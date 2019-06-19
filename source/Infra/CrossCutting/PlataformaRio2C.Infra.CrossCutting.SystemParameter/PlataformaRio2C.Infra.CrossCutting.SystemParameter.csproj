@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\..\packages\PostSharp.6.0.27\build\PostSharp.props" Condition="Exists('..\..\..\..\packages\PostSharp.6.0.27\build\PostSharp.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0C86C61E-C23C-4469-90A1-6ED8E75814DB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PlataformaRio2C.Infra.CrossCutting.SystemParameter</RootNamespace>
+    <AssemblyName>PlataformaRio2C.Infra.CrossCutting.SystemParameter</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <DontImportPostSharp>True</DontImportPostSharp>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Migrations, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Migrations.1.0.1.0\lib\net40-Client\Migrations.dll</HintPath>
+    </Reference>
+    <Reference Include="PostSharp, Version=6.0.27.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\PostSharp.Redist.6.0.27\lib\net45\PostSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Security.Cryptography, Version=1.7.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Security.Cryptography.1.7.2\lib\net35\Security.Cryptography.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attributes\SystemParametersDescriptionAttribute.cs" />
+    <Compile Include="Context\PlataformaRio2CContext.cs" />
+    <Compile Include="Enums\LanguageCodes.cs" />
+    <Compile Include="Enums\SystemParameterCodes.cs" />
+    <Compile Include="Enums\SystemParameterGroupCodes.cs" />
+    <Compile Include="Extensions\EncryptionExtensions.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="Interfaces\IAesEncryptionInfo.cs" />
+    <Compile Include="Interfaces\ISystemParameterAppService.cs" />
+    <Compile Include="Interfaces\ISystemParameterCollection.cs" />
+    <Compile Include="Interfaces\ISystemParameterRepository.cs" />
+    <Compile Include="Interfaces\IUnitOfWorkSystemParameter.cs" />
+    <Compile Include="Mapping\SystemParameterMap.cs" />
+    <Compile Include="Migrations\201710261946109_Initial.cs" />
+    <Compile Include="Migrations\201710261946109_Initial.Designer.cs">
+      <DependentUpon>201710261946109_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801241510205_AddIndexForCode.cs" />
+    <Compile Include="Migrations\201801241510205_AddIndexForCode.Designer.cs">
+      <DependentUpon>201801241510205_AddIndexForCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AppAesEncryptionInfo.cs" />
+    <Compile Include="Models\AppValidationResult.cs" />
+    <Compile Include="Models\SystemParameter.cs" />
+    <Compile Include="Models\UnitOfWorkWithLog.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\SystemParameterRepository.cs" />
+    <Compile Include="Service\SystemParameterAppService.cs" />
+    <Compile Include="Service\SystemParameterCollection.cs" />
+    <Compile Include="ViewModels\SystemParameterAppViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\PlataformaRio2C.Infra.CrossCutting.Resources\PlataformaRio2C.Infra.CrossCutting.Resources.csproj">
+      <Project>{7E1DE835-DDC4-416A-A2B7-9B4F5FFFFBF4}</Project>
+      <Name>PlataformaRio2C.Infra.CrossCutting.Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PlataformaRio2C.Infra.CrossCutting.Tools\PlataformaRio2C.Infra.CrossCutting.Tools.csproj">
+      <Project>{EC0B684E-F8A3-417A-9567-819FFC7C41CC}</Project>
+      <Name>PlataformaRio2C.Infra.CrossCutting.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\PlataformaRio2C.Infra.Data.Context\PlataformaRio2C.Infra.Data.Context.csproj">
+      <Project>{30C4D007-1A78-410C-9FCD-63699985C39B}</Project>
+      <Name>PlataformaRio2C.Infra.Data.Context</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201710261946109_Initial.resx">
+      <DependentUpon>201710261946109_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801241510205_AddIndexForCode.resx">
+      <DependentUpon>201801241510205_AddIndexForCode.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\..\..\..\packages\PostSharp.4.3.37\tools\PostSharp.targets" Condition="Exists('..\..\..\..\packages\PostSharp.4.3.37\tools\PostSharp.targets')" />
+  <Target Name="EnsurePostSharpImported" BeforeTargets="BeforeBuild" Condition="'$(PostSharp30Imported)' == ''">
+    <Error Condition="!Exists('..\..\..\..\packages\PostSharp.4.3.37\tools\PostSharp.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://www.postsharp.net/links/nuget-restore." />
+    <Error Condition="Exists('..\..\..\..\packages\PostSharp.4.3.37\tools\PostSharp.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://www.postsharp.net/links/nuget-restore." />
+  </Target>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Este projeto faz referência a pacotes do NuGet que não estão presentes neste computador. Use a Restauração de Pacotes do NuGet para baixá-los.  Para obter mais informações, consulte http://go.microsoft.com/fwlink/?LinkID=322105. O arquivo ausente é {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\..\packages\PostSharp.6.0.27\build\PostSharp.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\PostSharp.6.0.27\build\PostSharp.props'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\PostSharp.6.0.27\build\PostSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\PostSharp.6.0.27\build\PostSharp.targets'))" />
+  </Target>
+  <Import Project="..\..\..\..\packages\PostSharp.6.0.27\build\PostSharp.targets" Condition="Exists('..\..\..\..\packages\PostSharp.6.0.27\build\PostSharp.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

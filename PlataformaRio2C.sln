@@ -19,29 +19,29 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.2 - CrossCutting", "4.2 -
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{445AEE1D-0D70-4B43-AF41-C5073D1AF761}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.Web.Site", "PlataformaRio2C.Web.Site\PlataformaRio2C.Web.Site.csproj", "{AAA2F19F-23E9-41D7-9790-8E47CF17DB1F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.Web.Site", "source\Presentation\Web\PlataformaRio2C.Web.Site\PlataformaRio2C.Web.Site.csproj", "{AAA2F19F-23E9-41D7-9790-8E47CF17DB1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.Web.Admin", "PlataformaRio2C.Web.Admin\PlataformaRio2C.Web.Admin.csproj", "{5CE68B05-A92A-4A0F-B2C3-00FC381A5EBE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.Web.Admin", "source\Presentation\Web\PlataformaRio2C.Web.Admin\PlataformaRio2C.Web.Admin.csproj", "{5CE68B05-A92A-4A0F-B2C3-00FC381A5EBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.Application", "PlataformaRio2C.Application\PlataformaRio2C.Application.csproj", "{5C6E9CB9-B206-4ECF-AE1A-7E07995D39F7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.Application", "source\Application\PlataformaRio2C.Application\PlataformaRio2C.Application.csproj", "{5C6E9CB9-B206-4ECF-AE1A-7E07995D39F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.Domain", "PlataformaRio2C.Domain\PlataformaRio2C.Domain.csproj", "{9CFDDB5C-4DA2-437B-AEDD-CABE12EF09BC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.Domain", "source\Domain\PlataformaRio2C.Domain\PlataformaRio2C.Domain.csproj", "{9CFDDB5C-4DA2-437B-AEDD-CABE12EF09BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.Infra.Data.Context", "PlataformaRio2C.Infra.Data.Context\PlataformaRio2C.Infra.Data.Context.csproj", "{30C4D007-1A78-410C-9FCD-63699985C39B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.Infra.Data.Context", "source\Infra\Data\PlataformaRio2C.Infra.Data.Context\PlataformaRio2C.Infra.Data.Context.csproj", "{30C4D007-1A78-410C-9FCD-63699985C39B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.Infra.Data.Repository", "PlataformaRio2C.Infra.Data.Repository\PlataformaRio2C.Infra.Data.Repository.csproj", "{CF083D1D-24AD-412F-B28C-648A27D78D7D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.Infra.Data.Repository", "source\Infra\Data\PlataformaRio2C.Infra.Data.Repository\PlataformaRio2C.Infra.Data.Repository.csproj", "{CF083D1D-24AD-412F-B28C-648A27D78D7D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.Infra.CrossCutting.Identity", "PlataformaRio2C.Infra.CrossCutting.Identity\PlataformaRio2C.Infra.CrossCutting.Identity.csproj", "{D8359323-3DBC-477E-B673-E77BA1128426}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.Infra.CrossCutting.Identity", "source\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.Identity\PlataformaRio2C.Infra.CrossCutting.Identity.csproj", "{D8359323-3DBC-477E-B673-E77BA1128426}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.Infra.CrossCutting.IOC", "PlataformaRio2C.Infra.CrossCutting.IOC\PlataformaRio2C.Infra.CrossCutting.IOC.csproj", "{6F589B6B-0277-4C91-848A-C1851C4B106A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.Infra.CrossCutting.IOC", "source\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.IOC\PlataformaRio2C.Infra.CrossCutting.IOC.csproj", "{6F589B6B-0277-4C91-848A-C1851C4B106A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.Infra.CrossCutting.Tools", "PlataformaRio2C.Infra.CrossCutting.Tools\PlataformaRio2C.Infra.CrossCutting.Tools.csproj", "{EC0B684E-F8A3-417A-9567-819FFC7C41CC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.Infra.CrossCutting.Tools", "source\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.Tools\PlataformaRio2C.Infra.CrossCutting.Tools.csproj", "{EC0B684E-F8A3-417A-9567-819FFC7C41CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.Infra.CrossCutting.Resources", "PlataformaRio2C.Infra.CrossCutting.Resources\PlataformaRio2C.Infra.CrossCutting.Resources.csproj", "{7E1DE835-DDC4-416A-A2B7-9B4F5FFFFBF4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.Infra.CrossCutting.Resources", "source\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.Resources\PlataformaRio2C.Infra.CrossCutting.Resources.csproj", "{7E1DE835-DDC4-416A-A2B7-9B4F5FFFFBF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.Infra.CrossCutting.SystemParameter", "PlataformaRio2C.Infra.CrossCutting.SystemParameter\PlataformaRio2C.Infra.CrossCutting.SystemParameter.csproj", "{0C86C61E-C23C-4469-90A1-6ED8E75814DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.Infra.CrossCutting.SystemParameter", "source\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.SystemParameter\PlataformaRio2C.Infra.CrossCutting.SystemParameter.csproj", "{0C86C61E-C23C-4469-90A1-6ED8E75814DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.WebApi", "PlataformaRio2C.WebApi\PlataformaRio2C.WebApi.csproj", "{7AC9067F-93C3-4262-A693-A7AD5879BEBC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.WebApi", "source\Services\PlataformaRio2C.WebApi\PlataformaRio2C.WebApi.csproj", "{7AC9067F-93C3-4262-A693-A7AD5879BEBC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
