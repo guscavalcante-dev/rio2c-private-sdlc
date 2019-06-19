@@ -1,0 +1,123 @@
+﻿
+@{
+    ViewBag.Title = "Producer";
+    Layout = "~/Views/Shared/_LayoutModal.cshtml";
+    ViewBag.ModalClass = "modal-term";
+}
+
+<div class="modal-content">
+    @using (Html.BeginForm("AcceptTermProducer", "Term", FormMethod.Post, new { @class = "form-horizontal form-term", role = "form" }))
+    {
+        <div class="modal-header">
+            <h3 class="modal-title text-primary">Regulamento de Projeto | <em class="english"> Project's Terms</em></h3>
+        </div>
+        <div class="modal-body">
+            <div class="content term-content">
+                <section class="panel">
+                    <div class="panel-body">
+
+                        @Html.StatusMessages()
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary("", new { @class = "text-danger" })
+
+                        <div>
+                            <h3 class="text-center">RODADAS DE NEGÓCIOS | <em class="english">ONE-TO-ONE MEETINGS</em></h3>
+
+                            <h2>Regras | <em class="english">Rules</em></h2>
+                            <p>
+                                1.	Qualquer pessoa jurídica previamente credenciada no <strong>Rio2C|RioContentMarket 2019</strong>, nas categorias INDUSTRY e INDUSTRY+ poderá submeter seus projetos para as Rodadas de Negócios, <strong>no período de 11 de dezembro de 2018 a 11 de janeiro de 2019</strong>. |
+                                <em class="english">Any legal corporation registered for the <strong>Rio2C|RioContentMarket 2019</strong> in the INDUSTRY and INDUSTRY+ categories may submit projects for the One-to-One Meetings in the period <strong>between December 11th, 2018 – January 11th, 2019</strong>.</em>
+
+                            <p>
+                                2.	Cada pessoa jurídica previamente credenciada nas categorias INDUSTRY e INDUSTRY+ poderá inscrever até 3 (três) projetos e cada projeto poderá ser enviado para até 5 (cinco) Players. Caso a pessoa jurídica opte pela inscrição de 1 (um) único projeto este poderá ser enviado para até 15 Players.  |
+                                <em class="english">Each legal corporation previously registered in the INDUSTRY and INDUSTRY+ categories may submit up to 3 (three) projects and each project may be sent to a maximum of 5 (five) Players. In case the legal corporation decides to submit only 1 (one) project the same may be sent to a maximum of 15 Players.</em>
+                            </p>
+
+                            <p>
+                                3.	Toda pessoa jurídica deve possuir a titularidade dos direitos de propriedade intelectual (incluindo tanto direitos autorais quanto de propriedade industrial) sobre os projetos inscritos para as Rodadas de Negócios do <strong>Rio2C|RioContentMarket</strong>, bem como todas as autorizações de terceiros com relação às obras eventualmente envolvidas no âmbito dos projetos. |
+                                <em class="english">Each legal corporation must own the copyrights over the projects submitted for the <strong>Rio2C/RioContentMarket’s</strong> One-to-One Meetings, in addition to holding all necessary authorisations from third parties in relation to any work used in the projects.</em>
+                            </p>
+
+                            <p>
+                                4.	Projetos com informações incompletas ou incorretas serão desconsiderados. |
+                                <em class="english">Projects with incomplete or incorrect information will not be considered.</em>
+                            </p>
+
+                            <p>
+                                5.	Só poderão acessar a área de Rodadas de Negócios e participar das reuniões os representantes das empresas que estiverem devidamente credenciados nas categorias INDUSTRY e INDUSTRY+. |
+                                <em class="english">Only representatives from companies registered in the INDUSTRY and INDUSTRY+ categories may have access to the One-to-One Meetings area to take part in the meetings.</em>
+                            </p>
+
+                            <p>
+                                6.	As inscrições estão sujeitas à lotação do evento. |
+                                <em class="english">In case the event reaches full capacity registrations will no longer be available.</em>
+                            </p>
+
+
+                            <h2>Da Inscrição e Seleção de Projetos | <em class="english">Submission and Selection of Projects:</em></h2>
+                            <p>
+                                1.	Todo projeto direcionado à Players internacionais deverá obrigatoriamente estar em inglês. A tradução é de total responsabilidade do participante. |
+                                <em class="english">For foreign executives (Players), all projects must be made available in English. The participants shall be fully responsible for the translation.</em>
+                            </p>
+
+                            <p>
+                                2.	Ao clicar em “Enviar Projeto”, o responsável pela inscrição do mesmo deverá concordar com o “Regulamento das Rodadas de Negócios”, onde afirma estar ciente de que poderão haver projetos semelhantes e isenta o <strong>Rio2C|RioContentMarket</strong> e os executivos (Players) de qualquer responsabilidade com relação a projetos similares, excluindo o <strong>Rio2C|RioContentMarket</strong> e os executivos (Players) de qualquer demanda judicial ou extrajudicial envolvendo a discussão de direitos sobre as ideias, temas e formatos apresentados nas Rodadas de Negócios. |
+                                <em class="english">By clicking on “Send Project”, the person in charge of registration must also agree with the “Terms for Project Submission”, where they confirm they are aware that there may be similar projects and hold <strong>Rio2C|RioContentMarket</strong> and the executives (Players) exempt from any responsibility as to similar projects, excluding <strong>Rio2C|RioContentMarket</strong> and the executives (Players) from any judicial or extrajudicial demand involving the discussion of the rights over such projects.</em>
+                            </p>
+
+                            <p>
+                                3.	Após finalizada a inscrição, os projetos não poderão ser alterados. |
+                                <em class="english">After submission, the projects may not be changed.</em>
+                            </p>
+
+
+                            <h2>Da Participação | <em class="english">Attendance</em></h2>
+                            <p>
+                                1.	A agenda das Rodadas de Negócios do <strong>Rio2C|RioContentMarket</strong> será enviada às empresas produtoras titulares dos projetos a partir do dia <strong>15 de março de 2019</strong>. As Rodadas ocorrem entre os dias <strong>23 e 26 de abril de 2019</strong>.Os horários e datas definidos na agenda devem ser priorizados e não podem ser alterados. |
+                                <em class="english">Starting from <strong>March 15th, 2019</strong>, the production companies that own the submitted projects will receive a schedule for the One-to-One Meetings at<strong> Rio2C|RioContentMarket</strong>.The meetings shall take place between <strong>April 23rd and 26th, 2019</strong>. The times and dates that appear on the schedule forwarded must take precedence over other commitments and may not be changed.</em>
+                            </p>
+
+                            <p>
+                                2.	Os representantes dos projetos aceitos e agendados devem fazer a sua identificação <strong>1 (uma) hora antes de sua primeira reunião</strong> no balcão informativo em frente à Sala das Rodadas de Negócios do <strong>Rio2C|RioContentMarket</strong>.Para as reuniões subsequentes o proponente deverá <strong>comparecer ao local 10 minutos antes de seu encontro</strong>. |
+                                <em class="english">The representatives of the selected projects with meetings scheduled should identify themselves <strong>1 (one) hour before their first meeting </strong>at the information desk in front of <strong>Rio2C|RioContentMarket's</strong>’s One-to-One Meetings Room.For the following meetings, project representatives should arrive at the <strong>meeting place 10 minutes before the scheduled time</strong>.</em>
+                            </p>
+
+                            <p>
+                                3.	A apresentação de projetos para players internacionais deve ser realizada no idioma do player ou em inglês. |
+                                <em class="english">Projects shall be presented to international players in their native language or in English.</em>
+                            </p>
+
+                            <p>
+                                4.	Cada reunião terá a duração máxima de 20 minutos. |
+                                <em class="english">Each meeting will have a maximum duration of 20 minutes.</em>
+                            </p>
+
+                            <p>
+                                5.	A inscrição dos projetos para as Rodadas de Negócios <strong>não garante a realização de reuniões</strong>, uma vez que os próprios players selecionam os projetos adequados aos seus perfis e necessidades. |
+                                <em class="english">Project submission to the event <strong>does not guarantee that a meeting will take place</strong>, as the players themselves will select the projects that better suit their needs.</em>
+                            </p>
+
+                        </div>
+                    </div>
+                    <footer class="panel-footer">
+                        <div class="form-group">
+                            <label>
+
+                                <input name="Accept" type="checkbox" value="true" />
+                                <input type="hidden" name="Accept" value="false" />
+                                Declaro estar ciente e concordar com as regras e regulamentos acima. | <em class="english">I declare that I am aware and agree with the above mentioned rules and regulations.</em>
+                            </label>
+                        </div>
+                    </footer>
+                </section>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="@Url.Action("LogOff","Account")" class="btn btn-lg btn-default pull-left">Cancelar | <em class="english">Cancel</em></a>
+            <input type="submit" class="btn btn-lg btn-primary pull-right" value="Prosseguir | <em class='english'>Proceed</em>" />
+            @*<a href="@Url.Action("LogOff","Account")" class="btn btn-lg btn-default pull-left">@Labels.Cancel</a>
+            <input type="submit" class="btn btn-lg btn-primary pull-right" value="@Labels.Proceed" />*@
+        </div>
+    }
+</div>
+

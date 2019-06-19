@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "Caixa de envios";
+}
+
+<div class="col-lg-12">
+    <section class="panel">
+        <header class="panel-heading clearfix">
+            <h2 class="pull-left">@ViewBag.Title</h2>
+
+            <a href="#modalConfirmation" class="btn btn-sm btn-success pull-right" data-toggle="modal">
+                + Enviar convites para colaboradores
+            </a>
+        </header>
+    </section>
+</div>
+
+@Html.Partial("_ModalConfirmation")

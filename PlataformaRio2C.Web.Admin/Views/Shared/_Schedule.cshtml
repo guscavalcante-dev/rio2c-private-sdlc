@@ -1,0 +1,67 @@
+﻿<div class="projects-structure meetings">
+    <div ng-if="vm.loadingSchedule">
+        <p class="animation-load-dots">Carregando informações...</p>
+    </div>
+
+    <div class="alert alert-danger" ng-if="!vm.loadingSchedule && vm.processedError">
+        <p>@Messages.ErrorProcessingAgenda</p>
+    </div>
+
+    <div ng-if="!vm.loadingSchedule && !vm.processedError">
+        <div class="print-agenda">
+            <div class="agenda-group" ng-repeat="el in vm.eventsList">
+                <div class="agenda-head">
+                    {{el.dayOfWeek}} - {{el.date}}
+                </div>
+
+                <div class="agenda-body" ng-repeat="item  in el.items | orderBy: 'startHour' ">
+                    <div class="agenda-time">
+                        <div><span>{{item.startHour}}</span></div>
+                        <div><span>{{item.endHour}}</span></div>
+                    </div>
+                    <div class="agenda-info">
+                        <div ng-if="item.type == 'meetings'">
+                            <div>
+                                <label>@Labels.Project: </label>
+                                <span class="link">{{item.title}}</span>
+                            </div>
+                            <div>
+                                <label>@Labels.Producer: </label>
+                                <span class="link">{{item.producer.name}}</span>
+                            </div>
+                            <div>
+                                <label>@Labels.Player: </label>
+                                <span class="link">{{item.player.name}}</span>
+                            </div>
+                            <div>
+                                <label>@Labels.Room: </label>
+                                <span>{{item.room}}</span>
+                            </div>
+                            <div>
+                                <label>@Labels.Table: </label>
+                                <span>{{item.table}}</span>
+                            </div>
+                        </div>
+
+                        <div ng-if="item.type == 'conference'">
+                            <div>
+                                <label>@Labels.Title: </label>
+                                <span class="link">{{item.title}}</span>
+                            </div>
+                            <div>
+                                <label>@Labels.Room: </label>
+                                <span>{{item.room}}</span>
+                            </div>
+                            <div>
+                                <label>@Labels.LecturerMemberOneOrMany: </label>
+                                <span ng-repeat="lecturer in item.lecturers as lecturers">
+                                    {{(lecturers.indexOf(lecturer) + 1) >= lecturers.length ? lecturer.name : lecturer.name + ', ';}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

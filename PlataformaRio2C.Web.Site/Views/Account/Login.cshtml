@@ -1,0 +1,33 @@
+﻿@model LoginViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutBasic.cshtml";
+    ViewBag.Title = Labels.Enter;
+}
+
+@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-signin", role = "form" }))
+{
+    <div class="login-wrap">
+        <section id="loginForm">
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Email) })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "error-login" })
+            </div>
+
+            <div class="form-group">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Password) })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "error-login" })
+            </div>
+        
+            <div class="form-group">
+                <input type="submit" value="@Labels.Enter" class="btn btn-primary btn-lg btn-block" />
+            </div>
+
+            @*<p class="forgot-password">
+                @Html.ActionLink(Texts.ForgotPassword, "ForgotPassword")
+            </p>*@
+        </section>
+    </div>
+}

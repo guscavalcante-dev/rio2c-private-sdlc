@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = Texts.VerifyEmailProducerRegistration;
+    Layout = "~/Views/Shared/_LayoutBasic.cshtml";
+}
+
+<div class="form-signin">
+    <div class="login-wrap">
+        <section id="loginForm">
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            <div class="title-forgot-password">
+                <h4 class="text-center">@ViewBag.Title</h4>
+                <h4 class="text-center"><a href="@Url.Action("Login", "../Account")">@Labels.ClickHereToLoginIn</a></h4>
+            </div>
+        </section>
+    </div>
+</div>

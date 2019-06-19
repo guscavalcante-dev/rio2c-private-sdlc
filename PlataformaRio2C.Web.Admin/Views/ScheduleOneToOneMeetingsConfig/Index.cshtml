@@ -1,0 +1,191 @@
+﻿@model IEnumerable<NegotiationConfigAppViewModel>
+
+@{
+    ViewBag.Title = "Configurar parâmetros da agenda das Rodadas de Negócios";
+    var viewModel = Html.Serializar(Model);
+    var roomsOptions = Html.Serializar(new List<object> { new { uid = Guid.Empty, name = "Selecione" } });
+}
+
+<div ng-controller="OneToOneMeetingsConfig as vm" data-viewmodel="@viewModel.ToString()" data-room-options="@roomsOptions.ToString()">
+    @using (Html.BeginForm("Update", "ScheduleOneToOneMeetingsConfig", FormMethod.Post, new { enctype = "multipart/form-data", name = "formScheduleOneToOneMeetingsConfig", data_form_validator = "" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <section class="panel">
+            <header class="panel-heading">
+                <h2>@ViewBag.Title</h2>
+            </header>
+                <div class="profile-info meetings-config">
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+                    <div class="loading-list" ng-if="vm.loadingFormOptions">
+                        Carregando opções do formulário...
+                    </div>
+
+                    <div ng-if="!vm.loadingFormOptions" class="meetings-config-group">
+                        <div class="meetings-config-box">
+                            <div ng-repeat="date in vm.dates" class="meetings-info">
+                                <div class="task-element-trash">
+                                    <button class="btn btn-danger btn-sm" ng-click="vm.removeDate($index)" title="Remover data"><i class="icon-remove"></i></button>
+                                </div>
+
+                                <div class="date-info">
+                                    <div class="form-group date-input">
+                                        <label>Data:</label>
+                                        <input type="text" ng-model="date.Date" name="[{{$index}}].Date" data-item-field-name="Date" class="form-control" required data-error="true" data-error-required="Este campo é obrigatório" placeholder="DD/MM/AAAA"/>
+                                    </div>
+                                    <div class="form-group date-input">
+                                        <label>Hora início:</label>
+                                        <input type="text" ng-model="date.StartTime" name="[{{$index}}].StartTime" class="form-control" required data-item-field-name="StartTime" data-error="true" data-error-required="Este campo é obrigatório" placeholder="HH:MM"/>
+                                    </div>
+                                    <div class="form-group date-input">
+                                        <label>Hora fim:</label>
+                                        <input type="text" ng-model="date.EndTime" name="[{{$index}}].EndTime" class="form-control" required data-item-field-name="EndTime" data-error="true" data-error-required="Este campo é obrigatório" placeholder="HH:MM"/>
+                                    </div>
+                                    <div class="form-group date-input">
+                                        <label>Qtd de rodadas do 1 turno:</label>
+                                        <input type="number" ng-model="date.RoundsFirstTurn" name="[{{$index}}].RoundsFirstTurn" class="form-control" placeholder="Número de rodadas"/>
+                                    </div>
+                                    <div class="form-group date-input">
+                                        <label>Qtd de rodadas  do 2 turno:</label>
+                                        <input type="number" ng-model="date.RoundsSecondTurn" name="[{{$index}}].RoundsSecondTurn" class="form-control" required data-item-field-name="RoundsSecondTurn" data-error="true" data-error-required="Este campo é obrigatório" placeholder="Número de rodadas"/>
+                                    </div>
+                                    <div class="form-group date-input">
+                                        <label>Tempo de intervalo entre os turnos:</label>
+                                        <input type="text" ng-model="date.TimeIntervalBetweenTurn" name="[{{$index}}].TimeIntervalBetweenTurn" class="form-control" required data-item-field-name="TimeIntervalBetweenTurn" data-error="true" data-error-required="Este campo é obrigatório" placeholder="HH:MM"/>
+                                    </div>
+                                    <div class="form-group date-input">
+                                        <label>Tempo de cada rodada:</label>
+                                        <input type="text" ng-model="date.TimeOfEachRound" name="[{{$index}}].TimeOfEachRound" class="form-control" required data-item-field-name="TimeOfEachRound" data-error="true" data-error-required="Este campo é obrigatório" placeholder="HH:MM"/>
+                                    </div>
+                                    <div class="form-group date-input">
+                                        <label>Tempo de intervalo entre cada rodada:</label>
+                                        <input type="text" ng-model="date.TimeIntervalBetweenRound" name="[{{$index}}].TimeIntervalBetweenRound" class="form-control" required data-item-field-name="TimeIntervalBetweenRound" data-error="true" data-error-required="Este campo é obrigatório" placeholder="HH:MM"/>
+                                    </div>
+                                </div>
+
+                                <div class="meetings-rooms-box">
+                                    <div ng-repeat="room in date.Rooms" class="meetings-room">
+                                        <div class="task-element-trash">
+                                            <button class="btn btn-danger btn-xs" ng-click="vm.removeRoom(date, $index)" title="Remover sala"><i class="icon-remove"></i></button>
+                                        </div>
+                                        <h4>Sala:</h4>
+                                        <div class="room-info">
+                                            <div class="form-group room-input">
+                                                <label>Sala:</label>
+                                                <select class="form-control" title="{{room.roomSelected.names[1].value}} | {{room.roomSelected.names[0].value}}" ng-options="item as item.name for item in vm.roomOptions track by item.uid" ng-model="room.roomSelected"></select>
+                                                <input type="hidden" value="{{room.roomSelected.uid}}" name="[{{$parent.$index}}].Rooms[{{$index}}].RoomUid" class="form-control" required data-item-field-name="CountAutomaticTables" data-error="true" data-error-required="Este campo é obrigatório" />
+                                            </div>
+                                            <div class="form-group room-input">
+                                                <label>Número de mesas automáticas:</label>
+                                                <input type="number" ng-model="room.CountAutomaticTables" name="[{{$parent.$index}}].Rooms[{{$index}}].CountAutomaticTables" class="form-control" required data-item-field-name="CountAutomaticTables" data-error="true" data-error-required="Este campo é obrigatório" />
+                                            </div>
+                                            <div class="form-group room-input">
+                                                <label>Número de mesas manuais:</label>
+                                                <input type="number" ng-model="room.CountManualTables" name="[{{$parent.$index}}].Rooms[{{$index}}].CountManualTables" class="form-control" required data-item-field-name="CountManualTables" data-error="true" data-error-required="Este campo é obrigatório" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="add-rooms clearfix">
+                                        <input type="button" class="btn btn-sm btn-success pull-right" ng-click="vm.addRoom(date)" title="Adicionar sala" value="Adicionar sala" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="meetings-box-button clearfix">
+                            <input type="button" class="btn btn-lg btn-success" ng-click="vm.addDate()" title="Adicionar data" value="Adicionar data" />
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Save" class="btn btn-default btn-lg pull-right" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <div class="btn-group">
+                <a class="btn btn-link pull-left" href="@Url.Action("Index")"> « Voltar</a>
+            </div>
+        </section>
+    }
+</div>
+
+
+
+
+
+@*<div ng-repeat="date in vm.dates" style="border: 1px solid #808080; padding: 15px; margin-bottom: 30px;">
+
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label>Data:</label>
+                <input type="text" ng-model="date.Date" name="[{{$index}}].Date" class="form-control" />
+            </div>
+            <div class="form-group col-md-3">
+                <label>Hora início:</label>
+                <input type="text" ng-model="date.StartTime" name="[{{$index}}].StartTime" class="form-control" />
+            </div>
+            <div class="form-group col-md-3">
+                <label>Hora fim:</label>
+                <input type="text" ng-model="date.EndTime" name="[{{$index}}].EndTime" class="form-control" />
+            </div>
+            <div class="form-group col-md-3">
+                <label>Qtd slots do 1 turno:</label>
+                <input type="number" ng-model="date.CountSlotsFirstTurn" name="[{{$index}}].CountSlotsFirstTurn" class="form-control" />
+            </div>
+            <div class="form-group col-md-3">
+                <label>Qtd slots do 2 turno:</label>
+                <input type="number" ng-model="date.CountSlotsSecondTurn" name="[{{$index}}].CountSlotsSecondTurn" class="form-control" />
+            </div>
+            <div class="form-group col-md-3">
+                <label>Tempo de intervalo entre os turnos:</label>
+                <input type="text" ng-model="date.TimeIntervalBetweenTurn" name="[{{$index}}].TimeIntervalBetweenTurn" class="form-control" />
+            </div>
+            <div class="form-group col-md-3">
+                <label>Tempo de cada Slot:</label>
+                <input type="text" ng-model="date.TimeOfEachSlot" name="[{{$index}}].TimeOfEachSlot" class="form-control" />
+            </div>
+            <div class="form-group col-md-3">
+                <label>Tempo de intervalo entre cada slot:</label>
+                <input type="text" ng-model="date.TimeIntervalBetweenSlot" name="[{{$index}}].TimeIntervalBetweenSlot" class="form-control" />
+            </div>
+        </div>
+        <div>
+            <label>Salas:</label>
+
+            <div ng-repeat="room in date.Rooms" style="border: 1px solid #808080; padding: 15px; margin-bottom: 30px;">
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label>Número de mesas automáticas:</label>
+                        <select class="form-control" ng-options="item as item.name for item in vm.roomOptions track by item.uid" ng-model="room.roomSelected"></select>
+                        <input type="hidden" value="{{room.roomSelected.uid}}" name="[{{$parent.$index}}].Rooms[{{$index}}].RoomUid" class="form-control" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Número de mesas automáticas:</label>
+                        <input type="text" ng-model="room.CountAutomaticTables" name="[{{$parent.$index}}].Rooms[{{$index}}].CountAutomaticTables" class="form-control" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Número de mesas manuais:</label>
+                        <input type="text" ng-model="room.CountManualTables" name="[{{$parent.$index}}].Rooms[{{$index}}].CountManualTables" class="form-control" />
+                    </div>
+                </div>
+                <div>
+                    <button type="button" ng-click="vm.removeRoom(date, $index)">X remover sala</button>
+                </div>
+            </div>
+
+            <div class="clearfix">
+                <button type="button" ng-click="vm.addRoom(date)">Adicionar outra sala</button>
+            </div>
+        </div>
+
+        <div>
+            <button type="button" ng-click="vm.removeDate($index)">X remover data</button>
+        </div>
+    </div>
+
+
+    <div>
+        <button type="button" ng-click="vm.addDate()">Adicionar outra data</button>
+    </div>*@

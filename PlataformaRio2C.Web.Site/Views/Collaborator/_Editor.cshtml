@@ -1,0 +1,257 @@
+﻿@model CollaboratorEditAppViewModel
+
+<div class="nav-content clearfix">
+    <aside class="profile-nav col-lg-3">
+        @*<section class="panel">*@
+
+        <div class="user-heading">
+            @Html.EditorFor(m => m.ImageUpload, new { Image = Model.Image })
+            <div class="fileinput-message">
+                <span class="label label-danger">@Labels.Warning</span>
+
+                @if (Html.UserInRole("Player"))
+                {
+                    <span class="text">@Html.Raw(Texts.FacePhoto)</span>
+                }
+                else
+                {
+                    <span class="text">@Html.Raw(Texts.FaceFotoCollaboratorProducer)</span>
+                }
+                <span class="text">@Html.Raw(Labels.ImageSize)</span>
+
+            </div>
+        </div>
+        @Html.ValidationMessagesFor(model => model.ImageUpload, new { @class = "text-danger" })
+        <ul class="nav nav-pills nav-stacked">
+            <li class="text-center"><a href="@Url.Action("ProfileDetails","Collaborator")">@Labels.ViewProfile</a></li>
+
+        </ul>
+        @*</section>*@
+    </aside>
+    <aside class="profile-info col-lg-9">
+
+        <section class="panel">
+
+            <div class="panel-body bio-graph-info">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                @Html.HiddenFor(m => m.Uid)
+                @Html.AntiForgeryToken()
+
+                <div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label required" })
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", maxlength = "50" } })
+                        @Html.ValidationMessagesFor(model => model.Name, new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Badge, htmlAttributes: new { @class = "control-label required" })
+                        @Html.EditorFor(model => model.Badge, new { htmlAttributes = new { @class = "form-control", maxlength = "50" } })
+                        @Html.ValidationMessagesFor(model => model.Badge, new { @class = "text-danger" })
+                    </div>
+
+                    @*<div class="form-group">
+            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label required" })
+            @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", maxlength = "50" } })
+            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+        </div>*@
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CellPhone, htmlAttributes: new { @class = "control-label required" })
+                        @Html.EditorFor(model => model.CellPhone, new { htmlAttributes = new { @class = "form-control", maxlength = "50" } })
+                        @Html.ValidationMessageFor(model => model.CellPhone, "", new { @class = "text-danger" })
+                    </div>
+
+                    <hr />
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.JobTitles, htmlAttributes: new { @class = "control-label required" })
+                        @Html.ValidationMessages("JobTitles", htmlAttributes: new { @class = "text-danger" })
+
+                        @if (Model.JobTitles != null && Model.JobTitles.Any())
+                        {
+                            for (int i = 0; i < Model.LanguagesOptions.Count(); i++)
+                            {
+                                var code = Model.JobTitles.ToList().FirstOrDefault(e => e.LanguageCode == Model.LanguagesOptions.ElementAt(i).Code);
+                                var codeValue = code != null ? code.Value : null;
+                                var languageCodeValue = code != null ? code.LanguageCode : null;
+                                var labelLanguage = Model.LanguagesOptions.ElementAt(i).Name.Contains("Português") ? Labels.Portuguese : Model.LanguagesOptions.ElementAt(i).Name;
+
+                                <div class="language">
+                                    <label class="control-label2">@labelLanguage </label>
+                                    <textarea name="JobTitles[@i].Value" class="form-control" maxlength="256">@codeValue</textarea>
+                                    <input type="hidden" value="@languageCodeValue" name="JobTitles[@i].LanguageCode" class="form-control" />
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            for (int i = 0; i < Model.LanguagesOptions.Count(); i++)
+                            {
+                                var codeValue = Model.LanguagesOptions.ElementAt(i).Code;
+                                var labelLanguage = Model.LanguagesOptions.ElementAt(i).Name.Contains("Português") ? Labels.Portuguese : Model.LanguagesOptions.ElementAt(i).Name;
+
+                                <div class="language">
+                                    <label class="control-label2">@labelLanguage </label>
+                                    <textarea name="JobTitles[@i].Value" class="form-control" maxlength="256"></textarea>
+                                    <input type="hidden" value="@codeValue" name="JobTitles[@i].LanguageCode" class="form-control" />
+                                </div>
+                            }
+                        }
+                    </div>
+                    <hr />
+
+                    <div class="bio-row-detail">
+                        <p>
+                            @Html.LabelFor(model => model.User.Email, htmlAttributes: new { @class = "control-label" })
+                            <span>@Model.User.Email</span>
+                        </p>
+                    </div>
+
+                    <hr />
+
+
+                    @if (Html.UserInRole("Player"))
+                    {
+                        <div class="form-group">
+                            <label>Players:</label>
+                            @if (Model.Players != null && Model.Players.Any())
+                            {
+                                foreach (var item in Model.Players)
+                                {
+                                    @Html.EditorFor(model => item.Name, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                }
+                            }
+                        </div>
+                    }
+
+                    @if (Html.UserInRole("Producer"))
+                    {
+                    }
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Address.ZipCode, htmlAttributes: new { @class = "control-label required" })
+                        @Html.EditorFor(model => model.Address.ZipCode, new { htmlAttributes = new { @class = "form-control", maxlength = "50" } })
+                        @Html.ValidationMessageFor(model => model.Address.ZipCode, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Address.CountryId, htmlAttributes: new { @class = "control-label required" })
+                        @Html.HiddenFor(model => model.Address.Country)
+
+                        <select name="CountryId" id="CountryId" class="form-control">
+                            <option value="">@Labels.Choose</option>
+                            @if (Model.Countries != null)
+                            {
+                                foreach (var country in Model.Countries)
+                                {
+                                    <option value="@country.Id" @(Model.Address.Country == country.Id || Model.Address.CountryId == country.Id ? "selected" : "")>
+                                        @country.CountryName (@country.CountryCode)
+                                    </option>
+                                }
+                            }
+
+                        </select>
+                        @Html.HiddenFor(model => model.Address.Country)
+                        @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="form-group @(Model.StateId != 0 ? "hidden" : "")" id="stateNotBrazil">
+                        @Html.LabelFor(model => model.Address.State, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.Address.State, new { htmlAttributes = new { @class = "form-control", maxlength = "50" } })
+                        @Html.ValidationMessageFor(model => model.Address.State, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group @(Model.StateId == 0 ? "hidden" : "")" id="stateBrazil">
+                        @Html.LabelFor(model => model.Address.State, htmlAttributes: new { @class = "control-label required" })
+
+                        <select name="StateId" id="StateId" class="form-control">
+                            <option value="">@Labels.Choose</option>
+                            @if (Model.States != null)
+                            {
+                                foreach (var state in Model.States)
+                                {
+                                    <option value="@state.Id" @(state.Id == Model.StateId ? "selected" : "")>@state.StateName (@state.StateCode)</option>
+                                }
+                            }
+                        </select>
+                        @Html.HiddenFor(model => model.Address.StateId)
+                        @Html.ValidationMessageFor(model => model.Address.State, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group @(Model.CityId != 0 ? "hidden" : "")" id="cityNotBrazil">
+                        @Html.LabelFor(model => model.Address.City, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.Address.City, new { htmlAttributes = new { @class = "form-control", maxlength = "50" } })
+                        @Html.ValidationMessageFor(model => model.Address.City, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group @(Model.CityId  == 0 ? "hidden" : "")" id="cityBrazil">
+                        @Html.LabelFor(model => model.Address.City, htmlAttributes: new { @class = "control-label" })
+                        <select name="CityId" id="CityId" class="form-control">
+                            <option value="">@Labels.Choose</option>
+
+                            @if (Model.Cities != null)
+                            {
+                                foreach (var city in Model.Cities)
+                                {
+                                    <option value="@city.Id" @(city.Id == Model.CityId ? "selected" : "")>@city.Name</option>
+                                }
+                            }
+                        </select>
+                        @Html.HiddenFor(model => model.Address.CityId)
+                        @Html.ValidationMessageFor(model => model.Address.City, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Address.AddressValue, htmlAttributes: new { @class = "control-label required" })
+                        @Html.EditorFor(model => model.Address.AddressValue, new { htmlAttributes = new { @class = "form-control", maxlength = AddressAppViewModel.AddressValueMaxLength } })
+                        @Html.ValidationMessageFor(model => model.Address.AddressValue, "", new { @class = "text-danger" })
+                    </div>
+
+                    <hr />
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.MiniBios, htmlAttributes: new { @class = "control-label required" })
+                        @Html.ValidationMessages("MiniBios", htmlAttributes: new { @class = "text-danger" })
+
+                        @if (Model.MiniBios != null && Model.MiniBios.Any())
+                        {
+                            for (int i = 0; i < Model.LanguagesOptions.Count(); i++)
+                            {
+                                var code = Model.MiniBios.ToList().FirstOrDefault(e => e.LanguageCode == Model.LanguagesOptions.ElementAt(i).Code);
+                                var codeValue = code != null ? code.Value : null;
+                                var languageCodeValue = code != null ? code.LanguageCode : null;
+                                var labelLanguage = Model.LanguagesOptions.ElementAt(i).Name.Contains("Português") ? Labels.Portuguese : Model.LanguagesOptions.ElementAt(i).Name;
+
+                                <div class="language">
+                                    <label class="control-label">@labelLanguage</label>
+                                    <textarea name="MiniBios[@i].Value" class="form-control ckeditor-rio2c" id="ckeditor_@i">@codeValue</textarea>
+                                    <input type="hidden" value="@languageCodeValue" name="MiniBios[@i].LanguageCode" class="form-control" />
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            for (int i = 0; i < Model.LanguagesOptions.Count(); i++)
+                            {
+                                var codeValue = Model.LanguagesOptions.ElementAt(i).Code;
+                                var labelLanguage = Model.LanguagesOptions.ElementAt(i).Name.Contains("Português") ? Labels.Portuguese : Model.LanguagesOptions.ElementAt(i).Name;
+
+                                <div class="language">
+                                    <label class="control-label">@labelLanguage</label>
+                                    <textarea name="MiniBios[@i].Value" class="form-control ckeditor-rio2c" id="ckeditor_@i"></textarea>
+                                    <input type="hidden" value="@codeValue" name="MiniBios[@i].LanguageCode" class="form-control" />
+                                </div>
+                            }
+                        }
+                    </div>
+
+                    <div class="btn-group-form">
+                        <a href="@Url.Action("ProfileDetails","Collaborator")" class="btn btn-lg btn-default pull-left">@Labels.Cancel</a>
+                        <input type="submit" value="@Labels.Save" class="btn btn-lg btn-primary pull-right" />
+                    </div>
+                </div>
+            </div>
+        </section>
+    </aside>
+</div>

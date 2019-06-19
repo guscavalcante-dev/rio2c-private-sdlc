@@ -1,0 +1,14 @@
+﻿@model CollaboratorBasicAppViewModel
+
+@{
+    ViewBag.Title = "Agenda";
+}
+
+<section class="panel panel-lg" ng-controller="ScheduleCtrl as vm" data-uid-collaborator="@Model.Uid" ng-init="vm.init()" data-area="all">
+    <header class="panel-heading clearfix">
+        <h2 class="pull-left">@ViewBag.Title - @Model.Name</h2>
+    </header>
+
+    @Html.Partial("_Schedule")
+</section>
+

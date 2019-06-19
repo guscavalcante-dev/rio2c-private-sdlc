@@ -1,0 +1,180 @@
+﻿
+@{
+    ViewBag.Title = "Teste da agenda da rodada de negócios";
+}
+
+<div ng-controller="OneToOneMeetingsTest as vm">
+
+
+    <section class="panel">
+        <header class="panel-heading clearfix">
+            <h2 class="pull-left">@ViewBag.Title</h2>
+        </header>
+
+        <div class="profile-info meetings-generator">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="clearfix" style="border: 1px solid #808080; padding: 15px;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div style="background: #f1f2f7">
+                            <h2>Status do processamento da agenda:</h2>
+                            <p ng-if="!vm.processedScheduling">
+                                Nenhum processamento realizado.
+                            </p>
+                            <p ng-if="vm.processedScheduling && vm.processingScheduling ">
+                                Aguarde processando agenda.
+                            </p>
+                            <div ng-if="vm.processedScheduling && !vm.processingScheduling">
+                                <p>Agenda processada com sucesso {{vm.dateProcess}}.</p>
+
+                                <ul>
+                                    <li>{{vm.numberScheduledNegotiations}} negociações agendadas com sucesso.</li>
+                                    <li>{{vm.numberUnscheduledNegotiations}} negociações não agendadas.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button type="button" data-toggle="modal" data-target="#modalGenerateScheduleOneToOneMeetings" class="btn btn-sm btn-success pull-right">
+                        Gerar agenda de rodada de negócio
+                    </button>
+                </div>
+            </div>
+
+            <div ng-if="vm.processedScheduling && vm.dateProcess != null">
+
+                <div ng-if="vm.unscheduledNegotiations != null && vm.unscheduledNegotiations.length > 0">
+                    <h4>Negociação não agendadas:</h4>
+                    <table class="table table-advance table-hover meetings-generator-tables">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Player
+                                </th>
+                                <th>
+                                    Projeto
+                                </th>
+                                <th>
+                                    Produtora
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in vm.unscheduledNegotiations track by $index">
+                                <td>{{item.playerName}}</td>
+                                <td>{{item.projectName}}</td>
+                                <td>{{item.producerName}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <p ng-if="vm.loadingNegotiations">Carregando agenda de rodada de negócio...</p>
+
+            <p ng-if="!vm.loadingNegotiations && vm.groupNegotiations.length <= 0">Nenhuma negociação agendada.</p>
+
+
+            <div ng-if="!vm.loadingNegotiations && vm.groupNegotiations.length > 0" ng-repeat="groupNegotiation in vm.groupNegotiations track by $index" class="meetings-generator-dates">
+                <h2>{{groupNegotiation.date}}</h2>
+
+                <div ng-repeat="room in groupNegotiation.rooms track by $index" class="meetings-generator-rooms">
+
+                    <h3>{{room.room}}</h3>
+                    <div class="meetings-generator-slot" ng-repeat="slot in room.slots track by $index">
+
+                        <h4>Rodada {{slot.slot}} ({{slot.startTime}} - {{slot.endTime}})</h4>
+
+                        <table class="table table-advance table-hover meetings-generator-tables">
+                            <thead>
+                                <tr>
+                                    <th>Mesa</th>
+                                    <th>Player</th>
+                                    <th>Projeto</th>
+                                    <th>Produtora</th>
+                                    <th>Tipo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="table in slot.tables track by $index">
+                                    <td>
+                                        {{table.table}}
+                                    </td>
+                                    <td>
+                                        {{table.player}}
+                                    </td>
+                                    <td>
+                                        {{table.project}}
+                                    </td>
+                                    <td>
+                                        {{table.producer}}
+                                    </td>
+                                    <td>
+                                        {{table.type}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+
+
+    <!-- Modal -->
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="modalDelete" class="modal fade" style="display: none;">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title text-center">Atenção!</h4>
+                </div>
+
+                <div class="modal-body">
+                    <p>Tem certeza que deseja excluir?</p>
+                </div>
+
+                <div class="modal-footer ">
+                    <button data-dismiss="modal" class="btn btn-default" type="button">Cancelar</button>
+                    <a href="#" id="btn-trigger-delete" class="btn btn-success button-confirm">Confirmar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal -->
+    <!-- Modal -->
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="modalGenerateScheduleOneToOneMeetings" class="modal fade" style="display: none;">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title text-center">Atenção!</h4>
+                </div>
+
+                <div class="modal-body">
+                    <p>Tem certeza que deseja gerar a agenda de rodada de negócio?</p>
+                    <p>Caso já tenha gerado a agenda ela irá perder todas as antigas informações.</p>
+                </div>
+
+                <div class="modal-footer ">
+                    <button data-dismiss="modal" class="btn btn-default" type="button">Cancelar</button>
+                    <button type="button" ng-click="vm.generateScheduleOneToOneMeetings()" class="btn btn-success button-confirm">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal -->
+
+</div>
+
+
+

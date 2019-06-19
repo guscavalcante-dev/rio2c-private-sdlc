@@ -1,0 +1,18 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/_LayoutBasic.cshtml";
+}
+
+<div class="form-signin container-layout-basic">
+    <section>
+        <div class="title-forgot-password">
+            <div class="text-center">
+                <h1>Oops!</h1>
+                @Html.Raw(Messages.ErrorPage)
+            </div>
+        </div>
+    </section>
+</div>
+

@@ -1,0 +1,481 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AccessDenied" xml:space="preserve">
+    <value>Access denied.</value>
+  </data>
+  <data name="AddressIsRequired" xml:space="preserve">
+    <value>Address required.</value>
+  </data>
+  <data name="AttentionPossiblePlayersNotSelected" xml:space="preserve">
+    <value>Attention! You have selected only {0} players out of {1} possible.</value>
+  </data>
+  <data name="BadgeIsRequired" xml:space="preserve">
+    <value>Badge is required.</value>
+  </data>
+  <data name="CanNotEditASubmittedProjectForPlayerEvaluation" xml:space="preserve">
+    <value>Can not edit a submitted project for player evaluation.</value>
+  </data>
+  <data name="CityIsInvalid" xml:space="preserve">
+    <value>Invalid city.</value>
+  </data>
+  <data name="CityIsRequired" xml:space="preserve">
+    <value>City required.</value>
+  </data>
+  <data name="ClosedProducerRegistration" xml:space="preserve">
+    <value>Closed producer registration</value>
+  </data>
+  <data name="ClosedSendingToPlayers" xml:space="preserve">
+    <value>Closed sending to players</value>
+  </data>
+  <data name="CollaboratorMustHaveAPlayer" xml:space="preserve">
+    <value>Collaborator must have at least one Player.</value>
+  </data>
+  <data name="CollaboratorMustHaveAProducer" xml:space="preserve">
+    <value>The collaborator must have at least one producer.</value>
+  </data>
+  <data name="CompanyNameIsRequired" xml:space="preserve">
+    <value>Company name is required!</value>
+  </data>
+  <data name="CompanySummaryInEnglishMandatory" xml:space="preserve">
+    <value>Company summary in English is required.</value>
+  </data>
+  <data name="CompanySummaryInPtBrMandatory" xml:space="preserve">
+    <value>Company summary in Portuguese is required.</value>
+  </data>
+  <data name="CountryIsInvalid" xml:space="preserve">
+    <value>Invalid country.</value>
+  </data>
+  <data name="CountryIsRequired" xml:space="preserve">
+    <value>Country required.</value>
+  </data>
+  <data name="EmailISInvalid" xml:space="preserve">
+    <value>Invalid e-mail.</value>
+  </data>
+  <data name="ErrorPage" xml:space="preserve">
+    <value>&lt;h4 class="h4-error-page"&gt;An error has been occurred while accessing this page.&lt;/h4&gt; 
+&lt;h4 class="h4-error-page"&gt;The Rio2C team has been notified and will work so that this will not happen again. &lt;/h4&gt;
+&lt;h4 class="h4-error-page"&gt;Try again in a few minutes.&lt;/h4&gt;</value>
+  </data>
+  <data name="ErrorProcessingAgenda" xml:space="preserve">
+    <value>There was an error processing the agenda.</value>
+  </data>
+  <data name="ErrorSavingProject" xml:space="preserve">
+    <value>Error while saving the project! Check the fields!</value>
+  </data>
+  <data name="ErrorSendingEmail" xml:space="preserve">
+    <value>An unexpected error occurred while sending email.</value>
+  </data>
+  <data name="ErrorUnexpectedPageLink" xml:space="preserve">
+    <value>&lt;i class=" icon-circle-arrow-left" style="font-size: 20px"&gt;&lt;/i&gt; Return to home page</value>
+  </data>
+  <data name="ErrorUnexpectedPageText" xml:space="preserve">
+    <value>&lt;h4 class="h4-error-page"&gt;There was an error accessing this page. &lt;/h4&gt;
+
+                &lt;h4 class="h4-error-page"&gt;
+                    Try closing and opening your browser window again.
+                &lt;/h4&gt;
+
+                </value>
+  </data>
+  <data name="ErrorUpdatingPlayerData" xml:space="preserve">
+    <value>Error updating Player data '{0}' ! Check the fields!</value>
+  </data>
+  <data name="ErrorUpdatingPlayerInterests" xml:space="preserve">
+    <value>Error updating player '{0}' interests! Check the fields!</value>
+  </data>
+  <data name="ErrorUpdatingProducerData" xml:space="preserve">
+    <value>Error updating Producer data '{0}' ! Check the fields!</value>
+  </data>
+  <data name="ErrorUpdatingProfileCheckTheFields" xml:space="preserve">
+    <value>Error updating profile! Check the fields!</value>
+  </data>
+  <data name="ErrorWhileSavingInDataBase" xml:space="preserve">
+    <value>An error has been ocurred while saving this operation in the database.</value>
+  </data>
+  <data name="EvaluationPeriodClosed" xml:space="preserve">
+    <value>Evaluation period closed</value>
+  </data>
+  <data name="EvaluationSavesSuccessfully" xml:space="preserve">
+    <value>Evaluation saved successfully</value>
+  </data>
+  <data name="HoldingMustHaveName" xml:space="preserve">
+    <value>Holding's name required.</value>
+  </data>
+  <data name="ImageIsRequired" xml:space="preserve">
+    <value>Image is required.</value>
+  </data>
+  <data name="InsertNewLineUseShiftEnter" xml:space="preserve">
+    <value>To inser a new line use shift+enter.</value>
+  </data>
+  <data name="InterestsIncompleteMessage" xml:space="preserve">
+    <value>Interests incomplete!</value>
+    <comment>Interesse incompleto!</comment>
+  </data>
+  <data name="InvalidCode" xml:space="preserve">
+    <value>Invalid code.</value>
+  </data>
+  <data name="InvalidExtensionPng" xml:space="preserve">
+    <value>The logo should have a .png or .jpeg extension</value>
+  </data>
+  <data name="InvalidImageFormat" xml:space="preserve">
+    <value>Invalid image format.</value>
+  </data>
+  <data name="InvalidResolution" xml:space="preserve">
+    <value>The image size must be between 1KB and 10MB!</value>
+  </data>
+  <data name="InvalidResolutionPlayer" xml:space="preserve">
+    <value>The image size must be between 1KB and 10MB!</value>
+  </data>
+  <data name="JobTitleEnIsRequired" xml:space="preserve">
+    <value>Required Job Title in English.</value>
+  </data>
+  <data name="JobTitlePtBrIsRequired" xml:space="preserve">
+    <value>Required Job Title in Portuguese.</value>
+  </data>
+  <data name="LockOutPage" xml:space="preserve">
+    <value>&lt;hgroup&gt;
+    &lt;h1 class='text-danger'&gt;Locked out.&lt;/h1&gt;
+    &lt;h2 class='text-danger'&gt;This account has been locked out, please try again later.&lt;/h2&gt;
+&lt;/hgroup&gt;</value>
+  </data>
+  <data name="LoginByTicket4YouIncorrect" xml:space="preserve">
+    <value>This email does not exists, please use the same email at Ticket4You</value>
+  </data>
+  <data name="LoginOrPasswordIsIncorrect" xml:space="preserve">
+    <value>Incorrect Login or Password.</value>
+  </data>
+  <data name="MandatoryToSubmitYourProject" xml:space="preserve">
+    <value>&lt;strong&gt;Warning!&lt;/strong&gt;To submit your Project it is mandatory to fill up your PROFILE and PRODUCER/COMPANY, available on the MENU.</value>
+  </data>
+  <data name="MessageIsTooLong" xml:space="preserve">
+    <value>The message is too long. Try shortening it or sending it in multiple parts.</value>
+  </data>
+  <data name="MiniBioEnIsRequired" xml:space="preserve">
+    <value>Mini-bio in English is required.</value>
+  </data>
+  <data name="MiniBioPtBrIsRequired" xml:space="preserve">
+    <value>Mini-bio in Portuguese is required.</value>
+  </data>
+  <data name="MinimumNumberOfCharacters" xml:space="preserve">
+    <value>The '{0}' must be at least '{2}' characters long.</value>
+  </data>
+  <data name="NameIsRequired" xml:space="preserve">
+    <value>Name required.</value>
+  </data>
+  <data name="NumberIsInvalid" xml:space="preserve">
+    <value>Invalid number.</value>
+  </data>
+  <data name="NumberIsRequired" xml:space="preserve">
+    <value>Number required.</value>
+  </data>
+  <data name="PasswordConfirmationDoesNotMatch" xml:space="preserve">
+    <value>Incorrect password.</value>
+  </data>
+  <data name="PlayerDataSuccessfullyUpdated" xml:space="preserve">
+    <value>Player '{0}''s update successful!</value>
+  </data>
+  <data name="PlayerIncompleteMessage" xml:space="preserve">
+    <value>Player incomplete!</value>
+    <comment>Player incompleto!</comment>
+  </data>
+  <data name="PlayerInterestsSuccessfullyUpdated" xml:space="preserve">
+    <value>Player '{0}''s update was successfully concluded!</value>
+  </data>
+  <data name="PlayerNotFound" xml:space="preserve">
+    <value>Player not found</value>
+  </data>
+  <data name="PleaseClickHereToLogin" xml:space="preserve">
+    <value>Please click here to login.</value>
+    <comment>Por favor clique aqui para logar.</comment>
+  </data>
+  <data name="ProcessingAgenda" xml:space="preserve">
+    <value>Processing the agenda.</value>
+  </data>
+  <data name="ProducerMaxProjects" xml:space="preserve">
+    <value>The producer can have at most {0} projects saved.</value>
+  </data>
+  <data name="ProductionPlanEnIsRequired" xml:space="preserve">
+    <value>'Production Plan' in English is required.</value>
+  </data>
+  <data name="ProductionPlanPtBrIsRequired" xml:space="preserve">
+    <value>'Production Plan' in Portuguese is required.</value>
+  </data>
+  <data name="ProfileIncompleteMessage" xml:space="preserve">
+    <value>Profile incomplete!</value>
+    <comment>Perfil incompleto!</comment>
+  </data>
+  <data name="ProfileUpdatedSuccessfully" xml:space="preserve">
+    <value>Profile update was concluded!</value>
+  </data>
+  <data name="ProjectLogLineEnIsRequired" xml:space="preserve">
+    <value>'LogLine' in English is required.</value>
+  </data>
+  <data name="ProjectLogLinePtBrIsRequired" xml:space="preserve">
+    <value>'LogLine' in Portuguese is required.</value>
+  </data>
+  <data name="ProjectLookingFor" xml:space="preserve">
+    <value>'Looking For' is required.</value>
+  </data>
+  <data name="ProjectMustHaveAFormat" xml:space="preserve">
+    <value>'Format' is required.</value>
+  </data>
+  <data name="ProjectMustHaveAGenre" xml:space="preserve">
+    <value>'Genre' is required.</value>
+  </data>
+  <data name="ProjectMustHaveAPlatform" xml:space="preserve">
+    <value>'Platforms' is required.</value>
+  </data>
+  <data name="ProjectMustHaveASeeking" xml:space="preserve">
+    <value>'Seeking for this project' is required.</value>
+  </data>
+  <data name="ProjectMustHaveAStatus" xml:space="preserve">
+    <value>'Project Status' is required.</value>
+  </data>
+  <data name="ProjectMustHaveASubGenre" xml:space="preserve">
+    <value>'Sub-genre' is required.</value>
+  </data>
+  <data name="ProjectMustHaveEachEpisodePlayingTime" xml:space="preserve">
+    <value>'Each episode playing time' is required.</value>
+  </data>
+  <data name="ProjectMustHaveLinksImage" xml:space="preserve">
+    <value>'Image Link' is required.</value>
+  </data>
+  <data name="ProjectMustHaveLinksTeaser" xml:space="preserve">
+    <value>'Teaser link is required.</value>
+  </data>
+  <data name="ProjectMustHaveNumberOfEpisodes" xml:space="preserve">
+    <value>'Number of episodes' is required.</value>
+  </data>
+  <data name="ProjectMustHavePitching" xml:space="preserve">
+    <value>'Pitching Sessions' field is required a response.</value>
+  </data>
+  <data name="ProjectMustHaveTarget" xml:space="preserve">
+    <value>'Target audience' is required.</value>
+  </data>
+  <data name="ProjectMustHaveTotalValueOfProject" xml:space="preserve">
+    <value>'Total value of project' is required.</value>
+  </data>
+  <data name="ProjectMustHaveValueAlreadyRaised" xml:space="preserve">
+    <value>'Value already raised' is required.</value>
+  </data>
+  <data name="ProjectMustHaveValuePerEpisode" xml:space="preserve">
+    <value>'Value per episode' is required.</value>
+  </data>
+  <data name="ProjectMustHaveValueStillNeeded" xml:space="preserve">
+    <value>'Value still needed' is required.</value>
+  </data>
+  <data name="ProjectNotFound" xml:space="preserve">
+    <value>Project not found.</value>
+  </data>
+  <data name="ProjectSuccessfullyCreated" xml:space="preserve">
+    <value>Project Successfully Created!</value>
+  </data>
+  <data name="ProjectSuccessfullyDeleted" xml:space="preserve">
+    <value>Project Successfully Deleted!</value>
+  </data>
+  <data name="ProjectSuccessfullySubmitted" xml:space="preserve">
+    <value>Project successfully submitted!</value>
+  </data>
+  <data name="ProjectSuccessfullyUpdated" xml:space="preserve">
+    <value>Project Successfully Updated!</value>
+  </data>
+  <data name="ProjectSummaryEnIsRequired" xml:space="preserve">
+    <value>'Summary' in English is required.</value>
+  </data>
+  <data name="ProjectSummaryPtBrIsRequired" xml:space="preserve">
+    <value>'Summary' in Portuguese is required.</value>
+  </data>
+  <data name="ProjectTitleEnIsRequired" xml:space="preserve">
+    <value>'Title' in English is required.</value>
+  </data>
+  <data name="ProjectTitlePtBrIsRequired" xml:space="preserve">
+    <value>'Title' in Portuguese is required.</value>
+  </data>
+  <data name="ReasonIsRequired" xml:space="preserve">
+    <value>Reason is required.</value>
+  </data>
+  <data name="ReasonMaxLength" xml:space="preserve">
+    <value>The reason must be at most {0} characters.</value>
+  </data>
+  <data name="ReasonMinLength" xml:space="preserve">
+    <value>Reason must be at least 3 characters</value>
+  </data>
+  <data name="RegistrationOfClosedProject" xml:space="preserve">
+    <value>Registration of closed project!</value>
+  </data>
+  <data name="RestrictionsSpecificsInEnglishMandatory" xml:space="preserve">
+    <value>Restrictions or specifics in English is required.</value>
+  </data>
+  <data name="SelectAtLeastOneGroupOption" xml:space="preserve">
+    <value>Please select at least one option from the {0} group.</value>
+  </data>
+  <data name="StateIsInvalid" xml:space="preserve">
+    <value>Invalid State.</value>
+  </data>
+  <data name="StateIsRequired" xml:space="preserve">
+    <value>State required.</value>
+  </data>
+  <data name="SuccessfulRegistrationMessage" xml:space="preserve">
+    <value>Successful registration!</value>
+    <comment>Cadastro finalizado com sucesso!</comment>
+  </data>
+  <data name="SuccessfulRegistrationMessageByProducer" xml:space="preserve">
+    <value>Company Producer Registration Finished Successfully! &lt;a href="{0}"&gt;Click here&lt;/a&gt; to register your projects.</value>
+  </data>
+  <data name="SuccessfulRegistrationMessageByProducerAndPlayer" xml:space="preserve">
+    <value>Company Producer and Player Registration Finished Successfully! &lt;a href="{0}"&gt;Click here&lt;/a&gt; to register your projects.</value>
+  </data>
+  <data name="TheFieldIsRequired" xml:space="preserve">
+    <value>The '{0}' field is required.</value>
+  </data>
+  <data name="ThereIsalreadyProjectRegisteredWithThisTitle" xml:space="preserve">
+    <value>There is already a project registered with this title!</value>
+  </data>
+  <data name="ThisProjectHasAlreadyBeenSubmittedForTheEvaluationOfPlayers" xml:space="preserve">
+    <value>This project has already been submitted for the evaluation of players</value>
+  </data>
+  <data name="ToProceedYouMustAcceptTheTerm" xml:space="preserve">
+    <value>Para prosseguir você deve aceitar o Regulamento! | &lt;em class='english'&gt;To proceed you must accept the terms!&lt;/em&gt;</value>
+  </data>
+  <data name="TradeNameIsRequired" xml:space="preserve">
+    <value>Trade name required.</value>
+  </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>User not found</value>
+  </data>
+  <data name="VatNumberIsRequired" xml:space="preserve">
+    <value>Vat number required.</value>
+  </data>
+  <data name="WebSiteIsRequired" xml:space="preserve">
+    <value>Website is required.</value>
+  </data>
+  <data name="YouCanSelectUpToXPlayers" xml:space="preserve">
+    <value>You can select up to {0} players.</value>
+  </data>
+  <data name="YouCanSendUpToXPlayers" xml:space="preserve">
+    <value>You can send up to {0} players.</value>
+  </data>
+  <data name="YourPasswordHasBeenChangedSuccessfully" xml:space="preserve">
+    <value>Your password has been changed successfully.</value>
+  </data>
+  <data name="ZipCodeIsRequired" xml:space="preserve">
+    <value>Zip code required.</value>
+  </data>
+</root>

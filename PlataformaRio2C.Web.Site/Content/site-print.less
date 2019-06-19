@@ -1,0 +1,271 @@
+﻿body {
+    background: none !important;
+    color: #000 !important;
+    font: 13pt Georgia, "Times New Roman", Times, serif;
+    line-height: 120%;
+    margin: 0px;
+    text-shadow: none !important;
+    filter: none !important;
+    -ms-filter: none !important;
+
+    * {
+        display: block !important;
+    }
+}
+
+hr {
+    color: #cacaca !important;
+    background-color: #cacaca !important;
+}
+
+span {
+    display: inline !important;
+}
+
+.badge {
+    border: 1pt solid black !important;
+    border-radius: 10px !important;
+    display: inline-block !important;
+}
+
+h1, h2, h3, h4, h5, h6, code, pre {
+    color: #000;
+    text-transform: none;
+}
+
+h1 {
+    font-size: 18pt !important;
+    width: 100%;
+}
+
+h2 {
+    font-size: 18pt !important;
+}
+
+.project-title {
+    font-size: 18pt !important;
+    word-wrap: normal !important;
+    white-space: nowrap !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: auto !important;
+    display: inline-flex !important;
+}
+
+
+h3 {
+    font-size: 16pt !important;
+}
+
+h4, h5, h6 {
+    font-size: 15pt !important;
+}
+
+label {
+    font-size: 13pt !important;
+    display: inline-block !important;
+}
+
+
+p {
+    widows: 3;
+    orphans: 3;
+    font-size: 11pt !important;
+}
+
+@page {
+    size: A4;
+    margin: 1cm;
+}
+
+code, pre {
+    font-size: 8pt;
+    background-color: transparent;
+    /* just in case the user configured browser to print backgrounds */
+}
+
+a:link, a:visited {
+    text-decoration: underline;
+    color: #000;
+}
+
+abbr:after, acronym:after {
+    content: " (" attr(title) ") ";
+}
+
+header.header.gradient-bg, footer, .player-list-side, .profile-nav, .container-box-players, .top-nav, .navbar-options, .button-print, .btn-link, .pull-right, #darkroom-icons, #modalSendToPlayers, #modalSavePlayersSelected, img, ul, i, script, video, audio, object, embed, .content-header-button a {
+    display: none !important;
+}
+
+
+/*This takes out the space left behind by the deleted col-lg-4 section, at the right of the page*/
+.col-lg-8 {
+    width: 100% !important;
+}
+
+a {
+    word-wrap: break-word;
+
+    &[href]:after {
+        content: none !important;
+    }
+}
+
+.list-images-structure {
+    display: flex !important;
+}
+
+.container-box-players .btn-group {
+    display: flex !important;
+}
+
+.bio-graph-info {
+    page-break-after: avoid;
+}
+
+.section-eval .bar-eval .eval .player-display .player-status-print {
+    display: block;
+}
+
+.eval-wrapper {
+    display: block;
+
+    .bt-eval.accept, .bt-eval.deny {
+        border: 1px solid gray !important;
+        color: #cacaca !important;
+    }
+
+    .bt-eval.active.accept, .bt-eval.active.deny {
+        display: block !important;
+        width: 100% !important;
+        border: 2px solid black !important;
+    }
+
+    .refused .refused-wrapper {
+        display: block !important;
+    }
+}
+
+
+
+/*.panel-primary > .panel-heading {
+    &.panel-heading-print {
+
+        h1, h4, .row-detail-badges {
+            padding-left: 15px;
+        }
+    }
+
+    > .panel-heading {
+        background-color: #cacaca !important;
+        border-color: #cacaca !important;
+
+        h4.panel-title {
+            font-size: 16pt !important;
+        }
+    }
+   
+}*/
+
+
+.panel-primary > .panel-heading {
+    background-color: #cacaca !important;
+    border-color: #cacaca !important;
+
+    &.panel-heading-print {
+
+        h4.panel-title {
+            font-size: 16pt !important;
+        }
+
+        h1, h4, .row-detail-badges {
+            padding-left: 0;
+        }
+    }
+}
+
+
+.values-group {
+    page-break-inside: avoid;
+}
+
+
+
+//PRINT RULES FOR AGENDA ONLY//
+.print-agenda {
+    margin: 0 -10mm 0 -10mm;
+
+    .agenda-group {
+        width: 100% !important;
+        margin: auto !important;
+
+        &:last-child > .agenda-body:last-child {
+            border-bottom: 2px solid black !important;
+        }
+
+        > .agenda-head {
+            background-color: #9e9e9e !important;
+            padding: 10px !important;
+            text-align: center !important;
+            text-transform: capitalize !important;
+            font-weight: bold !important;
+            font-size: 20px !important;
+            border: 4px solid black !important;
+            page-break-inside: avoid;
+            page-break-after: avoid;
+            page-break-before: avoid;
+        }
+
+        > .agenda-body {
+            display: flex !important;
+            display: grid !important;
+            grid-template-columns: 2fr 10fr !important;
+            border: 2px solid black !important;
+            border-top: 1px solid black !important;
+            border-bottom: 1px solid black !important;
+            page-break-inside: avoid;
+
+            &:nth-child(2) {
+                border-top: unset;
+            }
+
+            &:last-child {
+                border-bottom: unset;
+            }
+
+
+
+            .agenda-time {
+                font-size: 14pt !important;
+                border-right: 1px solid black !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+
+                > div {
+                    text-align: center !important;
+                }
+
+                > div:nth-child(1) {
+                    padding-bottom: 15px !important;
+                }
+
+                > div:nth-child(2) {
+                    padding-top: 15px !important;
+                }
+            }
+
+            .agenda-info {
+                padding: 5px !important;
+                padding-left: 10px !important;
+                border-left: 1px solid black !important;
+
+                span {
+                    display: inline-block !important;
+                }
+            }
+        }
+    }
+}
+
+//PRINT RULES FOR AGENDA ONLY//

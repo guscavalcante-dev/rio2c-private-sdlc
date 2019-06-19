@@ -1,0 +1,321 @@
+﻿head {
+    display: none;
+}
+
+body {
+    background: none !important;
+    color: #000 !important;
+    font: 13pt Georgia, "Times New Roman", Times, serif;
+    line-height: 120%;
+    margin: 0px;
+    text-shadow: none !important;
+    filter: none !important;
+    -ms-filter: none !important;
+    /** {
+        display: block !important;
+    }*/
+}
+
+hr {
+    color: #cacaca !important;
+    background-color: #ccc !important;
+}
+
+span {
+    display: inline !important;
+}
+
+.badge {
+    border: 1pt solid black !important;
+    border-radius: 10px !important;
+    display: inline-block !important;
+}
+
+h1, h2, h3, h4, h5, h6, code, pre {
+    color: #000;
+    text-transform: none;
+}
+
+h1 {
+    font-size: 18pt !important;
+    width: 100%;
+}
+
+h2 {
+    font-size: 18pt !important;
+}
+
+.project-title {
+    font-size: 18pt !important;
+    word-wrap: normal !important;
+    white-space: nowrap !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: auto !important;
+    display: inline-flex !important;
+}
+
+
+h3 {
+    font-size: 16pt !important;
+}
+
+h4, h5, h6 {
+    font-size: 14pt !important;
+}
+
+label {
+    font-size: 13pt !important;
+    display: inline-block !important;
+}
+
+
+p {
+    widows: 3;
+    orphans: 3;
+    font-size: 11pt !important;
+}
+
+@page {
+    size: A4;
+    margin: 1cm;
+}
+
+code, pre {
+    font-size: 8pt;
+    background-color: transparent;
+    /* just in case the user configured browser to print backgrounds */
+}
+
+a:link, a:visited {
+    text-decoration: underline;
+    color: #000;
+}
+
+abbr:after, acronym:after {
+    content: " (" attr(title) ") ";
+}
+
+header.header.gradient-bg, footer, .player-list-side, .profile-nav, .container-box-players, .top-nav, .navbar-options, .button-print, .btn-link, .pull-right, #darkroom-icons, #modalSendToPlayers, #modalSavePlayersSelected, img, ul, i, script, video, audio, object, embed, .content-header-button a {
+    display: none !important;
+}
+
+/*This takes out the space left behind by the deleted col-lg-4 section, at the right of the page*/
+.col-lg-8 {
+    width: 100% !important;
+}
+
+a {
+    word-wrap: break-word;
+
+    &[href]:after {
+        content: none !important;
+    }
+}
+
+.list-images-structure {
+    display: flex !important;
+}
+
+.container-box-players .btn-group {
+    display: flex !important;
+}
+
+.bio-graph-info {
+    page-break-after: avoid;
+}
+
+.section-eval .bar-eval .eval .player-display .player-status-print {
+    display: block;
+}
+
+.eval-wrapper {
+    display: block;
+
+    .bt-eval.accept, .bt-eval.deny {
+        border: 1px solid gray !important;
+        color: #cacaca !important;
+    }
+
+    .bt-eval.active.accept, .bt-eval.active.deny {
+        display: block !important;
+        width: 100% !important;
+        border: 2px solid black !important;
+    }
+
+    .refused .refused-wrapper {
+        display: block !important;
+    }
+}
+
+.panel-primary > .panel-heading {
+    background-color: #cacaca !important;
+    border-color: #cacaca !important;
+
+    &.panel-heading-print {
+
+        h4.panel-title {
+            font-size: 16pt !important;
+        }
+
+        h1, h4, .row-detail-badges {
+            padding-left: 0;
+        }
+    }
+}
+
+
+.panel-body-print {
+    .panel-heading, .panel-body {
+        padding-left: 0;
+    }
+}
+
+
+.values-group {
+    page-break-inside: avoid;
+}
+
+/*ldomingues --------------------------------------------*/
+
+body {
+    header.header {
+        display: none !important;
+    }
+
+    #main-content {
+        margin: 0;
+
+
+        .wrapper {
+            margin: 0;
+            padding: 0;
+            display: block;
+        }
+    }
+
+    .filter-wrap {
+        display: flex !important;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        padding-bottom: 15px;
+
+        * {
+            font-size: inherit;
+        }
+
+        .form-group {
+            width: calc(14%) !important;
+
+            label {
+                font-size: 13px !important;
+            }
+        }
+    }
+
+    .buttons-wrap {
+        display: none;
+    }
+
+    .btn {
+        display: inline-block !important;
+    }
+
+    .modal {
+        position: relative;
+    }
+
+    .profile-info.meetings-generator {
+        float: none;
+
+        * {
+            float: none !important;
+        }
+
+        .box-buttons-actions {
+            display: none !important;
+        }
+
+
+        .meetings-generator-dates {
+            font-size: 12px !important;
+            border: 1px solid #000 !important;
+            page-break-before: always;
+
+            &:nth-of-type(2) {
+                page-break-before: avoid;
+            }
+
+            .meetings-generator-rooms {
+                border: 1px solid #000 !important;
+                page-break-before: always;
+
+                &:nth-child(2) {
+                    page-break-before: avoid;
+                }
+
+                .meetings-generator-slots {
+                    border: 1px solid #000 !important;
+                    page-break-before: always;
+
+                    &:nth-child(2) {
+                        page-break-before: avoid;
+                    }
+
+
+                    h4 {
+                        page-break-inside: avoid;
+                    }
+
+                    .slot-room-date {
+                        page-break-inside: avoid;
+                    }
+
+                    .wrap-table {
+
+
+                        table.meetings-generator-tables {
+                            border: 1px solid #000 !important;
+                            page-break-after: auto;
+                            display: block !important;
+
+                            tr.row-caption {
+                                display: table-row;
+                            }
+
+                            thead {
+                                display: table-header-group;
+                                page-break-inside: avoid;
+
+                                * {
+                                    border: 0;
+                                }
+                            }
+
+                            tr {
+                                page-break-before: auto;
+                                page-break-inside: avoid;
+                                page-break-after: auto;
+
+                                td {
+                                    page-break-before: auto;
+                                    page-break-inside: avoid;
+                                    page-break-after: auto;
+                                    max-width: 200px;
+
+                                    &:last-child {
+                                        display: none;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*-------------------------------------------------------------*/
+
+

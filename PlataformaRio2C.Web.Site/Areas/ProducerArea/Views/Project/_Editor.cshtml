@@ -1,0 +1,473 @@
+﻿@model ProjectEditAppViewModel
+
+@{
+    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+    int index = 0;
+}
+
+@Html.AntiForgeryToken()
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+@Html.HiddenFor(m => m.Uid)
+<div>
+
+    <div class="panel panel-primary form-group">
+
+        <div class="panel-heading">
+            @Html.LabelFor(model => model.Titles, htmlAttributes: new { @class = "control-label panel-title-label required" })
+        </div>
+
+        <div class="row form-box">
+            @if (Model.Titles != null && Model.Titles.Any())
+            {
+                for (int i = 0; i < Model.LanguagesOptions.Count(); i++)
+                {
+                    var code = Model.Titles.ToList().FirstOrDefault(e => e.LanguageCode == Model.LanguagesOptions.ElementAt(i).Code);
+                    var codeValue = code != null ? code.Value : null;
+                    var languageCodeValue = code != null ? code.LanguageCode : null;
+                    var labelLanguage = Model.LanguagesOptions.ElementAt(i).Name.Contains("Português") ? Labels.Portuguese : Model.LanguagesOptions.ElementAt(i).Name;
+
+                    <div class="language col-lg-6">
+                        <label class="control-label">@labelLanguage</label>
+                        <input type="text" maxlength="256" name="Titles[@i].Value" class="form-control" value="@codeValue" />
+                        <input type="hidden" value="@languageCodeValue" name="Titles[@i].LanguageCode" class="form-control" />
+                    </div>
+                }
+            }
+            else
+            {
+                for (int i = 0; i < Model.LanguagesOptions.Count(); i++)
+                {
+                    var codeValue = Model.LanguagesOptions.ElementAt(i).Code;
+                    var labelLanguage = Model.LanguagesOptions.ElementAt(i).Name.Contains("Português") ? Labels.Portuguese : Model.LanguagesOptions.ElementAt(i).Name;
+                    <div class="language col-lg-6">
+                        <label class="control-label"> @labelLanguage</label>
+                        <input type="text" maxlength="256" name="Titles[@i].Value" class="form-control" />
+                        <input type="hidden" value="@codeValue" name="Titles[@i].LanguageCode" class="form-control" />
+                    </div>
+                }
+            }
+        </div>
+        @Html.ValidationMessages("Titles", htmlAttributes: new { @class = "text-danger center-block" })
+    </div>
+
+
+
+    <!-- #region LogLines -->
+
+    <div class="panel panel-primary form-group">
+
+        <div class="panel-heading">
+            @Html.LabelFor(model => model.LogLines, htmlAttributes: new { @class = "control-label panel-title-label required" })
+        </div>
+
+        <div class="row form-box">
+            @if (Model.LogLines != null && Model.LogLines.Any())
+            {
+                for (int i = 0; i < Model.LanguagesOptions.Count(); i++)
+                {
+                    var code = Model.LogLines.ToList().FirstOrDefault(e => e.LanguageCode == Model.LanguagesOptions.ElementAt(i).Code);
+                    var codeValue = code != null ? code.Value : null;
+                    var languageCodeValue = code != null ? code.LanguageCode : null;
+                    var labelLanguage = Model.LanguagesOptions.ElementAt(i).Name.Contains("Português") ? Labels.Portuguese : Model.LanguagesOptions.ElementAt(i).Name;
+
+                    <div class="language col-lg-6">
+                        <label class="control-label">@labelLanguage</label>
+                        <input type="text" maxlength="256" name="LogLines[@i].Value" class="form-control" value="@codeValue" />
+                        <input type="hidden" value="@languageCodeValue" name="LogLines[@i].LanguageCode" class="form-control" />
+                    </div>
+                }
+            }
+            else
+            {
+                for (int i = 0; i < Model.LanguagesOptions.Count(); i++)
+                {
+                    var codeValue = Model.LanguagesOptions.ElementAt(i).Code;
+                    var labelLanguage = Model.LanguagesOptions.ElementAt(i).Name.Contains("Português") ? Labels.Portuguese : Model.LanguagesOptions.ElementAt(i).Name;
+                    <div class="language col-lg-6">
+                        <label class="control-label"> @labelLanguage</label>
+                        <input type="text" maxlength="256" name="LogLines[@i].Value" class="form-control" />
+                        <input type="hidden" value="@codeValue" name="LogLines[@i].LanguageCode" class="form-control" />
+                    </div>
+                }
+            }
+        </div>
+
+        @Html.ValidationMessages("LogLines", htmlAttributes: new { @class = "text-danger center-block" })
+    </div>
+
+    <!-- #endregion -->
+    <!-- #region Resumo/Summary -->
+    <div class="panel panel-primary form-group">
+
+        <div class="panel-heading">
+            @Html.LabelFor(model => model.Summaries, htmlAttributes: new { @class = "control-label panel-title-label required" })
+        </div>
+
+        <div class="row form-box">
+            @if (Model.Summaries != null && Model.Summaries.Any())
+            {
+                for (int i = 0; i < Model.LanguagesOptions.Count(); i++)
+                {
+                    var code = Model.Summaries.ToList().FirstOrDefault(e => e.LanguageCode == Model.LanguagesOptions.ElementAt(i).Code);
+                    var codeValue = code != null ? code.Value : null;
+                    var languageCodeValue = code != null ? code.LanguageCode : null;
+                    var labelLanguage = Model.LanguagesOptions.ElementAt(i).Name.Contains("Português") ? Labels.Portuguese : Model.LanguagesOptions.ElementAt(i).Name;
+
+
+                    <div class="language col-lg-6">
+                        <label class="control-label">@labelLanguage</label>
+                        @*<textarea name="Summaries[@i].Value" class="form-control ckeditor-rio2c" id="ckeditor_summaries_@i" maxlength="@ProjectSummaryAppViewModel.ValueMaxLength">@codeValue</textarea>*@
+
+                        <textarea name="Summaries[@i].Value" class="form-control ckeditor-rio2c" id="ckeditor_summaries_@i" maxlengthckeditor="4000">@codeValue</textarea>
+
+                        <input type="hidden" value="@languageCodeValue" name="Summaries[@i].LanguageCode" class="form-control" />
+                    </div>
+                }
+            }
+            else
+            {
+                for (int i = 0; i < Model.LanguagesOptions.Count(); i++)
+                {
+                    var codeValue = Model.LanguagesOptions.ElementAt(i).Code;
+                    var labelLanguage = Model.LanguagesOptions.ElementAt(i).Name.Contains("Português") ? Labels.Portuguese : Model.LanguagesOptions.ElementAt(i).Name;
+                    <div class="language col-lg-6">
+                        <label class="control-label"> @labelLanguage</label>
+                        <textarea name="Summaries[@i].Value" class="form-control ckeditor-rio2c" id="ckeditor_summaries_@i" maxlengthckeditor="4000"></textarea>
+
+                        @*<textarea name="Summaries[@i].Value" class="form-control ckeditor-rio2c" id="ckeditor_summaries_@i" maxlength="@ProjectSummaryAppViewModel.ValueMaxLength"></textarea>*@
+
+                        <input type="hidden" value="@codeValue" name="Summaries[@i].LanguageCode" class="form-control" />
+                    </div>
+                }
+            }
+        </div>
+
+        @Html.ValidationMessages("Summaries", htmlAttributes: new { @class = "text-danger center-block" })
+    </div>
+    <!-- #endregion -->
+
+
+
+    <div class="panel panel-primary form-group">
+        @Html.EditorFor(model => model.Interests, "ProjectInterestsEditor", new { GroupName = "Plataforma", IsRequired = true })
+        @Html.ValidationMessages("Platform", htmlAttributes: new { @class = "text-danger" })
+    </div>
+
+    <div class="panel panel-primary form-group">
+        @Html.EditorFor(model => model.Interests, "ProjectInterestsEditor", new { GroupName = "Project Status", ClassCol = "col-sm-6", IsRequired = true })
+        @Html.ValidationMessages("ProjectStatus", htmlAttributes: new { @class = "text-danger" })
+    </div>
+
+    <div class="panel panel-primary form-group">
+        @Html.EditorFor(model => model.Interests, "ProjectInterestsEditor", new { GroupName = "Looking For", ClassCol = "col-sm-6", IsRequired = true })
+        @Html.ValidationMessages("LookingFor", htmlAttributes: new { @class = "text-danger" })
+    </div>
+
+    @*<div class="panel panel-primary form-group">
+            @if (culture == "pt-br")
+            {
+                <div class=panel-heading>
+                    <label class="control-label panel-title-label required">Está buscando</label>
+                </div>
+                <label class="col-sm-4 control-label">
+                    <input type="radio" name="buscando" checked>Aquisição/Licenciamento
+                    <input type="radio" name="buscando">Coprodução
+                </label>
+            }
+
+            @if (culture == "en-us")
+            {
+                <div class=panel-heading>
+                    <label class="control-label panel-title-label required">Looking For</label>
+                </div>
+                <label class="col-sm-4 control-label">
+                    <input type="radio" name="buscando" checked>Aquisition/Licensing
+                    <input type="radio" name="buscando">Coproduction
+                </label>
+            }
+        </div>*@
+
+    <div class="panel panel-primary form-group">
+        @Html.EditorFor(model => model.Interests, "ProjectInterestsEditor", new { GroupName = "Format", IsRequired = true })
+        @Html.ValidationMessages("Format", htmlAttributes: new { @class = "text-danger" })
+    </div>
+
+
+    <div class="panel panel-primary form-group">
+        <div class="panel-heading" role="tab" id="heading_Format">
+            <h4 class="panel-title">
+                Se obra seriada | If series
+            </h4>
+        </div>
+        <div class="row form-box">
+            <div class="form-group form-group-margin-edited col-lg-6">
+                @Html.LabelFor(model => model.NumberOfEpisodes, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.NumberOfEpisodes, new { htmlAttributes = new { @class = "form-control", type = "number" } })
+                @Html.ValidationMessageFor(model => model.NumberOfEpisodes, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group form-group-margin-edited col-lg-6">
+                @Html.LabelFor(model => model.EachEpisodePlayingTime, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.EachEpisodePlayingTime, new { htmlAttributes = new { @class = "form-control", maxLength = "10" } })
+                @Html.ValidationMessageFor(model => model.EachEpisodePlayingTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="panel panel-primary form-group">
+
+        @Html.EditorFor(model => model.Interests, "ProjectInterestsEditor", new { GroupName = "Gênero | Genre", IsRequired = true })
+        @Html.ValidationMessages("Genre", htmlAttributes: new { @class = "text-danger" })
+
+    </div>
+    <div class="panel panel-primary form-group">
+
+        @Html.EditorFor(model => model.Interests, "ProjectInterestsEditor", new { GroupName = "Sub-genre", IsRequired = true })
+        @Html.ValidationMessages("SubGenre", htmlAttributes: new { @class = "text-danger" })
+    </div>
+    <br><br>
+    <div class="panel panel-primary form-group">
+        @Html.EditorFor(model => model.Interests, "ProjectInterestsEditor", new { GroupName = "Target audience", ClassCol = "col-sm-6", IsRequired = true })
+        @Html.ValidationMessages("TargetAudience", htmlAttributes: new { @class = "text-danger" })
+    </div>
+    
+    <!-- #region Plano de Produção -->
+
+    <div class="panel panel-primary  form-group">
+
+        <div class="panel-heading">
+            @Html.LabelFor(model => model.ProductionPlans, htmlAttributes: new { @class = "control-label panel-title-label required" })
+        </div>
+
+        <div class="row form-box">
+            @if (Model.ProductionPlans != null && Model.ProductionPlans.Any())
+            {
+                for (int i = 0; i < Model.LanguagesOptions.Count(); i++)
+                {
+                    var code = Model.ProductionPlans.ToList().FirstOrDefault(e => e.LanguageCode == Model.LanguagesOptions.ElementAt(i).Code);
+                    var codeValue = code != null ? code.Value : null;
+                    var languageCodeValue = code != null ? code.LanguageCode : null;
+                    var labelLanguage = Model.LanguagesOptions.ElementAt(i).Name.Contains("Português") ? Labels.Portuguese : Model.LanguagesOptions.ElementAt(i).Name;
+
+                    <div class="language col-lg-6">
+                        <label class="control-label">@labelLanguage</label>
+                        <textarea name="ProductionPlans[@i].Value" class="form-control ckeditor-rio2c" id="ckeditor_producer_plans_@i" maxlengthckeditor="@ProjectProductionPlanAppViewModel.ValueMaxLength">@codeValue</textarea>
+                        <input type="hidden" value="@languageCodeValue" name="ProductionPlans[@i].LanguageCode" class="form-control" />
+                    </div>
+                }
+            }
+            else
+            {
+                for (int i = 0; i < Model.LanguagesOptions.Count(); i++)
+                {
+                    var codeValue = Model.LanguagesOptions.ElementAt(i).Code;
+                    var labelLanguage = Model.LanguagesOptions.ElementAt(i).Name.Contains("Português") ? Labels.Portuguese : Model.LanguagesOptions.ElementAt(i).Name;
+                    <div class="language col-lg-6">
+                        <label class="control-label"> @labelLanguage</label>
+                        <textarea name="ProductionPlans[@i].Value" class="form-control ckeditor-rio2c" id="ckeditor_producer_plans_@i" maxlengthckeditor="@ProjectProductionPlanAppViewModel.ValueMaxLength"></textarea>
+                        <input type="hidden" value="@codeValue" name="ProductionPlans[@i].LanguageCode" class="form-control" />
+                    </div>
+                }
+            }
+        </div>
+        @Html.ValidationMessages("ProductionPlans", htmlAttributes: new { @class = "text-danger center-block" })
+    </div>
+
+    <!-- #endregion -->
+
+    <div class="panel panel-primary form-group">
+
+        <div class="panel-heading" role="tab" id="heading_Format">
+            <h4 class="panel-title">
+                @Texts.ProjectBudget
+            </h4>
+        </div>
+        <div class="row form-box">
+            <div class="form-group form-group-margin-edited col-lg-6">
+                @Html.LabelFor(model => model.ValuePerEpisode, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.ValuePerEpisode, new { htmlAttributes = new { @class = "form-control", maxLength = "30" } })
+                @Html.ValidationMessageFor(model => model.ValuePerEpisode, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group form-group-margin-edited col-lg-6">
+                @Html.LabelFor(model => model.TotalValueOfProject, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.TotalValueOfProject, new { htmlAttributes = new { @class = "form-control", maxLength = "30" } })
+                @Html.ValidationMessageFor(model => model.TotalValueOfProject, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+
+    <div class="panel panel-primary form-group">
+
+        <div class="panel-heading" role="tab" id="heading_Format">
+            <h4 class="panel-title">
+                @Texts.FundingPlan
+            </h4>
+        </div>
+        <div class="row form-box">
+            <div class="form-group form-group-margin-edited col-lg-6">
+                @Html.LabelFor(model => model.ValueAlreadyRaised, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.ValueAlreadyRaised, new { htmlAttributes = new { @class = "form-control", maxLength = "30" } })
+                @Html.ValidationMessageFor(model => model.ValueAlreadyRaised, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group form-group-margin-edited col-lg-6">
+                @Html.LabelFor(model => model.ValueStillNeeded, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.ValueStillNeeded, new { htmlAttributes = new { @class = "form-control", maxLength = "30" } })
+                @Html.ValidationMessageFor(model => model.ValueStillNeeded, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="panel panel-primary form-group">
+
+        <div class="panel-heading" role="tab" id="heading_Format">
+            <h4 class="panel-title">Links</h4>
+        </div>
+        <p class="paragraph-margin-edited">@Texts.LinksImageTeaser</p>
+
+
+        <div class="links-content">
+            <div class="form-group add-image clearfix">
+                <h4>@Labels.AddNewLinkImageTitle</h4>
+                <div class="add-task-row">
+                    <button ng-click="vm.addLinkImage()" class="btn btn-success" type="button">@Labels.AddNewLink</button>
+                </div>
+                <div class="task-content">
+                    <ul class="task-list">
+                        <li ng-repeat="item in vm.linksImage">
+                            <div class="row task-title">
+                                <div class="task-element-title form-inline col-lg-11">
+                                    <input type="text" placeholder="Link" value="{{item.Value}}" name="LinksImage[{{$index}}].Value" class="form-control text-box single-line" />
+                                </div>
+                                <div class="task-element-trash hidden-phone col-lg-1">
+                                    <button class="btn text-danger btn-sm" ng-click="vm.removeLinkImage($index)" type="button"><i class="icon-trash "></i></button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+            <div class="form-group add-teaser clearfix">
+                <h4>@Labels.AddNewLinkTeaserTitle</h4>
+                <div class="add-task-row">
+                    <button ng-click="vm.addLinkTeaser()" class="btn btn-success" type="button">@Labels.AddNewLink</button>
+                </div>
+                <div class="task-content">
+
+                    <ul class="task-list">
+                        <li ng-repeat="item in vm.linksTeaser">
+                            <div class="row task-title">
+                                <div class="task-element-title form-inline  col-lg-11">
+                                    <input type="text" placeholder="Link" value="{{item.Value}}" name="LinksTeaser[{{$index}}].Value" class="form-control text-box single-line" />
+                                </div>
+                                <div class="task-element-trash hidden-phone col-lg-1">
+                                    <button class="btn text-danger btn-sm" ng-click="vm.removeLinkTeaser($index)" type="button"><i class="icon-trash "></i></button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+        @Html.ValidationMessage("LinksImage", htmlAttributes: new { @class = "text-danger center-block" })
+        @Html.ValidationMessage("LinksTeaser", htmlAttributes: new { @class = "text-danger center-block" })
+    </div>
+
+
+
+    <div class="panel panel-primary form-group">
+
+        <div class="panel-heading" role="tab" id="heading_Format">
+            <h4 class="panel-title required">
+                @Texts.SelectionForPitchingSessions
+            </h4>
+        </div>
+
+        <div class="yes-no-box">
+            <div>
+                <label class="control-label">
+                    @Html.RadioButtonFor(m => m.Pitching, "True")
+                    @Labels.Yes
+                </label>
+            </div>
+
+            <div>
+                <label class="control-label">
+                    @Html.RadioButtonFor(m => m.Pitching, "False")
+                    @Labels.No
+                </label>
+            </div>
+        </div>
+
+        @Html.ValidationMessageFor(m => m.Pitching, "", new { @class = "text-danger" })
+    </div>
+
+
+
+    <div class="panel panel-primary form-group">
+
+        <div class="panel-heading">
+            @Html.LabelFor(model => model.AdditionalInformations, htmlAttributes: new { @class = "control-label panel-title-label" })
+        </div>
+
+
+        <div class="row form-box">
+            @if (Model.AdditionalInformations != null && Model.AdditionalInformations.Any())
+            {
+                for (int i = 0; i < Model.LanguagesOptions.Count(); i++)
+                {
+                    var code = Model.AdditionalInformations.ToList().FirstOrDefault(e => e.LanguageCode == Model.LanguagesOptions.ElementAt(i).Code);
+                    var codeValue = code != null ? code.Value : null;
+                    var languageCodeValue = code != null ? code.LanguageCode : null;
+                    var labelLanguage = Model.LanguagesOptions.ElementAt(i).Name.Contains("Português") ? Labels.Portuguese : Model.LanguagesOptions.ElementAt(i).Name;
+
+                    <div class="language col-lg-6">
+                        <label class="control-label">@labelLanguage</label>
+                        <textarea name="AdditionalInformations[@i].Value" class="form-control ckeditor-rio2c" id="ckeditor_additional_informations_@i" maxlengthckeditor="@ProjectAdditionalInformationAppViewModel.ValueMaxLength">@codeValue</textarea>
+                        <input type="hidden" value="@languageCodeValue" name="AdditionalInformations[@i].LanguageCode" class="form-control" />
+                    </div>
+                }
+            }
+            else
+            {
+                for (int i = 0; i < Model.LanguagesOptions.Count(); i++)
+                {
+                    var codeValue = Model.LanguagesOptions.ElementAt(i).Code;
+                    var labelLanguage = Model.LanguagesOptions.ElementAt(i).Name.Contains("Português") ? Labels.Portuguese : Model.LanguagesOptions.ElementAt(i).Name;
+                    <div class="language col-lg-6">
+                        <label class="control-label"> @labelLanguage</label>
+                        <textarea name="AdditionalInformations[@i].Value" class="form-control ckeditor-rio2c" id="ckeditor_additional_informations_@i" maxlengthckeditor="@ProjectAdditionalInformationAppViewModel.ValueMaxLength"></textarea>
+                        <input type="hidden" value="@codeValue" name="AdditionalInformations[@i].LanguageCode" class="form-control" />
+                    </div>
+                }
+            }
+        </div>
+        @Html.ValidationMessages("AdditionalInformations", htmlAttributes: new { @class = "text-danger" })
+    </div>
+
+    <div class="alert alert-warning">
+
+
+        <h4>@Labels.Important</h4>
+        @*@Texts.ForYourConvenience*@
+
+        @if (culture == "pt-br")
+        {
+            <p>Para sua conveniência,os projetos podem ser salvos e modificados antes do envio final. Caso o projeto não seja enviado até o dia 17 DE JANEIRO DE 2019 será automaticamente excluído. Uma vez finalizados e enviados para os players, os projetos NÃO PODEM SER ALTERADOS.</p>
+        }
+
+        @if (culture == "en-us")
+        {
+            <p>For your convenience, projects can be saved and modified before their final submission. If the project is not sent by JANUARY 17th, 2019 it shall be automatically excluded. Once completed and sent to the players, project submissions MAY NOT BE CHANGED.</p>
+        }
+
+
+    </div>
+
+</div>

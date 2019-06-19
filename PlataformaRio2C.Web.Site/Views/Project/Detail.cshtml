@@ -1,0 +1,491 @@
+﻿@model ProjectPlayerDetailAppViewModel
+@{
+    ViewBag.Title = Labels.ProjectDetails;
+
+
+    ProjectTitleAppViewModel titlePt = null;
+    ProjectTitleAppViewModel titleEn = null;
+
+    string projectTitle = null;
+
+    if (Model.Titles != null && Model.Titles.Any(e => !string.IsNullOrWhiteSpace(e.Value)))
+    {
+        titlePt = Model.Titles.FirstOrDefault(j => j.LanguageCode == "PtBr");
+        titleEn = Model.Titles.FirstOrDefault(j => j.LanguageCode == "En");
+        projectTitle = string.Format("{0} | {1}", titlePt.Value, titleEn.Value);
+    }
+
+    var players = new HtmlString(Json.Encode(Model.Players));
+
+}
+
+
+<div class="content content-header-button clearfix">
+    <h1 class="page-title">@ViewBag.Title</h1>
+
+</div>
+
+<section class="wrapper-no-margin-top" ng-controller="ProjecPlayerEvaluationController as vm" data-players="@players.ToString()">
+    <div class="content content-abas">
+        <div class="nav-content clearfix">
+
+            <a onClick="window.print()" class="btn btn-lg btn-primary btn-link button-print pull-right">
+                <i class="icon-print"></i>
+                @Labels.Print
+            </a>
+            @if (Model.Titles != null && Model.Titles.Any(e => !string.IsNullOrWhiteSpace(e.Value)))
+            {
+                <h2 class="project-title">
+
+                    <span>@titleEn.Value</span>
+                    @if (titlePt.Value != null)
+                    {
+                        <span>| @titlePt.Value</span>
+                    }
+
+                </h2>
+            }
+
+            <h4>@Labels.Producer: <a href="@Url.Action("Details", "Producer", new { uid = Model.ProducerUid})">@Model.ProducerName</a></h4>
+
+            @if (Model.Genres != null && Model.Genres.Any())
+            {
+                <div class="row-detail-badges">
+                    <label class="control-label">@Labels.Genre:</label>
+
+                    @foreach (var item in Model.Genres)
+                    {
+                        <span class="badge">@item</span>
+                    }
+
+                </div>
+            }
+
+            @if (Model.Summaries != null && Model.Summaries.Any())
+            {
+                <div class="bio-row-detail panel panel-primary rio2c-panel-detail">
+
+                    <div class="panel-heading" role="tab" id="heading_Format">
+                        <h4 class="panel-title">
+                            @Labels.Summaries
+                        </h4>
+                    </div>
+
+                    <div class="panel-body panel-body-mod bio-graph-info">
+                        @if (Model.Summaries != null && Model.Summaries.Any(e => !string.IsNullOrWhiteSpace(e.Value)))
+                        {
+                            var summaryPt = Model.Summaries.FirstOrDefault(j => j.LanguageCode == "PtBr");
+                            var summaryEn = Model.Summaries.FirstOrDefault(j => j.LanguageCode == "En");
+
+                            if (summaryEn != null)
+                            {
+                                <div class="panel-body-box">
+                                    <label>@Labels.English</label>
+                                    <div>@Html.Raw(summaryEn.Value)</div>
+                                </div>
+                            }
+
+                            if (summaryPt != null)
+                            {
+                                <div class="panel-body-box">
+                                    <label>@Labels.Portuguese</label>
+                                    <div>@Html.Raw(summaryPt.Value)</div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            }
+
+            @if (Model.LogLines != null && Model.LogLines.Any())
+            {
+                <div class="panel panel-primary rio2c-panel-detail">
+
+                    <div class="panel-heading" role="tab" id="heading_Format">
+                        <h4 class="panel-title">
+                            @Labels.LogLines
+                        </h4>
+                    </div>
+
+                    <div class="panel-body panel-body-mod bio-graph-info">
+                        @foreach (var item in Model.LogLines)
+                        {
+                            var labelLanguage = item.LanguageName.Contains("Português") ? Labels.Portuguese : item.LanguageName;
+
+                            <div class="panel-body-box">
+                                <label class="control-label">@labelLanguage</label>
+                                <p class="detail-value">@Html.Raw(item.Value)</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+            @if (Model.ProductionPlans != null && Model.ProductionPlans.Any())
+            {
+                <div class="panel panel-primary rio2c-panel-detail">
+
+                    <div class="panel-heading" role="tab" id="heading_Format">
+                        <h4 class="panel-title">
+                            @Labels.ProductionPlans
+                        </h4>
+                    </div>
+
+                    <div class="panel-body panel-body-mod bio-graph-info">
+                        @foreach (var item in Model.ProductionPlans)
+                        {
+                            var labelLanguage = item.LanguageName.Contains("Português") ? Labels.Portuguese : item.LanguageName;
+
+                            <div class="panel-body-box">
+                                <label class="control-label">@labelLanguage</label>
+                                <div class="detail-value">@Html.Raw(item.Value)</div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+            @if (Model.Seeking != null && Model.Seeking.Any())
+            {
+                <div class="panel panel-primary rio2c-panel-detail">
+                    <div class="panel-heading" role="tab" id="heading_Format">
+                        <h4 class="panel-title">
+                            @Labels.Seeking
+                        </h4>
+                    </div>
+
+                    <div class="panel-body panel-body-mod bio-graph-info">
+                        @foreach (var item in Model.Seeking)
+                        {
+                            <div class="panel-body-box">
+                                <label class="control-label">
+                                    @item
+                                </label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+            <hr class="hr-border-modified" />
+
+            <div class="values-group">
+                @if (Model.Formats != null && Model.Formats.Any())
+                {
+                    <div class="row-detail-badges">
+                        <label class="control-label">@Labels.Format:</label>
+
+                        @foreach (var item in Model.Formats)
+                        {
+                            <span class="badge">@item</span>
+                        }
+
+                    </div>
+                }
+
+                <div>
+                    @if (Model.NumberOfEpisodes > 0)
+                    {
+                        <p>
+                            <label class="control-label">@Labels.NumberOfEpisodes</label>
+                            <span>@Model.NumberOfEpisodes</span>
+                        </p>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.EachEpisodePlayingTime))
+                    {
+                        <p>
+                            <label class="control-label">@Labels.EachEpisodePlayingTime</label>
+                            <span>@Model.EachEpisodePlayingTime</span>
+                        </p>
+                    }
+                </div>
+
+                @if (Model.Platforms != null && Model.Platforms.Any())
+                {
+                    <div class="row-detail-badges">
+                        <label class="control-label">@Labels.Platforms:</label>
+
+                        @foreach (var item in Model.Platforms)
+                        {
+                            <span class="badge">@item</span>
+                        }
+
+                    </div>
+                }
+
+                @if (Model.ProjectStatus != null && Model.ProjectStatus.Any())
+                {
+                    <div class="row-detail-badges">
+                        <label class="control-label">@Labels.ProjectStatus:</label>
+
+                        @foreach (var item in Model.ProjectStatus)
+                        {
+                            <span class="badge">@item</span>
+                        }
+
+                    </div>
+                }
+
+                @if (Model.SubGenres != null && Model.SubGenres.Any())
+                {
+                    <div class="row-detail-badges">
+                        <label class="control-label">@Labels.SubGenre:</label>
+
+                        @foreach (var item in Model.SubGenres)
+                        {
+                            <span class="badge">@item</span>
+                        }
+
+                    </div>
+                }
+            </div>
+
+            <hr class="hr-border-modified" />
+
+            <div class="values-group">
+                <div class="row-detail-values">
+                    @if (!string.IsNullOrWhiteSpace(Model.ValuePerEpisode))
+        {
+
+            <p>
+                <label class="control-label">@Labels.ValuePerEpisode:</label>
+                <span>@Model.ValuePerEpisode</span>
+            </p>
+
+}
+                </div>
+                <div class="row-detail-values">
+                    <p>
+                        <label class="control-label">@Labels.TotalValueOfProject:</label>
+                        <span>@Model.TotalValueOfProject</span>
+                    </p>
+                </div>
+
+                <div class="row-detail-values">
+                    <p>
+                        <label class="control-label">@Labels.ValueAlreadyRaised:</label>
+                        <span>@Model.ValueAlreadyRaised</span>
+                    </p>
+                </div>
+                <div class="row-detail-values">
+                    <p>
+                        <label class="control-label">@Labels.ValueStillNeeded:</label>
+                        <span>@Model.ValueStillNeeded</span>
+                    </p>
+                </div>
+            </div>
+
+
+            <div>
+                @if (Model.LinksImage != null && Model.LinksImage.Any())
+                {
+                    <div class="panel panel-primary rio2c-panel-detail">
+                        <div class="panel-heading" role="tab" id="heading_Format">
+                            <h4 class="panel-title">
+                                @Labels.ImageLinks
+                            </h4>
+                        </div>
+                        <div class="panel-body panel-body-mod bio-graph-info">
+                            @foreach (var item in Model.LinksImage)
+                            {
+
+                                <div class="control-label">
+                                    <label title="@item.Value"><a href="@item.Value" target="_blank">@item.Value</a></label>
+                                </div>
+
+                            }
+                        </div>
+                    </div>
+                }
+                @if (Model.LinksTeaser != null && Model.LinksTeaser.Any())
+                {
+                    <div class="panel panel-primary rio2c-panel-detail">
+                        <div class="panel-heading" role="tab" id="heading_Format">
+                            <h4 class="panel-title">
+                                @Labels.TeaserLinks
+                            </h4>
+                        </div>
+                        <div class="panel-body panel-body-mod bio-graph-info">
+                            @foreach (var item in Model.LinksTeaser)
+                            {
+
+                                <div class="control-label">
+                                    <label title="@item.Value"><a href="@item.Value" target="_blank">@item.Value</a></label>
+                                </div>
+
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+
+            @*RETIRADO POR SOLICITAÇÃO DA EQUIPE RIO2C *@
+            @*<div class="panel panel-primary rio2c-panel-detail">
+                    <div class="panel-heading" role="tab" id="heading_Format">
+                        <h4 class="panel-title">
+                            @Texts.WillTakePartInPitching:
+                        </h4>
+                    </div>
+                    <div class="panel-body panel-body-mod bio-graph-info">
+                        @if (Model.Pitching == true)
+                        {
+
+                                <div class="panel-body-box">
+                                    <label class="control-label">
+                                        @Labels.Yes
+                                    </label>
+                                </div>
+
+                            }
+                            else
+                            {
+
+                                <div class="panel-body-box">
+                                    <label class="control-label">
+                                        @Labels.No
+                                    </label>
+                                </div>
+
+                        }
+                    </div>
+                </div>*@
+            @*RETIRADO POR SOLICITAÇÃO DA EQUIPE RIO2C *@
+
+            @if (Model.AdditionalInformations != null && Model.AdditionalInformations.Any(e => !string.IsNullOrWhiteSpace(e.Value)))
+            {
+
+                <div class="panel panel-primary rio2c-panel-detail">
+                    <div class="panel-heading" role="tab" id="heading_Format">
+                        <h4 class="panel-title">
+                            @Labels.AdditionalInformations
+                        </h4>
+                    </div>
+                </div>
+                <div class="panel-body panel-body-mod bio-graph-info">
+                    @foreach (var item in Model.AdditionalInformations)
+                    {
+                        var labelLanguage = item.LanguageName.Contains("Português") ? Labels.Portuguese : item.LanguageName;
+
+                        <div class="panel-body-box">
+                            <label class="control-label">@labelLanguage</label>
+                            <div class="detail-value">@Html.Raw(item.Value)</div>
+                        </div>
+                    }
+                </div>
+
+            }
+
+
+            <div class="panel panel-primary rio2c-panel-detail">
+                <div class="panel-heading" role="tab" id="heading_Format">
+                    <h4 class="panel-title">
+                        @Labels.EvaluateProject
+                    </h4>
+                </div>
+            </div>
+
+            @*Inicio dos botoes de avaliação*@
+            <div class="section-eval col-lg-8">
+
+                <div class="bar-eval" ng-repeat="player in vm.players">
+                    <div class="eval">
+                        <div class="player-display col-lg-10">
+                            <p title="{{player.Name}}: {{player.Status}}">{{player.Name}}</p><span class="player-status-print">{{player.Status}}</span>
+                        </div>
+
+                        <div ng-if="(player.StatusCode | lowercase) == 'onevaluation'" class="eval-wrapper col-lg-1 col-xs-6 ">
+                            <button class="bt-eval accept" ng-click="vm.showModalAcceptProject(player)">
+                                <i class="icon-ok"></i>
+                                <span class="icon-caption">@Labels.Accept</span>
+                            </button>
+                        </div>
+                        <div ng-if="(player.StatusCode | lowercase) == 'accepted'" class="eval-wrapper col-lg-1 col-xs-6 ">
+                            <button class="bt-eval accept active">
+                                <i class="icon-ok"></i>
+                                <span class="icon-caption">@Labels.Accept</span>
+                            </button>
+                        </div>
+                        <div ng-if="(player.StatusCode | lowercase) == 'rejected'" class="eval-wrapper col-lg-1 col-xs-6 ">
+                            <button class="bt-eval accept" ng-click="vm.showModalAcceptProject(player)">
+                                <i class="icon-ok"></i>
+                                <span class="icon-caption">@Labels.Accept</span>
+                            </button>
+                        </div>
+
+                        <div ng-if="(player.StatusCode | lowercase) == 'onevaluation'" class="eval-wrapper col-lg-1 col-xs-6 ">
+                            <button class="bt-eval deny" ng-click="vm.showModalRejectProject(player)">
+                                <i class="icon-remove"></i>
+                                <span class="icon-caption">@Labels.Refuse</span>
+                            </button>
+                        </div>
+                        <div ng-if="(player.StatusCode | lowercase) == 'rejected'" class="eval-wrapper col-lg-1 col-xs-6 ">
+                            <button class=" bt-eval deny active">
+                                <i class="icon-remove"></i>
+                                <span class="icon-caption">@Labels.Refuse</span>
+                            </button>
+                        </div>
+                        <div ng-if="(player.StatusCode | lowercase) == 'accepted'" class="eval-wrapper col-lg-1 col-xs-6 ">
+                            <button class=" bt-eval deny" ng-click="vm.showModalRejectProject(player)">
+                                <i class="icon-remove"></i>
+                                <span class="icon-caption">@Labels.Refuse</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="refused" ng-if="((player.StatusCode | lowercase) == 'rejected' && (player.Reason != ''))">
+                        <div class="refused-wrapper">
+                            <h5>@Labels.Reason</h5>
+                            <p>
+                                {{player.Reason}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <script type="text/ng-template" id="modalAccept.html">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="dismiss()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">@Labels.AcceptProject</h4>
+            </div>
+            <div class="modal-body">
+                <span ng-if="vm.processingAction" class="rio2c-loading"></span>
+
+                <div data-alerta="" ng-model="vm.messageResultProcessing"></div>
+
+                @Html.Raw(string.Format(Texts.DoYouReallyWishAccept, Model.Title, "{{vmModalAccept.playerToAccept.Name}}"))
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="dismiss()">@Labels.No</button>
+                <button type="button" class="btn btn-primary" ng-click="vm.acceptProject(vmModalAccept.playerToAccept, '@Model.Uid.ToString()')" ng-disabled="vm.processingAction">@Labels.Yes</button>
+            </div>
+        </script>
+
+
+        <script type="text/ng-template" id="modalReject.html">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="dismiss()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">@Labels.RefuseProject</h4>
+            </div>
+            <div class="modal-body">
+                <span ng-if="vm.processingAction" class="rio2c-loading"></span>
+
+                <div data-alerta="" ng-model="vm.messageResultProcessing"></div>
+
+
+                @Html.Raw(string.Format(Texts.DoYouReallyWishRefuse, Model.Title, "{{vmModalReject.playerToReject.Name}}"))
+                <textarea id="reasonText" maxlength="@ProjectPlayerDetailAppViewModel.ReasonMaxLength" placeholder="@Labels.Reason" ng-model="vmModalReject.playerToReject.Reason"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="dismiss()">@Labels.No</button>
+                <button type="button" class="btn btn-primary" ng-click="vm.rejectProject(vmModalReject.playerToReject, '@Model.Uid.ToString()')" ng-disabled="vm.processingAction">@Labels.Yes</button>
+            </div>
+        </script>
+    </div>
+</section>

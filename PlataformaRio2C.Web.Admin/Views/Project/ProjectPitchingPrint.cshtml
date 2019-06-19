@@ -1,0 +1,429 @@
+﻿@model ProjectDetailAppViewModel
+
+@{
+                /**/
+
+                ViewBag.Title = "Print";
+                Layout = "~/Views/Shared/_LayoutPrint.cshtml";
+                ProjectTitleAppViewModel titlePt = null;
+                ProjectTitleAppViewModel titleEn = null;
+
+                string projectTitle = null;
+
+                if (Model.Titles != null && Model.Titles.Any(e => !string.IsNullOrWhiteSpace(e.Value)))
+                {
+                    titlePt = Model.Titles.FirstOrDefault(j => j.LanguageCode == "PtBr");
+                    titleEn = Model.Titles.FirstOrDefault(j => j.LanguageCode == "En");
+                    projectTitle = string.Format("{0} | {1}", titlePt.Value, titleEn.Value);
+                }
+}
+
+
+<section class="panel">
+    <header class="panel-heading panel-heading-print">
+        @if (Model.Titles != null && Model.Titles.Any(e => !string.IsNullOrWhiteSpace(e.Value)))
+        {
+            <h1 class="project-title">
+
+                <span>@titleEn.Value</span>
+                @if (titlePt.Value != null)
+                {
+                    <span>| @titlePt.Value</span>
+                }
+
+            </h1>
+        }
+
+        <h4>@Labels.Producer: @Model.ProducerName</h4>
+
+        @if (Model.Genres != null && Model.Genres.Any())
+        {
+            <div class="row-detail-badges">
+                <label class="control-label">@Labels.Genre:</label>
+
+                @foreach (var item in Model.Genres)
+                {
+                    <span class="badge">@item</span>
+                }
+
+            </div>
+        }
+    </header>
+    <div class="panel-body panel-body-print">
+        <div>
+            <aside class="profile-info">
+                @if (Model.Summaries != null && Model.Summaries.Any())
+                {
+                    <div class="bio-row-detail panel panel-primary rio2c-panel-detail">
+                        <div class="panel-heading" role="tab" id="heading_Format">
+                            <h4 class="panel-title">
+                                @Labels.Summaries
+                            </h4>
+                        </div>
+
+                        <div class="panel-body panel-body-mod bio-graph-info">
+                            @if (Model.Summaries != null && Model.Summaries.Any(e => !string.IsNullOrWhiteSpace(e.Value)))
+                            {
+                                var summaryPt = Model.Summaries.FirstOrDefault(j => j.LanguageCode == "PtBr");
+                                var summaryEn = Model.Summaries.FirstOrDefault(j => j.LanguageCode == "En");
+
+                                if (summaryEn != null)
+                                {
+                                    <div class="panel-body-box">
+                                        <label>@Labels.English</label>
+                                        <div>@Html.Raw(summaryEn.Value)</div>
+                                    </div>
+                                }
+
+                                if (summaryPt != null)
+                                {
+                                    <div class="panel-body-box">
+                                        <label>@Labels.Portuguese</label>
+                                        <div>@Html.Raw(summaryPt.Value)</div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                }
+
+                @if (Model.LogLines != null && Model.LogLines.Any())
+                {
+                    <div class="panel panel-primary rio2c-panel-detail">
+
+                        <div class="panel-heading" role="tab" id="heading_Format">
+                            <h4 class="panel-title">
+                                @Labels.LogLines
+                            </h4>
+                        </div>
+
+                        <div class="panel-body panel-body-mod bio-graph-info">
+                            @foreach (var item in Model.LogLines)
+                            {
+                                var labelLanguage = item.LanguageName.Contains("Português") ? Labels.Portuguese : item.LanguageName;
+
+                                <div class="panel-body-box">
+                                    <label class="control-label">@labelLanguage</label>
+                                    <p class="detail-value">@Html.Raw(item.Value)</p>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+
+                @if (Model.ProductionPlans != null && Model.ProductionPlans.Any())
+                {
+                    <div class="panel panel-primary rio2c-panel-detail">
+
+                        <div class="panel-heading" role="tab" id="heading_Format">
+                            <h4 class="panel-title">
+                                @Labels.ProductionPlans
+                            </h4>
+                        </div>
+
+                        <div class="panel-body panel-body-mod bio-graph-info">
+                            @foreach (var item in Model.ProductionPlans)
+                            {
+                                var labelLanguage = item.LanguageName.Contains("Português") ? Labels.Portuguese : item.LanguageName;
+
+                                <div class="panel-body-box">
+                                    <label class="control-label">@labelLanguage</label>
+                                    <div class="detail-value">@Html.Raw(item.Value)</div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+
+                @if (Model.Seeking != null && Model.Seeking.Any())
+                {
+                    <div class="panel panel-primary rio2c-panel-detail">
+                        <div class="panel-heading" role="tab" id="heading_Format">
+                            <h4 class="panel-title">
+                                @Labels.Seeking
+                            </h4>
+                        </div>
+
+                        <div class="panel-body panel-body-mod bio-graph-info">
+                            @foreach (var item in Model.Seeking)
+                            {
+                                <div class="panel-body-box">
+                                    <label class="control-label">
+                                        @item
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+
+                <hr class="hr-border-modified" />
+
+                <div class="values-group">
+                    @if (Model.Formats != null && Model.Formats.Any())
+                    {
+                        <div class="row-detail-badges">
+                            <label class="control-label">@Labels.Format:</label>
+
+                            @foreach (var item in Model.Formats)
+                            {
+                                <span class="badge">@item</span>
+                            }
+
+                        </div>
+                    }
+
+                    <div>
+                        @if (Model.NumberOfEpisodes > 0)
+                        {
+                            <p>
+                                <label class="control-label">@Labels.NumberOfEpisodes</label>
+                                <span>@Model.NumberOfEpisodes</span>
+                            </p>
+                        }
+
+                        @if (!string.IsNullOrWhiteSpace(Model.EachEpisodePlayingTime))
+                        {
+                            <p>
+                                <label class="control-label">@Labels.EachEpisodePlayingTime</label>
+                                <span>@Model.EachEpisodePlayingTime</span>
+                            </p>
+                        }
+                    </div>
+
+                    @if (Model.Platforms != null && Model.Platforms.Any())
+                    {
+                        <div class="row-detail-badges">
+                            <label class="control-label">@Labels.Platforms:</label>
+
+                            @foreach (var item in Model.Platforms)
+                            {
+                                <span class="badge">@item</span>
+                            }
+
+                        </div>
+                    }
+
+                    @if (Model.ProjectStatus != null && Model.ProjectStatus.Any())
+                    {
+                        <div class="row-detail-badges">
+                            <label class="control-label">@Labels.ProjectStatus:</label>
+
+                            @foreach (var item in Model.ProjectStatus)
+                            {
+                                <span class="badge">@item</span>
+                            }
+
+                        </div>
+                    }
+
+                    @if (Model.LookingFor!= null && Model.LookingFor.Any())
+                    {
+                        <div class="row-detail-badges">
+                            <label class="control-label">@Labels.MarketLookingFor:</label>
+
+                            @foreach (var item in Model.LookingFor)
+                            {
+                                <span class="badge">@item</span>
+                            }
+
+                        </div>
+                    }
+
+                    @if (Model.SubGenres != null && Model.SubGenres.Any())
+                    {
+                        <div class="row-detail-badges">
+                            <label class="control-label">@Labels.SubGenre:</label>
+
+                            @foreach (var item in Model.SubGenres)
+                            {
+                                <span class="badge">@item</span>
+                            }
+
+                        </div>
+                    }
+
+                    @if (Model.TargetAudience != null && Model.TargetAudience.Any())
+                    {
+                        <div class="row-detail-badges">
+                            <label class="control-label">@Labels.TargetAudience:</label>
+
+                            @foreach (var item in Model.TargetAudience)
+                            {
+                                <span class="badge">@item</span>
+                            }
+
+                        </div>
+                    }
+                </div>
+
+                <hr class="hr-border-modified" />
+
+                <div class="values-group">
+                    <div class="row-detail-values">
+                        @if (!string.IsNullOrWhiteSpace(Model.ValuePerEpisode))
+                        {
+
+                            <p>
+                                <label class="control-label">@Labels.ValuePerEpisode:</label>
+                                <span>@Model.ValuePerEpisode</span>
+                            </p>
+
+                        }
+                    </div>
+                    <div class="row-detail-values">
+                        <p>
+                            <label class="control-label">@Labels.TotalValueOfProject:</label>
+                            @if (!string.IsNullOrWhiteSpace(Model.TotalValueOfProject))
+                            {
+                                <span>@Model.TotalValueOfProject</span>
+                            }
+                            else
+                            {
+                                <span>Não informado.</span>
+                            }
+                        </p>
+                    </div>
+
+                    <div class="row-detail-values">
+                        <p>
+                            <label class="control-label">@Labels.ValueAlreadyRaised:</label>
+                            @if (!string.IsNullOrWhiteSpace(Model.ValueAlreadyRaised))
+                            {
+                                <span>@Model.ValueAlreadyRaised</span>
+                            }
+                            else
+                            {
+                                <span>Não informado.</span>
+                            }
+                        </p>
+                    </div>
+                    <div class="row-detail-values">
+                        <p>
+                            <label class="control-label">@Labels.ValueStillNeeded:</label>
+                            @if (!string.IsNullOrWhiteSpace(Model.ValueStillNeeded))
+                            {
+                                <span>@Model.ValueStillNeeded</span>
+                            }
+                            else
+                            {
+                                <span>Não informado.</span>
+                            }
+                        </p>
+                    </div>
+                </div>
+
+
+                <div>
+                    @if (Model.LinksImage != null && Model.LinksImage.Any())
+                    {
+                        <div class="panel panel-primary rio2c-panel-detail">
+                            <div class="panel-heading" role="tab" id="heading_Format">
+                                <h4 class="panel-title">
+                                    @Labels.ImageLinks
+                                </h4>
+                            </div>
+                            <div class="panel-body panel-body-mod bio-graph-info">
+                                @foreach (var item in Model.LinksImage)
+                                {
+
+                                    <div class="control-label">
+                                        <label title="@item.Value"><a href="@item.Value" target="_blank">@item.Value</a></label>
+                                    </div>
+
+                                }
+                            </div>
+                        </div>
+                    }
+                    @if (Model.LinksTeaser != null && Model.LinksTeaser.Any())
+                    {
+                        <div class="panel panel-primary rio2c-panel-detail">
+                            <div class="panel-heading" role="tab" id="heading_Format">
+                                <h4 class="panel-title">
+                                    @Labels.TeaserLinks
+                                </h4>
+                            </div>
+                            <div class="panel-body panel-body-mod bio-graph-info">
+                                @foreach (var item in Model.LinksTeaser)
+                                {
+
+                                    <div class="control-label">
+                                        <label title="@item.Value"><a href="@item.Value" target="_blank">@item.Value</a></label>
+                                    </div>
+
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <br />
+
+                @*RETIRADO POR SOLICITAÇÃO DA EQUIPE RIO2C *@
+                <div class="panel panel-primary rio2c-panel-detail">
+                    <div class="panel-heading" role="tab" id="heading_format">
+                        <h4 class="panel-title">
+                            @Texts.WillTakePartInPitching:
+                        </h4>
+                    </div>
+                    <div class="panel-body panel-body-mod bio-graph-info">
+                        @if (Model.Pitching == true)
+                        {
+
+                            <div class="panel-body-box">
+                                <label class="control-label">
+                                    @Labels.Yes
+                                </label>
+                            </div>
+
+                        }
+                        else
+                        {
+
+                            <div class="panel-body-box">
+                                <label class="control-label">
+                                    @Labels.No
+                                </label>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+
+
+
+
+                @if (Model.AdditionalInformations != null && Model.AdditionalInformations.Any(e => !string.IsNullOrWhiteSpace(e.Value)))
+                {
+
+                    <div class="panel panel-primary rio2c-panel-detail">
+                        <div class="panel-heading" role="tab" id="heading_Format">
+                            <h4 class="panel-title">
+                                @Labels.AdditionalInformations
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="panel-body panel-body-mod bio-graph-info">
+                        @foreach (var item in Model.AdditionalInformations)
+                        {
+                            var labelLanguage = item.LanguageName.Contains("Português") ? Labels.Portuguese : item.LanguageName;
+
+                            <div class="panel-body-box">
+                                <label class="control-label">@labelLanguage</label>
+                                <div class="detail-value">@Html.Raw(item.Value)</div>
+                            </div>
+                        }
+                    </div>
+                }
+            </aside>
+        </div>
+
+    </div>
+</section>
+
+
+@section   scripts{
+    <script>
+        window.print();
+    </script>
+}

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<PlataformaRio2C.Infra.CrossCutting.SystemParameter.ViewModels.SystemParameterAppViewModel>
+
+@{
+    ViewBag.Title = "Parâmetros do sistema";
+}
+
+
+<section class="panel panel-lg">
+    <header class="panel-heading clearfix">
+        <h2 class=" pull-left">@ViewBag.Title</h2>
+
+        <a href="@Url.Action("ReIndex", "SystemParameter")" class="btn btn-sm btn-success pull-right">
+            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+            ReIndexar
+        </a>
+    </header>
+    <div class="panel-body">
+
+        @if (Model != null && Model.Any())
+        {
+            var i = 0;
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                @foreach (var group in Model.Select(a => a.GroupCode).Distinct())
+                {
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" role="tab" id="heading_@i">
+                            <h4 class="panel-title">
+                                <a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_@i" ng-click="vm.ActiveEditConfiguration($event, @i)" aria-expanded="true" aria-controls="collapse_@i">
+                                    @group
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapse_@i" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading_@i">
+                            <div class="panel-body">
+                                @Html.Partial("_SystemParameterGrouped", Model.Where(a => a.GroupCode == group).ToList())
+                            </div>
+                        </div>
+                    </div>
+
+                    i++;
+                }
+            </div>
+        }
+    </div>
+</section>

@@ -1,0 +1,335 @@
+﻿@model PlayerDetailWithInterestAppViewModel
+@{
+    ViewBag.Title = Labels.Player;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="content content-header-button">
+    <h1 class="page-title">@ViewBag.Title</h1>
+</div>
+
+<div class="content content-abas" ng-controller="PlayerDetailController as vm">
+
+    @using (Html.BeginForm("ProfileDetails", "Player", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+
+        <div class="nav-content clearfix">
+            <aside class="profile-nav col-lg-3">
+                <div class="user-heading user-heading-mod logo-player">
+                    <a href="#">
+                        @if (Model.Image != null && Model.Image.File != null)
+                        {
+                            @Html.Image(Model.Image.File, 0, "", "Model.Name")
+                        }
+                        else
+                        {
+                            <img ng-model="player" src="~/Content/img/profile-avatar-logo.png" alt="@Model.Name" title="@Model.Name" load-image="@Model.Uid" url-load="/api/players/image" />
+                        }
+                    </a>
+                    <div class="fileinput-message">
+                        @if (!string.IsNullOrWhiteSpace(Model.Website))
+                        {
+                            <span class="text">
+                                @Model.Website
+                            </span>
+                        }
+
+                        @if (!string.IsNullOrWhiteSpace(Model.SocialMedia))
+                        {
+                            <span class="text">@Model.SocialMedia</span>
+                        }
+                    </div>
+                </div>
+
+            </aside>
+            <aside class="profile-info col-lg-9">
+                <section class="panel">
+                    <div class="panel-body bio-graph-info">
+                        <h1 class="page-title">@Model.Name</h1>
+                        <div class="row">
+                            <div class="bio-row bio-row-detail">
+                                <p><label class="control-label">@Model.HoldingName</label></p>
+                                @*RETIRADO POR SOLICITAÇÃO DA EQUIPE RIO2C *@
+                                @*<p>@Html.LabelFor(model => model.TradeName, htmlAttributes: new { @class = "control-label" }) <span> @Model.TradeName</span></p>*@
+                                @*RETIRADO POR SOLICITAÇÃO DA EQUIPE RIO2C *@
+                            </div>
+
+                            <hr />
+
+                            @if (Model.Descriptions != null && Model.Descriptions.Any())
+                            {
+                                <div class="bio-row bio-row-detail">
+                                    @Html.LabelFor(model => model.Descriptions, htmlAttributes: new { @class = "control-label" }):
+
+                                    @foreach (var item in Model.Descriptions)
+                                    {
+                                        var labelLanguage = item.LanguageName.Contains("Português") ? Labels.Portuguese : item.LanguageName;
+                                        <p>
+                                            <label class="">@labelLanguage</label>
+                                        </p>
+                                        <div class="detail-value">@Html.Raw(item.Value)</div>
+                                    }
+                                </div>
+
+                                <hr />
+                            }
+
+
+                            @if (Model.RestrictionsSpecifics != null && Model.RestrictionsSpecifics.Any())
+                            {
+                                <div class="bio-row bio-row-detail">
+                                    <label class="control-label">@Labels.ContentTypeYouAreLookingFor:</label>
+
+                                    @foreach (var item in Model.RestrictionsSpecifics)
+                                    {
+                                        var labelLanguage = item.LanguageName.Contains("Português") ? Labels.Portuguese : item.LanguageName;
+                                        <p>
+                                            <label class="">@labelLanguage</label>
+                                        </p>
+                                        <div class="detail-value">@Html.Raw(item.Value)</div>
+                                    }
+                                </div>
+
+                                <hr />
+                            }
+
+
+                            @if (Model.Seeking != null && Model.Seeking.Any())
+                            {
+                                <div class="row-detail-badges">
+                                    <label class="control-label">@Labels.MarketLookingFor:</label>
+
+                                    @foreach (var item in Model.Seeking)
+                                    {
+                                        <span class="badge">@item</span>
+                                    }
+
+                                </div>
+                            }
+
+                            @if (Model.Activitys != null && Model.Activitys.Any())
+                            {
+                                <div class="row-detail-badges">
+                                    <label class="control-label">@Labels.Activity:</label>
+
+                                    @foreach (var item in Model.Activitys)
+                                    {
+                                        <span class="badge">@item</span>
+                                    }
+
+                                </div>
+
+                            }
+
+                            @if (Model.TargetAudience != null && Model.TargetAudience.Any())
+                            {
+                                <div class="row-detail-badges">
+                                    <label class="control-label">@Labels.TargetAudience:</label>
+
+                                    @foreach (var item in Model.TargetAudience)
+                                    {
+                                        <span class="badge">@item</span>
+                                    }
+
+                                </div>
+
+                            }
+
+                            @if (Model.Genres != null && Model.Genres.Any())
+                            {
+                                <div class="row-detail-badges">
+                                    <label class="control-label">@Labels.Genre:</label>
+
+                                    @foreach (var item in Model.Genres)
+                                    {
+                                        <span class="badge">@item</span>
+                                    }
+
+                                </div>
+
+                            }
+
+                            @if (Model.Formats != null && Model.Formats.Any())
+                            {
+                                <div class="row-detail-badges">
+                                    <label class="control-label">@Labels.Format:</label>
+
+                                    @foreach (var item in Model.Formats)
+                                    {
+                                        <span class="badge">@item</span>
+                                    }
+
+                                </div>
+
+                            }
+
+                            @if (Model.Platforms != null && Model.Platforms.Any())
+                            {
+                                <div class="row-detail-badges">
+                                    <label class="control-label">@Labels.Platforms:</label>
+
+                                    @foreach (var item in Model.Platforms)
+                                    {
+                                        <span class="badge">@item</span>
+                                    }
+
+                                </div>
+
+                            }
+
+                            @if (Model.Status != null && Model.Status.Any())
+                            {
+                                <div class="row-detail-badges">
+                                    <label class="control-label">@Labels.Status:</label>
+
+                                    @foreach (var item in Model.Status)
+                                    {
+                                        <span class="badge">@item</span>
+                                    }
+
+                                </div>
+
+                            }
+
+
+                            @if (Model.SubGenres != null && Model.SubGenres.Any())
+                            {
+                                <div class="row-detail-badges">
+                                    <label class="control-label">@Labels.SubGenre:</label>
+
+                                    @foreach (var item in Model.SubGenres)
+                                    {
+                                        <span class="badge">@item</span>
+                                    }
+
+                                </div>
+
+                            }
+
+
+                            @if (Model.Collaborators != null && Model.Collaborators.Any())
+                            {
+                                <hr />
+                                <div class="bio-row bio-row-detail ">
+                                    @Html.LabelFor(model => model.Collaborators, htmlAttributes: new { @class = "control-label" }):
+                                </div>
+
+                                <div class="row row-detail-player">
+                                    <div>
+                                        @foreach (var collaborator in Model.Collaborators)
+                                        {
+                                            <div class="col-lg-12">
+                                                <div class="panel">
+                                                    <div class="panel-body">
+                                                        <div class="bio-chart">
+                                                            <a href="#" ng-click="vm.showModalCollaboratorMiniBio($event, '@collaborator.Uid.ToString()')">
+                                                                @if (collaborator.Image != null && collaborator.Image.File != null)
+                                                                {
+                                                                    @Html.Image(collaborator.Image.File, 0, "", "Model.Name")
+                                                                }
+                                                                else
+                                                                {
+                                                                    <img ng-model="player" src="~/Content/img/profile-avatar.png" alt="@collaborator.Name" title="@collaborator.Name" load-image="@collaborator.Uid" url-load="/api/collaborators/thumbImage" />
+                                                                }
+                                                            </a>
+                                                        </div>
+                                                        <div class="bio-desk">
+                                                            <h4 class="red">@collaborator.Name</h4>
+                                                            <a href="#" ng-click="vm.showModalCollaboratorMiniBio($event, '@collaborator.Uid.ToString()')" class="btn btn-primary btn-link"><i class="icon-file-text-alt"></i> @Labels.SeeMiniBio</a>
+                                                            @if (collaborator.JobTitles != null && collaborator.JobTitles.Any())
+                                                            {
+                                                                <p>
+                                                                    @if (collaborator.JobTitles != null && collaborator.JobTitles.Any(e => e.LanguageCode == "En"))
+                                                                    {
+                                                                        <span>@collaborator.JobTitles.FirstOrDefault(e => e.LanguageCode == "En").Value</span>
+                                                                    }
+
+                                                                    @if (collaborator.JobTitles != null && collaborator.JobTitles.Any(e => e.LanguageCode == "PtBr" && !string.IsNullOrWhiteSpace(e.Value)))
+                                                                    {
+                                                                        <span>\ @collaborator.JobTitles.FirstOrDefault(e => e.LanguageCode == "PtBr").Value</span>
+                                                                    }
+                                                                </p>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </section>
+                <div class="form-group create-edit">
+                    <a href="javascript:history.back()" class="btn btn-lg btn-default pull-left">@Labels.Back</a>
+                </div>
+            </aside>
+        </div>
+
+
+        <script type="text/ng-template" id="modalCollaboratorMiniBio.html">
+            <div class="modal-header modal-header-minibio">
+                <h2>{{vm.collaborator.name}}</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="dismiss()"> <span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <span ng-if="vm.loadingMiniBioCollaborator" class="rio2c-loading"></span> Carregando informações do collaborator
+
+                <div data-alerta="" ng-model="vm.errosCollaboratorMiniBio" hidebtnclose="true"></div>
+
+                <div class="row" ng-if="vm.collaborator != null">
+                    <div class="col-md-3 photo-col">
+                        <div class="user-heading">
+                            <img ng-model="collaborator" class="img-thumbnail" src="/Content/img/profile-avatar.png" alt="{{vm.collaborator.name}}" title="{{vm.collaborator.name}}" load-image="{{vm.collaborator.uid}}" url-load="/api/collaborators/image" />
+                        </div>
+                    </div>
+                    <div class="col-md-9 description-col">
+                        <aside class="profile-info col-lg-9">
+                            <section class="panel">
+                                <div class="panel-body bio-graph-info">
+                                    
+                                    <div class="row">
+
+                                        <div class="bio-row" ng-if="vm.collaborator.jobTitles != null">
+                                            <p>
+                                                {{(vm.collaborator.jobTitles | filter: {languageCode : 'PtBr'}).value }}
+                                                <span>
+                                                    {{(vm.collaborator.jobTitles | filter: {languageCode : 'En'}).value }}
+                                                </span>
+                                            </p>
+                                        </div>
+                                                                       
+                                        <div class="bio-row bio-row-detail" ng-if="vm.collaborator.miniBios != null && vm.collaborator.miniBios.length > 0">
+                                            <div>
+                                                <label class="control-label labeled">@Labels.MiniBio</label>
+
+                                                <div class="bio-box" ng-repeat="minibio in vm.collaborator.miniBios">
+                                                    <p class="paragraphed">
+                                                        <label class="control-label labeled">{{minibio.languageName}}</label>
+                                                    </p>
+                                                    <div class="detail-value" ng-bind-html="minibio.value"></div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </section>
+                        </aside>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-default btn-lg pull-right" data-dismiss="modal" ng-click="dismiss()">@Labels.Close</button>
+            </div>
+        </script>
+
+    }
+
+</div>

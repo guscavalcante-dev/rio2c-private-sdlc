@@ -1,0 +1,221 @@
+﻿@model ConferenceDetailAppViewModel
+@{
+    ViewBag.Title = Labels.LectureDetails;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="content content-header-button clearfix">
+    <h1 class="page-title  pull-left">@ViewBag.Title</h1>
+</div>
+
+<div class="content content-abas conferences-structure">
+
+    <div class="nav-content conference-detail clearfix">
+        <div class="profile-info col-lg-12">
+            <section class="panel">
+                <div class="panel-body bio-graph-info">
+
+                    <div class="row">
+                        <div class="bio-row bio-row-detail">
+                            <label class="">@Labels.Date: </label>
+                            <div class="detail-value">@Model.Date.Value.ToString("dd/MM/yyyy")  </div>
+                        </div>
+
+                        <div class="bio-row bio-row-detail">
+                            <label class="">@Labels.Room: </label>
+                            <div class="detail-value">@Model.RoomName </div>
+                        </div>
+
+                        <div class="bio-row bio-row-detail">
+                            <label class="">@Labels.Hour: </label>
+                            <div class="detail-value">@Model.StartTime.Value.ToString("hh':'mm") @Labels.To @Model.EndTime.Value.ToString("hh':'mm") </div>
+                        </div>
+
+                        @*<h1 class="page-title">@Model.Title</h1>*@
+
+                        <div class="bio-row bio-row-detail">
+                            <label class="">@Labels.Title: </label>
+                            <div class="detail-value">@Model.Title</div>
+                        </div>
+
+                        <div class="bio-row bio-row-detail">
+                            <label class="">@Labels.Synopsis: </label>
+                            <div class="detail-value">@Html.Raw(Model.Synopsis)</div>
+                        </div>
+
+                        <div class="bio-row bio-row-detail">
+                            <label class="">@Labels.LecturerMemberOneOrMany: </label>
+
+                            <div class="list-images-structure">
+                                @if (Model.LecturersDetails != null && Model.LecturersDetails.Any())
+                                {
+                                    foreach (var lecturer in Model.LecturersDetails)
+                                    {
+
+                                        <div class="image-info-lecturer">
+                                            <div class="image-box">
+                                                <img ng-model="lecturer.image" class="img-thumbnail" src="~/Content/img/profile-avatar.png" alt="@lecturer.Name" title="@lecturer.Name" load-image="@lecturer.Uid" url-load="/api/conference/lecturerThumbImage" />
+                                            </div>
+                                            <div class="info-box">
+                                                <div class="lecturer-name" title="@lecturer.Name">
+                                                    <h4>@lecturer.Name</h4>
+                                                </div>
+                                                <div class="lecturer-role">
+                                                    <label><strong>@Labels.RoleInTheLecture:</strong> <span title="@lecturer.RoleLecturerName">@lecturer.RoleLecturerName</span></label>
+                                                   
+                                                </div>
+                                                <div class="lecturer-company">
+                                                    <label><strong>@Labels.Company:</strong> <span title="@lecturer.CompanyName">@lecturer.CompanyName</span></label>
+                                              
+                                                </div>
+                                                <div class="lecturer-jobtitle" >
+                                                    <label><strong>@Labels.JobTitle:</strong> <span title="@lecturer.JobTitle">@lecturer.JobTitle</span></label>
+                                                        
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    }
+                                }
+
+                            </div>
+                        </div>
+
+
+
+
+                        @*<div class="bio-row bio-row-detail">
+                                <label class="">@Labels.LecturerMemberOneOrMany: </label>
+                                <div class="wrapper-for-side-images">
+                                    <div class="list-images-structure">
+                                        @if (Model.Lecturers != null && Model.Lecturers.Any())
+                                        {
+                                            foreach (var lecturer in Model.Lecturers)
+                                            {
+                                                <figure class="relative">
+                                                    <div>
+                                                        <img ng-model="lecturer.image" class="img-thumbnail" src="~/Content/img/profile-avatar.png" alt="@lecturer.Name" title="@lecturer.Name" load-image="@lecturer.Uid" url-load="/api/conference/lecturerThumbImage" />
+                                                    </div>
+                                                    <figcaption title="@lecturer.Name">
+                                                        @lecturer.Name
+                                                    </figcaption>
+                                                </figure>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>*@
+
+                    </div>
+                </div>
+            </section>
+            <div class="form-group create-edit">
+                <a href="javascript:history.back()" class="btn btn-lg btn-default pull-left">Voltar</a>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        @*<aside class="profile-nav conferences-structure conference-detail col-lg-3">
+                @*<div class="user-heading user-heading-mod logo-player">
+                <a href="#">
+                    <img src="~/Content/img/profile-avatar-logo.png" alt="Nome Palestrante" title="Nome Palestrante" />
+                </a>
+                <hr />
+                    //SUGESTÃO DE COMPLEMENTO E EXTENSÃO DE INFORMAÇÕES DO PALESTRANTE.
+                    <div class="social-media-icons">
+                        <a href="" alt="site palestrante" title="site palestrante"><i class=" icon-globe" ></i></a>
+
+                        <a href="" alt="facebook palestrante" title="facebook palestrante"><i class="icon-facebook-sign" ></i></a>
+
+                        <a href="" alt="linkedin palestrante" title="linkedin palestrante"><i class=" icon-linkedin-sign" ></i></a>
+
+                        <a href="" alt="youtube palestrante" title="youtube palestrante"><i class="icon-youtube-play" ></i></a>
+                    </div>
+            </div>
+
+                <h4 class="">@Labels.LecturerMemberOneOrMany: </h4>
+                <div class="wrapper-for-side-images">
+                    <div class="list-images-structure">
+
+                        @if (Model.Lecturers != null && Model.Lecturers.Any())
+                        {
+                            foreach (var lecturer in Model.Lecturers)
+                            {
+                                <figure class="relative">
+                                    <div>
+                                        <img ng-model="lecturer.image" class="img-thumbnail" src="~/Content/img/profile-avatar.png" alt="@lecturer.Name" title="@lecturer.Name" load-image="@lecturer.Uid" url-load="/api/conference/lecturerThumbImage" />
+                                    </div>
+                                    <figcaption title="@lecturer.Name">
+                                        @lecturer.Name
+                                    </figcaption>
+                                </figure>
+                            }
+                        }
+
+                    </div>
+                </div>
+
+
+            </aside>
+            <aside class="profile-info col-lg-9">
+                <section class="panel">
+                    <div class="panel-body bio-graph-info">
+                        <h1 class="page-title">@Model.Title</h1>
+                        <div class="row">
+
+                            <div class="bio-row bio-row-detail">
+                                <label class="">@Labels.Date: </label>
+                                <div class="detail-value">@Model.Date.Value.ToString("dd/MM/yyyy")  </div>
+                            </div>
+
+                            <div class="bio-row bio-row-detail">
+                                <label class="">@Labels.Hour: </label>
+                                <div class="detail-value">@Model.StartTime.Value.ToString("hh':'mm") as @Model.EndTime.Value.ToString("hh':'mm") </div>
+                            </div>
+
+
+                            <div class="bio-row bio-row-detail">
+                                <label class="">@Labels.Local: </label>
+                                <div class="detail-value">@Model.Room </div>
+                            </div>
+
+                            <div class="bio-row bio-row-detail">
+                                <label class="">@Labels.ConferenceSynopsis: </label>
+                                <div class="detail-value">@Html.Raw(Model.Synopsis)</div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+                <div class="form-group create-edit">
+                    <a href="javascript:history.back()" class="btn btn-lg btn-default pull-left">@Labels.Back</a>
+                </div>
+            </aside>*@
+    </div>
+
+
+
+
+
+</div>
+
+

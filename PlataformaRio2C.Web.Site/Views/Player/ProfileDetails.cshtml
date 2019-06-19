@@ -1,0 +1,130 @@
+﻿@model PlayerDetailAppViewModel
+@{
+    ViewBag.Title = "Player";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content content-abas">
+    @Html.Partial("_TabsCollaboratorProfileEditor")
+
+    @using (Html.BeginForm("ProfileDetails", "Player", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+
+        <div class="nav-content clearfix">
+            <aside class="profile-nav col-lg-3">
+                <div class="user-heading logo-player">
+                    <a href="#">
+                        @if (Model.Image != null && Model.Image.File != null)
+                        {
+                            @Html.Image(Model.Image.File, 0, "", "Model.Name")
+                        }
+                        else
+                        {                            
+                            <img ng-model="player" src="~/Content/img/profile-avatar-logo.png" alt="@Model.Name" title="@Model.Name" load-image="@Model.Uid" url-load="/api/players/image" />
+                        }
+                    </a>
+                    <div class="fileinput-message">
+                        @if (!string.IsNullOrWhiteSpace(Model.Website))
+                        {
+                            <span class="text">
+                                @Model.Website
+                            </span>
+                        }
+
+                        @if (!string.IsNullOrWhiteSpace(Model.SocialMedia))
+                        {
+                            <span class="text">@Model.SocialMedia</span>
+                        }
+                    </div>
+                </div>
+
+                <ul class="nav nav-pills nav-stacked">
+                    <li><a href="@Url.Action("ProfileEdit", "Player", new { uid = Model.Uid})">@Labels.EditProfile</a></li>
+                </ul>
+            </aside>
+            <aside class="profile-info col-lg-9">
+                <section class="panel">
+                    <div class="panel-body bio-graph-info">
+                        <h1 class="page-title">@Model.Name</h1>
+                        <div class="row">
+                            <div class="bio-row bio-row-detail">
+                                <p><label class="control-label">@Model.HoldingName</label></p>
+                                <p>@Html.LabelFor(model => model.TradeName, htmlAttributes: new { @class = "control-label" }) <span> @Model.TradeName</span></p>
+                            </div>
+
+                            <hr />
+
+                            @if (Model.Descriptions != null && Model.Descriptions.Any())
+                            {
+                                <div class="bio-row bio-row-detail">
+                                    @Html.LabelFor(model => model.Descriptions, htmlAttributes: new { @class = "control-label" }):
+
+                                    @foreach (var item in Model.Descriptions)
+                                    {
+                                        var labelLanguage = item.LanguageName.Contains("Português") ? Labels.Portuguese : item.LanguageName;
+                                        <p>
+                                            <label class="">@labelLanguage</label>
+                                        </p>
+                                        <div class="detail-value">@Html.Raw(item.Value)</div>
+                                    }
+                                </div>
+
+                                <hr />
+                            }
+
+                            @if (Model.Collaborators != null && Model.Collaborators.Any())
+                            {
+                                <div class="bio-row bio-row-detail ">
+                                    @Html.LabelFor(model => model.Collaborators, htmlAttributes: new { @class = "control-label" }):
+                                </div>
+
+                                <div class="row row-detail-player">
+                                    <div class="">
+                                        @foreach (var collaborator in Model.Collaborators)
+                                        {
+                                            <div class="col-lg-12">
+                                                <div class="panel">
+                                                    <div class="panel-body">
+                                                        <div class="bio-chart">
+                                                            @if (collaborator.Image != null && collaborator.Image.File != null)
+                                                            {
+                                                                @Html.Image(collaborator.Image.File, 0, "", "Model.Name")
+                                                            }
+                                                            else
+                                                            {                                                                
+                                                                <img ng-model="collaborator" src="~/Content/img/profile-avatar.png" alt="@collaborator.Name" title="@collaborator.Name" load-image="@collaborator.Uid" url-load="/api/collaborators/thumbImage" />
+                                                            }
+                                                        </div>
+                                                        <div class="bio-desk">
+                                                            <h4 class="red">@collaborator.Name</h4>
+                                                            @if (collaborator.JobTitles != null && collaborator.JobTitles.Any())
+                                                            {
+                                                                <p>
+                                                                    @if (collaborator.JobTitles != null && collaborator.JobTitles.Any(e => e.LanguageCode == "En"))
+                                                                    {
+                                                                        <span>@collaborator.JobTitles.FirstOrDefault(e => e.LanguageCode == "En").Value</span>
+                                                                    }
+
+                                                                    @if (collaborator.JobTitles != null && collaborator.JobTitles.Any(e => e.LanguageCode == "PtBr" && !string.IsNullOrWhiteSpace(e.Value)))
+                                                                    {
+                                                                        <span>\ @collaborator.JobTitles.FirstOrDefault(e => e.LanguageCode == "PtBr").Value</span>
+                                                                    }
+                                                                </p>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </section>
+
+            </aside>
+        </div>
+    }
+
+</div>

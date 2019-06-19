@@ -1,0 +1,87 @@
+﻿@model IEnumerable<ProjectInterestAppViewModel>
+
+@{
+    var groupName = ViewData["GroupName"] != null ? ViewData["GroupName"].ToString() : "";
+    var validationName = ViewData["ValidationName"] != null ? ViewData["ValidationName"].ToString() : "Interests";
+    var classCol = ViewData["ClassCol"] != null ? ViewData["ClassCol"].ToString() : "col-sm-4";
+    var isRequired = ViewData["IsRequired"] != null ? ViewData["IsRequired"] != null ? (bool)ViewData["IsRequired"]: false : false;
+}
+
+@if (!string.IsNullOrWhiteSpace(groupName))
+{
+    var interestsInGroup = Model.Where(a => a.InterestGroupName.Contains(groupName)).ToList();
+    var group = interestsInGroup.First().InterestGroupName;
+
+    if (groupName.Contains("Format") || groupName.Contains("Audiovisual Genre"))
+    {
+        interestsInGroup = interestsInGroup.OrderBy(e => e.InterestName).ToList();
+    }
+
+
+        <div class="panel-heading" role="tab" id="heading_@groupName">
+            <h4 class="panel-title">
+                @if (group.Contains("Seeking"))
+                {
+                    <span>Está buscando para este projeto | Seeking for this project</span> @* Mover para resource exatamente pt|en*@
+                }
+                else
+                {
+                    @group
+                }    
+                
+                @if (isRequired)
+                {
+                    <span>*</span>
+                }
+            </h4>
+        </div>
+        <div class="panel-body bio-graph-info">
+            @if (Model.Any(e => e.InterestGroupName == group && e.InterestGroupType == "Multiple"))
+                {
+                    foreach (var interests in interestsInGroup)
+                    {
+                    <div class="checkboxes row-fluid">
+                        <label class="@classCol  control-label" style="font-weight: bold;">
+                            @Html.CheckBoxFor(m => interests.Selected, new { Name = "InterestsSelected[]", Value = interests.InterestId }) @interests.InterestName
+                        </label>
+                    </div>
+                }
+            }
+        </div>
+ 
+}
+else
+{
+    foreach (var group in Model.Select(g => g.InterestGroupName).Distinct())
+    {
+        var interestsInGroup = Model.Where(a => a.InterestGroupName == group).ToList();
+
+        if (group.Contains("Format") || group.Contains("Audiovisual Genre"))
+        {
+            interestsInGroup = interestsInGroup.OrderBy(e => e.InterestName).ToList();
+        }
+
+
+            <div class="panel-heading" role="tab" id="heading_@group">
+                <h4 class="panel-title">
+                    @group
+                </h4>
+            </div>
+            <div class="panel-body bio-graph-info">
+                @if (Model.Any(e => e.InterestGroupName == group && e.InterestGroupType == "Multiple"))
+                {
+                    foreach (var interests in interestsInGroup)
+                    {
+                        <div class="checkboxes row-fluid">
+                            <label class="@classCol control-label" style="font-weight: bold;">
+                                @Html.CheckBoxFor(m => interests.Selected, new { Name = "InterestsSelected[]"  }) @interests.InterestName
+
+                            </label>
+                        </div>
+                    }
+                }
+            </div>
+   
+    }
+
+}

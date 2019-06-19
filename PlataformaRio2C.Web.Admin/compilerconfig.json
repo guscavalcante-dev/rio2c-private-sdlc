@@ -1,0 +1,42 @@
+﻿[
+  {
+    "outputFile": "Content/style-responsive.css",
+    "inputFile": "Content/style-responsive.less"
+  },
+  {
+    "outputFile": "Content/style.css",
+    "inputFile": "Content/style.less"
+  },
+  {
+    "outputFile": "Content/css/style.css",
+    "inputFile": "Content/css/style.less"
+  },
+  {
+    "outputFile": "Content/css/style-responsive.css",
+    "inputFile": "Content/css/style-responsive.less"
+  },
+  {
+    "outputFile": "Content/css/bootstrap-reset.css",
+    "inputFile": "Content/css/bootstrap-reset.less"
+  },
+  {
+    "outputFile": "Content/assets/bootstrap-daterangepicker/daterangepicker.es5.js",
+    "inputFile": "Content/assets/bootstrap-daterangepicker/daterangepicker.js"
+  },
+  {
+    "outputFile": "Content/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.es5.js",
+    "inputFile": "Content/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js"
+  },
+  {
+    "outputFile": "Content/assets/bootstrap-wysihtml5/wysihtml5-0.3.0.es5.js",
+    "inputFile": "Content/assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js"
+  },
+  {
+    "outputFile": "Content/assets/bootstrap-timepicker/js/bootstrap-timepicker.es5.js",
+    "inputFile": "Content/assets/bootstrap-timepicker/js/bootstrap-timepicker.js"
+  },
+  {
+    "outputFile": "Content/css/site-print.css",
+    "inputFile": "Content/css/site-print.less"
+  }
+]

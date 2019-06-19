@@ -1,0 +1,62 @@
+﻿@{
+    bool profileComplete = ViewBag.ProfileComplete ?? false;
+    bool playerComplete = ViewBag.PlayerComplete ?? false;
+    bool interestComplete = ViewBag.InterestComplete ?? false;
+    bool producerComplete = ViewBag.ProducerComplete ?? false;
+}
+
+<ul class="nav nav-tabs">
+    <li class="@Html.AddClassActive("active", "ProfileDetails,ProfileEdit,ChangePassword,ProfileProducerEdit", "Collaborator") role="presentation">
+        <a class="tab-element" href="@Url.Action("ProfileDetails","Collaborator")">
+        @Labels.Profile
+        @if (!profileComplete)
+            {
+            <span data-toggle="tooltip" data-placement="right" title="@Messages.ProfileIncompleteMessage" class="my-tooltip">
+                <i class="icon-warning-sign my-exclamation-fa" aria-hidden="true"></i>
+            </span>
+        }
+        </a>
+    </li>
+
+    @*@if (Html.UserInRole("Producer"))
+    {
+        <li class="@Html.AddClassActive("active", "ProfileDetails,ProfileEdit", "Producer")" role="presentation">
+            <a class="tab-element" href="@Url.Action("ProfileDetails", "Producer")">
+                @Labels.Producer
+                @if (!producerComplete)
+                {
+                    <span data-toggle="tooltip" data-placement="right" title="Ajusar Mensagem" class="my-tooltip">
+                        <i class="icon-warning-sign my-exclamation-fa" aria-hidden="true"></i>
+                    </span>
+                }
+            </a>
+        </li>
+    }*@
+    
+    @if (Html.UserInRole("Player"))
+    {
+        <li class="@Html.AddClassActive("active", "ProfileDetails,ProfileEdit", "Player")" role="presentation">
+            <a class="tab-element" href="@Url.Action("ProfileDetails","Player")">
+                @Labels.Player
+                @if (!playerComplete)
+                {
+                    <span data-toggle="tooltip" data-placement="right" title="@Messages.PlayerIncompleteMessage" class="my-tooltip">
+                        <i class="icon-warning-sign my-exclamation-fa" aria-hidden="true"></i>
+                    </span>
+                }
+            </a>
+        </li>
+
+        <li class="@Html.AddClassActive("active", "Interests", "Player")" role="presentation">
+            <a class="tab-element" href="@Url.Action("Interests","Player")">
+                @Labels.Interests
+                @if (!interestComplete)
+                {
+                    <span data-toggle="tooltip" data-placement="right" title="@Messages.InterestsIncompleteMessage" class="my-tooltip">
+                        <i class="icon-warning-sign my-exclamation-fa" aria-hidden="true"></i>
+                    </span>
+                }
+            </a>
+        </li>
+    }
+</ul>

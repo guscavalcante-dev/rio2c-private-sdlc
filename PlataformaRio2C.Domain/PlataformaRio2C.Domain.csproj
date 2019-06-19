@@ -1,0 +1,482 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9CFDDB5C-4DA2-437B-AEDD-CABE12EF09BC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PlataformaRio2C.Domain</RootNamespace>
+    <AssemblyName>PlataformaRio2C.Domain</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Migrations, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Migrations.1.0.1.0\lib\net40-Client\Migrations.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entities\Collaborator\CollaboratorProducer.cs" />
+    <Compile Include="Entities\Collaborator\CollaboratorSpeaker.cs" />
+    <Compile Include="Entities\Common\InterestGroup.cs" />
+    <Compile Include="Entities\Conference\Conference.cs" />
+    <Compile Include="Entities\Conference\RoleLectureTitle.cs" />
+    <Compile Include="Entities\Conference\LecturerJobTitle.cs" />
+    <Compile Include="Entities\Conference\Lecturer.cs" />
+    <Compile Include="Entities\Conference\ConferenceLecturer.cs" />
+    <Compile Include="Entities\Conference\ConferenceSynopsis.cs" />
+    <Compile Include="Entities\Conference\ConferenceTitle.cs" />
+    <Compile Include="Entities\Conference\RoleLecturer.cs" />
+    <Compile Include="Entities\Country\City.cs" />
+    <Compile Include="Entities\Country\Country.cs" />
+    <Compile Include="Entities\Country\State.cs" />
+    <Compile Include="Entities\Logistics\Logistics.cs" />
+    <Compile Include="Entities\Mail\Mail.cs" />
+    <Compile Include="Entities\Mail\MailCollaborator.cs" />
+    <Compile Include="Entities\Message\Message.cs" />
+    <Compile Include="Entities\MusicalCommission\MusicalCommission.cs" />
+    <Compile Include="Entities\NegotiationConfig\NegotiationRoomConfig.cs" />
+    <Compile Include="Entities\NegotiationConfig\NegotiationConfig.cs" />
+    <Compile Include="Entities\Negotiation\Negotiation.cs" />
+    <Compile Include="Entities\PlayerProducer\PlayerProducer.cs" />
+    <Compile Include="Entities\Project\ProjectPlayer.cs" />
+    <Compile Include="Entities\Project\ProjectInterest.cs" />
+    <Compile Include="Entities\Producer\ProducerTargetAudience.cs" />
+    <Compile Include="Entities\Producer\ProducerActivity.cs" />
+    <Compile Include="Entities\Player\PlayerActivity.cs" />
+    <Compile Include="Entities\Producer\ProducerDescription.cs" />
+    <Compile Include="Entities\Producer\Producer.cs" />
+    <Compile Include="Entities\Player\PlayerInterest.cs" />
+    <Compile Include="Entities\Player\PlayerRestrictionsSpecifics.cs" />
+    <Compile Include="Entities\Player\PlayerTargetAudience.cs" />
+    <Compile Include="Entities\Producer\ProducerEvent.cs" />
+    <Compile Include="Entities\Project\Project.cs" />
+    <Compile Include="Entities\Project\ProjectLinkTeaser.cs" />
+    <Compile Include="Entities\Project\ProjectLinkImage.cs" />
+    <Compile Include="Entities\Project\ProjectLogLine.cs" />
+    <Compile Include="Entities\Project\ProjectPlayerEvaluation.cs" />
+    <Compile Include="Entities\Project\ProjectProductionPlan.cs" />
+    <Compile Include="Entities\Project\ProjectAdditionalInformation.cs" />
+    <Compile Include="Entities\Project\ProjectStatus.cs" />
+    <Compile Include="Entities\Project\ProjectSummary.cs" />
+    <Compile Include="Entities\Project\ProjectTitle.cs" />
+    <Compile Include="Entities\Quiz\Quiz.cs" />
+    <Compile Include="Entities\Quiz\QuizAnswer.cs" />
+    <Compile Include="Entities\Quiz\QuizOption.cs" />
+    <Compile Include="Entities\Quiz\QuizQuestion.cs" />
+    <Compile Include="Entities\Room\RoomName.cs" />
+    <Compile Include="Entities\Room\Room.cs" />
+    <Compile Include="Entities\Speaker\Speaker.cs" />
+    <Compile Include="Enums\NegotiationTypeCodes.cs" />
+    <Compile Include="Enums\StatusProjectCodes.cs" />
+    <Compile Include="Interfaces\IMailCollaboratorRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Collaborator\ICollaboratorProducerRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Conference\ILecturerJobTitleRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Conference\ILecturerRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Conference\IConferenceSynopsisRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Conference\IConferenceLecturerRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Conference\IConferenceTitleRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Conference\IConferenceRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Conference\IRoleLecturerTitleRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Conference\IRoleLecturerRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Country\ICityRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Country\ICountryRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Country\IStateRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IAddressRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Logistics\ILogisticsRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Mail\IMailRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Message\IMessageRepository.cs" />
+    <Compile Include="Interfaces\Repositories\MusicalCommission\IMusicalCommissionRepository.cs" />
+    <Compile Include="Interfaces\Repositories\NegotiationConfig\INegotiationRoomConfigRepository.cs" />
+    <Compile Include="Interfaces\Repositories\NegotiationConfig\INegotiationConfigRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Negotiation\INegotiationRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Project\IProjectPlayerRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Project\IProjectPlayerEvaluationRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Project\IProjectStatusRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Quiz\IQuizAnswerRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Quiz\IQuizOptionRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Quiz\IQuizQuestionRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Quiz\IQuizRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Room\IRoomNameRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Room\IRoomRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Speaker\ISpeakerRepository.cs" />
+    <Compile Include="Interfaces\Services\IConferenceService.cs" />
+    <Compile Include="Interfaces\Services\ICountryService.cs" />
+    <Compile Include="Interfaces\Services\IMailService.cs" />
+    <Compile Include="Interfaces\Services\INegotiationConfigService.cs" />
+    <Compile Include="Interfaces\Services\INegotiationService.cs" />
+    <Compile Include="Interfaces\Services\IQuizAnswerService.cs" />
+    <Compile Include="Interfaces\Services\IQuizOptionService.cs" />
+    <Compile Include="Interfaces\Services\IQuizQuestionService.cs" />
+    <Compile Include="Interfaces\Services\IQuizService.cs" />
+    <Compile Include="Interfaces\Services\IRoleLecturerService.cs" />
+    <Compile Include="Interfaces\Services\IRoomService.cs" />
+    <Compile Include="Interfaces\Services\IMessageService.cs" />
+    <Compile Include="Interfaces\Services\ILogisticsService.cs" />
+    <Compile Include="Interfaces\Services\MusicalCommission\IMusicalCommissionService.cs" />
+    <Compile Include="Interfaces\Services\Speaker\ISpeakerService.cs" />
+    <Compile Include="Services\ConferenceService.cs" />
+    <Compile Include="Services\CountryService.cs" />
+    <Compile Include="Services\MailCollaboratorService.cs" />
+    <Compile Include="Services\MailService.cs" />
+    <Compile Include="Services\MusicalCommissionService.cs" />
+    <Compile Include="Services\NegotiationConfigService.cs" />
+    <Compile Include="Services\NegotiationService.cs" />
+    <Compile Include="Services\QuizAnswerService.cs" />
+    <Compile Include="Services\RoleLecturerService.cs" />
+    <Compile Include="Services\RoomService.cs" />
+    <Compile Include="Services\MessageService.cs" />
+    <Compile Include="Services\LogisticsService.cs" />
+    <Compile Include="Services\SpeakerService.cs" />
+    <Compile Include="Specifications\AddressSpecs\AddressValueIsRequired.cs" />
+    <Compile Include="Specifications\AddressSpecs\AddressCityIsRequired.cs" />
+    <Compile Include="Specifications\AddressSpecs\AddressCountryIsRequired.cs" />
+    <Compile Include="Specifications\AddressSpecs\AddressStateIsRequired.cs" />
+    <Compile Include="Specifications\AddressSpecs\AddressZipCodeRequired.cs" />
+    <Compile Include="Specifications\AddressSpecs\AddressCityIsValid.cs" />
+    <Compile Include="Specifications\AddressSpecs\AddressStateIsValid.cs" />
+    <Compile Include="Specifications\AddressSpecs\AddressCountryIsValid.cs" />
+    <Compile Include="Specifications\CollaboratorSpecs\CollaboratorJobTitlePtBrIsRequired.cs" />
+    <Compile Include="Specifications\CollaboratorSpecs\CollaboratorMiniBioPtBrIsRequired.cs" />
+    <Compile Include="Specifications\CollaboratorSpecs\CollaboratorMiniBioEnIsRequired.cs" />
+    <Compile Include="Specifications\CollaboratorSpecs\CollaboratorJobTitleEnIsRequired.cs" />
+    <Compile Include="Specifications\CollaboratorSpecs\CollaboratorMustHaveAProducer.cs" />
+    <Compile Include="Specifications\CollaboratorSpecs\CollaboratorMustHaveAPlayer.cs" />
+    <Compile Include="Specifications\CollaboratorSpecs\CollaboratorMustHaveBadge.cs" />
+    <Compile Include="Specifications\CollaboratorSpecs\CollaboratorMustHaveName.cs" />
+    <Compile Include="Specifications\CollaboratorSpecs\CollaboratorResolutionFoto.cs" />
+    <Compile Include="Specifications\ConferenceSpecs\ConferenceEndTimeIsValid.cs" />
+    <Compile Include="Specifications\ConferenceSpecs\ConferenceStartTimeSmallerEndTime.cs" />
+    <Compile Include="Specifications\ConferenceSpecs\ConferenceStartTimeIsValid.cs" />
+    <Compile Include="Specifications\ConferenceSpecs\ConferenceEndTimeIsRequired.cs" />
+    <Compile Include="Specifications\ConferenceSpecs\ConferenceStartTimeIsRequired.cs" />
+    <Compile Include="Specifications\ConferenceSpecs\ConferenceMustHaveOneSynopsis.cs" />
+    <Compile Include="Specifications\ConferenceSpecs\ConferenceMustHaveOneLecturer.cs" />
+    <Compile Include="Specifications\ConferenceSpecs\ConferenceMustHaveOneTitle.cs" />
+    <Compile Include="Specifications\ConferenceSpecs\ConferenceRoomIsRequired.cs" />
+    <Compile Include="Specifications\ConferenceSpecs\ConferenceDateIsRequired.cs" />
+    <Compile Include="Specifications\ConferenceSpecs\ConferenceSynopsisEnIsRequired.cs" />
+    <Compile Include="Specifications\ConferenceSpecs\ConferenceSynopsisPtBrIsRequired.cs" />
+    <Compile Include="Specifications\ConferenceSpecs\ConferenceTitlePtBrIsRequired.cs" />
+    <Compile Include="Specifications\ConferenceSpecs\ConferenceTitleEnIsRequired.cs" />
+    <Compile Include="Specifications\HoldingSpecs\HoldingMustHaveName.cs" />
+    <Compile Include="Specifications\HoldingSpecs\HoldingResolutionFoto.cs" />
+    <Compile Include="Specifications\HoldingSpecs\HoldingLogoMustHaveValidFormat.cs" />
+    <Compile Include="Specifications\ImageSpecs\ImageIsRequired.cs" />
+    <Compile Include="Specifications\ImageSpecs\ImageResolutionFoto.cs" />
+    <Compile Include="Specifications\LogisticsSpecs\LogisticsDepartureTimeIsValid.cs" />
+    <Compile Include="Specifications\LogisticsSpecs\LogisticsArrivalTimeIsValid.cs" />
+    <Compile Include="Specifications\LogisticsSpecs\LogisticsArrivalTimeIsRequired.cs" />
+    <Compile Include="Specifications\LogisticsSpecs\LogisticsDepartureTimeIsRequired.cs" />
+    <Compile Include="Specifications\LogisticsSpecs\LogisticsDepartureDateIsRequired.cs" />
+    <Compile Include="Specifications\LogisticsSpecs\LogisticsArrivalDateSmallerDepartureDate.cs" />
+    <Compile Include="Specifications\LogisticsSpecs\LogisticsArrivalDateIsRequired.cs" />
+    <Compile Include="Specifications\LogisticsSpecs\LogisticsEventIsRequired.cs" />
+    <Compile Include="Specifications\LogisticsSpecs\LogisticsCollaboratorIsRequired.cs" />
+    <Compile Include="Specifications\MessageSpecs\MessageTextMaxLength.cs" />
+    <Compile Include="Specifications\NegotiationConfigSpecs\NegotiationConfigSpecsMustHaveOneRound.cs" />
+    <Compile Include="Specifications\NegotiationConfigSpecs\NegotiationConfigStartTimeSmallerEndTime.cs" />
+    <Compile Include="Specifications\NegotiationConfigSpecs\NegotiationConfigRoundsSecondTurnIsInvalid.cs" />
+    <Compile Include="Specifications\NegotiationConfigSpecs\NegotiationConfigRoundsFirstTurnIsInvalid.cs" />
+    <Compile Include="Specifications\NegotiationConfigSpecs\NegotiationConfigRoomIsRequired.cs" />
+    <Compile Include="Specifications\NegotiationConfigSpecs\NegotiationConfigEndTimeIsRequired.cs" />
+    <Compile Include="Specifications\NegotiationConfigSpecs\NegotiationConfigEndTimeIsValid.cs" />
+    <Compile Include="Specifications\NegotiationConfigSpecs\NegotiationConfigTimeIntervalBetweenRoundIsValid.cs" />
+    <Compile Include="Specifications\NegotiationConfigSpecs\NegotiationConfigTimeOfEachRoundIsValid.cs" />
+    <Compile Include="Specifications\NegotiationConfigSpecs\NegotiationConfigTimeIntervalBetweenTurnIsValid.cs" />
+    <Compile Include="Specifications\NegotiationConfigSpecs\NegotiationConfigStartTimeIsValid.cs" />
+    <Compile Include="Specifications\NegotiationConfigSpecs\NegotiationConfigStartTimeIsRequired.cs" />
+    <Compile Include="Specifications\NegotiationConfigSpecs\NegotiationConfigDateIsRequired.cs" />
+    <Compile Include="Specifications\NegotiationConfigSpecs\NegotiationConfigRoomIsUnique.cs" />
+    <Compile Include="Specifications\NegotiationRoomConfigSpecs\NegotiationRoomConfigRoomIsRequired.cs" />
+    <Compile Include="Specifications\NegotiationRoomConfigSpecs\NegotiationRoomConfigCountAutomaticTablesIsInvalid.cs" />
+    <Compile Include="Specifications\NegotiationSpecs\NegotiationStartTimeIsInvalid.cs" />
+    <Compile Include="Specifications\NegotiationSpecs\NegotiationTableIsRequired.cs" />
+    <Compile Include="Specifications\NegotiationSpecs\NegotiationStartTimeIsRequired.cs" />
+    <Compile Include="Specifications\NegotiationSpecs\NegotiationRoomIsRequired.cs" />
+    <Compile Include="Specifications\NegotiationSpecs\NegotiationProjectIsRequired.cs" />
+    <Compile Include="Specifications\NegotiationSpecs\NegotiationPlayerIsRequired.cs" />
+    <Compile Include="Specifications\NegotiationSpecs\NegotiationDateIsRequired.cs" />
+    <Compile Include="Specifications\PlayerSpecs\PlayerLogoMustHaveValidFormat.cs" />
+    <Compile Include="Specifications\ImageSpecs\ImageMustHaveValidFormat.cs" />
+    <Compile Include="Specifications\PhoneNumber\PhoneNumberIsRequired.cs" />
+    <Compile Include="Specifications\PhoneNumber\PhoneNumberIsValid.cs" />
+    <Compile Include="Specifications\PlayerSpecs\PlayerDescriptionPtBrIsRequired.cs" />
+    <Compile Include="Specifications\PlayerSpecs\PlayerDescriptionEnIsRequired.cs" />
+    <Compile Include="Specifications\PlayerSpecs\PlayerCnpjIsValid.cs" />
+    <Compile Include="Specifications\PlayerSpecs\PlayerRestrictionsSpecificsPtBrIsRequired.cs" />
+    <Compile Include="Specifications\PlayerSpecs\PlayerRestrictionsSpecificsEnIsRequired.cs" />
+    <Compile Include="Specifications\PlayerSpecs\PlayerCompanyNameIsRequired.cs" />
+    <Compile Include="Specifications\PlayerSpecs\PlayerTradeNameIsRequired.cs" />
+    <Compile Include="Specifications\PlayerSpecs\PlayerWebsiteIsRequired.cs" />
+    <Compile Include="Specifications\PlayerSpecs\PlayerResolutionFoto.cs" />
+    <Compile Include="Specifications\PlayerSpecs\PlayerMustHaveName.cs" />
+    <Compile Include="Specifications\Producer\ProducerCnpjIsValid.cs" />
+    <Compile Include="Specifications\Producer\ProducerDescriptionEnIsRequired.cs" />
+    <Compile Include="Specifications\Producer\ProducerDescriptionPtBrIsRequired.cs" />
+    <Compile Include="Specifications\Producer\ProducerLogoMustHaveValidFormat.cs" />
+    <Compile Include="Specifications\Producer\ProducerMustHaveName.cs" />
+    <Compile Include="Specifications\Producer\ProducerResolutionFoto.cs" />
+    <Compile Include="Specifications\Producer\ProducerTradeNameIsRequired.cs" />
+    <Compile Include="Specifications\Producer\ProducerWebsiteIsRequired.cs" />
+    <Compile Include="Specifications\ProjectPlayerEvaluationSpecs\RecuseReasonMaxLength.cs" />
+    <Compile Include="Specifications\ProjectPlayerEvaluationSpecs\RecuseReasonMinLegth.cs" />
+    <Compile Include="Specifications\ProjectPlayerEvaluationSpecs\RecuseReasonIsRequired.cs" />
+    <Compile Include="Specifications\ProjectSpecs\ProjectLookingFor.cs" />
+    <Compile Include="Specifications\ProjectSpecs\ProjectMustHavePitching.cs" />
+    <Compile Include="Specifications\ProjectSpecs\ProjectMustHaveLinksTeaser.cs" />
+    <Compile Include="Specifications\ProjectSpecs\ProjectMustHaveLinksImage.cs" />
+    <Compile Include="Specifications\ProjectSpecs\ProjectMustHaveTarget.cs" />
+    <Compile Include="Specifications\ProjectSpecs\ProjectMustHaveValueStillNeeded.cs" />
+    <Compile Include="Specifications\ProjectSpecs\ProjectMustHaveValueAlreadyRaised.cs" />
+    <Compile Include="Specifications\ProjectSpecs\ProjectMustHaveEachEpisodePlayingTime.cs" />
+    <Compile Include="Specifications\ProjectSpecs\ProjectMustHaveTotalValueOfProject.cs" />
+    <Compile Include="Specifications\ProjectSpecs\ProjectMustHaveNumberOfEpisodes.cs" />
+    <Compile Include="Specifications\ProjectSpecs\ProjectMustHaveValuePerEpisode.cs" />
+    <Compile Include="Specifications\ProjectSpecs\ProjectMustHaveASubGenre.cs" />
+    <Compile Include="Specifications\ProjectSpecs\ProjectMustHaveAGenre.cs" />
+    <Compile Include="Specifications\ProjectSpecs\ProjectMustHaveAFormat.cs" />
+    <Compile Include="Specifications\ProjectSpecs\ProjectMustHaveASeeking.cs" />
+    <Compile Include="Specifications\ProjectSpecs\ProjectMustHaveAStatus.cs" />
+    <Compile Include="Specifications\ProjectSpecs\ProjectMustHaveAPlatform.cs" />
+    <Compile Include="Specifications\ProjectSpecs\ProductionPlanEnIsRequired.cs" />
+    <Compile Include="Specifications\ProjectSpecs\ProductionPlanPtBrIsRequired.cs" />
+    <Compile Include="Specifications\ProjectSpecs\ProjectSummaryEnIsRequired.cs" />
+    <Compile Include="Specifications\ProjectSpecs\ProjectTitleEnIsRequired .cs" />
+    <Compile Include="Specifications\ProjectSpecs\ProjectLogLineEnIsRequired.cs" />
+    <Compile Include="Specifications\ProjectSpecs\ProjectLogLinePtBrIsRequired.cs" />
+    <Compile Include="Specifications\ProjectSpecs\ProjectSummaryPtBrIsRequired.cs" />
+    <Compile Include="Specifications\ProjectSpecs\ProjectTitlePtBrIsRequired.cs" />
+    <Compile Include="Specifications\User\UserEmailIsValid.cs" />
+    <Compile Include="Entities\Common\Interest.cs" />
+    <Compile Include="Entities\Base\Entity.cs" />
+    <Compile Include="Entities\Collaborator\Collaborator.cs" />
+    <Compile Include="Entities\Common\Address.cs" />
+    <Compile Include="Entities\Collaborator\CollaboratorMiniBio.cs" />
+    <Compile Include="Entities\Common\Activity.cs" />
+    <Compile Include="Entities\Event\Event.cs" />
+    <Compile Include="Entities\Holding\Holding.cs" />
+    <Compile Include="Entities\Collaborator\CollaboratorJobTitle.cs" />
+    <Compile Include="Entities\Player\PlayerDescription.cs" />
+    <Compile Include="Entities\Common\ImageFile.cs" />
+    <Compile Include="Entities\Common\Language.cs" />
+    <Compile Include="Entities\Player\Player.cs" />
+    <Compile Include="Entities\Holding\HoldingDescription.cs" />
+    <Compile Include="Entities\Common\TargetAudience.cs" />
+    <Compile Include="Entities\User\User.cs" />
+    <Compile Include="Entities\User\Role.cs" />
+    <Compile Include="Entities\User\UserUseTerm.cs" />
+    <Compile Include="Validations\Address\AddressIsConsistent.cs" />
+    <Compile Include="Validations\Collaborator\CollaboratorProducerIsComplete.cs" />
+    <Compile Include="Validations\Collaborator\CollaboratorPlayerIsConsistent.cs" />
+    <Compile Include="Validations\Collaborator\CollaboratorProducerIsConsistent.cs" />
+    <Compile Include="Validations\Collaborator\CollaboratorPlayerIsComplete.cs" />
+    <Compile Include="Validations\Collaborator\CollaboratorIsConsistent.cs" />
+    <Compile Include="Validations\Collaborator\CollaboratorImageIsConsistent.cs" />
+    <Compile Include="Validations\Conference\ConferenceIsConsistent.cs" />
+    <Compile Include="Validations\Holding\HoldingImageIsConsistent.cs" />
+    <Compile Include="Validations\Holding\HoldingIsConsistent.cs" />
+    <Compile Include="Validations\Image\ImageResolutionIsConsistent.cs" />
+    <Compile Include="Validations\Image\ImageIsConsistent.cs" />
+    <Compile Include="Validations\Logistics\LogisticsIsConsistent.cs" />
+    <Compile Include="Validations\Message\MessageIsConsistent.cs" />
+    <Compile Include="Validations\NegotiationConfig\NegotiationConfigIsConsistent.cs" />
+    <Compile Include="Validations\NegotiationRoomConfig\NegotiationRoomConfigIsConsistent.cs" />
+    <Compile Include="Validations\Negotiation\NegotiationIsConsistent.cs" />
+    <Compile Include="Validations\PhoneNumber\PhoneNumberIsConsistent.cs" />
+    <Compile Include="Validations\Player\PlayerImageIsConsistent.cs" />
+    <Compile Include="Validations\Player\PlayerIsInterestsIsConsistent.cs" />
+    <Compile Include="Validations\Player\PlayerIsConsistentForPortal.cs" />
+    <Compile Include="Validations\Player\PlayerIsConsistent.cs" />
+    <Compile Include="Validations\Producer\ProducerImageIsConsistent.cs" />
+    <Compile Include="Validations\Producer\ProducerIsConsistent.cs" />
+    <Compile Include="Validations\Producer\ProducerIsConsistentForPreRegistration.cs" />
+    <Compile Include="Validations\Producer\ProducerIsConsistentForPortal.cs" />
+    <Compile Include="Validations\ProjectPlayerEvaluation\ProjectPlayerEvaluationRecuseIsConsistent.cs" />
+    <Compile Include="Validations\Project\ProjectIsConsistent.cs" />
+    <Compile Include="Validations\User\UserIsConsistent.cs" />
+    <Compile Include="Enums\ClaimCodes.cs" />
+    <Compile Include="Enums\ErrorCodes.cs" />
+    <Compile Include="Enums\LanguageCodes.cs" />
+    <Compile Include="Enums\InterestGroupTypeCodes.cs" />
+    <Compile Include="Enums\UserRoles.cs" />
+    <Compile Include="Interfaces\Entities\IEntity.cs" />
+    <Compile Include="Interfaces\Repositories\Project\IProjectAdditionalInformationRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Project\IProjectInterestRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Project\IProjectLinkImageRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Project\IProjectLinkTeaserRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Project\IProjectLogLineRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Project\IProjectProductionPlanRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Project\IProjectTitleRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Project\IProjectSummaryRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Project\IProjectRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Producer\IProducerTargetAudienceRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Producer\IProducerActivityRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Player\IPlayerActivityRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Player\IPlayerRestrictionsSpecificsRepository..cs" />
+    <Compile Include="Interfaces\Repositories\Player\IPlayerTargetAudienceRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Common\ITargetAudienceRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Collaborator\ICollaboratorMiniBioRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Collaborator\ICollaboratorJobTitleRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Activity\IActivityRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Common\IInterestGroupRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Producer\IProducerDescriptionRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Player\IPlayerInterestRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Player\IPlayerDescriptionRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Holding\IHoldingDescriptionRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Common\IImageFileRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Event\IEventRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Collaborator\ICollaboratorRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Common\ILanguageRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Producer\IProducerRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IRepositoryFactory.cs" />
+    <Compile Include="Interfaces\Repositories\User\IRoleRepository.cs" />
+    <Compile Include="Interfaces\Repositories\User\IUserRoleRepository.cs" />
+    <Compile Include="Interfaces\Repositories\User\IUserUseTermRepository.cs" />
+    <Compile Include="Interfaces\Repositories\User\IUserRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Common\IInterestRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Player\IPlayerRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Holding\IHoldingRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IRepository.cs" />
+    <Compile Include="Interfaces\Services\Common\IService.cs" />
+    <Compile Include="Interfaces\Services\ICollaboratorPlayerService.cs" />
+    <Compile Include="Interfaces\Services\ICollaboratorProducerService.cs" />
+    <Compile Include="Interfaces\Services\ICollaboratorService.cs" />
+    <Compile Include="Interfaces\Services\IPlayerRestrictionsSpecificsService.cs" />
+    <Compile Include="Interfaces\Services\IInterestService.cs" />
+    <Compile Include="Interfaces\Services\IInterestGroupService.cs" />
+    <Compile Include="Interfaces\Services\IPlayerInterestService.cs" />
+    <Compile Include="Interfaces\Services\IEventService.cs" />
+    <Compile Include="Interfaces\Services\IHoldingService.cs" />
+    <Compile Include="Interfaces\Services\ILanguageService.cs" />
+    <Compile Include="Interfaces\Services\IProjectService.cs" />
+    <Compile Include="Interfaces\Services\IProducerService.cs" />
+    <Compile Include="Interfaces\Services\IUserUseTermService.cs" />
+    <Compile Include="Interfaces\Services\IUserService.cs" />
+    <Compile Include="Interfaces\Services\IPlayerService.cs" />
+    <Compile Include="Interfaces\Specification\ISpecification.cs" />
+    <Compile Include="Interfaces\Validation\ICollaboratorValidator.cs" />
+    <Compile Include="Interfaces\Validation\IValidation.cs" />
+    <Compile Include="Interfaces\Validation\IValidationRule.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CollaboratorPlayerService.cs" />
+    <Compile Include="Services\CollaboratorProducerService.cs" />
+    <Compile Include="Services\ProjectService.cs" />
+    <Compile Include="Services\ProducerService.cs" />
+    <Compile Include="Services\InterestService.cs" />
+    <Compile Include="Services\PlayerRestrictionsSpecificsService.cs" />
+    <Compile Include="Services\PlayerInterestService.cs" />
+    <Compile Include="Services\InterestGroupService.cs" />
+    <Compile Include="Services\PlayerAdminService.cs" />
+    <Compile Include="Services\UserUseTermService.cs" />
+    <Compile Include="Services\UserService.cs" />
+    <Compile Include="Services\EventService.cs" />
+    <Compile Include="Services\Common\Service.cs" />
+    <Compile Include="Services\CollaboratorService.cs" />
+    <Compile Include="Services\LanguageService.cs" />
+    <Compile Include="Services\PlayerService.cs" />
+    <Compile Include="Services\HoldingService.cs" />
+    <Compile Include="Entities\User\UserRole.cs" />
+    <Compile Include="Validation\Validation.cs" />
+    <Compile Include="Validation\ValidationError.cs" />
+    <Compile Include="Validation\ValidationResult.cs" />
+    <Compile Include="Validation\ValidationRule.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PlataformaRio2C.Infra.CrossCutting.Resources\PlataformaRio2C.Infra.CrossCutting.Resources.csproj">
+      <Project>{7E1DE835-DDC4-416A-A2B7-9B4F5FFFFBF4}</Project>
+      <Name>PlataformaRio2C.Infra.CrossCutting.Resources</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Specifications\Interests\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="bin\Debug\PlataformaRio2C.Domain.dll.config" />
+    <None Include="bin\Debug\PlataformaRio2C.Infra.CrossCutting.Resources.dll.config" />
+    <None Include="bin\Release\PlataformaRio2C.Domain.dll.config" />
+    <None Include="bin\Release\PlataformaRio2C.Infra.CrossCutting.Resources.dll.config" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\en-us\PlataformaRio2C.Infra.CrossCutting.Resources.resources.dll" />
+    <Content Include="bin\Debug\EntityFramework.dll" />
+    <Content Include="bin\Debug\EntityFramework.SqlServer.dll" />
+    <Content Include="bin\Debug\EntityFramework.SqlServer.xml" />
+    <Content Include="bin\Debug\EntityFramework.xml" />
+    <Content Include="bin\Debug\log4net.dll" />
+    <Content Include="bin\Debug\log4net.xml" />
+    <Content Include="bin\Debug\Migrations.dll" />
+    <Content Include="bin\Debug\PlataformaRio2C.Domain.dll" />
+    <Content Include="bin\Debug\PlataformaRio2C.Domain.pdb" />
+    <Content Include="bin\Debug\PlataformaRio2C.Infra.CrossCutting.Resources.dll" />
+    <Content Include="bin\Debug\PlataformaRio2C.Infra.CrossCutting.Resources.pdb" />
+    <Content Include="bin\Release\en-us\PlataformaRio2C.Infra.CrossCutting.Resources.resources.dll" />
+    <Content Include="bin\Release\EntityFramework.dll" />
+    <Content Include="bin\Release\EntityFramework.SqlServer.dll" />
+    <Content Include="bin\Release\EntityFramework.SqlServer.xml" />
+    <Content Include="bin\Release\EntityFramework.xml" />
+    <Content Include="bin\Release\log4net.dll" />
+    <Content Include="bin\Release\log4net.xml" />
+    <Content Include="bin\Release\Migrations.dll" />
+    <Content Include="bin\Release\PlataformaRio2C.Domain.dll" />
+    <Content Include="bin\Release\PlataformaRio2C.Domain.pdb" />
+    <Content Include="bin\Release\PlataformaRio2C.Infra.CrossCutting.Resources.dll" />
+    <Content Include="bin\Release\PlataformaRio2C.Infra.CrossCutting.Resources.pdb" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

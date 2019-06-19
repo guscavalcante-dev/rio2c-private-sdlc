@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = Labels.Rio2CSchedules;    
+    Layout = "~/Views/Shared/_LayoutPrint.cshtml";
+}
+
+<div class="content content-header-button clearfix">
+    <h1 class="page-title" style="text-align: center;">@ViewBag.Title</h1>
+   
+</div>
+
+
+<section class="wrapper-no-margin-top" ng-controller="ScheduleList as vm" data-area="print">
+    @Html.Partial("_SchedulePrint")
+</section>
+

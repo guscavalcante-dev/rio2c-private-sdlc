@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = Labels.Welcome;
+}
+
+<div class="content">
+    @*<div class="alert alert-warning fade in alert-dismissable producer-alert">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+        @Html.Raw(Messages.MandatoryToSubmitYourProject)
+    </div>*@
+    
+    <h1 class="page-title">@ViewBag.Title</h1>
+    <div class="news-message">
+        @Html.Raw(Texts.WelcomeContentProducer) 
+        <hr />
+    </div> 
+    @*<h4 class="event-rules">Regulamento das Rodadas de negócios | One-to-one metting rules  <a href="" title="Regulamento das Rodadas de negócios | One-to-one mettings rules"><i class=" icon-external-link"></i></a> </h4>*@
+</div>

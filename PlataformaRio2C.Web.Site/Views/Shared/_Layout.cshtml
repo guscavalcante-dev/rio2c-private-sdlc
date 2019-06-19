@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+<html class="no-js" lang="@CultureHelper.GetCurrentNeutralCulture()" ng-app="Rio2C">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <title>@ViewBag.Title - Plataforma Rio2c</title>
+    @Styles.Render("~/Content/assets/css")
+    @Styles.Render("~/Content/css")
+
+
+</head>
+<body class="full-width" ng-cloak>
+    <section id="container">
+        @Html.Partial("_Header")
+
+        <section id="main-content">
+            <section class="wrapper wrapper-no-margin-top">
+                @Html.StatusMessages()
+                @RenderBody()
+            </section>
+        </section>
+
+        @Html.Partial("_Footer")
+
+    </section>
+
+    @Scripts.Render("~/scripts/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="/Scripts/jquery.signalR-2.3.0.min.js"></script>
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Content/assets/js")
+    @Scripts.Render("~/Content/js/bundle")
+    @Scripts.Render("~/Scripts/angular/bundles")
+    @Scripts.Render("~/Content/js/Rio2C/bundles")
+
+    <script src='/signalr/hubs'></script>
+    @RenderSection("scripts", required: false)
+
+
+    <script>
+        //Script for EXCLAMATION TOOLTIPS//
+        $(document).ready(function () {
+            $('span[data-toggle="tooltip"]').tooltip();
+
+            $("#CountryId").change(function () {
+                var country = $(this).val();
+                $("#Address_Country").val(country);
+
+                if (country == 30) {
+                    $.ajax({
+                        url: "ListStates",
+                        type: "post",
+                        data: { code: country },
+                        dataType: 'json',
+                        success: function (r) {
+
+                            if ($("#StateId option").length >= 1) {
+                                $("#StateId option").each(function (i, el) {
+                                    if (i >= 1) {
+                                        $(this).remove();
+                                    }
+                                });
+                            }
+
+                            var option = "";
+                            $(r).each(function (i, el) {
+                                option = "<option value='" + el.Id + "'>" + el.StateName + " (" + el.StateCode + ")</option>";
+                                $("#StateId").append(option);
+                            });
+
+                            var stateId = $("#Address_StateId").val();
+                            if (stateId != 0) {
+                                $("#StateId").val(stateId).change();
+                                $("#Address_StateId").val(0);
+                            }
+
+                        }
+                    });
+
+                    $("#stateBrazil").removeClass("hidden");
+                    $("#stateNotBrazil").addClass("hidden");
+
+                    $("#cityBrazil").removeClass("hidden");
+                    $("#cityNotBrazil").addClass("hidden");
+
+                    $("#stateNotBrazil").val('');
+                } else {
+                    $("#stateNotBrazil").removeClass("hidden");
+                    $("#stateBrazil").addClass("hidden");
+
+                    $("#cityNotBrazil").removeClass("hidden");
+                    $("#cityBrazil").addClass("hidden");
+
+                    $("#CityId").val('0');
+                    $("#StateId").val('0');
+                }
+                
+            })
+
+            $("#StateId").change(function () {
+                var state = $(this).val();
+                $("#Address_StateId").val(state);
+
+                $.ajax({
+                    url: "ListCities",
+                    type: "post",
+                    dataType: "json",
+                    data: { code: state },
+                    success: function (r) {
+                        console.log(r);
+
+                        if ($("#CityId option").length > 1) {
+                            $("#CityId option").each(function (i, el) {
+                                if (i >= 1) {
+                                    $(this).remove();
+                                }
+                            });
+                        }
+                        var option = "";
+                        $(r).each(function (i, el) {
+                            option = "<option value='" + el.Id + "'>" + el.Name + "</option>";
+                            $("#CityId").append(option);
+                        });
+
+
+                        var cityId = $("#Address_CityId").val();
+                        if (cityId != 0) {
+                            $("#CityId").val(cityId).change();                            
+                        }
+                    }
+                })
+
+                $("#cityBrazil").removeClass("hidden");
+                $("#cityNotBrazil").addClass("hidden");
+
+                $("#cityNotBrazil").val('');
+            });
+
+            $("#CityId").change(function () {
+                var city = $(this).val();
+                $("#Address_CityId").val(city);
+            });
+
+            $(".culture").click(function (e) {
+                e.preventDefault();
+
+                var culture = $("#culture").val()
+                var intentCulture = $(this).attr('data-value');
+
+                if (culture != intentCulture) {
+                    var baseUrl = window.location.pathname;
+
+                    //window.location = ".." + baseUrl;
+                    window.location = "../Account/SetCulture?culture=" + intentCulture;
+                    console.log(baseUrl);
+                }
+            })
+        });
+    </script>
+
+    @Html.StatusMessageModal()
+</body>
+</html>

@@ -1,0 +1,71 @@
+﻿@model ProjectDetailAppViewModel
+
+@{
+    string projectTitle = null;
+    ProjectTitleAppViewModel titlePt = null;
+    ProjectTitleAppViewModel titleEn = null;
+
+    if (Model.Titles != null && Model.Titles.Any(e => !string.IsNullOrWhiteSpace(e.Value)))
+    {
+        titlePt = Model.Titles.FirstOrDefault(j => j.LanguageCode == "PtBr");
+        titleEn = Model.Titles.FirstOrDefault(j => j.LanguageCode == "En");
+        projectTitle = string.Format("{0} | {1}", titlePt.Value, titleEn.Value);
+    }
+}
+
+<!-- Modal -->
+<div aria-hidden="true" aria-labelledby="modalSendToPlayers" role="dialog" tabindex="-1" id="modalSendToPlayers" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-send-players-title">@Texts.ConfirmIndicationForEvaluation</h4>
+            </div>
+
+            <div class="modal-body">
+                <span ng-if="ctrlPlayerList.sendingToPlayers" class="rio2c-loading"></span>
+
+                <div data-alerta="" ng-model="ctrlPlayerList.ErrosSendPlayerSelection"></div>
+
+                <div class="container-box-players clearfix">
+                    <div class="header-players-modal-box">
+                        <h3>@Texts.PlayersSelectedForEvaluation</h3>
+                        <div ng-if="!ctrlPlayerList.loadingPlayers && ctrlPlayerList.playersSelected.length > 0" class="projects-structure-box-players-images clearfix">
+                            <div ng-repeat="player in ctrlPlayerList.playersSelected" class="figure-wrapper">
+                                <figure>
+                                    <div class="wrapper-images">
+                                        <img ng-if="!player.image" ng-model="player" class="img-thumbnail" src="~/Content/img/profile-avatar.png" alt="{{player.name}}" title="{{player.name}}" load-image="{{player.uid}}" ng-disable-load-image="{{!player.hasImage}}" url-load="/api/players/thumbImage" />
+                                        <img ng-if="player.image" ng-model="player" class="img-thumbnail" ng-src="data:image/jpeg;base64, {{player.image.file}}" alt="{{player.name}}" title="{{player.name}}" />
+                                    </div>
+                                    <figcaption>
+                                        <p>
+                                            {{player.name}}
+                                        </p>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="paragraph-box-send-project">
+                    <p class="text-question">@string.Format(Texts.WouldYouLikeToSubmitProject, projectTitle)</p>
+                    <div class="alert alert-warning">
+                        <p ng-if="ctrlPlayerList.playersSelected.length < 5">
+                            @string.Format(Messages.AttentionPossiblePlayersNotSelected, "{{ctrlPlayerList.playersSelected.length}}", ProjectDetailAppViewModel.SendPlayerCountMax)
+                        </p>
+                        <p>
+                            @Texts.AfterSubmitCantChange
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer ">
+                <button data-dismiss="modal" class="btn btn-default pull-left" type="button">@Labels.Cancel</button>
+                <button id="btn-trigger-send" class="btn btn-success button-confirm pull-right" ng-click="ctrlPlayerList.sendToPlayers()" ng-disabled="ctrlPlayerList.sendingToPlayers">@Labels.Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- modal -->

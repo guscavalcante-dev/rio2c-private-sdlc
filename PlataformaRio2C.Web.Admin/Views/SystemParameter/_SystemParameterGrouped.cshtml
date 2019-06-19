@@ -1,0 +1,62 @@
+﻿@model IList<PlataformaRio2C.Infra.CrossCutting.SystemParameter.ViewModels.SystemParameterAppViewModel>
+
+@using (Html.BeginForm("Index", "SystemParameter", FormMethod.Post, new { @class = "crud", ng_submit = "vm.saveConfigurationGroup($event)" }))
+{
+    @Html.AntiForgeryToken();
+    @Html.ValidationSummary(true);
+
+    @*<p class="ra-message-error" ng-if="vm.errorMessage != null">{{vm.errorMessage}}</p>*@
+
+for (int i = 0; i < Model.Count(); i++)
+{
+    @Html.HiddenFor(modelItem => Model[i].Uid)
+    @Html.HiddenFor(modelItem => Model[i].Code)
+    @Html.HiddenFor(modelItem => Model[i].TypeName)
+    @Html.HiddenFor(modelItem => Model[i].GroupCode)
+    @Html.HiddenFor(modelItem => Model[i].Visible)
+
+    if (Model[i].Code.ToUpper().Contains("PASSWORD"))
+    {
+        <div class="form-group">
+            <label for="@Model[i].Uid">@Html.Raw(Model[i].Description)</label>
+            @*@Html.HiddenFor(modelItem => Model[i].Description)*@
+            @Html.Password("[" + i + "].Value", Model[i].Value, new { style = "width:400px", @class = "textEdit form-control passwordfield", id = Model[i].Uid })
+            @Html.ValidationMessage(Model[i].Code)
+        </div>
+            <div class="form-group">
+                <label for="@Model[i].Uid">@*@Html.SystemText(SystemTextCodes.Label_System_Parameter_Confirm) @Html.Raw(Model[i].Description)*@</label>
+                @Html.Password("Confirm" + Model[i].Code, Model[i].Value, new { style = "width:400px", @class = "textEdit form-control confirmpasswordfield", id = Model[i].Uid, data_val = "true", data_val_equalto_other = "[" + i + "].Value", data_val_equalto = "A senha não foi confirmada" })
+                @Html.ValidationMessage("Confirm" + Model[i].Code)
+            </div>
+    }
+    else
+    {
+        if (Model[i].Code.EndsWith("ConnectionString"))
+        {
+            <div class="form-group">
+                <label for="@Model[i].Uid">@Html.Raw(Model[i].Description)</label>
+                @*@Html.HiddenFor(modelItem => Model[i].Description)*@
+                @Html.TextBox("[" + i + "].Value", Model[i].Value, new { style = "width:400px", @class = "textEdit form-control", id = Model[i].Uid, required = "required" })
+                @Html.ValidationMessage(Model[i].Code)
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                <label for="@Model[i].Uid">@Html.Raw(Model[i].Description)</label>
+
+                @*@Html.HiddenFor(modelItem => Model[i].Description)*@
+                @Html.TextBoxFor(modelItem => Model[i].Value, new { style = "width:400px", @class = "textEdit form-control", id = Model[i].Uid })
+                @Html.ValidationMessageFor(modelItem => Model[i].Value)
+            </div>
+        }
+    }
+}
+//if (Html.HasPermissions(new int[] { (int)PermissionCodes.EDIT_PARAMETERS }))
+//{
+            <div class="editor-buttons">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+            </div>
+    //}
+}
+

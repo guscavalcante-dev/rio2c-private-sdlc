@@ -1,0 +1,215 @@
+﻿@*
+    com Datatable
+    falta arrumar o json
+*@
+@model PlataformaRio2C.Application.ViewModels.ProjectItemListAppViewModel
+
+    @{
+        ViewBag.Title = "Projetos";
+    }
+
+    <section class="panel panel-lg">
+        <header class="panel-heading clearfix">
+            <h2 class="pull-left">@ViewBag.Title</h2>
+        </header>
+
+        <div class="wrap-table table-responsive">
+            <table class="table table-striped table-advance table-hover" id="TableProject">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ProducerName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Id)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.TitlePt)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.TitleEn)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ProjectSubmitted)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Pitching)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.RelatedPlayers)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.NumberOfEvaluations)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CreationDate)
+                        </th>
+                        <th class="editExcludeTd"></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            <a href="@Url.Action("Download")" class="btn btn-lg btn-primary btn-link pull-right">
+                <i class="icon-download-alt"></i>
+                @Labels.DownloadListProjects
+            </a>
+
+            <a href="@Url.Action("DownloadExcel")" class="btn btn-lg btn-primary btn-link pull-left">
+                <i class="icon-download-alt"></i>
+                Download Excel
+            </a>
+
+        </div>
+    </section>
+
+
+
+    <!-- Modal -->
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="modalDelete" class="modal fade" style="display: none;">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title text-center">Atenção!</h4>
+                </div>
+
+                <div class="modal-body">
+                    <p>Tem certeza que deseja excluir?</p>
+                </div>
+
+                <div class="modal-footer ">
+                    <button data-dismiss="modal" class="btn btn-default" type="button">Cancelar</button>
+                    <a href="#" id="btn-trigger-delete" class="btn btn-success button-confirm">Confirmar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal -->
+@*
+        Sem Datatable
+
+    ﻿@model IEnumerable<PlataformaRio2C.Application.ViewModels.ProjectItemListAppViewModel>
+    @{
+        ViewBag.Title = "Projetos";
+    }
+    <div ng-controller="ProjectList as vm">
+        <section class="panel panel-lg">
+            <header class="panel-heading clearfix">
+                <h2 class="pull-left">@ViewBag.Title</h2>
+            </header>
+            <div ng-if="vm.loadingListProject" class="loading-list">
+                <p>Carregando projetos...</p>
+            </div>
+            <div class="count-list-results" ng-if="!vm.loadingListProject">
+                @Html.Raw(String.Format(@Labels.ReturnedItems, "{{vm.listProject.length}}"))
+            </div>
+            <div class="wrap-table table-responsive table-reverse">
+                <table ng-if="!vm.loadingListProject && vm.listProject.length > 0" class="table table-striped table-advance table-hover">
+                    <thead>
+                        <tr>
+                            <th ng-click="vm.getListProject('ProducerName')" class="rio2c-ordained">
+                                Nome da produtora
+                                <span class="" ng-class="{'icon-sort-up' : (vm.orderBy === 'ProducerName' && vm.orderByDesc === false), 'icon-sort-down' : (vm.orderBy == 'ProducerName' && vm.orderByDesc === true)}"></span>
+                            </th>
+                            <th ng-click="vm.getListProject('Id')" class="rio2c-ordained">
+                                Id
+                                <span class="" ng-class="{'icon-sort-up' : (vm.orderBy === 'Id' && vm.orderByDesc === false), 'icon-sort-down' : (vm.orderBy == 'Id' && vm.orderByDesc === true)}"></span>
+                            </th>
+                            <th ng-click="vm.getListProject('TitlePt')" class="rio2c-ordained">
+                                Título em português
+                                <span class="" ng-class="{'icon-sort-up' : (vm.orderBy === 'TitlePt' && vm.orderByDesc === false), 'icon-sort-down' : (vm.orderBy == 'TitlePt' && vm.orderByDesc === true)}"></span>
+                            </th>
+                            <th ng-click="vm.getListProject('TitleEn')" class="rio2c-ordained">
+                                Título em inglês
+                                <span class="" ng-class="{'icon-sort-up' : (vm.orderBy === 'TitleEn' && vm.orderByDesc === false), 'icon-sort-down' : (vm.orderBy == 'TitleEn' && vm.orderByDesc === true)}"></span>
+                            </th>
+
+                            <th ng-click="vm.getListProject('ProjectSubmitted')" class="rio2c-ordained">
+                                Projeto foi enviado?
+                                <span class="" ng-class="{'icon-sort-up' : (vm.orderBy === 'ProjectSubmitted' && vm.orderByDesc === false), 'icon-sort-down' : (vm.orderBy == 'ProjectSubmitted' && vm.orderByDesc === true)}"></span>
+                            </th>
+                            <th>
+                                Qtd. players selecionados
+                            </th>
+                            <th>
+                                Qtd. de avaliações
+                            </th>
+                            <th ng-click="vm.getListProject('CreationDate')" class="rio2c-ordained">
+                                Data de criação
+                                <span class="" ng-class="{'icon-sort-up' : (vm.orderBy === 'CreationDate' && vm.orderByDesc === false), 'icon-sort-down' : (vm.orderBy == 'CreationDate' && vm.orderByDesc === true)}"></span>
+                            </th>
+                            <th class="editExcludeTd"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="project in vm.listProject track by $index">
+                            <td>{{project.producerName}}</td>
+                            <td>{{project.id}}</td>
+                            <td>{{project.titlePt}}</td>
+                            <td>{{project.titleEn}}</td>
+                            <td>
+                                <span ng-if="project.projectSubmitted == true">Sim</span>
+                                <span ng-if="project.projectSubmitted == false">Não</span>
+                            </td>
+                            <td>
+                                <span ng-if="!project.relatedPlayers || project.relatedPlayers.length <= 0">
+                                    {{project.relatedPlayers.length}}
+                                </span>
+                                <a ng-if="project.relatedPlayers && project.relatedPlayers.length > 0"
+                                   href="@Url.Action("PlayerSelection")?uid={{project.uid}}">
+                                    {{project.relatedPlayers.length}}
+                                </a>
+                            </td>
+                            <td>
+                                <span ng-if="!project.numberOfEvaluations || project.numberOfEvaluations <= 0">
+                                    {{project.numberOfEvaluations}}
+                                </span>
+                                <a ng-if="project.numberOfEvaluations && project.numberOfEvaluations > 0"
+                                   href="@Url.Action("PlayerSelection")?uid={{project.uid}}">
+                                    {{project.numberOfEvaluations}}
+                                </a>
+                            </td>
+                            <td>
+                                {{project.creationDate | date: 'dd/MM/yyyy hh:mm'}}
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Edit")?uid={{project.uid}}"> Editar</a> |
+                                <span>
+                                    <a data-toggle="modal" href="#modalDelete" data-urltarget="@Url.Action("Delete")?uid={{project.uid}}"> Excluir </a>
+                                </span>
+                                <a ng-if="project.relatedPlayers && project.relatedPlayers.length > 0" href="@Url.Action("PlayerSelection")?uid={{project.uid}}">
+                                    <br />
+                                    Ver seleção de player do projeto
+                                </a> |
+                                <a href="@Url.Action("Print")?uid={{project.uid}}" target="_blank"> Imprimir</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p ng-if="!vm.loadingListProject && vm.listProject.length <= 0">Nenhuma projeto encontrada.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal -->
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="modalDelete" class="modal fade" style="display: none;">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title text-center">Atenção!</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Tem certeza que deseja excluir?</p>
+                </div>
+                <div class="modal-footer ">
+                    <button data-dismiss="modal" class="btn btn-default" type="button">Cancelar</button>
+                    <a href="#" id="btn-trigger-delete" class="btn btn-success button-confirm">Confirmar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal -->
+*@

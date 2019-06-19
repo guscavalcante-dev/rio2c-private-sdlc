@@ -1,0 +1,56 @@
+﻿@model PreRegistrationAppViewModel
+@{
+    ViewBag.Title = Labels.PreRegistration;
+    Layout = "~/Views/Shared/_LayoutBasic.cshtml";
+    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+    
+}
+
+@using (Html.BeginForm("PreRegistration", "Collaborator", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-signin", role = "form" }))
+{
+    <div class="login-wrap">
+        <section id="loginForm">
+            <div>
+                <h4 class="pre-registration-title">@Labels.WelcomeTitle</h4>
+                <div>@Html.Raw(Labels.RegistrationConfirmation)</div>
+                
+            </div>
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" }).ToMvcHtmlString()
+
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Name) })
+                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "error-login" })
+            </div>
+
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Email) })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "error-login" })
+            </div>
+
+            @if (culture == "pt-br")
+            {
+                <div class="form-group">
+                    @Html.TextBoxFor(m => m.Cnpj, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Cnpj) })
+                    @Html.ValidationMessageFor(m => m.Cnpj, "", new { @class = "error-login" })
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.CompanyName) })
+                    @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "error-login" })
+                </div>
+            }
+            
+            <div class="form-group pre-registration-button">
+                <input type="submit" value="@Labels.Register" class="btn btn-primary btn-lg btn-block" />
+            </div>
+            <div><p class='pre-registration-login-text'>@Html.Raw(Labels.IfAlreadyHaveLogin), <a href="@Url.Action("Login", "Account", new { area = ""})">@Labels.ClickHere</a>.</p></div>
+            
+
+            <div class="pre-registration-contact">@Html.Raw(Labels.PreRegistrationContact)</div>
+        </section>
+    </div>
+}
+

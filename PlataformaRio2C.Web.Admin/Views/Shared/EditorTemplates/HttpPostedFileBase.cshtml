@@ -1,0 +1,52 @@
+﻿@model HttpPostedFileBase
+
+@{
+    var fieldName = ViewData.TemplateInfo.HtmlFieldPrefix;
+    var image = ViewData["Image"] as PlataformaRio2C.Application.ViewModels.ImageFileAppViewModel;
+}
+
+@if (image != null && image.ContentLength > 0)
+{
+
+    <div class="fileinput fileinput-exists" data-provides="fileinput">
+        <div class="fileinput-img fileinput-new">
+            <img src="/Content/img/profile-avatar.png" alt="" />
+        </div>
+        <div class="fileinput-preview fileinput-exists image-container">
+            @Html.HiddenFor(m => image.FileName, new { Name = "Image.FileName" })
+            @Html.HiddenFor(m => image.ContentLength, new { Name = "Image.ContentLength" })
+            @Html.HiddenFor(m => image.ContentType, new { Name = "Image.ContentType" })
+            @Html.HiddenFor(m => image.File, new { Name = "Image.File" })
+
+            @Html.Image(image.File, 0, "", "Logo")
+        </div>
+        <div>
+            <span class="btn btn-default btn-file">
+                <span class="fileinput-new">Selecionar imagem</span>
+                <span class="fileinput-exists">Alterar</span>
+                <input type="file" id="fileInput" name="@fieldName" />
+            </span>
+            <button href="#" class="btn btn-danger fileinput-exists" data-dismiss="fileinput">Remover</button>
+        </div>
+
+    </div>
+}
+else
+{
+    <div class="fileinput fileinput-new" data-provides="fileinput">
+        <div class="fileinput-img fileinput-new">
+            <img src="/Content/img/profile-avatar.png" alt="" />
+        </div>
+        <div class="fileinput-preview fileinput-exists image-container">
+            <img src="/Content/img/profile-avatar.png" alt="" />
+        </div>
+        <div>
+            <span class="btn btn-default btn-file">
+                <span class="fileinput-new">Selecionar imagem</span>
+                <span class="fileinput-exists">Alterar</span>
+                @Html.TextBoxFor(m => m.FileName, new { type = "File", Name = fieldName })
+            </span>
+            <button href="#" class="btn btn-danger fileinput-exists" data-dismiss="fileinput">Remover</button>
+        </div>
+    </div>
+}

@@ -1,0 +1,124 @@
+﻿@model PlataformaRio2C.Application.ViewModels.PlayerEditInterstsAppViewModel
+
+@{
+    ViewBag.Title = "Editar interesses";
+    int index = 0;
+}
+
+
+<div class="col-lg-12">
+    <section class="panel">
+        <header class="panel-heading">
+            <h2>@ViewBag.Title</h2>
+        </header>
+        <div class="panel-body">
+            <div class="btn-group">
+                <a class="btn btn-link pull-left" href="@Url.Action("Index")"> « Voltar</a>
+            </div>
+
+            @using (Html.BeginForm("EditInterests", "Player", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <aside class="profile-info col-lg-12">
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.Uid)
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", disabled= "disabled" } })
+                    </div>
+
+                   
+                    @Html.ValidationMessage("RestrictionsSpecifics", htmlAttributes: new { @class = "text-danger" })
+                    @if (Model.RestrictionsSpecifics != null && Model.RestrictionsSpecifics.Any())
+                    {
+                        for (int i = 0; i < Model.LanguagesOptions.Count(); i++)
+                        {
+                            var code = Model.RestrictionsSpecifics.ToList().FirstOrDefault(e => e.LanguageCode == Model.LanguagesOptions.ElementAt(i).Code);
+                            var codeValue = code != null ? code.Value : null;
+                            var languageCodeValue = code != null ? code.LanguageCode : null;
+                            var labelLanguage = Model.LanguagesOptions.ElementAt(i).Name.Contains("Português") ? Labels.Portuguese : Model.LanguagesOptions.ElementAt(i).Name;
+
+                            <div class="form-group">
+                                <label class="control-label">Restrição/especificação @labelLanguage</label>
+
+                                <textarea name="RestrictionsSpecifics[@i].Value" class="form-control">@codeValue</textarea>
+                                <input type="hidden" value="@languageCodeValue" name="RestrictionsSpecifics[@i].LanguageCode" class="form-control" />
+
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < Model.LanguagesOptions.Count(); i++)
+                        {
+                            var codeValue = Model.LanguagesOptions.ElementAt(i).Code;
+                            <div class="form-group">
+                                <label class="control-label">Restrição/especificação @Model.LanguagesOptions.ElementAt(i).Name</label>
+
+                                <textarea name="RestrictionsSpecifics[@i].Value" class="form-control ckeditor-rio2c"></textarea>
+                                <input type="hidden" value="@codeValue" name="RestrictionsSpecifics[@i].LanguageCode" class="form-control" />
+
+                            </div>
+                        }
+                    }
+
+
+
+                    @foreach (var group in Model.Interests.Select(g => g.InterestGroupName).Distinct())
+                    {
+                        var interestsInGroup = Model.Interests.Where(a => a.InterestGroupName == group).ToList();
+
+                        if (group.Contains("Format") || group.Contains("Audiovisual Genre"))
+                        {
+                            interestsInGroup = interestsInGroup.OrderBy(e => e.InterestName).ToList();
+                        }
+
+                        <div class="panel panel-primary">
+                            <div class="panel-heading" role="tab" id="heading_@index">
+                                <h4 class="panel-title">
+                                    @group
+                                </h4>
+                            </div>
+                            <div class="panel-body bio-graph-info">
+                                @if (Model.Interests.Any(e => e.InterestGroupName == group && e.InterestGroupType == "Multiple"))
+                    {
+                        foreach (var interests in interestsInGroup)
+                        {
+                                        <input name="Interests[@index].PlayerId" type="hidden" value="@interests.PlayerId" />
+                                        <input name="Interests[@index].EventId" type="hidden" value="@interests.EventId" />
+                                        <input name="Interests[@index].InterestId" type="hidden" value="@interests.InterestId" />
+                                        <input name="Interests[@index].InterestName" type="hidden" value="@interests.InterestName" />
+                                        <input name="Interests[@index].InterestGroupName" type="hidden" value="@interests.InterestGroupName" />
+                                        <input name="Interests[@index].InterestGroupType" type="hidden" value="@interests.InterestGroupType" />
+                                        <div class="checkboxes row-fluid">
+                                            <label class="col-sm-4" style="font-weight: bold;">
+                                                @Html.CheckBoxFor(m => interests.Selected, new { Name = "Interests[" + index + "].Selected" }) @interests.InterestName
+
+                                            </label>
+                                        </div>
+
+                                        {
+                                            index++;
+                                        }
+                                    }
+                                }
+                            </div>
+                        </div>
+                    }
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <input type="submit" value="Salvar" class="btn btn-default pull-right" />
+                        </div>
+                    </div>
+
+                </aside>
+            }
+        </div>
+    </section>
+</div>
+
+
+
+

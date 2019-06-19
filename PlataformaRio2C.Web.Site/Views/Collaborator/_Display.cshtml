@@ -1,0 +1,174 @@
+﻿@model CollaboratorDetailAppViewModel
+
+
+<div class="nav-content clearfix">
+    <aside class="profile-nav col-lg-3">
+        <div class="user-heading">
+            <a href="#">
+                @if (Model.Image != null && Model.Image.File != null)
+                {
+                    @Html.Image(Model.Image.File, 0, "", "Model.Name")
+                }
+                else
+                {
+                    <img ng-model="collaborator" class="img-thumbnail" src="~/Content/img/profile-avatar.png" alt="@Model.Name" title="@Model.Name" load-image="@Model.Uid" url-load="/api/collaborators/image" />
+                }
+            </a>
+
+            @if (Model.Image == null || Model.Image.File == null)
+            {
+                <div class="fileinput-message">
+                    <span class="label label-danger">@Labels.Warning</span>
+                    <span class="text">@Html.Raw(Labels.ImageSize)</span>
+                    @if (Html.UserInRole("Player"))
+                    {
+                        <span class="text">@Html.Raw(Texts.FacePhoto)</span>
+                    }
+                    else
+                    {
+                        <span class="text">@Html.Raw(Texts.FaceFotoCollaboratorProducer)</span>
+                    }
+                </div>
+            }
+
+        </div>
+
+        <ul class="nav nav-pills nav-stacked">
+            <li class="text-center"><a href="@Url.Action("ProfileEdit", "Collaborator")">@Labels.EditProfile</a></li>
+        </ul>
+    </aside>
+    <aside class="profile-info col-lg-9">
+        <section class="panel">
+            <div class="panel-body bio-graph-info">
+                <h1>@Model.Name</h1>
+                <div class="row">
+
+                    @if (Model.JobTitles != null && Model.JobTitles.Any(e => !string.IsNullOrWhiteSpace(e.Value)))
+                    {
+                        var jobPt = Model.JobTitles.FirstOrDefault(j => j.LanguageCode == "PtBr");
+                        var jobEn = Model.JobTitles.FirstOrDefault(j => j.LanguageCode == "En");
+                        <div class="bio-row">
+                            <p>
+                                @jobEn.Value
+                                @if (jobPt.Value != null)
+                                {
+                                    <span>/ @jobPt.Value</span>
+                                }
+                            </p>
+                        </div>
+                    }
+
+                    @if (Html.UserInRole("Player") && Model.Players != null && Model.Players.Any())
+                    {
+                        <div class="bio-row bio-player">
+                            <h4>Player(s):</h4>
+                            <section class="panel panel-players">
+                                <div class="panel-body">
+                                    <ul class="grid">
+                                        @foreach (var playerViewModel in Model.Players)
+                                        {
+                                            <li>
+                                                @* @MEDIA QUERY IS IN THE GALLERY.LESS FILE *@
+                                                <figure>
+                                                    <div class="wrapper-images">
+                                                        <img ng-model="player" class="img-thumbnail" src="~/Content/img/profile-avatar-logo.png" alt="@playerViewModel.Name" title="@playerViewModel.Name" load-image="@playerViewModel.Uid" url-load="/api/players/thumbImage" />
+                                                    </div>
+
+                                                    <figcaption>
+                                                        <h3 title="@playerViewModel.Name">@playerViewModel.Name</h3>
+                                                    </figcaption>
+                                                </figure>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </section>
+                        </div>
+                    }
+
+                    @if (Html.UserInRole("Producer") && Model.Producers != null && Model.Producers.Any(e => e.Name != null))
+                    {
+                        <div class="bio-row bio-player">
+                            <h4>Produtora:</h4>
+                            <section class="panel panel-players">
+                                <div class="panel-body">
+                                    <ul class="grid">
+                                        @foreach (var producerViewModel in Model.Producers)
+                                        {
+                                            <li>
+                                                @* @MEDIA QUERY IS IN THE GALLERY.LESS FILE *@
+                                                <figure>
+                                                    @if (producerViewModel.Image != null && producerViewModel.Image.File != null)
+                                                    {
+                                                        @Html.Image(producerViewModel.Image.File, 0, "", "Model.Name")
+                                                    }
+                                                    else
+                                                    {
+                                                        <img ng-model="producer" class="img-thumbnail" src="~/Content/img/profile-avatar-logo.png" alt="@producerViewModel.Name" title="@producerViewModel.Name" load-image="@producerViewModel.Uid" url-load="/api/producers/thumbImage" />
+                                                    }
+                                                    <figcaption>
+                                                        <h3 title="@producerViewModel.Name">@producerViewModel.Name</h3>
+                                                    </figcaption>
+                                                </figure>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </section>
+                        </div>
+                    }
+
+                    <div class="bio-row bio-row-detail">
+                        <p>@Html.LabelFor(model => model.Badge, htmlAttributes: new { @class = "control-label" })<span>@Model.Badge</span></p>
+                        <p>@Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label" })<span>@Model.PhoneNumber</span></p>
+                        <p>@Html.LabelFor(model => model.CellPhone, htmlAttributes: new { @class = "control-label" })<span>@Model.CellPhone</span></p>
+
+                        <p>
+                            @Html.LabelFor(model => model.User.Email, htmlAttributes: new { @class = "control-label" })
+                            <span>@Model.User.Email</span>
+                        </p>
+                    </div>
+
+                    <hr />
+                    <div class="bio-row bio-row-detail">
+                        <p>
+                            @Html.LabelFor(model => model.Address.ZipCode, htmlAttributes: new { @class = "control-label" })
+                            <span>@Model.Address.ZipCode</span>
+                        </p>
+
+                        <p>
+                            @Html.LabelFor(model => model.Address.Country, htmlAttributes: new { @class = "control-label" })
+                            <span>@Model.Address.Country</span>
+                        </p>
+
+                        <p>
+                            @Html.LabelFor(model => model.Address.State, htmlAttributes: new { @class = "control-label" })
+                            <span>@Model.Address.State</span>
+                        </p>
+
+                        <p>@Html.LabelFor(model => model.Address.City, htmlAttributes: new { @class = "control-label" })<span>@Model.Address.City</span></p>
+
+                        <p>@Html.LabelFor(model => model.Address.AddressValue, htmlAttributes: new { @class = "control-label" })<span>@Model.Address.AddressValue</span></p>
+                    </div>
+                    <hr />
+                    <div class="bio-row bio-row-detail">
+                        @if (Model.MiniBios != null && Model.MiniBios.Any())
+                        {
+                            <div>
+                                @Html.LabelFor(model => model.MiniBios, htmlAttributes: new { @class = "control-label" })
+                                @foreach (var item in Model.MiniBios)
+                                {
+                                    var labelLanguage = item.LanguageName.Contains("Português") ? Labels.Portuguese : item.LanguageName;
+                                    <p>
+                                        <label class="control-label">@labelLanguage</label>
+                                    </p>
+                                    <div class="detail-value">@Html.Raw(item.Value)</div>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+    </aside>
+</div>

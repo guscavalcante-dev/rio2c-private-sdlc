@@ -1,0 +1,447 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AdditionalInfoDescription" xml:space="preserve">
+    <value>Restrições ou especificidades do que está buscando no mercado.</value>
+    <comment>Restrições ou especificidades do que está buscando no mercado</comment>
+  </data>
+  <data name="EmailBodyForgotPassword" xml:space="preserve">
+    <value>&lt;p&gt;Para alterar sua senha clique aqui: &lt;br/&gt;&lt;a href='{0}'&gt;Alterar senha&lt;/a&gt;&lt;/p&gt;</value>
+  </data>
+  <data name="EmailInviteCollaborator" xml:space="preserve">
+    <value>&lt;p&gt;Prezado(a) Sr(a), @{Name},&lt;/p&gt;
+&lt;p&gt;Seja bem-vindo(a) ao Rio2C / RioContentMarket!&lt;p/&gt;
+&lt;p&gt;Iniciamos as inscrições dos players para as Rodadas de Negócios do &lt;strong&gt;Rio2C / RioContentMarket 2018&lt;/strong&gt;, que acontecerá de &lt;strong&gt;04 a 06 de abril&lt;/strong&gt;, na Cidade das Artes, Barra da Tijuca, Rio de Janeiro.&lt;/p&gt;
+&lt;p&gt;Seguem abaixo as instruções para sua inscrição com o link, login e uma senha para acesso. Solicitamos que, por favor, preencha a ficha até o dia &lt;strong&gt;15 de dezembro&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;O regulamento das Rodadas de Negócios encontra-se disponível ao iniciar seu cadastro no sistema.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Acesse o link &lt;strong style="color: #797979; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; text-decoration:none"&gt;@{UrlSite}&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Selecione seu idioma.&lt;/li&gt;
+&lt;li&gt;Faça seu login, inserindo seu e-mail "&lt;strong style="color: #797979; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; text-decoration:none"&gt;@{Email}&lt;/strong&gt;" e senha "&lt;strong style="color: #797979; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; text-decoration:none"&gt;@{Password}&lt;/strong&gt;".&lt;/li&gt;
+&lt;li&gt;Leia o regulamento e clique em “Concordo”.&lt;/li&gt;
+&lt;li&gt;Acesse o Menu PERFIL e preencha seu cadastro com seus dados pessoais. &lt;/li&gt;
+&lt;li&gt;É obrigatório o upload da sua foto, conforme as orientações.&lt;/li&gt;
+&lt;li&gt;Preencha a aba PLAYER com os dados da empresa.&lt;/li&gt;
+&lt;li&gt;É obrigatório o upload da logomarca da sua empresa, conforme as orientações.&lt;/li&gt;
+&lt;li&gt;Preencha o questionário na aba INTERESSES. &lt;/li&gt;
+&lt;li&gt;Após finalizar a sua inscrição você receberá um e-mail de confirmação da mesma.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;i&gt;&lt;strong&gt;PLAYERS RODADAS DE NEGÓCIOS&lt;/strong&gt;: Lembramos que as inscrições dos players nas rodadas de negócios é entre os dias &lt;strong&gt;15/11/2017&lt;/strong&gt; e &lt;strong&gt;15/12/2017&lt;/strong&gt;. Faça sua inscrição durante este período, pois não haverá prorrogação da data.&lt;/i&gt;&lt;/p&gt;
+
+&lt;p&gt;
+Atenciosamente, &lt;br/&gt;
+Credenciamento Rio2C / RioContentMarket&lt;br/&gt;
+Email: credenciamento@rio2c.com
+&lt;/p&gt;
+
+&lt;p&gt;
+Produtores de Mercado:&lt;br/&gt;
+Fernando Continentino e Maíra Maranhão&lt;br/&gt;
+fernando@rio2c.com&lt;br/&gt;
+maira@rio2c.com&lt;br/&gt;
+&lt;/p&gt;
+
+
+&lt;hr&gt;
+
+&lt;p&gt;Dear Mr/Mrs @{Name},&lt;/p&gt;
+
+&lt;p&gt;Welcome to Rio2C / RioContentMarket!&lt;/p&gt;
+&lt;p&gt;We have started registering players for &lt;strong&gt;Rio2C / RioContentMarket 2018&lt;/strong&gt; One-to-One Meetings, which will be held from &lt;strong&gt;April 4th to 6th&lt;/strong&gt;, at Cidade das Artes in Rio de Janeiro. &lt;/p&gt;
+
+&lt;p&gt;Please find below the instructions for your registration and the access link, login and password. Please, fill up the form until &lt;strong&gt;December 15th, 2017&lt;/strong&gt;. &lt;/p&gt;
+&lt;p&gt;The One-to-One meetings regulation is available upon registration. &lt;/p&gt; 
+ 
+&lt;ul&gt;
+&lt;li&gt;Please access this link &lt;strong style="color: #797979; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; text-decoration:none"&gt;@{UrlSite}&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Select your language.&lt;/li&gt;
+&lt;li&gt;Begin your login, inserting e-mail "&lt;strong style="color: #797979; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; text-decoration:none"&gt;@{Email}&lt;/strong&gt;" and password "&lt;strong style="color: #797979; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; text-decoration:none"&gt;@{Password}&lt;/strong&gt;".&lt;/li&gt;
+&lt;li&gt;Read the regulation and click on “I agree”.&lt;/li&gt;
+&lt;li&gt;Fill out the requested personal information. &lt;/li&gt;
+&lt;li&gt;Closeup photo is required as specified.&lt;/li&gt;
+&lt;li&gt;Fill out the requested company information. &lt;/li&gt;
+&lt;li&gt;Company logo is required as specified.&lt;/li&gt;
+&lt;li&gt;Answer the INTEREST questionnaire.&lt;/li&gt;
+&lt;li&gt;After finishing your registration, you will receive a confirmation e-mail.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;i&gt;&lt;strong&gt;PLAYERS - ONE-TO-ONE MEETINGS&lt;/strong&gt;: We would like to remind you that players must register for one-to-one meetings between &lt;strong&gt;November 15th and December 15th&lt;/strong&gt;. Please register during this period, as the deadline will not be extended.&lt;/i&gt;&lt;/p&gt;
+
+&lt;p&gt;
+Best regards,&lt;br/&gt;
+Registration Rio2C / RioContentMarket&lt;br/&gt;
+Email: credenciamento@rio2c.com&lt;br/&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+Market Producers: &lt;br/&gt;
+Fernando Continentino and Maíra Maranhão&lt;br/&gt;
+fernando@rio2c.com&lt;br/&gt;
+maira@rio2c.com&lt;br/&gt;
+&lt;/p&gt;</value>
+  </data>
+  <data name="EmailSubjectForgotPassword" xml:space="preserve">
+    <value>Plataforma Rio2c - Esqueci minha senha</value>
+  </data>
+  <data name="ChangePasswordConfirmed" xml:space="preserve">
+    <value>Troca de senha confirmada!</value>
+    <comment>Troca de senha confirmada!</comment>
+  </data>
+  <data name="EnterEmail" xml:space="preserve">
+    <value>Acesse com seu e-mail abaixo.</value>
+    <comment>Deixe seu e-mail abaixo.</comment>
+  </data>
+  <data name="FacePhoto" xml:space="preserve">
+    <value>Fazer upload de uma foto em formato retrato, colorida, de rosto, recente e com &lt;strong&gt;boa qualidade&lt;/strong&gt;. 
+É imprescindível a foto estar em alta resolução, pois será utilizada no catálogo impresso </value>
+    <comment>Favor colocar foto de rosto</comment>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Esqueceu sua senha?</value>
+    <comment>Esqueceu sua senha?</comment>
+  </data>
+  <data name="PasswordWasChanged" xml:space="preserve">
+    <value>Sua senha foi alterada.</value>
+    <comment>Sua senha foi alterada.</comment>
+  </data>
+  <data name="ThanksConfirmation" xml:space="preserve">
+    <value>Obrigado por confirmar seu e-mail.</value>
+    <comment>Obrigado por confirmar seu e-mail</comment>
+  </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>Usuário não encontrado.</value>
+    <comment>Usuário não encontrado.</comment>
+  </data>
+  <data name="VerifyYourEmail" xml:space="preserve">
+    <value>Por favor verifique seu e-mail para redefinir sua senha.</value>
+    <comment>Por favor verifique seu e-mail para redefinir sua senha.</comment>
+  </data>
+  <data name="ConferenceSoon" xml:space="preserve">
+    <value>A programação do Rio2C será divulgada a partir de fevereiro.</value>
+    <comment>A programação do Rio2C será divulgada à partir de fevereiro.</comment>
+  </data>
+  <data name="ProjectSoon" xml:space="preserve">
+    <value>A avaliação de projetos para as Rodadas de Negócios poderá ser realizada a partir de 2 de janeiro até 23 de fevereiro de 2018.</value>
+    <comment>A avaliação de projetos para as Rodadas de Negócio poderá ser realizada à partir de 2 de janeiro até 23 de fevereiro de 2018.</comment>
+  </data>
+  <data name="ScheduleSoon" xml:space="preserve">
+    <value>A agenda final das Rodadas de Negócios será divulgada em Março.</value>
+    <comment>As agendas das Rodadas de Negócios serão divulgadas à partir de 23 de fevereiro.</comment>
+  </data>
+  <data name="WelcomeContent" xml:space="preserve">
+    <value>&lt;div class="news-message-content"&gt;
+            &lt;p&gt;Essa é uma área exclusiva para players.&lt;/p&gt;
+                 
+             &lt;p&gt;Aqui, você poderá manter as suas informações pessoais e da sua empresa atualizadas, receber e avaliar os projetos que deseja atender nas Rodadas de Negócios, ver a sua agenda de palestras e se comunicar com outros players e produtoras através da Rio2C Net.
+            &lt;/p&gt;
+
+            &lt;p&gt;
+                Fique atento ao cronograma abaixo, para não perder nenhuma informação importante:
+                &lt;br&gt;
+                Inscrição de Players: 15.10 a 10.11 de 2018
+                &lt;br&gt;
+                Avaliação de Projetos: 11.12 de 2018 a 11.01 de 2019
+            &lt;/p&gt;
+
+            &lt;p&gt;Atenciosamente,&lt;br /&gt;
+                Equipe Rio2C&lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div class="news-message-contact clearfix"&gt;
+&lt;p class="pull-left"&gt;
+                Maira Maranhão&lt;br /&gt;
+                Produtora de Mercado&lt;br /&gt;
+                &lt;span class="news-message-contact-email"&gt;maira@rio2c.com&lt;/span&gt;&lt;br /&gt;
+                +55 21 30816436 | 20512590 | 98255.6442&lt;br /&gt;
+            &lt;/p&gt;
+            &lt;p class="pull-right"&gt;
+                Fernando Continentino&lt;br /&gt;
+                Produtor de Mercado&lt;br /&gt;
+                &lt;span class="news-message-contact-email"&gt;fernando@rio2c.com&lt;/span&gt;&lt;br /&gt;
+                +55 21 30816436 | 20512590 | 98461.9699&lt;br /&gt;
+            &lt;/p&gt;
+            
+        &lt;/div&gt;</value>
+  </data>
+  <data name="VerifyEmailProducerRegistration" xml:space="preserve">
+    <value>Você foi registrado com sucesso! Verifique seu e-mail com dados de acesso.</value>
+  </data>
+  <data name="PaymentNotConfirmed" xml:space="preserve">
+    <value>Não foi localizada a confirmação de pagamento da sua credencial. Verifique os dados informados e tente novamente.</value>
+  </data>
+  <data name="RegisterAlreadyConfirmed" xml:space="preserve">
+    <value>Seu cadastro já esta confirmado! Para acessar a plataforma Rio2c clique &lt;a href='http://{0}'&gt;aqui&lt;/a&gt;</value>
+  </data>
+  <data name="RegisterPlatform" xml:space="preserve">
+    <value>Registro Plataforma Rio2C</value>
+  </data>
+  <data name="WelcomeText" xml:space="preserve">
+    <value>&lt;p&gt;Olá @{Name},&lt;/p&gt;
+&lt;p&gt;Seja bem vindo(a) a Plataforma Rio2C.&lt;/p&gt;
+&lt;p&gt;Para acessar a Plataforma Rio2C acesse o site: @{UrlSite}&lt;/p&gt;
+&lt;p&gt;Usuário: @{Email}&lt;/p&gt;
+&lt;p&gt;Senha: @{Password}&lt;/p&gt;</value>
+  </data>
+  <data name="WelcomeTextProducer" xml:space="preserve">
+    <value>&lt;p&gt;Olá @{Name},&lt;/p&gt;
+&lt;p&gt;Seja bem vindo(a) a Plataforma Rio2C.&lt;/p&gt;
+&lt;p&gt;Seu cadastro como Produtor(a) foi confirmado.&lt;/p&gt;
+&lt;p&gt;Acesse Plataforma Rio2C no link: @{UrlSite} com seus dados de acesso.&lt;/p&gt;</value>
+  </data>
+  <data name="SelectLanguage" xml:space="preserve">
+    <value>Selecione um idioma</value>
+    <comment>Selecione um idioma</comment>
+  </data>
+  <data name="YouAreCurrentlyBrowsingAs" xml:space="preserve">
+    <value>Você está acessando como</value>
+    <comment>Você está acessando como</comment>
+  </data>
+  <data name="ForYourConvenience" xml:space="preserve">
+    <value>Para sua conveniência, os projetos podem ser salvos e modificados antes do envio final. Caso o projeto não seja enviado até o dia 17 DE JANEIRO será automaticamente excluído. Uma vez finalizados e enviados para os players, os projetos NÃO PODEM SER ALTERADOS.</value>
+  </data>
+  <data name="FundingPlan" xml:space="preserve">
+    <value>Plano de financiamento (apenas projetos em desenvolvimento / produção) </value>
+  </data>
+  <data name="LinksImageTeaser" xml:space="preserve">
+    <value>(Não serão aceitos links para download, só para sites de compartilhamento de imagem ou vídeo, ex: youtube e Vimeo.) </value>
+  </data>
+  <data name="ProjectBudget" xml:space="preserve">
+    <value>Orçamento do projeto (apenas para projetos em desenvolvimento / produção)</value>
+  </data>
+  <data name="SelectionForPitchingSessions" xml:space="preserve">
+    <value>Deseja participar do processo de seleção para apresentar esse projeto nas sessões de PITCHING do Rio2C/RioContentMarket?</value>
+  </data>
+  <data name="AfterSubmitCantChange" xml:space="preserve">
+    <value>Após submetê-lo, este projeto não poderá mais ser editado.</value>
+  </data>
+  <data name="ConfirmIndicationForEvaluation" xml:space="preserve">
+    <value>Confirmar indicação para avaliação</value>
+  </data>
+  <data name="NotPossibleToSaveSelection" xml:space="preserve">
+    <value>Não foi possível salvar a seleção. Motivo(s):</value>
+  </data>
+  <data name="PlayersSelectedForEvaluation" xml:space="preserve">
+    <value>Players selecionados para avaliação deste projeto</value>
+  </data>
+  <data name="WaitProcessingPlayerSelection" xml:space="preserve">
+    <value>Aguarde estamos processando a seleção de player</value>
+  </data>
+  <data name="WouldYouLikeToSubmitProject" xml:space="preserve">
+    <value>Gostaria de submeter o projeto "{0}" para avaliação destes players?</value>
+  </data>
+  <data name="WillTakePartInPitching" xml:space="preserve">
+    <value>Participará no processo de seleção das sessões PITCHING no Rio2C / RioContentMarket</value>
+  </data>
+  <data name="WelcomeContentProducer" xml:space="preserve">
+    <value>&lt;div class="news-message-content"&gt;
+            &lt;p&gt;Essa é uma área exclusiva para produtoras.&lt;/p&gt;
+                 
+             &lt;p&gt;Aqui, você poderá manter as suas informações pessoais e da sua empresa atualizadas, cadastrar e submeter os projetos.
+            &lt;/p&gt;
+          
+            &lt;p&gt;Atenciosamente,&lt;br /&gt;
+                Equipe Rio2C&lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div class="news-message-contact clearfix"&gt;
+            &lt;p class="pull-left"&gt;
+                Fernando Continentino&lt;br /&gt;
+                Produtor de Mercado&lt;br /&gt;
+                &lt;span class="news-message-contact-email"&gt;fernando@rio2c.com&lt;/span&gt;&lt;br /&gt;
+                +55 21 30816436 | 20512590 | 98461.9699&lt;br /&gt;
+            &lt;/p&gt;
+            &lt;p class="pull-right"&gt;
+                Maira Maranhão&lt;br /&gt;
+                Produtora de Mercado&lt;br /&gt;
+                &lt;span class="news-message-contact-email"&gt;maira@rio2c.com&lt;/span&gt;&lt;br /&gt;
+                +55 21 30816436 | 20512590 | 98255.6442&lt;br /&gt;
+            &lt;/p&gt;
+        &lt;/div&gt;</value>
+  </data>
+  <data name="FaceFotoCollaboratorProducer" xml:space="preserve">
+    <value>Fazer upload de uma foto em formato retrato, colorida, de rosto, recente e com boa qualidade. 
+É imprescindível a foto estar em alta resolução, pois será utilizada no catálogo impresso</value>
+  </data>
+  <data name="NoProjectRegistered" xml:space="preserve">
+    <value>Nenhum projeto cadastrado.</value>
+  </data>
+  <data name="DoYouReallyWishAccept" xml:space="preserve">
+    <value>&lt;label&gt;Deseja realmente confirmar o interese no projeto "&lt;span&gt;{0}&lt;/span&gt;" para o player "&lt;span&gt;{1}&lt;/span&gt;"&lt;/label&gt;</value>
+  </data>
+  <data name="DoYouReallyWishRefuse" xml:space="preserve">
+    <value>&lt;label&gt;Deseja realmente recusar o interese no projeto "&lt;span&gt;{0}&lt;/span&gt;" para o player "&lt;span&gt;{1}&lt;/span&gt;"&lt;/label&gt;</value>
+  </data>
+  <data name="PlayersSavedSuccess" xml:space="preserve">
+    <value>Player(s) salvo(s) com sucesso</value>
+    <comment>Player(s) salvo(s) com sucesso</comment>
+  </data>
+  <data name="ChatIsOffline" xml:space="preserve">
+    <value>A Rede Rio2C está dessincronizada, recarregue a página para sincronizar novamente.</value>
+  </data>
+  <data name="NoMinibioAvailable" xml:space="preserve">
+    <value>Esse executivo não tem mini-bio disponível.</value>
+  </data>
+  <data name="EmailAgenda" xml:space="preserve">
+    <value>&lt;p style="font-weight: 400;"&gt;Muito obrigada! |&amp;nbsp;&lt;em&gt;Thank you!&lt;/em&gt;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;O Rio2C 2019 foi um enorme sucesso e n&amp;oacute;s agradecemos voc&amp;ecirc; por ser uma parte fundamental desse processo.&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;&lt;span style="color: #0070c0;"&gt;&lt;em&gt;This 2019&amp;rsquo;s Rio2C was a tremendous success and we thank you for being an integral part of it.&lt;/em&gt;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;Foram 1537 Rodadas de Neg&amp;oacute;cios, 422 Players de todo o mundo e 30 sess&amp;otilde;es de Pitching Audiovisual.&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;&lt;span style="color: #0070c0;"&gt;&lt;em&gt;We hosted 1537 One-to-One Meetings, 422 Player from all over the globe and 30 Audiovisual Pitching sessions.&lt;/em&gt;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;Esperamos que o evento tenha sido proveitoso para todos e que muitos neg&amp;oacute;cios sejam confirmados proximamente.&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;&lt;span style="color: #0070c0;"&gt;&lt;em&gt;We hope the event was fruitful and that many profitable deals are made in the near future.&lt;/em&gt;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;N&amp;atilde;o se esque&amp;ccedil;a de marcar em seu calend&amp;aacute;rio a data do&amp;nbsp;&lt;strong&gt;Rio2C 2020: 05 de maio!&lt;/strong&gt;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;&lt;span style="color: #0070c0;"&gt;&lt;em&gt;Don&amp;rsquo;t forget to save the date to&amp;nbsp;&lt;strong&gt;Rio2C 2020: May 5&lt;sup&gt;th&lt;/sup&gt;!&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;Obrigada novamente pela sua presen&amp;ccedil;a! |&amp;nbsp;&lt;span style="color: #0070c0;"&gt;&lt;em&gt;Thank you once again for coming!&lt;/em&gt;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;Equipe de Rodadas de Neg&amp;oacute;cios |&amp;nbsp;&lt;span style="color: #0070c0;"&gt;&lt;em&gt;One-to-One Meetings Team&lt;/em&gt;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;&lt;strong&gt;MA&amp;Iacute;RA MARANH&amp;Atilde;O&lt;/strong&gt;&lt;br /&gt;Coordenadora de Mercado | Market Coordinator&lt;br /&gt;&lt;strong&gt;P&lt;/strong&gt;&amp;nbsp;+55 21 2051-2583 | +55 21 3081-2092|&amp;nbsp;&lt;strong&gt;M&lt;/strong&gt;&amp;nbsp;+55 21 98255-6442 |&amp;nbsp;+55 62 98231-1314&lt;br /&gt;&lt;a href="https://maps.google.com/?q=Av.+das+Am%C3%A9ricas,+3301+%E2%80%93+Bl.+5&amp;amp;entry=gmail&amp;amp;source=g"&gt;Av. das Am&amp;eacute;ricas, 3301 &amp;ndash; Bl. 5&lt;/a&gt;&amp;nbsp;| Gr. 307&amp;nbsp;&lt;br /&gt;Barra da Tijuca - Rio de Janeiro | 22631-003 | RJ | BRASIL&lt;/p&gt;</value>
+  </data>
+  <data name="EmailProducer" xml:space="preserve">
+    <value>&lt;p style="font-weight: 400;"&gt;Muito obrigada! |&amp;nbsp;&lt;em&gt;Thank you!&lt;/em&gt;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;O Rio2C 2019 foi um enorme sucesso e n&amp;oacute;s agradecemos voc&amp;ecirc; por ser uma parte fundamental desse processo.&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;&lt;span style="color: #0070c0;"&gt;&lt;em&gt;This 2019&amp;rsquo;s Rio2C was a tremendous success and we thank you for being an integral part of it.&lt;/em&gt;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;Foram 1537 Rodadas de Neg&amp;oacute;cios, 422 Players de todo o mundo e 30 sess&amp;otilde;es de Pitching Audiovisual.&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;&lt;span style="color: #0070c0;"&gt;&lt;em&gt;We hosted 1537 One-to-One Meetings, 422 Player from all over the globe and 30 Audiovisual Pitching sessions.&lt;/em&gt;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;Esperamos que o evento tenha sido proveitoso para todos e que muitos neg&amp;oacute;cios sejam confirmados proximamente.&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;&lt;span style="color: #0070c0;"&gt;&lt;em&gt;We hope the event was fruitful and that many profitable deals are made in the near future.&lt;/em&gt;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;N&amp;atilde;o se esque&amp;ccedil;a de marcar em seu calend&amp;aacute;rio a data do&amp;nbsp;&lt;strong&gt;Rio2C 2020: 05 de maio!&lt;/strong&gt;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;&lt;span style="color: #0070c0;"&gt;&lt;em&gt;Don&amp;rsquo;t forget to save the date to&amp;nbsp;&lt;strong&gt;Rio2C 2020: May 5&lt;sup&gt;th&lt;/sup&gt;!&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;Obrigada novamente pela sua presen&amp;ccedil;a! |&amp;nbsp;&lt;span style="color: #0070c0;"&gt;&lt;em&gt;Thank you once again for coming!&lt;/em&gt;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;Equipe de Rodadas de Neg&amp;oacute;cios |&amp;nbsp;&lt;span style="color: #0070c0;"&gt;&lt;em&gt;One-to-One Meetings Team&lt;/em&gt;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="font-weight: 400;"&gt;&lt;strong&gt;MA&amp;Iacute;RA MARANH&amp;Atilde;O&lt;/strong&gt;&lt;br /&gt;Coordenadora de Mercado | Market Coordinator&lt;br /&gt;&lt;strong&gt;P&lt;/strong&gt;&amp;nbsp;+55 21 2051-2583 | +55 21 3081-2092|&amp;nbsp;&lt;strong&gt;M&lt;/strong&gt;&amp;nbsp;+55 21 98255-6442 |&amp;nbsp;+55 62 98231-1314&lt;br /&gt;&lt;a href="https://maps.google.com/?q=Av.+das+Am%C3%A9ricas,+3301+%E2%80%93+Bl.+5&amp;amp;entry=gmail&amp;amp;source=g"&gt;Av. das Am&amp;eacute;ricas, 3301 &amp;ndash; Bl. 5&lt;/a&gt;&amp;nbsp;| Gr. 307&amp;nbsp;&lt;br /&gt;Barra da Tijuca - Rio de Janeiro | 22631-003 | RJ | BRASIL&lt;/p&gt;</value>
+  </data>
+</root>

@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html class="no-js" lang="@CultureHelper.GetCurrentNeutralCulture()">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <title>@ViewBag.Title - Plataforma Rio2c</title>
+    @Styles.Render("~/Content/assets/css")
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/scripts/modernizr")
+
+</head>
+<body class="full-width">
+    <section id="container">
+
+        @Html.Partial("_Header")
+
+        <section id="main-content">
+            <section class="wrapper">
+                <div class="container-bg">
+                    @*<div class="modal fade @ViewBag.ModalClass"*@
+                    <div class="modal fade"
+                         id="modalLayoult" tabindex="-1" role="dialog" aria-labelledby="modalLayoultLabel" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog modal-lg modal-layoult" role="document">
+                            @RenderBody()
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        @Html.Partial("_Footer")
+
+    </section>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Content/assets/js")
+    @Scripts.Render("~/Content/js/bundle")
+    @Scripts.Render("~/bundles/jqueryval")
+
+    @RenderSection("scripts", required: false)
+
+    <script>
+        function submitQuiz() {
+            var Answers = [];
+
+            $.each($('.quizQuestion'), function (i, o) {
+                if ($(this).find('.checkOption').length > 0) {
+                    var questionId = $(this).find('.questionId').val();
+                    var optionSelected = $("input[name='opt_" + questionId + "']:checked").data('value');
+
+                    if (typeof optionSelected != "undefined") {
+                        var Answer = {
+                            OptionId: optionSelected,
+                            Value: optionSelected,
+                            UserId: 0
+                        }
+                        Answers.push(Answer);
+
+                        var div = "<div id='answer_" + i + "'><input type='hidden' value='0' name='Answer[" + i + "].UserId' /> <input type='hidden' value='" + questionId + "' name='Answer[" + i + "].Value' /> <input type='hidden' value='" + optionSelected + "' name='Answer[" + i + "].OptionId' /> </div>";
+                        $("#formAnswer").append(div);
+                    }
+
+                } else {
+                    $.each($(".checkText"), function (ii, o) {
+                        var j = i++;
+                        var optionId = $(this).find('.optionTextId').val();
+                        var value = $("#opt_" + optionId).val();
+
+                        if (value != "") {
+                            var Answer = {
+                                OptionId: optionId,
+                                Value: value,
+                                UserId: 0
+                            }
+
+                            var div = "<div id='answer_" + j + "'><input type='hidden' value='0' name='Answer[" + j + "].UserId' /> <input type='hidden' value='" + value + "' name='Answer[" + j + "].Value' /> <input type='hidden' value='" + optionId + "' name='Answer[" + j+"].OptionId' /> </div>";
+                            $("#formAnswer").append(div);
+
+                            Answers.push(Answer);
+                        }
+                    });
+                }
+
+            });
+
+            console.log(Answers);
+
+            AnswersData = JSON.stringify(Answers);
+
+            var teste = $("#formAnswer").html();
+            $("#formAnswer").submit();
+            //$.ajax({
+            //    url: 'SubmitQuiz',
+            //    type: 'post',
+            //    //contentType: "application/json; charset=utf-8",
+            //    dataType: "json",
+            //    data: { 'Answer': AnswersData },
+            //    //data: AnswersData,
+            //    success: function (r) {
+            //        console.log(r);
+            //    }
+            //})
+
+            //window.location = '../Dashboard/';
+        }
+        $(document).ready(function () {
+            $('#modalLayoult').modal();
+
+            var reference = $("#reference").val();
+            reference++;
+
+            $("#btnProceed").click(function () {
+                var nextReference = reference + 1;
+                var validate = true;
+                var value = "";
+
+                //validação
+                if ($("#question_" + reference).find(".checkOption").length > 0) {
+                    validate = $("input[name='opt_" + reference + "']").is(":checked");
+                    value = $("input[name='opt_" + reference + "']:checked").data('value');
+                } else {
+                    $.each($("textarea"), function (i, l) {
+                        if ($(this).val() == "") {
+                            validate = false;
+                        }
+                    });
+                }
+
+
+                $("#error").addClass("hidden");
+                if (validate) {
+                    if ($("#question_" + nextReference).length == 0) {
+                        //$("form").submit();
+                        submitQuiz();
+                    } else if (value == "2" || value == "4") {
+                        //$("form").submit();
+                        submitQuiz();
+
+                    } else {
+                        $("#question_" + reference).addClass('hidden');
+                        $("#question_" + nextReference).removeClass('hidden');
+
+                        reference = nextReference;
+                    }
+                } else {
+                    $("#error").removeClass("hidden");
+                }
+
+            })
+        });
+    </script>
+</body>
+</html>

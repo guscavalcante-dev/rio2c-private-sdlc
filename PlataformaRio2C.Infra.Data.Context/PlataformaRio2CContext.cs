@@ -1,0 +1,135 @@
+﻿using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Infra.Data.Context.Config;
+using PlataformaRio2C.Infra.Data.Context.Mapping;
+using System.Data.Entity;
+
+namespace PlataformaRio2C.Infra.Data.Context
+{
+    public class PlataformaRio2CContext : BaseContext
+    {
+        static PlataformaRio2CContext()
+        {
+            Database.SetInitializer<PlataformaRio2CContext>(null);
+        }
+
+        public PlataformaRio2CContext()
+            : base("PlataformaRio2CConnection")
+        {
+
+        }
+
+        public DbSet<Holding> Holdings { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Configurations.Add(new LanguageMap());
+            modelBuilder.Configurations.Add(new AddressMap());
+            modelBuilder.Configurations.Add(new ImageFileMap());            
+            modelBuilder.Configurations.Add(new HoldingMap());
+            modelBuilder.Configurations.Add(new HoldingDescriptionMap());            
+            modelBuilder.Configurations.Add(new PlayerMap());
+            modelBuilder.Configurations.Add(new PlayerDescriptionMap());
+            modelBuilder.Configurations.Add(new CollaboratorMap());
+            modelBuilder.Configurations.Add(new CollaboratorJobTitleMap());
+            modelBuilder.Configurations.Add(new CollaboratorMiniBioMap());
+            modelBuilder.Configurations.Add(new EventMap());
+            modelBuilder.Configurations.Add(new UserMap());
+            modelBuilder.Configurations.Add(new UserUseTermMap());
+            modelBuilder.Configurations.Add(new RoleMap());            
+            modelBuilder.Configurations.Add(new InterestGroupMap());
+            modelBuilder.Configurations.Add(new InterestMap());
+            modelBuilder.Configurations.Add(new PlayerInterestMap());            
+            modelBuilder.Configurations.Add(new PlayerTargetAudienceMap());
+            modelBuilder.Configurations.Add(new PlayerRestrictionsSpecificsMap());
+            modelBuilder.Configurations.Add(new ProducerMap());
+            modelBuilder.Configurations.Add(new ProducerDescriptionMap());
+            modelBuilder.Configurations.Add(new ProducerEventMap());
+            modelBuilder.Configurations.Add(new CollaboratorProducerMap());
+            modelBuilder.Configurations.Add(new ProjectMap());
+            modelBuilder.Configurations.Add(new ProjectAdditionalInformationMap());
+            modelBuilder.Configurations.Add(new ProjectInterestMap());
+            modelBuilder.Configurations.Add(new ProjectLinkImageMap());
+            modelBuilder.Configurations.Add(new ProjectLinkTeaserMap());
+            modelBuilder.Configurations.Add(new ProjectLogLineMap());
+            modelBuilder.Configurations.Add(new ProjectProductionPlanMap());
+            modelBuilder.Configurations.Add(new ProjectSummaryMap());
+            modelBuilder.Configurations.Add(new ProjectTitleMap());
+            modelBuilder.Configurations.Add(new ProjectPlayerMap());
+            modelBuilder.Configurations.Add(new ProjectStatusMap());
+            modelBuilder.Configurations.Add(new ProjectPlayerEvaluationMap());
+            modelBuilder.Configurations.Add(new LogisticsMap());
+           
+            modelBuilder.Configurations.Add(new MessageMap());
+
+            modelBuilder.Configurations.Add(new MailMap());
+
+            modelBuilder.Configurations.Add(new ConferenceMap());
+            modelBuilder.Configurations.Add(new ConferenceTitleMap());
+            modelBuilder.Configurations.Add(new ConferenceSynopsisMap());
+            modelBuilder.Configurations.Add(new ConferenceLecturerMap());
+            modelBuilder.Configurations.Add(new LecturerMap());
+            
+            modelBuilder.Configurations.Add(new RoleLecturerMap());
+            modelBuilder.Configurations.Add(new RoleLecturerTitleMap());
+
+            modelBuilder.Configurations.Add(new RoomMap());
+            modelBuilder.Configurations.Add(new RoomNameMap());
+
+            modelBuilder.Configurations.Add(new NegotiationConfigMap());
+            modelBuilder.Configurations.Add(new NegotiationMap());
+
+            modelBuilder.Configurations.Add(new CountryMap());
+            modelBuilder.Configurations.Add(new StateMap());
+            modelBuilder.Configurations.Add(new CityMap());
+
+            modelBuilder.Configurations.Add(new QuizMap());
+            modelBuilder.Configurations.Add(new QuizQuestionMap());
+            modelBuilder.Configurations.Add(new QuizOptionMap());
+            modelBuilder.Configurations.Add(new QuizAnswerMap());
+
+            modelBuilder.Configurations.Add(new SpeakerMap());
+
+            modelBuilder.Configurations.Add(new MusicalCommissionMap());
+
+            base.OnModelCreating(modelBuilder);
+        }
+
+        public DbSet<Language> Languages { get; set; }
+        public DbSet<ImageFile> ImageFiles { get; set; }
+        
+        public DbSet<HoldingDescription> HoldingDescriptions { get; set; }
+        public DbSet<Player> Players { get; set; }
+        public DbSet<Collaborator> Collaborators { get; set; }
+        public DbSet<Event> Events { get; set; }               
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserUseTerm> UserUseTerms { get; set; }
+        public DbSet<InterestGroup> InterestGroups { get; set; }
+        public DbSet<Interest> Interests { get; set; }
+        public DbSet<PlayerInterest> PlayerInterests { get; set; }        
+        public DbSet<Activity> Activitys { get; set; }
+        public DbSet<TargetAudience> TargetAudiences { get; set; }
+        public DbSet<Producer> Producers { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<ProjectStatus> ProjectStatus { get; set; }
+
+        public DbSet<Room> Rooms { get; set; }
+
+        public DbSet<RoleLecturer> RoleLecturers { get; set; }
+
+        public DbSet<Mail> Mail { get; set; }
+        public DbSet<MailCollaborator> MailCollaborators { get; set; }
+
+        public DbSet<Country> Country { get; set; }
+        public DbSet<State> State { get; set; }
+        public DbSet<City> City { get; set; }
+
+        public DbSet<Quiz> Quiz { get; set; }
+        public DbSet<QuizQuestion> QuizQuestion { get; set; }
+        public DbSet<QuizOption> QuizOption { get; set; }
+        public DbSet<QuizAnswer> QuizAnswer { get; set; }
+
+        public DbSet<Speaker> Speaker { get; set; }
+
+        public DbSet<MusicalCommission> MusicalCommission { get; set; }
+    }
+}

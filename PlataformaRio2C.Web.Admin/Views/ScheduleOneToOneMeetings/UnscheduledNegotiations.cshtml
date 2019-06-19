@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "Negociações não agendadas";
+}
+
+<div ng-controller="OneToOneMeetingsProcess as vm">
+    <section class="panel panel-lg">
+        <header class="panel-heading clearfix">
+            <h2 class="pull-left">@ViewBag.Title</h2>
+        </header>
+        <div class="wrap-table table-responsive">
+            <div class="loading-list" ng-if="vm.processingScheduling">
+                <p>Carregando negociações não agendadas.</p>
+            </div>
+
+            <div ng-if="!vm.processingScheduling && vm.unscheduledNegotiations.length <= 0">
+                <p>Nenhuma negociação não agendada.</p>
+            </div>
+
+            <div class="count-list-results" ng-if="!vm.processingScheduling">
+               @Html.Raw(String.Format(@Labels.ReturnedItems, "{{vm.unscheduledNegotiations.length}}"))
+            </div>   
+
+            <div class="wrap-table table-responsive">
+                <table ng-if="!vm.processingScheduling && vm.unscheduledNegotiations.length > 0" class="table table-advance table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                Player
+                            </th>
+                            <th>
+                                Projeto
+                            </th>
+                            <th>
+                                Produtora
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in vm.unscheduledNegotiations track by $index">
+                            <td>{{item.playerName}}</td>
+                            <td>{{item.projectName}}</td>
+                            <td>{{item.producerName}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
+
+

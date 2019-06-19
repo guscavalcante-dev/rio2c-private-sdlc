@@ -1,0 +1,48 @@
+﻿@model IEnumerable<ProjectItemListAppViewModel>
+
+
+@{
+    ViewBag.Title = "Projetos com Pitching";
+}
+
+
+
+<section class="panel panel-lg">
+    <header class="panel-heading clearfix">
+        <h2 class="pull-left">@ViewBag.Title</h2>
+    </header>
+
+    <table class="table table-striped table-advance table-hover" id="TableProjectPitching">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProducerName)
+                    <span class="" ng-class="{'icon-sort-up' : (vm.orderBy === 'Name' && vm.orderByDesc === false), 'icon-sort-down' : (vm.orderBy == 'Name' && vm.orderByDesc === true)}"></span>
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TitlePt)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TitleEn)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProjectSubmitted)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RelatedPlayers)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NumberOfEvaluations)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreationDate)
+
+                <th class="editExcludeTd"></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</section>

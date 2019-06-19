@@ -1,0 +1,55 @@
+﻿<section class="profile-nav col-lg-4">
+
+    <div ng-if="!ctrlPlayerList.loadedOptionsPlayers" class="player-list-side">
+        <p class="text-center">@Labels.SearchingForPlayersForSelection</p>
+    </div>
+
+    <div ng-if="ctrlPlayerList.loadedOptionsPlayers" class="player-list-side">
+        <select class="select-players" ng-model="ctrlPlayerList.optionFilterPlayers">
+            <option value="all">@Labels.AllPlayers</option>
+            <option value="relatedInterests">@Labels.PlayersSuggested *</option>
+        </select>
+
+        <div class="msg-displayer" ng-if="ctrlPlayerList.loadingPlayers">
+            <p class="text-center">@Labels.SearchingForPlayers</p>
+        </div>
+
+        <div class="msg-displayer" ng-if="ctrlPlayerList.loadedOptionsPlayers && !ctrlPlayerList.loadingPlayers && ctrlPlayerList.groupPlayers.length <= 0">
+            <p class="text-center">@Labels.NoPlayerWasFound</p>
+        </div>
+        <div ng-if="!ctrlPlayerList.loadingPlayers && ctrlPlayerList.groupPlayers.length > 0">
+           
+            <div class="clearfix">
+                <div ng-if="ctrlPlayerList.playersSelected.length > 0" class="btn-select-all pull-right">
+                    <button class="btn btn-link btn-reset pull-right" type="button" ng-click="ctrlPlayerList.uncheckAll($event)"> <i class="icon-refresh"></i> @Labels.DeselectAll</button>
+                </div>
+
+                <div class="text-disclaimer">* @Labels.SeekProjectsOfThisGenre</div>
+            </div>
+
+            <ul class="players-check-list">
+                <li class="clearfix" ng-repeat="groupPlayers in ctrlPlayerList.groupPlayers">
+                    <h5 ng-if="groupPlayers.title">{{groupPlayers.title}}</h5>
+
+                    <div ng-repeat="player in groupPlayers.players" class="players-check-list-box">
+
+                        <input type="checkbox" name="name" ng-model="player.selected" ng-click="ctrlPlayerList.toggleSelectPlayer($event, player)" />
+                        <div class="player-image">
+                            <div class="wrapper-images">
+                                <img ng-if="!player.image" ng-model="player" class="img-thumbnail" src="~/Content/img/profile-avatar.png" alt="{{player.name}}" title="{{player.name}}" load-image="{{player.uid}}" ng-disable-load-image="{{!player.hasImage}}" url-load="/api/players/thumbImage" />
+                                <img ng-if="player.image" ng-model="player" class="img-thumbnail" ng-src="data:image/jpeg;base64, {{player.image.file}}" alt="{{player.name}}" title="{{player.name}}" />
+                            </div>
+                        </div>
+                        <div class="player-name">
+                            <p>
+                                <a href="@Url.Action("Details", "Player")?uid={{player.uid}}" title="{{player.name}}">
+                                    {{player.name}}
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>

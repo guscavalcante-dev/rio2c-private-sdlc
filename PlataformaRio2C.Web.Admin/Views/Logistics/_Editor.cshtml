@@ -1,0 +1,159 @@
+﻿@model LogisticsEditAppViewModel
+
+@{
+    /**/
+
+    var collaborator = new HtmlString(Json.Encode(Model.Collaborator));
+
+    if (Model.Collaborator != null)
+    {
+        collaborator = new HtmlString(Json.Encode(new { name = Model.Collaborator.Name, uid = Model.Collaborator.Uid }));
+    }
+
+    var dateArrivalDate = Model.ArrivalDate != null ? Model.ArrivalDate.Value.ToString("dd/MM/yyyy") : null;
+    var dateArrivalTime = Model.ArrivalTime != null ? Model.ArrivalTime.Value.ToString("hh':'mm") : null;
+    var dateDepartureDate = Model.DepartureDate != null ? Model.DepartureDate.Value.ToString("dd/MM/yyyy") : null;
+    var dateDepartureTime = Model.DepartureTime != null ? Model.DepartureTime.Value.ToString("hh':'mm") : null;
+    var originalName = Model.OriginalName != null ? Model.OriginalName : null;
+    var serverName = Model.OriginalName != null ? Model.ServerName : null;
+    var textEmail = Model.TextEmail != null ? Model.TextEmail : null;
+
+}
+
+@Html.AntiForgeryToken()
+
+<div ng-controller="LogisticsEditor as vm" data-collaborator="@collaborator.ToString()">
+    <aside class="profile-info col-lg-12">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(m => m.Uid)
+
+        <div class="form-group auto-complete-input">
+            <label class="control-label required">Executivo: *</label>
+
+            <input type="text"
+                   ng-model="vm.collaborator"
+                   placeholder="Digite o nome do executivo/player/holding/produtora"
+                   title="Digite o nome do executivo/player/holding/produtora"
+                   uib-typeahead="collaborator as collaborator.name for collaborator in vm.getCollaborators($viewValue)"
+                   typeahead-loading="loadingLocations"
+                   typeahead-no-results="noResults"
+                   typeahead-template-url="customTemplate.html"
+                   typeahead-min-length="3"
+                   class="form-control">
+
+            <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+            <div ng-show="noResults">
+                <i class="glyphicon glyphicon-remove"></i> Nenhum executivo encontrado
+            </div>
+
+            <input type="hidden" name="CollaboratorUid" value="{{vm.collaborator.uid}}" />
+
+            @Html.ValidationMessageFor(model => model.CollaboratorUid, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group date-time-input">
+            <label class="control-label required">Dia da chegada: *</label>
+            <input type="text" value="@dateArrivalDate" name="ArrivalDate" class="form-control" placeholder="dd/mm/aaaa" />
+            @Html.ValidationMessageFor(model => model.ArrivalDate, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group date-time-input">
+            <label class="control-label required">Hora de chegada: *</label>
+            <input type="text" value="@dateArrivalTime" name="ArrivalTime" class="form-control" placeholder="hh:mm" />
+            @Html.ValidationMessageFor(model => model.ArrivalTime, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group date-time-input">
+            <label class="control-label required">Data da saída: *</label> @*<span><small><sub>FORMATO: dd/mm/aa      hora:minuto</sub></small></span>*@
+            <input type="text" value="@dateDepartureDate" name="DepartureDate" class="form-control" placeholder="dd/mm/aaaa" />
+            @Html.ValidationMessageFor(model => model.DepartureDate, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group date-time-input">
+            <label class="control-label required">Hora de saída: *</label> @*<span><small><sub>FORMATO: dd/mm/aa      hora:minuto</sub></small></span>*@
+            <input type="text" value="@dateDepartureTime" name="DepartureTime" class="form-control" placeholder="hh:mm" />
+            @Html.ValidationMessageFor(model => model.DepartureTime, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <label class="control-label required">Texto Email: *</label>
+            @Html.TextAreaFor(model => model.TextEmail, new { @class = "form-control ckeditor-rio2c" })
+        </div>
+
+        <div class="form-group">
+            @Html.TextBoxFor(m => m.OriginalName, new { type = "file", name = "FileUpload", @class = "file-upload btn", style = "padding-left:0px", onchange = "UploadCompleted()" })
+            @if (Model.ServerName != "" && Model.ServerName != null)
+            {
+                @Html.ActionLink(Model.OriginalName, "DownloadArquivo", "Logistics", new { id = Model.ServerName.ToString(), name = Model.OriginalName }, null)
+            }
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                @*<input type="button" class="btn btn-default pull-left" value="Salvar e Enviar E-mail" onclick="SaveAndEmail('@Model.ArrivalDate', '@Model.ArrivalTime','@Model.CollaboratorUid','@Model.CreationDate','@Model.DepartureDate','@Model.DepartureTime','@Model.Uid', '@Model.OriginalName', '@Model.ArrivalDate')" />*@
+                @{ if (Model.Uid == Guid.Empty)
+                    {
+                        <input type="submit" value="Salvar" formaction="Create" class="btn btn-default pull-right" />
+                    }
+
+                    else
+                    {
+                        <input type="submit" value="Salvar" formaction="Edit" class="btn btn-default pull-right" />
+                    }
+                }
+                <input type="submit" value="Salvar e Enviar E-mail" class="btn btn-default pull-left" formaction="SaveAndSendEmail" class="btn btn-default pull-right" />
+            </div>
+        </div>
+    </aside>
+</div>
+
+<script type="text/ng-template" id="customTemplate.html">
+    <a>
+        <span ng-bind-html="match.model.name | uibTypeaheadHighlight:query"></span>
+    </a>
+</script>
+
+<script>
+    function SaveAndEmail(arrivalDate, arrivalTime, collaboratorUid, createDate, departureDate, departureTime, uid, originalName, textEmail) {
+        var dataSend = { ArrivalDate: arrivalDate, ArrivalTime: arrivalTime, CollaboratorUid: collaboratorUid, DepartureDate: departureDate, departureTime: departureTime, CreateDate: createDate, Uid: uid, OriginalName: originalName, TextEmail: textEmail };
+        //var jsonData = JSON.stringify({ 'viewMoldel': dataSend });
+        //alert(originalName);
+        $.ajax({
+            url: '/Logistics/SaveAndSendEmail',
+            type: 'POST',
+            dataType: "json",
+            data: dataSend,
+            success: function (response) {
+            }
+        });
+    }
+
+</script>
+<script>
+    function UploadCompleted() {
+
+        var formData = new FormData();
+        var file = $('.file-upload')[0].files[0];
+        formData.append('file', file);
+
+        $.ajax({
+            url: '/Logistics/FileUpload',
+            data: formData,
+            processData: false,
+            contentType: false,
+            type: 'POST',
+            success: function (response) {
+            }
+        });
+    }
+</script>
+<script>
+    function CancelarUpload() {
+        $.ajax({
+            url: '/Logistics/Cancelar',
+            success: function (response) {
+            }
+        });
+    }
+</script>

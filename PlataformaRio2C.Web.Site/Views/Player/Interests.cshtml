@@ -1,0 +1,161 @@
+﻿@model PlataformaRio2C.Application.ViewModels.PlayerAppViewModel
+
+@{
+    ViewBag.Title = "Interesses";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int index = 0;
+}
+
+<div class="content content-abas">
+    @Html.Partial("_TabsCollaboratorProfileEditor")
+
+    <div class="nav-content clearfix">
+        @if (Model.Interests != null && Model.Interests.Any())
+        {
+            using (Html.BeginForm("Interests", "Player", FormMethod.Post, new { enctype = "multipart/form-data", @class = "col-md-12" }))
+            {
+                <div>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                </div>
+                <div class="grid">
+
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.Uid)
+
+                    <h1 class="page-title">@Model.Name</h1>
+                    @Html.HiddenFor(m => m.Name)
+
+
+                    <div class="form-group bio-graph-info">
+                      
+                        @Html.LabelFor(model => model.RestrictionsSpecifics, htmlAttributes: new { @class = "control-label required" })
+
+                        @if (Model.RestrictionsSpecifics != null && Model.RestrictionsSpecifics.Any())
+                        {
+                            for (int i = 0; i < Model.LanguagesOptions.Count(); i++)
+                            {
+                                var code = Model.RestrictionsSpecifics.ToList().FirstOrDefault(e => e.LanguageCode == Model.LanguagesOptions.ElementAt(i).Code);
+                                var codeValue = code != null ? code.Value : null;
+                                var languageCodeValue = code != null ? code.LanguageCode : null;
+                                var labelLanguage = Model.LanguagesOptions.ElementAt(i).Name.Contains("Português") ? Labels.Portuguese: Model.LanguagesOptions.ElementAt(i).Name;
+
+                                <div class="language">
+                                    <label class="control-label">@labelLanguage</label>
+
+                                    <textarea name="RestrictionsSpecifics[@i].Value" class="form-control">@codeValue</textarea>
+                                    <input type="hidden" value="@languageCodeValue" name="RestrictionsSpecifics[@i].LanguageCode" class="form-control" />
+
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            for (int i = 0; i < Model.LanguagesOptions.Count(); i++)
+                            {
+                                var codeValue = Model.LanguagesOptions.ElementAt(i).Code;
+                                var labelLanguage = Model.LanguagesOptions.ElementAt(i).Name.Contains("Português") ? Labels.Portuguese : Model.LanguagesOptions.ElementAt(i).Name;
+
+                                <div class="language">
+                                    <label class="control-label"> @labelLanguage</label>
+
+                                    <textarea name="RestrictionsSpecifics[@i].Value" class="form-control"></textarea>
+                                    <input type="hidden" value="@codeValue" name="RestrictionsSpecifics[@i].LanguageCode" class="form-control" />
+
+                                </div>
+                            }
+                        }
+
+                        @Html.ValidationMessages("RestrictionsSpecifics", htmlAttributes: new { @class = "text-danger" })
+                    </div>
+                    <hr />
+
+                    @foreach (var group in Model.Interests.Select(g => g.InterestGroupName).Distinct())
+                    {
+                        var interestsInGroup = Model.Interests.Where(a => a.InterestGroupName == group).ToList();
+
+                        if (group.Contains("Format") || group.Contains("Audiovisual Genre"))
+                        {
+                            interestsInGroup = interestsInGroup.OrderBy(e => e.InterestName).ToList();
+                        }
+
+                        <div class="panel panel-primary">
+                            <div class="panel-heading" role="tab" id="heading_@index">
+                                <h4 class="panel-title">
+                                    @group
+                                </h4>
+                            </div>
+                            <div class="panel-body bio-graph-info">
+                                @if (Model.Interests.Any(e => e.InterestGroupName == group && e.InterestGroupType == "Multiple"))
+                                {
+                                    foreach (var interests in interestsInGroup)
+                                    {
+                                        <input name="Interests[@index].PlayerId" type="hidden" value="@interests.PlayerId" />
+                                        <input name="Interests[@index].EventId" type="hidden" value="@interests.EventId" />
+                                        <input name="Interests[@index].InterestId" type="hidden" value="@interests.InterestId" />
+                                        <input name="Interests[@index].InterestName" type="hidden" value="@interests.InterestName" />
+                                        <input name="Interests[@index].InterestGroupName" type="hidden" value="@interests.InterestGroupName" />
+                                        <input name="Interests[@index].InterestGroupType" type="hidden" value="@interests.InterestGroupType" />
+                                        <div class="checkboxes row-fluid">
+                                            <label class="col-sm-4" style="font-weight: bold;">
+                                                @Html.CheckBoxFor(m => interests.Selected, new { Name = "Interests[" + index + "].Selected" }) @interests.InterestName
+                                            
+                                            </label>
+                                        </div>
+
+                                        {
+                                            index++;
+                                        }
+                                    }
+                                }
+                            </div>
+                        </div>
+                    }
+                    @*<hr />
+                    <div class="form-group bio-graph-info">
+                        <label>
+                            <span class="additional-info-label">@Labels.AdditionalInformation</span>
+                        </label>
+
+                        <span class="additional-info-description">@Texts.AdditionalInfoDescription</span>
+
+                        @if (Model.AdditionalInformations != null && Model.AdditionalInformations.Any())
+                        {
+                            for (int i = 0; i < Model.Languages.Count(); i++)
+                            {
+                                var code = Model.AdditionalInformations.ToList().FirstOrDefault(e => e.LanguageCode == Model.Languages.ElementAt(i).Code);
+                                var codeValue = code != null ? code.Value : null;
+                                var languageCodeValue = code != null ? code.LanguageCode : null;
+                                var labelLanguage = Model.Languages.ElementAt(i).Name.Contains("Português") ? Labels.Portuguese : Model.Languages.ElementAt(i).Name;
+
+                                <div class="language">
+                                    <label class="control-label"> @labelLanguage</label>
+                                    <textarea name="AdditionalInformations[@i].Value" class="form-control">@codeValue</textarea>
+                                    <input type="hidden" value="@languageCodeValue" name="AdditionalInformations[@i].LanguageCode" class="form-control" />
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            for (int i = 0; i < Model.Languages.Count(); i++)
+                            {
+                                var codeValue = Model.Languages.ElementAt(i).Code;
+                                var labelLanguage = Model.Languages.ElementAt(i).Name.Contains("Português") ? Labels.Portuguese : Model.Languages.ElementAt(i).Name;
+                                <div class="language">
+                                    <label class="control-label"> @labelLanguage</label>
+                                    <textarea name="AdditionalInformations[@i].Value" class="form-control"></textarea>
+                                    <input type="hidden" value="@codeValue" name="AdditionalInformations[@i].LanguageCode" class="form-control" />
+                                </div>
+                            }
+                        }
+                    </div>*@
+
+
+                    <div class="btn-group-form">
+                        <a href="@Url.Action("CancelInterests","Player")" class="btn btn-lg btn-default pull-left">@Labels.Cancel</a>
+                        <input type="submit" value="@Labels.Save" class="btn btn-lg btn-primary pull-right" />
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

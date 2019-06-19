@@ -1,0 +1,96 @@
+﻿@{
+    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+}
+<!DOCTYPE html>
+<html class="no-js" lang="@CultureHelper.GetCurrentNeutralCulture()">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <title>@ViewBag.Title - Plataforma Rio2c</title>
+
+    @Styles.Render("~/Content/css")
+
+    <style>
+        .cultureUnchecked {
+            -webkit-filter: grayscale(100%);
+            -moz-filter: grayscale(100%);
+            -ms-filter: grayscale(100%);
+            -o-filter: grayscale(100%);
+            filter: grayscale(100%);
+        }
+    </style>
+</head>
+<body class="login-body gradient-bg">
+    <div class="container-bg">
+        <div class="container">
+            <div class="form-signin text-center">
+                <div class="nav-language language">
+                    <label>@Texts.SelectLanguage:</label>
+                    <a href="#" class="culture" data-value="pt-br">
+                        <img src="~/Content/img/bandeira-brasil.png" class="@(culture == "pt-br" ? "cultureUnchecked " : "")" />
+                    </a>
+                    <a href="#" class="culture" data-value="en-us">
+                        <img src="~/Content/img/bandeira-eua.png" class="@(culture == "en-us" ? "cultureUnchecked " : "")" />
+                    </a>
+                    <input type="hidden" value="@culture" id="culture" />
+    @*@Html.DropDownList("culture", new List<SelectListItem>() { new SelectListItem { Value = "pt-br", Text = "Português", Selected = culture == "pt-br" }, new SelectListItem { Value = "en-us", Text = "English", Selected = culture == "en-us" } }, new { data_target = Url.Action("SetCulture", "Account", new { area = "" }), @class = "slctCulture" })*@
+                </div>
+            </div>
+
+            <h1><span class="logo">Rio2C</span></h1>
+
+            <div class="form-signin">
+                @Html.StatusMessages()
+            </div>
+
+            @RenderBody()
+        </div>
+    </div>
+
+    @Html.Partial("_Footer")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    @RenderSection("scripts", required: false)
+    <script>
+        $(function () {
+            $('select[name="culture"]').change(function () {
+                console.log($(this).val());
+                window.location.href = $(this).data('target') + "?culture=" + $(this).val();
+            });            
+
+            $('form').on('submit', function (e) {
+                var $form = $(this);
+
+                if (!$form.data('submitted') && $form.valid()) {
+                    // mark it so that the next submit can be ignored
+                    $form.data('submitted', true);
+                    return;
+                }
+
+                // form is invalid or previously submitted - skip submit
+                e.preventDefault();
+            });
+
+
+            $(".culture").click(function (e) {
+                e.preventDefault();
+
+                var culture = $("#culture").val()
+                var intentCulture = $(this).attr('data-value');
+
+                if (culture != intentCulture) {
+                    var baseUrl = window.location.pathname;
+
+                    //window.location = ".." + baseUrl;
+                    window.location = "../Account/SetCulture?culture=" + intentCulture;
+                    console.log(baseUrl);
+                }
+            })
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,340 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AdditionalInfoDescription" xml:space="preserve">
+    <value>Restrictions or specifics regarding what you are looking for</value>
+    <comment>Restrições ou especificidades do que está buscando no mercado</comment>
+  </data>
+  <data name="EmailBodyForgotPassword" xml:space="preserve">
+    <value>&lt;p&gt;Click here to change your password: &lt;br/&gt;&lt;a href='{0}'&gt;Change Password&lt;/a&gt;&lt;/p&gt;</value>
+  </data>
+  <data name="EmailSubjectForgotPassword" xml:space="preserve">
+    <value>Plataforma Rio2c - Forgot password</value>
+  </data>
+  <data name="ChangePasswordConfirmed" xml:space="preserve">
+    <value>New password confirmed!</value>
+    <comment>Trocar senha confirmado!</comment>
+  </data>
+  <data name="EnterEmail" xml:space="preserve">
+    <value>Enter your e-mail below.</value>
+    <comment>Deixe seu e-mail abaixo.</comment>
+  </data>
+  <data name="FacePhoto" xml:space="preserve">
+    <value>Please upload a recent, color photo, close-up and &lt;strong&gt;high-quality&lt;/strong&gt;. This picture will also be used in the official catalogue.</value>
+    <comment>Favor fazer upload de uma foto colorida de rosto, recente e de boa qualidade.</comment>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Forgot your password?</value>
+    <comment>Esqueceu sua senha?</comment>
+  </data>
+  <data name="PasswordWasChanged" xml:space="preserve">
+    <value>Your password has been changed.</value>
+    <comment>Sua senha foi alterada.</comment>
+  </data>
+  <data name="ThanksConfirmation" xml:space="preserve">
+    <value>Thank you for confirming your e-mail.</value>
+    <comment>Obrigado por confirmar seu e-mail</comment>
+  </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>Username not found.</value>
+    <comment>Usuário não encontrado.</comment>
+  </data>
+  <data name="VerifyYourEmail" xml:space="preserve">
+    <value>Please check your e-mail to reset your password.</value>
+    <comment>Por favor verifique seu e-mail para redefinir sua senha.</comment>
+  </data>
+  <data name="ConferenceSoon" xml:space="preserve">
+    <value>Rio2C's programming will be announced starting from February.</value>
+    <comment>The programming of Rio2C will be announced starting in February.</comment>
+  </data>
+  <data name="ProjectSoon" xml:space="preserve">
+    <value>The project evaluation for the one-to-one meetings may be done between January 2nd and February 23rd, 2018.</value>
+    <comment>The assess of projects for the One-to-one Meetings can be carried out from January 2 until February 23, 2018.</comment>
+  </data>
+  <data name="ScheduleSoon" xml:space="preserve">
+    <value>The final agenda for the One-to-One Meetings will be announced in March.</value>
+    <comment>The One-to-one Meetings agendas will be released starting February 23.</comment>
+  </data>
+  <data name="WelcomeContent" xml:space="preserve">
+    <value>&lt;div class="news-message-content"&gt;
+    &lt;p&gt;This is an exclusive area for players.&lt;/p&gt;
+
+    &lt;p&gt;
+        Here you can update both your's and your company's information, receive and evaluate the projects you want to see at the One-to-One meetings, check your conference agenda and communicate with fellow players and producers through Rio2C Net.
+    &lt;/p&gt;
+
+    &lt;p&gt;
+        Please check the calendar below:      
+        &lt;br&gt;
+        Player Registration: October15th to November 15th, 2018
+        &lt;br&gt;
+        Project Evaluation: December 11th, 2018 to January 01ft, 2019
+    &lt;/p&gt;
+
+    &lt;p&gt;
+        Sincerely,&lt;br /&gt;
+        Team Rio2C
+    &lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div class="news-message-contact clearfix"&gt;
+    &lt;p class="pull-left"&gt;
+        Maira Maranhão&lt;br /&gt;
+        Market Producer&lt;br /&gt;
+        &lt;span class="news-message-contact-email"&gt;maira@rio2c.com&lt;/span&gt;&lt;br /&gt;
+        +55 21 30816436 | 20512590 | 98255.6442&lt;br /&gt;
+    &lt;/p&gt;
+&lt;p class="pull-right"&gt;
+        Fernando Continentino&lt;br /&gt;
+        Market Producer&lt;br /&gt;
+        &lt;span class="news-message-contact-email"&gt;fernando@rio2c.com&lt;/span&gt;&lt;br /&gt;
+        +55 21 30816436 | 20512590 | 98461.9699&lt;br /&gt;
+    &lt;/p&gt;
+&lt;/div&gt;</value>
+  </data>
+  <data name="VerifyEmailProducerRegistration" xml:space="preserve">
+    <value>Registration successful! Please check your email with access information.</value>
+  </data>
+  <data name="PaymentNotConfirmed" xml:space="preserve">
+    <value>Your credit card payment confirmation was not found. Verify the given informations and try again.</value>
+  </data>
+  <data name="RegisterAlreadyConfirmed" xml:space="preserve">
+    <value>Your registration has already been confirmed! To access the Rio2c platform click &lt;a href='http://{0}'&gt; here &lt;/a&gt;</value>
+  </data>
+  <data name="RegisterPlatform" xml:space="preserve">
+    <value>Registration Rio2C Platform</value>
+  </data>
+  <data name="WelcomeText" xml:space="preserve">
+    <value>&lt;p&gt; Hello @{Name}, &lt;/p&gt; 
+&lt;p&gt; Welcome to the Rio2C Platform. &lt;/p&gt;
+&lt;p&gt; To access the Rio2C Platform visit: @{UrlSite} &lt;/p&gt; 
+&lt;p&gt; Username: @{Email} &lt;/p&gt; 
+&lt;p&gt; Password: @{Password} &lt;/p&gt;</value>
+  </data>
+  <data name="WelcomeTextProducer" xml:space="preserve">
+    <value>&lt;p&gt; Hello @{Name}, &lt;/p&gt; 
+&lt;p&gt; Welcome to the Rio2C Platform. &lt;/p&gt; 
+&lt;p&gt; Your registration as Producer has been confirmed. &lt;/p&gt; 
+&lt;p&gt; Rio2C in the link: @{UrlSite} with your access data. &lt;/p&gt;</value>
+  </data>
+  <data name="SelectLanguage" xml:space="preserve">
+    <value>Select language</value>
+    <comment>Selecione um idioma</comment>
+  </data>
+  <data name="YouAreCurrentlyBrowsingAs" xml:space="preserve">
+    <value>You are currently browsing as</value>
+    <comment>Você está acessando como</comment>
+  </data>
+  <data name="ForYourConvenience" xml:space="preserve">
+    <value>For your convenience, projects can be saved and modified before their final submission. If the project is not sent by JANUARY 17TH it shall be automatically excluded. Once completed and sent to the players, project submissions MAY NOT BE CHANGED.</value>
+  </data>
+  <data name="FundingPlan" xml:space="preserve">
+    <value>Funding plan (only for projects under development/production)</value>
+  </data>
+  <data name="LinksImageTeaser" xml:space="preserve">
+    <value>(Links for download will not be accepted, only for image or video sharing sites, ex: youtube e Vimeo.)</value>
+  </data>
+  <data name="ProjectBudget" xml:space="preserve">
+    <value>Project budget (only for projects under development/production)</value>
+  </data>
+  <data name="SelectionForPitchingSessions" xml:space="preserve">
+    <value>Do you wish to take part in the selection process for the PITCHING sessions at Rio2C/RioContentMarket?</value>
+  </data>
+  <data name="AfterSubmitCantChange" xml:space="preserve">
+    <value>After submitting it, this project can no longer be edited.</value>
+  </data>
+  <data name="ConfirmIndicationForEvaluation" xml:space="preserve">
+    <value>Confirm indication for evaluation</value>
+  </data>
+  <data name="NotPossibleToSaveSelection" xml:space="preserve">
+    <value>Could not save selection. Reason(s):</value>
+  </data>
+  <data name="PlayersSelectedForEvaluation" xml:space="preserve">
+    <value>Players selected to evaluate this project</value>
+  </data>
+  <data name="WaitProcessingPlayerSelection" xml:space="preserve">
+    <value>Please wait, we are processing the player selection</value>
+  </data>
+  <data name="WouldYouLikeToSubmitProject" xml:space="preserve">
+    <value>Would you like to submit the "{0}" project to be evaluated by these players?</value>
+  </data>
+  <data name="WillTakePartInPitching" xml:space="preserve">
+    <value>Will take part in the selection process for the PITCHING sessions at Rio2C/RioContentMarket</value>
+  </data>
+  <data name="WelcomeContentProducer" xml:space="preserve">
+    <value>&lt;div class="news-message-content"&gt;
+    &lt;p&gt;This is an exclusive area for producers.&lt;/p&gt;
+
+    &lt;p&gt;
+        Here you can update both your's and your company's information, create and submit the projects.
+    &lt;/p&gt;    
+
+    &lt;p&gt;
+        Sincerely,&lt;br /&gt;
+        Team Rio2C
+    &lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div class="news-message-contact clearfix"&gt;
+    &lt;p class="pull-left"&gt;
+        Fernando Continentino&lt;br /&gt;
+        Market Producer&lt;br /&gt;
+        &lt;span class="news-message-contact-email"&gt;fernando@rio2c.com&lt;/span&gt;&lt;br /&gt;
+        +55 21 30816436 | 20512590 | 98461.9699&lt;br /&gt;
+    &lt;/p&gt;
+    &lt;p class="pull-right"&gt;
+        Maira Maranhão&lt;br /&gt;
+        Market Producer&lt;br /&gt;
+        &lt;span class="news-message-contact-email"&gt;maira@rio2c.com&lt;/span&gt;&lt;br /&gt;
+        +55 21 30816436 | 20512590 | 98255.6442&lt;br /&gt;
+    &lt;/p&gt;
+&lt;/div&gt;</value>
+  </data>
+  <data name="FaceFotoCollaboratorProducer" xml:space="preserve">
+    <value>Please, upload a recent, high-quality, color photo, close-up.</value>
+  </data>
+  <data name="NoProjectRegistered" xml:space="preserve">
+    <value>No project registered</value>
+  </data>
+  <data name="DoYouReallyWishAccept" xml:space="preserve">
+    <value>&lt;label&gt;Do you really wish to confirm the interest in this project "&lt;span&gt;{0}&lt;/span&gt;" to the player "&lt;span&gt;{1}&lt;/span&gt;"&lt;/label&gt;</value>
+  </data>
+  <data name="DoYouReallyWishRefuse" xml:space="preserve">
+    <value>&lt;label&gt;Do you really wish to refuse the interest in this project"&lt;span&gt;{0}&lt;/span&gt;" to the player "&lt;span&gt;{1}&lt;/span&gt;"&lt;/label&gt;</value>
+  </data>
+  <data name="PlayersSavedSuccess" xml:space="preserve">
+    <value>Player saved successfully</value>
+    <comment>Player saved successfully</comment>
+  </data>
+  <data name="ChatIsOffline" xml:space="preserve">
+    <value>The Rio2C Network is out of sync, reload the page to sync again.</value>
+  </data>
+  <data name="NoMinibioAvailable" xml:space="preserve">
+    <value>Esse executivo não tem mini-bio disponível.</value>
+  </data>
+  <data name="EmailAgenda" xml:space="preserve">
+    <value>&lt;p&gt;Prezado(a) Sr(a), @{Name},&lt;/p&gt;
+                                                        &lt;p&gt;Sua agenda Rio2C já está disponível em: &lt;a href="@{urlSistema}"&gt;@{urlSistema}&lt;/a&gt;&lt;/p&gt;
+                                     
+                                                        &lt;hr&gt;
+
+                                                        &lt;p&gt;Dear Mr/Mrs @{Name},&lt;/p&gt;
+                                                        &lt;p&gt;Your Rio2C schedule is already available at: &lt;a href="@{urlSistema}"&gt;@{urlSistema}&lt;/a&gt;&lt;/p&gt;</value>
+  </data>
+</root>

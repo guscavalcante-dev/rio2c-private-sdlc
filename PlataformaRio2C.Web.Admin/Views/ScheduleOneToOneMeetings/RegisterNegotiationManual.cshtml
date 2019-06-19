@@ -1,0 +1,173 @@
+﻿@model  ManualNegotiationRegisterAppViewModel
+
+@{
+    ViewBag.Title = "Agendar negociação";
+    var roomOptions = Html.Serializar(new List<object> { new { uid = Guid.Empty, name = "Selecione" } });
+    var startTimeOptions = Html.Serializar(new List<string> { "Selecione" });
+    var tableOptions = Html.Serializar(new List<string> { "Selecione" });
+
+
+}
+
+<div ng-controller="OneToOneMeetingsRegisterManualCtrl as vm" data-viewmodel="@Html.Serializar(Model).ToString()" data-room-options="@roomOptions.ToString()" data-room-selected="@Model.Room.ToString()" data-start-time-options="@startTimeOptions.ToString()" data-start-time-selected="@Model.StarTime.ToString()" data-table-options="@tableOptions.ToString()" data-table-selected="@Model.Table">
+    <section class="panel">
+        <header class="panel-heading">
+            <h2>@ViewBag.Title</h2>
+        </header>
+
+        @using (Html.BeginForm("RegisterNegotiationManual", "ScheduleOneToOneMeetings", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div>
+                <aside class="profile-info col-lg-12">
+                    <div class="loading-list" ng-if="vm.loadingFormOptions">
+                        Carregando opções do formulário...
+                    </div>
+                    <div ng-if="!vm.loadingFormOptions">
+                        <div class="form-group auto-complete-input">
+                            <label class="control-label required">Player: *</label>
+
+                            <input type="text"
+                                   ng-model="vm.playerSelected"
+                                   placeholder="Digite o nome do player/holding"
+                                   title="Digite o nome do player/holding"
+                                   uib-typeahead="player as player.name for player in vm.getPlayers($viewValue)"
+                                   typeahead-loading="loadingLocations"
+                                   typeahead-no-results="noResultsPlayers"
+                                   typeahead-template-url="customTemplate.html"
+                                   typeahead-min-length="3"
+                                   class="form-control">
+
+                            <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+                            <div ng-show="noResultsPlayers">
+                                <i class="glyphicon glyphicon-remove"></i> Nenhum player encontrado
+                            </div>
+
+                            <input type="hidden" name="Player" value="{{vm.playerSelected.uid}}" />
+                            <input type="hidden" name="PlayerName" value="{{vm.playerSelected.name}}" />
+
+                            @Html.ValidationMessageFor(model => model.Player, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group auto-complete-input">
+                            <label class="control-label required">Projeto: *</label>
+                            <input type="text"
+                                   ng-model="vm.projectSelected"
+                                   placeholder="Digite o nome do projeto/produtora"
+                                   title="Digite o nome do projeto/produtora"
+                                   uib-typeahead="project as project.title for project in vm.getProjects($viewValue)"
+                                   typeahead-loading="loadingLocations"
+                                   typeahead-no-results="noResultsProjects"
+                                   typeahead-template-url="projectOptions.html"
+                                   typeahead-min-length="3"
+                                   class="form-control">
+
+                            <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+                            <div ng-show="noResultsProjects">
+                                <i class="glyphicon glyphicon-remove"></i> Nenhum projeto encontrado
+                            </div>
+
+                            <input type="hidden" name="Project" value="{{vm.projectSelected.uid}}" />
+                            <input type="hidden" name="ProjectName" value="{{vm.projectSelected.title}}" />
+
+                            @Html.ValidationMessageFor(model => model.Project, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group date-time-input">
+                            <label class="control-label required">Data: *</label>
+                            <select class="form-control" ng-options="item as item for item in vm.optionsDates" ng-model="vm.dateSelected"></select>
+                            <input type="hidden" value="{{vm.dateSelected}}" name="Date" class="form-control" />
+                            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div ng-if="vm.loadingRooms">
+                            <p>Processando configurações da data...</p>
+                        </div>
+
+                        <div ng-if="!vm.loadingRooms && vm.roomOptions.length <= 1">
+                            <p>Não há opções de salas para o dia selecionado.</p>
+                        </div>
+
+                        <div ng-if="!vm.loadingRooms && vm.roomOptions.length > 1">
+                            <div class="form-group auto-complete-input">
+                                <label class="control-label required">Sala: *</label>
+                                <select class="form-control" ng-options="item as item.name for item in vm.roomOptions track by item.uid" ng-model="vm.roomSelected"></select>
+                                <input type="hidden" value="{{vm.roomSelected.uid}}" name="Room" class="form-control" />
+                                @Html.ValidationMessageFor(model => model.Room, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div ng-if="vm.roomSelected === vm.roomOptions[0]">
+                                <p class="text-warning">Selecione a sala para carregar as opçoes de horários.</p>
+                            </div>
+
+                            <div ng-if="vm.roomSelected !== vm.roomOptions[0]">
+                                <div ng-if="vm.loadingOptionsStartTime">
+                                    <p>Aguarde. Carregando opções de horários...</p>
+                                </div>
+
+                                <div ng-if="!vm.loadingOptionsStartTime && vm.startTimeOptions.length <= 1">
+                                    <p>Não há horários para o dia selecionado.</p>
+                                </div>
+
+                                <div ng-if="!vm.loadingOptionsStartTime && vm.startTimeOptions.length > 1">
+                                    <div class="form-group date-time-input">
+                                        <label class="control-label required">Hora de início da negociação: *</label>
+                                        <select class="form-control" ng-options="item for item in vm.startTimeOptions" ng-model="vm.startTimeSelected"></select>
+                                        <input type="hidden" value="{{vm.startTimeSelected}}" name="StarTime" class="form-control" />
+                                        @Html.ValidationMessageFor(model => model.StarTime, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div ng-if="vm.startTimeSelected === vm.startTimeOptions[0]">
+                                        <p class="text-warning">Selecione o horário para carregar as opçoes de mesas.</p>
+                                    </div>
+
+                                    <div ng-if="vm.startTimeSelected !== vm.startTimeOptions[0]">
+                                        <div ng-if="vm.loadingOptionsTables">
+                                            <p>Aguarde. Carregando mesas disponíveis...</p>
+                                        </div>
+
+                                        <div ng-if="!vm.loadingOptionsTables && vm.tableOptions.length <= 1">
+                                            <p>Não há mesa disponível no horário escolhido.</p>
+                                        </div>
+
+                                        <div ng-if="!vm.loadingOptionsTables && vm.tableOptions.length  > 1">
+                                            <div class="form-group date-time-input">
+                                                <label class="control-label required">Mesa: *</label>
+                                                <select class="form-control" ng-options="item for item in vm.tableOptions" ng-model="vm.tableSelected"></select>
+                                                <input type="hidden" value="{{vm.tableSelected}}" name="Table" class="form-control" />
+                                                @Html.ValidationMessageFor(model => model.Table, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <input type="submit" value="Salvar" class="btn btn-default pull-right" />
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        }
+        <div class="btn-group">
+            <a class="btn btn-link pull-left" href="@Url.Action("Index")"> « Voltar</a>
+        </div>
+    </section>
+    <script type="text/ng-template" id="customTemplate.html">
+        <a>
+            <span ng-bind-html="match.model.name | uibTypeaheadHighlight:query"></span>
+        </a>
+    </script>
+
+    <script type="text/ng-template" id="projectOptions.html">
+        <a>
+            <span ng-bind-html="match.model.title | uibTypeaheadHighlight:query"></span>
+        </a>
+    </script>
+</div>
+
+

@@ -1,0 +1,101 @@
+﻿@model PlataformaRio2C.Application.ViewModels.Admin.ProjectDetailAppViewModel
+
+@{
+    ViewBag.Title = Model.Title;
+}
+<div class="col-lg-12">
+    <section class="panel">
+        <header class="panel-heading">
+            <h2>@ViewBag.Title</h2>
+        </header>
+        <div class="panel-body">
+            <div class="btn-group">
+                <a class="btn btn-link pull-left" href="@Url.Action("Index")"> « Voltar</a>
+            </div>
+            <div>
+              
+                <table class="table table-striped table-advance table-hover">
+                    <thead>
+                        <tr>
+                            <th>Dada de seleção</th>
+                            <th>Player</th>
+                            <th>Usuário que salvou</th>
+                            <th>Data que foi salvo</th>
+                            <th>Enviado</th>
+                            <th>Usuário que enviou</th>
+                            <th>Data que foi enviado</th>
+                            <th>Status avaliação</th>
+                            <th>Motivo avaliação</th>
+                            <th class="editExcludeTd"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Players)
+                        {
+
+                            <tr>                                
+                                <td>@Html.DisplayFor(modelItem => item.DateSaved)</td>
+                                <td>@Html.DisplayFor(modelItem => item.PlayerName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.SavedUser)</td>
+                                <td>@Html.DisplayFor(modelItem => item.DateSaved)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Sent)</td>
+                                <td>@Html.DisplayFor(modelItem => item.SendingUser)</td>
+                                <td>@Html.DisplayFor(modelItem => item.DateSending)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Reason)</td>
+                                <td>                                  
+                                    <span>
+                                        <a data-toggle="modal" href="#modalDelete" data-urltarget="@Url.Action("DeleteProjectPlayer", new { id = item.Id, uid = Model.Uid})"> Excluir seleção de player</a>
+                                    </span>
+                                    <span>
+                                        <a data-toggle="modal" href="#modalDelete" data-urltarget="@Url.Action("ResetEvaluation", new { id = item.Id, uid = Model.Uid})"> Resetar Avaliação </a>
+                                    </span>
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </section>
+</div>
+
+@section scripts{
+    <script type="text/javascript" src="~/Scripts/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="~/Content/js/ckeditor_config.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('.ckeditor-rio2c').each(function () {
+                var ck = CKEDITOR.replace($(this)[0], {
+                    customConfig: '/Content/js/ckeditor_config.js'
+                });
+            });
+        });
+    </script>
+}
+
+
+<!-- Modal -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="modalDelete" class="modal fade" style="display: none;">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title text-center">Atenção!</h4>
+            </div>
+
+            <div class="modal-body">
+                <p>Tem certeza que deseja excluir?</p>
+            </div>
+
+            <div class="modal-footer ">
+                <button data-dismiss="modal" class="btn btn-default" type="button">Cancelar</button>
+                <a href="#" id="btn-trigger-delete" class="btn btn-success button-confirm">Confirmar</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- modal -->

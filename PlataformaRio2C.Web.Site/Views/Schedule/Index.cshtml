@@ -1,0 +1,106 @@
+﻿
+@{
+    ViewBag.Title = Labels.Diary;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content content-header-button clearfix">
+    <h1 class="page-title">@ViewBag.Title</h1>
+
+    <a href="@Url.Action("Print")" class="btn btn-lg btn-primary btn-link pull-right" target="_blank">
+        <i class="icon-print"></i>
+        @Labels.PrintSchedules
+    </a>
+</div>
+
+
+<section class="wrapper-no-margin-top" ng-controller="ScheduleList as vm">
+    @Html.Partial("_Schedule")
+
+    <script type="text/ng-template" id="modalAgenda.html">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="dismiss()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel" ng-if="vmModalAgenda.thisItem.type == 'meetings'">@Labels.NegotiationDetails</h4>
+            <h4 class="modal-title" id="myModalLabel" ng-if="vmModalAgenda.thisItem.type == 'conference'">@Labels.ConferenceDetails</h4>
+        </div>
+        <div class="modal-body body-agenda">
+            @*<span ng-if="vm.processingAction" class="rio2c-loading"></span>*@
+
+            @*<div data-alerta="" ng-model="vm.messageResultProcessing"></div>*@
+
+
+            @*<pre>{{vmModalAgenda.thisItem | json}}</pre>*@
+
+
+            <div class="agenda-information">
+
+                <div ng-if="vmModalAgenda.thisItem.type == 'meetings'">
+                    <div>
+                        <label>@Labels.Project: </label>
+                        <span class="link"><a href="@Url.Action("Detail", "Project")/?uid={{vmModalAgenda.thisItem.uid}}">{{vmModalAgenda.thisItem.title}} <i class="icon-external-link"></i></a> </span>
+                    </div>
+                    <div>
+                        <label>@Labels.Producer: </label>
+                        <span class="link"><a href="@Url.Action("Details", "Producer")/?uid={{vmModalAgenda.thisItem.producer.uid}}">{{vmModalAgenda.thisItem.producer.tradeName}} <i class="icon-external-link"></i></a></span>
+                    </div>
+                    <div>
+                        <label>@Labels.Player: </label>
+                        <span class="link"><a href="@Url.Action("ProfileDetails", "Player")/?uid={{vmModalAgenda.thisItem.player.uid}}">{{vmModalAgenda.thisItem.player.name}} <i class="icon-external-link"></i></a></span>
+                    </div>
+                    <div>
+                        <label>@Labels.Room: </label>
+                        <span>{{vmModalAgenda.thisItem.room}}</span>
+                    </div>
+                    <div>
+                        <label>@Labels.Table: </label>
+                        <span>{{vmModalAgenda.thisItem.table}}</span>
+                    </div>
+                </div>
+
+                <div ng-if="vmModalAgenda.thisItem.type == 'conference'">
+                    <div>
+                        <label>@Labels.Title: </label>
+                        <span class="link"><a href="@Url.Action("Detail", "Conference")/?uid={{vmModalAgenda.thisItem.uid}}">{{vmModalAgenda.thisItem.title}} <i class="icon-external-link"></i></a> </span>
+                    </div>
+                    <div>
+                        <label>@Labels.Room: </label>
+                        <span>{{vmModalAgenda.thisItem.room}}</span>
+                    </div>
+                    <div>
+                        @*<label>@Labels.LecturerMemberOneOrMany: </label>*@
+                        @*<span ng-repeat="lecturer in vmModalAgenda.thisItem.lecturers as lecturers">
+                            {{(lecturers.indexOf(lecturer) + 1) >= lecturers.length ? lecturer.name : lecturer.name + ', ';}}
+                        </span>*@
+
+                        <div ng-repeat="lecturerGroup in vmModalAgenda.thisItem.lecturersGroup as lecturerGroup">
+                            <label>{{lecturerGroup.roleLecturer | pluralize}}: </label>
+                            <span ng-repeat="lecturer in lecturerGroup.lecturers as lecturers">
+                                {{(lecturers.indexOf(lecturer) + 1) >= lecturers.length ? lecturer.name : lecturer.name + ', ';}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div>
+                    <label>@Labels.Date: </label>
+                    <span>{{vmModalAgenda.thisDate}}</span>
+                </div>
+
+                <div>
+                    <label>@Labels.Hour: </label>
+                    <span>{{vmModalAgenda.thisItem.startHour}} - {{vmModalAgenda.thisItem.endHour}}</span>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-default" ng-click="dismiss()">
+                @Labels.Ok
+            </button>
+        </div>
+    </script>
+</section>

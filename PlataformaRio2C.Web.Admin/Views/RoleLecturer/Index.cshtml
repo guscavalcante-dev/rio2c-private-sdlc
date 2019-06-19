@@ -1,0 +1,92 @@
+﻿@model IEnumerable<RoleLecturerAppViewModel>
+
+
+@{
+    ViewBag.Title = "Funções de palestrante";
+}
+
+
+
+<div ng-controller="RoleLecturerList as vm">
+    <section class="panel panel-lg">
+        <header class="panel-heading clearfix">
+            <h2 class="pull-left">@ViewBag.Title</h2>
+            <a href="@Url.Action("Create")" class="btn btn-sm btn-success pull-right">
+                + Cadastrar nova função de palestrante
+            </a>
+        </header>
+
+        <div class="wrap-table table-responsive">
+            <div class="loading-list" ng-if="vm.loadingListRoleLecturer">
+                <p>Carregando funções de palestrantes...</p>
+            </div>
+
+            <div class="count-list-results" ng-if="!vm.loadingListRoleLecturer">
+                @Html.Raw(String.Format(@Labels.ReturnedItems, "{{vm.listRoleLecturer.length}}"))
+            </div>
+
+            <table ng-if="!vm.loadingListRoleLecturer && vm.listRoleLecturer.length > 0" class="table table-striped table-advance table-hover">
+                <thead>
+                    <tr>
+                        <th ng-click="vm.getListRoleLecturer('Name')">
+                            @Html.DisplayNameFor(model => model.Name)
+                            <span class="" ng-class="{'icon-sort-up' : (vm.orderBy === 'Name' && vm.orderByDesc === false), 'icon-sort-down' : (vm.orderBy == 'Name' && vm.orderByDesc === true)}"></span>
+                        </th>
+
+                        <th ng-click="vm.getListRoleLecturer('CreationDate')" class="rio2c-ordained">
+                            @Html.DisplayNameFor(model => model.CreationDate)
+                            <span class="" ng-class="{'icon-sort-up' : (vm.orderBy === 'CreationDate' && vm.orderByDesc === false), 'icon-sort-down' : (vm.orderBy == 'CreationDate' && vm.orderByDesc === true)}"></span>
+                        </th>
+
+                        <th class="editExcludeTd"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="RoleLecturer in vm.listRoleLecturer track by $index">
+                        <td>
+                            {{RoleLecturer.name}}
+                        </td>
+
+                        <td>
+                            {{RoleLecturer.creationDate | date: 'dd/MM/yyyy HH:mm:ss'}}
+                        </td>
+
+
+                        <td>
+                            <a href="@Url.Action("Edit")?uid={{RoleLecturer.uid}}"> Editar</a> |
+                            <a data-toggle="modal" href="#modalDelete" data-urltarget="@Url.Action("Delete")?uid={{RoleLecturer.uid}}"> Excluir </a>
+
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+            <p ng-if="!vm.loadingListRoleLecturer && vm.listRoleLecturer.length <= 0">Nenhuma função de palestrante encontrada.</p>
+        </div>
+    </section>
+</div>
+
+
+
+<!-- Modal -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="modalDelete" class="modal fade" style="display: none;">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title text-center">Atenção!</h4>
+            </div>
+
+            <div class="modal-body">
+                <p>Tem certeza que deseja excluir?</p>
+            </div>
+
+            <div class="modal-footer ">
+                <button data-dismiss="modal" class="btn btn-default" type="button">Cancelar</button>
+                <a href="#" id="btn-trigger-delete" class="btn btn-success button-confirm">Confirmar</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- modal -->

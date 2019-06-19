@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <title>@ViewBag.Title - Admin Plataforma Rio2C</title>
+    <link href="@Html.GetBaseUrl()/Content/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    @Styles.Render("~/Content/assets/css")
+    @Styles.Render("~/Content/css/bundle")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body class="login-body">
+
+    <div class="container">
+        <h1 class="text-center">Administração Plataforma Rio2C</h1>
+
+        <div class="form-signin">
+            @Html.StatusMessages()
+        </div>
+
+        @RenderBody()
+    </div>
+
+    <!--main content end-->
+    <!--footer start-->
+    <footer class="site-footer">
+        <div class="text-center">
+            Copyright @DateTime.Now.Year © Plataforma Rio2C.  Desenvolvimento <a href="http://www.marlin.com.br" target="_blank">Marlin</a>.
+            <a href="#" class="go-top">
+                <i class="icon-angle-up"></i>
+            </a>
+        </div>
+    </footer>
+    <!--footer end-->
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Content/assets/js")
+    @Scripts.Render("~/Content/js/bundle")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

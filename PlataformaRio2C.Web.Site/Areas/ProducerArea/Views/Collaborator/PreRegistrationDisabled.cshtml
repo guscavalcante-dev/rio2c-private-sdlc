@@ -1,0 +1,24 @@
+﻿@model PreRegistrationAppViewModel
+@{
+    ViewBag.Title = Labels.PreRegistration;
+    Layout = "~/Views/Shared/_LayoutBasic.cshtml";
+    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+    
+}
+
+@using (Html.BeginForm("PreRegistration", "Collaborator", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-signin", role = "form" }))
+{
+    <div class="login-wrap">
+        <section id="loginForm">
+            <div>
+                <h4 class="pre-registration-title">@Messages.ClosedProducerRegistration</h4>                
+            </div>
+
+            <div><p class='pre-registration-login-text'>@Html.Raw(Labels.IfAlreadyHaveLogin), <a href="@Url.Action("Login", "Account", new { area = ""})">@Labels.ClickHere</a>.</p></div>
+            
+
+            <div class="pre-registration-contact">@Html.Raw(Labels.PreRegistrationContact)</div>
+        </section>
+    </div>
+}
+

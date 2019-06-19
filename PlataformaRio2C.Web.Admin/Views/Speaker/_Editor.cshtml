@@ -1,0 +1,156 @@
+﻿@model CollaboratorEditAppViewModel
+
+@Html.AntiForgeryToken()
+@Html.HiddenFor(m => m.Uid)
+
+<aside class="profile-nav col-lg-4">
+
+    <div class="user-heading round">
+        @Html.EditorFor(m => m.ImageUpload, new { Image = Model.Image })
+        <div class="fileinput-message">
+            <span class="label label-danger">@Labels.Warning</span>
+            <span class="text">@Html.Raw(Labels.ImageSize)</span>
+            <span class="text">@Html.Raw(Texts.FacePhoto) </span>
+        </div>
+
+        <div class="image-upload-error-message">@Html.ValidationMessagesFor(model => model.ImageUpload, new { @class = "text-danger" })</div>
+    </div>
+</aside>
+
+<aside class="profile-info col-lg-8">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Badge, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.Badge, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Badge, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.User.Email, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.User.Email, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.User.Email, "", new { @class = "text-danger" })
+        @Html.ValidationMessage("Email", "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label required" })
+        @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CellPhone, htmlAttributes: new { @class = "control-label required" })
+        @Html.EditorFor(model => model.CellPhone, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.CellPhone, "", new { @class = "text-danger" })
+    </div>
+
+
+    <hr />
+    <div class="form-group">
+
+        @if (Model.JobTitles != null && Model.JobTitles.Any())
+        {
+
+            @Html.LabelFor(model => model.JobTitles, htmlAttributes: new { @class = "control-label required" })
+
+            @Html.ValidationMessage("JobTitles", htmlAttributes: new { @class = "text-danger" })
+
+            for (int i = 0; i < Model.LanguagesOptions.Count(); i++)
+            {
+                var code = Model.JobTitles.ToList().FirstOrDefault(e => e.LanguageCode == Model.LanguagesOptions.ElementAt(i).Code);
+                var codeValue = code != null ? code.Value : null;
+                var languageCodeValue = code != null ? code.LanguageCode : null;
+
+                <div class="language">
+                    @*<label class="control-label2">@string.Format("{0} {1}", Html.DisplayNameFor(x => Model.JobTitles.ElementAt(i).Value), Model.Languages.ElementAt(i).Name) </label>*@
+
+                    <label class="control-label2">@string.Format(Model.LanguagesOptions.ElementAt(i).Name) </label>
+
+                    <textarea name="JobTitles[@i].Value" class="form-control">@codeValue</textarea>
+                    <input type="hidden" value="@languageCodeValue" name="JobTitles[@i].LanguageCode" class="form-control" />
+
+                </div>
+            }
+        }
+        else
+        {
+            for (int i = 0; i < Model.LanguagesOptions.Count(); i++)
+            {
+                var codeValue = Model.LanguagesOptions.ElementAt(i).Code;
+                <div class="form-group">
+
+                    <label class="control-label">JobTitles @Model.LanguagesOptions.ElementAt(i).Name</label>
+
+                    <textarea name="JobTitles[@i].Value" class="form-control"></textarea>
+                    <input type="hidden" value="@codeValue" name="JobTitles[@i].LanguageCode" class="form-control" />
+
+                </div>
+            }
+        }
+
+    </div>
+
+    <hr />
+
+
+    @Html.EditorFor(m => m.Address)
+
+    <hr />
+
+    <div class="form-group">
+
+        @if (Model.MiniBios != null && Model.MiniBios.Any())
+        {
+
+            @Html.LabelFor(model => model.MiniBios, htmlAttributes: new { @class = "control-label required" })
+            @Html.ValidationMessage("MiniBios", htmlAttributes: new { @class = "text-danger" })
+            for (int i = 0; i < Model.LanguagesOptions.Count(); i++)
+            {
+                var code = Model.MiniBios.ToList().FirstOrDefault(e => e.LanguageCode == Model.LanguagesOptions.ElementAt(i).Code);
+                var codeValue = code != null ? code.Value : null;
+                var languageCodeValue = code != null ? code.LanguageCode : null;
+
+                <div class="language">
+                    @*<label class="control-label">@string.Format("{0} {1}", Html.DisplayNameFor(x => Model.MiniBios.ElementAt(i).Value), Model.Languages.ElementAt(i).Name) </label>*@
+
+                    <label class="control-label">@string.Format(Model.LanguagesOptions.ElementAt(i).Name)</label>
+
+                    <textarea name="MiniBios[@i].Value" class="form-control ckeditor-rio2c">@codeValue</textarea>
+                    <input type="hidden" value="@languageCodeValue" name="MiniBios[@i].LanguageCode" class="form-control" />
+                </div>
+
+            }
+        }
+        else
+        {
+            for (int i = 0; i < Model.LanguagesOptions.Count(); i++)
+            {
+                var codeValue = Model.LanguagesOptions.ElementAt(i).Code;
+                <div class="form-group">
+                    <label class="control-label">MiniBio @Model.LanguagesOptions.ElementAt(i).Name</label>
+
+                    <textarea name="MiniBios[@i].Value" class="form-control ckeditor-rio2c"></textarea>
+                    <input type="hidden" value="@codeValue" name="MiniBios[@i].LanguageCode" class="form-control" />
+
+                </div>
+            }
+        }
+    </div>
+
+
+
+    <div class="form-group">
+        <div class="col-md-12">
+            <input type="submit" value="Salvar" class="btn btn-default pull-right" />
+        </div>
+    </div>
+</aside>
+
+

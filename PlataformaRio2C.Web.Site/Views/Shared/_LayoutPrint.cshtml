@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html class="no-js" lang="@CultureHelper.GetCurrentNeutralCulture()" ng-app="Rio2C">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <title>@ViewBag.Title - Plataforma Rio2c</title>
+    @Styles.Render("~/Content/assets/css")
+    @Styles.Render("~/Content/css")
+
+
+</head>
+<body ng-cloak>
+
+    <!--main content start-->
+    <section id="main-content" class="main-content-print">
+        <section class="wrapper">
+            @RenderBody()
+        </section>
+    </section>
+
+    @Scripts.Render("~/scripts/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Content/assets/js")
+    @Scripts.Render("~/Content/js/bundle")
+    @Scripts.Render("~/Scripts/angular/bundles")
+    @Scripts.Render("~/Content/js/Rio2C/bundles")
+
+    
+    @RenderSection("scripts", required: false)
+</body>
+</html>

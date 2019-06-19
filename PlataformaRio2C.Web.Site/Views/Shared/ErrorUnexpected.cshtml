@@ -1,0 +1,23 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/_LayoutBasic.cshtml";
+}
+
+<div class="form-signin container-layout-basic">
+    <section>
+        <div class="title-forgot-password">
+            <div class="text-center">
+                <h1>Oops!</h1>
+
+                @Html.Raw(Messages.ErrorUnexpectedPageText)
+
+                <h4 class="h4-error-page link-error">
+                    <a href="@Url.Action("Index", "Home")"> @Html.Raw(Messages.ErrorUnexpectedPageLink)</a>
+                </h4>
+            </div>
+        </div>
+    </section>
+</div>
+

@@ -1,0 +1,14 @@
+﻿@model CollaboratorDetailAppViewModel
+@{
+    ViewBag.Title = "Perfil Colaborador";
+}
+
+<div class="content content-abas">
+
+    @Html.Partial("_TabsCollaboratorProfileEditor", Model)
+
+    @using (Html.BeginForm("ProfileDetails", "Collaborator", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.Partial("_Display", Model)
+    }
+</div>

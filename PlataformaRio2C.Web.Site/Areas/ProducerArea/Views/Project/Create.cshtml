@@ -1,0 +1,50 @@
+﻿@model ProjectEditAppViewModel
+
+@{
+    ViewBag.Title = Labels.CreateProject;
+}
+
+<div class="content content-header-button">
+    <h1 class="page-title">@ViewBag.Title</h1>
+</div>
+
+<div class="content content-abas" ng-controller="ProjectEditor as vm" ng-init="vm.loadLinksImages( '@Json.Encode(Model.LinksImage)'); vm.loadLinksTeaser( '@Json.Encode(Model.LinksTeaser)');">
+   
+   @Html.AntiForgeryToken()
+   <div class="nav-content clearfix">
+       <aside class="profile-info col-lg">
+           <section class="panel">
+                <div class="panel-body bio-graph-info">                   
+
+                    @using (Html.BeginForm("Create", "Project", FormMethod.Post, new { enctype = "multipart/form-data", @class = "rio2c-form" }))
+                    {                       
+                        @Html.Partial("_Editor", Model)
+
+                        <hr />
+                        <div class="form-group create-edit">
+                            <a href="@Url.Action("Index","Project")" class="btn btn-lg btn-default pull-left">@Labels.Cancel</a>
+                            <input type="submit" value="@Labels.Save" class="btn btn-lg btn-primary pull-right" />
+                        </div>
+                    }                  
+                </div>
+            </section>
+        </aside>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript" src="~/Scripts/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="~/Content/js/ckeditor_config.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('.ckeditor-rio2c').each(function () {
+                var ck = CKEDITOR.replace($(this)[0], {
+                    customConfig: '/Content/js/ckeditor_config.js'                    
+                });
+            });
+
+           
+        });
+    </script>
+}

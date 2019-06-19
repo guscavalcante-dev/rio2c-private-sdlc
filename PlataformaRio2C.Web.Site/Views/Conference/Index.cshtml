@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = Labels.Conferences;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div ng-controller="ConferenceList as vm">
+
+    <div class="content content-header-button clearfix">
+        <h1 class="page-title pull-left">@ViewBag.Title</h1>
+    </div>
+
+    <section class="wrapper-no-margin-top">
+        <div class="content content-abas ">
+            <div class="nav-content clearfix">
+                <p ng-if="vm.loadingListConference ">
+                    @Labels.LoadingConferences
+                </p>
+
+                <div class="conferences-structure" ng-if="!vm.loadingListConference && vm.listConference.length > 0">
+                    <div class="list">
+
+
+                        <div ng-repeat="conference in vm.listConference">
+                            <div class="panel panel-conference" title="@Labels.LectureDetails">
+                                <a href="@Url.Action("/Detail")?uid={{conference.uid}}">
+
+                                    <header class="panel-heading projects-structure-box-header">
+                                        <div>
+                                            <h3><strong>@Labels.Date:</strong> <span>{{conference.date | date: 'dd/MM/yyyy'}}  @Labels.From {{conference.startTimeText | date: 'HH:mm'}} @Labels.To {{conference.endTimeText | date: 'HH:mm'}}</span></h3>
+                                        </div>
+                                        <div>
+                                            <h3><strong>@Labels.Title:</strong> <span>{{conference.title}}</span></h3>
+                                        </div>
+                                        <div>
+                                            <h3><strong>@Labels.Room:</strong> <span>{{conference.room}}</span></h3>
+                                        </div> 
+                                        <div>
+                                            <h3 class="no-margin"><strong>@Labels.LecturerMemberOneOrMany:</strong></h3>
+                                        </div>
+                                    </header>
+                                    <div class="panel-body panel-body-images">
+                                        <div class="list-images-structure ">
+                                            <figure class="relative" ng-repeat="lecturer in conference.lecturers">
+                                                <div>
+                                                    @*<img src="~/Content/img/profile-avatar.png" alt="{{lecturer.name}}" />*@
+                                                    <img ng-model="lecturer.image" class="img-thumbnail" src="~/Content/img/profile-avatar.png" alt="{{lecturer.name}}" title="{{lecturer.name}}" load-image="{{lecturer.uid}}" url-load="/api/conference/lecturerThumbImage" />
+                                                </div>
+                                                <figcaption title="{{lecturer.name}}">
+                                                    {{lecturer.name}}
+                                                </figcaption>
+                                            </figure>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div><!--End of list-->
+                </div><!--End of conference-structure-->
+
+                <p ng-if="!vm.loadingListConference && vm.listConference.length <= 0" class="rio2c-list-no-items-found">
+                    @Labels.NoConferenceToDisplay
+                </p>
+            </div>
+
+
+        </div>
+    </section>
+</div>
+
+
+

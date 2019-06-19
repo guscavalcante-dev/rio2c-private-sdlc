@@ -1,0 +1,122 @@
+﻿
+@{
+    ViewBag.Title = "Relatório da agenda da rodada de negócios";
+}
+
+<div ng-controller="OneToOneMeetingsReportCtrl as vm">
+
+    <section class="panel">
+        <header class="panel-heading clearfix">
+            <h2 class="pull-left">@ViewBag.Title</h2>
+
+
+
+
+        </header>
+
+        <div class="profile-info meetings-generator">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="loading-list" ng-if="vm.loadingNegotiations">
+                <p>Carregando agenda de rodada de negócio...</p>
+            </div>
+
+            <div ng-if="!vm.loadingNegotiations && vm.groupAllNegotiations.length > 0" ng-class="{{vm.hideFilter ? 'hide-filter' : 'show-filter'}}" class=" filter-squared clearfix">
+                <div class="filter-head" ng-click="vm.hideFilter = !vm.hideFilter">
+                    FILTRO
+                </div>
+
+                <div ng-show="!vm.hideFilter" class="filter-wrap">
+                    <div class="form-group">
+                        <label class="control-label">Player:</label>
+                        <input type="text" ng-model="vm.searchPlayer" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Projeto:</label>
+                        <input type="text" ng-model="vm.searchProject" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Produtora:</label>
+                        <input type="text" ng-model="vm.searchProducer" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Data:</label>
+                        <select ng-model="vm.searchDate" ng-options="item for item in vm.optionsDate" class="form-control">
+                            <option value="">Selecione</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Sala:</label>
+                        <select ng-model="vm.searchRoom" ng-options="item for item in vm.optionsRoom" class="form-control">
+                            <option value="">Selecione</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div ng-show="!vm.hideFilter" class="buttons-wrap">
+                    <div>
+                        <button type="button" class="btn btn-primary" ng-click="vm.filterSchedule()">Filtrar</button>
+                        <button type="button" class="btn btn-default" ng-click="vm.clearFilter()">Limpar filtro</button>
+                    </div>
+                </div>
+            </div>
+
+            <p ng-if="!vm.loadingNegotiations && vm.groupNegotiations.length <= 0">Nenhuma negociação agendada.</p>
+
+
+
+            <div ng-if="!vm.loadingNegotiations && vm.groupNegotiations.length > 0" ng-repeat="groupNegotiation in vm.groupNegotiations track by $index" class="meetings-generator-dates">
+                <h2>{{groupNegotiation.date}}</h2>
+
+                <div ng-repeat="room in groupNegotiation.rooms track by $index" class="meetings-generator-rooms">
+                    <h3>
+                        {{room.room}}
+
+                        <a href="@Url.Action("ExportExcel")?date={{groupNegotiation.date}}&roomName={{room.room}}" target="_blank" class="btn btn-sm btn-primary btn-link">
+                            <i class="icon-download-alt"></i>
+                            Exportar para excel
+                        </a>
+
+                        <span class="obs">OBS: O excel não considera o filtro aplicado</span>
+                    </h3>                   
+
+                    <div class="wrap-report meetings-generator-tables">
+                        <table class="table-excel">
+                            <thead>
+                                <tr>
+                                    <th>Hora</th>
+                                    <th ng-repeat="table in room.tables">
+                                        Mesa {{table.table}}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="itemTime in room.times">
+                                    <td>
+                                        <p>{{itemTime.item1}}</p>
+                                        <p>{{itemTime.item2}}</p>
+                                    </td>
+                                    <td ng-repeat="table in room.tables">
+                                        <div ng-repeat="negotiation in vm.filterTablesBySlot(table.negotiations, itemTime.item3)" class="wrapper-content">
+                                            <h4>{{negotiation.player}}</h4>
+                                            <h6 class="project-title">{{negotiation.project}}</h6>
+                                            <h5>{{negotiation.socialName}}</h5>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+
+

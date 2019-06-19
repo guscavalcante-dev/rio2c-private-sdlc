@@ -1,0 +1,207 @@
+﻿@using PlataformaRio2C.Application.Common
+@model IEnumerable<ProjectItemListAppViewModel>
+
+@{
+    ViewBag.Title = Labels.RegisteredProjects;
+}
+
+@Html.Partial("_ModalDelete")
+
+<div class="content content-header-button clearfix">
+    <h1 class="page-title">@ViewBag.Title</h1>
+
+    @if (ViewBag.RegistrationProjectDisabled == null || !ViewBag.RegistrationProjectDisabled)
+    {
+        <a href="@Url.Action("Create")" class="btn btn-lg btn-primary btn-link pull-right">
+            <i class="icon-plus-sign-alt"></i>
+            @Labels.NewProject
+        </a>
+    }
+</div>
+
+<section class="wrapper-no-margin-top">
+    <div class="content content-abas ">
+        <div class="nav-content clearfix">
+
+            <div class="projects-structure">
+                <div class="row">
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var project in Model)
+                        {
+
+                            <div class="projects-structure-box">
+                                <section class="panel">
+                                    <header class="panel-heading projects-structure-box-header">
+                                        <h3>
+                                            <a href="@Url.Action("Detail", new { uid = project.Uid })">
+                                                @if (project.Titles != null && project.Titles.Any(e => !string.IsNullOrWhiteSpace(e.Value)))
+                                                {
+                                                    var titlePt = project.Titles.FirstOrDefault(j => j.LanguageCode == "PtBr");
+                                                    var titleEn = project.Titles.FirstOrDefault(j => j.LanguageCode == "En");
+
+                                                    @titleEn.Value
+                                                    if (titlePt.Value != null)
+                                                    {
+                                                        <span>| @titlePt.Value</span>
+                                                    }
+                                                }
+                                            </a>
+                                        </h3>
+                                        <span class="tools pull-right">
+                                            @if (!project.ProjectSubmitted)
+                                            {
+                                                if (ViewBag.SendToPlayersDisabled == null || !ViewBag.SendToPlayersDisabled)
+                                                {
+                                                    <a href="@Url.Action("Detail", new { uid = project.Uid })" class="projects-list-icon icon-share-alt" data-toggle="tooltip" data-placement="auto" title="@Labels.SelectOrSendPlayer"></a>
+                                                }
+
+                                                if (ViewBag.RegistrationProjectDisabled == null || !ViewBag.RegistrationProjectDisabled)
+                                                {
+                                                    <a href="@Url.Action("Edit", "Project", new { uid = project.Uid })" class="projects-list-icon icon-edit" data-toggle="tooltip" data-placement="auto" title="@Labels.Edit"></a>
+                                                }
+
+
+
+                                                <span data-toggle="tooltip" data-placement="auto" title="@Labels.Remove"><a href="#modalDeleteConfirmation" class="projects-list-icon icon-remove" data-toggle="modal" data-urltarget="@Url.Action("Delete", new { uid = project.Uid })"></a></span>
+
+
+
+                                            }
+                                        </span>
+
+                                        <div><label>@Labels.Producer</label>: @project.ProducerName </div>
+                                        <div>
+                                            <label>@Labels.Genre</label>:
+                                            @foreach (var item in project.Genres)
+                                            {
+                                                <span class="badge">@item</span>
+                                            }
+                                        </div>
+
+                                    </header>
+
+                                    <div class="panel-body projects-struture-box-text-container">
+                                        <div class="projects-structure-box-main-text">
+
+                                            @if (project.Summaries != null && project.Summaries.Any(e => !string.IsNullOrWhiteSpace(e.Value)))
+                                            {
+                                                var summaryPt = project.Summaries.FirstOrDefault(j => j.LanguageCode == "PtBr");
+                                                var summaryEn = project.Summaries.FirstOrDefault(j => j.LanguageCode == "En");
+
+                                                if (summaryEn != null)
+                                                {
+                                                    <div class="box-summary-en">
+                                                        @Html.Raw(summaryEn.Value)
+                                                    </div>
+                                                    <hr />
+                                                }
+
+                                                if (summaryPt != null)
+                                                {
+                                                    <div class="box-summary-pt">
+                                                        @Html.Raw(summaryPt.Value)
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+
+                                        @if (project.ProjectSubmitted && project.RelatedPlayers != null && project.RelatedPlayers.Any())
+                                        {
+
+
+                                            <div class="wrapper-for-side-images">
+                                                <h5>@Labels.PlayersToEvaluation</h5>
+                                                <div class="list-images-structure">
+                                                    @foreach (var player in project.RelatedPlayers)
+                                                    {
+                                                       
+
+                                                        <figure class="relative">
+                                                            @if (player.StatusCode == StatusProjectCodes.Rejected.ToString() && !string.IsNullOrWhiteSpace(player.Reason))
+                                                            {
+                                                            <button type="button" class="btn btn-link btn-modal-reason" data-toggle="modal" data-target="#modalShowReason" data-player-name="@player.Name" data-player-reason="@player.Reason" data-player-status="@player.Status">Ver Motivo</button>
+                                                            }
+                                                            @if (player.HasImage)
+                                                            {
+                                                                <div>
+                                                                    <a href="@Url.Action("Details", "Player")?uid=@player.Uid"><img ng-model="player" class="img-thumbnail" src="~/Content/img/profile-avatar.png" alt="@player.Name" title="@player.Name" load-image="@player.Uid" url-load="/api/players/thumbImage" /></a>
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div>
+                                                                    <img class="img-thumbnail" src="~/Content/img/profile-avatar.png" alt="@player.Name" />
+                                                                </div>
+                                                            }
+
+                                                            <figcaption>
+                                                                <a href="@Url.Action("Details", "Player", new { uid = player.Uid})">
+                                                                   @player.Name
+                                                                </a>
+                                                            </figcaption>
+
+                                                            <span class="btn btn-lg btn-remove" title="@player.Status">
+                                                                @if (player.StatusCode.ToLower() == "onevaluation")
+                                                                {
+                                                                    <i class="@player.StatusCode.ToLower() icon-time" title="@player.Status"></i>
+                                                                }
+                                                                else if (player.StatusCode.ToLower() == "accepted")
+                                                                {
+                                                                    <i class="@player.StatusCode.ToLower() icon-thumbs-up" title="@player.Status"></i>
+                                                                }
+                                                                else if (player.StatusCode.ToLower() == "rejected")
+                                                                {
+                                                                    <i class="@player.StatusCode.ToLower() icon-thumbs-down" title="@player.Status"></i>
+                                                                }
+                                                            </span>
+
+                                                            <span class="btn btn-lg btn-remove" data-toggle="modal" data-target="#modalSendToPlayers" title="{{player.status}}">
+                                                                <i ng-if="(player.statusCode | lowercase) == 'onevaluation'" class="{{player.statusCode | lowercase}} icon-time" title="{{player.status}}"></i>
+                                                                <i ng-if="(player.statusCode | lowercase) == 'accepted'" class="{{player.statusCode | lowercase}} icon-thumbs-up" title="{{player.status}}"></i>
+                                                                <i ng-if="(player.statusCode | lowercase) == 'rejected'" class="{{player.statusCode | lowercase}} icon-thumbs-down" title="{{player.status}}"></i>
+
+                                                            </span>
+                                                           
+                                                        </figure>
+
+
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+
+                                            <div class="projects-structure-box-side-text">
+                                                <h5>
+                                                    @Labels.ProjectNotSubmittedToPlayers
+                                                </h5>
+                                            </div>
+                                        }
+                                    </div>
+                                </section>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        @*<div class="alert alert-warning fade in alert-dismissable producer-alert">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+                            @Html.Raw(Messages.MandatoryToSubmitYourProject)
+                        </div>*@
+                        <div class="projects-structure-box-side-text">
+                            <h5>
+                                @Texts.NoProjectRegistered
+                            </h5>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@Html.Partial("_ModalShowReason")
+@Html.Partial("_ModalDelete")
+

@@ -1,0 +1,42 @@
+﻿[
+  {
+    "outputFile": "Content/style.css",
+    "inputFile": "Content/style.less"
+  },
+  {
+    "outputFile": "Content/site.css",
+    "inputFile": "Content/site.less"
+  },
+  {
+    "outputFile": "Content/js/toucheffects.es5.js",
+    "inputFile": "Content/js/toucheffects.js"
+  },
+  {
+    "outputFile": "Content/less/gallery.css",
+    "inputFile": "Content/less/gallery.less"
+  },
+  {
+    "outputFile": "Content/js/toucheffects.min.es5.js",
+    "inputFile": "Content/js/toucheffects.min.js"
+  },
+  {
+    "outputFile": "Content/js/darkroom.es5.js",
+    "inputFile": "Content/js/darkroom.js"
+  },
+  {
+    "outputFile": "Content/js/fabric.es5.js",
+    "inputFile": "Content/js/fabric.js"
+  },
+  {
+    "outputFile": "Content/site-responsive.css",
+    "inputFile": "Content/site-responsive.less"
+  },
+  {
+    "outputFile": "Content/js/ckeditor_config.es5.js",
+    "inputFile": "Content/js/ckeditor_config.js"
+  },
+  {
+    "outputFile": "Content/site-print.css",
+    "inputFile": "Content/site-print.less"
+  }
+]

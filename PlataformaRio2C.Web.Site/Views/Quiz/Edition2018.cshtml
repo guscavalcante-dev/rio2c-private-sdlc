@@ -1,0 +1,76 @@
+﻿@model PlataformaRio2C.Application.ViewModels.QuizBasicAppViewModel
+@{
+    ViewBag.Title = "Edition2018";
+    ViewBag.ModalClass = "modal-term";
+    Layout = "~/Views/Shared/_LayoutModal.cshtml";
+}
+
+<div class="modal-content">
+    @using (Html.BeginForm("submitQuiz", "Quiz", FormMethod.Post, new { id= "formAnswer", @class = "form-horizontal form-term", role = "form" }))
+    {
+    }
+
+    <div class="modal-header">
+        <h3 class="modal-title text-primary"> @Model.Name </h3>
+    </div>
+    <div class="modal-body">
+        <div class="content term-content">
+            <section class="panel">
+                @*<div class="panel-body">*@
+                @*@Html.StatusMessages()
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary("", new { @class = "text-danger" })*@
+
+                <div class="container-fluid">
+
+                    @for (int i = 0; i < Model.Question.Count; i++)
+                    {
+                        <input type="hidden" value="@i" id="reference" />
+                        <div class="@(i != 0 ? "hidden" : "") quizQuestion" id="question_@Model.Question[i].Id">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <p style="font-size:19px">
+                                        <strong>@Model.Question[i].Question</strong>
+                                    </p>
+                                </div>
+                                <div class="col-sm-12">
+
+                                    @foreach (var option in Model.Option)
+                                    {
+                                        if (option.QuestionId == Model.Question[i].Id)
+                                        {
+                                            <input type="hidden" class="questionId" value="@Model.Question[i].Id" />
+                                            if (!option.Text)
+                                            {
+                                                <span class="checkOption">
+                                                    <input type="radio" name="opt_@Model.Question[i].Id" id="opt_@option.Id" data-value="@option.Id" />
+                                                    <label for="opt_@option.Id">@option.Value</label>
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="checkText">
+                                                    <input type="hidden" value="@option.Id" class="optionTextId" />
+                                                    <label for="opt_@option.Id">@option.Value</label>
+                                                    @*<input style="margin-bottom: 5px" class="form-control" type="text" name="opt_@option.Id" id="opt_@option.Id" />*@
+                                                    <textarea class="form-control" name="opt_@option.Id" id="opt_@option.Id" rows="5"></textarea>
+                                                </span>
+                                            }
+                                            <br />
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <br />
+                    <span id="error" style="color:red" class="hidden">@Labels.ValidateQuiz</span>
+
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <input type="button" class="btn btn-lg btn-primary pull-right" id="btnProceed" value="@Labels.Proceed" />
+    </div>
+</div>

@@ -1,0 +1,24 @@
+﻿@model PlataformaRio2C.Application.ViewModels.RoomEditAppViewModel
+
+@{
+    ViewBag.Title = "Editar sala";
+}
+
+<div class="col-lg-12">
+    <section class="panel">
+        <header class="panel-heading">
+            <h2>@ViewBag.Title</h2>
+        </header>
+        <div class="panel-body">
+
+            @using (Html.BeginForm("Edit", "Room", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.Partial("_Editor", Model);
+            }
+        </div>
+        <div class="btn-group">
+            <a class="btn btn-link pull-left" href="@Url.Action("Index")"> « Voltar</a>
+        </div>
+    </section>
+</div>
+

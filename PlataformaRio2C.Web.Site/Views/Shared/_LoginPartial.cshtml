@@ -1,0 +1,137 @@
+﻿@using Microsoft.AspNet.Identity
+<style>
+    .cultureUnchecked {
+        -webkit-filter: grayscale(100%);
+        -moz-filter: grayscale(100%);
+        -ms-filter: grayscale(100%);
+        -o-filter: grayscale(100%);
+        filter: grayscale(100%);
+    }
+</style>
+@{
+    var area = ViewContext.RouteData.DataTokens["area"] != null && !string.IsNullOrWhiteSpace(ViewContext.RouteData.DataTokens["area"].ToString()) ? ViewContext.RouteData.DataTokens["area"].ToString() : "Player";
+
+    if (area == "ProducerArea")
+    {
+        area = "Produtora";
+    }
+
+    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+}
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="top-nav">
+
+            <ul class="nav pull-right top-menu" ng-controller="MessageList as vm" ng-init="vm.getUnreadsMessages()">
+
+                <!-- user login dropdown start-->
+                <li class="dropdown">
+
+                    <!--Future functionality - chat-->
+                    <a ng-show="vm.unreadsMessages.length > 0" href="@Url.Action("Index", "Rio2CNetwork")" class="anchor-wrapper">
+                        <div class="icon-envelope-wrapper"><i class="icon-envelope"></i><span class="icon-circle"></span></div>
+                    </a>
+                    <p class="text-uppercase">@Labels.Menu</p>
+                    <a data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle" href="#">
+                        @*<img alt="" src="img/avatar1_small.jpg">*@
+                        @*<span class="username">@User.Identity.GetUserName()</span>*@
+                        @*<i class="fa fa-bars" aria-hidden="true"></i>*@
+                        <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+
+                        @*<b class="caret"></b>*@
+
+
+                    </a>
+                    <ul class="dropdown-menu extended logout">
+                        <li><a href="@Url.Action("ProfileDetails","Collaborator")">@Labels.Profile</a></li>
+
+                        @if (Html.UserInRole("Player"))
+                        {
+                            <li><a href="@Url.Action("ProfileDetails", "Player")">@Labels.Player</a></li>
+
+                            <li><a href="@Url.Action("Interests","Player")">@Labels.Interests</a></li>
+                        }
+
+                        @if (Html.UserInRole("Producer"))
+                        {
+                            <li><a href="@Url.Action("ProfileDetails", "Producer")">@Labels.Producer</a></li>
+                        }
+
+                        <li><a class="item-menu-hidden" href="@Url.Action("Index", "Project")">@Labels.Projects</a></li>
+                        <li><a class="item-menu-hidden" href="@Url.Action("Index", "Schedule")">@Labels.Diary <small>@Labels.BusinessRound</small></a></li>
+                        <li><a class="item-menu-hidden" href="@Url.Action("Index", "Conference")">@Labels.Conferences</a></li>
+
+
+                        <!--CHAT-->
+                        <li class="menu-chat-item">
+
+                            <a href="@Url.Action("Index", "Rio2CNetwork")">
+                                <span>@Labels.Rio2cChatTitle</span>
+                                <div class="icon-envelope-wrapper">
+                                    <i class="icon-envelope" ng-show="vm.unreadsMessages.length > 0"><span class="icon-circle"></span></i>
+                                </div>
+
+                            </a>
+
+
+                        </li>
+
+                        <!--<li><a href="@Url.Action("ChangePassword", "Collaborator")">@Labels.ChangePassword</a></li>-->
+
+                        <li><a href="javascript:document.getElementById('logoutForm').submit()" class="rio2c-btn-logout">@Labels.LogOut</a></li>
+                    </ul>
+                </li>
+                <!-- user login dropdown end -->
+            </ul>
+
+
+
+
+        </div>
+
+        <div class="nav navbar-nav navbar-right navbar-options">
+
+            <div class="nav-language language">
+                <label>@Texts.SelectLanguage:</label>
+
+                <a href="#" class="culture" data-value="pt-br">
+                    <img src="~/Content/img/bandeira-brasil.png" width="40" class="@(culture == "pt-br" ? "cultureUnchecked " : "")" />
+                </a>
+                <a href="#" class="culture" data-value="en-us">
+                    <img src="~/Content/img/bandeira-eua.png" width="40" class="@(culture == "en-us" ? "cultureUnchecked " : "")" />
+                </a>
+                <input type="hidden" value="@culture" id="culture" />
+            </div>
+
+            @*inicio bloco mudança de perfil Player/Produtora
+            @if (Html.GetCurrentUserRoles().Count() > 1)
+            {
+
+                <div class="nav-profile">
+                    <label>@Texts.YouAreCurrentlyBrowsingAs:</label>
+                    @Html.DropDownList("area", new List<SelectListItem>() { new SelectListItem { Value = "Player", Text = "Player", Selected = area == "Player" }, new SelectListItem { Value = "Produtora", Text = Labels.ProducerSingle, Selected = area == "Produtora" } }, new { data_target = Url.Action("SetArea", "Account", new { area = "" }), @class = "slctArea" })
+                </div> }
+            @*fim bloco mudança de perfil Player/Produtora*@
+
+        </div>
+
+        @*<ul class="nav navbar-nav navbar-right">
+                <li>
+                    @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                </li>
+                <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+            </ul>*@
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}

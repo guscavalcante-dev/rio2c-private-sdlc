@@ -1,0 +1,48 @@
+﻿@model RoomEditAppViewModel
+
+@Html.AntiForgeryToken()
+@Html.HiddenFor(m => m.Uid)
+
+
+<div>
+
+    <div class="profile-info lecturer-room col-lg-12">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @if (Model.Names != null && Model.Names.Any())
+        {
+            for (int i = 0; i < Model.LanguagesOptions.Count(); i++)
+            {
+                var code = Model.Names.ToList().FirstOrDefault(e => e.LanguageCode == Model.LanguagesOptions.ElementAt(i).Code);
+                var codeValue = code != null ? code.Value : null;
+                var languageCodeValue = code != null ? code.LanguageCode : null;
+                var labelLanguage = Model.LanguagesOptions.ElementAt(i).Name.Contains("Português") ? Labels.Portuguese : Labels.English;
+
+                <div class="language col-lg-6">
+                    <label class="control-label">Nome da sala em @labelLanguage</label>
+                    <input type="text" maxlength="256" name="Names[@i].Value" class="form-control" value="@codeValue" />
+                    <input type="hidden" value="@languageCodeValue" name="Names[@i].LanguageCode" class="form-control" />
+                </div>
+            }
+        }
+        else
+        {
+            for (int i = 0; i < Model.LanguagesOptions.Count(); i++)
+            {
+                var codeValue = Model.LanguagesOptions.ElementAt(i).Code;
+                var labelLanguage = Model.LanguagesOptions.ElementAt(i).Name.Contains("Português") ? Labels.Portuguese : Labels.English;
+                <div class="language col-lg-6">
+                    <label class="control-label">Nome da sala em @labelLanguage</label>
+                    <input type="text" maxlength="256" name="Names[@i].Value" class="form-control" />
+                    <input type="hidden" value="@codeValue" name="Names[@i].LanguageCode" class="form-control" />
+                </div>
+            }
+        }
+    </div>
+
+    <div class="col-md-12">
+        <input type="submit" value="Salvar" class="btn btn-default pull-right" />
+    </div>
+
+</div>
+

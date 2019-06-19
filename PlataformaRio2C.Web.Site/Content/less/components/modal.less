@@ -1,0 +1,208 @@
+﻿.modal-header {
+
+    &.modal-header-minibio {
+        padding-bottom: 0;
+
+        h2 {
+            color: black;
+            padding: 0;
+            margin: 0;
+        }
+
+        button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    }
+
+    h4.modal-title {
+        font-weight: 300;
+        font-family: @font_family_1;
+        text-align: center;
+        color: #555;
+    }
+}
+
+.modal-body {
+
+    &.body-agenda {
+
+        .agenda-information {
+            font-size: 18px;
+
+            i {
+                font-size: 12px;
+                transition: .5s all;
+            }
+
+            label {
+                font-weight: bold;
+                margin-bottom: 0;
+                color: #3c3c3c;
+            }
+
+            span.link {
+                transition: .5s all;
+
+                &:hover {
+                    font-size: 18.2px;
+                    color: gray;
+
+                    i {
+                        font-size: 13px;
+                    }
+                }
+            }
+        }
+    }
+
+
+    &.refuser-body {
+        label {
+            font-weight: bold;
+            color: #636363;
+        }
+
+        p#playerName, p#status, p#playerReason {
+            color: #555;
+        }
+    }
+
+    a {
+        font-weight: bold;
+        color: inherit;
+    }
+
+    label {
+        font-weight: 400;
+        font-family: @font_family_1;
+        text-align: center;
+        color: #000;
+    }
+
+    span {
+        font-weight: bold;
+        color: #6b6767;
+    }
+
+
+
+
+    #reasonText {
+        color: #555;
+        width: 100%;
+        height: 100px;
+
+        &::-webkit-input-placeholder {
+            color: #afafaf;
+            font-size: 18px;
+            text-transform: uppercase;
+        }
+
+        &::-moz-placeholder {
+            color: #afafaf;
+            font-size: 20px;
+            text-transform: uppercase;
+        }
+
+        &:-moz-placeholder {
+            color: #afafaf;
+            font-size: 18px;
+            text-transform: uppercase;
+        }
+
+        &:-ms-input-placeholder {
+            color: #afafaf;
+            font-size: 18px;
+            text-transform: uppercase;
+        }
+    }
+
+
+    .photo-col {
+        padding: 15px;
+
+        @media (max-width: 992px) {
+            & {
+                margin: 0 30%;
+
+                .user-heading {
+                    min-width: 110px;
+                }
+            }
+        }
+
+        .user-heading {
+            max-width: 200px;
+        }
+    }
+
+    .bio-box {
+        padding: 15px 0;
+    }
+
+    .bio-row {
+        margin: 0;
+    }
+
+    .panel-body {
+        padding-top: 0;
+    }
+
+    .panel {
+        webkit-box-shadow: none;
+        box-shadow: none;
+    }
+
+    .labeled {
+        display: inline-block;
+        max-width: 100%;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #555;
+    }
+
+    .paragraphed {
+        margin: 0;
+    }
+
+    .container-box-players {
+        position: static;
+        width: 100%;
+        border: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+
+    .projects-structure-box-players-images {
+        justify-content: space-between;
+    }
+
+    aside.profile-info {
+        width: 100%;
+    }
+}
+
+.modal-footer {
+    &.save-footer {
+        button {
+            min-width: 100px;
+            width: 20%;
+        }
+    }
+}
+
+.modal-send-players-title {
+    padding-right: 10%;
+    text-align: center;
+}
+
+
+.modal-layoult {
+    width: 90%;
+
+    .term-content {
+        width: 100%;
+    }
+}

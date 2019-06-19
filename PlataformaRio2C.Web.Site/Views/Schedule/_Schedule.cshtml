@@ -1,0 +1,67 @@
+﻿<div class="content content-abas ">
+    <div class="nav-content clearfix">
+
+        <div class="projects-structure meetings">
+
+            <div ng-if="vm.loadingSchedule">
+                <p class="animation-load-dots">@Messages.ProcessingAgenda@Html.Raw(@Labels.ThreeDotsToAnimation)</p>
+            </div>
+
+            <div class="alert alert-danger" ng-if="!vm.loadingSchedule && vm.processedError">
+                <p>@Messages.ErrorProcessingAgenda</p>
+            </div>
+
+
+            <div ng-if="!vm.loadingSchedule && !vm.processedError">
+                <div class="agenda-legend">
+                    <label>@Labels.Caption </label>
+                    <span class="green-flag"></span>
+                    <span>@Labels.Conference</span>
+                    <span class="orange-flag"></span>
+                    <span>@Labels.BusinessRound</span>
+                </div>
+
+                <div class="wrap-table">
+                    <div class="reverser">
+                        <table class="table table-bordered table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>@Labels.Hour</th>
+                                    <th ng-repeat="el in vm.daysObjectList"> <span>{{el.dayOfWeek}}</span> <span>{{el.date}}</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="hour in vm.hours">
+                                    <th class="numeric">{{hour}}</th>
+                                    <td ng-repeat="el in vm.daysObjectList">
+                                        <div class="wrap-agenda-1">
+                                            <div class="wrap-agenda-2" ng-show="vm.eventsList.length > 0">
+                                                <div ng-class="{'orange-flag' : item.type == 'meetings', 'green-flag' : item.type == 'conference'}" ng-repeat="item in vm.getEvent(el.date, hour)" style="{{vm.setSpan(item.duration)}}" ng-click="vm.showModalAgenda(item, el.date)" ng-mouseover="vm.growTd($event.target)" ng-mouseleave="vm.shrinkTd($event.target)">
+                                                    <div class="agenda-data">
+                                                        @*{{item.title}} <br /> {{item.room}}*@
+                                                        @*<span ng-if="item.startHour === hour">
+                                                            {{item.title}} <br /> {{item.room}}
+                                                        </span>*@
+                                                        <span>
+                                                            {{item.title}} <br /> {{item.room}}
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,31 @@
+﻿@model CollaboratorEditAppViewModel
+
+@{
+    ViewBag.Title = Labels.EditProducer;
+}
+
+<div class="content content-abas">
+
+    @Html.Partial("_TabsCollaboratorProfileEditor")
+
+    @using (Html.BeginForm("ProfileProducerEdit", "Collaborator", FormMethod.Post, new { enctype = "multipart/form-data", @class = "rio2c-form" }))
+    {
+        @Html.Partial("_Editor", Model)
+    }
+</div>
+
+@section scripts{
+    <script type="text/javascript" src="~/Scripts/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="~/Content/js/ckeditor_config.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('.ckeditor-rio2c').each(function () {
+                var ck = CKEDITOR.replace($(this)[0], {
+                    customConfig: '/Content/js/ckeditor_config.js'
+                });
+            });
+        });
+    </script>
+}
+

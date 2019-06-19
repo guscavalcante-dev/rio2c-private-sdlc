@@ -1,0 +1,217 @@
+﻿<div ng-controller="MessageList as vm" ng-init="vm.loadChat()">
+    <div class="chat-container clearfix">
+        <div ng-if="!vm.offline && vm.loadingListCollaborator" class="loading-chat-group">
+            <h4>@Labels.LoadingChat@Html.Raw(@Labels.ThreeDotsToAnimation)</h4>
+            <div class="circle"></div>
+        </div>
+
+        <div ng-if="vm.offline" class="loading-chat-group">
+            <h4>@Texts.ChatIsOffline</h4>
+            @*<div class="circle"></div>*@
+        </div>
+
+
+
+        <div ng-if="!vm.offline && !vm.loadingListCollaborator" class="back-button" ng-class="{{vm.buttonPosition}}">
+            <button type="button" ng-class="vm.backgroundBtn" ng-click="vm.changeBackButton()">
+                <i class="{{vm.iconElement}}"></i>
+            </button>
+        </div>
+
+        <div ng-if="!vm.offline && !vm.loadingListCollaborator" class="people-list " ng-class="vm.displayPeopleList" id="people-list">
+            <div class="chat-search">
+                <div class="input-group">
+                    <input type="text" placeholder="@Labels.Search" ng-model="vm.termSearch" ng-change="vm.filterByTerm()" />
+                    <i class="icon-search"></i>
+                </div>
+
+                @*<div class="switch has-switch">
+                        <div class="switch-on">
+                            <input type="checkbox" checked="" data-toggle="switch">
+                            <span class="switch-left">Players</span>
+                            <label>&nbsp;</label>
+                            <span class="switch-right">Producers</span>
+                        </div>
+                    </div>*@
+
+            </div>
+            <div class="tab-group">
+                <div class="tab" ng-class="vm.activePlayer" ng-click="vm.choosePlayer()" title="@Labels.Players"><a href="">@Labels.Players</a></div>
+                <div class="tab" ng-class="vm.activeProducer" ng-click="vm.chooseProducer()" title="@Labels.Producers"><a href="">@Labels.ProducersSpaceSlash</a></div>
+            </div>
+
+            @*<div>
+                    <input type="checkbox" ng-model="vm.executiveGroup" ng-true-value="'players'" ng-false-value="'producers'" />
+                    <span ng-if="vm.executiveGroup == 'players'">Players</span>
+                    <span ng-if="vm.executiveGroup == 'producers'">Produtores</span>
+                </div>*@
+
+            <div class="list-empty" ng-if="vm.collaborators.length <= 0">
+                <p>@Labels.NoUserHasBeenFoundInChat</p>
+            </div>
+
+            <ul class="list" ng-if="vm.collaborators.length > 0" vs-repeat>
+                <li class="clearfix" ng-repeat="collaborator in vm.collaborators | orderBy:vm.orderByUnreadsMessages" ng-click="vm.scrollChatDown()">
+                    <div class="list-item" ng-class="{'active' : vm.collaboratorSelected != null && collaborator.email === vm.collaboratorSelected.email}">
+                        <div class="image-wrapper">
+                            <a href="" ng-click="vm.selectCollaborator($event, collaborator); vm.changeBackButton()">
+                                <img ng-model="collaborator" src="~/content/img/profile-avatar.png" alt="{{collaborator.name}}" title="{{collaborator.name}}" load-image="{{collaborator.uid}}" ng-disable-load-image="{{!collaborator.hasImage}}" url-load="/api/collaborators/thumbimage" class="img-thumbnail" />
+                            </a>
+                        </div>
+                        <a href="" ng-click="vm.selectCollaborator($event, collaborator); vm.changeBackButton()">
+                            <div class="about">
+                                <div class="icon-envelope-wrapper" ng-if="collaborator.unreadsMessages.length > 0">
+                                    <i class="icon-envelope"></i><span class="icon-circle"></span>
+                                </div>
+                                <div title="{{collaborator.name}}" class="name">{{collaborator.name}}</div>
+                                <div ng-if="vm.executiveGroup == 'producers'" class="name" title="{{collaborator.producerName}}">{{collaborator.producerName}}</div>
+                                <div ng-if="vm.executiveGroup == 'players'" class="name" title="{{collaborator.playersName}}">{{collaborator.playersName}}</div>
+                                <div class="name">{{collaborator.jobTitle}}</div>
+
+                            </div>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+
+            @*<ul class="list" ng-if="vm.collaborators.length > 0">
+                <li class="clearfix" ng-repeat="collaborator in vm.collaborators | orderBy:vm.orderByUnreadsMessages" ng-click="vm.scrollChatDown()">
+
+                    <div class="list-item" ng-class="{'active' : vm.collaboratorSelected != null && collaborator.email === vm.collaboratorSelected.email}">
+                        <div class="image-wrapper">
+                            <a href="" ng-click="vm.selectCollaborator($event, collaborator); vm.changeBackButton()">
+                                <img ng-model="collaborator" src="~/content/img/profile-avatar.png" alt="{{collaborator.name}}" title="{{collaborator.name}}" load-image="{{collaborator.uid}}" ng-disable-load-image="{{!collaborator.hasImage}}" url-load="/api/collaborators/thumbimage" class="img-thumbnail" />
+                            </a>
+                        </div>
+                        <a href="" ng-click="vm.selectCollaborator($event, collaborator); vm.changeBackButton()">
+                            <div class="about">
+                                <div class="icon-envelope-wrapper" ng-if="collaborator.unreadsMessages.length > 0">
+                                    <i class="icon-envelope"></i><span class="icon-circle"></span>
+                                </div>
+                                <div title="{{collaborator.name}}" class="name">{{collaborator.name}}</div>
+                                <div ng-if="vm.executiveGroup == 'producers'" class="name" title="{{collaborator.producerName}}">{{collaborator.producerName}}</div>
+                                <div ng-if="vm.executiveGroup == 'players'" class="name" title="{{collaborator.playersName}}">{{collaborator.playersName}}</div>
+                                <div class="name">{{collaborator.jobTitle}}</div>
+
+                            </div>
+                        </a>
+                    </div>
+
+
+                </li>
+            </ul>*@
+        </div>
+        <div ng-if="!vm.offline && !vm.loadingListCollaborator" class="chat" ng-class="vm.displayChat">
+            <div ng-if="vm.collaboratorSelected == null" class="default-message">
+                <h2>@Labels.SelectAnExecutiveInChat</h2>
+            </div>
+
+            <div ng-if="vm.collaboratorSelected != null">
+
+                <div class="chat-header clearfix">
+                    <div class="image-wrapper">
+                        <a href="">
+                            <img ng-model="vm.collaboratorSelected" src="~/content/img/profile-avatar.png" alt="{{vm.collaboratorSelected.name}}" title="{{vm.collaboratorSelected.name}}" ng-image-default="~/content/img/profile-avatar.png" load-image="{{vm.collaboratorSelected.uid}}" ng-disable-load-image="{{!vm.collaboratorSelected.hasImage}}" url-load="/api/collaborators/thumbimage" class="img-thumbnail" />
+                        </a>
+                    </div>
+
+                    <div class="chat-about">
+                        <div class="chat-with">{{vm.collaboratorSelected.name}}</div>
+                        <div ng-if="vm.executiveGroup == 'producers'" class="chat-with empha">
+                            <div ng-if="vm.collaboratorSelected.producerName" class="empha-group">
+                                <div class="empha-producer">
+                                    <label>{{vm.collaboratorSelected.producerName}}</label>
+                                </div>
+                                <div class="empha-detail">
+                                    <a href="@Url.Action("Details", "Producer")?uid={{vm.collaboratorSelected.producerUid}}"><span class="detail-dash"> - </span> <span class="detail-text">@Labels.ProducerDetails <i class="icon-external-link"></i></span></a>
+                                </div>
+                            </div>
+                            <div ng-if="!vm.collaboratorSelected.producerName" class="empha-nothing">
+                               @Labels.NoInformations
+                            </div>
+                        </div>
+                        
+                        <div ng-if="vm.executiveGroup == 'players'" class="chat-with empha">{{vm.collaboratorSelected.playersName}}</div>
+
+
+                        <div class="chat-with">{{vm.collaboratorSelected.jobTitle}}</div>
+                    </div>
+
+                </div> <!-- end chat-header -->
+
+                <div ng-if="vm.collaboratorSelected.loadingMessages" class="chat-history-empty">
+                    <div class="animation-load-dots">
+                        <p>@Labels.LoadingMessages@Html.Raw(@Labels.ThreeDotsToAnimation)</p>
+                    </div>
+                </div>
+
+                <div ng-if="!vm.collaboratorSelected.loadingMessages" class="chat-history">
+                    @*<pre>{{vm.collaboratorSelected | json}}</pre>*@
+                    <ul>
+                        <li class="clearfix" ng-repeat="message in vm.collaboratorSelected.messages">
+                            <div class="message-data" ng-class="{'align-left': (message.senderEmail == vm.collaboratorSelected.email), 'align-right': (message.senderEmail != vm.collaboratorSelected.email)}">
+                                <div ng-if="message.senderEmail == vm.collaboratorSelected.email">
+                                    <span class="message-data-name">{{message.senderName}}</span> <i class="fa fa-circle" ng-class="{'me': message.senderEmail != vm.collaboratorSelected.email}"></i>
+                                    <span class="message-data-time">{{message.date}}</span> &nbsp; &nbsp;
+                                </div>
+
+                                <div ng-if="message.senderEmail != vm.collaboratorSelected.email">
+                                    <span class="message-data-time">{{message.date}}</span> &nbsp; &nbsp;
+                                    <span class="message-data-name">{{message.senderName}}</span> <i class="fa fa-circle" ng-class="{'me': message.senderEmail != vm.collaboratorSelected.email}"></i>
+                                </div>
+
+                            </div>
+                            <div class="message" ng-class="{'other-message float-left': (message.senderEmail == vm.collaboratorSelected.email), 'my-message float-right' : (message.senderEmail != vm.collaboratorSelected.email)}" ng-bind="message.text">
+                            </div>
+                        </li>
+                    </ul>
+
+
+
+                </div> <!-- end chat-history -->
+
+
+                <div ng-if="!vm.collaboratorSelected.loadingMessages" class="chat-message clearfix">
+
+                    <div class="animation-load-dots" ng-if="vm.sendingMessage">
+                        <div class="sending-message">@Labels.Sending@Html.Raw(@Labels.ThreeDotsToAnimation)</div>
+                    </div>
+
+                    <textarea name="message-to-send" id="message-to-send" placeholder="@Labels.TypeYourMessage" rows="3" ng-model="vm.message" ng-keydown="vm.checkIfShiftEnter($event)"></textarea>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input type="checkbox" id="enter-send" name="enter-send" ng-model="vm.enterToSend">
+                                <label for="enter-send" class="control-label" aria-label="Label for checkbox">@Labels.EnterToSend</label>
+                                <p ng-if="vm.enterToSend" ng-class="{'highlighted' : vm.enterToSend}">@Messages.InsertNewLineUseShiftEnter</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <button id="buttonSend" type="button" ng-click="vm.sendMessage();">@Labels.Send</button>
+
+                </div> <!-- end chat-message -->
+
+            </div>
+        </div> <!-- end chat -->
+
+        <script type="text/ng-template" id="modalErrorSendMessage.html">
+            <div class="modal-chat">
+                <div class="modal-header">
+                    <h2 class="modal-title">@Labels.Oops</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="dismiss()"> <span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="modal-body" id="modal-body">
+                    <div data-alerta="" ng-model="vmModalErrorSendMessage.errosSendMessage" hidebtnclose="true"></div>
+                </div>
+
+                <div class="modal-footer ">
+                    <button type="button" class="btn btn-default btn-lg pull-right" data-dismiss="modal" ng-click="dismiss()">@Labels.Ok</button>
+                </div>
+            </div>
+        </script>
+    </div>
+
+</div>

@@ -1,0 +1,181 @@
+﻿/* Cores temporarias */
+/*Variables*/
+.top-nav {
+  margin-top: 7px;
+}
+.top-nav ul.top-menu li.dropdown ul.dropdown-menu {
+  width: 218px;
+  background-color: black;
+  text-transform: uppercase;
+  border-radius: 5px;
+  margin-top: 45px;
+  float: right;
+  top: 42px;
+  right: 0;
+  left: -140px;
+}
+.top-nav ul.top-menu li.dropdown ul.dropdown-menu a.item-menu-hidden {
+  display: none;
+}
+.top-nav ul.top-menu li.dropdown ul.dropdown-menu:before {
+  content: "";
+  position: absolute;
+  height: 0px;
+  width: 0px;
+  top: -30px;
+  left: 160px;
+  border-width: 20px;
+  border-color: transparent transparent black transparent;
+  border-style: solid;
+}
+.top-nav ul.top-menu li.dropdown a.dropdown-toggle {
+  width: 50px;
+  padding: 10px 6px;
+  font-size: 35px;
+  border: 0 transparent !important;
+  right: -25px;
+  color: white;
+  background-color: transparent;
+}
+.top-nav ul.top-menu li.dropdown a.dropdown-toggle:hover {
+  color: #eeeeee !important;
+  border-color: transparent !important;
+  background-color: transparent !important;
+}
+.top-nav ul.top-menu li.dropdown a.dropdown-toggle:active {
+  color: #eeeeee !important;
+  border-color: transparent !important;
+  background-color: transparent !important;
+}
+.top-nav ul.top-menu li.dropdown a.dropdown-toggle:focus {
+  color: #eeeeee !important;
+  border-color: transparent !important;
+  background-color: transparent !important;
+}
+.login-wrap section .title-forgot-password h4 {
+  color: white;
+  text-shadow: .1px .1px .2px gray;
+}
+.login-wrap section .title-forgot-password h4 small {
+  color: inherit;
+  text-shadow: inherit;
+}
+.error-login {
+  text-align: center;
+  color: white;
+}
+.content .news-message {
+  /*text-align: center;
+        margin: 100px auto;
+        width: 80%;
+        text-shadow: 1.5px 1.5px 2px #89817e, -1.5px -1.5px 2px #89817e;*/
+  text-align: justify;
+  padding: 2% 0;
+}
+.content .news-message-content {
+  margin-bottom: 100px;
+}
+.content .news-message-content,
+.content .news-message-contact {
+  width: 80%;
+}
+.content .news-message-contact-email {
+  color: blue;
+  text-decoration: underline;
+}
+/*ESTRUTURA DA VIEW PROJETOS*/
+.content .projects-structure {
+  text-align: justify;
+  padding: 2% 0;
+}
+.content .projects-structure h1 {
+  display: inline-block;
+}
+.content .projects-structure .new-project-button {
+  position: absolute;
+  right: 80px;
+}
+.content .projects-structure .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+.content .projects-structure-box {
+  position: relative;
+  color: #808080;
+  background-color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 20px;
+  width: 100%;
+}
+.content .projects-structure-box-header h3 {
+  display: inline-block;
+}
+.content .projects-structure-box-header h5 {
+  margin-bottom: 0;
+}
+.content .projects-structure-box-header a.projects-list-icon {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 1.5em;
+}
+.content .projects-struture-box-text-container {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+.content .projects-struture-box-text-container .projects-structure-box-main-text {
+  display: inline-block;
+  text-align: left;
+  width: 70%;
+  margin: 0 10px 0 0;
+  -webkit-box-flex: 7;
+  -ms-flex-positive: 7;
+  flex-grow: 7;
+  -ms-flex-negative: 2;
+  flex-shrink: 2;
+}
+.content .projects-struture-box-text-container .projects-structure-box-side-text {
+  display: inline-block;
+  width: 30%;
+  margin: 0 10px;
+  -ms-flex-item-align: start;
+  align-self: flex-start;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+.content .projects-struture-box-text-container .wrapper-for-side-images h6 {
+  text-align: center;
+  font-size: 1.1em;
+  font-weight: bold;
+}
+.content .projects-struture-box-text-container .wrapper-for-side-images .projects-structure-box-side-images {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+.content .projects-struture-box-text-container .wrapper-for-side-images .projects-structure-box-side-images div {
+  width: 60px;
+  height: 60px;
+  margin: 5px 0 5px 5px;
+}
+/*ESTRUTURA DA VIEW PROJETOS*/
+.form-group .additional-info {
+  display: block;
+}
+.form-group .additional-info-description {
+  display: block;
+  margin-bottom: 20px;
+}

@@ -1,0 +1,97 @@
+﻿@model IEnumerable<PlataformaRio2C.Application.ViewModels.PlayerAppViewModel>
+@{
+    ViewBag.Title = "Interesses";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<div class="content content-abas">
+
+    @Html.Partial("_TabsCollaboratorProfileEditor")
+
+    <div class="nav-content clearfix">
+        @if (Model != null && Model.Any())
+        {
+
+            <div class="row-detail-player">
+                <div class="">
+                    <section class="panel">
+                        <div class="panel-body">
+                            <ul class="grid">
+                                @foreach (var playerViewModel in Model)
+                                {
+                                    <li>
+                                        @* @MEDIA QUERY IS IN THE GALLERY.LESS FILE *@
+
+                                        <figure class="player-interest-img-list">
+
+                                            @if (playerViewModel.Image != null && playerViewModel.Image.File != null)
+                                            {
+                                                @Html.Image(playerViewModel.Image.File, 0, "", "Model.Name")
+                                            }
+                                            else
+                                            {
+                                                <div class="wrapper-images">
+                                                <img ng-model="player" src="~/Content/img/profile-avatar-logo.png" alt="@playerViewModel.Name" title="@playerViewModel.Name" load-image="@playerViewModel.Uid" url-load="/api/players/image" /></div>
+                                            }
+
+                                            <figcaption>
+
+                                                <h3>@playerViewModel.Name</h3>
+
+                                                <div class="box-button clearfix">
+                                                    @*<div class="pull-left">
+                                                        <a class="btn btn-sm btn-primary" href="#">@Labels.ViewInterests</a>
+                                                    </div>*@
+                                                    <div class="pull-left">
+                                                        <a class="btn btn-sm btn-primary" href="@Url.Action("Interests", "Player", new { uid = playerViewModel.Uid })">@Labels.EditInterests</a>
+                                                    </div>
+                                                </div>
+
+                                            </figcaption>
+                                        </figure>
+                                        @if (playerViewModel.InterestFilled == false)
+                                        {
+                                            <span class="tooltip-for-list my-tooltip" data-toggle="tooltip" data-placement="right" title="@Messages.InterestsIncompleteMessage">
+                                                <i class="icon-warning-sign my-exclamation-fa" aria-hidden="true"></i>
+                                            </span>
+
+                                        }
+                                    </li>
+                                }
+
+                            </ul>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

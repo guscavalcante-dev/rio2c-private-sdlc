@@ -1,0 +1,72 @@
+﻿@model ProjectDetailAppViewModel
+
+<div class="container-box-players clearfix" ng-if="ctrlPlayerList.loadedOptionsPlayers && ctrlPlayerList.playersSelected.length > 0">
+    <div class="col-lg-8">
+        <h4>@Labels.PlayersSelectedToEvaluation</h4>
+
+        @*list-images-struture *@
+        <div class="list-images-structure" ng-if="ctrlPlayerList.loadedOptionsPlayers">
+
+
+            
+            <figure class="relative" ng-repeat="player in ctrlPlayerList.playersSelected">                
+                <a ng-if="player.reason && player.statusCode == 'Rejected'" class="btn btn-link btn-modal-reason" data-toggle="modal" data-target="#modalShowReason" data-player-name="{{player.name}}" data-player-reason="{{player.reason}}" data-player-status="{{player.status}}" title="@Labels.SeeReasonForRefusal">@Labels.SeeReason</a>
+                <div>
+                    <img ng-if="!player.image" ng-model="player" class="img-thumbnail" src="~/Content/img/profile-avatar.png" alt="{{player.name}}" title="{{player.name}}" load-image="{{player.uid}}" ng-disable-load-image="{{!player.hasImage}}" url-load="/api/players/thumbImage" />
+                    <img ng-if="player.image" ng-model="player" class="img-thumbnail" ng-src="data:image/jpeg;base64, {{player.image.file}}" alt="{{player.name}}" title="{{player.name}}" />
+                </div>
+
+                <figcaption>
+                    <a href="@Url.Action("Details", "Player")?uid={{player.uid}}">
+                        {{player.name}}
+                    </a>
+                </figcaption>
+
+                @if (!Model.ProjectSubmitted)
+                {
+                    <button type="button" class="btn btn-lg btn-remove" title="@Labels.Remove" ng-click="ctrlPlayerList.uncheckPlayer($event, player)">
+                        <i class="icon-remove-sign"></i>
+                    </button>
+                }
+                else
+                {
+                    <span class="btn btn-lg btn-remove" title="{{player.status}}">
+                        <i ng-if="(player.statusCode | lowercase) == 'onevaluation'" class="{{player.statusCode | lowercase}} icon-time" title="{{player.status}}"></i>
+                        <i ng-if="(player.statusCode | lowercase) == 'accepted'" class="{{player.statusCode | lowercase}} icon-thumbs-up" title="{{player.status}}"></i>
+                        <i ng-if="(player.statusCode | lowercase) == 'rejected'" class="{{player.statusCode | lowercase}} icon-thumbs-down" title="{{player.status}}"></i>
+                    </span>
+                }
+
+            </figure>
+        </div>
+
+
+
+
+        @*fim list-images-struture *@
+        <div class="msg-displayer msg-displayer-modified" ng-if="ctrlPlayerList.loadedOptionsPlayers && ctrlPlayerList.playersSelected.length <= 0">
+            @Labels.NoPlayerSelected
+        </div>
+
+        <div class="msg-displayer msg-displayer-modified" ng-if="!ctrlPlayerList.loadedOptionsPlayers">
+            @Labels.LoadingSelectedPlayers
+        </div>
+    </div>
+
+    @*Botao enviar para players*@
+
+    @if (!Model.ProjectSubmitted)
+    {
+        <div class="col-lg-4">
+            <div class="btn-group pull-right">
+                <a href="data-target" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalSavePlayersSelected">@Labels.Save</a>
+                <a href="data-target" class="btn btn-lg btn-default" data-toggle="modal" data-target="#modalSendToPlayers">
+                    <i class="icon-share"></i>
+                    @Labels.SendToPlayers
+                </a>
+
+            </div>
+
+        </div>
+    }
+</div>

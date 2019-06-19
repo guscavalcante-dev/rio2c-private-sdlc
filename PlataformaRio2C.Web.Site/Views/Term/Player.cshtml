@@ -1,0 +1,91 @@
+﻿@{
+    ViewBag.Title = Labels.TermsOfUse;
+    Layout = "~/Views/Shared/_LayoutModal.cshtml";
+    ViewBag.ModalClass = "modal-term";
+}
+
+<div class="modal-content">
+    @using (Html.BeginForm("AcceptTermPlayer", "Term", FormMethod.Post, new { @class = "form-horizontal form-term", role = "form" }))
+    {
+        <div class="modal-header">
+            <h3 class="modal-title text-primary">Regulamento de Player | <em class="english"> Player's Terms </em></h3>
+        </div>
+        <div class="modal-body">
+            <div class="content term-content">
+                <section class="panel">
+                    <div class="panel-body">
+                        @Html.StatusMessages()
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary("", new { @class = "text-danger" })
+
+                        <div>
+                            <h2 class="text-center">RODADAS DE NEGÓCIOS | <em class="english">ONE-TO-ONE MEETINGS</em></h2> <br />
+
+                            <h3 class="text-center">REGRAS GERAIS DE INSCRIÇÃO DE PROJETOS | <em class="english">GENERAL RULES FOR PROJECT SUBMISSION</em></h3>
+                            <p>
+                               1.	Ao executivo (Player) serão encaminhados projetos de pessoa jurídica, previamente credenciada para o <strong>Rio2C|RioContentMarket 2019</strong>, nas categorias INDUSTRY e INDUSTRY+ e inscritos para as Rodadas de Negócios, <strong>no período de 11 de dezembro de 2018 a 11 de janeiro de 2019.</strong> Cada pessoa jurídica poderá inscrever até 3 (três) projetos e enviar cada projeto para até 5 (cinco) Players. |
+                                <em class="english">
+                                    Projects from legal corporations registered in the INDUSTRY and INDUSTRY+ categories for <strong>Rio2C|RioContentMarket 2019</strong> are forwarded to the executive (Player). They must be registered for the One-to-One Meetings in the period between <strong>December 11th, 2018 to January 11th, 2019</strong>. Each legal corporation may submit up to 3 (three) projects and each project may be sent to a maximum of 5 (five) Players.
+                                </em>
+                            </p>
+
+                            <p>
+                                2.	Ao clicar em “Enviar Projeto” o responsável pela inscrição do mesmo deverá concordar com o “Regulamento das Rodadas de Negócios”, onde afirma estar ciente de que pode haver projetos semelhantes e isenta o <strong>Rio2C|RioContentMarket</strong> e os Players de qualquer responsabilidade com relação a projetos similares, excluindo o <strong>Rio2C|RioContentMarket</strong> e os players de qualquer demanda judicial ou extrajudicial envolvendo a discussão de direitos sobre os formatos.|
+                                <em class="english">By clicking on “Forward Project”, the person in charge of registration must also agree with the “Terms for Project Submission”, where they confirm they are aware that there may be similar projects and hold <strong>Rio2C|RioContentMarket</strong> and the executives (Players) exempt in relation to similar projects, excluding <strong>Rio2C|RioContentMarket</strong> and the Player from any judicial or extrajudicial demand involving the discussion of copyrights over the formats.</em>
+                            </p>
+
+                            <h2>
+                                DA PARTICIPAÇÃO DO EXECUTIVO (PLAYER) | <em class="english">OF THE EXECUTIVE’S (PLAYER’S) ATTENDANCE</em>
+                            </h2>
+
+                            <p>
+                                1.	Preencher a ficha de inscrição da empresa e executivos (Players) até o dia <strong>10 de novembro de 2018</strong>, no site do <strong>Rio2C|RioContentMarket</strong> com código e link enviados por e-mail pela organização. Essa inscrição irá gerar o perfil da empresa no sistema e o acesso será personalizado através de senha. |
+                                <em class="english">The player is requested to fill out the executive (Player) registration form by <strong>November 10th, 2018</strong> on <strong>Rio2C|RioContentMarket's</strong> website with the code and link forwarded via e-mail by the organizers. This registration generates the company’s profile on the system, which shall be personalized by using a password.</em>
+                            </p>
+
+                            <p>
+                                2.	Do dia <strong>11 de dezembro de 2018 a 22 de fevereiro de 2019</strong> todos os executivos que atenderão pela empresa (Player) receberão os projetos inscritos em uma área exclusiva no site do <strong>Rio2C|RioContentMarket</strong>. Para avaliar seus projetos, o executivo deverá acessar o site oficial do evento com seu login e senha. |
+                                <em class="english">Starting from <strong>December 11th, 2018 to February 22nd, 2019</strong>, all executives who will attend on behalf of the company (Player) will receive the submitted projects in a dedicated area of <strong>Rio2C|RioContentMarket’s</strong> website.To evaluate your projects, the executive must access the official website with their login and password.</em>
+                            </p>
+
+                            <p>
+                                3.	Os executivos (Players) terão até o dia <strong>22 de fevereiro de 2019</strong> para selecionar os projetos cujas empresas desejam se reunir. |
+                                <em class="english">Executives (Players) shall have until <strong>February 22nd, 2019</strong> to mark which projects’ proposing companies they would like to meet up with.</em>
+                            </p>
+
+                            <h2>Da Participação | <em class="english">Attendance</em></h2>
+
+                            <p>
+                                1.	Os executivos (Players) receberão a partir do dia <strong>15 de março de 2019</strong> a agenda de reuniões das Rodadas de Negócios do <strong>Rio2C|RioContentMarket</strong>. As agendas serão montadas pela organização, levando em consideração a disponibilidade do Player durante os dias <strong>23, 24, 25 e 26 de abril de 2019</strong>. |
+                                <em class="english">Starting from <strong>March 15th, 2019</strong> the executives (Players) will receive their One-to-One Meetings schedules for <strong>Rio2C|RioContentMarket</strong>. The schedules will be planned by the organization, taking into consideration the Player’s availability during <strong>April 23rd, 24th, 25th and 26th, 2019</strong>.</em>
+                            </p>
+
+                            <p>
+                                2.	Cada reunião terá a duração máxima de 20 minutos e solicitamos que os executivos (Players) estejam na sala de Rodadas de Negócios <strong>10 minutos antes da primeira reunião agendada</strong>. |
+                                <em class="english">Each meeting will have a maximum duration of 20 minutes and we kindly request that executives (Players) be at the One-to-One Meetings room <strong>10 minutes before the first scheduled meeting</strong>.</em>
+                            </p>
+
+                            <p>
+                                3.	Os horários e datas definidos na agenda enviada pelo <strong>Rio2C|RioContentMarket</strong> ao executivo (Player) são prioritários e <strong>não podem ser alterados</strong>. |
+                                <em class="english">Times and dates established on the schedule forwarded by <strong>Rio2C|RioContentMarket</strong> to the executive (Player) must take precedence and <strong>may not be changed</strong>.</em>
+                            </p>
+                        </div>
+                    </div>
+                    <footer class="panel-footer">
+                        <div class="form-group">
+                            <label>
+                                <input name="Accept" type="checkbox" value="true" />
+                                <input type="hidden" name="Accept" value="false" />
+                                Declaro estar ciente e concordar com as regras e regulamentos acima. | <em class="english">I declare that I am aware and agree with the above mentioned rules and regulations.</em>
+                            </label>
+                        </div>
+                    </footer>
+                </section>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="@Url.Action("LogOff","Account")" class="btn btn-lg btn-default pull-left">@Labels.Cancel</a>
+            <input type="submit" class="btn btn-lg btn-primary pull-right" value="@Html.Raw(Labels.Proceed)" />
+        </div>
+    }
+</div>

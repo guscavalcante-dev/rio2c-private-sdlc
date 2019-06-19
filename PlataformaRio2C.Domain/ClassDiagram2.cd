@@ -1,0 +1,2333 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="PlataformaRio2C.Domain.Entities.Entity" Collapsed="true">
+    <Position X="63.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAACAAAAAAAAAAAAABgBAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>Entities\Base\Entity.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Collaborator" Collapsed="true">
+    <Position X="10.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAABACAADAAAABCIAAgAQA0AAQogABECgAAJYQBMAAI=</HashCode>
+      <FileName>Entities\Collaborator\Collaborator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.CollaboratorJobTitle" Collapsed="true">
+    <Position X="17.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAggCAAAAAgAAgAAACgAgAAAEAAA=</HashCode>
+      <FileName>Entities\Collaborator\CollaboratorJobTitle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.CollaboratorMiniBio" Collapsed="true">
+    <Position X="26.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAggCAAAAAgAAgAAACgAgAAAEAAA=</HashCode>
+      <FileName>Entities\Collaborator\CollaboratorMiniBio.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.CollaboratorProducer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="134.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAABAAAAABgAAAAAAgAQAAAAAgAIAAAABAA=</HashCode>
+      <FileName>Entities\Collaborator\CollaboratorProducer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Activity" Collapsed="true">
+    <Position X="37.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAgAAAQAAQAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>Entities\Common\Activity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Address" Collapsed="true">
+    <Position X="44.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAABQAAAEAQAAAIgAgAAAAAAQIAABABAACABAAAAAA=</HashCode>
+      <FileName>Entities\Common\Address.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.ImageFile" Collapsed="true">
+    <Position X="51.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAYAAAAAAAAAAAgAAQAAAAiEARBAAAAQAABAAAA=</HashCode>
+      <FileName>Entities\Common\ImageFile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Interest" Collapsed="true">
+    <Position X="58" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAASAAAAAgAAAAAgEAAQAAQAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>Entities\Common\Interest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.InterestGroup" Collapsed="true">
+    <Position X="64.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAQAAAAAAAAAAAAAAgAAAQAAQAAAAAQAQAAQAAAAAA=</HashCode>
+      <FileName>Entities\Common\InterestGroup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Language" Collapsed="true">
+    <Position X="71.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAggAAQAAQAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>Entities\Common\Language.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.TargetAudience" Collapsed="true">
+    <Position X="78.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAgAAAQAAQAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>Entities\Common\TargetAudience.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Conference" Collapsed="true">
+    <Position X="85" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQADAGAAAABEAAABgAAAIIoAAgBAJJAAABAEAAAAA=</HashCode>
+      <FileName>Entities\Conference\Conference.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.ConferenceLecturer" Collapsed="true">
+    <Position X="91.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAABQAAAgiAgAAIQAIAAgAAAiAACAAABAA=</HashCode>
+      <FileName>Entities\Conference\ConferenceLecturer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.ConferenceSynopsis" Collapsed="true">
+    <Position X="98.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAQAAAAgCAAAAAgIAgAAAAAAgCAAEAAA=</HashCode>
+      <FileName>Entities\Conference\ConferenceSynopsis.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.ConferenceTitle" Collapsed="true">
+    <Position X="105.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAQAAAAgCAAAAAgIAgAAAAAAgCAAEAAA=</HashCode>
+      <FileName>Entities\Conference\ConferenceTitle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Lecturer" Collapsed="true">
+    <Position X="112" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAQAAACKAAAQAAAAhAAAUAAAAAABEAAAAAQAAIAAA=</HashCode>
+      <FileName>Entities\Conference\Lecturer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.LecturerJobTitle" Collapsed="true">
+    <Position X="118.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAACAAAAAAAAAgCgAAAAgAAgAAAAAAgAAAEAAA=</HashCode>
+      <FileName>Entities\Conference\LecturerJobTitle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.RoleLecturer" Collapsed="true">
+    <Position X="4" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAEAAAAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Conference\RoleLecturer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.RoleLecturerTitle" Collapsed="true">
+    <Position X="13" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAAgCAAAAQgAAggAAAAAgAAAEAAA=</HashCode>
+      <FileName>Entities\Conference\RoleLectureTitle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Event" Collapsed="true">
+    <Position X="19.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAQAAAAAAAgAAAwgAQAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Entities\Event\Event.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Holding" Collapsed="true">
+    <Position X="28.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAgAAAAAAgCAQUAAQgAABEAAAAAQAAAAAA=</HashCode>
+      <FileName>Entities\Holding\Holding.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.HoldingDescription" Collapsed="true">
+    <Position X="33.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEACAgAAAAAAAgCAAgAAgAAgAAAAAAgAAAEAAA=</HashCode>
+      <FileName>Entities\Holding\HoldingDescription.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Logistics" Collapsed="true">
+    <Position X="40" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAIAAAhAAICAAIAAggAEAAAAgAAAAAAAggACAAABAA=</HashCode>
+      <FileName>Entities\Logistics\Logistics.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Message" Collapsed="true">
+    <Position X="46.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAkAAAAIgCEIIAAAABAAAAAAAACAAIAAA=</HashCode>
+      <FileName>Entities\Message\Message.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Negotiation" Collapsed="true">
+    <Position X="53.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BACQABACIAAAABAABBgATAAARAAgAAwZAQIIAQAAAAA=</HashCode>
+      <FileName>Entities\Negotiation\Negotiation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.NegotiationConfig" Collapsed="true">
+    <Position X="60.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABABABEAAAAACAAEAAgAACIKIAAgAAAJAAAgAAWAAAA=</HashCode>
+      <FileName>Entities\NegotiationConfig\NegotiationConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.NegotiationRoomConfig" Collapsed="true">
+    <Position X="67" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAACAgAAAAAAABgAAEAAIAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\NegotiationConfig\NegotiationRoomConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Player" Collapsed="true">
+    <Position X="73.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAABSSEADKgogAABAAhCQD2BAQjIAhEGAAAAQCABAQA=</HashCode>
+      <FileName>Entities\Player\Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.PlayerActivity" Collapsed="true">
+    <Position X="80.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAFAAAAgAAAAAAABAAAAAAAAIAUAAAAA=</HashCode>
+      <FileName>Entities\Player\PlayerActivity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.PlayerDescription" Collapsed="true">
+    <Position X="87.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAABAAAAgCAAAAAgAAgAAAAAAoAQAEAAA=</HashCode>
+      <FileName>Entities\Player\PlayerDescription.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.PlayerInterest" Collapsed="true">
+    <Position X="94" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAABABAAAAgAACAAAAAAAAAAAAAIAQDAAAA=</HashCode>
+      <FileName>Entities\Player\PlayerInterest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.PlayerRestrictionsSpecifics" Collapsed="true">
+    <Position X="100.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAABAAAAgCAAAAAgAAgAAAAAAoAQAEAAA=</HashCode>
+      <FileName>Entities\Player\PlayerRestrictionsSpecifics.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.PlayerTargetAudience" Collapsed="true">
+    <Position X="107.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAgAAAAAAAAIAAAgAAAIAQAAAIA=</HashCode>
+      <FileName>Entities\Player\PlayerTargetAudience.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Producer" Collapsed="true">
+    <Position X="114.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QIAICCEAjAAohAAAAAgGQAXAAQBIAhsGAAAAQEAAQQA=</HashCode>
+      <FileName>Entities\Producer\Producer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.ProducerActivity" Collapsed="true">
+    <Position X="121" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAEEAAAgAAAAAAABQAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Entities\Producer\ProducerActivity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.ProducerDescription" Collapsed="true">
+    <Position X="6.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAABAAEAAAgCAAAAAgAQgAAAAAAgAAAEAAA=</HashCode>
+      <FileName>Entities\Producer\ProducerDescription.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.ProducerEvent" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="129.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAABAAAAABgAAAAAAgAQAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>Entities\Producer\ProducerEvent.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.ProducerTargetAudience" Collapsed="true">
+    <Position X="22" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAEAAAgAAAAAAAAYAAAgAAAAAAAAAIA=</HashCode>
+      <FileName>Entities\Producer\ProducerTargetAudience.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Project" Collapsed="true">
+    <Position X="31" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>JRQBAggGAAIFAEEAAQwEACEiAAAQAAZAQACABEGABAA=</HashCode>
+      <FileName>Entities\Project\Project.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.ProjectAdditionalInformation" Collapsed="true">
+    <Position X="35.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAKAAAAAAAAAgCCAAABgAAgAAAAAAgAAAEAAA=</HashCode>
+      <FileName>Entities\Project\ProjectAdditionalInformation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.ProjectInterest" Collapsed="true">
+    <Position X="42.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAIAABAAAAAAgECCAABAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Entities\Project\ProjectInterest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.ProjectLinkImage" Collapsed="true">
+    <Position X="49" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAgACAAABAAAgAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Entities\Project\ProjectLinkImage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.ProjectLinkTeaser" Collapsed="true">
+    <Position X="55.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAgACAAABAAAgAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Entities\Project\ProjectLinkTeaser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.ProjectLogLine" Collapsed="true">
+    <Position X="62.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAKAAAAAAAAAgCCAAABgAAgAAAAAAgAAAEAAA=</HashCode>
+      <FileName>Entities\Project\ProjectLogLine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.ProjectPlayer" Collapsed="true">
+    <Position X="69.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEgAAEOAAAABAAAAoQTkAQBAAAAAAAAAIYAQAAAAE=</HashCode>
+      <FileName>Entities\Project\ProjectPlayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.ProjectPlayerEvaluation" Collapsed="true">
+    <Position X="76" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAABAIMAIAAAIIAAAgAIAAIAAAACAAAAAAAAAAACAA=</HashCode>
+      <FileName>Entities\Project\ProjectPlayerEvaluation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.ProjectProductionPlan" Collapsed="true">
+    <Position X="82.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAKAAAAAAAAAgCCAAABgAAgAAAAAAgAAAEAAA=</HashCode>
+      <FileName>Entities\Project\ProjectProductionPlan.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.ProjectStatus" Collapsed="true">
+    <Position X="89.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAggAAQAAAAAAAAAAAAAQAAAAAg=</HashCode>
+      <FileName>Entities\Project\ProjectStatus.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.ProjectSummary" Collapsed="true">
+    <Position X="96.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAKAAAAAAAAAgCCAAABgAAgAAAAAAgAAAEAAA=</HashCode>
+      <FileName>Entities\Project\ProjectSummary.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.ProjectTitle" Collapsed="true">
+    <Position X="103" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAKAAAAAAAAAgCCAAABgAAgAAAAAAgAAAEAAA=</HashCode>
+      <FileName>Entities\Project\ProjectTitle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Room" Collapsed="true">
+    <Position X="109.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAgAAAAAAAAAAAAAAACAAAAABAA=</HashCode>
+      <FileName>Entities\Room\Room.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.RoomName" Collapsed="true">
+    <Position X="116.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACCAAAAAAAABgCAAAAAgAAgAAAAAAgAAAEAAA=</HashCode>
+      <FileName>Entities\Room\RoomName.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Role" Collapsed="true">
+    <Position X="123.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\User\Role.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.User" Collapsed="true">
+    <Position X="8.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAACAKAAIEAAAAgAQAQBAgAAAAAoARQIQJAAAQA=</HashCode>
+      <FileName>Entities\User\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.UserRole" Collapsed="true">
+    <Position X="15.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAIAAAAAAAAAEAgAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\User\UserRole.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.UserUseTerm" Collapsed="true">
+    <Position X="24.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gBABAAIgAAAAAAAAEAgAIAgAAgAAAAgAAAABAAAAAAA=</HashCode>
+      <FileName>Entities\User\UserUseTerm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Services.CollaboratorPlayerService" Collapsed="true">
+    <Position X="9.5" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAEAAIgAAAAAAAAA=</HashCode>
+      <FileName>Services\CollaboratorPlayerService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Services.CollaboratorProducerService" Collapsed="true">
+    <Position X="11.75" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAIgAAAAAAAAI=</HashCode>
+      <FileName>Services\CollaboratorProducerService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Services.CollaboratorService" Collapsed="true">
+    <Position X="10.5" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CGQAAAAgAAAAQAAAAEAgAABQAAAAAEAABCCAAAAYAAA=</HashCode>
+      <FileName>Services\CollaboratorService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Services.Service&lt;TEntity&gt;" Collapsed="true">
+    <Position X="23" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQKAAIAEABAAABgAAAAAAAAAAEAgEAAAgAIAAAAAAA=</HashCode>
+      <FileName>Services\Common\Service.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Services.ConferenceService" Collapsed="true">
+    <Position X="18.5" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQIAEAAQAAAAAAAAAAAAAAAAAAAAEAAAIAAAAAAAAA=</HashCode>
+      <FileName>Services\ConferenceService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Services.EventService" Collapsed="true">
+    <Position X="23" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\EventService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Services.HoldingService" Collapsed="true">
+    <Position X="27.5" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AiQAAAAAAAAAAAAAACAAAABAAAEAAEAAAAAAAAAIAAA=</HashCode>
+      <FileName>Services\HoldingService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Services.InterestGroupService" Collapsed="true">
+    <Position X="29.75" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\InterestGroupService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Services.InterestService" Collapsed="true">
+    <Position X="32" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\InterestService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Services.LanguageService" Collapsed="true">
+    <Position X="34.25" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\LanguageService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Services.LogisticsService" Collapsed="true">
+    <Position X="36.5" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\LogisticsService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Services.MessageService" Collapsed="true">
+    <Position X="38.75" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAEAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgA=</HashCode>
+      <FileName>Services\MessageService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Services.NegotiationConfigService" Collapsed="true">
+    <Position X="41" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\NegotiationConfigService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Services.NegotiationService" Collapsed="true">
+    <Position X="43.25" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\NegotiationService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Services.PlayerAdminService" Collapsed="true">
+    <Position X="45.5" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACQABAAAAAAAAAAAACAAAAAAAAEAAEAAAAgAAAAIAgA=</HashCode>
+      <FileName>Services\PlayerAdminService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Services.PlayerInterestService" Collapsed="true">
+    <Position X="0.5" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\PlayerInterestService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Services.PlayerRestrictionsSpecificsService" Collapsed="true">
+    <Position X="2.75" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\PlayerRestrictionsSpecificsService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Services.PlayerService" Collapsed="true">
+    <Position X="45.5" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\PlayerService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Services.ProducerService" Collapsed="true">
+    <Position X="5" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAYAAAAAAAAgA=</HashCode>
+      <FileName>Services\ProducerService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Services.ProjectService" Collapsed="true">
+    <Position X="7.25" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>WAQCAAAgAQAgAQAACCAAEQBACEIABECIAAwAAAAAAhI=</HashCode>
+      <FileName>Services\ProjectService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Services.RoleLecturerService" Collapsed="true">
+    <Position X="14" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Services\RoleLecturerService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Services.RoomService" Collapsed="true">
+    <Position X="16.25" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\RoomService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Services.UserService" Collapsed="true">
+    <Position X="20.75" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\UserService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Services.UserUseTermService" Collapsed="true">
+    <Position X="25.25" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\UserUseTermService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.AddressCityIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="125.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\AddressSpecs\AddressCityIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.AddressCityIsValid" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="127.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAgAAAA=</HashCode>
+      <FileName>Specifications\AddressSpecs\AddressCityIsValid.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.AddressCountryIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="129.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\AddressSpecs\AddressCountryIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.AddressCountryIsValid" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="131" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAgAAAA=</HashCode>
+      <FileName>Specifications\AddressSpecs\AddressCountryIsValid.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.AddressStateIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="132.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\AddressSpecs\AddressStateIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.AddressStateIsValid" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="134.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAgAAAA=</HashCode>
+      <FileName>Specifications\AddressSpecs\AddressStateIsValid.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.AddressValueIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="136.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\AddressSpecs\AddressValueIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.AddressZipCodeRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="138" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\AddressSpecs\AddressZipCodeRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.CollaboratorJobTitleEnIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="139.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\CollaboratorSpecs\CollaboratorJobTitleEnIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.CollaboratorJobTitlePtBrIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="141.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\CollaboratorSpecs\CollaboratorJobTitlePtBrIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.CollaboratorMiniBioEnIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="143.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\CollaboratorSpecs\CollaboratorMiniBioEnIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.CollaboratorMiniBioPtBrIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="125.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\CollaboratorSpecs\CollaboratorMiniBioPtBrIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.CollaboratorMustHaveAPlayer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="127.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\CollaboratorSpecs\CollaboratorMustHaveAPlayer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.CollaboratorMustHaveAProducer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="129.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\CollaboratorSpecs\CollaboratorMustHaveAProducer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.CollaboratorMustHaveBadge" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="131" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\CollaboratorSpecs\CollaboratorMustHaveBadge.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.CollaboratorMustHaveName" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="132.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\CollaboratorSpecs\CollaboratorMustHaveName.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.CollaboratorResolutionFoto" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="136.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\CollaboratorSpecs\CollaboratorResolutionFoto.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ConferenceDateIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="138" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ConferenceSpecs\ConferenceDateIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ConferenceEndTimeIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="139.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ConferenceSpecs\ConferenceEndTimeIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ConferenceEndTimeIsValid" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="141.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ConferenceSpecs\ConferenceEndTimeIsValid.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ConferenceMustHaveOneLecturer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="143.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ConferenceSpecs\ConferenceMustHaveOneLecturer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ConferenceMustHaveOneSynopsis" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="125.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ConferenceSpecs\ConferenceMustHaveOneSynopsis.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ConferenceMustHaveOneTitle" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="127.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ConferenceSpecs\ConferenceMustHaveOneTitle.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ConferenceRoomIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="129.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ConferenceSpecs\ConferenceRoomIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ConferenceStartTimeIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="131" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ConferenceSpecs\ConferenceStartTimeIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ConferenceStartTimeIsValid" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="132.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ConferenceSpecs\ConferenceStartTimeIsValid.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ConferenceStartTimeSmallerEndTime" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="134.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ConferenceSpecs\ConferenceStartTimeSmallerEndTime.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ConferenceSynopsisEnIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="136.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ConferenceSpecs\ConferenceSynopsisEnIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ConferenceSynopsisPtBrIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="138" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ConferenceSpecs\ConferenceSynopsisPtBrIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ConferenceTitleEnIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="139.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ConferenceSpecs\ConferenceTitleEnIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ConferenceTitlePtBrIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="141.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ConferenceSpecs\ConferenceTitlePtBrIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.HoldingLogoMustHaveValidFormat" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="143.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\HoldingSpecs\HoldingLogoMustHaveValidFormat.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.HoldingMustHaveName" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="125.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\HoldingSpecs\HoldingMustHaveName.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.HoldingResolutionFoto" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="127.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\HoldingSpecs\HoldingResolutionFoto.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ImageIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="129.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ImageSpecs\ImageIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ImageMustHaveValidFormat" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="131" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ImageSpecs\ImageMustHaveValidFormat.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ImageResolutionFoto" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="132.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ImageSpecs\ImageResolutionFoto.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.LogisticsArrivalDateIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="134.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\LogisticsSpecs\LogisticsArrivalDateIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.LogisticsArrivalDateSmallerDepartureDate" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="136.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\LogisticsSpecs\LogisticsArrivalDateSmallerDepartureDate.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.LogisticsArrivalTimeIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="138" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\LogisticsSpecs\LogisticsArrivalTimeIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.LogisticsArrivalTimeIsValid" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="139.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\LogisticsSpecs\LogisticsArrivalTimeIsValid.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.LogisticsCollaboratorIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="141.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\LogisticsSpecs\LogisticsCollaboratorIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.LogisticsDepartureDateIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="143.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\LogisticsSpecs\LogisticsDepartureDateIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.LogisticsDepartureTimeIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="125.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\LogisticsSpecs\LogisticsDepartureTimeIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.LogisticsDepartureTimeIsValid" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="127.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\LogisticsSpecs\LogisticsDepartureTimeIsValid.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.LogisticsEventIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="129.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\LogisticsSpecs\LogisticsEventIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.MessageTextMaxLength" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="131" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\MessageSpecs\MessageTextMaxLength.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.NegotiationConfigCountSlotsFirstTurnIsInvalid" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="132.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\NegotiationConfigSpecs\NegotiationConfigCountSlotsFirstTurnIsInvalid.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.NegotiationConfigCountSlotsSecondTurnIsInvalid" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="134.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\NegotiationConfigSpecs\NegotiationConfigCountSlotsSecondTurnIsInvalid.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.NegotiationConfigDateIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="136.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\NegotiationConfigSpecs\NegotiationConfigDateIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.NegotiationConfigEndTimeIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="138" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\NegotiationConfigSpecs\NegotiationConfigEndTimeIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.NegotiationConfigEndTimeIsValid" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="139.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\NegotiationConfigSpecs\NegotiationConfigEndTimeIsValid.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.NegotiationConfigRoomIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="141.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\NegotiationConfigSpecs\NegotiationConfigRoomIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.NegotiationConfigSpecsMustHaveOneSlot" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="143.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\NegotiationConfigSpecs\NegotiationConfigSpecsMustHaveOneSlot.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.NegotiationConfigStartTimeIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="125.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\NegotiationConfigSpecs\NegotiationConfigStartTimeIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.NegotiationConfigStartTimeIsValid" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="127.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\NegotiationConfigSpecs\NegotiationConfigStartTimeIsValid.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.NegotiationConfigStartTimeSmallerEndTime" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="129.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\NegotiationConfigSpecs\NegotiationConfigStartTimeSmallerEndTime.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.NegotiationConfigTimeIntervalBetweenSlotIsValid" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="131" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\NegotiationConfigSpecs\NegotiationConfigTimeIntervalBetweenSlotIsValid.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.NegotiationConfigTimeIntervalBetweenTurnIsValid" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="132.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\NegotiationConfigSpecs\NegotiationConfigTimeIntervalBetweenTurnIsValid.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.NegotiationConfigTimeOfEachSlotIsValid" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="134.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\NegotiationConfigSpecs\NegotiationConfigTimeOfEachSlotIsValid.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.NegotiationRoomConfigCountAutomaticTablesIsInvalid" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="136.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\NegotiationRoomConfigSpecs\NegotiationRoomConfigCountAutomaticTablesIsInvalid.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.NegotiationRoomConfigRoomIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="138" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\NegotiationRoomConfigSpecs\NegotiationRoomConfigRoomIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.PhoneNumberIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="139.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\PhoneNumber\PhoneNumberIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.PhoneNumberIsValid" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="141.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAEAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\PhoneNumber\PhoneNumberIsValid.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.PlayerCnpjIsValid" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="143.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAEAgACAAAAAAAABAAQAAAAAAAAA=</HashCode>
+      <FileName>Specifications\PlayerSpecs\PlayerCnpjIsValid.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.PlayerCompanyNameIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="125.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\PlayerSpecs\PlayerCompanyNameIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.PlayerDescriptionEnIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="127.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\PlayerSpecs\PlayerDescriptionEnIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.PlayerDescriptionPtBrIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="129.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\PlayerSpecs\PlayerDescriptionPtBrIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.PlayerLogoMustHaveValidFormat" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="131" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\PlayerSpecs\PlayerLogoMustHaveValidFormat.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.PlayerMustHaveName" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="132.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\PlayerSpecs\PlayerMustHaveName.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.PlayerResolutionFoto" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="134.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\PlayerSpecs\PlayerResolutionFoto.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.PlayerRestrictionsSpecificsEnIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="136.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\PlayerSpecs\PlayerRestrictionsSpecificsEnIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.PlayerRestrictionsSpecificsPtBrIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="138" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\PlayerSpecs\PlayerRestrictionsSpecificsPtBrIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.PlayerTradeNameIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="139.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\PlayerSpecs\PlayerTradeNameIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.PlayerWebsiteIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="141.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\PlayerSpecs\PlayerWebsiteIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProducerCnpjIsValid" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="143.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAEAgACAAAAAAAABAAQAAAAAAAAA=</HashCode>
+      <FileName>Specifications\Producer\ProducerCnpjIsValid.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProducerDescriptionEnIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="125.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\Producer\ProducerDescriptionEnIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProducerDescriptionPtBrIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="127.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\Producer\ProducerDescriptionPtBrIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProducerLogoMustHaveValidFormat" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="131" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\Producer\ProducerLogoMustHaveValidFormat.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProducerMustHaveName" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="132.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\Producer\ProducerMustHaveName.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProducerResolutionFoto" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="134.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\Producer\ProducerResolutionFoto.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProducerTradeNameIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="136.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\Producer\ProducerTradeNameIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProducerWebsiteIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="138" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\Producer\ProducerWebsiteIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.RecuseReasonIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="141.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ProjectPlayerEvaluationSpecs\RecuseReasonIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.RecuseReasonMaxLength" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="143.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ProjectPlayerEvaluationSpecs\RecuseReasonMaxLength.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.RecuseReasonMinLength" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="125.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ProjectPlayerEvaluationSpecs\RecuseReasonMinLegth.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProductionPlanEnIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="139.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ProjectSpecs\ProductionPlanEnIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProductionPlanPtBrIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="141.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ProjectSpecs\ProductionPlanPtBrIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProjectLogLineEnIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="143.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ProjectSpecs\ProjectLogLineEnIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProjectLogLinePtBrIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="125.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ProjectSpecs\ProjectLogLinePtBrIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProjectMustHaveAFormat" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="127.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ProjectSpecs\ProjectMustHaveAFormat.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProjectMustHaveAGenre" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="129.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ProjectSpecs\ProjectMustHaveAGenre.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProjectMustHaveAPlatform" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="131" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ProjectSpecs\ProjectMustHaveAPlatform.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProjectMustHaveASeeking" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="132.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ProjectSpecs\ProjectMustHaveASeeking.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProjectMustHaveAStatus" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="134.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ProjectSpecs\ProjectMustHaveAStatus.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProjectMustHaveASubGenre" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="136.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ProjectSpecs\ProjectMustHaveASubGenre.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProjectMustHaveEachEpisodePlayingTime" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="138" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ProjectSpecs\ProjectMustHaveEachEpisodePlayingTime.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProjectMustHaveLinksImage" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="139.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ProjectSpecs\ProjectMustHaveLinksImage.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProjectMustHaveLinksTeaser" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="141.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ProjectSpecs\ProjectMustHaveLinksTeaser.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProjectMustHaveNumberOfEpisodes" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="143.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ProjectSpecs\ProjectMustHaveNumberOfEpisodes.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProjectMustHavePitching" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="125.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ProjectSpecs\ProjectMustHavePitching.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProjectMustHaveTotalValueOfProject" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="127.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ProjectSpecs\ProjectMustHaveTotalValueOfProject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProjectMustHaveValueAlreadyRaised" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="129.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ProjectSpecs\ProjectMustHaveValueAlreadyRaised.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProjectMustHaveValuePerEpisode" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="131" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ProjectSpecs\ProjectMustHaveValuePerEpisode.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProjectMustHaveValueStillNeeded" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="132.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ProjectSpecs\ProjectMustHaveValueStillNeeded.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProjectSummaryEnIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="134.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ProjectSpecs\ProjectSummaryEnIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProjectSummaryPtBrIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="136.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ProjectSpecs\ProjectSummaryPtBrIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProjectTitleEnIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="138" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ProjectSpecs\ProjectTitleEnIsRequired .cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.ProjectTitlePtBrIsRequired" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="139.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\ProjectSpecs\ProjectTitlePtBrIsRequired.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Specifications.UserEmailIsValid" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="127.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Specifications\User\UserEmailIsValid.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Validation.Validation&lt;TEntity&gt;" Collapsed="true">
+    <Position X="31.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAACAABAAAgAA=</HashCode>
+      <FileName>Validation\Validation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Validation.ValidationError" Collapsed="true">
+    <Position X="129.25" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAAAAAgAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Validation\ValidationError.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Validation.ValidationResult" Collapsed="true">
+    <Position X="131" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAEAAAAQAAAAgABAAAAAAAIAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Validation\ValidationResult.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Validation.ValidationRule&lt;TEntity&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="132.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAgACAAAAAAEAAAAAAABAAAAAA=</HashCode>
+      <FileName>Validation\ValidationRule.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Validations.AddressIsConsistent" Collapsed="true">
+    <Position X="50.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validations\Address\AddressIsConsistent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Validations.CollaboratorImageIsConsistent" Collapsed="true">
+    <Position X="55.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validations\Collaborator\CollaboratorImageIsConsistent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Validations.CollaboratorIsConsistent" Collapsed="true">
+    <Position X="59.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validations\Collaborator\CollaboratorIsConsistent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Validations.CollaboratorPlayerIsComplete" Collapsed="true">
+    <Position X="1.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validations\Collaborator\CollaboratorPlayerIsComplete.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Validations.CollaboratorPlayerIsConsistent" Collapsed="true">
+    <Position X="5.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validations\Collaborator\CollaboratorPlayerIsConsistent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Validations.CollaboratorProducerIsComplete" Collapsed="true">
+    <Position X="10.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validations\Collaborator\CollaboratorProducerIsComplete.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Validations.CollaboratorProducerIsConsistent" Collapsed="true">
+    <Position X="14.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validations\Collaborator\CollaboratorProducerIsConsistent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Validations.ConferenceIsConsistent" Collapsed="true">
+    <Position X="19.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validations\Conference\ConferenceIsConsistent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Validations.HoldingImageIsConsistent" Collapsed="true">
+    <Position X="23.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validations\Holding\HoldingImageIsConsistent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Validations.HoldingIsConsistent" Collapsed="true">
+    <Position X="28.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validations\Holding\HoldingIsConsistent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Validations.ImageIsConsistent" Collapsed="true">
+    <Position X="32.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validations\Image\ImageIsConsistent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Validations.ImageResolutionIsConsistent" Collapsed="true">
+    <Position X="35" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validations\Image\ImageResolutionIsConsistent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Validations.LogisticsIsConsistent" Collapsed="true">
+    <Position X="37.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validations\Logistics\LogisticsIsConsistent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Validations.MessageIsConsistent" Collapsed="true">
+    <Position X="39.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validations\Message\MessageIsConsistent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Validations.NegotiationConfigIsConsistent" Collapsed="true">
+    <Position X="41.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validations\NegotiationConfig\NegotiationConfigIsConsistent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Validations.NegotiationRoomConfigIsConsistent" Collapsed="true">
+    <Position X="44" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validations\NegotiationRoomConfig\NegotiationRoomConfigIsConsistent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Validations.PhoneNumberIsConsistent" Collapsed="true">
+    <Position X="46.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validations\PhoneNumber\PhoneNumberIsConsistent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Validations.PlayerImageIsConsistent" Collapsed="true">
+    <Position X="48.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validations\Player\PlayerImageIsConsistent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Validations.PlayerIsConsistent" Collapsed="true">
+    <Position X="53" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validations\Player\PlayerIsConsistent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Validations.PlayerIsConsistentForPortal" Collapsed="true">
+    <Position X="57.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validations\Player\PlayerIsConsistentForPortal.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Validations.PlayerIsInterestsIsConsistent" Collapsed="true">
+    <Position X="62" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validations\Player\PlayerIsInterestsIsConsistent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Validations.ProducerImageIsConsistent" Collapsed="true">
+    <Position X="3.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validations\Producer\ProducerImageIsConsistent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Validations.ProducerIsConsistent" Collapsed="true">
+    <Position X="8" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validations\Producer\ProducerIsConsistent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Validations.ProducerIsConsistentForPortal" Collapsed="true">
+    <Position X="12.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validations\Producer\ProducerIsConsistentForPortal.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Validations.ProducerIsConsistentForPreRegistration" Collapsed="true">
+    <Position X="17" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validations\Producer\ProducerIsConsistentForPreRegistration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Validations.ProjectIsConsistent" Collapsed="true">
+    <Position X="21.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validations\Project\ProjectIsConsistent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Validations.ProjectPlayerEvaluationRecuseIsConsistent" Collapsed="true">
+    <Position X="26" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validations\ProjectPlayerEvaluation\ProjectPlayerEvaluationRecuseIsConsistent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlataformaRio2C.Domain.Entities.Validations.UserIsConsistent" Collapsed="true">
+    <Position X="30.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validations\User\UserIsConsistent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IEntity" Collapsed="true">
+    <Position X="127.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>Interfaces\Entities\IEntity.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IActivityRepository" Collapsed="true">
+    <Position X="78.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Activity\IActivityRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.ICollaboratorJobTitleRepository" Collapsed="true">
+    <Position X="87.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Collaborator\ICollaboratorJobTitleRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.ICollaboratorMiniBioRepository" Collapsed="true">
+    <Position X="94" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Collaborator\ICollaboratorMiniBioRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.ICollaboratorRepository" Collapsed="true">
+    <Position X="98.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAEAgAAAQAAAAAAAABACAABAAACA=</HashCode>
+      <FileName>Interfaces\Repositories\Collaborator\ICollaboratorRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IImageFileRepository" Collapsed="true">
+    <Position X="103" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Common\IImageFileRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IInterestGroupRepository" Collapsed="true">
+    <Position X="109.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Common\IInterestGroupRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IInterestRepository" Collapsed="true">
+    <Position X="116.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Common\IInterestRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.ILanguageRepository" Collapsed="true">
+    <Position X="4" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Common\ILanguageRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.ITargetAudienceRepository" Collapsed="true">
+    <Position X="10.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Common\ITargetAudienceRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IConferenceLecturerRepository" Collapsed="true">
+    <Position X="17.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Conference\IConferenceLecturerRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IConferenceRepository" Collapsed="true">
+    <Position X="24.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Conference\IConferenceRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IConferenceSynopsisRepository" Collapsed="true">
+    <Position X="31" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Conference\IConferenceSynopsisRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IConferenceTitleRepository" Collapsed="true">
+    <Position X="37.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Conference\IConferenceTitleRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.ILecturerJobTitleRepository" Collapsed="true">
+    <Position X="44.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Conference\ILecturerJobTitleRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.ILecturerRepository" Collapsed="true">
+    <Position X="51.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Conference\ILecturerRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IRoleLecturerRepository" Collapsed="true">
+    <Position X="58" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Conference\IRoleLecturerRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IRoleLecturerTitleRepository" Collapsed="true">
+    <Position X="64.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Conference\IRoleLecturerTitleRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IEventRepository" Collapsed="true">
+    <Position X="71.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Event\IEventRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IHoldingDescriptionRepository" Collapsed="true">
+    <Position X="80.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Holding\IHoldingDescriptionRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IHoldingRepository" Collapsed="true">
+    <Position X="89.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Holding\IHoldingRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IRepository&lt;T&gt;" Collapsed="true">
+    <Position X="62.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQKAAQAAAAAAABgAAAACAQAAAEAgEAAAgAAIAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\IRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IRepositoryFactory" Collapsed="true">
+    <Position X="129.25" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>wQAAFCEgCAAAAECKAQAQiABBFCACBmMwEA5EAMgAKIA=</HashCode>
+      <FileName>Interfaces\Repositories\IRepositoryFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.ILogisticsRepository" Collapsed="true">
+    <Position X="105.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Logistics\ILogisticsRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IMessageRepository" Collapsed="true">
+    <Position X="112" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Message\IMessageRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.INegotiationRepository" Collapsed="true">
+    <Position X="118.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Negotiation\INegotiationRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.INegotiationConfigRepository" Collapsed="true">
+    <Position X="6.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\NegotiationConfig\INegotiationConfigRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.INegotiationRoomConfigRepository" Collapsed="true">
+    <Position X="13" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\NegotiationConfig\INegotiationRoomConfigRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IPlayerActivityRepository" Collapsed="true">
+    <Position X="19.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Player\IPlayerActivityRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IPlayerDescriptionRepository" Collapsed="true">
+    <Position X="26.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Player\IPlayerDescriptionRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IPlayerInterestRepository" Collapsed="true">
+    <Position X="33.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Player\IPlayerInterestRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IPlayerRepository" Collapsed="true">
+    <Position X="40" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAACAAAAAAAAAAQAAAAgAACAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Player\IPlayerRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IPlayerRestrictionsSpecificsRepository" Collapsed="true">
+    <Position X="46.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Player\IPlayerRestrictionsSpecificsRepository..cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IPlayerTargetAudienceRepository" Collapsed="true">
+    <Position X="53.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Player\IPlayerTargetAudienceRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IProducerActivityRepository" Collapsed="true">
+    <Position X="60.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Producer\IProducerActivityRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IProducerDescriptionRepository" Collapsed="true">
+    <Position X="67" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Producer\IProducerDescriptionRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IProducerRepository" Collapsed="true">
+    <Position X="73.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Interfaces\Repositories\Producer\IProducerRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IProducerTargetAudienceRepository" Collapsed="true">
+    <Position X="82.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Producer\IProducerTargetAudienceRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IProjectAdditionalInformationRepository" Collapsed="true">
+    <Position X="91.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Project\IProjectAdditionalInformationRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IProjectInterestRepository" Collapsed="true">
+    <Position X="96.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Project\IProjectInterestRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IProjectLinkImageRepository" Collapsed="true">
+    <Position X="100.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Project\IProjectLinkImageRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IProjectLinkTeaserRepository" Collapsed="true">
+    <Position X="107.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Project\IProjectLinkTeaserRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IProjectLogLineRepository" Collapsed="true">
+    <Position X="114.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Project\IProjectLogLineRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IProjectPlayerEvaluationRepository" Collapsed="true">
+    <Position X="121" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Project\IProjectPlayerEvaluationRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IProjectPlayerRepository" Collapsed="true">
+    <Position X="8.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Project\IProjectPlayerRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IProjectProductionPlanRepository" Collapsed="true">
+    <Position X="15.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Project\IProjectProductionPlanRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IProjectRepository" Collapsed="true">
+    <Position X="22" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAABgBAAACCAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Project\IProjectRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IProjectStatusRepository" Collapsed="true">
+    <Position X="28.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Project\IProjectStatusRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IProjectSummaryRepository" Collapsed="true">
+    <Position X="35.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Project\IProjectSummaryRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IProjectTitleRepository" Collapsed="true">
+    <Position X="42.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Project\IProjectTitleRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IRoomNameRepository" Collapsed="true">
+    <Position X="49" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Room\IRoomNameRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IRoomRepository" Collapsed="true">
+    <Position X="55.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\Room\IRoomRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IRoleRepository" Collapsed="true">
+    <Position X="62.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\User\IRoleRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IUserRepository" Collapsed="true">
+    <Position X="69.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\User\IUserRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IUserRoleRepository" Collapsed="true">
+    <Position X="76" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\User\IUserRoleRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IUserUseTermRepository" Collapsed="true">
+    <Position X="85" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Repositories\User\IUserUseTermRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IService&lt;TEntity&gt;" Collapsed="true">
+    <Position X="24.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQKAAAAAAAAAABgAAAAAAAAAAEAgEAAAgAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Services\Common\IService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.ICollaboratorPlayerService" Collapsed="true">
+    <Position X="29.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Services\ICollaboratorPlayerService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.ICollaboratorProducerService" Collapsed="true">
+    <Position X="34.25" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Services\ICollaboratorProducerService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.ICollaboratorService" Collapsed="true">
+    <Position X="38.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAgAAAAAAAAAEAgAAAQAAAAAAAABACAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Services\ICollaboratorService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IConferenceService" Collapsed="true">
+    <Position X="43.25" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Services\IConferenceService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IEventService" Collapsed="true">
+    <Position X="47.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Services\IEventService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IHoldingService" Collapsed="true">
+    <Position X="0.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Services\IHoldingService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IInterestGroupService" Collapsed="true">
+    <Position X="2.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Services\IInterestGroupService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IInterestService" Collapsed="true">
+    <Position X="5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Services\IInterestService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.ILanguageService" Collapsed="true">
+    <Position X="7.25" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Services\ILanguageService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.ILogisticsService" Collapsed="true">
+    <Position X="9.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Services\ILogisticsService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IMessageService" Collapsed="true">
+    <Position X="11.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Services\IMessageService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.INegotiationConfigService" Collapsed="true">
+    <Position X="14" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Services\INegotiationConfigService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.INegotiationService" Collapsed="true">
+    <Position X="16.25" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Services\INegotiationService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IPlayerInterestService" Collapsed="true">
+    <Position X="18.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Services\IPlayerInterestService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IPlayerRestrictionsSpecificsService" Collapsed="true">
+    <Position X="20.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Services\IPlayerRestrictionsSpecificsService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IPlayerService" Collapsed="true">
+    <Position X="23" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Services\IPlayerService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IProducerService" Collapsed="true">
+    <Position X="25.25" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAYAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Services\IProducerService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IProjectService" Collapsed="true">
+    <Position X="27.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>SAACAAAAAQAgAAAACCAAEAAAAEIABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Services\IProjectService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IRoleLecturerService" Collapsed="true">
+    <Position X="32" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Services\IRoleLecturerService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IRoomService" Collapsed="true">
+    <Position X="36.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Services\IRoomService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IUserService" Collapsed="true">
+    <Position X="41" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Services\IUserService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IUserUseTermService" Collapsed="true">
+    <Position X="45.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Services\IUserUseTermService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.ISpecification&lt;T&gt;" Collapsed="true">
+    <Position X="131" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Specification\ISpecification.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IValidation&lt;TEntity&gt;" Collapsed="true">
+    <Position X="132.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Interfaces\Validation\IValidation.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.IValidationRule&lt;TEntity&gt;" Collapsed="true">
+    <Position X="134.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAgACAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Interfaces\Validation\IValidationRule.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PlataformaRio2C.Domain.Interfaces.Validation.ICollaboratorValidator" Collapsed="true">
+    <Position X="125.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Validation\ICollaboratorValidator.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="PlataformaRio2C.Domain.Enums.ClaimCodes" Collapsed="true">
+    <Position X="125.75" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAgAIAAAAAAAAAAAAIAEAAA=</HashCode>
+      <FileName>Enums\ClaimCodes.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="PlataformaRio2C.Domain.Enums.ErrorCodes" Collapsed="true">
+    <Position X="127.5" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\ErrorCodes.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="PlataformaRio2C.Domain.Enums.InterestGroupTypeCodes" Collapsed="true">
+    <Position X="129.25" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\InterestGroupTypeCodes.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="PlataformaRio2C.Domain.Enums.LanguageCodes" Collapsed="true">
+    <Position X="131" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\LanguageCodes.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="PlataformaRio2C.Domain.Enums.NegotiationTypeCodes" Collapsed="true">
+    <Position X="132.75" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\NegotiationTypeCodes.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="PlataformaRio2C.Domain.Enums.StatusProjectCodes" Collapsed="true">
+    <Position X="134.5" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Enums\StatusProjectCodes.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="PlataformaRio2C.Domain.Enums.UserRoles" Collapsed="true">
+    <Position X="136.25" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEQAAAAAAAAAQEAAAA=</HashCode>
+      <FileName>Enums\UserRoles.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

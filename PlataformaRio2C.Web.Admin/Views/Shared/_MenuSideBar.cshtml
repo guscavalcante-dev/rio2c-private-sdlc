@@ -1,0 +1,406 @@
+﻿@using Microsoft.AspNet.Identity
+
+<!-- sidebar menu start-->
+<ul class="sidebar-menu" id="nav-accordion">
+
+
+    @{ if (Html.HasClaim("ProjectPitching"))
+        {
+            <li class="sub-menu dcjq-parent-li">
+                <a href="javascript:;" class="dcjq-parent @Html.AddClassActive("active", "Index,Create,Edit,Schedule", "Producer,CollaboratorProducer,Project,ProjectPitching")">
+                    <div class="menu-items-flex menu-items-flex menu-items-flex--agenda ">
+                        <div><i class="icon-building"></i></div>
+                        <div> <span>Produtoras</span></div>
+                    </div>
+                    <span class="dcjq-icon"></span>
+                </a>
+                <ul class="sub">
+                    <li>
+                        <a class="@Html.AddClassActive("active", "Index,Create,Edit,PlayerSelection", "Project/ProjectPitching")" href="@Url.Action("ProjectPitching", "Project")">
+                            <div class="menu-items-flex">
+                                @*<div><i class="icon-puzzle-piece"></i></div>*@
+                                <div><span>Projetos para Pitching</span></div>
+                            </div>
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+        }
+        else if (Html.HasClaim("Logistics"))
+        {
+            <li>
+                <a class="@Html.AddClassActive("active", "Index,Create,Edit", "Logistics")" href="@Url.Action("Index", "Logistics")">
+                    <div class="menu-items-flex">
+                        <div><i class="icon-pushpin"></i></div>
+                        <div> <span>Logística</span></div>
+                    </div>
+                </a>
+            </li>
+        }
+        else
+        {
+            <li>
+                <a class="@Html.AddClassActive("active", "Index", "Dashboard")" href="@Url.Action("Index", "Dashboard")">
+                    <div class="menu-items-flex">
+                        <div><i class="icon-dashboard"></i></div>
+                        <div><span>@Labels.Dashboard</span></div>
+                    </div>
+                </a>
+            </li>
+
+            <li class="sub-menu dcjq-parent-li">
+                <a href="javascript:;" class="dcjq-parent @Html.AddClassActive("active", "Index,Create,Edit,Schedule", "Holding,Player,CollaboratorPlayer")">
+                    <div class="menu-items-flex menu-items-flex menu-items-flex--agenda">
+                        <div><i class="icon-desktop"></i></div>
+                        <div> <span>Players</span></div>
+                    </div>
+                    <span class="dcjq-icon"></span>
+                </a>
+                <ul class="sub">
+                    <li>
+                        <a class="@Html.AddClassActive("active", "Index,Create,Edit", "Holding")" href="@Url.Action("Index", "Holding")">
+                            <div class="menu-items-flex">
+                                @*<div><i class="icon-sitemap"></i></div>*@
+                                <div> <span>@Labels.Holdings</span></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="@Html.AddClassActive("active", "Index,Create,Edit", "Player")" href="@Url.Action("Index", "Player")">
+                            <div class="menu-items-flex">
+                                @*<div><i class="icon-desktop"></i></div>*@
+                                <div><span>Empresas / @Labels.Players</span></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="@Html.AddClassActive("active", "Index,Create,Edit", "CollaboratorPlayer")" href="@Url.Action("Index", "CollaboratorPlayer")">
+                            <div class="menu-items-flex">
+                                @*<div><i class="icon-user"></i></div>*@
+                                <div><span>@Labels.Executives / @Labels.Players</span></div>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="@Html.AddClassActive("active", "Index,SendToAllCollaborators,Collaborators", "ManualMessage")" href="@Url.Action("Collaborators", "ManualMessage")">
+                            <div class="menu-items-flex">
+                                @*<div><i class="icon-envelope-alt"></i></div>*@
+                                <div><span>Envio de convites</span></div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="sub-menu dcjq-parent-li">
+                <a href="javascript:;" class="dcjq-parent @Html.AddClassActive("active", "Index,Create,Edit,Schedule", "Producer,CollaboratorProducer,Project")">
+                    <div class="menu-items-flex menu-items-flex menu-items-flex--agenda ">
+                        <div><i class="icon-building"></i></div>
+                        <div> <span>Produtoras</span></div>
+                    </div>
+                    <span class="dcjq-icon"></span>
+                </a>
+                <ul class="sub">
+                    <li>
+                        <a class="@Html.AddClassActive("active", "Index,Create,Edit", "Producer")" href="@Url.Action("Index", "Producer")">
+                            <div class="menu-items-flex">
+                                @*<div><i class="icon-desktop"></i></div>*@
+                                <div><span>Empresas / Produtoras</span></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="@Html.AddClassActive("active", "Index,Create,Edit", "CollaboratorProducer")" href="@Url.Action("Index", "CollaboratorProducer")">
+                            <div class="menu-items-flex">
+                                @*<div><i class="icon-user"></i></div>*@
+                                <div><span>Executivos / Produtoras</span></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="@Html.AddClassActive("active", "Index,Create,Edit,PlayerSelection", "Project")" href="@Url.Action("Index", "Project")">
+                            <div class="menu-items-flex">
+                                @*<div><i class="icon-puzzle-piece"></i></div>*@
+                                <div><span>Projetos</span></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="@Html.AddClassActive("active", "Index,Create,Edit,PlayerSelection", "Project/ProjectPitching")" href="@Url.Action("ProjectPitching", "Project")">
+                            <div class="menu-items-flex">
+                                @*<div><i class="icon-puzzle-piece"></i></div>*@
+                                <div><span>Projetos para Pitching</span></div>
+                            </div>
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li class="sub-menu dcjq-parent-li">
+                <a href="javascript:;" class="dcjq-parent @Html.AddClassActive("active", "Index,Create,Edit", "Conference,RoleLecturer")">
+                    <div class="menu-items-flex menu-items-flex menu-items-flex--agenda">
+                        <div><i class="icon-bullhorn"></i></div>
+                        <div> <span>Palestras</span></div>
+                    </div>
+                    <span class="dcjq-icon"></span>
+                </a>
+                <ul class="sub">
+                    <li>
+                        <a class="@Html.AddClassActive("active", "Index,Create,Edit", "Conference")" href="@Url.Action("Index", "Conference")">
+                            <div class="menu-items-flex">
+                                @*<div><i class="icon-bullhorn"></i></div>*@
+                                <div> <span>Visualizar Palestras</span></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="@Html.AddClassActive("active", "Index,Create,Edit", "RoleLecturer")" href="@Url.Action("Index", "RoleLecturer")">
+                            <div class="menu-items-flex">
+                                @*<div><i class="icon-briefcase"></i></div>*@
+                                <div><span>Funções dos Palestrantes</span></div>
+                            </div>
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+
+
+            @*<li class="sub-menu dcjq-parent-li">
+                    <a href="javascript:;" class="dcjq-parent ">
+                        <div class="menu-items-flex menu-items-flex menu-items-flex--agenda">
+                            <div><i class="icon-building"></i></div>
+                            <div> <span>Salas</span></div>
+                        </div>
+                        <span class="dcjq-icon"></span>
+                    </a>
+                    <ul class="sub">
+                        <li>
+                            <a class="@Html.AddClassActive("active", "Index,Create,Edit", "Room")" href="@Url.Action("Create", "Room")">
+                                <div class="menu-items-flex">
+                                    <div><i class="icon-building"></i></div>
+                                    <div><span>Cadastrar Salas</span></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="@Html.AddClassActive("active", "Index,Create,Edit", "Room")" href="@Url.Action("Index", "Room")">
+                                <div class="menu-items-flex">
+                                    <div><i class="icon-building"></i></div>
+                                    <div><span>Ver Salas</span></div>
+                                </div>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>*@
+
+            <li>
+                <a class="@Html.AddClassActive("active", "Index", "Speaker")" href="@Url.Action("Index", "Speaker")">
+                    <div class="menu-items-flex">
+                        <div><i class="icon-building"></i></div>
+                        <div><span>Palestrantes</span></div>
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <a class="@Html.AddClassActive("active", "Index,Create,Edit", "Room")" href="@Url.Action("Index", "Room")">
+                    <div class="menu-items-flex">
+                        <div><i class="icon-building"></i></div>
+                        <div><span>Salas</span></div>
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <a class="@Html.AddClassActive("active", "Index,Create,Edit", "Logistics")" href="@Url.Action("Index", "Logistics")">
+                    <div class="menu-items-flex">
+                        <div><i class="icon-pushpin"></i></div>
+                        <div> <span>Logística</span></div>
+                    </div>
+                </a>
+            </li>
+
+            <li class="sub-menu dcjq-parent-li">
+                <a href="javascript:;" class="dcjq-parent @Html.AddClassActive("active", "Index,Process,Test,UnscheduledNegotiations,RegisterNegotiationManual,SendEmailToPlayers,SendEmailToProducers,Report", "ScheduleOneToOneMeetings,ScheduleOneToOneMeetingsConfig")  ">
+                    <div class="menu-items-flex menu-items-flex menu-items-flex--agenda">
+                        <div><i class="icon-briefcase"></i></div>
+                        <div> <span>Agenda de rodada de negócios</span></div>
+                    </div>
+                    <span class="dcjq-icon"></span>
+                </a>
+                <ul class="sub">
+                    <li>
+                        <a class="@Html.AddClassActive("active", "Index", "ScheduleOneToOneMeetingsConfig")" href="@Url.Action("Index", "ScheduleOneToOneMeetingsConfig")">
+                            <div class="menu-items-flex menu-items-flex--agenda">
+                                <div><span>Configurar parâmetros </span></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="@Html.AddClassActive("active", "Process", "ScheduleOneToOneMeetings")" href="@Url.Action("Process", "ScheduleOneToOneMeetings")">
+                            <div class="menu-items-flex menu-items-flex--agenda">
+                                <div><span>Gerar agenda</span></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="@Html.AddClassActive("active", "Index", "ScheduleOneToOneMeetings")" href="@Url.Action("Index", "ScheduleOneToOneMeetings")">
+                            <div class="menu-items-flex menu-items-flex--agenda">
+                                <div><span>Visualizar agenda</span></div>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="@Html.AddClassActive("active", "UnscheduledNegotiations", "ScheduleOneToOneMeetings")" href="@Url.Action("UnscheduledNegotiations", "ScheduleOneToOneMeetings")">
+                            <div class="menu-items-flex menu-items-flex--agenda">
+                                <div><span>Negociações não agendas</span></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="@Html.AddClassActive("active", "RegisterNegotiationManual", "ScheduleOneToOneMeetings")" href="@Url.Action("RegisterNegotiationManual", "ScheduleOneToOneMeetings")">
+                            <div class="menu-items-flex menu-items-flex--agenda">
+                                <div><span>Agendar negociação</span></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="@Html.AddClassActive("active", "SendEmailToPlayers", "ScheduleOneToOneMeetings")" href="@Url.Action("SendEmailToPlayers", "ScheduleOneToOneMeetings")">
+                            <div class="menu-items-flex menu-items-flex--agenda">
+                                <div><span>Enviar e-mail para players</span></div>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="@Html.AddClassActive("active", "SendEmailToProducers", "ScheduleOneToOneMeetings")" href="@Url.Action("SendEmailToProducers", "ScheduleOneToOneMeetings")">
+                            <div class="menu-items-flex menu-items-flex--agenda">
+                                <div><span>Enviar e-mail para produtoras</span></div>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="@Html.AddClassActive("active", "Report", "ScheduleOneToOneMeetings")" href="@Url.Action("Report", "ScheduleOneToOneMeetings")">
+                            <div class="menu-items-flex menu-items-flex--agenda">
+                                <div><span>Relatório da agenda</span></div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            if (Html.HasClaim("FinancialReport"))
+            {
+                <li class="sub-menu dcjq-parent-li">
+                    <a href="javascript:;" class="dcjq-parent @Html.AddClassActive("active", "SalesByCategory,SalesByRegion,SalesByPeriod,SalesByTypeOfPayment,Courtesies,ParticipantsByCategory", "FinancialReport")">
+                        <div class="menu-items-flex menu-items-flex menu-items-flex--agenda">
+                            <div><i class="icon-desktop"></i></div>
+                            <div> <span>Relatórios financeiros</span></div>
+                        </div>
+                        <span class="dcjq-icon"></span>
+                    </a>
+                    <ul class="sub">
+                        <li>
+                            <a class="@Html.AddClassActive("active", "SalesByCategory", "FinancialReport")" href="@Url.Action("SalesByCategory", "FinancialReport")">
+                                <div class="menu-items-flex">
+                                    @*<div><i class="icon-sitemap"></i></div>*@
+                                    <div> <span>Vendas por categoria</span></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="@Html.AddClassActive("active", "SalesByRegion", "FinancialReport")" href="@Url.Action("SalesByRegion", "FinancialReport")">
+                                <div class="menu-items-flex">
+                                    @*<div><i class="icon-desktop"></i></div>*@
+                                    <div><span>Vendas por região</span></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="@Html.AddClassActive("active", "SalesByPeriod", "FinancialReport")" href="@Url.Action("SalesByPeriod", "FinancialReport")">
+                                <div class="menu-items-flex">
+                                    @*<div><i class="icon-user"></i></div>*@
+                                    <div><span>Vendas por período</span></div>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="@Html.AddClassActive("active", "SalesByTypeOfPayment", "FinancialReport")" href="@Url.Action("SalesByTypeOfPayment", "FinancialReport")">
+                                <div class="menu-items-flex">
+                                    @*<div><i class="icon-envelope-alt"></i></div>*@
+                                    <div><span>Vendas por meio de pagamento</span></div>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="@Html.AddClassActive("active", "Courtesies", "FinancialReport")" href="@Url.Action("Courtesies", "FinancialReport")">
+                                <div class="menu-items-flex">
+                                    @*<div><i class="icon-envelope-alt"></i></div>*@
+                                    <div><span>Cortesias</span></div>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="@Html.AddClassActive("active", "ParticipantsByCategory", "FinancialReport")" href="@Url.Action("ParticipantsByCategory", "FinancialReport")">
+                                <div class="menu-items-flex">
+                                    @*<div><i class="icon-envelope-alt"></i></div>*@
+                                    <div><span>Participantes por categoria</span></div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            }
+        }
+    }
+    @if (@User.Identity.GetUserName().Contains("projeto.rio2c@marlin.com.br"))
+    {
+        <li>
+            <a class="@Html.AddClassActive("active", "Index,Create,Edit", "User")" href="@Url.Action("Index", "User")">
+                <div class="menu-items-flex">
+                    <div><i class="icon-group"></i></div>
+                    <div><span>Usuários</span></div>
+                </div>
+            </a>
+        </li>
+
+        <li class="sub-menu dcjq-parent-li">
+            <a href="javascript:;" class="dcjq-parent @Html.AddClassActive("active", "Index,SendToAllCollaborators", "SystemParameter,Language")  ">
+                <div class="menu-items-flex">
+                    <div><i class="icon-gears"></i></div>
+                    <div> <span>Configurações</span></div>
+                </div>
+                <span class="dcjq-icon"></span>
+            </a>
+            <ul class="sub">
+                <li>
+                    <a href="@Url.Action("Index", "SystemParameter")">
+                        <div class="menu-items-flex">
+                            <div><span>Parâmetros</span></div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index", "Language")">
+                        <div class="menu-items-flex">
+                            <div><span>Idiomas</span></div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    }
+
+
+</ul>
+<!-- sidebar menu end-->
