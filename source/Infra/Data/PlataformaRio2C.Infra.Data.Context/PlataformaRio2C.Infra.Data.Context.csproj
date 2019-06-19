@@ -134,6 +134,174 @@
     <Compile Include="Mapping\Player\PlayerDescriptionMap.cs" />
     <Compile Include="Mapping\Player\PlayerMap.cs" />
     <Compile Include="Mapping\User\UserMap.cs" />
+    <Compile Include="Migrations\201710131419397_Initial.cs" />
+    <Compile Include="Migrations\201710131419397_Initial.Designer.cs">
+      <DependentUpon>201710131419397_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710192001220_UpdateModelSprint2MiniBioAndSocialMediaAndTradeNameAndUserUseTerm.cs" />
+    <Compile Include="Migrations\201710192001220_UpdateModelSprint2MiniBioAndSocialMediaAndTradeNameAndUserUseTerm.Designer.cs">
+      <DependentUpon>201710192001220_UpdateModelSprint2MiniBioAndSocialMediaAndTradeNameAndUserUseTerm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710202007006_AddInterests.cs" />
+    <Compile Include="Migrations\201710202007006_AddInterests.Designer.cs">
+      <DependentUpon>201710202007006_AddInterests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710251556148_UpdateRelationshipCollaboratorPlayer.cs" />
+    <Compile Include="Migrations\201710251556148_UpdateRelationshipCollaboratorPlayer.Designer.cs">
+      <DependentUpon>201710251556148_UpdateRelationshipCollaboratorPlayer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711091809032_UpdateCollaboratorAddBadge.cs" />
+    <Compile Include="Migrations\201711091809032_UpdateCollaboratorAddBadge.Designer.cs">
+      <DependentUpon>201711091809032_UpdateCollaboratorAddBadge.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711101428058_DropPlayerInterestEvent.cs" />
+    <Compile Include="Migrations\201711101428058_DropPlayerInterestEvent.Designer.cs">
+      <DependentUpon>201711101428058_DropPlayerInterestEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711101438012_UpdatePlayerInterest.cs" />
+    <Compile Include="Migrations\201711101438012_UpdatePlayerInterest.Designer.cs">
+      <DependentUpon>201711101438012_UpdatePlayerInterest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711171857562_AddProducerAndUpdateUserUseTerm.cs" />
+    <Compile Include="Migrations\201711171857562_AddProducerAndUpdateUserUseTerm.Designer.cs">
+      <DependentUpon>201711171857562_AddProducerAndUpdateUserUseTerm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711232047039_UpdateProducerAddActivityAndTargetAudianceAndUpdatePlayer.cs" />
+    <Compile Include="Migrations\201711232047039_UpdateProducerAddActivityAndTargetAudianceAndUpdatePlayer.Designer.cs">
+      <DependentUpon>201711232047039_UpdateProducerAddActivityAndTargetAudianceAndUpdatePlayer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711241949395_AddProject.cs" />
+    <Compile Include="Migrations\201711241949395_AddProject.Designer.cs">
+      <DependentUpon>201711241949395_AddProject.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711271934072_UpdateCollaboratorUserIdUnique.cs" />
+    <Compile Include="Migrations\201711271934072_UpdateCollaboratorUserIdUnique.Designer.cs">
+      <DependentUpon>201711271934072_UpdateCollaboratorUserIdUnique.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711291349590_UpdateUserUseTermAddRoleId.cs" />
+    <Compile Include="Migrations\201711291349590_UpdateUserUseTermAddRoleId.Designer.cs">
+      <DependentUpon>201711291349590_UpdateUserUseTermAddRoleId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711291512191_UpdateUserUseTermRemoveRoleString.cs" />
+    <Compile Include="Migrations\201711291512191_UpdateUserUseTermRemoveRoleString.Designer.cs">
+      <DependentUpon>201711291512191_UpdateUserUseTermRemoveRoleString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712011811429_UpdateProjectAndAddRelationshipPlayer.cs" />
+    <Compile Include="Migrations\201712011811429_UpdateProjectAndAddRelationshipPlayer.Designer.cs">
+      <DependentUpon>201712011811429_UpdateProjectAndAddRelationshipPlayer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712051158572_UpdatePlayerAddCompanyName.cs" />
+    <Compile Include="Migrations\201712051158572_UpdatePlayerAddCompanyName.Designer.cs">
+      <DependentUpon>201712051158572_UpdatePlayerAddCompanyName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712121312465_UpdateProjectPlayerAddStatus.cs" />
+    <Compile Include="Migrations\201712121312465_UpdateProjectPlayerAddStatus.Designer.cs">
+      <DependentUpon>201712121312465_UpdateProjectPlayerAddStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712141517590_UpdatePlayerProjectRemoveId.cs" />
+    <Compile Include="Migrations\201712141517590_UpdatePlayerProjectRemoveId.Designer.cs">
+      <DependentUpon>201712141517590_UpdatePlayerProjectRemoveId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712141519254_UpdatePlayerProjectAddIdPrimaryKey.cs" />
+    <Compile Include="Migrations\201712141519254_UpdatePlayerProjectAddIdPrimaryKey.Designer.cs">
+      <DependentUpon>201712141519254_UpdatePlayerProjectAddIdPrimaryKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712141521158_AddProjectPlayerEvaluaation.cs" />
+    <Compile Include="Migrations\201712141521158_AddProjectPlayerEvaluaation.Designer.cs">
+      <DependentUpon>201712141521158_AddProjectPlayerEvaluaation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712142145140_UpdateAddressMaxLength.cs" />
+    <Compile Include="Migrations\201712142145140_UpdateAddressMaxLength.Designer.cs">
+      <DependentUpon>201712142145140_UpdateAddressMaxLength.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712191625387_UpdateProducerRemoveRequiredCnpj.cs" />
+    <Compile Include="Migrations\201712191625387_UpdateProducerRemoveRequiredCnpj.Designer.cs">
+      <DependentUpon>201712191625387_UpdateProducerRemoveRequiredCnpj.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712291731544_UpdateMaxLenghtProjectSummary.cs" />
+    <Compile Include="Migrations\201712291731544_UpdateMaxLenghtProjectSummary.Designer.cs">
+      <DependentUpon>201712291731544_UpdateMaxLenghtProjectSummary.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712291844161_UpdateMaxLenghtProjectSummary6000.cs" />
+    <Compile Include="Migrations\201712291844161_UpdateMaxLenghtProjectSummary6000.Designer.cs">
+      <DependentUpon>201712291844161_UpdateMaxLenghtProjectSummary6000.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801051643345_AddLogistics.cs" />
+    <Compile Include="Migrations\201801051643345_AddLogistics.Designer.cs">
+      <DependentUpon>201801051643345_AddLogistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801101549321_UpdateLogisticsDateTime.cs" />
+    <Compile Include="Migrations\201801101549321_UpdateLogisticsDateTime.Designer.cs">
+      <DependentUpon>201801101549321_UpdateLogisticsDateTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801102010386_AddConference.cs" />
+    <Compile Include="Migrations\201801102010386_AddConference.Designer.cs">
+      <DependentUpon>201801102010386_AddConference.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801111354487_UpdateConferenceRemoveImage.cs" />
+    <Compile Include="Migrations\201801111354487_UpdateConferenceRemoveImage.Designer.cs">
+      <DependentUpon>201801111354487_UpdateConferenceRemoveImage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801111814092_UpdateConferenceAddArrivalTimeAndDepartureTime.cs" />
+    <Compile Include="Migrations\201801111814092_UpdateConferenceAddArrivalTimeAndDepartureTime.Designer.cs">
+      <DependentUpon>201801111814092_UpdateConferenceAddArrivalTimeAndDepartureTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801112006319_UpdateConferenceTimeNames.cs" />
+    <Compile Include="Migrations\201801112006319_UpdateConferenceTimeNames.Designer.cs">
+      <DependentUpon>201801112006319_UpdateConferenceTimeNames.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801151840096_UpdateMaxValueFieldsProjects.cs" />
+    <Compile Include="Migrations\201801151840096_UpdateMaxValueFieldsProjects.Designer.cs">
+      <DependentUpon>201801151840096_UpdateMaxValueFieldsProjects.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801161442183_UpdateMaxValueFieldsProjectsToMax.cs" />
+    <Compile Include="Migrations\201801161442183_UpdateMaxValueFieldsProjectsToMax.Designer.cs">
+      <DependentUpon>201801161442183_UpdateMaxValueFieldsProjectsToMax.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801171340540_UpdateLogisticsTime.cs" />
+    <Compile Include="Migrations\201801171340540_UpdateLogisticsTime.Designer.cs">
+      <DependentUpon>201801171340540_UpdateLogisticsTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801221246388_AddMessage.cs" />
+    <Compile Include="Migrations\201801221246388_AddMessage.Designer.cs">
+      <DependentUpon>201801221246388_AddMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801291918101_UpdateConferenceAddLectureRole.cs" />
+    <Compile Include="Migrations\201801291918101_UpdateConferenceAddLectureRole.Designer.cs">
+      <DependentUpon>201801291918101_UpdateConferenceAddLectureRole.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801302004568_AddRoom.cs" />
+    <Compile Include="Migrations\201801302004568_AddRoom.Designer.cs">
+      <DependentUpon>201801302004568_AddRoom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801311621231_RemoveConference.cs" />
+    <Compile Include="Migrations\201801311621231_RemoveConference.Designer.cs">
+      <DependentUpon>201801311621231_RemoveConference.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802011903051_AddConferenceAndLecturer.cs" />
+    <Compile Include="Migrations\201802011903051_AddConferenceAndLecturer.Designer.cs">
+      <DependentUpon>201802011903051_AddConferenceAndLecturer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802051515308_UpdateConferenceRoleLecturerIsOptional.cs" />
+    <Compile Include="Migrations\201802051515308_UpdateConferenceRoleLecturerIsOptional.Designer.cs">
+      <DependentUpon>201802051515308_UpdateConferenceRoleLecturerIsOptional.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802062121506_UpdateRoomAddNameTranslate.cs" />
+    <Compile Include="Migrations\201802062121506_UpdateRoomAddNameTranslate.Designer.cs">
+      <DependentUpon>201802062121506_UpdateRoomAddNameTranslate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802191844494_AddConfigNegotiation.cs" />
+    <Compile Include="Migrations\201802191844494_AddConfigNegotiation.Designer.cs">
+      <DependentUpon>201802191844494_AddConfigNegotiation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802192027104_AddNegotiation.cs" />
+    <Compile Include="Migrations\201802192027104_AddNegotiation.Designer.cs">
+      <DependentUpon>201802192027104_AddNegotiation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802212057123_UpdateNegotiationRoomConfigAddManualTables.cs" />
+    <Compile Include="Migrations\201802212057123_UpdateNegotiationRoomConfigAddManualTables.Designer.cs">
+      <DependentUpon>201802212057123_UpdateNegotiationRoomConfigAddManualTables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201810291754002_Speaker.cs" />
     <Compile Include="Migrations\201810291754002_Speaker.Designer.cs">
       <DependentUpon>201810291754002_Speaker.cs</DependentUpon>
@@ -288,6 +456,132 @@
     <Content Include="bin\Release\System.Web.WebPages.xml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Migrations\201710131419397_Initial.resx">
+      <DependentUpon>201710131419397_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710192001220_UpdateModelSprint2MiniBioAndSocialMediaAndTradeNameAndUserUseTerm.resx">
+      <DependentUpon>201710192001220_UpdateModelSprint2MiniBioAndSocialMediaAndTradeNameAndUserUseTerm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710202007006_AddInterests.resx">
+      <DependentUpon>201710202007006_AddInterests.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710251556148_UpdateRelationshipCollaboratorPlayer.resx">
+      <DependentUpon>201710251556148_UpdateRelationshipCollaboratorPlayer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711091809032_UpdateCollaboratorAddBadge.resx">
+      <DependentUpon>201711091809032_UpdateCollaboratorAddBadge.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711101428058_DropPlayerInterestEvent.resx">
+      <DependentUpon>201711101428058_DropPlayerInterestEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711101438012_UpdatePlayerInterest.resx">
+      <DependentUpon>201711101438012_UpdatePlayerInterest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711171857562_AddProducerAndUpdateUserUseTerm.resx">
+      <DependentUpon>201711171857562_AddProducerAndUpdateUserUseTerm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711232047039_UpdateProducerAddActivityAndTargetAudianceAndUpdatePlayer.resx">
+      <DependentUpon>201711232047039_UpdateProducerAddActivityAndTargetAudianceAndUpdatePlayer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711241949395_AddProject.resx">
+      <DependentUpon>201711241949395_AddProject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711271934072_UpdateCollaboratorUserIdUnique.resx">
+      <DependentUpon>201711271934072_UpdateCollaboratorUserIdUnique.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711291349590_UpdateUserUseTermAddRoleId.resx">
+      <DependentUpon>201711291349590_UpdateUserUseTermAddRoleId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711291512191_UpdateUserUseTermRemoveRoleString.resx">
+      <DependentUpon>201711291512191_UpdateUserUseTermRemoveRoleString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712011811429_UpdateProjectAndAddRelationshipPlayer.resx">
+      <DependentUpon>201712011811429_UpdateProjectAndAddRelationshipPlayer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712051158572_UpdatePlayerAddCompanyName.resx">
+      <DependentUpon>201712051158572_UpdatePlayerAddCompanyName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712121312465_UpdateProjectPlayerAddStatus.resx">
+      <DependentUpon>201712121312465_UpdateProjectPlayerAddStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712141517590_UpdatePlayerProjectRemoveId.resx">
+      <DependentUpon>201712141517590_UpdatePlayerProjectRemoveId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712141519254_UpdatePlayerProjectAddIdPrimaryKey.resx">
+      <DependentUpon>201712141519254_UpdatePlayerProjectAddIdPrimaryKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712141521158_AddProjectPlayerEvaluaation.resx">
+      <DependentUpon>201712141521158_AddProjectPlayerEvaluaation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712142145140_UpdateAddressMaxLength.resx">
+      <DependentUpon>201712142145140_UpdateAddressMaxLength.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712191625387_UpdateProducerRemoveRequiredCnpj.resx">
+      <DependentUpon>201712191625387_UpdateProducerRemoveRequiredCnpj.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712291731544_UpdateMaxLenghtProjectSummary.resx">
+      <DependentUpon>201712291731544_UpdateMaxLenghtProjectSummary.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712291844161_UpdateMaxLenghtProjectSummary6000.resx">
+      <DependentUpon>201712291844161_UpdateMaxLenghtProjectSummary6000.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801051643345_AddLogistics.resx">
+      <DependentUpon>201801051643345_AddLogistics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801101549321_UpdateLogisticsDateTime.resx">
+      <DependentUpon>201801101549321_UpdateLogisticsDateTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801102010386_AddConference.resx">
+      <DependentUpon>201801102010386_AddConference.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801111354487_UpdateConferenceRemoveImage.resx">
+      <DependentUpon>201801111354487_UpdateConferenceRemoveImage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801111814092_UpdateConferenceAddArrivalTimeAndDepartureTime.resx">
+      <DependentUpon>201801111814092_UpdateConferenceAddArrivalTimeAndDepartureTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801112006319_UpdateConferenceTimeNames.resx">
+      <DependentUpon>201801112006319_UpdateConferenceTimeNames.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801151840096_UpdateMaxValueFieldsProjects.resx">
+      <DependentUpon>201801151840096_UpdateMaxValueFieldsProjects.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801161442183_UpdateMaxValueFieldsProjectsToMax.resx">
+      <DependentUpon>201801161442183_UpdateMaxValueFieldsProjectsToMax.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801171340540_UpdateLogisticsTime.resx">
+      <DependentUpon>201801171340540_UpdateLogisticsTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801221246388_AddMessage.resx">
+      <DependentUpon>201801221246388_AddMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801291918101_UpdateConferenceAddLectureRole.resx">
+      <DependentUpon>201801291918101_UpdateConferenceAddLectureRole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801302004568_AddRoom.resx">
+      <DependentUpon>201801302004568_AddRoom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801311621231_RemoveConference.resx">
+      <DependentUpon>201801311621231_RemoveConference.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802011903051_AddConferenceAndLecturer.resx">
+      <DependentUpon>201802011903051_AddConferenceAndLecturer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802051515308_UpdateConferenceRoleLecturerIsOptional.resx">
+      <DependentUpon>201802051515308_UpdateConferenceRoleLecturerIsOptional.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802062121506_UpdateRoomAddNameTranslate.resx">
+      <DependentUpon>201802062121506_UpdateRoomAddNameTranslate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802191844494_AddConfigNegotiation.resx">
+      <DependentUpon>201802191844494_AddConfigNegotiation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802192027104_AddNegotiation.resx">
+      <DependentUpon>201802192027104_AddNegotiation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802212057123_UpdateNegotiationRoomConfigAddManualTables.resx">
+      <DependentUpon>201802212057123_UpdateNegotiationRoomConfigAddManualTables.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810291754002_Speaker.resx">
       <DependentUpon>201810291754002_Speaker.cs</DependentUpon>
     </EmbeddedResource>

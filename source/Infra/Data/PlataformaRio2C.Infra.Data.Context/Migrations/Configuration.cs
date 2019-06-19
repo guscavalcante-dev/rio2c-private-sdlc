@@ -13,6 +13,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext context)
