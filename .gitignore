@@ -1,0 +1,25 @@
+# Build and Object Folders
+bin/
+obj/
+
+# VS Configuration Directory
+.vs/
+
+# Solution Packages
+packages/*
+
+# User Specific Files
+*.user
+*.suo
+
+# Resource Caches
+_ReSharper.*
+_TeamCity.*
+*.sln.cache
+
+# MacOS
+._*
+.DS_Store
+
+# Project Specific Files
+PlataformaRio2C*.LOG
