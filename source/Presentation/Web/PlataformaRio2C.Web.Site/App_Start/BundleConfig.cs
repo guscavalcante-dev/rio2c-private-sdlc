@@ -1,12 +1,178 @@
-﻿using System.Web.Optimization;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Web.Site
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-28-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 06-28-2019
+// ***********************************************************************
+// <copyright file="BundleConfig.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System.Web.Optimization;
 
 namespace PlataformaRio2C.Web.Site
 {
+    /// <summary>BundleConfig</summary>
     public static class BundleConfig
     {
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            #region Metronic Bundles
+
+            #region Scripts
+
+            #region Global Mandatory Vendors
+
+            bundles.Add(new ScriptBundle("~/bundles/js/layoutGlobalMandatoryVendors").Include(
+                "~/Assets/themes/metronic/vendors/general/jquery/dist/jquery.js",
+                "~/Assets/themes/metronic/vendors/general/popper.js/dist/umd/popper.js",
+                "~/Assets/themes/metronic/vendors/general/bootstrap/dist/js/bootstrap.min.js",
+                "~/Assets/themes/metronic/vendors/general/js-cookie/src/js.cookie.js",
+                "~/Assets/themes/metronic/vendors/general/moment/min/moment.min.js",
+                "~/Assets/themes/metronic/vendors/general/tooltip.js/dist/umd/tooltip.min.js",
+                "~/Assets/themes/metronic/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js",
+                "~/Assets/themes/metronic/vendors/general/sticky-js/dist/sticky.min.js",
+                "~/Assets/themes/metronic/vendors/general/wnumb/wNumb.js"));
+
+            #endregion
+
+            #region Global Optional Vendors
+
+            bundles.Add(new ScriptBundle("~/bundles/js/layoutGlobalOptionalVendors").Include(
+                "~/Assets/themes/metronic/vendors/general/block-ui/jquery.blockUI.js",
+                "~/Assets/themes/metronic/vendors/general/owl.carousel/dist/owl.carousel.js"));
+
+            /*
+                <!--begin:: Global Optional Vendors -->
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/jquery-form/dist/jquery.form.min.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/custom/js/vendors/bootstrap-datepicker.init.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/bootstrap-datetime-picker/js/bootstrap-datetimepicker.min.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/custom/js/vendors/bootstrap-timepicker.init.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/bootstrap-daterangepicker/daterangepicker.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/bootstrap-maxlength/src/bootstrap-maxlength.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/custom/vendors/bootstrap-multiselectsplitter/bootstrap-multiselectsplitter.min.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/bootstrap-select/dist/js/bootstrap-select.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/custom/js/vendors/bootstrap-switch.init.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/select2/dist/js/select2.full.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/ion-rangeslider/js/ion.rangeSlider.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/typeahead.js/dist/typeahead.bundle.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/handlebars/dist/handlebars.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/inputmask/dist/jquery.inputmask.bundle.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/inputmask/dist/inputmask/inputmask.date.extensions.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/inputmask/dist/inputmask/inputmask.numeric.extensions.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/nouislider/distribute/nouislider.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/autosize/dist/autosize.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/clipboard/dist/clipboard.min.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/dropzone/dist/dropzone.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/summernote/dist/summernote.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/markdown/lib/markdown.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/bootstrap-markdown/js/bootstrap-markdown.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/custom/js/vendors/bootstrap-markdown.init.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/bootstrap-notify/bootstrap-notify.min.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/custom/js/vendors/bootstrap-notify.init.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/jquery-validation/dist/jquery.validate.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/jquery-validation/dist/additional-methods.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/custom/js/vendors/jquery-validation.init.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/toastr/build/toastr.min.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/raphael/raphael.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/morris.js/morris.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/chart.js/dist/Chart.bundle.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/custom/vendors/bootstrap-session-timeout/dist/bootstrap-session-timeout.min.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/custom/vendors/jquery-idletimer/idle-timer.min.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/waypoints/lib/jquery.waypoints.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/counterup/jquery.counterup.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/es6-promise-polyfill/promise.min.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/sweetalert2/dist/sweetalert2.min.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/custom/js/vendors/sweetalert2.init.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/jquery.repeater/src/lib.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/jquery.repeater/src/jquery.input.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/jquery.repeater/src/repeater.js"></script>
+                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/dompurify/dist/purify.js"></script>
+                <!--end:: Global Optional Vendors -->             
+             */
+
+            #endregion
+
+            #region Global Theme Bundle
+
+            bundles.Add(new ScriptBundle("~/bundles/js/layoutGlobalThemeBundle").Include(
+                "~/Assets/themes/metronic/js/demo4/scripts.bundle.js"));
+
+            #endregion
+
+            #endregion
+
+            #region Styles
+
+            #region Global Mandatory Vendors
+
+            bundles.Add(new StyleBundle("~/bundles/css/layoutGlobalMandatoryVendors").Include(
+                "~/Assets/themes/metronic/vendors/general/perfect-scrollbar/css/perfect-scrollbar.css"));
+
+            #endregion
+
+            #region Global Optional Vendors
+
+            bundles.Add(new StyleBundle("~/bundles/css/layoutGlobalOptionalVendors").Include(
+                "~/Assets/themes/metronic/vendors/general/owl.carousel/dist/assets/owl.carousel.css",
+                "~/Assets/themes/metronic/vendors/general/owl.carousel/dist/assets/owl.theme.default.css",
+                "~/Assets/themes/metronic/vendors/custom/vendors/flaticon/flaticon.css",
+                "~/Assets/themes/metronic/vendors/custom/vendors/flaticon2/flaticon.css",
+                "~/Assets/themes/metronic/vendors/general/fortawesome/fontawesome-free/css/all.min.css"));
+
+            /*
+                <!--begin:: Global Optional Vendors -->
+                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/tether/dist/css/tether.css" />
+                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" />
+                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/bootstrap-datetime-picker/css/bootstrap-datetimepicker.css" />
+                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/bootstrap-timepicker/css/bootstrap-timepicker.css" />
+                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/bootstrap-daterangepicker/daterangepicker.css" />
+                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.css" />
+                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/bootstrap-select/dist/css/bootstrap-select.css" />
+                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" />
+                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/select2/dist/css/select2.css" />
+                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/ion-rangeslider/css/ion.rangeSlider.css" />
+                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/nouislider/distribute/nouislider.css" />
+                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/dropzone/dist/dropzone.css" />
+                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/summernote/dist/summernote.css" />
+                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/bootstrap-markdown/css/bootstrap-markdown.min.css" />
+                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/animate.css/animate.css" />
+                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/toastr/build/toastr.css" />
+                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/morris.js/morris.css" />
+                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/sweetalert2/dist/sweetalert2.css" />
+                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/socicon/css/socicon.css" />
+                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/custom/vendors/line-awesome/css/line-awesome.css" />
+                <!--end:: Global Optional Vendors -->
+             */
+
+            #endregion
+
+            #region Global Theme Styles
+
+            bundles.Add(new StyleBundle("~/bundles/css/layoutGlobalThemeStyles").Include(
+                "~/Assets/themes/metronic/css/demo4/style.bundle.css"));
+
+            #endregion
+
+            #region Global Customized Styles
+
+            bundles.Add(new StyleBundle("~/bundles/css/layoutGlobalCustomizedStyles").Include(
+                "~/Assets/css/rio2c.css",
+                "~/Assets/css/rio2c-responsive.css"));
+
+            #endregion
+
+            #endregion
+
+            #endregion
 
             #region scripts
 
@@ -40,7 +206,7 @@ namespace PlataformaRio2C.Web.Site
                 "~/Content/js/jquery.nicescroll.min.js",
                 "~/Content/js/jquery.scrollTo.min.js",
                 "~/Content/js/jquery.customSelect.min.js",
-                "~/Content/js/jquery.tagsinput.min.js",               
+                "~/Content/js/jquery.tagsinput.min.js",
                 "~/Content/js/bootstrap-switch.js",
                 "~/Content/js/ga.js",
                 "~/Content/js/common-scripts.js",
@@ -61,7 +227,7 @@ namespace PlataformaRio2C.Web.Site
             bundlesAngular.Include("~/Scripts/angular/angular-sanitize.min.js");
             bundlesAngular.Include("~/Scripts/angular/angular-route.min.js");
             bundlesAngular.Include("~/Scripts/angular/angular-cookies.min.js");
-            bundlesAngular.Include("~/Scripts/angular-ui/ui-bootstrap.min.js");            
+            bundlesAngular.Include("~/Scripts/angular-ui/ui-bootstrap.min.js");
             bundlesAngular.Include("~/Scripts/angular-ui/ui-bootstrap-tpls.min.js");
             bundlesAngular.Include("~/Scripts/ngToast/ngToast.min.js");
             bundlesAngular.Include("~/Scripts/MarlinToolKit/MarlinAlert/MarlinAlert.module.js");
@@ -71,7 +237,7 @@ namespace PlataformaRio2C.Web.Site
             bundlesAngular.Include("~/Scripts/angular-vs-repeat-master/angular-vs-repeat.min.js");
             bundlesAngular.Include("~/Scripts/Moment/moment.min.js");
             bundlesAngular.Include("~/Scripts/Moment/moment-with-locales.min.js");
-            
+
 
             bundles.Add(bundlesAngular);
 
@@ -102,7 +268,6 @@ namespace PlataformaRio2C.Web.Site
 
             #region styles
 
-
             bundles.Add(new StyleBundle("~/Content/assets/css").Include(
                   "~/Content/assets/bootstrap-colorpicker/css/colorpicker.css",
                   "~/Content/assets/bootstrap-datepicker/css/datepicker.css",
@@ -115,7 +280,10 @@ namespace PlataformaRio2C.Web.Site
 
             #endregion
 
+            // Required to generate bundles on release running in visual studio
+            #if !DEBUG
             BundleTable.EnableOptimizations = true;
+            #endif
         }
     }
 }

@@ -282,7 +282,6 @@
     <Compile Include="Areas\WebApi\Controllers\PlayerController.cs" />
     <Compile Include="Areas\WebApi\Models\Error.cs" />
     <Compile Include="Areas\WebApi\WebApiConfig.cs" />
-    <Compile Include="Codes\Helpers\FileVersionHelper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CollaboratorController.cs" />

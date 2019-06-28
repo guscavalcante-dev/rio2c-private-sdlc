@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 06-28-2019
 // ***********************************************************************
-// <copyright file="DashboardController.cs" company="Softo">
+// <copyright file="HomeController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
