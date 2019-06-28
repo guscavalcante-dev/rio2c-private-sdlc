@@ -1,24 +1,35 @@
-﻿using Microsoft.AspNet.Identity;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Web.Site
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-28-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 06-28-2019
+// ***********************************************************************
+// <copyright file="DashboardController.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using Microsoft.AspNet.Identity;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
-    
+    /// <summary>HomeController</summary>
     [Authorize(Order = 1)]
     public class HomeController : Controller
     {
-        private readonly IdentityAutenticationService _identityController;
+        private readonly IdentityAutenticationService identityController;
 
+        /// <summary>Initializes a new instance of the <see cref="HomeController"/> class.</summary>
+        /// <param name="identityController">The identity controller.</param>
         public HomeController(IdentityAutenticationService identityController)
         {
-            _identityController = identityController;
+            this.identityController = identityController;
         }
 
         // GET: Home
@@ -26,13 +37,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
         {
             try
             {
-                int userId = User.Identity.GetUserId<int>();
+                var userId = User.Identity.GetUserId<int>();
 
-                if (await _identityController.IsInRoleAsync(userId, "Player"))
+                if (await this.identityController.IsInRoleAsync(userId, "Player"))
                 {
                     return RedirectToAction("Index", "Dashboard");
                 }
-                else if (await _identityController.IsInRoleAsync(userId, "Producer"))
+
+                if (await this.identityController.IsInRoleAsync(userId, "Producer"))
                 {
                     return RedirectToAction("Index", "Dashboard", new { area = "ProducerArea" });
                 }
@@ -41,7 +53,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
             catch (Exception)
             {
-
                 return RedirectToAction("LogOff", "Account");
             }
         }

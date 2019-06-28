@@ -1,14 +1,23 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = Labels.Welcome;
 }
-
-<div class="content">
-    <h1 class="page-title">@ViewBag.Title</h1>
-	<div class="news-message">
-        @Html.Raw(Texts.WelcomeContent)       
-        <hr />    
+<div class="row">
+    <div class="col-sm-12">
+        <div class="kt-portlet kt-portlet--height-fluid">
+            <div class="kt-portlet__body ">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1 class="page-title">@ViewBag.Title</h1><br />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="news-message">
+                            @Html.Raw(Texts.WelcomeContent)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-
- 
+</div> 
