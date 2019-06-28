@@ -75,8 +75,12 @@
     <link href="~/Assets/themes/metronic/css/demo4/style.bundle.css" rel="stylesheet" type="text/css" />
     <!--end::Global Theme Styles -->
     <!--begin::Layout Skins(used by all pages) -->
-    @RenderSection("Styles", false)
+    <link href="~/Assets/css/rio2c.css" rel="stylesheet" type="text/css" />
+    <link href="~/Assets/css/rio2c-responsive.css" rel="stylesheet" type="text/css" />
     <!--end::Layout Skins(used by all pages) -->
+    <!--begin::Page Styles -->
+    @RenderSection("Styles", false)
+    <!--end::Page Styles -->
     <link rel="shortcut icon" href="~/Assets/themes/metronic/media/logos/favicon.ico" />
     @RenderSection("Head", false)
 </head>

@@ -314,6 +314,8 @@
   <ItemGroup>
     <Content Include="Areas\ProducerArea\Views\Collaborator\ProfileDetails.cshtml" />
     <Content Include="Areas\ProducerArea\Views\Collaborator\ProfileEdit.cshtml" />
+    <Content Include="Assets\css\rio2c-responsive.css" />
+    <Content Include="Assets\css\rio2c.css" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.css" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.min.css" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.rtl.css" />
