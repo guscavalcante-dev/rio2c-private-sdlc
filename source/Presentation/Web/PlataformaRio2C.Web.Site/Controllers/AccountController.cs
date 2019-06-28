@@ -97,31 +97,31 @@ namespace PlataformaRio2C.Web.Site.Controllers
             //byte[] bytePassword = ((HashAlgorithm)CryptoConfig.CreateFromName("MD5")).ComputeHash(encodedPassword);
             string md5Password = CreateMD5(model.Password);
 
-            //busca o email no JSON da ticket4you
-            Ticket4youController userByTicket = new Ticket4youController();
+            ////busca o email no JSON da ticket4you
+            //Ticket4youController userByTicket = new Ticket4youController();
 
-            if (userByTicket.SearchOne(model.Email) == null)
-            {
-                ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
-                //ModelState.AddModelError("", Messages.LoginByTicket4YouIncorrect);
-                return View(model);
-
-            }
-            else if (userByTicket.UserTicket.senha != md5Password)
-            {
-                ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
-                //ModelState.AddModelError("", Messages.LoginByTicket4YouIncorrect);
-                return View(model);
-            }
-            //else if (userByTicket.UserTicket.status_pedido != "Aprovado")
+            //if (userByTicket.SearchOne(model.Email) == null)
             //{
-            //    //CRIAR TEXTO DE PAGAMANTO NÃO APROVADO
+            //    ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
+            //    //ModelState.AddModelError("", Messages.LoginByTicket4YouIncorrect);
+            //    return View(model);
+
+            //}
+            //else if (userByTicket.UserTicket.senha != md5Password)
+            //{
             //    ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
             //    //ModelState.AddModelError("", Messages.LoginByTicket4YouIncorrect);
             //    return View(model);
             //}
-            else
-            {
+            ////else if (userByTicket.UserTicket.status_pedido != "Aprovado")
+            ////{
+            ////    //CRIAR TEXTO DE PAGAMANTO NÃO APROVADO
+            ////    ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
+            ////    //ModelState.AddModelError("", Messages.LoginByTicket4YouIncorrect);
+            ////    return View(model);
+            ////}
+            //else
+            //{
             
                 var user = AsyncHelpers.RunSync<ApplicationUser>(() => _identityController.FindByEmailAsync(model.Email));
                 if (user == null)
@@ -163,7 +163,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                         ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
                         return View(model);
                 }
-            }
+            //}
         }
 
         // GET: /Account/SendCode

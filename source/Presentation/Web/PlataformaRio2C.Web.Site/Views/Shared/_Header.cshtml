@@ -18,7 +18,7 @@
 
         <!--logo end-->
         <div class="horizontal-menu navbar-collapse collapse" style="margin-left:220px; margin-top:6px;">
-            <ul class="nav navbar-nav" style="display:none;">
+            <ul class="nav navbar-nav">
                 <li><a class="@Html.AddClassActive("active", "Index,Create,Edit,Detail", "Project")"  href="@Url.Action("Index", "Project")"><i class="icon-circle"></i> <span>@Labels.Projects</span></a></li>
 
                 @if (area == "Produtora")
@@ -26,7 +26,7 @@
                     <li><a class="@Html.AddClassActive("active", "Index,Create,Edit", "Player")" href="@Url.Action("List", "Player")"><i class="icon-circle"></i> <span>@Labels.Players</span></a></li>
                 }
 
-                <!--<li><a class="@Html.AddClassActive("active", "Index", "Schedule")" href="@Url.Action("Index", "Schedule")"><i class="icon-circle"></i> <span>@Labels.Diary <small>@Labels.BusinessRound</small></span></a></li>-->
+                <li><a class="@Html.AddClassActive("active", "Index", "Schedule")" href="@Url.Action("Index", "Schedule")"><i class="icon-circle"></i> <span>@Labels.Diary <small>@Labels.BusinessRound</small></span></a></li>
                 <li><a class="@Html.AddClassActive("active", "Index", "Conference")" href="@Url.Action("Index", "Conference")"><i class="icon-circle"></i> <span>@Labels.Conferences</span></a></li>
             </ul>
         </div>
