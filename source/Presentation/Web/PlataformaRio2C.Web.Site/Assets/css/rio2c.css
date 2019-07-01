@@ -63,3 +63,8 @@
     text-align: center;
     -webkit-text-fill-color: #CDD3D6;
 }
+
+.kt-header__brand-logo-default, .kt-header__brand-logo-sticky {
+    height: 40px !important;
+    width: 40px !important;
+}
