@@ -1,37 +1,51 @@
-﻿<div class="kt-subheader   kt-grid__item" id="kt_subheader">
-    <div class="kt-container ">
-        <div class="kt-subheader__main">
-            <h3 class="kt-subheader__title">Dashboard</h3>
-            <div class="kt-subheader__breadcrumbs">
-                <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
-                <span class="kt-subheader__breadcrumbs-separator"></span>
-                <a href="" class="kt-subheader__breadcrumbs-link">
-                    Dashboard
-                </a>
-                <span class="kt-subheader__breadcrumbs-separator"></span>
-                <a href="" class="kt-subheader__breadcrumbs-link">
-                    Default Dashboard
-                </a>
-            </div>
-        </div>
-        <div class="kt-subheader__toolbar">
-            <div class="kt-subheader__wrapper">
-                <a href="#" class="btn kt-subheader__btn-secondary">
-                    Reports
-                </a>
-                <div class="dropdown dropdown-inline" data-toggle="kt-tooltip" title="Quick actions" data-placement="top">
-                    <a href="#" class="btn btn-danger kt-subheader__btn-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Products
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="#"><i class="la la-plus"></i> New Product</a>
-                        <a class="dropdown-item" href="#"><i class="la la-user"></i> New Order</a>
-                        <a class="dropdown-item" href="#"><i class="la la-cloud-download"></i> New Download</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#"><i class="la la-cog"></i> Settings</a>
-                    </div>
+﻿@using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers
+@{
+    var breadcrumb = ViewBag.Breadcrumb as BreadcrumbHelper;
+}
+@if (breadcrumb?.Items?.Any() == true)
+{
+    <div class="kt-subheader   kt-grid__item" id="kt_subheader">
+        <div class="kt-container ">
+            <div class="kt-subheader__main">
+                <h3 class="kt-subheader__title">@breadcrumb.Title</h3>
+                <div class="kt-subheader__breadcrumbs">
+                    <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
+                    @foreach (var item in breadcrumb.Items)
+                    {
+                        <span class="kt-subheader__breadcrumbs-separator"></span>
+                        <a href="" class="kt-subheader__breadcrumbs-link">
+                            @item.Name
+                        </a>
+                    }
                 </div>
             </div>
+            @if (breadcrumb.MenuActions?.Any() == true)
+            {
+                <div class="kt-subheader__toolbar">
+                    <div class="kt-subheader__wrapper">
+                        @*<a href="#" class="btn kt-subheader__btn-secondary">
+                                @breadcrumb.MenuName
+                            </a>*@
+                        <div class="dropdown dropdown-inline" data-toggle="kt-tooltip" title="@breadcrumb.MenuName" data-placement="top">
+                            <a href="#" class="btn @(breadcrumb.MenuColorClass) kt-subheader__btn-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @breadcrumb.MenuName
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                @foreach (var menuAction in breadcrumb.MenuActions)
+                                {
+                                    <a class="dropdown-item" @(!string.IsNullOrEmpty(menuAction.Id) ? "id=" + menuAction.Id : string.Empty) @(!string.IsNullOrEmpty(menuAction.Url) ? "href=" + menuAction.Url + " target=_blank" : string.Empty) @(!string.IsNullOrEmpty(menuAction.OnClick) ? "onclick=" + menuAction.OnClick : string.Empty) @(menuAction.IsModal.HasValue && menuAction.IsModal.Value ? "data-toggle=modal" : string.Empty)>
+                                        @if (!string.IsNullOrEmpty(menuAction.Icon))
+                                        {
+                                            <i class="@(menuAction.Icon)"></i>
+                                        }
+                                        @menuAction.Name
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </div>
-</div>
+}

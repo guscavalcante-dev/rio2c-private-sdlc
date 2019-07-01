@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-28-2019
+// Last Modified On : 07-01-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -126,6 +126,8 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/themes/metronic/vendors/general/owl.carousel/dist/assets/owl.theme.default.css",
                 "~/Assets/themes/metronic/vendors/custom/vendors/flaticon/flaticon.css",
                 "~/Assets/themes/metronic/vendors/custom/vendors/flaticon2/flaticon.css",
+                "~/Assets/themes/metronic/vendors/general/socicon/css/socicon.css",
+                "~/Assets/themes/metronic/vendors/custom/vendors/line-awesome/css/line-awesome.css",
                 "~/Assets/themes/metronic/vendors/general/fortawesome/fontawesome-free/css/all.min.css"));
 
             /*
@@ -148,8 +150,6 @@ namespace PlataformaRio2C.Web.Site
                 <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/toastr/build/toastr.css" />
                 <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/morris.js/morris.css" />
                 <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/sweetalert2/dist/sweetalert2.css" />
-                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/socicon/css/socicon.css" />
-                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/custom/vendors/line-awesome/css/line-awesome.css" />
                 <!--end:: Global Optional Vendors -->
              */
 
