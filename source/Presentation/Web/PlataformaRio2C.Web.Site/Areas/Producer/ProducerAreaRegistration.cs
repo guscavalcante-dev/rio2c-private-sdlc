@@ -6,23 +6,23 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 07-01-2019
 // ***********************************************************************
-// <copyright file="ProducerAreaAreaRegistration.cs" company="Softo">
+// <copyright file="ProducerAreaRegistration.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 using System.Web.Mvc;
 
-namespace PlataformaRio2C.Web.Site.Areas.ProducerArea
+namespace PlataformaRio2C.Web.Site.Areas.Producer
 {
-    /// <summary>ProducerAreaAreaRegistration</summary>
-    public class ProducerAreaAreaRegistration : AreaRegistration 
+    /// <summary>ProducerAreaRegistration</summary>
+    public class ProducerAreaRegistration : AreaRegistration 
     {
         public override string AreaName 
         {
             get 
             {
-                return "ProducerArea";
+                return "Producer";
             }
         }
 
@@ -30,18 +30,19 @@ namespace PlataformaRio2C.Web.Site.Areas.ProducerArea
         /// <param name="context">Encapsulates the information that is required in order to register the area.</param>
         public override void RegisterArea(AreaRegistrationContext context) 
         {
-            //context.MapRoute(
-            //    "ProducerArea_default",
-            //    "ProducerArea/{controller}/{action}/{id}",
-            //    new { action = "Index", id = UrlParameter.Optional },
-            //    namespaces: new[] { "PlataformaRio2C.Web.Site.Areas.ProducerArea.Controllers" }                
-            //);
+            context.MapRoute(
+                "ProducerWithCulture",
+                "{culture}/Producer/{controller}/{action}/{id}",
+                new { culture = string.Empty, controller = "Home", action = "Index", area = AreaName, id = UrlParameter.Optional },
+                new { culture = @"^[a-zA-Z]{2}(\-[a-zA-Z]{2})?$" },
+                new[] { "PlataformaRio2C.Web.Site.Areas.Producer.Controllers" }
+            );
 
             context.MapRoute(
-                "ProducerArea_default",
-                "{culture}/ProducerArea/{controller}/{action}/{id}",
-                new { action = "Index", culture = string.Empty, area = AreaName, id = UrlParameter.Optional },
-                namespaces: new[] { "PlataformaRio2C.Web.Site.Controllers" }
+                "Producer",
+                "Producer/{controller}/{action}/{id}",
+                new { controller = "Home", action = "Index", area = AreaName, id = UrlParameter.Optional },
+                new[] { "PlataformaRio2C.Web.Site.Areas.Producer.Controllers" }
             );
         }
     }

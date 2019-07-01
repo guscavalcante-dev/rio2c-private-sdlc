@@ -16,7 +16,7 @@
                 var nativeName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(listCulture.NativeName);
 
                 <li class="kt-nav__item"> @*kt-nav__item--active*@
-                    <a href="@Url.Action("SetCulture", "Home", new { culture, returnUrl = Request.Path.Replace("/" + currentCulture.Name.ToLowerInvariant(), string.Empty) })" class="kt-nav__link">
+                    <a href="@Url.Action("SetCulture", "Home", new { Area = "", culture, returnUrl = Request.Path.Replace("/" + currentCulture.Name.ToLowerInvariant(), string.Empty) })" class="kt-nav__link">
                         <span class="kt-nav__link-icon"><img src="~/Assets/themes/metronic/media/flags/@(CultureHelper.GetCultureFlagImage(listCulture.Name))" alt="@(nativeName)" /></span>
                         <span class="kt-nav__link-text">@(nativeName)</span>
                     </a>

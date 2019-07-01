@@ -1,14 +1,26 @@
-﻿using PlataformaRio2C.Application.ViewModels;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Web.Site
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-28-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-01-2019
+// ***********************************************************************
+// <copyright file="QuizController.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Application.ViewModels;
 using Microsoft.AspNet.Identity;
 using PlataformaRio2C.Domain.Interfaces;
 using System.Linq;
 using System.Web.Mvc;
-using System.Web;
-using System.Collections.Generic;
 using PlataformaRio2C.Application.Interfaces.Services;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
+    /// <summary>QuizController</summary>
     public class QuizController : BaseController
     {
         private readonly IQuizRepository _quizRepository;
@@ -20,6 +32,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
         //private readonly IQuizRepository _quizRepository;
         //private readonly IQuizRepository _quizRepository;
 
+        /// <summary>Initializes a new instance of the <see cref="QuizController"/> class.</summary>
+        /// <param name="repositoryFactory">The repository factory.</param>
+        /// <param name="answerService">The answer service.</param>
         public QuizController(IRepositoryFactory repositoryFactory, IQuizAnswerAppService answerService)
         {
             _quizRepository = repositoryFactory.QuizRepository;

@@ -1,4 +1,17 @@
-﻿using Microsoft.AspNet.Identity;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Web.Site
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-28-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-01-2019
+// ***********************************************************************
+// <copyright file="ProjectController.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using Microsoft.AspNet.Identity;
 using PlataformaRio2C.Application.Interfaces.Services;
 using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -8,14 +21,17 @@ using System;
 using System.Linq;
 using System.Web.Mvc;
 
-namespace PlataformaRio2C.Web.Site.Areas.ProducerArea.Controllers
+namespace PlataformaRio2C.Web.Site.Areas.Producer.Controllers
 {
-    [TermFilter(Order = 2)]
+    /// <summary>ProjectController</summary>
+    //[TermFilter(Order = 2)]
     [Authorize(Order = 1, Roles = "Producer")]
     public class ProjectController : BaseController
     {
         private readonly IProjectAppService _projectAppService;
 
+        /// <summary>Initializes a new instance of the <see cref="ProjectController"/> class.</summary>
+        /// <param name="producerProjectAppService">The producer project application service.</param>
         public ProjectController(IProjectAppService producerProjectAppService)
         {
             _projectAppService = producerProjectAppService;

@@ -1,4 +1,17 @@
-﻿using Microsoft.AspNet.Identity;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Web.Site
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-28-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-01-2019
+// ***********************************************************************
+// <copyright file="TermController.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using Microsoft.AspNet.Identity;
 using PlataformaRio2C.Application.Interfaces.Services;
 using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -7,11 +20,14 @@ using System.Web.Mvc;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
+    /// <summary>TermController</summary>
     [Authorize]
     public class TermController : BaseController
     {
         private readonly IUserUseTermAppService _userUseTermAppService;
 
+        /// <summary>Initializes a new instance of the <see cref="TermController"/> class.</summary>
+        /// <param name="userUseTermAppService">The user use term application service.</param>
         public TermController(IUserUseTermAppService userUseTermAppService)
         {
             _userUseTermAppService = userUseTermAppService;

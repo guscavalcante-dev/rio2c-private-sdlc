@@ -2,7 +2,7 @@
     <div class="kt-container ">
         <!-- begin:: Brand -->
         <div class="kt-header__brand   kt-grid__item" id="kt_header_brand">
-            <a class="kt-header__brand-logo" href="demo4/index.html">
+            <a class="kt-header__brand-logo" href="@Url.Action("Index", "Home")">
                 <img alt="Logo" src="~/Assets/img/logo_rio2c_white.png" class="kt-header__brand-logo-default" />
                 <img alt="Logo" src="~/Assets/img/logo_rio2c_color.png" class="kt-header__brand-logo-sticky" />
             </a>
@@ -14,13 +14,7 @@
             <div id="kt_header_menu" class="kt-header-menu kt-header-menu-mobile ">
                 <ul class="kt-menu__nav ">
                     <li class="kt-menu__item  kt-menu__item--open kt-menu__item--here kt-menu__item--submenu kt-menu__item--rel kt-menu__item--open kt-menu__item--here" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
-                        <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">Dashboard</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
-                        <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
-                            <ul class="kt-menu__subnav">
-                                <li class="kt-menu__item  kt-menu__item--active " aria-haspopup="true"><a href="demo4/index.html" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Default Dashboard</span></a></li>
-                                <li class="kt-menu__item " aria-haspopup="true"><a href="demo4/dashboards/fluid.html" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Fluid Dashboard</span></a></li>
-                            </ul>
-                        </div>
+                        <a href="@Url.Action("Index", "Home")" class="kt-menu__link"><span class="kt-menu__link-text">Dashboard</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
                     </li>
                     <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
                         <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">Pages</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>

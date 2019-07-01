@@ -27,19 +27,22 @@ namespace PlataformaRio2C.Web.Site
 
             routes.MapMvcAttributeRoutes();
 
-            //routes.MapRoute(
-            //    name: "Default",
-            //    url: "{controller}/{action}/{id}",
-            //    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-            //    namespaces: new[] { "PlataformaRio2C.Web.Site.Controllers" }
-            //);
+            AreaRegistration.RegisterAllAreas();
 
             //routing to include culture
             routes.MapRoute(
-                name: "DefaultWithCulture",
-                url: "{culture}/{controller}/{action}/{id}",
-                defaults: new { culture = string.Empty, controller = "Home", action = "Index", area = "", id = UrlParameter.Optional },
-                namespaces: new[] { "PlataformaRio2C.Web.Site.Controllers" });
+                "DefaultWithCulture",
+                "{culture}/{controller}/{action}/{id}",
+                new { culture = string.Empty, controller = "Home", action = "Index", area = "", id = UrlParameter.Optional },
+                new { culture = @"^[a-zA-Z]{2}(\-[a-zA-Z]{2})?$" },
+                new[] { "PlataformaRio2C.Web.Site.Controllers" });
+
+            routes.MapRoute(
+                "Default",
+                "{controller}/{action}/{id}",
+                new { controller = "Home", action = "Index", area ="", id = UrlParameter.Optional },
+                new[] { "PlataformaRio2C.Web.Site.Controllers" }
+            );
         }
     }
 }

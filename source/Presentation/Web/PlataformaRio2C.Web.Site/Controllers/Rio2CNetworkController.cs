@@ -1,22 +1,35 @@
-﻿using Microsoft.AspNet.Identity;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Web.Site
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-28-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-01-2019
+// ***********************************************************************
+// <copyright file="Rio2CNetworkController.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using Microsoft.AspNet.Identity;
 using OfficeOpenXml;
 using PlataformaRio2C.Application.Interfaces.Services;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
-    [TermFilter(Order = 2)]
+    /// <summary>Rio2CNetworkController</summary>
+    //[TermFilter(Order = 2)]
     [Authorize(Order = 1, Roles = "Player,Producer")]
     public class Rio2CNetworkController : BaseController
     {
         public IMessageAppService _messageAppService { get; set; }
 
+        /// <summary>Initializes a new instance of the <see cref="Rio2CNetworkController"/> class.</summary>
+        /// <param name="messageAppService">The message application service.</param>
         public Rio2CNetworkController(IMessageAppService messageAppService)
         {
             _messageAppService = messageAppService;

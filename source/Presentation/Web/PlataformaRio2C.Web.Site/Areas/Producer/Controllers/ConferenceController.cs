@@ -11,44 +11,19 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Application.Interfaces.Services;
-using System;
 using System.Web.Mvc;
+using PlataformaRio2C.Application.Interfaces.Services;
 
-namespace PlataformaRio2C.Web.Site.Controllers
+namespace PlataformaRio2C.Web.Site.Areas.Producer.Controllers
 {
     /// <summary>ConferenceController</summary>
-    //[TermFilter(Order = 2)]
-    [Authorize(Order = 1, Roles = "Player, Producer")]
-    public class ConferenceController : BaseController
+    [Authorize(Order = 1, Roles = "Producer")]
+    public class ConferenceController : PlataformaRio2C.Web.Site.Controllers.ConferenceController
     {
-        private readonly IConferenceAppService _appService;
-
         /// <summary>Initializes a new instance of the <see cref="ConferenceController"/> class.</summary>
         /// <param name="appService">The application service.</param>
-        public ConferenceController(IConferenceAppService appService)
+        public ConferenceController(IConferenceAppService appService) : base(appService)
         {
-            _appService = appService;
-        }
-
-        // GET: Lecture
-        [HttpGet]
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public ActionResult Detail(Guid uid)
-        {
-            var result = _appService.GetByDetails(uid);
-
-            if (result != null)
-            {
-                return View( result);
-            }
-
-            return RedirectToAction("Index");            
         }
     }
 }

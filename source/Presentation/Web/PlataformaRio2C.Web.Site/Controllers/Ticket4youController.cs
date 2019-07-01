@@ -1,14 +1,24 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Web.Site
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-28-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-01-2019
+// ***********************************************************************
+// <copyright file="Ticket4youController.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
-using System.Web;
 using PlataformaRio2C.Web.Site.Models;
 using System.Net;
-using Newtonsoft.Json.Linq;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
+    /// <summary>Ticket4youController</summary>
     public class Ticket4youController : BaseController
     {
         private string urlJson = "http://rio2c.ticketforyou.com.br/Web/Api/Controller/APIExterna/dados_comprador.php";

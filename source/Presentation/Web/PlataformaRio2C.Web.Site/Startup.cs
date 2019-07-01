@@ -1,5 +1,16 @@
-﻿
-
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Web.Site
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-28-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-01-2019
+// ***********************************************************************
+// <copyright file="Startup.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
 using Newtonsoft.Json.Serialization;
@@ -15,8 +26,11 @@ using System.Web.Routing;
 [assembly: OwinStartupAttribute(typeof(PlataformaRio2C.Web.Site.Startup))]
 namespace PlataformaRio2C.Web.Site
 {
+    /// <summary>Startup</summary>
     public partial class Startup
     {
+        /// <summary>Configurations the specified application.</summary>
+        /// <param name="app">The application.</param>
         public void Configuration(IAppBuilder app)
         {
             var hubConfiguration = new HubConfiguration();
@@ -44,13 +58,10 @@ namespace PlataformaRio2C.Web.Site
             app.UseWebApi(config);
 
             GlobalConfiguration.Configure(WebApiConfig.Register);
-            AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);      
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             
-
-
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new RazorViewEngine());
 

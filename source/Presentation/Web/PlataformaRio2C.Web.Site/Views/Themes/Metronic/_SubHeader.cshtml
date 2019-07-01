@@ -9,7 +9,7 @@
             <div class="kt-subheader__main">
                 <h3 class="kt-subheader__title">@breadcrumb.Title</h3>
                 <div class="kt-subheader__breadcrumbs">
-                    <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
+                    <a href="@Url.Action("Index", "Home")" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                     @foreach (var item in breadcrumb.Items)
                     {
                         <span class="kt-subheader__breadcrumbs-separator"></span>

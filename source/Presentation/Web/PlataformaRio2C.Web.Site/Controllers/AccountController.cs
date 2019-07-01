@@ -1,29 +1,45 @@
-﻿using HtmlAgilityPack;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Web.Site
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-28-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-01-2019
+// ***********************************************************************
+// <copyright file="AccountController.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using HtmlAgilityPack;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
-using PlataformaRio2C.Infra.CrossCutting.Identity.Configuration;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Models;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Identity.ViewModels;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Enums;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using System;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using PlataformaRio2C.Web.Site.Models;
 using System.Web.Mvc;
-using System.Web.Security;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
+    /// <summary>AccountController</summary>
     [Authorize(Order = 1, Roles = "Player,Producer")]
     public class AccountController : BaseController
     {
         private readonly IdentityAutenticationService _identityController;
         private IAuthenticationManager authenticationManager => HttpContext.GetOwinContext().Authentication;
+
+        /// <summary>Initializes a new instance of the <see cref="AccountController"/> class.</summary>
+        /// <param name="identityController">The identity controller.</param>
+        public AccountController(IdentityAutenticationService identityController)
+        {
+            _identityController = identityController;
+        }
 
         private static string CreateMD5(string input)
         {
@@ -41,11 +57,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 }
                 return sb.ToString();
             }
-        }
-
-        public AccountController(IdentityAutenticationService identityController)
-        {
-            _identityController = identityController;
         }
 
         [AllowAnonymous]

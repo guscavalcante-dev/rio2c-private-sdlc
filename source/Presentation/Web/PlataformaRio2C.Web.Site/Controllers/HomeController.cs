@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-28-2019
+// Last Modified On : 07-01-2019
 // ***********************************************************************
 // <copyright file="HomeController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,7 +34,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
             this.identityController = identityController;
         }
 
-        // GET: Home
+        /// <summary>Indexes this instance.</summary>
+        /// <returns></returns>
         public async Task<ActionResult> Index()
         {
             try
@@ -43,12 +44,12 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
                 if (await this.identityController.IsInRoleAsync(userId, "Player"))
                 {
-                    return RedirectToAction("Index", "Dashboard");
+                    return RedirectToAction("Index", "Home", new { Area = "Player" });
                 }
 
                 if (await this.identityController.IsInRoleAsync(userId, "Producer"))
                 {
-                    return RedirectToAction("Index", "Dashboard", new { area = "ProducerArea" });
+                    return RedirectToAction("Index", "Home", new { Area = "Producer" });
                 }
 
                 return RedirectToAction("LogOff", "Account");

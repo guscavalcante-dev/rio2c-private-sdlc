@@ -1,4 +1,17 @@
-﻿using Microsoft.AspNet.Identity;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Web.Site
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-28-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-01-2019
+// ***********************************************************************
+// <copyright file="PlayerController.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using Microsoft.AspNet.Identity;
 using PlataformaRio2C.Application.Interfaces.Services;
 using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Domain.Interfaces;
@@ -10,7 +23,8 @@ using System.Web.Mvc;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
-    [TermFilter(Order = 2)]
+    /// <summary>PlayerController</summary>
+    //[TermFilter(Order = 2)]
     [Authorize(Order = 1, Roles = "Player,Producer")]
     public class PlayerController : BaseController
     {
@@ -18,6 +32,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
         protected readonly IPlayerAppService _playerAppService;
         protected readonly ICountryRepository _countryRepository;
 
+        /// <summary>Initializes a new instance of the <see cref="PlayerController"/> class.</summary>
+        /// <param name="collaboratorAppService">The collaborator application service.</param>
+        /// <param name="playerAppService">The player application service.</param>
+        /// <param name="repositoryFactory">The repository factory.</param>
         public PlayerController(ICollaboratorAppService collaboratorAppService, IPlayerAppService playerAppService, IRepositoryFactory repositoryFactory)
         {
             _collaboratorAppService = collaboratorAppService;
@@ -39,7 +57,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             if (string.IsNullOrWhiteSpace(uid))
             {
                 var result = _playerAppService.GetAllDetailByUserId(userId);
-                CheckRegisterIsComplete();
+                //CheckRegisterIsComplete();
 
                 if (result != null && result.Count() >= 2)
                 {
@@ -51,7 +69,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             else
             {
                 var result = _playerAppService.GetAllDetailByUserId(userId, new Guid(uid));
-                CheckRegisterIsComplete();
+                //CheckRegisterIsComplete();
 
                 return View("ProfileDetails", result);
             }
@@ -66,7 +84,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             {
                 var result = _playerAppService.GetAllEditByUserId(userId);
 
-                CheckRegisterIsComplete();
+                //CheckRegisterIsComplete();
 
                 if (result != null && result.Count() >= 2)
                 {
@@ -79,7 +97,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             {
                 var result = _playerAppService.GetAllEditByUserId(userId, new Guid(uid));
                 
-                CheckRegisterIsComplete();
+                //CheckRegisterIsComplete();
 
                 return View("ProfileEdit", result);
             }
@@ -116,7 +134,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
                 var playersVm = _playerAppService.GetAllByUserId(User.Identity.GetUserId<int>());
 
-                CheckRegisterIsComplete();
+                //CheckRegisterIsComplete();
 
                 if (playersVm != null && playersVm.Count() <= 1)
                 {
@@ -127,7 +145,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
             else
             {
-                CheckRegisterIsComplete();
+                //CheckRegisterIsComplete();
 
                 ModelState.AddModelError("", string.Format(Messages.ErrorUpdatingPlayerData, viewModel.Name));
                 viewModel.Countries = _countryRepository.GetAll();
@@ -151,7 +169,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             if (string.IsNullOrWhiteSpace(uid))
             {
                 var result = _playerAppService.GetAllByUserId(userId);
-                CheckRegisterIsComplete();
+                //CheckRegisterIsComplete();
                 if (result != null && result.Count() >= 2)
                 {
                     return View("ListPlayersInterests", result);
@@ -162,7 +180,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             else
             {
                 var result = _playerAppService.GetAllByUserId(userId, new Guid(uid));
-                CheckRegisterIsComplete();
+                //CheckRegisterIsComplete();
                 return View("Interests", result);
             }
         }
@@ -176,7 +194,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             if (result.IsValid)
             {
-                CheckRegisterIsComplete();
+                //CheckRegisterIsComplete();
                 this.StatusMessage(string.Format(Messages.PlayerInterestsSuccessfullyUpdated, viewModel.Name), Infra.CrossCutting.Tools.Enums.StatusMessageType.Success);
                 return RedirectToAction("Interests", "Player");
             }
@@ -190,7 +208,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 }
             }
 
-            CheckRegisterIsComplete();
+            //CheckRegisterIsComplete();
             return View(viewModel);
         }
 
