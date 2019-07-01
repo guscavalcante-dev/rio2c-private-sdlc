@@ -940,8 +940,13 @@
                             </div>
                         </a>
                         <div class="kt-notification__custom kt-space-between">
-                            <a href="demo4/custom/user/login-v2.html" target="_blank" class="btn btn-label btn-label-brand btn-sm btn-bold">Sign Out</a>
-                            <a href="demo4/custom/user/login-v2.html" target="_blank" class="btn btn-clean btn-sm btn-bold">Upgrade Plan</a>
+                            @using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm" }))
+                            {
+                                @Html.AntiForgeryToken()
+                            }
+
+                            <a onclick="$('#logoutForm').submit();" class="btn btn-label btn-label-brand btn-sm btn-bold">@Labels.LogOut</a>
+                            @*<a href="demo4/custom/user/login-v2.html" target="_blank" class="btn btn-clean btn-sm btn-bold">Upgrade Plan</a>*@
                         </div>
                     </div>
 
