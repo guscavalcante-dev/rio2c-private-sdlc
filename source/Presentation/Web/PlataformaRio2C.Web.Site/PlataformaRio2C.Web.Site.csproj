@@ -7804,6 +7804,7 @@
     <Content Include="Views\Themes\Metronic\_Chat.cshtml" />
     <Content Include="Views\Themes\Metronic\_HeaderMobile.cshtml" />
     <Content Include="Views\Themes\Metronic\_SubHeader.cshtml" />
+    <Content Include="Views\Themes\Metronic\_LanguageSelector.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>

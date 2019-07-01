@@ -15,13 +15,15 @@ using Microsoft.AspNet.Identity;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using System;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
+using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
     /// <summary>HomeController</summary>
     [Authorize(Order = 1)]
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly IdentityAutenticationService identityController;
 
@@ -55,6 +57,48 @@ namespace PlataformaRio2C.Web.Site.Controllers
             {
                 return RedirectToAction("LogOff", "Account");
             }
+        }
+
+        /// <summary>Sets the culture.</summary>
+        /// <param name="culture">The culture.</param>
+        /// <param name="returnUrl">The return URL.</param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public ActionResult SetCulture(string culture, string returnUrl = null)
+        {
+            if (returnUrl == null && Request.UrlReferrer != null)
+            {
+                returnUrl = Request.UrlReferrer.PathAndQuery;
+            }
+
+            // Validate input
+            culture = CultureHelper.GetImplementedCulture(culture);
+            RouteData.Values["culture"] = culture;  // set culture
+
+            #region Create/Update cookie culture
+
+            var cookie = Request.Cookies["Rio2CPlafatormCulture"];
+            if (cookie != null)
+            {
+                cookie.Value = culture;   // update cookie value
+            }
+            else
+            {
+                cookie = new HttpCookie("Rio2CPlafatormCulture");
+                cookie.Value = culture;
+                cookie.Expires = DateTime.Now.AddYears(1);
+            }
+
+            Response.Cookies.Add(cookie);
+
+            #endregion
+
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }
