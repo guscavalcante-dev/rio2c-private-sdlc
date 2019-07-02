@@ -909,4 +909,48 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="DownloadListProjects" xml:space="preserve">
     <value>Baixar lista de Projetos</value>
   </data>
+  <data name="Accreditation" xml:space="preserve">
+    <value>Credenciamento</value>
+    <comment>Credenciamento</comment>
+  </data>
+  <data name="Clipping" xml:space="preserve">
+    <value>Notícias</value>
+    <comment>Notícias</comment>
+  </data>
+  <data name="Commercial" xml:space="preserve">
+    <value>Comercial</value>
+    <comment>Comercial</comment>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>Fale Conosco</value>
+    <comment>Fale Conosco</comment>
+  </data>
+  <data name="Curatorship" xml:space="preserve">
+    <value>Curadoria</value>
+    <comment>Curadoria</comment>
+  </data>
+  <data name="Ethics" xml:space="preserve">
+    <value>Código de Ética</value>
+    <comment>Código de Ética</comment>
+  </data>
+  <data name="Marketing" xml:space="preserve">
+    <value>Marketing</value>
+    <comment>Marketing</comment>
+  </data>
+  <data name="PhotosForPublicity" xml:space="preserve">
+    <value>Fotos Divulgação</value>
+    <comment>Fotos Divulgação</comment>
+  </data>
+  <data name="Press" xml:space="preserve">
+    <value>Imprensa</value>
+    <comment>Imprensa</comment>
+  </data>
+  <data name="PressRelations" xml:space="preserve">
+    <value>Assessoria</value>
+    <comment>Assessoria</comment>
+  </data>
+  <data name="TheEvent" xml:space="preserve">
+    <value>O Evento</value>
+    <comment>O Evento</comment>
+  </data>
 </root>

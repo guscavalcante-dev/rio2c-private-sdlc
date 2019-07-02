@@ -167,8 +167,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
                     case IdentitySignInStatus.LockedOut:
                         return View("Lockout");
+
                     case IdentitySignInStatus.RequiresVerification:
                         return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+
                     case IdentitySignInStatus.Failure:
                     default:
                         ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);

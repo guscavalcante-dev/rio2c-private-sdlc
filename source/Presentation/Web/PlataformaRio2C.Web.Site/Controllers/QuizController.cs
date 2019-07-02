@@ -51,8 +51,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             if (AnsweredQuiz(userId, 1))
             {
-                return RedirectToAction("ProfileEdit", "Collaborator", new { area = "" });
-                //return RedirectToAction("", "Dashboard");
+                //return RedirectToAction("ProfileEdit", "Collaborator", new { area = "" });
+                return RedirectToAction("Index", "Home", new { Area = "" });
             }
             else
             {

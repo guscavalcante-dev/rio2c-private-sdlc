@@ -88,6 +88,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Credenciamento.
+        /// </summary>
+        public static string Accreditation {
+            get {
+                return ResourceManager.GetString("Accreditation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Atividade.
         /// </summary>
         public static string Activity {
@@ -313,6 +322,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Notícias.
+        /// </summary>
+        public static string Clipping {
+            get {
+                return ResourceManager.GetString("Clipping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fechar.
         /// </summary>
         public static string Close {
@@ -327,6 +345,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string CNPJ {
             get {
                 return ResourceManager.GetString("CNPJ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comercial.
+        /// </summary>
+        public static string Commercial {
+            get {
+                return ResourceManager.GetString("Commercial", resourceCulture);
             }
         }
         
@@ -412,6 +439,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fale Conosco.
+        /// </summary>
+        public static string ContactUs {
+            get {
+                return ResourceManager.GetString("ContactUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tipo de conteúdo que está buscando no Mercado (restrições e especificidades).
         /// </summary>
         public static string ContentTypeYouAreLookingFor {
@@ -462,6 +498,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string CreateProject {
             get {
                 return ResourceManager.GetString("CreateProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Curadoria.
+        /// </summary>
+        public static string Curatorship {
+            get {
+                return ResourceManager.GetString("Curatorship", resourceCulture);
             }
         }
         
@@ -705,6 +750,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string EnterToSend {
             get {
                 return ResourceManager.GetString("EnterToSend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Código de Ética.
+        /// </summary>
+        public static string Ethics {
+            get {
+                return ResourceManager.GetString("Ethics", resourceCulture);
             }
         }
         
@@ -1042,6 +1096,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Marketing.
+        /// </summary>
+        public static string Marketing {
+            get {
+                return ResourceManager.GetString("Marketing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Está no mercado buscando.
         /// </summary>
         public static string MarketLookingFor {
@@ -1276,6 +1339,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fotos Divulgação.
+        /// </summary>
+        public static string PhotosForPublicity {
+            get {
+                return ResourceManager.GetString("PhotosForPublicity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Plataforma Rio2C.
         /// </summary>
         public static string PlatformRio2C {
@@ -1393,6 +1465,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string PreRegistrationContact {
             get {
                 return ResourceManager.GetString("PreRegistrationContact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Imprensa.
+        /// </summary>
+        public static string Press {
+            get {
+                return ResourceManager.GetString("Press", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assessoria.
+        /// </summary>
+        public static string PressRelations {
+            get {
+                return ResourceManager.GetString("PressRelations", resourceCulture);
             }
         }
         
@@ -1965,6 +2055,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string TermsOfUse {
             get {
                 return ResourceManager.GetString("TermsOfUse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O Evento.
+        /// </summary>
+        public static string TheEvent {
+            get {
+                return ResourceManager.GetString("TheEvent", resourceCulture);
             }
         }
         

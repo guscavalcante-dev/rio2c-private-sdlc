@@ -897,4 +897,48 @@
   <data name="DownloadListProjects" xml:space="preserve">
     <value>Download list projects</value>
   </data>
+  <data name="Accreditation" xml:space="preserve">
+    <value>Accreditation</value>
+    <comment>Credenciamento</comment>
+  </data>
+  <data name="Clipping" xml:space="preserve">
+    <value>Clipping</value>
+    <comment>Notícias</comment>
+  </data>
+  <data name="Commercial" xml:space="preserve">
+    <value>Commercial</value>
+    <comment>Comercial</comment>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>Contact Us</value>
+    <comment>Fale Conosco</comment>
+  </data>
+  <data name="Curatorship" xml:space="preserve">
+    <value>Curatorship</value>
+    <comment>Curadoria</comment>
+  </data>
+  <data name="Ethics" xml:space="preserve">
+    <value>Ethics</value>
+    <comment>Código de Ética</comment>
+  </data>
+  <data name="Marketing" xml:space="preserve">
+    <value>Marketing</value>
+    <comment>Marketing</comment>
+  </data>
+  <data name="PhotosForPublicity" xml:space="preserve">
+    <value>Photos for Publicity</value>
+    <comment>Fotos Divulgação</comment>
+  </data>
+  <data name="Press" xml:space="preserve">
+    <value>Press</value>
+    <comment>Imprensa</comment>
+  </data>
+  <data name="PressRelations" xml:space="preserve">
+    <value>Relations</value>
+    <comment>Assessoria</comment>
+  </data>
+  <data name="TheEvent" xml:space="preserve">
+    <value>Event</value>
+    <comment>O Evento</comment>
+  </data>
 </root>
