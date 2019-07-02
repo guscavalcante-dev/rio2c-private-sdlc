@@ -7813,6 +7813,7 @@
     <Content Include="Views\Themes\Metronic\_SubHeader.cshtml" />
     <Content Include="Views\Themes\Metronic\_LanguageSelector.cshtml" />
     <Content Include="Views\Themes\Metronic\_InternalLogin.cshtml" />
+    <Content Include="Views\Themes\Metronic\_HeaderMenu.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>

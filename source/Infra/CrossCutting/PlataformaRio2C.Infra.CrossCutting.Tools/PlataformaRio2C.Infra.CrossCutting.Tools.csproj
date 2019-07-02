@@ -126,6 +126,7 @@
     <Compile Include="Extensions\PercentageRegistrationExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="Extensions\MenuExtension.cs" />
     <Compile Include="Helpers\BreadcrumbHelper.cs" />
     <Compile Include="Interfaces\IUserSession.cs" />
     <Compile Include="Interfaces\Services\ILogService.cs" />

@@ -22,7 +22,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
     /// <summary>BaseController</summary>
     public class BaseController : Controller
     {
-        protected string userInterfaceLanguage;
+        protected string UserInterfaceLanguage;
+        protected string Area;
 
         /// <summary>Begins to invoke the action in the current controller context.</summary>
         /// <param name="callback">The callback.</param>
@@ -30,13 +31,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <returns>Returns an IAsyncController instance.</returns>
         protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, object state)
         {
-            this.CheckCulture();
+            this.SetCulture();
+            this.SetArea();
 
             return base.BeginExecuteCore(callback, state);
         }
 
-        /// <summary>Checks the culture.</summary>
-        private void CheckCulture()
+        /// <summary>Sets the culture.</summary>
+        private void SetCulture()
         {
             // Attempt to read the culture cookie from Request
             var routeCulture = RouteData.Values["culture"] as string;
@@ -75,7 +77,13 @@ namespace PlataformaRio2C.Web.Site.Controllers
             Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
             Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
 
-            this.userInterfaceLanguage = cultureName;
+            this.UserInterfaceLanguage = cultureName;
+        }
+
+        /// <summary>Sets the area.</summary>
+        private void SetArea()
+        {
+            this.Area = ViewBag.Area = RouteData.Values["Area"] as string;
         }
 
         //protected void CheckRegisterIsComplete()
