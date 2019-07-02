@@ -972,4 +972,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="DevelopedBy" xml:space="preserve">
     <value>Desenvolvido por</value>
   </data>
+  <data name="GoBackToSignIn" xml:space="preserve">
+    <value>Voltar para o login</value>
+    <comment>Voltar para o login</comment>
+  </data>
 </root>

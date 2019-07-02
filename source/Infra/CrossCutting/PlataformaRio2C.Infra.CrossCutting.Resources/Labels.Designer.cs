@@ -889,6 +889,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Voltar para o login.
+        /// </summary>
+        public static string GoBackToSignIn {
+            get {
+                return ResourceManager.GetString("GoBackToSignIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Holding.
         /// </summary>
         public static string Holding {

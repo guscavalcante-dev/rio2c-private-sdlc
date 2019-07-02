@@ -11,6 +11,7 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using HtmlAgilityPack;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
@@ -266,16 +267,19 @@ namespace PlataformaRio2C.Web.Site.Controllers
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
-        /*
-        //
-        // GET: /Account/ForgotPassword
+        #region Forgot Password
+
+        /// <summary>Forgots the password.</summary>
+        /// <returns></returns>
         [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
             return View();
         }
 
-        // POST: /Account/ForgotPassword
+        /// <summary>Forgots the password.</summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -307,35 +311,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             return View(model);
         }
-        */
 
-        [Authorize]
-        public async Task<ActionResult> ResetPasswordAuthenticated()
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                var user = await _identityController.FindByNameAsync(User.Identity.Name);
-                if (user == null)
-                {
-                    authenticationManager.SignOut();
-                    return View("UserNotFound");
-                }
-                else if (!user.Active)
-                {
-                    authenticationManager.SignOut();
-                    return View("DisabledUser");
-                }
-                else
-                {
-                    var code = await _identityController.GeneratePasswordResetTokenAsync(user.Id);
-                    return View(new ResetPasswordViewModel { Code = code, Email = user.Email });
-                }
-            }
-
-            return RedirectToAction("Index", "Account");
-        }
-
-        // GET: /Account/ResetPassword
+        /// <summary>Resets the password.</summary>
+        /// <param name="code">The code.</param>
+        /// <returns></returns>
         [AllowAnonymous]
         public ActionResult ResetPassword(string code)
         {
@@ -343,6 +322,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
         }
 
         // POST: /Account/ResetPassword
+        /// <summary>Resets the password.</summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -370,10 +352,13 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
-            AddErrors(result);
-            return View(model);
 
+            AddErrors(result);
+
+            return View(model);
         }
+
+        #endregion
 
         // GET: /Account/ResetPasswordConfirmation
         [AllowAnonymous]
@@ -381,6 +366,33 @@ namespace PlataformaRio2C.Web.Site.Controllers
         {
             return View();
         }
+
+        [Authorize]
+        public async Task<ActionResult> ResetPasswordAuthenticated()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = await _identityController.FindByNameAsync(User.Identity.Name);
+                if (user == null)
+                {
+                    authenticationManager.SignOut();
+                    return View("UserNotFound");
+                }
+                else if (!user.Active)
+                {
+                    authenticationManager.SignOut();
+                    return View("DisabledUser");
+                }
+                else
+                {
+                    var code = await _identityController.GeneratePasswordResetTokenAsync(user.Id);
+                    return View(new ResetPasswordViewModel { Code = code, Email = user.Email });
+                }
+            }
+
+            return RedirectToAction("Index", "Account");
+        }
+
 
         // POST: /Account/LogOff        
         [Authorize]
