@@ -957,4 +957,7 @@
     <value>Welcome to Rio2C!</value>
     <comment>Bem vindo ao Rio2C!</comment>
   </data>
+  <data name="DevelopedBy" xml:space="preserve">
+    <value>Developed by</value>
+  </data>
 </root>

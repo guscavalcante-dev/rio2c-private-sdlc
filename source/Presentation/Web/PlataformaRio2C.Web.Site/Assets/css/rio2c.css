@@ -64,7 +64,52 @@
     -webkit-text-fill-color: #CDD3D6;
 }
 
-.kt-header__brand-logo-default, .kt-header__brand-logo-sticky {
+.kt-header__brand-logo-default, .kt-header__brand-logo-sticky, .r2c-header-mobile__logo {
     height: 40px !important;
     width: 40px !important;
+}
+
+.r2c-login__logo {
+    height: 80px;
+    width: 80px;
+}
+
+.r2c-header__topbar {
+    float: right;
+}
+
+a.r2c-login__footer-link, a.r2c-footer-link {
+    color: rgba(255, 255, 255, 0.4);
+    text-decoration: underline !important;
+    background-color: transparent !important;
+}
+
+    a.r2c-login__footer-link:hover, a.r2c-footer-link:hover {
+        color: rgba(255, 255, 255, 0.4) !important;
+        text-decoration: underline !important;
+    }
+/*
+ Extra small devices (portrait phones, less than 576px)
+ No media query since this is the default in Bootstrap
+*/
+/* Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+}
+
+/* Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+    .r2c-login__logo {
+        height: 150px;
+        width: 150px;
+    }   
+}
+
+/* Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+  
+}
+
+/* Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+  
 }

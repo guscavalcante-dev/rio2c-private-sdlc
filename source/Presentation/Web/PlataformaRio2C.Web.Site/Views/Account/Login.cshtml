@@ -4,10 +4,10 @@
     ViewBag.Title = Labels.Enter;
 }
 <!--begin::Aside-->
-<div class="kt-grid__item kt-grid__item--order-tablet-and-mobile-2 kt-grid kt-grid--hor kt-login__aside" style="background-image: url(/assets/themes/metronic/media//bg/bg-4.jpg);">
+<div class="kt-grid__item kt-grid__item--order-tablet-and-mobile-2 kt-grid kt-grid--hor kt-login__aside" style="background-image: url(/assets/img/bg-2.jpg);">
     <div class="kt-grid__item">
         <a href="#" class="kt-login__logo">
-            <img src="~/Assets/img/logo_rio2c_color.png">
+            <img src="~/Assets/img/logo_rio2c_white.png" class="r2c-login__logo">
         </a>
     </div>
     <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver">
@@ -19,26 +19,36 @@
     <div class="kt-grid__item">
         <div class="kt-login__info">
             <div class="kt-login__copyright">
-                &copy 2019 Rio2C @Labels.And Softo
+                &copy 2019 Rio2C | @Labels.DevelopedBy <a href="http://sof.to" target="_blank" class="r2c-login__footer-link">Softo</a>
             </div>
-            <div class="kt-login__menu">
+            @*<div class="kt-login__menu">
                 <a href="#" class="kt-link">Privacy</a>
                 <a href="#" class="kt-link">Legal</a>
                 <a href="#" class="kt-link">Contact</a>
-            </div>
+            </div>*@
         </div>
     </div>
 </div>
 <!--end::Aside-->
 <!--begin::Content-->
 <div class="kt-grid__item kt-grid__item--fluid  kt-grid__item--order-tablet-and-mobile-1  kt-login__wrapper">
-    @*<!--begin::Head-->
-    <div class="kt-login__head">
-        <span class="kt-login__signup-label">Don't have an account yet?</span>&nbsp;&nbsp;
-        <a href="#" class="kt-link kt-login__signup-link">Sign Up!</a>
-    </div>
-    <!--end::Head-->*@
+    <!--begin::Head-->
+    @*<div class="kt-login__head">
+            <span class="kt-login__signup-label">Don't have an account yet?</span>&nbsp;&nbsp;
+            <a href="#" class="kt-link kt-login__signup-link">Sign Up!</a>
+        </div>*@
+    <!--end::Head-->
     <!--begin::Body-->
+    <!-- begin:: Header Topbar -->
+    <div class="kt-header__topbar kt-grid__item r2c-header__topbar">
+        <!--begin: Language bar -->
+        @{ Html.RenderPartial("~/Views/Themes/Metronic/_LanguageSelector.cshtml"); }
+        <!--end: Language bar -->
+    </div>
+
+    <!-- end:: Header Topbar -->
+
+
     <div class="kt-login__body">
         <!--begin::Signin-->
         <div class="kt-login__form">
@@ -49,14 +59,14 @@
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-signin kt-form", role = "form", novalidade = "novalidate" }))
             {
                 @Html.AntiForgeryToken()
-                @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+                @Html.ValidationSummary(true, "Something is wrong", new { @class = "text-danger" })
                 <div class="form-group">
                     @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Email), autocomplete = "off" })
-                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "error-login" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group">
                     @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Password) })
-                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "error-login" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                 </div>
                 <!--begin::Action-->
                 <div class="kt-login__actions">
@@ -69,30 +79,30 @@
             }
             <!--end::Form-->
             @*<!--begin::Divider-->
-            <div class="kt-login__divider">
-                <div class="kt-divider">
-                    <span></span>
-                    <span>OR</span>
-                    <span></span>
+                <div class="kt-login__divider">
+                    <div class="kt-divider">
+                        <span></span>
+                        <span>OR</span>
+                        <span></span>
+                    </div>
                 </div>
-            </div>
-            <!--end::Divider-->
-            <!--begin::Options-->
-            <div class="kt-login__options">
-                <a href="#" class="btn btn-primary kt-btn">
-                    <i class="fab fa-facebook-f"></i>
-                    Facebook
-                </a>
-                <a href="#" class="btn btn-info kt-btn">
-                    <i class="fab fa-twitter"></i>
-                    Twitter
-                </a>
-                <a href="#" class="btn btn-danger kt-btn">
-                    <i class="fab fa-google"></i>
-                    Google
-                </a>
-            </div>
-            <!--end::Options-->*@
+                <!--end::Divider-->
+                <!--begin::Options-->
+                <div class="kt-login__options">
+                    <a href="#" class="btn btn-primary kt-btn">
+                        <i class="fab fa-facebook-f"></i>
+                        Facebook
+                    </a>
+                    <a href="#" class="btn btn-info kt-btn">
+                        <i class="fab fa-twitter"></i>
+                        Twitter
+                    </a>
+                    <a href="#" class="btn btn-danger kt-btn">
+                        <i class="fab fa-google"></i>
+                        Google
+                    </a>
+                </div>
+                <!--end::Options-->*@
         </div>
         <!--end::Signin-->
     </div>

@@ -969,4 +969,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Bem vindo ao Rio2C!</value>
     <comment>Bem vindo ao Rio2C!</comment>
   </data>
+  <data name="DevelopedBy" xml:space="preserve">
+    <value>Desenvolvido por</value>
+  </data>
 </root>
