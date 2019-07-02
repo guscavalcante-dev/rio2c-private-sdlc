@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-01-2019
+// Last Modified On : 07-02-2019
 // ***********************************************************************
 // <copyright file="Startup.Auth.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,14 +13,13 @@
 // ***********************************************************************
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Configuration;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Models;
 using System;
-using System.Globalization;
 using System.Web.Mvc;
+using Microsoft.Owin;
 
 namespace PlataformaRio2C.Web.Site
 {
@@ -36,7 +35,7 @@ namespace PlataformaRio2C.Web.Site
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/" + CultureInfo.CurrentCulture.Name.ToLowerInvariant() + "/Account/Login"),
+                LoginPath = new PathString("/Account/Login"),
                 Provider = new CookieAuthenticationProvider
                 {
                     // Enables the application to validate the security stamp when the user logs in.

@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-01-2019
+// Last Modified On : 07-02-2019
 // ***********************************************************************
 // <copyright file="BaseController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,23 +15,34 @@ using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
 using System;
 using System.Threading;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
     /// <summary>BaseController</summary>
     public class BaseController : Controller
     {
+        protected string userInterfaceLanguage;
+
         /// <summary>Begins to invoke the action in the current controller context.</summary>
         /// <param name="callback">The callback.</param>
         /// <param name="state">The state.</param>
         /// <returns>Returns an IAsyncController instance.</returns>
         protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, object state)
         {
+            this.CheckCulture();
+
+            return base.BeginExecuteCore(callback, state);
+        }
+
+        /// <summary>Checks the culture.</summary>
+        private void CheckCulture()
+        {
             // Attempt to read the culture cookie from Request
             var routeCulture = RouteData.Values["culture"] as string;
             var cookieCulture = Request.Cookies["Rio2CPlafatormCulture"]?.Value;
-            var cultureName = CultureHelper.IsImplementedCulture(routeCulture) ? routeCulture :
-                              CultureHelper.IsImplementedCulture(cookieCulture) ? cookieCulture :
+            var cultureName = routeCulture ??
+                              cookieCulture ??
                               (Request.UserLanguages != null && Request.UserLanguages.Length > 0 ? Request.UserLanguages[0] : null);
 
             // Validate culture name
@@ -39,20 +50,34 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             if (RouteData.Values["culture"] as string != cultureName)
             {
-                // Force a valid culture in the URL
-                RouteData.Values["culture"] = cultureName.ToLowerInvariant(); // lower case too
+                var routes = new RouteValueDictionary(RouteData.Values);
 
-                // Redirect user
-                Response.RedirectToRoute(RouteData.Values);
+                // Add or change culture on routes
+                if (!routes.ContainsKey("culture"))
+                {
+                    routes.Add("culture", cultureName.ToLowerInvariant());
+                }
+                else
+                {
+                    routes["culture"] = cultureName.ToLowerInvariant();
+                }
+
+                // Add other parameters to route
+                foreach (string key in HttpContext.Request.QueryString.Keys)
+                {
+                    routes[key] = HttpContext.Request.QueryString[key];
+                }
+
+                HttpContext.Response.RedirectToRoute(routes);
             }
 
             // Modify current thread's cultures            
             Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
             Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
 
-            return base.BeginExecuteCore(callback, state);
+            this.userInterfaceLanguage = cultureName;
         }
-        
+
         //protected void CheckRegisterIsComplete()
         //{
         //    var method = Request.HttpMethod;
@@ -122,7 +147,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         //        }
         //    }
         //}
-        
+
 
         //[AllowAnonymous]
         //public ActionResult SetArea(string area, string returnUrl = null)

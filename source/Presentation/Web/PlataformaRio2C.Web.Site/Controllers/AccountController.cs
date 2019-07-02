@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-01-2019
+// Last Modified On : 07-02-2019
 // ***********************************************************************
 // <copyright file="AccountController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -41,24 +41,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
             _identityController = identityController;
         }
 
-        private static string CreateMD5(string input)
-        {
-            // Use input string to calculate MD5 hash
-            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
-            {
-                byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
-                byte[] hashBytes = md5.ComputeHash(inputBytes);
-
-                // Convert the byte array to hexadecimal string
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < hashBytes.Length; i++)
-                {
-                    sb.Append(hashBytes[i].ToString("x2"));
-                }
-                return sb.ToString();
-            }
-        }
-
+        /// <summary>Indexes this instance.</summary>
+        /// <returns></returns>
         [AllowAnonymous]
         public ActionResult Index()
         {
@@ -70,7 +54,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
             return RedirectToAction("Login", "Account");
         }
 
-        // GET: Account
+        #region Login
+
+        /// <summary>Logins the specified return URL.</summary>
+        /// <param name="returnUrl">The return URL.</param>
+        /// <returns></returns>
         [AllowAnonymous]
         public async Task<ActionResult> Login(string returnUrl)
         {
@@ -87,6 +75,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
             return View();
         }
 
+        /// <summary>Logins the specified model.</summary>
+        /// <param name="model">The model.</param>
+        /// <param name="returnUrl">The return URL.</param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -154,6 +146,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     case IdentitySignInStatus.Success:
                         await _identityController.SignInAsync(authenticationManager, user, model.RememberMe);
 
+                        if (!string.IsNullOrEmpty(returnUrl?.Replace("/", string.Empty)))
+                        {
+                            return Redirect(returnUrl);
+                        }
+
                         if (await _identityController.IsInRoleAsync(user.Id, "Player") || await _identityController.IsInRoleAsync(user.Id, "Producer"))
                         {
                             //returnUrl = returnUrl ?? "/";
@@ -178,6 +175,29 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 }
             //}
         }
+
+        /// <summary>Creates the m d5.</summary>
+        /// <param name="input">The input.</param>
+        /// <returns></returns>
+        private static string CreateMD5(string input)
+        {
+            // Use input string to calculate MD5 hash
+            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
+            {
+                byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+                byte[] hashBytes = md5.ComputeHash(inputBytes);
+
+                // Convert the byte array to hexadecimal string
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < hashBytes.Length; i++)
+                {
+                    sb.Append(hashBytes[i].ToString("x2"));
+                }
+                return sb.ToString();
+            }
+        }
+
+        #endregion
 
         // GET: /Account/SendCode
         [AllowAnonymous]
