@@ -205,6 +205,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to e.
+        /// </summary>
+        public static string And {
+            get {
+                return ResourceManager.GetString("And", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data da chegada.
         /// </summary>
         public static string ArrivalDate {
@@ -813,6 +822,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Executives {
             get {
                 return ResourceManager.GetString("Executives", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Esqueceu a senha.
+        /// </summary>
+        public static string ForgotPassword {
+            get {
+                return ResourceManager.GetString("ForgotPassword", resourceCulture);
             }
         }
         
@@ -1942,6 +1960,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Entrar.
+        /// </summary>
+        public static string SignIn {
+            get {
+                return ResourceManager.GetString("SignIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Redes Sociais.
         /// </summary>
         public static string SocialMedia {
@@ -2244,6 +2271,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Welcome {
             get {
                 return ResourceManager.GetString("Welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bem vindo ao Rio2C!.
+        /// </summary>
+        public static string WelcomeSmall {
+            get {
+                return ResourceManager.GetString("WelcomeSmall", resourceCulture);
             }
         }
         

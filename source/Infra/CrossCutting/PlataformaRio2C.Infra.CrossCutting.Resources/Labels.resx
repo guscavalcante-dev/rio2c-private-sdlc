@@ -953,4 +953,20 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>O Evento</value>
     <comment>O Evento</comment>
   </data>
+  <data name="And" xml:space="preserve">
+    <value>e</value>
+    <comment>e</comment>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Esqueceu a senha</value>
+    <comment>Esqueceu a senha</comment>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>Entrar</value>
+    <comment>Entrar</comment>
+  </data>
+  <data name="WelcomeSmall" xml:space="preserve">
+    <value>Bem vindo ao Rio2C!</value>
+    <comment>Bem vindo ao Rio2C!</comment>
+  </data>
 </root>

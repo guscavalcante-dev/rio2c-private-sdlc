@@ -1,33 +1,108 @@
 ﻿@model LoginViewModel
 @{
-    Layout = "~/Views/Shared/_LayoutBasic.cshtml";
+    Layout = "~/Views/Themes/Metronic/_InternalLogin.cshtml";
     ViewBag.Title = Labels.Enter;
 }
-
-@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-signin", role = "form" }))
-{
-    <div class="login-wrap">
-        <section id="loginForm">
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-            <div class="form-group">
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Email) })
-                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "error-login" })
-            </div>
-
-            <div class="form-group">
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Password) })
-                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "error-login" })
-            </div>
-        
-            <div class="form-group">
-                <input type="submit" value="@Labels.Enter" class="btn btn-primary btn-lg btn-block" />
-            </div>
-
-            @*<p class="forgot-password">
-                @Html.ActionLink(Texts.ForgotPassword, "ForgotPassword")
-            </p>*@
-        </section>
+<!--begin::Aside-->
+<div class="kt-grid__item kt-grid__item--order-tablet-and-mobile-2 kt-grid kt-grid--hor kt-login__aside" style="background-image: url(/assets/themes/metronic/media//bg/bg-4.jpg);">
+    <div class="kt-grid__item">
+        <a href="#" class="kt-login__logo">
+            <img src="~/Assets/img/logo_rio2c_color.png">
+        </a>
     </div>
+    <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver">
+        <div class="kt-grid__item kt-grid__item--middle">
+            <h3 class="kt-login__title">@Labels.WelcomeSmall</h3>
+            <h4 class="kt-login__subtitle">@Texts.WelcomeLogin</h4>
+        </div>
+    </div>
+    <div class="kt-grid__item">
+        <div class="kt-login__info">
+            <div class="kt-login__copyright">
+                &copy 2019 Rio2C @Labels.And Softo
+            </div>
+            <div class="kt-login__menu">
+                <a href="#" class="kt-link">Privacy</a>
+                <a href="#" class="kt-link">Legal</a>
+                <a href="#" class="kt-link">Contact</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end::Aside-->
+<!--begin::Content-->
+<div class="kt-grid__item kt-grid__item--fluid  kt-grid__item--order-tablet-and-mobile-1  kt-login__wrapper">
+    @*<!--begin::Head-->
+    <div class="kt-login__head">
+        <span class="kt-login__signup-label">Don't have an account yet?</span>&nbsp;&nbsp;
+        <a href="#" class="kt-link kt-login__signup-link">Sign Up!</a>
+    </div>
+    <!--end::Head-->*@
+    <!--begin::Body-->
+    <div class="kt-login__body">
+        <!--begin::Signin-->
+        <div class="kt-login__form">
+            <div class="kt-login__title">
+                <h3>@Labels.SignIn</h3>
+            </div>
+            <!--begin::Form-->
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-signin kt-form", role = "form", novalidade = "novalidate" }))
+            {
+                @Html.AntiForgeryToken()
+                @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+                <div class="form-group">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Email), autocomplete = "off" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "error-login" })
+                </div>
+                <div class="form-group">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Password) })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "error-login" })
+                </div>
+                <!--begin::Action-->
+                <div class="kt-login__actions">
+                    <a href="@Url.Action("ForgotPassword", "Account", new { Area = "" })" class="kt-link kt-login__link-forgot">
+                        @(Labels.ForgotPassword)?
+                    </a>
+                    <input type="submit" value="@Labels.Enter" class="btn btn-primary btn-elevate kt-login__btn-primary" />
+                </div>
+                <!--end::Action-->
+            }
+            <!--end::Form-->
+            @*<!--begin::Divider-->
+            <div class="kt-login__divider">
+                <div class="kt-divider">
+                    <span></span>
+                    <span>OR</span>
+                    <span></span>
+                </div>
+            </div>
+            <!--end::Divider-->
+            <!--begin::Options-->
+            <div class="kt-login__options">
+                <a href="#" class="btn btn-primary kt-btn">
+                    <i class="fab fa-facebook-f"></i>
+                    Facebook
+                </a>
+                <a href="#" class="btn btn-info kt-btn">
+                    <i class="fab fa-twitter"></i>
+                    Twitter
+                </a>
+                <a href="#" class="btn btn-danger kt-btn">
+                    <i class="fab fa-google"></i>
+                    Google
+                </a>
+            </div>
+            <!--end::Options-->*@
+        </div>
+        <!--end::Signin-->
+    </div>
+
+    <!--end::Body-->
+</div>
+<!--end::Content-->
+@section Styles {
+    @Styles.Render("~/bundles/css/loginCustomStyles")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/loginCustomScripts")
 }

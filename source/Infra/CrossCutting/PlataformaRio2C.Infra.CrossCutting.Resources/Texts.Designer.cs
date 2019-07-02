@@ -475,6 +475,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O maior encontro de criatividade e inovação da América Latina..
+        /// </summary>
+        public static string WelcomeLogin {
+            get {
+                return ResourceManager.GetString("WelcomeLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;p&gt;Olá @{Name},&lt;/p&gt;
         ///&lt;p&gt;Seja bem vindo(a) a Plataforma Rio2C.&lt;/p&gt;
         ///&lt;p&gt;Para acessar a Plataforma Rio2C acesse o site: @{UrlSite}&lt;/p&gt;

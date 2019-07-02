@@ -941,4 +941,20 @@
     <value>Event</value>
     <comment>O Evento</comment>
   </data>
+  <data name="And" xml:space="preserve">
+    <value>and</value>
+    <comment>e</comment>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Forgot Password</value>
+    <comment>Esqueceu a senha</comment>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>Sign In</value>
+    <comment>Entrar</comment>
+  </data>
+  <data name="WelcomeSmall" xml:space="preserve">
+    <value>Welcome to Rio2C!</value>
+    <comment>Bem vindo ao Rio2C!</comment>
+  </data>
 </root>

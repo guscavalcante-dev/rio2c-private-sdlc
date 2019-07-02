@@ -108,6 +108,13 @@ namespace PlataformaRio2C.Web.Site
 
             #endregion
 
+            #region Login
+
+            bundles.Add(new ScriptBundle("~/bundles/js/loginCustomScripts").Include(
+                "~/Assets/themes/metronic/js/demo4/pages/login/login-1.js"));
+
+            #endregion
+
             #endregion
 
             #region Styles
@@ -116,6 +123,13 @@ namespace PlataformaRio2C.Web.Site
 
             bundles.Add(new StyleBundle("~/bundles/css/layoutGlobalMandatoryVendors").Include(
                 "~/Assets/themes/metronic/vendors/general/perfect-scrollbar/css/perfect-scrollbar.css"));
+
+            #endregion
+
+            #region Login
+
+            bundles.Add(new StyleBundle("~/bundles/css/loginCustomStyles").Include(
+                "~/Assets/themes/metronic/css/demo4/pages/login/login-1.css"));
 
             #endregion
 

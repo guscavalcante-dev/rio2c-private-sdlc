@@ -447,4 +447,8 @@ maira@rio2c.com&lt;br/&gt;
   <data name="FooterText" xml:space="preserve">
     <value>Rio2C®, Rio Creative Conference®, RioContentMarket®, PitchingShow®, BrainSpace®, Festivalia®, são marcas registradas. Todos os direitos de uso pertencem a Rio Creative Conferences Ltda., CNPJ: 26.079.220/0001-46. Qualquer uso sem autorização dos nomes ou suas variações é uma violação da lei internacional de registro de marcas.</value>
   </data>
+  <data name="WelcomeLogin" xml:space="preserve">
+    <value>O maior encontro de criatividade e inovação da América Latina.</value>
+    <comment>O maior encontro de criatividade e inovação da América Latina.</comment>
+  </data>
 </root>
