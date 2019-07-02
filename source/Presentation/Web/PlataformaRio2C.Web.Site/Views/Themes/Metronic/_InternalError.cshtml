@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "~/Views/Themes/Metronic/_Layout.cshtml";
+    ViewBag.LayoutBodyStyle = string.Empty;
+    ViewBag.LayoutBodyClass = "kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--enabled kt-subheader--fixed kt-subheader--solid kt-aside--enabled kt-aside--fixed kt-page--loading";
+}
+@section Head {
+    @RenderSection("Head", required: false)
+}
+<!-- begin:: Page -->
+<div class="kt-grid kt-grid--ver kt-grid--root">
+    @RenderBody()
+</div>
+<!-- end:: Page -->
+<!-- begin::Scrolltop -->
+<div id="kt_scrolltop" class="kt-scrolltop">
+    <i class="fa fa-arrow-up"></i>
+</div>
+<!-- end::Scrolltop -->
+@section Styles {
+    @RenderSection("Styles", required: false)
+}
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

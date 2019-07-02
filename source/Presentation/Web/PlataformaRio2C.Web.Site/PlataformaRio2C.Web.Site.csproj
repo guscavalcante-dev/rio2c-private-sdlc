@@ -288,6 +288,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CollaboratorController.cs" />
     <Compile Include="Controllers\ConferenceController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuizController.cs" />
     <Compile Include="Controllers\Rio2CNetworkController.cs" />
@@ -7814,6 +7815,8 @@
     <Content Include="Views\Themes\Metronic\_LanguageSelector.cshtml" />
     <Content Include="Views\Themes\Metronic\_InternalOutside.cshtml" />
     <Content Include="Views\Themes\Metronic\_HeaderMenu.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Themes\Metronic\_InternalError.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>

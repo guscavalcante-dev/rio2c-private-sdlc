@@ -346,4 +346,16 @@ CNPJ: 26.079.220/0001-46. Any unauthorized use of the names or their variations 
     <value>Latin America’s leading event in creativity and innovation</value>
     <comment>O maior encontro de criatividade e inovação da América Latina.</comment>
   </data>
+  <data name="ErrorMessage" xml:space="preserve">
+    <value>Oops! Something went wrong. We are fixing it!</value>
+    <comment>Oops! Alguma coisa deu errado. Estamos corrigindo o problema!</comment>
+  </data>
+  <data name="ForbiddenErrorMessage" xml:space="preserve">
+    <value>Oops! Request forbidden. Sorry, you have insufficient rights to access this page or perform this request.</value>
+    <comment>Oops! Requisição proibida. Desculpe, você não sem privilégios suficientes para acessar essa página ou executar essa requisição.</comment>
+  </data>
+  <data name="NotFoundErrorMessage" xml:space="preserve">
+    <value>Oops! You're lost. We can not find the page you're looking for.</value>
+    <comment>Oops! Você está perdido. Não conseguimos encontrar a página que você estava procurando.</comment>
+  </data>
 </root>

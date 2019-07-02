@@ -451,4 +451,16 @@ maira@rio2c.com&lt;br/&gt;
     <value>O maior encontro de criatividade e inovação da América Latina.</value>
     <comment>O maior encontro de criatividade e inovação da América Latina.</comment>
   </data>
+  <data name="ErrorMessage" xml:space="preserve">
+    <value>Oops! Alguma coisa deu errado. Estamos corrigindo o problema!</value>
+    <comment>Oops! Alguma coisa deu errado. Estamos corrigindo o problema!</comment>
+  </data>
+  <data name="ForbiddenErrorMessage" xml:space="preserve">
+    <value>Oops! Requisição proibida. Desculpe, você não sem privilégios suficientes para acessar essa página ou executar essa requisição.</value>
+    <comment>Oops! Requisição proibida. Desculpe, você não sem privilégios suficientes para acessar essa página ou executar essa requisição.</comment>
+  </data>
+  <data name="NotFoundErrorMessage" xml:space="preserve">
+    <value>Oops! Você está perdido. Não conseguimos encontrar a página que você estava procurando.</value>
+    <comment>Oops! Você está perdido. Não conseguimos encontrar a página que você estava procurando.</comment>
+  </data>
 </root>

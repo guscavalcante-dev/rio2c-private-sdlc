@@ -201,6 +201,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Oops! Alguma coisa deu errado. Estamos corrigindo o problema!.
+        /// </summary>
+        public static string ErrorMessage {
+            get {
+                return ResourceManager.GetString("ErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fazer upload de uma foto em formato retrato, colorida, de rosto, recente e com boa qualidade. 
         ///É imprescindível a foto estar em alta resolução, pois será utilizada no catálogo impresso.
         /// </summary>
@@ -226,6 +235,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string FooterText {
             get {
                 return ResourceManager.GetString("FooterText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oops! Requisição proibida. Desculpe, você não sem privilégios suficientes para acessar essa página ou executar essa requisição..
+        /// </summary>
+        public static string ForbiddenErrorMessage {
+            get {
+                return ResourceManager.GetString("ForbiddenErrorMessage", resourceCulture);
             }
         }
         
@@ -280,6 +298,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string NoProjectRegistered {
             get {
                 return ResourceManager.GetString("NoProjectRegistered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oops! Você está perdido. Não conseguimos encontrar a página que você estava procurando..
+        /// </summary>
+        public static string NotFoundErrorMessage {
+            get {
+                return ResourceManager.GetString("NotFoundErrorMessage", resourceCulture);
             }
         }
         

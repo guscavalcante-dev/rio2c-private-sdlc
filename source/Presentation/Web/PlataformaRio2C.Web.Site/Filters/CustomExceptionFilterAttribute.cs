@@ -47,24 +47,24 @@ namespace PlataformaRio2C.Web.Site
         }
     }
 
-    public class CustomExceptionMvcFilterAttribute : HandleErrorAttribute
-    {
-        public override void OnException(System.Web.Mvc.ExceptionContext filterContext)
-        {
-            CustomException.SendEmailException(filterContext.Exception);
-            //if (filterContext.Exception is HttpAntiForgeryException)
-            //{
-            //    filterContext.HttpContext.Response.Clear();
-            //    filterContext.HttpContext.Response.TrySkipIisCustomErrors = false;
-            //    filterContext.ExceptionHandled = false;
-            //    filterContext.HttpContext.Response.Redirect("/Account/ErrorUnexpected");
-            //}
-            //else
-            //{
-            //    CustomException.SendEmailException(filterContext.Exception);
-            //}
+    //public class CustomExceptionMvcFilterAttribute : HandleErrorAttribute
+    //{
+    //    public override void OnException(System.Web.Mvc.ExceptionContext filterContext)
+    //    {
+    //        CustomException.SendEmailException(filterContext.Exception);
+    //        //if (filterContext.Exception is HttpAntiForgeryException)
+    //        //{
+    //        //    filterContext.HttpContext.Response.Clear();
+    //        //    filterContext.HttpContext.Response.TrySkipIisCustomErrors = false;
+    //        //    filterContext.ExceptionHandled = false;
+    //        //    filterContext.HttpContext.Response.Redirect("/Account/ErrorUnexpected");
+    //        //}
+    //        //else
+    //        //{
+    //        //    CustomException.SendEmailException(filterContext.Exception);
+    //        //}
 
-            base.OnException(filterContext);
-        }
-    }
+    //        base.OnException(filterContext);
+    //    }
+    //}
 }

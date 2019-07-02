@@ -67,7 +67,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 // Add other parameters to route
                 foreach (string key in HttpContext.Request.QueryString.Keys)
                 {
-                    routes[key] = HttpContext.Request.QueryString[key];
+                    if (key != null)
+                    {
+                        routes[key] = HttpContext.Request.QueryString[key];
+                    }
                 }
 
                 HttpContext.Response.RedirectToRoute(routes);

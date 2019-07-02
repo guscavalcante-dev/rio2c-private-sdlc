@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-01-2019
+// Last Modified On : 07-02-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -126,13 +126,6 @@ namespace PlataformaRio2C.Web.Site
 
             #endregion
 
-            #region Login
-
-            bundles.Add(new StyleBundle("~/bundles/css/loginCustomStyles").Include(
-                "~/Assets/themes/metronic/css/demo4/pages/login/login-1.css"));
-
-            #endregion
-
             #region Global Optional Vendors
 
             bundles.Add(new StyleBundle("~/bundles/css/layoutGlobalOptionalVendors").Include(
@@ -181,6 +174,20 @@ namespace PlataformaRio2C.Web.Site
             bundles.Add(new StyleBundle("~/bundles/css/layoutGlobalCustomizedStyles").Include(
                 "~/Assets/css/rio2c.css",
                 "~/Assets/css/rio2c-responsive.css"));
+
+            #endregion
+
+            #region Login
+
+            bundles.Add(new StyleBundle("~/bundles/css/loginCustomStyles").Include(
+                "~/Assets/themes/metronic/css/demo4/pages/login/login-1.css"));
+
+            #endregion
+
+            #region Error
+
+            bundles.Add(new StyleBundle("~/bundles/css/errorCustomStyles").Include(
+                "~/Assets/themes/metronic/css/demo4/pages/error/error-1.css"));
 
             #endregion
 
