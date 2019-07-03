@@ -426,6 +426,9 @@
   <data name="SelectAtLeastOneGroupOption" xml:space="preserve">
     <value>Please select at least one option from the {0} group.</value>
   </data>
+  <data name="SomethingIsWrong" xml:space="preserve">
+    <value>Something is wrong.</value>
+  </data>
   <data name="StateIsInvalid" xml:space="preserve">
     <value>Invalid State.</value>
   </data>

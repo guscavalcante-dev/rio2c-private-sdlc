@@ -12,7 +12,7 @@
     @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-signin kt-form", role = "form", novalidade = "novalidate" }))
     {
         @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true, "Something is wrong", new { @class = "text-danger" })
+        @Html.ValidationSummary(true, Messages.SomethingIsWrong, new { @class = "text-danger" })
         <div class="form-group">
             @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Email), autocomplete = "off" })
             @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })

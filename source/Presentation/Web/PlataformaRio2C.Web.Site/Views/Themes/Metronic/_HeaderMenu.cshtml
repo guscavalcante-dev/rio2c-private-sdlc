@@ -5,7 +5,7 @@
 <ul class="kt-menu__nav ">
     <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "Index", "Home", null)" aria-haspopup="true">
         <a href="@Url.Action("Index", "Home")" class="kt-menu__link">
-            <span class="kt-menu__link-text">Dashboard</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
+            <span class="kt-menu__link-text">@Labels.Dashboard</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
         </a>
     </li>
     <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "Index", "Project", null)" aria-haspopup="true">
@@ -23,7 +23,7 @@
     }
     <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "Index", "Schedule", null)" aria-haspopup="true">
         <a href="@Url.Action("Index", "Schedule")" class="kt-menu__link">
-            <span class="kt-menu__link-text">@Labels.Diary <br/><small>@Labels.BusinessRound</small></span><i class="kt-menu__ver-arrow la la-angle-right"></i>
+            <span class="kt-menu__link-text">@Labels.BusinessRound</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
         </a>
     </li>
     <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "Index", "Conference", null)" aria-haspopup="true">
