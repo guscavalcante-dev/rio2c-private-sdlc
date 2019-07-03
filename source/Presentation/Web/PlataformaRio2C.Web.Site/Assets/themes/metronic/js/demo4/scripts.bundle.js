@@ -1,5 +1,7 @@
 "use strict";
 
+// IMPORTANT - Changes made to Rio2C
+// Line 2252 - desktop: 200 to 0 - fix header error
 /**
  * @class KApp
  */
@@ -2247,7 +2249,9 @@ var KTHeader = function(elementId, options) {
         classic: false,
         offset: {
             mobile: 150,
-            desktop: 200
+            /* IMPORTANT - Rio2C - Update desktop to 0 after any metronic update*/
+            //desktop: 200
+            desktop: 0
         },
         minimize: {
             mobile: false,
@@ -9476,6 +9480,8 @@ var KTLayout = function() {
                 mobile: false
             }
         };
+
+        console.log(options.offset)
 
         header = new KTHeader('kt_header', options);
     }
