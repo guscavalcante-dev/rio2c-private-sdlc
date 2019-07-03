@@ -1,7 +1,10 @@
 "use strict";
 
-// IMPORTANT - Changes made to Rio2C
-// Line 2252 - desktop: 200 to 0 - fix header error
+/*
+    IMPORTANT - Changes made to Rio2C
+    Line 2252 - desktop: 200 to 0 - fix header error
+*/
+
 /**
  * @class KApp
  */
