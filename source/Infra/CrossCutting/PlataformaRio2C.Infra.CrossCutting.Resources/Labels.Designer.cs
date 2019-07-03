@@ -1577,7 +1577,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Produtora/Empresa.
+        ///   Looks up a localized string similar to Produtora.
         /// </summary>
         public static string Producer {
             get {
@@ -1595,7 +1595,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Produtoras/Empresas.
+        ///   Looks up a localized string similar to Produtoras.
         /// </summary>
         public static string Producers {
             get {

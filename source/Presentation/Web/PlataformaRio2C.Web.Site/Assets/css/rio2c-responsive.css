@@ -1,14 +1,27 @@
-﻿@media (min-width: 576px) {
+﻿/*
+ Extra small devices (portrait phones, less than 576px)
+ No media query since this is the default in Bootstrap
+*/
+/* Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
 }
 
-@media (max-width: 768px) {
+/* Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+    .r2c-login__logo {
+        height: 150px;
+        width: 150px;
+    }
 }
 
+/* Large devices (desktops, 992px and up)*/
 @media (min-width: 992px) {
 }
 
+/* Extra large devices (large desktops, 1200px and up)*/
 @media (min-width: 1200px) {
 }
+
 
 @media (max-width: 1200px) {
     .kt-footer__top .redes a {

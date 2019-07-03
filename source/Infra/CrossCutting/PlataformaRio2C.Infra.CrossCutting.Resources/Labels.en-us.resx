@@ -365,8 +365,8 @@
     <comment>Nova senha</comment>
   </data>
   <data name="Producer" xml:space="preserve">
-    <value>Producer/Company</value>
-    <comment>Producer</comment>
+    <value>Producer</value>
+    <comment>Produtora</comment>
   </data>
   <data name="Please" xml:space="preserve">
     <value>Please</value>
@@ -670,7 +670,8 @@
     <value>Close</value>
   </data>
   <data name="Producers" xml:space="preserve">
-    <value>Producers/Companies</value>
+    <value>Producers</value>
+    <comment>Produtoras</comment>
   </data>
   <data name="DeselectAll" xml:space="preserve">
     <value>Deselect All</value>

@@ -69,6 +69,10 @@
     width: 40px !important;
 }
 
+
+/*
+    Login
+*/
 .r2c-login__logo {
     height: 80px;
     width: 80px;
@@ -88,28 +92,17 @@ a.r2c-login__footer-link, a.r2c-footer-link {
         color: rgba(255, 255, 255, 0.4) !important;
         text-decoration: underline !important;
     }
+
+
 /*
- Extra small devices (portrait phones, less than 576px)
- No media query since this is the default in Bootstrap
+    Browsing Mode
 */
-/* Small devices (landscape phones, 576px and up)*/
-@media (min-width: 576px) {
+.r2c-browsing-mode__row .r2c-disabled {
+    background: #f7f8fa;
+    pointer-events: none;
+    opacity: 0.65;
 }
 
-/* Medium devices (tablets, 768px and up)*/
-@media (min-width: 768px) {
-    .r2c-login__logo {
-        height: 150px;
-        width: 150px;
-    }   
-}
-
-/* Large devices (desktops, 992px and up)*/
-@media (min-width: 992px) {
-  
-}
-
-/* Extra large devices (large desktops, 1200px and up)*/
-@media (min-width: 1200px) {
-  
+.r2c-browsing-mode__row .kt-grid-nav__desc {
+    min-height: 30px;
 }

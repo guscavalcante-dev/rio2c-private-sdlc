@@ -1,34 +1,39 @@
 ﻿@{
-    var isProducer = User.IsInRole("Producer");
+    var userRoles = ViewBag.UserRoles as IList<string>;
+    var isPLayer = userRoles.HasElement("Player");
+    var isProducer = userRoles.HasElement("Producer");
     var menuOpenCssClass = "kt-menu__item--open";
 }
 <ul class="kt-menu__nav ">
-    <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "Index", "Home", null)" aria-haspopup="true">
-        <a href="@Url.Action("Index", "Home")" class="kt-menu__link">
-            <span class="kt-menu__link-text">@Labels.Dashboard</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
-        </a>
-    </li>
-    <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "Index", "Project", null)" aria-haspopup="true">
-        <a href="@Url.Action("Index", "Project")" class="kt-menu__link">
-            <span class="kt-menu__link-text">@Labels.Projects</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
-        </a>
-    </li>
-    @if (isProducer && ViewBag.Area == "Producer")
+    @if (isPLayer || isProducer)
     {
-        <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "List", "Player", "Producer")" aria-haspopup="true">
-            <a href="@Url.Action("List", "Player")" class="kt-menu__link">
-                <span class="kt-menu__link-text">@Labels.Players</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
+        <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "Index", "Home", null)" aria-haspopup="true">
+            <a href="@Url.Action("Index", "Home")" class="kt-menu__link">
+                <span class="kt-menu__link-text">@Labels.Dashboard</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
+            </a>
+        </li>
+        <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "Index", "Project", null)" aria-haspopup="true">
+            <a href="@Url.Action("Index", "Project")" class="kt-menu__link">
+                <span class="kt-menu__link-text">@Labels.Projects</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
+            </a>
+        </li>
+        if (isProducer && ViewBag.Area == "Producer")
+        {
+            <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "List", "Player", "Producer")" aria-haspopup="true">
+                <a href="@Url.Action("List", "Player")" class="kt-menu__link">
+                    <span class="kt-menu__link-text">@Labels.Players</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
+                </a>
+            </li>
+        }
+        <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "Index", "Schedule", null)" aria-haspopup="true">
+            <a href="@Url.Action("Index", "Schedule")" class="kt-menu__link">
+                <span class="kt-menu__link-text">@Labels.BusinessRound</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
+            </a>
+        </li>
+        <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "Index", "Conference", null)" aria-haspopup="true">
+            <a href="@Url.Action("Index", "Conference")" class="kt-menu__link">
+                <span class="kt-menu__link-text">@Labels.Conferences</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
             </a>
         </li>
     }
-    <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "Index", "Schedule", null)" aria-haspopup="true">
-        <a href="@Url.Action("Index", "Schedule")" class="kt-menu__link">
-            <span class="kt-menu__link-text">@Labels.BusinessRound</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
-        </a>
-    </li>
-    <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "Index", "Conference", null)" aria-haspopup="true">
-        <a href="@Url.Action("Index", "Conference")" class="kt-menu__link">
-            <span class="kt-menu__link-text">@Labels.Conferences</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
-        </a>
-    </li>
 </ul>

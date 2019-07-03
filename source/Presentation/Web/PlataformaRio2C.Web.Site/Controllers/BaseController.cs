@@ -13,6 +13,7 @@
 // ***********************************************************************
 using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -29,6 +30,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         protected string UserInterfaceLanguage;
         protected int UserId;
         protected string UserName;
+        protected IList<string> UserRoles;
         protected string Area;
 
         /// <summary>Initializes a new instance of the <see cref="BaseController"/> class.</summary>
@@ -125,6 +127,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             ViewBag.FullName = this.UserName = user.Name.UppercaseFirstOfEachWord(this.UserInterfaceLanguage);
             ViewBag.FirstName = this.UserName?.GetFirstWord();
+            ViewBag.UserRoles = this.UserRoles = this.identityController.FindAllRolesByUserIdAsync(this.UserId).Result;
         }
 
         //protected void CheckRegisterIsComplete()

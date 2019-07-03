@@ -4,23 +4,22 @@
 // Created          : 07-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-02-2019
+// Last Modified On : 07-03-2019
 // ***********************************************************************
-// <copyright file="MenuExtension.cs" company="Softo">
+// <copyright file="MenuExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
 using System.Linq;
 using System.Web.Mvc;
 
 namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
 {
     /// <summary>
-    /// The menu extension.
+    /// The menu extensions.
     /// </summary>
-    public static class MenuExtension
+    public static class MenuExtensions
     {
         /// <summary>Determines whether the specified CSS class is open.</summary>
         /// <param name="page">The page.</param>

@@ -350,7 +350,7 @@
     <comment>Nova senha</comment>
   </data>
   <data name="Producer" xml:space="preserve">
-    <value>Produtora/Empresa</value>
+    <value>Produtora</value>
     <comment>Produtora</comment>
   </data>
   <data name="Please" xml:space="preserve">
@@ -676,7 +676,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Fechar</value>
   </data>
   <data name="Producers" xml:space="preserve">
-    <value>Produtoras/Empresas</value>
+    <value>Produtoras</value>
+    <comment>Produtoras</comment>
   </data>
   <data name="DeselectAll" xml:space="preserve">
     <value>Desmarcar todos</value>
