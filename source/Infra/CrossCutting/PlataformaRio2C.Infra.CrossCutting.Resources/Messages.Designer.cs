@@ -205,6 +205,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Você está navegando como.
+        /// </summary>
+        public static string CurrentlyBrowsingAs {
+            get {
+                return ResourceManager.GetString("CurrentlyBrowsingAs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to E-mail inválido..
         /// </summary>
         public static string EmailISInvalid {
@@ -1013,6 +1022,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string SuccessfulRegistrationMessageByProducerAndPlayer {
             get {
                 return ResourceManager.GetString("SuccessfulRegistrationMessageByProducerAndPlayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trocar para.
+        /// </summary>
+        public static string SwitchTo {
+            get {
+                return ResourceManager.GetString("SwitchTo", resourceCulture);
             }
         }
         

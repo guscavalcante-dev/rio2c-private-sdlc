@@ -165,6 +165,9 @@
   <data name="CountryIsRequired" xml:space="preserve">
     <value>País obrigatório.</value>
   </data>
+  <data name="CurrentlyBrowsingAs" xml:space="preserve">
+    <value>Você está navegando como</value>
+  </data>
   <data name="EmailISInvalid" xml:space="preserve">
     <value>E-mail inválido.</value>
   </data>
@@ -446,6 +449,9 @@
   </data>
   <data name="SuccessfulRegistrationMessageByProducerAndPlayer" xml:space="preserve">
     <value>Cadastro de produtora empresa e de Player finalizado com sucesso! &lt;a href="{0}"&gt;Clique aqui&lt;/a&gt; para cadastrar seus projetos.</value>
+  </data>
+  <data name="SwitchTo" xml:space="preserve">
+    <value>Trocar para</value>
   </data>
   <data name="TheFieldIsRequired" xml:space="preserve">
     <value>O campo '{0}' é obrigatório.</value>

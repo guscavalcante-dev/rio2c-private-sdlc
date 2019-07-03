@@ -984,4 +984,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>MyRio2C</value>
     <comment>MyRio2C</comment>
   </data>
+  <data name="BrowsingMode" xml:space="preserve">
+    <value>Modo de Navegação</value>
+  </data>
 </root>

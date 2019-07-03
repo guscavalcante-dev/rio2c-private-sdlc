@@ -250,6 +250,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Modo de Navegação.
+        /// </summary>
+        public static string BrowsingMode {
+            get {
+                return ResourceManager.GetString("BrowsingMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rodadas de Negócios.
         /// </summary>
         public static string BusinessRound {
