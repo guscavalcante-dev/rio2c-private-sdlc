@@ -4,7 +4,7 @@
 // Created          : 07-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-02-2019
+// Last Modified On : 07-03-2019
 // ***********************************************************************
 // <copyright file="ErrorController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System.Web.Mvc;
+using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Web.Site.Controllers
@@ -19,6 +20,13 @@ namespace PlataformaRio2C.Web.Site.Controllers
     /// <summary>ErrorController</summary>
     public class ErrorController : BaseController
     {
+        /// <summary>Initializes a new instance of the <see cref="ErrorController"/> class.</summary>
+        /// <param name="identityController">The identity controller.</param>
+        public ErrorController(IdentityAutenticationService identityController)
+            : base(identityController)
+        {
+        }
+
         /// <summary>Indexes this instance.</summary>
         /// <returns></returns>
         public ActionResult Index()

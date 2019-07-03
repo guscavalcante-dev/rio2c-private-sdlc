@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-01-2019
+// Last Modified On : 07-03-2019
 // ***********************************************************************
 // <copyright file="QuizController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,6 +17,7 @@ using PlataformaRio2C.Domain.Interfaces;
 using System.Linq;
 using System.Web.Mvc;
 using PlataformaRio2C.Application.Interfaces.Services;
+using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -33,9 +34,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
         //private readonly IQuizRepository _quizRepository;
 
         /// <summary>Initializes a new instance of the <see cref="QuizController"/> class.</summary>
+        /// <param name="identityController">The identity controller.</param>
         /// <param name="repositoryFactory">The repository factory.</param>
         /// <param name="answerService">The answer service.</param>
-        public QuizController(IRepositoryFactory repositoryFactory, IQuizAnswerAppService answerService)
+        public QuizController(IdentityAutenticationService identityController, IRepositoryFactory repositoryFactory, IQuizAnswerAppService answerService)
+            : base(identityController)
         {
             _quizRepository = repositoryFactory.QuizRepository;
             _answerRepository = repositoryFactory.QuizAnswerRepository;

@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-01-2019
+// Last Modified On : 07-03-2019
 // ***********************************************************************
 // <copyright file="TermController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,6 +17,7 @@ using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System.Web.Mvc;
+using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -27,8 +28,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
         private readonly IUserUseTermAppService _userUseTermAppService;
 
         /// <summary>Initializes a new instance of the <see cref="TermController"/> class.</summary>
+        /// <param name="identityController">The identity controller.</param>
         /// <param name="userUseTermAppService">The user use term application service.</param>
-        public TermController(IUserUseTermAppService userUseTermAppService)
+        public TermController(IdentityAutenticationService identityController, IUserUseTermAppService userUseTermAppService)
+            : base(identityController)
         {
             _userUseTermAppService = userUseTermAppService;
         }

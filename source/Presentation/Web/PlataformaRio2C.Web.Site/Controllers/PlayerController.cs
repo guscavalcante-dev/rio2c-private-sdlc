@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-01-2019
+// Last Modified On : 07-03-2019
 // ***********************************************************************
 // <copyright file="PlayerController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,6 +20,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Linq;
 using System.Web.Mvc;
+using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -36,7 +37,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="collaboratorAppService">The collaborator application service.</param>
         /// <param name="playerAppService">The player application service.</param>
         /// <param name="repositoryFactory">The repository factory.</param>
-        public PlayerController(ICollaboratorAppService collaboratorAppService, IPlayerAppService playerAppService, IRepositoryFactory repositoryFactory)
+        public PlayerController(IdentityAutenticationService identityController, ICollaboratorAppService collaboratorAppService, IPlayerAppService playerAppService, IRepositoryFactory repositoryFactory)
+            : base(identityController)
         {
             _collaboratorAppService = collaboratorAppService;
             _playerAppService = playerAppService;

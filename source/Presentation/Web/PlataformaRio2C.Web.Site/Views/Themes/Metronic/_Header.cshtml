@@ -1,4 +1,10 @@
-﻿<div id="kt_header" class="kt-header  kt-header--fixed " data-ktheader-minimize="on">
+﻿@using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
+@{
+    var fullName = ViewBag.FullName as string;
+    var firstName = ViewBag.FirstName as string;
+    var firstCharacter = firstName.GetFirstChar();
+}
+<div id="kt_header" class="kt-header  kt-header--fixed " data-ktheader-minimize="on">
     <div class="kt-container ">
         <!-- begin:: Brand -->
         <div class="kt-header__brand   kt-grid__item" id="kt_header_brand">
@@ -717,9 +723,9 @@
             <!--begin: User bar -->
             <div class="kt-header__topbar-item kt-header__topbar-item--user">
                 <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">
-                    <span class="kt-header__topbar-welcome">Hi,</span>
-                    <span class="kt-header__topbar-username">Sean</span>
-                    <span class="kt-header__topbar-icon"><b>S</b></span>
+                    <span class="kt-header__topbar-welcome">@Labels.Hi,</span>
+                    <span class="kt-header__topbar-username">@firstName</span>
+                    <span class="kt-header__topbar-icon"><b>@firstCharacter</b></span>
                     <img alt="Pic" src="~/Assets/themes/metronic/media/users/300_21.jpg" class="kt-hidden" />
                 </div>
                 <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-xl">
@@ -730,16 +736,15 @@
                             <img class="kt-hidden" alt="Pic" src="~/Assets/themes/metronic/media/users/300_25.jpg" />
 
                             <!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
-                            <span class="kt-badge kt-badge--lg kt-badge--rounded kt-badge--bold kt-font-success">S</span>
+                            <span class="kt-badge kt-badge--lg kt-badge--rounded kt-badge--bold kt-font-success">@firstCharacter</span>
                         </div>
                         <div class="kt-user-card__name">
-                            Sean Stone
+                            @fullName
                         </div>
                         <div class="kt-user-card__badge">
                             <span class="btn btn-success btn-sm btn-bold btn-font-md">23 messages</span>
                         </div>
                     </div>
-
                     <!--end: Head -->
                     <!--begin: Navigation -->
                     <div class="kt-notification">
@@ -825,7 +830,6 @@
 
             <!--end: User bar -->
         </div>
-
         <!-- end:: Header Topbar -->
     </div>
 </div>

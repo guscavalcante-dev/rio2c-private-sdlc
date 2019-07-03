@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-01-2019
+// Last Modified On : 07-03-2019
 // ***********************************************************************
 // <copyright file="PlayerController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,6 +15,7 @@ using PlataformaRio2C.Application.Interfaces.Services;
 using PlataformaRio2C.Domain.Interfaces;
 using System;
 using System.Web.Mvc;
+using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 
 namespace PlataformaRio2C.Web.Site.Areas.Producer.Controllers
 {
@@ -24,11 +25,12 @@ namespace PlataformaRio2C.Web.Site.Areas.Producer.Controllers
     public class PlayerController : PlataformaRio2C.Web.Site.Controllers.PlayerController
     {
         /// <summary>Initializes a new instance of the <see cref="PlayerController"/> class.</summary>
+        /// <param name="identityController"></param>
         /// <param name="collaboratorAppService">The collaborator application service.</param>
         /// <param name="playerAppService">The player application service.</param>
         /// <param name="repositoryFactory">The repository factory.</param>
-        public PlayerController(ICollaboratorAppService collaboratorAppService, IPlayerAppService playerAppService, IRepositoryFactory repositoryFactory)
-            :base(collaboratorAppService, playerAppService, repositoryFactory)
+        public PlayerController(IdentityAutenticationService identityController, ICollaboratorAppService collaboratorAppService, IPlayerAppService playerAppService, IRepositoryFactory repositoryFactory)
+            :base(identityController, collaboratorAppService, playerAppService, repositoryFactory)
         {
 
         }

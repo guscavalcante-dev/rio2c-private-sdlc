@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-01-2019
+// Last Modified On : 07-03-2019
 // ***********************************************************************
 // <copyright file="ProjectController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,6 +20,7 @@ using PlataformaRio2C.Web.Site.Controllers;
 using System;
 using System.Linq;
 using System.Web.Mvc;
+using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 
 namespace PlataformaRio2C.Web.Site.Areas.Producer.Controllers
 {
@@ -31,12 +32,15 @@ namespace PlataformaRio2C.Web.Site.Areas.Producer.Controllers
         private readonly IProjectAppService _projectAppService;
 
         /// <summary>Initializes a new instance of the <see cref="ProjectController"/> class.</summary>
+        /// <param name="identityController">The identity controller.</param>
         /// <param name="producerProjectAppService">The producer project application service.</param>
-        public ProjectController(IProjectAppService producerProjectAppService)
+        public ProjectController(IdentityAutenticationService identityController, IProjectAppService producerProjectAppService)
+            : base(identityController)
         {
             _projectAppService = producerProjectAppService;
         }
-        
+
+
         // GET: ProducerArea/Project
         public ActionResult Index()
         {

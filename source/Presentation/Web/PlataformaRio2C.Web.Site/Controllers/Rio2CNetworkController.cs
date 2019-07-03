@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-01-2019
+// Last Modified On : 07-03-2019
 // ***********************************************************************
 // <copyright file="Rio2CNetworkController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,6 +18,7 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.IO;
 using System.Web.Mvc;
+using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -29,8 +30,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
         public IMessageAppService _messageAppService { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="Rio2CNetworkController"/> class.</summary>
+        /// <param name="identityController">The identity controller.</param>
         /// <param name="messageAppService">The message application service.</param>
-        public Rio2CNetworkController(IMessageAppService messageAppService)
+        public Rio2CNetworkController(IdentityAutenticationService identityController, IMessageAppService messageAppService)
+            : base(identityController)
         {
             _messageAppService = messageAppService;
         }

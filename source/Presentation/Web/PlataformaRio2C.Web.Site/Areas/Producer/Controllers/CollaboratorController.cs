@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-01-2019
+// Last Modified On : 07-03-2019
 // ***********************************************************************
 // <copyright file="CollaboratorController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -32,14 +32,20 @@ namespace PlataformaRio2C.Web.Site.Areas.Producer.Controllers
         private readonly IProjectAppService _projectAppService;
 
         /// <summary>Initializes a new instance of the <see cref="CollaboratorController"/> class.</summary>
-        /// <param name="collaboratorAppService">The collaborator application service.</param>
         /// <param name="identityController">The identity controller.</param>
+        /// <param name="collaboratorAppService">The collaborator application service.</param>
         /// <param name="producerAppService">The producer application service.</param>
         /// <param name="collaboratorProducerAppService">The collaborator producer application service.</param>
         /// <param name="collaboratorPlayerAppService">The collaborator player application service.</param>
         /// <param name="projectAppService">The project application service.</param>
-        public CollaboratorController(ICollaboratorAppService collaboratorAppService, IdentityAutenticationService identityController, IProducerAppService producerAppService, ICollaboratorProducerAppService collaboratorProducerAppService, ICollaboratorPlayerAppService collaboratorPlayerAppService, IProjectAppService projectAppService)
-            : base(collaboratorAppService, identityController, collaboratorPlayerAppService)
+        public CollaboratorController(
+            IdentityAutenticationService identityController,
+            ICollaboratorAppService collaboratorAppService, 
+            IProducerAppService producerAppService, 
+            ICollaboratorProducerAppService collaboratorProducerAppService, 
+            ICollaboratorPlayerAppService collaboratorPlayerAppService,
+            IProjectAppService projectAppService)
+            : base(identityController, collaboratorAppService, collaboratorPlayerAppService)
         {
             _collaboratorAppService = collaboratorAppService;
             _producerAppService = producerAppService;

@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-01-2019
+// Last Modified On : 07-03-2019
 // ***********************************************************************
 // <copyright file="Ticket4youController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Web.Site.Models;
 using System.Net;
+using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -23,6 +24,13 @@ namespace PlataformaRio2C.Web.Site.Controllers
     {
         private string urlJson = "http://rio2c.ticketforyou.com.br/Web/Api/Controller/APIExterna/dados_comprador.php";
         public TicketJsonResponse UserTicket { get; set; }
+
+        /// <summary>Initializes a new instance of the <see cref="Ticket4youController"/> class.</summary>
+        /// <param name="identityController">The identity controller.</param>
+        public Ticket4youController(IdentityAutenticationService identityController)
+            : base(identityController)
+        {
+        }
 
         public IEnumerable<TicketJsonResponse> SearchAll()
         {

@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-02-2019
+// Last Modified On : 07-03-2019
 // ***********************************************************************
 // <copyright file="AccountController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -38,6 +38,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <summary>Initializes a new instance of the <see cref="AccountController"/> class.</summary>
         /// <param name="identityController">The identity controller.</param>
         public AccountController(IdentityAutenticationService identityController)
+            : base(identityController)
         {
             _identityController = identityController;
         }

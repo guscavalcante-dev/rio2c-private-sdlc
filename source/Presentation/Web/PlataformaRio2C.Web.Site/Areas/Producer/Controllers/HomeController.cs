@@ -4,7 +4,7 @@
 // Created          : 07-01-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-01-2019
+// Last Modified On : 07-03-2019
 // ***********************************************************************
 // <copyright file="HomeController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,6 +14,7 @@
 using System.Collections.Generic;
 using PlataformaRio2C.Web.Site.Controllers;
 using System.Web.Mvc;
+using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 
 namespace PlataformaRio2C.Web.Site.Areas.Producer.Controllers
@@ -22,6 +23,13 @@ namespace PlataformaRio2C.Web.Site.Areas.Producer.Controllers
     [Authorize(Order = 1, Roles = "Producer")]
     public class HomeController : BaseController
     {
+        /// <summary>Initializes a new instance of the <see cref="HomeController"/> class.</summary>
+        /// <param name="identityController">The identity controller.</param>
+        public HomeController(IdentityAutenticationService identityController)
+            : base(identityController)
+        {
+        }
+        
         /// <summary>Indexes this instance.</summary>
         /// <returns></returns>
         public ActionResult Index()

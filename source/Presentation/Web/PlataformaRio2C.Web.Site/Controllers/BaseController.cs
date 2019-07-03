@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-02-2019
+// Last Modified On : 07-03-2019
 // ***********************************************************************
 // <copyright file="BaseController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,14 +16,27 @@ using System;
 using System.Threading;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Microsoft.AspNet.Identity;
+using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
     /// <summary>BaseController</summary>
     public class BaseController : Controller
     {
+        private readonly IdentityAutenticationService identityController;
         protected string UserInterfaceLanguage;
+        protected int UserId;
+        protected string UserName;
         protected string Area;
+
+        /// <summary>Initializes a new instance of the <see cref="BaseController"/> class.</summary>
+        /// <param name="identityControlle">The identity controlle.</param>
+        public BaseController(IdentityAutenticationService identityControlle)
+        {
+            this.identityController = identityControlle;
+        }
 
         /// <summary>Begins to invoke the action in the current controller context.</summary>
         /// <param name="callback">The callback.</param>
@@ -32,6 +45,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, object state)
         {
             this.SetCulture();
+            this.SetUserInfo();
             this.SetArea();
 
             return base.BeginExecuteCore(callback, state);
@@ -87,6 +101,30 @@ namespace PlataformaRio2C.Web.Site.Controllers
         private void SetArea()
         {
             this.Area = ViewBag.Area = RouteData.Values["Area"] as string;
+        }
+
+        /// <summary>Sets the user information.</summary>
+        private void SetUserInfo()
+        {
+            if (this.identityController == null)
+            {
+                return;
+            }
+
+            this.UserId = User.Identity.GetUserId<int>();
+            if (!User.Identity.IsAuthenticated || this.UserId <= 0)
+            {
+                return;
+            }
+
+            var user = this.identityController.FindByIdAsync(this.UserId).Result;
+            if (user == null)
+            {
+                return;
+            }
+
+            ViewBag.FullName = this.UserName = user.Name.UppercaseFirstOfEachWord(this.UserInterfaceLanguage);
+            ViewBag.FirstName = this.UserName?.GetFirstWord();
         }
 
         //protected void CheckRegisterIsComplete()

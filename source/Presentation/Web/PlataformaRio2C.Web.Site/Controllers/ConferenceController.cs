@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-01-2019
+// Last Modified On : 07-03-2019
 // ***********************************************************************
 // <copyright file="ConferenceController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,6 +14,7 @@
 using PlataformaRio2C.Application.Interfaces.Services;
 using System;
 using System.Web.Mvc;
+using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -25,8 +26,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
         private readonly IConferenceAppService _appService;
 
         /// <summary>Initializes a new instance of the <see cref="ConferenceController"/> class.</summary>
+        /// <param name="identityController">The identity controller.</param>
         /// <param name="appService">The application service.</param>
-        public ConferenceController(IConferenceAppService appService)
+        public ConferenceController(IdentityAutenticationService identityController, IConferenceAppService appService)
+            : base(identityController)
         {
             _appService = appService;
         }
