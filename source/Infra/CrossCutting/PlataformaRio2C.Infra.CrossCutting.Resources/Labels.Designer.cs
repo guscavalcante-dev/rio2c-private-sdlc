@@ -1195,6 +1195,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MyRio2C.
+        /// </summary>
+        public static string MyRio2C {
+            get {
+                return ResourceManager.GetString("MyRio2C", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nome.
         /// </summary>
         public static string Name {
@@ -1393,7 +1402,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Plataforma Rio2C.
+        ///   Looks up a localized string similar to MyRio2C.
         /// </summary>
         public static string PlatformRio2C {
             get {
@@ -2293,7 +2302,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bem vindo ao Rio2C | RioContentMarket 2019!.
+        ///   Looks up a localized string similar to Bem vindo ao MyRio2C | RioContentMarket 2019!.
         /// </summary>
         public static string Welcome {
             get {
@@ -2302,7 +2311,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bem vindo ao Rio2C!.
+        ///   Looks up a localized string similar to Bem vindo ao MyRio2C!.
         /// </summary>
         public static string WelcomeSmall {
             get {

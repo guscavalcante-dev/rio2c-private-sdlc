@@ -334,8 +334,8 @@
     <comment>Termo de uso</comment>
   </data>
   <data name="Welcome" xml:space="preserve">
-    <value>Bem vindo ao Rio2C | RioContentMarket 2019!</value>
-    <comment>Bem vindo ao Rio2C | RioContentMarket 2019!</comment>
+    <value>Bem vindo ao MyRio2C | RioContentMarket 2019!</value>
+    <comment>Bem vindo ao MyRio2C | RioContentMarket 2019!</comment>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>Confirme a senha</value>
@@ -431,8 +431,8 @@
     <comment>Desenvolvimento</comment>
   </data>
   <data name="PlatformRio2C" xml:space="preserve">
-    <value>Plataforma Rio2C</value>
-    <comment>Plataforma Rio2C</comment>
+    <value>MyRio2C</value>
+    <comment>MyRio2C</comment>
   </data>
   <data name="NewProject" xml:space="preserve">
     <value>Novo Projeto</value>
@@ -966,8 +966,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Entrar</comment>
   </data>
   <data name="WelcomeSmall" xml:space="preserve">
-    <value>Bem vindo ao Rio2C!</value>
-    <comment>Bem vindo ao Rio2C!</comment>
+    <value>Bem vindo ao MyRio2C!</value>
+    <comment>Bem vindo ao MyRio2C!</comment>
   </data>
   <data name="DevelopedBy" xml:space="preserve">
     <value>Desenvolvido por</value>
@@ -979,5 +979,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Hi" xml:space="preserve">
     <value>Olá</value>
     <comment>Olá</comment>
+  </data>
+  <data name="MyRio2C" xml:space="preserve">
+    <value>MyRio2C</value>
+    <comment>MyRio2C</comment>
   </data>
 </root>

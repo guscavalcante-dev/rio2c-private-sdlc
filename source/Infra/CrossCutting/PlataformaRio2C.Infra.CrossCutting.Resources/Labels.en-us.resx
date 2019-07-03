@@ -334,8 +334,8 @@
     <comment>Termo de uso</comment>
   </data>
   <data name="Welcome" xml:space="preserve">
-    <value>Welcome to Rio2C | RioContentMarket 2019!</value>
-    <comment>Bem vindo ao Rio2C | RioContentMarket 2019!</comment>
+    <value>Welcome to MyRio2C | RioContentMarket 2019!</value>
+    <comment>Bem vindo ao MyRio2C | RioContentMarket 2019!</comment>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>Confirm password</value>
@@ -431,8 +431,8 @@
     <comment>Desenvolvimento</comment>
   </data>
   <data name="PlatformRio2C" xml:space="preserve">
-    <value>Rio2C Platform</value>
-    <comment>Plataforma Rio2C</comment>
+    <value>MyRio2C</value>
+    <comment>MyRio2C</comment>
   </data>
   <data name="NewProject" xml:space="preserve">
     <value>New Project</value>
@@ -954,8 +954,8 @@
     <comment>Entrar</comment>
   </data>
   <data name="WelcomeSmall" xml:space="preserve">
-    <value>Welcome to Rio2C!</value>
-    <comment>Bem vindo ao Rio2C!</comment>
+    <value>Welcome to MyRio2C!</value>
+    <comment>Bem vindo ao MyRio2C!</comment>
   </data>
   <data name="DevelopedBy" xml:space="preserve">
     <value>Developed by</value>
@@ -967,5 +967,9 @@
   <data name="Hi" xml:space="preserve">
     <value>Hi</value>
     <comment>Olá</comment>
+  </data>
+  <data name="MyRio2C" xml:space="preserve">
+    <value>MyRio2C</value>
+    <comment>MyRio2c</comment>
   </data>
 </root>
