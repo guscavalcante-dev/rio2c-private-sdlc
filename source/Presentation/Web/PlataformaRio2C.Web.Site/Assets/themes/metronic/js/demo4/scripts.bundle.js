@@ -9484,8 +9484,6 @@ var KTLayout = function() {
             }
         };
 
-        console.log(options.offset)
-
         header = new KTHeader('kt_header', options);
     }
 
