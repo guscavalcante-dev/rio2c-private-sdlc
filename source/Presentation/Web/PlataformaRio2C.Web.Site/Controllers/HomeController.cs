@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-03-2019
+// Last Modified On : 07-04-2019
 // ***********************************************************************
 // <copyright file="HomeController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -63,30 +63,26 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         /// <summary>Sets the culture.</summary>
         /// <param name="culture">The culture.</param>
+        /// <param name="oldCulture">The old culture.</param>
         /// <param name="returnUrl">The return URL.</param>
         /// <returns></returns>
         [AllowAnonymous]
-        public ActionResult SetCulture(string culture, string returnUrl = null)
+        public ActionResult SetCulture(string culture, string oldCulture, string returnUrl = null)
         {
-            if (returnUrl == null && Request.UrlReferrer != null)
-            {
-                returnUrl = Request.UrlReferrer.PathAndQuery;
-            }
-
             // Validate input
             culture = CultureHelper.GetImplementedCulture(culture);
             RouteData.Values["culture"] = culture;  // set culture
 
             #region Create/Update cookie culture
 
-            var cookie = Request.Cookies["Rio2CPlafatormCulture"];
+            var cookie = Request.Cookies["MyRio2AdminCCulture"];
             if (cookie != null)
             {
                 cookie.Value = culture;   // update cookie value
             }
             else
             {
-                cookie = new HttpCookie("Rio2CPlafatormCulture");
+                cookie = new HttpCookie("MyRio2AdminCCulture");
                 cookie.Value = culture;
                 cookie.Expires = DateTime.Now.AddYears(1);
             }
@@ -94,6 +90,13 @@ namespace PlataformaRio2C.Web.Site.Controllers
             Response.Cookies.Add(cookie);
 
             #endregion
+
+            if (returnUrl == null && Request.UrlReferrer != null)
+            {
+                returnUrl = Request.UrlReferrer.PathAndQuery;
+            }
+
+            returnUrl = returnUrl?.Replace(oldCulture.ToLowerInvariant(), culture?.ToLowerInvariant());
 
             if (Url.IsLocalUrl(returnUrl))
             {

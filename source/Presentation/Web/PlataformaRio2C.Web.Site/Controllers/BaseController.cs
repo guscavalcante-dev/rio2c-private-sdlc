@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-03-2019
+// Last Modified On : 07-04-2019
 // ***********************************************************************
 // <copyright file="BaseController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -58,7 +58,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         {
             // Attempt to read the culture cookie from Request
             var routeCulture = RouteData.Values["culture"] as string;
-            var cookieCulture = Request.Cookies["Rio2CPlafatormCulture"]?.Value;
+            var cookieCulture = Request.Cookies["MyRio2CCulture"]?.Value;
             var cultureName = routeCulture ??
                               cookieCulture ??
                               (Request.UserLanguages != null && Request.UserLanguages.Length > 0 ? Request.UserLanguages[0] : null);

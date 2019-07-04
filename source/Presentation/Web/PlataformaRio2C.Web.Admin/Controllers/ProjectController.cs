@@ -1,22 +1,38 @@
-﻿using OfficeOpenXml;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Web.Admin
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-28-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-04-2019
+// ***********************************************************************
+// <copyright file="ProjectController.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using OfficeOpenXml;
 using PlataformaRio2C.Application.Interfaces.Services;
 using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
+    /// <summary>ProjectController</summary>
     [Authorize(Roles = "Administrator")]
     public class ProjectController : BaseController
     {
         private readonly IProjectAppService _appService;
 
-        public ProjectController(IProjectAppService appService)
+        /// <summary>Initializes a new instance of the <see cref="ProjectController"/> class.</summary>
+        /// <param name="identityController">The identity controller.</param>
+        /// <param name="appService">The application service.</param>
+        public ProjectController(IdentityAutenticationService identityController, IProjectAppService appService)
+            : base(identityController)
         {
             _appService = appService;
         }

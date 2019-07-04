@@ -1,0 +1,54 @@
+﻿@{
+    Layout = "~/Views/Themes/Metronic/_Layout.cshtml";
+    ViewBag.LayoutBodyStyle = "background-image: url(/Assets/img/header.jpg); background-position: center top; background-size: 100% 350px;";
+    ViewBag.LayoutBodyClass = "kt-page--loading-enabled kt-page--loading kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header--minimize-menu kt-header-mobile--fixed kt-subheader--enabled kt-subheader--transparent kt-page--loading";
+}
+@section Head {
+    @RenderSection("Head", required: false)
+}
+<!-- begin:: Page -->
+<!-- begin:: Header Mobile -->
+@{ Html.RenderPartial("~/Views/Themes/Metronic/_HeaderMobile.cshtml"); }
+<!-- end:: Header Mobile -->
+<div class="kt-grid kt-grid--hor kt-grid--root">
+    <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
+        <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
+            <!-- begin:: Header -->
+            @{ Html.RenderPartial("~/Views/Themes/Metronic/_Header.cshtml"); }
+            <!-- end:: Header -->
+            <div class="kt-body kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-grid--stretch" id="kt_body">
+                <div class="kt-content kt-content--fit-top  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
+                    <!-- begin:: Subheader -->
+                    @{ Html.RenderPartial("~/Views/Themes/Metronic/_SubHeader.cshtml"); }
+                    <!-- end:: Subheader -->
+                    <!-- begin:: Content -->
+                    <div class="kt-container  kt-grid__item kt-grid__item--fluid">
+                        @RenderBody()
+                    </div>
+                    <!-- end:: Content -->
+                </div>
+            </div>
+            <!-- begin:: Footer -->
+            @{ Html.RenderPartial("~/Views/Themes/Metronic/_Footer.cshtml"); }
+            <!-- end:: Footer -->
+        </div>
+    </div>
+</div>
+<!-- end:: Page -->
+<!-- begin::Quick Panel -->
+@{ Html.RenderPartial("~/Views/Themes/Metronic/_QuickPanel.cshtml"); }
+<!-- end::Quick Panel -->
+<!-- begin::Scrolltop -->
+<div id="kt_scrolltop" class="kt-scrolltop">
+    <i class="fa fa-arrow-up"></i>
+</div>
+<!-- end::Scrolltop -->
+@*<!--Begin:: Chat-->
+@{ Html.RenderPartial("~/Views/Themes/Metronic/_Chat.cshtml"); }
+<!--ENd:: Chat-->*@
+@section Styles {
+    @RenderSection("Styles", required: false)
+}
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

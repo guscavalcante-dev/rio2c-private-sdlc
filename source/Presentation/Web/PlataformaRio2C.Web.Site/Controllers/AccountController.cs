@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-03-2019
+// Last Modified On : 07-04-2019
 // ***********************************************************************
 // <copyright file="AccountController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -313,6 +313,34 @@ namespace PlataformaRio2C.Web.Site.Controllers
             return View(model);
         }
 
+        /// <summary>Resets the password authenticated.</summary>
+        /// <returns></returns>
+        [Authorize]
+        public async Task<ActionResult> ResetPasswordAuthenticated()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = await _identityController.FindByNameAsync(User.Identity.Name);
+                if (user == null)
+                {
+                    authenticationManager.SignOut();
+                    return View("UserNotFound");
+                }
+                else if (!user.Active)
+                {
+                    authenticationManager.SignOut();
+                    return View("DisabledUser");
+                }
+                else
+                {
+                    var code = await _identityController.GeneratePasswordResetTokenAsync(user.Id);
+                    return View(new ResetPasswordViewModel { Code = code, Email = user.Email });
+                }
+            }
+
+            return RedirectToAction("Index", "Account");
+        }
+
         /// <summary>Resets the password.</summary>
         /// <param name="code">The code.</param>
         /// <returns></returns>
@@ -322,7 +350,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
             return code == null ? View("Error") : View(new ResetPasswordViewModel { Code = code });
         }
 
-        // POST: /Account/ResetPassword
         /// <summary>Resets the password.</summary>
         /// <param name="model">The model.</param>
         /// <returns></returns>
@@ -359,43 +386,20 @@ namespace PlataformaRio2C.Web.Site.Controllers
             return View(model);
         }
 
-        #endregion
-
-        // GET: /Account/ResetPasswordConfirmation
+        /// <summary>Resets the password confirmation.</summary>
+        /// <returns></returns>
         [AllowAnonymous]
         public ActionResult ResetPasswordConfirmation()
         {
             return View();
         }
 
-        [Authorize]
-        public async Task<ActionResult> ResetPasswordAuthenticated()
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                var user = await _identityController.FindByNameAsync(User.Identity.Name);
-                if (user == null)
-                {
-                    authenticationManager.SignOut();
-                    return View("UserNotFound");
-                }
-                else if (!user.Active)
-                {
-                    authenticationManager.SignOut();
-                    return View("DisabledUser");
-                }
-                else
-                {
-                    var code = await _identityController.GeneratePasswordResetTokenAsync(user.Id);
-                    return View(new ResetPasswordViewModel { Code = code, Email = user.Email });
-                }
-            }
+        #endregion
 
-            return RedirectToAction("Index", "Account");
-        }
+        #region Log Off
 
-
-        // POST: /Account/LogOff        
+        /// <summary>Logs the off.</summary>
+        /// <returns></returns>
         [Authorize]
         public ActionResult LogOff()
         {
@@ -403,16 +407,25 @@ namespace PlataformaRio2C.Web.Site.Controllers
             return RedirectToAction("Index", "Account");
         }
 
-        #region Métodos privados auxiliares
+        #endregion
 
+        #region Auxiliary Private Methods
+
+        /// <summary>Redirects to local.</summary>
+        /// <param name="returnUrl">The return URL.</param>
+        /// <returns></returns>
         private ActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))
             {
                 return Redirect(returnUrl);
             }
+
             return RedirectToAction("Index", "Account");
         }
+
+        /// <summary>Adds the errors.</summary>
+        /// <param name="result">The result.</param>
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
@@ -421,8 +434,29 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
         }
 
+        /// <summary>Compiles the HTML default template message.</summary>
+        /// <returns></returns>
+        private string CompileHtmlDefaultTemplateMessage()
+        {
+            HtmlDocument template = new HtmlDocument();
+            template.Load(HttpContext.Server.MapPath(string.Format("~/TemplatesEmail/defaultTemplateWithImageSrc.html")));
+            return template.DocumentNode.InnerHtml;
+        }
+
+        /// <summary>Returns the user not found.</summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
+        private ActionResult ReturnUserNotFound<T>(T model)
+        {
+            ModelState.AddModelError("", Texts.UserNotFound);
+            return View(model);
+        }
+
         #endregion
 
+        /// <summary>Releases unmanaged resources and optionally releases managed resources.</summary>
+        /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -433,20 +467,18 @@ namespace PlataformaRio2C.Web.Site.Controllers
             base.Dispose(disposing);
         }
 
-        private string CompileHtmlDefaultTemplateMessage()
-        {
-            HtmlDocument template = new HtmlDocument();
-            template.Load(HttpContext.Server.MapPath(string.Format("~/TemplatesEmail/defaultTemplateWithImageSrc.html")));
-            return template.DocumentNode.InnerHtml;
-        }
+        #region Change Password
 
-
+        /// <summary>Changes the password.</summary>
+        /// <returns></returns>
         public ActionResult ChangePassword()
         {
             return View();
         }
 
-
+        /// <summary>Changes the password.</summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
@@ -470,22 +502,18 @@ namespace PlataformaRio2C.Web.Site.Controllers
             return View(model);
         }
 
-        private ActionResult ReturnUserNotFound<T>(T model)
-        {
-            ModelState.AddModelError("", Texts.UserNotFound);
-            return View(model);
-        }
+        #endregion
 
-        [AllowAnonymous]
-        public ActionResult Error()
-        {
-            return View();
-        }
+        //[AllowAnonymous]
+        //public ActionResult Error()
+        //{
+        //    return View();
+        //}
 
-        [AllowAnonymous]
-        public ActionResult ErrorUnexpected()
-        {
-            return View();
-        }
+        //[AllowAnonymous]
+        //public ActionResult ErrorUnexpected()
+        //{
+        //    return View();
+        //}
     }
 }

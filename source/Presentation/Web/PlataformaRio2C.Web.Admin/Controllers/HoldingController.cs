@@ -1,18 +1,36 @@
-﻿using PlataformaRio2C.Application.Interfaces.Services;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Web.Admin
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-28-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-04-2019
+// ***********************************************************************
+// <copyright file="HoldingController.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Application.Interfaces.Services;
 using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
-using System.Linq;
 using System.Web.Mvc;
+using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
+    /// <summary>HoldingController</summary>
     [Authorize(Roles = "Administrator")]
     public class HoldingController : BaseController
     {
         private readonly IHoldingAppService _appService;
 
-        public HoldingController(IHoldingAppService appService)
+        /// <summary>Initializes a new instance of the <see cref="HoldingController"/> class.</summary>
+        /// <param name="identityController">The identity controller.</param>
+        /// <param name="appService">The application service.</param>
+        public HoldingController(IdentityAutenticationService identityController, IHoldingAppService appService)
+            : base(identityController)
         {
             _appService = appService;
         }

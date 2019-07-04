@@ -1,0 +1,76 @@
+﻿@{
+    Layout = "~/Views/Themes/Metronic/_Layout.cshtml";
+    ViewBag.LayoutBodyStyle = string.Empty;
+    ViewBag.LayoutBodyClass = "kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--enabled kt-subheader--fixed kt-subheader--solid kt-aside--enabled kt-aside--fixed kt-page--loading";
+}
+@section Head {
+    @RenderSection("Head", required: false)
+}
+<!-- begin:: Page -->
+<div class="kt-grid kt-grid--ver kt-grid--root">
+    <div class="kt-grid kt-grid--hor kt-grid--root  kt-login kt-login--v1" id="kt_login">
+        <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--desktop kt-grid--ver-desktop kt-grid--hor-tablet-and-mobile">
+            <!--begin::Aside-->
+            <div class="kt-grid__item kt-grid__item--order-tablet-and-mobile-2 kt-grid kt-grid--hor kt-login__aside" style="background-image: url(/assets/img/bg-2.jpg);">
+                <div class="kt-grid__item">
+                    <a href="" class="kt-login__logo">
+                        <img src="~/Assets/img/logo_rio2c_white.png" class="r2c-login__logo">
+                    </a>
+                </div>
+                <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver">
+                    <div class="kt-grid__item kt-grid__item--middle">
+                        <h3 class="kt-login__title">@Labels.WelcomeSmallAdmin</h3>
+                        <h4 class="kt-login__subtitle">@Texts.WelcomeLogin</h4>
+                    </div>
+                </div>
+                <div class="kt-grid__item">
+                    <div class="kt-login__info">
+                        <div class="kt-login__copyright">
+                            &copy 2019 Rio2C | @Labels.DevelopedBy <a href="http://sof.to" target="_blank" class="r2c-login__footer-link">Softo</a>
+                        </div>
+                        @*<div class="kt-login__menu">
+                                <a href="#" class="kt-link">Privacy</a>
+                                <a href="#" class="kt-link">Legal</a>
+                                <a href="#" class="kt-link">Contact</a>
+                            </div>*@
+                    </div>
+                </div>
+            </div>
+            <!--end::Aside-->
+            <!--begin::Content-->
+            <div class="kt-grid__item kt-grid__item--fluid  kt-grid__item--order-tablet-and-mobile-1  kt-login__wrapper">
+                <!--begin::Head-->
+                @*<div class="kt-login__head">
+                        <span class="kt-login__signup-label">Don't have an account yet?</span>&nbsp;&nbsp;
+                        <a href="#" class="kt-link kt-login__signup-link">Sign Up!</a>
+                    </div>*@
+                <!--end::Head-->
+                <!--begin::Body-->
+                <!-- begin:: Header Topbar -->
+                <div class="kt-header__topbar kt-grid__item r2c-header__topbar">
+                    <!--begin: Language bar -->
+                    @{ Html.RenderPartial("~/Views/Themes/Metronic/_LanguageSelector.cshtml"); }
+                    <!--end: Language bar -->
+                </div>
+                <!-- end:: Header Topbar -->
+                <div class="kt-login__body">
+                    @RenderBody()
+                </div>
+                <!--end::Body-->
+            </div>
+            <!--end::Content-->
+        </div>
+    </div>
+</div>
+<!-- end:: Page -->
+<!-- begin::Scrolltop -->
+<div id="kt_scrolltop" class="kt-scrolltop">
+    <i class="fa fa-arrow-up"></i>
+</div>
+<!-- end::Scrolltop -->
+@section Styles {
+    @RenderSection("Styles", required: false)
+}
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

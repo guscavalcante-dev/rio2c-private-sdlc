@@ -1,0 +1,120 @@
+﻿/*
+ Extra small devices (portrait phones, less than 576px)
+ No media query since this is the default in Bootstrap
+*/
+/* Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+}
+
+/* Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+    .r2c-login__logo {
+        height: 150px;
+        width: 150px;
+    }
+}
+
+/* Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+}
+
+/* Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+}
+
+
+@media (max-width: 1200px) {
+    .kt-footer__top .redes a {
+        margin-right: 1.5px !important;
+    }
+
+    .kt-footer__top .btnComprar {
+        font-size: 12px;
+    }
+
+    .kt-footer__top .links1,
+    .kt-footer__top .links2 {
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 780px) {
+    .kt-footer__top .iconsRodape {
+        width: 100% !important;
+        margin: auto;
+        margin-left: 0 !important;
+        text-align: center;
+    }
+
+        .kt-footer__top .iconsRodape .btnComprar {
+            width: 225px;
+            display: inline-block;
+        }
+
+    .kt-footer__top .redes a {
+        margin-right: 25.7px !important;
+    }
+
+        .kt-footer__top .redes a:last-of-type {
+            margin-right: 0 !important;
+        }
+
+    .kt-footer__top .row .row > div {
+        width: 30%;
+        margin-left: 3%;
+        margin-bottom: 0;
+        margin-top: 30px;
+    }
+}
+
+@media (max-width: 767px) {
+    .kt-footer__top ul li,
+    .kt-footer__top ul li a {
+        text-align: left;
+    }
+
+    .kt-footer__top .frase {
+        margin-top: 45px;
+    }
+
+    .kt-footer__top .redes {
+        margin-top: 20px;
+    }
+
+        .kt-footer__top .redes a {
+            margin: 0 10px !important;
+        }
+
+    .kt-footer__top .row .row > div {
+        width: 40%;
+        margin: auto;
+    }
+
+    .kt-footer__top .row .row div {
+        width: 40% !important;
+        max-width: 40%;
+        -ms-flex: 0 0 40%;
+        flex: 0 0 40%;
+        margin-left: 10% !important;
+        margin-right: 0 !important;
+        margin-top: 30px;
+    }
+
+    .kt-footer__top .row .row .iconsRodape {
+        width: 100% !important;
+        max-width: 100%;
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        margin: auto;
+        margin-top: 30px !important;
+        margin-left: 0 !important;
+    }
+
+    .kt-footer__top .row .row .redes {
+        width: 100% !important;
+        max-width: 100%;
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        margin-left: 0 !important;
+    }
+}

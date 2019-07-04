@@ -1,22 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Web.Admin
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-28-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-04-2019
+// ***********************************************************************
+// <copyright file="RouteConfig.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace PlataformaRio2C.Web.Admin
 {
+    /// <summary>RouteConfig</summary>
     public static class RouteConfig
     {
+        /// <summary>Registers the routes.</summary>
+        /// <param name="routes">The routes.</param>
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            AreaRegistration.RegisterAllAreas();
+
+            //routing to include culture
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{uid}",
-                defaults: new { controller = "Dashboard", action = "Index", uid = UrlParameter.Optional }
+                "DefaultWithCulture",
+                "{culture}/{controller}/{action}/{id}",
+                new { culture = string.Empty, controller = "Home", action = "Index", area = "", id = UrlParameter.Optional },
+                new { culture = @"^[a-zA-Z]{2}(\-[a-zA-Z]{2})?$" },
+                new[] { "PlataformaRio2C.Web.Admin.Controllers" });
+
+            routes.MapRoute(
+                "Default",
+                "{controller}/{action}/{id}",
+                new { controller = "Home", action = "Index", area = "", id = UrlParameter.Optional },
+                new[] { "PlataformaRio2C.Web.Admin.Controllers" }
             );
         }
     }

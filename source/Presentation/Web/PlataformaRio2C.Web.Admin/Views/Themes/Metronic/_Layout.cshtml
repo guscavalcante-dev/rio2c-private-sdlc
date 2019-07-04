@@ -1,0 +1,105 @@
+﻿@using System.Globalization
+<!DOCTYPE html>
+@*
+    <!--
+    Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 4 & Angular 8
+    Version: 6.0.4
+    Author: KeenThemes
+    Website: http://www.keenthemes.com/
+    Contact: support@keenthemes.com
+    Follow: www.twitter.com/keenthemes
+    Dribbble: www.dribbble.com/keenthemes
+    Like: www.facebook.com/keenthemes
+    Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
+    Renew Support: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
+    License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
+    -->
+*@
+<html lang="@(CultureInfo.CurrentCulture?.ToString()?.ToLowerInvariant())">
+<!-- begin::Head -->
+<head>
+    <!--begin::Base Path (base relative path for assets of this page) -->
+    <base href="../">
+    <!--end::Base Path -->
+    <meta charset="utf-8" />
+    <title>@Labels.PlatformRio2CAdmin | @ViewBag.Title</title>
+    <meta name="description" content="@Labels.PlatformRio2CAdmin">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!--begin::Fonts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+    <script>
+        WebFont.load({
+            google: {
+                "families": ["Poppins:300,400,500,600,700"]
+            },
+            active: function () {
+                sessionStorage.fonts = true;
+            }
+        });
+    </script>
+    <!--end::Fonts -->
+    <!--begin:: Global Mandatory Vendors -->
+    @Styles.Render("~/bundles/css/layoutGlobalMandatoryVendors")
+    <!--end:: Global Mandatory Vendors -->
+    <!--begin:: Global Optional Vendors -->
+    @Styles.Render("~/bundles/css/layoutGlobalOptionalVendors")
+    <!--end:: Global Optional Vendors -->
+    <!--begin::Global Theme Styles(used by all pages) -->
+    @Styles.Render("~/bundles/css/layoutGlobalThemeStyles")
+    <!--end::Global Theme Styles -->
+    <!--begin::Global Customized Styles -->
+    @Styles.Render("~/bundles/css/layoutGlobalCustomizedStyles")
+    <!--end::Global Customized Styles -->
+    <!--begin::Page Styles -->
+    @RenderSection("Styles", false)
+    <!--end::Page Styles -->
+    <link rel="shortcut icon" href="~/Assets/img/favicon.png" />
+    @RenderSection("Head", false)
+</head>
+<!-- end::Head -->
+<!-- begin::Body -->
+<body style="@ViewBag.LayoutBodyStyle" class="@ViewBag.LayoutBodyClass">
+    @RenderBody()
+    <!-- begin::Global Config(global config for global JS sciprts) -->
+    <script>
+        var KTAppOptions = {
+            "colors": {
+                "state": {
+                    "brand": "#366cf3",
+                    "light": "#ffffff",
+                    "dark": "#282a3c",
+                    "primary": "#5867dd",
+                    "success": "#34bfa3",
+                    "info": "#36a3f7",
+                    "warning": "#ffb822",
+                    "danger": "#fd3995"
+                },
+                "base": {
+                    "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+                    "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+                }
+            }
+        };
+    </script>
+    <!-- end::Global Config -->
+    <!--begin:: Global Mandatory Vendors -->
+    @Scripts.Render("~/bundles/js/layoutGlobalMandatoryVendors")
+    <!--end:: Global Mandatory Vendors -->
+    <!--begin:: Global Optional Vendors -->
+    @Scripts.Render("~/bundles/js/layoutGlobalOptionalVendors")
+    <!--end:: Global Optional Vendors -->
+    <!--begin::Global Theme Bundle(used by all pages) -->
+    @Scripts.Render("~/bundles/js/layoutGlobalThemeBundle")
+    <!--end::Global Theme Bundle -->
+    <!--begin::Page Vendors(used by this page) -->
+    @*<script type="text/javascript" src="~/Assets/themes/metronic/vendors/custom/fullcalendar/fullcalendar.bundle.js"></script>
+    <script type="text/javascript" src="//maps.google.com/maps/api/js?key=AIzaSyBTGnKT7dt597vo9QgeQ7BFhvSRP4eiMSM"></script>
+    <script type="text/javascript" src="~/Assets/themes/metronic/vendors/custom/gmaps/gmaps.js"></script>*@
+    <!--end::Page Vendors -->
+    <!--begin::Page Scripts(used by this page) -->
+    @*<script type="text/javascript" src="~/Assets/themes/metronic/js/demo4/pages/dashboard.js"></script>*@
+    @RenderSection("Scripts", false)
+    <!--end::Page Scripts -->
+</body>
+<!-- end::Body -->
+</html>

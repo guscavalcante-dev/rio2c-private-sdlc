@@ -1,18 +1,37 @@
-﻿using OfficeOpenXml;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Web.Admin
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-28-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-04-2019
+// ***********************************************************************
+// <copyright file="ScheduleOneToOneMeetingsController.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using OfficeOpenXml;
 using PlataformaRio2C.Application.Interfaces.Services;
 using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using System;
 using System.IO;
 using System.Web.Mvc;
+using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
+    /// <summary>ScheduleOneToOneMeetingsController</summary>
     [Authorize(Roles = "Administrator")]
     public class ScheduleOneToOneMeetingsController : BaseController
     {
         private readonly INegotiationAppService _negotiationAppService;
-        public ScheduleOneToOneMeetingsController(INegotiationAppService negotiationAppService)
+
+        /// <summary>Initializes a new instance of the <see cref="ScheduleOneToOneMeetingsController"/> class.</summary>
+        /// <param name="identityController">The identity controller.</param>
+        /// <param name="negotiationAppService">The negotiation application service.</param>
+        public ScheduleOneToOneMeetingsController(IdentityAutenticationService identityController, INegotiationAppService negotiationAppService)
+            : base(identityController)
         {
             _negotiationAppService = negotiationAppService;
         }

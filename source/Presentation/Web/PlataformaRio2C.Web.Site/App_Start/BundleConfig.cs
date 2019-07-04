@@ -195,7 +195,7 @@ namespace PlataformaRio2C.Web.Site
 
             #endregion
 
-            #region scripts
+            #region Scripts
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-1.x.min.js"));
@@ -287,7 +287,7 @@ namespace PlataformaRio2C.Web.Site
 
             #endregion
 
-            #region styles
+            #region Styles
 
             bundles.Add(new StyleBundle("~/Content/assets/css").Include(
                   "~/Content/assets/bootstrap-colorpicker/css/colorpicker.css",

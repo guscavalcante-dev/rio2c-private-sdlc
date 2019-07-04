@@ -1,0 +1,108 @@
+﻿/*
+    Footer
+*/
+
+.kt-footer__top {
+    width: 100%;
+    /*background: #20292C;*/
+    padding: 50px 0 35px 0;
+    text-align: center;
+}
+
+    .kt-footer__top ul,
+    .kt-footer__top ul li {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+        .kt-footer__top ul li,
+        .kt-footer__top ul li a {
+            font-size: 13px;
+            line-height: 24px;
+            color: #CDD3D6;
+            text-align: left;
+        }
+
+            .kt-footer__top ul li, .kt-footer__top ul li a:hover {
+                color: #CDD3D6;
+            }
+
+    .kt-footer__top .redes {
+        width: 100%;
+    }
+
+        .kt-footer__top .redes a {
+            margin-right: 16.222222px;
+        }
+
+            .kt-footer__top .redes a:hover {
+                text-decoration: none;
+                color: #CDD3D6;
+            }
+
+            .kt-footer__top .redes a:last-of-type {
+                margin-right: 0;
+            }
+
+.row .kt-footer__top .redes a {
+    margin-right: 13.5px;
+}
+
+    .row .kt-footer__top .redes a:last-of-type {
+        margin-right: 0;
+    }
+
+.kt-footer__top .frase {
+    width: 100%;
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid #778082;
+    font-size: 12px;
+    color: #CDD3D6;
+    text-align: center;
+    -webkit-text-fill-color: #CDD3D6;
+}
+
+.kt-header__brand-logo-default, .kt-header__brand-logo-sticky, .r2c-header-mobile__logo {
+    height: 40px !important;
+    width: 40px !important;
+}
+
+
+/*
+    Login
+*/
+.r2c-login__logo {
+    height: 80px;
+    width: 80px;
+}
+
+.r2c-header__topbar {
+    float: right;
+}
+
+a.r2c-login__footer-link, a.r2c-footer-link {
+    color: rgba(255, 255, 255, 0.4);
+    text-decoration: underline !important;
+    background-color: transparent !important;
+}
+
+    a.r2c-login__footer-link:hover, a.r2c-footer-link:hover {
+        color: rgba(255, 255, 255, 0.4) !important;
+        text-decoration: underline !important;
+    }
+
+
+/*
+    Browsing Mode
+*/
+.r2c-browsing-mode__row .r2c-disabled {
+    background: #f7f8fa;
+    pointer-events: none;
+    opacity: 0.65;
+}
+
+.r2c-browsing-mode__row .kt-grid-nav__desc {
+    min-height: 30px;
+}

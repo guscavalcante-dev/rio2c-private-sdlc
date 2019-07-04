@@ -1,4 +1,17 @@
-﻿using Microsoft.AspNet.Identity;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Web.Admin
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-28-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-04-2019
+// ***********************************************************************
+// <copyright file="AccountController.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using PlataformaRio2C.Application.Interfaces.Services;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Models;
@@ -14,6 +27,7 @@ using System.Web.Mvc;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
+    /// <summary>AccountController</summary>
     [Authorize(Roles = "Administrator,Pitching")]
     public class AccountController : BaseController
     {
@@ -21,24 +35,34 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         private IAuthenticationManager authenticationManager => HttpContext.GetOwinContext().Authentication;
         private readonly IApiSymplaAppService _apiSymplaAppService;
 
+        /// <summary>Initializes a new instance of the <see cref="AccountController"/> class.</summary>
+        /// <param name="identityController">The identity controller.</param>
+        /// <param name="apiSymplaAppService">The API sympla application service.</param>
         public AccountController(IdentityAutenticationService identityController, IApiSymplaAppService apiSymplaAppService)
+            : base(identityController)
         {
             _identityController = identityController;
             _apiSymplaAppService = apiSymplaAppService;
         }
 
+        /// <summary>Indexes this instance.</summary>
+        /// <returns></returns>
         [AllowAnonymous]
         public ActionResult Index()
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Dashboard");
+                return RedirectToAction("Index", "Home");
             }
 
             return RedirectToAction("Login", "Account"); 
         }
 
-        // GET: Account
+        #region Login
+
+        /// <summary>Logins the specified return URL.</summary>
+        /// <param name="returnUrl">The return URL.</param>
+        /// <returns></returns>
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -46,6 +70,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             return View();
         }
 
+        /// <summary>Logins the specified model.</summary>
+        /// <param name="model">The model.</param>
+        /// <param name="returnUrl">The return URL.</param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -76,44 +104,58 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                         TempData["AvisoEmail"] = "Usuário não confirmado, verifique seu e-mail.";
                     }
 
-                    var identity = (ClaimsIdentity)User.Identity;
-                    IEnumerable<Claim> claims = identity.Claims;
+                    //var identity = (ClaimsIdentity)User.Identity;
 
-                    if (await _apiSymplaAppService.ConfirmUserAllowedFinancialReport(user.Email))
-                    {
-                        await _identityController.AddClaim(user.Id, new System.Security.Claims.Claim("FinancialReport", "true"));
-                    }
-                    else
-                    {
-                        await _identityController.RemoveClaim(user.Id, "FinancialReport");
-                    }
-                    if (user.Claims.Count !=0)
-                    {
-                        foreach (var item in user.Claims)
-                        {
-                            if (item.ClaimType.ToString() == "ProjectPitching")
-                            {
-                                return RedirectToAction("ProjectPitching", "Project");
-                            }
-                            else if (item.ClaimType.ToString() == "Logistics")
-                            {
-                                return RedirectToAction("Index", "Logistics");
-                            }
-                        }
-                    }
+                    //IEnumerable<Claim> claims = identity.Claims;
+
+                    //if (await _apiSymplaAppService.ConfirmUserAllowedFinancialReport(user.Email))
+                    //{
+                    //    await _identityController.AddClaim(user.Id, new System.Security.Claims.Claim("FinancialReport", "true"));
+                    //}
+                    //else
+                    //{
+                    //    await _identityController.RemoveClaim(user.Id, "FinancialReport");
+                    //}
+
+                    //if (user.Claims.Count != 0)
+                    //{
+                    //    foreach (var item in user.Claims)
+                    //    {
+                    //        if (item.ClaimType.ToString() == "ProjectPitching")
+                    //        {
+                    //            return RedirectToAction("ProjectPitching", "Project");
+                    //        }
+
+                    //        if (item.ClaimType.ToString() == "Logistics")
+                    //        {
+                    //            return RedirectToAction("Index", "Logistics");
+                    //        }
+                    //    }
+                    //}
 
                     await _identityController.SignInAsync(authenticationManager, user, model.RememberMe);
-                    return RedirectToLocal(returnUrl);
+
+                    if (!string.IsNullOrEmpty(returnUrl?.Replace("/", string.Empty)))
+                    {
+                        return Redirect(returnUrl);
+                    }
+
+                    return RedirectToAction("Index", "Home");
+
                 case IdentitySignInStatus.LockedOut:
                     return View("Lockout");
+
                 case IdentitySignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+
                 case IdentitySignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Login ou Senha incorretos.");
                     return View(model);
             }
         }
+
+        #endregion
 
         // GET: /Account/SendCode
         [AllowAnonymous]
@@ -182,15 +224,19 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
-        //
-        // GET: /Account/ForgotPassword
+        #region ForgotPassword
+
+        /// <summary>Forgots the password.</summary>
+        /// <returns></returns>
         [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
             return View();
         }
 
-        // POST: /Account/ForgotPassword
+        /// <summary>Forgots the password.</summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -217,6 +263,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             return View(model);
         }
 
+        /// <summary>Resets the password authenticated.</summary>
+        /// <returns></returns>
         [Authorize]
         public async Task<ActionResult> ResetPasswordAuthenticated()
         {
@@ -243,14 +291,18 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             return RedirectToAction("Index", "Account");
         }
 
-        // GET: /Account/ResetPassword
+        /// <summary>Resets the password.</summary>
+        /// <param name="code">The code.</param>
+        /// <returns></returns>
         [AllowAnonymous]
         public ActionResult ResetPassword(string code)
         {
             return code == null ? View("Error") : View(new ResetPasswordViewModel { Code = code });
         }
 
-        // POST: /Account/ResetPassword
+        /// <summary>Resets the password.</summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -285,14 +337,20 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         }
 
-        // GET: /Account/ResetPasswordConfirmation
+        /// <summary>Resets the password confirmation.</summary>
+        /// <returns></returns>
         [AllowAnonymous]
         public ActionResult ResetPasswordConfirmation()
         {
             return View();
         }
 
-        // POST: /Account/LogOff        
+        #endregion
+
+        #region Log Off
+
+        /// <summary>Logs the off.</summary>
+        /// <returns></returns>
         [Authorize]
         public ActionResult LogOff()
         {
@@ -300,16 +358,25 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             return RedirectToAction("Index", "Account");
         }
 
-        #region Métodos privados auxiliares
+        #endregion
 
+        #region Auxiliary Private Methods
+
+        /// <summary>Redirects to local.</summary>
+        /// <param name="returnUrl">The return URL.</param>
+        /// <returns></returns>
         private ActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))
             {
                 return Redirect(returnUrl);
             }
+
             return RedirectToAction("ProjectPitching", "Project");
         }
+
+        /// <summary>Adds the errors.</summary>
+        /// <param name="result">The result.</param>
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
@@ -320,6 +387,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #endregion
 
+        /// <summary>Releases unmanaged resources and optionally releases managed resources.</summary>
+        /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing)

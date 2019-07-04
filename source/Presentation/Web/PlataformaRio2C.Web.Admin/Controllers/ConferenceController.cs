@@ -1,17 +1,36 @@
-﻿using PlataformaRio2C.Application.Interfaces.Services;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Web.Admin
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-28-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-04-2019
+// ***********************************************************************
+// <copyright file="ConferenceController.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Application.Interfaces.Services;
 using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Web.Mvc;
+using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
+    /// <summary>ConferenceController</summary>
     [Authorize(Roles = "Administrator")]
     public class ConferenceController : BaseController
     {
         private readonly IConferenceAppService _appService;
 
-        public ConferenceController(IConferenceAppService appService)
+        /// <summary>Initializes a new instance of the <see cref="ConferenceController"/> class.</summary>
+        /// <param name="identityController">The identity controller.</param>
+        /// <param name="appService">The application service.</param>
+        public ConferenceController(IdentityAutenticationService identityController, IConferenceAppService appService)
+            : base(identityController)
         {
             _appService = appService;
         }

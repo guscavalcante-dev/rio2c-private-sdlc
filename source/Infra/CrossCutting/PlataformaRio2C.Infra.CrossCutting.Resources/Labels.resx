@@ -988,4 +988,80 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="BrowsingMode" xml:space="preserve">
     <value>Modo de Navegação</value>
   </data>
+  <data name="PlatformRio2CAdmin" xml:space="preserve">
+    <value>MyRio2C Admin</value>
+    <comment>MyRio2C Admin</comment>
+  </data>
+  <data name="WelcomeSmallAdmin" xml:space="preserve">
+    <value>Bem vindo ao MyRio2C Admin!</value>
+    <comment>Bem vindo ao MyRio2C Admin!</comment>
+  </data>
+  <data name="BusinessRoundtable" xml:space="preserve">
+    <value>Rodada de Negócios</value>
+    <comment>Rodada de Negócios</comment>
+  </data>
+  <data name="CalendarReport" xml:space="preserve">
+    <value>Relatório da Agenda</value>
+    <comment>Relatório da Agenda</comment>
+  </data>
+  <data name="Companies" xml:space="preserve">
+    <value>Empresas</value>
+    <comment>Empresas</comment>
+  </data>
+  <data name="GenerateCalendar" xml:space="preserve">
+    <value>Gerar Agenda</value>
+    <comment>Gerar Agenda</comment>
+  </data>
+  <data name="InvitationSending" xml:space="preserve">
+    <value>Envio de Convites</value>
+    <comment>Envio de Convites</comment>
+  </data>
+  <data name="Logistics" xml:space="preserve">
+    <value>Logística</value>
+    <comment>Logística</comment>
+  </data>
+  <data name="Parameters" xml:space="preserve">
+    <value>Parâmetros</value>
+    <comment>Parâmetros</comment>
+  </data>
+  <data name="ProjectsForPitching" xml:space="preserve">
+    <value>Projetos para Pitching</value>
+    <comment>Projetos para Pitching</comment>
+  </data>
+  <data name="Rooms" xml:space="preserve">
+    <value>Salas</value>
+    <comment>Salas</comment>
+  </data>
+  <data name="ScheduleNegotiation" xml:space="preserve">
+    <value>Agendar Negociação</value>
+    <comment>Agendar Negociação</comment>
+  </data>
+  <data name="SendEmailToPlayers" xml:space="preserve">
+    <value>Enviar e-mail para Players</value>
+    <comment>Enviar e-mail para Players</comment>
+  </data>
+  <data name="SendEmailToProducers" xml:space="preserve">
+    <value>Enviar e-mail para Produtoras</value>
+    <comment>Enviar e-mail para Produtoras</comment>
+  </data>
+  <data name="SpeakerFunctions" xml:space="preserve">
+    <value>Funções dos Palestrantes</value>
+    <comment>Funções dos Palestrantes</comment>
+  </data>
+  <data name="Speakers" xml:space="preserve">
+    <value>Palestrantes</value>
+    <comment>Palestrantes</comment>
+  </data>
+  <data name="Speeches" xml:space="preserve">
+    <value>Palestras</value>
+    <comment>Palestras</comment>
+  </data>
+  <data name="UnscheduledNegotiations" xml:space="preserve">
+    <value>Negociações não Agendadas</value>
+    <comment>Negociações não Agendadas</comment>
+  </data>
+  <data name="ViewCalendar" xml:space="preserve">
+    <value>Visualizar Agenda</value>
+    <comment>Visualizar Agenda</comment>
+  </data>
 </root>

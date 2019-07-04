@@ -1,19 +1,38 @@
-﻿using PlataformaRio2C.Infra.CrossCutting.SystemParameter;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Web.Admin
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-28-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-04-2019
+// ***********************************************************************
+// <copyright file="SystemParameterController.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Infra.CrossCutting.SystemParameter;
 using PlataformaRio2C.Infra.CrossCutting.SystemParameter.ViewModels;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
+    /// <summary>SystemParameterController</summary>
     [Authorize(Roles = "Administrator")]
     //[Authorize(Roles = "Administrator", Users = "projeto.rio2c@marlin.com.br")]
     public class SystemParameterController : BaseController
     {
         private readonly ISystemParameterAppService _systemParameterAppService;
 
-        public SystemParameterController(ISystemParameterAppService systemParameterAppService)
+        /// <summary>Initializes a new instance of the <see cref="SystemParameterController"/> class.</summary>
+        /// <param name="identityController">The identity controller.</param>
+        /// <param name="systemParameterAppService">The system parameter application service.</param>
+        public SystemParameterController(IdentityAutenticationService identityController, ISystemParameterAppService systemParameterAppService)
+            : base(identityController)
         {
             _systemParameterAppService = systemParameterAppService;
         }

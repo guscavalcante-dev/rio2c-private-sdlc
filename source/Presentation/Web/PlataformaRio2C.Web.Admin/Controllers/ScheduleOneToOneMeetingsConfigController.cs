@@ -1,16 +1,36 @@
-﻿using PlataformaRio2C.Application.Interfaces.Services;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Web.Admin
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-28-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-04-2019
+// ***********************************************************************
+// <copyright file="ScheduleOneToOneMeetingsConfigController.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Application.Interfaces.Services;
 using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
+    /// <summary>ScheduleOneToOneMeetingsConfigController</summary>
     [Authorize(Roles = "Administrator")]
     public class ScheduleOneToOneMeetingsConfigController : BaseController
     {
         private readonly INegotiationConfigService _scheduleOneToOneMeetingsConfigService;
-        public ScheduleOneToOneMeetingsConfigController(INegotiationConfigService scheduleOneToOneMeetingsConfigService)
+
+        /// <summary>Initializes a new instance of the <see cref="ScheduleOneToOneMeetingsConfigController"/> class.</summary>
+        /// <param name="identityController">The identity controller.</param>
+        /// <param name="scheduleOneToOneMeetingsConfigService">The schedule one to one meetings configuration service.</param>
+        public ScheduleOneToOneMeetingsConfigController(IdentityAutenticationService identityController, INegotiationConfigService scheduleOneToOneMeetingsConfigService)
+            : base(identityController)
         {
             _scheduleOneToOneMeetingsConfigService = scheduleOneToOneMeetingsConfigService;
         }

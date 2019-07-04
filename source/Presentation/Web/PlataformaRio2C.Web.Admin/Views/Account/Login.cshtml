@@ -1,43 +1,67 @@
 ﻿@model LoginViewModel
 @{
-    Layout = "~/Views/Shared/_LayoutBasic.cshtml";
-    ViewBag.Title = "Entrar";
+    Layout = "~/Views/Themes/Metronic/_InternalOutside.cshtml";
+    ViewBag.Title = Labels.Enter;
 }
-
-@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-signin", role = "form" }))
-{
-    
-    <h2 class="form-signin-heading">@ViewBag.Title</h2>
-   
-    <div class="login-wrap">
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email" })
-        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-        @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
-        <label class="checkbox">
-            @Html.CheckBoxFor(m => m.RememberMe)
-            @Html.LabelFor(m => m.RememberMe)
-        </label>
-        <input type="submit" value="Log in" class="btn btn-lg btn-login btn-block" />
+<!--begin::Signin-->
+<div class="kt-login__form">
+    <div class="kt-login__title">
+        <h3>@Labels.SignIn</h3>
     </div>
-    @*<p>
-        @Html.ActionLink("Register as a new user", "Register")
-    </p>*@
-    @* Enable this once you have account confirmation enabled for password reset functionality
-        <p>
-            @Html.ActionLink("Forgot your password?", "ForgotPassword")
-        </p>*@
+    <!--begin::Form-->
+    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-signin kt-form", role = "form", novalidade = "novalidate" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, Messages.SomethingIsWrong, new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Email), autocomplete = "off" })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Password) })
+            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+        </div>
+        <!--begin::Action-->
+        <div class="kt-login__actions">
+            <a href="@Url.Action("ForgotPassword", "Account", new { Area = "" })" class="kt-link kt-login__link-forgot">
+                @(Labels.ForgotPassword)?
+            </a>
+            <input type="submit" value="@Labels.SignIn" class="btn btn-primary btn-elevate kt-login__btn-primary" />
+        </div>
+        <!--end::Action-->
+    }
+    <!--end::Form-->
+    @*<!--begin::Divider-->
+        <div class="kt-login__divider">
+            <div class="kt-divider">
+                <span></span>
+                <span>OR</span>
+                <span></span>
+            </div>
+        </div>
+        <!--end::Divider-->
+        <!--begin::Options-->
+        <div class="kt-login__options">
+            <a href="#" class="btn btn-primary kt-btn">
+                <i class="fab fa-facebook-f"></i>
+                Facebook
+            </a>
+            <a href="#" class="btn btn-info kt-btn">
+                <i class="fab fa-twitter"></i>
+                Twitter
+            </a>
+            <a href="#" class="btn btn-danger kt-btn">
+                <i class="fab fa-google"></i>
+                Google
+            </a>
+        </div>
+        <!--end::Options-->*@
+</div>
+<!--end::Signin-->
+@section Styles {
+    @Styles.Render("~/bundles/css/loginCustomStyles")
 }
-
-    @*<div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
-    </div>*@
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/js/loginCustomScripts")
 }

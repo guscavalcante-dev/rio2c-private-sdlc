@@ -1,4 +1,17 @@
-﻿using PlataformaRio2C.Application.Interfaces.Services;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Web.Admin
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-28-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-04-2019
+// ***********************************************************************
+// <copyright file="SpeakerController.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Application.Interfaces.Services;
 using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
@@ -6,17 +19,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
+    /// <summary>SpeakerController</summary>
     public class SpeakerController : BaseController
     {
         private readonly ISpeakerService _service;
         private readonly ISpeakerAppService _appService;
         private readonly ICollaboratorAppService _collaboratorAppService;
 
-
-        public SpeakerController(ISpeakerService speakerService, ISpeakerAppService appService, ICollaboratorAppService collaboratorAppService)
+        /// <summary>Initializes a new instance of the <see cref="SpeakerController"/> class.</summary>
+        /// <param name="identityController">The identity controller.</param>
+        /// <param name="speakerService">The speaker service.</param>
+        /// <param name="appService">The application service.</param>
+        /// <param name="collaboratorAppService">The collaborator application service.</param>
+        public SpeakerController(IdentityAutenticationService identityController, ISpeakerService speakerService, ISpeakerAppService appService, ICollaboratorAppService collaboratorAppService)
+            : base(identityController)
         {
             _service = speakerService;
             _appService = appService;

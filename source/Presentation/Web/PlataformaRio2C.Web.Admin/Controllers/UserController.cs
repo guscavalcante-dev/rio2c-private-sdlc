@@ -1,22 +1,40 @@
-﻿using PlataformaRio2C.Application.Interfaces.Services;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Web.Admin
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-28-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-04-2019
+// ***********************************************************************
+// <copyright file="UserController.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Application.Interfaces.Services;
 using PlataformaRio2C.Application.ViewModels;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
+    /// <summary>UserController</summary>
     [Authorize(Roles = "Administrator")]
     //[Authorize(Roles = "Administrator", Users = "projeto.rio2c@marlin.com.br")]
     public class UserController : BaseController
     {
         private readonly IUserAppService _appService;
 
-        public UserController(IUserAppService appService, IUserRoleRepository userRoleRepository)
+        /// <summary>Initializes a new instance of the <see cref="UserController"/> class.</summary>
+        /// <param name="identityController">The identity controller.</param>
+        /// <param name="appService">The application service.</param>
+        /// <param name="userRoleRepository">The user role repository.</param>
+        public UserController(IdentityAutenticationService identityController, IUserAppService appService, IUserRoleRepository userRoleRepository)
+            : base(identityController)
         {
             _appService = appService;
         }
