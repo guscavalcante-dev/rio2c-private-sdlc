@@ -79,14 +79,14 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             #region Create/Update cookie culture
 
-            var cookie = Request.Cookies["MyRio2AdminCCulture"];
+            var cookie = Request.Cookies["MyRio2CAdminCulture"];
             if (cookie != null)
             {
                 cookie.Value = culture;   // update cookie value
             }
             else
             {
-                cookie = new HttpCookie("MyRio2AdminCCulture");
+                cookie = new HttpCookie("MyRio2CAdminCulture");
                 cookie.Value = culture;
                 cookie.Expires = DateTime.Now.AddYears(1);
             }

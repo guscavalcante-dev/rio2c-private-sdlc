@@ -58,7 +58,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         {
             // Attempt to read the culture cookie from Request
             var routeCulture = RouteData.Values["culture"] as string;
-            var cookieCulture = Request.Cookies["MyRio2AdminCCulture"]?.Value;
+            var cookieCulture = Request.Cookies["MyRio2CAdminCulture"]?.Value;
             var cultureName = routeCulture ??
                               cookieCulture ??
                               (Request.UserLanguages != null && Request.UserLanguages.Length > 0 ? Request.UserLanguages[0] : null);
