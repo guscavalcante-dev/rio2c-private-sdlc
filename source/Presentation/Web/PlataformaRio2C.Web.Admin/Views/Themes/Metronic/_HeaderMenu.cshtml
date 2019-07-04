@@ -3,9 +3,6 @@
     var isAdministrator = userRoles.HasElement("Administrator");
     var isProjectPitching = userRoles.HasElement("ProjectPitching");
     var isLogistics = userRoles.HasElement("Logistics");
-
-    var isPLayer = userRoles.HasElement("Player");
-    var isProducer = userRoles.HasElement("Producer");
     var menuOpenCssClass = "kt-menu__item--open kt-menu__item--here";
     var menuItemOpenCssClass = "kt-menu__item--active";
 }
@@ -36,25 +33,34 @@
                 </ul>
             </div>
         </li>
+    }
+    @if (isAdministrator || isProjectPitching)
+    {
         <li class="kt-menu__item kt-menu__item--submenu kt-menu__item--rel @this.IsOpen(menuOpenCssClass, "Index", "Producer", null) @this.IsOpen(menuOpenCssClass, "Index", "CollaboratorProducer", null) @this.IsOpen(menuOpenCssClass, "Index,ProjectPitching", "Project", null)" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
             <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">@Labels.Producers</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
             <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
                 <ul class="kt-menu__subnav">
-                    <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "Index", "Producer", null)" aria-haspopup="true">
-                        <a href="@Url.Action("Index", "Producer")" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Companies / @Labels.Producers</span></a>
-                    </li>
-                    <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "Index", "CollaboratorProducer", null)" aria-haspopup="true">
-                        <a href="@Url.Action("Index", "CollaboratorProducer")" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Executives / @Labels.Producers</span></a>
-                    </li>
-                    <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "Index", "Project", null)" aria-haspopup="true">
-                        <a href="@Url.Action("Index", "Project")" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Projects</span></a>
-                    </li>
+                    @if (isAdministrator)
+                    {
+                        <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "Index", "Producer", null)" aria-haspopup="true">
+                            <a href="@Url.Action("Index", "Producer")" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Companies / @Labels.Producers</span></a>
+                        </li>
+                        <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "Index", "CollaboratorProducer", null)" aria-haspopup="true">
+                            <a href="@Url.Action("Index", "CollaboratorProducer")" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Executives / @Labels.Producers</span></a>
+                        </li>
+                        <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "Index", "Project", null)" aria-haspopup="true">
+                            <a href="@Url.Action("Index", "Project")" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Projects</span></a>
+                        </li>
+                    }
                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "ProjectPitching", "Project", null)" aria-haspopup="true">
                         <a href="@Url.Action("ProjectPitching", "Project")" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.ProjectsForPitching</span></a>
                     </li>
                 </ul>
             </div>
         </li>
+    }
+    @if (isAdministrator)
+    {
         <li class="kt-menu__item kt-menu__item--submenu kt-menu__item--rel @this.IsOpen(menuOpenCssClass, "Index", "Conference", null) @this.IsOpen(menuOpenCssClass, "Index", "RoleLecturer", null)" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
             <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">@Labels.Speeches</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
             <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
@@ -78,11 +84,17 @@
                 <span class="kt-menu__link-text">@Labels.Rooms</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
             </a>
         </li>
+    }
+    @if (isAdministrator || isLogistics)
+    {
         <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "Index", "Logistics", null)" aria-haspopup="true">
             <a href="@Url.Action("Index", "Logistics")" class="kt-menu__link">
                 <span class="kt-menu__link-text">@Labels.Logistics</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
             </a>
         </li>
+    }
+    @if (isAdministrator)
+    {
         <li class="kt-menu__item kt-menu__item--submenu kt-menu__item--rel @this.IsOpen(menuOpenCssClass, null, "ScheduleOneToOneMeetings", null) @this.IsOpen(menuOpenCssClass, null, "ScheduleOneToOneMeetingsConfig", null)" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
             <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">@Labels.BusinessRoundtable</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
             <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
@@ -114,42 +126,5 @@
                 </ul>
             </div>
         </li>
-    }
-    @if (isProjectPitching)
-    {
-        @*<li class="sub-menu dcjq-parent-li">
-                <a href="javascript:;" class="dcjq-parent @Html.AddClassActive("active", "Index,Create,Edit,Schedule", "Producer,CollaboratorProducer,Project,ProjectPitching")">
-                    <div class="menu-items-flex menu-items-flex menu-items-flex--agenda ">
-                        <div><i class="icon-building"></i></div>
-                        <div> <span>Produtoras</span></div>
-                    </div>
-                    <span class="dcjq-icon"></span>
-                </a>
-                <ul class="sub">
-                    <li>
-                        <a class="@Html.AddClassActive("active", "Index,Create,Edit,PlayerSelection", "Project/ProjectPitching")" href="@Url.Action("ProjectPitching", "Project")">
-                            <div class="menu-items-flex">
-                                <div><span>Projetos para Pitching</span></div>
-                            </div>
-                        </a>
-                    </li>
-
-                </ul>
-            </li>*@
-    }
-    @if (isLogistics)
-    {
-        @*<li>
-                <a class="@Html.AddClassActive("active", "Index,Create,Edit", "Logistics")" href="@Url.Action("Index", "Logistics")">
-                    <div class="menu-items-flex">
-                        <div>
-                            <i class="icon-pushpin"></i>
-                        </div>
-                        <div>
-                            <span>Logística</span>
-                        </div>
-                    </div>
-                </a>
-            </li>*@
     }
 </ul>
