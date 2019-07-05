@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-02-2019
+// Last Modified On : 07-05-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -130,12 +130,14 @@ namespace PlataformaRio2C.Web.Site
 
             bundles.Add(new StyleBundle("~/bundles/css/layoutGlobalOptionalVendors").Include(
                 "~/Assets/themes/metronic/vendors/general/owl.carousel/dist/assets/owl.carousel.css",
-                "~/Assets/themes/metronic/vendors/general/owl.carousel/dist/assets/owl.theme.default.css",
-                "~/Assets/themes/metronic/vendors/custom/vendors/flaticon/flaticon.css",
-                "~/Assets/themes/metronic/vendors/custom/vendors/flaticon2/flaticon.css",
-                "~/Assets/themes/metronic/vendors/general/socicon/css/socicon.css",
-                "~/Assets/themes/metronic/vendors/custom/vendors/line-awesome/css/line-awesome.css",
-                "~/Assets/themes/metronic/vendors/general/fortawesome/fontawesome-free/css/all.min.css"));
+                "~/Assets/themes/metronic/vendors/general/owl.carousel/dist/assets/owl.theme.default.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/css/layoutFontOptionalVendors")
+                .Include("~/Assets/themes/metronic/vendors/custom/vendors/flaticon/flaticon.css", new CssRewriteUrlTransform())
+                .Include("~/Assets/themes/metronic/vendors/custom/vendors/flaticon2/flaticon.css", new CssRewriteUrlTransform())
+                .Include("~/Assets/themes/metronic/vendors/general/socicon/css/socicon.css", new CssRewriteUrlTransform())
+                .Include("~/Assets/themes/metronic/vendors/custom/vendors/line-awesome/css/line-awesome.css", new CssRewriteUrlTransform())
+                .Include("~/Assets/themes/metronic/vendors/general/fortawesome/fontawesome-free/css/all.min.css", new CssRewriteUrlTransform()));
 
             /*
                 <!--begin:: Global Optional Vendors -->
