@@ -36,7 +36,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Producer.Controllers
         {
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper("Dashboard", new List<BreadcrumbItemHelper> {
+            ViewBag.Breadcrumb = new BreadcrumbHelper("Área da Produtora", new List<BreadcrumbItemHelper> {
                 new BreadcrumbItemHelper("Dashboard", Url.Action("Index", "Home", new { Area = "Producer" }))
             });
 

@@ -9,7 +9,23 @@
             <span class="kt-header__topbar-icon">
 
                 <i class="la la-adjust"></i>
-            </span>
+
+                @*@if (ViewBag.Area == "Player")
+                {
+                
+                    <a href="@Url.Action("Index", "Home")" class="kt-menu__link">
+                        <span class="kt-menu__link-text">Área do Player</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
+                    </a>
+                
+                }
+
+                @if (ViewBag.Area == "Producer")
+                {
+                    <a href="@Url.Action("Index", "Home")" class="kt-menu__link">
+                        <span class="kt-menu__link-text">Área do Produtor</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
+                        </a>
+                }
+            </span>*@
         </div>
         <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-xl">
             <form>
