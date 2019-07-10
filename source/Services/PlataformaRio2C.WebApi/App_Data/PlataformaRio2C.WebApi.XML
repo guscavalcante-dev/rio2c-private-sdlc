@@ -83,6 +83,23 @@
             <param name="fieldsToRemove">The fields to remove.</param>
             <returns></returns>
         </member>
+        <member name="T:PlataformaRio2C.WebApi.Areas.Api.V1.Controllers.EventbriteController">
+            <summary>
+            Class for Eventbrite endpoints
+            </summary>
+        </member>
+        <member name="M:PlataformaRio2C.WebApi.Areas.Api.V1.Controllers.EventbriteController.#ctor">
+            <summary>Initializes a new instance of the <see cref="T:PlataformaRio2C.WebApi.Areas.Api.V1.Controllers.EventbriteController"/> class.</summary>
+        </member>
+        <member name="M:PlataformaRio2C.WebApi.Areas.Api.V1.Controllers.EventbriteController.Ping">
+            <summary>Pings this instance.</summary>
+            <returns></returns>
+        </member>
+        <member name="M:PlataformaRio2C.WebApi.Areas.Api.V1.Controllers.EventbriteController.Test(System.Object)">
+            <summary>Tests the specified body.</summary>
+            <param name="body">The body.</param>
+            <returns></returns>
+        </member>
         <member name="T:PlataformaRio2C.WebApi.Areas.Api.V1.Controllers.ConferenceController">
             <summary>
             Classe que fornece os endpoints sobre conferencias
