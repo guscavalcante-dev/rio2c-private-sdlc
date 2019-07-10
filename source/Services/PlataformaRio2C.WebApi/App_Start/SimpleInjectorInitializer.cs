@@ -1,4 +1,17 @@
-﻿using Microsoft.Owin;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.WebApi
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-10-2019
+// ***********************************************************************
+// <copyright file="SimpleInjectorInitializer.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using Microsoft.Owin;
 using PlataformaRio2C.Infra.CrossCutting.IOC;
 using SimpleInjector;
 using SimpleInjector.Integration.Web;
@@ -11,8 +24,10 @@ using System.Web.Mvc;
 
 namespace PlataformaRio2C.WebApi
 {
+    /// <summary>SimpleInjectorInitializer</summary>
     public static class SimpleInjectorInitializer
     {
+        /// <summary>Initializes this instance.</summary>
         public static void Initialize()
         {
             var container = new Container();
@@ -42,6 +57,8 @@ namespace PlataformaRio2C.WebApi
             GlobalConfiguration.Configuration.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);
         }
 
+        /// <summary>Initializes the container.</summary>
+        /// <param name="container">The container.</param>
         private static void InitializeContainer(Container container)
         {
             BootStrapper.RegisterServices(container);
