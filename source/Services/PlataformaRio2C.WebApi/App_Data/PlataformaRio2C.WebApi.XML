@@ -4,6 +4,16 @@
         <name>PlataformaRio2C.WebApi</name>
     </assembly>
     <members>
+        <member name="T:PlataformaRio2C.WebApi.SimpleInjectorInitializer">
+            <summary>SimpleInjectorInitializer</summary>
+        </member>
+        <member name="M:PlataformaRio2C.WebApi.SimpleInjectorInitializer.Initialize">
+            <summary>Initializes this instance.</summary>
+        </member>
+        <member name="M:PlataformaRio2C.WebApi.SimpleInjectorInitializer.InitializeContainer(SimpleInjector.Container)">
+            <summary>Initializes the container.</summary>
+            <param name="container">The container.</param>
+        </member>
         <member name="M:PlataformaRio2C.WebApi.Startup.ConfigureOAuth(Owin.IAppBuilder)">
             <summary>
             Configura o OAuth.
@@ -26,6 +36,52 @@
             <summary>
             Registra configurações
             </summary>
+        </member>
+        <member name="T:PlataformaRio2C.WebApi.Areas.Api.Controllers.BaseApiController">
+            <summary>BaseApiController</summary>
+        </member>
+        <member name="M:PlataformaRio2C.WebApi.Areas.Api.Controllers.BaseApiController.BadRequest(PlataformaRio2C.Application.AppValidationResult)">
+            <summary>Bads the request.</summary>
+            <param name="validationResult">The validation result.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PlataformaRio2C.WebApi.Areas.Api.Controllers.BaseApiController.NotFound(System.String)">
+            <summary>Nots the found.</summary>
+            <param name="message">The message.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PlataformaRio2C.WebApi.Areas.Api.Controllers.BaseApiController.BadRequest(System.String)">
+            <summary>Bads the request.</summary>
+            <param name="message">The message.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PlataformaRio2C.WebApi.Areas.Api.Controllers.BaseApiController.BadRequest(System.Exception)">
+            <summary>Bads the request.</summary>
+            <param name="ex">The ex.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PlataformaRio2C.WebApi.Areas.Api.Controllers.BaseApiController.Created(System.Object)">
+            <summary>Createds the specified view model.</summary>
+            <param name="viewModel">The view model.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PlataformaRio2C.WebApi.Areas.Api.Controllers.BaseApiController.Json(System.Object)">
+            <summary>Jsons the specified view model.</summary>
+            <param name="viewModel">The view model.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PlataformaRio2C.WebApi.Areas.Api.Controllers.BaseApiController.Json(System.Object,System.String)">
+            <summary>Jsons the specified view model.</summary>
+            <param name="viewModel">The view model.</param>
+            <param name="fields">The fields.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PlataformaRio2C.WebApi.Areas.Api.Controllers.BaseApiController.Json(System.Object,System.String,System.String)">
+            <summary>Jsons the specified view model.</summary>
+            <param name="viewModel">The view model.</param>
+            <param name="fields">The fields.</param>
+            <param name="fieldsToRemove">The fields to remove.</param>
+            <returns></returns>
         </member>
         <member name="T:PlataformaRio2C.WebApi.Areas.Api.V1.Controllers.ConferenceController">
             <summary>
@@ -358,6 +414,23 @@
             <summary>
             The controller that will handle requests for the help page.
             </summary>
+        </member>
+        <member name="M:PlataformaRio2C.WebApi.Areas.HelpPage.Controllers.HelpController.#ctor">
+            <summary>Initializes a new instance of the <see cref="T:PlataformaRio2C.WebApi.Areas.HelpPage.Controllers.HelpController"/> class.</summary>
+        </member>
+        <member name="M:PlataformaRio2C.WebApi.Areas.HelpPage.Controllers.HelpController.Index">
+            <summary>Indexes this instance.</summary>
+            <returns></returns>
+        </member>
+        <member name="M:PlataformaRio2C.WebApi.Areas.HelpPage.Controllers.HelpController.Api(System.String)">
+            <summary>APIs the specified API identifier.</summary>
+            <param name="apiId">The API identifier.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PlataformaRio2C.WebApi.Areas.HelpPage.Controllers.HelpController.ResourceModel(System.String)">
+            <summary>Resources the model.</summary>
+            <param name="modelName">Name of the model.</param>
+            <returns></returns>
         </member>
         <member name="M:PlataformaRio2C.WebApi.Areas.HelpPage.HelpPageConfigurationExtensions.SetDocumentationProvider(System.Web.Http.HttpConfiguration,System.Web.Http.Description.IDocumentationProvider)">
             <summary>

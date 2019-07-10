@@ -1,4 +1,17 @@
-﻿using Newtonsoft.Json;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.WebApi
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-10-2019
+// ***********************************************************************
+// <copyright file="BaseApiController.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
@@ -6,13 +19,10 @@ using PlataformaRio2C.WebApi.Areas.Api.ViewModels;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Dynamic;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -20,8 +30,12 @@ using System.Web.Script.Serialization;
 
 namespace PlataformaRio2C.WebApi.Areas.Api.Controllers
 {
+    /// <summary>BaseApiController</summary>
     public class BaseApiController : ApiController
     {
+        /// <summary>Bads the request.</summary>
+        /// <param name="validationResult">The validation result.</param>
+        /// <returns></returns>
         protected Task<IHttpActionResult> BadRequest(AppValidationResult validationResult)
         {
             IHttpActionResult response;
@@ -46,6 +60,9 @@ namespace PlataformaRio2C.WebApi.Areas.Api.Controllers
             return Task.FromResult(response);
         }
 
+        /// <summary>Nots the found.</summary>
+        /// <param name="message">The message.</param>
+        /// <returns></returns>
         protected Task<IHttpActionResult> NotFound(string message)
         {
             IHttpActionResult response;
@@ -70,6 +87,9 @@ namespace PlataformaRio2C.WebApi.Areas.Api.Controllers
             return Task.FromResult(response);
         }
 
+        /// <summary>Bads the request.</summary>
+        /// <param name="message">The message.</param>
+        /// <returns></returns>
         protected Task<IHttpActionResult> BadRequest(string message)
         {
             IHttpActionResult response;
@@ -94,6 +114,9 @@ namespace PlataformaRio2C.WebApi.Areas.Api.Controllers
             return Task.FromResult(response);
         }
 
+        /// <summary>Bads the request.</summary>
+        /// <param name="ex">The ex.</param>
+        /// <returns></returns>
         protected Task<IHttpActionResult> BadRequest(Exception ex)
         {
             IHttpActionResult response;
@@ -118,6 +141,9 @@ namespace PlataformaRio2C.WebApi.Areas.Api.Controllers
             return Task.FromResult(response);
         }
 
+        /// <summary>Createds the specified view model.</summary>
+        /// <param name="viewModel">The view model.</param>
+        /// <returns></returns>
         protected Task<IHttpActionResult> Created(object viewModel)
         {
             IHttpActionResult response;
@@ -129,10 +155,12 @@ namespace PlataformaRio2C.WebApi.Areas.Api.Controllers
 
             response = ResponseMessage(responseMessage);
 
-
             return Task.FromResult(response);
         }
 
+        /// <summary>Jsons the specified view model.</summary>
+        /// <param name="viewModel">The view model.</param>
+        /// <returns></returns>
         protected Task<IHttpActionResult> Json(object viewModel)
         {
             IHttpActionResult response;
@@ -149,6 +177,10 @@ namespace PlataformaRio2C.WebApi.Areas.Api.Controllers
             return Task.FromResult(response);
         }
 
+        /// <summary>Jsons the specified view model.</summary>
+        /// <param name="viewModel">The view model.</param>
+        /// <param name="fields">The fields.</param>
+        /// <returns></returns>
         protected Task<IHttpActionResult> Json(object viewModel, string fields)
         {
             if (!string.IsNullOrWhiteSpace(fields))
@@ -215,11 +247,14 @@ namespace PlataformaRio2C.WebApi.Areas.Api.Controllers
                 }
             }
 
-
-
             return Json(viewModel);
         }
 
+        /// <summary>Jsons the specified view model.</summary>
+        /// <param name="viewModel">The view model.</param>
+        /// <param name="fields">The fields.</param>
+        /// <param name="fieldsToRemove">The fields to remove.</param>
+        /// <returns></returns>
         protected Task<IHttpActionResult> Json(object viewModel, string fields, string fieldsToRemove)
         {
             if (!string.IsNullOrWhiteSpace(fields))
@@ -285,7 +320,6 @@ namespace PlataformaRio2C.WebApi.Areas.Api.Controllers
                     }
                 }
             }
-
 
             if (!string.IsNullOrWhiteSpace(fieldsToRemove))
             {
