@@ -435,6 +435,10 @@
         <member name="M:PlataformaRio2C.WebApi.Areas.HelpPage.Controllers.HelpController.#ctor">
             <summary>Initializes a new instance of the <see cref="T:PlataformaRio2C.WebApi.Areas.HelpPage.Controllers.HelpController"/> class.</summary>
         </member>
+        <member name="P:PlataformaRio2C.WebApi.Areas.HelpPage.Controllers.HelpController.Configuration">
+            <summary>Gets the configuration.</summary>
+            <value>The configuration.</value>
+        </member>
         <member name="M:PlataformaRio2C.WebApi.Areas.HelpPage.Controllers.HelpController.Index">
             <summary>Indexes this instance.</summary>
             <returns></returns>

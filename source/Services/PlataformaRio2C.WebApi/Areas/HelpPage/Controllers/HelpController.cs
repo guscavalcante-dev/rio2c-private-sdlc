@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 07-10-2019
 // ***********************************************************************
-// <copyright file="HelpController.cs" company="Softo">
+// <copyright file="SimpleInjectorInitializer.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -24,7 +24,6 @@ namespace PlataformaRio2C.WebApi.Areas.HelpPage.Controllers
     /// </summary>
     public class HelpController : Controller
     {
-        public HttpConfiguration Configuration { get; private set; }
         private const string ErrorViewName = "Error";
 
         /// <summary>Initializes a new instance of the <see cref="HelpController"/> class.</summary>
@@ -32,6 +31,10 @@ namespace PlataformaRio2C.WebApi.Areas.HelpPage.Controllers
         {
             this.Configuration = GlobalConfiguration.Configuration;
         }
+
+        /// <summary>Gets the configuration.</summary>
+        /// <value>The configuration.</value>
+        public HttpConfiguration Configuration { get; private set; }
 
         /// <summary>Indexes this instance.</summary>
         /// <returns></returns>
