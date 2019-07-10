@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 07-10-2019
 // ***********************************************************************
-// <copyright file="SimpleInjectorInitializer.cs" company="Softo">
+// <copyright file="HelpController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
