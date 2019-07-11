@@ -1,4 +1,11 @@
-﻿SET IDENTITY_INSERT [dbo].[Quiz] ON 
+﻿SET IDENTITY_INSERT [dbo].[AspNetUsers] ON 
+
+GO
+INSERT [dbo].[AspNetUsers] ([Id], [Uid], [CreationDate], [Active], [Name], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDateUtc], [LockoutEnabled], [AccessFailedCount], [UserName], [PasswordNew]) VALUES (1, N'4c576e3d-a400-445a-b4f9-054fa5129097', CAST(N'2017-10-13 11:19:12.610' AS DateTime), 1, N'Master', N'admin@rio2c.com', 0, N'AAJrovDMfghIz1jmPR3hT2nQvqXBXag9yhLLbRD5dtc1VaTkzqWHX5t6vEqZR6KcJw==', N'71e9d659-1645-4c1b-a41a-c67a3ae4f42c', NULL, 0, 0, NULL, 0, 0, N'projeto.rio2c@marlin.com.br', NULL)
+GO
+SET IDENTITY_INSERT [dbo].[AspNetUsers] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Quiz] ON 
 
 GO
 INSERT [dbo].[Quiz] ([Id], [EventId], [Name], [Uid], [CreationDate]) VALUES (1, 1, N'Pesquisa 2018', N'0a208226-c930-4e8d-a6a4-376f129c6dfe', CAST(N'2018-10-24 16:24:49.813' AS DateTime))
@@ -16,13 +23,6 @@ INSERT [dbo].[QuizQuestion] ([Id], [QuizId], [Question], [Uid], [CreationDate]) 
 GO
 SET IDENTITY_INSERT [dbo].[QuizQuestion] OFF
 GO
-SET IDENTITY_INSERT [dbo].[AspNetUsers] ON 
-
-GO
-INSERT [dbo].[AspNetUsers] ([Id], [Uid], [CreationDate], [Active], [Name], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDateUtc], [LockoutEnabled], [AccessFailedCount], [UserName], [PasswordNew]) VALUES (1, N'4c576e3d-a400-445a-b4f9-054fa5129097', CAST(N'2017-10-13 11:19:12.610' AS DateTime), 1, N'Master', N'admin@rio2c.com', 0, N'AAJrovDMfghIz1jmPR3hT2nQvqXBXag9yhLLbRD5dtc1VaTkzqWHX5t6vEqZR6KcJw==', N'71e9d659-1645-4c1b-a41a-c67a3ae4f42c', NULL, 0, 0, NULL, 0, 0, N'projeto.rio2c@marlin.com.br', NULL)
-GO
-SET IDENTITY_INSERT [dbo].[AspNetUsers] OFF
-GO
 INSERT [dbo].[QuizOption] ([Id], [QuestionId], [Text], [Value], [Uid], [CreationDate]) VALUES (1, 1, 0, N'Sim / Yes', N'444d96ad-1819-4989-a795-75324cba74c6', CAST(N'2018-10-24 16:30:56.917' AS DateTime))
 GO
 INSERT [dbo].[QuizOption] ([Id], [QuestionId], [Text], [Value], [Uid], [CreationDate]) VALUES (2, 1, 0, N'Não / No', N'96d76365-da41-48da-a3b7-ce5078c1ccea', CAST(N'2018-10-24 16:30:56.917' AS DateTime))
@@ -34,6 +34,157 @@ GO
 INSERT [dbo].[QuizOption] ([Id], [QuestionId], [Text], [Value], [Uid], [CreationDate]) VALUES (5, 3, 1, N'Projeto / Project', N'e5d7476e-e336-402e-9434-7f2fb6a478a2', CAST(N'2018-10-24 16:30:56.917' AS DateTime))
 GO
 INSERT [dbo].[QuizOption] ([Id], [QuestionId], [Text], [Value], [Uid], [CreationDate]) VALUES (6, 3, 1, N'Valor investido (dolar) / Total amount invested (dolar)', N'dc103eb7-0b2e-47f6-bda4-3447f382b04e', CAST(N'2018-10-24 16:30:56.917' AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[Language] ON 
+
+GO
+INSERT [dbo].[Language] ([Id], [Name], [Code], [Uid], [CreationDate]) VALUES (1, N'English', N'En', N'bae39f2b-c4fe-448f-9c36-0dcd8deadf8d', CAST(N'2017-10-13 16:41:32.313' AS DateTime))
+GO
+INSERT [dbo].[Language] ([Id], [Name], [Code], [Uid], [CreationDate]) VALUES (2, N'Português', N'PtBr', N'adc14eca-0523-4a6f-8802-8cf125507694', CAST(N'2017-10-13 16:41:32.313' AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[Language] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Room] ON 
+
+GO
+INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (4, N'58215549-9ecc-4f86-8398-9e452a77f9f9', CAST(N'2018-02-09 12:04:26.713' AS DateTime))
+GO
+INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (5, N'a2fb1580-e01f-4cd3-925e-3e822082c22a', CAST(N'2018-02-09 12:04:40.197' AS DateTime))
+GO
+INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (17, N'c1ed1ad7-c8c7-4bf1-b9c4-0fd85ea12615', CAST(N'2019-03-01 12:26:23.560' AS DateTime))
+GO
+INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (18, N'aa2257bb-fd45-44aa-a686-d9bd54419cb5', CAST(N'2019-03-01 12:26:32.030' AS DateTime))
+GO
+INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (19, N'832a6641-51a4-406d-a5d8-520ed0762739', CAST(N'2019-03-01 12:26:38.027' AS DateTime))
+GO
+INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (20, N'ff7c116c-8e04-4ebe-a006-8822da515b39', CAST(N'2019-03-01 12:26:44.800' AS DateTime))
+GO
+INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (21, N'c2a3a192-c28a-4a51-a7bd-f6be340709ce', CAST(N'2019-03-01 12:27:13.427' AS DateTime))
+GO
+INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (22, N'6053511f-7655-4210-83c8-476cc816f5f5', CAST(N'2019-03-01 12:27:19.987' AS DateTime))
+GO
+INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (23, N'b0b5c892-e7db-46d8-820c-3c5a86be85b3', CAST(N'2019-03-01 12:27:26.890' AS DateTime))
+GO
+INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (25, N'1eeb5390-5bb4-4283-a597-0d1b9c0f5b8a', CAST(N'2019-03-01 12:27:45.617' AS DateTime))
+GO
+INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (26, N'ccc0ef2b-ae20-4c24-bdf5-0eb639d00242', CAST(N'2019-03-01 12:27:56.107' AS DateTime))
+GO
+INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (27, N'3f2fead6-9da0-4d6a-ad66-b58aa9780764', CAST(N'2019-03-01 12:28:03.610' AS DateTime))
+GO
+INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (28, N'f39b98a0-643c-4cd3-b24a-91a98de29abb', CAST(N'2019-03-01 12:28:10.650' AS DateTime))
+GO
+INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (29, N'0db4a59e-da51-4cdf-a958-6ac844530580', CAST(N'2019-03-01 12:28:16.650' AS DateTime))
+GO
+INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (34, N'4646a801-3967-4cca-a0f0-f45c082be4af', CAST(N'2019-03-01 12:29:25.120' AS DateTime))
+GO
+INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (35, N'e851b1c4-4459-4f9d-a116-c72fe121c21b', CAST(N'2019-03-01 12:32:06.773' AS DateTime))
+GO
+INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (36, N'9d1f8b23-24be-403b-8cf4-e4b34c5fda56', CAST(N'2019-03-01 12:39:41.673' AS DateTime))
+GO
+INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (38, N'89b833c3-17d0-4537-b5aa-7be196675ba3', CAST(N'2019-03-12 12:39:52.580' AS DateTime))
+GO
+INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (39, N'ce4f68b1-c928-4e86-a80d-05fbdef1c730', CAST(N'2019-03-13 12:30:11.400' AS DateTime))
+GO
+INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (40, N'4f4d12e6-83d8-4fb3-979a-d5a86fb8f520', CAST(N'2019-03-28 12:13:54.777' AS DateTime))
+GO
+INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (41, N'7b295a87-62a2-4898-8a9f-74b1a060ec7f', CAST(N'2019-04-03 15:39:30.557' AS DateTime))
+GO
+INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (42, N'bb4493fe-664e-4c3c-826b-c1b3f7b57f83', CAST(N'2019-04-04 15:10:50.707' AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[Room] OFF
+GO
+SET IDENTITY_INSERT [dbo].[RoomName] ON 
+
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (55, N'TEATRO DE CÂMARA ', 1, 17, N'73956c51-a0c3-4692-8642-f8b08bb07de4', CAST(N'2019-03-01 12:26:23.560' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (56, N'TEATRO DE CÂMARA ', 2, 17, N'2829da79-0315-45dc-8f18-1d1d725b9f9b', CAST(N'2019-03-01 12:26:23.560' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (57, N'LOUNGE DA MÚSICA', 1, 18, N'783b01c3-91fb-4e4e-b708-5a1b1a6afc84', CAST(N'2019-03-01 12:26:32.030' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (58, N'LOUNGE DA MÚSICA', 2, 18, N'5f78136a-90b8-4b66-8700-ea8f0cde9d31', CAST(N'2019-03-01 12:26:32.030' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (59, N'LOUNGE DE INOVAÇÃO', 1, 19, N'c92c21f1-9870-4427-a267-cac6e912af00', CAST(N'2019-03-01 12:26:38.027' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (60, N'LOUNGE DE INOVAÇÃO', 2, 19, N'eafcb0e5-b38e-4df3-9bb3-65664312e8f0', CAST(N'2019-03-01 12:26:38.027' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (61, N'SALA AUDIOVISUAL', 1, 20, N'b4656372-07b7-4bf5-b2ff-6b28ef840b5b', CAST(N'2019-03-01 12:26:44.800' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (62, N'SALA AUDIOVISUAL', 2, 20, N'6d4df800-4cb8-4a46-88fd-fb835650f3fb', CAST(N'2019-03-01 12:26:44.800' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (63, N'PALCO FESTIVÁLIA', 1, 21, N'eb6e3ac9-88bb-414e-b010-14646226df9f', CAST(N'2019-03-01 12:27:13.427' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (64, N'PALCO FESTIVÁLIA', 2, 21, N'39be5a7f-d8d6-4645-86e4-866743467d62', CAST(N'2019-03-01 12:27:13.427' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (67, N'BRAZILIAN CONTENT', 1, 23, N'56f3672a-ab27-4849-9abf-618b80d2dd72', CAST(N'2019-03-01 12:27:26.890' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (68, N'BRAZILIAN CONTENT', 2, 23, N'ef9c1a3a-fa56-47dd-9e3c-a90c6740c1e4', CAST(N'2019-03-01 12:27:26.890' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (71, N'GRANDE SALA', 1, 25, N'9bf9244c-051b-4e00-a2c2-bfad91d478ed', CAST(N'2019-03-01 12:27:45.617' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (72, N'GRANDE SALA', 2, 25, N'ea07c878-951e-4e9d-8b61-bef907b7e9c7', CAST(N'2019-03-01 12:27:45.617' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (73, N'PITCHING DE STARTUPS', 1, 26, N'5650d6ce-8ac1-4512-b69f-7c57215d6bb0', CAST(N'2019-03-01 12:27:56.107' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (74, N'PITCHING DE STARTUPS', 2, 26, N'2f79f6c4-c650-470e-8036-fda7b5a0cece', CAST(N'2019-03-01 12:27:56.107' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (75, N'SALA DE MÚSICA', 1, 27, N'1127c90a-550d-4536-bb90-3ecd592f244d', CAST(N'2019-03-01 12:28:03.610' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (76, N'SALA DE MÚSICA', 2, 27, N'f5e8f61c-0539-4386-9b30-d93d52dd5b3c', CAST(N'2019-03-01 12:28:03.610' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (77, N'SALA DE INOVAÇÃO', 1, 28, N'4e52c02f-61df-4d85-ace7-000c3a8049e4', CAST(N'2019-03-01 12:28:10.650' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (78, N'SALA DE INOVAÇÃO', 2, 28, N'56ba257f-bbd5-4b12-944d-994022489811', CAST(N'2019-03-01 12:28:10.650' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (79, N'PITCHING SHOW', 1, 29, N'c1177cf6-5a69-444b-a099-d8599c66ad1d', CAST(N'2019-03-01 12:28:16.650' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (80, N'PITCHING SHOW', 2, 29, N'2f37f5bc-1bad-4429-858c-ba643929cba6', CAST(N'2019-03-01 12:28:16.650' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (91, N'LOUNGE AUDIOVISUAL', 1, 35, N'2e2dd140-216c-4385-9383-6784b862c4ef', CAST(N'2019-03-01 12:32:06.773' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (92, N'LOUNGE AUDIOVISUAL', 2, 35, N'61c73e83-4769-42ca-8fe6-96a2445b5042', CAST(N'2019-03-01 12:32:06.773' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (93, N'PITCHING DO AUDIOVISUAL', 1, 36, N'6bb09d6c-2767-4e93-b1e5-8450127a536c', CAST(N'2019-03-01 12:39:41.673' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (94, N'PITCHING DO AUDIOVISUAL', 2, 36, N'f8ac0f5b-5c78-4ef9-8e13-c27fbae06d7a', CAST(N'2019-03-01 12:39:41.673' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (97, N'One-to-One Meetings (Room 4)', 1, 38, N'1df297a3-fe64-4c73-8d73-82981f5daf2b', CAST(N'2019-03-12 12:39:52.580' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (98, N'Rodadas de Negócios (Sala 4)', 2, 38, N'5be96f2f-93b6-489f-9e3a-6a4c1d0b9e04', CAST(N'2019-03-12 12:39:52.580' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (107, N'One-to-One Meetings (Room 2)', 1, 5, N'41e10b43-229e-4085-b6ed-538c96400cd0', CAST(N'2019-03-12 12:46:17.033' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (108, N'Rodadas de Negócios (Sala 2)', 2, 5, N'5fa00dc1-77f4-4535-b012-5a5ecd434c6e', CAST(N'2019-03-12 12:46:17.033' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (109, N'One-to-One Meetings (Room 1)', 1, 4, N'cb4c57b7-3b96-4b99-8dbb-53afac99faf1', CAST(N'2019-03-12 12:51:13.870' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (110, N'Rodadas de Negócios (Sala 1)', 2, 4, N'b8bcc926-e780-441c-9b40-51fd57620f65', CAST(N'2019-03-12 12:51:13.870' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (111, N'One-to-One Meetings (Room 3)', 1, 34, N'42bbd647-ac82-4572-a7ba-9166743d0bc6', CAST(N'2019-03-12 12:53:48.627' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (112, N'Rodadas de Negócios (Sala 3)', 2, 34, N'66177568-42b8-4bcb-8320-6b657d526bbb', CAST(N'2019-03-12 12:53:48.627' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (115, N'SEBRAE''s Stand', 1, 39, N'21c73064-bea8-401e-8117-556feccc6647', CAST(N'2019-03-13 15:39:16.113' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (116, N'Stand do SEBRAE', 2, 39, N'7821c521-86fe-4bf0-bee6-a4cb50483ab4', CAST(N'2019-03-13 15:39:16.143' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (117, N'BRAINSPACE', 1, 22, N'2e1309c1-9319-4937-b82e-908805499261', CAST(N'2019-03-26 14:55:03.327' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (118, N'BRAINSPACE', 2, 22, N'92155168-6f0a-4f93-805f-d364792c2afb', CAST(N'2019-03-26 14:55:03.327' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (119, N'BRAZILIAN CONTENT.', 1, 40, N'2692fa9a-27b6-455b-9842-c0a1ed6543d4', CAST(N'2019-03-28 12:13:54.777' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (120, N'BRAZILIAN CONTENT.', 2, 40, N'd5429a91-fa19-407e-8a3f-b1d0731bf01a', CAST(N'2019-03-28 12:13:54.777' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (121, N'Inovação 2', 1, 41, N'5d34a53f-05d9-4405-9709-c9da8978cfe3', CAST(N'2019-04-03 15:39:30.557' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (122, N'Inovação 2', 2, 41, N'e62fecc0-6d7f-4fe8-802c-10f3fed5e3dc', CAST(N'2019-04-03 15:39:30.557' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (127, N'BRAZILIAN CONTENT..', 1, 42, N'72534c00-4f83-48b2-aa32-8529da875ad3', CAST(N'2019-04-04 17:27:38.287' AS DateTime))
+GO
+INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (128, N'BRAZILIAN CONTENT..', 2, 42, N'5f26a7dd-1c1d-44df-bc54-1732c05f5a41', CAST(N'2019-04-04 17:27:38.287' AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[RoomName] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Address] ON 
 
@@ -5576,175 +5727,6 @@ INSERT [dbo].[Address] ([Id], [ZipCode], [Country], [State], [City], [AddressVal
 GO
 SET IDENTITY_INSERT [dbo].[Address] OFF
 GO
-SET IDENTITY_INSERT [dbo].[Room] ON 
-
-GO
-INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (4, N'58215549-9ecc-4f86-8398-9e452a77f9f9', CAST(N'2018-02-09 12:04:26.713' AS DateTime))
-GO
-INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (5, N'a2fb1580-e01f-4cd3-925e-3e822082c22a', CAST(N'2018-02-09 12:04:40.197' AS DateTime))
-GO
-INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (17, N'c1ed1ad7-c8c7-4bf1-b9c4-0fd85ea12615', CAST(N'2019-03-01 12:26:23.560' AS DateTime))
-GO
-INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (18, N'aa2257bb-fd45-44aa-a686-d9bd54419cb5', CAST(N'2019-03-01 12:26:32.030' AS DateTime))
-GO
-INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (19, N'832a6641-51a4-406d-a5d8-520ed0762739', CAST(N'2019-03-01 12:26:38.027' AS DateTime))
-GO
-INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (20, N'ff7c116c-8e04-4ebe-a006-8822da515b39', CAST(N'2019-03-01 12:26:44.800' AS DateTime))
-GO
-INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (21, N'c2a3a192-c28a-4a51-a7bd-f6be340709ce', CAST(N'2019-03-01 12:27:13.427' AS DateTime))
-GO
-INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (22, N'6053511f-7655-4210-83c8-476cc816f5f5', CAST(N'2019-03-01 12:27:19.987' AS DateTime))
-GO
-INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (23, N'b0b5c892-e7db-46d8-820c-3c5a86be85b3', CAST(N'2019-03-01 12:27:26.890' AS DateTime))
-GO
-INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (25, N'1eeb5390-5bb4-4283-a597-0d1b9c0f5b8a', CAST(N'2019-03-01 12:27:45.617' AS DateTime))
-GO
-INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (26, N'ccc0ef2b-ae20-4c24-bdf5-0eb639d00242', CAST(N'2019-03-01 12:27:56.107' AS DateTime))
-GO
-INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (27, N'3f2fead6-9da0-4d6a-ad66-b58aa9780764', CAST(N'2019-03-01 12:28:03.610' AS DateTime))
-GO
-INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (28, N'f39b98a0-643c-4cd3-b24a-91a98de29abb', CAST(N'2019-03-01 12:28:10.650' AS DateTime))
-GO
-INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (29, N'0db4a59e-da51-4cdf-a958-6ac844530580', CAST(N'2019-03-01 12:28:16.650' AS DateTime))
-GO
-INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (34, N'4646a801-3967-4cca-a0f0-f45c082be4af', CAST(N'2019-03-01 12:29:25.120' AS DateTime))
-GO
-INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (35, N'e851b1c4-4459-4f9d-a116-c72fe121c21b', CAST(N'2019-03-01 12:32:06.773' AS DateTime))
-GO
-INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (36, N'9d1f8b23-24be-403b-8cf4-e4b34c5fda56', CAST(N'2019-03-01 12:39:41.673' AS DateTime))
-GO
-INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (38, N'89b833c3-17d0-4537-b5aa-7be196675ba3', CAST(N'2019-03-12 12:39:52.580' AS DateTime))
-GO
-INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (39, N'ce4f68b1-c928-4e86-a80d-05fbdef1c730', CAST(N'2019-03-13 12:30:11.400' AS DateTime))
-GO
-INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (40, N'4f4d12e6-83d8-4fb3-979a-d5a86fb8f520', CAST(N'2019-03-28 12:13:54.777' AS DateTime))
-GO
-INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (41, N'7b295a87-62a2-4898-8a9f-74b1a060ec7f', CAST(N'2019-04-03 15:39:30.557' AS DateTime))
-GO
-INSERT [dbo].[Room] ([Id], [Uid], [CreationDate]) VALUES (42, N'bb4493fe-664e-4c3c-826b-c1b3f7b57f83', CAST(N'2019-04-04 15:10:50.707' AS DateTime))
-GO
-SET IDENTITY_INSERT [dbo].[Room] OFF
-GO
-SET IDENTITY_INSERT [dbo].[Language] ON 
-
-GO
-INSERT [dbo].[Language] ([Id], [Name], [Code], [Uid], [CreationDate]) VALUES (1, N'English', N'En', N'bae39f2b-c4fe-448f-9c36-0dcd8deadf8d', CAST(N'2017-10-13 16:41:32.313' AS DateTime))
-GO
-INSERT [dbo].[Language] ([Id], [Name], [Code], [Uid], [CreationDate]) VALUES (2, N'Português', N'PtBr', N'adc14eca-0523-4a6f-8802-8cf125507694', CAST(N'2017-10-13 16:41:32.313' AS DateTime))
-GO
-SET IDENTITY_INSERT [dbo].[Language] OFF
-GO
-SET IDENTITY_INSERT [dbo].[SalesPlatform] ON 
-
-GO
-INSERT [dbo].[SalesPlatform] ([Id], [AlternativeId], [Name], [IsActive], [WebhookSecurityKey], [ApiKey], [ApiSecret], [MaxProcessingCount], [CreationUserId], [CreationDate], [UpdateUserId], [UpdateDate], [SecurityStamp]) VALUES (N'717287c1-bb97-43ca-99c0-4d25576eb3b0', 1, N'Eventbrite', 1, N'3718d5bd-d3d3-4e8f-a3e0-5270c5830af2', N'AR735YTCZCCPZYKPFN', NULL, 15, 1, CAST(N'2019-07-11 13:43:23.047' AS DateTime), 1, CAST(N'2019-07-11 13:43:23.047' AS DateTime), N'5852137c-86a3-4798-9ece-509818ae0955')
-GO
-SET IDENTITY_INSERT [dbo].[SalesPlatform] OFF
-GO
-SET IDENTITY_INSERT [dbo].[ProjectStatus] ON 
-
-GO
-INSERT [dbo].[ProjectStatus] ([Id], [Code], [Name], [CreationDate]) VALUES (1, N'OnEvaluation', N'OnEvaluation', CAST(N'2017-12-12 18:56:34.530' AS DateTime))
-GO
-INSERT [dbo].[ProjectStatus] ([Id], [Code], [Name], [CreationDate]) VALUES (2, N'Accepted', N'Accepted', CAST(N'2017-12-12 18:56:34.530' AS DateTime))
-GO
-INSERT [dbo].[ProjectStatus] ([Id], [Code], [Name], [CreationDate]) VALUES (3, N'Rejected', N'Rejected', CAST(N'2017-12-12 18:56:34.530' AS DateTime))
-GO
-SET IDENTITY_INSERT [dbo].[ProjectStatus] OFF
-GO
-SET IDENTITY_INSERT [dbo].[RoomName] ON 
-
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (55, N'TEATRO DE CÂMARA ', 1, 17, N'73956c51-a0c3-4692-8642-f8b08bb07de4', CAST(N'2019-03-01 12:26:23.560' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (56, N'TEATRO DE CÂMARA ', 2, 17, N'2829da79-0315-45dc-8f18-1d1d725b9f9b', CAST(N'2019-03-01 12:26:23.560' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (57, N'LOUNGE DA MÚSICA', 1, 18, N'783b01c3-91fb-4e4e-b708-5a1b1a6afc84', CAST(N'2019-03-01 12:26:32.030' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (58, N'LOUNGE DA MÚSICA', 2, 18, N'5f78136a-90b8-4b66-8700-ea8f0cde9d31', CAST(N'2019-03-01 12:26:32.030' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (59, N'LOUNGE DE INOVAÇÃO', 1, 19, N'c92c21f1-9870-4427-a267-cac6e912af00', CAST(N'2019-03-01 12:26:38.027' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (60, N'LOUNGE DE INOVAÇÃO', 2, 19, N'eafcb0e5-b38e-4df3-9bb3-65664312e8f0', CAST(N'2019-03-01 12:26:38.027' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (61, N'SALA AUDIOVISUAL', 1, 20, N'b4656372-07b7-4bf5-b2ff-6b28ef840b5b', CAST(N'2019-03-01 12:26:44.800' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (62, N'SALA AUDIOVISUAL', 2, 20, N'6d4df800-4cb8-4a46-88fd-fb835650f3fb', CAST(N'2019-03-01 12:26:44.800' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (63, N'PALCO FESTIVÁLIA', 1, 21, N'eb6e3ac9-88bb-414e-b010-14646226df9f', CAST(N'2019-03-01 12:27:13.427' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (64, N'PALCO FESTIVÁLIA', 2, 21, N'39be5a7f-d8d6-4645-86e4-866743467d62', CAST(N'2019-03-01 12:27:13.427' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (67, N'BRAZILIAN CONTENT', 1, 23, N'56f3672a-ab27-4849-9abf-618b80d2dd72', CAST(N'2019-03-01 12:27:26.890' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (68, N'BRAZILIAN CONTENT', 2, 23, N'ef9c1a3a-fa56-47dd-9e3c-a90c6740c1e4', CAST(N'2019-03-01 12:27:26.890' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (71, N'GRANDE SALA', 1, 25, N'9bf9244c-051b-4e00-a2c2-bfad91d478ed', CAST(N'2019-03-01 12:27:45.617' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (72, N'GRANDE SALA', 2, 25, N'ea07c878-951e-4e9d-8b61-bef907b7e9c7', CAST(N'2019-03-01 12:27:45.617' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (73, N'PITCHING DE STARTUPS', 1, 26, N'5650d6ce-8ac1-4512-b69f-7c57215d6bb0', CAST(N'2019-03-01 12:27:56.107' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (74, N'PITCHING DE STARTUPS', 2, 26, N'2f79f6c4-c650-470e-8036-fda7b5a0cece', CAST(N'2019-03-01 12:27:56.107' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (75, N'SALA DE MÚSICA', 1, 27, N'1127c90a-550d-4536-bb90-3ecd592f244d', CAST(N'2019-03-01 12:28:03.610' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (76, N'SALA DE MÚSICA', 2, 27, N'f5e8f61c-0539-4386-9b30-d93d52dd5b3c', CAST(N'2019-03-01 12:28:03.610' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (77, N'SALA DE INOVAÇÃO', 1, 28, N'4e52c02f-61df-4d85-ace7-000c3a8049e4', CAST(N'2019-03-01 12:28:10.650' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (78, N'SALA DE INOVAÇÃO', 2, 28, N'56ba257f-bbd5-4b12-944d-994022489811', CAST(N'2019-03-01 12:28:10.650' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (79, N'PITCHING SHOW', 1, 29, N'c1177cf6-5a69-444b-a099-d8599c66ad1d', CAST(N'2019-03-01 12:28:16.650' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (80, N'PITCHING SHOW', 2, 29, N'2f37f5bc-1bad-4429-858c-ba643929cba6', CAST(N'2019-03-01 12:28:16.650' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (91, N'LOUNGE AUDIOVISUAL', 1, 35, N'2e2dd140-216c-4385-9383-6784b862c4ef', CAST(N'2019-03-01 12:32:06.773' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (92, N'LOUNGE AUDIOVISUAL', 2, 35, N'61c73e83-4769-42ca-8fe6-96a2445b5042', CAST(N'2019-03-01 12:32:06.773' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (93, N'PITCHING DO AUDIOVISUAL', 1, 36, N'6bb09d6c-2767-4e93-b1e5-8450127a536c', CAST(N'2019-03-01 12:39:41.673' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (94, N'PITCHING DO AUDIOVISUAL', 2, 36, N'f8ac0f5b-5c78-4ef9-8e13-c27fbae06d7a', CAST(N'2019-03-01 12:39:41.673' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (97, N'One-to-One Meetings (Room 4)', 1, 38, N'1df297a3-fe64-4c73-8d73-82981f5daf2b', CAST(N'2019-03-12 12:39:52.580' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (98, N'Rodadas de Negócios (Sala 4)', 2, 38, N'5be96f2f-93b6-489f-9e3a-6a4c1d0b9e04', CAST(N'2019-03-12 12:39:52.580' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (107, N'One-to-One Meetings (Room 2)', 1, 5, N'41e10b43-229e-4085-b6ed-538c96400cd0', CAST(N'2019-03-12 12:46:17.033' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (108, N'Rodadas de Negócios (Sala 2)', 2, 5, N'5fa00dc1-77f4-4535-b012-5a5ecd434c6e', CAST(N'2019-03-12 12:46:17.033' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (109, N'One-to-One Meetings (Room 1)', 1, 4, N'cb4c57b7-3b96-4b99-8dbb-53afac99faf1', CAST(N'2019-03-12 12:51:13.870' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (110, N'Rodadas de Negócios (Sala 1)', 2, 4, N'b8bcc926-e780-441c-9b40-51fd57620f65', CAST(N'2019-03-12 12:51:13.870' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (111, N'One-to-One Meetings (Room 3)', 1, 34, N'42bbd647-ac82-4572-a7ba-9166743d0bc6', CAST(N'2019-03-12 12:53:48.627' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (112, N'Rodadas de Negócios (Sala 3)', 2, 34, N'66177568-42b8-4bcb-8320-6b657d526bbb', CAST(N'2019-03-12 12:53:48.627' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (115, N'SEBRAE''s Stand', 1, 39, N'21c73064-bea8-401e-8117-556feccc6647', CAST(N'2019-03-13 15:39:16.113' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (116, N'Stand do SEBRAE', 2, 39, N'7821c521-86fe-4bf0-bee6-a4cb50483ab4', CAST(N'2019-03-13 15:39:16.143' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (117, N'BRAINSPACE', 1, 22, N'2e1309c1-9319-4937-b82e-908805499261', CAST(N'2019-03-26 14:55:03.327' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (118, N'BRAINSPACE', 2, 22, N'92155168-6f0a-4f93-805f-d364792c2afb', CAST(N'2019-03-26 14:55:03.327' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (119, N'BRAZILIAN CONTENT.', 1, 40, N'2692fa9a-27b6-455b-9842-c0a1ed6543d4', CAST(N'2019-03-28 12:13:54.777' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (120, N'BRAZILIAN CONTENT.', 2, 40, N'd5429a91-fa19-407e-8a3f-b1d0731bf01a', CAST(N'2019-03-28 12:13:54.777' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (121, N'Inovação 2', 1, 41, N'5d34a53f-05d9-4405-9709-c9da8978cfe3', CAST(N'2019-04-03 15:39:30.557' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (122, N'Inovação 2', 2, 41, N'e62fecc0-6d7f-4fe8-802c-10f3fed5e3dc', CAST(N'2019-04-03 15:39:30.557' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (127, N'BRAZILIAN CONTENT..', 1, 42, N'72534c00-4f83-48b2-aa32-8529da875ad3', CAST(N'2019-04-04 17:27:38.287' AS DateTime))
-GO
-INSERT [dbo].[RoomName] ([Id], [Value], [LanguageId], [RoomId], [Uid], [CreationDate]) VALUES (128, N'BRAZILIAN CONTENT..', 2, 42, N'5f26a7dd-1c1d-44df-bc54-1732c05f5a41', CAST(N'2019-04-04 17:27:38.287' AS DateTime))
-GO
-SET IDENTITY_INSERT [dbo].[RoomName] OFF
-GO
 SET IDENTITY_INSERT [dbo].[Country] ON 
 
 GO
@@ -6300,6 +6282,26 @@ GO
 INSERT [dbo].[State] ([Id], [StateName], [StateCode], [CountryId], [Uid], [CreationDate], [Address_Id]) VALUES (27, N'Tocantins', N'TO', 30, N'2e8aa84c-515a-4539-a7da-a8c6b54b9055', CAST(N'2018-09-21 15:12:27.507' AS DateTime), NULL)
 GO
 SET IDENTITY_INSERT [dbo].[State] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Event] ON 
+
+GO
+INSERT [dbo].[Event] ([Id], [Name], [Uid], [CreationDate], [StartDate], [EndDate]) VALUES (1, N'Rio2c 2018', N'ae4b9a0f-8b2e-4ce4-8c3c-a6a1f17fefd6', CAST(N'2017-10-20 18:07:28.400' AS DateTime), CAST(N'1900-01-01 00:00:00.000' AS DateTime), CAST(N'2030-01-01 00:00:00.000' AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[Event] OFF
+GO
+SET IDENTITY_INSERT [dbo].[AspNetRoles] ON 
+
+GO
+INSERT [dbo].[AspNetRoles] ([Id], [Name]) VALUES (1, N'Administrator')
+GO
+INSERT [dbo].[AspNetRoles] ([Id], [Name]) VALUES (2, N'Producer')
+GO
+INSERT [dbo].[AspNetRoles] ([Id], [Name]) VALUES (3, N'Player')
+GO
+SET IDENTITY_INSERT [dbo].[AspNetRoles] OFF
+GO
+INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (1, 1)
 GO
 SET IDENTITY_INSERT [dbo].[City] ON 
 
@@ -17434,59 +17436,12 @@ INSERT [dbo].[City] ([Id], [Name], [StateId], [Uid], [CreationDate], [Address_Id
 GO
 SET IDENTITY_INSERT [dbo].[City] OFF
 GO
-SET IDENTITY_INSERT [dbo].[Activity] ON 
+SET IDENTITY_INSERT [dbo].[SalesPlatform] ON 
 
 GO
-INSERT [dbo].[Activity] ([Id], [Name], [Uid], [CreationDate]) VALUES (7, N'Distribuidor | Distributor', N'bbb7a126-7d63-4da4-8da6-62d020213ce6', CAST(N'2017-11-10 17:02:06.453' AS DateTime))
+INSERT [dbo].[SalesPlatform] ([Id], [Uid], [Name], [IsActive], [WebhookSecurityKey], [ApiKey], [ApiSecret], [MaxProcessingCount], [CreationUserId], [CreationDate], [UpdateUserId], [UpdateDate], [SecurityStamp]) VALUES (1, N'717287c1-bb97-43ca-99c0-4d25576eb3b0', N'Eventbrite', 1, N'3718d5bd-d3d3-4e8f-a3e0-5270c5830af2', N'AR735YTCZCCPZYKPFN', NULL, 15, 1, CAST(N'2019-07-11 14:58:44.460' AS DateTime), 1, CAST(N'2019-07-11 14:58:44.460' AS DateTime), N'5852137c-86a3-4798-9ece-509818ae0955')
 GO
-INSERT [dbo].[Activity] ([Id], [Name], [Uid], [CreationDate]) VALUES (8, N'Canal de TV Aberta | Broadcast TV Channel', N'900993c3-0a9a-4689-84ec-611af453a921', CAST(N'2017-11-10 17:02:06.453' AS DateTime))
-GO
-INSERT [dbo].[Activity] ([Id], [Name], [Uid], [CreationDate]) VALUES (9, N'VOD / OTT / Streaming', N'948caf73-0853-4865-a0ed-29d328780812', CAST(N'2017-11-10 17:02:06.453' AS DateTime))
-GO
-INSERT [dbo].[Activity] ([Id], [Name], [Uid], [CreationDate]) VALUES (10, N'Programador | Programmer', N'11f44949-2666-4c6a-bf1e-54e4e075b07c', CAST(N'2017-11-10 17:02:06.453' AS DateTime))
-GO
-INSERT [dbo].[Activity] ([Id], [Name], [Uid], [CreationDate]) VALUES (11, N'Canal de TV por assinatura | Pay-TV Channel', N'51ffdec5-b050-42f7-893f-9f181462ec84', CAST(N'2017-11-10 17:02:06.453' AS DateTime))
-GO
-INSERT [dbo].[Activity] ([Id], [Name], [Uid], [CreationDate]) VALUES (12, N'Produtora  | Producer', N'af37cfa4-0dd2-40a5-bb4f-21e78b32e9f0', CAST(N'2017-11-10 17:02:06.453' AS DateTime))
-GO
-INSERT [dbo].[Activity] ([Id], [Name], [Uid], [CreationDate]) VALUES (13, N'Outras Mídias | Other Media', N'badc77cd-7b11-439d-88a3-09f785fc59eb', CAST(N'2017-11-10 17:02:06.453' AS DateTime))
-GO
-SET IDENTITY_INSERT [dbo].[Activity] OFF
-GO
-SET IDENTITY_INSERT [dbo].[TargetAudience] ON 
-
-GO
-INSERT [dbo].[TargetAudience] ([Id], [Name], [Uid], [CreationDate]) VALUES (1, N'Pré-Escolar | Preschool', N'49546e50-b0d4-438e-b09b-6cab1e90a3e6', CAST(N'2017-11-10 12:53:53.290' AS DateTime))
-GO
-INSERT [dbo].[TargetAudience] ([Id], [Name], [Uid], [CreationDate]) VALUES (2, N'Infantil | Children', N'f2d845ce-9b4c-420a-ad9f-d8e7e8a47a97', CAST(N'2017-11-10 12:53:53.290' AS DateTime))
-GO
-INSERT [dbo].[TargetAudience] ([Id], [Name], [Uid], [CreationDate]) VALUES (3, N'Infanto-Juvenil | Tween', N'8317fb37-731d-4029-95eb-53b7dc690d5f', CAST(N'2017-11-10 12:53:53.290' AS DateTime))
-GO
-INSERT [dbo].[TargetAudience] ([Id], [Name], [Uid], [CreationDate]) VALUES (4, N'Jovem | Young Adults', N'bab33569-0cf0-40a2-8746-27fc0ff8100c', CAST(N'2017-11-10 12:53:53.290' AS DateTime))
-GO
-INSERT [dbo].[TargetAudience] ([Id], [Name], [Uid], [CreationDate]) VALUES (5, N'Adulto | Adult', N'1df39053-a721-4e60-939b-a9487ed41d08', CAST(N'2017-11-10 12:53:53.290' AS DateTime))
-GO
-SET IDENTITY_INSERT [dbo].[TargetAudience] OFF
-GO
-SET IDENTITY_INSERT [dbo].[AspNetRoles] ON 
-
-GO
-INSERT [dbo].[AspNetRoles] ([Id], [Name]) VALUES (1, N'Administrator')
-GO
-INSERT [dbo].[AspNetRoles] ([Id], [Name]) VALUES (2, N'Producer')
-GO
-INSERT [dbo].[AspNetRoles] ([Id], [Name]) VALUES (3, N'Player')
-GO
-SET IDENTITY_INSERT [dbo].[AspNetRoles] OFF
-GO
-INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (1, 1)
-GO
-SET IDENTITY_INSERT [dbo].[Event] ON 
-
-GO
-INSERT [dbo].[Event] ([Id], [Name], [Uid], [CreationDate], [StartDate], [EndDate]) VALUES (1, N'Rio2c 2018', N'ae4b9a0f-8b2e-4ce4-8c3c-a6a1f17fefd6', CAST(N'2017-10-20 18:07:28.400' AS DateTime), CAST(N'1900-01-01 00:00:00.000' AS DateTime), CAST(N'2030-01-01 00:00:00.000' AS DateTime))
-GO
-SET IDENTITY_INSERT [dbo].[Event] OFF
+SET IDENTITY_INSERT [dbo].[SalesPlatform] OFF
 GO
 SET IDENTITY_INSERT [dbo].[InterestGroup] ON 
 
@@ -17617,6 +17572,51 @@ GO
 INSERT [dbo].[Interest] ([Id], [InterestGroupId], [Name], [Uid], [CreationDate]) VALUES (185, 25, N'Pré-escolar | Preschool', N'6614c72e-8c94-4b5d-b285-1cb913062325', CAST(N'2019-01-21 08:31:15.893' AS DateTime))
 GO
 SET IDENTITY_INSERT [dbo].[Interest] OFF
+GO
+SET IDENTITY_INSERT [dbo].[ProjectStatus] ON 
+
+GO
+INSERT [dbo].[ProjectStatus] ([Id], [Code], [Name], [CreationDate]) VALUES (1, N'OnEvaluation', N'OnEvaluation', CAST(N'2017-12-12 18:56:34.530' AS DateTime))
+GO
+INSERT [dbo].[ProjectStatus] ([Id], [Code], [Name], [CreationDate]) VALUES (2, N'Accepted', N'Accepted', CAST(N'2017-12-12 18:56:34.530' AS DateTime))
+GO
+INSERT [dbo].[ProjectStatus] ([Id], [Code], [Name], [CreationDate]) VALUES (3, N'Rejected', N'Rejected', CAST(N'2017-12-12 18:56:34.530' AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[ProjectStatus] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Activity] ON 
+
+GO
+INSERT [dbo].[Activity] ([Id], [Name], [Uid], [CreationDate]) VALUES (7, N'Distribuidor | Distributor', N'bbb7a126-7d63-4da4-8da6-62d020213ce6', CAST(N'2017-11-10 17:02:06.453' AS DateTime))
+GO
+INSERT [dbo].[Activity] ([Id], [Name], [Uid], [CreationDate]) VALUES (8, N'Canal de TV Aberta | Broadcast TV Channel', N'900993c3-0a9a-4689-84ec-611af453a921', CAST(N'2017-11-10 17:02:06.453' AS DateTime))
+GO
+INSERT [dbo].[Activity] ([Id], [Name], [Uid], [CreationDate]) VALUES (9, N'VOD / OTT / Streaming', N'948caf73-0853-4865-a0ed-29d328780812', CAST(N'2017-11-10 17:02:06.453' AS DateTime))
+GO
+INSERT [dbo].[Activity] ([Id], [Name], [Uid], [CreationDate]) VALUES (10, N'Programador | Programmer', N'11f44949-2666-4c6a-bf1e-54e4e075b07c', CAST(N'2017-11-10 17:02:06.453' AS DateTime))
+GO
+INSERT [dbo].[Activity] ([Id], [Name], [Uid], [CreationDate]) VALUES (11, N'Canal de TV por assinatura | Pay-TV Channel', N'51ffdec5-b050-42f7-893f-9f181462ec84', CAST(N'2017-11-10 17:02:06.453' AS DateTime))
+GO
+INSERT [dbo].[Activity] ([Id], [Name], [Uid], [CreationDate]) VALUES (12, N'Produtora  | Producer', N'af37cfa4-0dd2-40a5-bb4f-21e78b32e9f0', CAST(N'2017-11-10 17:02:06.453' AS DateTime))
+GO
+INSERT [dbo].[Activity] ([Id], [Name], [Uid], [CreationDate]) VALUES (13, N'Outras Mídias | Other Media', N'badc77cd-7b11-439d-88a3-09f785fc59eb', CAST(N'2017-11-10 17:02:06.453' AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[Activity] OFF
+GO
+SET IDENTITY_INSERT [dbo].[TargetAudience] ON 
+
+GO
+INSERT [dbo].[TargetAudience] ([Id], [Name], [Uid], [CreationDate]) VALUES (1, N'Pré-Escolar | Preschool', N'49546e50-b0d4-438e-b09b-6cab1e90a3e6', CAST(N'2017-11-10 12:53:53.290' AS DateTime))
+GO
+INSERT [dbo].[TargetAudience] ([Id], [Name], [Uid], [CreationDate]) VALUES (2, N'Infantil | Children', N'f2d845ce-9b4c-420a-ad9f-d8e7e8a47a97', CAST(N'2017-11-10 12:53:53.290' AS DateTime))
+GO
+INSERT [dbo].[TargetAudience] ([Id], [Name], [Uid], [CreationDate]) VALUES (3, N'Infanto-Juvenil | Tween', N'8317fb37-731d-4029-95eb-53b7dc690d5f', CAST(N'2017-11-10 12:53:53.290' AS DateTime))
+GO
+INSERT [dbo].[TargetAudience] ([Id], [Name], [Uid], [CreationDate]) VALUES (4, N'Jovem | Young Adults', N'bab33569-0cf0-40a2-8746-27fc0ff8100c', CAST(N'2017-11-10 12:53:53.290' AS DateTime))
+GO
+INSERT [dbo].[TargetAudience] ([Id], [Name], [Uid], [CreationDate]) VALUES (5, N'Adulto | Adult', N'1df39053-a721-4e60-939b-a9487ed41d08', CAST(N'2017-11-10 12:53:53.290' AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[TargetAudience] OFF
 GO
 SET IDENTITY_INSERT [dbo].[SystemParameter] ON 
 

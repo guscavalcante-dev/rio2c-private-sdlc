@@ -1395,8 +1395,8 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[SalesPlatform](
-	[Id] [uniqueidentifier] NOT NULL,
-	[AlternativeId] [bigint] IDENTITY(1,1) NOT NULL,
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
 	[Name] [nvarchar](100) NOT NULL,
 	[IsActive] [bit] NOT NULL,
 	[WebhookSecurityKey] [uniqueidentifier] NOT NULL,
@@ -1411,9 +1411,49 @@ CREATE TABLE [dbo].[SalesPlatform](
  CONSTRAINT [PK_SalesPlatform] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [UQ_IDX_SalesPlatform_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[SalesPlatformWebhookRequest](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[SalesPlatformId] [int] NOT NULL,
+	[CreationDate] [datetime] NOT NULL,
+	[Endpoint] [nvarchar](250) NOT NULL,
+	[Header] [nvarchar](1000) NULL,
+	[Payload] [nvarchar](max) NULL,
+	[IpAddress] [varchar](38) NULL,
+	[IsProcessed] [bit] NOT NULL,
+	[IsProcessing] [bit] NOT NULL,
+	[ProcessingCount] [int] NOT NULL,
+	[LastProcessingDate] [datetime] NULL,
+	[ProcessingErrorCode] [nvarchar](10) NULL,
+	[ProcessingErrorMessage] [nvarchar](250) NULL,
+	[ManualProcessingUserId] [int] NULL,
+	[SecurityStamp] [uniqueidentifier] NOT NULL,
+ CONSTRAINT [PK_SalesPlatformWebhookRequest] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [UQ_IDX_SalesPlatformWebhookRequest_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
 GO
 SET ANSI_NULLS ON
 GO
@@ -1514,38 +1554,6 @@ CREATE TABLE [dbo].[UserUseTerm](
 ) ON [PRIMARY]
 
 GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING OFF
-GO
-CREATE TABLE [dbo].[WebhookRequest](
-	[Id] [uniqueidentifier] NOT NULL,
-	[AlternativeId] [bigint] IDENTITY(1,1) NOT NULL,
-	[SalesPlatformId] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
-	[Endpoint] [nvarchar](250) NOT NULL,
-	[Header] [nvarchar](1000) NULL,
-	[Payload] [nvarchar](max) NULL,
-	[IpAddress] [varchar](38) NULL,
-	[IsProcessed] [bit] NOT NULL,
-	[IsProcessing] [bit] NOT NULL,
-	[ProcessingCount] [int] NOT NULL,
-	[LastProcessingDate] [datetime] NULL,
-	[ProcessingErrorCode] [nvarchar](10) NULL,
-	[ProcessingErrorMessage] [nvarchar](250) NULL,
-	[ManualProcessingUserId] [int] NULL,
-	[SecurityStamp] [uniqueidentifier] NOT NULL,
- CONSTRAINT [PK_WebhookRequest] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
 ALTER TABLE [dbo].[Event] ADD  DEFAULT ('1900-01-01T00:00:00.000') FOR [StartDate]
 GO
 ALTER TABLE [dbo].[Event] ADD  DEFAULT ('1900-01-01T00:00:00.000') FOR [EndDate]
@@ -1566,17 +1574,17 @@ ALTER TABLE [dbo].[SalesPlatform] ADD  CONSTRAINT [DF_SalesPlatform_CreationDate
 GO
 ALTER TABLE [dbo].[SalesPlatform] ADD  CONSTRAINT [DF_SalesPlatform_UpdateDate]  DEFAULT (getdate()) FOR [UpdateDate]
 GO
+ALTER TABLE [dbo].[SalesPlatformWebhookRequest] ADD  CONSTRAINT [DF_SalesPlatformWebhookRequest_CreationDate]  DEFAULT (getdate()) FOR [CreationDate]
+GO
+ALTER TABLE [dbo].[SalesPlatformWebhookRequest] ADD  CONSTRAINT [DF_SalesPlatformWebhookRequest_IsProcessed]  DEFAULT ((0)) FOR [IsProcessed]
+GO
+ALTER TABLE [dbo].[SalesPlatformWebhookRequest] ADD  CONSTRAINT [DF_SalesPlatformWebhookRequest_IsProcessing]  DEFAULT ((0)) FOR [IsProcessing]
+GO
+ALTER TABLE [dbo].[SalesPlatformWebhookRequest] ADD  CONSTRAINT [DF_SalesPlatformWebhookRequest_ProcessingCount]  DEFAULT ((0)) FOR [ProcessingCount]
+GO
 ALTER TABLE [dbo].[Speaker] ADD  CONSTRAINT [DF_Speaker_Uid]  DEFAULT (newid()) FOR [Uid]
 GO
 ALTER TABLE [dbo].[UserUseTerm] ADD  DEFAULT ((2)) FOR [RoleId]
-GO
-ALTER TABLE [dbo].[WebhookRequest] ADD  CONSTRAINT [DF_WebhookRequest_CreationDate]  DEFAULT (getdate()) FOR [CreationDate]
-GO
-ALTER TABLE [dbo].[WebhookRequest] ADD  CONSTRAINT [DF_WebhookRequest_IsProcessed]  DEFAULT ((0)) FOR [IsProcessed]
-GO
-ALTER TABLE [dbo].[WebhookRequest] ADD  CONSTRAINT [DF_WebhookRequest_IsProcessing]  DEFAULT ((0)) FOR [IsProcessing]
-GO
-ALTER TABLE [dbo].[WebhookRequest] ADD  CONSTRAINT [DF_WebhookRequest_ProcessingCount]  DEFAULT ((0)) FOR [ProcessingCount]
 GO
 ALTER TABLE [dbo].[AspNetUserClaims]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.AspNetUserClaims_dbo.AspNetUsers_UserId] FOREIGN KEY([UserId])
 REFERENCES [dbo].[AspNetUsers] ([Id])
@@ -2107,6 +2115,16 @@ REFERENCES [dbo].[AspNetUsers] ([Id])
 GO
 ALTER TABLE [dbo].[SalesPlatform] CHECK CONSTRAINT [FK_AspNetUsers_SalesPlatform_UpdateUserId]
 GO
+ALTER TABLE [dbo].[SalesPlatformWebhookRequest]  WITH CHECK ADD  CONSTRAINT [FK_AspNetUsers_SalesPlatformWebhookRequest_ManualProcessingUserId] FOREIGN KEY([ManualProcessingUserId])
+REFERENCES [dbo].[AspNetUsers] ([Id])
+GO
+ALTER TABLE [dbo].[SalesPlatformWebhookRequest] CHECK CONSTRAINT [FK_AspNetUsers_SalesPlatformWebhookRequest_ManualProcessingUserId]
+GO
+ALTER TABLE [dbo].[SalesPlatformWebhookRequest]  WITH CHECK ADD  CONSTRAINT [FK_SalesPlatform_SalesPlatformWebhookRequest_SalesPlatformId] FOREIGN KEY([SalesPlatformId])
+REFERENCES [dbo].[SalesPlatform] ([Id])
+GO
+ALTER TABLE [dbo].[SalesPlatformWebhookRequest] CHECK CONSTRAINT [FK_SalesPlatform_SalesPlatformWebhookRequest_SalesPlatformId]
+GO
 ALTER TABLE [dbo].[Speaker]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.Speaker_dbo.Collaborator_CollaboratorId] FOREIGN KEY([CollaboratorId])
 REFERENCES [dbo].[Collaborator] ([Id])
 GO
@@ -2136,16 +2154,6 @@ ALTER TABLE [dbo].[UserUseTerm]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.UserUseTer
 REFERENCES [dbo].[Event] ([Id])
 GO
 ALTER TABLE [dbo].[UserUseTerm] CHECK CONSTRAINT [FK_dbo.UserUseTerm_dbo.Event_EventId]
-GO
-ALTER TABLE [dbo].[WebhookRequest]  WITH CHECK ADD  CONSTRAINT [FK_AspNetUsers_WebhookRequest_ManualProcessingUserId] FOREIGN KEY([ManualProcessingUserId])
-REFERENCES [dbo].[AspNetUsers] ([Id])
-GO
-ALTER TABLE [dbo].[WebhookRequest] CHECK CONSTRAINT [FK_AspNetUsers_WebhookRequest_ManualProcessingUserId]
-GO
-ALTER TABLE [dbo].[WebhookRequest]  WITH CHECK ADD  CONSTRAINT [FK_SalesPlatform_WebhookRequest_SalesPlatformId] FOREIGN KEY([SalesPlatformId])
-REFERENCES [dbo].[SalesPlatform] ([Id])
-GO
-ALTER TABLE [dbo].[WebhookRequest] CHECK CONSTRAINT [FK_SalesPlatform_WebhookRequest_SalesPlatformId]
 GO
 SET ANSI_NULLS ON
 GO
