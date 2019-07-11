@@ -1,7 +1,4 @@
-﻿USE [Rio2C_Dev]
-GO
-SET IDENTITY_INSERT [dbo].[Quiz] ON 
-
+﻿SET IDENTITY_INSERT [dbo].[Quiz] ON 
 INSERT [dbo].[Quiz] ([Id], [EventId], [Name], [Uid], [CreationDate]) VALUES (1, 1, N'Pesquisa 2018', N'0a208226-c930-4e8d-a6a4-376f129c6dfe', CAST(N'2018-10-24 16:24:49.813' AS DateTime))
 SET IDENTITY_INSERT [dbo].[Quiz] OFF
 SET IDENTITY_INSERT [dbo].[QuizQuestion] ON 
@@ -8870,14 +8867,20 @@ INSERT [dbo].[Activity] ([Id], [Name], [Uid], [CreationDate]) VALUES (11, N'Cana
 INSERT [dbo].[Activity] ([Id], [Name], [Uid], [CreationDate]) VALUES (12, N'Produtora  | Producer', N'af37cfa4-0dd2-40a5-bb4f-21e78b32e9f0', CAST(N'2017-11-10 17:02:06.453' AS DateTime))
 INSERT [dbo].[Activity] ([Id], [Name], [Uid], [CreationDate]) VALUES (13, N'Outras Mídias | Other Media', N'badc77cd-7b11-439d-88a3-09f785fc59eb', CAST(N'2017-11-10 17:02:06.453' AS DateTime))
 SET IDENTITY_INSERT [dbo].[Activity] OFF
-SET IDENTITY_INSERT [dbo].[AspNetRoles] ON 
 
+SET IDENTITY_INSERT [dbo].[AspNetRoles] ON 
 INSERT [dbo].[AspNetRoles] ([Id], [Name]) VALUES (1, N'Administrator')
 INSERT [dbo].[AspNetRoles] ([Id], [Name]) VALUES (3, N'Player')
 INSERT [dbo].[AspNetRoles] ([Id], [Name]) VALUES (2, N'Producer')
 SET IDENTITY_INSERT [dbo].[AspNetRoles] OFF
-SET IDENTITY_INSERT [dbo].[Event] ON 
 
+SET IDENTITY_INSERT [dbo].[AspNetUsers] ON 
+INSERT [dbo].[AspNetUsers] ([Id], [Uid], [CreationDate], [Active], [Name], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDateUtc], [LockoutEnabled], [AccessFailedCount], [UserName], [PasswordNew]) VALUES (1, N'4c576e3d-a400-445a-b4f9-054fa5129097', CAST(N'2017-10-13 11:19:12.610' AS DateTime), 1, N'Master', N'admin@rio2c.com', 0, N'AAJrovDMfghIz1jmPR3hT2nQvqXBXag9yhLLbRD5dtc1VaTkzqWHX5t6vEqZR6KcJw==', N'71e9d659-1645-4c1b-a41a-c67a3ae4f42c', NULL, 0, 0, NULL, 0, 0, N'projeto.rio2c@marlin.com.br', NULL)
+SET IDENTITY_INSERT [dbo].[AspNetUsers] OFF
+
+INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (1, 1)
+
+SET IDENTITY_INSERT [dbo].[Event] ON 
 INSERT [dbo].[Event] ([Id], [Name], [Uid], [CreationDate], [StartDate], [EndDate]) VALUES (1, N'Rio2c 2018', N'ae4b9a0f-8b2e-4ce4-8c3c-a6a1f17fefd6', CAST(N'2017-10-20 18:07:28.400' AS DateTime), CAST(N'1900-01-01 00:00:00.000' AS DateTime), CAST(N'2030-01-01 00:00:00.000' AS DateTime))
 SET IDENTITY_INSERT [dbo].[Event] OFF
 SET IDENTITY_INSERT [dbo].[ProjectStatus] ON 
@@ -8940,3 +8943,8 @@ INSERT [dbo].[TargetAudience] ([Id], [Name], [Uid], [CreationDate]) VALUES (3, N
 INSERT [dbo].[TargetAudience] ([Id], [Name], [Uid], [CreationDate]) VALUES (4, N'Jovem | Young Adults', N'bab33569-0cf0-40a2-8746-27fc0ff8100c', CAST(N'2017-11-10 12:53:53.290' AS DateTime))
 INSERT [dbo].[TargetAudience] ([Id], [Name], [Uid], [CreationDate]) VALUES (5, N'Adulto | Adult', N'1df39053-a721-4e60-939b-a9487ed41d08', CAST(N'2017-11-10 12:53:53.290' AS DateTime))
 SET IDENTITY_INSERT [dbo].[TargetAudience] OFF
+
+SET IDENTITY_INSERT [dbo].[SalesPlatform] ON 
+INSERT [dbo].[SalesPlatform] ([Id], [AlternativeId], [Name], [IsActive], [WebhookSecurityKey], [ApiKey], [ApiSecret], [MaxProcessingCount], [CreationUserId], [CreationDate], [UpdateUserId], [UpdateDate], [SecurityStamp]) VALUES (N'717287c1-bb97-43ca-99c0-4d25576eb3b0', 1, N'Eventbrite', 1, N'3718d5bd-d3d3-4e8f-a3e0-5270c5830af2', N'AR735YTCZCCPZYKPFN', NULL, 15, 1, GETDATE(), 1, GETDATE(), N'5852137c-86a3-4798-9ece-509818ae0955')
+SET IDENTITY_INSERT [dbo].[SalesPlatform] OFF
+go
