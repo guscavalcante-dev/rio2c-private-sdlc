@@ -1,13 +1,28 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Infra.Data.Repository
+// Author           : Rafael Dantas Ruiz
+// Created          : 07-11-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-11-2019
+// ***********************************************************************
+// <copyright file="RepositoryFactory.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
+    /// <summary>RepositoryFactory</summary>
     public class RepositoryFactory: IRepositoryFactory
     {
         private readonly PlataformaRio2CContext _context;
 
+        /// <summary>Initializes a new instance of the <see cref="RepositoryFactory"/> class.</summary>
+        /// <param name="context">The context.</param>
         public RepositoryFactory(PlataformaRio2CContext context)
         {
             _context = context;
@@ -592,6 +607,24 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             get
             {
                 return this._musicalCommissionRepository ?? (this._musicalCommissionRepository = new MusicalCommissionRepository(_context));
+            }
+        }
+
+        private ISalesPlatformRepository _salesPlatformRepository;
+        public ISalesPlatformRepository SalesPlatformRepository
+        {
+            get
+            {
+                return this._salesPlatformRepository ?? (this._salesPlatformRepository = new SalesPlatformRepository(_context));
+            }
+        }
+
+        private ISalesPlatformWebhookRequestRepository _salesPlatformWebhookRequestRepository;
+        public ISalesPlatformWebhookRequestRepository SalesPlatformWebhookRequestRepository
+        {
+            get
+            {
+                return this._salesPlatformWebhookRequestRepository ?? (this._salesPlatformWebhookRequestRepository = new SalesPlatformWebhookRequestRepository(_context));
             }
         }
     }

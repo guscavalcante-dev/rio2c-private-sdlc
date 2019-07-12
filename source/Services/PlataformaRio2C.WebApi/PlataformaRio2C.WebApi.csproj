@@ -83,6 +83,9 @@
       <HintPath>..\..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MediatR, Version=7.0.0.0, Culture=neutral, PublicKeyToken=bb9a41a5e8aaa7e2, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\MediatR.7.0.0\lib\net461\MediatR.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.4.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
     </Reference>
@@ -401,7 +404,9 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -437,6 +442,10 @@
       <Project>{5C6E9CB9-B206-4ECF-AE1A-7E07995D39F7}</Project>
       <Name>PlataformaRio2C.Application</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.CQRS\PlataformaRio2C.Infra.CrossCutting.CQRS.csproj">
+      <Project>{e414d342-6a28-4844-9f2f-a6022d5ae929}</Project>
+      <Name>PlataformaRio2C.Infra.CrossCutting.CQRS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.Identity\PlataformaRio2C.Infra.CrossCutting.Identity.csproj">
       <Project>{D8359323-3DBC-477E-B673-E77BA1128426}</Project>
       <Name>PlataformaRio2C.Infra.CrossCutting.Identity</Name>
@@ -444,6 +453,10 @@
     <ProjectReference Include="..\..\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.IOC\PlataformaRio2C.Infra.CrossCutting.IOC.csproj">
       <Project>{6F589B6B-0277-4C91-848A-C1851C4B106A}</Project>
       <Name>PlataformaRio2C.Infra.CrossCutting.IOC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.SalesPlatforms\PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.csproj">
+      <Project>{73e650a2-a5c8-4035-b206-586c4e4b0846}</Project>
+      <Name>PlataformaRio2C.Infra.CrossCutting.SalesPlatforms</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.Tools\PlataformaRio2C.Infra.CrossCutting.Tools.csproj">
       <Project>{EC0B684E-F8A3-417A-9567-819FFC7C41CC}</Project>

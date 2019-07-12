@@ -128,6 +128,8 @@
     <Compile Include="Mapping\Quiz\QuizQuestionMap.cs" />
     <Compile Include="Mapping\Room\RoomNameMap.cs" />
     <Compile Include="Mapping\Room\RoomMap.cs" />
+    <Compile Include="Mapping\SalesPlatform\SalesPlatformWebhookRequestMap.cs" />
+    <Compile Include="Mapping\SalesPlatform\SalesPlatformMap.cs" />
     <Compile Include="Mapping\Speaker\SpeakerMap.cs" />
     <Compile Include="Mapping\TargetAudienceMap.cs" />
     <Compile Include="Mapping\User\UserRoleMap.cs" />
@@ -345,6 +347,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="SqlScripts\02_Seed.sql" />
+    <Content Include="SqlScripts\01_Schema.sql" />
+    <Content Include="SqlScripts\Deltas\20190711_01_ChangesForWebhooks.sql" />
     <None Include="App.config" />
     <None Include="bin\Debug\App_Data\Logs\PlataformaRio2C_Web_Site_DESKTOP-S4BP9HQ_2018.09.20.LOG" />
     <None Include="bin\Debug\App_Data\Logs\PlataformaRio2C_Web_Site_DESKTOP-S4BP9HQ_2018.09.21.LOG" />

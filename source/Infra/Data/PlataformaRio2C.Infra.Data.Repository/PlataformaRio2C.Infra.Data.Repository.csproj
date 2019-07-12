@@ -138,6 +138,8 @@
     <Compile Include="Repositories\RepositoryFactory.cs" />
     <Compile Include="Repositories\Room\RoomNameRepository.cs" />
     <Compile Include="Repositories\Room\RoomRepository.cs" />
+    <Compile Include="Repositories\SalesPlatform\SalesPlatformWebhookRequestRepository.cs" />
+    <Compile Include="Repositories\SalesPlatform\SalesPlatformRepository.cs" />
     <Compile Include="Repositories\Speaker\SpeakerRepository.cs" />
     <Compile Include="Repositories\User\RoleRepository.cs" />
     <Compile Include="Repositories\User\UserRoleRepository.cs" />

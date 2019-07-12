@@ -21,6 +21,9 @@ using System.Reflection;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
+using MediatR;
+using PlataformaRio2C.Application.CQRS.CommandsHandlers;
+using PlataformaRio2C.Infra.CrossCutting.CQRS;
 
 namespace PlataformaRio2C.WebApi
 {
@@ -63,6 +66,10 @@ namespace PlataformaRio2C.WebApi
         {
             BootStrapper.RegisterServices(container);
             BootStrapperAdmin.RegisterServices(container);
+            CqrsBootStrapper.RegisterServices(container, new[]
+            {
+                typeof(CreateSalesPlatformWebhookRequestCommandHandler).Assembly
+            });
         }
     }
 }

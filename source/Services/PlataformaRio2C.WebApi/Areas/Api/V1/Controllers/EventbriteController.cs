@@ -4,7 +4,7 @@
 // Created          : 07-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-10-2019
+// Last Modified On : 07-12-2019
 // ***********************************************************************
 // <copyright file="EventbriteController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,11 +16,19 @@ using PlataformaRio2C.WebApi.Areas.Api.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Http.Results;
+using MediatR;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using WebApi.OutputCache.V2;
+using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.WebApi.Areas.Api.V1.Controllers
 {
@@ -32,9 +40,16 @@ namespace PlataformaRio2C.WebApi.Areas.Api.V1.Controllers
     [RoutePrefix("api/v{api-version:apiVersion}/eventbrite")]
     public class EventbriteController : BaseApiController
     {
+        private ISalesPlatformService salesPlatformService;
+        private readonly IMediator commandBus;
+
         /// <summary>Initializes a new instance of the <see cref="EventbriteController"/> class.</summary>
-        public EventbriteController()
+        /// <param name="commandBus">The command bus.</param>
+        /// <param name="salesPlatformServiceFactory">The sales platform service factory.</param>
+        public EventbriteController(IMediator commandBus, ISalesPlatformServiceFactory salesPlatformServiceFactory)
         {
+            this.salesPlatformService = salesPlatformServiceFactory.Get();
+            this.commandBus = commandBus;
         }
 
         /// <summary>Pings this instance.</summary>
@@ -51,8 +66,42 @@ namespace PlataformaRio2C.WebApi.Areas.Api.V1.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("Test")]
-        public async Task<IHttpActionResult> Test(dynamic body)
+        public async Task<IHttpActionResult> Test()
         {
+            try
+            {
+                //if (!ModelState.IsValid)
+                //{
+                //    throw new DomainException(this.localizer["Please, correct the form values."]);
+                //}
+
+                var salesPlatformWebhooRequestUid = Guid.NewGuid();
+                var result = await this.commandBus.Send(new CreateSalesPlatformWebhookRequest(
+                    salesPlatformWebhooRequestUid,
+                    1,
+                    HttpContext.Current.Request.Url.AbsoluteUri,
+                    Request.Headers.ToString(),
+                    Request.Content.ReadAsStringAsync().Result,
+                    HttpContext.Current.Request.GetIpAddress()));
+                //if (response.Errors.Any())
+                //{
+                //    return BadRequest(response.Errors);
+                //}
+
+                //return Ok(response.Value);
+            }
+            catch (DomainException ex)
+            {
+                var erorr = 1;
+                //this.SetResultMessage(new ResultMessage(this.localizer[ex.GetInnerMessage()], ResultMessageType.Error));
+            }
+            catch (Exception ex)
+            {
+                var teste = 1;
+                //HttpContext.RiseError(ex);
+                //return BadRequest(ex.Message);
+            }
+
             return await Json(new { status = "success", message = "Test with success." });
         }
 

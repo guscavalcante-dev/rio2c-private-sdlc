@@ -72,6 +72,9 @@
       <HintPath>..\..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MediatR, Version=7.0.0.0, Culture=neutral, PublicKeyToken=bb9a41a5e8aaa7e2, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\MediatR.7.0.0\lib\net461\MediatR.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
@@ -161,6 +164,8 @@
     <Compile Include="Common\AppValidationResult.cs" />
     <Compile Include="Common\EntityViewModel.cs" />
     <Compile Include="Common\StatusProjectCodes.cs" />
+    <Compile Include="CQRS\CommandsHandlers\SalesPlatforms\CreateSalesPlatformWebhookRequestCommandHandler.cs" />
+    <Compile Include="CQRS\Commands\SalesPlatforms\CreateSalesPlatformWebhookRequest.cs" />
     <Compile Include="Dtos\CustomFormSympla.cs" />
     <Compile Include="Dtos\GroupCountryDto.cs" />
     <Compile Include="Dtos\GroupCountrySearchDto.cs" />
@@ -431,6 +436,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="CQRS\EventsHandlers\" />
+    <Folder Include="CQRS\Events\" />
+    <Folder Include="CQRS\QueriesHandlers\" />
+    <Folder Include="CQRS\Queries\" />
     <Folder Include="Enums\" />
     <Folder Include="Interfaces\Api\" />
     <Folder Include="ViewModels\Common\ProducerProject\" />

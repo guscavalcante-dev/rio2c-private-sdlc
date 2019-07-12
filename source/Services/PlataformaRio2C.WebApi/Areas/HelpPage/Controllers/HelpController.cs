@@ -31,7 +31,7 @@ namespace PlataformaRio2C.WebApi.Areas.HelpPage.Controllers
         {
             this.Configuration = GlobalConfiguration.Configuration;
         }
-
+            
         /// <summary>Gets the configuration.</summary>
         /// <value>The configuration.</value>
         public HttpConfiguration Configuration { get; private set; }

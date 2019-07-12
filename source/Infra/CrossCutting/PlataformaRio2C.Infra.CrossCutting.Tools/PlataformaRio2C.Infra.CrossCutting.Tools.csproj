@@ -122,6 +122,7 @@
     <Compile Include="Enums\LogType.cs" />
     <Compile Include="Enums\MessageType.cs" />
     <Compile Include="Enums\StatusMessageType.cs" />
+    <Compile Include="Exceptions\DomainException.cs" />
     <Compile Include="Extensions\AsyncHelpers.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Extensions\EnumerableExtension.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
+    <Compile Include="Extensions\HttpRequestExtensions.cs" />
     <Compile Include="Extensions\HttpPostedFileBaseExtensions.cs" />
     <Compile Include="Extensions\ImageExtensions.cs" />
     <Compile Include="Extensions\ModelValidadeExtensions.cs" />

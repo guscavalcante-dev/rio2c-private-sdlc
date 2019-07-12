@@ -1,25 +1,40 @@
-﻿using PlataformaRio2C.Domain.Entities;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Infra.Data
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-12-2019
+// ***********************************************************************
+// <copyright file="PlataformaRio2CContext.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.Data.Context.Config;
 using PlataformaRio2C.Infra.Data.Context.Mapping;
 using System.Data.Entity;
 
 namespace PlataformaRio2C.Infra.Data.Context
 {
+    /// <summary>PlataformaRio2CContext</summary>
     public class PlataformaRio2CContext : BaseContext
     {
+        /// <summary>Initializes the <see cref="PlataformaRio2CContext"/> class.</summary>
         static PlataformaRio2CContext()
         {
             Database.SetInitializer<PlataformaRio2CContext>(null);
         }
 
+        /// <summary>Initializes a new instance of the <see cref="PlataformaRio2CContext"/> class.</summary>
         public PlataformaRio2CContext()
             : base("PlataformaRio2CConnection")
         {
-
         }
 
-        public DbSet<Holding> Holdings { get; set; }
-
+        /// <summary>Called when [model creating].</summary>
+        /// <param name="modelBuilder">The model builder.</param>
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new LanguageMap());
@@ -91,8 +106,13 @@ namespace PlataformaRio2C.Infra.Data.Context
 
             modelBuilder.Configurations.Add(new MusicalCommissionMap());
 
+            modelBuilder.Configurations.Add(new SalesPlatformMap());
+            modelBuilder.Configurations.Add(new SalesPlatformWebhookRequestMap());
+
             base.OnModelCreating(modelBuilder);
         }
+
+        public DbSet<Holding> Holdings { get; set; }
 
         public DbSet<Language> Languages { get; set; }
         public DbSet<ImageFile> ImageFiles { get; set; }
@@ -131,5 +151,8 @@ namespace PlataformaRio2C.Infra.Data.Context
         public DbSet<Speaker> Speaker { get; set; }
 
         public DbSet<MusicalCommission> MusicalCommission { get; set; }
+
+        public DbSet<SalesPlatform> SalesPlatforms { get; set; }
+        public DbSet<SalesPlatformWebhookRequest> SalesPlatformWebhookRequests { get; set; }
     }
 }

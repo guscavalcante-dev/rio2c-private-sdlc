@@ -119,6 +119,8 @@
     <Compile Include="Entities\Quiz\QuizQuestion.cs" />
     <Compile Include="Entities\Room\RoomName.cs" />
     <Compile Include="Entities\Room\Room.cs" />
+    <Compile Include="Entities\SalesPlatform\SalesPlatformWebhookRequest.cs" />
+    <Compile Include="Entities\SalesPlatform\SalesPlatform.cs" />
     <Compile Include="Entities\Speaker\Speaker.cs" />
     <Compile Include="Enums\NegotiationTypeCodes.cs" />
     <Compile Include="Enums\StatusProjectCodes.cs" />
@@ -152,6 +154,8 @@
     <Compile Include="Interfaces\Repositories\Quiz\IQuizRepository.cs" />
     <Compile Include="Interfaces\Repositories\Room\IRoomNameRepository.cs" />
     <Compile Include="Interfaces\Repositories\Room\IRoomRepository.cs" />
+    <Compile Include="Interfaces\Repositories\SalesPlatform\ISalesPlatformWebhookRequestRepository.cs" />
+    <Compile Include="Interfaces\Repositories\SalesPlatform\ISalesPlatformRepository.cs" />
     <Compile Include="Interfaces\Repositories\Speaker\ISpeakerRepository.cs" />
     <Compile Include="Interfaces\Services\IConferenceService.cs" />
     <Compile Include="Interfaces\Services\ICountryService.cs" />
@@ -347,6 +351,8 @@
     <Compile Include="Validations\Producer\ProducerIsConsistentForPortal.cs" />
     <Compile Include="Validations\ProjectPlayerEvaluation\ProjectPlayerEvaluationRecuseIsConsistent.cs" />
     <Compile Include="Validations\Project\ProjectIsConsistent.cs" />
+    <Compile Include="Validations\SalesPlatform\SalesPlatformWebhookRequestIsConsistent.cs" />
+    <Compile Include="Validations\SalesPlatform\SalesPlatformIsConsistent.cs" />
     <Compile Include="Validations\User\UserIsConsistent.cs" />
     <Compile Include="Enums\ClaimCodes.cs" />
     <Compile Include="Enums\ErrorCodes.cs" />
