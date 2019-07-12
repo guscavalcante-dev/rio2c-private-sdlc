@@ -35,7 +35,7 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTime? LastProcessingDate { get; private set; }
         public string ProcessingErrorCode { get; private set; }
         public int? ManualProcessingUserId { get; private set; }
-        //public Guid SecurityStamp { get; private set; }
+        public string SecurityStamp { get; private set; }
 
         public virtual SalesPlatform SalesPlatform { get; private set; }
 
@@ -64,7 +64,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsProcessed = false;
             this.IsProcessing = false;
             this.ProcessingCount = 0;
-            //this.SecurityStamp = Guid.NewGuid();
+            this.SecurityStamp = Guid.NewGuid().ToString();
         }
 
         /// <summary>Prevents a default instance of the <see cref="SalesPlatformWebhookRequest"/> class from being created.</summary>

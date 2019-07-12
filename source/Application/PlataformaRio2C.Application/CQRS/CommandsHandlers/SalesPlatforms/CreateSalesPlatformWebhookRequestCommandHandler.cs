@@ -53,41 +53,32 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <returns></returns>
         public async Task<Guid?> Handle(CreateSalesPlatformWebhookRequest cmd, CancellationToken cancellationToken)
         {
-            try
-            {
-                this.uow.BeginTransaction();
+            this.uow.BeginTransaction();
 
-                ////Validation
-                //AssertionConcern.AssertArgumentNotEmpty(obj.Title, "O Titulo não pode ser vazio");
-                //AssertionConcern.AssertArgumentNotEmpty(obj.Localization, "O Localização não pode ser vazio");
-                //AssertionConcern.AssertArgumentNotEmpty(obj.Description, "O Descrição não pode ser vazio");
-                //AssertionConcern.AssertArgumentNotNull(obj.Active, "O Ativo não pode ser vazio");
-                //AssertionConcern.AssertArgumentNotEmpty(obj.Serial, "O Serial não pode ser vazio");
-                //AssertionConcern.AssertArgumentFalse(_repository.HasExists(obj.Serial), "Ja existe cadastro com esse serial");
+            ////Validation
+            //AssertionConcern.AssertArgumentNotEmpty(obj.Title, "O Titulo não pode ser vazio");
+            //AssertionConcern.AssertArgumentNotEmpty(obj.Localization, "O Localização não pode ser vazio");
+            //AssertionConcern.AssertArgumentNotEmpty(obj.Description, "O Descrição não pode ser vazio");
+            //AssertionConcern.AssertArgumentNotNull(obj.Active, "O Ativo não pode ser vazio");
+            //AssertionConcern.AssertArgumentNotEmpty(obj.Serial, "O Serial não pode ser vazio");
+            //AssertionConcern.AssertArgumentFalse(_repository.HasExists(obj.Serial), "Ja existe cadastro com esse serial");
 
-                var salesPlatform = this.salesPlatformRepo.GetById(cmd.SalesPlatformId);
+            var salesPlatform = this.salesPlatformRepo.GetById(cmd.SalesPlatformId);
 
-                var salesPlatformWebhookRequest = new SalesPlatformWebhookRequest(
-                    cmd.SalesPlatformWebhookRequestUid,
-                    salesPlatform,
-                    cmd.Endpoint,
-                    cmd.Header,
-                    cmd.Payload,
-                    cmd.IpAddress);
-                this.salesPlatformWebhookRequestRepo.Create(salesPlatformWebhookRequest);
+            var salesPlatformWebhookRequest = new SalesPlatformWebhookRequest(
+                cmd.SalesPlatformWebhookRequestUid,
+                salesPlatform,
+                cmd.Endpoint,
+                cmd.Header,
+                cmd.Payload,
+                cmd.IpAddress);
+            this.salesPlatformWebhookRequestRepo.Create(salesPlatformWebhookRequest);
 
-                this.uow.SaveChanges();
+            this.uow.SaveChanges();
 
-                //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);
+            //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);
 
-                return cmd.SalesPlatformWebhookRequestUid;
-            }
-            catch (Exception ex)
-            {
-                var teste = 1;
-            }
-
-            return null;
+            return cmd.SalesPlatformWebhookRequestUid;
 
             //return Task.FromResult(propertyId); // use it when the methed is not async
         }

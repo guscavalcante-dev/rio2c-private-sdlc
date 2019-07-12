@@ -92,12 +92,12 @@ namespace PlataformaRio2C.WebApi.Areas.Api.V1.Controllers
             }
             catch (DomainException ex)
             {
-                var erorr = 1;
+                return await Json(new { status = "error", message = ex.InnerException });
                 //this.SetResultMessage(new ResultMessage(this.localizer[ex.GetInnerMessage()], ResultMessageType.Error));
             }
             catch (Exception ex)
             {
-                var teste = 1;
+                return await Json(new { status = "error", message = "Undefined error." });
                 //HttpContext.RiseError(ex);
                 //return BadRequest(ex.Message);
             }
