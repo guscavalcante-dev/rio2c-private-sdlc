@@ -4,7 +4,7 @@
 // Created          : 07-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-11-2019
+// Last Modified On : 07-19-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformWebhookRequestRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,8 +14,6 @@
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context;
-using System;
-using System.Data.Entity;
 using System.Linq;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
@@ -41,24 +39,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return @readonly
                         ? consult.AsNoTracking()
                         : consult;
-        }
-
-        /// <summary>Gets the by identifier.</summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns></returns>
-        public SalesPlatformWebhookRequest GetById(int id)
-        {
-            return this.GetAll()
-                            .FirstOrDefault(m => m.Id == id);
-        }
-
-        /// <summary>Gets the by uid.</summary>
-        /// <param name="uid">The uid.</param>
-        /// <returns></returns>
-        public SalesPlatformWebhookRequest GetByUid(Guid uid)
-        {
-            return this.GetAll()
-                            .FirstOrDefault(m => m.Uid == uid);
         }
     }
 }

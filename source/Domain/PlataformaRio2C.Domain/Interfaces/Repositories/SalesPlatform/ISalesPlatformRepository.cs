@@ -4,7 +4,7 @@
 // Created          : 07-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-12-2019
+// Last Modified On : 07-19-2019
 // ***********************************************************************
 // <copyright file="ISalesPlatformRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,14 +12,13 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Entities;
-using System;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Domain.Interfaces
 {
     /// <summary>ISalesPlatformRepository</summary>
     public interface ISalesPlatformRepository : IRepository<SalesPlatform>
     {
-        SalesPlatform GetById(int id);
-        SalesPlatform GetByUid(Guid uid);
+        Task<SalesPlatform> GetByNameAsync(string name);
     }    
 }

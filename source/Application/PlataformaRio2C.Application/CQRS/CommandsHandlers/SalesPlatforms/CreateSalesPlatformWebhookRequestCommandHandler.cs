@@ -4,7 +4,7 @@
 // Created          : 07-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-12-2019
+// Last Modified On : 07-19-2019
 // ***********************************************************************
 // <copyright file="CreateSalesPlatformWebhookRequestCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -63,11 +63,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             //AssertionConcern.AssertArgumentNotEmpty(obj.Serial, "O Serial não pode ser vazio");
             //AssertionConcern.AssertArgumentFalse(_repository.HasExists(obj.Serial), "Ja existe cadastro com esse serial");
 
-            var salesPlatform = this.salesPlatformRepo.GetById(cmd.SalesPlatformId);
+            var salesPlatform = await this.salesPlatformRepo.GetByNameAsync(cmd.SalesPlatformName);
 
             var salesPlatformWebhookRequest = new SalesPlatformWebhookRequest(
                 cmd.SalesPlatformWebhookRequestUid,
                 salesPlatform,
+                cmd.WebhookSecurityKey,
                 cmd.Endpoint,
                 cmd.Header,
                 cmd.Payload,

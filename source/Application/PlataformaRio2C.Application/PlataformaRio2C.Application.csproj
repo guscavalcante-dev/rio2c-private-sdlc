@@ -166,6 +166,8 @@
     <Compile Include="Common\StatusProjectCodes.cs" />
     <Compile Include="CQRS\CommandsHandlers\SalesPlatforms\CreateSalesPlatformWebhookRequestCommandHandler.cs" />
     <Compile Include="CQRS\Commands\SalesPlatforms\CreateSalesPlatformWebhookRequest.cs" />
+    <Compile Include="CQRS\QueriesHandlers\SalesPlatforms\FindSalesPlatformByNameQueryHandler.cs" />
+    <Compile Include="CQRS\Queries\SalesPlatforms\FindSalesPlatformByName.cs" />
     <Compile Include="Dtos\CustomFormSympla.cs" />
     <Compile Include="Dtos\GroupCountryDto.cs" />
     <Compile Include="Dtos\GroupCountrySearchDto.cs" />
@@ -334,6 +336,7 @@
     <Compile Include="ViewModels\Common\Room\RoomEditAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Room\RoomNameAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Room\RoomAppViewModel.cs" />
+    <Compile Include="ViewModels\Common\SalesPlatform\SalesPlatformBaseViewModel.cs" />
     <Compile Include="ViewModels\Common\Schedule\ScheduleDayAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Schedule\ScheduleEventAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Speaker\SpeakerBasicAppViewModel.cs" />
@@ -438,8 +441,6 @@
   <ItemGroup>
     <Folder Include="CQRS\EventsHandlers\" />
     <Folder Include="CQRS\Events\" />
-    <Folder Include="CQRS\QueriesHandlers\" />
-    <Folder Include="CQRS\Queries\" />
     <Folder Include="Enums\" />
     <Folder Include="Interfaces\Api\" />
     <Folder Include="ViewModels\Common\ProducerProject\" />

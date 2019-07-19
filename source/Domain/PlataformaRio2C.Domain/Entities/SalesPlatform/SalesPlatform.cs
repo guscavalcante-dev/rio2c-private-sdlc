@@ -4,7 +4,7 @@
 // Created          : 07-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-12-2019
+// Last Modified On : 07-19-2019
 // ***********************************************************************
 // <copyright file="EventbriteController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,7 +28,7 @@ namespace PlataformaRio2C.Domain.Entities
         public int CreationUserId { get; private set; }
         public int UpdateUserId { get; private set; }
         public DateTime UpdateDate { get; private set; }
-        public Guid SecurityStamp { get; private set; }
+        public string SecurityStamp { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="SalesPlatform"/> class.</summary>
         private SalesPlatform()
@@ -45,6 +45,15 @@ namespace PlataformaRio2C.Domain.Entities
             ValidationResult.Add(new SalesPlatformIsConsistent().Valid(this));
 
             return ValidationResult.IsValid;
+        }
+
+        /// <summary>Determines whether [is valid webhook security key] [the specified webhook security key string].</summary>
+        /// <param name="webhookSecurityKeyString">The webhook security key string.</param>
+        /// <returns>
+        ///   <c>true</c> if [is valid webhook security key] [the specified webhook security key string]; otherwise, <c>false</c>.</returns>
+        public bool IsValidWebhookSecurityKey(string webhookSecurityKeyString)
+        {
+            return string.Equals(this.WebhookSecurityKey.ToString(), webhookSecurityKeyString, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

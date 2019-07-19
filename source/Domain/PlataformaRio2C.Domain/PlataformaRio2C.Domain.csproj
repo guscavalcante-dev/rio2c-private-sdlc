@@ -446,6 +446,10 @@
       <Project>{7E1DE835-DDC4-416A-A2B7-9B4F5FFFFBF4}</Project>
       <Name>PlataformaRio2C.Infra.CrossCutting.Resources</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.Tools\PlataformaRio2C.Infra.CrossCutting.Tools.csproj">
+      <Project>{EC0B684E-F8A3-417A-9567-819FFC7C41CC}</Project>
+      <Name>PlataformaRio2C.Infra.CrossCutting.Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Specifications\Interests\" />

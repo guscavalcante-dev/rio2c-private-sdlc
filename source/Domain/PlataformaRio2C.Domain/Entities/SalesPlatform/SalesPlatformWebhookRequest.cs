@@ -4,7 +4,7 @@
 // Created          : 07-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-12-2019
+// Last Modified On : 07-19-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformWebhookRequest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,6 +14,7 @@
 using PlataformaRio2C.Domain.Entities.Validations;
 using PlataformaRio2C.Domain.Validation;
 using System;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -42,6 +43,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Initializes a new instance of the <see cref="SalesPlatformWebhookRequest"/> class.</summary>
         /// <param name="salesPlatformWebhookRequestUid">The sales platform webhook request uid.</param>
         /// <param name="salesPlatform">The sales platform.</param>
+        /// <param name="webhookSecurityKey">The webhook security key.</param>
         /// <param name="endpoint">The endpoint.</param>
         /// <param name="header">The header.</param>
         /// <param name="payload">The payload.</param>
@@ -49,11 +51,17 @@ namespace PlataformaRio2C.Domain.Entities
         public SalesPlatformWebhookRequest(
             Guid salesPlatformWebhookRequestUid,
             SalesPlatform salesPlatform,
+            string webhookSecurityKey,
             string endpoint,
             string header,
             string payload,
             string ipAddress)
         {
+            if (!salesPlatform.IsValidWebhookSecurityKey(webhookSecurityKey))
+            {
+                throw new DomainException("Invalid security key");
+            }
+
             this.Uid = salesPlatformWebhookRequestUid;
             this.SalesPlatformId = salesPlatform.Id;
             this.SalesPlatform = salesPlatform;

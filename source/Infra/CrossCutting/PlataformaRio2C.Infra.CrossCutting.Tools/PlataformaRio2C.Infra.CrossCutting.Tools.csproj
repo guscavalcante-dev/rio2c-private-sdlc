@@ -124,6 +124,7 @@
     <Compile Include="Enums\StatusMessageType.cs" />
     <Compile Include="Exceptions\DomainException.cs" />
     <Compile Include="Extensions\AsyncHelpers.cs" />
+    <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
     <Compile Include="Extensions\DynamicExtensions.cs" />

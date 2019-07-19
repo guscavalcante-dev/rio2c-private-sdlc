@@ -1,4 +1,17 @@
-﻿using PlataformaRio2C.Domain.Interfaces;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Infra.Data.Repository
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-19-2019
+// ***********************************************************************
+// <copyright file="Repository.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,6 +21,9 @@ using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Infra.Data.Repository
 {
+    /// <summary>Repository</summary>
+    /// <typeparam name="TContext">The type of the context.</typeparam>
+    /// <typeparam name="T"></typeparam>
     public abstract class Repository<TContext, T> : IRepository<T>
          where TContext : DbContext
          where T : class, IEntity
@@ -17,35 +33,44 @@ namespace PlataformaRio2C.Infra.Data.Repository
         protected TContext _context;
         protected DbSet<T> dbSet;
 
+        /// <summary>Initializes a new instance of the <see cref="Repository{TContext, T}"/> class.</summary>
+        /// <param name="context">The context.</param>
         public Repository(TContext context)
         {
             this._context = context;
             this.dbSet = context.Set<T>();
         }
 
-        /// <summary>
-        /// Método que traz um pela Chave primaria
-        /// </summary>
-        /// <param name="id">Chave primaria</param>
+        /// <summary>Gets the specified identifier.</summary>
+        /// <param name="id">The identifier.</param>
         /// <returns></returns>
         public virtual T Get(object id)
         {
             return this.dbSet.Find(id);
         }
 
+        /// <summary>Gets the specified uid.</summary>
+        /// <param name="uid">The uid.</param>
+        /// <returns></returns>
         public virtual T Get(Guid uid)
         {
-            return this.dbSet.Where(e => e.Uid == uid).FirstOrDefault();
+            return this.dbSet.FirstOrDefault(e => e.Uid == uid);
         }
 
-        /// <summary>
-        /// Método que traz um pela Chave primaria de forma assíncrona
-        /// </summary>
-        /// <param name="id">Chave primaria</param>
+        /// <summary>Gets the asynchronous.</summary>
+        /// <param name="id">The identifier.</param>
         /// <returns></returns>
         public virtual async Task<T> GetAsync(object id)
         {
             return await this.dbSet.FindAsync(id);
+        }
+
+        /// <summary>Gets the asynchronous.</summary>
+        /// <param name="uid">The uid.</param>
+        /// <returns></returns>
+        public virtual async Task<T> GetAsync(Guid uid)
+        {
+            return await this.dbSet.Where(e => e.Uid == uid).FirstOrDefaultAsync();
         }
 
         /// <summary>

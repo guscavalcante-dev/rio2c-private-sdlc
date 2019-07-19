@@ -4,9 +4,9 @@
 // Created          : 07-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-12-2019
+// Last Modified On : 07-19-2019
 // ***********************************************************************
-// <copyright file="EventbriteController.cs" company="Softo">
+// <copyright file="SalesPlatformController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -28,6 +28,7 @@ using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using WebApi.OutputCache.V2;
 using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.WebApi.Areas.Api.V1.Controllers
@@ -37,16 +38,16 @@ namespace PlataformaRio2C.WebApi.Areas.Api.V1.Controllers
     /// </summary>
     //[Authorize]
     [Microsoft.Web.Http.ApiVersion("1.0")]
-    [RoutePrefix("api/v{api-version:apiVersion}/eventbrite")]
-    public class EventbriteController : BaseApiController
+    [RoutePrefix("api/v{api-version:apiVersion}/salesplatforms")]
+    public class SalesPlatformController : BaseApiController
     {
         private ISalesPlatformService salesPlatformService;
         private readonly IMediator commandBus;
 
-        /// <summary>Initializes a new instance of the <see cref="EventbriteController"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="SalesPlatformController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="salesPlatformServiceFactory">The sales platform service factory.</param>
-        public EventbriteController(IMediator commandBus, ISalesPlatformServiceFactory salesPlatformServiceFactory)
+        public SalesPlatformController(IMediator commandBus, ISalesPlatformServiceFactory salesPlatformServiceFactory)
         {
             this.salesPlatformService = salesPlatformServiceFactory.Get();
             this.commandBus = commandBus;
@@ -61,24 +62,19 @@ namespace PlataformaRio2C.WebApi.Areas.Api.V1.Controllers
             return await Json(new { status = "success", message = "Pong" });
         }
 
-        /// <summary>Tests the specified body.</summary>
-        /// <param name="body">The body.</param>
+        /// <summary>Tests this instance.</summary>
         /// <returns></returns>
         [HttpPost]
-        [Route("Test")]
-        public async Task<IHttpActionResult> Test()
+        [Route("eventbrite/{key?}")]
+        public async Task<IHttpActionResult> Eventbrite(string key)
         {
             try
             {
-                //if (!ModelState.IsValid)
-                //{
-                //    throw new DomainException(this.localizer["Please, correct the form values."]);
-                //}
-
                 var salesPlatformWebhooRequestUid = Guid.NewGuid();
                 var result = await this.commandBus.Send(new CreateSalesPlatformWebhookRequest(
                     salesPlatformWebhooRequestUid,
-                    1,
+                    "Eventbrite",
+                    key,
                     HttpContext.Current.Request.Url.AbsoluteUri,
                     Request.Headers.ToString(),
                     Request.Content.ReadAsStringAsync().Result,
@@ -92,7 +88,7 @@ namespace PlataformaRio2C.WebApi.Areas.Api.V1.Controllers
             }
             catch (DomainException ex)
             {
-                return await Json(new { status = "error", message = ex.InnerException });
+                return await Json(new { status = "error", message = ex.GetInnerMessage() });
                 //this.SetResultMessage(new ResultMessage(this.localizer[ex.GetInnerMessage()], ResultMessageType.Error));
             }
             catch (Exception ex)
@@ -102,7 +98,7 @@ namespace PlataformaRio2C.WebApi.Areas.Api.V1.Controllers
                 //return BadRequest(ex.Message);
             }
 
-            return await Json(new { status = "success", message = "Test with success." });
+            return await Json(new { status = "success", message = "Eventbrite event saved successfully." });
         }
 
         //[Route("")]
