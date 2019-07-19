@@ -1407,7 +1407,7 @@ CREATE TABLE [dbo].[SalesPlatform](
 	[CreationDate] [datetime] NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
 	[UpdateDate] [datetime] NOT NULL,
-	[SecurityStamp] [uniqueidentifier] NOT NULL,
+	[SecurityStamp] [varchar](36) NOT NULL,
  CONSTRAINT [PK_SalesPlatform] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -1441,7 +1441,7 @@ CREATE TABLE [dbo].[SalesPlatformWebhookRequest](
 	[ProcessingErrorCode] [nvarchar](10) NULL,
 	[ProcessingErrorMessage] [nvarchar](250) NULL,
 	[ManualProcessingUserId] [int] NULL,
-	[SecurityStamp] [uniqueidentifier] NOT NULL,
+	[SecurityStamp] [varchar](36) NOT NULL,
  CONSTRAINT [PK_SalesPlatformWebhookRequest] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

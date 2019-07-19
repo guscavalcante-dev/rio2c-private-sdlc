@@ -26,7 +26,7 @@ CREATE TABLE "SalesPlatformWebhookRequest"
 	"ProcessingErrorCode" nvarchar(10)  NULL ,
 	"ProcessingErrorMessage" nvarchar(250)  NULL ,
 	"ManualProcessingUserId" int  NULL ,
-	"SecurityStamp"      uniqueidentifier  NOT NULL 
+	"SecurityStamp"      varchar(36)  NOT NULL 
 )
 go
 
@@ -63,7 +63,7 @@ CREATE TABLE "SalesPlatform"
 	"UpdateDate"         datetime  NOT NULL 
 	CONSTRAINT "DF_SalesPlatform_UpdateDate"
 		 DEFAULT  GETDATE(),
-	"SecurityStamp"      uniqueidentifier  NOT NULL 
+	"SecurityStamp"      varchar(36)  NOT NULL 
 )
 go
 
