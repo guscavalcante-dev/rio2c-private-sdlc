@@ -1438,7 +1438,7 @@ CREATE TABLE [dbo].[SalesPlatformWebhookRequest](
 	[IsProcessing] [bit] NOT NULL,
 	[ProcessingCount] [int] NOT NULL,
 	[LastProcessingDate] [datetime] NULL,
-	[NextProcessingDate] [datetime] NULL,
+	[NextProcessingDate] [datetime] NOT NULL,
 	[ProcessingErrorCode] [nvarchar](10) NULL,
 	[ProcessingErrorMessage] [nvarchar](250) NULL,
 	[ManualProcessingUserId] [int] NULL,
