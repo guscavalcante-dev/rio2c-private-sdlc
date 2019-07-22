@@ -23,6 +23,7 @@ CREATE TABLE "SalesPlatformWebhookRequest"
 	CONSTRAINT "DF_SalesPlatformWebhookRequest_ProcessingCount"
 		 DEFAULT  0,
 	"LastProcessingDate" datetime  NULL ,
+	"NextProcessingDate" datetime  NULL ,
 	"ProcessingErrorCode" nvarchar(10)  NULL ,
 	"ProcessingErrorMessage" nvarchar(250)  NULL ,
 	"ManualProcessingUserId" int  NULL ,
