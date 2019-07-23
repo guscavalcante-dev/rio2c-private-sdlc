@@ -27,10 +27,8 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite
     {
         private string ApiUrl = "https://www.eventbriteapi.com/v3/";
 
-        private readonly string appKey;
-        //private readonly string userKey;
-        private readonly string eventId;
-        //private EventbriteContext ctx;
+        private readonly string appKey; //Rio2C: WZNU5FWLAVRAQCIWCMNW // Rafael: D4ZOJ2GY6VK2ECV6IIPD
+        private readonly string eventId; // Rio2C: 63245927271 // Rafael: 65120229359
         private readonly SalesPlatformWebhookRequestDto salesPlatformWebhookRequestDto;
 
         /// <summary>Initializes a new instance of the <see cref="EventbriteSalesPlatformService"/> class.</summary>
@@ -50,7 +48,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite
                 throw new DomainException("The webhook request is required.");
             }
 
-            this.GetEvent();
+            this.GetAttendee();
         }
 
         public void GetLastEvent()
@@ -62,6 +60,12 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite
         public void GetEvent()
         {
             var response = this.ExecuteRequest<Event>($"events/{this.eventId}/", HttpMethod.Get, null);
+        }
+
+        /// <summary>Gets the attendee.</summary>
+        public void GetAttendee()
+        {
+            var response = this.ExecuteRequest<Attendee>($"events/{this.eventId}/attendees/{1245580008}/", HttpMethod.Get, null);
         }
 
         /// <summary>Executes the request.</summary>
@@ -84,7 +88,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite
                                                            SecurityProtocolType.Tls11 |
                                                            SecurityProtocolType.Tls12;
 
-                    var response = httpMethod == HttpMethod.Get ? client.DownloadString(this.ApiUrl + apiLink) : 
+                    var response = httpMethod == HttpMethod.Get ? client.DownloadString(this.ApiUrl + apiLink) :
                                                                   client.UploadString(this.ApiUrl + apiLink, httpMethod.ToString(), jsonString);
 
                     return JsonConvert.DeserializeObject<T>(response);

@@ -55,6 +55,7 @@
     <Compile Include="SalesPlatformServiceFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Eventbrite\Models\Errors.cs" />
+    <Compile Include="Services\Eventbrite\Models\Attendee.cs" />
     <Compile Include="Services\Eventbrite\Models\ModelWithId.cs" />
     <Compile Include="Services\Eventbrite\Models\Event.cs" />
     <Compile Include="Services\ISalesPlatformService.cs" />
