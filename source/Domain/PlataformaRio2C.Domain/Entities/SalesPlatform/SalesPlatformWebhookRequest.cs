@@ -18,6 +18,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
+    /// <summary>SalesPlatformWebhookRequest</summary>
     public class SalesPlatformWebhookRequest : Entity
     {
         public static readonly int EndpointMaxLength = 250;
@@ -155,9 +156,10 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="securityStamp">The security stamp.</param>
         private void ValidateSecurityStamp(string securityStamp)
         {
-            if (this.SecurityStamp.ToLower() != securityStamp.ToLower())
+            if (!string.Equals(this.SecurityStamp, securityStamp, StringComparison.OrdinalIgnoreCase))
             {
-                throw new DomainException("Invalid security stamp");
+                throw new DomainException("Invalid security stamp.");
+
             }
         }
 
@@ -171,15 +173,6 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         #endregion
-
-        //public void SetPlayer(Player entity)
-        //{
-        //    Player = entity;
-        //    if (entity != null)
-        //    {
-        //        PlayerId = entity.Id;
-        //    }
-        //}    
 
         /// <summary>Returns true if ... is valid.</summary>
         /// <returns>

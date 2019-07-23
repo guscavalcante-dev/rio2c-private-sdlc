@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 07-19-2019
 // ***********************************************************************
-// <copyright file="EventbriteController.cs" company="Softo">
+// <copyright file="SalesPlatform.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -17,6 +17,7 @@ using System;
 
 namespace PlataformaRio2C.Domain.Entities
 {
+    /// <summary>SalesPlatform</summary>
     public class SalesPlatform : Entity
     {
         public string Name { get; private set; }
