@@ -4,7 +4,7 @@
 // Created          : 07-22-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-22-2019
+// Last Modified On : 07-23-2019
 // ***********************************************************************
 // <copyright file="PostponeSalesPlatformWebhookRequestsCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -67,6 +67,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             salesPlatformWebhooRequest.Postpone(cmd.ErrorCode, cmd.ErrorMessage, cmd.SecurityStamp);
 
+            this.salesPlatformWebhookRequestRepo.Update(salesPlatformWebhooRequest);
             this.uow.SaveChanges();
 
             //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);

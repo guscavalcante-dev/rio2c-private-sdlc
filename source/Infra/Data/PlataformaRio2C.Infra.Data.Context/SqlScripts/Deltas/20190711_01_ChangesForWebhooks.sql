@@ -123,6 +123,6 @@ go
 
 
 SET IDENTITY_INSERT [dbo].[SalesPlatform] ON 
-INSERT [dbo].[SalesPlatform] ([Id], [Uid], [Name], [IsActive], [WebhookSecurityKey], [ApiKey], [ApiSecret], [MaxProcessingCount], [CreationUserId], [CreationDate], [UpdateUserId], [UpdateDate], [SecurityStamp]) VALUES (1, N'717287c1-bb97-43ca-99c0-4d25576eb3b0', N'Eventbrite', 1, N'3718d5bd-d3d3-4e8f-a3e0-5270c5830af2', N'AR735YTCZCCPZYKPFN', NULL, 15, 1, GETDATE(), 1, GETDATE(), N'5852137c-86a3-4798-9ece-509818ae0955')
+INSERT [dbo].[SalesPlatform] ([Id], [Uid], [Name], [IsActive], [WebhookSecurityKey], [ApiKey], [ApiSecret], [MaxProcessingCount], [CreationUserId], [CreationDate], [UpdateUserId], [UpdateDate], [SecurityStamp]) VALUES (1, N'717287c1-bb97-43ca-99c0-4d25576eb3b0', N'Eventbrite', 1, N'3718d5bd-d3d3-4e8f-a3e0-5270c5830af2', N'D4ZOJ2GY6VK2ECV6IIPD', NULL, 15, 1, GETDATE(), 1, GETDATE(), N'5852137c-86a3-4798-9ece-509818ae0955')
 SET IDENTITY_INSERT [dbo].[SalesPlatform] OFF
 go

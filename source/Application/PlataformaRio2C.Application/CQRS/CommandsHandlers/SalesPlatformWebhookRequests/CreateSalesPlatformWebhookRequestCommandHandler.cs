@@ -4,7 +4,7 @@
 // Created          : 07-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-19-2019
+// Last Modified On : 07-23-2019
 // ***********************************************************************
 // <copyright file="CreateSalesPlatformWebhookRequestCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -73,8 +73,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.Header,
                 cmd.Payload,
                 cmd.IpAddress);
-            this.salesPlatformWebhookRequestRepo.Create(salesPlatformWebhookRequest);
 
+            this.salesPlatformWebhookRequestRepo.Create(salesPlatformWebhookRequest);
             this.uow.SaveChanges();
 
             //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);

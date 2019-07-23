@@ -4,7 +4,7 @@
 // Created          : 07-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-19-2019
+// Last Modified On : 07-23-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformWebhookRequestMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -38,6 +38,12 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
 
             this.Property(p => p.IpAddress)
                 .HasMaxLength(SalesPlatformWebhookRequest.IpAddressMaxLength);
+
+            this.Property(p => p.ProcessingErrorCode)
+                .HasMaxLength(SalesPlatformWebhookRequest.ProcessingErrorCodeLength);
+
+            this.Property(p => p.ProcessingErrorMessage)
+                .HasMaxLength(SalesPlatformWebhookRequest.ProcessingErrorMessageLength);
 
             //this.Property(m => m.Payload)
             //    .HasColumnType("nvarchar(MAX)");

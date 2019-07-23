@@ -4,7 +4,7 @@
 // Created          : 07-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-22-2019
+// Last Modified On : 07-23-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformServiceFactory.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,6 +13,7 @@
 // ***********************************************************************
 using PlataformaRio2C.Application.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms

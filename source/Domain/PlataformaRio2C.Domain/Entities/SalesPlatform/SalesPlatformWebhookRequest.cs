@@ -4,7 +4,7 @@
 // Created          : 07-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-22-2019
+// Last Modified On : 07-23-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformWebhookRequest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,6 +25,8 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int HeaderMaxLength = 1000;
         public static readonly int PayloadtMaxLength = 5000;
         public static readonly int IpAddressMaxLength = 38;
+        public static readonly int ProcessingErrorCodeLength = 10;
+        public static readonly int ProcessingErrorMessageLength = 250;
 
         public int SalesPlatformId { get; private set; }
         public string Endpoint { get; private set; }

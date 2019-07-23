@@ -4,7 +4,7 @@
 // Created          : 07-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-19-2019
+// Last Modified On : 07-23-2019
 // ***********************************************************************
 // <copyright file="ProcessSalesPlatformWebhookRequestsCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -76,6 +76,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     if (salesPlatformWebhooRequest != null)
                     {
                         salesPlatformWebhooRequest.Process();
+                        this.salesPlatformWebhookRequestRepo.Update(salesPlatformWebhooRequest);
                         processingUids.Add(salesPlatformWebhooRequest.Uid);
                     }
                 }

@@ -4,7 +4,7 @@
 // Created          : 07-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-22-2019
+// Last Modified On : 07-23-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -123,6 +123,7 @@ namespace PlataformaRio2C.WebApi.Areas.Api.V1.Controllers
                 {
                     try
                     {
+                        //throw new DomainException("teste");
                         var salesPlatformService = this.salesPlatformServiceFactory.Get(pendingRequest);
                         salesPlatformService.ExecuteRequest();
 
@@ -131,7 +132,7 @@ namespace PlataformaRio2C.WebApi.Areas.Api.V1.Controllers
                     }
                     catch (Exception ex)
                     {
-                        // Set to process agin
+                        // Set to process again
                         await this.commandBus.Send(new PostponeSalesPlatformWebhookRequest(pendingRequest.Uid, null, ex.GetInnerMessage(), pendingRequest.SecurityStamp));
                     }
                 }
@@ -147,7 +148,7 @@ namespace PlataformaRio2C.WebApi.Areas.Api.V1.Controllers
                 //return BadRequest(ex.Message);
             }
 
-            return await Json(new { status = "success", message = "Eventbrite event saved successfully." });
+            return await Json(new { status = "success", message = "Requests processed successfully." });
         }
 
         //[Route("")]
