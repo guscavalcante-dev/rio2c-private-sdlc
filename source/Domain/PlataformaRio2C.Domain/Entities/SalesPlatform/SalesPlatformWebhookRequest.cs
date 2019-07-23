@@ -111,6 +111,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.ProcessingCount += 1;
             this.LastProcessingDate = DateTime.UtcNow;
             this.NextProcessingDate = null;
+            this.ProcessingErrorCode = null;
+            this.ProcessingErrorMessage = null;
             this.SecurityStamp = Guid.NewGuid().ToString();
         }
 
