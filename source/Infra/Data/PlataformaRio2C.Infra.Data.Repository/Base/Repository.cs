@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-19-2019
+// Last Modified On : 07-22-2019
 // ***********************************************************************
 // <copyright file="Repository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -70,7 +70,7 @@ namespace PlataformaRio2C.Infra.Data.Repository
         /// <returns></returns>
         public virtual async Task<T> GetAsync(Guid uid)
         {
-            return await this.dbSet.Where(e => e.Uid == uid).FirstOrDefaultAsync();
+            return await this.dbSet.FirstOrDefaultAsync(e => e.Uid == uid);
         }
 
         /// <summary>

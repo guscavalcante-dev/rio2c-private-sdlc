@@ -15,17 +15,18 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Queries;
-using PlataformaRio2C.Application.ViewModels;
-using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Application.Dtos;
 using PlataformaRio2C.Domain.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
 {
     /// <summary>FindSalesPlatformByNameQueryHandler</summary>
-    public class FindSalesPlatformByNameQueryHandler : IRequestHandler<FindSalesPlatformByName, SalesPlatformBaseViewModel>
+    public class FindSalesPlatformByNameQueryHandler : IRequestHandler<FindSalesPlatformByName, SalesPlatformDto>
     {
         private readonly ISalesPlatformRepository repo;
 
+        /// <summary>Initializes a new instance of the <see cref="FindSalesPlatformByNameQueryHandler"/> class.</summary>
+        /// <param name="salesPlatformRepository">The sales platform repository.</param>
         public FindSalesPlatformByNameQueryHandler(ISalesPlatformRepository salesPlatformRepository)
         {
             this.repo = salesPlatformRepository;
@@ -35,7 +36,7 @@ namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<SalesPlatformBaseViewModel> Handle(FindSalesPlatformByName cmd, CancellationToken cancellationToken)
+        public async Task<SalesPlatformDto> Handle(FindSalesPlatformByName cmd, CancellationToken cancellationToken)
         {
             var salesplatform = await this.repo.GetByNameAsync(cmd.Name);
             if (salesplatform == null)
@@ -43,7 +44,7 @@ namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
                 return null;
             }
 
-            return new SalesPlatformBaseViewModel(salesplatform);
+            return new SalesPlatformDto(salesplatform);
         }
     }
 }

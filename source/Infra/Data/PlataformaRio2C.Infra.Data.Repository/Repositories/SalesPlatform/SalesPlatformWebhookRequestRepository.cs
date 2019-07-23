@@ -4,17 +4,21 @@
 // Created          : 07-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-19-2019
+// Last Modified On : 07-22-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformWebhookRequestRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -33,12 +37,25 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public override IQueryable<SalesPlatformWebhookRequest> GetAll(bool @readonly = false)
         {
-            var consult = this.dbSet;
-                                //.Include(i => i.SalesPlatform);
+            var consult = this.dbSet
+                                .Include(i => i.SalesPlatform);
 
             return @readonly
                         ? consult.AsNoTracking()
                         : consult;
+        }
+
+        /// <summary>Gets all by pending asynchronous.</summary>
+        /// <returns></returns>
+        public async Task<List<SalesPlatformWebhookRequest>> GetAllByPendingAsync()
+        {
+            var query = this.GetAll()
+                                .Where(m => !m.IsProcessed
+                                            && !m.IsProcessing
+                                            && m.ProcessingCount <= 15
+                                            && m.NextProcessingDate < DateTime.UtcNow);
+
+            return await query.ToListAsync();
         }
     }
 }

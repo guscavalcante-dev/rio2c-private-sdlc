@@ -1,4 +1,17 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Domain
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-22-2019
+// ***********************************************************************
+// <copyright file="IRepository.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -6,8 +19,10 @@ using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Domain.Interfaces
 {
-    public interface IRepository<T>
-   where T : class, IEntity
+    /// <summary>IRepository</summary>
+    /// <typeparam name="T"></typeparam>
+    public interface IRepository<T> 
+        where T : class, IEntity
     {
         int Count(Expression<Func<T, bool>> filter = null);
         void Create(T entity);
@@ -32,6 +47,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         #region Async methods
 
         Task<T> GetAsync(object id);
+        Task<T> GetAsync(Guid uid);
         Task<T> GetAsync(Expression<Func<T, bool>> filter);
         Task<int> CountAsync(Expression<Func<T, bool>> filter = null);
 

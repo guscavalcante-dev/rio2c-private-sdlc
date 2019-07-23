@@ -4,14 +4,16 @@
 // Created          : 07-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-12-2019
+// Last Modified On : 07-22-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformServiceFactory.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Application.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms
 {
@@ -23,11 +25,17 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms
         {
         }
 
-        /// <summary>Gets this instance.</summary>
+        /// <summary>Gets the specified sales platform webhook request dto.</summary>
+        /// <param name="salesPlatformWebhookRequestDto">The sales platform webhook request dto.</param>
         /// <returns></returns>
-        public ISalesPlatformService Get()
+        public ISalesPlatformService Get(SalesPlatformWebhookRequestDto salesPlatformWebhookRequestDto)
         {
-            return new EventbriteSalesPlatformService();
+            if (salesPlatformWebhookRequestDto?.SalesPlatformDto?.Name == "Eventbrite")
+            {
+                return new EventbriteSalesPlatformService(salesPlatformWebhookRequestDto);
+            }
+
+            throw new DomainException("Unknown sales platform on webhook request.");
         }
     }
 }

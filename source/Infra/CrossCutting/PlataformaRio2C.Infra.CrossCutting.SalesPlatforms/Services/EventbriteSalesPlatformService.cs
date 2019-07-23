@@ -1,4 +1,17 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Domain
+// Author           : Rafael Dantas Ruiz
+// Created          : 07-12-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-22-2019
+// ***********************************************************************
+// <copyright file="EventbriteSalesPlatformService.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
@@ -9,6 +22,10 @@ using System.Threading;
 using System.Threading.Tasks;
 //using EventbriteNET;
 using Eventbrite;
+using PlataformaRio2C.Application.Dtos;
+using PlataformaRio2C.Application.ViewModels;
+using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services
 {
@@ -19,38 +36,42 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services
         //private readonly string userKey;
         private readonly long eventId;
         //private EventbriteContext ctx;
+        private readonly SalesPlatformWebhookRequestDto salesPlatformWebhookRequestDto;
 
         /// <summary>Initializes a new instance of the <see cref="EventbriteSalesPlatformService"/> class.</summary>
-        public EventbriteSalesPlatformService()
+        /// <param name="salesPlatformWebhookRequestDto">The sales platform webhook request dto.</param>
+        public EventbriteSalesPlatformService(SalesPlatformWebhookRequestDto salesPlatformWebhookRequestDto)
         {
             this.appKey = ConfigurationManager.AppSettings["EventbriteAppKey"];
             //this.userKey = ConfigurationManager.AppSettings["EventbriteUserKey"];
             var eventIdConfiguration = ConfigurationManager.AppSettings["EventbriteEventId"];
 
-            if (string.IsNullOrEmpty(this.appKey))
-            {
-                throw new Exception("Eventbrite app key is required.");
-            }
+            this.salesPlatformWebhookRequestDto = salesPlatformWebhookRequestDto;
 
-            //if (string.IsNullOrEmpty(this.userKey))
+            //if (string.IsNullOrEmpty(this.appKey))
             //{
-            //    throw new Exception("Eventbrite user key is required.");
+            //    throw new Exception("Eventbrite app key is required.");
             //}
 
-            if (!long.TryParse(eventIdConfiguration, NumberStyles.None, null, out this.eventId))
-            {
-                throw new Exception("Eventbrite event id is required.");
-            }
+            ////if (string.IsNullOrEmpty(this.userKey))
+            ////{
+            ////    throw new Exception("Eventbrite user key is required.");
+            ////}
 
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            //if (!long.TryParse(eventIdConfiguration, NumberStyles.None, null, out this.eventId))
+            //{
+            //    throw new Exception("Eventbrite event id is required.");
+            //}
 
-            var teste = new EventbriteApi();
-            teste.SetOAuthToken(this.appKey);
+            //ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+            //var teste = new EventbriteApi();
+            //teste.SetOAuthToken(this.appKey);
 
 
-            //var request = new Eventbrite.Requests.GetUserOwnedEventsRequest(this.eventId);
-            //var teste2 = teste.Execute(request, CancellationToken.None).Result;
-            var teste3 = 1;
+            ////var request = new Eventbrite.Requests.GetUserOwnedEventsRequest(this.eventId);
+            ////var teste2 = teste.Execute(request, CancellationToken.None).Result;
+            //var teste3 = 1;
 
             //var evt = new Eventbrite.Entities.Event();
             //evt.Id = this.eventId;
@@ -76,6 +97,17 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services
 
             //// All the tickets in that event
             //var tickets = firstEvent.Tickets.Values;
+        }
+
+        /// <summary>Executes the request.</summary>
+        public void ExecuteRequest()
+        {
+            if (this.salesPlatformWebhookRequestDto == null)
+            {
+                throw new DomainException("The webhook request is required.");
+            }
+
+            var teste = 1;
         }
 
         public void GetLastEvent()

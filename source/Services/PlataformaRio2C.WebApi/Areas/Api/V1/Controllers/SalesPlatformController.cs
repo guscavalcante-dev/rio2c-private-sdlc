@@ -4,7 +4,7 @@
 // Created          : 07-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-19-2019
+// Last Modified On : 07-22-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -41,16 +41,16 @@ namespace PlataformaRio2C.WebApi.Areas.Api.V1.Controllers
     [RoutePrefix("api/v{api-version:apiVersion}/salesplatforms")]
     public class SalesPlatformController : BaseApiController
     {
-        private ISalesPlatformService salesPlatformService;
         private readonly IMediator commandBus;
+        private readonly ISalesPlatformServiceFactory salesPlatformServiceFactory;
 
         /// <summary>Initializes a new instance of the <see cref="SalesPlatformController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="salesPlatformServiceFactory">The sales platform service factory.</param>
         public SalesPlatformController(IMediator commandBus, ISalesPlatformServiceFactory salesPlatformServiceFactory)
         {
-            this.salesPlatformService = salesPlatformServiceFactory.Get();
             this.commandBus = commandBus;
+            this.salesPlatformServiceFactory = salesPlatformServiceFactory;
         }
 
         /// <summary>Pings this instance.</summary>
@@ -90,6 +90,55 @@ namespace PlataformaRio2C.WebApi.Areas.Api.V1.Controllers
             {
                 return await Json(new { status = "error", message = ex.GetInnerMessage() });
                 //this.SetResultMessage(new ResultMessage(this.localizer[ex.GetInnerMessage()], ResultMessageType.Error));
+            }
+            catch (Exception ex)
+            {
+                return await Json(new { status = "error", message = "Undefined error." });
+                //HttpContext.RiseError(ex);
+                //return BadRequest(ex.Message);
+            }
+
+            return await Json(new { status = "success", message = "Eventbrite event saved successfully." });
+        }
+
+        /// <summary>Processes the requests.</summary>
+        /// <param name="key">The key.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("processrequests/{key?}")]
+        public async Task<IHttpActionResult> ProcessRequests(string key)
+        {
+            try
+            {
+                var pendingRequests = await this.commandBus.Send(new FindAllSalesPlatformWebhooRequestsByPending());
+                if (pendingRequests == null)
+                {
+                    return null;
+                }
+
+                // Mark all requests as processing
+                var processingRequestsUids = await this.commandBus.Send(new ProcessSalesPlatformWebhookRequests(pendingRequests.Select(m => m.Uid).ToList()));
+
+                foreach (var pendingRequest in pendingRequests.Where(m => processingRequestsUids.Contains(m.Uid)))
+                {
+                    try
+                    {
+                        var salesPlatformService = this.salesPlatformServiceFactory.Get(pendingRequest);
+                        salesPlatformService.ExecuteRequest();
+
+                        // Set as processed
+                        await this.commandBus.Send(new ConcludeSalesPlatformWebhookRequest(pendingRequest.Uid, pendingRequest.SecurityStamp));
+                    }
+                    catch (Exception ex)
+                    {
+                        // Set to process agin
+                        await this.commandBus.Send(new PostponeSalesPlatformWebhookRequest(pendingRequest.Uid, null, ex.GetInnerMessage(), pendingRequest.SecurityStamp));
+                    }
+                }
+            }
+            catch (DomainException ex)
+            {
+                return await Json(new { status = "error", message = ex.GetInnerMessage() });
             }
             catch (Exception ex)
             {

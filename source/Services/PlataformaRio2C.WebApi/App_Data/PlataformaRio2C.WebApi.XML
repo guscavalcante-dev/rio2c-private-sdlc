@@ -101,6 +101,11 @@
             <summary>Tests this instance.</summary>
             <returns></returns>
         </member>
+        <member name="M:PlataformaRio2C.WebApi.Areas.Api.V1.Controllers.SalesPlatformController.ProcessRequests(System.String)">
+            <summary>Processes the requests.</summary>
+            <param name="key">The key.</param>
+            <returns></returns>
+        </member>
         <member name="T:PlataformaRio2C.WebApi.Areas.Api.V1.Controllers.ConferenceController">
             <summary>
             Classe que fornece os endpoints sobre conferencias

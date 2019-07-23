@@ -4,7 +4,7 @@
 // Created          : 07-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-19-2019
+// Last Modified On : 07-22-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformWebhookRequest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,7 +34,9 @@ namespace PlataformaRio2C.Domain.Entities
         public bool IsProcessing { get; private set; }
         public int ProcessingCount { get; private set; }
         public DateTime? LastProcessingDate { get; private set; }
+        public DateTime? NextProcessingDate { get; private set; }
         public string ProcessingErrorCode { get; private set; }
+        public string ProcessingErrorMessage { get; private set; }
         public int? ManualProcessingUserId { get; private set; }
         public string SecurityStamp { get; private set; }
 
@@ -72,6 +74,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsProcessed = false;
             this.IsProcessing = false;
             this.ProcessingCount = 0;
+            this.NextProcessingDate = this.GetNextProcessingDate();
             this.SecurityStamp = Guid.NewGuid().ToString();
         }
 
@@ -79,6 +82,93 @@ namespace PlataformaRio2C.Domain.Entities
         private SalesPlatformWebhookRequest()
         {
         }
+
+        /// <summary>Processes this instance.</summary>
+        public void Process()
+        {
+            if (this.IsProcessing)
+            {
+                throw new DomainException("Sales platform webhook request is already being processed.");
+            }
+
+            this.IsProcessing = true;
+        }
+
+        /// <summary>Concludes the specified security stamp.</summary>
+        /// <param name="securityStamp">The security stamp.</param>
+        public void Conclude(string securityStamp)
+        {
+            this.ValidateSecurityStamp(securityStamp);
+            this.ValidateProcessing();
+
+            if (this.IsProcessed)
+            {
+                throw  new DomainException("The sales platform webhook request is already processed.");
+            }
+
+            this.IsProcessing = false;
+            this.IsProcessed = true;
+            this.ProcessingCount += 1;
+            this.LastProcessingDate = DateTime.UtcNow;
+            this.NextProcessingDate = null;
+            this.SecurityStamp = Guid.NewGuid().ToString();
+        }
+
+        /// <summary>Postpones the specified error code.</summary>
+        /// <param name="errorCode">The error code.</param>
+        /// <param name="errorMessage">The error message.</param>
+        /// <param name="securityStamp">The security stamp.</param>
+        public void Postpone(string errorCode, string errorMessage, string securityStamp)
+        {
+            this.ValidateSecurityStamp(securityStamp);
+            this.ValidateProcessing();
+
+            this.IsProcessing = false;
+            this.IsProcessed = false;
+            this.ProcessingCount += 1;
+            this.LastProcessingDate = DateTime.UtcNow;
+            this.NextProcessingDate = this.GetNextProcessingDate();
+            this.ProcessingErrorCode = errorCode;
+            this.ProcessingErrorMessage = errorMessage;
+            this.SecurityStamp = Guid.NewGuid().ToString();
+        }
+
+        /// <summary>Gets the next processing date.</summary>
+        /// <returns></returns>
+        private DateTime GetNextProcessingDate()
+        {
+            var visibilityTimeouts = new[] { 0, 60, 120, 180, 300, 480, 780, 1260, 2040, 3300, 5340, 8640, 13980, 22620, 36600, 42000 };
+
+            if (this.ProcessingCount > 15)
+            {
+                this.ProcessingCount = 15;
+            }
+
+            return (this.LastProcessingDate ?? DateTime.UtcNow).AddSeconds(visibilityTimeouts[this.ProcessingCount]);
+        }
+
+        #region Validations
+
+        /// <summary>Validates the security stamp.</summary>
+        /// <param name="securityStamp">The security stamp.</param>
+        private void ValidateSecurityStamp(string securityStamp)
+        {
+            if (this.SecurityStamp.ToLower() != securityStamp.ToLower())
+            {
+                throw new DomainException("Invalid security stamp");
+            }
+        }
+
+        /// <summary>Validates the processing.</summary>
+        private void ValidateProcessing()
+        {
+            if (!this.IsProcessing)
+            {
+                throw new DomainException("The sales platform webhook request is not being processed.");
+            }
+        }
+
+        #endregion
 
         //public void SetPlayer(Player entity)
         //{

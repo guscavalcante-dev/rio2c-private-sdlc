@@ -16,6 +16,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services
     /// <summary>ISalesPlatformService</summary>
     public interface ISalesPlatformService
     {
+        void ExecuteRequest();
         void GetLastEvent();
     }
 }
