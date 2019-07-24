@@ -82,7 +82,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite
         /// <param name="apiUrl">The API URL.</param>
         public void GetOrder(string apiUrl)
         {
-            var response = this.ExecuteRequest<Order>(apiUrl, HttpMethod.Get, null);
+            var response = this.ExecuteRequest<Order>(apiUrl + "?expand=attendees", HttpMethod.Get, null);
         }
 
         //public void GetEvent()

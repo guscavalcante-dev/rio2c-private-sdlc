@@ -11,6 +11,7 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.Models
@@ -44,5 +45,8 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.
 
         [JsonProperty("event_id")]
         public string EventId { get; set; }
+
+        [JsonProperty("attendees")]
+        public List<Attendee> Attendees { get; set; }
     }
 }
