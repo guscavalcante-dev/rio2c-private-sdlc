@@ -4,7 +4,7 @@
 // Created          : 07-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-12-2019
+// Last Modified On : 07-24-2019
 // ***********************************************************************
 // <copyright file="ISalesPlatformService.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,6 +17,5 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services
     public interface ISalesPlatformService
     {
         void ExecuteRequest();
-        void GetLastEvent();
     }
 }
