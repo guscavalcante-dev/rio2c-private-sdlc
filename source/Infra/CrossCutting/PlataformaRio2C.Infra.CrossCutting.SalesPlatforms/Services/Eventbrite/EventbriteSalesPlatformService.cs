@@ -130,7 +130,14 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite
 }
 
 /*
-Payload Exemplates:
+
+--- Statuses
+    + started     - order is created
+    + pending     - order is pending
+    + placed      - order is placed by the ticket buyer
+    + abandoned   - order is abandoned by the ticket buyer
+
+--- Payload Examples:
 
 --- Order
 {
