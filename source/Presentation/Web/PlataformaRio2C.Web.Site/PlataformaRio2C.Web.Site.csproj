@@ -7837,6 +7837,9 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Themes\Metronic\SideMenu.cshtml" />
+    <Content Include="Views\Project\Submited.cshtml" />
+    <Content Include="Views\Project\Review.cshtml" />
+    <Content Include="Views\Project\Submit.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>

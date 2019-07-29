@@ -55,8 +55,20 @@ namespace PlataformaRio2C.Web.Site.Controllers
         {
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper("Projects", new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper("Dashboard", Url.Action("Index", "Home", new { Area = "Player" }))
+            ViewBag.Breadcrumb = new BreadcrumbHelper("Submited Projects", new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper("Projects", Url.Action("Index", "Project", new { Area = "Player" }))
+            });
+
+            #endregion
+            return View();
+        }
+
+        public ActionResult Submit()
+        {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper("Submit your projects", new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper("Projects", Url.Action("Index", "Project", new { Area = "Player" }))
             });
 
             #endregion
@@ -67,8 +79,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
         {
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper("Projects", new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper("Dashboard", Url.Action("Index", "Home", new { Area = "Player" }))
+            ViewBag.Breadcrumb = new BreadcrumbHelper("Projects for review", new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper("Projects", Url.Action("Index", "Project", new { Area = "Player" }))
             });
 
             #endregion
