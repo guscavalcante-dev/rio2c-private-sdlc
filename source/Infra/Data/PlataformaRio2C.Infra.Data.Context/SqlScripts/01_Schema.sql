@@ -1,17 +1,27 @@
-﻿SET ANSI_NULLS ON
+﻿USE [Rio2C_Dev]
+GO
+SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_PADDING ON
 GO
-CREATE TABLE [dbo].[Activity](
+CREATE TABLE [dbo].[Activities](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Name] [varchar](50) NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.Activity] PRIMARY KEY CLUSTERED 
+	[ProjectTypeId] [int] NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[CreateDate] [datetime] NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_Activities] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_Activities_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
@@ -24,19 +34,21 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_PADDING ON
 GO
-CREATE TABLE [dbo].[Address](
+CREATE TABLE [dbo].[Addresses](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[ZipCode] [varchar](50) NULL,
-	[Country] [varchar](50) NULL,
-	[State] [varchar](50) NULL,
-	[City] [varchar](50) NULL,
-	[AddressValue] [varchar](1000) NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
-	[CountryId] [int] NULL,
-	[StateId] [int] NULL,
-	[CityId] [int] NULL,
- CONSTRAINT [PK_dbo.Address] PRIMARY KEY CLUSTERED 
+	[StreetId] [int] NOT NULL,
+	[Number] [varchar](16) NULL,
+	[Complement] [varchar](40) NULL,
+	[IsManual] [bit] NOT NULL,
+	[Latitude] [decimal](9, 6) NULL,
+	[Longitude] [decimal](9, 6) NULL,
+	[IsGeoLocationUpdated] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_Addresses] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -49,17 +61,465 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[AppAesEncryptionInfo](
+CREATE TABLE [dbo].[AttendeeCollaborators](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Password] [varchar](150) NULL,
-	[Salt] [varchar](150) NULL,
-	[PasswordIterations] [int] NOT NULL,
-	[InitialVector] [varchar](150) NULL,
-	[KeySize] [int] NOT NULL,
-	[Code] [int] NOT NULL,
- CONSTRAINT [PK_dbo.AppAesEncryptionInfo] PRIMARY KEY CLUSTERED 
+	[Uid] [uniqueidentifier] NOT NULL,
+	[EditionId] [int] NOT NULL,
+	[CollaboratorId] [int] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_AttendeeCollaborators] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_AttendeeCollaborators_EditionId_CollaboratorId] UNIQUE NONCLUSTERED 
+(
+	[EditionId] ASC,
+	[CollaboratorId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_AttendeeCollaborators_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[AttendeeCollaboratorTickets](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[AttendeeCollaboratorId] [int] NOT NULL,
+	[AttendeeSalesPlatformTicketTypeId] [int] NOT NULL,
+	[SalesPlatformAttendeeId] [varchar](40) NOT NULL,
+	[FirstName] [varchar](100) NOT NULL,
+	[LastNames] [varchar](200) NULL,
+	[CellPhone] [varchar](50) NULL,
+	[JobTitle] [varchar](200) NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_AttendeeCollaboratorTickets] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_AttendeeCollaboratorTickets_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AttendeeOrganizationCollaborators](
+	[Id] [int] NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[AttendeeOrganizationId] [int] NOT NULL,
+	[AttendeeCollaboratorId] [int] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_AttendeeOrganizationCollaborators] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_AttendeeOrganizationCollaborators_AttendeeOrganizationId_AttendeeCollaboratorId] UNIQUE NONCLUSTERED 
+(
+	[AttendeeOrganizationId] ASC,
+	[AttendeeCollaboratorId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_AttendeeOrganizationCollaborators_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AttendeeOrganizations](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[EditionId] [int] NOT NULL,
+	[OrganizationId] [int] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_AttendeeOrganizations] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_AttendeeOrganizations_EditionId_OrganizationId] UNIQUE NONCLUSTERED 
+(
+	[EditionId] ASC,
+	[OrganizationId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_AttendeeOrganizations_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AttendeeOrganizationTypes](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[AttendeeOrganizationId] [int] NOT NULL,
+	[OrganizationTypeId] [int] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_AttendeeOrganizationTypes] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_AttendeeOrganizationTypes_AttendeeOrganizationId_OrganizationTypeId] UNIQUE NONCLUSTERED 
+(
+	[AttendeeOrganizationId] ASC,
+	[OrganizationTypeId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_AttendeeOrganizationTypes_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[AttendeeSalesPlatforms](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[EditionId] [int] NOT NULL,
+	[SalesPlatformId] [int] NOT NULL,
+	[SalesPlatformEventId] [varchar](30) NOT NULL,
+	[IsActive] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_AttendeeSalesPlatforms] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_AttendeeSalesPlatforms_EditionId_SalesPlatformId] UNIQUE NONCLUSTERED 
+(
+	[EditionId] ASC,
+	[SalesPlatformId] ASC,
+	[CreateUserId] ASC,
+	[UpdateUserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_AttendeeSalesPlatforms_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[AttendeeSalesPlatformTicketTypes](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[AttendeeSalesPlatformId] [int] NOT NULL,
+	[TicketClassId] [varchar](30) NOT NULL,
+	[TicketClassName] [varchar](200) NOT NULL,
+	[TicketTypeId] [int] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [date] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_AttendeeSalesPlatformTicketTypes] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_AttendeeSalesPlatformTicketTypes_AttendeeSalesPlatformId_TicketClassId] UNIQUE NONCLUSTERED 
+(
+	[AttendeeSalesPlatformId] ASC,
+	[TicketClassId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_AttendeeSalesPlatformTicketTypes_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Cities](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[StateId] [int] NOT NULL,
+	[Name] [varchar](100) NOT NULL,
+	[IsManual] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_Cities] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_Cities_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[CollaboratorJobTitles](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[CollaboratorId] [int] NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[LanguageId] [int] NULL,
+	[Value] [varchar](256) NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_CollaboratorJobTitles] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_CollaboratorJobTitles_CollaboratorId_LanguageId] UNIQUE NONCLUSTERED 
+(
+	[CollaboratorId] ASC,
+	[LanguageId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_CollaboratorJobTitles_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[CollaboratorMiniBios](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[CollaboratorId] [int] NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[LanguageId] [int] NOT NULL,
+	[Value] [varchar](8000) NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_CollaboratorMiniBios] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_CollaboratorMiniBios_CollaboratorId_LanguageId] UNIQUE NONCLUSTERED 
+(
+	[CollaboratorId] ASC,
+	[LanguageId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_CollaboratorMiniBios_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Collaborators](
+	[Id] [int] NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[FirstName] [varchar](100) NOT NULL,
+	[LastNames] [varchar](200) NULL,
+	[IsImageUploaded] [bit] NOT NULL,
+	[PhoneNumber] [varchar](50) NULL,
+	[CellPhone] [varchar](50) NULL,
+	[Badge] [varchar](50) NULL,
+	[AddressId] [int] NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_Collaborators] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_Collaborators_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[ConferenceParticipantRoles](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Name] [varchar](256) NOT NULL,
+	[IsLecturer] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PKConferenceParticipantRoles] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ConferenceParticipantRoles_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[ConferenceParticipantRoleTitles](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[ConferenceParticipantRoleId] [int] NOT NULL,
+	[LanguageId] [int] NOT NULL,
+	[Value] [varchar](256) NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PKConferenceParticipantRoleTitles] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ConferenceParticipantRoleTitles_ConferenceParticipantRoleId_LanguageId] UNIQUE NONCLUSTERED 
+(
+	[ConferenceParticipantRoleId] ASC,
+	[LanguageId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ConferenceParticipantRoleTitles_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ConferenceParticipants](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[ConferenceId] [int] NOT NULL,
+	[AttendeeCollaboratorId] [int] NOT NULL,
+	[ConferenceParticipantRoleId] [int] NOT NULL,
+	[IsPreRegistered] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_ConferenceParticipants] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_ConferenceParticipants_ConferenceId_AttendeeCollaboratorId] UNIQUE NONCLUSTERED 
+(
+	[ConferenceId] ASC,
+	[AttendeeCollaboratorId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ConferenceParticipants_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Conferences](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[EditionId] [int] NOT NULL,
+	[RoomId] [int] NULL,
+	[StartDate] [datetime] NOT NULL,
+	[EndDate] [datetime] NOT NULL,
+	[Info] [varchar](3000) NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_Conferences] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -74,12 +534,1025 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_PADDING ON
 GO
-CREATE TABLE [dbo].[AspNetRoles](
+CREATE TABLE [dbo].[ConferenceSynopsis](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[ConferenceId] [int] NOT NULL,
+	[LanguageId] [int] NOT NULL,
+	[Value] [varchar](8000) NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_ConferenceSynopsis] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ConferenceSynopsis_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[ConferenceTitles](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[ConferenceId] [int] NOT NULL,
+	[LanguageId] [int] NOT NULL,
+	[Value] [varchar](8000) NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_ConferenceTitles] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ConferenceTitles_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Countries](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Name] [varchar](100) NOT NULL,
+	[Code] [varchar](3) NULL,
+	[IsManual] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_Countries] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_Countries_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Editions](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[UrlCode] [int] NOT NULL,
+	[IsCurrent] [bit] NOT NULL,
+	[IsActive] [bit] NOT NULL,
+	[StartDate] [datetime] NOT NULL,
+	[EndDate] [datetime] NOT NULL,
+	[SellStartDate] [datetime] NOT NULL,
+	[SellEndDate] [datetime] NOT NULL,
+	[ProjectSubmitStartDate] [datetime] NOT NULL,
+	[ProjectSubmitEndDate] [datetime] NOT NULL,
+	[ProjectEvaluationStartDate] [datetime] NOT NULL,
+	[ProjectEvaluationEndDate] [datetime] NOT NULL,
+	[NegotiationStartDate] [datetime] NOT NULL,
+	[NegotiationEndDate] [datetime] NOT NULL,
+	[CreateDate] [datetime] NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_Editions] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_Editions_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_Editions_UrlCode] UNIQUE NONCLUSTERED 
+(
+	[UrlCode] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[HoldingDescriptions](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[HoldingId] [int] NOT NULL,
+	[LanguageId] [int] NOT NULL,
+	[Value] [varchar](8000) NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_HoldingDescriptions] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_HoldingDescriptions_HoldingId_LanguageId] UNIQUE NONCLUSTERED 
+(
+	[HoldingId] ASC,
+	[LanguageId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_HoldingDescriptions_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Holdings](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Name] [varchar](100) NOT NULL,
+	[IsImageUploaded] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_Holdings] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_Holdings_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[InterestGroups](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[ProjectTypeId] [int] NOT NULL,
+	[Name] [varchar](150) NOT NULL,
+	[Type] [varchar](100) NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_InterestGroups] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_InterestGroups_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Interests](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[InterestGroupId] [int] NOT NULL,
+	[Name] [varchar](150) NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_Interests] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_Interests_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Languages](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[Code] [varchar](10) NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_Languages] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_Languages_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Logistics](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NULL,
+	[AttendeeCollaboratorId] [int] NULL,
+	[ArrivalDate] [datetime] NOT NULL,
+	[DepartureDate] [datetime] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_Logistics] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_Logistics_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Messages](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[EditionId] [int] NOT NULL,
+	[SenderId] [int] NOT NULL,
+	[RecipientId] [int] NOT NULL,
+	[Text] [nvarchar](max) NULL,
+	[SendDate] [datetime] NOT NULL,
+	[ReadDate] [datetime] NULL,
+	[NotificationEmailSendDate] [datetime] NULL,
+ CONSTRAINT [PK_Messages] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_Messages_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[NegotiationConfigs](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[EditionId] [int] NOT NULL,
+	[StartDate] [datetime] NOT NULL,
+	[EndDate] [datetime] NOT NULL,
+	[RoundFirstTurn] [int] NOT NULL,
+	[RoundSecondTurn] [int] NOT NULL,
+	[TimeIntervalBetweenTurn] [char](18) NULL,
+	[TimeOfEachRound] [time](7) NOT NULL,
+	[TimeIntervalBetweenRound] [time](7) NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_NegotiationConfigs] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_NegotiationConfigs_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[NegotiationRoomConfigs](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[RoomId] [int] NOT NULL,
+	[NegotiationConfigId] [int] NOT NULL,
+	[CountAutomaticTables] [int] NOT NULL,
+	[CountManualTables] [int] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CrateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_NegotiationRoomConfigs] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_NegotiationRoomConfigs_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Negotiations](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[ProjectBuyerEvaluationId] [int] NOT NULL,
+	[RoomId] [int] NOT NULL,
+	[StartDate] [datetime] NOT NULL,
+	[EndDate] [datetime] NOT NULL,
+	[TableNumber] [int] NOT NULL,
+	[RoundNumber] [int] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_Negotiations] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_Negotiations_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Neighborhoods](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[CityId] [int] NOT NULL,
+	[Name] [varchar](100) NOT NULL,
+	[IsManual] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_Neighborhoods] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_Neighborhoods_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[OrganizationActivities](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[OrganizationId] [int] NOT NULL,
+	[ActivityId] [int] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateuserId] [int] NOT NULL,
+ CONSTRAINT [PK_OrganizationActivities] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_OrganizationActivities_OrganizationId_ActivityId] UNIQUE NONCLUSTERED 
+(
+	[OrganizationId] ASC,
+	[ActivityId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_OrganizationActivities_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[OrganizationDescriptions](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[OrganizationId] [int] NOT NULL,
+	[LanguageId] [int] NOT NULL,
+	[Value] [varchar](8000) NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_OrganizationDescriptions] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_OrganizationDescriptions_OrganizationId_LanguageId] UNIQUE NONCLUSTERED 
+(
+	[OrganizationId] ASC,
+	[LanguageId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_OrganizationDescriptions_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[OrganizationInterests](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[OrganizationId] [int] NOT NULL,
+	[InterestId] [int] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_OrganizationInterests] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_OrganizationInterests_OrganizationId_InterestId] UNIQUE NONCLUSTERED 
+(
+	[OrganizationId] ASC,
+	[InterestId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[OrganizationRestrictionSpecifics](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[OrganizationId] [int] NOT NULL,
+	[LanguageId] [int] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_OrganizationRestrictionSpecifics] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IX_UQ_OrganizationRestrictionSpecifics_OrganizationId_LanguageId] UNIQUE NONCLUSTERED 
+(
+	[OrganizationId] ASC,
+	[LanguageId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IX_UQ_OrganizationRestrictionSpecifics_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Organizations](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[HoldingId] [int] NULL,
+	[Name] [varchar](100) NOT NULL,
+	[CompanyName] [varchar](100) NULL,
+	[TradeName] [varchar](100) NULL,
+	[Document] [varchar](50) NULL,
+	[Website] [varchar](100) NOT NULL,
+	[SocialMedia] [varchar](256) NULL,
+	[PhoneNumber] [varchar](50) NULL,
+	[HasImage] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_Organizations] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_Organizations_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[OrganizationTargetAudiences](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[OrganizationId] [int] NOT NULL,
+	[TargetAudienceId] [int] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_OrganizationTargetAudiences] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_OrganizationTargetAudiences_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[OrganizationTypes](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NULL,
+	[Name] [varchar](50) NOT NULL,
+	[RelatedProjectTypeId] [int] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [char](18) NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_OrganizationTypes] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_OrganizationTypes_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ProjectAdditionalInformations](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[ProjectId] [int] NOT NULL,
+	[LanguageId] [int] NOT NULL,
+	[Value] [nvarchar](max) NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_ProjectAdditionalInformations] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ProjectAdditionalInformations_ProjectId_LanguageId] UNIQUE NONCLUSTERED 
+(
+	[ProjectId] ASC,
+	[LanguageId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ProjectAdditionalInformations_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[ProjectBuyerEvaluations](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[BuyerAttendeeOrganizationId] [int] NOT NULL,
+	[ProjectId] [int] NOT NULL,
+	[ProjectEvaluationStatusId] [int] NULL,
+	[Reason] [varchar](1500) NULL,
+	[IsSent] [bit] NOT NULL,
+	[SellerUserId] [int] NOT NULL,
+	[BuyerEvaluationUserId] [int] NULL,
+	[EvaluationDate] [datetime] NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_ProjectBuyerEvaluations] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ProjectBuyerEvaluations_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[ProjectEvaluationStatuses](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NULL,
+	[Name] [varchar](50) NOT NULL,
+	[Code] [varchar](50) NOT NULL,
+	[IsEvaluated] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_ProjectEvaluationStatuses] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ProjectEvaluationStatuses_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[ProjectImageLinks](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[ProjectId] [int] NOT NULL,
+	[Value] [varchar](3000) NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_ProjectImageLinks] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ProjectInterests](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[ProjectId] [int] NOT NULL,
+	[InterestId] [int] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_ProjectInterests] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ProjectInterests_ProjectId_InterestId] UNIQUE NONCLUSTERED 
+(
+	[ProjectId] ASC,
+	[InterestId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ProjectInterests_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[ProjectLogLines](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[ProjectId] [int] NOT NULL,
+	[LanguageId] [int] NOT NULL,
+	[Value] [varchar](8000) NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_ProjectLogLines] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ProjectLogLines_ProjectId_LanguageId] UNIQUE NONCLUSTERED 
+(
+	[ProjectId] ASC,
+	[LanguageId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ProjectLogLines_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ProjectProductPlans](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[ProjectId] [int] NOT NULL,
+	[LanguageId] [int] NOT NULL,
+	[Value] [nvarchar](max) NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_ProjectProductPlans] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ProjectProductPlans_ProjectId_LanguageId] UNIQUE NONCLUSTERED 
+(
+	[ProjectId] ASC,
+	[LanguageId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ProjectProductPlans_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Projects](
+	[Id] [int] NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[ProjectTypeId] [int] NOT NULL,
+	[SellerAttendeeOrganizationId] [int] NULL,
+	[NumberOfEpisodes] [int] NOT NULL,
+	[EasyEpisodePlayingTime] [varchar](50) NULL,
+	[ValuePerEpisode] [varchar](50) NULL,
+	[TotalValueOfProject] [varchar](50) NULL,
+	[ValueAlreadyRaised] [varchar](50) NULL,
+	[ValueStillNeeded] [varchar](50) NULL,
+	[Pitching] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_Projects] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_Projects_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ProjectSummaries](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[ProjectId] [int] NOT NULL,
+	[LanguageId] [int] NOT NULL,
+	[Value] [nvarchar](max) NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_ProjectSummaries] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ProjectSummaries_ProjectId_LanguageId] UNIQUE NONCLUSTERED 
+(
+	[ProjectId] ASC,
+	[LanguageId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ProjectSummaries_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[ProjectTeaserLinks](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[ProjectId] [int] NOT NULL,
+	[Value] [varchar](3000) NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_ProjectTeaserLinks] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ProjectTeaserLinks_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[ProjectTitles](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[ProjectId] [int] NOT NULL,
+	[LanguageId] [int] NOT NULL,
+	[Value] [varchar](256) NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_ProjectTitles] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ProjectTitles_ProjectId_LanguageId] UNIQUE NONCLUSTERED 
+(
+	[ProjectId] ASC,
+	[LanguageId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ProjectTitles_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[ProjectTypes](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_ProjectTypes] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Roles](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Name] [varchar](256) NOT NULL,
- CONSTRAINT [PK_dbo.AspNetRoles] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_Roles] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_Roles_Name] UNIQUE NONCLUSTERED 
+(
+	[Name] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
@@ -92,12 +1565,293 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_PADDING ON
 GO
-CREATE TABLE [dbo].[AspNetUserClaims](
+CREATE TABLE [dbo].[RoomNames](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[UserId] [int] NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[RoomId] [int] NOT NULL,
+	[LanguageId] [int] NOT NULL,
+	[Value] [varchar](256) NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_RoomNames] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_RoomNames_RoomId_Languageid] UNIQUE NONCLUSTERED 
+(
+	[RoomId] ASC,
+	[LanguageId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_RoomNames_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Rooms](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NULL,
+	[EditionId] [int] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_Rooms] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_Rooms_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[SalesPlatforms](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Name] [varchar](100) NOT NULL,
+	[WebhookSecurityKey] [uniqueidentifier] NOT NULL,
+	[ApiKey] [varchar](200) NULL,
+	[ApiSecret] [varchar](200) NULL,
+	[MaxProcessingCount] [int] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+	[SecurityStamp] [varchar](36) NOT NULL,
+ CONSTRAINT [PK_SalesPlatforms] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_SalesPlatforms_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[SalesPlatformWebhooRequests](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[SalesPlatformId] [int] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[Endpoint] [varchar](250) NOT NULL,
+	[Header] [varchar](1000) NULL,
+	[Payload] [varchar](max) NULL,
+	[IpAddress] [varchar](38) NOT NULL,
+	[IsProcessed] [bit] NOT NULL,
+	[IsProcessing] [bit] NOT NULL,
+	[ProcessingCount] [int] NOT NULL,
+	[LastProcessingDate] [datetime] NULL,
+	[NextProcessingDate] [datetime] NOT NULL,
+	[ProcessingErrorCode] [varchar](10) NULL,
+	[ProcessingErrorMessage] [varchar](250) NULL,
+	[ManualProcessingUserId] [int] NULL,
+	[SecurityStamp] [varchar](36) NULL,
+ CONSTRAINT [PK_SalesPlatformWebhooRequests] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[States](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[CountryId] [int] NOT NULL,
+	[Name] [varchar](100) NOT NULL,
+	[Code] [varchar](2) NULL,
+	[IsManual] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_States] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_States_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Streets](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[NeighborhoodId] [int] NOT NULL,
+	[Name] [varchar](100) NOT NULL,
+	[ZipCode] [varchar](10) NOT NULL,
+	[IsManual] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_Streets] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_Streets_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_Streets_ZipCode] UNIQUE NONCLUSTERED 
+(
+	[ZipCode] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[SystemParameters](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Code] [int] NOT NULL,
+	[SubCode] [varchar](150) NULL,
+	[LanguageCode] [int] NOT NULL,
+	[GroupCode] [int] NOT NULL,
+	[TypeName] [varchar](150) NULL,
+	[Description] [varchar](256) NULL,
+	[Value] [varchar](1000) NULL,
+	[DateChanges] [datetime] NULL,
+ CONSTRAINT [PK_SystemParameters] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_SystemParameters_Code] UNIQUE NONCLUSTERED 
+(
+	[Code] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_SystemParameters_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[TargetAudiences](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[ProjectTypeId] [int] NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_TargetAudiences] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_TargetAudiences_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[TicketTypes](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Name] [varchar](200) NOT NULL,
+	[Code] [varchar](50) NOT NULL,
+	[RoleId] [int] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_TicketTypes] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_TicketTypes_Code] UNIQUE NONCLUSTERED 
+(
+	[Code] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_TicketTypes_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[UserClaims](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [int] NULL,
 	[ClaimType] [varchar](8000) NULL,
 	[ClaimValue] [varchar](8000) NULL,
- CONSTRAINT [PK_dbo.AspNetUserClaims] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_UserClaims] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -112,11 +1866,11 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_PADDING ON
 GO
-CREATE TABLE [dbo].[AspNetUserLogins](
+CREATE TABLE [dbo].[UserLogins](
 	[LoginProvider] [varchar](128) NOT NULL,
 	[ProviderKey] [varchar](128) NOT NULL,
 	[UserId] [int] NOT NULL,
- CONSTRAINT [PK_dbo.AspNetUserLogins] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_UserLogins] PRIMARY KEY CLUSTERED 
 (
 	[LoginProvider] ASC,
 	[ProviderKey] ASC,
@@ -131,10 +1885,10 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[AspNetUserRoles](
+CREATE TABLE [dbo].[UserRoles](
 	[UserId] [int] NOT NULL,
 	[RoleId] [int] NOT NULL,
- CONSTRAINT [PK_dbo.AspNetUserRoles] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_UserRoles] PRIMARY KEY CLUSTERED 
 (
 	[UserId] ASC,
 	[RoleId] ASC
@@ -148,12 +1902,12 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_PADDING ON
 GO
-CREATE TABLE [dbo].[AspNetUsers](
+CREATE TABLE [dbo].[Users](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
 	[Active] [bit] NOT NULL,
 	[Name] [varchar](150) NOT NULL,
+	[UserName] [varchar](256) NOT NULL,
 	[Email] [varchar](256) NULL,
 	[EmailConfirmed] [bit] NOT NULL,
 	[PasswordHash] [varchar](8000) NULL,
@@ -164,2027 +1918,1058 @@ CREATE TABLE [dbo].[AspNetUsers](
 	[LockoutEndDateUtc] [datetime] NULL,
 	[LockoutEnabled] [bit] NOT NULL,
 	[AccessFailedCount] [int] NOT NULL,
-	[UserName] [varchar](256) NOT NULL,
 	[PasswordNew] [varchar](50) NULL,
- CONSTRAINT [PK_dbo.AspNetUsers] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[City](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Name] [varchar](100) NULL,
-	[StateId] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
 	[CreationDate] [datetime] NOT NULL,
-	[Address_Id] [int] NULL,
- CONSTRAINT [PK_dbo.City] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[Collaborator](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Name] [varchar](50) NULL,
-	[AddressId] [int] NULL,
-	[PlayerId] [int] NULL,
-	[UserId] [int] NOT NULL,
-	[ImageId] [int] NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
-	[PhoneNumber] [varchar](50) NULL,
-	[CellPhone] [varchar](50) NULL,
-	[Badge] [varchar](50) NULL,
-	[SpeakerId] [int] NULL,
- CONSTRAINT [PK_dbo.Collaborator] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[CollaboratorJobTitle](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Value] [varchar](256) NULL,
-	[LanguageId] [int] NOT NULL,
-	[CollaboratoId] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.CollaboratorJobTitle] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[CollaboratorMiniBio](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Value] [varchar](8000) NULL,
-	[LanguageId] [int] NOT NULL,
-	[CollaboratoId] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.CollaboratorMiniBio] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[CollaboratorPlayer](
-	[CollaboratorId] [int] NOT NULL,
-	[PlayerId] [int] NOT NULL,
- CONSTRAINT [PK_dbo.CollaboratorPlayer] PRIMARY KEY CLUSTERED 
-(
-	[CollaboratorId] ASC,
-	[PlayerId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[CollaboratorProducer](
-	[CollaboratorId] [int] NOT NULL,
-	[ProducerId] [int] NOT NULL,
-	[EventId] [int] NOT NULL,
- CONSTRAINT [PK_dbo.CollaboratorProducer] PRIMARY KEY CLUSTERED 
-(
-	[CollaboratorId] ASC,
-	[ProducerId] ASC,
-	[EventId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[Conference](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Date] [datetime] NULL,
-	[StartTime] [time](7) NOT NULL,
-	[EndTime] [time](7) NOT NULL,
-	[Info] [varchar](3000) NULL,
-	[RoomId] [int] NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.Conference] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[ConferenceLecturer](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[IsPreRegistered] [bit] NOT NULL,
-	[ConferenceId] [int] NOT NULL,
-	[CollaboratorId] [int] NULL,
-	[LecturerId] [int] NULL,
-	[RoleLecturerId] [int] NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.ConferenceLecturer] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[ConferenceSynopsis](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Value] [varchar](8000) NULL,
-	[LanguageId] [int] NOT NULL,
-	[ConferenceId] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.ConferenceSynopsis] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[ConferenceTitle](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Value] [varchar](8000) NULL,
-	[LanguageId] [int] NOT NULL,
-	[ConferenceId] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.ConferenceTitle] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[Country](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[CountryName] [varchar](100) NULL,
-	[CountryCode] [varchar](3) NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
-	[Address_Id] [int] NULL,
- CONSTRAINT [PK_dbo.Country] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[Event](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Name] [varchar](50) NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
-	[StartDate] [datetime] NOT NULL,
-	[EndDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.Event] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[Holding](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Name] [varchar](100) NOT NULL,
-	[ImageId] [int] NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.Holding] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[HoldingDescription](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Value] [varchar](8000) NULL,
-	[LanguageId] [int] NOT NULL,
-	[HoldingId] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.HoldingDescription] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[ImageFile](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[FileName] [varchar](500) NOT NULL,
-	[File] [varbinary](max) NOT NULL,
-	[ContentType] [varchar](200) NOT NULL,
-	[ContentLength] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.ImageFile] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[Interest](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[InterestGroupId] [int] NOT NULL,
-	[Name] [varchar](150) NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.Interest] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[InterestGroup](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Name] [varchar](150) NOT NULL,
-	[Type] [varchar](100) NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.InterestGroup] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[Language](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Name] [varchar](50) NOT NULL,
-	[Code] [varchar](50) NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.Language] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[Lecturer](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Name] [varchar](1000) NULL,
-	[ImageId] [int] NULL,
-	[Email] [varchar](50) NULL,
-	[CompanyName] [varchar](50) NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.Lecturer] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[LecturerJobTitle](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Value] [varchar](50) NULL,
-	[LanguageId] [int] NOT NULL,
-	[LanguageCode] [varchar](50) NULL,
-	[LecturerId] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.LecturerJobTitle] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[Logistics](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[ArrivalTime] [time](7) NOT NULL,
-	[DepartureTime] [time](7) NOT NULL,
-	[CollaboratorId] [int] NOT NULL,
-	[EventId] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
-	[ArrivalDate] [datetime] NOT NULL,
-	[DepartureDate] [datetime] NOT NULL,
-	[OriginalName] [varchar](100) NULL,
-	[ServerName] [varchar](100) NULL,
- CONSTRAINT [PK_dbo.Logistics] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[Mail](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Message] [nvarchar](max) NULL,
-	[Subject] [varchar](50) NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.Mail] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[MailCollaborator](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[IdMailCollaborator] [int] NOT NULL,
-	[IdMail] [int] NOT NULL,
-	[IdCollaborator] [int] NOT NULL,
-	[SendDate] [datetime] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
-	[Collaborator_Id] [int] NULL,
-	[Mail_Id] [int] NULL,
- CONSTRAINT [PK_dbo.MailCollaborator] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Message](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Text] [nvarchar](max) NULL,
-	[IsRead] [bit] NOT NULL,
-	[SenderId] [int] NOT NULL,
-	[RecipientId] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.Message] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Negotiation](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[ProjectId] [int] NOT NULL,
-	[PlayerId] [int] NOT NULL,
-	[RoomId] [int] NOT NULL,
-	[EvaluationId] [int] NULL,
-	[Date] [datetime] NOT NULL,
-	[StarTime] [time](7) NOT NULL,
-	[EndTime] [time](7) NOT NULL,
-	[TableNumber] [int] NOT NULL,
-	[RoundNumber] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.Negotiation] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[NegotiationConfig](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Date] [datetime] NOT NULL,
-	[StartTime] [time](7) NOT NULL,
-	[EndTime] [time](7) NOT NULL,
-	[RoudsFirstTurn] [int] NOT NULL,
-	[RoundsSecondTurn] [int] NOT NULL,
-	[TimeIntervalBetweenTurn] [time](7) NOT NULL,
-	[TimeOfEachRound] [time](7) NOT NULL,
-	[TimeIntervalBetweenRound] [time](7) NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.NegotiationConfig] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[NegotiationRoomConfig](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[RoomId] [int] NOT NULL,
-	[CountAutomaticTables] [int] NOT NULL,
-	[NegotiationConfigId] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
-	[CountManualTables] [int] NOT NULL,
- CONSTRAINT [PK_dbo.NegotiationRoomConfig] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[Player](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Name] [varchar](100) NOT NULL,
-	[CNPJ] [varchar](50) NULL,
-	[Website] [varchar](100) NULL,
-	[PhoneNumber] [varchar](50) NULL,
-	[ImageId] [int] NULL,
-	[AddressId] [int] NULL,
-	[HoldingId] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
-	[TradeName] [varchar](100) NULL,
-	[SocialMedia] [varchar](256) NULL,
-	[CompanyName] [varchar](100) NULL,
- CONSTRAINT [PK_dbo.Player] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[PlayerActivity](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[PlayerId] [int] NOT NULL,
-	[ActivityId] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.PlayerActivity] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[PlayerDescription](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Value] [varchar](8000) NULL,
-	[LanguageId] [int] NOT NULL,
-	[PlayerId] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.PlayerDescription] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[PlayerInterest](
-	[PlayerId] [int] NOT NULL,
-	[InterestId] [int] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.PlayerInterest] PRIMARY KEY CLUSTERED 
-(
-	[PlayerId] ASC,
-	[InterestId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[PlayerRestrictionsSpecifics](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Value] [varchar](8000) NULL,
-	[LanguageId] [int] NOT NULL,
-	[PlayerId] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.PlayerRestrictionsSpecifics] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[PlayerTargetAudience](
-	[PlayerId] [int] NOT NULL,
-	[TargetAudienceId] [int] NOT NULL,
-	[Id] [int] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.PlayerTargetAudience] PRIMARY KEY CLUSTERED 
-(
-	[PlayerId] ASC,
-	[TargetAudienceId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[Producer](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Name] [varchar](100) NULL,
-	[TradeName] [varchar](100) NULL,
-	[CNPJ] [varchar](50) NULL,
-	[Website] [varchar](100) NULL,
-	[SocialMedia] [varchar](256) NULL,
-	[PhoneNumber] [varchar](50) NULL,
-	[ImageId] [int] NULL,
-	[AddressId] [int] NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.Producer] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[ProducerActivity](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[ProducerId] [int] NOT NULL,
-	[ActivityId] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.ProducerActivity] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[ProducerDescription](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Value] [varchar](8000) NULL,
-	[LanguageId] [int] NOT NULL,
-	[ProducerId] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.ProducerDescription] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[ProducerEvent](
-	[ProducerId] [int] NOT NULL,
-	[EventId] [int] NOT NULL,
- CONSTRAINT [PK_dbo.ProducerEvent] PRIMARY KEY CLUSTERED 
-(
-	[ProducerId] ASC,
-	[EventId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[ProducerTargetAudience](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[ProducerId] [int] NOT NULL,
-	[TargetAudienceId] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.ProducerTargetAudience] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[Project](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[NumberOfEpisodes] [int] NOT NULL,
-	[EachEpisodePlayingTime] [varchar](50) NULL,
-	[ValuePerEpisode] [varchar](50) NULL,
-	[TotalValueOfProject] [varchar](50) NULL,
-	[ValueAlreadyRaised] [varchar](50) NULL,
-	[ValueStillNeeded] [varchar](50) NULL,
-	[Pitching] [bit] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
-	[ProducerId] [int] NOT NULL,
- CONSTRAINT [PK_dbo.Project] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[ProjectAdditionalInformation](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Value] [nvarchar](max) NULL,
-	[LanguageId] [int] NOT NULL,
-	[ProjectId] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.ProjectAdditionalInformation] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[ProjectInterest](
-	[ProjectId] [int] NOT NULL,
-	[InterestId] [int] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.ProjectInterest] PRIMARY KEY CLUSTERED 
-(
-	[ProjectId] ASC,
-	[InterestId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[ProjectLinkImage](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Value] [varchar](3000) NULL,
-	[ProjectId] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.ProjectLinkImage] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[ProjectLinkTeaser](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Value] [varchar](3000) NULL,
-	[ProjectId] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.ProjectLinkTeaser] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[ProjectLogLine](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Value] [varchar](8000) NULL,
-	[LanguageId] [int] NOT NULL,
-	[ProjectId] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.ProjectLogLine] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[ProjectPlayer](
-	[PlayerId] [int] NOT NULL,
-	[ProjectId] [int] NOT NULL,
-	[Sent] [bit] NOT NULL,
-	[SavedUserId] [int] NULL,
-	[SendingUserId] [int] NULL,
-	[DateSaved] [datetime] NULL,
-	[DateSending] [datetime] NULL,
-	[CreationDate] [datetime] NOT NULL,
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[EvaluationId] [int] NULL,
- CONSTRAINT [PK_dbo.ProjectPlayer] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[ProjectPlayerEvaluation](
-	[Id] [int] NOT NULL,
-	[ProjectPlayerId] [int] NOT NULL,
-	[StatusId] [int] NOT NULL,
-	[EvaluationUserId] [int] NOT NULL,
-	[Reason] [varchar](1500) NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.ProjectPlayerEvaluation] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[ProjectProductionPlan](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Value] [nvarchar](max) NULL,
-	[LanguageId] [int] NOT NULL,
-	[ProjectId] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.ProjectProductionPlan] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[ProjectStatus](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Code] [varchar](150) NOT NULL,
-	[Name] [varchar](50) NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.ProjectStatus] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[ProjectSummary](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Value] [nvarchar](max) NULL,
-	[LanguageId] [int] NOT NULL,
-	[ProjectId] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.ProjectSummary] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[ProjectTitle](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Value] [varchar](256) NULL,
-	[LanguageId] [int] NOT NULL,
-	[ProjectId] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.ProjectTitle] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[Quiz](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[EventId] [int] NOT NULL,
-	[Name] [varchar](50) NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.Quiz] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[QuizAnswer](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[UserId] [int] NOT NULL,
-	[OptionId] [int] NOT NULL,
-	[Value] [varchar](50) NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.QuizAnswer] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[QuizOption](
-	[Id] [int] NOT NULL,
-	[QuestionId] [int] NOT NULL,
-	[Text] [bit] NOT NULL,
-	[Value] [varchar](200) NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.QuizOption] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[QuizQuestion](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[QuizId] [int] NOT NULL,
-	[Question] [varchar](200) NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.QuizQuestion] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[RoleLecturer](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.RoleLecturer] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[RoleLecturerTitle](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Value] [varchar](256) NULL,
-	[LanguageId] [int] NOT NULL,
-	[RoleLecturerId] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.RoleLecturerTitle] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Room](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.Room] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[RoomName](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Value] [varchar](256) NULL,
-	[LanguageId] [int] NOT NULL,
-	[RoomId] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.RoomName] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[SalesPlatform](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[Name] [nvarchar](100) NOT NULL,
-	[IsActive] [bit] NOT NULL,
-	[WebhookSecurityKey] [uniqueidentifier] NOT NULL,
-	[ApiKey] [nvarchar](200) NULL,
-	[ApiSecret] [nvarchar](200) NULL,
-	[MaxProcessingCount] [int] NOT NULL,
-	[CreationUserId] [int] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
-	[UpdateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
-	[SecurityStamp] [varchar](36) NOT NULL,
- CONSTRAINT [PK_SalesPlatform] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
- CONSTRAINT [UQ_IDX_SalesPlatform_Uid] UNIQUE NONCLUSTERED 
+ CONSTRAINT [IDX_UQ_Users_Uid] UNIQUE NONCLUSTERED 
 (
 	[Uid] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[SalesPlatformWebhookRequest](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[SalesPlatformId] [int] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
-	[Endpoint] [nvarchar](250) NOT NULL,
-	[Header] [nvarchar](1000) NULL,
-	[Payload] [nvarchar](max) NULL,
-	[IpAddress] [varchar](38) NULL,
-	[IsProcessed] [bit] NOT NULL,
-	[IsProcessing] [bit] NOT NULL,
-	[ProcessingCount] [int] NOT NULL,
-	[LastProcessingDate] [datetime] NULL,
-	[NextProcessingDate] [datetime] NULL,
-	[ProcessingErrorCode] [nvarchar](10) NULL,
-	[ProcessingErrorMessage] [nvarchar](250) NULL,
-	[ManualProcessingUserId] [int] NULL,
-	[SecurityStamp] [varchar](36) NOT NULL,
- CONSTRAINT [PK_SalesPlatformWebhookRequest] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
- CONSTRAINT [UQ_IDX_SalesPlatformWebhookRequest_Uid] UNIQUE NONCLUSTERED 
-(
-	[Uid] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-
-GO
 SET ANSI_PADDING OFF
 GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Speaker](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[CollaboratorId] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL
-) ON [PRIMARY]
-
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
+ALTER TABLE [dbo].[Activities]  WITH CHECK ADD  CONSTRAINT [FK_ProjectTypes_Activities_ProjectTypeId] FOREIGN KEY([ProjectTypeId])
+REFERENCES [dbo].[ProjectTypes] ([Id])
 GO
-SET ANSI_PADDING ON
+ALTER TABLE [dbo].[Activities] CHECK CONSTRAINT [FK_ProjectTypes_Activities_ProjectTypeId]
 GO
-CREATE TABLE [dbo].[State](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[StateName] [varchar](100) NULL,
-	[StateCode] [varchar](2) NULL,
-	[CountryId] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
-	[Address_Id] [int] NULL,
- CONSTRAINT [PK_dbo.State] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
+ALTER TABLE [dbo].[Activities]  WITH CHECK ADD  CONSTRAINT [FK_Users_Activities_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-SET ANSI_PADDING OFF
+ALTER TABLE [dbo].[Activities] CHECK CONSTRAINT [FK_Users_Activities_CreateUserId]
 GO
-SET ANSI_NULLS ON
+ALTER TABLE [dbo].[Activities]  WITH CHECK ADD  CONSTRAINT [FK_Users_Activities_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-SET QUOTED_IDENTIFIER ON
+ALTER TABLE [dbo].[Activities] CHECK CONSTRAINT [FK_Users_Activities_UpdateUserId]
 GO
-SET ANSI_PADDING ON
+ALTER TABLE [dbo].[Addresses]  WITH CHECK ADD  CONSTRAINT [FK_Streets_Addresses_StreetId] FOREIGN KEY([StreetId])
+REFERENCES [dbo].[Streets] ([Id])
 GO
-CREATE TABLE [dbo].[SystemParameter](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[Code] [int] NOT NULL,
-	[LanguageCode] [int] NOT NULL,
-	[GroupCode] [int] NOT NULL,
-	[TypeName] [varchar](150) NULL,
-	[Description] [varchar](256) NULL,
-	[Value] [varchar](1000) NULL,
-	[SubCode] [varchar](150) NULL,
-	[DateChanges] [datetime] NULL,
- CONSTRAINT [PK_dbo.SystemParameter] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
+ALTER TABLE [dbo].[Addresses] CHECK CONSTRAINT [FK_Streets_Addresses_StreetId]
 GO
-SET ANSI_PADDING OFF
+ALTER TABLE [dbo].[Addresses]  WITH CHECK ADD  CONSTRAINT [FK_Users_Addresses_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-SET ANSI_NULLS ON
+ALTER TABLE [dbo].[Addresses] CHECK CONSTRAINT [FK_Users_Addresses_CreateUserId]
 GO
-SET QUOTED_IDENTIFIER ON
+ALTER TABLE [dbo].[Addresses]  WITH CHECK ADD  CONSTRAINT [FK_Users_Addresses_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-SET ANSI_PADDING ON
+ALTER TABLE [dbo].[Addresses] CHECK CONSTRAINT [FK_Users_Addresses_UpdateUserId]
 GO
-CREATE TABLE [dbo].[TargetAudience](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Name] [varchar](50) NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
- CONSTRAINT [PK_dbo.TargetAudience] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
+ALTER TABLE [dbo].[AttendeeCollaborators]  WITH CHECK ADD  CONSTRAINT [FK_Collaborators_AttendeeCollaborators_CollaboratorId] FOREIGN KEY([CollaboratorId])
+REFERENCES [dbo].[Collaborators] ([Id])
 GO
-SET ANSI_PADDING OFF
+ALTER TABLE [dbo].[AttendeeCollaborators] CHECK CONSTRAINT [FK_Collaborators_AttendeeCollaborators_CollaboratorId]
 GO
-SET ANSI_NULLS ON
+ALTER TABLE [dbo].[AttendeeCollaborators]  WITH CHECK ADD  CONSTRAINT [FK_Editions_AttendeeCollaborators_EditionId] FOREIGN KEY([EditionId])
+REFERENCES [dbo].[Editions] ([Id])
 GO
-SET QUOTED_IDENTIFIER ON
+ALTER TABLE [dbo].[AttendeeCollaborators] CHECK CONSTRAINT [FK_Editions_AttendeeCollaborators_EditionId]
 GO
-CREATE TABLE [dbo].[UserUseTerm](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[UserId] [int] NOT NULL,
-	[EventId] [int] NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
-	[RoleId] [int] NOT NULL,
- CONSTRAINT [PK_dbo.UserUseTerm] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
+ALTER TABLE [dbo].[AttendeeCollaborators]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeCollaborators_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[Event] ADD  DEFAULT ('1900-01-01T00:00:00.000') FOR [StartDate]
+ALTER TABLE [dbo].[AttendeeCollaborators] CHECK CONSTRAINT [FK_Users_AttendeeCollaborators_CreateUserId]
 GO
-ALTER TABLE [dbo].[Event] ADD  DEFAULT ('1900-01-01T00:00:00.000') FOR [EndDate]
+ALTER TABLE [dbo].[AttendeeCollaborators]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeCollaborators_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[Logistics] ADD  DEFAULT ('1900-01-01T00:00:00.000') FOR [ArrivalDate]
+ALTER TABLE [dbo].[AttendeeCollaborators] CHECK CONSTRAINT [FK_Users_AttendeeCollaborators_UpdateUserId]
 GO
-ALTER TABLE [dbo].[Logistics] ADD  DEFAULT ('1900-01-01T00:00:00.000') FOR [DepartureDate]
+ALTER TABLE [dbo].[AttendeeCollaboratorTickets]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeCollaborators_AttendeeCollaboratorTickets_AttendeeCollaboratorId] FOREIGN KEY([AttendeeCollaboratorId])
+REFERENCES [dbo].[AttendeeCollaborators] ([Id])
 GO
-ALTER TABLE [dbo].[NegotiationRoomConfig] ADD  DEFAULT ((0)) FOR [CountManualTables]
+ALTER TABLE [dbo].[AttendeeCollaboratorTickets] CHECK CONSTRAINT [FK_AttendeeCollaborators_AttendeeCollaboratorTickets_AttendeeCollaboratorId]
 GO
-ALTER TABLE [dbo].[Project] ADD  DEFAULT ((0)) FOR [ProducerId]
+ALTER TABLE [dbo].[AttendeeCollaboratorTickets]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeSalesPlatformTicketTypes_AttendeeCollaboratorTickets_AttendeeSalesPlatformTicketTypeId] FOREIGN KEY([AttendeeSalesPlatformTicketTypeId])
+REFERENCES [dbo].[AttendeeSalesPlatformTicketTypes] ([Id])
 GO
-ALTER TABLE [dbo].[SalesPlatform] ADD  CONSTRAINT [DF_SalesPlatform_IsActive]  DEFAULT ((1)) FOR [IsActive]
+ALTER TABLE [dbo].[AttendeeCollaboratorTickets] CHECK CONSTRAINT [FK_AttendeeSalesPlatformTicketTypes_AttendeeCollaboratorTickets_AttendeeSalesPlatformTicketTypeId]
 GO
-ALTER TABLE [dbo].[SalesPlatform] ADD  CONSTRAINT [DF_SalesPlatform_MaxProcessingCount]  DEFAULT ((1)) FOR [MaxProcessingCount]
+ALTER TABLE [dbo].[AttendeeCollaboratorTickets]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeCollaboratorTickets_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[SalesPlatform] ADD  CONSTRAINT [DF_SalesPlatform_CreationDate]  DEFAULT (getdate()) FOR [CreationDate]
+ALTER TABLE [dbo].[AttendeeCollaboratorTickets] CHECK CONSTRAINT [FK_Users_AttendeeCollaboratorTickets_CreateUserId]
 GO
-ALTER TABLE [dbo].[SalesPlatform] ADD  CONSTRAINT [DF_SalesPlatform_UpdateDate]  DEFAULT (getdate()) FOR [UpdateDate]
+ALTER TABLE [dbo].[AttendeeCollaboratorTickets]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeCollaboratorTickets_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[SalesPlatformWebhookRequest] ADD  CONSTRAINT [DF_SalesPlatformWebhookRequest_CreationDate]  DEFAULT (getdate()) FOR [CreationDate]
+ALTER TABLE [dbo].[AttendeeCollaboratorTickets] CHECK CONSTRAINT [FK_Users_AttendeeCollaboratorTickets_UpdateUserId]
 GO
-ALTER TABLE [dbo].[SalesPlatformWebhookRequest] ADD  CONSTRAINT [DF_SalesPlatformWebhookRequest_IsProcessed]  DEFAULT ((0)) FOR [IsProcessed]
+ALTER TABLE [dbo].[AttendeeOrganizationCollaborators]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeCollaborators_AttendeeOrganizationCollaborators_AttendeeCollaboratorId] FOREIGN KEY([AttendeeCollaboratorId])
+REFERENCES [dbo].[AttendeeCollaborators] ([Id])
 GO
-ALTER TABLE [dbo].[SalesPlatformWebhookRequest] ADD  CONSTRAINT [DF_SalesPlatformWebhookRequest_IsProcessing]  DEFAULT ((0)) FOR [IsProcessing]
+ALTER TABLE [dbo].[AttendeeOrganizationCollaborators] CHECK CONSTRAINT [FK_AttendeeCollaborators_AttendeeOrganizationCollaborators_AttendeeCollaboratorId]
 GO
-ALTER TABLE [dbo].[SalesPlatformWebhookRequest] ADD  CONSTRAINT [DF_SalesPlatformWebhookRequest_ProcessingCount]  DEFAULT ((0)) FOR [ProcessingCount]
+ALTER TABLE [dbo].[AttendeeOrganizationCollaborators]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeOrganizations_AttendeeOrganizationCollaborators_AttendeeOrganizationId] FOREIGN KEY([AttendeeOrganizationId])
+REFERENCES [dbo].[AttendeeOrganizations] ([Id])
 GO
-ALTER TABLE [dbo].[Speaker] ADD  CONSTRAINT [DF_Speaker_Uid]  DEFAULT (newid()) FOR [Uid]
+ALTER TABLE [dbo].[AttendeeOrganizationCollaborators] CHECK CONSTRAINT [FK_AttendeeOrganizations_AttendeeOrganizationCollaborators_AttendeeOrganizationId]
 GO
-ALTER TABLE [dbo].[UserUseTerm] ADD  DEFAULT ((2)) FOR [RoleId]
+ALTER TABLE [dbo].[AttendeeOrganizationCollaborators]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeOrganizationCollaborators_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[AspNetUserClaims]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.AspNetUserClaims_dbo.AspNetUsers_UserId] FOREIGN KEY([UserId])
-REFERENCES [dbo].[AspNetUsers] ([Id])
-ON DELETE CASCADE
+ALTER TABLE [dbo].[AttendeeOrganizationCollaborators] CHECK CONSTRAINT [FK_Users_AttendeeOrganizationCollaborators_CreateUserId]
 GO
-ALTER TABLE [dbo].[AspNetUserClaims] CHECK CONSTRAINT [FK_dbo.AspNetUserClaims_dbo.AspNetUsers_UserId]
+ALTER TABLE [dbo].[AttendeeOrganizationCollaborators]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeOrganizationCollaborators_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[AspNetUserLogins]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserLogins_dbo.AspNetUsers_UserId] FOREIGN KEY([UserId])
-REFERENCES [dbo].[AspNetUsers] ([Id])
-ON DELETE CASCADE
+ALTER TABLE [dbo].[AttendeeOrganizationCollaborators] CHECK CONSTRAINT [FK_Users_AttendeeOrganizationCollaborators_UpdateUserId]
 GO
-ALTER TABLE [dbo].[AspNetUserLogins] CHECK CONSTRAINT [FK_dbo.AspNetUserLogins_dbo.AspNetUsers_UserId]
+ALTER TABLE [dbo].[AttendeeOrganizations]  WITH CHECK ADD  CONSTRAINT [FK_Editions_AttendeeOrganizations_EditionId] FOREIGN KEY([EditionId])
+REFERENCES [dbo].[Editions] ([Id])
 GO
-ALTER TABLE [dbo].[AspNetUserRoles]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetRoles_RoleId] FOREIGN KEY([RoleId])
-REFERENCES [dbo].[AspNetRoles] ([Id])
-ON DELETE CASCADE
+ALTER TABLE [dbo].[AttendeeOrganizations] CHECK CONSTRAINT [FK_Editions_AttendeeOrganizations_EditionId]
 GO
-ALTER TABLE [dbo].[AspNetUserRoles] CHECK CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetRoles_RoleId]
+ALTER TABLE [dbo].[AttendeeOrganizations]  WITH CHECK ADD  CONSTRAINT [FK_Organizations_AttendeeOrganizations_OrganizationId] FOREIGN KEY([OrganizationId])
+REFERENCES [dbo].[Organizations] ([Id])
 GO
-ALTER TABLE [dbo].[AspNetUserRoles]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetUsers_UserId] FOREIGN KEY([UserId])
-REFERENCES [dbo].[AspNetUsers] ([Id])
-ON DELETE CASCADE
+ALTER TABLE [dbo].[AttendeeOrganizations] CHECK CONSTRAINT [FK_Organizations_AttendeeOrganizations_OrganizationId]
 GO
-ALTER TABLE [dbo].[AspNetUserRoles] CHECK CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetUsers_UserId]
+ALTER TABLE [dbo].[AttendeeOrganizations]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeOrganizations_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[City]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.City_dbo.Address_Address_Id] FOREIGN KEY([Address_Id])
-REFERENCES [dbo].[Address] ([Id])
+ALTER TABLE [dbo].[AttendeeOrganizations] CHECK CONSTRAINT [FK_Users_AttendeeOrganizations_CreateUserId]
 GO
-ALTER TABLE [dbo].[City] CHECK CONSTRAINT [FK_dbo.City_dbo.Address_Address_Id]
+ALTER TABLE [dbo].[AttendeeOrganizations]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeOrganizations_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[City]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.City_dbo.State_StateId] FOREIGN KEY([StateId])
-REFERENCES [dbo].[State] ([Id])
+ALTER TABLE [dbo].[AttendeeOrganizations] CHECK CONSTRAINT [FK_Users_AttendeeOrganizations_UpdateUserId]
 GO
-ALTER TABLE [dbo].[City] CHECK CONSTRAINT [FK_dbo.City_dbo.State_StateId]
+ALTER TABLE [dbo].[AttendeeOrganizationTypes]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeOrganizations_AttendeeOrganizationTypes_AttendeeOrganizationId] FOREIGN KEY([AttendeeOrganizationId])
+REFERENCES [dbo].[AttendeeOrganizations] ([Id])
 GO
-ALTER TABLE [dbo].[Collaborator]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.Collaborator_dbo.Address_AddressId] FOREIGN KEY([AddressId])
-REFERENCES [dbo].[Address] ([Id])
+ALTER TABLE [dbo].[AttendeeOrganizationTypes] CHECK CONSTRAINT [FK_AttendeeOrganizations_AttendeeOrganizationTypes_AttendeeOrganizationId]
 GO
-ALTER TABLE [dbo].[Collaborator] CHECK CONSTRAINT [FK_dbo.Collaborator_dbo.Address_AddressId]
+ALTER TABLE [dbo].[AttendeeOrganizationTypes]  WITH CHECK ADD  CONSTRAINT [FK_OrganizationTypes_AttendeeOrganizationTypes_OrganizationTypeId] FOREIGN KEY([OrganizationTypeId])
+REFERENCES [dbo].[OrganizationTypes] ([Id])
 GO
-ALTER TABLE [dbo].[Collaborator]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.Collaborator_dbo.AspNetUsers_UserId] FOREIGN KEY([UserId])
-REFERENCES [dbo].[AspNetUsers] ([Id])
+ALTER TABLE [dbo].[AttendeeOrganizationTypes] CHECK CONSTRAINT [FK_OrganizationTypes_AttendeeOrganizationTypes_OrganizationTypeId]
 GO
-ALTER TABLE [dbo].[Collaborator] CHECK CONSTRAINT [FK_dbo.Collaborator_dbo.AspNetUsers_UserId]
+ALTER TABLE [dbo].[AttendeeOrganizationTypes]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeOrganizationTypes_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[Collaborator]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.Collaborator_dbo.ImageFile_ImageId] FOREIGN KEY([ImageId])
-REFERENCES [dbo].[ImageFile] ([Id])
+ALTER TABLE [dbo].[AttendeeOrganizationTypes] CHECK CONSTRAINT [FK_Users_AttendeeOrganizationTypes_CreateUserId]
 GO
-ALTER TABLE [dbo].[Collaborator] CHECK CONSTRAINT [FK_dbo.Collaborator_dbo.ImageFile_ImageId]
+ALTER TABLE [dbo].[AttendeeOrganizationTypes]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeOrganizationTypes_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[Collaborator]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.Collaborator_dbo.Player_PlayerId] FOREIGN KEY([PlayerId])
-REFERENCES [dbo].[Player] ([Id])
+ALTER TABLE [dbo].[AttendeeOrganizationTypes] CHECK CONSTRAINT [FK_Users_AttendeeOrganizationTypes_UpdateUserId]
 GO
-ALTER TABLE [dbo].[Collaborator] CHECK CONSTRAINT [FK_dbo.Collaborator_dbo.Player_PlayerId]
+ALTER TABLE [dbo].[AttendeeSalesPlatforms]  WITH CHECK ADD  CONSTRAINT [FK_Editions_AttendeeSalesPlatforms_EditionId] FOREIGN KEY([EditionId])
+REFERENCES [dbo].[Editions] ([Id])
 GO
-ALTER TABLE [dbo].[CollaboratorJobTitle]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.CollaboratorJobTitle_dbo.Collaborator_CollaboratoId] FOREIGN KEY([CollaboratoId])
-REFERENCES [dbo].[Collaborator] ([Id])
+ALTER TABLE [dbo].[AttendeeSalesPlatforms] CHECK CONSTRAINT [FK_Editions_AttendeeSalesPlatforms_EditionId]
 GO
-ALTER TABLE [dbo].[CollaboratorJobTitle] CHECK CONSTRAINT [FK_dbo.CollaboratorJobTitle_dbo.Collaborator_CollaboratoId]
+ALTER TABLE [dbo].[AttendeeSalesPlatforms]  WITH CHECK ADD  CONSTRAINT [FK_SalesPlatforms_AttendeeSalesPlatforms_SalesPlatformId] FOREIGN KEY([SalesPlatformId])
+REFERENCES [dbo].[SalesPlatforms] ([Id])
 GO
-ALTER TABLE [dbo].[CollaboratorJobTitle]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.CollaboratorJobTitle_dbo.Language_LanguageId] FOREIGN KEY([LanguageId])
-REFERENCES [dbo].[Language] ([Id])
+ALTER TABLE [dbo].[AttendeeSalesPlatforms] CHECK CONSTRAINT [FK_SalesPlatforms_AttendeeSalesPlatforms_SalesPlatformId]
 GO
-ALTER TABLE [dbo].[CollaboratorJobTitle] CHECK CONSTRAINT [FK_dbo.CollaboratorJobTitle_dbo.Language_LanguageId]
+ALTER TABLE [dbo].[AttendeeSalesPlatforms]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeSalesPlatforms_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[CollaboratorMiniBio]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.CollaboratorMiniBio_dbo.Collaborator_CollaboratoId] FOREIGN KEY([CollaboratoId])
-REFERENCES [dbo].[Collaborator] ([Id])
+ALTER TABLE [dbo].[AttendeeSalesPlatforms] CHECK CONSTRAINT [FK_Users_AttendeeSalesPlatforms_CreateUserId]
 GO
-ALTER TABLE [dbo].[CollaboratorMiniBio] CHECK CONSTRAINT [FK_dbo.CollaboratorMiniBio_dbo.Collaborator_CollaboratoId]
+ALTER TABLE [dbo].[AttendeeSalesPlatforms]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeSalesPlatforms_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[CollaboratorMiniBio]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.CollaboratorMiniBio_dbo.Language_LanguageId] FOREIGN KEY([LanguageId])
-REFERENCES [dbo].[Language] ([Id])
+ALTER TABLE [dbo].[AttendeeSalesPlatforms] CHECK CONSTRAINT [FK_Users_AttendeeSalesPlatforms_UpdateUserId]
 GO
-ALTER TABLE [dbo].[CollaboratorMiniBio] CHECK CONSTRAINT [FK_dbo.CollaboratorMiniBio_dbo.Language_LanguageId]
+ALTER TABLE [dbo].[AttendeeSalesPlatformTicketTypes]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeSalesPlatforms_AttendeeSalesPlatformTicketTypes_AttendeeSalesPlatformId] FOREIGN KEY([AttendeeSalesPlatformId])
+REFERENCES [dbo].[AttendeeSalesPlatforms] ([Id])
 GO
-ALTER TABLE [dbo].[CollaboratorPlayer]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.CollaboratorPlayer_dbo.Collaborator_CollaboratorId] FOREIGN KEY([CollaboratorId])
-REFERENCES [dbo].[Collaborator] ([Id])
+ALTER TABLE [dbo].[AttendeeSalesPlatformTicketTypes] CHECK CONSTRAINT [FK_AttendeeSalesPlatforms_AttendeeSalesPlatformTicketTypes_AttendeeSalesPlatformId]
 GO
-ALTER TABLE [dbo].[CollaboratorPlayer] CHECK CONSTRAINT [FK_dbo.CollaboratorPlayer_dbo.Collaborator_CollaboratorId]
+ALTER TABLE [dbo].[AttendeeSalesPlatformTicketTypes]  WITH CHECK ADD  CONSTRAINT [FK_TicketTypes_AttendeeSalesPlatformTicketTypes_TicketTypeId] FOREIGN KEY([TicketTypeId])
+REFERENCES [dbo].[TicketTypes] ([Id])
 GO
-ALTER TABLE [dbo].[CollaboratorPlayer]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.CollaboratorPlayer_dbo.Player_PlayerId] FOREIGN KEY([PlayerId])
-REFERENCES [dbo].[Player] ([Id])
+ALTER TABLE [dbo].[AttendeeSalesPlatformTicketTypes] CHECK CONSTRAINT [FK_TicketTypes_AttendeeSalesPlatformTicketTypes_TicketTypeId]
 GO
-ALTER TABLE [dbo].[CollaboratorPlayer] CHECK CONSTRAINT [FK_dbo.CollaboratorPlayer_dbo.Player_PlayerId]
+ALTER TABLE [dbo].[AttendeeSalesPlatformTicketTypes]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeSalesPlatformTicketTypes_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[CollaboratorProducer]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.CollaboratorProducer_dbo.Collaborator_CollaboratorId] FOREIGN KEY([CollaboratorId])
-REFERENCES [dbo].[Collaborator] ([Id])
+ALTER TABLE [dbo].[AttendeeSalesPlatformTicketTypes] CHECK CONSTRAINT [FK_Users_AttendeeSalesPlatformTicketTypes_CreateUserId]
 GO
-ALTER TABLE [dbo].[CollaboratorProducer] CHECK CONSTRAINT [FK_dbo.CollaboratorProducer_dbo.Collaborator_CollaboratorId]
+ALTER TABLE [dbo].[AttendeeSalesPlatformTicketTypes]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeSalesPlatformTicketTypes_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[CollaboratorProducer]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.CollaboratorProducer_dbo.Event_EventId] FOREIGN KEY([EventId])
-REFERENCES [dbo].[Event] ([Id])
+ALTER TABLE [dbo].[AttendeeSalesPlatformTicketTypes] CHECK CONSTRAINT [FK_Users_AttendeeSalesPlatformTicketTypes_UpdateUserId]
 GO
-ALTER TABLE [dbo].[CollaboratorProducer] CHECK CONSTRAINT [FK_dbo.CollaboratorProducer_dbo.Event_EventId]
+ALTER TABLE [dbo].[Cities]  WITH CHECK ADD  CONSTRAINT [FK_States_Cities_StateId] FOREIGN KEY([StateId])
+REFERENCES [dbo].[States] ([Id])
 GO
-ALTER TABLE [dbo].[CollaboratorProducer]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.CollaboratorProducer_dbo.Producer_ProducerId] FOREIGN KEY([ProducerId])
-REFERENCES [dbo].[Producer] ([Id])
+ALTER TABLE [dbo].[Cities] CHECK CONSTRAINT [FK_States_Cities_StateId]
 GO
-ALTER TABLE [dbo].[CollaboratorProducer] CHECK CONSTRAINT [FK_dbo.CollaboratorProducer_dbo.Producer_ProducerId]
+ALTER TABLE [dbo].[Cities]  WITH CHECK ADD  CONSTRAINT [FK_Users_Cities_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[Conference]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.Conference_dbo.Room_RoomId] FOREIGN KEY([RoomId])
-REFERENCES [dbo].[Room] ([Id])
+ALTER TABLE [dbo].[Cities] CHECK CONSTRAINT [FK_Users_Cities_CreateUserId]
 GO
-ALTER TABLE [dbo].[Conference] CHECK CONSTRAINT [FK_dbo.Conference_dbo.Room_RoomId]
+ALTER TABLE [dbo].[Cities]  WITH CHECK ADD  CONSTRAINT [FK_Users_Cities_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[ConferenceLecturer]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ConferenceLecturer_dbo.Collaborator_CollaboratorId] FOREIGN KEY([CollaboratorId])
-REFERENCES [dbo].[Collaborator] ([Id])
+ALTER TABLE [dbo].[Cities] CHECK CONSTRAINT [FK_Users_Cities_UpdateUserId]
 GO
-ALTER TABLE [dbo].[ConferenceLecturer] CHECK CONSTRAINT [FK_dbo.ConferenceLecturer_dbo.Collaborator_CollaboratorId]
+ALTER TABLE [dbo].[CollaboratorJobTitles]  WITH CHECK ADD  CONSTRAINT [FK_Collaborators_CollaboratorJobTitles_CollaboratorId] FOREIGN KEY([CollaboratorId])
+REFERENCES [dbo].[Collaborators] ([Id])
 GO
-ALTER TABLE [dbo].[ConferenceLecturer]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ConferenceLecturer_dbo.Conference_ConferenceId] FOREIGN KEY([ConferenceId])
-REFERENCES [dbo].[Conference] ([Id])
-ON DELETE CASCADE
+ALTER TABLE [dbo].[CollaboratorJobTitles] CHECK CONSTRAINT [FK_Collaborators_CollaboratorJobTitles_CollaboratorId]
 GO
-ALTER TABLE [dbo].[ConferenceLecturer] CHECK CONSTRAINT [FK_dbo.ConferenceLecturer_dbo.Conference_ConferenceId]
+ALTER TABLE [dbo].[CollaboratorJobTitles]  WITH CHECK ADD  CONSTRAINT [FK_Languages_CollaboratorJobTitles_LanguageId] FOREIGN KEY([LanguageId])
+REFERENCES [dbo].[Languages] ([Id])
 GO
-ALTER TABLE [dbo].[ConferenceLecturer]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ConferenceLecturer_dbo.Lecturer_LecturerId] FOREIGN KEY([LecturerId])
-REFERENCES [dbo].[Lecturer] ([Id])
+ALTER TABLE [dbo].[CollaboratorJobTitles] CHECK CONSTRAINT [FK_Languages_CollaboratorJobTitles_LanguageId]
 GO
-ALTER TABLE [dbo].[ConferenceLecturer] CHECK CONSTRAINT [FK_dbo.ConferenceLecturer_dbo.Lecturer_LecturerId]
+ALTER TABLE [dbo].[CollaboratorJobTitles]  WITH CHECK ADD  CONSTRAINT [FK_Users_CollaboratorJobTitles_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[ConferenceLecturer]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ConferenceLecturer_dbo.RoleLecturer_RoleLecturerId] FOREIGN KEY([RoleLecturerId])
-REFERENCES [dbo].[RoleLecturer] ([Id])
+ALTER TABLE [dbo].[CollaboratorJobTitles] CHECK CONSTRAINT [FK_Users_CollaboratorJobTitles_CreateUserId]
 GO
-ALTER TABLE [dbo].[ConferenceLecturer] CHECK CONSTRAINT [FK_dbo.ConferenceLecturer_dbo.RoleLecturer_RoleLecturerId]
+ALTER TABLE [dbo].[CollaboratorJobTitles]  WITH CHECK ADD  CONSTRAINT [FK_Users_CollaboratorJobTitles_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[ConferenceSynopsis]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ConferenceSynopsis_dbo.Conference_ConferenceId] FOREIGN KEY([ConferenceId])
-REFERENCES [dbo].[Conference] ([Id])
-ON DELETE CASCADE
+ALTER TABLE [dbo].[CollaboratorJobTitles] CHECK CONSTRAINT [FK_Users_CollaboratorJobTitles_UpdateUserId]
 GO
-ALTER TABLE [dbo].[ConferenceSynopsis] CHECK CONSTRAINT [FK_dbo.ConferenceSynopsis_dbo.Conference_ConferenceId]
+ALTER TABLE [dbo].[CollaboratorMiniBios]  WITH CHECK ADD  CONSTRAINT [FK_Collaborators_CollaboratorMiniBios_CollaboratorId] FOREIGN KEY([CollaboratorId])
+REFERENCES [dbo].[Collaborators] ([Id])
 GO
-ALTER TABLE [dbo].[ConferenceSynopsis]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ConferenceSynopsis_dbo.Language_LanguageId] FOREIGN KEY([LanguageId])
-REFERENCES [dbo].[Language] ([Id])
+ALTER TABLE [dbo].[CollaboratorMiniBios] CHECK CONSTRAINT [FK_Collaborators_CollaboratorMiniBios_CollaboratorId]
 GO
-ALTER TABLE [dbo].[ConferenceSynopsis] CHECK CONSTRAINT [FK_dbo.ConferenceSynopsis_dbo.Language_LanguageId]
+ALTER TABLE [dbo].[CollaboratorMiniBios]  WITH CHECK ADD  CONSTRAINT [FK_Languages_CollaboratorMiniBios_LanguageId] FOREIGN KEY([LanguageId])
+REFERENCES [dbo].[Languages] ([Id])
 GO
-ALTER TABLE [dbo].[ConferenceTitle]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ConferenceTitle_dbo.Conference_ConferenceId] FOREIGN KEY([ConferenceId])
-REFERENCES [dbo].[Conference] ([Id])
-ON DELETE CASCADE
+ALTER TABLE [dbo].[CollaboratorMiniBios] CHECK CONSTRAINT [FK_Languages_CollaboratorMiniBios_LanguageId]
 GO
-ALTER TABLE [dbo].[ConferenceTitle] CHECK CONSTRAINT [FK_dbo.ConferenceTitle_dbo.Conference_ConferenceId]
+ALTER TABLE [dbo].[CollaboratorMiniBios]  WITH CHECK ADD  CONSTRAINT [FK_Users_CollaboratorMiniBios_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[ConferenceTitle]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ConferenceTitle_dbo.Language_LanguageId] FOREIGN KEY([LanguageId])
-REFERENCES [dbo].[Language] ([Id])
+ALTER TABLE [dbo].[CollaboratorMiniBios] CHECK CONSTRAINT [FK_Users_CollaboratorMiniBios_CreateUserId]
 GO
-ALTER TABLE [dbo].[ConferenceTitle] CHECK CONSTRAINT [FK_dbo.ConferenceTitle_dbo.Language_LanguageId]
+ALTER TABLE [dbo].[CollaboratorMiniBios]  WITH CHECK ADD  CONSTRAINT [FK_Users_CollaboratorMiniBios_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[Country]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.Country_dbo.Address_Address_Id] FOREIGN KEY([Address_Id])
-REFERENCES [dbo].[Address] ([Id])
+ALTER TABLE [dbo].[CollaboratorMiniBios] CHECK CONSTRAINT [FK_Users_CollaboratorMiniBios_UpdateUserId]
 GO
-ALTER TABLE [dbo].[Country] CHECK CONSTRAINT [FK_dbo.Country_dbo.Address_Address_Id]
+ALTER TABLE [dbo].[Collaborators]  WITH CHECK ADD  CONSTRAINT [FK_Addresses_Collaborators_AddressId] FOREIGN KEY([AddressId])
+REFERENCES [dbo].[Addresses] ([Id])
 GO
-ALTER TABLE [dbo].[Holding]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.Holding_dbo.ImageFile_ImageId] FOREIGN KEY([ImageId])
-REFERENCES [dbo].[ImageFile] ([Id])
+ALTER TABLE [dbo].[Collaborators] CHECK CONSTRAINT [FK_Addresses_Collaborators_AddressId]
 GO
-ALTER TABLE [dbo].[Holding] CHECK CONSTRAINT [FK_dbo.Holding_dbo.ImageFile_ImageId]
+ALTER TABLE [dbo].[Collaborators]  WITH CHECK ADD  CONSTRAINT [FK_Users_Collaborators_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[HoldingDescription]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.HoldingDescription_dbo.Holding_HoldingId] FOREIGN KEY([HoldingId])
-REFERENCES [dbo].[Holding] ([Id])
+ALTER TABLE [dbo].[Collaborators] CHECK CONSTRAINT [FK_Users_Collaborators_CreateUserId]
 GO
-ALTER TABLE [dbo].[HoldingDescription] CHECK CONSTRAINT [FK_dbo.HoldingDescription_dbo.Holding_HoldingId]
+ALTER TABLE [dbo].[Collaborators]  WITH CHECK ADD  CONSTRAINT [FK_Users_Collaborators_Id] FOREIGN KEY([Id])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[HoldingDescription]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.HoldingDescription_dbo.Language_LanguageId] FOREIGN KEY([LanguageId])
-REFERENCES [dbo].[Language] ([Id])
+ALTER TABLE [dbo].[Collaborators] CHECK CONSTRAINT [FK_Users_Collaborators_Id]
 GO
-ALTER TABLE [dbo].[HoldingDescription] CHECK CONSTRAINT [FK_dbo.HoldingDescription_dbo.Language_LanguageId]
+ALTER TABLE [dbo].[Collaborators]  WITH CHECK ADD  CONSTRAINT [FK_Users_Collaborators_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[Interest]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.Interest_dbo.InterestGroup_InterestGroupId] FOREIGN KEY([InterestGroupId])
-REFERENCES [dbo].[InterestGroup] ([Id])
+ALTER TABLE [dbo].[Collaborators] CHECK CONSTRAINT [FK_Users_Collaborators_UpdateUserId]
 GO
-ALTER TABLE [dbo].[Interest] CHECK CONSTRAINT [FK_dbo.Interest_dbo.InterestGroup_InterestGroupId]
+ALTER TABLE [dbo].[ConferenceParticipantRoles]  WITH CHECK ADD  CONSTRAINT [FK_Users_ConferenceParticipantRoles_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[Lecturer]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.Lecturer_dbo.ImageFile_ImageId] FOREIGN KEY([ImageId])
-REFERENCES [dbo].[ImageFile] ([Id])
+ALTER TABLE [dbo].[ConferenceParticipantRoles] CHECK CONSTRAINT [FK_Users_ConferenceParticipantRoles_CreateUserId]
 GO
-ALTER TABLE [dbo].[Lecturer] CHECK CONSTRAINT [FK_dbo.Lecturer_dbo.ImageFile_ImageId]
+ALTER TABLE [dbo].[ConferenceParticipantRoles]  WITH CHECK ADD  CONSTRAINT [FK_Users_ConferenceParticipantRoles_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[LecturerJobTitle]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.LecturerJobTitle_dbo.Language_LanguageId] FOREIGN KEY([LanguageId])
-REFERENCES [dbo].[Language] ([Id])
+ALTER TABLE [dbo].[ConferenceParticipantRoles] CHECK CONSTRAINT [FK_Users_ConferenceParticipantRoles_UpdateUserId]
 GO
-ALTER TABLE [dbo].[LecturerJobTitle] CHECK CONSTRAINT [FK_dbo.LecturerJobTitle_dbo.Language_LanguageId]
+ALTER TABLE [dbo].[ConferenceParticipantRoleTitles]  WITH CHECK ADD  CONSTRAINT [FK_ConferenceParticipantRoles_ConferenceParticipantRoleTitles_ConferenceParticipantRoleId] FOREIGN KEY([ConferenceParticipantRoleId])
+REFERENCES [dbo].[ConferenceParticipantRoles] ([Id])
 GO
-ALTER TABLE [dbo].[LecturerJobTitle]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.LecturerJobTitle_dbo.Lecturer_LecturerId] FOREIGN KEY([LecturerId])
-REFERENCES [dbo].[Lecturer] ([Id])
+ALTER TABLE [dbo].[ConferenceParticipantRoleTitles] CHECK CONSTRAINT [FK_ConferenceParticipantRoles_ConferenceParticipantRoleTitles_ConferenceParticipantRoleId]
 GO
-ALTER TABLE [dbo].[LecturerJobTitle] CHECK CONSTRAINT [FK_dbo.LecturerJobTitle_dbo.Lecturer_LecturerId]
+ALTER TABLE [dbo].[ConferenceParticipantRoleTitles]  WITH CHECK ADD  CONSTRAINT [FK_Languages_ConferenceParticipantRoleTitles_LanguageId] FOREIGN KEY([LanguageId])
+REFERENCES [dbo].[Languages] ([Id])
 GO
-ALTER TABLE [dbo].[Logistics]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.Logistics_dbo.Collaborator_CollaboratorId] FOREIGN KEY([CollaboratorId])
-REFERENCES [dbo].[Collaborator] ([Id])
+ALTER TABLE [dbo].[ConferenceParticipantRoleTitles] CHECK CONSTRAINT [FK_Languages_ConferenceParticipantRoleTitles_LanguageId]
 GO
-ALTER TABLE [dbo].[Logistics] CHECK CONSTRAINT [FK_dbo.Logistics_dbo.Collaborator_CollaboratorId]
+ALTER TABLE [dbo].[ConferenceParticipantRoleTitles]  WITH CHECK ADD  CONSTRAINT [FK_Users_ConferenceParticipantRoleTitles_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[Logistics]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.Logistics_dbo.Event_EventId] FOREIGN KEY([EventId])
-REFERENCES [dbo].[Event] ([Id])
+ALTER TABLE [dbo].[ConferenceParticipantRoleTitles] CHECK CONSTRAINT [FK_Users_ConferenceParticipantRoleTitles_CreateUserId]
 GO
-ALTER TABLE [dbo].[Logistics] CHECK CONSTRAINT [FK_dbo.Logistics_dbo.Event_EventId]
+ALTER TABLE [dbo].[ConferenceParticipantRoleTitles]  WITH CHECK ADD  CONSTRAINT [FK_Users_ConferenceParticipantRoleTitles_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[MailCollaborator]  WITH CHECK ADD  CONSTRAINT [FK_dbo.MailCollaborator_dbo.Collaborator_Collaborator_Id] FOREIGN KEY([Collaborator_Id])
-REFERENCES [dbo].[Collaborator] ([Id])
+ALTER TABLE [dbo].[ConferenceParticipantRoleTitles] CHECK CONSTRAINT [FK_Users_ConferenceParticipantRoleTitles_UpdateUserId]
 GO
-ALTER TABLE [dbo].[MailCollaborator] CHECK CONSTRAINT [FK_dbo.MailCollaborator_dbo.Collaborator_Collaborator_Id]
+ALTER TABLE [dbo].[ConferenceParticipants]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeCollaborators_ConferenceParticipants_AttendeeCollaboratorId] FOREIGN KEY([AttendeeCollaboratorId])
+REFERENCES [dbo].[AttendeeCollaborators] ([Id])
 GO
-ALTER TABLE [dbo].[MailCollaborator]  WITH CHECK ADD  CONSTRAINT [FK_dbo.MailCollaborator_dbo.Mail_Mail_Id] FOREIGN KEY([Mail_Id])
-REFERENCES [dbo].[Mail] ([Id])
+ALTER TABLE [dbo].[ConferenceParticipants] CHECK CONSTRAINT [FK_AttendeeCollaborators_ConferenceParticipants_AttendeeCollaboratorId]
 GO
-ALTER TABLE [dbo].[MailCollaborator] CHECK CONSTRAINT [FK_dbo.MailCollaborator_dbo.Mail_Mail_Id]
+ALTER TABLE [dbo].[ConferenceParticipants]  WITH CHECK ADD  CONSTRAINT [FK_ConferenceParticipantRoles_ConferenceParticipants_ConferenceParticipantRoleId] FOREIGN KEY([ConferenceParticipantRoleId])
+REFERENCES [dbo].[ConferenceParticipantRoles] ([Id])
 GO
-ALTER TABLE [dbo].[Message]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.Message_dbo.AspNetUsers_RecipientId] FOREIGN KEY([RecipientId])
-REFERENCES [dbo].[AspNetUsers] ([Id])
+ALTER TABLE [dbo].[ConferenceParticipants] CHECK CONSTRAINT [FK_ConferenceParticipantRoles_ConferenceParticipants_ConferenceParticipantRoleId]
 GO
-ALTER TABLE [dbo].[Message] CHECK CONSTRAINT [FK_dbo.Message_dbo.AspNetUsers_RecipientId]
+ALTER TABLE [dbo].[ConferenceParticipants]  WITH CHECK ADD  CONSTRAINT [FK_Conferences_ConferenceParticipants_ConferenceId] FOREIGN KEY([ConferenceId])
+REFERENCES [dbo].[Conferences] ([Id])
 GO
-ALTER TABLE [dbo].[Message]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.Message_dbo.AspNetUsers_SenderId] FOREIGN KEY([SenderId])
-REFERENCES [dbo].[AspNetUsers] ([Id])
+ALTER TABLE [dbo].[ConferenceParticipants] CHECK CONSTRAINT [FK_Conferences_ConferenceParticipants_ConferenceId]
 GO
-ALTER TABLE [dbo].[Message] CHECK CONSTRAINT [FK_dbo.Message_dbo.AspNetUsers_SenderId]
+ALTER TABLE [dbo].[ConferenceParticipants]  WITH CHECK ADD  CONSTRAINT [FK_Users_ConferenceParticipants_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[Negotiation]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.Negotiation_dbo.Player_PlayerId] FOREIGN KEY([PlayerId])
-REFERENCES [dbo].[Player] ([Id])
+ALTER TABLE [dbo].[ConferenceParticipants] CHECK CONSTRAINT [FK_Users_ConferenceParticipants_CreateUserId]
 GO
-ALTER TABLE [dbo].[Negotiation] CHECK CONSTRAINT [FK_dbo.Negotiation_dbo.Player_PlayerId]
+ALTER TABLE [dbo].[ConferenceParticipants]  WITH CHECK ADD  CONSTRAINT [FK_Users_ConferenceParticipants_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[Negotiation]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.Negotiation_dbo.Project_ProjectId] FOREIGN KEY([ProjectId])
-REFERENCES [dbo].[Project] ([Id])
-ON DELETE CASCADE
+ALTER TABLE [dbo].[ConferenceParticipants] CHECK CONSTRAINT [FK_Users_ConferenceParticipants_UpdateUserId]
 GO
-ALTER TABLE [dbo].[Negotiation] CHECK CONSTRAINT [FK_dbo.Negotiation_dbo.Project_ProjectId]
+ALTER TABLE [dbo].[Conferences]  WITH CHECK ADD  CONSTRAINT [FK_Editions_Conferences_EditionId] FOREIGN KEY([EditionId])
+REFERENCES [dbo].[Editions] ([Id])
 GO
-ALTER TABLE [dbo].[Negotiation]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.Negotiation_dbo.ProjectPlayerEvaluation_EvaluationId] FOREIGN KEY([EvaluationId])
-REFERENCES [dbo].[ProjectPlayerEvaluation] ([Id])
-ON DELETE CASCADE
+ALTER TABLE [dbo].[Conferences] CHECK CONSTRAINT [FK_Editions_Conferences_EditionId]
 GO
-ALTER TABLE [dbo].[Negotiation] CHECK CONSTRAINT [FK_dbo.Negotiation_dbo.ProjectPlayerEvaluation_EvaluationId]
+ALTER TABLE [dbo].[Conferences]  WITH CHECK ADD  CONSTRAINT [FK_Rooms_Conferences_RoomId] FOREIGN KEY([RoomId])
+REFERENCES [dbo].[Rooms] ([Id])
 GO
-ALTER TABLE [dbo].[Negotiation]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.Negotiation_dbo.Room_RoomId] FOREIGN KEY([RoomId])
-REFERENCES [dbo].[Room] ([Id])
+ALTER TABLE [dbo].[Conferences] CHECK CONSTRAINT [FK_Rooms_Conferences_RoomId]
 GO
-ALTER TABLE [dbo].[Negotiation] CHECK CONSTRAINT [FK_dbo.Negotiation_dbo.Room_RoomId]
+ALTER TABLE [dbo].[Conferences]  WITH CHECK ADD  CONSTRAINT [FK_Users_Conferences_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[NegotiationRoomConfig]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.NegotiationRoomConfig_dbo.NegotiationConfig_NegotiationConfigId] FOREIGN KEY([NegotiationConfigId])
-REFERENCES [dbo].[NegotiationConfig] ([Id])
+ALTER TABLE [dbo].[Conferences] CHECK CONSTRAINT [FK_Users_Conferences_CreateUserId]
 GO
-ALTER TABLE [dbo].[NegotiationRoomConfig] CHECK CONSTRAINT [FK_dbo.NegotiationRoomConfig_dbo.NegotiationConfig_NegotiationConfigId]
+ALTER TABLE [dbo].[Conferences]  WITH CHECK ADD  CONSTRAINT [FK_Users_Conferences_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[NegotiationRoomConfig]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.NegotiationRoomConfig_dbo.Room_RoomId] FOREIGN KEY([RoomId])
-REFERENCES [dbo].[Room] ([Id])
+ALTER TABLE [dbo].[Conferences] CHECK CONSTRAINT [FK_Users_Conferences_UpdateUserId]
 GO
-ALTER TABLE [dbo].[NegotiationRoomConfig] CHECK CONSTRAINT [FK_dbo.NegotiationRoomConfig_dbo.Room_RoomId]
+ALTER TABLE [dbo].[ConferenceSynopsis]  WITH CHECK ADD  CONSTRAINT [FK_Conferences_ConferenceSynopsis_ConferenceId] FOREIGN KEY([ConferenceId])
+REFERENCES [dbo].[Conferences] ([Id])
 GO
-ALTER TABLE [dbo].[Player]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.Player_dbo.Address_AddressId] FOREIGN KEY([AddressId])
-REFERENCES [dbo].[Address] ([Id])
+ALTER TABLE [dbo].[ConferenceSynopsis] CHECK CONSTRAINT [FK_Conferences_ConferenceSynopsis_ConferenceId]
 GO
-ALTER TABLE [dbo].[Player] CHECK CONSTRAINT [FK_dbo.Player_dbo.Address_AddressId]
+ALTER TABLE [dbo].[ConferenceSynopsis]  WITH CHECK ADD  CONSTRAINT [FK_Languages_ConferenceSynopsis_LanguageId] FOREIGN KEY([LanguageId])
+REFERENCES [dbo].[Languages] ([Id])
 GO
-ALTER TABLE [dbo].[Player]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.Player_dbo.Holding_HoldingId] FOREIGN KEY([HoldingId])
-REFERENCES [dbo].[Holding] ([Id])
+ALTER TABLE [dbo].[ConferenceSynopsis] CHECK CONSTRAINT [FK_Languages_ConferenceSynopsis_LanguageId]
 GO
-ALTER TABLE [dbo].[Player] CHECK CONSTRAINT [FK_dbo.Player_dbo.Holding_HoldingId]
+ALTER TABLE [dbo].[ConferenceSynopsis]  WITH CHECK ADD  CONSTRAINT [FK_Users_ConferenceSynopsis_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[Player]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.Player_dbo.ImageFile_ImageId] FOREIGN KEY([ImageId])
-REFERENCES [dbo].[ImageFile] ([Id])
+ALTER TABLE [dbo].[ConferenceSynopsis] CHECK CONSTRAINT [FK_Users_ConferenceSynopsis_CreateUserId]
 GO
-ALTER TABLE [dbo].[Player] CHECK CONSTRAINT [FK_dbo.Player_dbo.ImageFile_ImageId]
+ALTER TABLE [dbo].[ConferenceSynopsis]  WITH CHECK ADD  CONSTRAINT [FK_Users_ConferenceSynopsis_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[PlayerActivity]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.PlayerActivity_dbo.Activity_ActivityId] FOREIGN KEY([ActivityId])
-REFERENCES [dbo].[Activity] ([Id])
+ALTER TABLE [dbo].[ConferenceSynopsis] CHECK CONSTRAINT [FK_Users_ConferenceSynopsis_UpdateUserId]
 GO
-ALTER TABLE [dbo].[PlayerActivity] CHECK CONSTRAINT [FK_dbo.PlayerActivity_dbo.Activity_ActivityId]
+ALTER TABLE [dbo].[ConferenceTitles]  WITH CHECK ADD  CONSTRAINT [FK_Conferences_ConferenceTitles_ConferenceId] FOREIGN KEY([ConferenceId])
+REFERENCES [dbo].[Conferences] ([Id])
 GO
-ALTER TABLE [dbo].[PlayerActivity]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.PlayerActivity_dbo.Player_PlayerId] FOREIGN KEY([PlayerId])
-REFERENCES [dbo].[Player] ([Id])
+ALTER TABLE [dbo].[ConferenceTitles] CHECK CONSTRAINT [FK_Conferences_ConferenceTitles_ConferenceId]
 GO
-ALTER TABLE [dbo].[PlayerActivity] CHECK CONSTRAINT [FK_dbo.PlayerActivity_dbo.Player_PlayerId]
+ALTER TABLE [dbo].[ConferenceTitles]  WITH CHECK ADD  CONSTRAINT [FK_Languages_ConferenceTitles_LanguageId] FOREIGN KEY([LanguageId])
+REFERENCES [dbo].[Languages] ([Id])
 GO
-ALTER TABLE [dbo].[PlayerDescription]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.PlayerDescription_dbo.Language_LanguageId] FOREIGN KEY([LanguageId])
-REFERENCES [dbo].[Language] ([Id])
+ALTER TABLE [dbo].[ConferenceTitles] CHECK CONSTRAINT [FK_Languages_ConferenceTitles_LanguageId]
 GO
-ALTER TABLE [dbo].[PlayerDescription] CHECK CONSTRAINT [FK_dbo.PlayerDescription_dbo.Language_LanguageId]
+ALTER TABLE [dbo].[ConferenceTitles]  WITH CHECK ADD  CONSTRAINT [FK_Users_ConferenceTitles_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[PlayerDescription]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.PlayerDescription_dbo.Player_PlayerId] FOREIGN KEY([PlayerId])
-REFERENCES [dbo].[Player] ([Id])
+ALTER TABLE [dbo].[ConferenceTitles] CHECK CONSTRAINT [FK_Users_ConferenceTitles_CreateUserId]
 GO
-ALTER TABLE [dbo].[PlayerDescription] CHECK CONSTRAINT [FK_dbo.PlayerDescription_dbo.Player_PlayerId]
+ALTER TABLE [dbo].[ConferenceTitles]  WITH CHECK ADD  CONSTRAINT [FK_Users_ConferenceTitles_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[PlayerInterest]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.PlayerInterest_dbo.Interest_InterestId] FOREIGN KEY([InterestId])
-REFERENCES [dbo].[Interest] ([Id])
+ALTER TABLE [dbo].[ConferenceTitles] CHECK CONSTRAINT [FK_Users_ConferenceTitles_UpdateUserId]
 GO
-ALTER TABLE [dbo].[PlayerInterest] CHECK CONSTRAINT [FK_dbo.PlayerInterest_dbo.Interest_InterestId]
+ALTER TABLE [dbo].[Countries]  WITH CHECK ADD  CONSTRAINT [FK_Users_Countries_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[PlayerInterest]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.PlayerInterest_dbo.Player_PlayerId] FOREIGN KEY([PlayerId])
-REFERENCES [dbo].[Player] ([Id])
+ALTER TABLE [dbo].[Countries] CHECK CONSTRAINT [FK_Users_Countries_CreateUserId]
 GO
-ALTER TABLE [dbo].[PlayerInterest] CHECK CONSTRAINT [FK_dbo.PlayerInterest_dbo.Player_PlayerId]
+ALTER TABLE [dbo].[Countries]  WITH CHECK ADD  CONSTRAINT [FK_Users_Countries_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[PlayerRestrictionsSpecifics]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.PlayerRestrictionsSpecifics_dbo.Language_LanguageId] FOREIGN KEY([LanguageId])
-REFERENCES [dbo].[Language] ([Id])
+ALTER TABLE [dbo].[Countries] CHECK CONSTRAINT [FK_Users_Countries_UpdateUserId]
 GO
-ALTER TABLE [dbo].[PlayerRestrictionsSpecifics] CHECK CONSTRAINT [FK_dbo.PlayerRestrictionsSpecifics_dbo.Language_LanguageId]
+ALTER TABLE [dbo].[Editions]  WITH CHECK ADD  CONSTRAINT [FK_Users_Editions_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[PlayerRestrictionsSpecifics]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.PlayerRestrictionsSpecifics_dbo.Player_PlayerId] FOREIGN KEY([PlayerId])
-REFERENCES [dbo].[Player] ([Id])
+ALTER TABLE [dbo].[Editions] CHECK CONSTRAINT [FK_Users_Editions_CreateUserId]
 GO
-ALTER TABLE [dbo].[PlayerRestrictionsSpecifics] CHECK CONSTRAINT [FK_dbo.PlayerRestrictionsSpecifics_dbo.Player_PlayerId]
+ALTER TABLE [dbo].[Editions]  WITH CHECK ADD  CONSTRAINT [FK_Users_Editions_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[PlayerTargetAudience]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.PlayerTargetAudience_dbo.Player_PlayerId] FOREIGN KEY([PlayerId])
-REFERENCES [dbo].[Player] ([Id])
+ALTER TABLE [dbo].[Editions] CHECK CONSTRAINT [FK_Users_Editions_UpdateUserId]
 GO
-ALTER TABLE [dbo].[PlayerTargetAudience] CHECK CONSTRAINT [FK_dbo.PlayerTargetAudience_dbo.Player_PlayerId]
+ALTER TABLE [dbo].[HoldingDescriptions]  WITH CHECK ADD  CONSTRAINT [FK_Holdings_HoldingDescriptions_HoldingId] FOREIGN KEY([HoldingId])
+REFERENCES [dbo].[Holdings] ([Id])
 GO
-ALTER TABLE [dbo].[PlayerTargetAudience]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.PlayerTargetAudience_dbo.TargetAudience_TargetAudienceId] FOREIGN KEY([TargetAudienceId])
-REFERENCES [dbo].[TargetAudience] ([Id])
+ALTER TABLE [dbo].[HoldingDescriptions] CHECK CONSTRAINT [FK_Holdings_HoldingDescriptions_HoldingId]
 GO
-ALTER TABLE [dbo].[PlayerTargetAudience] CHECK CONSTRAINT [FK_dbo.PlayerTargetAudience_dbo.TargetAudience_TargetAudienceId]
+ALTER TABLE [dbo].[HoldingDescriptions]  WITH CHECK ADD  CONSTRAINT [FK_Languages_HoldingDescriptions_LanguageId] FOREIGN KEY([LanguageId])
+REFERENCES [dbo].[Languages] ([Id])
 GO
-ALTER TABLE [dbo].[Producer]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.Producer_dbo.Address_AddressId] FOREIGN KEY([AddressId])
-REFERENCES [dbo].[Address] ([Id])
+ALTER TABLE [dbo].[HoldingDescriptions] CHECK CONSTRAINT [FK_Languages_HoldingDescriptions_LanguageId]
 GO
-ALTER TABLE [dbo].[Producer] CHECK CONSTRAINT [FK_dbo.Producer_dbo.Address_AddressId]
+ALTER TABLE [dbo].[HoldingDescriptions]  WITH CHECK ADD  CONSTRAINT [FK_Users_HoldingDescriptions_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[Producer]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.Producer_dbo.ImageFile_ImageId] FOREIGN KEY([ImageId])
-REFERENCES [dbo].[ImageFile] ([Id])
+ALTER TABLE [dbo].[HoldingDescriptions] CHECK CONSTRAINT [FK_Users_HoldingDescriptions_CreateUserId]
 GO
-ALTER TABLE [dbo].[Producer] CHECK CONSTRAINT [FK_dbo.Producer_dbo.ImageFile_ImageId]
+ALTER TABLE [dbo].[HoldingDescriptions]  WITH CHECK ADD  CONSTRAINT [FK_Users_HoldingDescriptions_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[ProducerActivity]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ProducerActivity_dbo.Activity_ActivityId] FOREIGN KEY([ActivityId])
-REFERENCES [dbo].[Activity] ([Id])
+ALTER TABLE [dbo].[HoldingDescriptions] CHECK CONSTRAINT [FK_Users_HoldingDescriptions_UpdateUserId]
 GO
-ALTER TABLE [dbo].[ProducerActivity] CHECK CONSTRAINT [FK_dbo.ProducerActivity_dbo.Activity_ActivityId]
+ALTER TABLE [dbo].[Holdings]  WITH CHECK ADD  CONSTRAINT [FK_Users_Holdings_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[ProducerActivity]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ProducerActivity_dbo.Producer_ProducerId] FOREIGN KEY([ProducerId])
-REFERENCES [dbo].[Producer] ([Id])
+ALTER TABLE [dbo].[Holdings] CHECK CONSTRAINT [FK_Users_Holdings_CreateUserId]
 GO
-ALTER TABLE [dbo].[ProducerActivity] CHECK CONSTRAINT [FK_dbo.ProducerActivity_dbo.Producer_ProducerId]
+ALTER TABLE [dbo].[Holdings]  WITH CHECK ADD  CONSTRAINT [FK_Users_Holdings_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[ProducerDescription]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ProducerDescription_dbo.Language_LanguageId] FOREIGN KEY([LanguageId])
-REFERENCES [dbo].[Language] ([Id])
+ALTER TABLE [dbo].[Holdings] CHECK CONSTRAINT [FK_Users_Holdings_UpdateUserId]
 GO
-ALTER TABLE [dbo].[ProducerDescription] CHECK CONSTRAINT [FK_dbo.ProducerDescription_dbo.Language_LanguageId]
+ALTER TABLE [dbo].[InterestGroups]  WITH CHECK ADD  CONSTRAINT [FK_ProjectTypes_InterestGroups_ProjectTypeId] FOREIGN KEY([ProjectTypeId])
+REFERENCES [dbo].[ProjectTypes] ([Id])
 GO
-ALTER TABLE [dbo].[ProducerDescription]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ProducerDescription_dbo.Producer_ProducerId] FOREIGN KEY([ProducerId])
-REFERENCES [dbo].[Producer] ([Id])
+ALTER TABLE [dbo].[InterestGroups] CHECK CONSTRAINT [FK_ProjectTypes_InterestGroups_ProjectTypeId]
 GO
-ALTER TABLE [dbo].[ProducerDescription] CHECK CONSTRAINT [FK_dbo.ProducerDescription_dbo.Producer_ProducerId]
+ALTER TABLE [dbo].[InterestGroups]  WITH CHECK ADD  CONSTRAINT [FK_Users_InterestGroups_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[ProducerEvent]  WITH CHECK ADD  CONSTRAINT [FK_dbo.ProducerEvent_dbo.Event_EventId] FOREIGN KEY([EventId])
-REFERENCES [dbo].[Event] ([Id])
+ALTER TABLE [dbo].[InterestGroups] CHECK CONSTRAINT [FK_Users_InterestGroups_CreateUserId]
 GO
-ALTER TABLE [dbo].[ProducerEvent] CHECK CONSTRAINT [FK_dbo.ProducerEvent_dbo.Event_EventId]
+ALTER TABLE [dbo].[InterestGroups]  WITH CHECK ADD  CONSTRAINT [FK_Users_InterestGroups_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[ProducerEvent]  WITH CHECK ADD  CONSTRAINT [FK_dbo.ProducerEvent_dbo.Producer_ProducerId] FOREIGN KEY([ProducerId])
-REFERENCES [dbo].[Producer] ([Id])
+ALTER TABLE [dbo].[InterestGroups] CHECK CONSTRAINT [FK_Users_InterestGroups_UpdateUserId]
 GO
-ALTER TABLE [dbo].[ProducerEvent] CHECK CONSTRAINT [FK_dbo.ProducerEvent_dbo.Producer_ProducerId]
+ALTER TABLE [dbo].[Interests]  WITH CHECK ADD  CONSTRAINT [FK_InterestGroups_Interests_InterestGroupId] FOREIGN KEY([InterestGroupId])
+REFERENCES [dbo].[InterestGroups] ([Id])
 GO
-ALTER TABLE [dbo].[ProducerTargetAudience]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ProducerTargetAudience_dbo.Producer_ProducerId] FOREIGN KEY([ProducerId])
-REFERENCES [dbo].[Producer] ([Id])
+ALTER TABLE [dbo].[Interests] CHECK CONSTRAINT [FK_InterestGroups_Interests_InterestGroupId]
 GO
-ALTER TABLE [dbo].[ProducerTargetAudience] CHECK CONSTRAINT [FK_dbo.ProducerTargetAudience_dbo.Producer_ProducerId]
+ALTER TABLE [dbo].[Interests]  WITH CHECK ADD  CONSTRAINT [FK_Users_Interests_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[ProducerTargetAudience]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ProducerTargetAudience_dbo.TargetAudience_TargetAudienceId] FOREIGN KEY([TargetAudienceId])
-REFERENCES [dbo].[TargetAudience] ([Id])
+ALTER TABLE [dbo].[Interests] CHECK CONSTRAINT [FK_Users_Interests_CreateUserId]
 GO
-ALTER TABLE [dbo].[ProducerTargetAudience] CHECK CONSTRAINT [FK_dbo.ProducerTargetAudience_dbo.TargetAudience_TargetAudienceId]
+ALTER TABLE [dbo].[Interests]  WITH CHECK ADD  CONSTRAINT [FK_Users_Interests_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[Project]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.Project_dbo.Producer_ProducerId] FOREIGN KEY([ProducerId])
-REFERENCES [dbo].[Producer] ([Id])
-ON DELETE CASCADE
+ALTER TABLE [dbo].[Interests] CHECK CONSTRAINT [FK_Users_Interests_UpdateUserId]
 GO
-ALTER TABLE [dbo].[Project] CHECK CONSTRAINT [FK_dbo.Project_dbo.Producer_ProducerId]
+ALTER TABLE [dbo].[Languages]  WITH CHECK ADD  CONSTRAINT [FK_Users_Languages_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[ProjectAdditionalInformation]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ProjectAdditionalInformation_dbo.Language_LanguageId] FOREIGN KEY([LanguageId])
-REFERENCES [dbo].[Language] ([Id])
+ALTER TABLE [dbo].[Languages] CHECK CONSTRAINT [FK_Users_Languages_CreateUserId]
 GO
-ALTER TABLE [dbo].[ProjectAdditionalInformation] CHECK CONSTRAINT [FK_dbo.ProjectAdditionalInformation_dbo.Language_LanguageId]
+ALTER TABLE [dbo].[Languages]  WITH CHECK ADD  CONSTRAINT [FK_Users_Languages_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[ProjectAdditionalInformation]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ProjectAdditionalInformation_dbo.Project_ProjectId] FOREIGN KEY([ProjectId])
-REFERENCES [dbo].[Project] ([Id])
-ON DELETE CASCADE
+ALTER TABLE [dbo].[Languages] CHECK CONSTRAINT [FK_Users_Languages_UpdateUserId]
 GO
-ALTER TABLE [dbo].[ProjectAdditionalInformation] CHECK CONSTRAINT [FK_dbo.ProjectAdditionalInformation_dbo.Project_ProjectId]
+ALTER TABLE [dbo].[Logistics]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeCollaborators_Logistics_AttendeeCollaboratorId] FOREIGN KEY([AttendeeCollaboratorId])
+REFERENCES [dbo].[AttendeeCollaborators] ([Id])
 GO
-ALTER TABLE [dbo].[ProjectInterest]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ProjectInterest_dbo.Interest_InterestId] FOREIGN KEY([InterestId])
-REFERENCES [dbo].[Interest] ([Id])
+ALTER TABLE [dbo].[Logistics] CHECK CONSTRAINT [FK_AttendeeCollaborators_Logistics_AttendeeCollaboratorId]
 GO
-ALTER TABLE [dbo].[ProjectInterest] CHECK CONSTRAINT [FK_dbo.ProjectInterest_dbo.Interest_InterestId]
+ALTER TABLE [dbo].[Logistics]  WITH CHECK ADD  CONSTRAINT [FK_Users_Logistics_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[ProjectInterest]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ProjectInterest_dbo.Project_ProjectId] FOREIGN KEY([ProjectId])
-REFERENCES [dbo].[Project] ([Id])
-ON DELETE CASCADE
+ALTER TABLE [dbo].[Logistics] CHECK CONSTRAINT [FK_Users_Logistics_CreateUserId]
 GO
-ALTER TABLE [dbo].[ProjectInterest] CHECK CONSTRAINT [FK_dbo.ProjectInterest_dbo.Project_ProjectId]
+ALTER TABLE [dbo].[Logistics]  WITH CHECK ADD  CONSTRAINT [FK_Users_Logistics_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[ProjectLinkImage]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ProjectLinkImage_dbo.Project_ProjectId] FOREIGN KEY([ProjectId])
-REFERENCES [dbo].[Project] ([Id])
-ON DELETE CASCADE
+ALTER TABLE [dbo].[Logistics] CHECK CONSTRAINT [FK_Users_Logistics_UpdateUserId]
 GO
-ALTER TABLE [dbo].[ProjectLinkImage] CHECK CONSTRAINT [FK_dbo.ProjectLinkImage_dbo.Project_ProjectId]
+ALTER TABLE [dbo].[Messages]  WITH CHECK ADD  CONSTRAINT [FK_Editions_Messages_EditionId] FOREIGN KEY([EditionId])
+REFERENCES [dbo].[Editions] ([Id])
 GO
-ALTER TABLE [dbo].[ProjectLinkTeaser]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ProjectLinkTeaser_dbo.Project_ProjectId] FOREIGN KEY([ProjectId])
-REFERENCES [dbo].[Project] ([Id])
-ON DELETE CASCADE
+ALTER TABLE [dbo].[Messages] CHECK CONSTRAINT [FK_Editions_Messages_EditionId]
 GO
-ALTER TABLE [dbo].[ProjectLinkTeaser] CHECK CONSTRAINT [FK_dbo.ProjectLinkTeaser_dbo.Project_ProjectId]
+ALTER TABLE [dbo].[Messages]  WITH CHECK ADD  CONSTRAINT [FK_Users_Messages_RecipientId] FOREIGN KEY([RecipientId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[ProjectLogLine]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ProjectLogLine_dbo.Language_LanguageId] FOREIGN KEY([LanguageId])
-REFERENCES [dbo].[Language] ([Id])
+ALTER TABLE [dbo].[Messages] CHECK CONSTRAINT [FK_Users_Messages_RecipientId]
 GO
-ALTER TABLE [dbo].[ProjectLogLine] CHECK CONSTRAINT [FK_dbo.ProjectLogLine_dbo.Language_LanguageId]
+ALTER TABLE [dbo].[Messages]  WITH CHECK ADD  CONSTRAINT [FK_Users_Messages_SenderId] FOREIGN KEY([SenderId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[ProjectLogLine]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ProjectLogLine_dbo.Project_ProjectId] FOREIGN KEY([ProjectId])
-REFERENCES [dbo].[Project] ([Id])
-ON DELETE CASCADE
+ALTER TABLE [dbo].[Messages] CHECK CONSTRAINT [FK_Users_Messages_SenderId]
 GO
-ALTER TABLE [dbo].[ProjectLogLine] CHECK CONSTRAINT [FK_dbo.ProjectLogLine_dbo.Project_ProjectId]
+ALTER TABLE [dbo].[NegotiationConfigs]  WITH CHECK ADD  CONSTRAINT [FK_Editions_NegotiationConfigs_EditionId] FOREIGN KEY([EditionId])
+REFERENCES [dbo].[Editions] ([Id])
 GO
-ALTER TABLE [dbo].[ProjectPlayer]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ProjectPlayer_dbo.AspNetUsers_SavedUserId] FOREIGN KEY([SavedUserId])
-REFERENCES [dbo].[AspNetUsers] ([Id])
+ALTER TABLE [dbo].[NegotiationConfigs] CHECK CONSTRAINT [FK_Editions_NegotiationConfigs_EditionId]
 GO
-ALTER TABLE [dbo].[ProjectPlayer] CHECK CONSTRAINT [FK_dbo.ProjectPlayer_dbo.AspNetUsers_SavedUserId]
+ALTER TABLE [dbo].[NegotiationConfigs]  WITH CHECK ADD  CONSTRAINT [FK_Users_NegotiationConfigs_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[ProjectPlayer]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ProjectPlayer_dbo.AspNetUsers_SendingUserId] FOREIGN KEY([SendingUserId])
-REFERENCES [dbo].[AspNetUsers] ([Id])
+ALTER TABLE [dbo].[NegotiationConfigs] CHECK CONSTRAINT [FK_Users_NegotiationConfigs_CreateUserId]
 GO
-ALTER TABLE [dbo].[ProjectPlayer] CHECK CONSTRAINT [FK_dbo.ProjectPlayer_dbo.AspNetUsers_SendingUserId]
+ALTER TABLE [dbo].[NegotiationConfigs]  WITH CHECK ADD  CONSTRAINT [FK_Users_NegotiationConfigs_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[ProjectPlayer]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ProjectPlayer_dbo.Player_PlayerId] FOREIGN KEY([PlayerId])
-REFERENCES [dbo].[Player] ([Id])
+ALTER TABLE [dbo].[NegotiationConfigs] CHECK CONSTRAINT [FK_Users_NegotiationConfigs_UpdateUserId]
 GO
-ALTER TABLE [dbo].[ProjectPlayer] CHECK CONSTRAINT [FK_dbo.ProjectPlayer_dbo.Player_PlayerId]
+ALTER TABLE [dbo].[NegotiationRoomConfigs]  WITH CHECK ADD  CONSTRAINT [FK_NegotiationConfigs_NegotiationRoomConfigs_NegotiationConfigId] FOREIGN KEY([NegotiationConfigId])
+REFERENCES [dbo].[NegotiationConfigs] ([Id])
 GO
-ALTER TABLE [dbo].[ProjectPlayerEvaluation]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ProjectPlayerEvaluation_dbo.AspNetUsers_EvaluationUserId] FOREIGN KEY([EvaluationUserId])
-REFERENCES [dbo].[AspNetUsers] ([Id])
+ALTER TABLE [dbo].[NegotiationRoomConfigs] CHECK CONSTRAINT [FK_NegotiationConfigs_NegotiationRoomConfigs_NegotiationConfigId]
 GO
-ALTER TABLE [dbo].[ProjectPlayerEvaluation] CHECK CONSTRAINT [FK_dbo.ProjectPlayerEvaluation_dbo.AspNetUsers_EvaluationUserId]
+ALTER TABLE [dbo].[NegotiationRoomConfigs]  WITH CHECK ADD  CONSTRAINT [FK_Rooms_NegotiationRoomConfigs_RoomId] FOREIGN KEY([RoomId])
+REFERENCES [dbo].[Rooms] ([Id])
 GO
-ALTER TABLE [dbo].[ProjectPlayerEvaluation]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ProjectPlayerEvaluation_dbo.ProjectPlayer_Id] FOREIGN KEY([Id])
-REFERENCES [dbo].[ProjectPlayer] ([Id])
-ON DELETE CASCADE
+ALTER TABLE [dbo].[NegotiationRoomConfigs] CHECK CONSTRAINT [FK_Rooms_NegotiationRoomConfigs_RoomId]
 GO
-ALTER TABLE [dbo].[ProjectPlayerEvaluation] CHECK CONSTRAINT [FK_dbo.ProjectPlayerEvaluation_dbo.ProjectPlayer_Id]
+ALTER TABLE [dbo].[NegotiationRoomConfigs]  WITH CHECK ADD  CONSTRAINT [FK_Users_NegotiationRoomConfigs_CrateUserId] FOREIGN KEY([CrateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[ProjectPlayerEvaluation]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ProjectPlayerEvaluation_dbo.ProjectStatus_StatusId] FOREIGN KEY([StatusId])
-REFERENCES [dbo].[ProjectStatus] ([Id])
+ALTER TABLE [dbo].[NegotiationRoomConfigs] CHECK CONSTRAINT [FK_Users_NegotiationRoomConfigs_CrateUserId]
 GO
-ALTER TABLE [dbo].[ProjectPlayerEvaluation] CHECK CONSTRAINT [FK_dbo.ProjectPlayerEvaluation_dbo.ProjectStatus_StatusId]
+ALTER TABLE [dbo].[NegotiationRoomConfigs]  WITH CHECK ADD  CONSTRAINT [FK_Users_NegotiationRoomConfigs_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[ProjectProductionPlan]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ProjectProductionPlan_dbo.Language_LanguageId] FOREIGN KEY([LanguageId])
-REFERENCES [dbo].[Language] ([Id])
+ALTER TABLE [dbo].[NegotiationRoomConfigs] CHECK CONSTRAINT [FK_Users_NegotiationRoomConfigs_UpdateUserId]
 GO
-ALTER TABLE [dbo].[ProjectProductionPlan] CHECK CONSTRAINT [FK_dbo.ProjectProductionPlan_dbo.Language_LanguageId]
+ALTER TABLE [dbo].[Negotiations]  WITH CHECK ADD  CONSTRAINT [FK_ProjectBuyerEvaluations_Negotiations_ProjectBuyerEvaluationId] FOREIGN KEY([ProjectBuyerEvaluationId])
+REFERENCES [dbo].[ProjectBuyerEvaluations] ([Id])
 GO
-ALTER TABLE [dbo].[ProjectProductionPlan]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ProjectProductionPlan_dbo.Project_ProjectId] FOREIGN KEY([ProjectId])
-REFERENCES [dbo].[Project] ([Id])
-ON DELETE CASCADE
+ALTER TABLE [dbo].[Negotiations] CHECK CONSTRAINT [FK_ProjectBuyerEvaluations_Negotiations_ProjectBuyerEvaluationId]
 GO
-ALTER TABLE [dbo].[ProjectProductionPlan] CHECK CONSTRAINT [FK_dbo.ProjectProductionPlan_dbo.Project_ProjectId]
+ALTER TABLE [dbo].[Negotiations]  WITH CHECK ADD  CONSTRAINT [FK_Rooms_Negotiations_RoomId] FOREIGN KEY([RoomId])
+REFERENCES [dbo].[Rooms] ([Id])
 GO
-ALTER TABLE [dbo].[ProjectSummary]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ProjectSummary_dbo.Language_LanguageId] FOREIGN KEY([LanguageId])
-REFERENCES [dbo].[Language] ([Id])
+ALTER TABLE [dbo].[Negotiations] CHECK CONSTRAINT [FK_Rooms_Negotiations_RoomId]
 GO
-ALTER TABLE [dbo].[ProjectSummary] CHECK CONSTRAINT [FK_dbo.ProjectSummary_dbo.Language_LanguageId]
+ALTER TABLE [dbo].[Negotiations]  WITH CHECK ADD  CONSTRAINT [FK_Users_Negotiations_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[ProjectSummary]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ProjectSummary_dbo.Project_ProjectId] FOREIGN KEY([ProjectId])
-REFERENCES [dbo].[Project] ([Id])
-ON DELETE CASCADE
+ALTER TABLE [dbo].[Negotiations] CHECK CONSTRAINT [FK_Users_Negotiations_CreateUserId]
 GO
-ALTER TABLE [dbo].[ProjectSummary] CHECK CONSTRAINT [FK_dbo.ProjectSummary_dbo.Project_ProjectId]
+ALTER TABLE [dbo].[Negotiations]  WITH CHECK ADD  CONSTRAINT [FK_Users_Negotiations_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[ProjectTitle]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ProjectTitle_dbo.Language_LanguageId] FOREIGN KEY([LanguageId])
-REFERENCES [dbo].[Language] ([Id])
+ALTER TABLE [dbo].[Negotiations] CHECK CONSTRAINT [FK_Users_Negotiations_UpdateUserId]
 GO
-ALTER TABLE [dbo].[ProjectTitle] CHECK CONSTRAINT [FK_dbo.ProjectTitle_dbo.Language_LanguageId]
+ALTER TABLE [dbo].[Neighborhoods]  WITH CHECK ADD  CONSTRAINT [FK_Cities_Neighborhoods_CityId] FOREIGN KEY([CityId])
+REFERENCES [dbo].[Cities] ([Id])
 GO
-ALTER TABLE [dbo].[ProjectTitle]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.ProjectTitle_dbo.Project_ProjectId] FOREIGN KEY([ProjectId])
-REFERENCES [dbo].[Project] ([Id])
-ON DELETE CASCADE
+ALTER TABLE [dbo].[Neighborhoods] CHECK CONSTRAINT [FK_Cities_Neighborhoods_CityId]
 GO
-ALTER TABLE [dbo].[ProjectTitle] CHECK CONSTRAINT [FK_dbo.ProjectTitle_dbo.Project_ProjectId]
+ALTER TABLE [dbo].[Neighborhoods]  WITH CHECK ADD  CONSTRAINT [FK_Users_Neighborhoods_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[QuizAnswer]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.QuizAnswer_dbo.AspNetUsers_UserId] FOREIGN KEY([UserId])
-REFERENCES [dbo].[AspNetUsers] ([Id])
+ALTER TABLE [dbo].[Neighborhoods] CHECK CONSTRAINT [FK_Users_Neighborhoods_CreateUserId]
 GO
-ALTER TABLE [dbo].[QuizAnswer] CHECK CONSTRAINT [FK_dbo.QuizAnswer_dbo.AspNetUsers_UserId]
+ALTER TABLE [dbo].[Neighborhoods]  WITH CHECK ADD  CONSTRAINT [FK_Users_Neighborhoods_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[QuizOption]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.QuizOption_dbo.QuizAnswer_Id] FOREIGN KEY([Id])
-REFERENCES [dbo].[QuizAnswer] ([Id])
+ALTER TABLE [dbo].[Neighborhoods] CHECK CONSTRAINT [FK_Users_Neighborhoods_UpdateUserId]
 GO
-ALTER TABLE [dbo].[QuizOption] NOCHECK CONSTRAINT [FK_dbo.QuizOption_dbo.QuizAnswer_Id]
+ALTER TABLE [dbo].[OrganizationActivities]  WITH CHECK ADD  CONSTRAINT [FK_Activities_OrganizationActivities_ActivityId] FOREIGN KEY([ActivityId])
+REFERENCES [dbo].[Activities] ([Id])
 GO
-ALTER TABLE [dbo].[QuizOption]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.QuizOption_dbo.QuizQuestion_QuestionId] FOREIGN KEY([QuestionId])
-REFERENCES [dbo].[QuizQuestion] ([Id])
+ALTER TABLE [dbo].[OrganizationActivities] CHECK CONSTRAINT [FK_Activities_OrganizationActivities_ActivityId]
 GO
-ALTER TABLE [dbo].[QuizOption] CHECK CONSTRAINT [FK_dbo.QuizOption_dbo.QuizQuestion_QuestionId]
+ALTER TABLE [dbo].[OrganizationActivities]  WITH CHECK ADD  CONSTRAINT [FK_Organizations_OrganizationActivities_OrganizationId] FOREIGN KEY([OrganizationId])
+REFERENCES [dbo].[Organizations] ([Id])
 GO
-ALTER TABLE [dbo].[QuizQuestion]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.QuizQuestion_dbo.Quiz_QuizId] FOREIGN KEY([QuizId])
-REFERENCES [dbo].[Quiz] ([Id])
+ALTER TABLE [dbo].[OrganizationActivities] CHECK CONSTRAINT [FK_Organizations_OrganizationActivities_OrganizationId]
 GO
-ALTER TABLE [dbo].[QuizQuestion] CHECK CONSTRAINT [FK_dbo.QuizQuestion_dbo.Quiz_QuizId]
+ALTER TABLE [dbo].[OrganizationActivities]  WITH CHECK ADD  CONSTRAINT [FK_Users_OrganizationActivities_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[RoleLecturerTitle]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.RoleLecturerTitle_dbo.Language_LanguageId] FOREIGN KEY([LanguageId])
-REFERENCES [dbo].[Language] ([Id])
+ALTER TABLE [dbo].[OrganizationActivities] CHECK CONSTRAINT [FK_Users_OrganizationActivities_CreateUserId]
 GO
-ALTER TABLE [dbo].[RoleLecturerTitle] CHECK CONSTRAINT [FK_dbo.RoleLecturerTitle_dbo.Language_LanguageId]
+ALTER TABLE [dbo].[OrganizationActivities]  WITH CHECK ADD  CONSTRAINT [FK_Users_OrganizationActivities_UpdateuserId] FOREIGN KEY([UpdateuserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[RoleLecturerTitle]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.RoleLecturerTitle_dbo.RoleLecturer_RoleLecturerId] FOREIGN KEY([RoleLecturerId])
-REFERENCES [dbo].[RoleLecturer] ([Id])
+ALTER TABLE [dbo].[OrganizationActivities] CHECK CONSTRAINT [FK_Users_OrganizationActivities_UpdateuserId]
 GO
-ALTER TABLE [dbo].[RoleLecturerTitle] CHECK CONSTRAINT [FK_dbo.RoleLecturerTitle_dbo.RoleLecturer_RoleLecturerId]
+ALTER TABLE [dbo].[OrganizationDescriptions]  WITH CHECK ADD  CONSTRAINT [FK_Languages_OrganizationDescriptions_LanguageId] FOREIGN KEY([LanguageId])
+REFERENCES [dbo].[Languages] ([Id])
 GO
-ALTER TABLE [dbo].[RoomName]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.RoomName_dbo.Language_LanguageId] FOREIGN KEY([LanguageId])
-REFERENCES [dbo].[Language] ([Id])
+ALTER TABLE [dbo].[OrganizationDescriptions] CHECK CONSTRAINT [FK_Languages_OrganizationDescriptions_LanguageId]
 GO
-ALTER TABLE [dbo].[RoomName] CHECK CONSTRAINT [FK_dbo.RoomName_dbo.Language_LanguageId]
+ALTER TABLE [dbo].[OrganizationDescriptions]  WITH CHECK ADD  CONSTRAINT [FK_Organizations_OrganizationDescriptions_OrganizationId] FOREIGN KEY([OrganizationId])
+REFERENCES [dbo].[Organizations] ([Id])
 GO
-ALTER TABLE [dbo].[RoomName]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.RoomName_dbo.Room_RoomId] FOREIGN KEY([RoomId])
-REFERENCES [dbo].[Room] ([Id])
+ALTER TABLE [dbo].[OrganizationDescriptions] CHECK CONSTRAINT [FK_Organizations_OrganizationDescriptions_OrganizationId]
 GO
-ALTER TABLE [dbo].[RoomName] CHECK CONSTRAINT [FK_dbo.RoomName_dbo.Room_RoomId]
+ALTER TABLE [dbo].[OrganizationDescriptions]  WITH CHECK ADD  CONSTRAINT [FK_Users_OrganizationDescriptions_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[SalesPlatform]  WITH CHECK ADD  CONSTRAINT [FK_AspNetUsers_SalesPlatform_CreationUserId] FOREIGN KEY([CreationUserId])
-REFERENCES [dbo].[AspNetUsers] ([Id])
+ALTER TABLE [dbo].[OrganizationDescriptions] CHECK CONSTRAINT [FK_Users_OrganizationDescriptions_CreateUserId]
 GO
-ALTER TABLE [dbo].[SalesPlatform] CHECK CONSTRAINT [FK_AspNetUsers_SalesPlatform_CreationUserId]
+ALTER TABLE [dbo].[OrganizationDescriptions]  WITH CHECK ADD  CONSTRAINT [FK_Users_OrganizationDescriptions_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[SalesPlatform]  WITH CHECK ADD  CONSTRAINT [FK_AspNetUsers_SalesPlatform_UpdateUserId] FOREIGN KEY([UpdateUserId])
-REFERENCES [dbo].[AspNetUsers] ([Id])
+ALTER TABLE [dbo].[OrganizationDescriptions] CHECK CONSTRAINT [FK_Users_OrganizationDescriptions_UpdateUserId]
 GO
-ALTER TABLE [dbo].[SalesPlatform] CHECK CONSTRAINT [FK_AspNetUsers_SalesPlatform_UpdateUserId]
+ALTER TABLE [dbo].[OrganizationInterests]  WITH CHECK ADD  CONSTRAINT [FK_Interests_OrganizationInterests_InterestId] FOREIGN KEY([InterestId])
+REFERENCES [dbo].[Interests] ([Id])
 GO
-ALTER TABLE [dbo].[SalesPlatformWebhookRequest]  WITH CHECK ADD  CONSTRAINT [FK_AspNetUsers_SalesPlatformWebhookRequest_ManualProcessingUserId] FOREIGN KEY([ManualProcessingUserId])
-REFERENCES [dbo].[AspNetUsers] ([Id])
+ALTER TABLE [dbo].[OrganizationInterests] CHECK CONSTRAINT [FK_Interests_OrganizationInterests_InterestId]
 GO
-ALTER TABLE [dbo].[SalesPlatformWebhookRequest] CHECK CONSTRAINT [FK_AspNetUsers_SalesPlatformWebhookRequest_ManualProcessingUserId]
+ALTER TABLE [dbo].[OrganizationInterests]  WITH CHECK ADD  CONSTRAINT [FK_Organizations_OrganizationInterests_OrganizationId] FOREIGN KEY([OrganizationId])
+REFERENCES [dbo].[Organizations] ([Id])
 GO
-ALTER TABLE [dbo].[SalesPlatformWebhookRequest]  WITH CHECK ADD  CONSTRAINT [FK_SalesPlatform_SalesPlatformWebhookRequest_SalesPlatformId] FOREIGN KEY([SalesPlatformId])
-REFERENCES [dbo].[SalesPlatform] ([Id])
+ALTER TABLE [dbo].[OrganizationInterests] CHECK CONSTRAINT [FK_Organizations_OrganizationInterests_OrganizationId]
 GO
-ALTER TABLE [dbo].[SalesPlatformWebhookRequest] CHECK CONSTRAINT [FK_SalesPlatform_SalesPlatformWebhookRequest_SalesPlatformId]
+ALTER TABLE [dbo].[OrganizationInterests]  WITH CHECK ADD  CONSTRAINT [FK_Users_OrganizationInterests_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[Speaker]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.Speaker_dbo.Collaborator_CollaboratorId] FOREIGN KEY([CollaboratorId])
-REFERENCES [dbo].[Collaborator] ([Id])
+ALTER TABLE [dbo].[OrganizationInterests] CHECK CONSTRAINT [FK_Users_OrganizationInterests_CreateUserId]
 GO
-ALTER TABLE [dbo].[Speaker] NOCHECK CONSTRAINT [FK_dbo.Speaker_dbo.Collaborator_CollaboratorId]
+ALTER TABLE [dbo].[OrganizationInterests]  WITH CHECK ADD  CONSTRAINT [FK_Users_OrganizationInterests_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[State]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.State_dbo.Address_Address_Id] FOREIGN KEY([Address_Id])
-REFERENCES [dbo].[Address] ([Id])
+ALTER TABLE [dbo].[OrganizationInterests] CHECK CONSTRAINT [FK_Users_OrganizationInterests_UpdateUserId]
 GO
-ALTER TABLE [dbo].[State] CHECK CONSTRAINT [FK_dbo.State_dbo.Address_Address_Id]
+ALTER TABLE [dbo].[OrganizationRestrictionSpecifics]  WITH CHECK ADD  CONSTRAINT [FK_Languages_OrganizationRestrictionSpecifics_LanguageId] FOREIGN KEY([LanguageId])
+REFERENCES [dbo].[Languages] ([Id])
 GO
-ALTER TABLE [dbo].[State]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.State_dbo.Country_CountryId] FOREIGN KEY([CountryId])
-REFERENCES [dbo].[Country] ([Id])
+ALTER TABLE [dbo].[OrganizationRestrictionSpecifics] CHECK CONSTRAINT [FK_Languages_OrganizationRestrictionSpecifics_LanguageId]
 GO
-ALTER TABLE [dbo].[State] CHECK CONSTRAINT [FK_dbo.State_dbo.Country_CountryId]
+ALTER TABLE [dbo].[OrganizationRestrictionSpecifics]  WITH CHECK ADD  CONSTRAINT [FK_Organizations_OrganizationRestrictionSpecifics_OrganizationId] FOREIGN KEY([OrganizationId])
+REFERENCES [dbo].[Organizations] ([Id])
 GO
-ALTER TABLE [dbo].[UserUseTerm]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.UserUseTerm_dbo.AspNetRoles_RoleId] FOREIGN KEY([RoleId])
-REFERENCES [dbo].[AspNetRoles] ([Id])
+ALTER TABLE [dbo].[OrganizationRestrictionSpecifics] CHECK CONSTRAINT [FK_Organizations_OrganizationRestrictionSpecifics_OrganizationId]
 GO
-ALTER TABLE [dbo].[UserUseTerm] CHECK CONSTRAINT [FK_dbo.UserUseTerm_dbo.AspNetRoles_RoleId]
+ALTER TABLE [dbo].[OrganizationRestrictionSpecifics]  WITH CHECK ADD  CONSTRAINT [FK_Users_OrganizationRestrictionSpecifics_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[UserUseTerm]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.UserUseTerm_dbo.AspNetUsers_UserId] FOREIGN KEY([UserId])
-REFERENCES [dbo].[AspNetUsers] ([Id])
+ALTER TABLE [dbo].[OrganizationRestrictionSpecifics] CHECK CONSTRAINT [FK_Users_OrganizationRestrictionSpecifics_CreateUserId]
 GO
-ALTER TABLE [dbo].[UserUseTerm] CHECK CONSTRAINT [FK_dbo.UserUseTerm_dbo.AspNetUsers_UserId]
+ALTER TABLE [dbo].[OrganizationRestrictionSpecifics]  WITH CHECK ADD  CONSTRAINT [FK_Users_OrganizationRestrictionSpecifics_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[UserUseTerm]  WITH NOCHECK ADD  CONSTRAINT [FK_dbo.UserUseTerm_dbo.Event_EventId] FOREIGN KEY([EventId])
-REFERENCES [dbo].[Event] ([Id])
+ALTER TABLE [dbo].[OrganizationRestrictionSpecifics] CHECK CONSTRAINT [FK_Users_OrganizationRestrictionSpecifics_UpdateUserId]
 GO
-ALTER TABLE [dbo].[UserUseTerm] CHECK CONSTRAINT [FK_dbo.UserUseTerm_dbo.Event_EventId]
+ALTER TABLE [dbo].[Organizations]  WITH CHECK ADD  CONSTRAINT [FK_Holdings_Organizations_HoldingId] FOREIGN KEY([HoldingId])
+REFERENCES [dbo].[Holdings] ([Id])
 GO
-SET ANSI_NULLS ON
+ALTER TABLE [dbo].[Organizations] CHECK CONSTRAINT [FK_Holdings_Organizations_HoldingId]
 GO
-SET QUOTED_IDENTIFIER ON
+ALTER TABLE [dbo].[Organizations]  WITH CHECK ADD  CONSTRAINT [FK_Users_Organizations_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
 GO
-                                                                                          
-                CREATE PROCEDURE [dbo].[GetCryptInfoByCode] 
-                (
-                    @code int
-                )
-                AS
-                BEGIN
-                -- SET NOCOUNT ON added to prevent extra result sets from
-                -- interfering with SELECT statements.
-                SET NOCOUNT ON;
-               OPEN SYMMETRIC KEY [PlataformaRio2CEDSymmetricKey] 
-                    DECRYPTION BY CERTIFICATE [PlataformaRio2CCertificate];
-                  
-                       SELECT top 1
-                                    [Id] As 'Id'
-                             ,CONVERT(varchar, DecryptByKey([Password])) AS 'Password'
-                             ,CONVERT(varchar, DecryptByKey([Salt])) AS 'Salt'
-                             ,[PasswordIterations] AS 'PasswordIterations'
-                             ,CONVERT(varchar, DecryptByKey([InitialVector])) AS 'InitialVector'
-                             ,[KeySize] AS 'KeySize'
-                                    ,[Code] As Code
-                             FROM [dbo].[AppAesEncryptionInfo] 
-                             WHERE [Code] = @code
-                 
-                       END                  
-
-
+ALTER TABLE [dbo].[Organizations] CHECK CONSTRAINT [FK_Users_Organizations_CreateUserId]
+GO
+ALTER TABLE [dbo].[Organizations]  WITH CHECK ADD  CONSTRAINT [FK_Users_Organizations_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[Organizations] CHECK CONSTRAINT [FK_Users_Organizations_UpdateUserId]
+GO
+ALTER TABLE [dbo].[OrganizationTargetAudiences]  WITH CHECK ADD  CONSTRAINT [FK_Organizations_OrganizationTargetAudiences_OrganizationId] FOREIGN KEY([OrganizationId])
+REFERENCES [dbo].[Organizations] ([Id])
+GO
+ALTER TABLE [dbo].[OrganizationTargetAudiences] CHECK CONSTRAINT [FK_Organizations_OrganizationTargetAudiences_OrganizationId]
+GO
+ALTER TABLE [dbo].[OrganizationTargetAudiences]  WITH CHECK ADD  CONSTRAINT [FK_TargetAudiences_OrganizationTargetAudiences_TargetAudienceId] FOREIGN KEY([TargetAudienceId])
+REFERENCES [dbo].[TargetAudiences] ([Id])
+GO
+ALTER TABLE [dbo].[OrganizationTargetAudiences] CHECK CONSTRAINT [FK_TargetAudiences_OrganizationTargetAudiences_TargetAudienceId]
+GO
+ALTER TABLE [dbo].[OrganizationTargetAudiences]  WITH CHECK ADD  CONSTRAINT [FK_Users_OrganizationTargetAudiences_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[OrganizationTargetAudiences] CHECK CONSTRAINT [FK_Users_OrganizationTargetAudiences_CreateUserId]
+GO
+ALTER TABLE [dbo].[OrganizationTargetAudiences]  WITH CHECK ADD  CONSTRAINT [FK_Users_OrganizationTargetAudiences_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[OrganizationTargetAudiences] CHECK CONSTRAINT [FK_Users_OrganizationTargetAudiences_UpdateUserId]
+GO
+ALTER TABLE [dbo].[OrganizationTypes]  WITH CHECK ADD  CONSTRAINT [FK_ProjectTypes_OrganizationTypes_RelatedProjectTypeId] FOREIGN KEY([RelatedProjectTypeId])
+REFERENCES [dbo].[ProjectTypes] ([Id])
+GO
+ALTER TABLE [dbo].[OrganizationTypes] CHECK CONSTRAINT [FK_ProjectTypes_OrganizationTypes_RelatedProjectTypeId]
+GO
+ALTER TABLE [dbo].[OrganizationTypes]  WITH CHECK ADD  CONSTRAINT [FK_Users_OrganizationTypes_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[OrganizationTypes] CHECK CONSTRAINT [FK_Users_OrganizationTypes_CreateUserId]
+GO
+ALTER TABLE [dbo].[OrganizationTypes]  WITH CHECK ADD  CONSTRAINT [FK_Users_OrganizationTypes_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[OrganizationTypes] CHECK CONSTRAINT [FK_Users_OrganizationTypes_UpdateUserId]
+GO
+ALTER TABLE [dbo].[ProjectAdditionalInformations]  WITH CHECK ADD  CONSTRAINT [FK_Languages_ProjectAdditionalInformations_LanguageId] FOREIGN KEY([LanguageId])
+REFERENCES [dbo].[Languages] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectAdditionalInformations] CHECK CONSTRAINT [FK_Languages_ProjectAdditionalInformations_LanguageId]
+GO
+ALTER TABLE [dbo].[ProjectAdditionalInformations]  WITH CHECK ADD  CONSTRAINT [FK_Projects_ProjectAdditionalInformations_ProjectId] FOREIGN KEY([ProjectId])
+REFERENCES [dbo].[Projects] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectAdditionalInformations] CHECK CONSTRAINT [FK_Projects_ProjectAdditionalInformations_ProjectId]
+GO
+ALTER TABLE [dbo].[ProjectAdditionalInformations]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectAdditionalInformations_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectAdditionalInformations] CHECK CONSTRAINT [FK_Users_ProjectAdditionalInformations_CreateUserId]
+GO
+ALTER TABLE [dbo].[ProjectAdditionalInformations]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectAdditionalInformations_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectAdditionalInformations] CHECK CONSTRAINT [FK_Users_ProjectAdditionalInformations_UpdateUserId]
+GO
+ALTER TABLE [dbo].[ProjectBuyerEvaluations]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeOrganizations_ProjectBuyerEvaluations_BuyerAttendeeOrganizationId] FOREIGN KEY([BuyerAttendeeOrganizationId])
+REFERENCES [dbo].[AttendeeOrganizations] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectBuyerEvaluations] CHECK CONSTRAINT [FK_AttendeeOrganizations_ProjectBuyerEvaluations_BuyerAttendeeOrganizationId]
+GO
+ALTER TABLE [dbo].[ProjectBuyerEvaluations]  WITH CHECK ADD  CONSTRAINT [FK_ProjectEvaluationStatuses_ProjectBuyerEvaluations_ProjectEvaluationStatusId] FOREIGN KEY([ProjectEvaluationStatusId])
+REFERENCES [dbo].[ProjectEvaluationStatuses] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectBuyerEvaluations] CHECK CONSTRAINT [FK_ProjectEvaluationStatuses_ProjectBuyerEvaluations_ProjectEvaluationStatusId]
+GO
+ALTER TABLE [dbo].[ProjectBuyerEvaluations]  WITH CHECK ADD  CONSTRAINT [FK_Projects_ProjectBuyerEvaluations_ProjectId] FOREIGN KEY([ProjectId])
+REFERENCES [dbo].[Projects] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectBuyerEvaluations] CHECK CONSTRAINT [FK_Projects_ProjectBuyerEvaluations_ProjectId]
+GO
+ALTER TABLE [dbo].[ProjectBuyerEvaluations]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectBuyerEvaluations_BuyerEvaluationUserId] FOREIGN KEY([BuyerEvaluationUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectBuyerEvaluations] CHECK CONSTRAINT [FK_Users_ProjectBuyerEvaluations_BuyerEvaluationUserId]
+GO
+ALTER TABLE [dbo].[ProjectBuyerEvaluations]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectBuyerEvaluations_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectBuyerEvaluations] CHECK CONSTRAINT [FK_Users_ProjectBuyerEvaluations_CreateUserId]
+GO
+ALTER TABLE [dbo].[ProjectBuyerEvaluations]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectBuyerEvaluations_SellerUserId] FOREIGN KEY([SellerUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectBuyerEvaluations] CHECK CONSTRAINT [FK_Users_ProjectBuyerEvaluations_SellerUserId]
+GO
+ALTER TABLE [dbo].[ProjectBuyerEvaluations]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectBuyerEvaluations_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectBuyerEvaluations] CHECK CONSTRAINT [FK_Users_ProjectBuyerEvaluations_UpdateUserId]
+GO
+ALTER TABLE [dbo].[ProjectEvaluationStatuses]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectEvaluationStatuses_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectEvaluationStatuses] CHECK CONSTRAINT [FK_Users_ProjectEvaluationStatuses_CreateUserId]
+GO
+ALTER TABLE [dbo].[ProjectEvaluationStatuses]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectEvaluationStatuses_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectEvaluationStatuses] CHECK CONSTRAINT [FK_Users_ProjectEvaluationStatuses_UpdateUserId]
+GO
+ALTER TABLE [dbo].[ProjectImageLinks]  WITH CHECK ADD  CONSTRAINT [FK_Projects_ProjectImageLinks_ProjectId] FOREIGN KEY([ProjectId])
+REFERENCES [dbo].[Projects] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectImageLinks] CHECK CONSTRAINT [FK_Projects_ProjectImageLinks_ProjectId]
+GO
+ALTER TABLE [dbo].[ProjectImageLinks]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectImageLinks_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectImageLinks] CHECK CONSTRAINT [FK_Users_ProjectImageLinks_CreateUserId]
+GO
+ALTER TABLE [dbo].[ProjectImageLinks]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectImageLinks_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectImageLinks] CHECK CONSTRAINT [FK_Users_ProjectImageLinks_UpdateUserId]
+GO
+ALTER TABLE [dbo].[ProjectInterests]  WITH CHECK ADD  CONSTRAINT [FK_Interests_ProjectInterests_InterestId] FOREIGN KEY([InterestId])
+REFERENCES [dbo].[Interests] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectInterests] CHECK CONSTRAINT [FK_Interests_ProjectInterests_InterestId]
+GO
+ALTER TABLE [dbo].[ProjectInterests]  WITH CHECK ADD  CONSTRAINT [FK_Projects_ProjectInterests_ProjectId] FOREIGN KEY([ProjectId])
+REFERENCES [dbo].[Projects] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectInterests] CHECK CONSTRAINT [FK_Projects_ProjectInterests_ProjectId]
+GO
+ALTER TABLE [dbo].[ProjectInterests]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectInterests_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectInterests] CHECK CONSTRAINT [FK_Users_ProjectInterests_CreateUserId]
+GO
+ALTER TABLE [dbo].[ProjectInterests]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectInterests_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectInterests] CHECK CONSTRAINT [FK_Users_ProjectInterests_UpdateUserId]
+GO
+ALTER TABLE [dbo].[ProjectLogLines]  WITH CHECK ADD  CONSTRAINT [FK_Languages_ProjectLogLines_LanguageId] FOREIGN KEY([LanguageId])
+REFERENCES [dbo].[Languages] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectLogLines] CHECK CONSTRAINT [FK_Languages_ProjectLogLines_LanguageId]
+GO
+ALTER TABLE [dbo].[ProjectLogLines]  WITH CHECK ADD  CONSTRAINT [FK_Projects_ProjectLogLines_ProjectId] FOREIGN KEY([ProjectId])
+REFERENCES [dbo].[Projects] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectLogLines] CHECK CONSTRAINT [FK_Projects_ProjectLogLines_ProjectId]
+GO
+ALTER TABLE [dbo].[ProjectLogLines]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectLogLines_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectLogLines] CHECK CONSTRAINT [FK_Users_ProjectLogLines_CreateUserId]
+GO
+ALTER TABLE [dbo].[ProjectLogLines]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectLogLines_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectLogLines] CHECK CONSTRAINT [FK_Users_ProjectLogLines_UpdateUserId]
+GO
+ALTER TABLE [dbo].[ProjectProductPlans]  WITH CHECK ADD  CONSTRAINT [FK_Languages_ProjectProductPlans_LanguageId] FOREIGN KEY([LanguageId])
+REFERENCES [dbo].[Languages] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectProductPlans] CHECK CONSTRAINT [FK_Languages_ProjectProductPlans_LanguageId]
+GO
+ALTER TABLE [dbo].[ProjectProductPlans]  WITH CHECK ADD  CONSTRAINT [FK_Projects_ProjectProductPlans_ProjectId] FOREIGN KEY([ProjectId])
+REFERENCES [dbo].[Projects] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectProductPlans] CHECK CONSTRAINT [FK_Projects_ProjectProductPlans_ProjectId]
+GO
+ALTER TABLE [dbo].[ProjectProductPlans]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectProductPlans_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectProductPlans] CHECK CONSTRAINT [FK_Users_ProjectProductPlans_CreateUserId]
+GO
+ALTER TABLE [dbo].[ProjectProductPlans]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectProductPlans_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectProductPlans] CHECK CONSTRAINT [FK_Users_ProjectProductPlans_UpdateUserId]
+GO
+ALTER TABLE [dbo].[Projects]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeOrganizations_Projects_SellerAttendeeOrganizationId] FOREIGN KEY([SellerAttendeeOrganizationId])
+REFERENCES [dbo].[AttendeeOrganizations] ([Id])
+GO
+ALTER TABLE [dbo].[Projects] CHECK CONSTRAINT [FK_AttendeeOrganizations_Projects_SellerAttendeeOrganizationId]
+GO
+ALTER TABLE [dbo].[Projects]  WITH CHECK ADD  CONSTRAINT [FK_ProjectTypes_Projects_ProjectTypeId] FOREIGN KEY([ProjectTypeId])
+REFERENCES [dbo].[ProjectTypes] ([Id])
+GO
+ALTER TABLE [dbo].[Projects] CHECK CONSTRAINT [FK_ProjectTypes_Projects_ProjectTypeId]
+GO
+ALTER TABLE [dbo].[Projects]  WITH CHECK ADD  CONSTRAINT [FK_Users_Projects_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[Projects] CHECK CONSTRAINT [FK_Users_Projects_CreateUserId]
+GO
+ALTER TABLE [dbo].[Projects]  WITH CHECK ADD  CONSTRAINT [FK_Users_Projects_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[Projects] CHECK CONSTRAINT [FK_Users_Projects_UpdateUserId]
+GO
+ALTER TABLE [dbo].[ProjectSummaries]  WITH CHECK ADD  CONSTRAINT [FK_Languages_ProjectSummaries_LanguageId] FOREIGN KEY([LanguageId])
+REFERENCES [dbo].[Languages] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectSummaries] CHECK CONSTRAINT [FK_Languages_ProjectSummaries_LanguageId]
+GO
+ALTER TABLE [dbo].[ProjectSummaries]  WITH CHECK ADD  CONSTRAINT [FK_Projects_ProjectSummaries_ProjectId] FOREIGN KEY([ProjectId])
+REFERENCES [dbo].[Projects] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectSummaries] CHECK CONSTRAINT [FK_Projects_ProjectSummaries_ProjectId]
+GO
+ALTER TABLE [dbo].[ProjectSummaries]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectSummaries_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectSummaries] CHECK CONSTRAINT [FK_Users_ProjectSummaries_CreateUserId]
+GO
+ALTER TABLE [dbo].[ProjectSummaries]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectSummaries_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectSummaries] CHECK CONSTRAINT [FK_Users_ProjectSummaries_UpdateUserId]
+GO
+ALTER TABLE [dbo].[ProjectTeaserLinks]  WITH CHECK ADD  CONSTRAINT [FK_Projects_ProjectTeaserLinks_ProjectId] FOREIGN KEY([ProjectId])
+REFERENCES [dbo].[Projects] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectTeaserLinks] CHECK CONSTRAINT [FK_Projects_ProjectTeaserLinks_ProjectId]
+GO
+ALTER TABLE [dbo].[ProjectTeaserLinks]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectTeaserLinks_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectTeaserLinks] CHECK CONSTRAINT [FK_Users_ProjectTeaserLinks_CreateUserId]
+GO
+ALTER TABLE [dbo].[ProjectTeaserLinks]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectTeaserLinks_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectTeaserLinks] CHECK CONSTRAINT [FK_Users_ProjectTeaserLinks_UpdateUserId]
+GO
+ALTER TABLE [dbo].[ProjectTitles]  WITH CHECK ADD  CONSTRAINT [FK_Languages_ProjectTitles_LanguageId] FOREIGN KEY([LanguageId])
+REFERENCES [dbo].[Languages] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectTitles] CHECK CONSTRAINT [FK_Languages_ProjectTitles_LanguageId]
+GO
+ALTER TABLE [dbo].[ProjectTitles]  WITH CHECK ADD  CONSTRAINT [FK_Projects_ProjectTitles_ProjectId] FOREIGN KEY([ProjectId])
+REFERENCES [dbo].[Projects] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectTitles] CHECK CONSTRAINT [FK_Projects_ProjectTitles_ProjectId]
+GO
+ALTER TABLE [dbo].[ProjectTitles]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectTitles_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectTitles] CHECK CONSTRAINT [FK_Users_ProjectTitles_CreateUserId]
+GO
+ALTER TABLE [dbo].[ProjectTitles]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectTitles_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectTitles] CHECK CONSTRAINT [FK_Users_ProjectTitles_UpdateUserId]
+GO
+ALTER TABLE [dbo].[ProjectTypes]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectTypes_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectTypes] CHECK CONSTRAINT [FK_Users_ProjectTypes_CreateUserId]
+GO
+ALTER TABLE [dbo].[ProjectTypes]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectTypes_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectTypes] CHECK CONSTRAINT [FK_Users_ProjectTypes_UpdateUserId]
+GO
+ALTER TABLE [dbo].[RoomNames]  WITH CHECK ADD  CONSTRAINT [FK_Languages_RoomNames_LanguageId] FOREIGN KEY([LanguageId])
+REFERENCES [dbo].[Languages] ([Id])
+GO
+ALTER TABLE [dbo].[RoomNames] CHECK CONSTRAINT [FK_Languages_RoomNames_LanguageId]
+GO
+ALTER TABLE [dbo].[RoomNames]  WITH CHECK ADD  CONSTRAINT [FK_Rooms_RoomNames_RoomId] FOREIGN KEY([RoomId])
+REFERENCES [dbo].[Rooms] ([Id])
+GO
+ALTER TABLE [dbo].[RoomNames] CHECK CONSTRAINT [FK_Rooms_RoomNames_RoomId]
+GO
+ALTER TABLE [dbo].[RoomNames]  WITH CHECK ADD  CONSTRAINT [FK_Users_RoomNames_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[RoomNames] CHECK CONSTRAINT [FK_Users_RoomNames_CreateUserId]
+GO
+ALTER TABLE [dbo].[RoomNames]  WITH CHECK ADD  CONSTRAINT [FK_Users_RoomNames_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[RoomNames] CHECK CONSTRAINT [FK_Users_RoomNames_UpdateUserId]
+GO
+ALTER TABLE [dbo].[Rooms]  WITH CHECK ADD  CONSTRAINT [FK_Editions_Rooms_EditionId] FOREIGN KEY([EditionId])
+REFERENCES [dbo].[Editions] ([Id])
+GO
+ALTER TABLE [dbo].[Rooms] CHECK CONSTRAINT [FK_Editions_Rooms_EditionId]
+GO
+ALTER TABLE [dbo].[Rooms]  WITH CHECK ADD  CONSTRAINT [FK_Users_Rooms_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[Rooms] CHECK CONSTRAINT [FK_Users_Rooms_CreateUserId]
+GO
+ALTER TABLE [dbo].[Rooms]  WITH CHECK ADD  CONSTRAINT [FK_Users_Rooms_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[Rooms] CHECK CONSTRAINT [FK_Users_Rooms_UpdateUserId]
+GO
+ALTER TABLE [dbo].[SalesPlatforms]  WITH CHECK ADD  CONSTRAINT [FK_Users_SalesPlatforms_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[SalesPlatforms] CHECK CONSTRAINT [FK_Users_SalesPlatforms_CreateUserId]
+GO
+ALTER TABLE [dbo].[SalesPlatforms]  WITH CHECK ADD  CONSTRAINT [FK_Users_SalesPlatforms_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[SalesPlatforms] CHECK CONSTRAINT [FK_Users_SalesPlatforms_UpdateUserId]
+GO
+ALTER TABLE [dbo].[SalesPlatformWebhooRequests]  WITH CHECK ADD  CONSTRAINT [FK_SalesPlatforms_SalesPlatformWebhooRequests_SalesPlatformId] FOREIGN KEY([SalesPlatformId])
+REFERENCES [dbo].[SalesPlatforms] ([Id])
+GO
+ALTER TABLE [dbo].[SalesPlatformWebhooRequests] CHECK CONSTRAINT [FK_SalesPlatforms_SalesPlatformWebhooRequests_SalesPlatformId]
+GO
+ALTER TABLE [dbo].[SalesPlatformWebhooRequests]  WITH CHECK ADD  CONSTRAINT [FK_Users_SalesPlatformWebhooRequests_ManualProcessingUserId] FOREIGN KEY([ManualProcessingUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[SalesPlatformWebhooRequests] CHECK CONSTRAINT [FK_Users_SalesPlatformWebhooRequests_ManualProcessingUserId]
+GO
+ALTER TABLE [dbo].[States]  WITH CHECK ADD  CONSTRAINT [FK_Countries_States_CountryId] FOREIGN KEY([CountryId])
+REFERENCES [dbo].[Countries] ([Id])
+GO
+ALTER TABLE [dbo].[States] CHECK CONSTRAINT [FK_Countries_States_CountryId]
+GO
+ALTER TABLE [dbo].[States]  WITH CHECK ADD  CONSTRAINT [FK_Users_States_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[States] CHECK CONSTRAINT [FK_Users_States_CreateUserId]
+GO
+ALTER TABLE [dbo].[States]  WITH CHECK ADD  CONSTRAINT [FK_Users_States_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[States] CHECK CONSTRAINT [FK_Users_States_UpdateUserId]
+GO
+ALTER TABLE [dbo].[Streets]  WITH CHECK ADD  CONSTRAINT [FK_Neighborhoods_Streets_NeighborhoodId] FOREIGN KEY([NeighborhoodId])
+REFERENCES [dbo].[Neighborhoods] ([Id])
+GO
+ALTER TABLE [dbo].[Streets] CHECK CONSTRAINT [FK_Neighborhoods_Streets_NeighborhoodId]
+GO
+ALTER TABLE [dbo].[Streets]  WITH CHECK ADD  CONSTRAINT [FK_Users_Streets_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[Streets] CHECK CONSTRAINT [FK_Users_Streets_CreateUserId]
+GO
+ALTER TABLE [dbo].[Streets]  WITH CHECK ADD  CONSTRAINT [FK_Users_Streets_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[Streets] CHECK CONSTRAINT [FK_Users_Streets_UpdateUserId]
+GO
+ALTER TABLE [dbo].[TargetAudiences]  WITH CHECK ADD  CONSTRAINT [FK_ProjectTypes_TargetAudiences_ProjectTypeId] FOREIGN KEY([ProjectTypeId])
+REFERENCES [dbo].[ProjectTypes] ([Id])
+GO
+ALTER TABLE [dbo].[TargetAudiences] CHECK CONSTRAINT [FK_ProjectTypes_TargetAudiences_ProjectTypeId]
+GO
+ALTER TABLE [dbo].[TargetAudiences]  WITH CHECK ADD  CONSTRAINT [FK_Users_TargetAudiences_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[TargetAudiences] CHECK CONSTRAINT [FK_Users_TargetAudiences_CreateUserId]
+GO
+ALTER TABLE [dbo].[TargetAudiences]  WITH CHECK ADD  CONSTRAINT [FK_Users_TargetAudiences_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[TargetAudiences] CHECK CONSTRAINT [FK_Users_TargetAudiences_UpdateUserId]
+GO
+ALTER TABLE [dbo].[TicketTypes]  WITH CHECK ADD  CONSTRAINT [FK_Roles_TicketTypes_RoleId] FOREIGN KEY([RoleId])
+REFERENCES [dbo].[Roles] ([Id])
+GO
+ALTER TABLE [dbo].[TicketTypes] CHECK CONSTRAINT [FK_Roles_TicketTypes_RoleId]
+GO
+ALTER TABLE [dbo].[TicketTypes]  WITH CHECK ADD  CONSTRAINT [FK_Users_TicketTypes_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[TicketTypes] CHECK CONSTRAINT [FK_Users_TicketTypes_CreateUserId]
+GO
+ALTER TABLE [dbo].[TicketTypes]  WITH CHECK ADD  CONSTRAINT [FK_Users_TicketTypes_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[TicketTypes] CHECK CONSTRAINT [FK_Users_TicketTypes_UpdateUserId]
+GO
+ALTER TABLE [dbo].[UserClaims]  WITH CHECK ADD  CONSTRAINT [FK_Users_UserClaims_UserId] FOREIGN KEY([UserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[UserClaims] CHECK CONSTRAINT [FK_Users_UserClaims_UserId]
+GO
+ALTER TABLE [dbo].[UserLogins]  WITH CHECK ADD  CONSTRAINT [FK_Users_UserLogins_UserId] FOREIGN KEY([UserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[UserLogins] CHECK CONSTRAINT [FK_Users_UserLogins_UserId]
+GO
+ALTER TABLE [dbo].[UserRoles]  WITH CHECK ADD  CONSTRAINT [FK_Roles_UserRoles_RoleId] FOREIGN KEY([RoleId])
+REFERENCES [dbo].[Roles] ([Id])
+GO
+ALTER TABLE [dbo].[UserRoles] CHECK CONSTRAINT [FK_Roles_UserRoles_RoleId]
+GO
+ALTER TABLE [dbo].[UserRoles]  WITH CHECK ADD  CONSTRAINT [FK_Users_UserRoles_UserId] FOREIGN KEY([UserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[UserRoles] CHECK CONSTRAINT [FK_Users_UserRoles_UserId]
 GO
