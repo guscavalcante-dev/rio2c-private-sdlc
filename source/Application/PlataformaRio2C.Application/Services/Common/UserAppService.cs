@@ -1,15 +1,27 @@
-﻿using PlataformaRio2C.Application.Interfaces.Services;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Application
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-06-2019
+// ***********************************************************************
+// <copyright file="UserAppService.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Application.Interfaces.Services;
 using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
-using PlataformaRio2C.Infra.Data.Context;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace PlataformaRio2C.Application.Services
 {
+    /// <summary>UserAppService</summary>
     public class UserAppService : AppService<Infra.Data.Context.PlataformaRio2CContext, Domain.Entities.User, UserAppViewModel, UserAppViewModel, UserAppViewModel, UserAppViewModel>, IUserAppService
     {
         private readonly IdentityAutenticationService _identityController;
@@ -17,6 +29,13 @@ namespace PlataformaRio2C.Application.Services
         protected readonly IUserRepository _userRepository;
         protected readonly IUserRoleRepository _userRoleRepository;
 
+        /// <summary>Initializes a new instance of the <see cref="UserAppService"/> class.</summary>
+        /// <param name="service">The service.</param>
+        /// <param name="unitOfWork">The unit of work.</param>
+        /// <param name="userRepository">The user repository.</param>
+        /// <param name="userRoleRepository">The user role repository.</param>
+        /// <param name="identityController">The identity controller.</param>
+        /// <param name="roleRepository">The role repository.</param>
         public UserAppService(IUserService service, IUnitOfWork unitOfWork, IUserRepository userRepository, IUserRoleRepository userRoleRepository ,IdentityAutenticationService identityController, IRoleRepository roleRepository)
             : base(unitOfWork, service)
         {
@@ -128,7 +147,7 @@ namespace PlataformaRio2C.Application.Services
                 vm.Uid = user.Uid;
                 vm.UserName = user.UserName;
                 vm.Active = user.Active;
-                vm.CreationDate = user.CreationDate;
+                vm.CreationDate = user.CreateDate;
                 vm.Email = user.Email;
 
                 entity.Add(vm);

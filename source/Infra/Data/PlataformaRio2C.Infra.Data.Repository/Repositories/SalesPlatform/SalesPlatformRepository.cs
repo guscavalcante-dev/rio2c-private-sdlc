@@ -1,22 +1,22 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Domain
+// Assembly         : PlataformaRio2C.Infra.Data.Repository
 // Author           : Rafael Dantas Ruiz
 // Created          : 07-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-19-2019
+// Last Modified On : 08-06-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Infra.Data.Context;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Infra.Data.Context;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {

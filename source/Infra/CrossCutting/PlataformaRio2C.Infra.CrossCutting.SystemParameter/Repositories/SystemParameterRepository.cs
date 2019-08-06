@@ -1,21 +1,36 @@
-﻿using PlataformaRio2C.Infra.CrossCutting.Tools.Enums;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Interfaces;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Infra.CrossCutting.SystemParameter
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-06-2019
+// ***********************************************************************
+// <copyright file="SystemParameterRepository.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using PlataformaRio2C.Infra.CrossCutting.SystemParameter.Context;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Enums;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Interfaces;
 
-namespace PlataformaRio2C.Infra.CrossCutting.SystemParameter
+namespace PlataformaRio2C.Infra.CrossCutting.SystemParameter.Repositories
 {
+    /// <summary>SystemParameterRepository</summary>
     public class SystemParameterRepository : ISystemParameterRepository
     {
         private readonly ILogService _logger;
 
-        protected PlataformaRio2C.Infra.CrossCutting.SystemParameter.PlataformaRio2CContext _context;
+        protected PlataformaRio2CContext _context;
         protected DbSet<SystemParameter> dbSet;
 
-        public SystemParameterRepository(PlataformaRio2C.Infra.CrossCutting.SystemParameter.PlataformaRio2CContext context, ILogService logger)            
+        public SystemParameterRepository(PlataformaRio2CContext context, ILogService logger)            
         {
             _logger = logger;
             _context = context;

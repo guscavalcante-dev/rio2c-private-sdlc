@@ -1,4 +1,17 @@
-﻿using HtmlAgilityPack;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Application
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-06-2019
+// ***********************************************************************
+// <copyright file="CollaboratorProducerAppService.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using HtmlAgilityPack;
 using PlataformaRio2C.Application.Interfaces.Services;
 using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Domain.Entities;
@@ -12,15 +25,14 @@ using System;
 using System.Linq;
 using System.Web;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System.Globalization;
 using System.Threading;
 using PlataformaRio2C.Domain.Entities.Specifications;
 
 namespace PlataformaRio2C.Application.Services
 {
+    /// <summary>CollaboratorProducerAppService</summary>
     public class CollaboratorProducerAppService : AppService<PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext, Collaborator, CollaboratorBasicAppViewModel, CollaboratorDetailAppViewModel, CollaboratorProducerEditAppViewModel, CollaboratorProducerItemListAppViewModel>, ICollaboratorProducerAppService
     {
         #region props
@@ -28,7 +40,7 @@ namespace PlataformaRio2C.Application.Services
         private readonly ICollaboratorService _collaboratorService;
         private readonly ICollaboratorAppService _collaboratorAppService;
         private readonly ICollaboratorRepository _collaboratorRepository;
-        private readonly IEventRepository _eventRepository;
+        private readonly IEditionRepository _eventRepository;
         private readonly IProducerRepository _producerRepository;
         private readonly ILanguageRepository _languageRepository;
         private readonly IRoleRepository _roleRepository;
@@ -44,7 +56,7 @@ namespace PlataformaRio2C.Application.Services
             : base(unitOfWork, service)
         {
             _collaboratorService = collaboratorService;
-            _eventRepository = repositoryFactory.EventRepository;
+            _eventRepository = repositoryFactory.EditionRepository;
             _languageRepository = repositoryFactory.LanguageRepository;
             _roleRepository = repositoryFactory.RoleRepository;
             _collaboratorRepository = repositoryFactory.CollaboratorRepository;
@@ -310,7 +322,7 @@ namespace PlataformaRio2C.Application.Services
 
         #region Private methods
 
-        private bool CheckCollaboratorIsAlreadyRegistered(Collaborator entityCollaborator, Event entityEvent)
+        private bool CheckCollaboratorIsAlreadyRegistered(Collaborator entityCollaborator, Edition entityEvent)
         {
             if (entityCollaborator != null)
             {

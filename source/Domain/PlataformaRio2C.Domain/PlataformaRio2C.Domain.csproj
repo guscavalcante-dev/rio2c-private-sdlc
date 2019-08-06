@@ -311,7 +311,7 @@
     <Compile Include="Entities\Common\Address.cs" />
     <Compile Include="Entities\Collaborator\CollaboratorMiniBio.cs" />
     <Compile Include="Entities\Common\Activity.cs" />
-    <Compile Include="Entities\Event\Event.cs" />
+    <Compile Include="Entities\Editions\Edition.cs" />
     <Compile Include="Entities\Holding\Holding.cs" />
     <Compile Include="Entities\Collaborator\CollaboratorJobTitle.cs" />
     <Compile Include="Entities\Player\PlayerDescription.cs" />
@@ -323,6 +323,7 @@
     <Compile Include="Entities\User\User.cs" />
     <Compile Include="Entities\User\Role.cs" />
     <Compile Include="Entities\User\UserUseTerm.cs" />
+    <Compile Include="Statics\User\Role.cs" />
     <Compile Include="Validations\Address\AddressIsConsistent.cs" />
     <Compile Include="Validations\Collaborator\CollaboratorProducerIsComplete.cs" />
     <Compile Include="Validations\Collaborator\CollaboratorPlayerIsConsistent.cs" />
@@ -384,7 +385,7 @@
     <Compile Include="Interfaces\Repositories\Player\IPlayerDescriptionRepository.cs" />
     <Compile Include="Interfaces\Repositories\Holding\IHoldingDescriptionRepository.cs" />
     <Compile Include="Interfaces\Repositories\Common\IImageFileRepository.cs" />
-    <Compile Include="Interfaces\Repositories\Event\IEventRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Editions\IEditionRepository.cs" />
     <Compile Include="Interfaces\Repositories\Collaborator\ICollaboratorRepository.cs" />
     <Compile Include="Interfaces\Repositories\Common\ILanguageRepository.cs" />
     <Compile Include="Interfaces\Repositories\Producer\IProducerRepository.cs" />
@@ -405,7 +406,7 @@
     <Compile Include="Interfaces\Services\IInterestService.cs" />
     <Compile Include="Interfaces\Services\IInterestGroupService.cs" />
     <Compile Include="Interfaces\Services\IPlayerInterestService.cs" />
-    <Compile Include="Interfaces\Services\IEventService.cs" />
+    <Compile Include="Interfaces\Services\IEditionService.cs" />
     <Compile Include="Interfaces\Services\IHoldingService.cs" />
     <Compile Include="Interfaces\Services\ILanguageService.cs" />
     <Compile Include="Interfaces\Services\IProjectService.cs" />
@@ -429,7 +430,7 @@
     <Compile Include="Services\PlayerAdminService.cs" />
     <Compile Include="Services\UserUseTermService.cs" />
     <Compile Include="Services\UserService.cs" />
-    <Compile Include="Services\EventService.cs" />
+    <Compile Include="Services\EditionService.cs" />
     <Compile Include="Services\Common\Service.cs" />
     <Compile Include="Services\CollaboratorService.cs" />
     <Compile Include="Services\LanguageService.cs" />

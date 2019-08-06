@@ -1,4 +1,17 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Application
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-06-2019
+// ***********************************************************************
+// <copyright file="UserUseTermAppViewModel.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using PlataformaRio2C.Application.Common;
 using PlataformaRio2C.Domain.Entities;
 using System.Collections.Generic;
@@ -6,6 +19,7 @@ using System.Linq;
 
 namespace PlataformaRio2C.Application.ViewModels
 {
+    /// <summary>ProjectInterestAppViewModel</summary>
     public class ProjectInterestAppViewModel : EntityViewModel<ProjectInterestAppViewModel, ProjectInterest>, IEntityViewModel<ProjectInterest>
     {
         public int ProjectId { get; set; }
@@ -41,7 +55,7 @@ namespace PlataformaRio2C.Application.ViewModels
             Selected = entity.Project != null && entity.Project.Interests != null && entity.Project.Interests.Any(e => e.Interest.Name == entity.Interest.Name);
         }
 
-        public static IEnumerable<ProjectInterestAppViewModel> MapList(IEnumerable<Interest> interests, Project project, Event _event)
+        public static IEnumerable<ProjectInterestAppViewModel> MapList(IEnumerable<Interest> interests, Project project, Edition _event)
         {
             foreach (var interest in interests)
             {
@@ -55,7 +69,7 @@ namespace PlataformaRio2C.Application.ViewModels
             return entity;
         }
 
-        public ProjectInterest MapReverse(Project p, Interest i, Event v)
+        public ProjectInterest MapReverse(Project p, Interest i, Edition v)
         {
             var entity = new ProjectInterest(p, i);
             return entity;

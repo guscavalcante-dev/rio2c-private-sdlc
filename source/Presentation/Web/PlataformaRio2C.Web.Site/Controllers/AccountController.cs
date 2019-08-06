@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-04-2019
+// Last Modified On : 08-06-2019
 // ***********************************************************************
 // <copyright file="AccountController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -153,18 +153,18 @@ namespace PlataformaRio2C.Web.Site.Controllers
                             return Redirect(returnUrl);
                         }
 
-                        if (await _identityController.IsInRoleAsync(user.Id, "Player") || await _identityController.IsInRoleAsync(user.Id, "Producer"))
+                        if (!await _identityController.IsInRoleAsync(user.Id, Domain.Statics.Role.User.Name) && 
+                            !await _identityController.IsInRoleAsync(user.Id, Domain.Statics.Role.Admin.Name))
                         {
-                            //returnUrl = returnUrl ?? "/";
-                            //return RedirectToLocal(returnUrl);
-                            return RedirectToAction("", "Quiz");
+                            this.StatusMessage(Messages.AccessDenied, StatusMessageType.Danger);
+                            return RedirectToAction("LogOff");
                         }
 
-                        this.StatusMessage(Messages.AccessDenied, StatusMessageType.Danger);
+                        //returnUrl = returnUrl ?? "/";
+                        //return RedirectToLocal(returnUrl);
+                        return RedirectToAction("Index", "Quiz");
 
-                        return RedirectToAction("LogOff");
-
-                    case IdentitySignInStatus.LockedOut:
+                case IdentitySignInStatus.LockedOut:
                         return View("Lockout");
 
                     case IdentitySignInStatus.RequiresVerification:

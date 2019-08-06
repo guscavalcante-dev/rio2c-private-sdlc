@@ -1,20 +1,32 @@
-﻿using LinqKit;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Application
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-06-2019
+// ***********************************************************************
+// <copyright file="PlayerAppService.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using LinqKit;
 using PlataformaRio2C.Application.Interfaces.Services;
 using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Entities.Validations;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Infra.Data.Context;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 
 namespace PlataformaRio2C.Application.Services
 {
+    /// <summary>PlayerAppService</summary>
     public class PlayerAppService : AppService<PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext, Player, PlayerBasicAppViewModel, PlayerDetailAppViewModel, PlayerEditAppViewModel, PlayerItemListAppViewModel>, IPlayerAppService
     {
         #region props
@@ -27,7 +39,7 @@ namespace PlataformaRio2C.Application.Services
         private readonly ITargetAudienceRepository _targetAudienceRepository;
         private readonly IPlayerActivityRepository _playerActivityRepository;
         private readonly IPlayerTargetAudienceRepository _playerTargetAudienceRepository;
-        private readonly IEventRepository _eventRepository;
+        private readonly IEditionRepository _eventRepository;
         private readonly IPlayerRepository _playerRepository;
         private readonly ICountryRepository _countryRepository;
         private readonly IStateRepository _stateRepository;
@@ -50,7 +62,7 @@ namespace PlataformaRio2C.Application.Services
             _playerActivityRepository = repositoryFactory.PlayerActivityRepository;
             _playerTargetAudienceRepository = repositoryFactory.PlayerTargetAudienceRepository;
             _interestRepository = repositoryFactory.InterestRepository;
-            _eventRepository = repositoryFactory.EventRepository;
+            _eventRepository = repositoryFactory.EditionRepository;
             _playerRepository = repositoryFactory.PlayerRepository;
             _playerRestrictionsSpecificsRepository = repositoryFactory.PlayerRestrictionsSpecificsRepository;
 

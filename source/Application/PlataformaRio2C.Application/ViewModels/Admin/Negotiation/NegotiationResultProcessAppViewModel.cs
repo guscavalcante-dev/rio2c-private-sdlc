@@ -1,10 +1,24 @@
-﻿using PlataformaRio2C.Domain.Entities;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Application
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-06-2019
+// ***********************************************************************
+// <copyright file="NegotiationResultProcessAppViewModel.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace PlataformaRio2C.Application.ViewModels
 {
+    /// <summary>NegotiationResultProcessAppViewModel</summary>
     public class NegotiationResultProcessAppViewModel
     {
         public int NumberScheduledNegotiations{ get; set; }
@@ -22,7 +36,7 @@ namespace PlataformaRio2C.Application.ViewModels
             var lastNegotiation = negotiations.LastOrDefault(e => e.RoundNumber > 0 && e.Project != null);
             if (lastNegotiation != null)
             {
-                DateProcess = lastNegotiation.CreationDate.ToString("dd/MM/yyyy HH:mm:ss");
+                DateProcess = lastNegotiation.CreateDate.ToString("dd/MM/yyyy HH:mm:ss");
             }
             else
             {

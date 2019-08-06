@@ -1,3 +1,16 @@
+// ***********************************************************************
+// Assembly         : PlataformaRio2C.Infra.Data.Context
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-06-2019
+// ***********************************************************************
+// <copyright file="Configuration.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 namespace PlataformaRio2C.Infra.Data.Context.Migrations
 {
     using CrossCutting.Tools.Extensions;
@@ -8,6 +21,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
+    /// <summary>Configuration</summary>
     internal sealed class Configuration : DbMigrationsConfiguration<PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext>
     {
         public Configuration()
@@ -109,12 +123,12 @@ namespace PlataformaRio2C.Infra.Data.Context.Migrations
         {
             if (!context.Events.Any())
             {
-                var eventInitial = new Event("Rio2c 2018");
+                var eventInitial = new Edition("Rio2c 2018");
                 eventInitial.SetStartDate(new DateTime(2018, 3, 1));
                 eventInitial.SetEndDate(new DateTime(2018, 4, 1));
 
                 context.Events.AddRange(
-                   new List<Event>()
+                   new List<Edition>()
                    {
                         eventInitial
                    }

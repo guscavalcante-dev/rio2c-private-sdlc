@@ -1,32 +1,39 @@
-﻿using HtmlAgilityPack;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Application
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-06-2019
+// ***********************************************************************
+// <copyright file="CollaboratorAppService.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using HtmlAgilityPack;
 using LinqKit;
 using PlataformaRio2C.Application.Interfaces.Services;
 using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Domain.Entities.Validations;
 using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Domain.Services;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.SystemParameter;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Model;
-using PlataformaRio2C.Infra.Data.Context;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
-using System.Threading;
-using System.Web.Mvc;
-using System.Web.Security;
 
 namespace PlataformaRio2C.Application.Services
 {
+    /// <summary>CollaboratorAppService</summary>
     public class CollaboratorAppService : AppService<Infra.Data.Context.PlataformaRio2CContext, Collaborator, CollaboratorBasicAppViewModel, CollaboratorDetailAppViewModel, CollaboratorEditAppViewModel, CollaboratorItemListAppViewModel>, ICollaboratorAppService
     {
         #region props
@@ -38,7 +45,7 @@ namespace PlataformaRio2C.Application.Services
         private readonly IPlayerRepository _playerRepository;
         private readonly ISystemParameterRepository _systemParameterRepository;
         private readonly IdentityAutenticationService _identityController;
-        private readonly IEventRepository _eventRepository;
+        private readonly IEditionRepository _eventRepository;
         private readonly ICountryRepository _countryRepository;
         private readonly IStateRepository _stateRepository;
         private readonly ICityRepository _cityRepository;
@@ -55,7 +62,7 @@ namespace PlataformaRio2C.Application.Services
             _collaboratorJobTitleRepository = repositoryFactory.CollaboratorJobTitleRepository;
             _collaboratorMiniBioRepository = repositoryFactory.CollaboratorMiniBioRepository;
             _playerRepository = repositoryFactory.PlayerRepository;
-            _eventRepository = repositoryFactory.EventRepository;
+            _eventRepository = repositoryFactory.EditionRepository;
             _systemParameterRepository = systemParameterRepository;
             _identityController = identityController;
             _countryRepository = repositoryFactory.CountryRepository;
@@ -376,7 +383,7 @@ namespace PlataformaRio2C.Application.Services
 
         #region private methods          
 
-        private AppValidationResult SendIntiveByEmail(string email, Event eventRio2c)
+        private AppValidationResult SendIntiveByEmail(string email, Edition eventRio2c)
         {
 
             var result = new AppValidationResult();

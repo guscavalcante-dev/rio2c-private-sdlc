@@ -1,9 +1,22 @@
-﻿using PlataformaRio2C.Application.Common;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Application
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-06-2019
+// ***********************************************************************
+// <copyright file="UserUseTermAppViewModel.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Application.Common;
 using PlataformaRio2C.Domain.Entities;
-using System;
 
 namespace PlataformaRio2C.Application.ViewModels
 {
+    /// <summary>UserUseTermAppViewModel</summary>
     public class UserUseTermAppViewModel : EntityViewModel<UserUseTermAppViewModel, UserUseTerm>, IEntityViewModel<UserUseTerm>
     {
         public int UserId { get; set; }
@@ -19,16 +32,16 @@ namespace PlataformaRio2C.Application.ViewModels
         public UserUseTermAppViewModel(UserUseTerm entity)
         {
             Uid = entity.Uid;
-            CreationDate = entity.CreationDate;
+            CreationDate = entity.CreateDate;
 
             if (entity.User != null)
             {
                 UserId = entity.User.Id;
             }
 
-            if (entity.Event != null)
+            if (entity.Edition != null)
             {
-                EventId = entity.Event.Id;
+                EventId = entity.Edition.Id;
             }           
 
             if (entity.Role != null)

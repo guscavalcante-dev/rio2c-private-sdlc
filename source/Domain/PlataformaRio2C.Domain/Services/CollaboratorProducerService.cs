@@ -1,16 +1,28 @@
-﻿using PlataformaRio2C.Domain.Entities;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Domain
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-06-2019
+// ***********************************************************************
+// <copyright file="CollaboratorProducerService.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Entities.Validations;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Validation;
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading;
 
 namespace PlataformaRio2C.Domain.Services
 {
+    /// <summary>CollaboratorProducerService</summary>
     public class CollaboratorProducerService : CollaboratorService, ICollaboratorProducerService
     {        
         private readonly IProducerRepository _producerRepository;
@@ -28,9 +40,7 @@ namespace PlataformaRio2C.Domain.Services
             return _collaboratorProducerRepository.GetAll(@readonly).ToList().Select(e => e.Collaborator);
         }
 
-       
-
-        public ValidationResult PreRegister(string email, string company, string collaboratorName, Event eventEntity)
+        public ValidationResult PreRegister(string email, string company, string collaboratorName, Edition eventEntity)
         {
             CultureInfo currentCulture = Thread.CurrentThread.CurrentCulture;
 

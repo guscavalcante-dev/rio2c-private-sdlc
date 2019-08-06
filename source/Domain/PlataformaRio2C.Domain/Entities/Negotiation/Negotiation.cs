@@ -1,10 +1,23 @@
-﻿using PlataformaRio2C.Domain.Entities.Validations;
-using PlataformaRio2C.Domain.Enums;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Domain
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-06-2019
+// ***********************************************************************
+// <copyright file="Negotiation.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Domain.Entities.Validations;
 using PlataformaRio2C.Domain.Validation;
 using System;
 
 namespace PlataformaRio2C.Domain.Entities
 {
+    /// <summary>Negotiation</summary>
     public class Negotiation : Entity
     {
         public int ProjectId { get; private set; }
@@ -56,7 +69,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         public void SetSourceEvaluation(ProjectPlayerEvaluation entity)
         {
-            CreationDate = DateTime.Now;
+            CreateDate = DateTime.Now;
             Uid = Guid.NewGuid();
             Evaluation = entity;
             if (entity != null)

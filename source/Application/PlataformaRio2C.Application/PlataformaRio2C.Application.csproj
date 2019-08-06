@@ -172,8 +172,10 @@
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\ConcludeSalesPlatformWebhookRequest.cs" />
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\ProcessSalesPlatformWebhookRequests.cs" />
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\CreateSalesPlatformWebhookRequest.cs" />
+    <Compile Include="CQRS\QueriesHandlers\Quizzes\FindActiveQuizQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\SalesPlatformWebhookRequests\FindAllSalesPlatformWebhooRequestsByPendingQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\SalesPlatforms\FindSalesPlatformByNameQueryHandler.cs" />
+    <Compile Include="CQRS\Queries\Quizzes\FindActiveQuiz.cs" />
     <Compile Include="CQRS\Queries\SalesPlatformWebhookRequests\FindAllSalesPlatformWebhooRequestsByPending.cs" />
     <Compile Include="CQRS\Queries\SalesPlatforms\FindSalesPlatformByName.cs" />
     <Compile Include="Dtos\CustomFormSympla.cs" />
@@ -184,6 +186,7 @@
     <Compile Include="Dtos\ParticipantSympla.cs" />
     <Compile Include="Dtos\ProjectPlayerAppDto.cs" />
     <Compile Include="Dtos\ProjectPlayerFilterAppDto.cs" />
+    <Compile Include="Dtos\Quizzes\QuizDto.cs" />
     <Compile Include="Dtos\SendToPlayerAppDto.cs" />
     <Compile Include="Dtos\UidsDto.cs" />
     <Compile Include="Interfaces\Services\IConfigNetworkRio2CAppService.cs" />
@@ -344,8 +347,8 @@
     <Compile Include="ViewModels\Common\Room\RoomEditAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Room\RoomNameAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Room\RoomAppViewModel.cs" />
-    <Compile Include="Dtos\SalesPlatformWebhookRequest\SalesPlatformWebhookRequestDto.cs" />
-    <Compile Include="Dtos\SalesPlatform\SalesPlatformDto.cs" />
+    <Compile Include="Dtos\SalesPlatformWebhookRequests\SalesPlatformWebhookRequestDto.cs" />
+    <Compile Include="Dtos\SalesPlatforms\SalesPlatformDto.cs" />
     <Compile Include="ViewModels\Common\Schedule\ScheduleDayAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Schedule\ScheduleEventAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Speaker\SpeakerBasicAppViewModel.cs" />

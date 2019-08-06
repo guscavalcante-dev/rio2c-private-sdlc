@@ -1,4 +1,17 @@
-﻿using PlataformaRio2C.Domain.Entities;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Infra.Data
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-06-2019
+// ***********************************************************************
+// <copyright file="PlataformaRio2CContext.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Domain.Entities;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.ModelConfiguration;
@@ -60,7 +73,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                .HasForeignKey(d => d.CollaboratorId);
 
 
-            this.HasRequired(t => t.Event)
+            this.HasRequired(t => t.Edition)
               .WithMany()
               .HasForeignKey(d => d.EventId);
 

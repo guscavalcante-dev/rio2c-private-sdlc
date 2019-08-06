@@ -1,12 +1,26 @@
-﻿namespace PlataformaRio2C.Domain.Entities
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Domain
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-06-2019
+// ***********************************************************************
+// <copyright file="UserUseTerm.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+namespace PlataformaRio2C.Domain.Entities
 {
+    /// <summary>UserUseTerm</summary>
     public class UserUseTerm : Entity
     {
         public int UserId { get; private set; }
         public virtual User User { get; private set; }
 
         public int EventId { get; private set; }
-        public virtual Event Event { get; private set; }
+        public virtual Edition Edition { get; private set; }
       
         public int RoleId { get; private set; }
         public virtual Role Role { get; private set; }
@@ -46,9 +60,9 @@
             }
         }
 
-        public void SetEvent(Event eventValue)
+        public void SetEvent(Edition eventValue)
         {
-            Event = eventValue;
+            Edition = eventValue;
             if (eventValue != null)
             {
                 SetEventId(eventValue.Id);

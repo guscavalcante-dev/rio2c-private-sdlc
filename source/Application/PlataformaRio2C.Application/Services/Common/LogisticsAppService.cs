@@ -1,8 +1,20 @@
-﻿using PlataformaRio2C.Application.Interfaces.Services;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Application
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-06-2019
+// ***********************************************************************
+// <copyright file="LogisticsAppService.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Application.Interfaces.Services;
 using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Infra.Data.Context;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 using System;
 using System.Linq;
@@ -15,18 +27,26 @@ using System.Net.Mail;
 
 namespace PlataformaRio2C.Application.Services
 {
+    /// <summary>LogisticsAppService</summary>
     public class LogisticsAppService : AppService<Infra.Data.Context.PlataformaRio2CContext, Logistics, LogisticsAppViewModel, LogisticsAppViewModel, LogisticsEditAppViewModel, LogisticsItemListAppViewModel>, ILogisticsAppService
     {
         private readonly ICollaboratorRepository _collaboratorRepository;
         private readonly IProducerRepository _producerRepository;
-        private readonly IEventRepository _eventRepository;
+        private readonly IEditionRepository _eventRepository;
         private readonly ISystemParameterRepository _systemParameterRepository;
         private readonly IEmailAppService _emailAppService;
+
+        /// <summary>Initializes a new instance of the <see cref="LogisticsAppService"/> class.</summary>
+        /// <param name="service">The service.</param>
+        /// <param name="unitOfWork">The unit of work.</param>
+        /// <param name="repositoryFactory">The repository factory.</param>
+        /// <param name="emailAppService">The email application service.</param>
+        /// <param name="systemParameterRepository">The system parameter repository.</param>
         public LogisticsAppService(ILogisticsService service, IUnitOfWork unitOfWork, IRepositoryFactory repositoryFactory, IEmailAppService emailAppService, ISystemParameterRepository systemParameterRepository)
             : base(unitOfWork, service)
         {
             _collaboratorRepository = repositoryFactory.CollaboratorRepository;
-            _eventRepository = repositoryFactory.EventRepository;
+            _eventRepository = repositoryFactory.EditionRepository;
             _producerRepository = repositoryFactory.ProducerRepository;
             _emailAppService = emailAppService;
             _systemParameterRepository = systemParameterRepository;

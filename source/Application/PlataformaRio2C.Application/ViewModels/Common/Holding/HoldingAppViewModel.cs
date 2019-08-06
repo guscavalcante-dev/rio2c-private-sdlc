@@ -1,19 +1,29 @@
-﻿using PlataformaRio2C.Application.Common;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Application
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-06-2019
+// ***********************************************************************
+// <copyright file="HoldingAppViewModel.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Application.Common;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
 namespace PlataformaRio2C.Application.ViewModels
 {
+    /// <summary>HoldingAppViewModel</summary>
     public class HoldingAppViewModel : EntityViewModel<HoldingAppViewModel, Holding>, IEntityViewModel<Holding>
     {
-
-                                         
-
         [Display(Name = "Name", ResourceType = typeof(Labels))]
         public string Name { get; set; }
 
@@ -34,7 +44,7 @@ namespace PlataformaRio2C.Application.ViewModels
 
         public HoldingAppViewModel(Domain.Entities.Holding entity)
         {
-            CreationDate = entity.CreationDate;
+            CreationDate = entity.CreateDate;
             Uid = entity.Uid;
             Name = entity.Name;
 

@@ -1,9 +1,23 @@
-﻿using PlataformaRio2C.Application.Common;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Application
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-06-2019
+// ***********************************************************************
+// <copyright file="ProjectAdditionalInformationAppViewModel.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Application.Common;
 using PlataformaRio2C.Domain.Entities;
 using System.Web.Mvc;
 
 namespace PlataformaRio2C.Application.ViewModels
 {
+    /// <summary>ProjectAdditionalInformationAppViewModel</summary>
     public class ProjectAdditionalInformationAppViewModel : EntityViewModel<ProjectAdditionalInformationAppViewModel, ProjectAdditionalInformation>, IEntityViewModel<ProjectAdditionalInformation>
     {
         public static readonly int ValueMaxLength = ProjectAdditionalInformation.ValueMaxLength;
@@ -23,7 +37,7 @@ namespace PlataformaRio2C.Application.ViewModels
 
         public ProjectAdditionalInformationAppViewModel(Domain.Entities.ProjectAdditionalInformation entity)
         {
-            CreationDate = entity.CreationDate;
+            CreationDate = entity.CreateDate;
             Uid = entity.Uid;
             Value = entity.Value;
 

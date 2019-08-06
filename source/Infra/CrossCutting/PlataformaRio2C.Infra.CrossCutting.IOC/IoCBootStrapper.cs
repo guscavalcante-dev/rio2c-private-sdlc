@@ -4,16 +4,15 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-12-2019
+// Last Modified On : 08-06-2019
 // ***********************************************************************
-// <copyright file="BootStrapper.cs" company="Softo">
+// <copyright file="IoCBootStrapper.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 using LazyCache;
 using Microsoft.AspNet.Identity;
-using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.Interfaces.Services;
 using PlataformaRio2C.Application.Services;
 using PlataformaRio2C.Domain.Interfaces;
@@ -29,14 +28,14 @@ using PlataformaRio2C.Infra.Data.Repository.Repositories;
 using SimpleInjector;
 using System;
 using System.Linq;
-using System.Net;
-using System.Net.Mail;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms;
+using PlataformaRio2C.Infra.CrossCutting.SystemParameter.Context;
+using PlataformaRio2C.Infra.CrossCutting.SystemParameter.Repositories;
 
 namespace PlataformaRio2C.Infra.CrossCutting.IOC
 {
-    /// <summary>BootStrapper</summary>
-    public static class BootStrapper
+    /// <summary>IoCBootStrapper</summary>
+    public static class IoCBootStrapper
     {
         /// <summary>Registers the services.</summary>
         /// <param name="container">The container.</param>
@@ -58,54 +57,74 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
             ResolveInterest(container);
             ResolveSalesPlataforms(container);
 
-            container.Register<IEventRepository, EventRepository>(Lifestyle.Scoped);
+            //container.Register<IEditionRepository, EditionRepository>(Lifestyle.Scoped);
 
-            container.Register<IRoleRepository, RoleRepository>(Lifestyle.Scoped);
+            //container.Register<IRoleRepository, RoleRepository>(Lifestyle.Scoped);
 
-            container.Register<PlataformaRio2C.Infra.CrossCutting.SystemParameter.PlataformaRio2CContext>(Lifestyle.Scoped);
+            container.Register<PlataformaRio2CContext>(Lifestyle.Scoped);
+
+            // SystemParameter Assembly
             container.Register<ISystemParameterRepository, SystemParameterRepository>(Lifestyle.Scoped);
-
             container.Register<ISystemParameterCollection, SystemParameterCollection>(Lifestyle.Scoped);
-
             container.Register<ISystemParameterAppService, SystemParameterAppService>(Lifestyle.Scoped);
-            container.Register<IUnitOfWorkSystemParameter, SystemParameter.UnitOfWorkWithLog<SystemParameter.PlataformaRio2CContext>>(Lifestyle.Scoped);
+            container.Register<IUnitOfWorkSystemParameter, SystemParameter.UnitOfWorkWithLog<PlataformaRio2CContext>>(Lifestyle.Scoped);
 
             container.Register<IProducerAppService, ProducerAppService>(Lifestyle.Scoped);
             container.Register<IProducerService, ProducerService>(Lifestyle.Scoped);
-            container.Register<IProducerRepository, ProducerRepository>(Lifestyle.Scoped);
+            //container.Register<IProducerRepository, ProducerRepository>(Lifestyle.Scoped);
 
             container.Register<IEmailAppService, EmailAppService>(Lifestyle.Scoped);
 
             container.Register<IMessageAppService, MessageAppService>(Lifestyle.Scoped);
             container.Register<IMessageService, MessageService>(Lifestyle.Scoped);
-            container.Register<IMessageRepository, MessageRepository>(Lifestyle.Scoped);
+            //container.Register<IMessageRepository, MessageRepository>(Lifestyle.Scoped);
 
             container.Register<IProjectService, ProjectService>(Lifestyle.Scoped);
             container.Register<IProjectAppService, ProjectAppService>(Lifestyle.Scoped);
-            container.Register<IProjectRepository, ProjectRepository>(Lifestyle.Scoped);
+            //container.Register<IProjectRepository, ProjectRepository>(Lifestyle.Scoped);
 
             container.Register<IErrorMessageService, ErrorMessageService>(Lifestyle.Scoped);
 
 
             container.Register<IRoomService, RoomService>(Lifestyle.Scoped);
-            container.Register<IRoomRepository, RoomRepository>(Lifestyle.Scoped);
+            //container.Register<IRoomRepository, RoomRepository>(Lifestyle.Scoped);
             container.Register<IRoomAppService, RoomAppService>(Lifestyle.Scoped);
 
             container.Register<IRoleLecturerService, RoleLecturerService>(Lifestyle.Scoped);
-            container.Register<IRoleLecturerRepository, RoleLecturerRepository>(Lifestyle.Scoped);
+            //container.Register<IRoleLecturerRepository, RoleLecturerRepository>(Lifestyle.Scoped);
             container.Register<IRoleLecturerAppService, RoleLecturerAppService>(Lifestyle.Scoped);
 
             container.Register<IDashboardAppService, DashboardAppService>(Lifestyle.Scoped);
 
             container.Register<INegotiationService, NegotiationService>(Lifestyle.Scoped);
-            container.Register<INegotiationRepository, NegotiationRepository>(Lifestyle.Scoped);
+            //container.Register<INegotiationRepository, NegotiationRepository>(Lifestyle.Scoped);
             container.Register<INegotiationAppService, NegotiationAppService>(Lifestyle.Scoped);
 
             container.Register<IScheduleAppService, ScheduleAppService>(Lifestyle.Scoped);
 
             container.Register<IQuizAnswerAppService, QuizAnswerAppService>(Lifestyle.Scoped);
             container.Register<IQuizAnswerService, QuizAnswerService>(Lifestyle.Scoped);
-            container.Register<IQuizAnswerRepository, QuizAnswerRepository>(Lifestyle.Scoped);
+            //container.Register<IQuizAnswerRepository, QuizAnswerRepository>(Lifestyle.Scoped);
+
+            RegisterRepositories(container);
+        }
+
+        /// <summary>Registers the repositories.</summary>
+        /// <param name="container">The container.</param>
+        private static void RegisterRepositories(Container container)
+        {
+            var repositoryAssembly = typeof(UserRepository).Assembly;
+            var registrations = from type in repositoryAssembly.GetExportedTypes()
+                                where type.Namespace.StartsWith("PlataformaRio2C.Infra.Data.Repository.Repositories")
+                                from service in type.GetInterfaces()
+                                select new { service, implementation = type };
+
+            foreach (var reg in registrations)
+            {
+                container.Register(reg.service, reg.implementation, Lifestyle.Scoped);
+            }
+
+            container.Register<IRepositoryFactory, RepositoryFactory>(Lifestyle.Scoped);
         }
 
         /// <summary>Resolves the base.</summary>
@@ -113,7 +132,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
         public static void ResolveBase(Container container)
         {
             container.Register<Data.Context.PlataformaRio2CContext>(Lifestyle.Scoped);
-            container.Register<IRepositoryFactory, RepositoryFactory>(Lifestyle.Scoped);
             container.Register<Data.Context.Interfaces.IUnitOfWork, Data.Context.Models.UnitOfWorkWithLog<Data.Context.PlataformaRio2CContext>>(Lifestyle.Scoped);
             container.Register<ILogService>(() => new LogService(true), Lifestyle.Scoped);
             container.Register<Identity.Context.PlataformaRio2CContext>(Lifestyle.Scoped);
@@ -124,36 +142,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
             container.Register<IdentityAutenticationService>(Lifestyle.Scoped);
             container.Register<IdentityServicesSetup>(() => MakeIdentityServicesSetup(container), Lifestyle.Scoped);
 
-            container.Register<IImageFileRepository, ImageFileRepository>(Lifestyle.Scoped);
-            container.Register<ILanguageRepository, LanguageRepository>(Lifestyle.Scoped);
-
-            container.Register<IUserRoleRepository, UserRoleRepository>(Lifestyle.Scoped);
-
             container.Register<ILanguageAppService, LanguageAppService>(Lifestyle.Scoped);
             container.Register<ILanguageService, LanguageService>(Lifestyle.Scoped);
 
             container.Register<IUserAppService, UserAppService>(Lifestyle.Scoped);
             container.Register<IUserService, UserService>(Lifestyle.Scoped);
 
-            container.Register<IActivityRepository, ActivityRepository>(Lifestyle.Scoped);
-            container.Register<ITargetAudienceRepository, TargetAudienceRepository>(Lifestyle.Scoped);
-
             container.Register<IPlayerRestrictionsSpecificsService, PlayerRestrictionsSpecificsService>(Lifestyle.Scoped);
 
             container.Register<ILogisticsAppService, LogisticsAppService>(Lifestyle.Scoped);
             container.Register<ILogisticsService, LogisticsService>(Lifestyle.Scoped);
 
-            container.Register<ILogisticsRepository, LogisticsRepository>(Lifestyle.Scoped);
 
             container.Register<IConferenceAppService, ConferenceAppService>(Lifestyle.Scoped);
-            container.Register<IConferenceRepository, ConferenceRepository>(Lifestyle.Scoped);
             container.Register<IConferenceService, ConferenceService>(Lifestyle.Scoped);
 
-            container.Register<ISpeakerRepository, SpeakerRepository>(Lifestyle.Scoped);
             container.Register<ISpeakerService, SpeakerService>(Lifestyle.Scoped);
             container.Register<ISpeakerAppService, SpeakerAppService>(Lifestyle.Scoped);
 
-            container.Register<IMusicalCommissionRepository, MusicalCommissionRepository>(Lifestyle.Scoped);
             container.Register<IMusicalCommissionService, MusicalCommissionService>(Lifestyle.Scoped);
             container.Register<IMusicalCommissionAppService, MusicalCommissionAppService>(Lifestyle.Scoped);
         }
@@ -162,10 +168,8 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
         /// <param name="container">The container.</param>
         public static void ResolveHolding(Container container)
         {
-            container.Register<IHoldingRepository, HoldingRepository>(Lifestyle.Scoped);
             container.Register<IHoldingService, HoldingService>(Lifestyle.Scoped);
             container.Register<IHoldingAppService, HoldingAppService>(Lifestyle.Scoped);
-            container.Register<IHoldingDescriptionRepository, HoldingDescriptionRepository>(Lifestyle.Scoped);
         }
 
         /// <summary>Resolves the collaborator.</summary>
@@ -174,11 +178,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
         {
             container.Register<ICollaboratorService, CollaboratorService>(Lifestyle.Scoped);
             container.Register<ICollaboratorAppService, CollaboratorAppService>(Lifestyle.Scoped);
-            container.Register<ICollaboratorRepository, CollaboratorRepository>(Lifestyle.Scoped);
-            container.Register<ICollaboratorJobTitleRepository, CollaboratorJobTitleRepository>(Lifestyle.Scoped);
-            container.Register<ICollaboratorMiniBioRepository, CollaboratorMiniBioRepository>(Lifestyle.Scoped);
 
-            container.Register<ICountryRepository, CountryRepository>(Lifestyle.Scoped);
             container.Register<ICountryService, CountryService>(Lifestyle.Scoped);
             container.Register<ICountryAppService, CountryAppService>(Lifestyle.Scoped);
         }
@@ -206,22 +206,14 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
         public static void ResolvePlayer(Container container)
         {
             container.Register<IPlayerAppService, PlayerAppService>(Lifestyle.Scoped);
-            container.Register<IPlayerRepository, PlayerRepository>(Lifestyle.Scoped);
-            container.Register<IPlayerDescriptionRepository, PlayerDescriptionRepository>(Lifestyle.Scoped);
             container.Register<IPlayerInterestService, PlayerInterestService>(Lifestyle.Scoped);
-            container.Register<IPlayerInterestRepository, PlayerInterestRepository>(Lifestyle.Scoped);
-            container.Register<IPlayerRestrictionsSpecificsRepository, PlayerRestrictionsSpecificsRepository>(Lifestyle.Scoped);
-            container.Register<IPlayerActivityRepository, PlayerActivityRepository>(Lifestyle.Scoped);
-            container.Register<IPlayerTargetAudienceRepository, PlayerTargetAudienceRepository>(Lifestyle.Scoped);
         }
 
         /// <summary>Resolves the user.</summary>
         /// <param name="container">The container.</param>
         public static void ResolveUser(Container container)
         {
-            container.Register<IUserRepository, UserRepository>(Lifestyle.Scoped);
             container.Register<IUserUseTermAppService, UserUseTermAppService>(Lifestyle.Scoped);
-            container.Register<IUserUseTermRepository, UserUseTermRepository>(Lifestyle.Scoped);
             container.Register<IUserUseTermService, UserUseTermService>(Lifestyle.Scoped);
         }
 
@@ -231,7 +223,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
         {
             container.Register<IInterestGroupAppService, InterestGroupAppService>(Lifestyle.Scoped);
             container.Register<IInterestGroupService, InterestGroupService>(Lifestyle.Scoped);
-            container.Register<IInterestGroupRepository, InterestGroupRepository>(Lifestyle.Scoped);
         }
 
         /// <summary>Resolves the interest.</summary>
@@ -240,7 +231,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
         {
             container.Register<IInterestAppService, InterestAppService>(Lifestyle.Scoped);
             container.Register<IInterestService, InterestService>(Lifestyle.Scoped);
-            container.Register<IInterestRepository, InterestRepository>(Lifestyle.Scoped);
         }
 
         /// <summary>Resolves the sales plataforms.</summary>
@@ -248,8 +238,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
         public static void ResolveSalesPlataforms(Container container)
         {
             container.Register<ISalesPlatformServiceFactory, SalesPlatformServiceFactory>(Lifestyle.Scoped);
-            container.Register<ISalesPlatformRepository, SalesPlatformRepository>(Lifestyle.Scoped);
-            container.Register<ISalesPlatformWebhookRequestRepository, SalesPlatformWebhookRequestRepository>(Lifestyle.Scoped);
         }
 
         /// <summary>Makes the identity services setup.</summary>

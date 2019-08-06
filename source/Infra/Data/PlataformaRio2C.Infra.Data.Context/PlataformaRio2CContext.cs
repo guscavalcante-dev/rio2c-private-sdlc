@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-12-2019
+// Last Modified On : 08-06-2019
 // ***********************************************************************
 // <copyright file="PlataformaRio2CContext.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -47,7 +47,7 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new CollaboratorMap());
             modelBuilder.Configurations.Add(new CollaboratorJobTitleMap());
             modelBuilder.Configurations.Add(new CollaboratorMiniBioMap());
-            modelBuilder.Configurations.Add(new EventMap());
+            modelBuilder.Configurations.Add(new EditionMap());
             modelBuilder.Configurations.Add(new UserMap());
             modelBuilder.Configurations.Add(new UserUseTermMap());
             modelBuilder.Configurations.Add(new RoleMap());            
@@ -120,7 +120,7 @@ namespace PlataformaRio2C.Infra.Data.Context
         public DbSet<HoldingDescription> HoldingDescriptions { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<Collaborator> Collaborators { get; set; }
-        public DbSet<Event> Events { get; set; }               
+        public DbSet<Edition> Events { get; set; }               
         public DbSet<User> Users { get; set; }
         public DbSet<UserUseTerm> UserUseTerms { get; set; }
         public DbSet<InterestGroup> InterestGroups { get; set; }

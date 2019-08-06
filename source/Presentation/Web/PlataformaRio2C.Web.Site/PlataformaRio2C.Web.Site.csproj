@@ -79,6 +79,9 @@
       <HintPath>..\..\..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MediatR, Version=7.0.0.0, Culture=neutral, PublicKeyToken=bb9a41a5e8aaa7e2, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\MediatR.7.0.0\lib\net461\MediatR.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.4.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
     </Reference>
@@ -306,6 +309,7 @@
     <Compile Include="Controllers\TermController.cs" />
     <Compile Include="Controllers\Ticket4youController.cs" />
     <Compile Include="Filters\CustomExceptionFilterAttribute.cs" />
+    <Compile Include="Filters\AuthorizeTicketTypeFilterAttribute.cs" />
     <Compile Include="Filters\TermFilterAttribute.cs" />
     <Compile Include="Hub\ConnectionMapping.cs" />
     <Compile Include="Hub\MessageHub.cs" />
@@ -7915,6 +7919,10 @@
     <ProjectReference Include="..\..\..\Domain\PlataformaRio2C.Domain\PlataformaRio2C.Domain.csproj">
       <Project>{9CFDDB5C-4DA2-437B-AEDD-CABE12EF09BC}</Project>
       <Name>PlataformaRio2C.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.CQRS\PlataformaRio2C.Infra.CrossCutting.CQRS.csproj">
+      <Project>{e414d342-6a28-4844-9f2f-a6022d5ae929}</Project>
+      <Name>PlataformaRio2C.Infra.CrossCutting.CQRS</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.Identity\PlataformaRio2C.Infra.CrossCutting.Identity.csproj">
       <Project>{D8359323-3DBC-477E-B673-E77BA1128426}</Project>

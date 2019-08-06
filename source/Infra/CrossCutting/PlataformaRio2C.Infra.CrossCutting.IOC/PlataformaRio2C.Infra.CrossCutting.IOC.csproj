@@ -115,10 +115,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SiteIoCBootStrapper.cs" />
     <Compile Include="BootStrapperHub.cs" />
-    <Compile Include="BootStrapperPortal.cs" />
-    <Compile Include="BootStrapperAdmin.cs" />
-    <Compile Include="BootStrapper.cs" />
+    <Compile Include="AdminIoCBootStrapper.cs" />
+    <Compile Include="IoCBootStrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

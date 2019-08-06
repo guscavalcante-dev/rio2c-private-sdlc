@@ -1,4 +1,17 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Application
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-06-2019
+// ***********************************************************************
+// <copyright file="ProjectAppService.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using PlataformaRio2C.Application.Interfaces.Services;
 using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Domain.Entities;
@@ -11,7 +24,6 @@ using System.Web.Mvc;
 using PlataformaRio2C.Application.Common;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
-using System.Resources;
 using PlataformaRio2C.Application.Dtos;
 using System.Linq.Expressions;
 using LinqKit;
@@ -24,12 +36,13 @@ using System.Text.RegularExpressions;
 
 namespace PlataformaRio2C.Application.Services
 {
+    /// <summary>ProjectAppService</summary>
     public class ProjectAppService : AppService<PlataformaRio2CContext, Project, ProjectBasicAppViewModel, ProjectDetailAppViewModel, ProjectEditAppViewModel, ProjectItemListAppViewModel>, IProjectAppService
     {
         #region props
 
         private readonly ILanguageRepository _languageRepository;
-        private readonly IEventRepository _eventRepository;
+        private readonly IEditionRepository _eventRepository;
         private readonly IInterestRepository _interestRepository;
 
         private readonly IProjectTitleRepository _projectTitleRepository;
@@ -60,7 +73,7 @@ namespace PlataformaRio2C.Application.Services
             _projectLogLineRepository = repositoryFactory.ProjectLogLineRepository;
             _projectSummaryRepository = repositoryFactory.ProjectSummaryRepository;
             _projectProductionPlanRepository = repositoryFactory.ProjectProductionPlanRepository;
-            _eventRepository = repositoryFactory.EventRepository;
+            _eventRepository = repositoryFactory.EditionRepository;
             _interestRepository = repositoryFactory.InterestRepository;
             _projectInterestRepository = repositoryFactory.ProjectInterestRepository;
             _projectLinkImageRepository = repositoryFactory.ProjectLinkImageRepository;

@@ -1,4 +1,17 @@
-﻿namespace PlataformaRio2C.Domain.Interfaces
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Domain
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-06-2019
+// ***********************************************************************
+// <copyright file="IRepositoryFactory.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+namespace PlataformaRio2C.Domain.Interfaces
 {
     public interface IRepositoryFactory
     {
@@ -12,7 +25,7 @@
         ICollaboratorProducerRepository CollaboratorProducerRepository { get; }
         IInterestRepository InterestRepository { get; }
         IInterestGroupRepository InterestGroupRepository { get; }
-        IEventRepository EventRepository { get; }
+        IEditionRepository EditionRepository { get; }
         IUserRepository UserRepository { get; }
         IActivityRepository ActivityRepository { get; }
         ITargetAudienceRepository TargetAudienceRepository { get; }
@@ -74,6 +87,5 @@
         ISpeakerRepository SpeakerRepository { get; }
 
         IMusicalCommissionRepository MusicalCommissionRepository { get; }
-
     }
 }

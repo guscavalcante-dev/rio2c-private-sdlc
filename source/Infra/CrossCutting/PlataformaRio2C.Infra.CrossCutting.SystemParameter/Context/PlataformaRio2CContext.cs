@@ -1,12 +1,27 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Infra.CrossCutting.SystemParameter
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-06-2019
+// ***********************************************************************
+// <copyright file="PlataformaRio2CContext.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
+using PlataformaRio2C.Infra.CrossCutting.SystemParameter.Mapping;
 
-namespace PlataformaRio2C.Infra.CrossCutting.SystemParameter
+namespace PlataformaRio2C.Infra.CrossCutting.SystemParameter.Context
 {
+    /// <summary>PlataformaRio2CContext</summary>
     public class PlataformaRio2CContext : DbContext
     {
         public DbSet<SystemParameter> SystemParameters { get; set; }

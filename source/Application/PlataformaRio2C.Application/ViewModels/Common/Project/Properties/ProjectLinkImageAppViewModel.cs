@@ -1,9 +1,23 @@
-﻿using PlataformaRio2C.Application.Common;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Application
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-06-2019
+// ***********************************************************************
+// <copyright file="ProjectLinkImageAppViewModel.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Application.Common;
 using PlataformaRio2C.Domain.Entities;
 using System.Web.Mvc;
 
 namespace PlataformaRio2C.Application.ViewModels
 {
+    /// <summary>ProjectLinkImageAppViewModel</summary>
     public class ProjectLinkImageAppViewModel : EntityViewModel<ProjectLinkImageAppViewModel, ProjectLinkImage>, IEntityViewModel<ProjectLinkImage>
     {
         [AllowHtml]
@@ -17,7 +31,7 @@ namespace PlataformaRio2C.Application.ViewModels
 
         public ProjectLinkImageAppViewModel(Domain.Entities.ProjectLinkImage entity)
         {
-            CreationDate = entity.CreationDate;
+            CreationDate = entity.CreateDate;
             Uid = entity.Uid;
             Value = entity.Value;
         }

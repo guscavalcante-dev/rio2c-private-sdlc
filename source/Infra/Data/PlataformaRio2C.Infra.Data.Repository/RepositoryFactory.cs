@@ -4,7 +4,7 @@
 // Created          : 07-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-11-2019
+// Last Modified On : 08-06-2019
 // ***********************************************************************
 // <copyright file="RepositoryFactory.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,8 +13,9 @@
 // ***********************************************************************
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context;
+using PlataformaRio2C.Infra.Data.Repository.Repositories;
 
-namespace PlataformaRio2C.Infra.Data.Repository.Repositories
+namespace PlataformaRio2C.Infra.Data.Repository
 {
     /// <summary>RepositoryFactory</summary>
     public class RepositoryFactory: IRepositoryFactory
@@ -100,12 +101,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             }
         }
 
-        private IEventRepository _eventRepository;
-        public IEventRepository EventRepository
+        private IEditionRepository _editionRepository;
+        public IEditionRepository EditionRepository
         {
             get
             {
-                return this._eventRepository ?? (this._eventRepository = new EventRepository(_context));
+                return this._editionRepository ?? (this._editionRepository = new EditionRepository(_context));
             }
         }
 

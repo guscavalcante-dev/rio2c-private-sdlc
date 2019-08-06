@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-04-2019
+// Last Modified On : 08-06-2019
 // ***********************************************************************
 // <copyright file="BaseController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -128,6 +128,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             ViewBag.FullName = this.UserName = user.Name.UppercaseFirstOfEachWord(this.UserInterfaceLanguage);
             ViewBag.FirstName = this.UserName?.GetFirstWord();
             ViewBag.UserRoles = this.UserRoles = this.identityController.FindAllRolesByUserIdAsync(this.UserId).Result;
+            ViewBag.UserTicketTypes = new[] { "Industry", "Player" }; //TODO: Get from database
         }
 
         //protected void CheckRegisterIsComplete()

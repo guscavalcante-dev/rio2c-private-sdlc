@@ -1,15 +1,31 @@
-﻿using PlataformaRio2C.Application.Interfaces.Services;
-using PlataformaRio2C.Infra.CrossCutting.SystemParameter;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Application
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-06-2019
+// ***********************************************************************
+// <copyright file="EmailAppService.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using System;
 using System.Net.Mail;
 using System.Net.Mime;
+using PlataformaRio2C.Application.Interfaces.Services;
+using PlataformaRio2C.Infra.CrossCutting.SystemParameter;
 
-namespace PlataformaRio2C.Application
+namespace PlataformaRio2C.Application.Services
 {
+    /// <summary>EmailAppService</summary>
     public class EmailAppService: IEmailAppService
     {
         private readonly ISystemParameterRepository _systemParameterRepository;
 
+        /// <summary>Initializes a new instance of the <see cref="EmailAppService"/> class.</summary>
+        /// <param name="systemParameterRepository">The system parameter repository.</param>
         public EmailAppService(ISystemParameterRepository systemParameterRepository)
         {
             _systemParameterRepository = systemParameterRepository;

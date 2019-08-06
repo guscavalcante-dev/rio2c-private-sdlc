@@ -135,7 +135,7 @@
     <Compile Include="Repositories\Quiz\QuizOptionRepository.cs" />
     <Compile Include="Repositories\Quiz\QuizQuestionReposiotry.cs" />
     <Compile Include="Repositories\Quiz\QuizRepository.cs" />
-    <Compile Include="Repositories\RepositoryFactory.cs" />
+    <Compile Include="RepositoryFactory.cs" />
     <Compile Include="Repositories\Room\RoomNameRepository.cs" />
     <Compile Include="Repositories\Room\RoomRepository.cs" />
     <Compile Include="Repositories\SalesPlatform\SalesPlatformWebhookRequestRepository.cs" />
@@ -147,7 +147,7 @@
     <Compile Include="Repositories\Player\PlayerDescriptionRepository.cs" />
     <Compile Include="Repositories\Holding\HoldingDescriptionRepository.cs" />
     <Compile Include="Repositories\Common\ImageFileRepository.cs" />
-    <Compile Include="Repositories\Common\EventRepository.cs" />
+    <Compile Include="Repositories\Common\EditionRepository.cs" />
     <Compile Include="Repositories\Common\LanguageRepository.cs" />
     <Compile Include="Repositories\User\UserRepository.cs" />
     <Compile Include="Repositories\Player\PlayerRepository.cs" />

@@ -1,4 +1,16 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Application
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-06-2019
+// ***********************************************************************
+// <copyright file="UserUseTermAppService.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using System.Collections.Generic;
 using PlataformaRio2C.Application.Interfaces.Services;
 using PlataformaRio2C.Application.ViewModels;
@@ -9,15 +21,20 @@ using System.Linq;
 
 namespace PlataformaRio2C.Application.Services
 {
+    /// <summary>UserUseTermAppService</summary>
     public class UserUseTermAppService : AppService<PlataformaRio2CContext, Domain.Entities.UserUseTerm, UserUseTermAppViewModel, UserUseTermAppViewModel, UserUseTermAppViewModel, UserUseTermAppViewModel>, IUserUseTermAppService
     {
-        private readonly IEventRepository _eventRepository;
+        private readonly IEditionRepository _eventRepository;
         private readonly IRoleRepository _roleRepository;
 
+        /// <summary>Initializes a new instance of the <see cref="UserUseTermAppService"/> class.</summary>
+        /// <param name="service">The service.</param>
+        /// <param name="unitOfWork">The unit of work.</param>
+        /// <param name="repositoryFactory">The repository factory.</param>
         public UserUseTermAppService(IUserUseTermService service, IUnitOfWork unitOfWork, IRepositoryFactory repositoryFactory)
             : base(unitOfWork, service)
         {
-            _eventRepository = repositoryFactory.EventRepository;
+            _eventRepository = repositoryFactory.EditionRepository;
             _roleRepository = repositoryFactory.RoleRepository;
         }
 

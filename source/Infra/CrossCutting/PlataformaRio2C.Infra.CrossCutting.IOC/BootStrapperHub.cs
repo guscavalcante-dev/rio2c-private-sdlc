@@ -1,4 +1,17 @@
-﻿using PlataformaRio2C.Application.Interfaces.Services;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Infra.CrossCutting.IOC
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-06-2019
+// ***********************************************************************
+// <copyright file="BootStrapperHub.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Application.Interfaces.Services;
 using PlataformaRio2C.Application.Services;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Services;
@@ -9,15 +22,17 @@ using PlataformaRio2C.Infra.Data.Repository.Repositories;
 using SimpleInjector;
 using SimpleInjector.Lifestyles;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PlataformaRio2C.Infra.CrossCutting.SystemParameter.Context;
+using PlataformaRio2C.Infra.CrossCutting.SystemParameter.Repositories;
+using PlataformaRio2C.Infra.Data.Repository;
 
 namespace PlataformaRio2C.Infra.CrossCutting.IOC
 {
+    /// <summary>BootStrapperHub</summary>
     public static class BootStrapperHub
     {
+        /// <summary>Initializes the thread scoped.</summary>
+        /// <returns></returns>
         public static Container InitializeThreadScoped()
         {
             var container = new Container();
@@ -40,7 +55,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
             container.Register<ICollaboratorMiniBioRepository, CollaboratorMiniBioRepository>(Lifestyle.Scoped);
             container.Register<IUserRoleRepository, UserRoleRepository>(Lifestyle.Scoped);
             container.Register<IRoleRepository, RoleRepository>(Lifestyle.Scoped);
-            container.Register<PlataformaRio2C.Infra.CrossCutting.SystemParameter.PlataformaRio2CContext>(Lifestyle.Scoped);
+            container.Register<PlataformaRio2CContext>(Lifestyle.Scoped);
             container.Register<ISystemParameterRepository, SystemParameterRepository>(Lifestyle.Scoped);
 
             try
@@ -52,7 +67,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
 
                 throw;
             }
-           
 
             return container;
         }

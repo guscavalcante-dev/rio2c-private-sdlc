@@ -1,4 +1,17 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Domain
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-06-2019
+// ***********************************************************************
+// <copyright file="ProjectService.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Validation;
@@ -9,6 +22,7 @@ using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Services
 {
+    /// <summary>ProjectService</summary>
     public class ProjectService : Service<Project>, IProjectService
     {
         private readonly IPlayerRepository _playerRepository;
@@ -322,7 +336,7 @@ namespace PlataformaRio2C.Domain.Services
             var collaborator = _collaboratorRepository.GetWithProducerByUserId(userId);
             if (collaborator != null && collaborator.ProducersEvents != null)
             {
-                var producerId = collaborator.ProducersEvents.Where(e => e.Event.Name.Contains("2018")).Select(e => e.ProducerId).FirstOrDefault();
+                var producerId = collaborator.ProducersEvents.Where(e => e.Edition.Name.Contains("2018")).Select(e => e.ProducerId).FirstOrDefault();
                 var producer = _producerRepository.Get(producerId);
 
                 var r = _repository as IProjectRepository;

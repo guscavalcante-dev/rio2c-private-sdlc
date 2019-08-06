@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-03-2019
+// Last Modified On : 08-06-2019
 // ***********************************************************************
 // <copyright file="QuizController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,15 +15,20 @@ using PlataformaRio2C.Application.ViewModels;
 using Microsoft.AspNet.Identity;
 using PlataformaRio2C.Domain.Interfaces;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
+using MediatR;
+using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Application.Interfaces.Services;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
     /// <summary>QuizController</summary>
+    [Authorize(Order = 1)]
     public class QuizController : BaseController
     {
+        private readonly IMediator commandBus;
         private readonly IQuizRepository _quizRepository;
         private readonly IQuizAnswerRepository _answerRepository;
         private readonly IQuizQuestionRepository _questionRepository;
@@ -34,12 +39,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
         //private readonly IQuizRepository _quizRepository;
 
         /// <summary>Initializes a new instance of the <see cref="QuizController"/> class.</summary>
+        /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="repositoryFactory">The repository factory.</param>
         /// <param name="answerService">The answer service.</param>
-        public QuizController(IdentityAutenticationService identityController, IRepositoryFactory repositoryFactory, IQuizAnswerAppService answerService)
+        public QuizController(IMediator commandBus, IdentityAutenticationService identityController, IRepositoryFactory repositoryFactory, IQuizAnswerAppService answerService)
             : base(identityController)
         {
+            this.commandBus = commandBus;
             _quizRepository = repositoryFactory.QuizRepository;
             _answerRepository = repositoryFactory.QuizAnswerRepository;
             _questionRepository = repositoryFactory.QuizQuestionRepository;
@@ -48,24 +55,31 @@ namespace PlataformaRio2C.Web.Site.Controllers
         }
 
         // GET: Quiz
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            int userId = User.Identity.GetUserId<int>();
+            //int userId = User.Identity.GetUserId<int>();
 
-            if (AnsweredQuiz(userId, 1))
+            var quiz = await this.commandBus.Send(new FindActiveQuiz());
+            if (quiz == null)
+            {
+                return RedirectToAction("Index", "Home", new { Area = "" });
+            }
+
+            if (this.AnsweredQuiz(this.UserId, 1))
             {
                 //return RedirectToAction("ProfileEdit", "Collaborator", new { area = "" });
                 return RedirectToAction("Index", "Home", new { Area = "" });
             }
-            else
-            {
-                return RedirectToAction("Edition2018");
-            }
 
+            return RedirectToAction("Edition2018");
 
             //return View();
         }
 
+        /// <summary>Answereds the quiz.</summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="quizId">The quiz identifier.</param>
+        /// <returns></returns>
         private bool AnsweredQuiz(int userId, int quizId)
         {
             bool response = false;

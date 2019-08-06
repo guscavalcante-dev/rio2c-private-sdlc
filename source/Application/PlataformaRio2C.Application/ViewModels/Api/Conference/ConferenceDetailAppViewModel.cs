@@ -1,12 +1,24 @@
-﻿using PlataformaRio2C.Domain.Entities;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Application
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-06-2019
+// ***********************************************************************
+// <copyright file="ConferenceDetailAppViewModel.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.ViewModels.Api
 {
+    /// <summary>ConferenceDetailAppViewModel</summary>
     public class ConferenceDetailAppViewModel
     {
         public Guid Uid { get; set; }
@@ -28,7 +40,7 @@ namespace PlataformaRio2C.Application.ViewModels.Api
         public ConferenceDetailAppViewModel(Conference entity)
         {
             Uid = entity.Uid;
-            CreationDate = entity.CreationDate;
+            CreationDate = entity.CreateDate;
 
             Title = entity.GetTitle();
 

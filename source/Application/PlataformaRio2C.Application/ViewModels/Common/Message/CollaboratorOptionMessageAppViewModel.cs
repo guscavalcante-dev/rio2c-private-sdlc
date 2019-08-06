@@ -1,4 +1,17 @@
-﻿using PlataformaRio2C.Application.Common;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Application
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-06-2019
+// ***********************************************************************
+// <copyright file="CollaboratorOptionMessageAppViewModel.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Application.Common;
 using PlataformaRio2C.Domain.Entities;
 using System;
 using System.Globalization;
@@ -7,6 +20,7 @@ using System.Threading;
 
 namespace PlataformaRio2C.Application.ViewModels
 {
+    /// <summary>CollaboratorOptionMessageAppViewModel</summary>
     public class CollaboratorOptionMessageAppViewModel : EntityViewModel<CollaboratorOptionMessageAppViewModel, Collaborator>
     {
         public string Name { get; set; }
@@ -36,11 +50,11 @@ namespace PlataformaRio2C.Application.ViewModels
             Email = entity.User.Email;
             HasImage = entity.ImageId > 0;
 
-            IsProducer = entity.ProducersEvents != null && entity.ProducersEvents.Any(e => e.Producer != null && e.Event.Name.Contains("2018"));
+            IsProducer = entity.ProducersEvents != null && entity.ProducersEvents.Any(e => e.Producer != null && e.Edition.Name.Contains("2018"));
 
             if (IsProducer)
             {
-                var producer = entity.ProducersEvents.Where(e => e.Producer != null && e.Event.Name.Contains("2018")).Select(e => e.Producer).FirstOrDefault();
+                var producer = entity.ProducersEvents.Where(e => e.Producer != null && e.Edition.Name.Contains("2018")).Select(e => e.Producer).FirstOrDefault();
 
                 if (producer != null)
                 {

@@ -140,7 +140,7 @@
     <Compile Include="Mapping\Common\LanguageMap .cs" />
     <Compile Include="Mapping\Holding\HoldingDescriptionMap.cs" />
     <Compile Include="Mapping\Collaborator\CollaboratorMap.cs" />
-    <Compile Include="Mapping\EventMap.cs" />
+    <Compile Include="Mapping\Editions\EditionMap.cs" />
     <Compile Include="Mapping\Holding\HoldingMap.cs" />
     <Compile Include="Mapping\Common\ImageFileMap.cs" />
     <Compile Include="Mapping\Player\PlayerDescriptionMap.cs" />

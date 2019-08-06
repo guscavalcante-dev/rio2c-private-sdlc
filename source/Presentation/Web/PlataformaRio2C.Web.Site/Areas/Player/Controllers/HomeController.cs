@@ -4,7 +4,7 @@
 // Created          : 07-01-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-03-2019
+// Last Modified On : 08-06-2019
 // ***********************************************************************
 // <copyright file="HomeController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,15 +12,18 @@
 // <summary></summary>
 // ***********************************************************************
 using System.Collections.Generic;
+using System.Linq;
 using PlataformaRio2C.Web.Site.Controllers;
 using System.Web.Mvc;
+using System.Web.Routing;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 
 namespace PlataformaRio2C.Web.Site.Areas.Player.Controllers
 {
     //[TermFilter(Order = 2)]
-    [Authorize(Order = 1, Roles = "Player")]
+    [Authorize(Order = 1/*, Roles = "Player"*/)]
+    //[AuthorizeTicketType(new[] { "Player" })]
     public class HomeController : BaseController
     {
         /// <summary>Initializes a new instance of the <see cref="HomeController"/> class.</summary>

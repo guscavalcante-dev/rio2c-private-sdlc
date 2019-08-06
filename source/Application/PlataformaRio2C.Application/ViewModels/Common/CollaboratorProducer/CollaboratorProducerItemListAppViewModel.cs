@@ -1,4 +1,17 @@
-﻿using PlataformaRio2C.Application.Common;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Application
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-06-2019
+// ***********************************************************************
+// <copyright file="CollaboratorProducerItemListAppViewModel.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Application.Common;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System.ComponentModel.DataAnnotations;
@@ -6,6 +19,7 @@ using System.Linq;
 
 namespace PlataformaRio2C.Application.ViewModels
 {
+    /// <summary>CollaboratorProducerItemListAppViewModel</summary>
     public class CollaboratorProducerItemListAppViewModel : EntityViewModel<CollaboratorProducerItemListAppViewModel, Collaborator>
     {
         [Display(Name = "FullName", ResourceType = typeof(Labels))]
@@ -35,9 +49,9 @@ namespace PlataformaRio2C.Application.ViewModels
                 HasAcceptTerm = entity.User.UserUseTerms.Any();
             }            
 
-            if (entity.ProducersEvents.Any(e => e.Event.Name.Contains("2018")))
+            if (entity.ProducersEvents.Any(e => e.Edition.Name.Contains("2018")))
             {
-                ProducerName = entity.ProducersEvents.Where(e => e.Event.Name.Contains("2018")).Select(e => e.Producer.Name).FirstOrDefault();
+                ProducerName = entity.ProducersEvents.Where(e => e.Edition.Name.Contains("2018")).Select(e => e.Producer.Name).FirstOrDefault();
             }
         }
     }
