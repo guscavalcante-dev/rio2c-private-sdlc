@@ -45,7 +45,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Identity.Context
             modelBuilder.Entity<CustomUserClaim>().ToTable("UserClaims");
             modelBuilder.Entity<CustomUserLogin>().ToTable("UserLogins");
             modelBuilder.Entity<CustomRole>().ToTable("Roles");
-            modelBuilder.Entity<CustomUserRole>().ToTable("UserRoles");
+            modelBuilder.Entity<CustomUserRole>().ToTable("UsersRoles");
         }
 
         /// <summary>Saves all changes made in this context to the underlying database.</summary>

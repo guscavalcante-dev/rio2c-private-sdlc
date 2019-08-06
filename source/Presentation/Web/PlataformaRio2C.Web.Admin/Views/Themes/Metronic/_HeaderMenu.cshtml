@@ -1,6 +1,6 @@
 ﻿@{
     var userRoles = ViewBag.UserRoles as IList<string>;
-    var isAdministrator = userRoles.HasElement("Administrator");
+    var isAdministrator = userRoles.HasElement("Admin");
     var isProjectPitching = userRoles.HasElement("ProjectPitching");
     var isLogistics = userRoles.HasElement("Logistics");
     var menuOpenCssClass = "kt-menu__item--open kt-menu__item--here";

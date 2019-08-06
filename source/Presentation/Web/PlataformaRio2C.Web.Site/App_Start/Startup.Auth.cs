@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-02-2019
+// Last Modified On : 08-06-2019
 // ***********************************************************************
 // <copyright file="Startup.Auth.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -36,6 +36,7 @@ namespace PlataformaRio2C.Web.Site
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login"),
+                CookieName = ".MyRio2C.Site.ApplicationCookie",
                 Provider = new CookieAuthenticationProvider
                 {
                     // Enables the application to validate the security stamp when the user logs in.

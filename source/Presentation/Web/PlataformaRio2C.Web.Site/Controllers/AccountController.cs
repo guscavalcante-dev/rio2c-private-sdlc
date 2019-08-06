@@ -24,12 +24,11 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
     /// <summary>AccountController</summary>
-    [Authorize(Order = 1, Roles = "Player,Producer")]
+    [Authorize(Order = 1)]
     public class AccountController : BaseController
     {
         private readonly IdentityAutenticationService _identityController;
@@ -128,7 +127,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             //else
             //{
 
-            var md5Password = CryptoHelper.ToMD5(model.Password);
+            //var md5Password = CryptoHelper.ToMD5(model.Password);
             var user = AsyncHelpers.RunSync<ApplicationUser>(() => _identityController.FindByEmailAsync(model.Email));
             if (user == null)
             {
@@ -140,14 +139,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return View("DisabledUser");
             }
 
-            _identityController.AddPassword(user.Id, md5Password);
-
-            //var result = await _identityController.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, true);
-            var result = await _identityController.PasswordSignInAsync(model.Email, md5Password, model.RememberMe, true);
+            var result = await _identityController.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, true);
             switch (result)
             {
                 case IdentitySignInStatus.Success:
-                    await _identityController.SignInAsync(authenticationManager, user, model.RememberMe);
+                    await _identityController.SignInAsync(this.authenticationManager, user, model.RememberMe);
 
                     if (!string.IsNullOrEmpty(returnUrl?.Replace("/", string.Empty)))
                     {
@@ -303,12 +299,12 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 var user = await _identityController.FindByNameAsync(User.Identity.Name);
                 if (user == null)
                 {
-                    authenticationManager.SignOut();
+                    this.authenticationManager.SignOut();
                     return View("UserNotFound");
                 }
                 else if (!user.Active)
                 {
-                    authenticationManager.SignOut();
+                    this.authenticationManager.SignOut();
                     return View("DisabledUser");
                 }
                 else
@@ -380,10 +376,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         /// <summary>Logs the off.</summary>
         /// <returns></returns>
-        [Authorize]
+        [HttpPost]
         public ActionResult LogOff()
         {
-            authenticationManager.SignOut();
+            this.authenticationManager.SignOut();
             return RedirectToAction("Index", "Account");
         }
 

@@ -22,12 +22,11 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>AccountController</summary>
-    [Authorize(Roles = "Administrator,Pitching")]
+    [Authorize(Roles = "Admin")]
     public class AccountController : BaseController
     {
         private readonly IdentityAutenticationService _identityController;
@@ -94,10 +93,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return View("DisabledUser");
             }
 
-            var md5Password = CryptoHelper.ToMD5(model.Password);
-
-            //var result = await _identityController.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, true);
-            var result = await _identityController.PasswordSignInAsync(user.UserName, md5Password, model.RememberMe, true);
+            var result = await _identityController.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, true);
             switch (result)
             {
                 case IdentitySignInStatus.Success:
