@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-04-2019
+// Last Modified On : 08-06-2019
 // ***********************************************************************
 // <copyright file="HomeController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,7 +23,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>HomeController</summary>
-    [Authorize(Roles = "Administrator,Pitching")]
+    [Authorize(Roles = "Admin")]
     public class HomeController : BaseController
     {
         private readonly IdentityAutenticationService identityController;

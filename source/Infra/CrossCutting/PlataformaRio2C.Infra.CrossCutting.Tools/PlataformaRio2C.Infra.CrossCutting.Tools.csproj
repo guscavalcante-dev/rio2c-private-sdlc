@@ -141,6 +141,7 @@
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Extensions\MenuExtensions.cs" />
+    <Compile Include="Helpers\CryptoHelper.cs" />
     <Compile Include="Helpers\BreadcrumbHelper.cs" />
     <Compile Include="Interfaces\IUserSession.cs" />
     <Compile Include="Interfaces\Services\ILogService.cs" />

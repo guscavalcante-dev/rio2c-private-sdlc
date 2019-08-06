@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-04-2019
+// Last Modified On : 08-06-2019
 // ***********************************************************************
 // <copyright file="AccountController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,11 +19,10 @@ using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Identity.ViewModels;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Enums;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using System.Collections.Generic;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
@@ -95,7 +94,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return View("DisabledUser");
             }
 
-            var result = await _identityController.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, true);
+            var md5Password = CryptoHelper.ToMD5(model.Password);
+
+            //var result = await _identityController.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, true);
+            var result = await _identityController.PasswordSignInAsync(user.UserName, md5Password, model.RememberMe, true);
             switch (result)
             {
                 case IdentitySignInStatus.Success:

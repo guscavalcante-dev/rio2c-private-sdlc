@@ -21,10 +21,10 @@ using PlataformaRio2C.Infra.CrossCutting.Identity.ViewModels;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Enums;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -100,7 +100,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             //transforma a senha digitada em md5
             //byte[] encodedPassword = new UTF8Encoding().GetBytes(model.Password);
             //byte[] bytePassword = ((HashAlgorithm)CryptoConfig.CreateFromName("MD5")).ComputeHash(encodedPassword);
-            string md5Password = CreateMD5(model.Password);
+            //var md5Password = CreateMD5(model.Password);
 
             ////busca o email no JSON da ticket4you
             //Ticket4youController userByTicket = new Ticket4youController();
@@ -127,76 +127,56 @@ namespace PlataformaRio2C.Web.Site.Controllers
             ////}
             //else
             //{
-            
-                var user = AsyncHelpers.RunSync<ApplicationUser>(() => _identityController.FindByEmailAsync(model.Email));
-                if (user == null)
-                {
-                    ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
-                    return View(model);
-                }
-                else if (!user.Active)
-                {
-                    return View("DisabledUser");
-                }
 
-                _identityController.AddPassword(user.Id, md5Password);
+            var md5Password = CryptoHelper.ToMD5(model.Password);
+            var user = AsyncHelpers.RunSync<ApplicationUser>(() => _identityController.FindByEmailAsync(model.Email));
+            if (user == null)
+            {
+                ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
+                return View(model);
+            }
+            else if (!user.Active)
+            {
+                return View("DisabledUser");
+            }
 
-                //var result = await _identityController.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, true);
-                var result = await _identityController.PasswordSignInAsync(model.Email, md5Password, model.RememberMe, true);
-                switch (result)
-                {
-                    case IdentitySignInStatus.Success:
-                        await _identityController.SignInAsync(authenticationManager, user, model.RememberMe);
+            _identityController.AddPassword(user.Id, md5Password);
 
-                        if (!string.IsNullOrEmpty(returnUrl?.Replace("/", string.Empty)))
-                        {
-                            return Redirect(returnUrl);
-                        }
+            //var result = await _identityController.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, true);
+            var result = await _identityController.PasswordSignInAsync(model.Email, md5Password, model.RememberMe, true);
+            switch (result)
+            {
+                case IdentitySignInStatus.Success:
+                    await _identityController.SignInAsync(authenticationManager, user, model.RememberMe);
 
-                        if (!await _identityController.IsInRoleAsync(user.Id, Domain.Statics.Role.User.Name) && 
-                            !await _identityController.IsInRoleAsync(user.Id, Domain.Statics.Role.Admin.Name))
-                        {
-                            this.StatusMessage(Messages.AccessDenied, StatusMessageType.Danger);
-                            return RedirectToAction("LogOff");
-                        }
+                    if (!string.IsNullOrEmpty(returnUrl?.Replace("/", string.Empty)))
+                    {
+                        return Redirect(returnUrl);
+                    }
 
-                        //returnUrl = returnUrl ?? "/";
-                        //return RedirectToLocal(returnUrl);
-                        return RedirectToAction("Index", "Quiz");
+                    if (!await _identityController.IsInRoleAsync(user.Id, Domain.Statics.Role.User.Name) &&
+                        !await _identityController.IsInRoleAsync(user.Id, Domain.Statics.Role.Admin.Name))
+                    {
+                        this.StatusMessage(Messages.AccessDenied, StatusMessageType.Danger);
+                        return RedirectToAction("LogOff");
+                    }
+
+                    //returnUrl = returnUrl ?? "/";
+                    //return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Index", "Quiz");
 
                 case IdentitySignInStatus.LockedOut:
-                        return View("Lockout");
+                    return View("Lockout");
 
-                    case IdentitySignInStatus.RequiresVerification:
-                        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                case IdentitySignInStatus.RequiresVerification:
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
 
-                    case IdentitySignInStatus.Failure:
-                    default:
-                        ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
-                        return View(model);
-                }
-            //}
-        }
-
-        /// <summary>Creates the m d5.</summary>
-        /// <param name="input">The input.</param>
-        /// <returns></returns>
-        private static string CreateMD5(string input)
-        {
-            // Use input string to calculate MD5 hash
-            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
-            {
-                byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
-                byte[] hashBytes = md5.ComputeHash(inputBytes);
-
-                // Convert the byte array to hexadecimal string
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < hashBytes.Length; i++)
-                {
-                    sb.Append(hashBytes[i].ToString("x2"));
-                }
-                return sb.ToString();
+                case IdentitySignInStatus.Failure:
+                default:
+                    ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
+                    return View(model);
             }
+            //}
         }
 
         #endregion
@@ -292,8 +272,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 if (user == null || !user.Active)
                 {
                     return ReturnUserNotFound<ForgotPasswordViewModel>(model);
-                }                         
-                
+                }
+
                 var code = await _identityController.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
 
@@ -304,8 +284,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 var path = VirtualPathUtility.ToAbsolute("/");
                 var url = new Uri(Request.Url, path).AbsoluteUri;
 
-                messageEmail = messageEmail.Replace("@{UrlSite}", url);                
-                
+                messageEmail = messageEmail.Replace("@{UrlSite}", url);
+
                 await _identityController.SendEmailAsync(user.Id, Texts.EmailSubjectForgotPassword, messageEmail);
                 return View("ForgotPasswordConfirmation");
             }
