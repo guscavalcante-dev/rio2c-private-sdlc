@@ -1543,6 +1543,121 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_PADDING ON
 GO
+CREATE TABLE [dbo].[QuizAnswers](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[QuizOptionId] [int] NOT NULL,
+	[Answer] [varbinary](200) NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_QuizAnswers] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_QuizAnswers_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[QuizOptions](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[QuizQuestionId] [int] NOT NULL,
+	[HasText] [bit] NOT NULL,
+	[Option] [varchar](200) NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_QuizOptions] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_QuizOptions_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[QuizQuestions](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[QuizId] [int] NOT NULL,
+	[Question] [varchar](200) NOT NULL,
+	[DisplayOrder] [int] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_QuizQuestions] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_QuizQuestions_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Quizzes](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[EditionId] [int] NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[IsActive] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_Quizzes] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_Quizzes_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
 CREATE TABLE [dbo].[Roles](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Name] [varchar](256) NOT NULL,
@@ -2837,6 +2952,66 @@ ALTER TABLE [dbo].[ProjectTypes]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectTy
 REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[ProjectTypes] CHECK CONSTRAINT [FK_Users_ProjectTypes_UpdateUserId]
+GO
+ALTER TABLE [dbo].[QuizAnswers]  WITH CHECK ADD  CONSTRAINT [FK_QuizOptions_QuizAnswers_QuizOptionId] FOREIGN KEY([QuizOptionId])
+REFERENCES [dbo].[QuizOptions] ([Id])
+GO
+ALTER TABLE [dbo].[QuizAnswers] CHECK CONSTRAINT [FK_QuizOptions_QuizAnswers_QuizOptionId]
+GO
+ALTER TABLE [dbo].[QuizAnswers]  WITH CHECK ADD  CONSTRAINT [FK_Users_QuizAnswers_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[QuizAnswers] CHECK CONSTRAINT [FK_Users_QuizAnswers_CreateUserId]
+GO
+ALTER TABLE [dbo].[QuizAnswers]  WITH CHECK ADD  CONSTRAINT [FK_Users_QuizAnswers_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[QuizAnswers] CHECK CONSTRAINT [FK_Users_QuizAnswers_UpdateUserId]
+GO
+ALTER TABLE [dbo].[QuizOptions]  WITH CHECK ADD  CONSTRAINT [FK_QuizQuestions_QuizOptions_QuizQuestionId] FOREIGN KEY([QuizQuestionId])
+REFERENCES [dbo].[QuizQuestions] ([Id])
+GO
+ALTER TABLE [dbo].[QuizOptions] CHECK CONSTRAINT [FK_QuizQuestions_QuizOptions_QuizQuestionId]
+GO
+ALTER TABLE [dbo].[QuizOptions]  WITH CHECK ADD  CONSTRAINT [FK_Users_QuizOptions_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[QuizOptions] CHECK CONSTRAINT [FK_Users_QuizOptions_CreateUserId]
+GO
+ALTER TABLE [dbo].[QuizOptions]  WITH CHECK ADD  CONSTRAINT [FK_Users_QuizOptions_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[QuizOptions] CHECK CONSTRAINT [FK_Users_QuizOptions_UpdateUserId]
+GO
+ALTER TABLE [dbo].[QuizQuestions]  WITH CHECK ADD  CONSTRAINT [FK_Quizzes_QuizQuestions_QuizId] FOREIGN KEY([QuizId])
+REFERENCES [dbo].[Quizzes] ([Id])
+GO
+ALTER TABLE [dbo].[QuizQuestions] CHECK CONSTRAINT [FK_Quizzes_QuizQuestions_QuizId]
+GO
+ALTER TABLE [dbo].[QuizQuestions]  WITH CHECK ADD  CONSTRAINT [FK_Users_QuizQuestions_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[QuizQuestions] CHECK CONSTRAINT [FK_Users_QuizQuestions_CreateUserId]
+GO
+ALTER TABLE [dbo].[QuizQuestions]  WITH CHECK ADD  CONSTRAINT [FK_Users_QuizQuestions_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[QuizQuestions] CHECK CONSTRAINT [FK_Users_QuizQuestions_UpdateUserId]
+GO
+ALTER TABLE [dbo].[Quizzes]  WITH CHECK ADD  CONSTRAINT [FK_Editions_Quizzes_EditionId] FOREIGN KEY([EditionId])
+REFERENCES [dbo].[Editions] ([Id])
+GO
+ALTER TABLE [dbo].[Quizzes] CHECK CONSTRAINT [FK_Editions_Quizzes_EditionId]
+GO
+ALTER TABLE [dbo].[Quizzes]  WITH CHECK ADD  CONSTRAINT [FK_Users_Quizzes_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[Quizzes] CHECK CONSTRAINT [FK_Users_Quizzes_CreateUserId]
+GO
+ALTER TABLE [dbo].[Quizzes]  WITH CHECK ADD  CONSTRAINT [FK_Users_Quizzes_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[Quizzes] CHECK CONSTRAINT [FK_Users_Quizzes_UpdateUserId]
 GO
 ALTER TABLE [dbo].[RoomNames]  WITH CHECK ADD  CONSTRAINT [FK_Languages_RoomNames_LanguageId] FOREIGN KEY([LanguageId])
 REFERENCES [dbo].[Languages] ([Id])
