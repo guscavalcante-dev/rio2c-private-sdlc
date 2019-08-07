@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-03-2019
+// Last Modified On : 08-07-2019
 // ***********************************************************************
 // <copyright file="Ticket4youController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Web.Site.Models;
 using System.Net;
+using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 
 namespace PlataformaRio2C.Web.Site.Controllers
@@ -26,9 +27,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
         public TicketJsonResponse UserTicket { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="Ticket4youController"/> class.</summary>
+        /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        public Ticket4youController(IdentityAutenticationService identityController)
-            : base(identityController)
+        public Ticket4youController(IMediator commandBus, IdentityAutenticationService identityController)
+            : base(commandBus, identityController)
         {
         }
 

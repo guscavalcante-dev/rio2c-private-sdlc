@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-06-2019
+// Last Modified On : 08-07-2019
 // ***********************************************************************
 // <copyright file="HomeController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,6 +17,7 @@ using System;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
 
 namespace PlataformaRio2C.Web.Site.Controllers
@@ -28,9 +29,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
         private readonly IdentityAutenticationService identityController;
 
         /// <summary>Initializes a new instance of the <see cref="HomeController"/> class.</summary>
+        /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        public HomeController(IdentityAutenticationService identityController)
-            : base(identityController)
+        public HomeController(IMediator commandBus, IdentityAutenticationService identityController)
+            : base(commandBus, identityController)
         {
             this.identityController = identityController;
         }

@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-03-2019
+// Last Modified On : 08-07-2019
 // ***********************************************************************
 // <copyright file="ProducerController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,6 +14,7 @@
 using PlataformaRio2C.Application.Interfaces.Services;
 using PlataformaRio2C.Domain.Interfaces;
 using System.Web.Mvc;
+using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 
 namespace PlataformaRio2C.Web.Site.Areas.Producer.Controllers
@@ -23,12 +24,13 @@ namespace PlataformaRio2C.Web.Site.Areas.Producer.Controllers
     public class ProducerController : PlataformaRio2C.Web.Site.Controllers.ProducerController
     {
         /// <summary>Initializes a new instance of the <see cref="ProducerController"/> class.</summary>
+        /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="producerAppService">The producer application service.</param>
         /// <param name="collaboratorAppService">The collaborator application service.</param>
         /// <param name="repositoryFactory">The repository factory.</param>
-        public ProducerController(IdentityAutenticationService identityController, IProducerAppService producerAppService, ICollaboratorAppService collaboratorAppService, IRepositoryFactory repositoryFactory)
-            :base(identityController, producerAppService, collaboratorAppService, repositoryFactory)
+        public ProducerController(IMediator commandBus, IdentityAutenticationService identityController, IProducerAppService producerAppService, ICollaboratorAppService collaboratorAppService, IRepositoryFactory repositoryFactory)
+            :base(commandBus, identityController, producerAppService, collaboratorAppService, repositoryFactory)
         {            
         }
     }

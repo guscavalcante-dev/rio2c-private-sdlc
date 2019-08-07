@@ -4,7 +4,7 @@
 // Created          : 07-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-03-2019
+// Last Modified On : 08-07-2019
 // ***********************************************************************
 // <copyright file="ErrorController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System.Web.Mvc;
+using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
@@ -21,9 +22,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
     public class ErrorController : BaseController
     {
         /// <summary>Initializes a new instance of the <see cref="ErrorController"/> class.</summary>
+        /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        public ErrorController(IdentityAutenticationService identityController)
-            : base(identityController)
+        public ErrorController(IMediator commandBus, IdentityAutenticationService identityController)
+            : base(commandBus, identityController)
         {
         }
 

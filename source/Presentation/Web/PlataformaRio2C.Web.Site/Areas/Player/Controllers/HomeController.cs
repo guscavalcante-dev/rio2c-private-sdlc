@@ -4,7 +4,7 @@
 // Created          : 07-01-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-06-2019
+// Last Modified On : 08-07-2019
 // ***********************************************************************
 // <copyright file="HomeController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,6 +16,7 @@ using System.Linq;
 using PlataformaRio2C.Web.Site.Controllers;
 using System.Web.Mvc;
 using System.Web.Routing;
+using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 
@@ -27,9 +28,10 @@ namespace PlataformaRio2C.Web.Site.Areas.Player.Controllers
     public class HomeController : BaseController
     {
         /// <summary>Initializes a new instance of the <see cref="HomeController"/> class.</summary>
+        /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        public HomeController(IdentityAutenticationService identityController)
-            : base(identityController)
+        public HomeController(IMediator commandBus, IdentityAutenticationService identityController)
+            : base(commandBus, identityController)
         {
         }
 

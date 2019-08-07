@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-03-2019
+// Last Modified On : 08-07-2019
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -120,6 +120,20 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         public static string GetFirstChar(this string s)
         {
             return s?.Substring(0, 1);
+        }
+
+        /// <summary>Converts the string representation of a number to an integer.</summary>
+        /// <param name="s">The s.</param>
+        /// <returns></returns>
+        public static int? ToInt(this string s)
+        {
+            int output;
+            if (!int.TryParse(s, NumberStyles.None, null, out output))
+            {
+                return null;
+            }
+
+            return output;
         }
     }
 }

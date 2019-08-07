@@ -14,19 +14,21 @@
 using System.Collections.Generic;
 using PlataformaRio2C.Web.Site.Controllers;
 using System.Web.Mvc;
+using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 
 namespace PlataformaRio2C.Web.Site.Areas.Producer.Controllers
 {
     //[TermFilter(Order = 2)]
-    [Authorize(Order = 1, Roles = "Producer")]
+    [Authorize(Order = 1)]
     public class HomeController : BaseController
     {
         /// <summary>Initializes a new instance of the <see cref="HomeController"/> class.</summary>
+        /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        public HomeController(IdentityAutenticationService identityController)
-            : base(identityController)
+        public HomeController(IMediator commandBus, IdentityAutenticationService identityController)
+            : base(commandBus, identityController)
         {
         }
         

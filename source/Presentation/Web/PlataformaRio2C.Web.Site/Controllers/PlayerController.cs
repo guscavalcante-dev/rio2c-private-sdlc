@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-03-2019
+// Last Modified On : 08-07-2019
 // ***********************************************************************
 // <copyright file="PlayerController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,6 +20,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Linq;
 using System.Web.Mvc;
+using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 
 namespace PlataformaRio2C.Web.Site.Controllers
@@ -34,11 +35,13 @@ namespace PlataformaRio2C.Web.Site.Controllers
         protected readonly ICountryRepository _countryRepository;
 
         /// <summary>Initializes a new instance of the <see cref="PlayerController"/> class.</summary>
+        /// <param name="commandBus">The command bus.</param>
+        /// <param name="identityController">The identity controller.</param>
         /// <param name="collaboratorAppService">The collaborator application service.</param>
         /// <param name="playerAppService">The player application service.</param>
         /// <param name="repositoryFactory">The repository factory.</param>
-        public PlayerController(IdentityAutenticationService identityController, ICollaboratorAppService collaboratorAppService, IPlayerAppService playerAppService, IRepositoryFactory repositoryFactory)
-            : base(identityController)
+        public PlayerController(IMediator commandBus, IdentityAutenticationService identityController, ICollaboratorAppService collaboratorAppService, IPlayerAppService playerAppService, IRepositoryFactory repositoryFactory)
+            : base(commandBus, identityController)
         {
             _collaboratorAppService = collaboratorAppService;
             _playerAppService = playerAppService;

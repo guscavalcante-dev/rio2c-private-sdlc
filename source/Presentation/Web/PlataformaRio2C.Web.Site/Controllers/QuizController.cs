@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-06-2019
+// Last Modified On : 08-07-2019
 // ***********************************************************************
 // <copyright file="QuizController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -44,7 +44,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="repositoryFactory">The repository factory.</param>
         /// <param name="answerService">The answer service.</param>
         public QuizController(IMediator commandBus, IdentityAutenticationService identityController, IRepositoryFactory repositoryFactory, IQuizAnswerAppService answerService)
-            : base(identityController)
+            : base(commandBus, identityController)
         {
             this.commandBus = commandBus;
             _quizRepository = repositoryFactory.QuizRepository;

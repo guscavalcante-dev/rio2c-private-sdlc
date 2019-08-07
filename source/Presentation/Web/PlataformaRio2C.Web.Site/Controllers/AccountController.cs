@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-06-2019
+// Last Modified On : 08-07-2019
 // ***********************************************************************
 // <copyright file="AccountController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,6 +24,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using MediatR;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -35,9 +36,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
         private IAuthenticationManager authenticationManager => HttpContext.GetOwinContext().Authentication;
 
         /// <summary>Initializes a new instance of the <see cref="AccountController"/> class.</summary>
+        /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        public AccountController(IdentityAutenticationService identityController)
-            : base(identityController)
+        public AccountController(IMediator commandBus, IdentityAutenticationService identityController)
+            : base(commandBus, identityController)
         {
             _identityController = identityController;
         }

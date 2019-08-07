@@ -4,7 +4,7 @@
 // Created          : 07-01-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-01-2019
+// Last Modified On : 08-07-2019
 // ***********************************************************************
 // <copyright file="PlayerAreaRegistration.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,6 +30,14 @@ namespace PlataformaRio2C.Web.Site.Areas.Player
         /// <param name="context">Encapsulates the information that is required in order to register the area.</param>
         public override void RegisterArea(AreaRegistrationContext context) 
         {
+            context.MapRoute(
+                "PlayerWithCultureAndEdition",
+                "{culture}/{edition}/Player/{controller}/{action}/{id}",
+                new { culture = string.Empty, edition = string.Empty, controller = "Home", action = "Index", area = AreaName, id = UrlParameter.Optional },
+                new { culture = @"^[a-zA-Z]{2}(\-[a-zA-Z]{2})?$", edition = @"^[0-9]{4}$" },
+                new[] { "PlataformaRio2C.Web.Site.Areas.Player.Controllers" }
+            );
+
             context.MapRoute(
                 "PlayerWithCulture",
                 "{culture}/Player/{controller}/{action}/{id}",

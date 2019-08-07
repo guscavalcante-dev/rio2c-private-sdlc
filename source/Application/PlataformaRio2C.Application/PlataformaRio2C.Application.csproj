@@ -172,13 +172,16 @@
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\ConcludeSalesPlatformWebhookRequest.cs" />
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\ProcessSalesPlatformWebhookRequests.cs" />
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\CreateSalesPlatformWebhookRequest.cs" />
+    <Compile Include="CQRS\QueriesHandlers\Editions\FindAllEditionsByActiveQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Quizzes\FindActiveQuizQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\SalesPlatformWebhookRequests\FindAllSalesPlatformWebhooRequestsByPendingQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\SalesPlatforms\FindSalesPlatformByNameQueryHandler.cs" />
+    <Compile Include="CQRS\Queries\Editions\FindAllEditionsByIsActive.cs" />
     <Compile Include="CQRS\Queries\Quizzes\FindActiveQuiz.cs" />
     <Compile Include="CQRS\Queries\SalesPlatformWebhookRequests\FindAllSalesPlatformWebhooRequestsByPending.cs" />
     <Compile Include="CQRS\Queries\SalesPlatforms\FindSalesPlatformByName.cs" />
     <Compile Include="Dtos\CustomFormSympla.cs" />
+    <Compile Include="Dtos\Editions\EditionDto.cs" />
     <Compile Include="Dtos\GroupCountryDto.cs" />
     <Compile Include="Dtos\GroupCountrySearchDto.cs" />
     <Compile Include="Dtos\HeaderDtoSympla.cs" />

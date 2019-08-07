@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-06-2019
+// Last Modified On : 08-07-2019
 // ***********************************************************************
 // <copyright file="BaseController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,10 +14,13 @@
 using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Web.Mvc;
 using System.Web.Routing;
+using MediatR;
 using Microsoft.AspNet.Identity;
+using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
@@ -26,18 +29,22 @@ namespace PlataformaRio2C.Web.Site.Controllers
     /// <summary>BaseController</summary>
     public class BaseController : Controller
     {
+        protected IMediator commandBus;
         private readonly IdentityAutenticationService identityController;
         protected string UserInterfaceLanguage;
+        protected Guid EditionUid;
         protected int UserId;
         protected string UserName;
         protected IList<string> UserRoles;
         protected string Area;
 
         /// <summary>Initializes a new instance of the <see cref="BaseController"/> class.</summary>
-        /// <param name="identityControlle">The identity controlle.</param>
-        public BaseController(IdentityAutenticationService identityControlle)
+        /// <param name="commandBus">The command bus.</param>
+        /// <param name="identityController">The identity controller.</param>
+        public BaseController(IMediator commandBus, IdentityAutenticationService identityController)
         {
-            this.identityController = identityControlle;
+            this.commandBus = commandBus;
+            this.identityController = identityController;
         }
 
         /// <summary>Begins to invoke the action in the current controller context.</summary>
@@ -46,16 +53,30 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <returns>Returns an IAsyncController instance.</returns>
         protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, object state)
         {
-            this.SetCulture();
+            var changedCultureRouteValue = this.ValidateCulture();
+            if (changedCultureRouteValue)
+            {
+                return base.BeginExecuteCore(callback, state);
+            }
+
+            var changedEditionRouteValue = this.ValidateEdition();
+            if (changedEditionRouteValue)
+            {
+                return base.BeginExecuteCore(callback, state);
+            }
+
             this.SetUserInfo();
             this.SetArea();
 
             return base.BeginExecuteCore(callback, state);
         }
 
-        /// <summary>Sets the culture.</summary>
-        private void SetCulture()
+        /// <summary>Validates the culture.</summary>
+        /// <returns></returns>
+        private bool ValidateCulture()
         {
+            var changedCultureRouteValue = false;
+
             // Attempt to read the culture cookie from Request
             var routeCulture = RouteData.Values["culture"] as string;
             var cookieCulture = Request.Cookies["MyRio2CCulture"]?.Value;
@@ -90,6 +111,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 }
 
                 HttpContext.Response.RedirectToRoute(routes);
+                changedCultureRouteValue = true;
             }
 
             // Modify current thread's cultures            
@@ -97,6 +119,66 @@ namespace PlataformaRio2C.Web.Site.Controllers
             Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
 
             this.UserInterfaceLanguage = cultureName;
+
+            return changedCultureRouteValue;
+        }
+
+        /// <summary>Validates the edition.</summary>
+        /// <returns></returns>
+        private bool ValidateEdition()
+        {
+            // Attempt to read the edition cookie from Request
+            var routeEdition = (RouteData.Values["edition"] as string).ToInt();
+
+            var activeEditions = this.commandBus.Send(new FindAllEditionsByIsActive()).Result;
+            if (activeEditions?.Any() != true)
+            {
+                return false;
+            }
+
+            ViewBag.ActiveEditions = activeEditions;
+
+            // Check current edition on url parameter
+            if (routeEdition.HasValue)
+            {
+                var currentRoute = activeEditions.FirstOrDefault(ae => ae.UrlCode == routeEdition);
+                if (currentRoute != null)
+                {
+                    ViewBag.EditionUid = this.EditionUid = currentRoute.Uid;
+                    return false;
+                }
+            }
+
+            // Update edition on url parameter
+            var currentEdition = activeEditions.FirstOrDefault(ae => ae.IsCurrent);
+            if (currentEdition == null)
+            {
+                return false;
+            }
+
+            var routes = new RouteValueDictionary(RouteData.Values);
+
+            // Add or change culture on routes
+            if (!routes.ContainsKey("edition"))
+            {
+                routes.Add("edition", currentEdition.UrlCode);
+            }
+            else
+            {
+                routes["edition"] = currentEdition.UrlCode;
+            }
+
+            // Add other parameters to route
+            foreach (string key in HttpContext.Request.QueryString.Keys)
+            {
+                if (key != null)
+                {
+                    routes[key] = HttpContext.Request.QueryString[key];
+                }
+            }
+
+            HttpContext.Response.RedirectToRoute(routes);
+            return true;
         }
 
         /// <summary>Sets the area.</summary>
