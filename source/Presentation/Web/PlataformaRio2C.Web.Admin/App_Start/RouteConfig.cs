@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-04-2019
+// Last Modified On : 08-07-2019
 // ***********************************************************************
 // <copyright file="RouteConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,7 +27,15 @@ namespace PlataformaRio2C.Web.Admin
 
             AreaRegistration.RegisterAllAreas();
 
-            //routing to include culture
+            // Route to include edition
+            routes.MapRoute(
+                "DefaultWithCultureAndEdition",
+                "{culture}/{edition}/{controller}/{action}/{id}",
+                new { culture = string.Empty, edition = string.Empty, controller = "Home", action = "Index", area = "", id = UrlParameter.Optional },
+                new { culture = @"^[a-zA-Z]{2}(\-[a-zA-Z]{2})?$", edition = @"^[0-9]{4}$" },
+                new[] { "PlataformaRio2C.Web.Admin.Controllers" });
+
+            // Route to include culture
             routes.MapRoute(
                 "DefaultWithCulture",
                 "{culture}/{controller}/{action}/{id}",
@@ -35,6 +43,7 @@ namespace PlataformaRio2C.Web.Admin
                 new { culture = @"^[a-zA-Z]{2}(\-[a-zA-Z]{2})?$" },
                 new[] { "PlataformaRio2C.Web.Admin.Controllers" });
 
+            // Default route
             routes.MapRoute(
                 "Default",
                 "{controller}/{action}/{id}",

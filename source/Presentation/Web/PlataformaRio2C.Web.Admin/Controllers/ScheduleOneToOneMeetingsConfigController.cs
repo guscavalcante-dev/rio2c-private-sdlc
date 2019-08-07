@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-04-2019
+// Last Modified On : 08-07-2019
 // ***********************************************************************
 // <copyright file="ScheduleOneToOneMeetingsConfigController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,6 +16,7 @@ using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
@@ -27,10 +28,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         private readonly INegotiationConfigService _scheduleOneToOneMeetingsConfigService;
 
         /// <summary>Initializes a new instance of the <see cref="ScheduleOneToOneMeetingsConfigController"/> class.</summary>
+        /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="scheduleOneToOneMeetingsConfigService">The schedule one to one meetings configuration service.</param>
-        public ScheduleOneToOneMeetingsConfigController(IdentityAutenticationService identityController, INegotiationConfigService scheduleOneToOneMeetingsConfigService)
-            : base(identityController)
+        public ScheduleOneToOneMeetingsConfigController(IMediator commandBus, IdentityAutenticationService identityController, INegotiationConfigService scheduleOneToOneMeetingsConfigService)
+            : base(commandBus, identityController)
         {
             _scheduleOneToOneMeetingsConfigService = scheduleOneToOneMeetingsConfigService;
         }

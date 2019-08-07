@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-04-2019
+// Last Modified On : 08-07-2019
 // ***********************************************************************
 // <copyright file="CollaboratorController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,6 +17,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Linq;
 using System.Web.Mvc;
+using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
@@ -29,10 +30,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         private readonly ICollaboratorAppService _appService;
 
         /// <summary>Initializes a new instance of the <see cref="CollaboratorController"/> class.</summary>
+        /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="appService">The application service.</param>
-        public CollaboratorController(IdentityAutenticationService identityController, ICollaboratorAppService appService)
-            : base(identityController)
+        public CollaboratorController(IMediator commandBus, IdentityAutenticationService identityController, ICollaboratorAppService appService)
+            : base(commandBus, identityController)
         {
             _appService = appService;
         }

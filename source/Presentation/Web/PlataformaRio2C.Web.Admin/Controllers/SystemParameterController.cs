@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-04-2019
+// Last Modified On : 08-07-2019
 // ***********************************************************************
 // <copyright file="SystemParameterController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,6 +17,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
@@ -29,10 +30,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         private readonly ISystemParameterAppService _systemParameterAppService;
 
         /// <summary>Initializes a new instance of the <see cref="SystemParameterController"/> class.</summary>
+        /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="systemParameterAppService">The system parameter application service.</param>
-        public SystemParameterController(IdentityAutenticationService identityController, ISystemParameterAppService systemParameterAppService)
-            : base(identityController)
+        public SystemParameterController(IMediator commandBus, IdentityAutenticationService identityController, ISystemParameterAppService systemParameterAppService)
+            : base(commandBus, identityController)
         {
             _systemParameterAppService = systemParameterAppService;
         }

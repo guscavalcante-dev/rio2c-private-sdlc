@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-04-2019
+// Last Modified On : 08-07-2019
 // ***********************************************************************
 // <copyright file="ManualMessageController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
@@ -32,18 +33,20 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         private readonly IMailAppService _mailAppService;
 
         /// <summary>Initializes a new instance of the <see cref="ManualMessageController"/> class.</summary>
+        /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="appService">The application service.</param>
         /// <param name="collaboratorPlayerAppService">The collaborator player application service.</param>
         /// <param name="mailAppService">The mail application service.</param>
         /// <param name="collaboratorAppService">The collaborator application service.</param>
         public ManualMessageController(
+            IMediator commandBus,
             IdentityAutenticationService identityController, 
             ICollaboratorAppService appService, 
             ICollaboratorPlayerAppService collaboratorPlayerAppService, 
             IMailAppService mailAppService, 
             ICollaboratorAppService collaboratorAppService)
-            : base(identityController)
+            : base(commandBus, identityController)
         {
             _appService = appService;
             _collaboratorPlayerAppService = collaboratorPlayerAppService;

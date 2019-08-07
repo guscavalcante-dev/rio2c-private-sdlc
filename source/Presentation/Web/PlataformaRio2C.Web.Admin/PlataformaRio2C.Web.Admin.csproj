@@ -8927,6 +8927,10 @@
       <Project>{9CFDDB5C-4DA2-437B-AEDD-CABE12EF09BC}</Project>
       <Name>PlataformaRio2C.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.CQRS\PlataformaRio2C.Infra.CrossCutting.CQRS.csproj">
+      <Project>{e414d342-6a28-4844-9f2f-a6022d5ae929}</Project>
+      <Name>PlataformaRio2C.Infra.CrossCutting.CQRS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.Identity\PlataformaRio2C.Infra.CrossCutting.Identity.csproj">
       <Project>{d8359323-3dbc-477e-b673-e77ba1128426}</Project>
       <Name>PlataformaRio2C.Infra.CrossCutting.Identity</Name>

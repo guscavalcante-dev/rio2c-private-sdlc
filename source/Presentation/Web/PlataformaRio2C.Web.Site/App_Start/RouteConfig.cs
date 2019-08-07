@@ -29,7 +29,7 @@ namespace PlataformaRio2C.Web.Site
 
             AreaRegistration.RegisterAllAreas();
 
-            //routing to include culture
+            // Route to include edition
             routes.MapRoute(
                 "DefaultWithCultureAndEdition",
                 "{culture}/{edition}/{controller}/{action}/{id}",
@@ -37,6 +37,7 @@ namespace PlataformaRio2C.Web.Site
                 new { culture = @"^[a-zA-Z]{2}(\-[a-zA-Z]{2})?$", edition = @"^[0-9]{4}$" },
                 new[] { "PlataformaRio2C.Web.Site.Controllers" });
 
+            // Route to include culture
             routes.MapRoute(
                 "DefaultWithCulture",
                 "{culture}/{controller}/{action}/{id}",
@@ -44,6 +45,7 @@ namespace PlataformaRio2C.Web.Site
                 new { culture = @"^[a-zA-Z]{2}(\-[a-zA-Z]{2})?$" },
                 new[] { "PlataformaRio2C.Web.Site.Controllers" });
 
+            // Default route
             routes.MapRoute(
                 "Default",
                 "{controller}/{action}/{id}",

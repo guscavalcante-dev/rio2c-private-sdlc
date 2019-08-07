@@ -32,7 +32,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         protected IMediator commandBus;
         private readonly IdentityAutenticationService identityController;
         protected string UserInterfaceLanguage;
-        protected Guid EditionUid;
+        protected Guid? EditionUid;
         protected int UserId;
         protected string UserName;
         protected IList<string> UserRoles;
@@ -75,8 +75,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <returns></returns>
         private bool ValidateCulture()
         {
-            var changedCultureRouteValue = false;
-
             // Attempt to read the culture cookie from Request
             var routeCulture = RouteData.Values["culture"] as string;
             var cookieCulture = Request.Cookies["MyRio2CCulture"]?.Value;
@@ -111,7 +109,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 }
 
                 HttpContext.Response.RedirectToRoute(routes);
-                changedCultureRouteValue = true;
+                return true;
             }
 
             // Modify current thread's cultures            
@@ -120,7 +118,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             this.UserInterfaceLanguage = cultureName;
 
-            return changedCultureRouteValue;
+            return false;
         }
 
         /// <summary>Validates the edition.</summary>
@@ -178,6 +176,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
 
             HttpContext.Response.RedirectToRoute(routes);
+
             return true;
         }
 

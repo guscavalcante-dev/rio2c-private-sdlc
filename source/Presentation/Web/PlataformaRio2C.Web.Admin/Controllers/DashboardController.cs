@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-04-2019
+// Last Modified On : 08-07-2019
 // ***********************************************************************
 // <copyright file="DashboardController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System.Web.Mvc;
+using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
@@ -21,9 +22,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     public class DashboardController : BaseController
     {
         /// <summary>Initializes a new instance of the <see cref="DashboardController"/> class.</summary>
+        /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        public DashboardController(IdentityAutenticationService identityController)
-            : base(identityController)
+        public DashboardController(IMediator commandBus, IdentityAutenticationService identityController)
+            : base(commandBus, identityController)
         {
         }
 

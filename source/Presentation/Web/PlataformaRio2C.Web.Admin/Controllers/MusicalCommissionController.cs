@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-04-2019
+// Last Modified On : 08-07-2019
 // ***********************************************************************
 // <copyright file="MusicalCommissionController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
@@ -32,18 +33,20 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         private readonly ICollaboratorService _collaboratorService;
 
         /// <summary>Initializes a new instance of the <see cref="MusicalCommissionController"/> class.</summary>
+        /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="commissionService">The commission service.</param>
         /// <param name="appService">The application service.</param>
         /// <param name="collaboratorAppService">The collaborator application service.</param>
         /// <param name="collaboratorService">The collaborator service.</param>
         public MusicalCommissionController(
+            IMediator commandBus,
             IdentityAutenticationService identityController, 
             IMusicalCommissionService commissionService, 
             IMusicalCommissionAppService appService, 
             ICollaboratorAppService collaboratorAppService, 
             ICollaboratorService collaboratorService)
-            : base(identityController)
+            : base(commandBus, identityController)
         {
             _service = commissionService;
             _appService = appService;
