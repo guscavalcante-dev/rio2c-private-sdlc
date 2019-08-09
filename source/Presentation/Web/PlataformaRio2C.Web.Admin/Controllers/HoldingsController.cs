@@ -77,7 +77,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions)
         {
             var holdings = await this.CommandBus.Send(new FindAllHoldingsAsync(
-                request.Start,
+                request.Start / request.Length,
                 request.Length,
                 request.Search?.Value,
                 request.GetSortColumns(),

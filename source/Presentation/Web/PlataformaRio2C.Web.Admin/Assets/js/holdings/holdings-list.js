@@ -29,7 +29,6 @@ var HoldingsList = function () {
             serverSide: true,
             order: [[0, "asc"]],
             sDom: 'lt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>r',
-            //ajax: 'https://keenthemes.com/metronic/themes/themes/metronic/dist/preview/inc/api/datatables/demos/server.php',
             ajax: {
                 url: searchAction,
                 data: function (d) {
