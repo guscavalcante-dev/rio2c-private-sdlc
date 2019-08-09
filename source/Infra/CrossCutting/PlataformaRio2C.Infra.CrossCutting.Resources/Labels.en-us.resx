@@ -1060,4 +1060,20 @@
     <value>Create Date</value>
     <comment>Data de Criação</comment>
   </data>
+  <data name="HoldingsRegistered" xml:space="preserve">
+    <value>Holdings registered</value>
+    <comment>Holdings cadastradas</comment>
+  </data>
+  <data name="In" xml:space="preserve">
+    <value>in</value>
+    <comment>em</comment>
+  </data>
+  <data name="InEditionYear" xml:space="preserve">
+    <value>in {0} Edition</value>
+    <comment>na Edição {0}</comment>
+  </data>
+  <data name="ShowFromAllEditions" xml:space="preserve">
+    <value>Show from all editions</value>
+    <comment>Exibir de todas as edições</comment>
+  </data>
 </root>

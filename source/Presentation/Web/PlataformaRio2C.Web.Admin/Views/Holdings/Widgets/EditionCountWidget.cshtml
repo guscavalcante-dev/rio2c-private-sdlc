@@ -1,0 +1,15 @@
+﻿<!--begin:: Edition Count-->
+<div id="HoldingEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder">
+    <div class="kt-portlet__body kt-portlet__body--fluid">
+        <div class="kt-widget20">
+            <div class="kt-widget20__content kt-portlet__space-x">
+                <span class="kt-widget20__number kt-font-danger counter">&nbsp;</span>
+                <span class="kt-widget20__desc">@Labels.Holdings @Labels.InEditionYear.Replace("{0}", ViewBag.EditionUrlCode.ToString())</span>
+            </div>
+            <div class="kt-widget20__chart" style="height:130px;">
+                <canvas id="kt_chart_bandwidth2"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end:: Edition Count-->

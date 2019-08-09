@@ -25,5 +25,6 @@ namespace PlataformaRio2C.Domain.Interfaces
     {
         Task<IPagedList<HoldingListDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllEditions, int? editionId);
         Task<List<Holding>> GetAllAsync();
+        Task<int> CountAllByDataTable(bool showAllEditions, int? editionId);
     }
 }

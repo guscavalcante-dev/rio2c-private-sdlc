@@ -1072,4 +1072,16 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Data de Criação</value>
     <comment>Data de Criação</comment>
   </data>
+  <data name="HoldingsRegistered" xml:space="preserve">
+    <value>Holdings cadastradas</value>
+    <comment>Holdings cadastradas</comment>
+  </data>
+  <data name="InEditionYear" xml:space="preserve">
+    <value>na Edição {0}</value>
+    <comment>na Edição {0}</comment>
+  </data>
+  <data name="ShowFromAllEditions" xml:space="preserve">
+    <value>Exibir de todas as edições</value>
+    <comment>Exibir de todas as edições</comment>
+  </data>
 </root>

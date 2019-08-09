@@ -988,6 +988,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Holdings cadastradas.
+        /// </summary>
+        public static string HoldingsRegistered {
+            get {
+                return ResourceManager.GetString("HoldingsRegistered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Horário.
         /// </summary>
         public static string Hour {
@@ -1047,6 +1056,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Incomplete {
             get {
                 return ResourceManager.GetString("Incomplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to na Edição {0}.
+        /// </summary>
+        public static string InEditionYear {
+            get {
+                return ResourceManager.GetString("InEditionYear", resourceCulture);
             }
         }
         
@@ -2136,6 +2154,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string SendToPlayers {
             get {
                 return ResourceManager.GetString("SendToPlayers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exibir de todas as edições.
+        /// </summary>
+        public static string ShowFromAllEditions {
+            get {
+                return ResourceManager.GetString("ShowFromAllEditions", resourceCulture);
             }
         }
         

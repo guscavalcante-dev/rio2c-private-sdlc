@@ -171,14 +171,6 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
-            #region Global Customized Styles
-
-            bundles.Add(new StyleBundle("~/bundles/css/layoutGlobalCustomizedStyles").Include(
-                "~/Assets/css/rio2c.css",
-                "~/Assets/css/rio2c-responsive.css"));
-
-            #endregion
-
             #region Login
 
             bundles.Add(new StyleBundle("~/bundles/css/loginCustomStyles").Include(
@@ -197,16 +189,46 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+            #region MyRio2C Bundles
+
+            bundles.Add(new ScriptBundle("~/bundles/js/layoutGlobalCustomized").Include(
+                "~/Assets/js/myrio2c.common.js"));
+
+            bundles.Add(new StyleBundle("~/bundles/css/layoutGlobalCustomizedStyles").Include(
+                "~/Assets/css/myrio2c.common.css",
+                "~/Assets/css/myrio2c.common.responsive.css"));
+
+            #endregion
+
+            #region Components Bundles
+
+            #region Datatables
+
+            bundles.Add(new StyleBundle("~/bundles/css/dataTablesBundle")
+                .Include("~/Assets/themes/metronic/vendors/custom/datatables/datatables.bundle.css", new CssRewriteUrlTransform()));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/dataTablesBundle").Include(
+                "~/Assets/themes/metronic/vendors/custom/datatables/datatables.bundle.js"));
+
+            #endregion
+
+            #region Chart.js
+
+            bundles.Add(new ScriptBundle("~/bundles/js/chartJsBundle").Include(
+                "~/Assets/themes/metronic/vendors/general/chart.js/dist/Chart.bundle.js"));
+
+            #endregion
+
+            #endregion
+
             #region Pages Bundles
 
             #region Holdings
 
-            bundles.Add(new StyleBundle("~/bundles/css/holdingsListBundle")
-                .Include("~/Assets/themes/metronic/vendors/custom/datatables/datatables.bundle.css", new CssRewriteUrlTransform()));
-
             bundles.Add(new ScriptBundle("~/bundles/js/holdingsListBundle").Include(
-                "~/Assets/js/holdings/holdings-list.js",
-                "~/Assets/themes/metronic/vendors/custom/datatables/datatables.bundle.js"));
+                "~/Assets/js/holdings/holdings.totalcount.widget.js",
+                "~/Assets/js/holdings/holdings.editioncount.widget.js",
+                "~/Assets/js/holdings/holdings.datatable.widget.js"));
 
             #endregion
 

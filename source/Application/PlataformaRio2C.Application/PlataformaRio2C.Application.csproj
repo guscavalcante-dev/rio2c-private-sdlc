@@ -177,11 +177,13 @@
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\CreateSalesPlatformWebhookRequest.cs" />
     <Compile Include="CQRS\BaseUserRequest.cs" />
     <Compile Include="CQRS\QueriesHandlers\Editions\FindAllEditionsByActiveQueryHandler.cs" />
+    <Compile Include="CQRS\QueriesHandlers\Holdings\CountAllHoldingsAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Holdings\FindAllHoldingsAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Quizzes\FindActiveQuizQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\SalesPlatformWebhookRequests\FindAllSalesPlatformWebhooRequestsByPendingQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\SalesPlatforms\FindSalesPlatformByNameQueryHandler.cs" />
     <Compile Include="CQRS\Queries\Editions\FindAllEditionsByIsActive.cs" />
+    <Compile Include="CQRS\Queries\Holdings\CountAllHoldingsAsync.cs" />
     <Compile Include="CQRS\Queries\Holdings\FindAllHoldingsAsync.cs" />
     <Compile Include="CQRS\Queries\Quizzes\FindActiveQuiz.cs" />
     <Compile Include="CQRS\Queries\SalesPlatformWebhookRequests\FindAllSalesPlatformWebhooRequestsByPending.cs" />

@@ -181,6 +181,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .ToListPagedAsync(page, pageSize);
         }
 
+        /// <summary>Counts all by data table.</summary>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<int> CountAllByDataTable(bool showAllEditions, int? editionId)
+        {
+            var query = this.GetAll()
+                                .FindByEditionId(showAllEditions, editionId);
+
+            return await query.CountAsync();
+        }
+
         public override IQueryable<Holding> GetAll(Expression<Func<Holding, bool>> filter)
         {
             return this.GetAll().Where(filter);

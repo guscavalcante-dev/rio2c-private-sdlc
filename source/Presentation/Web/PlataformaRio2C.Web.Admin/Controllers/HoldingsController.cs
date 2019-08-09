@@ -69,6 +69,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             return View();
         }
 
+        #endregion
+
+        #region DataTable Widget
+
         /// <summary>Searches the specified request.</summary>
         /// <param name="request">The request.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
@@ -91,6 +95,27 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             var response = DataTablesResponse.Create(request, holdings.TotalItemCount, holdings.TotalItemCount, holdings);
 
             return new DataTablesJsonResult(response, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Count
+
+        /// <summary>Counts the specified show all editions.</summary>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> Count(bool showAllEditions)
+        {
+            var holdingsCount = await this.CommandBus.Send(new CountAllHoldingsAsync(
+                showAllEditions,
+                this.UserId,
+                this.UserUid,
+                this.EditionId,
+                this.EditionUid,
+                this.UserInterfaceLanguage));
+
+            return Json(new { status = "success", count = holdingsCount }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion
