@@ -175,6 +175,7 @@
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\ConcludeSalesPlatformWebhookRequest.cs" />
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\ProcessSalesPlatformWebhookRequests.cs" />
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\CreateSalesPlatformWebhookRequest.cs" />
+    <Compile Include="CQRS\BaseUserRequest.cs" />
     <Compile Include="CQRS\QueriesHandlers\Editions\FindAllEditionsByActiveQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Holdings\FindAllHoldingsAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Quizzes\FindActiveQuizQueryHandler.cs" />

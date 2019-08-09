@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 08-09-2019
 // ***********************************************************************
-// <copyright file="IEditionRepository.cs" company="Softo">
+// <copyright file="IHoldingRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -20,10 +20,10 @@ using X.PagedList;
 
 namespace PlataformaRio2C.Domain.Interfaces
 {
-    /// <summary></summary>
+    /// <summary>IHoldingRepository</summary>
     public interface IHoldingRepository : IRepository<Holding>
     {
-        Task<IPagedList<HoldingListDto>> FindAllBySearchDto(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns);
+        Task<IPagedList<HoldingListDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllEditions, Guid? editionUid);
         Task<List<Holding>> GetAllAsync();
-    }    
+    }
 }

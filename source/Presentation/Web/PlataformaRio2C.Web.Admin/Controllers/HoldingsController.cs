@@ -75,10 +75,16 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         public async Task<ActionResult> Search(IDataTablesRequest request)
         {
             var holdings = await this.CommandBus.Send(new FindAllHoldingsAsync(
-                request.Start, 
-                request.Length, 
+                request.Start,
+                request.Length,
                 request.Search?.Value,
-                request.GetSortColumns()));
+                request.GetSortColumns(),
+                false,
+                this.UserId,
+                this.UserUid,
+                this.EditionId,
+                this.EditionUid,
+                this.UserInterfaceLanguage));
 
             var response = DataTablesResponse.Create(request, holdings.TotalItemCount, holdings.TotalItemCount, holdings);
 
@@ -89,14 +95,14 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         public ActionResult Create()
         {
-            var viewModel = _appService.GetEditViewModel();            
+            var viewModel = _appService.GetEditViewModel();
             return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(HoldingAppViewModel viewModel)
-        {            
+        {
             var result = _appService.Create(viewModel);
 
             if (result.IsValid)
@@ -131,7 +137,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(HoldingAppViewModel viewModel)
-        {            
+        {
             var result = _appService.Update(viewModel);
 
             if (result.IsValid)
@@ -168,7 +174,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             {
                 foreach (var error in result.Errors)
                 {
-                    this.StatusMessage(error.Message, Infra.CrossCutting.Tools.Enums.StatusMessageType.Danger);                    
+                    this.StatusMessage(error.Message, Infra.CrossCutting.Tools.Enums.StatusMessageType.Danger);
                 }
             }
 
@@ -176,7 +182,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         }
 
         private void UpdateHoldingViewModelDefaultValues(HoldingAppViewModel viewModel)
-        {            
+        {
             viewModel.MergeWith<HoldingAppViewModel>(_appService.GetEditViewModel());
         }
     }

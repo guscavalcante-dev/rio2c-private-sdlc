@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 08-09-2019
 // ***********************************************************************
-// <copyright file="EditionRepository.cs" company="Softo">
+// <copyright file="HoldingRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -27,13 +27,28 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
-    #region Project IQueryable Extensions
+    #region Holding IQueryable Extensions
 
     /// <summary>
-    /// HoldingListDtoIQueryableExtensions
+    /// HoldingIQueryableExtensions
     /// </summary>
-    internal static class HoldingListDtoIQueryableExtensions
+    internal static class HoldingIQueryableExtensions
     {
+        /// <summary>Finds the by edition uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="editionUid">The edition uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<Holding> FindByEditionUid(this IQueryable<Holding> query, bool showAllEditions, Guid? editionUid)
+        {
+            if (!showAllEditions && editionUid.HasValue)
+            {
+                //query = query.Where(h => h.)
+            }
+
+            return query;
+        }
+
         /// <summary>Finds the by keywords.</summary>
         /// <param name="query">The query.</param>
         /// <param name="keywords">The keywords.</param>
@@ -57,7 +72,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+    }
 
+    #endregion
+
+    #region HoldingListDto IQueryable Extensions
+
+    /// <summary>
+    /// HoldingListDtoIQueryableExtensions
+    /// </summary>
+    internal static class HoldingListDtoIQueryableExtensions
+    {
         /// <summary>
         /// To the list paged.
         /// </summary>
@@ -96,13 +121,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public override IQueryable<Holding> GetAll(bool @readonly = false)
         {
             var consult = this.dbSet
-                                .Include(i => i.Descriptions)
-                                .Include(i => i.Descriptions.Select(t => t.Language));
-                              
+                .Include(i => i.Descriptions)
+                .Include(i => i.Descriptions.Select(t => t.Language));
+
 
             return @readonly
-                      ? consult.AsNoTracking()
-                      : consult;
+                ? consult.AsNoTracking()
+                : consult;
         }
 
         /// <summary>Gets all asynchronous.</summary>
@@ -114,16 +139,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return await query.ToListAsync();
         }
 
-        /// <summary>Finds all by search dto.</summary>
+        /// <summary>Finds all by data table.</summary>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="keywords">The keywords.</param>
         /// <param name="sortColumns">The sort columns.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="editionUid">The edition uid.</param>
         /// <returns></returns>
-        public async Task<IPagedList<HoldingListDto>> FindAllBySearchDto(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns)
+        public async Task<IPagedList<HoldingListDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllEditions, Guid? editionUid)
         {
             var query = this.GetAll()
-                                .FindByKeywords(keywords);
+                                .FindByKeywords(keywords)
+                                .FindByEditionUid(showAllEditions, editionUid);
 
             return await query
                             .Select(h => new HoldingListDto
@@ -166,9 +194,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public override Holding Get(object id)
         {
             return this.dbSet
-                 //.Include(i => i.Image)
-                        .SingleOrDefault(x => x.Id == (int)id);
-
+                            //.Include(i => i.Image)
+                            .SingleOrDefault(x => x.Id == (int)id);
         }
     }
 }

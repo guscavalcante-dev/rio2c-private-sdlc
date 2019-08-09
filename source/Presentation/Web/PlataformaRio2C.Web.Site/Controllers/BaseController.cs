@@ -32,8 +32,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
         protected IMediator commandBus;
         private readonly IdentityAutenticationService identityController;
         protected string UserInterfaceLanguage;
+        protected int? EditionId;
         protected Guid? EditionUid;
         protected int UserId;
+        protected Guid UserUid;
         protected string UserName;
         protected IList<string> UserRoles;
         protected string Area;
@@ -142,6 +144,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 var currentRoute = activeEditions.FirstOrDefault(ae => ae.UrlCode == routeEdition);
                 if (currentRoute != null)
                 {
+                    ViewBag.EditionId = this.EditionId = currentRoute.Id;
                     ViewBag.EditionUid = this.EditionUid = currentRoute.Uid;
                     return false;
                 }
@@ -194,7 +197,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return;
             }
 
-            this.UserId = User.Identity.GetUserId<int>();
+            ViewBag.UserId = this.UserId = User.Identity.GetUserId<int>();
             if (!User.Identity.IsAuthenticated || this.UserId <= 0)
             {
                 return;
@@ -206,6 +209,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return;
             }
 
+            ViewBag.UserUid = this.UserUid = user.Uid;
             ViewBag.FullName = this.UserName = user.Name.UppercaseFirstOfEachWord(this.UserInterfaceLanguage);
             ViewBag.FirstName = this.UserName?.GetFirstWord();
             ViewBag.UserRoles = this.UserRoles = this.identityController.FindAllRolesByUserIdAsync(this.UserId).Result;

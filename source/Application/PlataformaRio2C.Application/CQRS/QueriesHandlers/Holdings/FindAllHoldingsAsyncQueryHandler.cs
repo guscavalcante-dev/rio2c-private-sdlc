@@ -39,7 +39,7 @@ namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
         /// <returns></returns>
         public async Task<IPagedList<HoldingListDto>> Handle(FindAllHoldingsAsync cmd, CancellationToken cancellationToken)
         {
-            return await this.repo.FindAllBySearchDto(cmd.Page, cmd.PageSize, cmd.Keywords, cmd.SortColumns);
+            return await this.repo.FindAllByDataTable(cmd.Page, cmd.PageSize, cmd.Keywords, cmd.SortColumns, cmd.ShowAllEditions, cmd.EditionUid);
         }
     }
 }
