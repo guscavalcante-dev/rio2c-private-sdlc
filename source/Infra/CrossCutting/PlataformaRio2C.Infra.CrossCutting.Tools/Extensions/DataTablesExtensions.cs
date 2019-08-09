@@ -4,7 +4,7 @@
 // Created          : 08-08-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-09-2019
+// Last Modified On : 08-10-2019
 // ***********************************************************************
 // <copyright file="DataTablesExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -39,6 +39,8 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         /// <returns></returns>
         public static IQueryable<T> DynamicOrder<T>(this IQueryable<T> query, List<Tuple<string, string>> sortColumns, List<string> allowedColumns, string defaultSort)
         {
+            var hasSortColumn = false;
+
             var orderBy = string.Empty;
 
             var allowedSortColumns = sortColumns?.Where(sc => allowedColumns.Contains(sc.Item1)).ToList();
@@ -48,11 +50,13 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                 foreach (var sortColumn in allowedSortColumns)
                 {
                     orderBy += (!string.IsNullOrEmpty(orderBy) ? ", " : string.Empty) + sortColumn.Item1 + (sortColumn.Item2 == "Descending" ? " desc" : string.Empty);
+                    hasSortColumn = true;
                 }
 
                 query = query.OrderBy(orderBy);
             }
-            else
+
+            if (!hasSortColumn)
             {
                 query = query.OrderBy(defaultSort);
             }
