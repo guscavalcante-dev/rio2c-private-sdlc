@@ -35,30 +35,33 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         /// <param name="query">The query.</param>
         /// <param name="sortColumns">The sort columns.</param>
         /// <param name="allowedColumns">The allowed columns.</param>
-        /// <param name="defaultSort">The default sort.</param>
+        /// <param name="defaultSortColumn">The default sort column.</param>
         /// <returns></returns>
-        public static IQueryable<T> DynamicOrder<T>(this IQueryable<T> query, List<Tuple<string, string>> sortColumns, List<string> allowedColumns, string defaultSort)
+        public static IQueryable<T> DynamicOrder<T>(this IQueryable<T> query, List<Tuple<string, string>> sortColumns, List<string> allowedColumns, string defaultSortColumn)
         {
             var hasSortColumn = false;
 
             var orderBy = string.Empty;
 
-            var allowedSortColumns = sortColumns?.Where(sc => allowedColumns.Contains(sc.Item1)).ToList();
-
-            if (allowedSortColumns?.Any() == true)
+            if (allowedColumns?.Any() == true)
             {
-                foreach (var sortColumn in allowedSortColumns)
-                {
-                    orderBy += (!string.IsNullOrEmpty(orderBy) ? ", " : string.Empty) + sortColumn.Item1 + (sortColumn.Item2 == "Descending" ? " desc" : string.Empty);
-                    hasSortColumn = true;
-                }
+                var allowedSortColumns = sortColumns?.Where(sc => allowedColumns.Select(ac => ac.ToLowerInvariant()).Contains(sc.Item1.ToLowerInvariant())).ToList();
 
-                query = query.OrderBy(orderBy);
+                if (allowedSortColumns?.Any() == true)
+                {
+                    foreach (var sortColumn in allowedSortColumns)
+                    {
+                        orderBy += (!string.IsNullOrEmpty(orderBy) ? ", " : string.Empty) + sortColumn.Item1 + (sortColumn.Item2 == "Descending" ? " desc" : string.Empty);
+                        hasSortColumn = true;
+                    }
+
+                    query = query.OrderBy(orderBy);
+                }
             }
 
             if (!hasSortColumn)
             {
-                query = query.OrderBy(defaultSort);
+                query = query.OrderBy(defaultSortColumn);
             }
 
             return query;
