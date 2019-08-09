@@ -1064,4 +1064,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Visualizar Agenda</value>
     <comment>Visualizar Agenda</comment>
   </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Ações</value>
+    <comment>Ações</comment>
+  </data>
+  <data name="CreateDate" xml:space="preserve">
+    <value>Data de Criação</value>
+    <comment>Data de Criação</comment>
+  </data>
 </root>

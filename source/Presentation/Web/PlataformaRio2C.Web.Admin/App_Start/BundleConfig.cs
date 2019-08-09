@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-05-2019
+// Last Modified On : 08-09-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -32,7 +32,7 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/themes/metronic/vendors/general/popper.js/dist/umd/popper.js",
                 "~/Assets/themes/metronic/vendors/general/bootstrap/dist/js/bootstrap.min.js",
                 "~/Assets/themes/metronic/vendors/general/js-cookie/src/js.cookie.js",
-                "~/Assets/themes/metronic/vendors/general/moment/min/moment.min.js",
+                "~/Assets/themes/metronic/vendors/general/moment/min/moment-with-locales.min.js",
                 "~/Assets/themes/metronic/vendors/general/tooltip.js/dist/umd/tooltip.min.js",
                 "~/Assets/themes/metronic/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js",
                 "~/Assets/themes/metronic/vendors/general/sticky-js/dist/sticky.min.js",
@@ -192,6 +192,21 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/themes/metronic/css/demo4/pages/error/error-1.css"));
 
             #endregion
+
+            #endregion
+
+            #endregion
+
+            #region Pages Bundles
+
+            #region Holdings
+
+            bundles.Add(new StyleBundle("~/bundles/css/holdingsListBundle")
+                .Include("~/Assets/themes/metronic/vendors/custom/datatables/datatables.bundle.css", new CssRewriteUrlTransform()));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/holdingsListBundle").Include(
+                "~/Assets/js/holdings/holdings-list.js",
+                "~/Assets/themes/metronic/vendors/custom/datatables/datatables.bundle.js"));
 
             #endregion
 

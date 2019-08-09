@@ -1052,4 +1052,12 @@
     <value>View Calendar</value>
     <comment>Visualizar Agenda</comment>
   </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Actions</value>
+    <comment>Ações</comment>
+  </data>
+  <data name="CreateDate" xml:space="preserve">
+    <value>Create Date</value>
+    <comment>Data de Criação</comment>
+  </data>
 </root>

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-06-2019
+// Last Modified On : 08-09-2019
 // ***********************************************************************
 // <copyright file="HoldingAppViewModel.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -48,10 +48,10 @@ namespace PlataformaRio2C.Application.ViewModels
             Uid = entity.Uid;
             Name = entity.Name;
 
-            if (entity.Image != null)
-            {
-                Image = new ImageFileAppViewModel(entity.Image);
-            }
+            //if (entity.Image != null)
+            //{
+            //    Image = new ImageFileAppViewModel(entity.Image);
+            //}
 
             if (entity.Descriptions != null && entity.Descriptions.Any())
             {
@@ -64,15 +64,15 @@ namespace PlataformaRio2C.Application.ViewModels
         {
             var holding = new Domain.Entities.Holding(this.Name);
 
-            if (ImageUpload != null && Image == null)
-            {
-                Image = new ImageFileAppViewModel(ImageUpload);
-            }
+            //if (ImageUpload != null && Image == null)
+            //{
+            //    Image = new ImageFileAppViewModel(ImageUpload);
+            //}
 
-            if (Image != null)
-            {
-                holding.SetImage(Image.MapReverse());
-            }
+            //if (Image != null)
+            //{
+            //    holding.SetImage(Image.MapReverse());
+            //}
 
             if (Descriptions != null && Descriptions.Any())
             {
@@ -96,17 +96,17 @@ namespace PlataformaRio2C.Application.ViewModels
                 Image = new ImageFileAppViewModel(ImageUpload);
             }
 
-            if (Image != null)
-            {
-                if (entity.Image != null)
-                {
-                    entity.SetImage(Image.MapReverse(entity.Image));
-                }
-                else
-                {   
-                    entity.SetImage(Image.MapReverse());
-                }
-            }
+            //if (Image != null)
+            //{
+            //    if (entity.Image != null)
+            //    {
+            //        entity.SetImage(Image.MapReverse(entity.Image));
+            //    }
+            //    else
+            //    {   
+            //        entity.SetImage(Image.MapReverse());
+            //    }
+            //}
 
             if (Descriptions != null && Descriptions.Any())
             {

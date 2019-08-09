@@ -1,70 +1,82 @@
-﻿using PlataformaRio2C.Domain.Entities.Validations;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Domain
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-09-2019
+// ***********************************************************************
+// <copyright file="Holding.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Domain.Entities.Validations;
 using PlataformaRio2C.Domain.Validation;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace PlataformaRio2C.Domain.Entities
 {
+    /// <summary>Holding</summary>
     public class Holding : Entity
     {
         public static readonly int NameMinLength = 2;
         public static readonly int NameMaxLength = 100;
-        public static readonly double ImageMinMByteSize = 0.0009765625;
 
         public string Name { get; private set; }
-
-        public int? ImageId { get; private set; }
-        public virtual ImageFile Image{ get; private set; }
+        public bool IsImageUploaded { get; private set; }
 
         public virtual ICollection<HoldingDescription> Descriptions { get; private set; }
 
+        /// <summary>Initializes a new instance of the <see cref="Holding"/> class.</summary>
         protected Holding()
         {
-            
         }
 
+        /// <summary>Initializes a new instance of the <see cref="Holding"/> class.</summary>
+        /// <param name="name">The name.</param>
         public Holding(string name)
         {
-            Descriptions = new List<HoldingDescription>();
-            SetName(name);
+            this.Descriptions = new List<HoldingDescription>();
+            this.SetName(name);
         }
 
+        /// <summary>Sets the name.</summary>
+        /// <param name="name">The name.</param>
         public void SetName(string name)
         {
-            Name = name;
+            this.Name = name;
         }
 
-        public void SetImage(ImageFile image)
-        {
-            ImageId = null;
-            Image = image;
-            if (image != null)
-            {
-                ImageId = image.Id;
-            }            
-        }
-
+        /// <summary>Sets the descriptions.</summary>
+        /// <param name="descriptions">The descriptions.</param>
         public void SetDescriptions(IEnumerable<HoldingDescription> descriptions)
         {
-            Descriptions = descriptions.ToList();
+            this.Descriptions = descriptions.ToList();
         }
 
+        /// <summary>Adds the description.</summary>
+        /// <param name="description">The description.</param>
         public void AddDescription(HoldingDescription description)
         {
-            Descriptions.Add(description);
+            this.Descriptions.Add(description);
         }
 
+        /// <summary>Returns true if ... is valid.</summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
         public override bool IsValid()
         {
             ValidationResult = new ValidationResult();
 
             ValidationResult.Add(new HoldingIsConsistent().Valid(this));         
 
-            if (Image != null)
-            {
-                ValidationResult.Add(new ImageIsConsistent().Valid(this.Image));
-                ValidationResult.Add(new HoldingImageIsConsistent().Valid(this));
-            }
+            //if (Image != null)
+            //{
+            //    ValidationResult.Add(new ImageIsConsistent().Valid(this.Image));
+            //    ValidationResult.Add(new HoldingImageIsConsistent().Valid(this));
+            //}
 
             return ValidationResult.IsValid;
         }

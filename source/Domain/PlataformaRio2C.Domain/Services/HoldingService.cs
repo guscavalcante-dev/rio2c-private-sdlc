@@ -84,11 +84,11 @@ namespace PlataformaRio2C.Domain.Services
 
         public override ValidationResult Delete(Holding entity)
         {
-            var imageFile = _imageFileRepository.Get(entity.ImageId);
-            if (imageFile != null)
-            {
-                _imageFileRepository.Delete(imageFile);
-            }
+            //var imageFile = _imageFileRepository.Get(entity.ImageId);
+            //if (imageFile != null)
+            //{
+            //    _imageFileRepository.Delete(imageFile);
+            //}
 
             if (entity.Descriptions != null && entity.Descriptions.Any())
             {

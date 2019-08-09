@@ -67,8 +67,15 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="X.PagedList, Version=7.6.0.0, Culture=neutral, PublicKeyToken=00b6c4f97602e5e8, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\X.PagedList.7.6.0\lib\net461\X.PagedList.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dtos\HoldingDescriptions\HoldingDescriptionBaseDto.cs" />
+    <Compile Include="Dtos\Holdings\HoldingListDto.cs" />
+    <Compile Include="Dtos\Languages\LanguageBaseDto.cs" />
+    <Compile Include="Dtos\Users\UserBaseDto.cs" />
     <Compile Include="Entities\Collaborator\CollaboratorProducer.cs" />
     <Compile Include="Entities\Collaborator\CollaboratorSpeaker.cs" />
     <Compile Include="Entities\Common\InterestGroup.cs" />

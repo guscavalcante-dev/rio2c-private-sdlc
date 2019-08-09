@@ -70,6 +70,12 @@
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="DataTables.AspNet.Core, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\DataTables.AspNet.Core.2.0.2\lib\net45\DataTables.AspNet.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DataTables.AspNet.Mvc5, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\DataTables.AspNet.Mvc5.2.0.2\lib\net45\DataTables.AspNet.Mvc5.dll</HintPath>
+    </Reference>
     <Reference Include="Elmah, Version=1.2.14706.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
     </Reference>
@@ -265,6 +271,12 @@
       <HintPath>..\..\..\..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="X.PagedList, Version=7.6.0.0, Culture=neutral, PublicKeyToken=00b6c4f97602e5e8, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\X.PagedList.7.6.0\lib\net461\X.PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="X.PagedList.Mvc, Version=7.6.0.0, Culture=neutral, PublicKeyToken=c6e0b5b21f916f4f, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\X.PagedList.Mvc.7.6.0\lib\net461\X.PagedList.Mvc.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Owin">
@@ -312,7 +324,7 @@
     <Compile Include="Controllers\InterestController.cs" />
     <Compile Include="Controllers\InterestGroupController.cs" />
     <Compile Include="Controllers\EventController.cs" />
-    <Compile Include="Controllers\HoldingController.cs" />
+    <Compile Include="Controllers\HoldingsController.cs" />
     <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Controllers\LogisticsController.cs" />
     <Compile Include="Controllers\ManualMessageController.cs" />
@@ -332,12 +344,15 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\components\datatables\datatables.en-us.js" />
+    <Content Include="Assets\components\datatables\datatables.pt-br.js" />
     <Content Include="Assets\css\rio2c-responsive.css" />
     <Content Include="Assets\css\rio2c.css" />
     <Content Include="Assets\img\favicon.png" />
     <Content Include="Assets\img\header.jpg" />
     <Content Include="Assets\img\logo_rio2c_color.png" />
     <Content Include="Assets\img\logo_rio2c_white.png" />
+    <Content Include="Assets\js\holdings\holdings-list.js" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.css" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.min.css" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.rtl.css" />
@@ -8867,10 +8882,10 @@
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutBasic.cshtml" />
     <Content Include="Views\Account\DisabledUser.cshtml" />
-    <Content Include="Views\Holding\Index.cshtml" />
-    <Content Include="Views\Holding\Create.cshtml" />
-    <Content Include="Views\Holding\Edit.cshtml" />
-    <Content Include="Views\Holding\_Editor.cshtml" />
+    <Content Include="Views\Holdings\Index.cshtml" />
+    <Content Include="Views\Holdings\Create.cshtml" />
+    <Content Include="Views\Holdings\Edit.cshtml" />
+    <Content Include="Views\Holdings\_Editor.cshtml" />
     <Content Include="Views\Player\Index.cshtml" />
     <Content Include="Views\Player\Create.cshtml" />
     <Content Include="Views\Collaborator\Index.cshtml" />
@@ -8885,7 +8900,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Assets\js\" />
     <Folder Include="Scripts\ckeditor\images\" />
     <Folder Include="Scripts\ckeditor\plugins\a11yhelp\lang\" />
     <Folder Include="Scripts\ckeditor\plugins\docprops\dialogs\" />

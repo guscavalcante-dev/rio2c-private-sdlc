@@ -106,3 +106,10 @@ a.r2c-login__footer-link, a.r2c-footer-link {
 .r2c-browsing-mode__row .kt-grid-nav__desc {
     min-height: 30px;
 }
+
+/*
+    Datatables
+*/
+.dt-hide-column {
+    display: none;
+}

@@ -13,7 +13,7 @@
                     @foreach (var item in breadcrumb.Items)
                     {
                         <span class="kt-subheader__breadcrumbs-separator"></span>
-                        <a href="" class="kt-subheader__breadcrumbs-link">
+                        <a href="@item.Url" class="kt-subheader__breadcrumbs-link">
                             @item.Name
                         </a>
                     }

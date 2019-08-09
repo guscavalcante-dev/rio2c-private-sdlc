@@ -4,9 +4,9 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-07-2019
+// Last Modified On : 08-09-2019
 // ***********************************************************************
-// <copyright file="HoldingController.cs" company="Softo">
+// <copyright file="HoldingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -15,31 +15,50 @@ using PlataformaRio2C.Application.Interfaces.Services;
 using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Mvc;
+using DataTables.AspNet.Core;
+using DataTables.AspNet.Mvc5;
 using MediatR;
+using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
-    /// <summary>HoldingController</summary>
-    [Authorize(Roles = "Administrator")]
-    public class HoldingController : BaseController
+    /// <summary>HoldingsController</summary>
+    [Authorize(Roles = "Admin")]
+    public class HoldingsController : BaseController
     {
         private readonly IHoldingAppService _appService;
 
-        /// <summary>Initializes a new instance of the <see cref="HoldingController"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="HoldingsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="appService">The application service.</param>
-        public HoldingController(IMediator commandBus, IdentityAutenticationService identityController, IHoldingAppService appService)
+        public HoldingsController(IMediator commandBus, IdentityAutenticationService identityController, IHoldingAppService appService)
             : base(commandBus, identityController)
         {
             _appService = appService;
         }
 
-        // GET: Holding
+        #region List
+
+        /// <summary>Indexes this instance.</summary>
+        /// <returns></returns>
+        [HttpGet]
         public ActionResult Index()
         {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Holdings, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Holdings, Url.Action("Index", "Holding", new { Area = "" }))
+            });
+
+            #endregion
+
             //var viewModel = _appService.GetAllSimple();
 
             //if (viewModel != null)
@@ -49,6 +68,24 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             return View();
         }
+
+        /// <summary>Searches this instance.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> Search(IDataTablesRequest request)
+        {
+            var holdings = await this.CommandBus.Send(new FindAllHoldingsAsync(
+                request.Start, 
+                request.Length, 
+                request.Search?.Value,
+                request.GetSortColumns()));
+
+            var response = DataTablesResponse.Create(request, holdings.TotalItemCount, holdings.TotalItemCount, holdings);
+
+            return new DataTablesJsonResult(response, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
 
         public ActionResult Create()
         {

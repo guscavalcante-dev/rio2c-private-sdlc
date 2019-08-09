@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-01-2019
+// Last Modified On : 08-09-2019
 // ***********************************************************************
 // <copyright file="Startup.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,8 +17,6 @@ using Owin;
 using PlataformaRio2C.Web.Admin.App_Start;
 using PlataformaRio2C.Web.Admin.Areas.WebApi;
 using PlataformaRio2C.Web.Admin.Models;
-using System.Globalization;
-using System.Threading;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -47,6 +45,9 @@ namespace PlataformaRio2C.Web.Admin
             json.UseDataContractJsonSerializer = true;
             json.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
             json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+            // DataTables.AspNet registration with default options.
+            DataTables.AspNet.Mvc5.Configuration.RegisterDataTables();
 
             app.UseWebApi(config);
             
