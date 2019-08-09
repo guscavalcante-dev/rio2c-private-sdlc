@@ -69,17 +69,19 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             return View();
         }
 
-        /// <summary>Searches this instance.</summary>
+        /// <summary>Searches the specified request.</summary>
+        /// <param name="request">The request.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Search(IDataTablesRequest request)
+        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions)
         {
             var holdings = await this.CommandBus.Send(new FindAllHoldingsAsync(
                 request.Start,
                 request.Length,
                 request.Search?.Value,
                 request.GetSortColumns(),
-                false,
+                showAllEditions,
                 this.UserId,
                 this.UserUid,
                 this.EditionId,

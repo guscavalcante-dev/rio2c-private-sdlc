@@ -98,6 +98,8 @@
     <Compile Include="Entities\NegotiationConfig\NegotiationRoomConfig.cs" />
     <Compile Include="Entities\NegotiationConfig\NegotiationConfig.cs" />
     <Compile Include="Entities\Negotiation\Negotiation.cs" />
+    <Compile Include="Entities\Organizations\AttendeeOrganization.cs" />
+    <Compile Include="Entities\Organizations\Organization.cs" />
     <Compile Include="Entities\PlayerProducer\PlayerProducer.cs" />
     <Compile Include="Entities\Project\ProjectPlayer.cs" />
     <Compile Include="Entities\Project\ProjectInterest.cs" />
@@ -319,13 +321,13 @@
     <Compile Include="Entities\Collaborator\CollaboratorMiniBio.cs" />
     <Compile Include="Entities\Common\Activity.cs" />
     <Compile Include="Entities\Editions\Edition.cs" />
-    <Compile Include="Entities\Holding\Holding.cs" />
+    <Compile Include="Entities\Holdings\Holding.cs" />
     <Compile Include="Entities\Collaborator\CollaboratorJobTitle.cs" />
     <Compile Include="Entities\Player\PlayerDescription.cs" />
     <Compile Include="Entities\Common\ImageFile.cs" />
     <Compile Include="Entities\Common\Language.cs" />
     <Compile Include="Entities\Player\Player.cs" />
-    <Compile Include="Entities\Holding\HoldingDescription.cs" />
+    <Compile Include="Entities\Holdings\HoldingDescription.cs" />
     <Compile Include="Entities\Common\TargetAudience.cs" />
     <Compile Include="Entities\User\User.cs" />
     <Compile Include="Entities\User\Role.cs" />

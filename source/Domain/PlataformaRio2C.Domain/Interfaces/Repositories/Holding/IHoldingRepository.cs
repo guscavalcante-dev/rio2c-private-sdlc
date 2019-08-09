@@ -23,7 +23,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>IHoldingRepository</summary>
     public interface IHoldingRepository : IRepository<Holding>
     {
-        Task<IPagedList<HoldingListDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllEditions, Guid? editionUid);
+        Task<IPagedList<HoldingListDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllEditions, int? editionId);
         Task<List<Holding>> GetAllAsync();
     }
 }

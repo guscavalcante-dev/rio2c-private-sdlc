@@ -15,9 +15,9 @@
 var HoldingsList = function () {
 
     var initiListTable = function (searchAction) {
-        var table = $('#holdings-list-table');
+        var tableElementId = $('#holdings-list-table');
 
-        table.DataTable({
+        var table = tableElementId.DataTable({
             "language": {
                 "url": "/Assets/components/datatables/datatables." + userInterfaceLanguage + ".js"
             },
@@ -28,8 +28,14 @@ var HoldingsList = function () {
             processing: true,
             serverSide: true,
             order: [[0, "asc"]],
+            sDom: 'lt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>r',
             //ajax: 'https://keenthemes.com/metronic/themes/themes/metronic/dist/preview/inc/api/datatables/demos/server.php',
-            ajax: searchAction,
+            ajax: {
+                url: searchAction,
+                data: function (d) {
+                    d.showAllEditions = $('#ShowAllEditions').prop('checked');
+                }
+            },
             columns: [
                 { data: 'name' },
                 { data: 'createDate' },
@@ -87,6 +93,14 @@ var HoldingsList = function () {
                     }
                 }
             ]
+        });
+
+        $('#Search').keyup(function() {
+            table.search($(this).val()).draw();
+        });
+
+        $('#ShowAllEditions').click(function (e) {
+            table.ajax.reload();
         });
     };
 

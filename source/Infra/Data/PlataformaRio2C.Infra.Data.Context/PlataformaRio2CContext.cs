@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-06-2019
+// Last Modified On : 08-09-2019
 // ***********************************************************************
 // <copyright file="PlataformaRio2CContext.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -37,17 +37,26 @@ namespace PlataformaRio2C.Infra.Data.Context
         /// <param name="modelBuilder">The model builder.</param>
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            // Edition
+            modelBuilder.Configurations.Add(new EditionMap());
+
+            // Holding
+            modelBuilder.Configurations.Add(new HoldingMap());
+            modelBuilder.Configurations.Add(new HoldingDescriptionMap());
+
+            // Organization
+            modelBuilder.Configurations.Add(new OrganizationMap());
+            modelBuilder.Configurations.Add(new AttendeeOrganizationMap());
+
+            // TODO: Old mapping that must be reviewed
             modelBuilder.Configurations.Add(new LanguageMap());
             modelBuilder.Configurations.Add(new AddressMap());
             modelBuilder.Configurations.Add(new ImageFileMap());            
-            modelBuilder.Configurations.Add(new HoldingMap());
-            modelBuilder.Configurations.Add(new HoldingDescriptionMap());            
             modelBuilder.Configurations.Add(new PlayerMap());
             modelBuilder.Configurations.Add(new PlayerDescriptionMap());
             modelBuilder.Configurations.Add(new CollaboratorMap());
             modelBuilder.Configurations.Add(new CollaboratorJobTitleMap());
             modelBuilder.Configurations.Add(new CollaboratorMiniBioMap());
-            modelBuilder.Configurations.Add(new EditionMap());
             modelBuilder.Configurations.Add(new UserMap());
             modelBuilder.Configurations.Add(new UserUseTermMap());
             modelBuilder.Configurations.Add(new RoleMap());            
@@ -112,15 +121,22 @@ namespace PlataformaRio2C.Infra.Data.Context
             base.OnModelCreating(modelBuilder);
         }
 
-        public DbSet<Holding> Holdings { get; set; }
+        // Edition
+        public DbSet<Edition> Events { get; set; } //TODO: Rename Events to Editions on context
 
+        // Holding
+        public DbSet<Holding> Holdings { get; set; }
+        public DbSet<HoldingDescription> HoldingDescriptions { get; set; }
+
+        // Organization
+        public DbSet<Organization> Organizations { get; set; }
+        public DbSet<AttendeeOrganization> AttendeeOrganizations { get; set; }
+
+        // TODO: Old dbsets that must be reviewed
         public DbSet<Language> Languages { get; set; }
         public DbSet<ImageFile> ImageFiles { get; set; }
-        
-        public DbSet<HoldingDescription> HoldingDescriptions { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<Collaborator> Collaborators { get; set; }
-        public DbSet<Edition> Events { get; set; }               
         public DbSet<User> Users { get; set; }
         public DbSet<UserUseTerm> UserUseTerms { get; set; }
         public DbSet<InterestGroup> InterestGroups { get; set; }

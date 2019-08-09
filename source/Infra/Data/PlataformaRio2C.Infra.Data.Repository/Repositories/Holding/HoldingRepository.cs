@@ -34,16 +34,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     /// </summary>
     internal static class HoldingIQueryableExtensions
     {
-        /// <summary>Finds the by edition uid.</summary>
+        /// <summary>Finds the by edition identifier.</summary>
         /// <param name="query">The query.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
-        /// <param name="editionUid">The edition uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        internal static IQueryable<Holding> FindByEditionUid(this IQueryable<Holding> query, bool showAllEditions, Guid? editionUid)
+        internal static IQueryable<Holding> FindByEditionId(this IQueryable<Holding> query, bool showAllEditions, int? editionId)
         {
-            if (!showAllEditions && editionUid.HasValue)
+            if (!showAllEditions && editionId.HasValue)
             {
-                //query = query.Where(h => h.)
+                query = query.Where(h => h.Organizations.Any(o => o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId)));
             }
 
             return query;
@@ -145,13 +145,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="keywords">The keywords.</param>
         /// <param name="sortColumns">The sort columns.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
-        /// <param name="editionUid">The edition uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<IPagedList<HoldingListDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllEditions, Guid? editionUid)
+        public async Task<IPagedList<HoldingListDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllEditions, int? editionId)
         {
             var query = this.GetAll()
                                 .FindByKeywords(keywords)
-                                .FindByEditionUid(showAllEditions, editionUid);
+                                .FindByEditionId(showAllEditions, editionId);
 
             return await query
                             .Select(h => new HoldingListDto

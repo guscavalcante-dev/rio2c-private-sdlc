@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -37,6 +38,8 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTime NegotiationEndDate { get; private set; }
 
         public virtual Quiz Quiz { get; private set; }
+
+        public virtual ICollection<AttendeeOrganization> AttendeeOrganizations { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="Edition"/> class.</summary>
         /// <param name="name">The name.</param>

@@ -28,6 +28,7 @@ namespace PlataformaRio2C.Domain.Entities
         public bool IsImageUploaded { get; private set; }
 
         public virtual ICollection<HoldingDescription> Descriptions { get; private set; }
+        public virtual ICollection<Organization> Organizations { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="Holding"/> class.</summary>
         protected Holding()

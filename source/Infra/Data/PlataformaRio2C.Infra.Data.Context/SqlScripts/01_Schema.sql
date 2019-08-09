@@ -1104,7 +1104,7 @@ CREATE TABLE [dbo].[Organizations](
 	[CompanyName] [varchar](100) NULL,
 	[TradeName] [varchar](100) NULL,
 	[Document] [varchar](50) NULL,
-	[Website] [varchar](100) NOT NULL,
+	[Website] [varchar](100) NULL,
 	[SocialMedia] [varchar](256) NULL,
 	[PhoneNumber] [varchar](50) NULL,
 	[HasImage] [bit] NOT NULL,

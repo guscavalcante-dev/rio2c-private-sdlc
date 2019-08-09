@@ -99,6 +99,8 @@
     <Compile Include="Mapping\NegotiationConfig\NegotiationRoomConfigMap.cs" />
     <Compile Include="Mapping\NegotiationConfig\NegotiationConfigMap.cs" />
     <Compile Include="Mapping\Negotiation\NegotiationMap.cs" />
+    <Compile Include="Mapping\Organizations\AttendeeOrganizationMap.cs" />
+    <Compile Include="Mapping\Organizations\OrganizationMap.cs" />
     <Compile Include="Mapping\Project\ProjectAdditionalInformationMap.cs" />
     <Compile Include="Mapping\Project\ProjectInterestMap.cs" />
     <Compile Include="Mapping\Project\ProjectPlayerEvaluationMap.cs" />
@@ -138,10 +140,10 @@
     <Compile Include="Mapping\Collaborator\CollaboratorMiniBioMap.cs" />
     <Compile Include="Mapping\Collaborator\CollaboratorJobTitleMap.cs" />
     <Compile Include="Mapping\Common\LanguageMap .cs" />
-    <Compile Include="Mapping\Holding\HoldingDescriptionMap.cs" />
+    <Compile Include="Mapping\Holdings\HoldingDescriptionMap.cs" />
     <Compile Include="Mapping\Collaborator\CollaboratorMap.cs" />
     <Compile Include="Mapping\Editions\EditionMap.cs" />
-    <Compile Include="Mapping\Holding\HoldingMap.cs" />
+    <Compile Include="Mapping\Holdings\HoldingMap.cs" />
     <Compile Include="Mapping\Common\ImageFileMap.cs" />
     <Compile Include="Mapping\Player\PlayerDescriptionMap.cs" />
     <Compile Include="Mapping\Player\PlayerMap.cs" />
@@ -347,6 +349,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="SqlScripts\03_SampleData_Test.sql" />
     <Content Include="SqlScripts\02_Seed.sql" />
     <Content Include="SqlScripts\01_Schema.sql" />
     <Content Include="SqlScripts\Deltas\20190711_01_ChangesForWebhooks.sql" />
@@ -607,6 +610,7 @@
       <DependentUpon>201811221800248_musicalCommission.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\..\..\packages\PostSharp.4.3.37\tools\PostSharp.targets" Condition="Exists('..\..\..\..\packages\PostSharp.4.3.37\tools\PostSharp.targets')" />
   <Target Name="EnsurePostSharpImported" BeforeTargets="BeforeBuild" Condition="'$(PostSharp30Imported)' == ''">
