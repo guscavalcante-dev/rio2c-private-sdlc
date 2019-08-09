@@ -20,6 +20,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using LinqKit;
 using PlataformaRio2C.Domain.Dtos;
 using X.PagedList;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
@@ -41,18 +42,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             if (!string.IsNullOrEmpty(keywords))
             {
-                //var predicate = PredicateBuilder.New<Holding>(true);
+                var predicate = PredicateBuilder.New<Holding>(true);
 
                 foreach (var keyword in keywords.Split(' '))
                 {
                     if (!string.IsNullOrEmpty(keyword))
                     {
-                        //predicate = predicate.And(h => h.Name.Contains(keyword));
-                        query = query.Where(h => h.Name.Contains(keyword));
+                        predicate = predicate.And(h => h.Name.Contains(keyword));
                     }
                 }
 
-                //query = query.AsExpandable().Where(predicate);
+                query = query.AsExpandable().Where(predicate);
             }
 
             return query;
