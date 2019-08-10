@@ -14,7 +14,7 @@
 
 var HoldingsDataTableWidget = function () {
 
-    var initiListTable = function (searchAction) {
+    var initiListTable = function (searchUrl) {
         MyRio2cCommon.block('#HoldingDataTableWidget');
 
         var tableElementId = $('#holdings-list-table');
@@ -32,7 +32,7 @@ var HoldingsDataTableWidget = function () {
             order: [[0, "asc"]],
             sDom: 'lt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>r',
             ajax: {
-                url: searchAction,
+                url: searchUrl,
                 data: function (d) {
                     d.showAllEditions = $('#ShowAllEditions').prop('checked');
                 }
@@ -108,8 +108,8 @@ var HoldingsDataTableWidget = function () {
     };
 
     return {
-        init: function (searchAction) {
-            initiListTable(searchAction);
+        init: function (searchUrl) {
+            initiListTable(searchUrl);
         }
     };
 }();

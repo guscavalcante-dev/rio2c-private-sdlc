@@ -23,11 +23,9 @@
     @Scripts.Render("~/bundles/js/chartJsBundle")
     @Scripts.Render("~/bundles/js/holdingsListBundle")
     <script>
-        var editionUrlCode = '@ViewBag.EditionUrlCode';
-
         jQuery(document).ready(function () {
-            HoldingsTotalCountWidget.init();
-            HoldingsEditionCountWidget.init();
+            HoldingsTotalCountWidget.init('@Url.Action("Count", "Holdings", new { Area = "" })');
+            HoldingsEditionCountWidget.init('@Url.Action("Count", "Holdings", new { Area = "" })');
             HoldingsDataTableWidget.init('@Url.Action("Search", "Holdings", new { Area = "" })');
         });
     </script>

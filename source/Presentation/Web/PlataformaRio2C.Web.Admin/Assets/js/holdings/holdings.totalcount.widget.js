@@ -17,11 +17,11 @@ var HoldingsTotalCountWidget = function () {
     var widgetElementId = '#HoldingTotalCountWidget';
     var widgetElement = $(widgetElementId);
 
-    var getCounter = function () {
+    var getCounter = function (countUrl) {
         var jsonParameters = new Object();
         jsonParameters.showAllEditions = true;
 
-        $.get('/pt-br/' + editionUrlCode + '/Holdings/Count', jsonParameters, function (data) {
+        $.get(countUrl, jsonParameters, function (data) {
             if (data.status === 'success') {
                 widgetElement.find('.counter').html(data.count);
             }
@@ -142,9 +142,9 @@ var HoldingsTotalCountWidget = function () {
     };
 
     return {
-        init: function () {
+        init: function (countUrl) {
             MyRio2cCommon.block(widgetElementId);
-            getCounter();
+            getCounter(countUrl);
             initChart();
         }
     };
