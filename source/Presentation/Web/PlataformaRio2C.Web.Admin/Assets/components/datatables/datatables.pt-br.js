@@ -19,5 +19,12 @@
     "oAria": {
         "sSortAscending": ": Ordenar colunas de forma ascendente",
         "sSortDescending": ": Ordenar colunas de forma descendente"
+    },
+    "select": {
+        "rows": {
+            "0": "Clique para selecionar uma linha",
+            "1": "1 linha selecionada",
+            "_": "%d linhas selecionadas"
+        }
     }
 }
