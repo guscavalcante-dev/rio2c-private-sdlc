@@ -41,6 +41,9 @@ var HoldingsDataTableWidget = function () {
                     d.showAllEditions = $('#ShowAllEditions').prop('checked');
                 }
             },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $('#holdings-list-table_processing').hide();
+            },
             createdRow: function (row, data, dataIndex) {
                 $(row).attr('data-id', data.uid);
             },
