@@ -56,17 +56,40 @@ var HoldingsDataTableWidget = function () {
                 url: searchUrl,
                 data: function (d) {
                     d.showAllEditions = $('#ShowAllEditions').prop('checked');
+                },
+                dataFilter: function (data) {
+                    var jsonReturned = jQuery.parseJSON(data);
+
+                    return MyRio2cCommon.handleAjaxReturn({
+                        data: jsonReturned,
+                        // Success
+                        onSuccess: function () {
+
+                            // Parameters returned with capital letter
+                            var json = new Object();
+                            json.draw = jsonReturned.dataTable.Draw;
+                            json.error = jsonReturned.dataTable.Error;
+                            json.recordsTotal = jsonReturned.dataTable.TotalRecords;
+                            json.recordsFiltered = jsonReturned.dataTable.TotalRecordsFiltered;
+                            json.data = jsonReturned.dataTable.Data;
+
+                            return JSON.stringify(json); // return JSON string
+                        },
+                        // Error
+                        onError: function () {
+                        }
+                    });
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 $('#holdings-list-table_processing').hide();
             },
             createdRow: function (row, data, dataIndex) {
-                $(row).attr('data-id', data.uid);
+                $(row).attr('data-id', data.Uid);
             },
             columns: [
-                { data: 'name' },
-                { data: 'createDate' },
+                { data: 'Name' },
+                { data: 'CreateDate' },
                 //{
                 //    data: null,
                 //    render: function (data, type, row, meta) {

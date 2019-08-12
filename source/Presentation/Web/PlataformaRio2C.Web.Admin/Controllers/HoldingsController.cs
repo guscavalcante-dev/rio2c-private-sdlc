@@ -60,13 +60,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             #endregion
 
-            //var viewModel = _appService.GetAllSimple();
-
-            //if (viewModel != null)
-            //{
-            //    viewModel = viewModel.OrderBy(e => e.Name).ToList();
-            //}
-
             return View(searchViewModel);
         }
 
@@ -95,7 +88,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             var response = DataTablesResponse.Create(request, holdings.TotalItemCount, holdings.TotalItemCount, holdings);
 
-            return new DataTablesJsonResult(response, JsonRequestBehavior.AllowGet);
+            return Json(new
+            {
+                status = "success",
+                dataTable = response
+            }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion
@@ -118,14 +115,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             return Json(new
             {
                 status = "success",
-                //message = returnMessage,
                 pages = new List<dynamic>
                 {
                     new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", holdingsCount), divIdOrClass = "#HoldingTotalCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
-
-            //return Json(new { status = "success", count = holdingsCount }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion
@@ -147,14 +141,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             return Json(new
             {
                 status = "success",
-                //message = returnMessage,
                 pages = new List<dynamic>
                 {
                     new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", holdingsCount), divIdOrClass = "#HoldingEditionCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
-
-            //return Json(new { status = "success", count = holdingsCount }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion
