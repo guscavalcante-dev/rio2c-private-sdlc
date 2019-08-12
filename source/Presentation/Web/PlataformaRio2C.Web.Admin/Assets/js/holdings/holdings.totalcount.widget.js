@@ -17,37 +17,7 @@ var HoldingsTotalCountWidget = function () {
     var widgetElementId = '#HoldingTotalCountWidget';
     var widgetElement = $(widgetElementId);
 
-    var getCounter = function (countUrl) {
-        var jsonParameters = new Object();
-        jsonParameters.showAllEditions = true;
-
-        $.get(countUrl, jsonParameters, function (data) {
-            if (data.status === 'success') {
-                widgetElement.find('.counter').html(data.count);
-            }
-            //solutionCommonHandleFormReturn(data, null, null,
-            //    // Success
-            //    function () {
-            //        if (data.Email !== null && data.Email !== '') {
-            //            $('#Email').val(data.Email);
-            //            disableEmailField();
-            //        }
-            //        else {
-            //            enableEmailField();
-            //        }
-            //    },
-            //    // Error
-            //    function () {
-            //        //console.log('erro');
-            //    });
-            MyRio2cCommon.unblock({ idOrClass: widgetElementId });
-        })
-        .fail(function () {
-            //showAlert();
-            //MyRio2cCommon.unblock(widgetElementId);
-        });
-    };
-
+    // Show ---------------------------------------------------------------------------------------
     var initChart = function () {
         if ($('#kt_chart_bandwidth1').length == 0) {
             return;
@@ -141,11 +111,36 @@ var HoldingsTotalCountWidget = function () {
         var chart = new Chart(ctx, config);
     };
 
+    var enableShowPlugins = function () {
+        initChart();
+    };
+
+    var show = function (showUrl) {
+        var jsonParameters = new Object();
+
+        $.get(showUrl, jsonParameters, function (data) {
+            MyRio2cCommon.handleAjaxReturn({
+                data: data,
+                // Success
+                onSuccess: function () {
+                    enableShowPlugins();
+                    MyRio2cCommon.unblock({ idOrClass: widgetElementId });
+                },
+                // Error
+                onError: function() {
+                }
+            });
+        })
+        .fail(function () {
+            //showAlert();
+            //MyRio2cCommon.unblock(widgetElementId);
+        });
+    };
+
     return {
-        init: function (countUrl) {
+        init: function (showUrl) {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
-            getCounter(countUrl);
-            initChart();
+            show(showUrl);
         }
     };
 }();

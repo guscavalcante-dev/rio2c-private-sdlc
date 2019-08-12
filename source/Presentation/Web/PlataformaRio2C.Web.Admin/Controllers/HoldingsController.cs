@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-09-2019
+// Last Modified On : 08-12-2019
 // ***********************************************************************
 // <copyright file="HoldingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -99,23 +99,61 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #endregion
 
-        #region Count
+        #region Total Count Widget
 
-        /// <summary>Counts the specified show all editions.</summary>
-        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <summary>Shows the total count widget.</summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Count(bool showAllEditions)
+        public async Task<ActionResult> ShowTotalCountWidget()
         {
             var holdingsCount = await this.CommandBus.Send(new CountAllHoldingsAsync(
-                showAllEditions,
+                true,
                 this.UserId,
                 this.UserUid,
                 this.EditionId,
                 this.EditionUid,
                 this.UserInterfaceLanguage));
 
-            return Json(new { status = "success", count = holdingsCount }, JsonRequestBehavior.AllowGet);
+            return Json(new
+            {
+                status = "success",
+                //message = returnMessage,
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", holdingsCount), divIdOrClass = "#HoldingTotalCountWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+
+            //return Json(new { status = "success", count = holdingsCount }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Edition Count Widget
+
+        /// <summary>Shows the edition count widget.</summary>
+        /// <returns></returns>
+        public async Task<ActionResult> ShowEditionCountWidget()
+        {
+            var holdingsCount = await this.CommandBus.Send(new CountAllHoldingsAsync(
+                false,
+                this.UserId,
+                this.UserUid,
+                this.EditionId,
+                this.EditionUid,
+                this.UserInterfaceLanguage));
+
+            return Json(new
+            {
+                status = "success",
+                //message = returnMessage,
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", holdingsCount), divIdOrClass = "#HoldingEditionCountWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+
+            //return Json(new { status = "success", count = holdingsCount }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

@@ -28,23 +28,25 @@ var HoldingsDataTableWidget = function () {
             lengthMenu: [[1, 10, 25, 50, 100], [1, 10, 25, 50, 100]],
             pageLength: 10,
             responsive: true,
-            //sScrollY: "400",
+            sScrollY: "520",
             //bScrollCollapse: false,
             searchDelay: 2000,
             processing: true,
             serverSide: true,
             order: [[0, "asc"]],
-            sDom: 'lt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>r',
+            sDom: '<"row"<"col-sm-6"l>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
             ajax: {
                 url: searchUrl,
                 data: function (d) {
                     d.showAllEditions = $('#ShowAllEditions').prop('checked');
                 }
             },
+            createdRow: function (row, data, dataIndex) {
+                $(row).attr('data-id', data.uid);
+            },
             columns: [
                 { data: 'name' },
                 { data: 'createDate' },
-                { data: 'uid' },
                 //{
                 //    data: null,
                 //    render: function (data, type, row, meta) {
@@ -71,12 +73,6 @@ var HoldingsDataTableWidget = function () {
                     }
                 },
                 {
-                    targets: [2],
-                    className: "dt-hide-column",
-                    orderable: false,
-                    searchable: false
-                },
-                {
                     targets: -1,
                     title: 'Actions',
                     width: "10%",
@@ -100,8 +96,10 @@ var HoldingsDataTableWidget = function () {
             ]
         });
 
-        $('#Search').keyup(function() {
-            table.search($(this).val()).draw();
+        $('#Search').keyup(function (e) {
+            if (e.keyCode === 13) {
+                table.search($(this).val()).draw();
+            }
         });
 
         $('#ShowAllEditions').click(function (e) {

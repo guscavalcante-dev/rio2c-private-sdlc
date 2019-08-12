@@ -4,10 +4,14 @@
 <!--begin:: Quick Stats-->
 <div class="row">
     <div class="col-sm-6">
-        @Html.Partial("Widgets/TotalCountWidget")
+        <!--begin:: Total Count Widget-->
+        <div id="HoldingTotalCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <!--end:: Total Count Widget-->
     </div>
     <div class="col-sm-6">
-        @Html.Partial("Widgets/EditionCountWidget")
+        <!--begin:: Edition Count-->
+        <div id="HoldingEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <!--end:: Edition Count-->        
     </div>
 </div>
 <!--end:: Quick Stats-->
@@ -24,8 +28,8 @@
     @Scripts.Render("~/bundles/js/holdingsListBundle")
     <script>
         jQuery(document).ready(function () {
-            HoldingsTotalCountWidget.init('@Url.Action("Count", "Holdings", new { Area = "" })');
-            HoldingsEditionCountWidget.init('@Url.Action("Count", "Holdings", new { Area = "" })');
+            HoldingsTotalCountWidget.init('@Url.Action("ShowTotalCountWidget", "Holdings", new { Area = "" })');
+            HoldingsEditionCountWidget.init('@Url.Action("ShowEditionCountWidget", "Holdings", new { Area = "" })');
             HoldingsDataTableWidget.init('@Url.Action("Search", "Holdings", new { Area = "" })');
         });
     </script>

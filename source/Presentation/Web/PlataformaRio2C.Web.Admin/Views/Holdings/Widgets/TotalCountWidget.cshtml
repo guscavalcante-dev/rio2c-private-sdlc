@@ -1,15 +1,12 @@
-﻿<!--begin:: Total Count-->
-<div id="HoldingTotalCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder">
-    <div class="kt-portlet__body kt-portlet__body--fluid">
-        <div class="kt-widget20">
-            <div class="kt-widget20__content kt-portlet__space-x">
-                <span class="kt-widget20__number kt-font-brand counter">&nbsp;</span>
-                <span class="kt-widget20__desc">@Labels.HoldingsRegistered</span>
-            </div>
-            <div class="kt-widget20__chart" style="height:130px;">
-                <canvas id="kt_chart_bandwidth1"></canvas>
-            </div>
+﻿@model int
+<div class="kt-portlet__body kt-portlet__body--fluid">
+    <div class="kt-widget20">
+        <div class="kt-widget20__content kt-portlet__space-x">
+            <span class="kt-widget20__number kt-font-brand">@Model</span>
+            <span class="kt-widget20__desc">@Labels.HoldingsRegistered</span>
+        </div>
+        <div class="kt-widget20__chart" style="height:130px;">
+            <canvas id="kt_chart_bandwidth1"></canvas>
         </div>
     </div>
 </div>
-<!--end:: Total Count-->

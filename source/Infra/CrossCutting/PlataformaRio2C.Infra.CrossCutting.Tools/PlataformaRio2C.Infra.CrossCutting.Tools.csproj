@@ -148,6 +148,7 @@
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Extensions\MenuExtensions.cs" />
     <Compile Include="Extensions\DataTablesExtensions.cs" />
+    <Compile Include="Helpers\RazorHelper.cs" />
     <Compile Include="Helpers\CryptoHelper.cs" />
     <Compile Include="Helpers\BreadcrumbHelper.cs" />
     <Compile Include="Interfaces\IUserSession.cs" />
