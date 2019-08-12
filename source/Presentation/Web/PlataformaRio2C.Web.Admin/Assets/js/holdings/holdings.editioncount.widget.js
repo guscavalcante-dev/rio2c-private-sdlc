@@ -4,7 +4,7 @@
 // Created          : 08-07-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-09-2019
+// Last Modified On : 08-12-2019
 // ***********************************************************************
 // <copyright file="holdings.editioncount.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -40,7 +40,7 @@ var HoldingsEditionCountWidget = function () {
             //    function () {
             //        //console.log('erro');
             //    });
-            MyRio2cCommon.unblock(widgetElementId);
+            MyRio2cCommon.unblock({ idOrClass: widgetElementId });
         })
         .fail(function () {
             //showAlert();
@@ -142,7 +142,7 @@ var HoldingsEditionCountWidget = function () {
 
     return {
         init: function (countUrl) {
-            MyRio2cCommon.block(widgetElementId);
+            MyRio2cCommon.block({ idOrClass: widgetElementId });
             getCounter(countUrl);
             initChart();
         }
