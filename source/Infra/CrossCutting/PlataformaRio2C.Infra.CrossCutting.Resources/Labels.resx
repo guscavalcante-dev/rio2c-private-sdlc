@@ -1080,7 +1080,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>na Edição {0}</value>
     <comment>na Edição {0}</comment>
   </data>
-  <data name="ShowFromAllEditions" xml:space="preserve">
+  <data name="ShowAllEditions" xml:space="preserve">
     <value>Exibir de todas as edições</value>
     <comment>Exibir de todas as edições</comment>
   </data>

@@ -21,12 +21,26 @@ var HoldingsDataTableWidget = function () {
 
         var tableElementId = $('#holdings-list-table');
 
+        // Set initial page size
+        var pageLengthOptions = [1, 10, 25, 50, 100];
+        var pageLength = 10;
+        if (!MyRio2cCommon.isNullOrEmpty(initialPageSize) && pageLengthOptions.includes(initialPageSize)) {
+            pageLength = initialPageSize;
+        }
+
+        // Set initial page
+        var displayStart = 0;
+        if (!MyRio2cCommon.isNullOrEmpty(initialPage)) {
+            displayStart = (initialPage - 1) * pageLength;
+        }
+
         var table = tableElementId.DataTable({
             "language": {
                 "url": "/Assets/components/datatables/datatables." + userInterfaceLanguage + ".js"
             },
-            lengthMenu: [[1, 10, 25, 50, 100], [1, 10, 25, 50, 100]],
-            pageLength: 10,
+            lengthMenu: [pageLengthOptions, pageLengthOptions],
+            displayStart: displayStart,
+            pageLength: pageLength,
             responsive: true,
             sScrollY: "520",
             //bScrollCollapse: false,
@@ -35,6 +49,9 @@ var HoldingsDataTableWidget = function () {
             serverSide: true,
             order: [[0, "asc"]],
             sDom: '<"row"<"col-sm-6"l>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+            oSearch: {
+                sSearch: $('#Search').val()
+            },
             ajax: {
                 url: searchUrl,
                 data: function (d) {

@@ -2160,9 +2160,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Exibir de todas as edições.
         /// </summary>
-        public static string ShowFromAllEditions {
+        public static string ShowAllEditions {
             get {
-                return ResourceManager.GetString("ShowFromAllEditions", resourceCulture);
+                return ResourceManager.GetString("ShowAllEditions", resourceCulture);
             }
         }
         

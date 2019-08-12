@@ -1,4 +1,5 @@
-﻿@{
+﻿@model HoldingSearchViewModel
+@{
     ViewBag.Title = Labels.Holdings;
 }
 <!--begin:: Quick Stats-->
@@ -15,7 +16,7 @@
     </div>
 </div>
 <!--end:: Quick Stats-->
-@Html.Partial("Widgets/DataTablewidget")
+@Html.Partial("Widgets/DataTablewidget", Model)
 @*
     @Html.Partial("../Shared/_ModalDelete")
 *@
@@ -27,6 +28,9 @@
     @Scripts.Render("~/bundles/js/chartJsBundle")
     @Scripts.Render("~/bundles/js/holdingsListBundle")
     <script>
+        var initialPage = @(Model.Page?.ToString() ?? "null");
+        var initialPageSize = @(Model.PageSize?.ToString() ?? "null");
+
         jQuery(document).ready(function () {
             HoldingsTotalCountWidget.init('@Url.Action("ShowTotalCountWidget", "Holdings", new { Area = "" })');
             HoldingsEditionCountWidget.init('@Url.Action("ShowEditionCountWidget", "Holdings", new { Area = "" })');

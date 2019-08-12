@@ -46,10 +46,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #region List
 
-        /// <summary>Indexes this instance.</summary>
+        /// <summary>Indexes the specified search view model.</summary>
+        /// <param name="searchViewModel">The search view model.</param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(HoldingSearchViewModel searchViewModel)
         {
             #region Breadcrumb
 
@@ -66,7 +67,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             //    viewModel = viewModel.OrderBy(e => e.Name).ToList();
             //}
 
-            return View();
+            return View(searchViewModel);
         }
 
         #endregion

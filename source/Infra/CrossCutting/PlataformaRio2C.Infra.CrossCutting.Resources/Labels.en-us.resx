@@ -1072,7 +1072,7 @@
     <value>in {0} Edition</value>
     <comment>na Edição {0}</comment>
   </data>
-  <data name="ShowFromAllEditions" xml:space="preserve">
+  <data name="ShowAllEditions" xml:space="preserve">
     <value>Show from all editions</value>
     <comment>Exibir de todas as edições</comment>
   </data>

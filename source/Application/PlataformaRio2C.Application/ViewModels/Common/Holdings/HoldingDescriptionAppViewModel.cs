@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-06-2019
+// Last Modified On : 08-12-2019
 // ***********************************************************************
 // <copyright file="HoldingDescriptionAppViewModel.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

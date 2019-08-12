@@ -304,6 +304,7 @@
     <Compile Include="ViewModels\Common\Conference\ConferenceLecturerAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Conference\LecturerDetailAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Country\CountryBasicAppViewModel.cs" />
+    <Compile Include="ViewModels\Common\Holdings\HoldingSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Mail\MailAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Mail\MailCollaboratorAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Mail\MailCollaboratorEditAppViewModel.cs" />
@@ -338,8 +339,8 @@
     <Compile Include="ViewModels\Common\Conference\ConferenceSynopsisAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Conference\ConferenceTitleAppViewModel.cs" />
     <Compile Include="ViewModels\Common\RoleLecturer\RoleLecturerAppViewModel.cs" />
-    <Compile Include="ViewModels\Common\Holding\HoldingItemListAppViewModel.cs" />
-    <Compile Include="ViewModels\Common\Holding\HoldingOptionAppViewModel.cs" />
+    <Compile Include="ViewModels\Common\Holdings\HoldingItemListAppViewModel.cs" />
+    <Compile Include="ViewModels\Common\Holdings\HoldingOptionAppViewModel.cs" />
     <Compile Include="ViewModels\Common\ImageBase64AppViewModel.cs" />
     <Compile Include="ViewModels\Common\Interest\InterestAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Interest\InterestGroupAppViewModel.cs" />
@@ -408,8 +409,8 @@
     <Compile Include="ViewModels\Common\User\UserUseTermAppViewModel.cs" />
     <Compile Include="ViewModels\Common\User\UserAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Event\EventAppViewModel.cs" />
-    <Compile Include="ViewModels\Common\Holding\HoldingDescriptionAppViewModel.cs" />
-    <Compile Include="ViewModels\Common\Holding\HoldingAppViewModel.cs" />
+    <Compile Include="ViewModels\Common\Holdings\HoldingDescriptionAppViewModel.cs" />
+    <Compile Include="ViewModels\Common\Holdings\HoldingAppViewModel.cs" />
     <Compile Include="ViewModels\Common\ImageFileAppViewModel.cs" />
     <Compile Include="ViewModels\Common\LanguageAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Player\Properties\PlayerDescriptionAppViewModel.cs" />

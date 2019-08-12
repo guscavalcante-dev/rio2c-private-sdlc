@@ -15,7 +15,7 @@
 var MyRio2cCommon = function () {
 
     // General ------------------------------------------------------------------------------------
-    var has = function (obj, key) {
+    var hasProperty = function (obj, key) {
         return key.split(".").every(function (x) {
             if (typeof obj !== "object" || obj === null || !(x in obj)) {
                 return false;
@@ -27,11 +27,19 @@ var MyRio2cCommon = function () {
         });
     };
 
+    var isNullOrEmpty = function (value) {
+        if (typeof (value) === 'undefined' || value == null || value === '') {
+            return true;
+        }
+
+        return false;
+    };
+
     // Block/unblock UI ---------------------------------------------------------------------------
     var block = function (options) {
         var idOrClass = 'body';
 
-        if (has(options, 'idOrClass')) {
+        if (hasProperty(options, 'idOrClass')) {
             idOrClass = options.idOrClass;
         }
 
@@ -41,7 +49,7 @@ var MyRio2cCommon = function () {
     var unblock = function (options) {
         var idOrClass = 'body';
 
-        if (has(options, 'idOrClass')) {
+        if (hasProperty(options, 'idOrClass')) {
             idOrClass = options.idOrClass;
         }
 
@@ -51,7 +59,7 @@ var MyRio2cCommon = function () {
     // Handle ajax return -------------------------------------------------------------------------
     var handleAjaxReturn = function (options) {
 
-        if (!has(options, 'data')) {
+        if (!hasProperty(options, 'data')) {
             //showAlert(data.message, data.status, data.isFixed);
 
             return;
@@ -69,7 +77,7 @@ var MyRio2cCommon = function () {
         if (data.status === "success") {
             // Redirect
             //if (typeof data.redirect !== "undefined" && data.redirect != null && data.redirect !== '') {
-            if (has(data, 'redirect')) {
+            if (hasProperty(data, 'redirect')) {
                 //showAlert(data.message + " " + redirectMessage, data.status, data.isFixed, function () {
                 //    window.location.replace(data.redirect);
                 //});
@@ -79,7 +87,7 @@ var MyRio2cCommon = function () {
 
             // Submit search form
             //if (typeof searchFormIdOrClass !== "undefined" && searchFormIdOrClass != null && searchFormIdOrClass !== '') {
-            if (has(options, 'searchFormIdOrClass')) {
+            if (hasProperty(options, 'searchFormIdOrClass')) {
                 //showAlert(data.message + " " + redirectMessage, data.status, data.isFixed, function () {
                 //    $(searchFormIdOrClass).submit();
                 //});
@@ -100,7 +108,7 @@ var MyRio2cCommon = function () {
 
             // Replace pages
             //if (data.pages !== "undefined" && data.pages != null && data.pages !== '') {
-            if (has(data, 'pages')) {
+            if (hasProperty(data, 'pages')) {
                 //showAlert(data.message, data.status, data.isFixed);
 
                 $.each(data.pages, function (key, value) {
@@ -108,7 +116,7 @@ var MyRio2cCommon = function () {
                 });
 
                 //if (typeof callbackSuccess !== "undefined" && callbackSuccess != null && callbackSuccess !== '') {
-                if (has(options, 'onSuccess')) {
+                if (hasProperty(options, 'onSuccess')) {
                     options.onSuccess(data);
                 }
 
@@ -116,7 +124,7 @@ var MyRio2cCommon = function () {
             }
 
             //if (typeof formDivIdOrClass !== "undefined" && formDivIdOrClass != null && formDivIdOrClass !== '') {
-            if (has(options, 'formDivIdOrClass')) {
+            if (hasProperty(options, 'formDivIdOrClass')) {
                 //showAlert(data.message, data.status, data.isFixed);
 
                 if (typeof data.page !== "undefined" && data.page != null && data.page !== '') {
@@ -127,14 +135,14 @@ var MyRio2cCommon = function () {
                 //}
 
                 //if (typeof callbackSuccess !== "undefined" && callbackSuccess != null && callbackSuccess !== '') {
-                if (has(options, 'onSuccess')) {
+                if (hasProperty(options, 'onSuccess')) {
                     options.onSuccess(data);
                 }
                 return;
             }
 
             //if (typeof callbackSuccess !== "undefined" && callbackSuccess != null && callbackSuccess !== '') {
-            if (has(options, 'onSuccess')) {
+            if (hasProperty(options, 'onSuccess')) {
                 if (typeof data.message !== "undefined" && data.message != null && data.message !== '') {
                     //showAlert(data.message, data.status, data.isFixed);
                 }
@@ -145,7 +153,7 @@ var MyRio2cCommon = function () {
             }
 
             //if (typeof data.message !== "undefined" && data.message != null && data.message !== '') {
-            if (has(data, 'message')) {
+            if (hasProperty(data, 'message')) {
                 //showAlert(data.message, data.status, data.isFixed);
             }
 
@@ -156,7 +164,7 @@ var MyRio2cCommon = function () {
         if (data.status === "error") {
             // User is not logged in
             //if (typeof data.redirect !== "undefined" && data.redirect != null && data.redirect !== '') {
-            if (has(data, 'redirect')) {
+            if (hasProperty(data, 'redirect')) {
                 //showAlert(data.message + " " + redirectMessage, data.status, data.isFixed, function () {
                 //    if (data.redirect.toLowerCase() == "/accounts/login")
                 //        window.location.replace(data.redirect + "?ReturnUrl=" + encodeURIComponent(window.location.pathname) + encodeURIComponent(window.location.search));
@@ -168,12 +176,12 @@ var MyRio2cCommon = function () {
             }
             // Form with error
             //if (typeof formDivIdOrClass !== "undefined" && formDivIdOrClass != null && formDivIdOrClass !== '' && typeof data.page !== "undefined" && data.page !== null && data.page !== '') {
-            if (has(options, 'formDivIdOrClass') && has(data, 'page')) {
+            if (hasProperty(options, 'formDivIdOrClass') && hasProperty(data, 'page')) {
                 //showAlert(data.message, data.status, data.isFixed);
                 $(options.formDivIdOrClass).html(data.page);
 
                 //if (typeof callbackError !== "undefined" && callbackError != null && callbackError !== '') {
-                if (has(options, 'onError')) {
+                if (hasProperty(options, 'onError')) {
                     options.onError();
                 }
 
@@ -181,7 +189,7 @@ var MyRio2cCommon = function () {
             }
 
             //if (typeof callbackError !== "undefined" && callbackError != null && callbackError !== '') {
-            if (has(options, 'onError')) {
+            if (hasProperty(options, 'onError')) {
                 //showAlert(data.message, data.status, data.isFixed);
                 options.onError();
 
@@ -197,8 +205,11 @@ var MyRio2cCommon = function () {
     };
 
     return {
-        has: function (obj, key) {
-            has(obj, key);
+        hasProperty: function (obj, key) {
+            hasProperty(obj, key);
+        },
+        isNullOrEmpty: function (value) {
+            isNullOrEmpty(value);
         },
         block: function (options) {
             block(options);
