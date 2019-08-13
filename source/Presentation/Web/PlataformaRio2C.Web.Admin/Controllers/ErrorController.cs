@@ -4,7 +4,7 @@
 // Created          : 07-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-07-2019
+// Last Modified On : 08-13-2019
 // ***********************************************************************
 // <copyright file="ErrorController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -38,7 +38,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             Response.TrySkipIisCustomErrors = true;
 
             // If to avoid showing "Moved objecto to here" on browser
-            if (!string.IsNullOrEmpty(RouteData.Values["culture"] as string))
+            if (!string.IsNullOrEmpty(RouteData.Values["culture"] as string) && !string.IsNullOrEmpty(RouteData.Values["edition"] as string))
             {
                 Response.StatusCode = ViewBag.ErrorCode;
             }
@@ -58,7 +58,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             ViewBag.ErrorCode = 404;
 
             // If to avoid showing "Moved objecto to here" on browser
-            if (!string.IsNullOrEmpty(RouteData.Values["culture"] as string))
+            if (!string.IsNullOrEmpty(RouteData.Values["culture"] as string) && !string.IsNullOrEmpty(RouteData.Values["edition"] as string))
             {
                 Response.StatusCode = ViewBag.ErrorCode;
             }
@@ -83,7 +83,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             Response.TrySkipIisCustomErrors = true;
 
             // If to avoid showing "Moved objecto to here" on browser
-            if (!string.IsNullOrEmpty(RouteData.Values["culture"] as string))
+            if (!string.IsNullOrEmpty(RouteData.Values["culture"] as string) && !string.IsNullOrEmpty(RouteData.Values["edition"] as string))
             {
                 Response.StatusCode = ViewBag.ErrorCode;
             }

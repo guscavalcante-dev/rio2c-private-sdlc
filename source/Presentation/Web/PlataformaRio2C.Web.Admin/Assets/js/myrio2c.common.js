@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-12-2019
+// Last Modified On : 08-13-2019
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,8 +18,11 @@ var MyRio2cCommon = function () {
     var enableAjaxForbiddenCatch = function() {
         $(document).ajaxError(function (e, xhr) {
             if (xhr.status === 401) {
-                //var response = $.parseJSON(xhr.responseText); //does not work for 401, only for 403
                 window.location.reload();
+            }
+            else if (xhr.status === 403) {
+                var response = $.parseJSON(xhr.responseText);
+                window.location = response.redirect;
             }
         });
     };

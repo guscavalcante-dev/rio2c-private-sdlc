@@ -4,6 +4,12 @@
         <name>PlataformaRio2C.WebApi</name>
     </assembly>
     <members>
+        <member name="T:PlataformaRio2C.WebApi.App_Start.FormsAuthenticationConfig">
+            <summary>FormsAuthenticationConfig</summary>
+        </member>
+        <member name="M:PlataformaRio2C.WebApi.App_Start.FormsAuthenticationConfig.Register">
+            <summary>Registers this instance.</summary>
+        </member>
         <member name="T:PlataformaRio2C.WebApi.SimpleInjectorInitializer">
             <summary>SimpleInjectorInitializer</summary>
         </member>
