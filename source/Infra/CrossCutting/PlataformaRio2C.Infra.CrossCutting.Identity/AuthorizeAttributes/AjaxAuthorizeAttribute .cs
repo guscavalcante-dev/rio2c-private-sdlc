@@ -1,5 +1,5 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Web.Admin
+// Assembly         : PlataformaRio2C.Infra.CrossCutting.Identity
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-12-2019
 //
@@ -11,6 +11,7 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System.Net;
 using System.Web.Mvc;
 
 namespace PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes
@@ -24,7 +25,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes
         {
             if (context.HttpContext.Request.IsAjaxRequest())
             {
-                context.HttpContext.Response.StatusCode = 403;
                 context.Result = new JsonResult
                 {
                     Data = new
@@ -34,6 +34,8 @@ namespace PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes
                     },
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet
                 };
+
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
             }
             else
             {

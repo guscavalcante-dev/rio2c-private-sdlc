@@ -17,8 +17,8 @@ var MyRio2cCommon = function () {
     // Layout -------------------------------------------------------------------------------------
     var enableAjaxForbiddenCatch = function() {
         $(document).ajaxError(function (e, xhr) {
-            if (xhr.status === 403) {
-                var response = $.parseJSON(xhr.responseText);
+            if (xhr.status === 401) {
+                //var response = $.parseJSON(xhr.responseText); //does not work for 401, only for 403
                 window.location.reload();
             }
         });

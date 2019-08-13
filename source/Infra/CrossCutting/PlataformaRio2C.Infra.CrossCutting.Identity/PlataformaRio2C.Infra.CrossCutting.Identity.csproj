@@ -153,6 +153,7 @@
     <Compile Include="Models\IdentitySignInStatusCodes.cs" />
     <Compile Include="Models\IdentitySmsMessageService.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Modules\SuppressFormsAuthenticationRedirectModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\IdentityAutenticationService.cs" />
     <Compile Include="ViewModels\AddPhoneNumberViewModel.cs" />
