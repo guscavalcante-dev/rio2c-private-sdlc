@@ -22,6 +22,7 @@ using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Queries;
+using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
@@ -29,7 +30,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>HoldingsController</summary>
-    [Authorize(Roles = "Admin")]
+    [AjaxAuthorize(Roles = "Admin")]
     public class HoldingsController : BaseController
     {
         private readonly IHoldingAppService _appService;

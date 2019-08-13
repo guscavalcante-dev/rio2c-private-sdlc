@@ -122,6 +122,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthorizeAttributes\AjaxAuthorizeAttribute .cs" />
     <Compile Include="Configuration\ApplicationRoleManager.cs" />
     <Compile Include="Configuration\ApplicationSignInManager.cs" />
     <Compile Include="Configuration\ApplicationUserManager.cs" />

@@ -14,6 +14,16 @@
 
 var MyRio2cCommon = function () {
 
+    // Layout -------------------------------------------------------------------------------------
+    var enableAjaxForbiddenCatch = function() {
+        $(document).ajaxError(function (e, xhr) {
+            if (xhr.status === 403) {
+                var response = $.parseJSON(xhr.responseText);
+                window.location.reload();
+            }
+        });
+    };
+
     // General ------------------------------------------------------------------------------------
     var hasProperty = function (obj, key) {
         return key.split(".").every(function (x) {
@@ -202,6 +212,9 @@ var MyRio2cCommon = function () {
     };
 
     return {
+        init: function () {
+            enableAjaxForbiddenCatch();
+        },
         hasProperty: function (obj, key) {
             return hasProperty(obj, key);
         },
