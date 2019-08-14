@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-05-2019
+// Last Modified On : 08-14-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,7 +27,7 @@ namespace PlataformaRio2C.Web.Site
 
             #region Global Mandatory Vendors
 
-            bundles.Add(new ScriptBundle("~/bundles/js/layoutGlobalMandatoryVendors").Include(
+            bundles.Add(new ScriptBundle("~/bundles/js/layoutGlobalMandatoryVendors.js").Include(
                 "~/Assets/themes/metronic/vendors/general/jquery/dist/jquery.js",
                 "~/Assets/themes/metronic/vendors/general/popper.js/dist/umd/popper.js",
                 "~/Assets/themes/metronic/vendors/general/bootstrap/dist/js/bootstrap.min.js",
@@ -42,7 +42,7 @@ namespace PlataformaRio2C.Web.Site
 
             #region Global Optional Vendors
 
-            bundles.Add(new ScriptBundle("~/bundles/js/layoutGlobalOptionalVendors").Include(
+            bundles.Add(new ScriptBundle("~/bundles/js/layoutGlobalOptionalVendors.js").Include(
                 "~/Assets/themes/metronic/vendors/general/block-ui/jquery.blockUI.js",
                 "~/Assets/themes/metronic/vendors/general/owl.carousel/dist/owl.carousel.js"));
 
@@ -103,14 +103,14 @@ namespace PlataformaRio2C.Web.Site
 
             #region Global Theme Bundle
 
-            bundles.Add(new ScriptBundle("~/bundles/js/layoutGlobalThemeBundle").Include(
+            bundles.Add(new ScriptBundle("~/bundles/js/layoutGlobalThemeBundle.js").Include(
                 "~/Assets/themes/metronic/js/demo4/scripts.bundle.js"));
 
             #endregion
 
             #region Login
 
-            bundles.Add(new ScriptBundle("~/bundles/js/loginCustomScripts").Include(
+            bundles.Add(new ScriptBundle("~/bundles/js/loginCustomScripts.js").Include(
                 "~/Assets/themes/metronic/js/demo4/pages/login/login-1.js"));
 
             #endregion
@@ -121,18 +121,18 @@ namespace PlataformaRio2C.Web.Site
 
             #region Global Mandatory Vendors
 
-            bundles.Add(new StyleBundle("~/bundles/css/layoutGlobalMandatoryVendors").Include(
+            bundles.Add(new StyleBundle("~/bundles/css/layoutGlobalMandatoryVendors.css").Include(
                 "~/Assets/themes/metronic/vendors/general/perfect-scrollbar/css/perfect-scrollbar.css"));
 
             #endregion
 
             #region Global Optional Vendors
 
-            bundles.Add(new StyleBundle("~/bundles/css/layoutGlobalOptionalVendors").Include(
+            bundles.Add(new StyleBundle("~/bundles/css/layoutGlobalOptionalVendors.css").Include(
                 "~/Assets/themes/metronic/vendors/general/owl.carousel/dist/assets/owl.carousel.css",
                 "~/Assets/themes/metronic/vendors/general/owl.carousel/dist/assets/owl.theme.default.css"));
 
-            bundles.Add(new StyleBundle("~/bundles/css/layoutFontOptionalVendors")
+            bundles.Add(new StyleBundle("~/bundles/css/layoutFontOptionalVendors.css")
                 .Include("~/Assets/themes/metronic/vendors/custom/vendors/flaticon/flaticon.css", new CssRewriteUrlTransform())
                 .Include("~/Assets/themes/metronic/vendors/custom/vendors/flaticon2/flaticon.css", new CssRewriteUrlTransform())
                 .Include("~/Assets/themes/metronic/vendors/general/socicon/css/socicon.css", new CssRewriteUrlTransform())
@@ -166,14 +166,14 @@ namespace PlataformaRio2C.Web.Site
 
             #region Global Theme Styles
 
-            bundles.Add(new StyleBundle("~/bundles/css/layoutGlobalThemeStyles").Include(
+            bundles.Add(new StyleBundle("~/bundles/css/layoutGlobalThemeStyles.css").Include(
                 "~/Assets/themes/metronic/css/demo4/style.bundle.css"));
 
             #endregion
 
             #region Global Customized Styles
 
-            bundles.Add(new StyleBundle("~/bundles/css/layoutGlobalCustomizedStyles").Include(
+            bundles.Add(new StyleBundle("~/bundles/css/layoutGlobalCustomizedStyles.css").Include(
                 "~/Assets/css/rio2c.css",
                 "~/Assets/css/rio2c-responsive.css"));
 
@@ -181,14 +181,14 @@ namespace PlataformaRio2C.Web.Site
 
             #region Login
 
-            bundles.Add(new StyleBundle("~/bundles/css/loginCustomStyles").Include(
+            bundles.Add(new StyleBundle("~/bundles/css/loginCustomStyles.css").Include(
                 "~/Assets/themes/metronic/css/demo4/pages/login/login-1.css"));
 
             #endregion
 
             #region Error
 
-            bundles.Add(new StyleBundle("~/bundles/css/errorCustomStyles").Include(
+            bundles.Add(new StyleBundle("~/bundles/css/errorCustomStyles.css").Include(
                 "~/Assets/themes/metronic/css/demo4/pages/error/error-1.css"));
 
             #endregion

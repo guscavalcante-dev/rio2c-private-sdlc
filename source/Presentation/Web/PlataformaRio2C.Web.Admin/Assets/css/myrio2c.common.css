@@ -139,3 +139,23 @@ a.r2c-login__footer-link, a.r2c-footer-link {
 .modal-open {
     overflow: hidden !important;
 }
+
+
+/*
+    Form
+*/
+.form-optional-input {
+    font-size: 0.9rem;
+}
+
+
+/*
+    Block UI
+*/
+.blockUI.blockOverlay.blockUIModal {
+    z-index: 2000 !important;
+}
+
+.blockUI.blockMsg.blockPage.blockUIModal {
+    z-index: 2011 !important;
+}

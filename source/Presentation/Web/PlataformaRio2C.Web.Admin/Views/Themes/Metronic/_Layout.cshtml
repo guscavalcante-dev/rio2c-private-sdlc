@@ -39,17 +39,17 @@
     </script>
     <!--end::Fonts -->
     <!--begin:: Global Mandatory Vendors -->
-    @Styles.Render("~/bundles/css/layoutGlobalMandatoryVendors")
+    @Styles.Render("~/bundles/css/layoutGlobalMandatoryVendors.css")
     <!--end:: Global Mandatory Vendors -->
     <!--begin:: Global Optional Vendors -->
-    @Styles.Render("~/bundles/css/layoutGlobalOptionalVendors")
-    @Styles.Render("~/bundles/css/layoutFontOptionalVendors")
+    @Styles.Render("~/bundles/css/layoutGlobalOptionalVendors.css")
+    @Styles.Render("~/bundles/css/layoutFontOptionalVendors.css")
     <!--end:: Global Optional Vendors -->
     <!--begin::Global Theme Styles(used by all pages) -->
-    @Styles.Render("~/bundles/css/layoutGlobalThemeStyles")
+    @Styles.Render("~/bundles/css/layoutGlobalThemeStyles.css")
     <!--end::Global Theme Styles -->
     <!--begin::Global Customized Styles -->
-    @Styles.Render("~/bundles/css/layoutGlobalCustomizedStyles")
+    @Styles.Render("~/bundles/css/layoutGlobalCustomizedStyles.css")
     <!--end::Global Customized Styles -->
     <!--begin::Page Styles -->
     @RenderSection("Styles", false)
@@ -86,14 +86,14 @@
     </script>
     <!-- end::Global Config -->
     <!--begin:: Global Mandatory Vendors -->
-    @Scripts.Render("~/bundles/js/layoutGlobalMandatoryVendors")
+    @Scripts.Render("~/bundles/js/layoutGlobalMandatoryVendors.js")
     <!--end:: Global Mandatory Vendors -->
     <!--begin:: Global Optional Vendors -->
-    @Scripts.Render("~/bundles/js/layoutGlobalOptionalVendors")
+    @Scripts.Render("~/bundles/js/layoutGlobalOptionalVendors.js")
     <!--end:: Global Optional Vendors -->
     <!--begin::Global Theme Bundle(used by all pages) -->
-    @Scripts.Render("~/bundles/js/layoutGlobalThemeBundle")
-    @Scripts.Render("~/bundles/js/layoutGlobalCustomized")
+    @Scripts.Render("~/bundles/js/layoutGlobalThemeBundle.js")
+    @Scripts.Render("~/bundles/js/layoutGlobalCustomized.js")
     <!--end::Global Theme Bundle -->
     <!--begin::Page Vendors(used by this page) -->
     @*<script type="text/javascript" src="~/Assets/themes/metronic/vendors/custom/fullcalendar/fullcalendar.bundle.js"></script>

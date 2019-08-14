@@ -351,8 +351,17 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\components\cropper\myrio2c.cropper.js" />
+    <Content Include="Assets\components\cropper\demo\css\main.css" />
+    <Content Include="Assets\components\cropper\demo\index.html" />
+    <Content Include="Assets\components\cropper\demo\js\main.js" />
+    <Content Include="Assets\components\cropper\dist\cropper.css" />
+    <Content Include="Assets\components\cropper\dist\cropper.js" />
+    <Content Include="Assets\components\cropper\dist\cropper.min.css" />
+    <Content Include="Assets\components\cropper\dist\cropper.min.js" />
     <Content Include="Assets\components\datatables\datatables.en-us.js" />
     <Content Include="Assets\components\datatables\datatables.pt-br.js" />
+    <Content Include="Assets\components\jquery.form\jquery.form.js" />
     <Content Include="Assets\css\myrio2c.common.responsive.css" />
     <Content Include="Assets\css\myrio2c.common.css" />
     <Content Include="Assets\img\favicon.png" />
@@ -8868,6 +8877,7 @@
     <Content Include="Views\Holdings\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Views\Holdings\Modals\CreateModal.cshtml" />
     <Content Include="Views\Holdings\Modals\_Form.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\CropperImageFileViewModel.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>

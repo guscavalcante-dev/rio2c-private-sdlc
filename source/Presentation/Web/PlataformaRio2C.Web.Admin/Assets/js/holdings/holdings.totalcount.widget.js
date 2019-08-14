@@ -26,18 +26,16 @@ var HoldingsTotalCountWidget = function () {
         var ctx = document.getElementById("kt_chart_bandwidth1").getContext("2d");
 
         var gradient = ctx.createLinearGradient(0, 0, 0, 240);
-        gradient.addColorStop(0, Chart.helpers.color('#d1f1ec').alpha(1).rgbString());
-        gradient.addColorStop(1, Chart.helpers.color('#d1f1ec').alpha(0.3).rgbString());
+        gradient.addColorStop(0, Chart.helpers.color('#ffefce').alpha(1).rgbString());
+        gradient.addColorStop(1, Chart.helpers.color('#ffefce').alpha(0.3).rgbString());
 
         var config = {
             type: 'line',
             data: {
                 labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October"],
                 datasets: [{
-                    label: "Bandwidth Stats",
                     backgroundColor: gradient,
-                    borderColor: KTApp.getStateColor('success'),
-
+                    borderColor: KTApp.getStateColor('warning'),
                     pointBackgroundColor: Chart.helpers.color('#000000').alpha(0).rgbString(),
                     pointBorderColor: Chart.helpers.color('#000000').alpha(0).rgbString(),
                     pointHoverBackgroundColor: KTApp.getStateColor('danger'),

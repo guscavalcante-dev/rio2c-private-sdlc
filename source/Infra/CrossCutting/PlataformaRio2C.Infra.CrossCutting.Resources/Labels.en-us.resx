@@ -1080,4 +1080,24 @@
     <value>New Holding</value>
     <comment>Nova Holding</comment>
   </data>
+  <data name="Descriptions" xml:space="preserve">
+    <value>Descriptions</value>
+    <comment>Descrições</comment>
+  </data>
+  <data name="InvalidImage" xml:space="preserve">
+    <value>The image format must be jpeg, jpg, gif or png.</value>
+    <comment>A imagem deve estar no formato jpeg, jpg, gif ou png.</comment>
+  </data>
+  <data name="Optional" xml:space="preserve">
+    <value>optional</value>
+    <comment>opcional</comment>
+  </data>
+  <data name="ZoomIn" xml:space="preserve">
+    <value>Zoom In</value>
+    <comment>Mais Zoom</comment>
+  </data>
+  <data name="ZoomOut" xml:space="preserve">
+    <value>Zoom Out</value>
+    <comment>Menos Zoom</comment>
+  </data>
 </root>

@@ -74,6 +74,8 @@
   <ItemGroup>
     <Compile Include="Dtos\HoldingDescriptions\HoldingDescriptionBaseDto.cs" />
     <Compile Include="Dtos\Holdings\HoldingListDto.cs" />
+    <Compile Include="Dtos\BaseDto.cs" />
+    <Compile Include="Dtos\Languages\LanguageDto.cs" />
     <Compile Include="Dtos\Languages\LanguageBaseDto.cs" />
     <Compile Include="Dtos\Users\UserBaseDto.cs" />
     <Compile Include="Entities\Collaborator\CollaboratorProducer.cs" />

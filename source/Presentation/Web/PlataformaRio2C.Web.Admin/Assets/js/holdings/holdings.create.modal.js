@@ -4,7 +4,7 @@
 // Created          : 08-13-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-13-2019
+// Last Modified On : 08-14-2019
 // ***********************************************************************
 // <copyright file="holdings.create.modal.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,9 +16,91 @@ var HoldingsCreateModal = function () {
 
     var modalId = '#CreateHoldingModal';
 
+    // CkEditor -----------------------------------------------------------------------------------
+    var enableCkEditor = function () {
+        $('.ckeditor-rio2c').each(function () {
+            var ck = CKEDITOR.replace($(this)[0], {
+                customConfig: '/Content/js/ckeditor_config.js'
+            });
+        });
+    };
+
+    // Enable ajax form ---------------------------------------------------------------------------
+    var enableAjaxForm = function () {
+        var uploadFormElement = $('#CreateHoldingForm');
+
+        uploadFormElement.ajaxForm({
+            beforeSend: function () {
+                MyRio2cCommon.block({ isModal: true });
+
+                //if (progressBarElement.length) {
+                //    progressBarElement.removeClass('hide');
+                //    var percentVal = '0%';
+                //    bar.width(percentVal);
+                //    percent.html(percentVal);
+                //}
+            },
+            uploadProgress: function (event, position, total, percentComplete) {
+                //if (progressBarElement.length) {
+                //    var percentVal = percentComplete + '%';
+                //    bar.width(percentVal);
+                //    percent.html(percentVal);
+                //}
+            },
+            success: function (data) {
+                MyRio2cCommon.handleAjaxReturn({
+                    data: data,
+                    // Success
+                    onSuccess: function () {
+                        //enableCreatePlugins();
+                        $(modalId).modal('hide');
+                    },
+                    // Error
+                    onError: function () {
+                        enableCreatePlugins();
+                    }
+                });
+
+                //if (progressBarElement.length) {
+                //    var percentVal = '100%';
+                //    bar.width(percentVal);
+                //    percent.html(percentVal);
+                //}
+                //if (typeof data.imageLink !== 'undefined' && data.imageLink != null && data.imageLink != '' && $(imgFinalElement).length) {
+                //    imgFinalElement.attr('src', data.imageLink);
+                //}
+                //showAlert(data.message, data.status);
+                //if (typeof getPersonActivities !== 'undefined' && getPersonActivities != null) {
+                //    getPersonActivities(true);
+                //}
+            },
+            complete: function () {
+                MyRio2cCommon.unblock();
+
+                //if (progressBarElement.length) {
+                //    progressBarElement.addClass('hide');
+                //    var percentVal = '0%';
+                //    bar.width(percentVal);
+                //    percent.html(percentVal);
+                //}
+            }
+        });
+    };
+
+    // Enable form validation ---------------------------------------------------------------------
+    var enableFormValidation = function () {
+        MyRio2cCommon.enableFormValidation({
+            formIdOrClass: '',
+            enableHiddenInputsValidation: true
+        });
+    };
+
     // Create -------------------------------------------------------------------------------------
     var enableCreatePlugins = function () {
-        //initChart();
+        MyRio2cCropper.init();
+        enableCkEditor();
+        enableAjaxForm();
+        enableFormValidation();
     };
 
     var show = function () {

@@ -628,6 +628,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Descrições.
+        /// </summary>
+        public static string Descriptions {
+            get {
+                return ResourceManager.GetString("Descriptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Desmarcar todos.
         /// </summary>
         public static string DeselectAll {
@@ -1087,6 +1096,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A imagem deve estar no formato jpeg, jpg, gif ou png..
+        /// </summary>
+        public static string InvalidImage {
+            get {
+                return ResourceManager.GetString("InvalidImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Envio de Convites.
         /// </summary>
         public static string InvitationSending {
@@ -1461,6 +1479,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Oops {
             get {
                 return ResourceManager.GetString("Oops", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to opcional.
+        /// </summary>
+        public static string Optional {
+            get {
+                return ResourceManager.GetString("Optional", resourceCulture);
             }
         }
         
@@ -2577,6 +2604,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ZipCode {
             get {
                 return ResourceManager.GetString("ZipCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mais Zoom.
+        /// </summary>
+        public static string ZoomIn {
+            get {
+                return ResourceManager.GetString("ZoomIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Menos Zoom.
+        /// </summary>
+        public static string ZoomOut {
+            get {
+                return ResourceManager.GetString("ZoomOut", resourceCulture);
             }
         }
     }

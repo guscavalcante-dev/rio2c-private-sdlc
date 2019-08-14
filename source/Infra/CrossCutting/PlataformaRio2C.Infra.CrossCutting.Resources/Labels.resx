@@ -1088,4 +1088,24 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Nova Holding</value>
     <comment>Nova Holding</comment>
   </data>
+  <data name="Descriptions" xml:space="preserve">
+    <value>Descrições</value>
+    <comment>Descrições</comment>
+  </data>
+  <data name="InvalidImage" xml:space="preserve">
+    <value>A imagem deve estar no formato jpeg, jpg, gif ou png.</value>
+    <comment>A imagem deve estar no formato jpeg, jpg, gif ou png.</comment>
+  </data>
+  <data name="Optional" xml:space="preserve">
+    <value>opcional</value>
+    <comment>opcional</comment>
+  </data>
+  <data name="ZoomIn" xml:space="preserve">
+    <value>Mais Zoom</value>
+    <comment>Mais Zoom</comment>
+  </data>
+  <data name="ZoomOut" xml:space="preserve">
+    <value>Menos Zoom</value>
+    <comment>Menos Zoom</comment>
+  </data>
 </root>

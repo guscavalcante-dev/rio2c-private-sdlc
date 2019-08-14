@@ -84,6 +84,46 @@ var MyRio2cCommon = function () {
         return urlPrefix + url;
     };
 
+    // Forms --------------------------------------------------------------------------------------
+    var enableFormValidation = function (options) {
+
+        if (!hasProperty(options, 'formIdOrClass') || isNullOrEmpty(options.formIdOrClass)) {
+            return;
+        }
+
+        var enableHiddenInputsValidation = false;
+        if (!hasProperty(options, 'enableHiddenInputsValidation') && hasValue(options.enableHiddenInputsValidation)) {
+            enableHiddenInputsValidation = options.enableHiddenInputsValidation;
+        }
+
+        $(options.formIdOrClass).removeData('validator');
+        $(options.formIdOrClass).removeData('unobtrusiveValidation');
+        $.validator.unobtrusive.parse(options.formIdOrClass);
+
+        if (enableHiddenInputsValidation == true) {
+            var validator = $(options.formIdOrClass).data('validator');
+            if (undefined != validator)
+                validator.settings.ignore = "";
+        }
+    };
+
+    // Hide/Show Element --------------------------------------------------------------------------
+    var hide = function (element) {
+        if (isNullOrEmpty(element)) {
+            return;
+        }
+
+        element.addClass('d-none');
+    };
+
+    var show = function (element) {
+        if (isNullOrEmpty(element)) {
+            return;
+        }
+
+        element.removeClass('d-none');
+    };
+
     // Block/unblock UI ---------------------------------------------------------------------------
     var block = function (options) {
         var idOrClass = 'body';
@@ -93,6 +133,11 @@ var MyRio2cCommon = function () {
         }
 
         KTApp.block(idOrClass);
+
+        if (hasProperty(options, 'isModal') && options.isModal) {
+            $(".blockUI.blockOverlay").addClass("blockUIModal");
+            $(".blockUI.blockMsg.blockPage").addClass("blockUIModal");
+        }
     };
 
     var unblock = function (options) {
@@ -267,6 +312,15 @@ var MyRio2cCommon = function () {
         },
         isNullOrEmpty: function (value) {
             return isNullOrEmpty(value);
+        },
+        show: function (element) {
+            show(element);
+        },
+        enableFormValidation: function (options) {
+            enableFormValidation(options);
+        },
+        hide: function (element) {
+            hide(element);
         },
         getUrlWithCultureAndEdition: function (url) {
             return getUrlWithCultureAndEdition(url);

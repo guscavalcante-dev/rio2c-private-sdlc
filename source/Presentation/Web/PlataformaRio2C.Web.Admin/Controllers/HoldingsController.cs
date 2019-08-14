@@ -25,6 +25,7 @@ using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
@@ -156,9 +157,16 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <summary>Shows the create modal.</summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult ShowCreateModal()
+        public async Task<ActionResult> ShowCreateModal()
         {
-            var viewModel = _appService.GetEditViewModel();
+            //var viewModel = _appService.GetEditViewModel();
+
+            var viewModel = new HoldingViewModel(await this.CommandBus.Send(new FindAllLanguagesAsync(
+                this.UserId,
+                this.UserUid,
+                this.EditionId,
+                this.EditionUid,
+                this.UserInterfaceLanguage)));
 
             return Json(new
             {
@@ -172,42 +180,89 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             //return View(viewModel);
         }
 
+        /// <summary>Creates the specified view model.</summary>
+        /// <param name="viewModel">The view model.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Create(HoldingViewModel viewModel)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException("Please, correct the form errors.");
+                }
+
+                //try
+                //{
+                //    ImageHelper.UploadOriginalAndAdvancedCropLogo(this.site.Id, viewModel.File, viewModel.DataX, viewModel.DataY, viewModel.DataWidth, viewModel.DataHeight, "SiteLogos");
+                //    var result = this.commandBus.Send(new EditSiteLogo(this.site.Id, Session.GetUserId(), Session.GetUserEmail()));
+                //    if (!result.IsExecuted)
+                //    {
+                //        throw result.Exception;
+                //    }
+                //}
+                //catch (DomainRuleException dex)
+                //{
+                //    ModelState.AddModelError("File", dex.GetInnerMessage());
+                //    throw;
+                //}
+            }
+            catch (DomainException ex)
+            {
+                //this.SetResultMessage(new ResultMessage(ex.GetInnerMessage(), ResultMessageType.Error));
+                //viewModel.UpdateModelsAndLists(this.site);
+                //return View("SiteLogoSettings", viewModel);
+            }
+            catch (Exception ex)
+            {
+                //Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                //this.SetResultMessage(new ResultMessage("[[[We found an error updating site logo. We are already working on it.]]]", ResultMessageType.Error));
+                //return RedirectToAction("SiteLogoSettings");
+            }
+
+            //this.SetResultMessage(new ResultMessage("[[[The site logo was updated successfully.]]]", ResultMessageType.Success));
+            //return RedirectToAction("SiteLogoSettings");
+
+            return Json(new { status = "success"/*, message = T._("The person picture was changed successfully."), imageLink = FileHelper.AvatarFor(viewModel.PersonId, viewModel.PersonTypeId)*/ });
+        }
+
         #endregion
 
 
-        public ActionResult Create()
-        {
-            var viewModel = _appService.GetEditViewModel();
-            return View(viewModel);
-        }
+        //public ActionResult Create()
+        //{
+        //    var viewModel = _appService.GetEditViewModel();
+        //    return View(viewModel);
+        //}
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(HoldingAppViewModel viewModel)
-        {
-            var result = _appService.Create(viewModel);
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create(HoldingAppViewModel viewModel)
+        //{
+        //    var result = _appService.Create(viewModel);
 
-            if (result.IsValid)
-            {
-                this.StatusMessage("Holding criado com sucesso!", Infra.CrossCutting.Tools.Enums.StatusMessageType.Success);
+        //    if (result.IsValid)
+        //    {
+        //        this.StatusMessage("Holding criado com sucesso!", Infra.CrossCutting.Tools.Enums.StatusMessageType.Success);
 
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                ModelState.AddModelError("", "Erro ao salvar cadastro! Verifique o preenchimento dos campos!");
+        //        return RedirectToAction("Index");
+        //    }
+        //    else
+        //    {
+        //        ModelState.AddModelError("", "Erro ao salvar cadastro! Verifique o preenchimento dos campos!");
 
-                foreach (var error in result.Errors)
-                {
-                    var target = error.Target ?? "";
-                    ModelState.AddModelError(target, error.Message);
-                }
-            }
+        //        foreach (var error in result.Errors)
+        //        {
+        //            var target = error.Target ?? "";
+        //            ModelState.AddModelError(target, error.Message);
+        //        }
+        //    }
 
-            UpdateHoldingViewModelDefaultValues(viewModel);
+        //    UpdateHoldingViewModelDefaultValues(viewModel);
 
-            return View(viewModel);
-        }
+        //    return View(viewModel);
+        //}
 
         public ActionResult Edit(Guid Uid)
         {
