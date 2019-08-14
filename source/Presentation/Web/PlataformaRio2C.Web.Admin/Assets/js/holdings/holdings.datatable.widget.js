@@ -4,7 +4,7 @@
 // Created          : 08-07-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-12-2019
+// Last Modified On : 08-14-2019
 // ***********************************************************************
 // <copyright file="holdings.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,7 +17,7 @@ var HoldingsDataTableWidget = function () {
     var widgetElementId = '#HoldingDataTableWidget';
     var widgetElement = $(widgetElementId);
 
-    var initiListTable = function (searchUrl) {
+    var initiListTable = function () {
 
         var tableElementId = $('#holdings-list-table');
 
@@ -53,7 +53,7 @@ var HoldingsDataTableWidget = function () {
                 sSearch: $('#Search').val()
             },
             ajax: {
-                url: searchUrl,
+                url: MyRio2cCommon.getUrlWithCultureAndEdition('/Holdings/Search'),
                 data: function (d) {
                     d.showAllEditions = $('#ShowAllEditions').prop('checked');
                 },
@@ -153,9 +153,9 @@ var HoldingsDataTableWidget = function () {
     };
 
     return {
-        init: function (searchUrl) {
+        init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
-            initiListTable(searchUrl);
+            initiListTable();
         }
     };
 }();

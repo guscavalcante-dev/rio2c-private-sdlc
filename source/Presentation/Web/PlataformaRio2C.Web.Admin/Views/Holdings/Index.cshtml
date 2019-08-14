@@ -27,14 +27,15 @@
     @Scripts.Render("~/bundles/js/dataTablesBundle")
     @Scripts.Render("~/bundles/js/chartJsBundle")
     @Scripts.Render("~/bundles/js/holdingsListBundle")
+    @Scripts.Render("~/bundles/js/holdingsCreateBundle")
     <script>
         var initialPage = @(Model.Page?.ToString() ?? "null");
         var initialPageSize = @(Model.PageSize?.ToString() ?? "null");
 
         jQuery(document).ready(function () {
-            HoldingsTotalCountWidget.init('@Url.Action("ShowTotalCountWidget", "Holdings", new { Area = "" })');
-            HoldingsEditionCountWidget.init('@Url.Action("ShowEditionCountWidget", "Holdings", new { Area = "" })');
-            HoldingsDataTableWidget.init('@Url.Action("Search", "Holdings", new { Area = "" })');
+            HoldingsTotalCountWidget.init();
+            HoldingsEditionCountWidget.init();
+            HoldingsDataTableWidget.init();
         });
     </script>
 }

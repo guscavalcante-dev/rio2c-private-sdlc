@@ -106,11 +106,12 @@
     <!--end::Page Scripts -->
     <!--begin: MyRio2C Scripts-->
     <script>
-        $(function () {
-            MyRio2cCommon.init();
-        });
+        MyRio2cCommon.init('@ViewBag.UserInterfaceLanguage', '@ViewBag.EditionUrlCode');
     </script>
     <!--end: MyRio2C Scripts-->
+    <!--begin: Global Modal Container-->
+    <div id="GlobalModalContainer"></div>
+    <!--end: Global Modal Container-->
 </body>
 <!-- end::Body -->
 </html>

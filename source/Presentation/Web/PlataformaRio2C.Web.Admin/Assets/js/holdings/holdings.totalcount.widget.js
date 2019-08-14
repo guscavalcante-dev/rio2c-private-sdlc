@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-12-2019
+// Last Modified On : 08-14-2019
 // ***********************************************************************
 // <copyright file="holdings.totalcount.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -115,10 +115,10 @@ var HoldingsTotalCountWidget = function () {
         initChart();
     };
 
-    var show = function (showUrl) {
+    var show = function () {
         var jsonParameters = new Object();
 
-        $.get(showUrl, jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Holdings/ShowTotalCountWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -138,9 +138,9 @@ var HoldingsTotalCountWidget = function () {
     };
 
     return {
-        init: function (showUrl) {
+        init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
-            show(showUrl);
+            show();
         }
     };
 }();

@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-12-2019
+// Last Modified On : 08-14-2019
 // ***********************************************************************
 // <copyright file="HoldingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -150,6 +150,30 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         }
 
         #endregion
+
+        #region Create
+
+        /// <summary>Shows the create modal.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult ShowCreateModal()
+        {
+            var viewModel = _appService.GetEditViewModel();
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/CreateModal", viewModel), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+
+            //return View(viewModel);
+        }
+
+        #endregion
+
 
         public ActionResult Create()
         {

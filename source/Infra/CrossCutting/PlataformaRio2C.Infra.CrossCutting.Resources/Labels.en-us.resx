@@ -1076,4 +1076,8 @@
     <value>Show from all editions</value>
     <comment>Exibir de todas as edições</comment>
   </data>
+  <data name="NewHolding" xml:space="preserve">
+    <value>New Holding</value>
+    <comment>Nova Holding</comment>
+  </data>
 </root>

@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-13-2019
+// Last Modified On : 08-14-2019
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,8 +14,22 @@
 
 var MyRio2cCommon = function () {
 
+    // Global Variables --------------------------------------------------------------------------
+    var globalVariables = new Object();
+    globalVariables.userInterfaceLanguage = '';
+    globalVariables.editionUrlCode = '';
+
+    var setGlobalVariables = function (userInterfaceLanguage, editionUrlCode) {
+        globalVariables.userInterfaceLanguage = userInterfaceLanguage;
+        globalVariables.editionUrlCode = editionUrlCode;
+    };
+
+    var getGlobalVariables = function () {
+        return globalVariables;
+    };
+
     // Layout -------------------------------------------------------------------------------------
-    var enableAjaxForbiddenCatch = function() {
+    var enableAjaxForbiddenCatch = function () {
         $(document).ajaxError(function (e, xhr) {
             if (xhr.status === 401) {
                 window.location.reload();
@@ -46,6 +60,28 @@ var MyRio2cCommon = function () {
         }
 
         return false;
+    };
+
+    var getUrlWithCultureAndEdition = function (url) {
+        var urlPrefix = '';
+
+        if (!isNullOrEmpty(globalVariables.userInterfaceLanguage)) {
+            if (url.includes(globalVariables.userInterfaceLanguage)) {
+                url.replace(globalVariables.userInterfaceLanguage + '/', '');
+            }
+
+            urlPrefix = '/' + globalVariables.userInterfaceLanguage;
+        }
+
+        if (!isNullOrEmpty(globalVariables.editionUrlCode)) {
+            if (url.includes(globalVariables.editionUrlCode)) {
+                url.replace(globalVariables.editionUrlCode + '/', '');
+            }
+
+            urlPrefix += '/' + globalVariables.editionUrlCode;
+        }
+
+        return urlPrefix + url;
     };
 
     // Block/unblock UI ---------------------------------------------------------------------------
@@ -215,14 +251,25 @@ var MyRio2cCommon = function () {
     };
 
     return {
-        init: function () {
-            enableAjaxForbiddenCatch();
+        init: function (userInterfaceLanguage, editionUrlCode) {
+            setGlobalVariables(userInterfaceLanguage, editionUrlCode);
+
+            // Functions that need jquery
+            $(function () {
+                enableAjaxForbiddenCatch();
+            });
+        },
+        getGlobalVariables: function() {
+            return getGlobalVariables();
         },
         hasProperty: function (obj, key) {
             return hasProperty(obj, key);
         },
         isNullOrEmpty: function (value) {
             return isNullOrEmpty(value);
+        },
+        getUrlWithCultureAndEdition: function (url) {
+            return getUrlWithCultureAndEdition(url);
         },
         block: function (options) {
             block(options);

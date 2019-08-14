@@ -107,6 +107,7 @@ a.r2c-login__footer-link, a.r2c-footer-link {
     min-height: 30px;
 }
 
+
 /*
     Datatables
 */
@@ -128,4 +129,13 @@ a.r2c-login__footer-link, a.r2c-footer-link {
 .dataTables_scrollBody::-webkit-scrollbar-thumb {
     background-color: #777;
     border-radius: 10px;
+}
+
+/*
+    Modal
+*/
+
+/* Fix background */
+.modal-open {
+    overflow: hidden !important;
 }

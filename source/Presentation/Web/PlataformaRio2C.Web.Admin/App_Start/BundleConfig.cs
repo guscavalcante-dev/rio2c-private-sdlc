@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-09-2019
+// Last Modified On : 08-14-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -229,6 +229,9 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/holdings/holdings.totalcount.widget.js",
                 "~/Assets/js/holdings/holdings.editioncount.widget.js",
                 "~/Assets/js/holdings/holdings.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/holdingsCreateBundle").Include(
+                "~/Assets/js/holdings/holdings.create.modal.js"));
 
             #endregion
 

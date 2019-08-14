@@ -1321,6 +1321,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nova Holding.
+        /// </summary>
+        public static string NewHolding {
+            get {
+                return ResourceManager.GetString("NewHolding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nova senha.
         /// </summary>
         public static string NewPassword {

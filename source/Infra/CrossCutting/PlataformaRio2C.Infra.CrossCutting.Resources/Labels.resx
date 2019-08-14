@@ -1084,4 +1084,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Exibir de todas as edições</value>
     <comment>Exibir de todas as edições</comment>
   </data>
+  <data name="NewHolding" xml:space="preserve">
+    <value>Nova Holding</value>
+    <comment>Nova Holding</comment>
+  </data>
 </root>
