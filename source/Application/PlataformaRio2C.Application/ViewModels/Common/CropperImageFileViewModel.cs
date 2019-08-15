@@ -31,8 +31,9 @@ namespace PlataformaRio2C.Application.ViewModels
         public decimal DataScaleY { get; set; }
 
         [Display(Name = "Image", ResourceType = typeof(Labels))]
-        [HttpPostedFileExtensions(ErrorMessageResourceType = typeof(Labels), ErrorMessageResourceName = "InvalidImage")]
-        public HttpPostedFileBase File { get; set; }
+        // TODO: Enable HttpPostedFileExtensions DataAnnotation
+        //[HttpPostedFileExtensions(ErrorMessageResourceType = typeof(Labels), ErrorMessageResourceName = "InvalidImage")]
+        public HttpPostedFileBase ImageFile { get; set; }
 
         public bool IsImageUploaded { get; set; }
         public Guid? ImageUid { get; set; }

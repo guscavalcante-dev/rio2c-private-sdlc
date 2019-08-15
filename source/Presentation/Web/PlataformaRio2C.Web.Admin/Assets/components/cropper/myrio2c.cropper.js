@@ -136,7 +136,7 @@ var MyRio2cCropper = function () {
         });
 
         // Import image
-        var $inputImage = $('#inputImage');
+        var $inputImage = $('#ImageFile');
         var URL = window.URL || window.webkitURL;
         var blobURL;
 
@@ -179,7 +179,7 @@ var MyRio2cCropper = function () {
     };
 
     var cancel = function() {
-        $('#inputImage').val('');
+        $('#ImageFile').val('');
         MyRio2cCommon.show($('.existent-image-container'));
         MyRio2cCommon.hide($('.cropper-control-hide'));
     };

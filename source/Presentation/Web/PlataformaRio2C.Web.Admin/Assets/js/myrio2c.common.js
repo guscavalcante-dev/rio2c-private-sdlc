@@ -92,7 +92,7 @@ var MyRio2cCommon = function () {
         }
 
         var enableHiddenInputsValidation = false;
-        if (!hasProperty(options, 'enableHiddenInputsValidation') && hasValue(options.enableHiddenInputsValidation)) {
+        if (hasProperty(options, 'enableHiddenInputsValidation') && options.enableHiddenInputsValidation) {
             enableHiddenInputsValidation = options.enableHiddenInputsValidation;
         }
 

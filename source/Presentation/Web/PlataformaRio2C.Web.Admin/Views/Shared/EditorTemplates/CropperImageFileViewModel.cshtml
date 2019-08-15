@@ -5,8 +5,8 @@
         <div class="kt-avatar kt-avatar--outline" id="kt_apps_user_add_avatar">
             @*<div class="kt-avatar__holder" style="background-image: url(https://keenthemes.com/metronic/preview/demo4/custom/apps/user/assets/media/users/300_10.jpg)"></div>*@
             <div class="kt-avatar__holder" style="background-color: rgba(255, 255, 255, 0.1)"></div>
-            @Html.TextBoxFor(m => m.File, new { @id = "inputImage", @class = "sr-only", type = "file", @accept = "image/*" })
-            @Html.ValidationMessageFor(m => m.File, null, new { @class = "help-block" })
+            @Html.TextBoxFor(m => m.ImageFile, new { id = "ImageFile", @class = "sr-only", type = "file", @accept = "image/*" })
+            @Html.ValidationMessageFor(m => m.ImageFile, null, new { @class = "help-block" })
         </div>
         @*@if (Model.IsImageUploaded)
             {
@@ -14,7 +14,7 @@
             }*@
     </div>
     <div class="col-md-12">
-        <label class="btn default btn-file" for="inputImage">
+        <label class="btn default btn-file" for="ImageFile">
             <span class="btn btn-primary">@(Model.IsImageUploaded ? Labels.Alter : Labels.SelectImage)</span>
         </label>
     </div>

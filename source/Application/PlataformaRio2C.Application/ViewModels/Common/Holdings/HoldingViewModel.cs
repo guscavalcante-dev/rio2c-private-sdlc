@@ -23,11 +23,12 @@ namespace PlataformaRio2C.Application.ViewModels
     /// <summary>HoldingViewModel</summary>
     public class HoldingViewModel
     {
-        public Guid Uid { get; set; }
+        public Guid? Uid { get; set; }
 
         public CropperImageFileViewModel CropperImage { get; set; }
 
         [Display(Name = "Name", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public string Name { get; set; }
 
         public IEnumerable<HoldingDescriptionAppViewModel> Descriptions { get; set; }

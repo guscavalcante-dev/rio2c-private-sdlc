@@ -30,6 +30,9 @@ var HoldingsCreateModal = function () {
         var uploadFormElement = $('#CreateHoldingForm');
 
         uploadFormElement.ajaxForm({
+            beforeSubmit: function () {
+                return uploadFormElement.valid(); // TRUE when form is valid, FALSE will cancel submit
+            },
             beforeSend: function () {
                 MyRio2cCommon.block({ isModal: true });
 
@@ -90,7 +93,7 @@ var HoldingsCreateModal = function () {
     // Enable form validation ---------------------------------------------------------------------
     var enableFormValidation = function () {
         MyRio2cCommon.enableFormValidation({
-            formIdOrClass: '',
+            formIdOrClass: '#CreateHoldingForm',
             enableHiddenInputsValidation: true
         });
     };
@@ -104,7 +107,7 @@ var HoldingsCreateModal = function () {
     };
 
     var show = function () {
-        MyRio2cCommon.block();
+        MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
 
@@ -123,6 +126,7 @@ var HoldingsCreateModal = function () {
             });
         })
         .fail(function () {
+            MyRio2cCommon.unblock();
             //showAlert();
             //MyRio2cCommon.unblock(widgetElementId);
         });

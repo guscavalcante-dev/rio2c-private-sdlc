@@ -4,9 +4,9 @@
         @Html.EditorFor(m => m.CropperImage)
     </div>
     <div class="col-lg-8">
-        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label bold" })
-        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        @Html.LabelFor(m => m.Name, new { @class = "control-label bold" })
+        @Html.TextBoxFor(m => m.Name, new {  @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
     </div>
 </div>
 @if (Model.LanguagesDtos?.Any() == true)
