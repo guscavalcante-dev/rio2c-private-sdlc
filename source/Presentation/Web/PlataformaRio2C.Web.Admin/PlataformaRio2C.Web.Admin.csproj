@@ -8991,6 +8991,10 @@
       <Project>{ec0b684e-f8a3-417a-9567-819ffc7c41cc}</Project>
       <Name>PlataformaRio2C.Infra.CrossCutting.Tools</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Infra\Data\PlataformaRio2c.Infra.Data.FileRepository\PlataformaRio2c.Infra.Data.FileRepository.csproj">
+      <Project>{6F4648EE-2D98-4E95-BC92-0760AF1FD909}</Project>
+      <Name>PlataformaRio2c.Infra.Data.FileRepository</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

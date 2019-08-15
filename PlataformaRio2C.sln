@@ -47,6 +47,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.Infra.Cross
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.Infra.CrossCutting.CQRS", "source\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.CQRS\PlataformaRio2C.Infra.CrossCutting.CQRS.csproj", "{E414D342-6A28-4844-9F2F-A6022D5AE929}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2c.Infra.Data.FileRepository", "source\Infra\Data\PlataformaRio2c.Infra.Data.FileRepository\PlataformaRio2c.Infra.Data.FileRepository.csproj", "{6F4648EE-2D98-4E95-BC92-0760AF1FD909}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -138,6 +140,12 @@ Global
 		{E414D342-6A28-4844-9F2F-A6022D5AE929}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E414D342-6A28-4844-9F2F-A6022D5AE929}.Test|Any CPU.ActiveCfg = Release|Any CPU
 		{E414D342-6A28-4844-9F2F-A6022D5AE929}.Test|Any CPU.Build.0 = Release|Any CPU
+		{6F4648EE-2D98-4E95-BC92-0760AF1FD909}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F4648EE-2D98-4E95-BC92-0760AF1FD909}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F4648EE-2D98-4E95-BC92-0760AF1FD909}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F4648EE-2D98-4E95-BC92-0760AF1FD909}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F4648EE-2D98-4E95-BC92-0760AF1FD909}.Test|Any CPU.ActiveCfg = Release|Any CPU
+		{6F4648EE-2D98-4E95-BC92-0760AF1FD909}.Test|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -160,9 +168,10 @@ Global
 		{7AC9067F-93C3-4262-A693-A7AD5879BEBC} = {2319ABF0-1FB1-48EE-9ABE-FB8AEDC57623}
 		{73E650A2-A5C8-4035-B206-586C4E4B0846} = {BBC0206D-64F0-4559-8042-759AB0CD62F7}
 		{E414D342-6A28-4844-9F2F-A6022D5AE929} = {BBC0206D-64F0-4559-8042-759AB0CD62F7}
+		{6F4648EE-2D98-4E95-BC92-0760AF1FD909} = {0AD73B36-C100-4557-9708-BEF73CFA3AC7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		LessCompiler = aaa2f19f-23e9-41d7-9790-8e47cf17db1f
 		SolutionGuid = {359C66AC-967C-49D7-A3E0-7E8A0A656AD1}
+		LessCompiler = aaa2f19f-23e9-41d7-9790-8e47cf17db1f
 	EndGlobalSection
 EndGlobal
