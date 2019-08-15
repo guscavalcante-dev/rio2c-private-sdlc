@@ -15,6 +15,7 @@
 var HoldingsCreateModal = function () {
 
     var modalId = '#CreateHoldingModal';
+    var uploadFormId = '#CreateHoldingForm';
 
     // CkEditor -----------------------------------------------------------------------------------
     var enableCkEditor = function () {
@@ -27,7 +28,7 @@ var HoldingsCreateModal = function () {
 
     // Enable ajax form ---------------------------------------------------------------------------
     var enableAjaxForm = function () {
-        var uploadFormElement = $('#CreateHoldingForm');
+        var uploadFormElement = $(uploadFormId);
 
         uploadFormElement.ajaxForm({
             beforeSubmit: function () {
@@ -93,14 +94,14 @@ var HoldingsCreateModal = function () {
     // Enable form validation ---------------------------------------------------------------------
     var enableFormValidation = function () {
         MyRio2cCommon.enableFormValidation({
-            formIdOrClass: '#CreateHoldingForm',
+            formIdOrClass: uploadFormId,
             enableHiddenInputsValidation: true
         });
     };
 
     // Create -------------------------------------------------------------------------------------
     var enableCreatePlugins = function () {
-        MyRio2cCropper.init();
+        MyRio2cCropper.init({ formIdOrClass: uploadFormId });
         enableCkEditor();
         enableAjaxForm();
         enableFormValidation();

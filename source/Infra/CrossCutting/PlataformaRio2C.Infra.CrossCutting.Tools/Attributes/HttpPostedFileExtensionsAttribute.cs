@@ -73,8 +73,10 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Attributes
         /// <param name="name">The name of the field that caused the validation failure.</param>
         public override string FormatErrorMessage(string name)
         {
-            if (ErrorMessage == null)
+            if (ErrorMessage == null && ErrorMessageResourceName == null)
+            {
                 return _innerAttribute.FormatErrorMessage(name);
+            }
 
             return string.Format(ErrorMessageString, name);
         }

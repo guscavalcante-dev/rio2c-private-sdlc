@@ -13,7 +13,8 @@
 // ***********************************************************************
 var MyRio2cCropper = function () {
 
-    var enableCropper = function () {
+    var enableCropper = function (options) {
+
         var $image = $('#image');
         var $dataX = $('#CropperImage_DataX');
         var $dataY = $('#CropperImage_DataY');
@@ -23,7 +24,7 @@ var MyRio2cCropper = function () {
         var $dataScaleX = $('#CropperImage_DataScaleX');
         var $dataScaleY = $('#CropperImage_DataScaleY');
 
-        var options = {
+        var internalOptions = {
             //preview: '.img-preview',
             cropBoxMovable: false,
             cropBoxResizable: false,
@@ -58,7 +59,7 @@ var MyRio2cCropper = function () {
                 'zoom.cropper': function (e) {
                 }
             })
-            .cropper(options);
+            .cropper(internalOptions);
 
         // Zoom / Reset
         $('.docs-buttons').on('click', '[data-method]', function () {
@@ -171,9 +172,12 @@ var MyRio2cCropper = function () {
                 }
 
                 // Validate the form
-                //$('#upload-picture-form').validate().form(); //TODO: Enable validation
+                if (MyRio2cCommon.hasProperty(options, 'formIdOrClass') && !MyRio2cCommon.isNullOrEmpty(options.formIdOrClass)) {
+                    $(options.formIdOrClass).valid();
+                }
             });
-        } else {
+        }
+        else {
             $inputImage.prop('disabled', true).parent().addClass('disabled');
         }
     };
@@ -186,32 +190,11 @@ var MyRio2cCropper = function () {
 
     return {
         //main function to initiate the module
-        init: function () {
-            enableCropper();
+        init: function (options) {
+            enableCropper(options);
         },
         cancel: function() {
             cancel();
         }
     };
 }();
-
-
-//$('.cropper-range').on("change mousemove", function () {
-//    var currentValue = $(this).val();
-//    console.log('currentValue: ' + currentValue);
-
-//    if (currentValue != lastRangeValue) {
-//        var divisor = 100;
-//        if (currentValue > 0) {
-//            divisor = 10;
-//        }
-//        var ratio = 1 + (currentValue / divisor);
-//        console.log('----------');
-//        console.log('currentValue: ' + currentValue);
-//        console.log('lastRangeValue: ' + lastRangeValue);
-//        console.log('lastRangeValue: ' + ratio);
-//        $('#image').cropper('zoomTo', ratio);
-//    }
-
-//    lastRangeValue = currentValue;
-//});

@@ -213,12 +213,16 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 //this.SetResultMessage(new ResultMessage(ex.GetInnerMessage(), ResultMessageType.Error));
                 //viewModel.UpdateModelsAndLists(this.site);
                 //return View("SiteLogoSettings", viewModel);
+
+                return Json(new { status = "error", message = ex.GetInnerMessage() });
             }
             catch (Exception ex)
             {
                 //Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 //this.SetResultMessage(new ResultMessage("[[[We found an error updating site logo. We are already working on it.]]]", ResultMessageType.Error));
                 //return RedirectToAction("SiteLogoSettings");
+
+                return Json(new { status = "error", message = "We found an error creating the holding. We are already working on it." });
             }
 
             //this.SetResultMessage(new ResultMessage("[[[The site logo was updated successfully.]]]", ResultMessageType.Success));

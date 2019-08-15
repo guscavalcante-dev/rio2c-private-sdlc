@@ -402,6 +402,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A imagem deve estar no formato jpeg, jpg, gif ou png..
+        /// </summary>
+        public static string InvalidImage {
+            get {
+                return ResourceManager.GetString("InvalidImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Formato de imagem inválido..
         /// </summary>
         public static string InvalidImageFormat {

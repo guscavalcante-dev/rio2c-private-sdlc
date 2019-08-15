@@ -395,8 +395,8 @@
     <value>Português</value>
   </data>
   <data name="InfoImagePlayer" xml:space="preserve">
-    <value>Favor inserir o logotipo da empresa em formato PNG ou JPG, com fundo branco. &lt;br /&gt; Tamanho mínimo 1Kb.</value>
-    <comment>Inserir logomarca do empresa em formato PNG, com fundo branco, tamanho mínimo: 50KB</comment>
+    <value>Favor inserir o logotipo da empresa em formato jpeg, jpg, gif ou png com fundo branco. &lt;br /&gt; Tamanho mínimo 1Kb.</value>
+    <comment>Favor inserir o logotipo da empresa em formato jpeg, jpg, gif ou png com fundo branco. &lt;br /&gt; Tamanho mínimo 1Kb.</comment>
   </data>
   <data name="ExecutiveCreate" xml:space="preserve">
     <value>Criar Executivo</value>
@@ -1091,10 +1091,6 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Descriptions" xml:space="preserve">
     <value>Descrições</value>
     <comment>Descrições</comment>
-  </data>
-  <data name="InvalidImage" xml:space="preserve">
-    <value>A imagem deve estar no formato jpeg, jpg, gif ou png.</value>
-    <comment>A imagem deve estar no formato jpeg, jpg, gif ou png.</comment>
   </data>
   <data name="Optional" xml:space="preserve">
     <value>opcional</value>

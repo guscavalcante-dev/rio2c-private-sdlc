@@ -1078,7 +1078,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Favor inserir o logotipo da empresa em formato PNG ou JPG, com fundo branco. &lt;br /&gt; Tamanho mínimo 1Kb..
+        ///   Looks up a localized string similar to Favor inserir o logotipo da empresa em formato jpeg, jpg, gif ou png com fundo branco. &lt;br /&gt; Tamanho mínimo 1Kb..
         /// </summary>
         public static string InfoImagePlayer {
             get {
@@ -1092,15 +1092,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Interests {
             get {
                 return ResourceManager.GetString("Interests", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to A imagem deve estar no formato jpeg, jpg, gif ou png..
-        /// </summary>
-        public static string InvalidImage {
-            get {
-                return ResourceManager.GetString("InvalidImage", resourceCulture);
             }
         }
         

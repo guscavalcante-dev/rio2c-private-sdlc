@@ -237,6 +237,10 @@
   <data name="InvalidExtensionPng" xml:space="preserve">
     <value>A logo deve ter a extensão .png ou .jpeg</value>
   </data>
+  <data name="InvalidImage" xml:space="preserve">
+    <value>A imagem deve estar no formato jpeg, jpg, gif ou png.</value>
+    <comment>A imagem deve estar no formato jpeg, jpg, gif ou png.</comment>
+  </data>
   <data name="InvalidImageFormat" xml:space="preserve">
     <value>Formato de imagem inválido.</value>
   </data>

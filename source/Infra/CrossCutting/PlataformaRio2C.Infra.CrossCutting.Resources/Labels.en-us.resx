@@ -395,8 +395,8 @@
     <value>Portuguese</value>
   </data>
   <data name="InfoImagePlayer" xml:space="preserve">
-    <value>Please insert the company logo in PNG format, white blackboard. &lt;br /&gt; minimum size 1kb.</value>
-    <comment>Inserir logomarca do empresa em formato PNG, com fundo branco, tamanho mínimo: 1KB</comment>
+    <value>Please insert the company logo in jpeg, jpg, gif or png format with white blackboard. &lt;br /&gt; Minimum size 1kb.</value>
+    <comment>Favor inserir o logotipo da empresa em formato jpeg, jpg, gif ou png com fundo branco. &lt;br /&gt; Tamanho mínimo 1Kb.</comment>
   </data>
   <data name="ExecutiveCreate" xml:space="preserve">
     <value>Create Executive</value>
@@ -1083,10 +1083,6 @@
   <data name="Descriptions" xml:space="preserve">
     <value>Descriptions</value>
     <comment>Descrições</comment>
-  </data>
-  <data name="InvalidImage" xml:space="preserve">
-    <value>The image format must be jpeg, jpg, gif or png.</value>
-    <comment>A imagem deve estar no formato jpeg, jpg, gif ou png.</comment>
   </data>
   <data name="Optional" xml:space="preserve">
     <value>optional</value>
