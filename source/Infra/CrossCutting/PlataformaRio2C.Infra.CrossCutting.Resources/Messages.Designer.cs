@@ -187,6 +187,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Por favor, corrija os erros do formulário..
+        /// </summary>
+        public static string CorrectFormValues {
+            get {
+                return ResourceManager.GetString("CorrectFormValues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to País inválido.
         /// </summary>
         public static string CountryIsInvalid {
@@ -348,6 +357,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} criada com sucesso..
+        /// </summary>
+        public static string FemaleEntityCreatedSuccessfully {
+            get {
+                return ResourceManager.GetString("FemaleEntityCreatedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O holding deve ter um nome..
         /// </summary>
         public static string HoldingMustHaveName {
@@ -482,6 +500,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string LoginOrPasswordIsIncorrect {
             get {
                 return ResourceManager.GetString("LoginOrPasswordIsIncorrect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} criado com sucesso..
+        /// </summary>
+        public static string MaleEntityCreatedSuccessfully {
+            get {
+                return ResourceManager.GetString("MaleEntityCreatedSuccessfully", resourceCulture);
             }
         }
         
@@ -1130,6 +1157,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string WebSiteIsRequired {
             get {
                 return ResourceManager.GetString("WebSiteIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encontramos um erro ao realizar essa operação. Já estamos trabalhando para resolvê-lo..
+        /// </summary>
+        public static string WeFoundAndError {
+            get {
+                return ResourceManager.GetString("WeFoundAndError", resourceCulture);
             }
         }
         

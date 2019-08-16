@@ -159,6 +159,10 @@
   <data name="CompanySummaryInPtBrMandatory" xml:space="preserve">
     <value>Resumo da empresa em português é obrigatório.</value>
   </data>
+  <data name="CorrectFormValues" xml:space="preserve">
+    <value>Por favor, corrija os erros do formulário.</value>
+    <comment>Por favor, corrija os erros do formulário.</comment>
+  </data>
   <data name="CountryIsInvalid" xml:space="preserve">
     <value>País inválido</value>
   </data>
@@ -218,6 +222,10 @@
   <data name="EvaluationSavesSuccessfully" xml:space="preserve">
     <value>Avaliação salva com sucesso!</value>
   </data>
+  <data name="FemaleEntityCreatedSuccessfully" xml:space="preserve">
+    <value>{0} criada com sucesso.</value>
+    <comment>{0} criada com sucesso.</comment>
+  </data>
   <data name="HoldingMustHaveName" xml:space="preserve">
     <value>O holding deve ter um nome.</value>
   </data>
@@ -267,6 +275,10 @@
   </data>
   <data name="LoginOrPasswordIsIncorrect" xml:space="preserve">
     <value>Login ou Senha incorretos.</value>
+  </data>
+  <data name="MaleEntityCreatedSuccessfully" xml:space="preserve">
+    <value>{0} criado com sucesso.</value>
+    <comment>{0} criado com sucesso.</comment>
   </data>
   <data name="MandatoryToSubmitYourProject" xml:space="preserve">
     <value>&lt;strong&gt;Atenção!&lt;/strong&gt; Para submeter seus projetos é obrigatório o preenchimento do PERFIL e PRODUTORA/EMPRESA.</value>
@@ -487,6 +499,10 @@
   </data>
   <data name="WebSiteIsRequired" xml:space="preserve">
     <value>Website obrigatório.</value>
+  </data>
+  <data name="WeFoundAndError" xml:space="preserve">
+    <value>Encontramos um erro ao realizar essa operação. Já estamos trabalhando para resolvê-lo.</value>
+    <comment>Encontramos um erro ao realizar essa operação. Já estamos trabalhando para resolvê-lo.</comment>
   </data>
   <data name="YouCanSelectUpToXPlayers" xml:space="preserve">
     <value>Você pode selecionar no máximo {0} players</value>

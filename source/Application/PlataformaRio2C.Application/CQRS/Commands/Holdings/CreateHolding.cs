@@ -24,13 +24,19 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public CreateHolding(List<LanguageDto> languagesDtos)
             : base (languagesDtos)
         {
-            this.LanguagesDtos = languagesDtos;
             this.CropperImage = new CropperImageBaseCommand(false, null);
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateHolding"/> class.</summary>
         public CreateHolding()
         {
+        }
+
+        /// <summary>Updates the properties.</summary>
+        /// <param name="languagesDtos">The languages dtos.</param>
+        public void UpdateProperties(List<LanguageDto> languagesDtos)
+        {
+            this.UpdateBaseProperties(languagesDtos);
         }
     }
 }

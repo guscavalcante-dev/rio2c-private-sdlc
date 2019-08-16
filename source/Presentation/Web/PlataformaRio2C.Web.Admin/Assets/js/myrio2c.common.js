@@ -154,37 +154,41 @@ var MyRio2cCommon = function () {
     var handleAjaxReturn = function (options) {
 
         if (!hasProperty(options, 'data')) {
-            //showAlert(data.message, data.status, data.isFixed);
-
             return null;
         }
 
         var data = options.data;
         
         // Undefined Error (no data.status)
-        if (typeof data.status === "undefined" || data.status == null || data.status === '') {
-            //showAlert(data.message, data.status, data.isFixed);
-
-            return null;
+        if (!hasProperty(data, 'status') || isNullOrEmpty(data.status)) {
+            data.status = 'error';
         }
 
         if (data.status === "success") {
             // Redirect
-            //if (typeof data.redirect !== "undefined" && data.redirect != null && data.redirect !== '') {
-            if (hasProperty(data, 'redirect')) {
-                //showAlert(data.message + " " + redirectMessage, data.status, data.isFixed, function () {
-                //    window.location.replace(data.redirect);
-                //});
+            if (hasProperty(data, 'redirect') && !isNullOrEmpty(data.redirect)) {
+                showAlert({
+                    message: data.message + " " + redirectMessage,
+                    messageType: data.status,
+                    isFixed: data.isFixed,
+                    callbackOnHidden: function() {
+                        window.location.replace(data.redirect);
+                    }
+                });
 
                 return null;
             }
 
             // Submit search form
-            //if (typeof searchFormIdOrClass !== "undefined" && searchFormIdOrClass != null && searchFormIdOrClass !== '') {
-            if (hasProperty(options, 'searchFormIdOrClass')) {
-                //showAlert(data.message + " " + redirectMessage, data.status, data.isFixed, function () {
-                //    $(searchFormIdOrClass).submit();
-                //});
+            if (hasProperty(options, 'searchFormIdOrClass') && !isNullOrEmpty(options.searchFormIdOrClass)) {
+                showAlert({
+                    message: data.message + " " + redirectMessage,
+                    messageType: data.status,
+                    isFixed: data.isFixed,
+                    callbackOnHidden: function () {
+                        $(searchFormIdOrClass).submit();
+                    }
+                });
 
                 return null;
             }
@@ -201,9 +205,8 @@ var MyRio2cCommon = function () {
             //}
 
             // Replace pages
-            //if (data.pages !== "undefined" && data.pages != null && data.pages !== '') {
-            if (hasProperty(data, 'pages')) {
-                //showAlert(data.message, data.status, data.isFixed);
+            if (hasProperty(data, 'pages') && !isNullOrEmpty(data.pages)) {
+                showAlert({ message: data.message, messageType: data.status, isFixed: data.isFixed });
 
                 $.each(data.pages, function (key, value) {
                     $(value.divIdOrClass).html(value.page);
@@ -217,9 +220,8 @@ var MyRio2cCommon = function () {
                 return null;
             }
 
-            //if (typeof formDivIdOrClass !== "undefined" && formDivIdOrClass != null && formDivIdOrClass !== '') {
-            if (hasProperty(options, 'formDivIdOrClass')) {
-                //showAlert(data.message, data.status, data.isFixed);
+            if (hasProperty(options, 'formDivIdOrClass') && !isNullOrEmpty(options.formDivIdOrClass)) {
+                showAlert({ message: data.message, messageType: data.status, isFixed: data.isFixed });
 
                 if (typeof data.page !== "undefined" && data.page != null && data.page !== '') {
                     $(options.formDivIdOrClass).html(data.page);
@@ -228,7 +230,6 @@ var MyRio2cCommon = function () {
                 //    $(formDivIdOrClass).html('');
                 //}
 
-                //if (typeof callbackSuccess !== "undefined" && callbackSuccess != null && callbackSuccess !== '') {
                 if (hasProperty(options, 'onSuccess')) {
                     return options.onSuccess(data);
                 }
@@ -236,19 +237,13 @@ var MyRio2cCommon = function () {
                 return null;
             }
 
-            //if (typeof callbackSuccess !== "undefined" && callbackSuccess != null && callbackSuccess !== '') {
             if (hasProperty(options, 'onSuccess')) {
-                if (typeof data.message !== "undefined" && data.message != null && data.message !== '') {
-                    //showAlert(data.message, data.status, data.isFixed);
-                }
+                showAlert({ message: data.message, messageType: data.status, isFixed: data.isFixed });
 
                 return options.onSuccess();
             }
 
-            //if (typeof data.message !== "undefined" && data.message != null && data.message !== '') {
-            if (hasProperty(data, 'message')) {
-                //showAlert(data.message, data.status, data.isFixed);
-            }
+            showAlert({ message: data.message, messageType: data.status, isFixed: data.isFixed });
 
             return null;
         }
@@ -256,24 +251,46 @@ var MyRio2cCommon = function () {
         // Defined Error (data.status == "error)
         if (data.status === "error") {
             // User is not logged in
-            //if (typeof data.redirect !== "undefined" && data.redirect != null && data.redirect !== '') {
-            if (hasProperty(data, 'redirect')) {
-                //showAlert(data.message + " " + redirectMessage, data.status, data.isFixed, function () {
-                //    if (data.redirect.toLowerCase() == "/accounts/login")
-                //        window.location.replace(data.redirect + "?ReturnUrl=" + encodeURIComponent(window.location.pathname) + encodeURIComponent(window.location.search));
-                //    else
-                //        window.location.replace(data.redirect);
-                //});
+            if (hasProperty(data, 'redirect') && !isNullOrEmpty(data.redirect)) {
+                showAlert({
+                    message: data.message + " " + redirectMessage,
+                    messageType: data.status,
+                    isFixed: data.isFixed,
+                    callbackOnHidden: function() {
+                        if (data.redirect.toLowerCase() == "/accounts/login")
+                            window.location.replace(data.redirect +
+                                "?ReturnUrl=" +
+                                encodeURIComponent(window.location.pathname) +
+                                encodeURIComponent(window.location.search));
+                        else
+                            window.location.replace(data.redirect);
+                    }
+                });
 
                 return null;
             }
+
+            if (hasProperty(data, 'pages') && !isNullOrEmpty(data.pages)) {
+                showAlert({ message: data.message, messageType: data.status, isFixed: data.isFixed });
+
+                $.each(data.pages, function (key, value) {
+                    $(value.divIdOrClass).html(value.page);
+                });
+
+                //if (typeof callbackSuccess !== "undefined" && callbackSuccess != null && callbackSuccess !== '') {
+                if (hasProperty(options, 'onError')) {
+                    return options.onError(data);
+                }
+
+                return null;
+            }
+
             // Form with error
-            //if (typeof formDivIdOrClass !== "undefined" && formDivIdOrClass != null && formDivIdOrClass !== '' && typeof data.page !== "undefined" && data.page !== null && data.page !== '') {
-            if (hasProperty(options, 'formDivIdOrClass') && hasProperty(data, 'page')) {
-                //showAlert(data.message, data.status, data.isFixed);
+            if (hasProperty(options, 'formDivIdOrClass') && !isNullOrEmpty(options.formDivIdOrClass) && hasProperty(data, 'page') && !isNullOrEmpty(data.page) ) {
+                showAlert({ message: data.message, messageType: data.status, isFixed: data.isFixed });
+
                 $(options.formDivIdOrClass).html(data.page);
 
-                //if (typeof callbackError !== "undefined" && callbackError != null && callbackError !== '') {
                 if (hasProperty(options, 'onError')) {
                     return options.onError();
                 }
@@ -281,13 +298,13 @@ var MyRio2cCommon = function () {
                 return;
             }
 
-            //if (typeof callbackError !== "undefined" && callbackError != null && callbackError !== '') {
             if (hasProperty(options, 'onError')) {
-                //showAlert(data.message, data.status, data.isFixed);
+                showAlert({ message: data.message, messageType: data.status, isFixed: data.isFixed });
+
                 return options.onError();
             }
 
-            //showAlert(data.message, data.status, data.isFixed);
+            showAlert({ message: data.message, messageType: data.status, isFixed: data.isFixed });
 
             return null;
         }
@@ -417,8 +434,12 @@ var MyRio2cCommon = function () {
             options.messageType = "error";
         }
 
-        if (!hasProperty(options, 'message') || isNullOrEmpty(options.message)) {
+        if (options.messageType.toLowerCase() === 'error' && (!hasProperty(options, 'message') || isNullOrEmpty(options.message))) {
             options.message = alertUndefinedMessage;
+        }
+
+        if (!hasProperty(options, 'message') || isNullOrEmpty(options.message)) {
+            return;
         }
 
         if (hasProperty(options, 'message')) {

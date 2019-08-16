@@ -42,5 +42,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public HoldingBaseCommand()
         {
         }
+
+        /// <summary>Updates the base properties.</summary>
+        /// <param name="languagesDtos">The languages dtos.</param>
+        public void UpdateBaseProperties(List<LanguageDto> languagesDtos)
+        {
+            this.LanguagesDtos = languagesDtos;
+        }
     }
 }

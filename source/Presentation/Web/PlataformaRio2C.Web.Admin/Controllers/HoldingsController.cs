@@ -22,6 +22,7 @@ using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
 using PlataformaRio2c.Infra.Data.FileRepository;
+using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
@@ -163,15 +164,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowCreateModal()
         {
-            //var viewModel = _appService.GetEditViewModel();
-
-            //var viewModel = new HoldingViewModel(await this.CommandBus.Send(new FindAllLanguagesAsync(
-            //    this.UserId,
-            //    this.UserUid,
-            //    this.EditionId,
-            //    this.EditionUid,
-            //    this.UserInterfaceLanguage)));
-
             var cmd = new CreateHolding(await this.CommandBus.Send(new FindAllLanguagesDtosAsync(
                 this.UserId,
                 this.UserUid,
@@ -187,66 +179,62 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     new { page = this.RenderRazorViewToString("Modals/CreateModal", cmd), divIdOrClass = "#GlobalModalContainer" },
                 }
             }, JsonRequestBehavior.AllowGet);
-
-            //return View(viewModel);
         }
 
-        /// <summary>Creates the specified command.</summary>
+        /// <summary>Creates the specified create holding.</summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
-        /// <exception cref="DomainException">Please, correct the form errors.</exception>
         [HttpPost]
         public async Task<ActionResult> Create(CreateHolding cmd)
         {
-            var holdingUid = Guid.NewGuid();
+            var result = new AppValidationResult();
 
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    throw new DomainException("Please, correct the form errors.");
+                    throw new DomainException();
                 }
 
-                try
-                {
-                    cmd.UpdateBaseProperties(this.UserId,
-                        this.UserUid,
-                        this.EditionId,
-                        this.EditionUid,
-                        this.UserInterfaceLanguage);
+                cmd.UpdateBaseProperties(this.UserId,
+                    this.UserUid,
+                    this.EditionId,
+                    this.EditionUid,
+                    this.UserInterfaceLanguage);
 
-                    var result = await this.CommandBus.Send(cmd);
-                    if (!result.IsValid)
-                    {
-                    }
-                }
-                catch (DomainException dex)
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
                 {
-                    ModelState.AddModelError("CropperImage_ImageFile", dex.GetInnerMessage());
-                    throw;
+                    throw new DomainException();
                 }
             }
-            catch (DomainException ex)
+            catch (DomainException)
             {
-                //this.SetResultMessage(new ResultMessage(ex.GetInnerMessage(), ResultMessageType.Error));
-                //viewModel.UpdateModelsAndLists(this.site);
-                //return View("SiteLogoSettings", viewModel);
+                cmd.UpdateProperties(await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserId, this.UserUid, this.EditionId, this.EditionUid, this.UserInterfaceLanguage)));
 
-                return Json(new { status = "error", message = ex.GetInnerMessage() });
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                return Json(new
+                {
+                    status = "error",
+                    message = Messages.CorrectFormValues,
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/_Form", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                //Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                //this.SetResultMessage(new ResultMessage("[[[We found an error updating site logo. We are already working on it.]]]", ResultMessageType.Error));
-                //return RedirectToAction("SiteLogoSettings");
-
-                return Json(new { status = "error", message = "We found an error creating the holding. We are already working on it." });
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            //this.SetResultMessage(new ResultMessage("[[[The site logo was updated successfully.]]]", ResultMessageType.Success));
-            //return RedirectToAction("SiteLogoSettings");
-
-            return Json(new { status = "success"/*, message = T._("The person picture was changed successfully."), imageLink = FileHelper.AvatarFor(viewModel.PersonId, viewModel.PersonTypeId)*/ });
+            return Json(new { status = "success", message = string.Format(Messages.MaleEntityCreatedSuccessfully, Labels.Holding) });
         }
 
         #endregion

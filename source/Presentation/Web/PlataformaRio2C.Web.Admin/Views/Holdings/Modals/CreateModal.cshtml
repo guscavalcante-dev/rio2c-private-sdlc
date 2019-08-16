@@ -9,7 +9,9 @@
             <div class="modal-body">
                 @using (Html.BeginForm("Create", "Holdings", new { Area = "" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "CreateHoldingForm" }))
                 {
-                    @Html.Partial("Modals/_Form", Model)
+                    <div id="form-container">
+                        @Html.Partial("Modals/_Form", Model)
+                    </div>
                 }
             </div>
             <div class="modal-footer">
