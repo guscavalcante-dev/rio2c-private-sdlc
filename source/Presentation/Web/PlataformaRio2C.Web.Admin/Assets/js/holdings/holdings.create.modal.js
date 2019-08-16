@@ -4,7 +4,7 @@
 // Created          : 08-13-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-14-2019
+// Last Modified On : 08-16-2019
 // ***********************************************************************
 // <copyright file="holdings.create.modal.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,32 +17,19 @@ var HoldingsCreateModal = function () {
     var modalId = '#CreateHoldingModal';
     var uploadFormId = '#CreateHoldingForm';
 
-    // CkEditor -----------------------------------------------------------------------------------
-    var enableCkEditor = function () {
-        $('.ckeditor-rio2c').each(function () {
-            var ck = CKEDITOR.replace($(this)[0], {
-                customConfig: '/Content/js/ckeditor_config.js'
-            });
-        });
-    };
-
     // Enable ajax form ---------------------------------------------------------------------------
     var enableAjaxForm = function () {
         var uploadFormElement = $(uploadFormId);
 
         uploadFormElement.ajaxForm({
+            beforeSerialize: function (form, options) {
+                MyRio2cCommon.updateCkEditorElements();
+            },
             beforeSubmit: function () {
                 return uploadFormElement.valid(); // TRUE when form is valid, FALSE will cancel submit
             },
             beforeSend: function () {
                 MyRio2cCommon.block({ isModal: true });
-
-                //if (progressBarElement.length) {
-                //    progressBarElement.removeClass('hide');
-                //    var percentVal = '0%';
-                //    bar.width(percentVal);
-                //    percent.html(percentVal);
-                //}
             },
             uploadProgress: function (event, position, total, percentComplete) {
                 //if (progressBarElement.length) {
@@ -102,7 +89,7 @@ var HoldingsCreateModal = function () {
     // Create -------------------------------------------------------------------------------------
     var enableCreatePlugins = function () {
         MyRio2cCropper.init({ formIdOrClass: uploadFormId });
-        enableCkEditor();
+        MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c' });
         enableAjaxForm();
         enableFormValidation();
     };

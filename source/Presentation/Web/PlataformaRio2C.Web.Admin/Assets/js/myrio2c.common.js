@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-14-2019
+// Last Modified On : 08-16-2019
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -295,6 +295,34 @@ var MyRio2cCommon = function () {
         //showAlert();
     };
 
+    // CKEDITOR -----------------------------------------------------------------------------------
+    var enableCkEditor = function (options) {
+
+        if (!hasProperty(options, 'idOrClass')) {
+            return;
+        }
+
+        if (isNullOrEmpty(window.CKEDITOR)) {
+            return;
+        }
+
+        $(options.idOrClass).each(function () {
+            var ck = CKEDITOR.replace($(this)[0], {
+                customConfig: '/Content/js/ckeditor_config.js'
+            });
+        });
+    };
+
+    var updateCkEditorElements = function () {
+        if (isNullOrEmpty(window.CKEDITOR)) {
+            return;
+        }
+
+        for (instance in CKEDITOR.instances) {
+            CKEDITOR.instances[instance].updateElement();
+        }
+    };
+
     return {
         init: function (userInterfaceLanguage, editionUrlCode) {
             setGlobalVariables(userInterfaceLanguage, editionUrlCode);
@@ -333,6 +361,12 @@ var MyRio2cCommon = function () {
         },
         handleAjaxReturn: function (options) {
             return handleAjaxReturn(options);
+        },
+        enableCkEditor: function(options) {
+            enableCkEditor(options);
+        },
+        updateCkEditorElements: function() {
+            updateCkEditorElements();
         }
     };
 }();

@@ -31,11 +31,6 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<Organization> Organizations { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="Holding"/> class.</summary>
-        protected Holding()
-        {
-        }
-
-        /// <summary>Initializes a new instance of the <see cref="Holding"/> class.</summary>
         /// <param name="uid">The uid.</param>
         /// <param name="name">The name.</param>
         /// <param name="userId">The user identifier.</param>
@@ -49,6 +44,11 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
             this.CreateDescriptions(descriptions);
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="Holding"/> class.</summary>
+        protected Holding()
+        {
         }
 
         #region Descriptions
@@ -100,6 +100,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.Descriptions = descriptions.ToList();
         }
 
+        #region Validation
+
         /// <summary>Returns true if ... is valid.</summary>
         /// <returns>
         ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
@@ -108,31 +110,33 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidationResult = new ValidationResult();
 
             this.ValidateName();
-            //ValidationResult.Add(new HoldingIsConsistent().Valid(this));         
-
-            //if (Image != null)
-            //{
-            //    ValidationResult.Add(new ImageIsConsistent().Valid(this.Image));
-            //    ValidationResult.Add(new HoldingImageIsConsistent().Valid(this));
-            //}
+            this.ValidateDescriptions();
+            
 
             return this.ValidationResult.IsValid;
         }
 
-        #region Validation
-
+        /// <summary>Validates the name.</summary>
         public void ValidateName()
         {
-            if (string.IsNullOrEmpty(this.Name))
+            // TODO: use resources on validation errrors
+            if (string.IsNullOrEmpty(this.Name?.Trim()))
             {
-                // TODO: use resources on validation errrors
-                //this.ValidationResult.Add(new ValidationError(string.Format("Já existe um holding com o nome '{0}'.", cmd.Name), new string[] { "Name" }););
                 this.ValidationResult.Add(new ValidationError("O nome é obrigatório.", new string[] { "Name" }));
             }
 
-            if (this.Name?.Trim().Length > 100)
+            if (this.Name?.Trim().Length < NameMinLength || this.Name?.Trim().Length > NameMaxLength)
             {
-                this.ValidationResult.Add(new ValidationError("O nome deve ter no máximo 100 caracters.", new string[] { "Name" }));
+                this.ValidationResult.Add(new ValidationError($"O nome deve ter entre '{NameMinLength}' e '{NameMaxLength}' caracteres.", new string[] { "Name" }));
+            }
+        }
+
+        /// <summary>Validates the descriptions.</summary>
+        public void ValidateDescriptions()
+        {
+            foreach (var description in this.Descriptions?.Where(d => !d.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(description.ValidationResult);
             }
         }
 

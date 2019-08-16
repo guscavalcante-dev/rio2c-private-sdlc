@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-09-2019
+// Last Modified On : 08-16-2019
 // ***********************************************************************
 // <copyright file="HoldingDescription.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using PlataformaRio2C.Domain.Validation;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -31,21 +32,25 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual Holding Holding { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="HoldingDescription"/> class.</summary>
-        protected HoldingDescription()
-        {
-        }
-
+        /// <param name="value">The value.</param>
+        /// <param name="language">The language.</param>
+        /// <param name="userId">The user identifier.</param>
         public HoldingDescription(string value, Language language, int userId)
         {
-            this.Value = value;
+            this.Value = value?.Trim();
             this.SetLanguage(language);
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
         }
 
+        /// <summary>Initializes a new instance of the <see cref="HoldingDescription"/> class.</summary>
+        protected HoldingDescription()
+        {
+        }
+
         public HoldingDescription(string value, string languageCode)
         {
-            this.Value = value;
+            this.Value = value?.Trim();
             this.LanguageCode = languageCode;
         }
 
@@ -54,8 +59,8 @@ namespace PlataformaRio2C.Domain.Entities
         public void SetLanguage(Language language)
         {
             this.Language = language;
-            this.LanguageId = language.Id;
-            this.LanguageCode = language.Code;
+            this.LanguageId = language?.Id ?? 0;
+            this.LanguageCode = language?.Code;
         }
 
         /// <summary>Sets the holding.</summary>
@@ -66,12 +71,46 @@ namespace PlataformaRio2C.Domain.Entities
             this.HoldingId = holding.Id;
         }
 
+        #region Validation
+
         /// <summary>Returns true if ... is valid.</summary>
         /// <returns>
         ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
         public override bool IsValid()
         {
-            return true;
+            this.ValidationResult = new ValidationResult();
+
+            this.ValidateValue();
+            this.ValidateLanguage();
+
+            return this.ValidationResult.IsValid;
         }
+
+        /// <summary>Validates the value.</summary>
+        public void ValidateValue()
+        {
+            // TODO: use resources on validation errrors
+            if (string.IsNullOrEmpty(this.Value?.Trim()))
+            {
+                this.ValidationResult.Add(new ValidationError("A descrição é obrigatório.", new string[] { "Value" }));
+            }
+
+            if (this.Value?.Trim().Length < ValueMinLength || this.Value?.Trim().Length > ValueMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError($"A descrição deve ter entre '{ValueMinLength}' e '{ValueMaxLength}' caracteres.", new string[] { "Name" }));
+            }
+        }
+
+        /// <summary>Validates the language.</summary>
+        public void ValidateLanguage()
+        {
+            // TODO: use resources on validation errrors
+            if (this.Language == null)
+            {
+                this.ValidationResult.Add(new ValidationError("O idioma da descrição é obrigatório.", new string[] { "Value" }));
+            }
+        }
+
+        #endregion
     }
 }
