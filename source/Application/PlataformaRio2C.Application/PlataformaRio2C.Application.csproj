@@ -167,10 +167,12 @@
     <Compile Include="Common\AppValidationResult.cs" />
     <Compile Include="Common\EntityViewModel.cs" />
     <Compile Include="Common\StatusProjectCodes.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Holdings\CreateHoldingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\SalesPlatformWebhookRequests\PostponeSalesPlatformWebhookRequestsCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\SalesPlatformWebhookRequests\ConcludeSalesPlatformWebhookRequestsCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\SalesPlatformWebhookRequests\ProcessSalesPlatformWebhookRequestsCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\SalesPlatformWebhookRequests\CreateSalesPlatformWebhookRequestCommandHandler.cs" />
+    <Compile Include="CQRS\Commands\Holdings\CreateHolding.cs" />
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\PostponeSalesPlatformWebhookRequest.cs" />
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\ConcludeSalesPlatformWebhookRequest.cs" />
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\ProcessSalesPlatformWebhookRequests.cs" />

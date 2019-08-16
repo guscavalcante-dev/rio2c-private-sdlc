@@ -4,13 +4,14 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-09-2019
+// Last Modified On : 08-15-2019
 // ***********************************************************************
 // <copyright file="Holding.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using PlataformaRio2C.Domain.Entities.Validations;
 using PlataformaRio2C.Domain.Validation;
 using System.Collections.Generic;
@@ -36,7 +37,20 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>Initializes a new instance of the <see cref="Holding"/> class.</summary>
+        /// <param name="uid">The uid.</param>
         /// <param name="name">The name.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        public Holding(Guid uid, string name, int userId, bool isImageUploaded)
+        {
+            //this.Uid = uid;
+            this.Descriptions = new List<HoldingDescription>();
+            this.SetName(name);
+            this.IsImageUploaded = isImageUploaded;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
         public Holding(string name)
         {
             this.Descriptions = new List<HoldingDescription>();

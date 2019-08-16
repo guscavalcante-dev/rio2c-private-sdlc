@@ -334,6 +334,7 @@
     <Compile Include="Entities\User\User.cs" />
     <Compile Include="Entities\User\Role.cs" />
     <Compile Include="Entities\User\UserUseTerm.cs" />
+    <Compile Include="Statics\Files\FileRepositoryPathType.cs" />
     <Compile Include="Statics\User\Role.cs" />
     <Compile Include="Validations\Address\AddressIsConsistent.cs" />
     <Compile Include="Validations\Collaborator\CollaboratorProducerIsComplete.cs" />

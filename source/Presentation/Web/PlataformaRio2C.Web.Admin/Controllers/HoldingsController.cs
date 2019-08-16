@@ -21,7 +21,11 @@ using System.Web.Mvc;
 using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
+using PlataformaRio2c.Infra.Data.FileRepository;
+using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
+using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
+using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -35,15 +39,17 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     public class HoldingsController : BaseController
     {
         private readonly IHoldingAppService _appService;
+        private readonly IFileRepository fileRepo;
 
         /// <summary>Initializes a new instance of the <see cref="HoldingsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="appService">The application service.</param>
-        public HoldingsController(IMediator commandBus, IdentityAutenticationService identityController, IHoldingAppService appService)
+        public HoldingsController(IMediator commandBus, IdentityAutenticationService identityController, IHoldingAppService appService, IFileRepository fileRepository)
             : base(commandBus, identityController)
         {
             _appService = appService;
+            this.fileRepo = fileRepository;
         }
 
         #region List
@@ -180,12 +186,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             //return View(viewModel);
         }
 
-        /// <summary>Creates the specified view model.</summary>
-        /// <param name="viewModel">The view model.</param>
-        /// <returns></returns>
         [HttpPost]
-        public ActionResult Create(HoldingViewModel viewModel)
+        public async Task<ActionResult> Create(HoldingViewModel viewModel)
         {
+            var holdingUid = Guid.NewGuid();
+
             try
             {
                 if (!ModelState.IsValid)
@@ -193,20 +198,42 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     throw new DomainException("Please, correct the form errors.");
                 }
 
-                //try
-                //{
-                //    ImageHelper.UploadOriginalAndAdvancedCropLogo(this.site.Id, viewModel.File, viewModel.DataX, viewModel.DataY, viewModel.DataWidth, viewModel.DataHeight, "SiteLogos");
-                //    var result = this.commandBus.Send(new EditSiteLogo(this.site.Id, Session.GetUserId(), Session.GetUserEmail()));
-                //    if (!result.IsExecuted)
-                //    {
-                //        throw result.Exception;
-                //    }
-                //}
-                //catch (DomainRuleException dex)
-                //{
-                //    ModelState.AddModelError("File", dex.GetInnerMessage());
-                //    throw;
-                //}
+                try
+                {
+                    await this.CommandBus.Send(new CreateHolding(
+                        holdingUid,
+                        viewModel.Name,
+                        viewModel.Descriptions,
+                        viewModel.CropperImage.ImageFile,
+                        viewModel.CropperImage.DataX,
+                        viewModel.CropperImage.DataY,
+                        viewModel.CropperImage.DataWidth,
+                        viewModel.CropperImage.DataHeight,
+                        this.UserId,
+                        this.UserUid,
+                        this.EditionId,
+                        this.EditionUid,
+                        this.UserInterfaceLanguage));
+
+                    //ImageHelper.UploadOriginalAndCroppedImages(
+                    //    holdingUid, 
+                    //    viewModel.CropperImage.ImageFile, 
+                    //    viewModel.CropperImage.DataX, 
+                    //    viewModel.CropperImage.DataY, 
+                    //    viewModel.CropperImage.DataWidth, 
+                    //    viewModel.CropperImage.DataHeight, 
+                    //    FileRepositoryPathType.HoldingImage);
+                    //var result = this.commandBus.Send(new EditSiteLogo(this.site.Id, Session.GetUserId(), Session.GetUserEmail()));
+                    //if (!result.IsExecuted)
+                    //{
+                    //    throw result.Exception;
+                    //}
+                }
+                catch (DomainException dex)
+                {
+                    ModelState.AddModelError("CropperImage_ImageFile", dex.GetInnerMessage());
+                    throw;
+                }
             }
             catch (DomainException ex)
             {

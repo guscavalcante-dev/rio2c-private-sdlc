@@ -11,14 +11,19 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Collections.Generic;
+using System;
 using System.IO;
+using PlataformaRio2C.Domain.Statics;
 
 namespace PlataformaRio2c.Infra.Data.FileRepository
 {
     /// <summary>IFileRepository</summary>
     public interface IFileRepository
     {
+        string GetImage(FileRepositoryPathType fileRepositoryPathType, Guid? imageUid, bool hasImage, bool isThumbnail);
+        string GetUrl(FileRepositoryPathType fileRepositoryPathType, Guid fileUid);
+        void Upload(Stream inputStream, string contentType, string fileName, FileRepositoryPathType fileRepositoryPathType, params object[] args);
+
         //string GetLinkForAvatar(int id, int personTypeId = 1);
         //bool HasAvatar(int id);
         //bool HasAvatarCopy(int id);

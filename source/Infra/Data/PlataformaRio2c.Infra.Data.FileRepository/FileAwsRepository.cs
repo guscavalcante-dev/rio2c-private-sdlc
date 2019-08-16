@@ -17,8 +17,10 @@ using System.Configuration;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using Amazon;
 using Amazon.S3;
 using Amazon.S3.Model;
+using PlataformaRio2C.Domain.Statics;
 
 namespace PlataformaRio2c.Infra.Data.FileRepository
 {
@@ -46,6 +48,132 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
             this.imagesOrganizationsDirectory = ConfigurationManager.AppSettings["AwsImagesOrganizationsDirectory"];
             this.imagesUsersDirectory = ConfigurationManager.AppSettings["AwsImagesUsersDirectory"];
         }
+
+        #region Get Url
+
+        /// <summary>Gets the image.</summary>
+        /// <param name="fileRepositoryPathType">Type of the file.</param>
+        /// <param name="imageUid">The image uid.</param>
+        /// <param name="hasImage">if set to <c>true</c> [has image].</param>
+        /// <param name="isThumbnail">if set to <c>true</c> [is thumbnail].</param>
+        /// <returns></returns>
+        public string GetImage(FileRepositoryPathType fileRepositoryPathType, Guid? imageUid, bool hasImage, bool isThumbnail)
+        {
+            if (!hasImage || !imageUid.HasValue)
+            {
+                return string.Empty;
+            }
+
+            return this.GetUrl(fileRepositoryPathType, imageUid.Value) + (isThumbnail ? "-thumb.jpg" : ".jpg");
+        }
+
+        /// <summary>Gets the URL.</summary>
+        /// <param name="fileRepositoryPathType">Type of the file.</param>
+        /// <param name="fileUid">The file uid.</param>
+        /// <returns></returns>
+        public string GetUrl(FileRepositoryPathType fileRepositoryPathType, Guid fileUid)
+        {
+            return this.GetDirectoryUrl(fileRepositoryPathType) + fileUid;
+        }
+
+        #endregion
+
+        #region Upload
+
+        /// <summary>Uploads the specified input stream.</summary>
+        /// <param name="inputStream">The input stream.</param>
+        /// <param name="contentType">Type of the content.</param>
+        /// <param name="fileName">Name of the file.</param>
+        /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
+        /// <param name="args">The arguments.</param>
+        public void Upload(Stream inputStream, string contentType, string fileName, FileRepositoryPathType fileRepositoryPathType, params object[] args)
+        {
+            // Get the phisical directory
+            var directory = this.GetBaseDirectory(fileRepositoryPathType, args);
+
+            try
+            {
+                using (IAmazonS3 client = new AmazonS3Client(this.awsAccessKey, awsSecretKey, RegionEndpoint.USEast1))
+                {
+                    // simple object put
+                    var request = new PutObjectRequest
+                    {
+                        Key = directory + fileName,
+                        BucketName = awsBucket,
+                        InputStream = inputStream,
+                        ContentType = contentType
+                    };
+
+                    //S3Response response = client.PutObject(request);
+                    client.PutObject(request);
+                }
+            }
+            catch (AmazonS3Exception amazonS3Exception)
+            {
+                if (amazonS3Exception.ErrorCode != null &&
+                    (amazonS3Exception.ErrorCode.Equals("InvalidAccessKeyId") ||
+                     amazonS3Exception.ErrorCode.Equals("InvalidSecurity")))
+                {
+                    Console.WriteLine("Please check the provided AWS Credentials.");
+                    Console.WriteLine("If you haven't signed up for Amazon S3, please visit http://aws.amazon.com/s3");
+                    throw;
+                }
+
+                Console.WriteLine("An error occurred with the message '{0}' when writing an object", amazonS3Exception.Message);
+                throw;
+            }
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>Gets the directory URL.</summary>
+        /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
+        /// <param name="args">The arguments.</param>
+        /// <returns></returns>
+        private string GetDirectoryUrl(FileRepositoryPathType fileRepositoryPathType, params object[] args)
+        {
+            return this.GetBaseUrl() + this.GetBaseDirectory(fileRepositoryPathType, args);
+        }
+
+        /// <summary>Gets the base directory.</summary>
+        /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
+        /// <param name="args">The arguments.</param>
+        /// <returns></returns>
+        private string GetBaseDirectory(FileRepositoryPathType fileRepositoryPathType, params object[] args)
+        {
+            if (fileRepositoryPathType.Uid == FileRepositoryPathType.HoldingImage.Uid)
+            {
+                return string.Format(this.imagesHoldingsDirectory, args);
+            }
+
+            if (fileRepositoryPathType.Uid == FileRepositoryPathType.OrganizationImage.Uid)
+            {
+                return string.Format(this.imagesOrganizationsDirectory, args);
+            }
+
+            if (fileRepositoryPathType.Uid == FileRepositoryPathType.UserImage.Uid)
+            {
+                return string.Format(this.imagesUsersDirectory, args);
+            }
+
+            return string.Empty;
+        }
+
+        /// <summary>Gets the base URL.</summary>
+        /// <returns></returns>
+        private string GetBaseUrl()
+        {
+            if (string.IsNullOrEmpty(this.awsBucket))
+            {
+                return string.Empty;
+            }
+
+            return $"https://{this.awsBucket}";
+        }
+
+        #endregion
 
         ///// <summary>
         ///// Determines whether the specified identifier has avatar.
