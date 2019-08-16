@@ -323,6 +323,85 @@ var MyRio2cCommon = function () {
         }
     };
 
+    // Ajax Form ----------------------------------------------------------------------------------
+    var enableAjaxForm = function (options) {
+
+        if (!hasProperty(options, 'idOrClass')) {
+            return;
+        }
+
+        var uploadFormElement = $(options.idOrClass);
+
+        uploadFormElement.ajaxForm({
+            beforeSerialize: function (form, options) {
+                MyRio2cCommon.updateCkEditorElements();
+            },
+            beforeSubmit: function () {
+                return uploadFormElement.valid(); // TRUE when form is valid, FALSE will cancel submit
+            },
+            beforeSend: function () {
+                MyRio2cCommon.block({ isModal: true });
+            },
+            uploadProgress: function (event, position, total, percentComplete) {
+                //if (progressBarElement.length) {
+                //    var percentVal = percentComplete + '%';
+                //    bar.width(percentVal);
+                //    percent.html(percentVal);
+                //}
+            },
+            success: function (data) {
+                MyRio2cCommon.handleAjaxReturn({
+                    data: data,
+                    // Success
+                    onSuccess: function () {
+                        if (!hasProperty(options, 'onSuccess')) {
+                            return;
+                        }
+
+                        options.onSuccess();
+                    },
+                    // Error
+                    onError: function () {
+                        if (!hasProperty(options, 'onError')) {
+                            return;
+                        }
+
+                        options.onError();
+                    }
+                });
+
+                //if (progressBarElement.length) {
+                //    var percentVal = '100%';
+                //    bar.width(percentVal);
+                //    percent.html(percentVal);
+                //}
+                //if (typeof data.imageLink !== 'undefined' && data.imageLink != null && data.imageLink != '' && $(imgFinalElement).length) {
+                //    imgFinalElement.attr('src', data.imageLink);
+                //}
+                //showAlert(data.message, data.status);
+                //if (typeof getPersonActivities !== 'undefined' && getPersonActivities != null) {
+                //    getPersonActivities(true);
+                //}
+            },
+            complete: function () {
+                MyRio2cCommon.unblock();
+
+                if (!hasProperty(options, 'onComplete')) {
+                    return;
+                }
+
+                options.onComplete();
+
+                //if (progressBarElement.length) {
+                //    progressBarElement.addClass('hide');
+                //    var percentVal = '0%';
+                //    bar.width(percentVal);
+                //    percent.html(percentVal);
+                //}
+            }
+        });
+    };
+
     return {
         init: function (userInterfaceLanguage, editionUrlCode) {
             setGlobalVariables(userInterfaceLanguage, editionUrlCode);
@@ -367,6 +446,9 @@ var MyRio2cCommon = function () {
         },
         updateCkEditorElements: function() {
             updateCkEditorElements();
+        },
+        enableAjaxForm: function (options) {
+            enableAjaxForm(options);
         }
     };
 }();

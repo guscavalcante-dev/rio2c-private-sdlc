@@ -17,67 +17,6 @@ var HoldingsCreateModal = function () {
     var modalId = '#CreateHoldingModal';
     var uploadFormId = '#CreateHoldingForm';
 
-    // Enable ajax form ---------------------------------------------------------------------------
-    var enableAjaxForm = function () {
-        var uploadFormElement = $(uploadFormId);
-
-        uploadFormElement.ajaxForm({
-            beforeSerialize: function (form, options) {
-                MyRio2cCommon.updateCkEditorElements();
-            },
-            beforeSubmit: function () {
-                return uploadFormElement.valid(); // TRUE when form is valid, FALSE will cancel submit
-            },
-            beforeSend: function () {
-                MyRio2cCommon.block({ isModal: true });
-            },
-            uploadProgress: function (event, position, total, percentComplete) {
-                //if (progressBarElement.length) {
-                //    var percentVal = percentComplete + '%';
-                //    bar.width(percentVal);
-                //    percent.html(percentVal);
-                //}
-            },
-            success: function (data) {
-                MyRio2cCommon.handleAjaxReturn({
-                    data: data,
-                    // Success
-                    onSuccess: function () {
-                        //enableCreatePlugins();
-                        $(modalId).modal('hide');
-                    },
-                    // Error
-                    onError: function () {
-                        enableCreatePlugins();
-                    }
-                });
-
-                //if (progressBarElement.length) {
-                //    var percentVal = '100%';
-                //    bar.width(percentVal);
-                //    percent.html(percentVal);
-                //}
-                //if (typeof data.imageLink !== 'undefined' && data.imageLink != null && data.imageLink != '' && $(imgFinalElement).length) {
-                //    imgFinalElement.attr('src', data.imageLink);
-                //}
-                //showAlert(data.message, data.status);
-                //if (typeof getPersonActivities !== 'undefined' && getPersonActivities != null) {
-                //    getPersonActivities(true);
-                //}
-            },
-            complete: function () {
-                MyRio2cCommon.unblock();
-
-                //if (progressBarElement.length) {
-                //    progressBarElement.addClass('hide');
-                //    var percentVal = '0%';
-                //    bar.width(percentVal);
-                //    percent.html(percentVal);
-                //}
-            }
-        });
-    };
-
     // Enable form validation ---------------------------------------------------------------------
     var enableFormValidation = function () {
         MyRio2cCommon.enableFormValidation({
@@ -86,14 +25,15 @@ var HoldingsCreateModal = function () {
         });
     };
 
-    // Create -------------------------------------------------------------------------------------
-    var enableCreatePlugins = function () {
+    // Enable plugins -----------------------------------------------------------------------------
+    var enablelugins = function () {
         MyRio2cCropper.init({ formIdOrClass: uploadFormId });
         MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c' });
         enableAjaxForm();
         enableFormValidation();
     };
 
+    // Show modal ---------------------------------------------------------------------------------
     var show = function () {
         MyRio2cCommon.block({ isModal: true });
 
@@ -104,7 +44,7 @@ var HoldingsCreateModal = function () {
                 data: data,
                 // Success
                 onSuccess: function () {
-                    enableCreatePlugins();
+                    enablelugins();
                     $(modalId).modal();
                     MyRio2cCommon.unblock();
                 },
@@ -117,6 +57,20 @@ var HoldingsCreateModal = function () {
             MyRio2cCommon.unblock();
             //showAlert();
             //MyRio2cCommon.unblock(widgetElementId);
+        });
+    };
+
+    // Enable ajax form ---------------------------------------------------------------------------
+    var enableAjaxForm = function () {
+        MyRio2cCommon.enableAjaxForm({
+            idOrClass: '#CreateHoldingForm',
+            onSuccess: function () {
+                //enableCreatePlugins();
+                $(modalId).modal('hide');
+            },
+            onError: function () {
+                enablelugins();
+            }
         });
     };
 
