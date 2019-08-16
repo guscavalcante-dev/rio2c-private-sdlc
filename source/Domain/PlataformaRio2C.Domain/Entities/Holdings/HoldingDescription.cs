@@ -11,6 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
+
 namespace PlataformaRio2C.Domain.Entities
 {
     /// <summary>HoldingDescription</summary>
@@ -33,13 +35,12 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="HoldingDescription"/> class.</summary>
-        /// <param name="value">The value.</param>
-        /// <param name="language">The language.</param>
-        public HoldingDescription(string value, Language language)
+        public HoldingDescription(string value, Language language, int userId)
         {
             this.Value = value;
-            this.SetLanguage(language); 
+            this.SetLanguage(language);
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
         }
 
         public HoldingDescription(string value, string languageCode)
@@ -48,19 +49,26 @@ namespace PlataformaRio2C.Domain.Entities
             this.LanguageCode = languageCode;
         }
 
+        /// <summary>Sets the language.</summary>
+        /// <param name="language">The language.</param>
         public void SetLanguage(Language language)
         {
             this.Language = language;
             this.LanguageId = language.Id;
+            this.LanguageCode = language.Code;
         }
 
-
+        /// <summary>Sets the holding.</summary>
+        /// <param name="holding">The holding.</param>
         public void SetHolding(Holding holding)
         {
             this.Holding = holding;
             this.HoldingId = holding.Id;
         }
 
+        /// <summary>Returns true if ... is valid.</summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
         public override bool IsValid()
         {
             return true;

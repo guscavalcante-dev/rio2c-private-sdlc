@@ -80,7 +80,7 @@ namespace PlataformaRio2C.Application.ViewModels
                 foreach (var description in Descriptions)
                 {
                     description.SetLanguage(new LanguageAppViewModel(description.LanguageCode));
-                    holding.AddDescription(description.MapReverse());
+                    holding.CreateDescription(description.MapReverse());
                 }
             }
 

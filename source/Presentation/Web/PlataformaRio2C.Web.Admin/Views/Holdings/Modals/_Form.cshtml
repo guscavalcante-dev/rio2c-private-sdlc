@@ -1,11 +1,11 @@
-﻿@model HoldingViewModel
+﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateHolding
 <div class="form-group row">
     <div class="col-lg-4 text-center">
         @Html.EditorFor(m => m.CropperImage)
     </div>
     <div class="col-lg-8">
-        @Html.LabelFor(m => m.Name, new { @class = "control-label bold" })
-        @Html.TextBoxFor(m => m.Name, new {  @class = "form-control" })
+        @Html.LabelFor(m => m.Name, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
     </div>
 </div>

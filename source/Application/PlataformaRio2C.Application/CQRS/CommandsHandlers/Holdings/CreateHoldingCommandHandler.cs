@@ -4,7 +4,7 @@
 // Created          : 08-15-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-15-2019
+// Last Modified On : 08-16-2019
 // ***********************************************************************
 // <copyright file="CreateHoldingCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,80 +12,101 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
+using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
     /// <summary>CreateHoldingCommandHandler</summary>
-    public class CreateHoldingCommandHandler : IRequestHandler<CreateHolding, Guid?>
+    public class CreateHoldingCommandHandler : BaseCommandHandler, IRequestHandler<CreateHolding, AppValidationResult>
     {
-        private readonly IMediator eventBus;
-        private readonly IUnitOfWork uow;
+        private AppValidationResult appValidationResult = new AppValidationResult();
         private readonly IHoldingRepository holdingRepo;
-        private readonly IFileRepository fileRepo;
+        private readonly ILanguageRepository languageRepo;
 
         public CreateHoldingCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IHoldingRepository holdingRepository,
-            IFileRepository fileRepository)
+            ILanguageRepository languageRepository)
+            : base(eventBus, uow)
         {
-            this.eventBus = eventBus;
-            this.uow = uow;
             this.holdingRepo = holdingRepository;
-            this.fileRepo = fileRepository;
+            this.languageRepo = languageRepository;
         }
 
         /// <summary>Handles the specified create holding.</summary>
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<Guid?> Handle(CreateHolding cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(CreateHolding cmd, CancellationToken cancellationToken)
         {
-            this.uow.BeginTransaction();
+            this.Uow.BeginTransaction();
 
-            ////Validation
-            //AssertionConcern.AssertArgumentNotEmpty(obj.Title, "O Titulo não pode ser vazio");
-            //AssertionConcern.AssertArgumentNotEmpty(obj.Localization, "O Localização não pode ser vazio");
-            //AssertionConcern.AssertArgumentNotEmpty(obj.Description, "O Descrição não pode ser vazio");
-            //AssertionConcern.AssertArgumentNotNull(obj.Active, "O Ativo não pode ser vazio");
-            //AssertionConcern.AssertArgumentNotEmpty(obj.Serial, "O Serial não pode ser vazio");
-            //AssertionConcern.AssertArgumentFalse(_repository.HasExists(obj.Serial), "Ja existe cadastro com esse serial");
+            var holdingUid = Guid.NewGuid();
+
+            #region Other entities validations
+
+            var existHoldingByName = this.holdingRepo.Get(e => e.Name == cmd.Name);
+            if (existHoldingByName != null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format("Já existe um holding com o nome '{0}'.", cmd.Name), new string[] { "Name" })); //TODO: use resources
+            }
+
+            if (!this.ValidationResult.IsValid)
+            {
+                this.appValidationResult.Add(this.ValidationResult);
+                return this.appValidationResult;
+            }
+
+            #endregion
+
+            var languageDtos = await this.languageRepo.FindAllDtosAsync();
 
             var holding = new Holding(
-                cmd.HoldingUid, 
-                cmd.Name, 
-                cmd.UserId, 
-                cmd.ImageFile != null);
-            this.holdingRepo.Create(holding);
+                holdingUid,
+                cmd.Name,
+                cmd.UserId,
+                cmd.CropperImage?.ImageFile != null,
+                cmd.Descriptions?.Where(d => !string.IsNullOrEmpty(d.Value))?.Select(d => new HoldingDescription(
+                    d.Value,
+                    languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language,
+                    cmd.UserId))?.ToList());
 
-            var result = this.uow.SaveChanges();
+            if (!holding.IsValid())
+            {
+                this.appValidationResult.Add(holding.ValidationResult);
+                return this.appValidationResult;
+            }
+
+            this.holdingRepo.Create(holding);
+            this.Uow.SaveChanges();
+            this.appValidationResult.Data = holding;
 
             if (holding.IsImageUploaded)
             {
                 ImageHelper.UploadOriginalAndCroppedImages(
                     holding.Uid,
-                    cmd.ImageFile,
-                    cmd.CropperImageDataX,
-                    cmd.CropperImageDataY,
-                    cmd.CropperImageDataWidth,
-                    cmd.CropperImageDataHeight,
+                    cmd.CropperImage.ImageFile,
+                    cmd.CropperImage.DataX,
+                    cmd.CropperImage.DataY,
+                    cmd.CropperImage.DataWidth,
+                    cmd.CropperImage.DataHeight,
                     FileRepositoryPathType.HoldingImage);
             }
 
+            return this.appValidationResult;
 
             //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);
-
-            return holding.Uid;
 
             //return Task.FromResult(propertyId); // use it when the methed is not async
         }

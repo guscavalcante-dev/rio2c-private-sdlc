@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-14-2019
+// Last Modified On : 08-16-2019
 // ***********************************************************************
 // <copyright file="HoldingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,10 +22,8 @@ using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
 using PlataformaRio2c.Infra.Data.FileRepository;
-using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
-using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -167,7 +165,14 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         {
             //var viewModel = _appService.GetEditViewModel();
 
-            var viewModel = new HoldingViewModel(await this.CommandBus.Send(new FindAllLanguagesAsync(
+            //var viewModel = new HoldingViewModel(await this.CommandBus.Send(new FindAllLanguagesAsync(
+            //    this.UserId,
+            //    this.UserUid,
+            //    this.EditionId,
+            //    this.EditionUid,
+            //    this.UserInterfaceLanguage)));
+
+            var cmd = new CreateHolding(await this.CommandBus.Send(new FindAllLanguagesDtosAsync(
                 this.UserId,
                 this.UserUid,
                 this.EditionId,
@@ -179,15 +184,19 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Modals/CreateModal", viewModel), divIdOrClass = "#GlobalModalContainer" },
+                    new { page = this.RenderRazorViewToString("Modals/CreateModal", cmd), divIdOrClass = "#GlobalModalContainer" },
                 }
             }, JsonRequestBehavior.AllowGet);
 
             //return View(viewModel);
         }
 
+        /// <summary>Creates the specified command.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        /// <exception cref="DomainException">Please, correct the form errors.</exception>
         [HttpPost]
-        public async Task<ActionResult> Create(HoldingViewModel viewModel)
+        public async Task<ActionResult> Create(CreateHolding cmd)
         {
             var holdingUid = Guid.NewGuid();
 
@@ -200,34 +209,16 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 try
                 {
-                    await this.CommandBus.Send(new CreateHolding(
-                        holdingUid,
-                        viewModel.Name,
-                        viewModel.Descriptions,
-                        viewModel.CropperImage.ImageFile,
-                        viewModel.CropperImage.DataX,
-                        viewModel.CropperImage.DataY,
-                        viewModel.CropperImage.DataWidth,
-                        viewModel.CropperImage.DataHeight,
-                        this.UserId,
+                    cmd.UpdateBaseProperties(this.UserId,
                         this.UserUid,
                         this.EditionId,
                         this.EditionUid,
-                        this.UserInterfaceLanguage));
+                        this.UserInterfaceLanguage);
 
-                    //ImageHelper.UploadOriginalAndCroppedImages(
-                    //    holdingUid, 
-                    //    viewModel.CropperImage.ImageFile, 
-                    //    viewModel.CropperImage.DataX, 
-                    //    viewModel.CropperImage.DataY, 
-                    //    viewModel.CropperImage.DataWidth, 
-                    //    viewModel.CropperImage.DataHeight, 
-                    //    FileRepositoryPathType.HoldingImage);
-                    //var result = this.commandBus.Send(new EditSiteLogo(this.site.Id, Session.GetUserId(), Session.GetUserEmail()));
-                    //if (!result.IsExecuted)
-                    //{
-                    //    throw result.Exception;
-                    //}
+                    var result = await this.CommandBus.Send(cmd);
+                    if (!result.IsValid)
+                    {
+                    }
                 }
                 catch (DomainException dex)
                 {

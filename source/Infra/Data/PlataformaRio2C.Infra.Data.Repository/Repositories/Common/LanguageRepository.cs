@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-14-2019
+// Last Modified On : 08-16-2019
 // ***********************************************************************
 // <copyright file="LanguageRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -87,7 +87,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         /// <summary>Finds all asynchronous.</summary>
         /// <returns></returns>
-        public async Task<List<LanguageDto>> FindAllAsync()
+        public async Task<List<LanguageDto>> FindAllDtosAsync()
         {
             var query = this.GetBaseQuery();
 
@@ -100,7 +100,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 CreateDate = l.CreateDate,
                 CreateUserId = l.CreateUserId,
                 UpdateDate = l.UpdateDate,
-                UpdateUserId = l.UpdateUserId
+                UpdateUserId = l.UpdateUserId,
+                Language = l
             }).ToListAsync();
         }
     }

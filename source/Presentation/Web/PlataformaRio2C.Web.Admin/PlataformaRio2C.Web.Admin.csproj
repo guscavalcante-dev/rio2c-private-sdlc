@@ -8877,7 +8877,7 @@
     <Content Include="Views\Holdings\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Views\Holdings\Modals\CreateModal.cshtml" />
     <Content Include="Views\Holdings\Modals\_Form.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\CropperImageFileViewModel.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\CropperImageBaseCommand.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>
