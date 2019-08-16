@@ -1104,4 +1104,16 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Menos Zoom</value>
     <comment>Menos Zoom</comment>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>Erro</value>
+    <comment>Erro</comment>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Info</value>
+    <comment>Info</comment>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Sucesso</value>
+    <comment>Sucesso</comment>
+  </data>
 </root>

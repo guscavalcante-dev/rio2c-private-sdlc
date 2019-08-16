@@ -27,12 +27,12 @@ namespace PlataformaRio2C.Application.Services
             return viewModel;
         }
 
-        public override AppValidationResult Create(HoldingAppViewModel viewModel)
-        {
-            LoadViewModelOptions(viewModel);
+        //public override AppValidationResult Create(HoldingAppViewModel viewModel)
+        //{
+        //    LoadViewModelOptions(viewModel);
 
-            return base.Create(viewModel);
-        }
+        //    return base.Create(viewModel);
+        //}
 
 
         public override AppValidationResult Update(HoldingAppViewModel viewModel)

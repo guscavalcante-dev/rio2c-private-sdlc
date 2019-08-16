@@ -1096,4 +1096,16 @@
     <value>Zoom Out</value>
     <comment>Menos Zoom</comment>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+    <comment>Erro</comment>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Info</value>
+    <comment>Info</comment>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Success</value>
+    <comment>Sucesso</comment>
+  </data>
 </root>

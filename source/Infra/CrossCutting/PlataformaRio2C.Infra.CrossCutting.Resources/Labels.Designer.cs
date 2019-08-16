@@ -835,6 +835,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Erro.
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Código de Ética.
         /// </summary>
         public static string Ethics {
@@ -1074,6 +1083,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string InEditionYear {
             get {
                 return ResourceManager.GetString("InEditionYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Info.
+        /// </summary>
+        public static string Info {
+            get {
+                return ResourceManager.GetString("Info", resourceCulture);
             }
         }
         
@@ -2289,6 +2307,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string SubGenre {
             get {
                 return ResourceManager.GetString("SubGenre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sucesso.
+        /// </summary>
+        public static string Success {
+            get {
+                return ResourceManager.GetString("Success", resourceCulture);
             }
         }
         

@@ -470,6 +470,10 @@
   <data name="TradeNameIsRequired" xml:space="preserve">
     <value>Trade name required.</value>
   </data>
+  <data name="UndefinedMessage" xml:space="preserve">
+    <value>Undefined message.</value>
+    <comment>Mensagem indefinida.</comment>
+  </data>
   <data name="UserNotFound" xml:space="preserve">
     <value>User not found</value>
   </data>
@@ -487,6 +491,10 @@
   </data>
   <data name="YourPasswordHasBeenChangedSuccessfully" xml:space="preserve">
     <value>Your password has been changed successfully.</value>
+  </data>
+  <data name="YouWillBeRedirected" xml:space="preserve">
+    <value>You will be redirected...</value>
+    <comment>Você será redirecionado...</comment>
   </data>
   <data name="ZipCodeIsRequired" xml:space="preserve">
     <value>Zip code required.</value>

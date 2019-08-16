@@ -1089,6 +1089,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mensagem indefinida..
+        /// </summary>
+        public static string UndefinedMessage {
+            get {
+                return ResourceManager.GetString("UndefinedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Usuário não encontrado.
         /// </summary>
         public static string UserNotFound {
@@ -1148,6 +1157,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string YourPasswordHasBeenChangedSuccessfully {
             get {
                 return ResourceManager.GetString("YourPasswordHasBeenChangedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Você será redirecionado....
+        /// </summary>
+        public static string YouWillBeRedirected {
+            get {
+                return ResourceManager.GetString("YouWillBeRedirected", resourceCulture);
             }
         }
         

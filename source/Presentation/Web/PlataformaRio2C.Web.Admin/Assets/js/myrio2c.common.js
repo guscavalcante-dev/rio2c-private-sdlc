@@ -402,6 +402,53 @@ var MyRio2cCommon = function () {
         });
     };
 
+    // Toastr -------------------------------------------------------------------------------------
+    var showAlert = function (options) {
+
+        if (isNullOrEmpty(options)) {
+            options = new Object();
+        }
+
+        if (!hasProperty(options, 'messageType')
+            || (options.messageType.toLowerCase() !== 'error'
+                && options.messageType.toLowerCase() !== 'success'
+                && options.messageType.toLowerCase() !== 'info'
+                && options.messageType.toLowerCase() !== 'warning')) {
+            options.messageType = "error";
+        }
+
+        if (!hasProperty(options, 'message') || isNullOrEmpty(options.message)) {
+            options.message = alertUndefinedMessage;
+        }
+
+        if (hasProperty(options, 'message')) {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "positionClass": "toast-top-right",
+                "onclick": null,
+                "showDuration": "1000",
+                "hideDuration": "1000",
+                "timeOut": "10000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+
+            if (hasProperty(options, 'callbackOnHidden') && !isNullOrEmpty(options.callbackOnHidden)) {
+                toastr.options.onHidden = options.callbackOnHidden;
+            }
+
+            if (hasProperty(options, 'isFixed') && options.isFixed === true) {
+                toastr.options.timeOut = 'none';
+            }
+
+            toastr[options.messageType.toLowerCase()](options.message, alertMessageTypeTranslated[options.messageType.toLowerCase()]);
+        }
+    };
+
     return {
         init: function (userInterfaceLanguage, editionUrlCode) {
             setGlobalVariables(userInterfaceLanguage, editionUrlCode);
@@ -449,6 +496,9 @@ var MyRio2cCommon = function () {
         },
         enableAjaxForm: function (options) {
             enableAjaxForm(options);
+        },
+        showAlert: function (options) {
+            showAlert(options);
         }
     };
 }();

@@ -106,6 +106,16 @@
     <!--end::Page Scripts -->
     <!--begin: MyRio2C Scripts-->
     <script>
+        // Show alert translations --------------------------------------------
+        var alertMessageTypeTranslated = {};
+        alertMessageTypeTranslated['success'] = '@Labels.Success';
+        alertMessageTypeTranslated['info'] = '@Labels.Info';
+        alertMessageTypeTranslated['error'] = '@Labels.Error';
+        alertMessageTypeTranslated['warning'] = '@Labels.Warning';
+        var alertUndefinedMessage = '@Messages.UndefinedMessage';
+        var redirectMessage = '@Messages.YouWillBeRedirected';
+
+        // MyRio2CCommon Script -----------------------------------------------
         MyRio2cCommon.init('@ViewBag.UserInterfaceLanguage', '@ViewBag.EditionUrlCode');
     </script>
     <!--end: MyRio2C Scripts-->

@@ -23,31 +23,31 @@ namespace PlataformaRio2C.Domain.Services
             _playerRepository = _repositoryFactory.PlayerRepository;
         }
 
-        public override ValidationResult Create(Holding holding)
-        {
-            if (!string.IsNullOrWhiteSpace(holding.Name))
-            {
-                var existHoldingByName = _repository.Get(e => e.Name == holding.Name);
-                if (existHoldingByName != null)
-                {
-                    var error = new ValidationError(string.Format("Já existe um holding com o nome '{0}'.", holding.Name), new string[] { "Name" });
-                    _validationResult.Add(error);
-                }
-            }
+        //public override ValidationResult Create(Holding holding)
+        //{
+        //    if (!string.IsNullOrWhiteSpace(holding.Name))
+        //    {
+        //        var existHoldingByName = _repository.Get(e => e.Name == holding.Name);
+        //        if (existHoldingByName != null)
+        //        {
+        //            var error = new ValidationError(string.Format("Já existe um holding com o nome '{0}'.", holding.Name), new string[] { "Name" });
+        //            _validationResult.Add(error);
+        //        }
+        //    }
 
-            if (holding.Descriptions != null && holding.Descriptions.Any())
-            {
-                foreach (var description in holding.Descriptions)
-                {
-                    var language = _languageRepository.Get(e => e.Code == description.LanguageCode);
-                    description.SetLanguage(language);
-                    description.SetHolding(holding);
-                    _holdingDescriptionRepository.Create(description);
-                }
-            }
+        //    if (holding.Descriptions != null && holding.Descriptions.Any())
+        //    {
+        //        foreach (var description in holding.Descriptions)
+        //        {
+        //            var language = _languageRepository.Get(e => e.Code == description.LanguageCode);
+        //            description.SetLanguage(language);
+        //            description.SetHolding(holding);
+        //            _holdingDescriptionRepository.Create(description);
+        //        }
+        //    }
 
-            return base.Create(holding);
-        }
+        //    return base.Create(holding);
+        //}
 
         public override ValidationResult Update(Holding holding)
         {

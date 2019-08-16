@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-14-2019
+// Last Modified On : 08-16-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,6 +35,7 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/themes/metronic/vendors/general/moment/min/moment-with-locales.min.js",
                 "~/Assets/themes/metronic/vendors/general/tooltip.js/dist/umd/tooltip.min.js",
                 "~/Assets/themes/metronic/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js",
+                "~/Assets/themes/metronic/vendors/general/toastr/build/toastr.min.js",
                 "~/Assets/themes/metronic/vendors/general/sticky-js/dist/sticky.min.js",
                 "~/Assets/themes/metronic/vendors/general/wnumb/wNumb.js"));
 
@@ -122,7 +123,8 @@ namespace PlataformaRio2C.Web.Admin
             #region Global Mandatory Vendors
 
             bundles.Add(new StyleBundle("~/bundles/css/layoutGlobalMandatoryVendors.css").Include(
-                "~/Assets/themes/metronic/vendors/general/perfect-scrollbar/css/perfect-scrollbar.css"));
+                "~/Assets/themes/metronic/vendors/general/perfect-scrollbar/css/perfect-scrollbar.css",
+                "~/Assets/themes/metronic/vendors/general/toastr/build/toastr.css"));
 
             #endregion
 
