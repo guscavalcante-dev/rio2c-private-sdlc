@@ -31,7 +31,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
             this.Uid = entity.Uid;
             this.Name = entity.Name;
-            this.Descriptions = entity.Descriptions?.Select(d => new HoldingDescriptionBaseCommand(d));
+            this.Descriptions = entity.Descriptions?.Select(d => new HoldingDescriptionBaseCommand(d))?.ToList();
             this.CropperImage = new CropperImageBaseCommand(entity.IsImageUploaded, entity.Uid);
         }
 

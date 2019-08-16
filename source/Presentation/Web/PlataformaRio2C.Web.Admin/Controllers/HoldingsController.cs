@@ -210,8 +210,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             }
             catch (DomainException)
             {
-                cmd.UpdateProperties(await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserId, this.UserUid, this.EditionId, this.EditionUid, this.UserInterfaceLanguage)));
-
                 foreach (var error in result.Errors)
                 {
                     var target = error.Target ?? "";

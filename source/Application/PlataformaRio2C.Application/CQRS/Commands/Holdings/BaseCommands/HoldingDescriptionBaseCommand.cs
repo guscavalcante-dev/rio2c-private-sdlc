@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System.Web.Mvc;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
@@ -22,6 +23,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [AllowHtml]
         public string Value { get; set; }
         public string LanguageCode { get; set; }
+        public string LanguageName { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="HoldingDescriptionBaseCommand"/> class.</summary>
         /// <param name="entity">The entity.</param>
@@ -29,8 +31,17 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
             this.Value = entity.Value;
             this.LanguageCode = entity.LanguageCode;
+            this.LanguageName = entity.Language.Name;
         }
-        
+
+        /// <summary>Initializes a new instance of the <see cref="HoldingDescriptionBaseCommand"/> class.</summary>
+        /// <param name="languageDto">The language dto.</param>
+        public HoldingDescriptionBaseCommand(LanguageDto languageDto)
+        {
+            this.LanguageCode = languageDto.Code;
+            this.LanguageName = languageDto.Name;
+        }
+
         /// <summary>Initializes a new instance of the <see cref="HoldingDescriptionBaseCommand"/> class.</summary>
         public HoldingDescriptionBaseCommand()
         {

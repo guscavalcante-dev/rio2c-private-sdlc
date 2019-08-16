@@ -9,31 +9,12 @@
         @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
     </div>
 </div>
-@if (Model.LanguagesDtos?.Any() == true)
-{
-    <div class="kt-separator kt-separator--border-dashed kt-separator--space-xl"></div>
-    <div class="kt-section">
-        <h3 class="kt-section__title">
-            @Labels.Descriptions
-            @*<i data-toggle="kt-tooltip" data-width="auto" class="kt-section__help" title="" data-original-title="If different than the corresponding address"></i>*@
-        </h3>
-        <div class="kt-section__content">
-            <div class="form-group row">
-                <div class="col-lg-12">
-                    @Html.ValidationMessage("Descriptions", new { @class = "text-danger" })
-                    @for (var i = 0; i < Model.LanguagesDtos.Count(); i++)
-                    {
-                        var code = Model.Descriptions?.FirstOrDefault(e => e.LanguageCode == Model.LanguagesDtos.ElementAt(i).Code);
-                        var codeValue = code?.Value;
-                        var languageCodeValue = Model.LanguagesDtos.ElementAt(i).Code;
-                        <div class="form-group">
-                            <label class="control-label">@Model.LanguagesDtos.ElementAt(i).Name</label> <span class="form-optional-input text-muted">@Labels.Optional</span>
-                            <textarea name="Descriptions[@i].Value" class="form-control ckeditor-rio2c">@codeValue</textarea>
-                            <input type="hidden" value="@languageCodeValue" name="Descriptions[@i].LanguageCode" class="form-control" />
-                        </div>
-                    }
-                </div>
-            </div>
-        </div>
+<div class="kt-separator kt-separator--border-dashed kt-separator--space-xl"></div>
+<div class="kt-section">
+    <h3 class="kt-section__title">
+        @Labels.Descriptions
+    </h3>
+    <div class="kt-section__content">
+        @Html.EditorFor(m => m.Descriptions)
     </div>
-}
+</div>

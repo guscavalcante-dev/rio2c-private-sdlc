@@ -11,7 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using PlataformaRio2C.Domain.Dtos;
@@ -28,26 +27,22 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public string Name { get; set; }
 
-        public IEnumerable<HoldingDescriptionBaseCommand> Descriptions { get; set; }
-        public List<LanguageDto> LanguagesDtos { get; set; }
+        public List<HoldingDescriptionBaseCommand> Descriptions { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="HoldingBaseCommand"/> class.</summary>
         /// <param name="languagesDtos">The languages dtos.</param>
         public HoldingBaseCommand(List<LanguageDto> languagesDtos)
         {
-            this.LanguagesDtos = languagesDtos;
+            this.Descriptions = new List<HoldingDescriptionBaseCommand>();
+            foreach (var languageDto in languagesDtos)
+            {
+                this.Descriptions.Add(new HoldingDescriptionBaseCommand(languageDto));
+            }
         }
 
         /// <summary>Initializes a new instance of the <see cref="HoldingBaseCommand"/> class.</summary>
         public HoldingBaseCommand()
         {
-        }
-
-        /// <summary>Updates the base properties.</summary>
-        /// <param name="languagesDtos">The languages dtos.</param>
-        public void UpdateBaseProperties(List<LanguageDto> languagesDtos)
-        {
-            this.LanguagesDtos = languagesDtos;
         }
     }
 }

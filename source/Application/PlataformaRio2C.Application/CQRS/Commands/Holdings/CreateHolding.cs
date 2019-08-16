@@ -31,12 +31,5 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public CreateHolding()
         {
         }
-
-        /// <summary>Updates the properties.</summary>
-        /// <param name="languagesDtos">The languages dtos.</param>
-        public void UpdateProperties(List<LanguageDto> languagesDtos)
-        {
-            this.UpdateBaseProperties(languagesDtos);
-        }
     }
 }
