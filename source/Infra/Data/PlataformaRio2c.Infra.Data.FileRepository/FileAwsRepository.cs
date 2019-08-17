@@ -134,7 +134,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
         /// <returns></returns>
         private string GetDirectoryUrl(FileRepositoryPathType fileRepositoryPathType, params object[] args)
         {
-            return this.GetBaseUrl() + this.GetBaseDirectory(fileRepositoryPathType, args);
+            return this.GetBaseUrl() + "/" + this.GetBaseDirectory(fileRepositoryPathType, args);
         }
 
         /// <summary>Gets the base directory.</summary>
