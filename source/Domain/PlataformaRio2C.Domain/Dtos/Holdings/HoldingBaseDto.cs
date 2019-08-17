@@ -1,31 +1,33 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Rafael Dantas Ruiz
-// Created          : 08-08-2019
+// Created          : 08-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 08-16-2019
 // ***********************************************************************
-// <copyright file="HoldingDescriptionBaseDto.cs" company="Softo">
+// <copyright file="HoldingBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
-    /// <summary>HoldingDescriptionBaseDto</summary>
-    public class HoldingDescriptionBaseDto
+    /// <summary>HoldingBaseDto</summary>
+    public class HoldingBaseDto
     {
         public int Id { get; set; }
         public Guid Uid { get; set; }
-        public string Value { get; set; }
+        public string Name { get; set; }
+        public bool IsImageUploaded { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime UpdateDate { get; set; }
 
-        public LanguageBaseDto LanguageDto { get; set; }
-
-        /// <summary>Initializes a new instance of the <see cref="HoldingDescriptionBaseDto"/> class.</summary>
-        public HoldingDescriptionBaseDto()
+        /// <summary>Initializes a new instance of the <see cref="HoldingDto"/> class.</summary>
+        public HoldingBaseDto()
         {
         }
     }

@@ -72,8 +72,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dtos\HoldingDescriptions\HoldingDescriptionDto.cs" />
     <Compile Include="Dtos\HoldingDescriptions\HoldingDescriptionBaseDto.cs" />
-    <Compile Include="Dtos\Holdings\HoldingListDto.cs" />
+    <Compile Include="Dtos\Holdings\HoldingDto.cs" />
+    <Compile Include="Dtos\Holdings\HoldingBaseDto.cs" />
     <Compile Include="Dtos\BaseDto.cs" />
     <Compile Include="Dtos\Languages\LanguageDto.cs" />
     <Compile Include="Dtos\Languages\LanguageBaseDto.cs" />

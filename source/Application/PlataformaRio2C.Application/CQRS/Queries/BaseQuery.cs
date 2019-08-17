@@ -1,29 +1,30 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Rafael Dantas Ruiz
-// Created          : 08-14-2019
+// Created          : 08-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 08-16-2019
 // ***********************************************************************
-// <copyright file="FindAllLanguagesDtosAsync.cs" company="Softo">
+// <copyright file="BaseQuery.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Collections.Generic;
-using PlataformaRio2C.Domain.Dtos;
+using MediatR;
 
 namespace PlataformaRio2C.Application.CQRS.Queries
 {
-    /// <summary>FindAllLanguagesDtosAsync</summary>
-    public class FindAllLanguagesDtosAsync : BaseQuery<List<LanguageDto>>
+    /// <summary>BaseQuery</summary>
+    public class BaseQuery<T> : IRequest<T>
     {
-        /// <summary>Initializes a new instance of the <see cref="FindAllLanguagesDtosAsync"/> class.</summary>
+        public string UserInterfaceLanguage { get; private set; }
+
+        /// <summary>Updates the base properties.</summary>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
-        public FindAllLanguagesDtosAsync(string userInterfaceLanguage)
+        public void UpdateBaseProperties(string userInterfaceLanguage)
         {
-            this.UpdateBaseProperties(userInterfaceLanguage);
+            this.UserInterfaceLanguage = userInterfaceLanguage;
         }
     }
 }

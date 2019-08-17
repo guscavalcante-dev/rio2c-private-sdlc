@@ -30,17 +30,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<HoldingDescriptionBaseCommand> Descriptions { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="HoldingBaseCommand"/> class.</summary>
-        /// <param name="languagesDtos">The languages dtos.</param>
-        public HoldingBaseCommand(List<LanguageDto> languagesDtos)
-        {
-            this.Descriptions = new List<HoldingDescriptionBaseCommand>();
-            foreach (var languageDto in languagesDtos)
-            {
-                this.Descriptions.Add(new HoldingDescriptionBaseCommand(languageDto));
-            }
-        }
-
-        /// <summary>Initializes a new instance of the <see cref="HoldingBaseCommand"/> class.</summary>
         public HoldingBaseCommand()
         {
         }

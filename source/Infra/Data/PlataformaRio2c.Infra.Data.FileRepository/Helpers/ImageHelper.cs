@@ -4,7 +4,7 @@
 // Created          : 08-15-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-15-2019
+// Last Modified On : 08-16-2019
 // ***********************************************************************
 // <copyright file="ImageHelper.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,8 +18,6 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
@@ -72,35 +70,21 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
             UploadLogo(fileUid, croppedImage.GetBytes(), fileRepositoryPathType, false);
         }
 
-        ///// <summary>Uploads the original and basic crop logo.</summary>
-        ///// <param name="siteId">The site identifier.</param>
-        ///// <param name="imageBytes">The image bytes.</param>
-        ///// <param name="fileRepositoryPathType">Type of the file repository path.</param>
-        //public static void UploadOriginalAndBasicCropLogo(Guid siteId, byte[] imageBytes, FileRepositoryPathType fileRepositoryPathType)
-        //{
-        //    try
-        //    {
-        //        // Resize to maximum width and height
-        //        var basicCroppedImage = BasicCrop(imageBytes, true, true);
+        /// <summary>Gets the image URL.</summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="html">The HTML.</param>
+        /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
+        /// <param name="imageUid">The image uid.</param>
+        /// <param name="hasImage">if set to <c>true</c> [has image].</param>
+        /// <param name="isThumbnail">if set to <c>true</c> [is thumbnail].</param>
+        /// <returns></returns>
+        public static string GetImageUrl<T>(this HtmlHelper<T> html, FileRepositoryPathType fileRepositoryPathType, Guid imageUid, bool hasImage, bool isThumbnail)
+        {
+            var fileRepo = new FileRepositoryFactory().Get();
+            return fileRepo.GetImageUrl(fileRepositoryPathType, imageUid, hasImage, isThumbnail);
+        }
 
-        //        // Centralize the image horizontaly and verticaly
-        //        var centralizedCroppedImage = CropImage(
-        //            basicCroppedImage.GetBytes(),
-        //            (decimal)(basicCroppedImage.Width - logoWidgth) / 2,
-        //            (decimal)(basicCroppedImage.Height - logoHeight) / 2,
-        //            (decimal)logoWidgth,
-        //            (decimal)logoHeight,
-        //            false);
-
-        //        UploadLogo(siteId, imageBytes, fileRepositoryPathType, true);
-        //        UploadLogo(siteId, centralizedCroppedImage.GetBytes(), fileRepositoryPathType, false);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-        //        throw new DomainException("The image could not be saved.");
-        //    }
-        //}
+        #region Private Methods
 
         /// <summary>Uploads the logo.</summary>
         /// <param name="siteId">The site identifier.</param>
@@ -116,70 +100,6 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
                 fileRepo.Upload(originalImageStream, "image/png", siteId + (isOriginalLogo ? "_original.png" : "_thumbnail.png"), fileRepositoryPathType);
             }
         }
-
-        ///// <summary>
-        ///// Gets the site logo.
-        ///// </summary>
-        ///// <typeparam name="T"></typeparam>
-        ///// <param name="html">The HTML.</param>
-        ///// <param name="siteId">The site identifier.</param>
-        ///// <param name="logoUploadDate">The logo upload date.</param>
-        ///// <returns></returns>
-        //public static string GetSiteLogo<T>(this HtmlHelper<T> html, Guid siteId, DateTime? logoUploadDate)
-        //{
-        //    IFileRepository fileRepo = new FileAwsRepository();
-        //    return fileRepo.GetSiteLogo(siteId, logoUploadDate);
-        //}
-
-        ///// <summary>
-        ///// Gets the image stream from URL.
-        ///// </summary>
-        ///// <param name="siteId">The site identifier.</param>
-        ///// <param name="url">The URL.</param>
-        ///// <returns></returns>
-        //public static byte[] GetImageBytesFromUrl(Guid siteId, string url)
-        //{
-        //    try
-        //    {
-        //        if (string.IsNullOrEmpty(url))
-        //        {
-        //            //Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception("ImageHelper.GetImageBytesFromUrl::(1) The image url is required."));
-        //            throw new DomainException("The image url is required.");
-        //        }
-
-        //        using (var webClient = new WebClient())
-        //        {
-        //            var imageBytes = webClient.DownloadData(url);
-
-        //            // Check if the file is a image
-        //            try
-        //            {
-        //                var image = new WebImage(imageBytes);
-        //                if (AllowedImageFormats.All(aif => aif != image.ImageFormat))
-        //                {
-        //                    throw new DomainException("The image format from url " + url + " must be jpeg, jpg, gif or png.");
-        //                }
-        //            }
-        //            catch (Exception)
-        //            {
-        //                throw new DomainException("The file from url " + url + " is not an image.");
-        //            }
-
-        //            return webClient.DownloadData(url);
-        //        }
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        throw ex;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-        //        throw new DomainException("The image could not be opened from url " + url + ".");
-        //    }
-        //}
-
-        #region Private Methods
 
         /// <summary>Basics the crop.</summary>
         /// <param name="imageBytes">The image bytes.</param>

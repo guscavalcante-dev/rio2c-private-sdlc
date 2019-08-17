@@ -4,7 +4,7 @@
 // Created          : 08-07-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-14-2019
+// Last Modified On : 08-16-2019
 // ***********************************************************************
 // <copyright file="holdings.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -129,9 +129,9 @@ var HoldingsDataTableWidget = function () {
                                   <i class="la la-ellipsis-h"></i>\
                                 </a>\
                                 <div class="dropdown-menu dropdown-menu-right">\
-                                    <a class="dropdown-item" href="#"><i class="la la-edit"></i> Edit Details</a>\
-                                    <a class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</a>\
-                                    <a class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</a>\
+                                    <button class="dropdown-item" onclick="HoldingsUpdateModal.show(\'' + full.Uid +'\')"><i class="la la-edit"></i> Edit Details</button>\
+                                    <button class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</button>\
+                                    <button class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</button>\
                                 </div>\
                             </span>';
                     }

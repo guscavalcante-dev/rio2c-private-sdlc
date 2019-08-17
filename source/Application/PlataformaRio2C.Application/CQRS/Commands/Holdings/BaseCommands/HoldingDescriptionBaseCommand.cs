@@ -27,11 +27,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Initializes a new instance of the <see cref="HoldingDescriptionBaseCommand"/> class.</summary>
         /// <param name="entity">The entity.</param>
-        public HoldingDescriptionBaseCommand(HoldingDescription entity)
+        public HoldingDescriptionBaseCommand(HoldingDescriptionBaseDto entity)
         {
             this.Value = entity.Value;
-            this.LanguageCode = entity.LanguageCode;
-            this.LanguageName = entity.Language.Name;
+            this.LanguageCode = entity.LanguageDto.Code;
+            this.LanguageName = entity.LanguageDto.Name;
         }
 
         /// <summary>Initializes a new instance of the <see cref="HoldingDescriptionBaseCommand"/> class.</summary>

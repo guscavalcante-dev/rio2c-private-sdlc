@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-09-2019
+// Last Modified On : 08-16-2019
 // ***********************************************************************
 // <copyright file="HoldingRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,6 +34,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     /// </summary>
     internal static class HoldingIQueryableExtensions
     {
+        /// <summary>Finds the by uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="holdingUid">The holding uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<Holding> FindByUid(this IQueryable<Holding> query, Guid holdingUid)
+        {
+            query = query.Where(h => h.Uid == holdingUid);
+
+            return query;
+        }
+
         /// <summary>Finds the by edition identifier.</summary>
         /// <param name="query">The query.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
@@ -76,10 +87,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
     #endregion
 
-    #region HoldingListDto IQueryable Extensions
+    #region HoldingBaseDto IQueryable Extensions
 
     /// <summary>
-    /// HoldingListDtoIQueryableExtensions
+    /// HoldingBaseDtoIQueryableExtensions
     /// </summary>
     internal static class HoldingListDtoIQueryableExtensions
     {
@@ -90,7 +101,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        internal static async Task<IPagedList<HoldingListDto>> ToListPagedAsync(this IQueryable<HoldingListDto> query, int page, int pageSize)
+        internal static async Task<IPagedList<HoldingBaseDto>> ToListPagedAsync(this IQueryable<HoldingBaseDto> query, int page, int pageSize)
         {
             page++;
 
@@ -139,23 +150,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return await query.ToListAsync();
         }
 
-        /// <summary>Finds all by data table.</summary>
-        /// <param name="page">The page.</param>
-        /// <param name="pageSize">Size of the page.</param>
-        /// <param name="keywords">The keywords.</param>
-        /// <param name="sortColumns">The sort columns.</param>
-        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
-        /// <param name="editionId">The edition identifier.</param>
+        /// <summary>Finds the dto by uid asynchronous.</summary>
+        /// <param name="holdingUid">The holding uid.</param>
         /// <returns></returns>
-        public async Task<IPagedList<HoldingListDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllEditions, int? editionId)
+        public async Task<HoldingDto> FindDtoByUidAsync(Guid holdingUid)
         {
             var query = this.GetAll()
-                                .FindByKeywords(keywords)
-                                .FindByEditionId(showAllEditions, editionId);
+                                .FindByUid(holdingUid);
 
             return await query
-                            .Select(h => new HoldingListDto
+                            .Select(h => new HoldingDto
                             {
+                                Id = h.Id,
                                 Uid = h.Uid,
                                 Name = h.Name,
                                 IsImageUploaded = h.IsImageUploaded,
@@ -165,19 +171,47 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 UpdateUserId = h.UpdateUserId,
                                 //Creator = h.Creator,
                                 //Updated = h.Updater,
-                                //DescriptionsDtos = h.Descriptions.Select(d => new HoldingDescriptionBaseDto
-                                //{
-                                //    Uid = d.Uid,
-                                //    Value = d.Value,
-                                //    LanguageDto = new LanguageBaseDto
-                                //    {
-                                //        Uid = d.Language.Uid,
-                                //        Name = d.Language.Name,
-                                //        Code = d.Language.Code
-                                //    }
-                                //})
+                                DescriptionsDtos = h.Descriptions.Select(d => new HoldingDescriptionDto
+                                {
+                                    Id = d.Id,
+                                    Uid = d.Uid,
+                                    Value = d.Value,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = d.Language.Id,
+                                        Uid = d.Language.Uid,
+                                        Name = d.Language.Name,
+                                        Code = d.Language.Code
+                                    }
+                                })
+                            }).FirstOrDefaultAsync();
+        }
+
+        /// <summary>Finds all by data table.</summary>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="sortColumns">The sort columns.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<HoldingBaseDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllEditions, int? editionId)
+        {
+            var query = this.GetAll()
+                                .FindByKeywords(keywords)
+                                .FindByEditionId(showAllEditions, editionId);
+
+            return await query
+                            .Select(h => new HoldingBaseDto
+                            {
+                                Id = h.Id,
+                                Uid = h.Uid,
+                                Name = h.Name,
+                                IsImageUploaded = h.IsImageUploaded,
+                                CreateDate = h.CreateDate,
+                                UpdateDate = h.UpdateDate,
                             })
-                            .DynamicOrder<HoldingListDto>(sortColumns, new List<string> { "name", "createDate" }, "name")
+                            .DynamicOrder<HoldingBaseDto>(sortColumns, new List<string> { "name", "createDate" }, "name")
                             .ToListPagedAsync(page, pageSize);
         }
 

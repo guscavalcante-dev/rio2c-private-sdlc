@@ -1,11 +1,19 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.CropperImageBaseCommand
+﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Statics
+@model PlataformaRio2C.Application.CQRS.Commands.CropperImageBaseCommand
 <!-- EXISTENT IMAGE CONTAINER - BEGIN -->
 <div class="row existent-image-container">
     <div class="col-md-12">
         <div class="kt-avatar kt-avatar--outline" id="kt_apps_user_add_avatar">
-            @*<div class="kt-avatar__holder" style="background-image: url(https://keenthemes.com/metronic/preview/demo4/custom/apps/user/assets/media/users/300_10.jpg)"></div>*@
-            <div class="kt-avatar__holder" style="background-color: rgba(255, 255, 255, 0.1)"></div>
-            @Html.TextBoxFor(m => m.ImageFile, new { id = "ImageFile", @class = "sr-only", type = "file", @accept = "image/*" })
+            @if (Model.IsImageUploaded && Model.ImageUid.HasValue)
+            {
+                <div class="kt-avatar__holder wh-200" style="background-color: rgba(255, 255, 255, 0.1); background-image: url(@Html.GetImageUrl(FileRepositoryPathType.HoldingImage, Model.ImageUid.Value, Model.IsImageUploaded, true))"></div>
+            }
+            else
+            {
+                <div class="kt-avatar__holder wh-200" style="background-color: rgba(255, 255, 255, 0.1);"></div>
+            }
+            @Html.TextBoxFor(m => m.ImageFile, new {id = "ImageFile", @class = "sr-only", type = "file", @accept = "image/*"})
         </div>
         @*@if (Model.IsImageUploaded)
             {

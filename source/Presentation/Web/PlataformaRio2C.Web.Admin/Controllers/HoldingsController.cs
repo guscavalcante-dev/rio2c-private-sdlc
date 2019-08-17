@@ -164,12 +164,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowCreateModal()
         {
-            var cmd = new CreateHolding(await this.CommandBus.Send(new FindAllLanguagesDtosAsync(
-                this.UserId,
-                this.UserUid,
-                this.EditionId,
-                this.EditionUid,
-                this.UserInterfaceLanguage)));
+            var cmd = new CreateHolding(await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)));
 
             return Json(new
             {
@@ -181,9 +176,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        /// <summary>Creates the specified create holding.</summary>
+        /// <summary>Creates the specified command.</summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
+        /// <exception cref="DomainException"></exception>
         [HttpPost]
         public async Task<ActionResult> Create(CreateHolding cmd)
         {
@@ -235,8 +231,86 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             return Json(new { status = "success", message = string.Format(Messages.MaleEntityCreatedSuccessfully, Labels.Holding) });
         }
 
-        #endregion
+        #endregion#region Create
 
+        #region Update
+
+        /// <summary>Shows the update modal.</summary>
+        /// <param name="holdingUid">The holding uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowUpdateModal(Guid? holdingUid)
+        {
+            var cmd = new UpdateHolding(
+                await this.CommandBus.Send(new FindHoldingByUidAsync(holdingUid, this.UserInterfaceLanguage)),
+                await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)));
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/UpdateModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Updates the specified command.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        /// <exception cref="DomainException"></exception>
+        [HttpPost]
+        public async Task<ActionResult> Update(UpdateHolding cmd)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException();
+                }
+
+                cmd.UpdateBaseProperties(this.UserId,
+                    this.UserUid,
+                    this.EditionId,
+                    this.EditionUid,
+                    this.UserInterfaceLanguage);
+
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException();
+                }
+            }
+            catch (DomainException)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                return Json(new
+                {
+                    status = "error",
+                    message = Messages.CorrectFormValues,
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/_Form", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.MaleEntityCreatedSuccessfully, Labels.Holding) });
+        }
+
+        #endregion#region Create
 
         //public ActionResult Create()
         //{

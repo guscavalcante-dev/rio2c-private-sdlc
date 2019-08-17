@@ -270,6 +270,9 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/holdingsCreate.js").Include(
                 "~/Assets/js/holdings/holdings.create.modal.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js/holdingsUpdate.js").Include(
+                "~/Assets/js/holdings/holdings.update.modal.js"));
+
             #endregion
 
             #endregion

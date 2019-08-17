@@ -33,6 +33,7 @@
     @Scripts.Render("~/bundles/js/ckEditor.js")
     @Scripts.Render("~/bundles/js/holdingsList.js")
     @Scripts.Render("~/bundles/js/holdingsCreate.js")
+    @Scripts.Render("~/bundles/js/holdingsUpdate.js")
     <script>
         var initialPage = @(Model.Page?.ToString() ?? "null");
         var initialPageSize = @(Model.PageSize?.ToString() ?? "null");

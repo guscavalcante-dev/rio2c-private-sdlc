@@ -4,7 +4,7 @@
 // Created          : 08-08-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-09-2019
+// Last Modified On : 08-16-2019
 // ***********************************************************************
 // <copyright file="FindAllHoldingsAsync.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,7 +20,7 @@ using X.PagedList;
 namespace PlataformaRio2C.Application.CQRS.Queries
 {
     /// <summary>FindAllHoldingsAsync</summary>
-    public class FindAllHoldingsAsync : BaseUserRequest, IRequest<IPagedList<HoldingListDto>>
+    public class FindAllHoldingsAsync : BaseUserRequest, IRequest<IPagedList<HoldingBaseDto>>
     {
         public int Page { get; private set; }
         public int PageSize { get; private set; }

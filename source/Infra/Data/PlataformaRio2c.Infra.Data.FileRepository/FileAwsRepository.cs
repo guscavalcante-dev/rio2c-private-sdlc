@@ -4,7 +4,7 @@
 // Created          : 08-15-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-15-2019
+// Last Modified On : 08-16-2019
 // ***********************************************************************
 // <copyright file="FileAwsRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -51,20 +51,20 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
 
         #region Get Url
 
-        /// <summary>Gets the image.</summary>
-        /// <param name="fileRepositoryPathType">Type of the file.</param>
+        /// <summary>Gets the image URL.</summary>
+        /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
         /// <param name="imageUid">The image uid.</param>
         /// <param name="hasImage">if set to <c>true</c> [has image].</param>
         /// <param name="isThumbnail">if set to <c>true</c> [is thumbnail].</param>
         /// <returns></returns>
-        public string GetImage(FileRepositoryPathType fileRepositoryPathType, Guid? imageUid, bool hasImage, bool isThumbnail)
+        public string GetImageUrl(FileRepositoryPathType fileRepositoryPathType, Guid? imageUid, bool hasImage, bool isThumbnail)
         {
             if (!hasImage || !imageUid.HasValue)
             {
                 return string.Empty;
             }
 
-            return this.GetUrl(fileRepositoryPathType, imageUid.Value) + (isThumbnail ? "-thumb.jpg" : ".jpg");
+            return this.GetUrl(fileRepositoryPathType, imageUid.Value) + (isThumbnail ? "_thumbnail.png" : "_original.png");
         }
 
         /// <summary>Gets the URL.</summary>

@@ -26,18 +26,37 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Initializes a new instance of the <see cref="UpdateHolding"/> class.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
-        public UpdateHolding(Domain.Entities.Holding entity, List<LanguageDto> languagesDtos)
-            : base(languagesDtos)
+        public UpdateHolding(HoldingDto entity, List<LanguageDto> languagesDtos)
         {
             this.Uid = entity.Uid;
             this.Name = entity.Name;
-            this.Descriptions = entity.Descriptions?.Select(d => new HoldingDescriptionBaseCommand(d))?.ToList();
+            this.UpdateDescriptions(entity, languagesDtos);
             this.CropperImage = new CropperImageBaseCommand(entity.IsImageUploaded, entity.Uid);
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateHolding"/> class.</summary>
         public UpdateHolding()
         {
+        }
+
+        /// <summary>Updates the descriptions.</summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="languagesDtos">The languages dtos.</param>
+        private void UpdateDescriptions(HoldingDto entity, List<LanguageDto> languagesDtos)
+        {
+            this.Descriptions = new List<HoldingDescriptionBaseCommand>();
+            foreach (var languageDto in languagesDtos)
+            {
+                var description = entity.DescriptionsDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
+                if (description != null)
+                {
+                    this.Descriptions.Add(new HoldingDescriptionBaseCommand(description));
+                }
+                else
+                {
+                    this.Descriptions.Add(new HoldingDescriptionBaseCommand(languageDto));
+                }
+            }
         }
     }
 }
