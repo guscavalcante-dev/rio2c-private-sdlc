@@ -1120,6 +1120,10 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>uma holding</value>
     <comment>uma holding</comment>
   </data>
+  <data name="By" xml:space="preserve">
+    <value>por</value>
+    <comment>por</comment>
+  </data>
   <data name="CreatedF" xml:space="preserve">
     <value>criada</value>
     <comment>criada</comment>
@@ -1152,9 +1156,17 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Idioma</value>
     <comment>Idioma</comment>
   </data>
+  <data name="LastUpdateOn" xml:space="preserve">
+    <value>Última atualização em</value>
+    <comment>Última atualização em</comment>
+  </data>
   <data name="TheName" xml:space="preserve">
     <value>o nome</value>
     <comment>o nome</comment>
+  </data>
+  <data name="UpdateDate" xml:space="preserve">
+    <value>Data de Atualização</value>
+    <comment>Data de Atualização</comment>
   </data>
   <data name="UpdatedF" xml:space="preserve">
     <value>atualizada</value>

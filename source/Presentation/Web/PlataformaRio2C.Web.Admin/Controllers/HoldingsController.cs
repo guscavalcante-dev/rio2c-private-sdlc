@@ -25,6 +25,7 @@ using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
+using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -37,17 +38,15 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     [AjaxAuthorize(Roles = "Admin")]
     public class HoldingsController : BaseController
     {
-        private readonly IHoldingAppService _appService;
         private readonly IFileRepository fileRepo;
 
         /// <summary>Initializes a new instance of the <see cref="HoldingsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        /// <param name="appService">The application service.</param>
-        public HoldingsController(IMediator commandBus, IdentityAutenticationService identityController, IHoldingAppService appService, IFileRepository fileRepository)
+        /// <param name="fileRepository">The file repository.</param>
+        public HoldingsController(IMediator commandBus, IdentityAutenticationService identityController, IFileRepository fileRepository)
             : base(commandBus, identityController)
         {
-            _appService = appService;
             this.fileRepo = fileRepository;
         }
 
@@ -81,7 +80,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions)
         {
-            var holdings = await this.CommandBus.Send(new FindAllHoldingsAsync(
+            var holdings = await this.CommandBus.Send(new FindAllHoldingsDtosAsync(
                 request.Start / request.Length,
                 request.Length,
                 request.Search?.Value,

@@ -39,7 +39,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Value = value?.Trim();
             this.Language = language;
             this.LanguageId = language?.Id ?? 0;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
         }
 
@@ -53,7 +53,7 @@ namespace PlataformaRio2C.Domain.Entities
         public void Update(HoldingDescription description)
         {
             this.Value = description.Value.Trim();
-            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateDate = DateTime.Now;
             this.UpdateUserId = description.UpdateUserId;
         }
 

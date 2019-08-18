@@ -4,9 +4,9 @@
 // Created          : 08-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-16-2019
+// Last Modified On : 08-18-2019
 // ***********************************************************************
-// <copyright file="FindAllHoldingsAsyncQueryHandler.cs" company="Softo">
+// <copyright file="FindAllHoldingsDtosAsyncQueryHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -21,14 +21,14 @@ using X.PagedList;
 
 namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
 {
-    /// <summary>FindAllHoldingsAsyncQueryHandler</summary>
-    public class FindAllHoldingsAsyncQueryHandler : IRequestHandler<FindAllHoldingsAsync, IPagedList<HoldingBaseDto>>
+    /// <summary>FindAllHoldingsDtosAsyncQueryHandler</summary>
+    public class FindAllHoldingsDtosAsyncQueryHandler : IRequestHandler<FindAllHoldingsDtosAsync, IPagedList<HoldingBaseDto>>
     {
         private readonly IHoldingRepository repo;
 
-        /// <summary>Initializes a new instance of the <see cref="FindAllHoldingsAsyncQueryHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="FindAllHoldingsDtosAsyncQueryHandler"/> class.</summary>
         /// <param name="holdingRepository">The holding repository.</param>
-        public FindAllHoldingsAsyncQueryHandler(IHoldingRepository holdingRepository)
+        public FindAllHoldingsDtosAsyncQueryHandler(IHoldingRepository holdingRepository)
         {
             this.repo = holdingRepository;
         }
@@ -37,7 +37,7 @@ namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<IPagedList<HoldingBaseDto>> Handle(FindAllHoldingsAsync cmd, CancellationToken cancellationToken)
+        public async Task<IPagedList<HoldingBaseDto>> Handle(FindAllHoldingsDtosAsync cmd, CancellationToken cancellationToken)
         {
             return await this.repo.FindAllByDataTable(cmd.Page, cmd.PageSize, cmd.Keywords, cmd.SortColumns, cmd.ShowAllEditions, cmd.EditionId);
         }

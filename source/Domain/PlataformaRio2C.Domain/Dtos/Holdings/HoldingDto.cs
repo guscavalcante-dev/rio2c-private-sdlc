@@ -4,7 +4,7 @@
 // Created          : 08-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-16-2019
+// Last Modified On : 08-18-2019
 // ***********************************************************************
 // <copyright file="HoldingDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,7 +23,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public int UpdateUserId { get; set; }
 
         public UserBaseDto CreatorDto { get; set; }
-        public UserBaseDto UpdatedDto { get; set; }
+        public UserBaseDto UpdaterDto { get; set; }
 
         public IEnumerable<HoldingDescriptionBaseDto> DescriptionsDtos { get; set; }
 

@@ -4,9 +4,9 @@
 // Created          : 08-08-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-16-2019
+// Last Modified On : 08-18-2019
 // ***********************************************************************
-// <copyright file="FindAllHoldingsAsync.cs" company="Softo">
+// <copyright file="FindAllHoldingsDtosAsync.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -19,8 +19,8 @@ using X.PagedList;
 
 namespace PlataformaRio2C.Application.CQRS.Queries
 {
-    /// <summary>FindAllHoldingsAsync</summary>
-    public class FindAllHoldingsAsync : BaseUserRequest, IRequest<IPagedList<HoldingBaseDto>>
+    /// <summary>FindAllHoldingsDtosAsync</summary>
+    public class FindAllHoldingsDtosAsync : BaseUserRequest, IRequest<IPagedList<HoldingBaseDto>>
     {
         public int Page { get; private set; }
         public int PageSize { get; private set; }
@@ -28,7 +28,7 @@ namespace PlataformaRio2C.Application.CQRS.Queries
         public List<Tuple<string, string>> SortColumns { get; private set; }
         public bool ShowAllEditions { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="FindAllHoldingsAsync"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="FindAllHoldingsDtosAsync"/> class.</summary>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="keywords">The keywords.</param>
@@ -39,7 +39,7 @@ namespace PlataformaRio2C.Application.CQRS.Queries
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="editionUid">The edition uid.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
-        public FindAllHoldingsAsync(
+        public FindAllHoldingsDtosAsync(
             int page, 
             int pageSize, 
             string keywords, 

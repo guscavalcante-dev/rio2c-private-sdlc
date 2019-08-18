@@ -22,6 +22,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     public class UpdateHolding : HoldingBaseCommand
     {
         public Guid HoldingUid { get; set; }
+        public UserBaseDto UpdaterBaseDto { get; set; }
+        public DateTime UpdateDate { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateHolding"/> class.</summary>
         /// <param name="entity">The entity.</param>
@@ -30,6 +32,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
             this.HoldingUid = entity.Uid;
             this.Name = entity.Name;
+            this.UpdaterBaseDto = entity.UpdaterDto;
+            this.UpdateDate = entity.UpdateDate;
             this.UpdateDescriptions(entity, languagesDtos);
             this.CropperImage = new CropperImageBaseCommand(entity.IsImageUploaded, entity.Uid, entity.UpdateDate.ToString("yyyyMMddHHmmss"));
         }

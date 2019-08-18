@@ -1,10 +1,23 @@
-﻿using PlataformaRio2C.Domain.Enums;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Domain
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-18-2019
+// ***********************************************************************
+// <copyright file="User.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
 using System;
 using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Entities
 {
+    /// <summary>User</summary>
     public class User : Entity
     {
         public virtual string UserName { get; set; }
@@ -41,10 +54,13 @@ namespace PlataformaRio2C.Domain.Entities
 
         public virtual ICollection<UserUseTerm> UserUseTerms { get; set; }
 
+        public virtual ICollection<Holding> UpdatedHoldings { get; set; }
+
+        /// <summary>Initializes a new instance of the <see cref="User"/> class.</summary>
         protected User()
         {
-
         }
+
         public User(string email)
         {
             SetActive(true);

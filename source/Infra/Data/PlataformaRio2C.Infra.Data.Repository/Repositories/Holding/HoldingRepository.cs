@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-16-2019
+// Last Modified On : 08-18-2019
 // ***********************************************************************
 // <copyright file="HoldingRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -170,7 +170,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 UpdateDate = h.UpdateDate,
                                 UpdateUserId = h.UpdateUserId,
                                 //Creator = h.Creator,
-                                //Updated = h.Updater,
+                                UpdaterDto = new UserBaseDto
+                                {
+                                    Uid = h.Updater.Uid,
+                                    Name = h.Updater.Name,
+                                    Email =h.Updater.Email 
+                                },
                                 DescriptionsDtos = h.Descriptions.Select(d => new HoldingDescriptionDto
                                 {
                                     Id = d.Id,
@@ -211,7 +216,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 CreateDate = h.CreateDate,
                                 UpdateDate = h.UpdateDate,
                             })
-                            .DynamicOrder<HoldingBaseDto>(sortColumns, new List<string> { "name", "createDate" }, "name")
+                            .DynamicOrder<HoldingBaseDto>(sortColumns, new List<string> { "name", "createDate", "updateDate" }, "name")
                             .ToListPagedAsync(page, pageSize);
         }
 

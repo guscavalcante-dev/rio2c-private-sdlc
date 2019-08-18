@@ -29,9 +29,9 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                 .IsRequired();
 
             // Relationships
-            //this.HasOptional(t => t.Image)
-            //    .WithMany()
-            //    .HasForeignKey(d => d.ImageId);
+            this.HasRequired(t => t.Updater)
+                .WithMany(e => e.UpdatedHoldings)
+                .HasForeignKey(d => d.UpdateUserId);
         }
     }
 }

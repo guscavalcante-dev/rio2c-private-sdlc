@@ -91,6 +91,7 @@ var HoldingsDataTableWidget = function () {
             columns: [
                 { data: 'Name' },
                 { data: 'CreateDate' },
+                { data: 'UpdateDate' },
                 //{
                 //    data: null,
                 //    render: function (data, type, row, meta) {
@@ -124,6 +125,14 @@ var HoldingsDataTableWidget = function () {
                 },
                 {
                     targets: [1],
+                    width: "20%",
+                    className: "dt-center",
+                    render: function (data) {
+                        return moment(data).locale(userInterfaceLanguage).format('L LTS');
+                    }
+                },
+                {
+                    targets: [2],
                     width: "20%",
                     className: "dt-center",
                     render: function (data) {

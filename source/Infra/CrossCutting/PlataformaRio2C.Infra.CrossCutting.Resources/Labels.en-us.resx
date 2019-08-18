@@ -1112,6 +1112,10 @@
     <value>a holding</value>
     <comment>uma holding</comment>
   </data>
+  <data name="By" xml:space="preserve">
+    <value>by</value>
+    <comment>por</comment>
+  </data>
   <data name="CreatedF" xml:space="preserve">
     <value>created</value>
     <comment>criada</comment>
@@ -1144,9 +1148,17 @@
     <value>Language</value>
     <comment>Idioma</comment>
   </data>
+  <data name="LastUpdateOn" xml:space="preserve">
+    <value>Last update on</value>
+    <comment>Última atualização em</comment>
+  </data>
   <data name="TheName" xml:space="preserve">
     <value>the name</value>
     <comment>o nome</comment>
+  </data>
+  <data name="UpdateDate" xml:space="preserve">
+    <value>Update Date</value>
+    <comment>Data de Atualização</comment>
   </data>
   <data name="UpdatedF" xml:space="preserve">
     <value>updated</value>

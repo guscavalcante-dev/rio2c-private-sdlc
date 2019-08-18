@@ -28,6 +28,8 @@ namespace PlataformaRio2C.Domain.Entities
         public string Name { get; private set; }
         public bool IsImageUploaded { get; private set; }
 
+        public virtual User Updater { get; private set; }
+
         public virtual ICollection<HoldingDescription> Descriptions { get; private set; }
         public virtual ICollection<Organization> Organizations { get; private set; }
 
@@ -42,7 +44,7 @@ namespace PlataformaRio2C.Domain.Entities
             //this.Uid = uid;
             this.Name = name?.Trim();
             this.IsImageUploaded = isImageUploaded;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeDescriptions(descriptions);
         }
@@ -62,8 +64,8 @@ namespace PlataformaRio2C.Domain.Entities
             //this.Uid = uid;
             this.Name = name?.Trim();
             this.IsImageUploaded = isImageUploaded;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
             this.SynchronizeDescriptions(descriptions);
         }
 

@@ -295,6 +295,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to por.
+        /// </summary>
+        public static string By {
+            get {
+                return ResourceManager.GetString("By", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Relatório da Agenda.
         /// </summary>
         public static string CalendarReport {
@@ -1209,6 +1218,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Language {
             get {
                 return ResourceManager.GetString("Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Última atualização em.
+        /// </summary>
+        public static string LastUpdateOn {
+            get {
+                return ResourceManager.GetString("LastUpdateOn", resourceCulture);
             }
         }
         
@@ -2550,6 +2568,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string UnscheduledNegotiations {
             get {
                 return ResourceManager.GetString("UnscheduledNegotiations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de Atualização.
+        /// </summary>
+        public static string UpdateDate {
+            get {
+                return ResourceManager.GetString("UpdateDate", resourceCulture);
             }
         }
         
