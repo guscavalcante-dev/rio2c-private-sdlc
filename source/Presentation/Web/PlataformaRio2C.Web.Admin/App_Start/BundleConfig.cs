@@ -256,6 +256,13 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+            #region Bootbox
+
+            bundles.Add(new ScriptBundle("~/bundles/js/bootbox.js").Include(
+                "~/Scripts/bootbox.min.js"));
+
+            #endregion
+
             #endregion
 
             #region Pages Bundles
@@ -268,10 +275,13 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/holdings/holdings.datatable.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/holdingsCreate.js").Include(
-                "~/Assets/js/holdings/holdings.create.modal.js"));
+                "~/Assets/js/holdings/holdings.create.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/holdingsUpdate.js").Include(
-                "~/Assets/js/holdings/holdings.update.modal.js"));
+                "~/Assets/js/holdings/holdings.update.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/holdingsDelete.js").Include(
+                "~/Assets/js/holdings/holdings.delete.js"));
 
             #endregion
 

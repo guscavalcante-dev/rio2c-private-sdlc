@@ -232,6 +232,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} {1} com sucesso..
+        /// </summary>
+        public static string EntityActionSuccessfull {
+            get {
+                return ResourceManager.GetString("EntityActionSuccessfull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} não {1}..
+        /// </summary>
+        public static string EntityNotAction {
+            get {
+                return ResourceManager.GetString("EntityNotAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;h4 class=&quot;h4-error-page&quot;&gt;Ocorreu um erro ao acessar essa página.&lt;/h4&gt; 
         ///&lt;h4 class=&quot;h4-error-page&quot;&gt;A equipe Rio2C foi comunicada e atuara para que isso não ocorra novamente. &lt;/h4&gt;
         ///&lt;h4 class=&quot;h4-error-page&quot;&gt;Tente novamente em alguns minutos.&lt;/h4&gt;.
@@ -353,15 +371,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string EvaluationSavesSuccessfully {
             get {
                 return ResourceManager.GetString("EvaluationSavesSuccessfully", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} criada com sucesso..
-        /// </summary>
-        public static string FemaleEntityCreatedSuccessfully {
-            get {
-                return ResourceManager.GetString("FemaleEntityCreatedSuccessfully", resourceCulture);
             }
         }
         
@@ -500,15 +509,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string LoginOrPasswordIsIncorrect {
             get {
                 return ResourceManager.GetString("LoginOrPasswordIsIncorrect", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} criado com sucesso..
-        /// </summary>
-        public static string MaleEntityCreatedSuccessfully {
-            get {
-                return ResourceManager.GetString("MaleEntityCreatedSuccessfully", resourceCulture);
             }
         }
         

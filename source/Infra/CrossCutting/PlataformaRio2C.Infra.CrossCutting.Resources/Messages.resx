@@ -222,10 +222,6 @@
   <data name="EvaluationSavesSuccessfully" xml:space="preserve">
     <value>Avaliação salva com sucesso!</value>
   </data>
-  <data name="FemaleEntityCreatedSuccessfully" xml:space="preserve">
-    <value>{0} criada com sucesso.</value>
-    <comment>{0} criada com sucesso.</comment>
-  </data>
   <data name="HoldingMustHaveName" xml:space="preserve">
     <value>O holding deve ter um nome.</value>
   </data>
@@ -276,9 +272,9 @@
   <data name="LoginOrPasswordIsIncorrect" xml:space="preserve">
     <value>Login ou Senha incorretos.</value>
   </data>
-  <data name="MaleEntityCreatedSuccessfully" xml:space="preserve">
-    <value>{0} criado com sucesso.</value>
-    <comment>{0} criado com sucesso.</comment>
+  <data name="EntityActionSuccessfull" xml:space="preserve">
+    <value>{0} {1} com sucesso.</value>
+    <comment>{0} {1} com sucesso.</comment>
   </data>
   <data name="MandatoryToSubmitYourProject" xml:space="preserve">
     <value>&lt;strong&gt;Atenção!&lt;/strong&gt; Para submeter seus projetos é obrigatório o preenchimento do PERFIL e PRODUTORA/EMPRESA.</value>
@@ -519,5 +515,9 @@
   </data>
   <data name="ZipCodeIsRequired" xml:space="preserve">
     <value>Cep obrigatório.</value>
+  </data>
+  <data name="EntityNotAction" xml:space="preserve">
+    <value>{0} não {1}.</value>
+    <comment>{0} não {1}.</comment>
   </data>
 </root>

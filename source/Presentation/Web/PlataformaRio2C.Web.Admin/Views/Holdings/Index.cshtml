@@ -31,9 +31,11 @@
     @Scripts.Render("~/bundles/js/chart.js")
     @Scripts.Render("~/bundles/js/cropper.js")
     @Scripts.Render("~/bundles/js/ckEditor.js")
+    @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/holdingsList.js")
     @Scripts.Render("~/bundles/js/holdingsCreate.js")
     @Scripts.Render("~/bundles/js/holdingsUpdate.js")
+    @Scripts.Render("~/bundles/js/holdingsDelete.js")
     <script>
         var initialPage = @(Model.Page?.ToString() ?? "null");
         var initialPageSize = @(Model.PageSize?.ToString() ?? "null");

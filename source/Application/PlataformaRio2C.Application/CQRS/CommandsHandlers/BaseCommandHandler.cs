@@ -20,6 +20,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>BaseCommandHandler</summary>
     public class BaseCommandHandler
     {
+        protected readonly AppValidationResult AppValidationResult;
         protected readonly ValidationResult ValidationResult;
         protected readonly IMediator EventBus;
         protected readonly IUnitOfWork Uow;
@@ -29,6 +30,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="uow">The uow.</param>
         public BaseCommandHandler(IMediator eventBus, IUnitOfWork uow)
         {
+            this.AppValidationResult = new AppValidationResult();
             this.ValidationResult = new ValidationResult();
             this.EventBus = eventBus;
             this.Uow = uow;

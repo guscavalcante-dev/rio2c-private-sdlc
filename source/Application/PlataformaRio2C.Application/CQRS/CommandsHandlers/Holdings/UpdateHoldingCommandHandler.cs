@@ -22,15 +22,14 @@ using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
     /// <summary>UpdateHoldingCommandHandler</summary>
-    public class UpdateHoldingCommandHandler : BaseCommandHandler, IRequestHandler<UpdateHolding, AppValidationResult>
+    public class UpdateHoldingCommandHandler : BaseHoldingCommandHandler, IRequestHandler<UpdateHolding, AppValidationResult>
     {
-        private AppValidationResult appValidationResult = new AppValidationResult();
-        private readonly IHoldingRepository holdingRepo;
         private readonly IHoldingDescriptionRepository holdingDescriptionRepo;
         private readonly ILanguageRepository languageRepo;
 
@@ -46,9 +45,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IHoldingRepository holdingRepository,
             IHoldingDescriptionRepository holdingDescriptionRepository,
             ILanguageRepository languageRepository)
-            : base(eventBus, uow)
+            : base(eventBus, uow, holdingRepository)
         {
-            this.holdingRepo = holdingRepository;
             this.holdingDescriptionRepo = holdingDescriptionRepository;
             this.languageRepo = languageRepository;
         }
@@ -61,9 +59,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.Uow.BeginTransaction();
 
-            #region Other entities validations
+            var holding = await this.GetHoldingByUid(cmd.HoldingUid);
 
-            var existHoldingByName = this.holdingRepo.Get(e => e.Name == cmd.Name && e.Uid != cmd.HoldingUid);
+            #region Initial Validations
+
+            var existHoldingByName = this.HoldingRepo.Get(e => e.Name == cmd.Name && e.Uid != cmd.HoldingUid);
             if (existHoldingByName != null)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format("Já existe um holding com o nome '{0}'.", cmd.Name), new string[] { "Name" })); //TODO: use resources
@@ -71,14 +71,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             if (!this.ValidationResult.IsValid)
             {
-                this.appValidationResult.Add(this.ValidationResult);
-                return this.appValidationResult;
+                this.AppValidationResult.Add(this.ValidationResult);
+                return this.AppValidationResult;
             }
 
             #endregion
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
-            var holding = await this.holdingRepo.GetAsync(cmd.HoldingUid);
             var beforeIsImageUploaded = holding.IsImageUploaded;
 
             var newDescriptions = cmd.Descriptions?.Where(d => !string.IsNullOrEmpty(d.Value))?.Select(d => new HoldingDescription(
@@ -102,13 +101,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             if (!holding.IsValid())
             {
-                this.appValidationResult.Add(holding.ValidationResult);
-                return this.appValidationResult;
+                this.AppValidationResult.Add(holding.ValidationResult);
+                return this.AppValidationResult;
             }
 
-            this.holdingRepo.Update(holding);
+            this.HoldingRepo.Update(holding);
             this.Uow.SaveChanges();
-            this.appValidationResult.Data = holding;
+            this.AppValidationResult.Data = holding;
 
             // Update images
             if (cmd.CropperImage?.ImageFile != null)
@@ -130,7 +129,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     FileRepositoryPathType.HoldingImage);
             }
 
-            return this.appValidationResult;
+            return this.AppValidationResult;
 
             //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);
 

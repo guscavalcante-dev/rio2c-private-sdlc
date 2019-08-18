@@ -130,8 +130,8 @@ var HoldingsDataTableWidget = function () {
                                   <i class="la la-ellipsis-h"></i>\
                                 </a>\
                                 <div class="dropdown-menu dropdown-menu-right">\
-                                    <button class="dropdown-item" onclick="HoldingsUpdateModal.show(\'' + full.Uid + '\')"><i class="la la-edit"></i> ' + labels.edit +'</button>\
-                                    <button class="dropdown-item" href="#"><i class="la la-remove"></i> ' + labels.remove +'</button>\
+                                    <button class="dropdown-item" onclick="HoldingsUpdate.showModal(\'' + full.Uid + '\');"><i class="la la-edit"></i> ' + labels.edit +'</button>\
+                                    <button class="dropdown-item" onclick="HoldingsDelete.showModal(\'' + full.Uid + '\');"><i class="la la-remove"></i> ' + labels.remove +'</button>\
                                 </div>\
                             </span>';
                     }

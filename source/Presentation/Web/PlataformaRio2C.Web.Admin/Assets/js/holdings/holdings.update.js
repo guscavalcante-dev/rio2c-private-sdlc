@@ -1,21 +1,21 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Rafael Dantas Ruiz
-// Created          : 08-13-2019
+// Created          : 08-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 08-18-2019
 // ***********************************************************************
-// <copyright file="holdings.create.modal.js" company="Softo">
+// <copyright file="holdings.update.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var HoldingsCreateModal = function () {
+var HoldingsUpdate = function () {
 
-    var modalId = '#CreateHoldingModal';
-    var formId = '#CreateHoldingForm';
+    var modalId = '#UpdateHoldingModal';
+    var formId = '#UpdateHoldingForm';
 
     // Enable form validation ---------------------------------------------------------------------
     var enableFormValidation = function () {
@@ -34,12 +34,13 @@ var HoldingsCreateModal = function () {
     };
 
     // Show modal ---------------------------------------------------------------------------------
-    var show = function () {
+    var showModal = function (holdingUid) {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
+        jsonParameters.holdingUid = holdingUid;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Holdings/ShowCreateModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Holdings/ShowUpdateModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -78,8 +79,8 @@ var HoldingsCreateModal = function () {
     };
 
     return {
-        show: function () {
-            show();
+        showModal: function (holdingUid) {
+            showModal(holdingUid);
         }
     };
 }();

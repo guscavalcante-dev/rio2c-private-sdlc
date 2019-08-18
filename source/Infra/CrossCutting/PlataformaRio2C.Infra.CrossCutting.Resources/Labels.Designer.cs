@@ -556,6 +556,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to criada.
+        /// </summary>
+        public static string CreatedF {
+            get {
+                return ResourceManager.GetString("CreatedF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to criado.
+        /// </summary>
+        public static string CreatedM {
+            get {
+                return ResourceManager.GetString("CreatedM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Criar Projeto.
         /// </summary>
         public static string CreateProject {
@@ -606,6 +624,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string DateHourFormat {
             get {
                 return ResourceManager.GetString("DateHourFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to excluída.
+        /// </summary>
+        public static string DeletedF {
+            get {
+                return ResourceManager.GetString("DeletedF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to excluído.
+        /// </summary>
+        public static string DeletedM {
+            get {
+                return ResourceManager.GetString("DeletedM", resourceCulture);
             }
         }
         
@@ -921,6 +957,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Format {
             get {
                 return ResourceManager.GetString("Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to encontrada.
+        /// </summary>
+        public static string FoundF {
+            get {
+                return ResourceManager.GetString("FoundF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to encontrado.
+        /// </summary>
+        public static string FoundM {
+            get {
+                return ResourceManager.GetString("FoundM", resourceCulture);
             }
         }
         
@@ -2460,6 +2514,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string UnscheduledNegotiations {
             get {
                 return ResourceManager.GetString("UnscheduledNegotiations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to atualizada.
+        /// </summary>
+        public static string UpdatedF {
+            get {
+                return ResourceManager.GetString("UpdatedF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to atualizado.
+        /// </summary>
+        public static string UpdatedM {
+            get {
+                return ResourceManager.GetString("UpdatedM", resourceCulture);
             }
         }
         

@@ -168,6 +168,8 @@
     <Compile Include="Common\EntityViewModel.cs" />
     <Compile Include="Common\StatusProjectCodes.cs" />
     <Compile Include="CQRS\CommandsHandlers\BaseCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Holdings\BaseHoldingCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Holdings\DeleteHoldingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\UpdateHoldingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\CreateHoldingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\SalesPlatformWebhookRequests\PostponeSalesPlatformWebhookRequestsCommandHandler.cs" />
@@ -177,6 +179,7 @@
     <Compile Include="CQRS\Commands\BaseCommand.cs" />
     <Compile Include="CQRS\Commands\Common\BaseCommands\CropperImageBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Holdings\BaseCommands\HoldingBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Holdings\DeleteHolding.cs" />
     <Compile Include="CQRS\Commands\Holdings\UpdateHolding.cs" />
     <Compile Include="CQRS\Commands\Holdings\CreateHolding.cs" />
     <Compile Include="CQRS\Commands\Holdings\BaseCommands\HoldingDescriptionBaseCommand.cs" />

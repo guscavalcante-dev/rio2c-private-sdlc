@@ -1108,4 +1108,36 @@
     <value>Success</value>
     <comment>Sucesso</comment>
   </data>
+  <data name="CreatedF" xml:space="preserve">
+    <value>created</value>
+    <comment>criada</comment>
+  </data>
+  <data name="CreatedM" xml:space="preserve">
+    <value>created</value>
+    <comment>criado</comment>
+  </data>
+  <data name="DeletedF" xml:space="preserve">
+    <value>deleted</value>
+    <comment>excluída</comment>
+  </data>
+  <data name="DeletedM" xml:space="preserve">
+    <value>deleted</value>
+    <comment>excluído</comment>
+  </data>
+  <data name="FoundF" xml:space="preserve">
+    <value>found</value>
+    <comment>encontrada</comment>
+  </data>
+  <data name="FoundM" xml:space="preserve">
+    <value>found</value>
+    <comment>encontrado</comment>
+  </data>
+  <data name="UpdatedF" xml:space="preserve">
+    <value>updated</value>
+    <comment>atualizada</comment>
+  </data>
+  <data name="UpdatedM" xml:space="preserve">
+    <value>updated</value>
+    <comment>atualizado</comment>
+  </data>
 </root>

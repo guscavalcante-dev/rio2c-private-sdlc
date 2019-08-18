@@ -179,7 +179,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <summary>Creates the specified command.</summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
-        /// <exception cref="DomainException"></exception>
         [HttpPost]
         public async Task<ActionResult> Create(CreateHolding cmd)
         {
@@ -229,7 +228,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.MaleEntityCreatedSuccessfully, Labels.Holding) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Holding, Labels.CreatedF) });
         }
 
         #endregion#region Create
@@ -259,7 +258,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <summary>Updates the specified command.</summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
-        /// <exception cref="DomainException"></exception>
         [HttpPost]
         public async Task<ActionResult> Update(UpdateHolding cmd)
         {
@@ -309,10 +307,81 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.MaleEntityCreatedSuccessfully, Labels.Holding) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Holding, Labels.UpdatedF) });
         }
 
         #endregion#region Create
+
+        #region Delete
+
+        /// <summary>Deletes the specified command.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> Delete(DeleteHolding cmd)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException();
+                }
+
+                cmd.UpdateBaseProperties(
+                    this.UserId,
+                    this.UserUid,
+                    this.EditionId,
+                    this.EditionUid,
+                    this.UserInterfaceLanguage);
+
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException();
+                }
+            }
+            catch (DomainException)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                return Json(new
+                {
+                    status = "error",
+                    message = Messages.CorrectFormValues,
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Holding, Labels.DeletedF) });
+
+            //var result = _appService.Delete(Uid);
+
+            //if (result.IsValid)
+            //{
+            //    this.StatusMessage("Holding apagado com sucesso!", Infra.CrossCutting.Tools.Enums.StatusMessageType.Success);
+            //}
+            //else
+            //{
+            //    foreach (var error in result.Errors)
+            //    {
+            //        this.StatusMessage(error.Message, Infra.CrossCutting.Tools.Enums.StatusMessageType.Danger);
+            //    }
+            //}
+
+            //return RedirectToAction("Index");
+        }
+
+        #endregion
 
         //public ActionResult Create()
         //{
@@ -348,59 +417,59 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         //    return View(viewModel);
         //}
 
-        public ActionResult Edit(Guid Uid)
-        {
-            var result = _appService.Get(Uid);
+        //public ActionResult Edit(Guid Uid)
+        //{
+        //    var result = _appService.Get(Uid);
 
-            return View(result);
-        }
+        //    return View(result);
+        //}
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(HoldingAppViewModel viewModel)
-        {
-            var result = _appService.Update(viewModel);
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit(HoldingAppViewModel viewModel)
+        //{
+        //    var result = _appService.Update(viewModel);
 
-            if (result.IsValid)
-            {
-                this.StatusMessage("Holding atualizado com sucesso!", Infra.CrossCutting.Tools.Enums.StatusMessageType.Success);
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                ModelState.AddModelError("", "Erro ao atualizar cadastro! Verifique o preenchimento dos campos!");
+        //    if (result.IsValid)
+        //    {
+        //        this.StatusMessage("Holding atualizado com sucesso!", Infra.CrossCutting.Tools.Enums.StatusMessageType.Success);
+        //        return RedirectToAction("Index");
+        //    }
+        //    else
+        //    {
+        //        ModelState.AddModelError("", "Erro ao atualizar cadastro! Verifique o preenchimento dos campos!");
 
-                foreach (var error in result.Errors)
-                {
-                    var target = error.Target ?? "";
-                    ModelState.AddModelError(target, error.Message);
-                }
-            }
+        //        foreach (var error in result.Errors)
+        //        {
+        //            var target = error.Target ?? "";
+        //            ModelState.AddModelError(target, error.Message);
+        //        }
+        //    }
 
-            UpdateHoldingViewModelDefaultValues(viewModel);
+        //    UpdateHoldingViewModelDefaultValues(viewModel);
 
-            return View(viewModel);
-        }
+        //    return View(viewModel);
+        //}
 
 
-        public ActionResult Delete(Guid Uid)
-        {
-            var result = _appService.Delete(Uid);
+        //public ActionResult Delete(Guid Uid)
+        //{
+        //    var result = _appService.Delete(Uid);
 
-            if (result.IsValid)
-            {
-                this.StatusMessage("Holding apagado com sucesso!", Infra.CrossCutting.Tools.Enums.StatusMessageType.Success);
-            }
-            else
-            {
-                foreach (var error in result.Errors)
-                {
-                    this.StatusMessage(error.Message, Infra.CrossCutting.Tools.Enums.StatusMessageType.Danger);
-                }
-            }
+        //    if (result.IsValid)
+        //    {
+        //        this.StatusMessage("Holding apagado com sucesso!", Infra.CrossCutting.Tools.Enums.StatusMessageType.Success);
+        //    }
+        //    else
+        //    {
+        //        foreach (var error in result.Errors)
+        //        {
+        //            this.StatusMessage(error.Message, Infra.CrossCutting.Tools.Enums.StatusMessageType.Danger);
+        //        }
+        //    }
 
-            return RedirectToAction("Index");
-        }
+        //    return RedirectToAction("Index");
+        //}
 
         private void UpdateHoldingViewModelDefaultValues(HoldingAppViewModel viewModel)
         {

@@ -28,20 +28,22 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
     /// <summary>CreateHoldingCommandHandler</summary>
-    public class CreateHoldingCommandHandler : BaseCommandHandler, IRequestHandler<CreateHolding, AppValidationResult>
+    public class CreateHoldingCommandHandler : BaseHoldingCommandHandler, IRequestHandler<CreateHolding, AppValidationResult>
     {
-        private AppValidationResult appValidationResult = new AppValidationResult();
-        private readonly IHoldingRepository holdingRepo;
         private readonly ILanguageRepository languageRepo;
 
+        /// <summary>Initializes a new instance of the <see cref="CreateHoldingCommandHandler"/> class.</summary>
+        /// <param name="eventBus">The event bus.</param>
+        /// <param name="uow">The uow.</param>
+        /// <param name="holdingRepository">The holding repository.</param>
+        /// <param name="languageRepository">The language repository.</param>
         public CreateHoldingCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IHoldingRepository holdingRepository,
             ILanguageRepository languageRepository)
-            : base(eventBus, uow)
+            : base(eventBus, uow, holdingRepository)
         {
-            this.holdingRepo = holdingRepository;
             this.languageRepo = languageRepository;
         }
 
@@ -55,9 +57,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var holdingUid = Guid.NewGuid();
 
-            #region Other entities validations
+            #region Initial validations
 
-            var existHoldingByName = this.holdingRepo.Get(e => e.Name == cmd.Name);
+            var existHoldingByName = this.HoldingRepo.Get(e => e.Name == cmd.Name);
             if (existHoldingByName != null)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format("Já existe um holding com o nome '{0}'.", cmd.Name), new string[] { "Name" })); //TODO: use resources
@@ -65,8 +67,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             if (!this.ValidationResult.IsValid)
             {
-                this.appValidationResult.Add(this.ValidationResult);
-                return this.appValidationResult;
+                this.AppValidationResult.Add(this.ValidationResult);
+                return this.AppValidationResult;
             }
 
             #endregion
@@ -85,13 +87,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             if (!holding.IsValid())
             {
-                this.appValidationResult.Add(holding.ValidationResult);
-                return this.appValidationResult;
+                this.AppValidationResult.Add(holding.ValidationResult);
+                return this.AppValidationResult;
             }
 
-            this.holdingRepo.Create(holding);
+            this.HoldingRepo.Create(holding);
             this.Uow.SaveChanges();
-            this.appValidationResult.Data = holding;
+            this.AppValidationResult.Data = holding;
 
             if (holding.IsImageUploaded)
             {
@@ -105,7 +107,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     FileRepositoryPathType.HoldingImage);
             }
 
-            return this.appValidationResult;
+            return this.AppValidationResult;
 
             //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);
 

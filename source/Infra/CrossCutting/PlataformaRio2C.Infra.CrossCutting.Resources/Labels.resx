@@ -1116,4 +1116,36 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Sucesso</value>
     <comment>Sucesso</comment>
   </data>
+  <data name="CreatedF" xml:space="preserve">
+    <value>criada</value>
+    <comment>criada</comment>
+  </data>
+  <data name="CreatedM" xml:space="preserve">
+    <value>criado</value>
+    <comment>criado</comment>
+  </data>
+  <data name="DeletedF" xml:space="preserve">
+    <value>excluída</value>
+    <comment>excluída</comment>
+  </data>
+  <data name="DeletedM" xml:space="preserve">
+    <value>excluído</value>
+    <comment>excluído</comment>
+  </data>
+  <data name="FoundF" xml:space="preserve">
+    <value>encontrada</value>
+    <comment>encontrada</comment>
+  </data>
+  <data name="FoundM" xml:space="preserve">
+    <value>encontrado</value>
+    <comment>encontrado</comment>
+  </data>
+  <data name="UpdatedF" xml:space="preserve">
+    <value>atualizada</value>
+    <comment>atualizada</comment>
+  </data>
+  <data name="UpdatedM" xml:space="preserve">
+    <value>atualizado</value>
+    <comment>atualizado</comment>
+  </data>
 </root>
