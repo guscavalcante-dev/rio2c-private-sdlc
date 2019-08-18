@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-09-2019
+// Last Modified On : 08-18-2019
 // ***********************************************************************
 // <copyright file="HoldingMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,16 +26,9 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
 
             this.Property(t => t.Name)
                 .HasMaxLength(Holding.NameMaxLength)
-                //.HasColumnAnnotation(IndexAnnotation.AnnotationName,
-                //                        new IndexAnnotation(
-                //                                                new IndexAttribute("IX_Name", 2) {
-                //                                                    IsUnique = true
-                //                                                }
-                //                                            )
-                //                                    )
                 .IsRequired();
 
-            //Relationships
+            // Relationships
             //this.HasOptional(t => t.Image)
             //    .WithMany()
             //    .HasForeignKey(d => d.ImageId);

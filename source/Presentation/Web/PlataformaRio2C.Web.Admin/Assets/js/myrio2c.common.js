@@ -375,7 +375,7 @@ var MyRio2cCommon = function () {
                             return;
                         }
 
-                        options.onSuccess();
+                        options.onSuccess(data);
                     },
                     // Error
                     onError: function () {
@@ -383,7 +383,7 @@ var MyRio2cCommon = function () {
                             return;
                         }
 
-                        options.onError();
+                        options.onError(data);
                     }
                 });
 

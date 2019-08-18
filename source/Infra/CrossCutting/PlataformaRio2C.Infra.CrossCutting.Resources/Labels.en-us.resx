@@ -1108,6 +1108,10 @@
     <value>Success</value>
     <comment>Sucesso</comment>
   </data>
+  <data name="AHolding" xml:space="preserve">
+    <value>a holding</value>
+    <comment>uma holding</comment>
+  </data>
   <data name="CreatedF" xml:space="preserve">
     <value>created</value>
     <comment>criada</comment>
@@ -1131,6 +1135,10 @@
   <data name="FoundM" xml:space="preserve">
     <value>found</value>
     <comment>encontrado</comment>
+  </data>
+  <data name="TheName" xml:space="preserve">
+    <value>the name</value>
+    <comment>o nome</comment>
   </data>
   <data name="UpdatedF" xml:space="preserve">
     <value>updated</value>

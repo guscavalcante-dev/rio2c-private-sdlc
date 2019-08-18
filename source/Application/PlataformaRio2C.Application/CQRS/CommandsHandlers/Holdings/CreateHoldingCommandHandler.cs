@@ -62,7 +62,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var existHoldingByName = this.HoldingRepo.Get(e => e.Name == cmd.Name);
             if (existHoldingByName != null)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format("Já existe um holding com o nome '{0}'.", cmd.Name), new string[] { "Name" })); //TODO: use resources
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.AHolding, Labels.TheName, cmd.Name), new string[] { "Name" }));
             }
 
             if (!this.ValidationResult.IsValid)

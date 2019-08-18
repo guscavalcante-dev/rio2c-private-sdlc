@@ -515,6 +515,10 @@
     <value>Please, confirm to delete.</value>
     <comment>Please, confirm to delete.</comment>
   </data>
+  <data name="EntityExistsWithSameProperty" xml:space="preserve">
+    <value>There is already {1} with the {1} '{2}'.</value>
+    <comment>Já existe um holding com o nome 'Xpto'.</comment>
+  </data>
   <data name="EntityNotAction" xml:space="preserve">
     <value>{0} not {1}.</value>
     <comment>{0} não {1}.</comment>

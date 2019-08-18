@@ -63,15 +63,17 @@ var HoldingsCreate = function () {
     var enableAjaxForm = function () {
         MyRio2cCommon.enableAjaxForm({
             idOrClass: formId,
-            onSuccess: function () {
+            onSuccess: function (data) {
                 $(modalId).modal('hide');
 
                 if (!MyRio2cCommon.isNullOrEmpty(HoldingsDataTableWidget)) {
                     HoldingsDataTableWidget.refreshData();
                 }
             },
-            onError: function () {
-                enablelugins();
+            onError: function (data) {
+                if (MyRio2cCommon.hasProperty(data, 'pages')) {
+                    enablelugins();
+                }
             }
         });
     };

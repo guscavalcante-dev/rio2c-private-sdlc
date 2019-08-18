@@ -187,6 +187,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to uma holding.
+        /// </summary>
+        public static string AHolding {
+            get {
+                return ResourceManager.GetString("AHolding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Todos.
         /// </summary>
         public static string All {
@@ -2433,6 +2442,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string TheEvent {
             get {
                 return ResourceManager.GetString("TheEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to o nome.
+        /// </summary>
+        public static string TheName {
+            get {
+                return ResourceManager.GetString("TheName", resourceCulture);
             }
         }
         
