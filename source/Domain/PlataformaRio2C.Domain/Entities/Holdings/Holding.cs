@@ -39,7 +39,7 @@ namespace PlataformaRio2C.Domain.Entities
         public Holding(Guid uid, string name, bool isImageUploaded, List<HoldingDescription> descriptions, int userId)
         {
             //this.Uid = uid;
-            this.SetName(name);
+            this.Name = name?.Trim();
             this.IsImageUploaded = isImageUploaded;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
@@ -59,7 +59,7 @@ namespace PlataformaRio2C.Domain.Entities
         public void Update(string name, bool isImageUploaded, List<HoldingDescription> descriptions, int userId)
         {
             //this.Uid = uid;
-            this.SetName(name);
+            this.Name = name?.Trim();
             this.IsImageUploaded = isImageUploaded;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
@@ -76,9 +76,6 @@ namespace PlataformaRio2C.Domain.Entities
             {
                 this.Descriptions = new List<HoldingDescription>();
             }
-
-            // Remove descriptions
-            this.RemoveDescriptions(descriptions);
 
             if (descriptions?.Any() != true)
             {
@@ -100,14 +97,10 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        /// <summary>Creates the description.</summary>
-        /// <param name="description">The description.</param>
-        private void CreateDescription(HoldingDescription description)
-        {
-            this.Descriptions.Add(description);
-        }
-
-        private void RemoveDescriptions(List<HoldingDescription> descriptions)
+        /// <summary>Deletes the descriptions.</summary>
+        /// <param name="descriptions">The descriptions.</param>
+        /// <returns></returns>
+        public List<HoldingDescription> DeleteDescriptions(List<HoldingDescription> descriptions)
         {
             var descriptionsToDelete = this.Descriptions.Where(db => descriptions?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false).ToList();
 
@@ -116,29 +109,38 @@ namespace PlataformaRio2C.Domain.Entities
             {
                 this.Descriptions.Remove(descriptionToDelete);
             }
+
+            return descriptionsToDelete;
+        }
+
+        /// <summary>Creates the description.</summary>
+        /// <param name="description">The description.</param>
+        private void CreateDescription(HoldingDescription description)
+        {
+            this.Descriptions.Add(description);
         }
 
         #endregion
 
-        public Holding(string name)
-        {
-            this.Descriptions = new List<HoldingDescription>();
-            this.SetName(name);
-        }
+        //public Holding(string name)
+        //{
+        //    this.Descriptions = new List<HoldingDescription>();
+        //    this.SetName(name);
+        //}
 
-        /// <summary>Sets the name.</summary>
-        /// <param name="name">The name.</param>
-        public void SetName(string name)
-        {
-            this.Name = name;
-        }
+        ///// <summary>Sets the name.</summary>
+        ///// <param name="name">The name.</param>
+        //public void SetName(string name)
+        //{
+        //    this.Name = name;
+        //}
 
-        /// <summary>Sets the descriptions.</summary>
-        /// <param name="descriptions">The descriptions.</param>
-        public void SetDescriptions(IEnumerable<HoldingDescription> descriptions)
-        {
-            this.Descriptions = descriptions.ToList();
-        }
+        ///// <summary>Sets the descriptions.</summary>
+        ///// <param name="descriptions">The descriptions.</param>
+        //public void SetDescriptions(IEnumerable<HoldingDescription> descriptions)
+        //{
+        //    this.Descriptions = descriptions.ToList();
+        //}
 
         #region Validation
 

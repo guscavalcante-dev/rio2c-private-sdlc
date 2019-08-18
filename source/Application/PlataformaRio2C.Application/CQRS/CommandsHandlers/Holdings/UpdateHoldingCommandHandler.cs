@@ -31,16 +31,25 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     {
         private AppValidationResult appValidationResult = new AppValidationResult();
         private readonly IHoldingRepository holdingRepo;
+        private readonly IHoldingDescriptionRepository holdingDescriptionRepo;
         private readonly ILanguageRepository languageRepo;
 
+        /// <summary>Initializes a new instance of the <see cref="UpdateHoldingCommandHandler"/> class.</summary>
+        /// <param name="eventBus">The event bus.</param>
+        /// <param name="uow">The uow.</param>
+        /// <param name="holdingRepository">The holding repository.</param>
+        /// <param name="holdingDescriptionRepository">The holding description repository.</param>
+        /// <param name="languageRepository">The language repository.</param>
         public UpdateHoldingCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IHoldingRepository holdingRepository,
+            IHoldingDescriptionRepository holdingDescriptionRepository,
             ILanguageRepository languageRepository)
             : base(eventBus, uow)
         {
             this.holdingRepo = holdingRepository;
+            this.holdingDescriptionRepo = holdingDescriptionRepository;
             this.languageRepo = languageRepository;
         }
 
@@ -70,16 +79,25 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
             var holding = await this.holdingRepo.GetAsync(cmd.HoldingUid);
+            var beforeIsImageUploaded = holding.IsImageUploaded;
 
-            var hadImage = holding.IsImageUploaded;
+            var newDescriptions = cmd.Descriptions?.Where(d => !string.IsNullOrEmpty(d.Value))?.Select(d => new HoldingDescription(
+                d.Value,
+                languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language,
+                cmd.UserId))?.ToList();
 
+            // Delete holding descriptions
+            var deletedDescriptions = holding.DeleteDescriptions(newDescriptions);
+            if (deletedDescriptions?.Any() == true)
+            {
+                this.holdingDescriptionRepo.DeleteAll(deletedDescriptions);
+            }
+
+            // Update holding
             holding.Update(
                 cmd.Name,
                 cmd.CropperImage?.IsImageUploaded == true,
-                cmd.Descriptions?.Where(d => !string.IsNullOrEmpty(d.Value))?.Select(d => new HoldingDescription(
-                    d.Value,
-                    languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language,
-                    cmd.UserId))?.ToList(),
+                newDescriptions,
                 cmd.UserId);
 
             if (!holding.IsValid())
@@ -105,7 +123,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     FileRepositoryPathType.HoldingImage);
             }
             // Delete images
-            else if (hadImage && !holding.IsImageUploaded && cmd.CropperImage?.ImageFile == null)
+            else if (beforeIsImageUploaded && !holding.IsImageUploaded && cmd.CropperImage?.ImageFile == null)
             {
                 ImageHelper.DeleteOriginalAndCroppedImages(
                     holding.Uid,

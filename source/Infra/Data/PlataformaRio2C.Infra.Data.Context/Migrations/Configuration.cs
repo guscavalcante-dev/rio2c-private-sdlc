@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-06-2019
+// Last Modified On : 08-18-2019
 // ***********************************************************************
 // <copyright file="Configuration.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -93,31 +93,31 @@ namespace PlataformaRio2C.Infra.Data.Context.Migrations
         }
         private void SeedHoldings(PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext context)
         {
-            var playerGloboSat = new Holding("GLOBOSAT");
+            //var playerGloboSat = new Holding("GLOBOSAT");
             //var playerMarlin = new Holding("MARLIN");
 
-            if (!context.Holdings.Any())
-            {
-                context.Holdings.AddRange(
-                    new List<Holding>()
-                    {
-                        playerGloboSat
-                    }
-                );
-            }
+            //if (!context.Holdings.Any())
+            //{
+            //    context.Holdings.AddRange(
+            //        new List<Holding>()
+            //        {
+            //            playerGloboSat
+            //        }
+            //    );
+            //}
 
-            if (!context.Players.Any())
-            {
-                context.Players.AddRange(
-                   new List<Player>()
-                   {
-                        new Player("Gloob", playerGloboSat),
-                        new Player("Multishow", playerGloboSat),
-                        new Player("GNT", playerGloboSat),
-                        //new Player("Marlin desenvolvimento", playerMarlin),
-                   }
-               );
-            }
+            //if (!context.Players.Any())
+            //{
+            //    context.Players.AddRange(
+            //       new List<Player>()
+            //       {
+            //            new Player("Gloob", playerGloboSat),
+            //            new Player("Multishow", playerGloboSat),
+            //            new Player("GNT", playerGloboSat),
+            //            //new Player("Marlin desenvolvimento", playerMarlin),
+            //       }
+            //   );
+            //}
         }
         private void SeedEvent(PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext context)
         {
