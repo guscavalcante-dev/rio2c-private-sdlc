@@ -11,8 +11,10 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -20,6 +22,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     public class HoldingDescriptionBaseCommand
     {
         [AllowHtml]
+        [StringLength(8000, MinimumLength = 2, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Value { get; set; }
         public string LanguageCode { get; set; }
         public string LanguageName { get; set; }

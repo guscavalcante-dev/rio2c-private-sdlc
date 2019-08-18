@@ -963,6 +963,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O campo {0} deve ter entre &apos;{2}&apos; e &apos;{1}&apos; caracteres..
+        /// </summary>
+        public static string PropertyBetweenLengths {
+            get {
+                return ResourceManager.GetString("PropertyBetweenLengths", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Motivo é obrigatorio..
         /// </summary>
         public static string ReasonIsRequired {

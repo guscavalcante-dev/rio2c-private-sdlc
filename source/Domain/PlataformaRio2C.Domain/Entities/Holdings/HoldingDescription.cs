@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System;
 using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -99,25 +100,23 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Validates the value.</summary>
         public void ValidateValue()
         {
-            // TODO: use resources on validation errrors
             if (string.IsNullOrEmpty(this.Value?.Trim()))
             {
-                this.ValidationResult.Add(new ValidationError("A descrição é obrigatório.", new string[] { "Value" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Descriptions), new string[] { "Descriptions" }));
             }
 
             if (this.Value?.Trim().Length < ValueMinLength || this.Value?.Trim().Length > ValueMaxLength)
             {
-                this.ValidationResult.Add(new ValidationError($"A descrição deve ter entre '{ValueMinLength}' e '{ValueMaxLength}' caracteres.", new string[] { "Name" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Descriptions, ValueMaxLength, ValueMinLength), new string[] { "Descriptions" }));
             }
         }
 
         /// <summary>Validates the language.</summary>
         public void ValidateLanguage()
         {
-            // TODO: use resources on validation errrors
             if (this.Language == null)
             {
-                this.ValidationResult.Add(new ValidationError("O idioma da descrição é obrigatório.", new string[] { "Value" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Language), new string[] { "Descriptions" }));
             }
         }
 

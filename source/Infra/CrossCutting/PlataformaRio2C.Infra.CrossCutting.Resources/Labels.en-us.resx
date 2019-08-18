@@ -1128,6 +1128,10 @@
     <value>deleted</value>
     <comment>excluído</comment>
   </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+    <comment>Descrição</comment>
+  </data>
   <data name="FoundF" xml:space="preserve">
     <value>found</value>
     <comment>encontrada</comment>
@@ -1135,6 +1139,10 @@
   <data name="FoundM" xml:space="preserve">
     <value>found</value>
     <comment>encontrado</comment>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+    <comment>Idioma</comment>
   </data>
   <data name="TheName" xml:space="preserve">
     <value>the name</value>

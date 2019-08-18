@@ -15,6 +15,7 @@ using System;
 using PlataformaRio2C.Domain.Validation;
 using System.Collections.Generic;
 using System.Linq;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -164,12 +165,12 @@ namespace PlataformaRio2C.Domain.Entities
             // TODO: use resources on validation errrors
             if (string.IsNullOrEmpty(this.Name?.Trim()))
             {
-                this.ValidationResult.Add(new ValidationError("O nome é obrigatório.", new string[] { "Name" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Name), new string[] { "Name" }));
             }
 
             if (this.Name?.Trim().Length < NameMinLength || this.Name?.Trim().Length > NameMaxLength)
             {
-                this.ValidationResult.Add(new ValidationError($"O nome deve ter entre '{NameMinLength}' e '{NameMaxLength}' caracteres.", new string[] { "Name" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, NameMaxLength, NameMinLength), new string[] { "Name" }));
             }
         }
 

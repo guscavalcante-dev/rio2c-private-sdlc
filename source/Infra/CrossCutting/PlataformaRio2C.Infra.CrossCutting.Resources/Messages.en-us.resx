@@ -523,4 +523,8 @@
     <value>{0} not {1}.</value>
     <comment>{0} não {1}.</comment>
   </data>
+  <data name="PropertyBetweenLengths" xml:space="preserve">
+    <value>The field {0} must have between '{2}' and '{1}' characters.</value>
+    <comment>O campo {0} deve ter entre '{1}' e '{2}' caracteres.</comment>
+  </data>
 </root>

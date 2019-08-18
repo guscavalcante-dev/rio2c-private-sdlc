@@ -24,6 +24,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = "Name", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [StringLength(100, MinimumLength = 2, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Name { get; set; }
 
         public List<HoldingDescriptionBaseCommand> Descriptions { get; set; }

@@ -1136,6 +1136,10 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>excluído</value>
     <comment>excluído</comment>
   </data>
+  <data name="Description" xml:space="preserve">
+    <value>Descrição</value>
+    <comment>Descrição</comment>
+  </data>
   <data name="FoundF" xml:space="preserve">
     <value>encontrada</value>
     <comment>encontrada</comment>
@@ -1143,6 +1147,10 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="FoundM" xml:space="preserve">
     <value>encontrado</value>
     <comment>encontrado</comment>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Idioma</value>
+    <comment>Idioma</comment>
   </data>
   <data name="TheName" xml:space="preserve">
     <value>o nome</value>
