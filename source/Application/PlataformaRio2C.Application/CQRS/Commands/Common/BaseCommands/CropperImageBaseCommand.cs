@@ -4,7 +4,7 @@
 // Created          : 08-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-16-2019
+// Last Modified On : 08-18-2019
 // ***********************************************************************
 // <copyright file="CropperImageBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -36,14 +36,17 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public bool IsImageUploaded { get; set; }
         public Guid? ImageUid { get; set; }
+        public string ImageVersion { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CropperImageBaseCommand"/> class.</summary>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="imageUid">The image uid.</param>
-        public CropperImageBaseCommand(bool isImageUploaded, Guid? imageUid)
+        /// <param name="imageVersion">The image version.</param>
+        public CropperImageBaseCommand(bool isImageUploaded, Guid? imageUid, string imageVersion)
         {
             this.IsImageUploaded = isImageUploaded;
             this.ImageUid = imageUid;
+            this.ImageVersion = imageVersion;
         }
 
         /// <summary>Initializes a new instance of the <see cref="CropperImageBaseCommand"/> class.</summary>

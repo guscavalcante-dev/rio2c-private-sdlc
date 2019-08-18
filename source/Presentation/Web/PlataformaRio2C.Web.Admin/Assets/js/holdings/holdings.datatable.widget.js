@@ -4,7 +4,7 @@
 // Created          : 08-07-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-16-2019
+// Last Modified On : 08-18-2019
 // ***********************************************************************
 // <copyright file="holdings.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,6 +16,7 @@ var HoldingsDataTableWidget = function () {
 
     var widgetElementId = '#HoldingDataTableWidget';
     var widgetElement = $(widgetElementId);
+    var table;
 
     var initiListTable = function () {
 
@@ -34,7 +35,7 @@ var HoldingsDataTableWidget = function () {
             displayStart = (initialPage - 1) * pageLength;
         }
 
-        var table = tableElementId.DataTable({
+        table = tableElementId.DataTable({
             "language": {
                 "url": "/Assets/components/datatables/datatables." + userInterfaceLanguage + ".js"
             },
@@ -129,9 +130,8 @@ var HoldingsDataTableWidget = function () {
                                   <i class="la la-ellipsis-h"></i>\
                                 </a>\
                                 <div class="dropdown-menu dropdown-menu-right">\
-                                    <button class="dropdown-item" onclick="HoldingsUpdateModal.show(\'' + full.Uid +'\')"><i class="la la-edit"></i> Edit Details</button>\
-                                    <button class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</button>\
-                                    <button class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</button>\
+                                    <button class="dropdown-item" onclick="HoldingsUpdateModal.show(\'' + full.Uid + '\')"><i class="la la-edit"></i> ' + labels.edit +'</button>\
+                                    <button class="dropdown-item" href="#"><i class="la la-remove"></i> ' + labels.remove +'</button>\
                                 </div>\
                             </span>';
                     }
@@ -152,10 +152,17 @@ var HoldingsDataTableWidget = function () {
         MyRio2cCommon.unblock({ idOrClass: widgetElementId });
     };
 
+    var refreshData = function () {
+        table.ajax.reload();
+    };
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             initiListTable();
+        },
+        refreshData: function() {
+            refreshData();
         }
     };
 }();

@@ -4,7 +4,7 @@
 // Created          : 08-15-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-16-2019
+// Last Modified On : 08-18-2019
 // ***********************************************************************
 // <copyright file="ImageHelper.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -70,18 +70,28 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
             UploadLogo(fileUid, croppedImage.GetBytes(), fileRepositoryPathType, false);
         }
 
+        /// <summary>Deletes the original and cropped images.</summary>
+        /// <param name="fileUid">The file uid.</param>
+        /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
+        public static void DeleteOriginalAndCroppedImages(Guid fileUid, FileRepositoryPathType fileRepositoryPathType)
+        {
+            var fileRepo = new FileRepositoryFactory().Get();
+            fileRepo.DeleteImages(fileUid, fileRepositoryPathType);
+        }
+
         /// <summary>Gets the image URL.</summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="html">The HTML.</param>
         /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
         /// <param name="imageUid">The image uid.</param>
+        /// <param name="version">The version.</param>
         /// <param name="hasImage">if set to <c>true</c> [has image].</param>
         /// <param name="isThumbnail">if set to <c>true</c> [is thumbnail].</param>
         /// <returns></returns>
-        public static string GetImageUrl<T>(this HtmlHelper<T> html, FileRepositoryPathType fileRepositoryPathType, Guid imageUid, bool hasImage, bool isThumbnail)
+        public static string GetImageUrl<T>(this HtmlHelper<T> html, FileRepositoryPathType fileRepositoryPathType, Guid imageUid, string version, bool hasImage, bool isThumbnail)
         {
             var fileRepo = new FileRepositoryFactory().Get();
-            return fileRepo.GetImageUrl(fileRepositoryPathType, imageUid, hasImage, isThumbnail);
+            return fileRepo.GetImageUrl(fileRepositoryPathType, imageUid, version, hasImage, isThumbnail);
         }
 
         #region Private Methods

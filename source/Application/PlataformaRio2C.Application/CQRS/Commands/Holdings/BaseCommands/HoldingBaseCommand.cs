@@ -4,7 +4,7 @@
 // Created          : 08-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-16-2019
+// Last Modified On : 08-18-2019
 // ***********************************************************************
 // <copyright file="HoldingBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,13 +13,12 @@
 // ***********************************************************************
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>HoldingBaseCommand</summary>
-    public class HoldingBaseCommand : BaseCommand<AppValidationResult>
+    public class HoldingBaseCommand : BaseCommand
     {
         public CropperImageBaseCommand CropperImage { get; set; }
 

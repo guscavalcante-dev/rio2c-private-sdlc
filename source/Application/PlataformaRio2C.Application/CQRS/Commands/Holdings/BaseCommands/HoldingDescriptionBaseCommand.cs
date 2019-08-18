@@ -4,7 +4,7 @@
 // Created          : 08-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-16-2019
+// Last Modified On : 08-18-2019
 // ***********************************************************************
 // <copyright file="HoldingDescriptionBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,7 +13,6 @@
 // ***********************************************************************
 using System.Web.Mvc;
 using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {

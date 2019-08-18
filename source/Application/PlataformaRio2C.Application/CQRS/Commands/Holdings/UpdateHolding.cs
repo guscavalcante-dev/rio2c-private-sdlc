@@ -4,7 +4,7 @@
 // Created          : 08-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-16-2019
+// Last Modified On : 08-18-2019
 // ***********************************************************************
 // <copyright file="UpdateHolding.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,17 +21,17 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>UpdateHolding</summary>
     public class UpdateHolding : HoldingBaseCommand
     {
-        public Guid Uid;
+        public Guid HoldingUid { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateHolding"/> class.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         public UpdateHolding(HoldingDto entity, List<LanguageDto> languagesDtos)
         {
-            this.Uid = entity.Uid;
+            this.HoldingUid = entity.Uid;
             this.Name = entity.Name;
             this.UpdateDescriptions(entity, languagesDtos);
-            this.CropperImage = new CropperImageBaseCommand(entity.IsImageUploaded, entity.Uid);
+            this.CropperImage = new CropperImageBaseCommand(entity.IsImageUploaded, entity.Uid, entity.UpdateDate.ToString("yyyyMMddHHmmss"));
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateHolding"/> class.</summary>

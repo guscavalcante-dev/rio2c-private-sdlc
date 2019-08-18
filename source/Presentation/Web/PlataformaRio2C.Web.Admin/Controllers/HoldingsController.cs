@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-16-2019
+// Last Modified On : 08-18-2019
 // ***********************************************************************
 // <copyright file="HoldingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -192,7 +192,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     throw new DomainException();
                 }
 
-                cmd.UpdateBaseProperties(this.UserId,
+                cmd.UpdateBaseProperties(
+                    this.UserId,
                     this.UserUid,
                     this.EditionId,
                     this.EditionUid,
@@ -242,7 +243,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         public async Task<ActionResult> ShowUpdateModal(Guid? holdingUid)
         {
             var cmd = new UpdateHolding(
-                await this.CommandBus.Send(new FindHoldingByUidAsync(holdingUid, this.UserInterfaceLanguage)),
+                await this.CommandBus.Send(new FindHoldingDtoByUidAsync(holdingUid, this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)));
 
             return Json(new
@@ -271,7 +272,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     throw new DomainException();
                 }
 
-                cmd.UpdateBaseProperties(this.UserId,
+                cmd.UpdateBaseProperties(
+                    this.UserId,
                     this.UserUid,
                     this.EditionId,
                     this.EditionUid,

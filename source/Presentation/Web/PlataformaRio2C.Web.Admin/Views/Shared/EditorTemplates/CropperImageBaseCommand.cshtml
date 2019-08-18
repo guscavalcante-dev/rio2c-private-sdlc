@@ -7,13 +7,10 @@
         <div class="kt-avatar kt-avatar--outline" id="kt_apps_user_add_avatar">
             @if (Model.IsImageUploaded && Model.ImageUid.HasValue)
             {
-                <div class="kt-avatar__holder wh-200" style="background-color: rgba(255, 255, 255, 0.1); background-image: url(@Html.GetImageUrl(FileRepositoryPathType.HoldingImage, Model.ImageUid.Value, Model.IsImageUploaded, true))"></div>
+                <div id="current-image" class="kt-avatar__holder wh-200" style="background-color: rgba(255, 255, 255, 0.1); background-image: url(@Html.GetImageUrl(FileRepositoryPathType.HoldingImage, Model.ImageUid.Value, Model.ImageVersion, Model.IsImageUploaded, true))"></div>
             }
-            else
-            {
-                <div class="kt-avatar__holder wh-200" style="background-color: rgba(255, 255, 255, 0.1);"></div>
-            }
-            @Html.TextBoxFor(m => m.ImageFile, new {id = "ImageFile", @class = "sr-only", type = "file", @accept = "image/*"})
+            <div id="no-image" class="kt-avatar__holder wh-200 @(Model.IsImageUploaded && Model.ImageUid.HasValue ? "d-none" : string.Empty)" style="background-color: rgba(255, 255, 255, 0.1);"></div>
+            @Html.TextBoxFor(m => m.ImageFile, new { id = "ImageFile", @class = "sr-only", type = "file", @accept = "image/*" })
         </div>
         @*@if (Model.IsImageUploaded)
             {
@@ -21,6 +18,12 @@
             }*@
     </div>
     <div class="col-md-12">
+        @if (Model.IsImageUploaded)
+        {
+            <label class="btn default btn-file">
+                <span class="btn btn-secondary" onclick="MyRio2cCropper.remove();">@Labels.Remove</span>
+            </label>
+        }
         <label class="btn default btn-file" for="ImageFile">
             <span class="btn btn-primary">@(Model.IsImageUploaded ? Labels.Alter : Labels.SelectImage)</span>
         </label>
@@ -38,6 +41,7 @@
                 <div class="col-md-12">
                     @Html.HiddenFor(m => m.IsImageUploaded)
                     @Html.HiddenFor(m => m.ImageUid)
+                    @Html.HiddenFor(m => m.ImageVersion)
                     @Html.HiddenFor(m => m.DataX)
                     @Html.HiddenFor(m => m.DataY)
                     @Html.HiddenFor(m => m.DataHeight)

@@ -4,7 +4,7 @@
 // Created          : 08-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-16-2019
+// Last Modified On : 08-18-2019
 // ***********************************************************************
 // <copyright file="BaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,7 +17,7 @@ using MediatR;
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>BaseCommand</summary>
-    public class BaseCommand<T> : IRequest<T>
+    public class BaseCommand : IRequest<AppValidationResult>
     {
         public int UserId { get; private set; }
         public Guid UserUid { get; private set; }

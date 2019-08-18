@@ -4,7 +4,7 @@
 // Created          : 08-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-16-2019
+// Last Modified On : 08-18-2019
 // ***********************************************************************
 // <copyright file="CreateHolding.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,7 +23,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="languagesDtos">The languages dtos.</param>
         public CreateHolding(List<LanguageDto> languagesDtos)
         {
-            this.CropperImage = new CropperImageBaseCommand(false, null);
+            this.CropperImage = new CropperImageBaseCommand(false, null, null);
             this.UpdateDescriptions(languagesDtos);
         }
 

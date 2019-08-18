@@ -4,7 +4,7 @@
 // Created          : 08-15-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-16-2019
+// Last Modified On : 08-18-2019
 // ***********************************************************************
 // <copyright file="FileLocalRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -43,17 +43,18 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
         /// <summary>Gets the image URL.</summary>
         /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
         /// <param name="imageUid">The image uid.</param>
+        /// <param name="version">The version.</param>
         /// <param name="hasImage">if set to <c>true</c> [has image].</param>
         /// <param name="isThumbnail">if set to <c>true</c> [is thumbnail].</param>
         /// <returns></returns>
-        public string GetImageUrl(FileRepositoryPathType fileRepositoryPathType, Guid? imageUid, bool hasImage, bool isThumbnail)
+        public string GetImageUrl(FileRepositoryPathType fileRepositoryPathType, Guid? imageUid, string version, bool hasImage, bool isThumbnail)
         {
             if (!hasImage || !imageUid.HasValue)
             {
                 return string.Empty;
             }
 
-            return this.GetUrl(fileRepositoryPathType, imageUid.Value) + (isThumbnail ? "_thumbnail.png" : "_original.png");
+            return this.GetUrl(fileRepositoryPathType, imageUid.Value) + (isThumbnail ? "_thumbnail.png" : "_original.png") + (!string.IsNullOrEmpty(version) ? $"?v={version}" : string.Empty);
         }
 
         /// <summary>Gets the URL.</summary>
@@ -88,6 +89,31 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
             {
                 inputStream.CopyTo(fileStream);
             }
+        }
+
+        #endregion
+
+        #region Delete
+
+        /// <summary>Deletes the images.</summary>
+        /// <param name="imageUid">The image uid.</param>
+        /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
+        /// <param name="args">The arguments.</param>
+        public void DeleteImages(Guid imageUid, FileRepositoryPathType fileRepositoryPathType, params object[] args)
+        {
+            var fileName = imageUid + "*.png";
+
+            this.DeleteFiles(fileName, fileRepositoryPathType, args);
+        }
+
+        /// <summary>Deletes the files.</summary>
+        /// <param name="fileName">Name of the file.</param>
+        /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
+        /// <param name="args">The arguments.</param>
+        public void DeleteFiles(string fileName, FileRepositoryPathType fileRepositoryPathType, params object[] args)
+        {
+            var directory = this.GetBaseDirectory(fileRepositoryPathType, args);
+            File.Delete(directory + fileName);
         }
 
         #endregion

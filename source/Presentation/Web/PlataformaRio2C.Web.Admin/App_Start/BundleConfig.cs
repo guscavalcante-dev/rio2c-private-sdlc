@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-16-2019
+// Last Modified On : 08-18-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -252,7 +252,7 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/cropper.js").Include(
                 "~/Assets/components/cropper/dist/cropper.js",
-                "~/Assets/components/cropper/myrio2c.cropper.js"));
+                "~/Assets/js/myrio2c.cropper.js"));
 
             #endregion
 

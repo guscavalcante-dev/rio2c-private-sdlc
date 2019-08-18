@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-12-2019
+// Last Modified On : 08-18-2019
 // ***********************************************************************
 // <copyright file="HoldingDescriptionAppViewModel.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -45,9 +45,10 @@ namespace PlataformaRio2C.Application.ViewModels
 
         public HoldingDescription MapReverse()
         {
-            var holdingDescription = new HoldingDescription(Value, LanguageCode);
+            return null;
+            //var holdingDescription = new HoldingDescription(Value, LanguageCode);
 
-            return holdingDescription;
+            //return holdingDescription;
         }
 
         public void SetLanguage(LanguageAppViewModel language)

@@ -49,38 +49,38 @@ namespace PlataformaRio2C.Domain.Services
         //    return base.Create(holding);
         //}
 
-        public override ValidationResult Update(Holding holding)
-        {
-            if (!string.IsNullOrWhiteSpace(holding.Name))
-            {
-                var existHoldingByName = _repository.Get(e => e.Name == holding.Name && e.Id != holding.Id);
-                if (existHoldingByName != null)
-                {
-                    var error = new ValidationError(string.Format("Já existe um holding com o nome '{0}'.", holding.Name), new string[] { "Name" });
-                    _validationResult.Add(error);
-                }
-            }
+        //public override ValidationResult Update(Holding holding)
+        //{
+        //    if (!string.IsNullOrWhiteSpace(holding.Name))
+        //    {
+        //        var existHoldingByName = _repository.Get(e => e.Name == holding.Name && e.Id != holding.Id);
+        //        if (existHoldingByName != null)
+        //        {
+        //            var error = new ValidationError(string.Format("Já existe um holding com o nome '{0}'.", holding.Name), new string[] { "Name" });
+        //            _validationResult.Add(error);
+        //        }
+        //    }
 
-            var oldsDescriptions = _holdingDescriptionRepository.GetAll(e => e.HoldingId == holding.Id);
-            if (oldsDescriptions != null && oldsDescriptions.Any())
-            {
-                _holdingDescriptionRepository.DeleteAll(oldsDescriptions);
-            }
+        //    var oldsDescriptions = _holdingDescriptionRepository.GetAll(e => e.HoldingId == holding.Id);
+        //    if (oldsDescriptions != null && oldsDescriptions.Any())
+        //    {
+        //        _holdingDescriptionRepository.DeleteAll(oldsDescriptions);
+        //    }
 
-            if (holding.Descriptions != null && holding.Descriptions.Any())
-            {
-                foreach (var description in holding.Descriptions)
-                {
-                    var language = _languageRepository.GetAll(e => e.Code == description.LanguageCode).FirstOrDefault();
-                    description.SetLanguage(language);
-                    description.SetHolding(holding);
+        //    if (holding.Descriptions != null && holding.Descriptions.Any())
+        //    {
+        //        foreach (var description in holding.Descriptions)
+        //        {
+        //            var language = _languageRepository.GetAll(e => e.Code == description.LanguageCode).FirstOrDefault();
+        //            description.SetLanguage(language);
+        //            description.SetHolding(holding);
 
-                    _holdingDescriptionRepository.Create(description);
-                }
-            }
+        //            _holdingDescriptionRepository.Create(description);
+        //        }
+        //    }
 
-            return base.Update(holding);
-        }
+        //    return base.Update(holding);
+        //}
 
         public override ValidationResult Delete(Holding entity)
         {

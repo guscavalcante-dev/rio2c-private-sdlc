@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-16-2019
+// Last Modified On : 08-18-2019
 // ***********************************************************************
 // <copyright file="HoldingDescription.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,8 +26,6 @@ namespace PlataformaRio2C.Domain.Entities
         public int LanguageId { get; private set; }
         public string Value { get; private set; }
 
-        public virtual string LanguageCode { get; private set; }
-
         public virtual Language Language { get; private set; }
         public virtual Holding Holding { get; private set; }
 
@@ -38,7 +36,8 @@ namespace PlataformaRio2C.Domain.Entities
         public HoldingDescription(string value, Language language, int userId)
         {
             this.Value = value?.Trim();
-            this.SetLanguage(language);
+            this.Language = language;
+            this.LanguageId = language?.Id ?? 0;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
         }
@@ -48,30 +47,41 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        public HoldingDescription(string value, string languageCode)
+        /// <summary>Updates the specified description.</summary>
+        /// <param name="description">The description.</param>
+        public void Update(HoldingDescription description)
         {
-            this.Value = value?.Trim();
-            this.LanguageCode = languageCode;
+            this.Value = description.Value.Trim();
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = description.UpdateUserId;
         }
 
-        /// <summary>Sets the language.</summary>
-        /// <param name="language">The language.</param>
-        public void SetLanguage(Language language)
-        {
-            this.Language = language;
-            this.LanguageId = language?.Id ?? 0;
-            this.LanguageCode = language?.Code;
-        }
+        ///// <summary>Sets the language.</summary>
+        ///// <param name="language">The language.</param>
+        //public void SetLanguage(Language language)
+        //{
+        //    this.Language = language;
+        //    this.LanguageId = language?.Id ?? 0;
+        //    this.LanguageCode = language?.Code;
+        //}
 
-        /// <summary>Sets the holding.</summary>
-        /// <param name="holding">The holding.</param>
-        public void SetHolding(Holding holding)
-        {
-            this.Holding = holding;
-            this.HoldingId = holding.Id;
-        }
+        // Remove below
 
-        #region Validation
+        //public HoldingDescription(string value, string languageCode)
+        //{
+        //    this.Value = value?.Trim();
+        //    this.LanguageCode = languageCode;
+        //}
+
+        ///// <summary>Sets the holding.</summary>
+        ///// <param name="holding">The holding.</param>
+        //public void SetHolding(Holding holding)
+        //{
+        //    this.Holding = holding;
+        //    this.HoldingId = holding.Id;
+        //}
+
+        #region Validations
 
         /// <summary>Returns true if ... is valid.</summary>
         /// <returns>

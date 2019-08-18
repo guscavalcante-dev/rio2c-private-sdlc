@@ -4,7 +4,7 @@
 // Created          : 08-13-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-16-2019
+// Last Modified On : 08-18-2019
 // ***********************************************************************
 // <copyright file="holdings.create.modal.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -65,8 +65,11 @@ var HoldingsCreateModal = function () {
         MyRio2cCommon.enableAjaxForm({
             idOrClass: formId,
             onSuccess: function () {
-                //enableCreatePlugins();
                 $(modalId).modal('hide');
+
+                if (!MyRio2cCommon.isNullOrEmpty(HoldingsDataTableWidget)) {
+                    HoldingsDataTableWidget.refreshData();
+                }
             },
             onError: function () {
                 enablelugins();

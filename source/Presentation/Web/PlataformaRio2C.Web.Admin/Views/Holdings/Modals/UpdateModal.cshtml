@@ -9,7 +9,7 @@
             <div class="modal-body">
                 @using (Html.BeginForm("Update", "Holdings", new { Area = "" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UpdateHoldingForm" }))
                 {
-                    @Html.HiddenFor(m => m.Uid)
+                    @Html.HiddenFor(m => m.HoldingUid)
                     <div id="form-container">
                         @Html.Partial("Modals/_Form", Model)
                     </div>
@@ -17,7 +17,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">@Labels.Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="$('#CreateHoldingForm').submit();">@Labels.Save</button>
+                <button type="button" class="btn btn-primary" onclick="$('#UpdateHoldingForm').submit();">@Labels.Save</button>
             </div>
         </div>
     </div>

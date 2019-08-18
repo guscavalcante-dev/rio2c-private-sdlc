@@ -4,7 +4,7 @@
 // Created          : 08-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-16-2019
+// Last Modified On : 08-18-2019
 // ***********************************************************************
 // <copyright file="HoldingBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Dtos
 {

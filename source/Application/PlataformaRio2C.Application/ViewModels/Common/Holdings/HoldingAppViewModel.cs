@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-12-2019
+// Last Modified On : 08-18-2019
 // ***********************************************************************
 // <copyright file="HoldingAppViewModel.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -80,7 +80,7 @@ namespace PlataformaRio2C.Application.ViewModels
                 foreach (var description in Descriptions)
                 {
                     description.SetLanguage(new LanguageAppViewModel(description.LanguageCode));
-                    holding.CreateDescription(description.MapReverse());
+                    //holding.CreateDescription(description.MapReverse());
                 }
             }
 

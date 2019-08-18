@@ -4,7 +4,7 @@
 // Created          : 08-14-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-14-2019
+// Last Modified On : 08-18-2019
 // ***********************************************************************
 // <copyright file="myrio2c.cropper.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -157,6 +157,7 @@ var MyRio2cCropper = function () {
                     if (/^image\/\w+$/.test(file.type)) {
                         MyRio2cCommon.hide($('.existent-image-container'));
                         MyRio2cCommon.show($('.cropper-control-hide'));
+                        $('#CropperImage_IsImageUploaded').val('True');
 
                         blobURL = URL.createObjectURL(file);
                         $image.one('built.cropper', function () {
@@ -182,10 +183,18 @@ var MyRio2cCropper = function () {
         }
     };
 
-    var cancel = function() {
+    var cancel = function () {
         $('#ImageFile').val('');
+        $('#CropperImage_IsImageUploaded').val('True');
         MyRio2cCommon.show($('.existent-image-container'));
         MyRio2cCommon.hide($('.cropper-control-hide'));
+    };
+
+    var remove = function () {
+        $('#ImageFile').val('');
+        $('#CropperImage_IsImageUploaded').val('False');
+        $('#current-image').addClass('d-none');
+        $('#no-image').removeClass('d-none');
     };
 
     return {
@@ -193,8 +202,11 @@ var MyRio2cCropper = function () {
         init: function (options) {
             enableCropper(options);
         },
-        cancel: function() {
+        cancel: function () {
             cancel();
+        },
+        remove: function () {
+            remove();
         }
     };
 }();

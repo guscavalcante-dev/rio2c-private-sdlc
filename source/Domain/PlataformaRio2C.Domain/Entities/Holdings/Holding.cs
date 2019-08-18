@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-16-2019
+// Last Modified On : 08-18-2019
 // ***********************************************************************
 // <copyright file="Holding.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,17 +33,17 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Initializes a new instance of the <see cref="Holding"/> class.</summary>
         /// <param name="uid">The uid.</param>
         /// <param name="name">The name.</param>
-        /// <param name="userId">The user identifier.</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
-        /// <param name="descriptions"></param>
-        public Holding(Guid uid, string name, int userId, bool isImageUploaded, List<HoldingDescription> descriptions)
+        /// <param name="descriptions">The descriptions.</param>
+        /// <param name="userId">The user identifier.</param>
+        public Holding(Guid uid, string name, bool isImageUploaded, List<HoldingDescription> descriptions, int userId)
         {
             //this.Uid = uid;
             this.SetName(name);
             this.IsImageUploaded = isImageUploaded;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
-            this.CreateDescriptions(descriptions);
+            this.SynchronizeDescriptions(descriptions);
         }
 
         /// <summary>Initializes a new instance of the <see cref="Holding"/> class.</summary>
@@ -51,31 +51,71 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
+        /// <summary>Updates the specified name.</summary>
+        /// <param name="name">The name.</param>
+        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="descriptions">The descriptions.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Update(string name, bool isImageUploaded, List<HoldingDescription> descriptions, int userId)
+        {
+            //this.Uid = uid;
+            this.SetName(name);
+            this.IsImageUploaded = isImageUploaded;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+            this.SynchronizeDescriptions(descriptions);
+        }
+
         #region Descriptions
 
-        private void CreateDescriptions(List<HoldingDescription> descriptions)
+        /// <summary>Synchronizes the descriptions.</summary>
+        /// <param name="descriptions">The descriptions.</param>
+        private void SynchronizeDescriptions(List<HoldingDescription> descriptions)
         {
             if (this.Descriptions == null)
             {
                 this.Descriptions = new List<HoldingDescription>();
             }
 
+            // Remove descriptions
+            this.RemoveDescriptions(descriptions);
+
             if (descriptions?.Any() != true)
             {
                 return;
             }
 
+            // Create or update descriptions
             foreach (var description in descriptions)
             {
-                this.CreateDescription(description);
+                var descriptionDb = this.Descriptions.FirstOrDefault(d => d.Language.Code == description.Language.Code);
+                if (descriptionDb != null)
+                {
+                    descriptionDb.Update(description);
+                }
+                else
+                {
+                    this.CreateDescription(description);
+                }
             }
         }
 
         /// <summary>Creates the description.</summary>
         /// <param name="description">The description.</param>
-        public void CreateDescription(HoldingDescription description)
+        private void CreateDescription(HoldingDescription description)
         {
             this.Descriptions.Add(description);
+        }
+
+        private void RemoveDescriptions(List<HoldingDescription> descriptions)
+        {
+            var descriptionsToDelete = this.Descriptions.Where(db => descriptions?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false).ToList();
+
+            // Remove transactions from the list
+            foreach (var descriptionToDelete in descriptionsToDelete)
+            {
+                this.Descriptions.Remove(descriptionToDelete);
+            }
         }
 
         #endregion

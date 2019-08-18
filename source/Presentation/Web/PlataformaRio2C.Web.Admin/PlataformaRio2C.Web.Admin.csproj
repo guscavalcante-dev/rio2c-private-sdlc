@@ -351,7 +351,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\components\cropper\myrio2c.cropper.js" />
+    <Content Include="Assets\js\myrio2c.cropper.js" />
     <Content Include="Assets\components\cropper\demo\css\main.css" />
     <Content Include="Assets\components\cropper\demo\index.html" />
     <Content Include="Assets\components\cropper\demo\js\main.js" />

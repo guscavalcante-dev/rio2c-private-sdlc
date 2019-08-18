@@ -4,7 +4,7 @@
 // Created          : 08-15-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-16-2019
+// Last Modified On : 08-18-2019
 // ***********************************************************************
 // <copyright file="FileAwsRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,7 +14,6 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using Amazon;
@@ -51,20 +50,14 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
 
         #region Get Url
 
-        /// <summary>Gets the image URL.</summary>
-        /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
-        /// <param name="imageUid">The image uid.</param>
-        /// <param name="hasImage">if set to <c>true</c> [has image].</param>
-        /// <param name="isThumbnail">if set to <c>true</c> [is thumbnail].</param>
-        /// <returns></returns>
-        public string GetImageUrl(FileRepositoryPathType fileRepositoryPathType, Guid? imageUid, bool hasImage, bool isThumbnail)
+        public string GetImageUrl(FileRepositoryPathType fileRepositoryPathType, Guid? imageUid, string version, bool hasImage, bool isThumbnail)
         {
             if (!hasImage || !imageUid.HasValue)
             {
                 return string.Empty;
             }
 
-            return this.GetUrl(fileRepositoryPathType, imageUid.Value) + (isThumbnail ? "_thumbnail.png" : "_original.png");
+            return this.GetUrl(fileRepositoryPathType, imageUid.Value) + (isThumbnail ? "_thumbnail.png" : "_original.png") + (!string.IsNullOrEmpty(version) ? $"?v={version}" : string.Empty);
         }
 
         /// <summary>Gets the URL.</summary>
@@ -88,7 +81,6 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
         /// <param name="args">The arguments.</param>
         public void Upload(Stream inputStream, string contentType, string fileName, FileRepositoryPathType fileRepositoryPathType, params object[] args)
         {
-            // Get the phisical directory
             var directory = this.GetBaseDirectory(fileRepositoryPathType, args);
 
             try
@@ -126,7 +118,24 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
 
         #endregion
 
+        #region Delete
+
+        /// <summary>Deletes the images.</summary>
+        /// <param name="imageUid">The image uid.</param>
+        /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
+        /// <param name="args">The arguments.</param>
+        public void DeleteImages(Guid imageUid, FileRepositoryPathType fileRepositoryPathType, params object[] args)
+        {
+            var fileName = imageUid + "_";
+
+            this.DeleteFiles(fileName, fileRepositoryPathType, args);
+        }
+
+        #endregion
+
         #region Private Methods
+
+        #region Directories
 
         /// <summary>Gets the directory URL.</summary>
         /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
@@ -172,6 +181,104 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
 
             return $"https://{this.awsBucket}";
         }
+
+        #endregion
+
+        #region Get
+
+        /// <summary>Gets the files.</summary>
+        /// <param name="directory">The directory.</param>
+        /// <param name="filename">The filename.</param>
+        /// <returns></returns>
+        private List<string> GetFiles(string directory, string filename = null)
+        {
+            var files = new List<string>();
+            using (IAmazonS3 client = new AmazonS3Client(this.awsAccessKey, awsSecretKey, RegionEndpoint.USEast1))
+            {
+                var request = new ListObjectsRequest
+                {
+                    BucketName = this.awsBucket
+                };
+
+                if (filename != null)
+                    request.Prefix = directory + filename;
+                else
+                    request.Prefix = directory;
+
+                do
+                {
+                    ListObjectsResponse response = client.ListObjects(request);
+
+                    files.AddRange(response.S3Objects.Select(entry => entry.Key));
+
+                    if (response.IsTruncated)
+                    {
+                        request.Marker = response.NextMarker;
+                    }
+                    else
+                    {
+                        request = null;
+                    }
+                }
+                while (request != null);
+            }
+            return files;
+        }
+
+        #endregion
+
+        #region Delete
+
+        /// <summary>Deletes the files.</summary>
+        /// <param name="fileName">Name of the file.</param>
+        /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
+        /// <param name="args">The arguments.</param>
+        private void DeleteFiles(string fileName, FileRepositoryPathType fileRepositoryPathType, params object[] args)
+        {
+            var directory = this.GetBaseDirectory(fileRepositoryPathType, args);
+
+            foreach (var file in this.GetFiles(directory, fileName))
+            {
+                this.DeleteFile(file);
+            }
+        }
+
+        /// <summary>Deletes the file.</summary>
+        /// <param name="fileName">Name of the file.</param>
+        private void DeleteFile(string fileName)
+        {
+            try
+            {
+                using (IAmazonS3 client = new AmazonS3Client(this.awsAccessKey, awsSecretKey, RegionEndpoint.USEast1))
+                {
+                    // Create a DeleteObject request
+                    var request = new DeleteObjectRequest
+                    {
+                        BucketName = this.awsBucket,
+                        Key = fileName
+                    };
+
+                    // Issue request
+                    client.DeleteObject(request);
+                }
+            }
+            catch (AmazonS3Exception amazonS3Exception)
+            {
+                if (amazonS3Exception.ErrorCode != null &&
+                    (amazonS3Exception.ErrorCode.Equals("InvalidAccessKeyId") ||
+                     amazonS3Exception.ErrorCode.Equals("InvalidSecurity")))
+                {
+                    Console.WriteLine("Please check the provided AWS Credentials.");
+                    Console.WriteLine("If you haven't signed up for Amazon S3, please visit http://aws.amazon.com/s3");
+                    throw;
+                }
+
+                Console.WriteLine("An error occurred with the message '{0}' when writing an object", amazonS3Exception.Message);
+                throw;
+            }
+        }
+
+        #endregion
 
         #endregion
 
