@@ -44,7 +44,6 @@ var HoldingsDelete = function () {
 
     var showModal = function (holdingUid) {
         bootbox.dialog({
-            title: labels.deleteConfirmationTitle,
             message: labels.deleteConfirmationMessage,
             buttons: {
                 cancel: {

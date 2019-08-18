@@ -516,6 +516,10 @@
   <data name="ZipCodeIsRequired" xml:space="preserve">
     <value>Cep obrigatório.</value>
   </data>
+  <data name="ConfirmDelete" xml:space="preserve">
+    <value>Por favor, confirme para excluir.</value>
+    <comment>Por favor, confirme para excluir.</comment>
+  </data>
   <data name="EntityNotAction" xml:space="preserve">
     <value>{0} não {1}.</value>
     <comment>{0} não {1}.</comment>

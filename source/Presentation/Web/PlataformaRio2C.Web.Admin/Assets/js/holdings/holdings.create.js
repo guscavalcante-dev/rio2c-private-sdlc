@@ -46,7 +46,6 @@ var HoldingsCreate = function () {
                 onSuccess: function () {
                     enablelugins();
                     $(modalId).modal();
-                    MyRio2cCommon.unblock();
                 },
                 // Error
                 onError: function() {
@@ -54,9 +53,9 @@ var HoldingsCreate = function () {
             });
         })
         .fail(function () {
+        })
+        .always(function () {
             MyRio2cCommon.unblock();
-            //showAlert();
-            //MyRio2cCommon.unblock(widgetElementId);
         });
     };
 
