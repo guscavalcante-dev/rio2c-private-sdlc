@@ -1,6 +1,4 @@
-﻿USE [Rio2C_Dev]
-GO
-SET ANSI_NULLS ON
+﻿SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
@@ -386,7 +384,7 @@ CREATE TABLE [dbo].[Collaborators](
 	[Uid] [uniqueidentifier] NOT NULL,
 	[FirstName] [varchar](100) NOT NULL,
 	[LastNames] [varchar](200) NULL,
-	[IsImageUploaded] [bit] NOT NULL,
+	[ImageUploadDate] [datetime] NULL,
 	[PhoneNumber] [varchar](50) NULL,
 	[CellPhone] [varchar](50) NULL,
 	[Badge] [varchar](50) NULL,
@@ -703,7 +701,7 @@ CREATE TABLE [dbo].[Holdings](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
 	[Name] [varchar](100) NOT NULL,
-	[IsImageUploaded] [bit] NOT NULL,
+	[ImageUploadDate] [datetime] NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,
 	[UpdateDate] [datetime] NOT NULL,
@@ -1107,7 +1105,8 @@ CREATE TABLE [dbo].[Organizations](
 	[Website] [varchar](100) NULL,
 	[SocialMedia] [varchar](256) NULL,
 	[PhoneNumber] [varchar](50) NULL,
-	[HasImage] [bit] NOT NULL,
+	[AddressId] [int] NULL,
+	[ImageUploadDate] [datetime] NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,
 	[UpdateDate] [datetime] NOT NULL,
@@ -2677,6 +2676,11 @@ ALTER TABLE [dbo].[OrganizationRestrictionSpecifics]  WITH CHECK ADD  CONSTRAINT
 REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[OrganizationRestrictionSpecifics] CHECK CONSTRAINT [FK_Users_OrganizationRestrictionSpecifics_UpdateUserId]
+GO
+ALTER TABLE [dbo].[Organizations]  WITH CHECK ADD  CONSTRAINT [FK_Addresses_Organizations_AddressId] FOREIGN KEY([AddressId])
+REFERENCES [dbo].[Addresses] ([Id])
+GO
+ALTER TABLE [dbo].[Organizations] CHECK CONSTRAINT [FK_Addresses_Organizations_AddressId]
 GO
 ALTER TABLE [dbo].[Organizations]  WITH CHECK ADD  CONSTRAINT [FK_Holdings_Organizations_HoldingId] FOREIGN KEY([HoldingId])
 REFERENCES [dbo].[Holdings] ([Id])
