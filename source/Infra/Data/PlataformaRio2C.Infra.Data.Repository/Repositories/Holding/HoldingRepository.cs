@@ -164,7 +164,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 Id = h.Id,
                                 Uid = h.Uid,
                                 Name = h.Name,
-                                IsImageUploaded = h.IsImageUploaded,
+                                ImageUploadDate = h.ImageUploadDate,
                                 CreateDate = h.CreateDate,
                                 CreateUserId = h.CreateUserId,
                                 UpdateDate = h.UpdateDate,
@@ -212,7 +212,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 Id = h.Id,
                                 Uid = h.Uid,
                                 Name = h.Name,
-                                IsImageUploaded = h.IsImageUploaded,
+                                ImageUploadDate = h.ImageUploadDate,
                                 CreateDate = h.CreateDate,
                                 UpdateDate = h.UpdateDate,
                             })

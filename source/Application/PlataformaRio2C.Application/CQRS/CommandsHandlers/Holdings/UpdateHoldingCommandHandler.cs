@@ -78,7 +78,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #endregion
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
-            var beforeIsImageUploaded = holding.IsImageUploaded;
+            var beforeImageUploadDate = holding.ImageUploadDate;
 
             var newDescriptions = cmd.Descriptions?.Where(d => !string.IsNullOrEmpty(d.Value))?.Select(d => new HoldingDescription(
                 d.Value,
@@ -95,7 +95,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             // Update holding
             holding.Update(
                 cmd.Name,
-                cmd.CropperImage?.IsImageUploaded == true,
+                cmd.CropperImage?.ImageFile != null,
+                cmd.CropperImage?.IsImageDeleted == true,
                 newDescriptions,
                 cmd.UserId);
 
@@ -122,7 +123,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     FileRepositoryPathType.HoldingImage);
             }
             // Delete images
-            else if (beforeIsImageUploaded && !holding.IsImageUploaded && cmd.CropperImage?.ImageFile == null)
+            else if (cmd.CropperImage?.IsImageDeleted == true && beforeImageUploadDate.HasValue)
             {
                 ImageHelper.DeleteOriginalAndCroppedImages(
                     holding.Uid,

@@ -43,18 +43,17 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
         /// <summary>Gets the image URL.</summary>
         /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
         /// <param name="imageUid">The image uid.</param>
-        /// <param name="version">The version.</param>
-        /// <param name="hasImage">if set to <c>true</c> [has image].</param>
+        /// <param name="imageUploadDate">The image upload date.</param>
         /// <param name="isThumbnail">if set to <c>true</c> [is thumbnail].</param>
         /// <returns></returns>
-        public string GetImageUrl(FileRepositoryPathType fileRepositoryPathType, Guid? imageUid, string version, bool hasImage, bool isThumbnail)
+        public string GetImageUrl(FileRepositoryPathType fileRepositoryPathType, Guid? imageUid, DateTime? imageUploadDate, bool isThumbnail)
         {
-            if (!hasImage || !imageUid.HasValue)
+            if (!imageUploadDate.HasValue || !imageUid.HasValue)
             {
                 return string.Empty;
             }
 
-            return this.GetUrl(fileRepositoryPathType, imageUid.Value) + (isThumbnail ? "_thumbnail.png" : "_original.png") + (!string.IsNullOrEmpty(version) ? $"?v={version}" : string.Empty);
+            return this.GetUrl(fileRepositoryPathType, imageUid.Value) + (isThumbnail ? "_thumbnail.png" : "_original.png") + $"?v={imageUploadDate.Value.ToString("yyyyMMddHHmmss")}";
         }
 
         /// <summary>Gets the URL.</summary>

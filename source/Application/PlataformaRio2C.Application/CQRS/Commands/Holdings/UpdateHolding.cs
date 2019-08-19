@@ -35,7 +35,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdaterBaseDto = entity.UpdaterDto;
             this.UpdateDate = entity.UpdateDate;
             this.UpdateDescriptions(entity, languagesDtos);
-            this.CropperImage = new CropperImageBaseCommand(entity.IsImageUploaded, entity.Uid, entity.UpdateDate.ToString("yyyyMMddHHmmss"));
+            this.CropperImage = new CropperImageBaseCommand(entity.ImageUploadDate, entity.Uid);
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateHolding"/> class.</summary>

@@ -113,8 +113,8 @@ var HoldingsDataTableWidget = function () {
                     targets: [0],
                     render: function (data, type, full, meta) {
                         var image = '';
-                        if (full.IsImageUploaded) {
-                            image += '<img style="max-width: 30px; max-height: 30px;" src="https://dev.assets.my.rio2c.com/img/holdings/' + full.Uid + '_thumbnail.png?v=' + moment(full.UpdateDate).locale(userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
+                        if (!MyRio2cCommon.isNullOrEmpty(full.ImageUploadDate)) {
+                            image += '<img style="max-width: 30px; max-height: 30px;" src="https://dev.assets.my.rio2c.com/img/holdings/' + full.Uid + '_thumbnail.png?v=' + moment(full.ImageUploadDate).locale(userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
                         }
                         else {
                             image += '<img style="max-width: 30px; max-height: 30px;" src="https://dev.assets.my.rio2c.com/img/holdings/no-image.png?v=20190818200849" /> ';

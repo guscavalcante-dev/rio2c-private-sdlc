@@ -8951,7 +8951,6 @@
     <Folder Include="Scripts\ckeditor\skins\office2003\images\" />
     <Folder Include="Scripts\ckeditor\skins\v2\images\" />
     <Folder Include="Scripts\ckeditor\themes\default\" />
-    <Folder Include="Scripts\globalize\" />
     <Folder Include="UploadsArchives\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Event\" />

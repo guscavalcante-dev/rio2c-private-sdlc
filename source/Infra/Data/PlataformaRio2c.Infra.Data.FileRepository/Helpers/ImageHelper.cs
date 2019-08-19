@@ -84,14 +84,13 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
         /// <param name="html">The HTML.</param>
         /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
         /// <param name="imageUid">The image uid.</param>
-        /// <param name="version">The version.</param>
-        /// <param name="hasImage">if set to <c>true</c> [has image].</param>
+        /// <param name="imageUploadDate">The image upload date.</param>
         /// <param name="isThumbnail">if set to <c>true</c> [is thumbnail].</param>
         /// <returns></returns>
-        public static string GetImageUrl<T>(this HtmlHelper<T> html, FileRepositoryPathType fileRepositoryPathType, Guid imageUid, string version, bool hasImage, bool isThumbnail)
+        public static string GetImageUrl<T>(this HtmlHelper<T> html, FileRepositoryPathType fileRepositoryPathType, Guid imageUid, DateTime imageUploadDate, bool isThumbnail)
         {
             var fileRepo = new FileRepositoryFactory().Get();
-            return fileRepo.GetImageUrl(fileRepositoryPathType, imageUid, version, hasImage, isThumbnail);
+            return fileRepo.GetImageUrl(fileRepositoryPathType, imageUid, imageUploadDate, isThumbnail);
         }
 
         #region Private Methods

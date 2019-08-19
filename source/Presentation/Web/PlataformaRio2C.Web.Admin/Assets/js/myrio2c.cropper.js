@@ -157,7 +157,7 @@ var MyRio2cCropper = function () {
                     if (/^image\/\w+$/.test(file.type)) {
                         MyRio2cCommon.hide($('.existent-image-container'));
                         MyRio2cCommon.show($('.cropper-control-hide'));
-                        $('#CropperImage_IsImageUploaded').val('True');
+                        $('#CropperImage_IsImageDeleted').val('False');
 
                         blobURL = URL.createObjectURL(file);
                         $image.one('built.cropper', function () {
@@ -185,14 +185,14 @@ var MyRio2cCropper = function () {
 
     var cancel = function () {
         $('#ImageFile').val('');
-        $('#CropperImage_IsImageUploaded').val('True');
+        $('#CropperImage_IsImageDeleted').val('False');
         MyRio2cCommon.show($('.existent-image-container'));
         MyRio2cCommon.hide($('.cropper-control-hide'));
     };
 
     var remove = function () {
         $('#ImageFile').val('');
-        $('#CropperImage_IsImageUploaded').val('False');
+        $('#CropperImage_IsImageDeleted').val('True');
         $('#current-image').addClass('d-none');
         $('#no-image').removeClass('d-none');
     };

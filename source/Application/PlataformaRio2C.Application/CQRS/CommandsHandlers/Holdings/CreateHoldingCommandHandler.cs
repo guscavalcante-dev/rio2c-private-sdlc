@@ -95,7 +95,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.Uow.SaveChanges();
             this.AppValidationResult.Data = holding;
 
-            if (holding.IsImageUploaded)
+            if (cmd.CropperImage?.ImageFile != null)
             {
                 ImageHelper.UploadOriginalAndCroppedImages(
                     holding.Uid,

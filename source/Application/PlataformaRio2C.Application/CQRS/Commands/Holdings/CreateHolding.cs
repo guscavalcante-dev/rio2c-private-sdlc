@@ -23,7 +23,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="languagesDtos">The languages dtos.</param>
         public CreateHolding(List<LanguageDto> languagesDtos)
         {
-            this.CropperImage = new CropperImageBaseCommand(false, null, null);
+            this.CropperImage = new CropperImageBaseCommand(null, null);
             this.UpdateDescriptions(languagesDtos);
         }
 

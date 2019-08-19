@@ -34,24 +34,35 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [HttpPostedFileExtensions(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "InvalidImage")]
         public HttpPostedFileBase ImageFile { get; set; }
 
-        public bool IsImageUploaded { get; set; }
+        public string ImageUploadDate { get; set; }
         public Guid? ImageUid { get; set; }
-        public string ImageVersion { get; set; }
+        public bool IsImageDeleted { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CropperImageBaseCommand"/> class.</summary>
-        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="imageUploadDate">The image upload date.</param>
         /// <param name="imageUid">The image uid.</param>
-        /// <param name="imageVersion">The image version.</param>
-        public CropperImageBaseCommand(bool isImageUploaded, Guid? imageUid, string imageVersion)
+        public CropperImageBaseCommand(DateTime? imageUploadDate, Guid? imageUid)
         {
-            this.IsImageUploaded = isImageUploaded;
+            this.ImageUploadDate = imageUploadDate?.ToString("yyyyMMddHHmmss");
             this.ImageUid = imageUid;
-            this.ImageVersion = imageVersion;
+            this.IsImageDeleted = false;
         }
 
         /// <summary>Initializes a new instance of the <see cref="CropperImageBaseCommand"/> class.</summary>
         public CropperImageBaseCommand()
         {
+        }
+
+        /// <summary>Gets the image upload date.</summary>
+        /// <returns></returns>
+        public DateTime? GetImageUploadDate()
+        {
+            if (string.IsNullOrEmpty(this.ImageUploadDate))
+            {
+                return null;
+            }
+
+            return DateTime.ParseExact(this.ImageUploadDate, "yyyyMMddHHmmss", null);
         }
     }
 }

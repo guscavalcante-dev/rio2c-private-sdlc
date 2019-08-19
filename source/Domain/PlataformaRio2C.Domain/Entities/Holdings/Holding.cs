@@ -26,7 +26,7 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int NameMaxLength = 100;
 
         public string Name { get; private set; }
-        public bool IsImageUploaded { get; private set; }
+        public DateTime? ImageUploadDate { get; private set; }
 
         public virtual User Updater { get; private set; }
 
@@ -43,7 +43,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             //this.Uid = uid;
             this.Name = name?.Trim();
-            this.IsImageUploaded = isImageUploaded;
+            this.ImageUploadDate = isImageUploaded ? (DateTime?)DateTime.Now : null;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeDescriptions(descriptions);
@@ -57,13 +57,21 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Updates the specified name.</summary>
         /// <param name="name">The name.</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
         /// <param name="descriptions">The descriptions.</param>
         /// <param name="userId">The user identifier.</param>
-        public void Update(string name, bool isImageUploaded, List<HoldingDescription> descriptions, int userId)
+        public void Update(string name, bool isImageUploaded, bool isImageDeleted, List<HoldingDescription> descriptions, int userId)
         {
             //this.Uid = uid;
             this.Name = name?.Trim();
-            this.IsImageUploaded = isImageUploaded;
+            if (isImageUploaded)
+            {
+                this.ImageUploadDate = DateTime.Now;
+            }
+            else if (isImageDeleted)
+            {
+                this.ImageUploadDate = null;
+            }
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
             this.SynchronizeDescriptions(descriptions);

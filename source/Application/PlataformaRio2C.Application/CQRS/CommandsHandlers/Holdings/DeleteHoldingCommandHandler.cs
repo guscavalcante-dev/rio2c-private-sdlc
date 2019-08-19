@@ -67,7 +67,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            var beforeIsImageUploaded = holding.IsImageUploaded;
+            var beforeImageUploadDate = holding.ImageUploadDate;
 
             // Delete holding descriptions
             var deletedDescriptions = holding.Descriptions;
@@ -79,7 +79,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.HoldingRepo.Delete(holding);
             this.Uow.SaveChanges();
 
-            if (beforeIsImageUploaded)
+            if (beforeImageUploadDate.HasValue)
             {
                 ImageHelper.DeleteOriginalAndCroppedImages(
                     cmd.HoldingUid,
