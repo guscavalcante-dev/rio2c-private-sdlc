@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 
@@ -50,7 +51,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdaterBaseDto = entity.UpdaterDto;
             this.UpdateDate = entity.UpdateDate;
             this.UpdateDescriptions(entity, languagesDtos);
-            this.CropperImage = new CropperImageBaseCommand(entity.ImageUploadDate, entity.Uid);
+            this.CropperImage = new CropperImageBaseCommand(entity.ImageUploadDate, entity.Uid, FileRepositoryPathType.OrganizationImage);
             this.UpdateBaseProperties(holdingBaseDtos);
         }
 

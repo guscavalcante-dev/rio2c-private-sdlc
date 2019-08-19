@@ -14,6 +14,7 @@
 using System.Collections.Generic;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Domain.Statics;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -27,7 +28,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="languagesDtos">The languages dtos.</param>
         public CreateOrganization(List<HoldingBaseDto> holdingBaseDtos, List<LanguageDto> languagesDtos)
         {
-            this.CropperImage = new CropperImageBaseCommand(null, null);
+            this.CropperImage = new CropperImageBaseCommand(null, null, FileRepositoryPathType.OrganizationImage);
             this.UpdateDescriptions(languagesDtos);
             this.UpdateBaseProperties(holdingBaseDtos);
         }

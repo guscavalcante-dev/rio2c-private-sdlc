@@ -4,7 +4,7 @@
 // Created          : 08-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-18-2019
+// Last Modified On : 08-19-2019
 // ***********************************************************************
 // <copyright file="UpdateHolding.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 
@@ -42,7 +43,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdaterBaseDto = entity.UpdaterDto;
             this.UpdateDate = entity.UpdateDate;
             this.UpdateDescriptions(entity, languagesDtos);
-            this.CropperImage = new CropperImageBaseCommand(entity.ImageUploadDate, entity.Uid);
+            this.CropperImage = new CropperImageBaseCommand(entity.ImageUploadDate, entity.Uid, FileRepositoryPathType.HoldingImage);
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateHolding"/> class.</summary>

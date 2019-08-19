@@ -14,6 +14,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web;
+using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 
@@ -37,15 +38,18 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string ImageUploadDate { get; set; }
         public Guid? ImageUid { get; set; }
         public bool IsImageDeleted { get; set; }
+        public Guid? FileRepositoryPathTypeUid { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CropperImageBaseCommand"/> class.</summary>
         /// <param name="imageUploadDate">The image upload date.</param>
         /// <param name="imageUid">The image uid.</param>
-        public CropperImageBaseCommand(DateTime? imageUploadDate, Guid? imageUid)
+        /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
+        public CropperImageBaseCommand(DateTime? imageUploadDate, Guid? imageUid, FileRepositoryPathType fileRepositoryPathType)
         {
             this.ImageUploadDate = imageUploadDate?.ToString("yyyyMMddHHmmss");
             this.ImageUid = imageUid;
             this.IsImageDeleted = false;
+            this.FileRepositoryPathTypeUid = fileRepositoryPathType.Uid;
         }
 
         /// <summary>Initializes a new instance of the <see cref="CropperImageBaseCommand"/> class.</summary>
