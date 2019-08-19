@@ -67,8 +67,16 @@ var OrganizationsUpdate = function () {
             onSuccess: function (data) {
                 $(modalId).modal('hide');
 
-                if (!MyRio2cCommon.isNullOrEmpty(HoldingsDataTableWidget)) {
-                    HoldingsDataTableWidget.refreshData();
+                if (typeof (OrganizationsDataTableWidget) !== 'undefined') {
+                    OrganizationsDataTableWidget.refreshData();
+                }
+
+                if (typeof (OrganizationsTotalCountWidget) !== 'undefined') {
+                    OrganizationsTotalCountWidget.init();
+                }
+
+                if (typeof (OrganizationsEditionCountWidget) !== 'undefined') {
+                    OrganizationsEditionCountWidget.init();
                 }
             },
             onError: function (data) {

@@ -232,6 +232,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to um player.
+        /// </summary>
+        public static string APlayer {
+            get {
+                return ResourceManager.GetString("APlayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data da chegada.
         /// </summary>
         public static string ArrivalDate {
@@ -1510,11 +1519,29 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nova.
+        /// </summary>
+        public static string NewF {
+            get {
+                return ResourceManager.GetString("NewF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nova Holding.
         /// </summary>
         public static string NewHolding {
             get {
                 return ResourceManager.GetString("NewHolding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Novo.
+        /// </summary>
+        public static string NewM {
+            get {
+                return ResourceManager.GetString("NewM", resourceCulture);
             }
         }
         
@@ -2667,6 +2694,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string UnscheduledNegotiations {
             get {
                 return ResourceManager.GetString("UnscheduledNegotiations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Atualizar.
+        /// </summary>
+        public static string Update {
+            get {
+                return ResourceManager.GetString("Update", resourceCulture);
             }
         }
         

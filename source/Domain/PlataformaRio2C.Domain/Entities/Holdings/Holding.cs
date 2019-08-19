@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-18-2019
+// Last Modified On : 08-19-2019
 // ***********************************************************************
 // <copyright file="Holding.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -115,7 +115,6 @@ namespace PlataformaRio2C.Domain.Entities
         {
             var descriptionsToDelete = this.Descriptions.Where(db => descriptions?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false).ToList();
 
-            // Remove transactions from the list
             foreach (var descriptionToDelete in descriptionsToDelete)
             {
                 this.Descriptions.Remove(descriptionToDelete);

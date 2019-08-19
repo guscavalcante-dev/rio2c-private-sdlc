@@ -24,17 +24,17 @@
                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Players", null)" aria-haspopup="true">
                         <a href="@Url.Action("Index", "Players")" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Companies</span></a>
                     </li>
-                    @*<li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "Index", "CollaboratorPlayer", null)" aria-haspopup="true">
+                    <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "Index", "CollaboratorPlayer", null)" aria-haspopup="true">
                         <a href="@Url.Action("Index", "CollaboratorPlayer")" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Executives</span></a>
                     </li>
                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "Collaborators", "ManualMessage", null)" aria-haspopup="true">
                         <a href="@Url.Action("Collaborators", "ManualMessage")" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.InvitationSending</span></a>
-                    </li>*@
+                    </li>
                 </ul>
             </div>
         </li>
     }
-    @*@if (isAdministrator || isProjectPitching)
+    @if (isAdministrator || isProjectPitching)
     {
         <li class="kt-menu__item kt-menu__item--submenu kt-menu__item--rel @this.IsOpen(menuOpenCssClass, "Index", "Producer", null) @this.IsOpen(menuOpenCssClass, "Index", "CollaboratorProducer", null) @this.IsOpen(menuOpenCssClass, "Index,ProjectPitching", "Project", null)" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
             <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">@Labels.Producers</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
@@ -126,5 +126,5 @@
                 </ul>
             </div>
         </li>
-    }*@
+    }
 </ul>

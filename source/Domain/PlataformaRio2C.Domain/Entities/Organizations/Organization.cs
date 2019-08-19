@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -22,9 +23,9 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int NameMinLength = 2;
         public static readonly int NameMaxLength = 100;
         public static readonly int CompanyNameMaxLength = 100;
+        public static readonly int TradeNameMaxLength = 100;
         public static readonly int WebSiteMaxLength = 100;
         public static readonly int SocialMediaMaxLength = 256;
-        public static readonly int TradeNameMaxLength = 100;
 
         public int? HoldingId { get; private set; }
         public string Name { get; private set; }
@@ -53,12 +54,54 @@ namespace PlataformaRio2C.Domain.Entities
         //public virtual ICollection<PlayerRestrictionsSpecifics> RestrictionsSpecifics { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="Organization"/> class.</summary>
-        /// <param name="name">The name.</param>
+        /// <param name="uid">The uid.</param>
         /// <param name="holding">The holding.</param>
-        public Organization(string name, Holding holding)
+        /// <param name="edition">The edition.</param>
+        /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="companyName">Name of the company.</param>
+        /// <param name="tradeName">Name of the trade.</param>
+        /// <param name="document">The document.</param>
+        /// <param name="website">The website.</param>
+        /// <param name="socialMedia">The social media.</param>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <param name="addressId">The address identifier.</param>
+        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="descriptions">The descriptions.</param>
+        /// <param name="userId">The user identifier.</param>
+        public Organization(
+            Guid uid, 
+            Holding holding, 
+            Edition edition,
+            OrganizationType organizationType,
+            string name, 
+            string companyName, 
+            string tradeName, 
+            string document, 
+            string website, 
+            string socialMedia, 
+            string phoneNumber, 
+            int? addressId, 
+            bool isImageUploaded, 
+            List<OrganizationDescription> descriptions, 
+            int userId)
         {
-            this.SetName(name);
-            this.SetHolding(holding);
+            //this.Uid = uid;
+            this.Holding = holding;
+            this.HoldingId = holding?.Id;
+            this.Name = name?.Trim();
+            this.CompanyName = companyName?.Trim();
+            this.TradeName = tradeName?.Trim();
+            this.Document = document?.Trim();
+            this.Website = website?.Trim();
+            this.SocialMedia = socialMedia?.Trim();
+            this.PhoneNumber = phoneNumber?.Trim();
+            this.AddressId = addressId;
+            this.ImageUploadDate = isImageUploaded ? (DateTime?)DateTime.Now : null;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateUserId = this.UpdateUserId = userId;
+            this.SynchronizeDescriptions(descriptions);
+            this.SynchronizeAttendeeOrganizations(edition, organizationType, userId);
         }
 
         /// <summary>Initializes a new instance of the <see cref="Organization"/> class.</summary>
@@ -66,20 +109,89 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Sets the name.</summary>
-        /// <param name="name">The name.</param>
-        public void SetName(string name)
+        #region Descriptions
+
+        /// <summary>Synchronizes the descriptions.</summary>
+        /// <param name="descriptions">The descriptions.</param>
+        private void SynchronizeDescriptions(List<OrganizationDescription> descriptions)
         {
-            this.Name = name;
+            if (this.Descriptions == null)
+            {
+                this.Descriptions = new List<OrganizationDescription>();
+            }
+
+            if (descriptions?.Any() != true)
+            {
+                return;
+            }
+
+            // Create or update descriptions
+            foreach (var description in descriptions)
+            {
+                var descriptionDb = this.Descriptions.FirstOrDefault(d => d.Language.Code == description.Language.Code);
+                if (descriptionDb != null)
+                {
+                    descriptionDb.Update(description);
+                }
+                else
+                {
+                    this.CreateDescription(description);
+                }
+            }
         }
 
-        /// <summary>Sets the holding.</summary>
-        /// <param name="holding">The holding.</param>
-        public void SetHolding(Holding holding)
+        /// <summary>Deletes the descriptions.</summary>
+        /// <param name="descriptions">The descriptions.</param>
+        /// <returns></returns>
+        public List<OrganizationDescription> DeleteDescriptions(List<OrganizationDescription> descriptions)
         {
-            this.Holding = holding;
-            this.HoldingId = holding.Id;
+            var descriptionsToDelete = this.Descriptions.Where(db => descriptions?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false).ToList();
+
+            foreach (var descriptionToDelete in descriptionsToDelete)
+            {
+                this.Descriptions.Remove(descriptionToDelete);
+            }
+
+            return descriptionsToDelete;
         }
+
+        /// <summary>Creates the description.</summary>
+        /// <param name="description">The description.</param>
+        private void CreateDescription(OrganizationDescription description)
+        {
+            this.Descriptions.Add(description);
+        }
+
+        #endregion
+
+        #region Attendee Organizations
+
+        /// <summary>Synchronizes the attendee organizations.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeAttendeeOrganizations(Edition edition, OrganizationType organizationType, int userId)
+        {
+            if (this.AttendeeOrganizations == null)
+            {
+                this.AttendeeOrganizations = new List<AttendeeOrganization>();
+            }
+
+            if (edition == null)
+            {
+                return;
+            }
+
+            var attendeeOrganization = this.AttendeeOrganizations.FirstOrDefault(ao => ao.EditionId == edition.Id);
+            if (attendeeOrganization != null)
+            {
+                return;
+            }
+
+            this.AttendeeOrganizations.Add(new AttendeeOrganization(edition, this, organizationType, userId));
+        }
+
+        #endregion
 
         /// <summary>Returns true if ... is valid.</summary>
         /// <returns>

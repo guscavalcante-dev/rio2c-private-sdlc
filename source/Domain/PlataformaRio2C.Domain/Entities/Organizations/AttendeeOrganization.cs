@@ -11,8 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -29,16 +30,49 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Initializes a new instance of the <see cref="AttendeeOrganization"/> class.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="organization">The organization.</param>
-        public AttendeeOrganization(Edition edition, Organization organization)
+        /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="userId">The user identifier.</param>
+        public AttendeeOrganization(Edition edition, Organization organization, OrganizationType organizationType, int userId)
         {
             this.Edition = edition;
             this.Organization = organization;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateUserId = this.UpdateUserId = userId;
+            this.SynchronizeAttendeeOrganizationTypes(organizationType, userId);
         }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeOrganization"/> class.</summary>
         protected AttendeeOrganization()
         {
         }
+
+        #region Attendee Organization Types
+
+        /// <summary>Synchronizes the attendee organization types.</summary>
+        /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeAttendeeOrganizationTypes(OrganizationType organizationType, int userId)
+        {
+            if (this.AttendeeOrganizationTypes == null)
+            {
+                this.AttendeeOrganizationTypes = new List<AttendeeOrganizationType>();
+            }
+
+            if (organizationType == null)
+            {
+                return;
+            }
+
+            var attendeeOrganizationType = this.AttendeeOrganizationTypes.FirstOrDefault(aot => aot.OrganizationTypeId == organizationType.Id);
+            if (attendeeOrganizationType != null)
+            {
+                return;
+            }
+
+            this.AttendeeOrganizationTypes.Add(new AttendeeOrganizationType(this, organizationType, userId));
+        }
+
+        #endregion
 
         /// <summary>Returns true if ... is valid.</summary>
         /// <returns>

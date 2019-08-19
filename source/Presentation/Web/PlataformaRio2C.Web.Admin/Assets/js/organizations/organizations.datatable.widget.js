@@ -129,13 +129,12 @@ var OrganizationsDataTableWidget = function () {
                     render: function (data, type, full, meta) {
                         var image = '';
                         if (!MyRio2cCommon.isNullOrEmpty(full.ImageUploadDate)) {
-                            image += '<img style="max-width: 30px; max-height: 30px;" src="https://dev.assets.my.rio2c.com/img/organizations/' + full.Uid + '_thumbnail.png?v=' + moment(full.ImageUploadDate).locale(userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
+                            image += '<img style="max-width: 50px; max-height: 50px;" src="https://dev.assets.my.rio2c.com/img/organizations/' + full.Uid + '_thumbnail.png?v=' + moment(full.ImageUploadDate).locale(userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
                         }
                         else {
-                            image += '<img style="max-width: 30px; max-height: 30px;" src="https://dev.assets.my.rio2c.com/img/organizations/no-image.png?v=20190818200849" /> ';
+                            image += '<img style="max-width: 50px; max-height: 50px;" src="https://dev.assets.my.rio2c.com/img/organizations/no-image.png?v=20190818200849" /> ';
                         }
                         return image + full.Name;
-                        //return moment(data).locale(userInterfaceLanguage).format('L LTS');
                     }
                 },
                 {

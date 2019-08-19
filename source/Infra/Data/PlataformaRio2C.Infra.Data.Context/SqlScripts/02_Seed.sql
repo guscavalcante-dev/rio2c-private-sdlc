@@ -199,17 +199,17 @@ GO
 SET IDENTITY_INSERT [dbo].[OrganizationTypes] ON 
 
 GO
-INSERT [dbo].[OrganizationTypes] ([Id], [Uid], [Name], [RelatedProjectTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (1, N'936b3262-8b8f-472c-94ad-3a2b925dd0ae', N'Player', 1, CAST(N'2019-08-05 15:32:10.480' AS DateTime), 1, N'Aug  5 2019  3:32P', 1)
+INSERT [dbo].[OrganizationTypes] ([Id], [Uid], [Name], [RelatedProjectTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (1, N'936b3262-8b8f-472c-94ad-3a2b925dd0ae', N'Player', 1, CAST(N'2019-08-05 15:32:10.480' AS DateTime), 1, CAST(N'2019-08-05 15:32:10.480' AS DateTime), 1)
 GO
-INSERT [dbo].[OrganizationTypes] ([Id], [Uid], [Name], [RelatedProjectTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (2, N'7ce5a34f-e31f-4c26-bed9-cdd6a0206185', N'Produtora', 1, CAST(N'2019-08-05 15:32:10.483' AS DateTime), 1, N'Aug  5 2019  3:32P', 1)
+INSERT [dbo].[OrganizationTypes] ([Id], [Uid], [Name], [RelatedProjectTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (2, N'7ce5a34f-e31f-4c26-bed9-cdd6a0206185', N'Produtora', 1, CAST(N'2019-08-05 15:32:10.483' AS DateTime), 1, CAST(N'2019-08-05 15:32:10.480' AS DateTime), 1)
 GO
-INSERT [dbo].[OrganizationTypes] ([Id], [Uid], [Name], [RelatedProjectTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (3, N'f2efdbaa-27bd-42bd-bf29-a8daed6093ff', N'Startup', 2, CAST(N'2019-08-05 15:32:10.483' AS DateTime), 1, N'Aug  5 2019  3:32P', 1)
+INSERT [dbo].[OrganizationTypes] ([Id], [Uid], [Name], [RelatedProjectTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (3, N'f2efdbaa-27bd-42bd-bf29-a8daed6093ff', N'Startup', 2, CAST(N'2019-08-05 15:32:10.483' AS DateTime), 1, CAST(N'2019-08-05 15:32:10.480' AS DateTime), 1)
 GO
-INSERT [dbo].[OrganizationTypes] ([Id], [Uid], [Name], [RelatedProjectTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (4, N'7eb327a9-95e8-4514-8e66-39510fc9ed03', N'Investidor', 2, CAST(N'2019-08-05 15:32:10.483' AS DateTime), 1, N'Aug  5 2019  3:32P', 1)
+INSERT [dbo].[OrganizationTypes] ([Id], [Uid], [Name], [RelatedProjectTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (4, N'7eb327a9-95e8-4514-8e66-39510fc9ed03', N'Investidor', 2, CAST(N'2019-08-05 15:32:10.483' AS DateTime), 1, CAST(N'2019-08-05 15:32:10.480' AS DateTime), 1)
 GO
-INSERT [dbo].[OrganizationTypes] ([Id], [Uid], [Name], [RelatedProjectTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (7, N'd077ba5c-2982-4b69-95d4-d9aa1bf8e7f4', N'Banda de Música', 3, CAST(N'2019-08-05 15:32:38.010' AS DateTime), 1, N'Aug  5 2019  3:32P', 1)
+INSERT [dbo].[OrganizationTypes] ([Id], [Uid], [Name], [RelatedProjectTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (7, N'd077ba5c-2982-4b69-95d4-d9aa1bf8e7f4', N'Banda de Música', 3, CAST(N'2019-08-05 15:32:38.010' AS DateTime), 1, CAST(N'2019-08-05 15:32:10.480' AS DateTime), 1)
 GO
-INSERT [dbo].[OrganizationTypes] ([Id], [Uid], [Name], [RelatedProjectTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (8, N'243aafb2-b610-49b4-b9bc-33cdf631c367', N'Gravadora', 3, CAST(N'2019-08-05 15:32:38.010' AS DateTime), 1, N'Aug  5 2019  3:32P', 1)
+INSERT [dbo].[OrganizationTypes] ([Id], [Uid], [Name], [RelatedProjectTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (8, N'243aafb2-b610-49b4-b9bc-33cdf631c367', N'Gravadora', 3, CAST(N'2019-08-05 15:32:38.010' AS DateTime), 1, CAST(N'2019-08-05 15:32:10.480' AS DateTime), 1)
 GO
 SET IDENTITY_INSERT [dbo].[OrganizationTypes] OFF
 GO

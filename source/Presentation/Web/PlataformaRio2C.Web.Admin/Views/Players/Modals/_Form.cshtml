@@ -4,21 +4,21 @@
         @Html.EditorFor(m => m.CropperImage)
     </div>
     <div class="col-lg-8">
-        <div class="form-group row"">
+        <div class="form-group row">
             <div class="col-md-12">
                 @Html.LabelFor(m => m.HoldingUid, new { @class = "control-label" })
                 @Html.DropDownList("HoldingUid", new SelectList(Model.HoldingBaseDtos, "Uid", "Name", Model.HoldingUid), $"{Labels.Select}...", new { @Class = "form-control select2-enable" })
                 @Html.ValidationMessageFor(m => m.HoldingUid, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="form-group row"">
+        <div class="form-group row">
             <div class="col-md-12">
                 @Html.LabelFor(m => m.Name, new { @class = "control-label" })
                 @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="form-group row"">
+        <div class="form-group row">
             <div class="col-md-12">
                 @Html.LabelFor(m => m.Document, new { @class = "control-label" })
                 @Html.TextBoxFor(m => m.Document, new { @class = "form-control" })
@@ -27,18 +27,39 @@
         </div>
     </div>
 </div>
-<div class="form-group row"">
+<div class="form-group row">
     <div class="col-md-12">
         @Html.LabelFor(m => m.CompanyName, new { @class = "control-label" })
         @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
     </div>
 </div>
-<div class="form-group row"">
+<div class="form-group row">
     <div class="col-md-12">
         @Html.LabelFor(m => m.TradeName, new { @class = "control-label" })
         @Html.TextBoxFor(m => m.TradeName, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.TradeName, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group row">
+    <div class="col-md-12">
+        @Html.LabelFor(m => m.Website, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Website, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Website, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group row">
+    <div class="col-md-12">
+        @Html.LabelFor(m => m.SocialMedia, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.SocialMedia, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.SocialMedia, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group row">
+    <div class="col-md-12">
+        @Html.LabelFor(m => m.PhoneNumber, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="kt-separator kt-separator--border-dashed kt-separator--space-xl"></div>

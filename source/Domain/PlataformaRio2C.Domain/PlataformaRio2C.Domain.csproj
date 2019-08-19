@@ -158,6 +158,7 @@
     <Compile Include="Interfaces\Repositories\Country\ICityRepository.cs" />
     <Compile Include="Interfaces\Repositories\Country\ICountryRepository.cs" />
     <Compile Include="Interfaces\Repositories\Country\IStateRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Organizations\IOrganizationTypeRepository.cs" />
     <Compile Include="Interfaces\Repositories\Organizations\IOrganizationRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAddressRepository.cs" />
     <Compile Include="Interfaces\Repositories\Logistics\ILogisticsRepository.cs" />

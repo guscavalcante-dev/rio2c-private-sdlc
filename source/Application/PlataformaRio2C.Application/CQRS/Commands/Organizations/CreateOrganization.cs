@@ -13,12 +13,15 @@
 // ***********************************************************************
 using System.Collections.Generic;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>CreateOrganization</summary>
     public class CreateOrganization : OrganizationBaseCommand
     {
+        public OrganizationType OrganizationType { get; set; }
+
         /// <summary>Initializes a new instance of the <see cref="CreateOrganization"/> class.</summary>
         /// <param name="holdingBaseDtos">The holding base dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
@@ -32,6 +35,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Initializes a new instance of the <see cref="CreateOrganization"/> class.</summary>
         public CreateOrganization()
         {
+        }
+
+        /// <summary>Updates the properties.</summary>
+        /// <param name="holdingBaseDtos">The holding base dtos.</param>
+        public void UpdateProperties(List<HoldingBaseDto> holdingBaseDtos)
+        {
+            this.UpdateBaseProperties(holdingBaseDtos);
         }
 
         /// <summary>Updates the descriptions.</summary>

@@ -25,8 +25,20 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.ToTable("Organizations");
 
             this.Property(t => t.Name)
-                .HasMaxLength(Holding.NameMaxLength)
+                .HasMaxLength(Organization.NameMaxLength)
                 .IsRequired();
+
+            this.Property(t => t.CompanyName)
+                .HasMaxLength(Organization.CompanyNameMaxLength);
+
+            this.Property(t => t.TradeName)
+                .HasMaxLength(Organization.TradeNameMaxLength);
+
+            this.Property(t => t.Website)
+                .HasMaxLength(Organization.WebSiteMaxLength);
+
+            this.Property(t => t.SocialMedia)
+                .HasMaxLength(Organization.SocialMediaMaxLength);
 
             // Relationships
             this.HasRequired(t => t.Holding)

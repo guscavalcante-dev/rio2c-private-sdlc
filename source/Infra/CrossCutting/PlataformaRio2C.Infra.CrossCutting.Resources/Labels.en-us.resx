@@ -1212,4 +1212,20 @@
     <value>Select</value>
     <comment>Selecione</comment>
   </data>
+  <data name="APlayer" xml:space="preserve">
+    <value>a player</value>
+    <comment>um player</comment>
+  </data>
+  <data name="NewF" xml:space="preserve">
+    <value>New</value>
+    <comment>Nova</comment>
+  </data>
+  <data name="NewM" xml:space="preserve">
+    <value>New</value>
+    <comment>Novo</comment>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+    <comment>Atualizar</comment>
+  </data>
 </root>

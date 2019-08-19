@@ -1161,7 +1161,7 @@ CREATE TABLE [dbo].[OrganizationTypes](
 	[RelatedProjectTypeId] [int] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [char](18) NULL,
+	[UpdateDate] [datetime] NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_OrganizationTypes] PRIMARY KEY CLUSTERED 
 (

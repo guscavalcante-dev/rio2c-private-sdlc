@@ -26,7 +26,6 @@ namespace PlataformaRio2C.Domain.Entities
         public string Name { get; private set; }
         public int RelatedProjectTypeId { get; private set; }
         
-        public virtual User Updater { get; private set; }
         public virtual ProjectType RelatedProjectType { get; private set; }
 
         public virtual ICollection<AttendeeOrganizationType> AttendeeOrganizationTypes { get; private set; }
