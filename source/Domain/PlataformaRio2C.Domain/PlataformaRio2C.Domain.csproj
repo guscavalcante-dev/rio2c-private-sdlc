@@ -72,6 +72,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dtos\OrganizationDescriptions\OrganizationDescriptionBaseDto.cs" />
+    <Compile Include="Dtos\OrganizationDescriptions\OrganizationDescriptionDto.cs" />
     <Compile Include="Dtos\HoldingDescriptions\HoldingDescriptionDto.cs" />
     <Compile Include="Dtos\HoldingDescriptions\HoldingDescriptionBaseDto.cs" />
     <Compile Include="Dtos\Organizations\OrganizationBaseDto.cs" />
@@ -106,6 +108,7 @@
     <Compile Include="Entities\Negotiation\Negotiation.cs" />
     <Compile Include="Entities\Organizations\AttendeeOrganizationType.cs" />
     <Compile Include="Entities\Organizations\AttendeeOrganization.cs" />
+    <Compile Include="Entities\Organizations\OrganizationDescription.cs" />
     <Compile Include="Entities\Organizations\OrganizationType.cs" />
     <Compile Include="Entities\Organizations\Organization.cs" />
     <Compile Include="Entities\PlayerProducer\PlayerProducer.cs" />

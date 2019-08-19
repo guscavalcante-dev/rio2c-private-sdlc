@@ -6,31 +6,28 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 08-19-2019
 // ***********************************************************************
-// <copyright file="OrganizationDto.cs" company="Softo">
+// <copyright file="OrganizationDescriptionDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Collections.Generic;
+using System;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
-    /// <summary>OrganizationDto</summary>
-    public class OrganizationDto : OrganizationBaseDto
+    /// <summary>OrganizationDescriptionDto</summary>
+    public class OrganizationDescriptionDto : OrganizationDescriptionBaseDto
     {
-        public string CompanyName { get; set; }
-        public string TradeName { get; set; }
-        public string SocialMedia { get; set; }
+        public DateTime CreateDate { get; set; }
         public int CreateUserId { get; set; }
+        public DateTime UpdateDate { get; set; }
         public int UpdateUserId { get; set; }
 
         public UserBaseDto CreatorDto { get; set; }
-        public UserBaseDto UpdaterDto { get; set; }
+        public UserBaseDto UpdatedDto { get; set; }
 
-        public IEnumerable<OrganizationDescriptionBaseDto> DescriptionsDtos { get; set; }
-
-        /// <summary>Initializes a new instance of the <see cref="HoldingDto"/> class.</summary>
-        public OrganizationDto()
+        /// <summary>Initializes a new instance of the <see cref="OrganizationDescriptionDto"/> class.</summary>
+        public OrganizationDescriptionDto()
         {
         }
     }

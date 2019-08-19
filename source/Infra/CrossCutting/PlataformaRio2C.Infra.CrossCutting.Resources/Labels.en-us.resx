@@ -1208,4 +1208,8 @@
     <value>Startup</value>
     <comment>Startup</comment>
   </data>
+  <data name="Select" xml:space="preserve">
+    <value>Select</value>
+    <comment>Selecione</comment>
+  </data>
 </root>

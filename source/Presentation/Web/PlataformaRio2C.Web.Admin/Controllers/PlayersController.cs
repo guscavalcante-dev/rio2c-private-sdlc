@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-18-2019
+// Last Modified On : 08-19-2019
 // ***********************************************************************
 // <copyright file="PlayersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -165,7 +165,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowCreateModal()
         {
-            var cmd = new CreateHolding(await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)));
+            var cmd = new CreateOrganization(
+                await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
+                await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)));
 
             return Json(new
             {
@@ -181,7 +183,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Create(CreateHolding cmd)
+        public async Task<ActionResult> Create(CreateOrganization cmd)
         {
             var result = new AppValidationResult();
 
@@ -229,7 +231,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Holding, Labels.CreatedF) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Player, Labels.CreatedM) });
         }
 
         #endregion#region Create
@@ -237,14 +239,24 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         #region Update
 
         /// <summary>Shows the update modal.</summary>
-        /// <param name="holdingUid">The holding uid.</param>
+        /// <param name="organizationUid">The organization uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowUpdateModal(Guid? holdingUid)
+        public async Task<ActionResult> ShowUpdateModal(Guid? organizationUid)
         {
-            var cmd = new UpdateHolding(
-                await this.CommandBus.Send(new FindHoldingDtoByUidAsync(holdingUid, this.UserInterfaceLanguage)),
-                await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)));
+            UpdateOrganization cmd;
+
+            try
+            {
+                cmd = new UpdateOrganization(
+                    await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(organizationUid, this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)));
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
 
             return Json(new
             {
@@ -260,7 +272,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Update(UpdateHolding cmd)
+        public async Task<ActionResult> Update(UpdateOrganization cmd)
         {
             var result = new AppValidationResult();
 
@@ -308,7 +320,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Holding, Labels.UpdatedF) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Player, Labels.UpdatedM) });
         }
 
         #endregion#region Create
@@ -319,7 +331,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Delete(DeleteHolding cmd)
+        public async Task<ActionResult> Delete(DeleteOrganization cmd)
         {
             var result = new AppValidationResult();
 
@@ -363,7 +375,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Holding, Labels.DeletedF) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Player, Labels.DeletedM) });
         }
 
         #endregion

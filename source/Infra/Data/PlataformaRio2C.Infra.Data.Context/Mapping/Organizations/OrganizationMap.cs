@@ -33,13 +33,17 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                 .WithMany(e => e.Organizations)
                 .HasForeignKey(d => d.HoldingId);
 
+            this.HasRequired(t => t.Updater)
+                .WithMany(e => e.UpdatedOrganizations)
+                .HasForeignKey(d => d.UpdateUserId);
+
             this.HasMany(t => t.AttendeeOrganizations)
                 .WithRequired(e => e.Organization)
                 .HasForeignKey(e => e.OrganizationId);
 
-            //this.HasOptional(t => t.Image)
-            //    .WithMany()
-            //    .HasForeignKey(d => d.ImageId);
+            this.HasMany(t => t.Descriptions)
+                .WithRequired(e => e.Organization)
+                .HasForeignKey(e => e.OrganizationId);
         }
     }
 }

@@ -15,11 +15,11 @@
 var OrganizationsDelete = function () {
 
     // Delete -------------------------------------------------------------------------------------
-    var executeDelete = function (holdingUid) {
+    var executeDelete = function (organizationUid) {
         MyRio2cCommon.block();
 
         var jsonParameters = new Object();
-        jsonParameters.holdingUid = holdingUid;
+        jsonParameters.organizationUid = organizationUid;
 
         $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Players/Delete'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -42,7 +42,7 @@ var OrganizationsDelete = function () {
         });
     };
 
-    var showModal = function (holdingUid) {
+    var showModal = function (organizationUid) {
         bootbox.dialog({
             message: labels.deleteConfirmationMessage,
             buttons: {
@@ -56,7 +56,7 @@ var OrganizationsDelete = function () {
                     label: labels.remove,
                     className: "btn btn-danger",
                     callback: function () {
-                        executeDelete(holdingUid);
+                        executeDelete(organizationUid);
                     }
                 }
             }
@@ -64,8 +64,8 @@ var OrganizationsDelete = function () {
     };
 
     return {
-        showModal: function (holdingUid) {
-            showModal(holdingUid);
+        showModal: function (organizationUid) {
+            showModal(organizationUid);
         }
     };
 }();

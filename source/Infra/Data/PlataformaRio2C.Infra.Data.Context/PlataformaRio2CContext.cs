@@ -46,6 +46,7 @@ namespace PlataformaRio2C.Infra.Data.Context
 
             // Organization
             modelBuilder.Configurations.Add(new OrganizationMap());
+            modelBuilder.Configurations.Add(new OrganizationDescriptionMap());
             modelBuilder.Configurations.Add(new AttendeeOrganizationMap());
             modelBuilder.Configurations.Add(new AttendeeOrganizationTypeMap());
             modelBuilder.Configurations.Add(new OrganizationTypeMap());

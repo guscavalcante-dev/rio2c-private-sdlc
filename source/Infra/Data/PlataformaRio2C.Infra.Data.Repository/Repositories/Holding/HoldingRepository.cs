@@ -192,6 +192,28 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             }).FirstOrDefaultAsync();
         }
 
+        /// <summary>Finds all base dto.</summary>
+        /// <param name="keywords">The keywords.</param>
+        /// <returns></returns>
+        public async Task<List<HoldingBaseDto>> FindAllBaseDto(string keywords)
+        {
+            var query = this.GetAll()
+                                .FindByKeywords(keywords);
+
+            return await query
+                            .Select(h => new HoldingBaseDto
+                            {
+                                Id = h.Id,
+                                Uid = h.Uid,
+                                Name = h.Name,
+                                ImageUploadDate = h.ImageUploadDate,
+                                CreateDate = h.CreateDate,
+                                UpdateDate = h.UpdateDate,
+                            })
+                            .OrderBy(hbd => hbd.Name)
+                            .ToListAsync();
+        }
+
         /// <summary>Finds all by data table.</summary>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
@@ -200,7 +222,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<IPagedList<HoldingBaseDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllEditions, int? editionId)
+        public async Task<IPagedList<HoldingBaseDto>> FindAllBaseDtoByPage(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllEditions, int? editionId)
         {
             var query = this.GetAll()
                                 .FindByKeywords(keywords)

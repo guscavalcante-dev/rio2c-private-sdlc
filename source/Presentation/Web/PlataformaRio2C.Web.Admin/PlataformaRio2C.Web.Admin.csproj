@@ -8894,7 +8894,7 @@
     <Content Include="Views\Players\_Editor.cshtml" />
     <Content Include="Views\Players\Create.cshtml" />
     <Content Include="Views\Players\Edit.cshtml" />
-    <Content Include="Views\Players\EditorTemplates\HoldingDescriptionBaseCommand.cshtml" />
+    <Content Include="Views\Players\EditorTemplates\OrganizationDescriptionBaseCommand.cshtml" />
     <Content Include="Views\Players\Index.cshtml" />
     <Content Include="Views\Players\Modals\_Form.cshtml" />
     <Content Include="Views\Players\Modals\CreateModal.cshtml" />

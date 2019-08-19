@@ -1,5 +1,5 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateHolding
-<div class="modal fade" id="UpdatePlayerodal" tabindex="-1" role="dialog" aria-labelledby="CreateHoldingModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateOrganization
+<div class="modal fade" id="UpdatePlayerModal" tabindex="-1" role="dialog" aria-labelledby="CreateHoldingModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -9,7 +9,7 @@
             <div class="modal-body">
                 @using (Html.BeginForm("Update", "Players", new { Area = "" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UpdatePlayerForm" }))
                 {
-                    @Html.HiddenFor(m => m.HoldingUid)
+                    @Html.HiddenFor(m => m.OrganizationUid)
                     <div id="form-container">
                         @Html.Partial("Modals/_Form", Model)
                     </div>

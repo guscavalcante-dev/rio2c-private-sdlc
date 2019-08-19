@@ -178,6 +178,11 @@
     <Compile Include="CQRS\CommandsHandlers\SalesPlatformWebhookRequests\CreateSalesPlatformWebhookRequestCommandHandler.cs" />
     <Compile Include="CQRS\Commands\BaseCommand.cs" />
     <Compile Include="CQRS\Commands\Common\BaseCommands\CropperImageBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Organizations\BaseCommands\OrganizationBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Organizations\BaseCommands\OrganizationDescriptionBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Organizations\CreateOrganization.cs" />
+    <Compile Include="CQRS\Commands\Organizations\DeleteOrganization.cs" />
+    <Compile Include="CQRS\Commands\Organizations\UpdateOrganization.cs" />
     <Compile Include="CQRS\Commands\Holdings\BaseCommands\HoldingBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Holdings\DeleteHolding.cs" />
     <Compile Include="CQRS\Commands\Holdings\UpdateHolding.cs" />
@@ -189,12 +194,13 @@
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\CreateSalesPlatformWebhookRequest.cs" />
     <Compile Include="CQRS\BaseUserRequest.cs" />
     <Compile Include="CQRS\QueriesHandlers\Editions\FindAllEditionsByActiveQueryHandler.cs" />
+    <Compile Include="CQRS\QueriesHandlers\Holdings\FindAllHoldingsBaseDtosAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Organizations\CountAllOrganizationsAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Organizations\FindAllOrganizationsBaseDtosAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Organizations\FindOrganizationDtoByUidAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Holdings\CountAllHoldingsAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Holdings\FindHoldingDtoByUidAsyncQueryHandler.cs" />
-    <Compile Include="CQRS\QueriesHandlers\Holdings\FindAllHoldingsBaseDtosAsyncQueryHandler.cs" />
+    <Compile Include="CQRS\QueriesHandlers\Holdings\FindAllHoldingsBaseDtosByPageAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Languages\FindAllLanguagesDtosAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Quizzes\FindActiveQuizQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\SalesPlatformWebhookRequests\FindAllSalesPlatformWebhooRequestsByPendingQueryHandler.cs" />
@@ -202,8 +208,9 @@
     <Compile Include="CQRS\Queries\BaseQuery.cs" />
     <Compile Include="CQRS\Queries\Editions\FindAllEditionsByIsActive.cs" />
     <Compile Include="CQRS\Queries\Holdings\CountAllHoldingsAsync.cs" />
-    <Compile Include="CQRS\Queries\Holdings\FindHoldingDtoByUidAsync.cs" />
     <Compile Include="CQRS\Queries\Holdings\FindAllHoldingsBaseDtosAsync.cs" />
+    <Compile Include="CQRS\Queries\Holdings\FindHoldingDtoByUidAsync.cs" />
+    <Compile Include="CQRS\Queries\Holdings\FindAllHoldingsBaseDtosByPageAsync.cs" />
     <Compile Include="CQRS\Queries\Languages\FindAllLanguagesDtosAsync.cs" />
     <Compile Include="CQRS\Queries\Organizations\CountAllOrganizationsAsync.cs" />
     <Compile Include="CQRS\Queries\Organizations\FindAllOrganizationsBaseDtosAsync.cs" />

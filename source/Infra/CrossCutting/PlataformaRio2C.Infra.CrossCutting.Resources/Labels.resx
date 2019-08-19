@@ -1216,4 +1216,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Startup</value>
     <comment>Startup</comment>
   </data>
+  <data name="Select" xml:space="preserve">
+    <value>Selecione</value>
+    <comment>Selecione</comment>
+  </data>
 </root>

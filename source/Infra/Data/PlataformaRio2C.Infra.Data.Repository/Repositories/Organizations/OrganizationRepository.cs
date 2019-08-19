@@ -185,31 +185,43 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 Id = h.Id,
                                 Uid = h.Uid,
                                 Name = h.Name,
+                                CompanyName = h.CompanyName,
+                                TradeName = h.TradeName,
+                                Document = h.Document,
+                                Website = h.Website,
+                                SocialMedia = h.SocialMedia,
+                                PhoneNumber = h.PhoneNumber,
                                 ImageUploadDate = h.ImageUploadDate,
                                 CreateDate = h.CreateDate,
                                 CreateUserId = h.CreateUserId,
                                 UpdateDate = h.UpdateDate,
                                 UpdateUserId = h.UpdateUserId,
                                 //Creator = h.Creator,
+                                HoldingBaseDto = new HoldingBaseDto
+                                {
+                                    Id = h.Holding.Id,
+                                    Uid = h.Holding.Uid,
+                                    Name = h.Holding.Name
+                                },
                                 UpdaterDto = new UserBaseDto
                                 {
                                     Uid = h.Updater.Uid,
                                     Name = h.Updater.Name,
                                     Email =h.Updater.Email 
                                 },
-                                //DescriptionsDtos = h.Descriptions.Select(d => new HoldingDescriptionDto
-                                //{
-                                //    Id = d.Id,
-                                //    Uid = d.Uid,
-                                //    Value = d.Value,
-                                //    LanguageDto = new LanguageBaseDto
-                                //    {
-                                //        Id = d.Language.Id,
-                                //        Uid = d.Language.Uid,
-                                //        Name = d.Language.Name,
-                                //        Code = d.Language.Code
-                                //    }
-                                //})
+                                DescriptionsDtos = h.Descriptions.Select(d => new OrganizationDescriptionDto
+                                {
+                                    Id = d.Id,
+                                    Uid = d.Uid,
+                                    Value = d.Value,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = d.Language.Id,
+                                        Uid = d.Language.Uid,
+                                        Name = d.Language.Name,
+                                        Code = d.Language.Code
+                                    }
+                                })
                             }).FirstOrDefaultAsync();
         }
 

@@ -14,7 +14,7 @@
 
 var OrganizationsUpdate = function () {
 
-    var modalId = '#UpdateHPlayerModal';
+    var modalId = '#UpdatePlayerModal';
     var formId = '#UpdatePlayerForm';
 
     // Enable form validation ---------------------------------------------------------------------
@@ -34,11 +34,11 @@ var OrganizationsUpdate = function () {
     };
 
     // Show modal ---------------------------------------------------------------------------------
-    var showModal = function (holdingUid) {
+    var showModal = function (organizationUid) {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
-        jsonParameters.holdingUid = holdingUid;
+        jsonParameters.organizationUid = organizationUid;
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Players/ShowUpdateModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -80,8 +80,8 @@ var OrganizationsUpdate = function () {
     };
 
     return {
-        showModal: function (holdingUid) {
-            showModal(holdingUid);
+        showModal: function (organizationUid) {
+            showModal(organizationUid);
         }
     };
 }();

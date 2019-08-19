@@ -78,7 +78,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions)
         {
-            var holdings = await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(
+            var holdings = await this.CommandBus.Send(new FindAllHoldingsBaseDtosByPageAsync(
                 request.Start / request.Length,
                 request.Length,
                 request.Search?.Value,
@@ -238,9 +238,18 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUpdateModal(Guid? holdingUid)
         {
-            var cmd = new UpdateHolding(
-                await this.CommandBus.Send(new FindHoldingDtoByUidAsync(holdingUid, this.UserInterfaceLanguage)),
-                await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)));
+            UpdateHolding cmd;
+
+            try
+            {
+                cmd = new UpdateHolding(
+                    await this.CommandBus.Send(new FindHoldingDtoByUidAsync(holdingUid, this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)));
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
 
             return Json(new
             {

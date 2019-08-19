@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Rafael Dantas Ruiz
-// Created          : 08-16-2019
+// Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-18-2019
+// Last Modified On : 08-19-2019
 // ***********************************************************************
-// <copyright file="UpdateHolding.cs" company="Softo">
+// <copyright file="UpdateOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -20,52 +20,61 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>UpdateHolding</summary>
-    public class UpdateHolding : HoldingBaseCommand
+    /// <summary>UpdateOrganization</summary>
+    public class UpdateOrganization : OrganizationBaseCommand
     {
-        public Guid HoldingUid { get; set; }
+        public Guid OrganizationUid { get; set; }
         public UserBaseDto UpdaterBaseDto { get; set; }
         public DateTime UpdateDate { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateHolding"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="UpdateOrganization"/> class.</summary>
         /// <param name="entity">The entity.</param>
+        /// <param name="holdingBaseDtos">The holding base dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
-        public UpdateHolding(HoldingDto entity, List<LanguageDto> languagesDtos)
+        public UpdateOrganization(OrganizationDto entity, List<HoldingBaseDto> holdingBaseDtos, List<LanguageDto> languagesDtos)
         {
             if (entity == null)
             {
-                throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Holding, Labels.FoundF));
+                throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Player, Labels.FoundM));
             }
 
-            this.HoldingUid = entity.Uid;
+            this.OrganizationUid = entity.Uid;
+            this.HoldingUid = entity.HoldingBaseDto?.Uid;
             this.Name = entity.Name;
+            this.Document = entity.Document;
+            this.CompanyName = entity.CompanyName;
+            this.TradeName = entity.TradeName;
+            this.Website = entity.Website;
+            this.SocialMedia = entity.SocialMedia;
+            this.PhoneNumber = entity.PhoneNumber;
             this.UpdaterBaseDto = entity.UpdaterDto;
             this.UpdateDate = entity.UpdateDate;
             this.UpdateDescriptions(entity, languagesDtos);
             this.CropperImage = new CropperImageBaseCommand(entity.ImageUploadDate, entity.Uid);
+            this.UpdateBaseProperties(holdingBaseDtos);
         }
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateHolding"/> class.</summary>
-        public UpdateHolding()
+        /// <summary>Initializes a new instance of the <see cref="UpdateOrganization"/> class.</summary>
+        public UpdateOrganization()
         {
         }
 
         /// <summary>Updates the descriptions.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
-        private void UpdateDescriptions(HoldingDto entity, List<LanguageDto> languagesDtos)
+        private void UpdateDescriptions(OrganizationDto entity, List<LanguageDto> languagesDtos)
         {
-            this.Descriptions = new List<HoldingDescriptionBaseCommand>();
+            this.Descriptions = new List<OrganizationDescriptionBaseCommand>();
             foreach (var languageDto in languagesDtos)
             {
                 var description = entity.DescriptionsDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
                 if (description != null)
                 {
-                    this.Descriptions.Add(new HoldingDescriptionBaseCommand(description));
+                    this.Descriptions.Add(new OrganizationDescriptionBaseCommand(description));
                 }
                 else
                 {
-                    this.Descriptions.Add(new HoldingDescriptionBaseCommand(languageDto));
+                    this.Descriptions.Add(new OrganizationDescriptionBaseCommand(languageDto));
                 }
             }
         }

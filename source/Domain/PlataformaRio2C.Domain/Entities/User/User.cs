@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-18-2019
+// Last Modified On : 08-19-2019
 // ***********************************************************************
 // <copyright file="User.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -55,6 +55,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<UserUseTerm> UserUseTerms { get; set; }
 
         public virtual ICollection<Holding> UpdatedHoldings { get; set; }
+        public virtual ICollection<Organization> UpdatedOrganizations { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="User"/> class.</summary>
         protected User()

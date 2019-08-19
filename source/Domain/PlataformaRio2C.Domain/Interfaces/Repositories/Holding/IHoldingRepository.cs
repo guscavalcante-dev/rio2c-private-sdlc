@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-16-2019
+// Last Modified On : 08-19-2019
 // ***********************************************************************
 // <copyright file="IHoldingRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,7 +24,8 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface IHoldingRepository : IRepository<Holding>
     {
         Task<HoldingDto> FindDtoByUidAsync(Guid holdingUid);
-        Task<IPagedList<HoldingBaseDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllEditions, int? editionId);
+        Task<List<HoldingBaseDto>> FindAllBaseDto(string keywords);
+        Task<IPagedList<HoldingBaseDto>> FindAllBaseDtoByPage(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllEditions, int? editionId);
         Task<List<Holding>> GetAllAsync();
         Task<int> CountAllByDataTable(bool showAllEditions, int? editionId);
     }

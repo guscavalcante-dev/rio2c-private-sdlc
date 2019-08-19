@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-09-2019
+// Last Modified On : 08-19-2019
 // ***********************************************************************
 // <copyright file="Organization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -40,6 +40,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual Holding Holding { get; private set; }
         public virtual User Updater { get; private set; }
 
+        public virtual ICollection<OrganizationDescription> Descriptions { get; private set; }
         public virtual ICollection<AttendeeOrganization> AttendeeOrganizations { get; private set; }
 
         //public virtual Address Address { get; private set; }
