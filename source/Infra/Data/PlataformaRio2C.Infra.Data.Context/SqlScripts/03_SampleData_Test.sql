@@ -4723,3 +4723,140 @@ INSERT [dbo].[HoldingDescriptions] ([Id], [Uid], [HoldingId], [LanguageId], [Val
 GO
 SET IDENTITY_INSERT [dbo].[HoldingDescriptions] OFF
 GO
+
+USE [Rio2C_Dev]
+GO
+SET IDENTITY_INSERT [dbo].[AttendeeOrganizationTypes] ON 
+
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (1, N'c1a1bc76-a0b1-4acd-aa90-d037b7694e79', 1, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (2, N'315df402-e701-4d7d-a381-1fa78525ab1d', 2, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (3, N'6a6eaaab-6168-4c3a-a6e4-e99e59a4bba2', 3, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (4, N'c27c8428-7200-4ad8-99b2-4749a76de09d', 4, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (5, N'4394fc30-f986-4e56-9210-c90ec7fd29e2', 5, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (6, N'66fa1193-c6f9-46e6-985f-ba520f861d12', 6, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (7, N'76d8aff0-da2f-4276-b7d0-bc227a40058e', 7, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (8, N'5009be7b-1410-4bdd-a8f1-e09a9b607855', 8, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (9, N'f19e40b3-0699-406b-8a85-3fe731802ad5', 9, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (10, N'da94dd86-7ffc-4c81-a1a2-353cc071790f', 10, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (11, N'7820a49c-5e2b-4b7a-a716-11b1c9c1573e', 11, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (12, N'8ae4958a-54b2-43ba-aa88-553d5b1f894b', 12, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (13, N'8829cc26-f853-4c28-a324-7931d1bf9220', 13, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (14, N'70f52651-5cf5-422d-9c27-7f5cc7479be9', 14, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (15, N'e699d392-496a-4059-b974-86edd039a336', 15, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (16, N'a53836a4-f38b-4ebe-b930-56f40503dcca', 16, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (17, N'7b206249-a1e3-468a-b51d-2ad5b4c015bc', 17, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (18, N'3395c253-2eaf-4ed0-b41a-19e57ad149d9', 18, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (19, N'efee67ce-8d27-4a70-b52e-b725207cd4f8', 19, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (20, N'97e304b5-63aa-40ce-8635-60547dd97509', 20, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (21, N'44cb2c4e-e8ec-48de-943e-43f2602c86a0', 21, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (22, N'c32dd3a3-9d0f-4ff6-ad15-5d1df4a8cfd8', 22, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (23, N'9ed2343e-aff4-4f7f-ac92-53b7dbaed200', 23, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (24, N'97841ca8-da89-4ccb-9a05-9e89d7b84d30', 24, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (25, N'35e752e1-0838-4894-89cf-02372cae759d', 25, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (26, N'6fa38921-688f-43b1-a62c-99d53e0af61e', 26, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (27, N'9ff58590-5073-4197-ab04-a2735c71b150', 27, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (28, N'cae9ae0e-04c1-46c0-ad6a-ec68228c5d62', 28, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (29, N'98eff94b-865b-4ea8-97d8-fb07b1df4588', 29, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (30, N'fa291979-ac92-4450-a3a1-aa7b11fe84f4', 30, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (31, N'121d207e-2f0b-4362-a515-262b6fe9fb9b', 31, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (32, N'f46bfa4c-bcca-41f1-a308-79eb0581199f', 32, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (33, N'314bc3ff-bde8-410b-895e-b5ca4b966a4d', 33, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (34, N'07956084-fd5a-4c53-aed4-3a684246bc9c', 34, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (35, N'4c5d7209-769d-4e14-9eb4-c23ac83d08e3', 35, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (36, N'9bd9d540-a620-4827-9337-59b8a757de27', 36, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (37, N'b5f514a0-73e3-4100-bc11-95d6d9a1539d', 37, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (38, N'a4fb3edf-6591-4d88-ae30-c2ee8166620b', 38, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (39, N'c574bc9e-9369-4ae3-be7d-ffda4c4396ae', 39, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (40, N'816e20b1-4b24-4553-b4f5-c4fd972393bc', 40, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (41, N'62288f35-41ce-44d4-bca4-f62646f76d4c', 41, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (42, N'e9a914cc-3500-4c65-928f-5db7ebc4d106', 42, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (43, N'31985622-807e-437c-a5b2-8c6bab901ffb', 43, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (44, N'90fadbb2-27eb-4b46-ac79-c46692fab045', 44, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (45, N'13712db4-72c5-441d-91ae-9a3edc69ebc0', 45, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (46, N'475a513c-afa6-438d-8a17-119e519c1020', 46, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (47, N'621f3c6c-b616-40f0-b2e1-7d453b37f851', 47, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (48, N'9d5c9f45-5dd5-4c7b-8e24-272d68e98b19', 48, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (49, N'9d663df7-3968-4f47-b954-538d299d9fd6', 49, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (50, N'53445c07-2211-4bad-a34f-cd0e51e0dd7f', 50, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (51, N'c4145e3a-afd4-45b8-8b0f-fff6bc616902', 51, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (52, N'7937e9a6-2e4b-4331-9d71-91926bf1c0d8', 52, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (53, N'671599b7-f352-42ed-b334-a7231ee97465', 53, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (54, N'6d941d81-bfad-4157-a721-124e1f47eef0', 54, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (55, N'8c95546e-8a8c-45e9-8a7c-22f686e3a66e', 55, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (56, N'09cd7591-d12a-47ba-ba07-3eb71e35dc49', 56, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (57, N'd5c8da8f-1dba-4d12-9a4c-3dc2e4e68bde', 57, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (58, N'b75bf800-8461-4b08-ace0-324eaeb8eafb', 58, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (59, N'3b945c3e-d339-42b1-8151-45c468ddfe1a', 59, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (60, N'227ff188-ff85-4b27-a5d6-40a76a97b777', 60, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (61, N'87d6bd06-62d9-4272-9c40-edbb503a908c', 61, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (62, N'df8fcfcb-ab58-4ae2-87c4-4cc1963c4fa5', 62, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (63, N'd7c171cc-ced5-42e7-b53b-4e4219fa70ca', 63, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+INSERT [dbo].[AttendeeOrganizationTypes] ([Id], [Uid], [AttendeeOrganizationId], [OrganizationTypeId], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (64, N'2db56165-af89-4178-a944-e44e1c193980', 64, 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1, CAST(N'2019-08-19 09:34:17.183' AS DateTime), 1)
+GO
+SET IDENTITY_INSERT [dbo].[AttendeeOrganizationTypes] OFF
+GO
+

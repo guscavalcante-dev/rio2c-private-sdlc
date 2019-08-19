@@ -4,9 +4,9 @@
 // Created          : 08-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-18-2019
+// Last Modified On : 08-19-2019
 // ***********************************************************************
-// <copyright file="FindAllHoldingsDtosAsyncQueryHandler.cs" company="Softo">
+// <copyright file="FindAllHoldingsBaseDtosAsyncQueryHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -21,23 +21,23 @@ using X.PagedList;
 
 namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
 {
-    /// <summary>FindAllHoldingsDtosAsyncQueryHandler</summary>
-    public class FindAllHoldingsDtosAsyncQueryHandler : IRequestHandler<FindAllHoldingsDtosAsync, IPagedList<HoldingBaseDto>>
+    /// <summary>FindAllHoldingsBaseDtosAsyncQueryHandler</summary>
+    public class FindAllHoldingsBaseDtosAsyncQueryHandler : IRequestHandler<FindAllHoldingsBaseDtosAsync, IPagedList<HoldingBaseDto>>
     {
         private readonly IHoldingRepository repo;
 
-        /// <summary>Initializes a new instance of the <see cref="FindAllHoldingsDtosAsyncQueryHandler"/> class.</summary>
-        /// <param name="holdingRepository">The holding repository.</param>
-        public FindAllHoldingsDtosAsyncQueryHandler(IHoldingRepository holdingRepository)
+        /// <summary>Initializes a new instance of the <see cref="FindAllHoldingsBaseDtosAsyncQueryHandler"/> class.</summary>
+        /// <param name="repository">The repository.</param>
+        public FindAllHoldingsBaseDtosAsyncQueryHandler(IHoldingRepository repository)
         {
-            this.repo = holdingRepository;
+            this.repo = repository;
         }
 
-        /// <summary>Handles the specified find all holdings asynchronous.</summary>
+        /// <summary>Handles the specified find all holdings base dtos asynchronous.</summary>
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<IPagedList<HoldingBaseDto>> Handle(FindAllHoldingsDtosAsync cmd, CancellationToken cancellationToken)
+        public async Task<IPagedList<HoldingBaseDto>> Handle(FindAllHoldingsBaseDtosAsync cmd, CancellationToken cancellationToken)
         {
             return await this.repo.FindAllByDataTable(cmd.Page, cmd.PageSize, cmd.Keywords, cmd.SortColumns, cmd.ShowAllEditions, cmd.EditionId);
         }

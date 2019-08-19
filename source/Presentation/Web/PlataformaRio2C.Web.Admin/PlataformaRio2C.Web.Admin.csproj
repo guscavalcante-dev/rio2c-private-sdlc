@@ -323,6 +323,7 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\FinancialReportController.cs" />
+    <Compile Include="Controllers\PlayersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Controllers\MusicalCommissionController.cs" />
@@ -375,6 +376,12 @@
     <Content Include="Assets\js\holdings\holdings.editioncount.widget.js" />
     <Content Include="Assets\js\holdings\holdings.totalcount.widget.js" />
     <Content Include="Assets\js\holdings\holdings.datatable.widget.js" />
+    <Content Include="Assets\js\organizations\organizations.create.js" />
+    <Content Include="Assets\js\organizations\organizations.datatable.widget.js" />
+    <Content Include="Assets\js\organizations\organizations.delete.js" />
+    <Content Include="Assets\js\organizations\organizations.editioncount.widget.js" />
+    <Content Include="Assets\js\organizations\organizations.totalcount.widget.js" />
+    <Content Include="Assets\js\organizations\organizations.update.js" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.css" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.min.css" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.rtl.css" />
@@ -8884,6 +8891,17 @@
     <Content Include="Views\Shared\EditorTemplates\CropperImageBaseCommand.cshtml" />
     <Content Include="Views\Holdings\EditorTemplates\HoldingDescriptionBaseCommand.cshtml" />
     <Content Include="Views\Holdings\Modals\UpdateModal.cshtml" />
+    <Content Include="Views\Players\_Editor.cshtml" />
+    <Content Include="Views\Players\Create.cshtml" />
+    <Content Include="Views\Players\Edit.cshtml" />
+    <Content Include="Views\Players\EditorTemplates\HoldingDescriptionBaseCommand.cshtml" />
+    <Content Include="Views\Players\Index.cshtml" />
+    <Content Include="Views\Players\Modals\_Form.cshtml" />
+    <Content Include="Views\Players\Modals\CreateModal.cshtml" />
+    <Content Include="Views\Players\Modals\UpdateModal.cshtml" />
+    <Content Include="Views\Players\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Views\Players\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Views\Players\Widgets\TotalCountWidget.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>

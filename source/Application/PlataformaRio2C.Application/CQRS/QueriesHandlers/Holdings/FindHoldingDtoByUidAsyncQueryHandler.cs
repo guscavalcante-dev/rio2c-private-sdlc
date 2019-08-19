@@ -4,7 +4,7 @@
 // Created          : 08-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-18-2019
+// Last Modified On : 08-19-2019
 // ***********************************************************************
 // <copyright file="FindHoldingDtoByUidAsyncQueryHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,10 +26,10 @@ namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
         private readonly IHoldingRepository repo;
 
         /// <summary>Initializes a new instance of the <see cref="FindHoldingDtoByUidAsyncQueryHandler"/> class.</summary>
-        /// <param name="holdingRepository">The holding repository.</param>
-        public FindHoldingDtoByUidAsyncQueryHandler(IHoldingRepository holdingRepository)
+        /// <param name="repository">The repository.</param>
+        public FindHoldingDtoByUidAsyncQueryHandler(IHoldingRepository repository)
         {
-            this.repo = holdingRepository;
+            this.repo = repository;
         }
 
         /// <summary>Handles the specified find holding by uid asynchronous.</summary>

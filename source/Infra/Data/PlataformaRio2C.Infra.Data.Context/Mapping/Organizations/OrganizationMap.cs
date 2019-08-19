@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-09-2019
+// Last Modified On : 08-19-2019
 // ***********************************************************************
 // <copyright file="OrganizationMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -32,6 +32,10 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.HasRequired(t => t.Holding)
                 .WithMany(e => e.Organizations)
                 .HasForeignKey(d => d.HoldingId);
+
+            this.HasMany(t => t.AttendeeOrganizations)
+                .WithRequired(e => e.Organization)
+                .HasForeignKey(e => e.OrganizationId);
 
             //this.HasOptional(t => t.Image)
             //    .WithMany()

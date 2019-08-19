@@ -26,7 +26,7 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int SocialMediaMaxLength = 256;
         public static readonly int TradeNameMaxLength = 100;
 
-        public int HoldingId { get; private set; }
+        public int? HoldingId { get; private set; }
         public string Name { get; private set; }
         public string CompanyName { get; private set; }
         public string TradeName { get; private set; }
@@ -34,10 +34,11 @@ namespace PlataformaRio2C.Domain.Entities
         public string Website { get; private set; }
         public string SocialMedia { get; private set; }
         public string PhoneNumber { get; private set; }
-        //public int? AddressId { get; private set; }
+        public int? AddressId { get; private set; }
+        public DateTime? ImageUploadDate { get; private set; }
         
-        public virtual Guid HoldingUid { get; private set; }
         public virtual Holding Holding { get; private set; }
+        public virtual User Updater { get; private set; }
 
         public virtual ICollection<AttendeeOrganization> AttendeeOrganizations { get; private set; }
 
@@ -76,11 +77,7 @@ namespace PlataformaRio2C.Domain.Entities
         public void SetHolding(Holding holding)
         {
             this.Holding = holding;
-            if (holding != null)
-            {
-                this.HoldingId = holding.Id;
-                this.HoldingUid = holding.Uid;
-            }
+            this.HoldingId = holding.Id;
         }
 
         /// <summary>Returns true if ... is valid.</summary>

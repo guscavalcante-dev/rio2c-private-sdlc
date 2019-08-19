@@ -4,7 +4,7 @@
 // Created          : 08-07-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-18-2019
+// Last Modified On : 08-19-2019
 // ***********************************************************************
 // <copyright file="holdings.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -124,16 +124,8 @@ var HoldingsDataTableWidget = function () {
                     }
                 },
                 {
-                    targets: [1],
-                    width: "20%",
-                    className: "dt-center",
-                    render: function (data) {
-                        return moment(data).locale(userInterfaceLanguage).format('L LTS');
-                    }
-                },
-                {
-                    targets: [2],
-                    width: "20%",
+                    targets: [1,2],
+                    width: "12%",
                     className: "dt-center",
                     render: function (data) {
                         return moment(data).locale(userInterfaceLanguage).format('L LTS');

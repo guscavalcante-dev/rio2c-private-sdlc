@@ -189,9 +189,12 @@
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\CreateSalesPlatformWebhookRequest.cs" />
     <Compile Include="CQRS\BaseUserRequest.cs" />
     <Compile Include="CQRS\QueriesHandlers\Editions\FindAllEditionsByActiveQueryHandler.cs" />
+    <Compile Include="CQRS\QueriesHandlers\Organizations\CountAllOrganizationsAsyncQueryHandler.cs" />
+    <Compile Include="CQRS\QueriesHandlers\Organizations\FindAllOrganizationsBaseDtosAsyncQueryHandler.cs" />
+    <Compile Include="CQRS\QueriesHandlers\Organizations\FindOrganizationDtoByUidAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Holdings\CountAllHoldingsAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Holdings\FindHoldingDtoByUidAsyncQueryHandler.cs" />
-    <Compile Include="CQRS\QueriesHandlers\Holdings\FindAllHoldingsDtosAsyncQueryHandler.cs" />
+    <Compile Include="CQRS\QueriesHandlers\Holdings\FindAllHoldingsBaseDtosAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Languages\FindAllLanguagesDtosAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Quizzes\FindActiveQuizQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\SalesPlatformWebhookRequests\FindAllSalesPlatformWebhooRequestsByPendingQueryHandler.cs" />
@@ -200,8 +203,11 @@
     <Compile Include="CQRS\Queries\Editions\FindAllEditionsByIsActive.cs" />
     <Compile Include="CQRS\Queries\Holdings\CountAllHoldingsAsync.cs" />
     <Compile Include="CQRS\Queries\Holdings\FindHoldingDtoByUidAsync.cs" />
-    <Compile Include="CQRS\Queries\Holdings\FindAllHoldingsDtosAsync.cs" />
+    <Compile Include="CQRS\Queries\Holdings\FindAllHoldingsBaseDtosAsync.cs" />
     <Compile Include="CQRS\Queries\Languages\FindAllLanguagesDtosAsync.cs" />
+    <Compile Include="CQRS\Queries\Organizations\CountAllOrganizationsAsync.cs" />
+    <Compile Include="CQRS\Queries\Organizations\FindAllOrganizationsBaseDtosAsync.cs" />
+    <Compile Include="CQRS\Queries\Organizations\FindOrganizationDtoByUidAsync.cs" />
     <Compile Include="CQRS\Queries\Quizzes\FindActiveQuiz.cs" />
     <Compile Include="CQRS\Queries\SalesPlatformWebhookRequests\FindAllSalesPlatformWebhooRequestsByPending.cs" />
     <Compile Include="CQRS\Queries\SalesPlatforms\FindSalesPlatformByName.cs" />
@@ -339,6 +345,7 @@
     <Compile Include="ViewModels\Common\Negotiation\GroupItemDateNegotiationAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Negotiation\GroupDateNegotiationAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Negotiation\NegotiationAppViewModel.cs" />
+    <Compile Include="ViewModels\Common\Players\PlayerCompanySearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Project\ProjectOptionFilterAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Quiz\AnswerBasicAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Quiz\AnswerDetailAppViewModel.cs" />

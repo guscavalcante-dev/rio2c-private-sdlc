@@ -1,0 +1,49 @@
+﻿@model PlayerCompanySearchViewModel
+@{
+    ViewBag.Title = Labels.Holdings;
+}
+<!--begin:: Quick Stats-->
+<div class="row">
+    <div class="col-sm-6">
+        <!--begin:: Total Count Widget-->
+        <div id="HoldingTotalCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <!--end:: Total Count Widget-->
+    </div>
+    <div class="col-sm-6">
+        <!--begin:: Edition Count-->
+        <div id="HoldingEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <!--end:: Edition Count-->
+    </div>
+</div>
+<!--end:: Quick Stats-->
+@Html.Partial("Widgets/DataTablewidget", Model)
+@*
+    @Html.Partial("../Shared/_ModalDelete")
+*@
+@section Styles {
+    @Styles.Render("~/bundles/css/dataTables.css")
+    @Styles.Render("~/bundles/css/cropper.css")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/jqueryval.js")
+    @Scripts.Render("~/bundles/js/jqueryform.js")
+    @Scripts.Render("~/bundles/js/dataTables.js")
+    @Scripts.Render("~/bundles/js/chart.js")
+    @Scripts.Render("~/bundles/js/cropper.js")
+    @Scripts.Render("~/bundles/js/ckEditor.js")
+    @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/organizations.list.js")
+    @Scripts.Render("~/bundles/js/organizations.create.js")
+    @Scripts.Render("~/bundles/js/organizations.update.js")
+    @Scripts.Render("~/bundles/js/organizations.delete.js")
+    <script>
+        var initialPage = @(Model.Page?.ToString() ?? "null");
+        var initialPageSize = @(Model.PageSize?.ToString() ?? "null");
+
+        jQuery(document).ready(function () {
+            OrganizationsTotalCountWidget.init();
+            OrganizationsEditionCountWidget.init();
+            OrganizationsDataTableWidget.init();
+        });
+    </script>
+}

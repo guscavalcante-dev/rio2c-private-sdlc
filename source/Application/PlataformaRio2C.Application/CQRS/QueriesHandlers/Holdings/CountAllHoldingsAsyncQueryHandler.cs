@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-09-2019
+// Last Modified On : 08-19-2019
 // ***********************************************************************
 // <copyright file="CountAllHoldingsAsyncQueryHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,10 +25,10 @@ namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
         private readonly IHoldingRepository repo;
 
         /// <summary>Initializes a new instance of the <see cref="CountAllHoldingsAsyncQueryHandler"/> class.</summary>
-        /// <param name="holdingRepository">The holding repository.</param>
-        public CountAllHoldingsAsyncQueryHandler(IHoldingRepository holdingRepository)
+        /// <param name="repository">The repository.</param>
+        public CountAllHoldingsAsyncQueryHandler(IHoldingRepository repository)
         {
-            this.repo = holdingRepository;
+            this.repo = repository;
         }
 
         /// <summary>Handles the specified count all holdings asynchronous.</summary>

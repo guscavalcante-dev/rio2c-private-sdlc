@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-18-2019
+// Last Modified On : 08-19-2019
 // ***********************************************************************
 // <copyright file="HoldingRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -92,7 +92,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     /// <summary>
     /// HoldingBaseDtoIQueryableExtensions
     /// </summary>
-    internal static class HoldingListDtoIQueryableExtensions
+    internal static class HoldingBaseDtoIQueryableExtensions
     {
         /// <summary>
         /// To the list paged.

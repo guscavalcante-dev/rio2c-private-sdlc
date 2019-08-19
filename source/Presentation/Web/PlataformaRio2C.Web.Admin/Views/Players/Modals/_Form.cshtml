@@ -1,0 +1,21 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.HoldingBaseCommand
+<div class="form-group row">
+    <div class="col-lg-4 text-center">
+        @Html.EditorFor(m => m.CropperImage)
+    </div>
+    <div class="col-lg-8">
+        @Html.LabelFor(m => m.Name, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="kt-separator kt-separator--border-dashed kt-separator--space-xl"></div>
+<div class="kt-section">
+    <h3 class="kt-section__title mb-0">
+        @Labels.Descriptions
+    </h3>
+    @Html.ValidationMessage("Descriptions", new { @class = "text-danger" })
+    <div class="kt-section__content mt-3">
+        @Html.EditorFor(m => m.Descriptions)
+    </div>
+</div>

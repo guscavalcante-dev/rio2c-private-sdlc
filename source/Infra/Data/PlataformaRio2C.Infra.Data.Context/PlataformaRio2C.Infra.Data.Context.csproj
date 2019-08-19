@@ -99,8 +99,11 @@
     <Compile Include="Mapping\NegotiationConfig\NegotiationRoomConfigMap.cs" />
     <Compile Include="Mapping\NegotiationConfig\NegotiationConfigMap.cs" />
     <Compile Include="Mapping\Negotiation\NegotiationMap.cs" />
+    <Compile Include="Mapping\Organizations\AttendeeOrganizationTypeMap.cs" />
     <Compile Include="Mapping\Organizations\AttendeeOrganizationMap.cs" />
+    <Compile Include="Mapping\Organizations\OrganizationTypeMap.cs" />
     <Compile Include="Mapping\Organizations\OrganizationMap.cs" />
+    <Compile Include="Mapping\Project\ProjectTypeMap.cs" />
     <Compile Include="Mapping\Project\ProjectAdditionalInformationMap.cs" />
     <Compile Include="Mapping\Project\ProjectInterestMap.cs" />
     <Compile Include="Mapping\Project\ProjectPlayerEvaluationMap.cs" />

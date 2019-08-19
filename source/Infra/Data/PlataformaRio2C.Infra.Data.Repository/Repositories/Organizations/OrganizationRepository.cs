@@ -1,0 +1,284 @@
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Domain
+// Author           : Rafael Dantas Ruiz
+// Created          : 08-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-19-2019
+// ***********************************************************************
+// <copyright file="OrganizationRepository.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Infra.Data.Context;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using LinqKit;
+using PlataformaRio2C.Domain.Dtos;
+using X.PagedList;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+
+namespace PlataformaRio2C.Infra.Data.Repository.Repositories
+{
+    #region Organization IQueryable Extensions
+
+    /// <summary>
+    /// OrganizationIQueryableExtensions
+    /// </summary>
+    internal static class OrganizationIQueryableExtensions
+    {
+        /// <summary>Finds the by uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="holdingUid">The holding uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<Organization> FindByUid(this IQueryable<Organization> query, Guid holdingUid)
+        {
+            query = query.Where(o => o.Uid == holdingUid);
+
+            return query;
+        }
+
+        /// <summary>Finds the by organization typeuid and edition identifier.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="organizationTypeUid">The organization type uid.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<Organization> FindByOrganizationTypeuidAndEditionId(this IQueryable<Organization> query, Guid organizationTypeUid, bool showAllEditions, int? editionId)
+        {
+            if (!showAllEditions && editionId.HasValue)
+            {
+                query = query.Where(o => o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
+                                                                           && ao.AttendeeOrganizationTypes.Any(aot => aot.OrganizationType.Uid == organizationTypeUid)));
+            }
+            else
+            {
+                query = query.Where(o => o.AttendeeOrganizations.Any(ao => ao.AttendeeOrganizationTypes.Any(aot => aot.OrganizationType.Uid == organizationTypeUid)));
+            }
+
+            return query;
+        }
+
+        /// <summary>Finds the by edition identifier.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<Organization> FindByEditionId(this IQueryable<Organization> query, bool showAllEditions, int? editionId)
+        {
+            if (!showAllEditions && editionId.HasValue)
+            {
+                query = query.Where(o => o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId));
+            }
+
+            return query;
+        }
+
+        /// <summary>Finds the by keywords.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <returns></returns>
+        internal static IQueryable<Organization> FindByKeywords(this IQueryable<Organization> query, string keywords)
+        {
+            if (!string.IsNullOrEmpty(keywords))
+            {
+                var predicate = PredicateBuilder.New<Organization>(true);
+
+                foreach (var keyword in keywords.Split(' '))
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        predicate = predicate.And(h => h.Name.Contains(keyword));
+                    }
+                }
+
+                query = query.AsExpandable().Where(predicate);
+            }
+
+            return query;
+        }
+    }
+
+    #endregion
+
+    #region OrganizationBaseDto IQueryable Extensions
+
+    /// <summary>
+    /// OrganizationBaseDtoIQueryableExtensions
+    /// </summary>
+    internal static class OrganizationBaseDtoIQueryableExtensions
+    {
+        /// <summary>
+        /// To the list paged.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        internal static async Task<IPagedList<OrganizationBaseDto>> ToListPagedAsync(this IQueryable<OrganizationBaseDto> query, int page, int pageSize)
+        {
+            page++;
+
+            // Page the list
+            var pagedList = await query.ToPagedListAsync(page, pageSize);
+            if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
+                pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
+
+            return pagedList;
+        }
+    }
+
+    #endregion
+
+    /// <summary>OrganizationRepository</summary>
+    public class OrganizationRepository : Repository<PlataformaRio2CContext, Organization>, IOrganizationRepository
+    {
+        /// <summary>Initializes a new instance of the <see cref="OrganizationRepository"/> class.</summary>
+        /// <param name="context">The context.</param>
+        public OrganizationRepository(PlataformaRio2CContext context)
+            : base(context)
+        {
+        }
+
+        /// <summary>Método que traz todos os registros</summary>
+        /// <param name="readonly"></param>
+        /// <returns></returns>
+        public override IQueryable<Organization> GetAll(bool @readonly = false)
+        {
+            var consult = this.dbSet;
+                                    //.Include(i => i.Descriptions)
+                                    //.Include(i => i.Descriptions.Select(t => t.Language));
+
+
+            return @readonly
+                        ? consult.AsNoTracking()
+                        : consult;
+        }
+
+        /// <summary>Gets all asynchronous.</summary>
+        /// <returns></returns>
+        public async Task<List<Organization>> GetAllAsync()
+        {
+            var query = this.GetAll();
+
+            return await query.ToListAsync();
+        }
+
+        /// <summary>Finds the dto by uid asynchronous.</summary>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <returns></returns>
+        public async Task<OrganizationDto> FindDtoByUidAsync(Guid organizationUid)
+        {
+            var query = this.GetAll()
+                                .FindByUid(organizationUid);
+
+            return await query
+                            .Select(h => new OrganizationDto
+                            {
+                                Id = h.Id,
+                                Uid = h.Uid,
+                                Name = h.Name,
+                                ImageUploadDate = h.ImageUploadDate,
+                                CreateDate = h.CreateDate,
+                                CreateUserId = h.CreateUserId,
+                                UpdateDate = h.UpdateDate,
+                                UpdateUserId = h.UpdateUserId,
+                                //Creator = h.Creator,
+                                UpdaterDto = new UserBaseDto
+                                {
+                                    Uid = h.Updater.Uid,
+                                    Name = h.Updater.Name,
+                                    Email =h.Updater.Email 
+                                },
+                                //DescriptionsDtos = h.Descriptions.Select(d => new HoldingDescriptionDto
+                                //{
+                                //    Id = d.Id,
+                                //    Uid = d.Uid,
+                                //    Value = d.Value,
+                                //    LanguageDto = new LanguageBaseDto
+                                //    {
+                                //        Id = d.Language.Id,
+                                //        Uid = d.Language.Uid,
+                                //        Name = d.Language.Name,
+                                //        Code = d.Language.Code
+                                //    }
+                                //})
+                            }).FirstOrDefaultAsync();
+        }
+
+        /// <summary>Finds all by data table.</summary>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="sortColumns">The sort columns.</param>
+        /// <param name="organizationTypeId">The organization type identifier.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<OrganizationBaseDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, Guid organizationTypeId, bool showAllEditions, int? editionId)
+        {
+            var query = this.GetAll()
+                                .FindByKeywords(keywords)
+                                .FindByOrganizationTypeuidAndEditionId(organizationTypeId, showAllEditions, editionId);
+
+            return await query
+                            .Select(o => new OrganizationBaseDto
+                            {
+                                Id = o.Id,
+                                Uid = o.Uid,
+                                Name = o.Name,
+                                HoldingBaseDto = new HoldingBaseDto
+                                {
+                                    Id = o.Holding.Id,
+                                    Uid = o.Holding.Uid,
+                                    Name = o.Holding.Name
+                                },
+                                Document = o.Document,
+                                Website = o.Website,
+                                PhoneNumber = o.PhoneNumber,
+                                ImageUploadDate = o.ImageUploadDate,
+                                CreateDate = o.CreateDate,
+                                UpdateDate = o.UpdateDate,
+                            })
+                            .DynamicOrder<OrganizationBaseDto>(sortColumns, new List<string> { "Name", "CreateDate", "UpdateDate" }, "Name")
+                            .ToListPagedAsync(page, pageSize);
+        }
+
+        /// <summary>Counts all by data table.</summary>
+        /// <param name="organizationTypeId">The organization type identifier.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<int> CountAllByDataTable(Guid organizationTypeId, bool showAllEditions, int? editionId)
+        {
+            var query = this.GetAll()
+                                .FindByOrganizationTypeuidAndEditionId(organizationTypeId, showAllEditions, editionId);
+
+            return await query.CountAsync();
+        }
+
+        public override IQueryable<Organization> GetAll(Expression<Func<Organization, bool>> filter)
+        {
+            return this.GetAll().Where(filter);
+        }
+
+        public override Organization Get(Expression<Func<Organization, bool>> filter)
+        {
+            return this.GetAll().FirstOrDefault(filter);
+        }
+
+        public override Organization Get(object id)
+        {
+            return this.dbSet
+                            //.Include(i => i.Image)
+                            .SingleOrDefault(x => x.Id == (int)id);
+        }
+    }
+}

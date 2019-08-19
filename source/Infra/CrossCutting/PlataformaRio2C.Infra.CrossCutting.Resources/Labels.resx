@@ -1176,4 +1176,44 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>atualizado</value>
     <comment>atualizado</comment>
   </data>
+  <data name="AudioVisual" xml:space="preserve">
+    <value>Áudio Visual</value>
+    <comment>Áudio Visual</comment>
+  </data>
+  <data name="CompanyDocument" xml:space="preserve">
+    <value>CNPJ</value>
+    <comment>CNPJ</comment>
+  </data>
+  <data name="Inovation" xml:space="preserve">
+    <value>Inovação</value>
+    <comment>Inovação</comment>
+  </data>
+  <data name="Investor" xml:space="preserve">
+    <value>Investidor</value>
+    <comment>Investidor</comment>
+  </data>
+  <data name="Music" xml:space="preserve">
+    <value>Música</value>
+    <comment>Música</comment>
+  </data>
+  <data name="MusicBand" xml:space="preserve">
+    <value>Banda de Música</value>
+    <comment>Banda de Música</comment>
+  </data>
+  <data name="NewCompany" xml:space="preserve">
+    <value>Nova Empresa</value>
+    <comment>Nova Empresa</comment>
+  </data>
+  <data name="PlayersRegistered" xml:space="preserve">
+    <value>Players cadastrados</value>
+    <comment>Players cadastrados</comment>
+  </data>
+  <data name="Recorder" xml:space="preserve">
+    <value>Gravadora</value>
+    <comment>Gravadora</comment>
+  </data>
+  <data name="Startup" xml:space="preserve">
+    <value>Startup</value>
+    <comment>Startup</comment>
+  </data>
 </root>

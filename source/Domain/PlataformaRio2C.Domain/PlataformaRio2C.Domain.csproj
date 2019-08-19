@@ -74,6 +74,8 @@
   <ItemGroup>
     <Compile Include="Dtos\HoldingDescriptions\HoldingDescriptionDto.cs" />
     <Compile Include="Dtos\HoldingDescriptions\HoldingDescriptionBaseDto.cs" />
+    <Compile Include="Dtos\Organizations\OrganizationBaseDto.cs" />
+    <Compile Include="Dtos\Organizations\OrganizationDto.cs" />
     <Compile Include="Dtos\Holdings\HoldingDto.cs" />
     <Compile Include="Dtos\Holdings\HoldingBaseDto.cs" />
     <Compile Include="Dtos\BaseDto.cs" />
@@ -102,9 +104,12 @@
     <Compile Include="Entities\NegotiationConfig\NegotiationRoomConfig.cs" />
     <Compile Include="Entities\NegotiationConfig\NegotiationConfig.cs" />
     <Compile Include="Entities\Negotiation\Negotiation.cs" />
+    <Compile Include="Entities\Organizations\AttendeeOrganizationType.cs" />
     <Compile Include="Entities\Organizations\AttendeeOrganization.cs" />
+    <Compile Include="Entities\Organizations\OrganizationType.cs" />
     <Compile Include="Entities\Organizations\Organization.cs" />
     <Compile Include="Entities\PlayerProducer\PlayerProducer.cs" />
+    <Compile Include="Entities\Project\ProjectType.cs" />
     <Compile Include="Entities\Project\ProjectPlayer.cs" />
     <Compile Include="Entities\Project\ProjectInterest.cs" />
     <Compile Include="Entities\Producer\ProducerTargetAudience.cs" />
@@ -150,6 +155,7 @@
     <Compile Include="Interfaces\Repositories\Country\ICityRepository.cs" />
     <Compile Include="Interfaces\Repositories\Country\ICountryRepository.cs" />
     <Compile Include="Interfaces\Repositories\Country\IStateRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Organizations\IOrganizationRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAddressRepository.cs" />
     <Compile Include="Interfaces\Repositories\Logistics\ILogisticsRepository.cs" />
     <Compile Include="Interfaces\Repositories\Mail\IMailRepository.cs" />

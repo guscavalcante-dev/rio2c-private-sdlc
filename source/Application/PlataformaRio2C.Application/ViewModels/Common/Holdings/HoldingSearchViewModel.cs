@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Rafael Dantas Ruiz
-// Created          : 08-12-2019
+// Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-14-2019
+// Last Modified On : 08-19-2019
 // ***********************************************************************
 // <copyright file="HoldingSearchViewModel.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

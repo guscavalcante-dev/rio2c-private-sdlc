@@ -4,14 +4,13 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-18-2019
+// Last Modified On : 08-19-2019
 // ***********************************************************************
 // <copyright file="HoldingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Application.Interfaces.Services;
 using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
@@ -25,7 +24,6 @@ using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
-using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -80,7 +78,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions)
         {
-            var holdings = await this.CommandBus.Send(new FindAllHoldingsDtosAsync(
+            var holdings = await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(
                 request.Start / request.Length,
                 request.Length,
                 request.Search?.Value,

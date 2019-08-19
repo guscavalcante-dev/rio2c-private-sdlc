@@ -1168,4 +1168,44 @@
     <value>updated</value>
     <comment>atualizado</comment>
   </data>
+  <data name="AudioVisual" xml:space="preserve">
+    <value>Audio Visual</value>
+    <comment>Áudio Visual</comment>
+  </data>
+  <data name="CompanyDocument" xml:space="preserve">
+    <value>Company Document</value>
+    <comment>CNPJ</comment>
+  </data>
+  <data name="Inovation" xml:space="preserve">
+    <value>Inovation</value>
+    <comment>Inovação</comment>
+  </data>
+  <data name="Investor" xml:space="preserve">
+    <value>Investor</value>
+    <comment>Investidor</comment>
+  </data>
+  <data name="Music" xml:space="preserve">
+    <value>Music</value>
+    <comment>Música</comment>
+  </data>
+  <data name="MusicBand" xml:space="preserve">
+    <value>Music Band</value>
+    <comment>Banda de Música</comment>
+  </data>
+  <data name="NewCompany" xml:space="preserve">
+    <value>New Company</value>
+    <comment>Nova Empresa</comment>
+  </data>
+  <data name="PlayersRegistered" xml:space="preserve">
+    <value>Players registered</value>
+    <comment>Players registered</comment>
+  </data>
+  <data name="Recorder" xml:space="preserve">
+    <value>Gravadora</value>
+    <comment>Gravadora</comment>
+  </data>
+  <data name="Startup" xml:space="preserve">
+    <value>Startup</value>
+    <comment>Startup</comment>
+  </data>
 </root>

@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-18-2019
+// Last Modified On : 08-19-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -269,19 +269,37 @@ namespace PlataformaRio2C.Web.Admin
 
             #region Holdings
 
-            bundles.Add(new ScriptBundle("~/bundles/js/holdingsList.js").Include(
+            bundles.Add(new ScriptBundle("~/bundles/js/holdings.list.js").Include(
                 "~/Assets/js/holdings/holdings.totalcount.widget.js",
                 "~/Assets/js/holdings/holdings.editioncount.widget.js",
                 "~/Assets/js/holdings/holdings.datatable.widget.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/holdingsCreate.js").Include(
+            bundles.Add(new ScriptBundle("~/bundles/js/holdings.create.js").Include(
                 "~/Assets/js/holdings/holdings.create.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/holdingsUpdate.js").Include(
+            bundles.Add(new ScriptBundle("~/bundles/js/holdings.update.js").Include(
                 "~/Assets/js/holdings/holdings.update.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/holdingsDelete.js").Include(
+            bundles.Add(new ScriptBundle("~/bundles/js/holdings.delete.js").Include(
                 "~/Assets/js/holdings/holdings.delete.js"));
+
+            #endregion
+
+            #region Holdings
+
+            bundles.Add(new ScriptBundle("~/bundles/js/organizations.list.js").Include(
+                "~/Assets/js/organizations/organizations.totalcount.widget.js",
+                "~/Assets/js/organizations/organizations.editioncount.widget.js",
+                "~/Assets/js/organizations/organizations.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/organizations.create.js").Include(
+                "~/Assets/js/organizations/organizations.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/organizations.update.js").Include(
+                "~/Assets/js/organizations/organizations.update.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/organizations.delete.js").Include(
+                "~/Assets/js/organizations/organizations.delete.js"));
 
             #endregion
 
