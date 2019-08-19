@@ -287,6 +287,13 @@ namespace PlataformaRio2C.Web.Site
 
             #endregion
 
+            bundles.Add(new ScriptBundle("~/bundles/js/scheduleCustomScripts").Include(
+                "~/Assets/themes/metronic/vendors/custom/fullcalendar/fullcalendar.bundle.js",
+                "~/Assets/js/pages/schedule/components/calendar/basic.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/projectSubmitCustomScripts").Include(
+"~/Assets/themes/metronic/js/demo4/pages/wizard/wizard-3.js"));
+
             #endregion
 
             #region Styles
@@ -301,12 +308,17 @@ namespace PlataformaRio2C.Web.Site
                       "~/Content/font-awesome.css",
                       "~/Content/style.css"));
 
+            bundles.Add(new StyleBundle("~/bundles/css/scheduleCustomStyles").Include(
+                "~/Assets/themes/metronic/vendors/custom/fullcalendar/fullcalendar.bundle.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/css/projectSubmitCustomStyles").Include(
+    "~/Assets/themes/metronic/css/demo4/pages/wizard/wizard-3.css"));
             #endregion
 
             // Required to generate bundles on release running in visual studio
-            #if !DEBUG
+#if !DEBUG
             BundleTable.EnableOptimizations = true;
-            #endif
+#endif
         }
     }
 }

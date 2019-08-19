@@ -16,6 +16,8 @@ using System;
 using System.Web.Mvc;
 using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
+using System.Collections.Generic;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -40,6 +42,13 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper("Conference", new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper("Dashboard", Url.Action("Index", "Home", new { Area = "Player" }))
+            });
+
+            #endregion
             return View();
         }
 

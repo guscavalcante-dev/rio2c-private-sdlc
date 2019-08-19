@@ -1,9 +1,148 @@
 ﻿@{
     ViewBag.Title = Labels.Projects;
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div ng-controller="ProjectPlayerListController as vm">
+<div class="row">
+    <!--begin:Left panel-->
+    <div class="col-md-3 col-lg-3">
+
+        @{ Html.RenderPartial("~/Views/Themes/Metronic/SideMenu.cshtml"); }
+    </div>
+    <!--end:Left panel-->
+    <!--begin:Right panel-->
+    <div class="col-md-9 col-lg-9">
+        <div class="row">
+            <!--begin:Right column-->
+            <div class="col-md-12">
+                <!--begin:Main-->
+                <div class="kt-portlet">
+                    <div class="kt-portlet__body">
+                        <div class="kt-infobox">
+                            <div class="kt-infobox__header">
+                                <h2 class="kt-infobox__title">Projetos Audiovisuais</h2>
+                            </div>
+                            <div class="kt-infobox__body">
+                                <div class="kt-infobox__section">
+                                    <div class="kt-infobox__content">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi a vehicula ligula. Suspendisse potenti. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="kt-portlet kt-iconbox kt-iconbox--wave">
+                            <div class="kt-portlet__body">
+                                <div class="kt-iconbox__body">
+                                    <div class="kt-iconbox__icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect id="bound" x="0" y="0" width="24" height="24"></rect>
+                                                <path d="M2.56066017,10.6819805 L4.68198052,8.56066017 C5.26776695,7.97487373 6.21751442,7.97487373 6.80330086,8.56066017 L8.9246212,10.6819805 C9.51040764,11.267767 9.51040764,12.2175144 8.9246212,12.8033009 L6.80330086,14.9246212 C6.21751442,15.5104076 5.26776695,15.5104076 4.68198052,14.9246212 L2.56066017,12.8033009 C1.97487373,12.2175144 1.97487373,11.267767 2.56066017,10.6819805 Z M14.5606602,10.6819805 L16.6819805,8.56066017 C17.267767,7.97487373 18.2175144,7.97487373 18.8033009,8.56066017 L20.9246212,10.6819805 C21.5104076,11.267767 21.5104076,12.2175144 20.9246212,12.8033009 L18.8033009,14.9246212 C18.2175144,15.5104076 17.267767,15.5104076 16.6819805,14.9246212 L14.5606602,12.8033009 C13.9748737,12.2175144 13.9748737,11.267767 14.5606602,10.6819805 Z" id="Combined-Shape" fill="#000000" opacity="0.3"></path>
+                                                <path d="M8.56066017,16.6819805 L10.6819805,14.5606602 C11.267767,13.9748737 12.2175144,13.9748737 12.8033009,14.5606602 L14.9246212,16.6819805 C15.5104076,17.267767 15.5104076,18.2175144 14.9246212,18.8033009 L12.8033009,20.9246212 C12.2175144,21.5104076 11.267767,21.5104076 10.6819805,20.9246212 L8.56066017,18.8033009 C7.97487373,18.2175144 7.97487373,17.267767 8.56066017,16.6819805 Z M8.56066017,4.68198052 L10.6819805,2.56066017 C11.267767,1.97487373 12.2175144,1.97487373 12.8033009,2.56066017 L14.9246212,4.68198052 C15.5104076,5.26776695 15.5104076,6.21751442 14.9246212,6.80330086 L12.8033009,8.9246212 C12.2175144,9.51040764 11.267767,9.51040764 10.6819805,8.9246212 L8.56066017,6.80330086 C7.97487373,6.21751442 7.97487373,5.26776695 8.56066017,4.68198052 Z" id="Combined-Shape" fill="#000000"></path>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <div class="kt-iconbox__desc">
+                                        <h3 class="kt-iconbox__title">
+                                            <a class="kt-link" href="#">Projetos enviados (Producer)</a>
+                                        </h3>
+                                        <div class="kt-iconbox__content">
+                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kt-portlet__foot">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-12 kt-align-right">
+                                        <a href="@Url.Action("Submit", "Project", new { Area = "" })" class="btn btn-brand">Enviar projeto</a>
+                                        <a href="@Url.Action("Submited", "Project", new { Area = "" })" class="btn btn-secondary">Projetos enviados</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="kt-portlet kt-iconbox kt-iconbox--wave">
+                            <div class="kt-portlet__body">
+                                <div class="kt-iconbox__body">
+                                    <div class="kt-iconbox__icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect id="bound" x="0" y="0" width="24" height="24"></rect>
+                                                <path d="M2.56066017,10.6819805 L4.68198052,8.56066017 C5.26776695,7.97487373 6.21751442,7.97487373 6.80330086,8.56066017 L8.9246212,10.6819805 C9.51040764,11.267767 9.51040764,12.2175144 8.9246212,12.8033009 L6.80330086,14.9246212 C6.21751442,15.5104076 5.26776695,15.5104076 4.68198052,14.9246212 L2.56066017,12.8033009 C1.97487373,12.2175144 1.97487373,11.267767 2.56066017,10.6819805 Z M14.5606602,10.6819805 L16.6819805,8.56066017 C17.267767,7.97487373 18.2175144,7.97487373 18.8033009,8.56066017 L20.9246212,10.6819805 C21.5104076,11.267767 21.5104076,12.2175144 20.9246212,12.8033009 L18.8033009,14.9246212 C18.2175144,15.5104076 17.267767,15.5104076 16.6819805,14.9246212 L14.5606602,12.8033009 C13.9748737,12.2175144 13.9748737,11.267767 14.5606602,10.6819805 Z" id="Combined-Shape" fill="#000000" opacity="0.3"></path>
+                                                <path d="M8.56066017,16.6819805 L10.6819805,14.5606602 C11.267767,13.9748737 12.2175144,13.9748737 12.8033009,14.5606602 L14.9246212,16.6819805 C15.5104076,17.267767 15.5104076,18.2175144 14.9246212,18.8033009 L12.8033009,20.9246212 C12.2175144,21.5104076 11.267767,21.5104076 10.6819805,20.9246212 L8.56066017,18.8033009 C7.97487373,18.2175144 7.97487373,17.267767 8.56066017,16.6819805 Z M8.56066017,4.68198052 L10.6819805,2.56066017 C11.267767,1.97487373 12.2175144,1.97487373 12.8033009,2.56066017 L14.9246212,4.68198052 C15.5104076,5.26776695 15.5104076,6.21751442 14.9246212,6.80330086 L12.8033009,8.9246212 C12.2175144,9.51040764 11.267767,9.51040764 10.6819805,8.9246212 L8.56066017,6.80330086 C7.97487373,6.21751442 7.97487373,5.26776695 8.56066017,4.68198052 Z" id="Combined-Shape" fill="#000000"></path>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <div class="kt-iconbox__desc">
+                                        <h3 class="kt-iconbox__title">
+                                            <a class="kt-link" href="#">Avaliação de projetos (Player)</a>
+                                        </h3>
+                                        <div class="kt-iconbox__content">
+                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kt-portlet__foot">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-12 kt-align-right">
+                                        <a href="@Url.Action("Review", "Project", new { Area = "" })" class="btn btn-brand">Avaliar projetos</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                @*<div class="kt-portlet kt-portlet--responsive-mobile">
+        <div class="kt-portlet__head">
+            <div class="kt-portlet__head-label">
+                <h3 class="kt-portlet__head-title">
+                    Projetos enviados
+                </h3>
+            </div>
+            <div class="kt-portlet__head-toolbar">
+                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                    <button type="button" class="btn btn-secondary"><i class="la la-file-text-o"></i></button>
+                    <button type="button" class="btn btn-secondary"><i class="la la-floppy-o"></i></button>
+                    <button type="button" class="btn btn-secondary"><i class="la la-header"></i></button>
+                    <div class="btn-group" role="group">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Dropdown
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
+                            <a class="dropdown-item" href="#">Dropdown link</a>
+                            <a class="dropdown-item" href="#">Dropdown link</a>
+                            <a class="dropdown-item" href="#">Dropdown link</a>
+                            <a class="dropdown-item" href="#">Dropdown link</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="kt-portlet__body">
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
+        </div>
+            </div>*@
+                <!--end:Main-->
+            </div>
+            <!--end:Right column-->
+        </div>
+        <div class="row">
+        </div>
+    </div>
+    <!--begin:Right panel-->
+</div>
+
+@*<div ng-controller="ProjectPlayerListController as vm">
     <div class="content content-header-button clearfix">
         <h1 class="page-title  pull-left">@ViewBag.Title</h1>
         <div ng-if="!vm.loadingOptions" class="filter-menu pull-left">
@@ -106,7 +245,7 @@
                                     </div>
                                 </header>
                                 <div class="panel-body">
-                                    @*list-images-struture *@
+                                    @*list-images-struture @@
                                     <div class="list-images-structure ">
 
                                         <figure class="relative" ng-repeat="player in project.players">
@@ -129,7 +268,7 @@
 
 
                                     </div>
-                                    @*fim list-images-struture *@
+                                    @*fim list-images-struture @@
 
 
                                 </div>
@@ -144,4 +283,4 @@
             </div>
         </div>
     </section>
-</div>
+</div>*@

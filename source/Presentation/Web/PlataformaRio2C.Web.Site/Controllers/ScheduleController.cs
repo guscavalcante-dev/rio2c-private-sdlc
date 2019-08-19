@@ -11,10 +11,12 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System.Collections.Generic;
 using PlataformaRio2C.Application.Interfaces.Services;
 using System.Web.Mvc;
 using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -42,6 +44,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
             //{
             //    return View("Disabled");
             //}
+
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper("Agenda", new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper("Dashboard", Url.Action("Index", "Home", new { Area = "Player" }))
+            });
+
+            #endregion
 
             return View();
         }
