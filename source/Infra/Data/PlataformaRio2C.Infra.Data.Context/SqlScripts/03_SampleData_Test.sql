@@ -1,5 +1,4 @@
-﻿USE [Rio2C_Dev]
-GO
+﻿
 SET IDENTITY_INSERT [dbo].[Holdings] ON 
 
 GO
@@ -4724,8 +4723,6 @@ GO
 SET IDENTITY_INSERT [dbo].[HoldingDescriptions] OFF
 GO
 
-USE [Rio2C_Dev]
-GO
 SET IDENTITY_INSERT [dbo].[AttendeeOrganizationTypes] ON 
 
 GO
