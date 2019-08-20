@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-19-2019
+// Last Modified On : 08-20-2019
 // ***********************************************************************
 // <copyright file="PlayersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -217,8 +217,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
-                cmd.UpdateProperties(await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)));
-
+                cmd.UpdateBaseProperties(await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)));
 
                 return Json(new
                 {
@@ -288,6 +287,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     throw new DomainException();
                 }
 
+                cmd.OrganizationType = OrganizationType.Player;
+
                 cmd.UpdateBaseProperties(
                     this.UserId,
                     this.UserUid,
@@ -308,6 +309,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     var target = error.Target ?? "";
                     ModelState.AddModelError(target, error.Message);
                 }
+
+                cmd.UpdateBaseProperties(await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)));
 
                 return Json(new
                 {

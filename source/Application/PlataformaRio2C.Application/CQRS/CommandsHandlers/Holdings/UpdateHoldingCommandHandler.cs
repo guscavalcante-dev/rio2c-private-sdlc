@@ -4,7 +4,7 @@
 // Created          : 08-17-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-18-2019
+// Last Modified On : 08-20-2019
 // ***********************************************************************
 // <copyright file="UpdateHoldingCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -77,8 +77,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            var languageDtos = await this.languageRepo.FindAllDtosAsync();
+            // Before update values
             var beforeImageUploadDate = holding.ImageUploadDate;
+
+            var languageDtos = await this.languageRepo.FindAllDtosAsync();
 
             var newDescriptions = cmd.Descriptions?.Where(d => !string.IsNullOrEmpty(d.Value))?.Select(d => new HoldingDescription(
                 d.Value,

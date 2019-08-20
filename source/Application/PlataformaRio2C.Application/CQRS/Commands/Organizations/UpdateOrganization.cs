@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
@@ -25,6 +26,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     public class UpdateOrganization : OrganizationBaseCommand
     {
         public Guid OrganizationUid { get; set; }
+        public OrganizationType OrganizationType { get; set; }
         public UserBaseDto UpdaterBaseDto { get; set; }
         public DateTime UpdateDate { get; set; }
 

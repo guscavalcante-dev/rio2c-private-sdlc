@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 08-20-2019
 // ***********************************************************************
-// <copyright file="CreateOrganizationCommandHandler.cs" company="Softo">
+// <copyright file="UpdateOrganizationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -27,15 +27,15 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>CreateOrganizationCommandHandler</summary>
-    public class CreateOrganizationCommandHandler : BaseOrganizationCommandHandler, IRequestHandler<CreateOrganization, AppValidationResult>
+    /// <summary>UpdateOrganizationCommandHandler</summary>
+    public class UpdateOrganizationCommandHandler : BaseOrganizationCommandHandler, IRequestHandler<UpdateOrganization, AppValidationResult>
     {
         private readonly IHoldingRepository holdingRepo;
         private readonly IEditionRepository editionRepo;
         private readonly IOrganizationTypeRepository organizationTypeRepo;
         private readonly ILanguageRepository languageRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="CreateOrganizationCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="UpdateOrganizationCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="organizationRepository">The organization repository.</param>
@@ -43,7 +43,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="organizationTypeRepository">The organization type repository.</param>
         /// <param name="languageRepository">The language repository.</param>
-        public CreateOrganizationCommandHandler(
+        public UpdateOrganizationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IOrganizationRepository organizationRepository,
@@ -59,20 +59,21 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.languageRepo = languageRepository;
         }
 
-        /// <summary>Handles the specified create organization.</summary>
-        /// <param name="cmd"></param>
+        /// <summary>Handles the specified update organization.</summary>
+        /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(CreateOrganization cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(UpdateOrganization cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
-            var organizationUid = Guid.NewGuid();
+            var organization = await this.GetOrganizationByUid(cmd.OrganizationUid);
 
             #region Initial validations
 
-            var existingOrganizationByName = this.OrganizationRepo.Get(e => e.Name == cmd.Name
-                                                                            && e.Holding.Uid == cmd.HoldingUid);
+            var existingOrganizationByName = this.OrganizationRepo.Get(e => e.Name == cmd.Name 
+                                                                            && e.Holding.Uid == cmd.HoldingUid 
+                                                                            && e.Uid != cmd.OrganizationUid);
             if (existingOrganizationByName != null)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.APlayer, Labels.TheName, cmd.Name), new string[] { "Name" }));
@@ -86,30 +87,41 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            var languageDtos = await this.languageRepo.FindAllDtosAsync();
-            var holding = await this.holdingRepo.GetAsync(cmd.HoldingUid ?? Guid.Empty);
-            var edition = await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty);
-            var organizationType = await this.organizationTypeRepo.GetAsync(cmd.OrganizationType?.Uid ?? Guid.Empty);
+            // Before update values
+            var beforeImageUploadDate = organization.ImageUploadDate;
 
-            var organization = new Organization(
-                organizationUid,
-                holding,
-                edition,
-                organizationType,
-                cmd.Name,
-                cmd.CompanyName,
-                cmd.TradeName,
-                cmd.Document,
-                cmd.Website,
-                cmd.SocialMedia,
-                cmd.PhoneNumber,
-                null,
-                cmd.CropperImage?.ImageFile != null,
-                cmd.Descriptions?.Where(d => !string.IsNullOrEmpty(d.Value))?.Select(d => new OrganizationDescription(
-                    d.Value,
-                    languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language,
-                    cmd.UserId))?.ToList(),
-                cmd.UserId);
+            //var languageDtos = await this.languageRepo.FindAllDtosAsync();
+            //var holding = await this.holdingRepo.GetAsync(cmd.HoldingUid ?? Guid.Empty);
+            //var edition = await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty);
+            //var organizationType = await this.organizationTypeRepo.GetAsync(cmd.OrganizationType?.Uid ?? Guid.Empty);
+
+            //var newDescriptions = cmd.Descriptions?.Where(d => !string.IsNullOrEmpty(d.Value))?.Select(d => new OrganizationDescription(
+            //    d.Value,
+            //    languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language,
+            //    cmd.UserId))?.ToList();
+
+            //// Delete holding descriptions
+            //var deletedDescriptions = organization.DeleteDescriptions(newDescriptions);
+            //if (deletedDescriptions?.Any() == true)
+            //{
+            //    this.organizationDescriptionRepo.DeleteAll(deletedDescriptions);
+            //}
+
+            //// Update holding
+            //organization.Update(
+            //    holding,
+            //    cmd.Name,
+            //    cmd.CompanyName,
+            //    cmd.TradeName,
+            //    cmd.Document,
+            //    cmd.Website,
+            //    cmd.SocialMedia,
+            //    cmd.PhoneNumber,
+            //    null,
+            //    cmd.CropperImage?.ImageFile != null,
+            //    cmd.CropperImage?.IsImageDeleted == true,
+            //    newDescriptions,
+            //    cmd.UserId);
 
             if (!organization.IsValid())
             {
@@ -117,10 +129,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
-            this.OrganizationRepo.Create(organization);
+            this.OrganizationRepo.Update(organization);
             this.Uow.SaveChanges();
             this.AppValidationResult.Data = organization;
 
+            // Update images
             if (cmd.CropperImage?.ImageFile != null)
             {
                 ImageHelper.UploadOriginalAndCroppedImages(
@@ -130,6 +143,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.CropperImage.DataY,
                     cmd.CropperImage.DataWidth,
                     cmd.CropperImage.DataHeight,
+                    FileRepositoryPathType.OrganizationImage);
+            }
+            // Delete images
+            else if (cmd.CropperImage?.IsImageDeleted == true && beforeImageUploadDate.HasValue)
+            {
+                ImageHelper.DeleteOriginalAndCroppedImages(
+                    organization.Uid,
                     FileRepositoryPathType.OrganizationImage);
             }
 

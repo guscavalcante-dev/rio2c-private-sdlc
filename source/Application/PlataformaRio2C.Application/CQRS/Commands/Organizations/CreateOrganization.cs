@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-19-2019
+// Last Modified On : 08-20-2019
 // ***********************************************************************
 // <copyright file="CreateOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -36,13 +36,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Initializes a new instance of the <see cref="CreateOrganization"/> class.</summary>
         public CreateOrganization()
         {
-        }
-
-        /// <summary>Updates the properties.</summary>
-        /// <param name="holdingBaseDtos">The holding base dtos.</param>
-        public void UpdateProperties(List<HoldingBaseDto> holdingBaseDtos)
-        {
-            this.UpdateBaseProperties(holdingBaseDtos);
         }
 
         /// <summary>Updates the descriptions.</summary>
