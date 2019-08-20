@@ -7856,9 +7856,9 @@
     <Content Include="Views\Project\Submited.cshtml" />
     <Content Include="Views\Project\Review.cshtml" />
     <Content Include="Views\Project\Submit.cshtml" />
-    <None Include="Web.config">
+    <Content Include="Web.config">
       <SubType>Designer</SubType>
-    </None>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -7867,7 +7867,7 @@
     </Content>
     <Content Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>
-    </None>
+    </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />

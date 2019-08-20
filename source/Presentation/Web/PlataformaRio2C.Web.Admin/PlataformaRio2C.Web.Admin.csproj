@@ -8033,9 +8033,9 @@
     <Content Include="Views\Players\Widgets\DataTableWidget.cshtml" />
     <Content Include="Views\Players\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Views\Players\Widgets\TotalCountWidget.cshtml" />
-    <None Include="Web.config">
+    <Content Include="Web.config">
       <SubType>Designer</SubType>
-    </None>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
