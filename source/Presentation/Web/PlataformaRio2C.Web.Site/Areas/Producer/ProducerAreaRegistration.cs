@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-07-2019
+// Last Modified On : 08-20-2019
 // ***********************************************************************
 // <copyright file="ProducerAreaRegistration.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -32,7 +32,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Producer
         {
             context.MapRoute(
                 "ProducerWithCultureAndEdition",
-                "{culture}/{edition}/Player/{controller}/{action}/{id}",
+                "{culture}/{edition}/" + AreaName + "/{controller}/{action}/{id}",
                 new { culture = string.Empty, edition = string.Empty, controller = "Home", action = "Index", area = AreaName, id = UrlParameter.Optional },
                 new { culture = @"^[a-zA-Z]{2}(\-[a-zA-Z]{2})?$", edition = @"^[0-9]{4}$" },
                 new[] { "PlataformaRio2C.Web.Site.Areas.Producer.Controllers" }
@@ -40,7 +40,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Producer
 
             context.MapRoute(
                 "ProducerWithCulture",
-                "{culture}/Producer/{controller}/{action}/{id}",
+                "{culture}/" + AreaName + "/{controller}/{action}/{id}",
                 new { culture = string.Empty, controller = "Home", action = "Index", area = AreaName, id = UrlParameter.Optional },
                 new { culture = @"^[a-zA-Z]{2}(\-[a-zA-Z]{2})?$" },
                 new[] { "PlataformaRio2C.Web.Site.Areas.Producer.Controllers" }
