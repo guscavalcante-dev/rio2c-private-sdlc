@@ -10,7 +10,7 @@
                 var fileRepositoryPathType = Model.FileRepositoryPathTypeUid == FileRepositoryPathType.HoldingImage.Uid ? FileRepositoryPathType.HoldingImage :
                                              Model.FileRepositoryPathTypeUid == FileRepositoryPathType.OrganizationImage.Uid ? FileRepositoryPathType.OrganizationImage : 
                                              FileRepositoryPathType.UserImage;
-                <div id="current-image" class="kt-avatar__holder wh-200" style="background-color: rgba(255, 255, 255, 0.1); background-image: url(@Html.GetImageUrl(fileRepositoryPathType, Model.ImageUid.Value, Model.GetImageUploadDate().Value, true))"></div>
+                <div id="current-image" class="kt-avatar__holder wh-200" style="background-color: rgba(255, 255, 255, 0.1); background-image: url(@ImageHelper.GetImageUrl(fileRepositoryPathType, Model.ImageUid.Value, Model.GetImageUploadDate().Value, true))"></div>
             }
             <div id="no-image" class="kt-avatar__holder wh-200 @(Model.GetImageUploadDate().HasValue ? "d-none" : string.Empty)" style="background-color: rgba(255, 255, 255, 0.1);"></div>
             @Html.TextBoxFor(m => m.ImageFile, new { id = "ImageFile", @class = "sr-only", type = "file", @accept = "image/*" })
