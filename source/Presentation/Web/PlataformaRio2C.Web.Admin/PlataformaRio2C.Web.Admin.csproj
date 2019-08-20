@@ -352,6 +352,9 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\img\bg-1.jpg" />
+    <Content Include="Assets\img\bg-2.jpg" />
+    <Content Include="Assets\img\bg-3.jpg" />
     <Content Include="Assets\js\holdings\holdings.delete.js" />
     <Content Include="Assets\js\myrio2c.cropper.js" />
     <Content Include="Assets\components\cropper\demo\css\main.css" />
