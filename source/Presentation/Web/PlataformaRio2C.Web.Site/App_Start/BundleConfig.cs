@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-14-2019
+// Last Modified On : 08-20-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -32,9 +32,10 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/themes/metronic/vendors/general/popper.js/dist/umd/popper.js",
                 "~/Assets/themes/metronic/vendors/general/bootstrap/dist/js/bootstrap.min.js",
                 "~/Assets/themes/metronic/vendors/general/js-cookie/src/js.cookie.js",
-                "~/Assets/themes/metronic/vendors/general/moment/min/moment.min.js",
+                "~/Assets/themes/metronic/vendors/general/moment/min/moment-with-locales.min.js",
                 "~/Assets/themes/metronic/vendors/general/tooltip.js/dist/umd/tooltip.min.js",
                 "~/Assets/themes/metronic/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js",
+                "~/Assets/themes/metronic/vendors/general/toastr/build/toastr.min.js",
                 "~/Assets/themes/metronic/vendors/general/sticky-js/dist/sticky.min.js",
                 "~/Assets/themes/metronic/vendors/general/wnumb/wNumb.js"));
 
@@ -122,7 +123,8 @@ namespace PlataformaRio2C.Web.Site
             #region Global Mandatory Vendors
 
             bundles.Add(new StyleBundle("~/bundles/css/layoutGlobalMandatoryVendors.css").Include(
-                "~/Assets/themes/metronic/vendors/general/perfect-scrollbar/css/perfect-scrollbar.css"));
+                "~/Assets/themes/metronic/vendors/general/perfect-scrollbar/css/perfect-scrollbar.css",
+                "~/Assets/themes/metronic/vendors/general/toastr/build/toastr.css"));
 
             #endregion
 
@@ -171,14 +173,6 @@ namespace PlataformaRio2C.Web.Site
 
             #endregion
 
-            #region Global Customized Styles
-
-            bundles.Add(new StyleBundle("~/bundles/css/layoutGlobalCustomizedStyles.css").Include(
-                "~/Assets/css/rio2c.css",
-                "~/Assets/css/rio2c-responsive.css"));
-
-            #endregion
-
             #region Login
 
             bundles.Add(new StyleBundle("~/bundles/css/loginCustomStyles.css").Include(
@@ -192,6 +186,80 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/themes/metronic/css/demo4/pages/error/error-1.css"));
 
             #endregion
+
+            #endregion
+
+            #endregion
+
+            #region MyRio2C Bundles
+
+            bundles.Add(new StyleBundle("~/bundles/css/layoutGlobalCustomizedStyles.css").Include(
+                "~/Assets/css/myrio2c.common.css",
+                "~/Assets/css/myrio2c.common.responsive.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/layoutGlobalCustomized.js").Include(
+                "~/Assets/js/myrio2c.common.js"));
+
+            #endregion
+
+            #region Components Bundles
+
+            #region JQuery Validation
+
+            bundles.Add(new ScriptBundle("~/bundles/js/jqueryval.js").Include(
+                "~/Scripts/jquery.validate.min.js",
+                "~/Scripts/jquery.validate-vsdoc.min.js",
+                "~/Scripts/jquery.validate.unobtrusive.min.js"));
+
+            #endregion
+
+            #region JQuery Form
+
+            bundles.Add(new ScriptBundle("~/bundles/js/jqueryform.js").Include(
+                "~/Assets/components/jquery.form/jquery.form.js"));
+
+            #endregion
+
+            #region Datatables
+
+            bundles.Add(new StyleBundle("~/bundles/css/dataTables.css")
+                .Include("~/Assets/themes/metronic/vendors/custom/datatables/datatables.bundle.css", new CssRewriteUrlTransform()));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/dataTables.js").Include(
+                "~/Assets/themes/metronic/vendors/custom/datatables/datatables.bundle.js"));
+
+            #endregion
+
+            #region Chart.js
+
+            bundles.Add(new ScriptBundle("~/bundles/js/chart.js").Include(
+                "~/Assets/themes/metronic/vendors/general/chart.js/dist/Chart.bundle.js"));
+
+            #endregion
+
+            #region CKEditor
+
+            bundles.Add(new ScriptBundle("~/bundles/js/ckEditor.js").Include(
+                "~/Scripts/ckeditor/ckeditor.js",
+                "~/Content/js/ckeditor_config.js"));
+
+            #endregion
+
+            #region Cropperjs
+
+            bundles.Add(new StyleBundle("~/bundles/css/cropper.css")
+                .Include("~/Assets/components/cropper/dist/cropper.css", new CssRewriteUrlTransform()));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/cropper.js").Include(
+                "~/Assets/components/cropper/dist/cropper.js",
+                "~/Assets/js/myrio2c.cropper.js"));
+
+            #endregion
+
+            #region Bootbox
+
+            bundles.Add(new ScriptBundle("~/bundles/js/bootbox.js").Include(
+                "~/Scripts/bootbox.min.js"));
 
             #endregion
 
@@ -316,9 +384,9 @@ namespace PlataformaRio2C.Web.Site
             #endregion
 
             // Required to generate bundles on release running in visual studio
-#if !DEBUG
+            #if !DEBUG
             BundleTable.EnableOptimizations = true;
-#endif
+            #endif
         }
     }
 }

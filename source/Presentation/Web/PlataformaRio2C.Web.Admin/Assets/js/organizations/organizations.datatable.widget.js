@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-19-2019
+// Last Modified On : 08-20-2019
 // ***********************************************************************
 // <copyright file="organizations.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,9 +35,11 @@ var OrganizationsDataTableWidget = function () {
             displayStart = (initialPage - 1) * pageLength;
         }
 
+        var globalVariables = MyRio2cCommon.getGlobalVariables();
+
         table = tableElementId.DataTable({
             "language": {
-                "url": "/Assets/components/datatables/datatables." + userInterfaceLanguage + ".js"
+                "url": "/Assets/components/datatables/datatables." + globalVariables.userInterfaceLanguage + ".js"
             },
             lengthMenu: [pageLengthOptions, pageLengthOptions],
             displayStart: displayStart,
@@ -129,7 +131,7 @@ var OrganizationsDataTableWidget = function () {
                     render: function (data, type, full, meta) {
                         var image = '';
                         if (!MyRio2cCommon.isNullOrEmpty(full.ImageUploadDate)) {
-                            image += '<img style="max-width: 50px; max-height: 50px;" src="https://dev.assets.my.rio2c.com/img/organizations/' + full.Uid + '_thumbnail.png?v=' + moment(full.ImageUploadDate).locale(userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
+                            image += '<img style="max-width: 50px; max-height: 50px;" src="https://dev.assets.my.rio2c.com/img/organizations/' + full.Uid + '_thumbnail.png?v=' + moment(full.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
                         }
                         else {
                             image += '<img style="max-width: 50px; max-height: 50px;" src="https://dev.assets.my.rio2c.com/img/organizations/no-image.png?v=20190818200849" /> ';
@@ -149,7 +151,7 @@ var OrganizationsDataTableWidget = function () {
                     targets: [5,6],
                     className: "dt-center",
                     render: function (data) {
-                        return moment(data).locale(userInterfaceLanguage).format('L LTS');
+                        return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
                 },
                 {

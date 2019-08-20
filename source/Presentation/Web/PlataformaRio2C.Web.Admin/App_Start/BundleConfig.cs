@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-19-2019
+// Last Modified On : 08-20-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -285,7 +285,7 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
-            #region Holdings
+            #region Organizations
 
             bundles.Add(new ScriptBundle("~/bundles/js/organizations.list.js").Include(
                 "~/Assets/js/organizations/organizations.totalcount.widget.js",
