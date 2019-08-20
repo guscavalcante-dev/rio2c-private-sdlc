@@ -341,6 +341,9 @@
     <Content Include="Areas\Producer\Views\Collaborator\ProfileEdit.cshtml" />
     <Content Include="Assets\css\myrio2c.common.responsive.css" />
     <Content Include="Assets\css\myrio2c.common.css" />
+    <Content Include="Assets\img\bg-1.jpg" />
+    <Content Include="Assets\img\bg-2.jpg" />
+    <Content Include="Assets\img\bg-3.jpg" />
     <Content Include="Assets\img\favicon.png" />
     <Content Include="Assets\img\header.jpg" />
     <Content Include="Assets\img\logo-rio2c-footer.png" />
