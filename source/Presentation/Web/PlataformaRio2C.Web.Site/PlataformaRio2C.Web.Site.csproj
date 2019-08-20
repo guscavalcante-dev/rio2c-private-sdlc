@@ -6398,7 +6398,6 @@
     <Content Include="Assets\themes\metronic\vendors\general\autosize\LICENSE.md" />
     <Content Include="Assets\themes\metronic\vendors\general\autosize\package.json" />
     <Content Include="Assets\themes\metronic\vendors\general\autosize\readme.md" />
-    <Content Include="Assets\themes\metronic\vendors\general\autosize\src\.DS_Store" />
     <Content Include="Assets\themes\metronic\vendors\general\block-ui\blockUI.jquery.json" />
     <Content Include="Assets\themes\metronic\vendors\general\block-ui\bower.json" />
     <Content Include="Assets\themes\metronic\vendors\general\block-ui\composer.json" />
@@ -6939,7 +6938,6 @@
     <Content Include="Assets\themes\metronic\vendors\general\popper.js\index.js.flow" />
     <Content Include="Assets\themes\metronic\vendors\general\popper.js\package.json" />
     <Content Include="Assets\themes\metronic\vendors\general\popper.js\README.md" />
-    <Content Include="Assets\themes\metronic\vendors\general\raphael\.DS_Store" />
     <Content Include="Assets\themes\metronic\vendors\general\raphael\bower.json" />
     <Content Include="Assets\themes\metronic\vendors\general\raphael\CONTRIBUTING.md" />
     <Content Include="Assets\themes\metronic\vendors\general\raphael\history.md" />
@@ -6977,7 +6975,6 @@
     <Content Include="Assets\themes\metronic\vendors\general\sticky-js\README.md" />
     <Content Include="Assets\themes\metronic\vendors\general\sticky-js\src\.babelrc" />
     <Content Include="Assets\themes\metronic\vendors\general\sticky-js\yarn.lock" />
-    <Content Include="Assets\themes\metronic\vendors\general\summernote\.DS_Store" />
     <Content Include="Assets\themes\metronic\vendors\general\summernote\.editorconfig" />
     <Content Include="Assets\themes\metronic\vendors\general\summernote\.eslintrc" />
     <Content Include="Assets\themes\metronic\vendors\general\summernote\.github\CODE_OF_CONDUCT.md" />
@@ -6996,9 +6993,6 @@
     <Content Include="Assets\themes\metronic\vendors\general\summernote\LICENSE" />
     <Content Include="Assets\themes\metronic\vendors\general\summernote\package.json" />
     <Content Include="Assets\themes\metronic\vendors\general\summernote\README.md" />
-    <Content Include="Assets\themes\metronic\vendors\general\summernote\src\.DS_Store" />
-    <Content Include="Assets\themes\metronic\vendors\general\summernote\src\icons\.DS_Store" />
-    <Content Include="Assets\themes\metronic\vendors\general\summernote\src\icons\dist\.DS_Store" />
     <Content Include="Assets\themes\metronic\vendors\general\summernote\src\icons\dist\font\summernote.eot" />
     <Content Include="Assets\themes\metronic\vendors\general\summernote\src\icons\dist\font\summernote.ttf" />
     <Content Include="Assets\themes\metronic\vendors\general\summernote\src\icons\dist\font\summernote.woff" />

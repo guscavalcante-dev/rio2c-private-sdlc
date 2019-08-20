@@ -6140,7 +6140,6 @@
     <Content Include="Assets\themes\metronic\vendors\general\autosize\LICENSE.md" />
     <Content Include="Assets\themes\metronic\vendors\general\autosize\package.json" />
     <Content Include="Assets\themes\metronic\vendors\general\autosize\readme.md" />
-    <Content Include="Assets\themes\metronic\vendors\general\autosize\src\.DS_Store" />
     <Content Include="Assets\themes\metronic\vendors\general\block-ui\blockUI.jquery.json" />
     <Content Include="Assets\themes\metronic\vendors\general\block-ui\bower.json" />
     <Content Include="Assets\themes\metronic\vendors\general\block-ui\composer.json" />
@@ -6730,7 +6729,6 @@
     <Content Include="Assets\themes\metronic\vendors\general\popper.js\index.js.flow" />
     <Content Include="Assets\themes\metronic\vendors\general\popper.js\package.json" />
     <Content Include="Assets\themes\metronic\vendors\general\popper.js\README.md" />
-    <Content Include="Assets\themes\metronic\vendors\general\raphael\.DS_Store" />
     <Content Include="Assets\themes\metronic\vendors\general\raphael\bower.json" />
     <Content Include="Assets\themes\metronic\vendors\general\raphael\CONTRIBUTING.md" />
     <Content Include="Assets\themes\metronic\vendors\general\raphael\history.md" />
