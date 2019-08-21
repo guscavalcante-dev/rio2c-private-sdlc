@@ -4,7 +4,7 @@
 // Created          : 08-15-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-18-2019
+// Last Modified On : 08-21-2019
 // ***********************************************************************
 // <copyright file="CreateHoldingCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -79,12 +79,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 holdingUid,
                 cmd.Name,
                 cmd.CropperImage?.ImageFile != null,
-                cmd.Descriptions?.Where(d => !string.IsNullOrEmpty(d.Value))?.Select(d => new HoldingDescription(
+                cmd.Descriptions?.Select(d => new HoldingDescription(
                     d.Value,
                     languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language,
                     cmd.UserId))?.ToList(),
                 cmd.UserId);
-
             if (!holding.IsValid())
             {
                 this.AppValidationResult.Add(holding.ValidationResult);

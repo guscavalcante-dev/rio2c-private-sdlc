@@ -4,7 +4,7 @@
 // Created          : 07-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-06-2019
+// Last Modified On : 08-21-2019
 // ***********************************************************************
 // <copyright file="RepositoryFactory.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,15 +27,6 @@ namespace PlataformaRio2C.Infra.Data.Repository
         public RepositoryFactory(PlataformaRio2CContext context)
         {
             _context = context;
-        }
-
-        private IHoldingDescriptionRepository _holdingDescriptionRepository;
-        public IHoldingDescriptionRepository HoldingDescriptionRepository
-        {
-            get
-            {
-                return this._holdingDescriptionRepository ?? (this._holdingDescriptionRepository = new HoldingDescriptionRepository(_context));
-            }
         }
 
         private IHoldingRepository _holdingRepository;

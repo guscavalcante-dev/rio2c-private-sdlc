@@ -4,14 +4,13 @@
 // Created          : 08-17-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-20-2019
+// Last Modified On : 08-21-2019
 // ***********************************************************************
 // <copyright file="UpdateHoldingCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,24 +29,20 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>UpdateHoldingCommandHandler</summary>
     public class UpdateHoldingCommandHandler : BaseHoldingCommandHandler, IRequestHandler<UpdateHolding, AppValidationResult>
     {
-        private readonly IHoldingDescriptionRepository holdingDescriptionRepo;
         private readonly ILanguageRepository languageRepo;
 
         /// <summary>Initializes a new instance of the <see cref="UpdateHoldingCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="holdingRepository">The holding repository.</param>
-        /// <param name="holdingDescriptionRepository">The holding description repository.</param>
         /// <param name="languageRepository">The language repository.</param>
         public UpdateHoldingCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IHoldingRepository holdingRepository,
-            IHoldingDescriptionRepository holdingDescriptionRepository,
             ILanguageRepository languageRepository)
             : base(eventBus, uow, holdingRepository)
         {
-            this.holdingDescriptionRepo = holdingDescriptionRepository;
             this.languageRepo = languageRepository;
         }
 
@@ -77,31 +72,20 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
+            var languageDtos = await this.languageRepo.FindAllDtosAsync();
+
             // Before update values
             var beforeImageUploadDate = holding.ImageUploadDate;
 
-            var languageDtos = await this.languageRepo.FindAllDtosAsync();
-
-            var newDescriptions = cmd.Descriptions?.Where(d => !string.IsNullOrEmpty(d.Value))?.Select(d => new HoldingDescription(
-                d.Value,
-                languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language,
-                cmd.UserId))?.ToList();
-
-            // Delete holding descriptions
-            var deletedDescriptions = holding.DeleteDescriptions(newDescriptions);
-            if (deletedDescriptions?.Any() == true)
-            {
-                this.holdingDescriptionRepo.DeleteAll(deletedDescriptions);
-            }
-
-            // Update holding
             holding.Update(
                 cmd.Name,
                 cmd.CropperImage?.ImageFile != null,
                 cmd.CropperImage?.IsImageDeleted == true,
-                newDescriptions,
+                cmd.Descriptions?.Select(d => new HoldingDescription(
+                    d.Value,
+                    languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language,
+                    cmd.UserId))?.ToList(),
                 cmd.UserId);
-
             if (!holding.IsValid())
             {
                 this.AppValidationResult.Add(holding.ValidationResult);
@@ -127,9 +111,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             // Delete images
             else if (cmd.CropperImage?.IsImageDeleted == true && beforeImageUploadDate.HasValue)
             {
-                ImageHelper.DeleteOriginalAndCroppedImages(
-                    holding.Uid,
-                    FileRepositoryPathType.HoldingImage);
+                ImageHelper.DeleteOriginalAndCroppedImages(holding.Uid, FileRepositoryPathType.HoldingImage);
             }
 
             return this.AppValidationResult;

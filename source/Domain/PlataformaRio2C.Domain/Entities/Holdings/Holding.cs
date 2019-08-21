@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-19-2019
+// Last Modified On : 08-21-2019
 // ***********************************************************************
 // <copyright file="Holding.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,7 +20,7 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 namespace PlataformaRio2C.Domain.Entities
 {
     /// <summary>Holding</summary>
-    public class Holding : Entity
+    public class Holding : AggregateRoot
     {
         public static readonly int NameMinLength = 2;
         public static readonly int NameMaxLength = 100;
@@ -44,9 +44,10 @@ namespace PlataformaRio2C.Domain.Entities
             //this.Uid = uid;
             this.Name = name?.Trim();
             this.ImageUploadDate = isImageUploaded ? (DateTime?)DateTime.Now : null;
+            this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
-            this.SynchronizeDescriptions(descriptions);
+            this.SynchronizeDescriptions(descriptions, userId);
         }
 
         /// <summary>Initializes a new instance of the <see cref="Holding"/> class.</summary>
@@ -74,19 +75,37 @@ namespace PlataformaRio2C.Domain.Entities
             }
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.SynchronizeDescriptions(descriptions);
+            this.SynchronizeDescriptions(descriptions, userId);
+        }
+
+        /// <summary>Deletes the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(int userId)
+        {
+            this.IsDeleted = true;
+            this.ImageUploadDate = null;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+
+            foreach (var holdingDescription in this.Descriptions)
+            {
+                holdingDescription.Deleted(userId);
+            }
         }
 
         #region Descriptions
 
         /// <summary>Synchronizes the descriptions.</summary>
         /// <param name="descriptions">The descriptions.</param>
-        private void SynchronizeDescriptions(List<HoldingDescription> descriptions)
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeDescriptions(List<HoldingDescription> descriptions, int userId)
         {
             if (this.Descriptions == null)
             {
                 this.Descriptions = new List<HoldingDescription>();
             }
+
+            this.DeleteDescriptions(descriptions, userId);
 
             if (descriptions?.Any() != true)
             {
@@ -110,17 +129,15 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Deletes the descriptions.</summary>
         /// <param name="descriptions">The descriptions.</param>
+        /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public List<HoldingDescription> DeleteDescriptions(List<HoldingDescription> descriptions)
+        private void DeleteDescriptions(List<HoldingDescription> descriptions, int userId)
         {
             var descriptionsToDelete = this.Descriptions.Where(db => descriptions?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false).ToList();
-
             foreach (var descriptionToDelete in descriptionsToDelete)
             {
-                this.Descriptions.Remove(descriptionToDelete);
+                descriptionToDelete.Deleted(userId);
             }
-
-            return descriptionsToDelete;
         }
 
         /// <summary>Creates the description.</summary>
@@ -131,26 +148,6 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         #endregion
-
-        //public Holding(string name)
-        //{
-        //    this.Descriptions = new List<HoldingDescription>();
-        //    this.SetName(name);
-        //}
-
-        ///// <summary>Sets the name.</summary>
-        ///// <param name="name">The name.</param>
-        //public void SetName(string name)
-        //{
-        //    this.Name = name;
-        //}
-
-        ///// <summary>Sets the descriptions.</summary>
-        ///// <param name="descriptions">The descriptions.</param>
-        //public void SetDescriptions(IEnumerable<HoldingDescription> descriptions)
-        //{
-        //    this.Descriptions = descriptions.ToList();
-        //}
 
         #region Validation
 

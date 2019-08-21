@@ -4,7 +4,7 @@
 // Created          : 08-18-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-18-2019
+// Last Modified On : 08-21-2019
 // ***********************************************************************
 // <copyright file="BaseHoldingCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -43,7 +43,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         public async Task<Holding> GetHoldingByUid(Guid holdingUid)
         {
             var holding = await this.HoldingRepo.GetAsync(holdingUid);
-            if (holding == null)
+            if (holding == null || holding.IsDeleted)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Holding, Labels.FoundF)));
                 return null;

@@ -10,7 +10,7 @@ namespace PlataformaRio2C.Domain.Services
         private readonly IRepositoryFactory _repositoryFactory;
         private readonly IImageFileRepository _imageFileRepository;
         private readonly ILanguageRepository _languageRepository;
-        private readonly IHoldingDescriptionRepository _holdingDescriptionRepository;
+        //private readonly IHoldingDescriptionRepository _holdingDescriptionRepository;
         private readonly IPlayerRepository _playerRepository;
 
         public HoldingService(IHoldingRepository repository, IRepositoryFactory repositoryFactory)
@@ -19,7 +19,7 @@ namespace PlataformaRio2C.Domain.Services
             _repositoryFactory = repositoryFactory;
             _imageFileRepository = _repositoryFactory.ImageFileRepository;
             _languageRepository = _repositoryFactory.LanguageRepository;
-            _holdingDescriptionRepository = _repositoryFactory.HoldingDescriptionRepository;
+            //_holdingDescriptionRepository = _repositoryFactory.HoldingDescriptionRepository;
             _playerRepository = _repositoryFactory.PlayerRepository;
         }
 
@@ -90,10 +90,10 @@ namespace PlataformaRio2C.Domain.Services
             //    _imageFileRepository.Delete(imageFile);
             //}
 
-            if (entity.Descriptions != null && entity.Descriptions.Any())
-            {
-                _holdingDescriptionRepository.DeleteAll(entity.Descriptions);
-            }
+            //if (entity.Descriptions != null && entity.Descriptions.Any())
+            //{
+            //    _holdingDescriptionRepository.DeleteAll(entity.Descriptions);
+            //}
 
             var countPlayersAssociated = _playerRepository.Count(e => e.HoldingId == entity.Id);
 

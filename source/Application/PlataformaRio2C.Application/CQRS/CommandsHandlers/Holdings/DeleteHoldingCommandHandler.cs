@@ -4,25 +4,20 @@
 // Created          : 08-18-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-18-2019
+// Last Modified On : 08-21-2019
 // ***********************************************************************
 // <copyright file="DeleteHoldingCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
 using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
-using PlataformaRio2C.Domain.Validation;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -30,21 +25,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>DeleteHoldingCommandHandler</summary>
     public class DeleteHoldingCommandHandler : BaseHoldingCommandHandler, IRequestHandler<DeleteHolding, AppValidationResult>
     {
-        private readonly IHoldingDescriptionRepository holdingDescriptionRepo;
-
         /// <summary>Initializes a new instance of the <see cref="DeleteHoldingCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="holdingRepository">The holding repository.</param>
-        /// <param name="holdingDescriptionRepository">The holding description repository.</param>
         public DeleteHoldingCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            IHoldingRepository holdingRepository,
-            IHoldingDescriptionRepository holdingDescriptionRepository)
+            IHoldingRepository holdingRepository)
             : base(eventBus, uow, holdingRepository)
         {
-            this.holdingDescriptionRepo = holdingDescriptionRepository;
         }
 
         /// <summary>Handles the specified delete holding.</summary>
@@ -69,21 +59,19 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var beforeImageUploadDate = holding.ImageUploadDate;
 
-            // Delete holding descriptions
-            var deletedDescriptions = holding.Descriptions;
-            if (deletedDescriptions?.Any() == true)
+            holding.Delete(cmd.UserId);
+            if (!holding.IsValid())
             {
-                this.holdingDescriptionRepo.DeleteAll(deletedDescriptions);
+                this.AppValidationResult.Add(holding.ValidationResult);
+                return this.AppValidationResult;
             }
 
-            this.HoldingRepo.Delete(holding);
+            this.HoldingRepo.Update(holding);
             this.Uow.SaveChanges();
 
             if (beforeImageUploadDate.HasValue)
             {
-                ImageHelper.DeleteOriginalAndCroppedImages(
-                    cmd.HoldingUid,
-                    FileRepositoryPathType.HoldingImage);
+                ImageHelper.DeleteOriginalAndCroppedImages(cmd.HoldingUid, FileRepositoryPathType.HoldingImage);
             }
 
             return this.AppValidationResult;

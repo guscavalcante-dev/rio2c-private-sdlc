@@ -206,7 +206,6 @@
     <Compile Include="Repositories\User\UserRoleRepository.cs" />
     <Compile Include="Repositories\User\UserUseTermRepository.cs" />
     <Compile Include="Repositories\Player\PlayerDescriptionRepository.cs" />
-    <Compile Include="Repositories\Holding\HoldingDescriptionRepository.cs" />
     <Compile Include="Repositories\Common\ImageFileRepository.cs" />
     <Compile Include="Repositories\Common\EditionRepository.cs" />
     <Compile Include="Repositories\Common\LanguageRepository.cs" />

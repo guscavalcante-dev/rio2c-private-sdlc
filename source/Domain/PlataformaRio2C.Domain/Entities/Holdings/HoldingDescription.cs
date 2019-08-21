@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-18-2019
+// Last Modified On : 08-21-2019
 // ***********************************************************************
 // <copyright file="HoldingDescription.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -52,35 +52,19 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="description">The description.</param>
         public void Update(HoldingDescription description)
         {
-            this.Value = description.Value.Trim();
+            this.Value = description.Value?.Trim();
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = description.UpdateUserId;
         }
 
-        ///// <summary>Sets the language.</summary>
-        ///// <param name="language">The language.</param>
-        //public void SetLanguage(Language language)
-        //{
-        //    this.Language = language;
-        //    this.LanguageId = language?.Id ?? 0;
-        //    this.LanguageCode = language?.Code;
-        //}
-
-        // Remove below
-
-        //public HoldingDescription(string value, string languageCode)
-        //{
-        //    this.Value = value?.Trim();
-        //    this.LanguageCode = languageCode;
-        //}
-
-        ///// <summary>Sets the holding.</summary>
-        ///// <param name="holding">The holding.</param>
-        //public void SetHolding(Holding holding)
-        //{
-        //    this.Holding = holding;
-        //    this.HoldingId = holding.Id;
-        //}
+        /// <summary>Deleteds the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Deleted(int userId)
+        {
+            this.IsDeleted = true;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
 
         #region Validations
 
@@ -100,10 +84,10 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Validates the value.</summary>
         public void ValidateValue()
         {
-            if (string.IsNullOrEmpty(this.Value?.Trim()))
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Descriptions), new string[] { "Descriptions" }));
-            }
+            //if (string.IsNullOrEmpty(this.Value?.Trim()))
+            //{
+            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Descriptions), new string[] { "Descriptions" }));
+            //}
 
             if (this.Value?.Trim().Length < ValueMinLength || this.Value?.Trim().Length > ValueMaxLength)
             {

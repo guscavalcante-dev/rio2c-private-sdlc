@@ -84,6 +84,7 @@
     <Compile Include="Dtos\Languages\LanguageDto.cs" />
     <Compile Include="Dtos\Languages\LanguageBaseDto.cs" />
     <Compile Include="Dtos\Users\UserBaseDto.cs" />
+    <Compile Include="Entities\Base\AggregateRoot.cs" />
     <Compile Include="Entities\Collaborator\CollaboratorProducer.cs" />
     <Compile Include="Entities\Collaborator\CollaboratorSpeaker.cs" />
     <Compile Include="Entities\Common\InterestGroup.cs" />
@@ -407,7 +408,6 @@
     <Compile Include="Interfaces\Repositories\Producer\IProducerDescriptionRepository.cs" />
     <Compile Include="Interfaces\Repositories\Player\IPlayerInterestRepository.cs" />
     <Compile Include="Interfaces\Repositories\Player\IPlayerDescriptionRepository.cs" />
-    <Compile Include="Interfaces\Repositories\Holding\IHoldingDescriptionRepository.cs" />
     <Compile Include="Interfaces\Repositories\Common\IImageFileRepository.cs" />
     <Compile Include="Interfaces\Repositories\Editions\IEditionRepository.cs" />
     <Compile Include="Interfaces\Repositories\Collaborator\ICollaboratorRepository.cs" />

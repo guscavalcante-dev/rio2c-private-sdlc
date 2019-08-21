@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-19-2019
+// Last Modified On : 08-21-2019
 // ***********************************************************************
 // <copyright file="HoldingRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -83,6 +83,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>Determines whether [is not deleted].</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<Holding> IsNotDeleted(this IQueryable<Holding> query)
+        {
+            query = query.Where(h => !h.IsDeleted);
+
+            return query;
+        }
     }
 
     #endregion
@@ -132,8 +142,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public override IQueryable<Holding> GetAll(bool @readonly = false)
         {
             var consult = this.dbSet
-                .Include(i => i.Descriptions)
-                .Include(i => i.Descriptions.Select(t => t.Language));
+                                .IsNotDeleted()
+                                .Include(i => i.Descriptions)
+                                .Include(i => i.Descriptions.Select(t => t.Language));
 
 
             return @readonly

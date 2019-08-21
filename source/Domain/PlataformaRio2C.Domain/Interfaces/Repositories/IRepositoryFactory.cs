@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-06-2019
+// Last Modified On : 08-21-2019
 // ***********************************************************************
 // <copyright file="IRepositoryFactory.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,7 +18,6 @@ namespace PlataformaRio2C.Domain.Interfaces
         IImageFileRepository ImageFileRepository { get; }
         ILanguageRepository LanguageRepository { get; }
         IHoldingRepository HoldingRepository { get; }
-        IHoldingDescriptionRepository HoldingDescriptionRepository { get; }
         IPlayerRepository PlayerRepository { get; }
         IPlayerDescriptionRepository PlayerDescriptionRepository { get; }
         ICollaboratorRepository CollaboratorRepository { get; }
