@@ -4,7 +4,7 @@
 // Created          : 08-08-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-10-2019
+// Last Modified On : 08-22-2019
 // ***********************************************************************
 // <copyright file="DataTablesExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,10 +34,16 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         /// <typeparam name="T"></typeparam>
         /// <param name="query">The query.</param>
         /// <param name="sortColumns">The sort columns.</param>
+        /// <param name="changeNameColumns">The change name columns.</param>
         /// <param name="allowedColumns">The allowed columns.</param>
         /// <param name="defaultSortColumn">The default sort column.</param>
         /// <returns></returns>
-        public static IQueryable<T> DynamicOrder<T>(this IQueryable<T> query, List<Tuple<string, string>> sortColumns, List<string> allowedColumns, string defaultSortColumn)
+        public static IQueryable<T> DynamicOrder<T>(
+            this IQueryable<T> query, 
+            List<Tuple<string, string>> sortColumns, 
+            List<Tuple<string, string>> changeNameColumns, 
+            List<string> allowedColumns, 
+            string defaultSortColumn)
         {
             var hasSortColumn = false;
 
@@ -45,11 +51,11 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
 
             if (allowedColumns?.Any() == true)
             {
-                var allowedSortColumns = sortColumns?.Where(sc => allowedColumns.Select(ac => ac.ToLowerInvariant()).Contains(sc.Item1.ToLowerInvariant())).ToList();
 
-                if (allowedSortColumns?.Any() == true)
+                var finalSortColumns = GetFinalSortColumns(sortColumns, changeNameColumns, allowedColumns);
+                if (finalSortColumns?.Any() == true)
                 {
-                    foreach (var sortColumn in allowedSortColumns)
+                    foreach (var sortColumn in finalSortColumns)
                     {
                         orderBy += (!string.IsNullOrEmpty(orderBy) ? ", " : string.Empty) + sortColumn.Item1 + (sortColumn.Item2 == "Descending" ? " desc" : string.Empty);
                         hasSortColumn = true;
@@ -65,6 +71,32 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             }
 
             return query;
+        }
+
+        /// <summary>Gets the final sort columns.</summary>
+        /// <param name="sortColumns">The sort columns.</param>
+        /// <param name="changeNameColumns">The change name columns.</param>
+        /// <param name="allowedColumns">The allowed columns.</param>
+        /// <returns></returns>
+        private static List<Tuple<string, string>> GetFinalSortColumns(List<Tuple<string, string>> sortColumns, List<Tuple<string, string>> changeNameColumns, List<string> allowedColumns)
+        {
+            var finalSortColumns = new List<Tuple<string, string>>();
+
+            if (changeNameColumns?.Any() == true)
+            {
+                foreach (var sortColumn in sortColumns)
+                {
+                    var newColumnName = changeNameColumns.FirstOrDefault(cnc => cnc.Item1.ToLowerInvariant() == sortColumn.Item1.ToLowerInvariant());
+                    finalSortColumns.Add(newColumnName != null ? new Tuple<string, string>(newColumnName.Item2, sortColumn.Item2) :
+                                                                 new Tuple<string, string>(sortColumn.Item1, sortColumn.Item2));
+                }
+            }
+            else
+            {
+                finalSortColumns = sortColumns;
+            }
+
+            return finalSortColumns?.Where(sc => allowedColumns.Select(ac => ac.ToLowerInvariant()).Contains(sc.Item1.ToLowerInvariant())).ToList();
         }
     }
 }

@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-21-2019
+// Last Modified On : 08-22-2019
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -258,6 +258,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByOrganizationTypeuidAndEditionId(organizationTypeUid, showAllEditions, editionId);
 
             return await query
+                            .DynamicOrder<Organization>(
+                                sortColumns,
+                                new List<Tuple<string, string>>
+                                {
+                                    new Tuple<string, string>("HoldingBaseDto.Name", "Holding.Name")
+                                },
+                                new List<string> { "Name", "Holding.Name", "Document", "Website", "PhoneNumber", "CreateDate", "UpdateDate" },
+                                "Name")
                             .Select(o => new OrganizationBaseDto
                             {
                                 Id = o.Id,
@@ -283,7 +291,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 IsInOtherEdition = editionId.HasValue && o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
                                                                                                            && !ao.IsDeleted)
                             })
-                            .DynamicOrder<OrganizationBaseDto>(sortColumns, new List<string> { "Name", "CreateDate", "UpdateDate" }, "Name")
                             .ToListPagedAsync(page, pageSize);
         }
 
