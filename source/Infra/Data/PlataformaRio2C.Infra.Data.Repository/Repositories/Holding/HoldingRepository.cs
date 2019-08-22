@@ -251,6 +251,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 ImageUploadDate = h.ImageUploadDate,
                                 CreateDate = h.CreateDate,
                                 UpdateDate = h.UpdateDate,
+                                IsInCurrentEdition = h.Organizations.Any(o => !o.IsDeleted
+                                                                              && o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
+                                                                                                                   && !ao.Edition.IsDeleted
+                                                                                                                   && !ao.IsDeleted))
                             })
                             .DynamicOrder<HoldingBaseDto>(sortColumns, new List<string> { "name", "createDate", "updateDate" }, "name")
                             .ToListPagedAsync(page, pageSize);

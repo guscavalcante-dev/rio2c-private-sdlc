@@ -276,6 +276,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 CreateDate = o.CreateDate,
                                 UpdateDate = o.UpdateDate,
                                 IsInCurrentEdition = editionId.HasValue && o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
+                                                                                                             && !ao.Edition.IsDeleted
                                                                                                              && !ao.IsDeleted
                                                                                                              && ao.AttendeeOrganizationTypes.Any(aot => aot.OrganizationType.Uid == organizationTypeUid
                                                                                                                                                         && !aot.IsDeleted)),

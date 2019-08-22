@@ -7,6 +7,14 @@
     height: 200px;
 }
 
+table.image-side-text td {
+    border: 0;
+    padding: 0 0 0 5px;
+}
+    table.image-side-text td img {
+        max-width: 50px;
+        max-height: 50px;
+    }
 
 /*
     Footer

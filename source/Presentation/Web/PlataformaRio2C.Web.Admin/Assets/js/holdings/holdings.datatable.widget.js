@@ -4,7 +4,7 @@
 // Created          : 08-07-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-20-2019
+// Last Modified On : 08-21-2019
 // ***********************************************************************
 // <copyright file="holdings.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -114,15 +114,27 @@ var HoldingsDataTableWidget = function () {
                 {
                     targets: [0],
                     render: function (data, type, full, meta) {
-                        var image = '';
+                        var html = '\
+                                <table class="image-side-text text-left">\
+                                    <tr>\
+                                        <td>';
+
                         if (!MyRio2cCommon.isNullOrEmpty(full.ImageUploadDate)) {
-                            image += '<img style="max-width: 50px; max-height: 50px;" src="https://dev.assets.my.rio2c.com/img/holdings/' + full.Uid + '_thumbnail.png?v=' + moment(full.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
+                            html += '<img src="https://dev.assets.my.rio2c.com/img/holdings/' + full.Uid + '_thumbnail.png?v=' + moment(full.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
                         }
                         else {
-                            image += '<img style="max-width: 50px; max-height: 50px;" src="https://dev.assets.my.rio2c.com/img/holdings/no-image.png?v=20190818200849" /> ';
+                            html += '<img src="https://dev.assets.my.rio2c.com/img/holdings/no-image.png?v=20190818200849" /> ';
                         }
-                        return image + full.Name;
-                        //return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+
+                        html += '       <td> ' + full.Name + '</td>\
+                                    </tr>\
+                                </table>';
+
+                        if (!full.IsInCurrentEdition) {
+                            html += '<span class="kt-badge kt-badge--inline kt-badge--info mt-2">' + labels.notInEdition + '</span>';
+                        }
+
+                        return html;
                     }
                 },
                 {

@@ -118,19 +118,26 @@ var OrganizationsDataTableWidget = function () {
                 {
                     targets: [0],
                     width: "25%",
+                    className: "dt-center",
                     render: function (data, type, full, meta) {
-                        var html = '';
+                        var html = '\
+                                <table class="image-side-text text-left">\
+                                    <tr>\
+                                        <td>';
+
                         if (!MyRio2cCommon.isNullOrEmpty(full.ImageUploadDate)) {
-                            html += '<img style="max-width: 50px; max-height: 50px;" src="https://dev.assets.my.rio2c.com/img/organizations/' + full.Uid + '_thumbnail.png?v=' + moment(full.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
+                            html += '<img src="https://dev.assets.my.rio2c.com/img/organizations/' + full.Uid + '_thumbnail.png?v=' + moment(full.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
                         }
                         else {
-                            html += '<img style="max-width: 50px; max-height: 50px;" src="https://dev.assets.my.rio2c.com/img/organizations/no-image.png?v=20190818200849" /> ';
+                            html += '<img src="https://dev.assets.my.rio2c.com/img/organizations/no-image.png?v=20190818200849" /> ';
                         }
 
-                        html += full.Name;
+                        html += '       <td> ' + full.Name + '</td>\
+                                    </tr>\
+                                </table>';
 
                         if (!full.IsInCurrentEdition) {
-                            html += '<br /><span class="kt-badge kt-badge--inline kt-badge--info">' + notInEdition + '</span>';
+                            html += '<span class="kt-badge kt-badge--inline kt-badge--info mt-2">' + labels.notInEdition + '</span>';
                         }
 
                         return html;
