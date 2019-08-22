@@ -1258,6 +1258,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Investidores.
+        /// </summary>
+        public static string Investors {
+            get {
+                return ResourceManager.GetString("Investors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Envio de Convites.
         /// </summary>
         public static string InvitationSending {
@@ -1497,6 +1506,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string MusicBand {
             get {
                 return ResourceManager.GetString("MusicBand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bandas de Música.
+        /// </summary>
+        public static string MusicBands {
+            get {
+                return ResourceManager.GetString("MusicBands", resourceCulture);
             }
         }
         
@@ -2108,6 +2126,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gravadoras.
+        /// </summary>
+        public static string Recorders {
+            get {
+                return ResourceManager.GetString("Recorders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Recusar.
         /// </summary>
         public static string Refuse {
@@ -2568,6 +2595,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Startup {
             get {
                 return ResourceManager.GetString("Startup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Startups.
+        /// </summary>
+        public static string Startups {
+            get {
+                return ResourceManager.GetString("Startups", resourceCulture);
             }
         }
         

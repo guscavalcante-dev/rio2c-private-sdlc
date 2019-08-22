@@ -1256,4 +1256,20 @@
     <value>Show all companies</value>
     <comment>Exibir todas as empresas</comment>
   </data>
+  <data name="Investors" xml:space="preserve">
+    <value>Investors</value>
+    <comment>Investidores</comment>
+  </data>
+  <data name="MusicBands" xml:space="preserve">
+    <value>Music Bands</value>
+    <comment>Bandas de Música</comment>
+  </data>
+  <data name="Recorders" xml:space="preserve">
+    <value>Recorders</value>
+    <comment>Gravadoras</comment>
+  </data>
+  <data name="Startups" xml:space="preserve">
+    <value>Startups</value>
+    <comment>Startups</comment>
+  </data>
 </root>

@@ -1264,4 +1264,20 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Exibir todas as empresas</value>
     <comment>Exibir todas as empresas</comment>
   </data>
+  <data name="Investors" xml:space="preserve">
+    <value>Investidores</value>
+    <comment>Investidores</comment>
+  </data>
+  <data name="MusicBands" xml:space="preserve">
+    <value>Bandas de Música</value>
+    <comment>Bandas de Música</comment>
+  </data>
+  <data name="Recorders" xml:space="preserve">
+    <value>Gravadoras</value>
+    <comment>Gravadoras</comment>
+  </data>
+  <data name="Startups" xml:space="preserve">
+    <value>Startups</value>
+    <comment>Startups</comment>
+  </data>
 </root>
