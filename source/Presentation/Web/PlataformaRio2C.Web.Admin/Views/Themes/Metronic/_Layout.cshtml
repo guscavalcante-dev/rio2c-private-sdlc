@@ -110,8 +110,8 @@
             remove: '@Labels.Remove',
             cancel: '@Labels.Cancel',
             deleteConfirmationMessage: '@Messages.ConfirmDelete',
-            deleteCurrentEditionConfirmationMessage: '@string.Format(Messages.ConfirmDeleteEdition, ViewBag.EditionUrlCode)',
-            notInEdition: '@string.Format(Labels.NotInEdition, ViewBag.EditionUrlCode)'
+            deleteCurrentEditionConfirmationMessage: '@(ViewBag.EditionUrlCode != null ? string.Format(Messages.ConfirmDeleteEdition, ViewBag.EditionUrlCode) : string.Empty)',
+            notInEdition: '@(ViewBag.EditionUrlCode != null ? string.Format(Labels.NotInEdition, ViewBag.EditionUrlCode) : string.Empty)'
         };
 
         // MyRio2CCommon script -----------------------------------------------
