@@ -22,6 +22,9 @@ var HoldingsDataTableWidget = function () {
 
         var tableElementId = $('#holdings-list-table');
 
+        // Disable datatable alert
+        $.fn.dataTable.ext.errMode = 'none';
+
         // Set initial page size
         var pageLengthOptions = [1, 10, 25, 50, 100];
         var pageLength = 10;
