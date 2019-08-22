@@ -95,17 +95,27 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             if (!string.IsNullOrEmpty(keywords))
             {
-                var predicate = PredicateBuilder.New<Organization>(true);
+                var outerWhere = PredicateBuilder.New<Organization>(false);
+                var innerOrganizationNameWhere = PredicateBuilder.New<Organization>(true);
+                var innerHoldingNameWhere = PredicateBuilder.New<Organization>(true);
+                var innerDocumentWhere = PredicateBuilder.New<Organization>(true);
 
                 foreach (var keyword in keywords.Split(' '))
                 {
                     if (!string.IsNullOrEmpty(keyword))
                     {
-                        predicate = predicate.And(o => o.Name.Contains(keyword));
+                        innerOrganizationNameWhere = innerOrganizationNameWhere.And(o => o.Name.Contains(keyword));
+                        innerHoldingNameWhere = innerHoldingNameWhere.And(o => o.Holding.Name.Contains(keyword));
+                        innerDocumentWhere = innerDocumentWhere.And(o => o.Document.Contains(keyword));
+
                     }
                 }
 
-                query = query.AsExpandable().Where(predicate);
+                outerWhere = outerWhere.Or(innerOrganizationNameWhere);
+                outerWhere = outerWhere.Or(innerHoldingNameWhere);
+                outerWhere = outerWhere.Or(innerDocumentWhere);
+                query = query.Where(outerWhere);
+                //query = query.AsExpandable().Where(predicate);
             }
 
             return query;

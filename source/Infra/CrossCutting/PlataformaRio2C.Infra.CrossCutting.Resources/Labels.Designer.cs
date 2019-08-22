@@ -1114,6 +1114,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nome da Holding.
+        /// </summary>
+        public static string HoldingName {
+            get {
+                return ResourceManager.GetString("HoldingName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Holdings.
         /// </summary>
         public static string Holdings {
@@ -1708,6 +1717,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ou.
+        /// </summary>
+        public static string Or {
+            get {
+                return ResourceManager.GetString("Or", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parâmetros.
         /// </summary>
         public static string Parameters {
@@ -1803,6 +1821,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string PlayerDidNotDefinedGenre {
             get {
                 return ResourceManager.GetString("PlayerDidNotDefinedGenre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nome do Player.
+        /// </summary>
+        public static string PlayerName {
+            get {
+                return ResourceManager.GetString("PlayerName", resourceCulture);
             }
         }
         

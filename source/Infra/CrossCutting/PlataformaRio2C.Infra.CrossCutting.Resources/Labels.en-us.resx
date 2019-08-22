@@ -1240,4 +1240,16 @@
     <value>Remove from {0}</value>
     <comment>Remover de {0}</comment>
   </data>
+  <data name="HoldingName" xml:space="preserve">
+    <value>Holding Name</value>
+    <comment>Nome da Holding</comment>
+  </data>
+  <data name="Or" xml:space="preserve">
+    <value>or</value>
+    <comment>or</comment>
+  </data>
+  <data name="PlayerName" xml:space="preserve">
+    <value>Player Name</value>
+    <comment>Nome do Player</comment>
+  </data>
 </root>

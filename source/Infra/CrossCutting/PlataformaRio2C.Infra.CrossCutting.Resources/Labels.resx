@@ -1248,4 +1248,16 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Remover de {0}</value>
     <comment>Remover de {0}</comment>
   </data>
+  <data name="HoldingName" xml:space="preserve">
+    <value>Nome da Holding</value>
+    <comment>Nome da Holding</comment>
+  </data>
+  <data name="Or" xml:space="preserve">
+    <value>ou</value>
+    <comment>ou</comment>
+  </data>
+  <data name="PlayerName" xml:space="preserve">
+    <value>Nome do Player</value>
+    <comment>Nome do Player</comment>
+  </data>
 </root>
