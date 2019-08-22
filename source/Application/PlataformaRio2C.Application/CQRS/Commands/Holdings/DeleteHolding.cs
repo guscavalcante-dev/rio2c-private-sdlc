@@ -4,7 +4,7 @@
 // Created          : 08-18-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-18-2019
+// Last Modified On : 08-21-2019
 // ***********************************************************************
 // <copyright file="DeleteHolding.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

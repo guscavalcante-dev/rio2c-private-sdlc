@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-19-2019
+// Last Modified On : 08-21-2019
 // ***********************************************************************
 // <copyright file="HoldingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -194,7 +194,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     this.EditionId,
                     this.EditionUid,
                     this.UserInterfaceLanguage);
-
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
                 {
@@ -282,7 +281,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     this.EditionId,
                     this.EditionUid,
                     this.UserInterfaceLanguage);
-
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
                 {
@@ -341,7 +339,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     this.EditionId,
                     this.EditionUid,
                     this.UserInterfaceLanguage);
-
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
                 {

@@ -4,7 +4,7 @@
 // Created          : 08-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-18-2019
+// Last Modified On : 08-21-2019
 // ***********************************************************************
 // <copyright file="holdings.delete.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,7 +26,7 @@ var HoldingsDelete = function () {
                 data: data,
                 // Success
                 onSuccess: function () {
-                    if (!MyRio2cCommon.isNullOrEmpty(HoldingsDataTableWidget)) {
+                    if (typeof (HoldingsDataTableWidget) !== 'undefined') {
                         HoldingsDataTableWidget.refreshData();
                     }
                 },

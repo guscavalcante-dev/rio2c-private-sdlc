@@ -58,7 +58,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #region Initial Validations
 
-            var existHoldingByName = this.HoldingRepo.Get(e => e.Name == cmd.Name && e.Uid != cmd.HoldingUid);
+            var existHoldingByName = this.HoldingRepo.Get(h => h.Name == cmd.Name 
+                                                               && h.Uid != cmd.HoldingUid
+                                                               && !h.IsDeleted);
             if (existHoldingByName != null)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.AHolding, Labels.TheName, cmd.Name), new string[] { "Name" }));
@@ -81,10 +83,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.Name,
                 cmd.CropperImage?.ImageFile != null,
                 cmd.CropperImage?.IsImageDeleted == true,
-                cmd.Descriptions?.Select(d => new HoldingDescription(
-                    d.Value,
-                    languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language,
-                    cmd.UserId))?.ToList(),
+                cmd.Descriptions?.Select(d => new HoldingDescription(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.UserId);
             if (!holding.IsValid())
             {

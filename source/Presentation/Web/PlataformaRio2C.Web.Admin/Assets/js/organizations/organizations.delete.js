@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-19-2019
+// Last Modified On : 08-21-2019
 // ***********************************************************************
 // <copyright file="organizations.delete.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,8 +26,16 @@ var OrganizationsDelete = function () {
                 data: data,
                 // Success
                 onSuccess: function () {
-                    if (!MyRio2cCommon.isNullOrEmpty(HoldingsDataTableWidget)) {
-                        HoldingsDataTableWidget.refreshData();
+                    if (typeof (OrganizationsDataTableWidget) !== 'undefined') {
+                        OrganizationsDataTableWidget.refreshData();
+                    }
+
+                    if (typeof (OrganizationsTotalCountWidget) !== 'undefined') {
+                        OrganizationsTotalCountWidget.init();
+                    }
+
+                    if (typeof (OrganizationsEditionCountWidget) !== 'undefined') {
+                        OrganizationsEditionCountWidget.init();
                     }
                 },
                 // Error

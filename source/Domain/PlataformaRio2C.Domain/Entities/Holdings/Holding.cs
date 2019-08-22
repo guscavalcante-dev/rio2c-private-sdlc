@@ -43,7 +43,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             //this.Uid = uid;
             this.Name = name?.Trim();
-            this.ImageUploadDate = isImageUploaded ? (DateTime?)DateTime.Now : null;
+            this.UpdateImageUploadDate(isImageUploaded, false);
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
@@ -65,14 +65,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             //this.Uid = uid;
             this.Name = name?.Trim();
-            if (isImageUploaded)
-            {
-                this.ImageUploadDate = DateTime.Now;
-            }
-            else if (isImageDeleted)
-            {
-                this.ImageUploadDate = null;
-            }
+            this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
             this.SynchronizeDescriptions(descriptions, userId);
@@ -86,10 +79,21 @@ namespace PlataformaRio2C.Domain.Entities
             this.ImageUploadDate = null;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
+            this.DeleteDescriptions(null, userId);
+        }
 
-            foreach (var holdingDescription in this.Descriptions)
+        /// <summary>Updates the image upload date.</summary>
+        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
+        private void UpdateImageUploadDate(bool isImageUploaded, bool isImageDeleted)
+        {
+            if (isImageUploaded)
             {
-                holdingDescription.Deleted(userId);
+                this.ImageUploadDate = DateTime.Now;
+            }
+            else if (isImageDeleted)
+            {
+                this.ImageUploadDate = null;
             }
         }
 
@@ -128,15 +132,14 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>Deletes the descriptions.</summary>
-        /// <param name="descriptions">The descriptions.</param>
+        /// <param name="newDescriptions">The new descriptions.</param>
         /// <param name="userId">The user identifier.</param>
-        /// <returns></returns>
-        private void DeleteDescriptions(List<HoldingDescription> descriptions, int userId)
+        private void DeleteDescriptions(List<HoldingDescription> newDescriptions, int userId)
         {
-            var descriptionsToDelete = this.Descriptions.Where(db => descriptions?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false).ToList();
+            var descriptionsToDelete = this.Descriptions.Where(db => newDescriptions?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false).ToList();
             foreach (var descriptionToDelete in descriptionsToDelete)
             {
-                descriptionToDelete.Deleted(userId);
+                descriptionToDelete.Delete(userId);
             }
         }
 

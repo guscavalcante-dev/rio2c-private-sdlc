@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-19-2019
+// Last Modified On : 08-21-2019
 // ***********************************************************************
 // <copyright file="AttendeeOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -46,6 +46,35 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
+        /// <summary>Deletes the specified organization type.</summary>
+        /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(OrganizationType organizationType, int userId)
+        {
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+
+            var attendeOrganizationType = this.AttendeeOrganizationTypes?.FirstOrDefault(aot => aot.OrganizationType.Uid == organizationType.Uid && !aot.IsDeleted);
+            attendeOrganizationType?.Delete(userId);
+
+            if (this.AttendeeOrganizationTypes?.All(aot => aot.IsDeleted) == true)
+            {
+                this.IsDeleted = true;
+            }
+        }
+
+        /// <summary>Restores the specified organization type.</summary>
+        /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Restore(OrganizationType organizationType, int userId)
+        {
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            this.SynchronizeAttendeeOrganizationTypes(organizationType, userId);
+
+        }
+
         #region Attendee Organization Types
 
         /// <summary>Synchronizes the attendee organization types.</summary>
@@ -66,10 +95,13 @@ namespace PlataformaRio2C.Domain.Entities
             var attendeeOrganizationType = this.AttendeeOrganizationTypes.FirstOrDefault(aot => aot.OrganizationTypeId == organizationType.Id);
             if (attendeeOrganizationType != null)
             {
-                return;
+                attendeeOrganizationType.Restore(userId);
             }
+            else
+            {
+                this.AttendeeOrganizationTypes.Add(new AttendeeOrganizationType(this, organizationType, userId));
 
-            this.AttendeeOrganizationTypes.Add(new AttendeeOrganizationType(this, organizationType, userId));
+            }
         }
 
         #endregion
@@ -80,17 +112,11 @@ namespace PlataformaRio2C.Domain.Entities
         public override bool IsValid()
         {
             return true;
-            //ValidationResult = new ValidationResult();
+        }
 
-            //ValidationResult.Add(new PlayerIsConsistent().Valid(this));
-
-            //if (Image != null)
-            //{
-            //    ValidationResult.Add(new ImageIsConsistent().Valid(this.Image));
-            //    ValidationResult.Add(new PlayerImageIsConsistent().Valid(this));
-            //}
-
-            //return ValidationResult.IsValid;
+        internal void Delete(OrganizationType organizationType)
+        {
+            throw new NotImplementedException();
         }
     }
 }

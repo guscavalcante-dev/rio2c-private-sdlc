@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-19-2019
+// Last Modified On : 08-21-2019
 // ***********************************************************************
 // <copyright file="Organization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,6 +14,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -97,10 +99,11 @@ namespace PlataformaRio2C.Domain.Entities
             this.SocialMedia = socialMedia?.Trim();
             this.PhoneNumber = phoneNumber?.Trim();
             this.AddressId = addressId;
-            this.ImageUploadDate = isImageUploaded ? (DateTime?)DateTime.Now : null;
+            this.UpdateImageUploadDate(isImageUploaded, false);
+            this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
-            this.SynchronizeDescriptions(descriptions);
+            this.SynchronizeDescriptions(descriptions, userId);
             this.SynchronizeAttendeeOrganizations(edition, organizationType, userId);
         }
 
@@ -109,16 +112,101 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
+        /// <summary>Updates the specified holding.</summary>
+        /// <param name="holding">The holding.</param>
+        /// <param name="edition">The edition.</param>
+        /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="companyName">Name of the company.</param>
+        /// <param name="tradeName">Name of the trade.</param>
+        /// <param name="document">The document.</param>
+        /// <param name="website">The website.</param>
+        /// <param name="socialMedia">The social media.</param>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <param name="addressId">The address identifier.</param>
+        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
+        /// <param name="descriptions">The descriptions.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Update (
+            Holding holding,
+            Edition edition,
+            OrganizationType organizationType,
+            string name,
+            string companyName,
+            string tradeName,
+            string document,
+            string website,
+            string socialMedia,
+            string phoneNumber,
+            int? addressId,
+            bool isImageUploaded,
+            bool isImageDeleted,
+            List<OrganizationDescription> descriptions,
+            int userId)
+        {
+            //this.Uid = uid;
+            this.Holding = holding;
+            this.HoldingId = holding?.Id;
+            this.Name = name?.Trim();
+            this.CompanyName = companyName?.Trim();
+            this.TradeName = tradeName?.Trim();
+            this.Document = document?.Trim();
+            this.Website = website?.Trim();
+            this.SocialMedia = socialMedia?.Trim();
+            this.PhoneNumber = phoneNumber?.Trim();
+            this.AddressId = addressId;
+            this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateUserId = this.UpdateUserId = userId;
+            this.SynchronizeDescriptions(descriptions, userId);
+            this.SynchronizeAttendeeOrganizations(edition, organizationType, userId);
+        }
+
+        /// <summary>Deletes the specified edition.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(Edition edition, OrganizationType organizationType, int userId)
+        {
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            this.DeleteAttendeeOrganization(edition, organizationType, userId);
+
+            //this.IsDeleted = true;
+            //this.ImageUploadDate = null;
+            //this.DeleteDescriptions(null, userId);
+        }
+
+        /// <summary>Updates the image upload date.</summary>
+        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
+        private void UpdateImageUploadDate(bool isImageUploaded, bool isImageDeleted)
+        {
+            if (isImageUploaded)
+            {
+                this.ImageUploadDate = DateTime.Now;
+            }
+            else if (isImageDeleted)
+            {
+                this.ImageUploadDate = null;
+            }
+        }
+
         #region Descriptions
 
         /// <summary>Synchronizes the descriptions.</summary>
         /// <param name="descriptions">The descriptions.</param>
-        private void SynchronizeDescriptions(List<OrganizationDescription> descriptions)
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeDescriptions(List<OrganizationDescription> descriptions, int userId)
         {
             if (this.Descriptions == null)
             {
                 this.Descriptions = new List<OrganizationDescription>();
             }
+
+            this.DeleteDescriptions(descriptions, userId);
 
             if (descriptions?.Any() != true)
             {
@@ -141,18 +229,15 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>Deletes the descriptions.</summary>
-        /// <param name="descriptions">The descriptions.</param>
-        /// <returns></returns>
-        public List<OrganizationDescription> DeleteDescriptions(List<OrganizationDescription> descriptions)
+        /// <param name="newDescriptions">The new descriptions.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteDescriptions(List<OrganizationDescription> newDescriptions, int userId)
         {
-            var descriptionsToDelete = this.Descriptions.Where(db => descriptions?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false).ToList();
-
+            var descriptionsToDelete = this.Descriptions.Where(db => newDescriptions?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false).ToList();
             foreach (var descriptionToDelete in descriptionsToDelete)
             {
-                this.Descriptions.Remove(descriptionToDelete);
+                descriptionToDelete.Delete(userId);
             }
-
-            return descriptionsToDelete;
         }
 
         /// <summary>Creates the description.</summary>
@@ -185,31 +270,74 @@ namespace PlataformaRio2C.Domain.Entities
             var attendeeOrganization = this.AttendeeOrganizations.FirstOrDefault(ao => ao.EditionId == edition.Id);
             if (attendeeOrganization != null)
             {
-                return;
+                attendeeOrganization.Restore(organizationType, userId);
             }
+            else
+            {
+                this.AttendeeOrganizations.Add(new AttendeeOrganization(edition, this, organizationType, userId));
+            }
+        }
 
-            this.AttendeeOrganizations.Add(new AttendeeOrganization(edition, this, organizationType, userId));
+        /// <summary>Deletes the attendee organization.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteAttendeeOrganization(Edition edition, OrganizationType organizationType, int userId)
+        {
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+
+            var attendeeOrganization = this.AttendeeOrganizations?.FirstOrDefault(ao => ao.EditionId == edition.Id && !ao.IsDeleted);
+            attendeeOrganization?.Delete(organizationType, userId);
+
+            if (this.AttendeeOrganizations?.All(ao => ao.IsDeleted) == true)
+            {
+                this.IsDeleted = true;
+            }
         }
 
         #endregion
+
+        #region Validations
 
         /// <summary>Returns true if ... is valid.</summary>
         /// <returns>
         ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
         public override bool IsValid()
         {
-            return true;
-            //ValidationResult = new ValidationResult();
+            this.ValidationResult = new ValidationResult();
 
-            //ValidationResult.Add(new PlayerIsConsistent().Valid(this));
+            this.ValidateName();
+            this.ValidateDescriptions();
 
-            //if (Image != null)
-            //{
-            //    ValidationResult.Add(new ImageIsConsistent().Valid(this.Image));
-            //    ValidationResult.Add(new PlayerImageIsConsistent().Valid(this));
-            //}
 
-            //return ValidationResult.IsValid;
+            return this.ValidationResult.IsValid;
         }
+
+        /// <summary>Validates the name.</summary>
+        public void ValidateName()
+        {
+            // TODO: use resources on validation errrors
+            if (string.IsNullOrEmpty(this.Name?.Trim()))
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Name), new string[] { "Name" }));
+            }
+
+            if (this.Name?.Trim().Length < NameMinLength || this.Name?.Trim().Length > NameMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, NameMaxLength, NameMinLength), new string[] { "Name" }));
+            }
+        }
+
+        /// <summary>Validates the descriptions.</summary>
+        public void ValidateDescriptions()
+        {
+            foreach (var description in this.Descriptions?.Where(d => !d.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(description.ValidationResult);
+            }
+        }
+
+        #endregion
     }
 }

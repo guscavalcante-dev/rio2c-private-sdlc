@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-19-2019
+// Last Modified On : 08-21-2019
 // ***********************************************************************
 // <copyright file="OrganizationDescription.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -52,9 +52,18 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="description">The description.</param>
         public void Update(OrganizationDescription description)
         {
-            this.Value = description.Value.Trim();
+            this.Value = description.Value?.Trim();
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = description.UpdateUserId;
+        }
+
+        /// <summary>Deletes the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(int userId)
+        {
+            this.IsDeleted = true;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
         }
 
         #region Validations
@@ -75,10 +84,10 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Validates the value.</summary>
         public void ValidateValue()
         {
-            if (string.IsNullOrEmpty(this.Value?.Trim()))
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Descriptions), new string[] { "Descriptions" }));
-            }
+            //if (string.IsNullOrEmpty(this.Value?.Trim()))
+            //{
+            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Descriptions), new string[] { "Descriptions" }));
+            //}
 
             if (this.Value?.Trim().Length < ValueMinLength || this.Value?.Trim().Length > ValueMaxLength)
             {

@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-20-2019
+// Last Modified On : 08-21-2019
 // ***********************************************************************
 // <copyright file="CreateOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,7 +13,6 @@
 // ***********************************************************************
 using System.Collections.Generic;
 using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Statics;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
@@ -21,8 +20,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>CreateOrganization</summary>
     public class CreateOrganization : OrganizationBaseCommand
     {
-        public OrganizationType OrganizationType { get; set; }
-
         /// <summary>Initializes a new instance of the <see cref="CreateOrganization"/> class.</summary>
         /// <param name="holdingBaseDtos">The holding base dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
@@ -30,7 +27,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
             this.CropperImage = new CropperImageBaseCommand(null, null, FileRepositoryPathType.OrganizationImage);
             this.UpdateDescriptions(languagesDtos);
-            this.UpdateBaseProperties(holdingBaseDtos);
+            this.UpdateErrorProperties(holdingBaseDtos);
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateOrganization"/> class.</summary>

@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-19-2019
+// Last Modified On : 08-21-2019
 // ***********************************************************************
 // <copyright file="OrganizationBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
@@ -60,6 +61,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<OrganizationDescriptionBaseCommand> Descriptions { get; set; }
 
         public List<HoldingBaseDto> HoldingBaseDtos { get; private set; }
+        public OrganizationType OrganizationType { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="OrganizationBaseCommand"/> class.</summary>
         public OrganizationBaseCommand()
@@ -67,8 +69,25 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         }
 
         /// <summary>Updates the base properties.</summary>
-        /// <param name="holdingBaseDtos">The holding base dtos.</param>
-        public void UpdateBaseProperties(List<HoldingBaseDto> holdingBaseDtos)
+        /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="userUid">The user uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="editionUid">The edition uid.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        public void UpdateBaseProperties(
+            OrganizationType organizationType,
+            int userId,
+            Guid userUid,
+            int? editionId,
+            Guid? editionUid,
+            string userInterfaceLanguage)
+        {
+            this.OrganizationType = organizationType;
+            this.UpdateBaseProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
+        }
+
+        public void UpdateErrorProperties(List<HoldingBaseDto> holdingBaseDtos)
         {
             this.HoldingBaseDtos = holdingBaseDtos;
         }

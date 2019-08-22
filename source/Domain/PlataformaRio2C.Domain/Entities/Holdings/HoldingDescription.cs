@@ -57,9 +57,9 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = description.UpdateUserId;
         }
 
-        /// <summary>Deleteds the specified user identifier.</summary>
+        /// <summary>Deletes the specified user identifier.</summary>
         /// <param name="userId">The user identifier.</param>
-        public void Deleted(int userId)
+        public void Delete(int userId)
         {
             this.IsDeleted = true;
             this.UpdateDate = DateTime.Now;

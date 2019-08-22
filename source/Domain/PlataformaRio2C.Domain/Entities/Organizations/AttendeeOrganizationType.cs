@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-19-2019
+// Last Modified On : 08-21-2019
 // ***********************************************************************
 // <copyright file="AttendeeOrganizationType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,15 +24,6 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual AttendeeOrganization AttendeeOrganization { get; private set; }
         public virtual OrganizationType OrganizationType { get; private set; }
 
-        ///// <summary>Initializes a new instance of the <see cref="AttendeeOrganization"/> class.</summary>
-        ///// <param name="edition">The edition.</param>
-        ///// <param name="organization">The organization.</param>
-        //public AttendeeOrganizationType(Edition edition, Organization organization)
-        //{
-        //    this.Edition = edition;
-        //    this.Organization = organization;
-        //}
-
         /// <summary>Initializes a new instance of the <see cref="AttendeeOrganizationType"/> class.</summary>
         /// <param name="attendeeOrganization">The attendee organization.</param>
         /// <param name="organizationType">Type of the organization.</param>
@@ -50,23 +41,34 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
+        /// <summary>Deletes the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(int userId)
+        {
+            this.IsDeleted = true;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Restores the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Restore(int userId)
+        {
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
+        #region Validations
+
         /// <summary>Returns true if ... is valid.</summary>
         /// <returns>
         ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
         public override bool IsValid()
         {
             return true;
-            //ValidationResult = new ValidationResult();
-
-            //ValidationResult.Add(new PlayerIsConsistent().Valid(this));
-
-            //if (Image != null)
-            //{
-            //    ValidationResult.Add(new ImageIsConsistent().Valid(this.Image));
-            //    ValidationResult.Add(new PlayerImageIsConsistent().Valid(this));
-            //}
-
-            //return ValidationResult.IsValid;
         }
+
+        #endregion
     }
 }

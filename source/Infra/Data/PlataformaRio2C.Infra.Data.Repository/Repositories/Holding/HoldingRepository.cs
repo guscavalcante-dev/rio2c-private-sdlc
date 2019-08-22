@@ -54,7 +54,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             if (!showAllEditions && editionId.HasValue)
             {
-                query = query.Where(h => h.Organizations.Any(o => o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId)));
+                query = query.Where(h => h.Organizations.Any(o => o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
+                                                                                                    && !ao.IsDeleted
+                                                                                                    && !ao.Edition.IsDeleted)
+                                                                  && !o.IsDeleted));
             }
 
             return query;
@@ -142,9 +145,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public override IQueryable<Holding> GetAll(bool @readonly = false)
         {
             var consult = this.dbSet
-                                .IsNotDeleted()
-                                .Include(i => i.Descriptions)
-                                .Include(i => i.Descriptions.Select(t => t.Language));
+                                .IsNotDeleted();
+                                //.Include(i => i.Descriptions)
+                                //.Include(i => i.Descriptions.Select(t => t.Language));
 
 
             return @readonly

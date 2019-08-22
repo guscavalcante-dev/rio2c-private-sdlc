@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-20-2019
+// Last Modified On : 08-21-2019
 // ***********************************************************************
 // <copyright file="CreateOrganizationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -71,8 +71,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #region Initial validations
 
-            var existingOrganizationByName = this.OrganizationRepo.Get(e => e.Name == cmd.Name
-                                                                            && e.Holding.Uid == cmd.HoldingUid);
+            var existingOrganizationByName = this.OrganizationRepo.Get(o => o.Name == cmd.Name
+                                                                            && o.Holding.Uid == cmd.HoldingUid
+                                                                            && !o.IsDeleted);
             if (existingOrganizationByName != null)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.APlayer, Labels.TheName, cmd.Name), new string[] { "Name" }));
@@ -105,12 +106,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.PhoneNumber,
                 null,
                 cmd.CropperImage?.ImageFile != null,
-                cmd.Descriptions?.Where(d => !string.IsNullOrEmpty(d.Value))?.Select(d => new OrganizationDescription(
-                    d.Value,
-                    languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language,
-                    cmd.UserId))?.ToList(),
+                cmd.Descriptions?.Select(d => new OrganizationDescription(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.UserId);
-
             if (!organization.IsValid())
             {
                 this.AppValidationResult.Add(organization.ValidationResult);

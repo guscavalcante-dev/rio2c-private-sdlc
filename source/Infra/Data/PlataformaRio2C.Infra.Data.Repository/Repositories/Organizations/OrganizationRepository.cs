@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-19-2019
+// Last Modified On : 08-21-2019
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -36,11 +36,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     {
         /// <summary>Finds the by uid.</summary>
         /// <param name="query">The query.</param>
-        /// <param name="holdingUid">The holding uid.</param>
+        /// <param name="organizationId">The organization identifier.</param>
         /// <returns></returns>
-        internal static IQueryable<Organization> FindByUid(this IQueryable<Organization> query, Guid holdingUid)
+        internal static IQueryable<Organization> FindByUid(this IQueryable<Organization> query, Guid organizationId)
         {
-            query = query.Where(o => o.Uid == holdingUid);
+            query = query.Where(o => o.Uid == organizationId);
 
             return query;
         }
@@ -56,11 +56,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             if (!showAllEditions && editionId.HasValue)
             {
                 query = query.Where(o => o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
-                                                                           && ao.AttendeeOrganizationTypes.Any(aot => aot.OrganizationType.Uid == organizationTypeUid)));
+                                                                           && ao.AttendeeOrganizationTypes.Any(aot => aot.OrganizationType.Uid == organizationTypeUid
+                                                                                                                      && !aot.IsDeleted)
+                                                                           && !ao.IsDeleted));
             }
             else
             {
-                query = query.Where(o => o.AttendeeOrganizations.Any(ao => ao.AttendeeOrganizationTypes.Any(aot => aot.OrganizationType.Uid == organizationTypeUid)));
+                query = query.Where(o => o.AttendeeOrganizations.Any(ao => ao.AttendeeOrganizationTypes.Any(aot => aot.OrganizationType.Uid == organizationTypeUid
+                                                                                                                   && !aot.IsDeleted)
+                                                                           && !ao.IsDeleted));
             }
 
             return query;
@@ -75,7 +79,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             if (!showAllEditions && editionId.HasValue)
             {
-                query = query.Where(o => o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId));
+                query = query.Where(o => o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
+                                                                           && !ao.IsDeleted
+                                                                           && !ao.Edition.IsDeleted));
             }
 
             return query;
@@ -95,12 +101,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 {
                     if (!string.IsNullOrEmpty(keyword))
                     {
-                        predicate = predicate.And(h => h.Name.Contains(keyword));
+                        predicate = predicate.And(o => o.Name.Contains(keyword));
                     }
                 }
 
                 query = query.AsExpandable().Where(predicate);
             }
+
+            return query;
+        }
+
+        /// <summary>Determines whether [is not deleted].</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<Organization> IsNotDeleted(this IQueryable<Organization> query)
+        {
+            query = query.Where(o => !o.IsDeleted);
 
             return query;
         }
@@ -152,7 +168,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public override IQueryable<Organization> GetAll(bool @readonly = false)
         {
-            var consult = this.dbSet;
+            var consult = this.dbSet
+                                    .IsNotDeleted();
                                     //.Include(i => i.Descriptions)
                                     //.Include(i => i.Descriptions.Select(t => t.Language));
 
