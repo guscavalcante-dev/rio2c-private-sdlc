@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-21-2019
+// Last Modified On : 08-22-2019
 // ***********************************************************************
 // <copyright file="AttendeeOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -54,10 +54,12 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
 
-            var attendeOrganizationType = this.AttendeeOrganizationTypes?.FirstOrDefault(aot => aot.OrganizationType.Uid == organizationType.Uid && !aot.IsDeleted);
-            attendeOrganizationType?.Delete(userId);
+            foreach (var attendeeOrganizationType in this.FindAllAttendeeOrganizationTypesNotDeleted(organizationType))
+            {
+                attendeeOrganizationType?.Delete(userId);
+            }
 
-            if (this.AttendeeOrganizationTypes?.All(aot => aot.IsDeleted) == true)
+            if (this.FindAllAttendeeOrganizationTypesNotDeleted(organizationType)?.Any() == false)
             {
                 this.IsDeleted = true;
             }
@@ -102,6 +104,14 @@ namespace PlataformaRio2C.Domain.Entities
                 this.AttendeeOrganizationTypes.Add(new AttendeeOrganizationType(this, organizationType, userId));
 
             }
+        }
+
+        /// <summary>Finds all attendee organization types not deleted.</summary>
+        /// <param name="organizationType">Type of the organization.</param>
+        /// <returns></returns>
+        private List<AttendeeOrganizationType> FindAllAttendeeOrganizationTypesNotDeleted(OrganizationType organizationType)
+        {
+            return this.AttendeeOrganizationTypes?.Where(aot => (organizationType == null || aot.OrganizationType.Uid == organizationType.Uid) && !aot.IsDeleted)?.ToList();
         }
 
         #endregion

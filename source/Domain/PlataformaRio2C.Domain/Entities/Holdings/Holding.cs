@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-21-2019
+// Last Modified On : 08-22-2019
 // ***********************************************************************
 // <copyright file="Holding.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -76,10 +76,11 @@ namespace PlataformaRio2C.Domain.Entities
         public void Delete(int userId)
         {
             this.IsDeleted = true;
-            this.ImageUploadDate = null;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
+            this.DeleteOrganizations(userId);
             this.DeleteDescriptions(null, userId);
+            this.UpdateImageUploadDate(false, true);
         }
 
         /// <summary>Updates the image upload date.</summary>
@@ -96,6 +97,27 @@ namespace PlataformaRio2C.Domain.Entities
                 this.ImageUploadDate = null;
             }
         }
+
+        #region Organizations
+
+        /// <summary>Deletes the organizations.</summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteOrganizations(int userId)
+        {
+            foreach (var organization in this.FindAllOrganizationsNotDeleted())
+            {
+                organization.Delete(null, null, userId);
+            }
+        }
+
+        /// <summary>Finds all organizations not deleted.</summary>
+        /// <returns></returns>
+        private List<Organization> FindAllOrganizationsNotDeleted()
+        {
+            return this.Organizations?.Where(o => !o.IsDeleted)?.ToList();
+        }
+
+        #endregion
 
         #region Descriptions
 
@@ -163,7 +185,6 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.ValidateName();
             this.ValidateDescriptions();
-            
 
             return this.ValidationResult.IsValid;
         }
@@ -171,7 +192,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Validates the name.</summary>
         public void ValidateName()
         {
-            // TODO: use resources on validation errrors
             if (string.IsNullOrEmpty(this.Name?.Trim()))
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Name), new string[] { "Name" }));

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-18-2019
+// Last Modified On : 08-22-2019
 // ***********************************************************************
 // <copyright file="HoldingMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -32,6 +32,10 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.HasRequired(t => t.Updater)
                 .WithMany(e => e.UpdatedHoldings)
                 .HasForeignKey(d => d.UpdateUserId);
+
+            this.HasMany(t => t.Organizations)
+                .WithOptional(e => e.Holding)
+                .HasForeignKey(e => e.HoldingId);
         }
     }
 }

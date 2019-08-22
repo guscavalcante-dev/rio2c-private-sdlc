@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-21-2019
+// Last Modified On : 08-22-2019
 // ***********************************************************************
 // <copyright file="Organization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -176,9 +176,11 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
             this.DeleteAttendeeOrganization(edition, organizationType, userId);
 
-            //this.IsDeleted = true;
-            //this.ImageUploadDate = null;
-            //this.DeleteDescriptions(null, userId);
+            if (this.FindAllAttendeeOrganizationsNotDeleted(edition)?.Any() == false)
+            {
+                this.IsDeleted = true;
+                this.UpdateImageUploadDate(false, true);
+            }
         }
 
         /// <summary>Updates the image upload date.</summary>
@@ -296,13 +298,18 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
 
-            var attendeeOrganization = this.AttendeeOrganizations?.FirstOrDefault(ao => ao.EditionId == edition.Id && !ao.IsDeleted);
-            attendeeOrganization?.Delete(organizationType, userId);
-
-            if (this.AttendeeOrganizations?.All(ao => ao.IsDeleted) == true)
+            foreach (var attendeeOrganization in this.FindAllAttendeeOrganizationsNotDeleted(edition))
             {
-                this.IsDeleted = true;
+                attendeeOrganization?.Delete(organizationType, userId);
             }
+        }
+
+        /// <summary>Finds all attendee organizations not deleted.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <returns></returns>
+        private List<AttendeeOrganization> FindAllAttendeeOrganizationsNotDeleted(Edition edition)
+        {
+            return this.AttendeeOrganizations?.Where(ao => (edition == null || ao.EditionId == edition.Id) && !ao.IsDeleted)?.ToList();
         }
 
         #endregion
@@ -319,14 +326,12 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateName();
             this.ValidateDescriptions();
 
-
             return this.ValidationResult.IsValid;
         }
 
         /// <summary>Validates the name.</summary>
         public void ValidateName()
         {
-            // TODO: use resources on validation errrors
             if (string.IsNullOrEmpty(this.Name?.Trim()))
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Name), new string[] { "Name" }));

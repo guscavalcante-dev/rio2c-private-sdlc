@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-19-2019
+// Last Modified On : 08-22-2019
 // ***********************************************************************
 // <copyright file="OrganizationMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -41,7 +41,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                 .HasMaxLength(Organization.SocialMediaMaxLength);
 
             // Relationships
-            this.HasRequired(t => t.Holding)
+            this.HasOptional(t => t.Holding)
                 .WithMany(e => e.Organizations)
                 .HasForeignKey(d => d.HoldingId);
 

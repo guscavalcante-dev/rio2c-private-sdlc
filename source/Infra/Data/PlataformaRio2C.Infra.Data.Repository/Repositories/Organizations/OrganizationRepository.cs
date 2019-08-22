@@ -308,7 +308,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                              && !ao.IsDeleted
                                                                                                              && ao.AttendeeOrganizationTypes.Any(aot => aot.OrganizationType.Uid == organizationTypeUid
                                                                                                                                                         && !aot.IsDeleted)),
-                                IsInOtherEdition = editionId.HasValue && o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
+                                IsInOtherEdition = editionId.HasValue && o.AttendeeOrganizations.Any(ao => ao.EditionId != editionId
                                                                                                            && !ao.IsDeleted)
                             })
                             .ToListPagedAsync(page, pageSize);
