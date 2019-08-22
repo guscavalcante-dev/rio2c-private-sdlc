@@ -196,6 +196,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Por favor, confirme para excluir da edição {0}..
+        /// </summary>
+        public static string ConfirmDeleteEdition {
+            get {
+                return ResourceManager.GetString("ConfirmDeleteEdition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Por favor, corrija os erros do formulário..
         /// </summary>
         public static string CorrectFormValues {

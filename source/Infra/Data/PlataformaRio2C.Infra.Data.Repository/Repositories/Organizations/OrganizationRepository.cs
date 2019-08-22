@@ -56,9 +56,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             if (!showAllEditions && editionId.HasValue)
             {
                 query = query.Where(o => o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
+                                                                           && !ao.IsDeleted
                                                                            && ao.AttendeeOrganizationTypes.Any(aot => aot.OrganizationType.Uid == organizationTypeUid
-                                                                                                                      && !aot.IsDeleted)
-                                                                           && !ao.IsDeleted));
+                                                                                                                      && !aot.IsDeleted)));
             }
             else
             {
@@ -247,15 +247,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="keywords">The keywords.</param>
         /// <param name="sortColumns">The sort columns.</param>
-        /// <param name="organizationTypeId">The organization type identifier.</param>
+        /// <param name="organizationTypeUid">The organization type uid.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<IPagedList<OrganizationBaseDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, Guid organizationTypeId, bool showAllEditions, int? editionId)
+        public async Task<IPagedList<OrganizationBaseDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, Guid organizationTypeUid, bool showAllEditions, int? editionId)
         {
             var query = this.GetAll()
                                 .FindByKeywords(keywords)
-                                .FindByOrganizationTypeuidAndEditionId(organizationTypeId, showAllEditions, editionId);
+                                .FindByOrganizationTypeuidAndEditionId(organizationTypeUid, showAllEditions, editionId);
 
             return await query
                             .Select(o => new OrganizationBaseDto
@@ -275,6 +275,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 ImageUploadDate = o.ImageUploadDate,
                                 CreateDate = o.CreateDate,
                                 UpdateDate = o.UpdateDate,
+                                IsInCurrentEdition = editionId.HasValue && o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
+                                                                                                             && !ao.IsDeleted
+                                                                                                             && ao.AttendeeOrganizationTypes.Any(aot => aot.OrganizationType.Uid == organizationTypeUid
+                                                                                                                                                        && !aot.IsDeleted)),
+                                IsInOtherEdition = editionId.HasValue && o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
+                                                                                                           && !ao.IsDeleted)
                             })
                             .DynamicOrder<OrganizationBaseDto>(sortColumns, new List<string> { "Name", "CreateDate", "UpdateDate" }, "Name")
                             .ToListPagedAsync(page, pageSize);

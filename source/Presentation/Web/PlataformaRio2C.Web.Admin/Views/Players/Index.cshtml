@@ -36,7 +36,13 @@
     @Scripts.Render("~/bundles/js/organizations.create.js")
     @Scripts.Render("~/bundles/js/organizations.update.js")
     @Scripts.Render("~/bundles/js/organizations.delete.js")
-    <script>
+<script>
+        // Page translations ----------------------------------------------------------------------
+        var addToEdition = '@string.Format(Labels.AddToEdition, ViewBag.EditionUrlCode)';
+        var removeFromEdition = '@string.Format(Labels.RemoveFromEdition, ViewBag.EditionUrlCode)';
+        var notInEdition = '@string.Format(Labels.NotInEdition, ViewBag.EditionUrlCode)';
+
+        // Pagination -----------------------------------------------------------------------------
         var initialPage = @(Model.Page?.ToString() ?? "null");
         var initialPageSize = @(Model.PageSize?.ToString() ?? "null");
 
@@ -45,5 +51,5 @@
             OrganizationsEditionCountWidget.init();
             OrganizationsDataTableWidget.init();
         });
-    </script>
+</script>
 }

@@ -50,9 +50,15 @@ var OrganizationsDelete = function () {
         });
     };
 
-    var showModal = function (organizationUid) {
+    var showModal = function (organizationUid, isDeletingFromCurrentEdition) {
+        var message = labels.deleteConfirmationMessage;
+
+        if (isDeletingFromCurrentEdition) {
+            message = labels.deleteCurrentEditionConfirmationMessage;
+        }
+
         bootbox.dialog({
-            message: labels.deleteConfirmationMessage,
+            message: message,
             buttons: {
                 cancel: {
                     label: labels.cancel,
@@ -72,8 +78,8 @@ var OrganizationsDelete = function () {
     };
 
     return {
-        showModal: function (organizationUid) {
-            showModal(organizationUid);
+        showModal: function (organizationUid, isDeletingFromCurrentEdition) {
+            showModal(organizationUid, isDeletingFromCurrentEdition);
         }
     };
 }();

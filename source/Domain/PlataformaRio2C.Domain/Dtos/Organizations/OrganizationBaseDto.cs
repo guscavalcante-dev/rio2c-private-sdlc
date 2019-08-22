@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-19-2019
+// Last Modified On : 08-21-2019
 // ***********************************************************************
 // <copyright file="OrganizationBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,6 +28,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTime? ImageUploadDate { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
+        public bool IsInCurrentEdition { get; set; }
+        public bool IsInOtherEdition { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="OrganizationBaseDto"/> class.</summary>
         public OrganizationBaseDto()

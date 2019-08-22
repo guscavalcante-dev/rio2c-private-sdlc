@@ -242,9 +242,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         /// <summary>Shows the update modal.</summary>
         /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="isAddingToCurrentEdition">The is adding to current edition.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowUpdateModal(Guid? organizationUid)
+        public async Task<ActionResult> ShowUpdateModal(Guid? organizationUid, bool? isAddingToCurrentEdition)
         {
             UpdateOrganization cmd;
 
@@ -253,7 +254,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 cmd = new UpdateOrganization(
                     await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(organizationUid, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)));
+                    await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
+                    isAddingToCurrentEdition);
             }
             catch (DomainException ex)
             {

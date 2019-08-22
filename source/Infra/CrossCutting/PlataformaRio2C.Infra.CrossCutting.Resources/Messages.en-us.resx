@@ -527,4 +527,8 @@
     <value>The field {0} must have between '{2}' and '{1}' characters.</value>
     <comment>O campo {0} deve ter entre '{1}' e '{2}' caracteres.</comment>
   </data>
+  <data name="ConfirmDeleteEdition" xml:space="preserve">
+    <value>Please, confirm to delete from {0} edition.</value>
+    <comment>Por favor, confirme para excluir da edição {0}.</comment>
+  </data>
 </root>

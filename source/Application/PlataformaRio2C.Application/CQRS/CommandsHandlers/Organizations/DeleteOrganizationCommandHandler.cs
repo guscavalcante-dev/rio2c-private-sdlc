@@ -11,7 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,33 +26,25 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>DeleteOrganizationCommandHandler</summary>
     public class DeleteOrganizationCommandHandler : BaseOrganizationCommandHandler, IRequestHandler<DeleteOrganization, AppValidationResult>
     {
-        private readonly IHoldingRepository holdingRepo;
         private readonly IEditionRepository editionRepo;
         private readonly IOrganizationTypeRepository organizationTypeRepo;
-        private readonly ILanguageRepository languageRepo;
 
         /// <summary>Initializes a new instance of the <see cref="DeleteOrganizationCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="organizationRepository">The organization repository.</param>
-        /// <param name="holdingRepository">The holding repository.</param>
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="organizationTypeRepository">The organization type repository.</param>
-        /// <param name="languageRepository">The language repository.</param>
         public DeleteOrganizationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IOrganizationRepository organizationRepository,
-            IHoldingRepository holdingRepository,
             IEditionRepository editionRepository,
-            IOrganizationTypeRepository organizationTypeRepository,
-            ILanguageRepository languageRepository)
+            IOrganizationTypeRepository organizationTypeRepository)
             : base(eventBus, uow, organizationRepository)
         {
-            this.holdingRepo = holdingRepository;
             this.editionRepo = editionRepository;
             this.organizationTypeRepo = organizationTypeRepository;
-            this.languageRepo = languageRepository;
         }
 
         /// <summary>Handles the specified delete organization.</summary>
@@ -92,7 +83,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.OrganizationRepo.Update(organization);
             this.Uow.SaveChanges();
 
-            if (beforeImageUploadDate.HasValue)
+            if (beforeImageUploadDate.HasValue && organization.IsDeleted)
             {
                 ImageHelper.DeleteOriginalAndCroppedImages(cmd.OrganizationUid, FileRepositoryPathType.OrganizationImage);
             }

@@ -25,6 +25,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     public class UpdateOrganization : OrganizationBaseCommand
     {
         public Guid OrganizationUid { get; set; }
+        public bool IsAddingToCurrentEdition { get; set; }
         public UserBaseDto UpdaterBaseDto { get; set; }
         public DateTime UpdateDate { get; set; }
 
@@ -32,7 +33,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="entity">The entity.</param>
         /// <param name="holdingBaseDtos">The holding base dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
-        public UpdateOrganization(OrganizationDto entity, List<HoldingBaseDto> holdingBaseDtos, List<LanguageDto> languagesDtos)
+        /// <param name="isAddingToCurrentEdition">The is adding to current edition.</param>
+        /// <exception cref="DomainException"></exception>
+        public UpdateOrganization(OrganizationDto entity, List<HoldingBaseDto> holdingBaseDtos, List<LanguageDto> languagesDtos, bool? isAddingToCurrentEdition)
         {
             if (entity == null)
             {
@@ -53,6 +56,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateDescriptions(entity, languagesDtos);
             this.CropperImage = new CropperImageBaseCommand(entity.ImageUploadDate, entity.Uid, FileRepositoryPathType.OrganizationImage);
             this.UpdateErrorProperties(holdingBaseDtos);
+            this.IsAddingToCurrentEdition = isAddingToCurrentEdition ?? false;
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateOrganization"/> class.</summary>

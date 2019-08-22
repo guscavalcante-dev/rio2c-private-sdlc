@@ -104,7 +104,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeDescriptions(descriptions, userId);
-            this.SynchronizeAttendeeOrganizations(edition, organizationType, userId);
+            this.SynchronizeAttendeeOrganizations(edition, organizationType, true, userId);
         }
 
         /// <summary>Initializes a new instance of the <see cref="Organization"/> class.</summary>
@@ -127,6 +127,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
         /// <param name="descriptions">The descriptions.</param>
+        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
         /// <param name="userId">The user identifier.</param>
         public void Update (
             Holding holding,
@@ -143,6 +144,7 @@ namespace PlataformaRio2C.Domain.Entities
             bool isImageUploaded,
             bool isImageDeleted,
             List<OrganizationDescription> descriptions,
+            bool isAddingToCurrentEdition,
             int userId)
         {
             //this.Uid = uid;
@@ -161,7 +163,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeDescriptions(descriptions, userId);
-            this.SynchronizeAttendeeOrganizations(edition, organizationType, userId);
+            this.SynchronizeAttendeeOrganizations(edition, organizationType, isAddingToCurrentEdition, userId);
         }
 
         /// <summary>Deletes the specified edition.</summary>
@@ -254,9 +256,16 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Synchronizes the attendee organizations.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeAttendeeOrganizations(Edition edition, OrganizationType organizationType, int userId)
+        private void SynchronizeAttendeeOrganizations(Edition edition, OrganizationType organizationType, bool isAddingToCurrentEdition, int userId)
         {
+            // Synchronize only when is adding to current edition
+            if (!isAddingToCurrentEdition)
+            {
+                return;
+            }
+
             if (this.AttendeeOrganizations == null)
             {
                 this.AttendeeOrganizations = new List<AttendeeOrganization>();

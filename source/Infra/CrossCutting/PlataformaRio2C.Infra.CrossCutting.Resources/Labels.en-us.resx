@@ -1228,4 +1228,16 @@
     <value>Update</value>
     <comment>Atualizar</comment>
   </data>
+  <data name="AddToEdition" xml:space="preserve">
+    <value>Add to {0}</value>
+    <comment>Adicionar em {0}</comment>
+  </data>
+  <data name="NotInEdition" xml:space="preserve">
+    <value>Not in {0} edition</value>
+    <comment>Fora da edição {0}</comment>
+  </data>
+  <data name="RemoveFromEdition" xml:space="preserve">
+    <value>Remove from {0}</value>
+    <comment>Remover de {0}</comment>
+  </data>
 </root>

@@ -1165,16 +1165,16 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>o nome</comment>
   </data>
   <data name="UpdateDate" xml:space="preserve">
-    <value>Data de Atualização</value>
-    <comment>Data de Atualização</comment>
+    <value>Data de Edição</value>
+    <comment>Data de Edição</comment>
   </data>
   <data name="UpdatedF" xml:space="preserve">
-    <value>atualizada</value>
-    <comment>atualizada</comment>
+    <value>editada</value>
+    <comment>editada</comment>
   </data>
   <data name="UpdatedM" xml:space="preserve">
-    <value>atualizado</value>
-    <comment>atualizado</comment>
+    <value>editado</value>
+    <comment>editado</comment>
   </data>
   <data name="AudioVisual" xml:space="preserve">
     <value>Áudio Visual</value>
@@ -1233,7 +1233,19 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Novo</comment>
   </data>
   <data name="Update" xml:space="preserve">
-    <value>Atualizar</value>
-    <comment>Atualizar</comment>
+    <value>Editar</value>
+    <comment>Editar</comment>
+  </data>
+  <data name="AddToEdition" xml:space="preserve">
+    <value>Adicionar em {0}</value>
+    <comment>Adicionar em {0}</comment>
+  </data>
+  <data name="NotInEdition" xml:space="preserve">
+    <value>Fora da edição {0}</value>
+    <comment>Fora da edição {0}</comment>
+  </data>
+  <data name="RemoveFromEdition" xml:space="preserve">
+    <value>Remover de {0}</value>
+    <comment>Remover de {0}</comment>
   </data>
 </root>

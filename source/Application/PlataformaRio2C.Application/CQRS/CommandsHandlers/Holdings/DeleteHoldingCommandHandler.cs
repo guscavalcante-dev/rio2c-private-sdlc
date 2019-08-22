@@ -69,7 +69,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.HoldingRepo.Update(holding);
             this.Uow.SaveChanges();
 
-            if (beforeImageUploadDate.HasValue)
+            if (beforeImageUploadDate.HasValue && holding.IsDeleted)
             {
                 ImageHelper.DeleteOriginalAndCroppedImages(cmd.HoldingUid, FileRepositoryPathType.HoldingImage);
             }

@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-19-2019
+// Last Modified On : 08-21-2019
 // ***********************************************************************
 // <copyright file="organizations.update.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,11 +34,12 @@ var OrganizationsUpdate = function () {
     };
 
     // Show modal ---------------------------------------------------------------------------------
-    var showModal = function (organizationUid) {
+    var showModal = function (organizationUid, isAddingToCurrentEdition) {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
         jsonParameters.organizationUid = organizationUid;
+        jsonParameters.isAddingToCurrentEdition = isAddingToCurrentEdition;
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Players/ShowUpdateModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -88,8 +89,8 @@ var OrganizationsUpdate = function () {
     };
 
     return {
-        showModal: function (organizationUid) {
-            showModal(organizationUid);
+        showModal: function (organizationUid, isAddingToCurrentEdition) {
+            showModal(organizationUid, isAddingToCurrentEdition);
         }
     };
 }();

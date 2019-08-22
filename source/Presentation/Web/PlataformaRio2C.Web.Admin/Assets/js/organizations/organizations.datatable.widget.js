@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-20-2019
+// Last Modified On : 08-21-2019
 // ***********************************************************************
 // <copyright file="organizations.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -90,16 +90,6 @@ var OrganizationsDataTableWidget = function () {
             createdRow: function (row, data, dataIndex) {
                 $(row).attr('data-id', data.Uid);
             },
-
-            /**
-                                 <th>@Labels.Name</th>
-                    <th>@Labels.Holding</th>
-                    <th>@Labels.CompanyDocument</th>
-                    <th>@Labels.Website</th>
-                    <th>@Labels.PhoneNumber</th>
-                    <th>@Labels.CreateDate</th>
-                    <th>@Labels.UpdateDate</th>
-             */
             columns: [
                 { data: 'Name' },
                 { data: 'HoldingBaseDto.Name' },
@@ -129,14 +119,21 @@ var OrganizationsDataTableWidget = function () {
                     targets: [0],
                     width: "25%",
                     render: function (data, type, full, meta) {
-                        var image = '';
+                        var html = '';
                         if (!MyRio2cCommon.isNullOrEmpty(full.ImageUploadDate)) {
-                            image += '<img style="max-width: 50px; max-height: 50px;" src="https://dev.assets.my.rio2c.com/img/organizations/' + full.Uid + '_thumbnail.png?v=' + moment(full.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
+                            html += '<img style="max-width: 50px; max-height: 50px;" src="https://dev.assets.my.rio2c.com/img/organizations/' + full.Uid + '_thumbnail.png?v=' + moment(full.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
                         }
                         else {
-                            image += '<img style="max-width: 50px; max-height: 50px;" src="https://dev.assets.my.rio2c.com/img/organizations/no-image.png?v=20190818200849" /> ';
+                            html += '<img style="max-width: 50px; max-height: 50px;" src="https://dev.assets.my.rio2c.com/img/organizations/no-image.png?v=20190818200849" /> ';
                         }
-                        return image + full.Name;
+
+                        html += full.Name;
+
+                        if (!full.IsInCurrentEdition) {
+                            html += '<br /><span class="kt-badge kt-badge--inline kt-badge--info">' + notInEdition + '</span>';
+                        }
+
+                        return html;
                     }
                 },
                 {
@@ -162,16 +159,31 @@ var OrganizationsDataTableWidget = function () {
                     searchable: false,
                     className: "dt-center",
                     render: function (data, type, full, meta) {
-                        return '\
-                            <span class="dropdown">\
-                                <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">\
-                                  <i class="la la-ellipsis-h"></i>\
-                                </a>\
-                                <div class="dropdown-menu dropdown-menu-right">\
-                                    <button class="dropdown-item" onclick="OrganizationsUpdate.showModal(\'' + full.Uid + '\');"><i class="la la-edit"></i> ' + labels.edit +'</button>\
-                                    <button class="dropdown-item" onclick="OrganizationsDelete.showModal(\'' + full.Uid + '\');"><i class="la la-remove"></i> ' + labels.remove +'</button>\
-                                </div>\
-                            </span>';
+                        var html = '\
+                                        <span class="dropdown">\
+                                            <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">\
+                                              <i class="la la-ellipsis-h"></i>\
+                                            </a>\
+                                            <div class="dropdown-menu dropdown-menu-right">';
+
+                        if (!full.IsInCurrentEdition) {
+                            html += '<button class="dropdown-item" onclick="OrganizationsUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition +'</button>';
+                        }
+
+                        html += '<button class="dropdown-item" onclick="OrganizationsUpdate.showModal(\'' + full.Uid + '\', false);"><i class="la la-edit"></i> ' + labels.edit + '</button>';
+
+                        if (full.IsInCurrentEdition && full.IsInOtherEdition) {
+                            html += '<button class="dropdown-item" onclick="OrganizationsDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + removeFromEdition + '</button>';
+                        }
+                        else {
+                            html += '<button class="dropdown-item" onclick="OrganizationsDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+                        }
+
+                        html += '\
+                                            </div>\
+                                        </span>';
+
+                        return html;
                     }
                 }
             ]

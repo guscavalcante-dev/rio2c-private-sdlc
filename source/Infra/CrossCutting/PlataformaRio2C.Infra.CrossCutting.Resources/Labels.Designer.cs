@@ -187,6 +187,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adicionar em {0}.
+        /// </summary>
+        public static string AddToEdition {
+            get {
+                return ResourceManager.GetString("AddToEdition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to uma holding.
         /// </summary>
         public static string AHolding {
@@ -1636,6 +1645,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fora da edição {0}.
+        /// </summary>
+        public static string NotInEdition {
+            get {
+                return ResourceManager.GetString("NotInEdition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nenhum usuário encontrado..
         /// </summary>
         public static string NoUserHasBeenFoundInChat {
@@ -2154,6 +2172,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Remove {
             get {
                 return ResourceManager.GetString("Remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remover de {0}.
+        /// </summary>
+        public static string RemoveFromEdition {
+            get {
+                return ResourceManager.GetString("RemoveFromEdition", resourceCulture);
             }
         }
         
@@ -2698,7 +2725,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Atualizar.
+        ///   Looks up a localized string similar to Editar.
         /// </summary>
         public static string Update {
             get {
@@ -2707,7 +2734,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data de Atualização.
+        ///   Looks up a localized string similar to Data de Edição.
         /// </summary>
         public static string UpdateDate {
             get {
@@ -2716,7 +2743,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to atualizada.
+        ///   Looks up a localized string similar to editada.
         /// </summary>
         public static string UpdatedF {
             get {
@@ -2725,7 +2752,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to atualizado.
+        ///   Looks up a localized string similar to editado.
         /// </summary>
         public static string UpdatedM {
             get {
