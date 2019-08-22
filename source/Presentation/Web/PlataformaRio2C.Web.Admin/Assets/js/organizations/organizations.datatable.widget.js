@@ -86,10 +86,11 @@ var OrganizationsDataTableWidget = function () {
                         onError: function () {
                         }
                     });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $('#organizations-list-table_processing').hide();
+                    MyRio2cCommon.showAlert();
                 }
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                $('#holdings-list-table_processing').hide();
             },
             createdRow: function (row, data, dataIndex) {
                 $(row).attr('data-id', data.Uid);
