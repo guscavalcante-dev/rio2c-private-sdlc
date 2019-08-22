@@ -67,23 +67,21 @@
     <div class="kt-portlet__body">
         <!--begin: SearchForm-->
         <div class="form-group row">
-            <div class="col-lg-4">
+            <div class="col-lg-6">
                 <label>@Labels.Search:</label>
                 @Html.TextBoxFor(m => m.Search, new { type = "search", @class = "form-control", autocomplete = "off", placeholder = $"{Labels.HoldingName.ToLowerInvariant()}" })
                 @*<span class="form-text text-muted">Please enter your full name</span>*@
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <div class="form-group">
                     <label>&nbsp;</label>
                     <div class="kt-checkbox-list">
-                        <label class="kt-checkbox">
-                            @Html.CheckBoxFor(m => m.ShowAllEditions) @Labels.ShowAllEditions
+                        <label class="kt-checkbox mt-2">
+                            @Html.CheckBoxFor(m => m.ShowAllEditions, new { @class = "enable-datatable-reload" }) @Labels.ShowAllEditions
                             <span></span>
                         </label>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4">
             </div>
         </div>
         <!--end: SearchForm-->

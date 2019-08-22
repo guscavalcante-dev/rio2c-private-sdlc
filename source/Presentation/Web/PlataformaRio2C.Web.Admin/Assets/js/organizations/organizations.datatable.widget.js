@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-21-2019
+// Last Modified On : 08-22-2019
 // ***********************************************************************
 // <copyright file="organizations.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -59,6 +59,7 @@ var OrganizationsDataTableWidget = function () {
                 url: MyRio2cCommon.getUrlWithCultureAndEdition('/Players/Search'),
                 data: function (d) {
                     d.showAllEditions = $('#ShowAllEditions').prop('checked');
+                    d.showAllOrganizations = $('#ShowAllOrganizations').prop('checked');
                 },
                 dataFilter: function (data) {
                     var jsonReturned = jQuery.parseJSON(data);
@@ -202,7 +203,7 @@ var OrganizationsDataTableWidget = function () {
             }
         });
 
-        $('#ShowAllEditions').click(function (e) {
+        $('.enable-datatable-reload').click(function (e) {
             table.ajax.reload();
         });
 

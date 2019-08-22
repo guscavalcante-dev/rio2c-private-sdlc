@@ -49,20 +49,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="query">The query.</param>
         /// <param name="organizationTypeUid">The organization type uid.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="showAllOrganizations">if set to <c>true</c> [show all organizations].</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        internal static IQueryable<Organization> FindByOrganizationTypeuidAndEditionId(this IQueryable<Organization> query, Guid organizationTypeUid, bool showAllEditions, int? editionId)
+        internal static IQueryable<Organization> FindByOrganizationTypeuidAndEditionId(this IQueryable<Organization> query, Guid organizationTypeUid, bool showAllEditions, bool showAllOrganizations, int? editionId)
         {
             if (!showAllEditions && editionId.HasValue)
             {
                 query = query.Where(o => o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
                                                                            && !ao.IsDeleted
-                                                                           && ao.AttendeeOrganizationTypes.Any(aot => aot.OrganizationType.Uid == organizationTypeUid
+                                                                           && ao.AttendeeOrganizationTypes.Any(aot => (showAllOrganizations || aot.OrganizationType.Uid == organizationTypeUid)
                                                                                                                       && !aot.IsDeleted)));
             }
             else
             {
-                query = query.Where(o => o.AttendeeOrganizations.Any(ao => ao.AttendeeOrganizationTypes.Any(aot => aot.OrganizationType.Uid == organizationTypeUid
+                query = query.Where(o => o.AttendeeOrganizations.Any(ao => ao.AttendeeOrganizationTypes.Any(aot => (showAllOrganizations || aot.OrganizationType.Uid == organizationTypeUid)
                                                                                                                    && !aot.IsDeleted)
                                                                            && !ao.IsDeleted));
             }
@@ -259,13 +260,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="sortColumns">The sort columns.</param>
         /// <param name="organizationTypeUid">The organization type uid.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="showAllOrganizations">if set to <c>true</c> [show all organizations].</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<IPagedList<OrganizationBaseDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, Guid organizationTypeUid, bool showAllEditions, int? editionId)
+        public async Task<IPagedList<OrganizationBaseDto>> FindAllByDataTable(
+            int page, 
+            int pageSize, 
+            string keywords, 
+            List<Tuple<string, string>> sortColumns, 
+            Guid organizationTypeUid, 
+            bool showAllEditions,
+            bool showAllOrganizations,
+            int? editionId)
         {
             var query = this.GetAll()
                                 .FindByKeywords(keywords)
-                                .FindByOrganizationTypeuidAndEditionId(organizationTypeUid, showAllEditions, editionId);
+                                .FindByOrganizationTypeuidAndEditionId(organizationTypeUid, showAllEditions, showAllOrganizations, editionId);
 
             return await query
                             .DynamicOrder<Organization>(
@@ -312,7 +322,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<int> CountAllByDataTable(Guid organizationTypeId, bool showAllEditions, int? editionId)
         {
             var query = this.GetAll()
-                                .FindByOrganizationTypeuidAndEditionId(organizationTypeId, showAllEditions, editionId);
+                                .FindByOrganizationTypeuidAndEditionId(organizationTypeId, showAllEditions, false, editionId);
 
             return await query.CountAsync();
         }

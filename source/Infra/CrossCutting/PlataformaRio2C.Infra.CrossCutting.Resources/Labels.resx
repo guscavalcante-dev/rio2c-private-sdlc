@@ -1260,4 +1260,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Nome do Player</value>
     <comment>Nome do Player</comment>
   </data>
+  <data name="ShowAllCompanies" xml:space="preserve">
+    <value>Exibir todas as empresas</value>
+    <comment>Exibir todas as empresas</comment>
+  </data>
 </root>

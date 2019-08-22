@@ -1252,4 +1252,8 @@
     <value>Player Name</value>
     <comment>Nome do Player</comment>
   </data>
+  <data name="ShowAllCompanies" xml:space="preserve">
+    <value>Show all companies</value>
+    <comment>Exibir todas as empresas</comment>
+  </data>
 </root>

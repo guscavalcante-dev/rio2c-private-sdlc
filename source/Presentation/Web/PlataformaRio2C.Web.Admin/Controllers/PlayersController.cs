@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-21-2019
+// Last Modified On : 08-22-2019
 // ***********************************************************************
 // <copyright file="PlayersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -75,9 +75,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <summary>Searches the specified request.</summary>
         /// <param name="request">The request.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="showAllOrganizations">if set to <c>true</c> [show all organizations].</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions)
+        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllOrganizations)
         {
             var holdings = await this.CommandBus.Send(new FindAllOrganizationsBaseDtosAsync(
                 request.Start / request.Length,
@@ -86,6 +87,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 request.GetSortColumns(),
                 OrganizationType.Player.Uid,
                 showAllEditions,
+                showAllOrganizations,
                 this.UserId,
                 this.UserUid,
                 this.EditionId,

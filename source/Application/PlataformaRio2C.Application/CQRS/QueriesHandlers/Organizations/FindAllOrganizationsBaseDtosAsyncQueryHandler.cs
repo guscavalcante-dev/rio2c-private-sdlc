@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-19-2019
+// Last Modified On : 08-22-2019
 // ***********************************************************************
 // <copyright file="FindAllOrganizationsBaseDtosAsyncQueryHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -39,7 +39,7 @@ namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
         /// <returns></returns>
         public async Task<IPagedList<OrganizationBaseDto>> Handle(FindAllOrganizationsBaseDtosAsync cmd, CancellationToken cancellationToken)
         {
-            return await this.repo.FindAllByDataTable(cmd.Page, cmd.PageSize, cmd.Keywords, cmd.SortColumns, cmd.OrganizationTypeId, cmd.ShowAllEditions, cmd.EditionId);
+            return await this.repo.FindAllByDataTable(cmd.Page, cmd.PageSize, cmd.Keywords, cmd.SortColumns, cmd.OrganizationTypeId, cmd.ShowAllEditions, cmd.ShowAllOrganizations, cmd.EditionId);
         }
     }
 }

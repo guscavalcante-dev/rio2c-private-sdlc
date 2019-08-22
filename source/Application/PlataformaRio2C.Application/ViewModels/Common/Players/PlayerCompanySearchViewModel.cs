@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-19-2019
+// Last Modified On : 08-22-2019
 // ***********************************************************************
 // <copyright file="PlayerCompanySearchViewModel.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,6 +24,9 @@ namespace PlataformaRio2C.Application.ViewModels
 
         [Display(Name = "ShowAllEditions", ResourceType = typeof(Labels))]
         public bool ShowAllEditions { get; set; }
+
+        [Display(Name = "ShowAllCompanies", ResourceType = typeof(Labels))]
+        public bool ShowAllOrganizations { get; set; }
 
         public int? Page { get; set; }
         public int? PageSize { get; set; }

@@ -2473,6 +2473,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exibir todas as empresas.
+        /// </summary>
+        public static string ShowAllCompanies {
+            get {
+                return ResourceManager.GetString("ShowAllCompanies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exibir de todas as edições.
         /// </summary>
         public static string ShowAllEditions {
