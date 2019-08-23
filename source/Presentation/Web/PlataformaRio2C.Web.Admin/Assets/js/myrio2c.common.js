@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-16-2019
+// Last Modified On : 08-23-2019
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -39,6 +39,10 @@ var MyRio2cCommon = function () {
                 window.location = response.redirect;
             }
         });
+    };
+
+    var disableMetronicScripts = function () {
+        $('#kt_aside_menu, #kt_header_menu').unbind('click');
     };
 
     // General ------------------------------------------------------------------------------------
@@ -476,6 +480,7 @@ var MyRio2cCommon = function () {
 
             // Functions that need jquery
             $(function () {
+                disableMetronicScripts();
                 enableAjaxForbiddenCatch();
             });
         },
