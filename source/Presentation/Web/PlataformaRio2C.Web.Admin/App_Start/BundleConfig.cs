@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-20-2019
+// Last Modified On : 08-23-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -271,8 +271,10 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/holdings.list.js").Include(
                 "~/Assets/js/holdings/holdings.totalcount.widget.js",
-                "~/Assets/js/holdings/holdings.editioncount.widget.js",
                 "~/Assets/js/holdings/holdings.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/holdings.editioncount.js").Include(
+                "~/Assets/js/holdings/holdings.editioncount.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/holdings.create.js").Include(
                 "~/Assets/js/holdings/holdings.create.js"));
@@ -289,8 +291,10 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/organizations.list.js").Include(
                 "~/Assets/js/organizations/organizations.totalcount.widget.js",
-                "~/Assets/js/organizations/organizations.editioncount.widget.js",
                 "~/Assets/js/organizations/organizations.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/organizations.editioncount.js").Include(
+                "~/Assets/js/organizations/organizations.editioncount.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/organizations.create.js").Include(
                 "~/Assets/js/organizations/organizations.create.js"));

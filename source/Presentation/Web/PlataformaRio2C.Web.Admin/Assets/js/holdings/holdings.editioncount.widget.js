@@ -4,7 +4,7 @@
 // Created          : 08-07-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-14-2019
+// Last Modified On : 08-23-2019
 // ***********************************************************************
 // <copyright file="holdings.editioncount.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,16 +14,17 @@
 
 var HoldingsEditionCountWidget = function () {
 
-    var widgetElementId = '#HoldingEditionCountWidget';
+    var widgetElementId = '#HoldingsEditionCountWidget';
+    var chartElementId = 'HoldingsEditionCountChart';
     var widgetElement = $(widgetElementId);
 
     // Show ---------------------------------------------------------------------------------------
     var initChart = function () {
-        if ($('#kt_chart_bandwidth2').length == 0) {
+        if ($('#' + chartElementId).length === 0) {
             return;
         }
 
-        var ctx = document.getElementById("kt_chart_bandwidth2").getContext("2d");
+        var ctx = document.getElementById(chartElementId).getContext("2d");
 
         var gradient = ctx.createLinearGradient(0, 0, 0, 240);
         gradient.addColorStop(0, Chart.helpers.color('#d1f1ec').alpha(1).rgbString());

@@ -1,39 +1,28 @@
 ﻿@{
-    ViewBag.Title = Labels.Welcome;
+    ViewBag.Title = Labels.Dashboard;
 }
 <div class="row">
-    <div class="col-sm-12">
-        <div class="kt-portlet kt-portlet--height-fluid">
-            <div class="kt-portlet__body ">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h1 class="page-title">@ViewBag.Title</h1><br />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="news-message">
-                            Página temporária, o dashboard será exibido.
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="col-sm-6">
+        <!--begin:: Holdings Edition Count-->
+        <div id="HoldingsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <!--end:: Holdings Edition Count-->
     </div>
-</div> 
+    <div class="col-sm-6">
+        <!--begin:: Players Edition Count-->
+        <div id="PlayersEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <!--end:: Players Edition Count-->
+    </div>
+</div>
+@section Styles {
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/chart.js")
+    @Scripts.Render("~/bundles/js/holdings.editioncount.js")
+    @Scripts.Render("~/bundles/js/organizations.editioncount.js")
+    <script>
+        jQuery(document).ready(function () {
+            HoldingsEditionCountWidget.init();
+            OrganizationsEditionCountWidget.init();
+        });
+    </script>
+}

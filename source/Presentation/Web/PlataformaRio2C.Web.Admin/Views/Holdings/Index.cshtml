@@ -6,20 +6,17 @@
 <div class="row">
     <div class="col-sm-6">
         <!--begin:: Total Count Widget-->
-        <div id="HoldingTotalCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <div id="HoldingsTotalCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
         <!--end:: Total Count Widget-->
     </div>
     <div class="col-sm-6">
         <!--begin:: Edition Count-->
-        <div id="HoldingEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <div id="HoldingsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
         <!--end:: Edition Count-->
     </div>
 </div>
 <!--end:: Quick Stats-->
 @Html.Partial("Widgets/DataTablewidget", Model)
-@*
-    @Html.Partial("../Shared/_ModalDelete")
-*@
 @section Styles {
     @Styles.Render("~/bundles/css/dataTables.css")
     @Styles.Render("~/bundles/css/cropper.css")
@@ -33,6 +30,7 @@
     @Scripts.Render("~/bundles/js/ckEditor.js")
     @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/holdings.list.js")
+    @Scripts.Render("~/bundles/js/holdings.editioncount.js")
     @Scripts.Render("~/bundles/js/holdings.create.js")
     @Scripts.Render("~/bundles/js/holdings.update.js")
     @Scripts.Render("~/bundles/js/holdings.delete.js")

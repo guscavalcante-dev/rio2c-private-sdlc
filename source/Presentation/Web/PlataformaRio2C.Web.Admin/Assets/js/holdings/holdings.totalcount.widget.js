@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-14-2019
+// Last Modified On : 08-23-2019
 // ***********************************************************************
 // <copyright file="holdings.totalcount.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,16 +14,17 @@
 
 var HoldingsTotalCountWidget = function () {
 
-    var widgetElementId = '#HoldingTotalCountWidget';
+    var widgetElementId = '#HoldingsTotalCountWidget';
+    var chartElementId = 'HoldingsTotalCountChart';
     var widgetElement = $(widgetElementId);
 
     // Show ---------------------------------------------------------------------------------------
     var initChart = function () {
-        if ($('#kt_chart_bandwidth1').length == 0) {
+        if ($('#' + chartElementId).length === 0) {
             return;
         }
 
-        var ctx = document.getElementById("kt_chart_bandwidth1").getContext("2d");
+        var ctx = document.getElementById(chartElementId).getContext("2d");
 
         var gradient = ctx.createLinearGradient(0, 0, 0, 240);
         gradient.addColorStop(0, Chart.helpers.color('#ffefce').alpha(1).rgbString());
