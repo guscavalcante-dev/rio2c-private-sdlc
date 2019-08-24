@@ -144,6 +144,53 @@ var MyRio2cCommon = function () {
         element.removeClass('d-none');
     };
 
+    var changeElementsVisibilityByDataId = function (options) {
+        if (!hasProperty(options, 'dataId') || isNullOrEmpty(options.dataId)) {
+            return false;
+        }
+
+        var dataIdElement = $('[data-id="' + options.dataId + '"]');
+        if (isNullOrEmpty(dataIdElement)) {
+            return false;
+        }
+
+        if (!hasProperty(options, 'hideElementIdOrClass') || !isNullOrEmpty(options.hideElementIdOrClass)) {
+            var hideElement = dataIdElement.find(options.hideElementIdOrClass);
+            if (!isNullOrEmpty(hideElement)) {
+                hide(hideElement);
+            }
+        }
+
+        if (!hasProperty(options, 'showElementIdOrClass') || !isNullOrEmpty(options.showElementIdOrClass)) {
+            var showElement = dataIdElement.find(options.showElementIdOrClass);
+            if (!isNullOrEmpty(showElement)) {
+                show(showElement);
+            }
+        }
+    };
+
+    var enableFieldEdit = function (options) {
+        if (!hasProperty(options, 'dataId') || isNullOrEmpty(options.dataId)) {
+            return false;
+        }
+
+        changeElementsVisibilityByDataId({ dataId: options.dataId, hideElementIdOrClass: '.view', showElementIdOrClass: '.edit' });
+
+        return false;
+    };
+
+    var disableFieldEdit = function (options) {
+        if (!hasProperty(options, 'dataId') || isNullOrEmpty(options.dataId)) {
+            return false;
+        }
+
+        changeElementsVisibilityByDataId({ dataId: options.dataId, hideElementIdOrClass: '.edit', showElementIdOrClass: '.view' });
+
+        $('[data-id="' + options.dataId + '"] .edit :input').val('').trigger('change');
+
+        return false;
+    };
+
     // Block/unblock UI ---------------------------------------------------------------------------
     var block = function (options) {
         var idOrClass = 'body';
@@ -512,6 +559,15 @@ var MyRio2cCommon = function () {
         },
         show: function (element) {
             show(element);
+        },
+        changeElementsVisibilityByDataId: function (options) {
+            return changeElementsVisibilityByDataId(options);
+        },
+        enableFieldEdit: function (options) {
+            return enableFieldEdit(options);
+        },
+        disableFieldEdit: function (options) {
+            return disableFieldEdit(options);
         },
         enableFormValidation: function (options) {
             enableFormValidation(options);

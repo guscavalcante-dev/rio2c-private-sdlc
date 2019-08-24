@@ -5,12 +5,12 @@
         @Html.LabelFor(m => m.CountryUid, new { @class = "control-label" })
         <div class="view">
             @Html.DropDownList("CountryUid", new SelectList(Model.CountriesBaseDtos, "Uid", "Name", Model.CountryUid), $"{Labels.Select}...", new { @class = "form-control" })
-            <span class="form-text text-muted text-right"><a href="" onclick="return MyRio2cCommon.enableFieldEdit({ dataId: 'Country' });">@(Labels.NewM.ToLowerInvariant()) @(Labels.Country.ToLowerInvariant())</a></span>
+            <span class="form-text text-muted text-right"><a href="" onclick="return AddressesForm.enableNewCountry();" class="btn-link btn-edit">@(Labels.NewM.ToLowerInvariant()) @(Labels.Country.ToLowerInvariant())</a></span>
             @Html.ValidationMessageFor(m => m.CountryUid, "", new { @class = "text-danger" })
         </div>
         <div class="edit d-none">
             @Html.TextBoxFor(m => m.CountryName, new { @class = "form-control" })
-            <span class="form-text text-muted text-right"><a href="" onclick="return MyRio2cCommon.disableFieldEdit({ dataId: 'Country' });">@(Labels.Cancel.ToLowerInvariant())</a></span>
+            <span class="form-text text-muted text-right"><a href="" onclick="return MyRio2cCommon.disableFieldEdit({ dataId: 'Country' });" class="btn-link">@(Labels.Cancel.ToLowerInvariant())</a></span>
             @Html.ValidationMessageFor(m => m.CountryName, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -25,12 +25,12 @@
         @Html.LabelFor(m => m.StateUid, new { @class = "control-label" })
         <div class="view">
             @Html.DropDownList("StateUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control" })
-            <span class="form-text text-muted text-right"><a href="" onclick="return MyRio2cCommon.enableFieldEdit({ dataId: 'State' });">@(Labels.NewM.ToLowerInvariant()) @(Labels.State.ToLowerInvariant())</a></span>
+            <span class="form-text text-muted text-right"><a href="" onclick="return AddressesForm.enableNewState();" class="btn-link btn-edit">@(Labels.NewM.ToLowerInvariant()) @(Labels.State.ToLowerInvariant())</a></span>
             @Html.ValidationMessageFor(m => m.StateUid, "", new { @class = "text-danger" })
         </div>
         <div class="edit d-none">
             @Html.TextBoxFor(m => m.StateName, new { @class = "form-control" })
-            <span class="form-text text-muted text-right"><a href="" onclick="return MyRio2cCommon.disableFieldEdit({ dataId: 'State' });">@(Labels.Cancel.ToLowerInvariant())</a></span>
+            <span class="form-text text-muted text-right"><a href="" onclick="return MyRio2cCommon.disableFieldEdit({ dataId: 'State' });" class="btn-link">@(Labels.Cancel.ToLowerInvariant())</a></span>
             @Html.ValidationMessageFor(m => m.StateName, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -38,12 +38,12 @@
         @Html.LabelFor(m => m.CityUid, new { @class = "control-label" })
         <div class="view">
             @Html.DropDownList("CityUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control" })
-            <span class="form-text text-muted text-right"><a href="" onclick="return MyRio2cCommon.enableFieldEdit({ dataId: 'City' });">@(Labels.NewF.ToLowerInvariant()) @(Labels.City.ToLowerInvariant())</a></span>
+            <span class="form-text text-muted text-right"><a href="" onclick="return AddressesForm.enableNewCity();" class="btn-link btn-edit">@(Labels.NewF.ToLowerInvariant()) @(Labels.City.ToLowerInvariant())</a></span>
             @Html.ValidationMessageFor(m => m.CityUid, "", new { @class = "text-danger" })
         </div>
         <div class="edit d-none">
             @Html.TextBoxFor(m => m.CityName, new { @class = "form-control" })
-            <span class="form-text text-muted text-right"><a href="" onclick="return MyRio2cCommon.disableFieldEdit({ dataId: 'City' });">@(Labels.Cancel.ToLowerInvariant())</a></span>
+            <span class="form-text text-muted text-right"><a href="" onclick="return MyRio2cCommon.disableFieldEdit({ dataId: 'City' });" class="btn-link">@(Labels.Cancel.ToLowerInvariant())</a></span>
             @Html.ValidationMessageFor(m => m.CityName, "", new { @class = "text-danger" })
         </div>
         @Html.ValidationMessageFor(m => m.CityName, "", new { @class = "text-danger" })

@@ -14,24 +14,44 @@
 
 var AddressesForm = function (formId) {
 
-    var countryId = '#Address_CountryUid';
-    var stateId = '#Address_StateUid';
-    var cityId = '#Address_CityUid';
+    var countryDataId = 'Country';
+    var stateDataId = 'State';
+    var cityDataId = 'City';
 
-    var countryIdElement;
-    var stateIdElement;
-    var cityIdElement;
+    var countryUid = '#Address_CountryUid';
+    var countryName = '#Address_CountryName';
+    var stateUid = '#Address_StateUid';
+    var stateName = '#Address_StateName';
+    var cityUid = '#Address_CityUid';
+    var cityName = '#Address_CityName';
+
+    var countryUidElement;
+    var countryNameElement;
+    var stateUidElement;
+    var stateNameElement;
+    var cityUidElement;
+    var cityNameElement;
 
     // Init elements ------------------------------------------------------------------------------
     var initElements = function () {
-        countryIdElement = $(countryId);
-        stateIdElement = $(stateId);
-        cityIdElement = $(cityId);
+        countryUidElement = $(countryUid);
+        countryNameElement = $(countryName);
+        stateUidElement = $(stateUid);
+        stateNameElement = $(stateName);
+        cityUidElement = $(cityUid);
+        cityNameElement = $(cityName);
     };
 
     // Country select2 ----------------------------------------------------------------------------
+    var enableNewCountry = function () {
+        MyRio2cCommon.enableFieldEdit({ dataId: countryDataId });
+        countryUidElement.val('').trigger('change');
+
+        return false;
+    };
+
     var enableCountrySelect2 = function () {
-        countryIdElement.select2({
+        countryUidElement.select2({
             width: '100%',
             placeholder: labels.selectPlaceholder,
             triggerChange: true,
@@ -40,21 +60,38 @@ var AddressesForm = function (formId) {
     };
 
     // State select2 ------------------------------------------------------------------------------
-    var emptyStateSelect2 = function () {
-        stateIdElement.val('').trigger('change');
+    var enableNewState = function () {
+        MyRio2cCommon.enableFieldEdit({ dataId: stateDataId });
+        stateUidElement.val('').trigger('change');
 
-        stateIdElement.select2({
+        return false;
+    };
+
+    var toggleNewStateButton = function () {
+        if (MyRio2cCommon.isNullOrEmpty(countryUidElement.val()) && MyRio2cCommon.isNullOrEmpty(countryNameElement.val())) {
+            $('[data-id="' + stateDataId + '"] .btn-edit').addClass('disabled');
+            MyRio2cCommon.disableFieldEdit({ dataId: stateDataId });
+        }
+        else {
+            $('[data-id="' + stateDataId + '"] .btn-edit').removeClass('disabled');
+        }
+    };
+
+    var emptyStateSelect2 = function () {
+        stateUidElement.val('').trigger('change');
+
+        stateUidElement.select2({
             width: '100%',
             placeholder: labels.selectPlaceholder,
             data: []
         });
 
-        stateIdElement.empty();
-        stateIdElement.prop("disabled", true);
+        stateUidElement.empty();
+        stateUidElement.prop("disabled", true);
     };
 
     var enableStateSelect2 = function () {
-        var countryUid = countryIdElement.val();
+        var countryUid = countryUidElement.val();
 
         if (MyRio2cCommon.isNullOrEmpty(countryUid)) {
             emptyStateSelect2();
@@ -90,16 +127,16 @@ var AddressesForm = function (formId) {
                             }
                         }
 
-                        stateIdElement.val('').trigger('change');
+                        stateUidElement.val('').trigger('change');
 
-                        stateIdElement.empty().select2({
+                        stateUidElement.empty().select2({
                             placeholder: labels.selectPlaceholder,
                             triggerChange: true,
                             allowClear: true,
                             data: statesData
                         });
 
-                        stateIdElement.prop("disabled", false);
+                        stateUidElement.prop("disabled", false);
                     },
                     // Error
                     onError: function () {
@@ -117,21 +154,38 @@ var AddressesForm = function (formId) {
     };
 
     // City select2 ------------------------------------------------------------------------------
-    var emptyCitySelect2 = function () {
-        cityIdElement.val('').trigger('change');
+    var enableNewCity = function () {
+        MyRio2cCommon.enableFieldEdit({ dataId: cityDataId });
+        cityUidElement.val('').trigger('change');
 
-        cityIdElement.select2({
+        return false;
+    };
+
+    var toggleNewCityButton = function () {
+        if (MyRio2cCommon.isNullOrEmpty(stateUidElement.val()) && MyRio2cCommon.isNullOrEmpty(stateNameElement.val())) {
+            $('[data-id="' + cityDataId + '"] .btn-edit').addClass('disabled');
+            MyRio2cCommon.disableFieldEdit({ dataId: cityDataId });
+        }
+        else {
+            $('[data-id="' + cityDataId + '"] .btn-edit').removeClass('disabled');
+        }
+    };
+
+    var emptyCitySelect2 = function () {
+        cityUidElement.val('').trigger('change');
+
+        cityUidElement.select2({
             width: '100%',
             placeholder: labels.selectPlaceholder,
             data: []
         });
 
-        cityIdElement.empty();
-        cityIdElement.prop("disabled", true);
+        cityUidElement.empty();
+        cityUidElement.prop("disabled", true);
     };
 
     var enableCitySelect2 = function () {
-        var stateUid = stateIdElement.val();
+        var stateUid = stateUidElement.val();
 
         if (MyRio2cCommon.isNullOrEmpty(stateUid)) {
             emptyCitySelect2();
@@ -166,16 +220,16 @@ var AddressesForm = function (formId) {
                             }
                         }
 
-                        cityIdElement.val('').trigger('change');
+                        cityUidElement.val('').trigger('change');
 
-                        cityIdElement.empty().select2({
+                        cityUidElement.empty().select2({
                             placeholder: labels.selectPlaceholder,
                             triggerChange: true,
                             allowClear: true,
                             data: citiesData
                         });
 
-                        cityIdElement.prop("disabled", false);
+                        cityUidElement.prop("disabled", false);
                     },
                     // Error
                     onError: function () {
@@ -200,26 +254,39 @@ var AddressesForm = function (formId) {
 
     // Enable change events -----------------------------------------------------------------------
     var enableCountryChangeEvent = function() {
-        countryIdElement.not('.change-event-enabled').on('change', function() {
+        countryUidElement.not('.change-event-enabled').on('change', function() {
             enableStateSelect2();
+            toggleNewStateButton();
         });
+        countryUidElement.addClass('change-event-enabled');
 
-        countryIdElement.addClass('change-event-enabled');
+        countryNameElement.not('.change-event-enabled').on('change keyup', function () {
+            toggleNewStateButton();
+        });
+        countryNameElement.addClass('change-event-enabled');
     };
 
     var enableStateChangeEvent = function () {
-        stateIdElement.not('.change-event-enabled').on('change', function () {
+        stateUidElement.not('.change-event-enabled').on('change', function () {
             enableCitySelect2();
+            toggleNewCityButton();
         });
+        stateUidElement.addClass('change-event-enabled');
 
-        stateIdElement.addClass('change-event-enabled');
+        stateNameElement.not('.change-event-enabled').on('change keyup', function () {
+            toggleNewCityButton();
+        });
+        stateNameElement.addClass('change-event-enabled');
     };
 
     var enableCityChangeEvent = function () {
-        cityIdElement.not('.change-event-enabled').on('change', function () {
+        cityUidElement.not('.change-event-enabled').on('change', function () {
         });
+        cityUidElement.addClass('change-event-enabled');
 
-        cityIdElement.addClass('change-event-enabled');
+        cityNameElement.not('.change-event-enabled').on('change keyup', function () {
+        });
+        cityNameElement.addClass('change-event-enabled');
     };
 
     var enableChangeEvents = function () {
@@ -232,12 +299,23 @@ var AddressesForm = function (formId) {
     var enablePlugins = function () {
         enableSelect2();
         enableChangeEvents();
+        toggleNewStateButton();
+        toggleNewCityButton();
     };
 
     return {
         init: function () {
             initElements();
             enablePlugins();
+        },
+        enableNewCountry: function() {
+            return enableNewCountry();
+        },
+        enableNewState: function () {
+            return enableNewState();
+        },
+        enableNewCity: function () {
+            return enableNewCity();
         }
     };
 }();
