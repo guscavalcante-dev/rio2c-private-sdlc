@@ -188,7 +188,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     throw new DomainException();
                 }
 
-                cmd.UpdateBaseProperties(
+                cmd.UpdatePreSendProperties(
                     this.UserId,
                     this.UserUid,
                     this.EditionId,
@@ -275,7 +275,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     throw new DomainException();
                 }
 
-                cmd.UpdateBaseProperties(
+                cmd.UpdatePreSendProperties(
                     this.UserId,
                     this.UserUid,
                     this.EditionId,
@@ -333,7 +333,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     throw new DomainException();
                 }
 
-                cmd.UpdateBaseProperties(
+                cmd.UpdatePreSendProperties(
                     this.UserId,
                     this.UserUid,
                     this.EditionId,

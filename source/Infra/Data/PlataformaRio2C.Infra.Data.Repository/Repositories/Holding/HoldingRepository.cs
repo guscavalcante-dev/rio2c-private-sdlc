@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-22-2019
+// Last Modified On : 08-23-2019
 // ***********************************************************************
 // <copyright file="HoldingRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -151,8 +151,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
 
             return @readonly
-                ? consult.AsNoTracking()
-                : consult;
+                        ? consult.AsNoTracking()
+                        : consult;
         }
 
         /// <summary>Gets all asynchronous.</summary>

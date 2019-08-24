@@ -4,7 +4,7 @@
 // Created          : 08-14-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-16-2019
+// Last Modified On : 08-23-2019
 // ***********************************************************************
 // <copyright file="FindAllLanguagesDtosAsync.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,7 +23,7 @@ namespace PlataformaRio2C.Application.CQRS.Queries
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public FindAllLanguagesDtosAsync(string userInterfaceLanguage)
         {
-            this.UpdateBaseProperties(userInterfaceLanguage);
+            this.UpdatePreSendProperties(userInterfaceLanguage);
         }
     }
 }

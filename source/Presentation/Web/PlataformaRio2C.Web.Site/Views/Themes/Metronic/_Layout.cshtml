@@ -45,15 +45,15 @@
     @Styles.Render("~/bundles/css/layoutGlobalOptionalVendors.css")
     @Styles.Render("~/bundles/css/layoutFontOptionalVendors.css")
     <!--end:: Global Optional Vendors -->
-    <!--begin::Global Theme Styles(used by all pages) -->
-    @Styles.Render("~/bundles/css/layoutGlobalThemeStyles.css")
-    <!--end::Global Theme Styles -->
     <!--begin::Global Customized Styles -->
     @Styles.Render("~/bundles/css/layoutGlobalCustomizedStyles.css")
     <!--end::Global Customized Styles -->
     <!--begin::Page Styles -->
     @RenderSection("Styles", false)
     <!--end::Page Styles -->
+    <!--begin::Global Theme Styles(used by all pages) -->
+    @Styles.Render("~/bundles/css/layoutGlobalThemeStyles.css")
+    <!--end::Global Theme Styles -->
     <link rel="shortcut icon" href="~/Assets/img/favicon.png" />
     @RenderSection("Head", false)
 </head>
@@ -106,6 +106,7 @@
 
         // Global javascript translations -------------------------------------
         var labels = {
+            selectPlaceholder: '@(Labels.Select)...',
             edit: '@Labels.Edit',
             remove: '@Labels.Remove',
             cancel: '@Labels.Cancel',

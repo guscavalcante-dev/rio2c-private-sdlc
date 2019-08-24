@@ -33,7 +33,7 @@ namespace PlataformaRio2C.Application.ViewModels
 
             if (entity.Address != null)
             {              
-                RegisterComplete = entity.Address.ZipCode != null && !string.IsNullOrWhiteSpace(entity.Address.ZipCode) && entity.CompanyName != null && !string.IsNullOrWhiteSpace(entity.CompanyName);
+                //RegisterComplete = entity.Address.ZipCode != null && !string.IsNullOrWhiteSpace(entity.Address.ZipCode) && entity.CompanyName != null && !string.IsNullOrWhiteSpace(entity.CompanyName);
             }
 
             InterestFilled = entity.Interests != null && entity.Interests.Any();

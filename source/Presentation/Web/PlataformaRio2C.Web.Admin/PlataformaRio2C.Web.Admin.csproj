@@ -323,6 +323,8 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\FinancialReportController.cs" />
+    <Compile Include="Controllers\CitiesController.cs" />
+    <Compile Include="Controllers\StatesController.cs" />
     <Compile Include="Controllers\PlayersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MailController.cs" />
@@ -355,6 +357,7 @@
     <Content Include="Assets\img\bg-1.jpg" />
     <Content Include="Assets\img\bg-2.jpg" />
     <Content Include="Assets\img\bg-3.jpg" />
+    <Content Include="Assets\js\addresses\addresses.form.js" />
     <Content Include="Assets\js\holdings\holdings.delete.js" />
     <Content Include="Assets\js\myrio2c.cropper.js" />
     <Content Include="Assets\components\cropper\demo\css\main.css" />
@@ -8078,6 +8081,7 @@
     <Content Include="Views\Player\_Editor.cshtml" />
     <Content Include="Views\Collaborator\Edit.cshtml" />
     <Content Include="Views\Collaborator\_Editor.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\AddressBaseCommand.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

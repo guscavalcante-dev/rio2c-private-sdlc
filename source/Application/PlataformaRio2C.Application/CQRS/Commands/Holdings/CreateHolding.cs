@@ -4,7 +4,7 @@
 // Created          : 08-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-19-2019
+// Last Modified On : 08-23-2019
 // ***********************************************************************
 // <copyright file="CreateHolding.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,7 +13,6 @@
 // ***********************************************************************
 using System.Collections.Generic;
 using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Statics;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -24,24 +23,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="languagesDtos">The languages dtos.</param>
         public CreateHolding(List<LanguageDto> languagesDtos)
         {
-            this.CropperImage = new CropperImageBaseCommand(null, null, FileRepositoryPathType.HoldingImage);
-            this.UpdateDescriptions(languagesDtos);
+            this.UpdateBaseProperties(null, languagesDtos);
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateHolding"/> class.</summary>
         public CreateHolding()
         {
-        }
-
-        /// <summary>Updates the descriptions.</summary>
-        /// <param name="languagesDtos">The languages dtos.</param>
-        private void UpdateDescriptions(List<LanguageDto> languagesDtos)
-        {
-            this.Descriptions = new List<HoldingDescriptionBaseCommand>();
-            foreach (var languageDto in languagesDtos)
-            {
-                this.Descriptions.Add(new HoldingDescriptionBaseCommand(languageDto));
-            }
         }
     }
 }

@@ -683,9 +683,6 @@
   <data name="SeeMiniBio" xml:space="preserve">
     <value>See Mini-bio</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value />
-  </data>
   <data name="Complete" xml:space="preserve">
     <value>Complete</value>
   </data>
@@ -1271,5 +1268,25 @@
   <data name="Startups" xml:space="preserve">
     <value>Startups</value>
     <comment>Startups</comment>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>Code</value>
+    <comment>Código</comment>
+  </data>
+  <data name="Number" xml:space="preserve">
+    <value>Number</value>
+    <comment>Número</comment>
+  </data>
+  <data name="AddressComplement" xml:space="preserve">
+    <value>Address 2</value>
+    <comment>Complemento</comment>
+  </data>
+  <data name="Neighborhood" xml:space="preserve">
+    <value>Neighborhood</value>
+    <comment>Bairro</comment>
+  </data>
+  <data name="StreetName" xml:space="preserve">
+    <value>Street</value>
+    <comment>Logradouro</comment>
   </data>
 </root>

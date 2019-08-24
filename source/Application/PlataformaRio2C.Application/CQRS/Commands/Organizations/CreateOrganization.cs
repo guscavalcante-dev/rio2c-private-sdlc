@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-21-2019
+// Last Modified On : 08-23-2019
 // ***********************************************************************
 // <copyright file="CreateOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,7 +13,6 @@
 // ***********************************************************************
 using System.Collections.Generic;
 using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Statics;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -23,27 +22,15 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Initializes a new instance of the <see cref="CreateOrganization"/> class.</summary>
         /// <param name="holdingBaseDtos">The holding base dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
-        public CreateOrganization(List<HoldingBaseDto> holdingBaseDtos, List<LanguageDto> languagesDtos)
+        /// <param name="countriesBaseDtos">The countries base dtos.</param>
+        public CreateOrganization(List<HoldingBaseDto> holdingBaseDtos, List<LanguageDto> languagesDtos, List<CountryBaseDto> countriesBaseDtos)
         {
-            this.CropperImage = new CropperImageBaseCommand(null, null, FileRepositoryPathType.OrganizationImage);
-            this.UpdateDescriptions(languagesDtos);
-            this.UpdateErrorProperties(holdingBaseDtos);
+            this.UpdateBaseProperties(null, holdingBaseDtos, languagesDtos, countriesBaseDtos);
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateOrganization"/> class.</summary>
         public CreateOrganization()
         {
-        }
-
-        /// <summary>Updates the descriptions.</summary>
-        /// <param name="languagesDtos">The languages dtos.</param>
-        private void UpdateDescriptions(List<LanguageDto> languagesDtos)
-        {
-            this.Descriptions = new List<OrganizationDescriptionBaseCommand>();
-            foreach (var languageDto in languagesDtos)
-            {
-                this.Descriptions.Add(new OrganizationDescriptionBaseCommand(languageDto));
-            }
         }
     }
 }

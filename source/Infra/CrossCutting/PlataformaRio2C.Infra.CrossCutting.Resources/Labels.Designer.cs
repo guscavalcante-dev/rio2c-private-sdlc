@@ -178,6 +178,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Complemento.
+        /// </summary>
+        public static string AddressComplement {
+            get {
+                return ResourceManager.GetString("AddressComplement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cadastrar Palestrante.
         /// </summary>
         public static string AddSpeaker {
@@ -435,6 +444,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string CNPJ {
             get {
                 return ResourceManager.GetString("CNPJ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Código.
+        /// </summary>
+        public static string Code {
+            get {
+                return ResourceManager.GetString("Code", resourceCulture);
             }
         }
         
@@ -1546,6 +1564,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bairro.
+        /// </summary>
+        public static string Neighborhood {
+            get {
+                return ResourceManager.GetString("Neighborhood", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nova Empresa.
         /// </summary>
         public static string NewCompany {
@@ -1686,6 +1713,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string NoUserHasBeenFoundInChat {
             get {
                 return ResourceManager.GetString("NoUserHasBeenFoundInChat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Número.
+        /// </summary>
+        public static string Number {
+            get {
+                return ResourceManager.GetString("Number", resourceCulture);
             }
         }
         
@@ -2622,6 +2658,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Status {
             get {
                 return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logradouro.
+        /// </summary>
+        public static string StreetName {
+            get {
+                return ResourceManager.GetString("StreetName", resourceCulture);
             }
         }
         

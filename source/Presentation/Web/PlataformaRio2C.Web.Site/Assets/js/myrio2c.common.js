@@ -45,6 +45,10 @@ var MyRio2cCommon = function () {
         $('#kt_aside_menu, #kt_header_menu').unbind('click');
     };
 
+    var fixSelect2Modal = function () {
+        $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+    };
+
     // General ------------------------------------------------------------------------------------
     var hasProperty = function (obj, key) {
         return key.split(".").every(function (x) {
@@ -109,6 +113,18 @@ var MyRio2cCommon = function () {
             if (undefined != validator)
                 validator.settings.ignore = "";
         }
+    };
+
+    var enableSelect2 = function (options) {
+        if (isNullOrEmpty(options)) {
+            options = new Object();
+        }
+
+        if (!hasProperty(options, 'inputIdOrClass') || isNullOrEmpty(options.inputIdOrClass)) {
+            options.inputIdOrClass = '.enable-select2';
+        }
+
+        $(options.inputIdOrClass).select2({ width: '100%' });
     };
 
     // Hide/Show Element --------------------------------------------------------------------------
@@ -482,6 +498,7 @@ var MyRio2cCommon = function () {
             $(function () {
                 disableMetronicScripts();
                 enableAjaxForbiddenCatch();
+                fixSelect2Modal();
             });
         },
         getGlobalVariables: function() {
@@ -498,6 +515,9 @@ var MyRio2cCommon = function () {
         },
         enableFormValidation: function (options) {
             enableFormValidation(options);
+        },
+        enableSelect2: function (options) {
+            enableSelect2(options);
         },
         hide: function (element) {
             hide(element);

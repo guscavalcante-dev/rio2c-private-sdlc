@@ -61,9 +61,9 @@ namespace PlataformaRio2C.Application.Services
             var entity = viewModel.MapReverse();
             MapEntity(ref entity, viewModel);
             _collaboratorAppService.MapEntity(ref entity, viewModel.JobTitles, viewModel.MiniBios);
-            entity.Address.SetCity(cityId);
-            entity.Address.SetCountry(countryId);
-            entity.Address.SetState(stateId);
+            //entity.Address.SetCity(cityId);
+            //entity.Address.SetCountry(countryId);
+            //entity.Address.SetState(stateId);
 
             ValidationResult.Add(service.Create(entity));
 
@@ -110,16 +110,16 @@ namespace PlataformaRio2C.Application.Services
 
             if (entity != null)
             {
-                entity.Address.SetCity(cityId);
-                entity.Address.SetCountry(countryId);
-                entity.Address.SetState(stateId);
+                //entity.Address.SetCity(cityId);
+                //entity.Address.SetCountry(countryId);
+                //entity.Address.SetState(stateId);
 
                 var entityAlter = viewModel.MapReverse(entity);
 
                 MapEntity(ref entity, viewModel);
                 _collaboratorAppService.MapEntity(ref entityAlter, viewModel.JobTitles, viewModel.MiniBios);
 
-                entityAlter.Address.SetCountry(countryId);
+                //entityAlter.Address.SetCountry(countryId);
 
                 ValidationResult.Add(service.Update(entityAlter));
             }
@@ -165,7 +165,7 @@ namespace PlataformaRio2C.Application.Services
                 }
                 else
                 {
-                    entityAlter.Address.SetZipCode(null);
+                    //entityAlter.Address.SetZipCode(null);
                 }
             }
 

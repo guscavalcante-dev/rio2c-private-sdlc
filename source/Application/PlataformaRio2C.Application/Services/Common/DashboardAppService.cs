@@ -78,8 +78,8 @@ namespace PlataformaRio2C.Application.Services
 
             if (entities != null && entities.Any())
             {
-                var entitiesGroupByCountry = entities.GroupBy(e => e.Address.Country).ToList().Select(e => new GroupCountryDto(e.Key, e.Count())).ToList();
-                result = ProcessByCountry(entitiesGroupByCountry).ToList();
+                //var entitiesGroupByCountry = entities.GroupBy(e => e.Address.Country).ToList().Select(e => new GroupCountryDto(e.Key, e.Count())).ToList();
+                //result = ProcessByCountry(entitiesGroupByCountry).ToList();
             }
 
             return result.OrderByDescending(e => e.Number);
@@ -93,8 +93,8 @@ namespace PlataformaRio2C.Application.Services
 
             if (entities != null && entities.Any())
             {
-                var entitiesGroupByCountry = entities.GroupBy(e => e.Address.Country).ToList().Select(e => new GroupCountryDto(e.Key, e.Count())).ToList();
-                result = ProcessByCountry(entitiesGroupByCountry).ToList();
+                //var entitiesGroupByCountry = entities.GroupBy(e => e.Address.Country).ToList().Select(e => new GroupCountryDto(e.Key, e.Count())).ToList();
+                //result = ProcessByCountry(entitiesGroupByCountry).ToList();
             }
 
             return result.OrderByDescending(e => e.Number);

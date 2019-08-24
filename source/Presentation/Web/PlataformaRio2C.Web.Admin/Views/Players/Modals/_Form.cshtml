@@ -7,7 +7,7 @@
         <div class="form-group row">
             <div class="col-md-12">
                 @Html.LabelFor(m => m.HoldingUid, new { @class = "control-label" })
-                @Html.DropDownList("HoldingUid", new SelectList(Model.HoldingBaseDtos, "Uid", "Name", Model.HoldingUid), $"{Labels.Select}...", new { @Class = "form-control select2-enable" })
+                @Html.DropDownList("HoldingUid", new SelectList(Model.HoldingBaseDtos, "Uid", "Name", Model.HoldingUid), $"{Labels.Select}...", new { @class = "form-control enable-select2" })
                 @Html.ValidationMessageFor(m => m.HoldingUid, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -20,7 +20,7 @@
         </div>
         <div class="form-group row">
             <div class="col-md-12">
-                @Html.LabelFor(m => m.Document, new { @class = "control-label" })
+                @Html.LabelFor(m => m.Document, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
                 @Html.TextBoxFor(m => m.Document, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.Document, "", new { @class = "text-danger" })
             </div>
@@ -29,44 +29,49 @@
 </div>
 <div class="form-group row">
     <div class="col-md-12">
-        @Html.LabelFor(m => m.CompanyName, new { @class = "control-label" })
+        @Html.LabelFor(m => m.CompanyName, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
         @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="form-group row">
     <div class="col-md-12">
-        @Html.LabelFor(m => m.TradeName, new { @class = "control-label" })
+        @Html.LabelFor(m => m.TradeName, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
         @Html.TextBoxFor(m => m.TradeName, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.TradeName, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="form-group row">
     <div class="col-md-12">
-        @Html.LabelFor(m => m.Website, new { @class = "control-label" })
+        @Html.LabelFor(m => m.Website, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
         @Html.TextBoxFor(m => m.Website, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Website, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="form-group row">
     <div class="col-md-12">
-        @Html.LabelFor(m => m.SocialMedia, new { @class = "control-label" })
+        @Html.LabelFor(m => m.SocialMedia, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
         @Html.TextBoxFor(m => m.SocialMedia, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.SocialMedia, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="form-group row">
     <div class="col-md-12">
-        @Html.LabelFor(m => m.PhoneNumber, new { @class = "control-label" })
+        @Html.LabelFor(m => m.PhoneNumber, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
         @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="kt-separator kt-separator--border-dashed kt-separator--space-xl"></div>
 <div class="kt-section">
-    <h3 class="kt-section__title mb-0">
-        @Labels.Descriptions
-    </h3>
+    <h3 class="kt-section__title mb-0">@Labels.Address <span class="form-optional-input text-muted">@Labels.Optional</span></h3>
+    <div class="kt-section__content mt-3">
+        @Html.EditorFor(m => m.Address)
+    </div>
+</div>
+<div class="kt-separator kt-separator--border-dashed kt-separator--space-xl"></div>
+<div class="kt-section">
+    <h3 class="kt-section__title mb-0">@Labels.Descriptions</h3>
     @Html.ValidationMessage("Descriptions", new { @class = "text-danger" })
     <div class="kt-section__content mt-3">
         @Html.EditorFor(m => m.Descriptions)

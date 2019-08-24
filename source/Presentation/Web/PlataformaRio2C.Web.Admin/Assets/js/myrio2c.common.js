@@ -45,6 +45,10 @@ var MyRio2cCommon = function () {
         $('#kt_aside_menu, #kt_header_menu').unbind('click');
     };
 
+    var fixSelect2Modal = function () {
+        $.fn.modal.Constructor.prototype.enforceFocus = function() {};
+    };
+
     // General ------------------------------------------------------------------------------------
     var hasProperty = function (obj, key) {
         return key.split(".").every(function (x) {
@@ -111,6 +115,18 @@ var MyRio2cCommon = function () {
         }
     };
 
+    var enableSelect2 = function (options) {
+        if (isNullOrEmpty(options)) {
+            options = new Object();
+        }
+
+        if (!hasProperty(options, 'inputIdOrClass') || isNullOrEmpty(options.inputIdOrClass)) {
+            options.inputIdOrClass = '.enable-select2';
+        }
+
+        $(options.inputIdOrClass).select2({ width: '100%' });  
+    };
+
     // Hide/Show Element --------------------------------------------------------------------------
     var hide = function (element) {
         if (isNullOrEmpty(element)) {
@@ -126,6 +142,53 @@ var MyRio2cCommon = function () {
         }
 
         element.removeClass('d-none');
+    };
+
+    var changeElementsVisibilityByDataId = function (options) {
+        if (!hasProperty(options, 'dataId') || isNullOrEmpty(options.dataId)) {
+            return false;
+        }
+
+        var dataIdElement = $('[data-id="' + options.dataId + '"]');
+        if (isNullOrEmpty(dataIdElement)) {
+            return false;
+        }
+
+        if (!hasProperty(options, 'hideElementIdOrClass') || !isNullOrEmpty(options.hideElementIdOrClass)) {
+            var hideElement = dataIdElement.find(options.hideElementIdOrClass);
+            if (!isNullOrEmpty(hideElement)) {
+                hide(hideElement);
+            }
+        }
+
+        if (!hasProperty(options, 'showElementIdOrClass') || !isNullOrEmpty(options.showElementIdOrClass)) {
+            var showElement = dataIdElement.find(options.showElementIdOrClass);
+            if (!isNullOrEmpty(showElement)) {
+                show(showElement);
+            }
+        }
+    };
+
+    var enableFieldEdit = function(options) {
+        if (!hasProperty(options, 'dataId') || isNullOrEmpty(options.dataId)) {
+            return false;
+        }
+
+        changeElementsVisibilityByDataId({ dataId: options.dataId, hideElementIdOrClass: '.view', showElementIdOrClass: '.edit' });
+
+        return false;
+    };
+
+    var disableFieldEdit = function (options) {
+        if (!hasProperty(options, 'dataId') || isNullOrEmpty(options.dataId)) {
+            return false;
+        }
+
+        changeElementsVisibilityByDataId({ dataId: options.dataId, hideElementIdOrClass: '.edit', showElementIdOrClass: '.view' });
+
+        $('[data-id="' + options.dataId + '"] .edit :input').val('');
+
+        return false;
     };
 
     // Block/unblock UI ---------------------------------------------------------------------------
@@ -482,6 +545,7 @@ var MyRio2cCommon = function () {
             $(function () {
                 disableMetronicScripts();
                 enableAjaxForbiddenCatch();
+                fixSelect2Modal();
             });
         },
         getGlobalVariables: function() {
@@ -493,14 +557,26 @@ var MyRio2cCommon = function () {
         isNullOrEmpty: function (value) {
             return isNullOrEmpty(value);
         },
-        show: function (element) {
-            show(element);
-        },
         enableFormValidation: function (options) {
             enableFormValidation(options);
         },
+        enableSelect2: function (options) {
+            enableSelect2(options);
+        },
         hide: function (element) {
             hide(element);
+        },
+        show: function (element) {
+            show(element);
+        },
+        changeElementsVisibilityByDataId: function (options) {
+            return changeElementsVisibilityByDataId(options);
+        },
+        enableFieldEdit: function (options) {
+            return enableFieldEdit(options);
+        },
+        disableFieldEdit: function (options) {
+            return disableFieldEdit(options);
         },
         getUrlWithCultureAndEdition: function (url) {
             return getUrlWithCultureAndEdition(url);

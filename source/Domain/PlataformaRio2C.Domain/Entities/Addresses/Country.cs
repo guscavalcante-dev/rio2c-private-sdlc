@@ -1,0 +1,161 @@
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Domain
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-23-2019
+// ***********************************************************************
+// <copyright file="Country.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
+
+namespace PlataformaRio2C.Domain.Entities
+{
+    /// <summary>Country</summary>
+    public class Country : Entity
+    {
+        public static readonly int NameMinLength = 3;
+        public static readonly int NameMaxLength = 100;
+        public static readonly int CodeMinLength = 1;
+        public static readonly int CodeMaxLength = 3;
+
+        public string Name { get; private set; }
+        public string Code { get; private set; }
+        public bool IsManual { get; private set; }
+
+        public virtual ICollection<State> States { get; private set; }
+
+        /// <summary>Initializes a new instance of the <see cref="Country"/> class.</summary>
+        /// <param name="name">The name.</param>
+        /// <param name="code">The code.</param>
+        /// <param name="isManual">if set to <c>true</c> [is manual].</param>
+        /// <param name="userId">The user identifier.</param>
+        public Country(string name, string code, bool isManual, int userId)
+        {
+            this.Name = name?.Trim();
+            this.Code = code?.Trim();
+            this.IsManual = isManual;
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="Country"/> class.</summary>
+        protected Country()
+        {
+        }
+
+        /// <summary>Updates the specified name.</summary>
+        /// <param name="name">The name.</param>
+        /// <param name="code">The code.</param>
+        /// <param name="isManual">if set to <c>true</c> [is manual].</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Update(string name, string code, bool isManual, int userId)
+        {
+            this.Name = name?.Trim();
+            this.Code = code?.Trim();
+            this.IsManual = isManual;
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Deletes the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(int userId)
+        {
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            this.DeleteStates(userId);
+
+            if (this.FindAllStatesNotDeleted()?.Any() == false)
+            {
+                this.IsDeleted = true;
+            }
+        }
+
+        #region States
+
+        /// <summary>Deletes the states.</summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteStates(int userId)
+        {
+            foreach (var state in this.FindAllStatesNotDeleted())
+            {
+                state?.Delete(userId);
+            }
+        }
+
+        /// <summary>Finds all states not deleted.</summary>
+        /// <returns></returns>
+        private List<State> FindAllStatesNotDeleted()
+        {
+            return this.States?.Where(s => !s.IsDeleted)?.ToList();
+        }
+
+        #endregion
+
+        #region Validations
+
+        /// <summary>Returns true if ... is valid.</summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
+        public override bool IsValid()
+        {
+            this.ValidationResult = new ValidationResult();
+
+            this.ValidateName();
+            this.ValidateCode();
+            this.ValidateStates();
+
+            return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>Validates the name.</summary>
+        public void ValidateName()
+        {
+            if (string.IsNullOrEmpty(this.Name?.Trim()))
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Name), new string[] { "Name" }));
+            }
+
+            if (this.Name?.Trim().Length < NameMinLength || this.Name?.Trim().Length > NameMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, NameMaxLength, NameMinLength), new string[] { "Name" }));
+            }
+        }
+
+        /// <summary>Validates the code.</summary>
+        public void ValidateCode()
+        {
+            if (string.IsNullOrEmpty(this.Code?.Trim()))
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Code), new string[] { "Code" }));
+            }
+
+            if (this.Code?.Trim().Length < CodeMinLength || this.Code?.Trim().Length > CodeMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Code, CodeMaxLength, CodeMinLength), new string[] { "Code" }));
+            }
+        }
+
+        /// <summary>Validates the states.</summary>
+        public void ValidateStates()
+        {
+            foreach (var state in this.States?.Where(d => !d.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(state.ValidationResult);
+            }
+        }
+
+        #endregion
+    }
+}

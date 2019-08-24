@@ -20,6 +20,7 @@
 @section Styles {
     @Styles.Render("~/bundles/css/dataTables.css")
     @Styles.Render("~/bundles/css/cropper.css")
+    @Styles.Render("~/bundles/css/select2.css")
 }
 @section Scripts {
     @Scripts.Render("~/bundles/js/jqueryval.js")
@@ -27,6 +28,7 @@
     @Scripts.Render("~/bundles/js/dataTables.js")
     @Scripts.Render("~/bundles/js/chart.js")
     @Scripts.Render("~/bundles/js/cropper.js")
+    @Scripts.Render("~/bundles/js/select2.js")
     @Scripts.Render("~/bundles/js/ckEditor.js")
     @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/organizations.list.js")
@@ -34,7 +36,8 @@
     @Scripts.Render("~/bundles/js/organizations.create.js")
     @Scripts.Render("~/bundles/js/organizations.update.js")
     @Scripts.Render("~/bundles/js/organizations.delete.js")
-<script>
+    @Scripts.Render("~/bundles/js/addresses.js")
+    <script>
         // Page translations ----------------------------------------------------------------------
         var addToEdition = '@string.Format(Labels.AddToEdition, ViewBag.EditionUrlCode)';
         var removeFromEdition = '@string.Format(Labels.RemoveFromEdition, ViewBag.EditionUrlCode)';
@@ -48,5 +51,5 @@
             OrganizationsEditionCountWidget.init();
             OrganizationsDataTableWidget.init();
         });
-</script>
+    </script>
 }

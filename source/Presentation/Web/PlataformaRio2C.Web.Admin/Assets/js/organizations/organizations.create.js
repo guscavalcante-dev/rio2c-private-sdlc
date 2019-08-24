@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-19-2019
+// Last Modified On : 08-23-2019
 // ***********************************************************************
 // <copyright file="organizations.create.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,8 +26,10 @@ var OrganizationsCreate = function () {
     };
 
     // Enable plugins -----------------------------------------------------------------------------
-    var enablelugins = function () {
+    var enablePlugins = function () {
         MyRio2cCropper.init({ formIdOrClass: formId });
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });
+        AddressesForm.init();
         MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c' });
         enableAjaxForm();
         enableFormValidation();
@@ -44,7 +46,7 @@ var OrganizationsCreate = function () {
                 data: data,
                 // Success
                 onSuccess: function () {
-                    enablelugins();
+                    enablePlugins();
                     $(modalId).modal();
                 },
                 // Error
@@ -80,7 +82,7 @@ var OrganizationsCreate = function () {
             },
             onError: function (data) {
                 if (MyRio2cCommon.hasProperty(data, 'pages')) {
-                    enablelugins();
+                    enablePlugins();
                 }
             }
         });

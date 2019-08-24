@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-22-2019
+// Last Modified On : 08-23-2019
 // ***********************************************************************
 // <copyright file="Organization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -295,9 +295,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         private void DeleteAttendeeOrganization(Edition edition, OrganizationType organizationType, int userId)
         {
-            this.UpdateDate = DateTime.Now;
-            this.UpdateUserId = userId;
-
             foreach (var attendeeOrganization in this.FindAllAttendeeOrganizationsNotDeleted(edition))
             {
                 attendeeOrganization?.Delete(organizationType, userId);

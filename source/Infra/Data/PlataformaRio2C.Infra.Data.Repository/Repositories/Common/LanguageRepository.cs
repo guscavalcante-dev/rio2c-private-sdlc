@@ -4,20 +4,21 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-16-2019
+// Last Modified On : 08-23-2019
 // ***********************************************************************
 // <copyright file="LanguageRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
+using PlataformaRio2C.Domain.Dtos;
 using X.PagedList;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
@@ -29,9 +30,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     /// </summary>
     internal static class LanguageIQueryableExtensions
     {
-        //internal static async IQueryable<Language> IsActive(this IQueryable<LanguageDto> query)
-        //{
-        //}
+        /// <summary>Determines whether [is not deleted].</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<Language> IsNotDeleted(this IQueryable<Language> query)
+        {
+            query = query.Where(h => !h.IsDeleted);
+
+            return query;
+        }
     }
 
     #endregion
@@ -78,7 +85,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         private IQueryable<Language> GetBaseQuery(bool @readonly = false)
         {
-            var consult = this.dbSet;
+            var consult = this.dbSet
+                                    .IsNotDeleted();
 
             return @readonly
                         ? consult.AsNoTracking()

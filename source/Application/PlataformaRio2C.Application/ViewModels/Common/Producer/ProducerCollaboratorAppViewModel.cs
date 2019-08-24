@@ -29,7 +29,7 @@ namespace PlataformaRio2C.Application.ViewModels
 
             if (entity.Address != null)
             {
-                RegisterComplete = entity.Address.ZipCode != null && !string.IsNullOrWhiteSpace(entity.Address.ZipCode);
+                //RegisterComplete = entity.Address.ZipCode != null && !string.IsNullOrWhiteSpace(entity.Address.ZipCode);
             }
         }
 

@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-21-2019
+// Last Modified On : 08-23-2019
 // ***********************************************************************
 // <copyright file="DeleteOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,14 +35,14 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
         }
 
-        /// <summary>Updates the base properties.</summary>
+        /// <summary>Updates the pre send properties.</summary>
         /// <param name="organizationType">Type of the organization.</param>
         /// <param name="userId">The user identifier.</param>
         /// <param name="userUid">The user uid.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="editionUid">The edition uid.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
-        public void UpdateBaseProperties(
+        public void UpdatePreSendProperties(
             OrganizationType organizationType,
             int userId,
             Guid userUid,
@@ -51,7 +51,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string userInterfaceLanguage)
         {
             this.OrganizationType = organizationType;
-            this.UpdateBaseProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
+            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
         }
     }
 }

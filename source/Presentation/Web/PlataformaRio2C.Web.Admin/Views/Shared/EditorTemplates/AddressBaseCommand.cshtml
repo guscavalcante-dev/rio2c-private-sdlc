@@ -1,0 +1,76 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.AddressBaseCommand
+<!--begin:: Address Form-->
+<div class="form-group row">
+    <div class="col-md-8" data-id="Country">
+        @Html.LabelFor(m => m.CountryUid, new { @class = "control-label" })
+        <div class="view">
+            @Html.DropDownList("CountryUid", new SelectList(Model.CountriesBaseDtos, "Uid", "Name", Model.CountryUid), $"{Labels.Select}...", new { @class = "form-control" })
+            <span class="form-text text-muted text-right"><a href="" onclick="return MyRio2cCommon.enableFieldEdit({ dataId: 'Country' });">@(Labels.NewM.ToLowerInvariant()) @(Labels.Country.ToLowerInvariant())</a></span>
+            @Html.ValidationMessageFor(m => m.CountryUid, "", new { @class = "text-danger" })
+        </div>
+        <div class="edit d-none">
+            @Html.TextBoxFor(m => m.CountryName, new { @class = "form-control" })
+            <span class="form-text text-muted text-right"><a href="" onclick="return MyRio2cCommon.disableFieldEdit({ dataId: 'Country' });">@(Labels.Cancel.ToLowerInvariant())</a></span>
+            @Html.ValidationMessageFor(m => m.CountryName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-md-4">
+        @Html.LabelFor(m => m.StreetZipCode, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.StreetZipCode, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.StreetZipCode, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group row">
+    <div class="col-md-6" data-id="State">
+        @Html.LabelFor(m => m.StateUid, new { @class = "control-label" })
+        <div class="view">
+            @Html.DropDownList("StateUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control" })
+            <span class="form-text text-muted text-right"><a href="" onclick="return MyRio2cCommon.enableFieldEdit({ dataId: 'State' });">@(Labels.NewM.ToLowerInvariant()) @(Labels.State.ToLowerInvariant())</a></span>
+            @Html.ValidationMessageFor(m => m.StateUid, "", new { @class = "text-danger" })
+        </div>
+        <div class="edit d-none">
+            @Html.TextBoxFor(m => m.StateName, new { @class = "form-control" })
+            <span class="form-text text-muted text-right"><a href="" onclick="return MyRio2cCommon.disableFieldEdit({ dataId: 'State' });">@(Labels.Cancel.ToLowerInvariant())</a></span>
+            @Html.ValidationMessageFor(m => m.StateName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-md-6" data-id="City">
+        @Html.LabelFor(m => m.CityUid, new { @class = "control-label" })
+        <div class="view">
+            @Html.DropDownList("CityUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control" })
+            <span class="form-text text-muted text-right"><a href="" onclick="return MyRio2cCommon.enableFieldEdit({ dataId: 'City' });">@(Labels.NewF.ToLowerInvariant()) @(Labels.City.ToLowerInvariant())</a></span>
+            @Html.ValidationMessageFor(m => m.CityUid, "", new { @class = "text-danger" })
+        </div>
+        <div class="edit d-none">
+            @Html.TextBoxFor(m => m.CityName, new { @class = "form-control" })
+            <span class="form-text text-muted text-right"><a href="" onclick="return MyRio2cCommon.disableFieldEdit({ dataId: 'City' });">@(Labels.Cancel.ToLowerInvariant())</a></span>
+            @Html.ValidationMessageFor(m => m.CityName, "", new { @class = "text-danger" })
+        </div>
+        @Html.ValidationMessageFor(m => m.CityName, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group row">
+    <div class="col-md-8">
+        @Html.LabelFor(m => m.StreetUid, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.StreetName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.StreetName, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-4">
+        @Html.LabelFor(m => m.AddressNumber, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.AddressNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.AddressNumber, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group row">
+    <div class="col-md-4">
+        @Html.LabelFor(m => m.AddressComplement, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+        @Html.TextBoxFor(m => m.AddressComplement, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.AddressComplement, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-8">
+        @Html.LabelFor(m => m.NeighborhoodUid, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.NeighborhoodName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.NeighborhoodName, "", new { @class = "text-danger" })
+    </div>
+</div>
+<!--end:: Address Form-->

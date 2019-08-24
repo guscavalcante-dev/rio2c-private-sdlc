@@ -4,16 +4,15 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-19-2019
+// Last Modified On : 08-23-2019
 // ***********************************************************************
 // <copyright file="FindAllHoldingsBaseDtosAsync.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
+
 using System.Collections.Generic;
-using MediatR;
 using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Application.CQRS.Queries
@@ -31,7 +30,7 @@ namespace PlataformaRio2C.Application.CQRS.Queries
             string userInterfaceLanguage)
         {
             this.Keywords = keywords;
-            this.UpdateBaseProperties(userInterfaceLanguage);
+            this.UpdatePreSendProperties(userInterfaceLanguage);
         }
     }
 }

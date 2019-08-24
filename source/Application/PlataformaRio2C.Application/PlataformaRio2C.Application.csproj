@@ -181,6 +181,7 @@
     <Compile Include="CQRS\CommandsHandlers\SalesPlatformWebhookRequests\ProcessSalesPlatformWebhookRequestsCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\SalesPlatformWebhookRequests\CreateSalesPlatformWebhookRequestCommandHandler.cs" />
     <Compile Include="CQRS\Commands\BaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Common\BaseCommands\AddressBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Common\BaseCommands\CropperImageBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Organizations\BaseCommands\OrganizationBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Organizations\BaseCommands\OrganizationDescriptionBaseCommand.cs" />
@@ -197,6 +198,9 @@
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\ProcessSalesPlatformWebhookRequests.cs" />
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\CreateSalesPlatformWebhookRequest.cs" />
     <Compile Include="CQRS\BaseUserRequest.cs" />
+    <Compile Include="CQRS\QueriesHandlers\Cities\FindAllCitiesBaseDtosByStateUidAsyncQueryHandler.cs" />
+    <Compile Include="CQRS\QueriesHandlers\States\FindAllStatesBaseDtosByCountryUidAsyncQueryHandler.cs" />
+    <Compile Include="CQRS\QueriesHandlers\Countries\FindAllCountriesBaseDtosAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Editions\FindAllEditionsByActiveQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Holdings\FindAllHoldingsBaseDtosAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Organizations\CountAllOrganizationsAsyncQueryHandler.cs" />
@@ -210,6 +214,9 @@
     <Compile Include="CQRS\QueriesHandlers\SalesPlatformWebhookRequests\FindAllSalesPlatformWebhooRequestsByPendingQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\SalesPlatforms\FindSalesPlatformByNameQueryHandler.cs" />
     <Compile Include="CQRS\Queries\BaseQuery.cs" />
+    <Compile Include="CQRS\Queries\Cities\FindAllCitiesBaseDtosByStateUidAsync.cs" />
+    <Compile Include="CQRS\Queries\States\FindAllStatesBaseDtosByCountryUidAsync.cs" />
+    <Compile Include="CQRS\Queries\Countries\FindAllCountriesBaseDtosAsync.cs" />
     <Compile Include="CQRS\Queries\Editions\FindAllEditionsByIsActive.cs" />
     <Compile Include="CQRS\Queries\Holdings\CountAllHoldingsAsync.cs" />
     <Compile Include="CQRS\Queries\Holdings\FindAllHoldingsBaseDtosAsync.cs" />

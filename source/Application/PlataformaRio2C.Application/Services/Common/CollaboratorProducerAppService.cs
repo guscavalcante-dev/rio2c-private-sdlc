@@ -214,23 +214,23 @@ namespace PlataformaRio2C.Application.Services
 
 
 
-                entityAlter.Address.SetZipCode(viewModel.Address.ZipCode);
-                if (viewModel.Address.CountryId != null)
-                {
-                    entityAlter.Address.SetCountry((int)viewModel.Address.CountryId);
-                }
-                if (viewModel.Address.StateId != null)
-                {
-                    entityAlter.Address.SetState((int)viewModel.Address.StateId);
-                }
-                if (viewModel.Address.CityId != null)
-                {
-                    entityAlter.Address.SetCity((int)viewModel.Address.CityId);
-                }
+                //entityAlter.Address.SetZipCode(viewModel.Address.ZipCode);
+                //if (viewModel.Address.CountryId != null)
+                //{
+                //    entityAlter.Address.SetCountry((int)viewModel.Address.CountryId);
+                //}
+                //if (viewModel.Address.StateId != null)
+                //{
+                //    entityAlter.Address.SetState((int)viewModel.Address.StateId);
+                //}
+                //if (viewModel.Address.CityId != null)
+                //{
+                //    entityAlter.Address.SetCity((int)viewModel.Address.CityId);
+                //}
 
-                entityAlter.Address.SetAddressValue(viewModel.Address.AddressValue);
-                entityAlter.Address.SetCity(viewModel.Address.City);
-                entityAlter.Address.SetState(viewModel.Address.State);
+                //entityAlter.Address.SetAddressValue(viewModel.Address.AddressValue);
+                //entityAlter.Address.SetCity(viewModel.Address.City);
+                //entityAlter.Address.SetState(viewModel.Address.State);
 
 
                 MapEntityUserRole(ref entityAlter);

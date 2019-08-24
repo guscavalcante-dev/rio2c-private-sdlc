@@ -58,44 +58,44 @@ namespace PlataformaRio2C.Application.Services
                 var stateID = viewModel.Address.StateId == null ? 0 : (int)viewModel.Address.StateId;
                 if (entity.Address == null)
                 {
-                    var address = new Address();
-                    address.SetCountry((int)viewModel.Address.CountryId);
-                    if (address.CountryId == 30)
-                    {
-                        address.SetCity(cityId);
-                        address.SetState(stateID);
-                        address.SetCity("");
-                        address.SetState("");
-                    }
-                    else
-                    {
-                        address.SetCity(viewModel.Address.City);
-                        address.SetState(viewModel.Address.State);
-                        address.SetCity(0);
-                        address.SetState(0);
-                    }
+                    //var address = new Address();
+                    //address.SetCountry((int)viewModel.Address.CountryId);
+                    //if (address.CountryId == 30)
+                    //{
+                    //    address.SetCity(cityId);
+                    //    address.SetState(stateID);
+                    //    address.SetCity("");
+                    //    address.SetState("");
+                    //}
+                    //else
+                    //{
+                    //    address.SetCity(viewModel.Address.City);
+                    //    address.SetState(viewModel.Address.State);
+                    //    address.SetCity(0);
+                    //    address.SetState(0);
+                    //}
 
-                    entity.SetAddress(address);
+                    //entity.SetAddress(address);
 
                 }
                 else
                 {
-                    entity.Address.SetCountry((int)viewModel.Address.CountryId);
+                    //entity.Address.SetCountry((int)viewModel.Address.CountryId);
 
-                    if (entity.Address.CountryId == 30)
-                    {
-                        entity.Address.SetCity(cityId);
-                        entity.Address.SetState(stateID);
-                        entity.Address.SetCity("");
-                        entity.Address.SetState("");
-                    }
-                    else
-                    {
-                        entity.Address.SetCity(viewModel.Address.City);
-                        entity.Address.SetState(viewModel.Address.State);
-                        entity.Address.SetCity(0);
-                        entity.Address.SetState(0);
-                    }
+                    //if (entity.Address.CountryId == 30)
+                    //{
+                    //    entity.Address.SetCity(cityId);
+                    //    entity.Address.SetState(stateID);
+                    //    entity.Address.SetCity("");
+                    //    entity.Address.SetState("");
+                    //}
+                    //else
+                    //{
+                    //    entity.Address.SetCity(viewModel.Address.City);
+                    //    entity.Address.SetState(viewModel.Address.State);
+                    //    entity.Address.SetCity(0);
+                    //    entity.Address.SetState(0);
+                    //}
                 }
 
                 var a = entity.Address.Uid.ToString();
@@ -105,7 +105,7 @@ namespace PlataformaRio2C.Application.Services
 
                 var entityAlter = viewModel.MapReverse(entity);
                 entityAlter.SetCNPJ(entity.CNPJ);
-                entityAlter.Address.SetCountry((int)viewModel.Address.CountryId);
+                //entityAlter.Address.SetCountry((int)viewModel.Address.CountryId);
                 MapDescriptions(ref entityAlter, viewModel.Descriptions);
 
                 var _activities = _activityRepository.GetAll();
@@ -157,7 +157,7 @@ namespace PlataformaRio2C.Application.Services
             {
                 if (entity != null)
                 {
-                    entity.Address.SetZipCode(null);
+                    //entity.Address.SetZipCode(null);
                 }
             }
 
@@ -282,25 +282,25 @@ namespace PlataformaRio2C.Application.Services
 
                 if (addressEntity != null)
                 {
-                    if (addressEntity.CountryId != null)
-                    {
-                        states = _stateRepository.GetAll(a => a.CountryId == addressEntity.CountryId).ToList();
-                    }
+                    //if (addressEntity.CountryId != null)
+                    //{
+                    //    states = _stateRepository.GetAll(a => a.CountryId == addressEntity.CountryId).ToList();
+                    //}
 
-                    if (addressEntity.StateId != null)
-                    {
-                        cities = _cityRepository.GetAll(a => a.StateId == addressEntity.StateId).ToList();
-                    }
+                    //if (addressEntity.StateId != null)
+                    //{
+                    //    cities = _cityRepository.GetAll(a => a.StateId == addressEntity.StateId).ToList();
+                    //}
                 }
                 else
                 {
-                    addressEntity = new Address();
+                    //addressEntity = new Address();
                 }
 
 
-                addressEntity.Countries = countries;
-                addressEntity.States = states;
-                addressEntity.Cities = cities;
+                //addressEntity.Countries = countries;
+                //addressEntity.States = states;
+                //addressEntity.Cities = cities;
 
                 if (producers.FirstOrDefault(e => e.Uid == producerUid) != null)
                 {

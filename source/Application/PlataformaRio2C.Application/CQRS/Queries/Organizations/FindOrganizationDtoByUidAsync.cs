@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-19-2019
+// Last Modified On : 08-23-2019
 // ***********************************************************************
 // <copyright file="FindOrganizationDtoByUidAsync.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,7 +29,7 @@ namespace PlataformaRio2C.Application.CQRS.Queries
             string userInterfaceLanguage)
         {
             this.HoldingUid = holdingUid ?? Guid.Empty;
-            this.UpdateBaseProperties(userInterfaceLanguage);
+            this.UpdatePreSendProperties(userInterfaceLanguage);
         }
     }
 }

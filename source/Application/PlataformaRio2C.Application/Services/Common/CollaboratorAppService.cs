@@ -150,7 +150,7 @@ namespace PlataformaRio2C.Application.Services
         public List<State> listStates(string countryCode)
         {
             List<State> states = new List<State>();
-            states = _stateRepository.GetAll(a => a.Country.CountryCode == countryCode).ToList();
+            states = _stateRepository.GetAll(a => a.Country.Code == countryCode).ToList();
 
 
             return states;
@@ -176,7 +176,7 @@ namespace PlataformaRio2C.Application.Services
         public List<City> listCities(string stateCode)
         {
             List<City> cities = new List<City>();
-            cities = _cityRepository.GetAll(a => a.State.StateCode == stateCode).ToList();
+            //cities = _cityRepository.GetAll(a => a.State.StateCode == stateCode).ToList();
 
 
             return cities;
@@ -210,12 +210,12 @@ namespace PlataformaRio2C.Application.Services
                 {
                     //populate all states according to Country ID
                     viewModel.States = _stateRepository.GetAll(a => a.CountryId == 30).ToList();
-                    viewModel.StateId = (entity.Address.StateId != null ? (int)entity.Address.StateId : 0);
+                    //viewModel.StateId = (entity.Address.StateId != null ? (int)entity.Address.StateId : 0);
                     //viewModel.StateId = 0;
 
                     //populate all cities according to State ID
                     viewModel.Cities = _cityRepository.GetAll(a => a.StateId == viewModel.Address.StateId).ToList();
-                    viewModel.CityId = (entity.Address.CityId != null ? (int)entity.Address.CityId : 0);
+                    //viewModel.CityId = (entity.Address.CityId != null ? (int)entity.Address.CityId : 0);
                     //viewModel.CityId = 0;
 
                 }

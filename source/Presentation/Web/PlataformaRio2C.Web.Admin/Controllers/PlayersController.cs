@@ -169,7 +169,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         {
             var cmd = new CreateOrganization(
                 await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
-                await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)));
+                await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
+                await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)));
 
             return Json(new
             {
@@ -196,7 +197,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     throw new DomainException();
                 }
 
-                cmd.UpdateBaseProperties(
+                cmd.UpdatePreSendProperties(
                     OrganizationType.Player,
                     this.UserId,
                     this.UserUid,
@@ -217,7 +218,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
-                cmd.UpdateErrorProperties(await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)));
+                cmd.UpdateDropdownProperties(
+                    await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)));
 
                 return Json(new
                 {
@@ -257,6 +260,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(organizationUid, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                     isAddingToCurrentEdition);
             }
             catch (DomainException ex)
@@ -289,7 +293,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     throw new DomainException();
                 }
 
-                cmd.UpdateBaseProperties(
+                cmd.UpdatePreSendProperties(
                     OrganizationType.Player,
                     this.UserId,
                     this.UserUid,
@@ -310,7 +314,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
-                cmd.UpdateErrorProperties(await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)));
+                cmd.UpdateDropdownProperties(
+                    await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)));
 
                 return Json(new
                 {
@@ -350,7 +356,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     throw new DomainException();
                 }
 
-                cmd.UpdateBaseProperties(
+                cmd.UpdatePreSendProperties(
                     OrganizationType.Player,
                     this.UserId,
                     this.UserUid,

@@ -108,20 +108,20 @@ namespace PlataformaRio2C.Application.Services
                 var addressEntity = entity.Address;
 
                 List<State> states = null;
-                if (addressEntity.CountryId != null)
-                {
-                    states = _stateRepository.GetAll(a => a.CountryId == addressEntity.CountryId).ToList();
-                }
+                //if (addressEntity.CountryId != null)
+                //{
+                //    states = _stateRepository.GetAll(a => a.CountryId == addressEntity.CountryId).ToList();
+                //}
 
                 List<City> cities = null;
-                if (addressEntity.StateId != null)
-                {
-                    cities = _cityRepository.GetAll(a => a.StateId == addressEntity.StateId).ToList();
-                }
+                //if (addressEntity.StateId != null)
+                //{
+                //    cities = _cityRepository.GetAll(a => a.StateId == addressEntity.StateId).ToList();
+                //}
 
-                addressEntity.Countries = countries;
-                addressEntity.States = states;
-                addressEntity.Cities = cities;
+                //addressEntity.Countries = countries;
+                //addressEntity.States = states;
+                //addressEntity.Cities = cities;
                 vm = new PlayerEditAppViewModel(entity);
 
                 var activities = _activityRepository.GetAll().ToList();
@@ -151,9 +151,9 @@ namespace PlataformaRio2C.Application.Services
             var _activities = _activityRepository.GetAll();
             var entitysActivities = new List<PlayerActivity>();
 
-            entity.Address.SetCity(cityId);
-            entity.Address.SetCountry(countryId);
-            entity.Address.SetState(stateId);
+            //entity.Address.SetCity(cityId);
+            //entity.Address.SetCountry(countryId);
+            //entity.Address.SetState(stateId);
 
             foreach (var activityViewModel in viewModel.Activitys)
             {
@@ -203,13 +203,13 @@ namespace PlataformaRio2C.Application.Services
 
             if (entity != null)
             {
-                entity.Address.SetCity(cityId);
-                entity.Address.SetCountry(countryId);
-                entity.Address.SetState(stateId);
+                //entity.Address.SetCity(cityId);
+                //entity.Address.SetCountry(countryId);
+                //entity.Address.SetState(stateId);
 
                 var entityAlter = viewModel.MapReverse(entity);
 
-                entityAlter.Address.SetCountry(countryId);
+                //entityAlter.Address.SetCountry(countryId);
 
                 _playerActivityRepository.DeleteAll(entity.PlayerActivitys);
                 _playerTargetAudienceRepository.DeleteAll(entity.PlayerTargetAudience);
@@ -262,16 +262,16 @@ namespace PlataformaRio2C.Application.Services
             if (entity != null)
             {
 
-                entity.Address.SetCity((int)viewModel.Address.CityId);
-                entity.Address.SetCountry((int)viewModel.Address.CountryId);
-                entity.Address.SetState((int)viewModel.Address.StateId);
+                //entity.Address.SetCity((int)viewModel.Address.CityId);
+                //entity.Address.SetCountry((int)viewModel.Address.CountryId);
+                //entity.Address.SetState((int)viewModel.Address.StateId);
 
                 _playerActivityRepository.DeleteAll(entity.PlayerActivitys);
                 _playerTargetAudienceRepository.DeleteAll(entity.PlayerTargetAudience);
 
                 //entity.SetAddress(null);
                 var entityAlter = viewModel.MapReverse(entity);
-                entityAlter.Address.SetCountry((int)viewModel.Address.CountryId);
+                //entityAlter.Address.SetCountry((int)viewModel.Address.CountryId);
 
                 var _activities = _activityRepository.GetAll();
                 var entitysActivities = new List<PlayerActivity>();
@@ -322,7 +322,7 @@ namespace PlataformaRio2C.Application.Services
             {
                 if (entity != null)
                 {
-                    entity.Address.SetZipCode(null);
+                    //entity.Address.SetZipCode(null);
                 }
             }
 
@@ -509,20 +509,20 @@ namespace PlataformaRio2C.Application.Services
                         var addressEntity = player.Address;
 
                         List<State> states = null;
-                        if (addressEntity.CountryId != null)
-                        {
-                            states = _stateRepository.GetAll(a => a.CountryId == addressEntity.CountryId).ToList();
-                        }
+                        //if (addressEntity.CountryId != null)
+                        //{
+                        //    states = _stateRepository.GetAll(a => a.CountryId == addressEntity.CountryId).ToList();
+                        //}
 
                         List<City> cities = null;
-                        if (addressEntity.StateId != null)
-                        {
-                            cities = _cityRepository.GetAll(a => a.StateId == addressEntity.StateId).ToList();
-                        }
+                        //if (addressEntity.StateId != null)
+                        //{
+                        //    cities = _cityRepository.GetAll(a => a.StateId == addressEntity.StateId).ToList();
+                        //}
 
-                        addressEntity.Countries = countries;
-                        addressEntity.States = states;
-                        addressEntity.Cities = cities;
+                        //addressEntity.Countries = countries;
+                        //addressEntity.States = states;
+                        //addressEntity.Cities = cities;
 
                         var playerViewModel = new PlayerEditAppViewModel(player);
                         playerViewModel.LanguagesOptions = LanguageAppViewModel.MapList(languages);
@@ -813,7 +813,7 @@ namespace PlataformaRio2C.Application.Services
 
             var predicateZipCode = PredicateBuilder.New<Player>(false);
 
-            predicateZipCode = predicateZipCode.Or(p => p.Address != null && p.Address.ZipCode != null);
+            //predicateZipCode = predicateZipCode.Or(p => p.Address != null && p.Address.ZipCode != null);
 
             predicate = PredicateBuilder.And<Player>(predicate, predicateZipCode);
 
@@ -859,7 +859,7 @@ namespace PlataformaRio2C.Application.Services
 
             var predicateZipCode = PredicateBuilder.New<Player>(false);
 
-            predicateZipCode = predicateZipCode.Or(p => p.Address != null && p.Address.ZipCode != null);
+            //predicateZipCode = predicateZipCode.Or(p => p.Address != null && p.Address.ZipCode != null);
 
             predicate = PredicateBuilder.And<Player>(predicate, predicateZipCode);
 

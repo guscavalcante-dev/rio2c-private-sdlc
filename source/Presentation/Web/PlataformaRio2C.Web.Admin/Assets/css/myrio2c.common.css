@@ -162,7 +162,9 @@ a.r2c-login__footer-link, a.r2c-footer-link {
     Form
 */
 .form-optional-input {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
+    color: #74788d !important;
+    font-weight: normal !important;
 }
 
 

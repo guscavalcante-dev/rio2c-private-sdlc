@@ -1280,4 +1280,24 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Startups</value>
     <comment>Startups</comment>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>Código</value>
+    <comment>Código</comment>
+  </data>
+  <data name="Number" xml:space="preserve">
+    <value>Número</value>
+    <comment>Número</comment>
+  </data>
+  <data name="AddressComplement" xml:space="preserve">
+    <value>Complemento</value>
+    <comment>Complemento</comment>
+  </data>
+  <data name="Neighborhood" xml:space="preserve">
+    <value>Bairro</value>
+    <comment>Bairro</comment>
+  </data>
+  <data name="StreetName" xml:space="preserve">
+    <value>Logradouro</value>
+    <comment>Logradouro</comment>
+  </data>
 </root>

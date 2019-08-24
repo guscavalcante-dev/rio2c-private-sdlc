@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-19-2019
+// Last Modified On : 08-23-2019
 // ***********************************************************************
 // <copyright file="PlataformaRio2CContext.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -54,9 +54,17 @@ namespace PlataformaRio2C.Infra.Data.Context
             // Projects
             modelBuilder.Configurations.Add(new ProjectTypeMap());
 
+            // Addresses
+            modelBuilder.Configurations.Add(new CountryMap());
+            modelBuilder.Configurations.Add(new StateMap());
+            modelBuilder.Configurations.Add(new CityMap());
+            modelBuilder.Configurations.Add(new NeighborhoodMap());
+            modelBuilder.Configurations.Add(new StreetMap());
+            modelBuilder.Configurations.Add(new AddressMap());
+
+
             // TODO: Old mapping that must be reviewed
             modelBuilder.Configurations.Add(new LanguageMap());
-            modelBuilder.Configurations.Add(new AddressMap());
             modelBuilder.Configurations.Add(new ImageFileMap());            
             modelBuilder.Configurations.Add(new PlayerMap());
             modelBuilder.Configurations.Add(new PlayerDescriptionMap());
@@ -107,10 +115,6 @@ namespace PlataformaRio2C.Infra.Data.Context
 
             modelBuilder.Configurations.Add(new NegotiationConfigMap());
             modelBuilder.Configurations.Add(new NegotiationMap());
-
-            modelBuilder.Configurations.Add(new CountryMap());
-            modelBuilder.Configurations.Add(new StateMap());
-            modelBuilder.Configurations.Add(new CityMap());
 
             modelBuilder.Configurations.Add(new QuizMap());
             modelBuilder.Configurations.Add(new QuizQuestionMap());

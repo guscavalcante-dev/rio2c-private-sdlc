@@ -77,9 +77,11 @@
     <Compile Include="Config\BaseContext.cs" />
     <Compile Include="Interfaces\IDbContext.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
+    <Compile Include="Mapping\Addresses\StreetMap.cs" />
+    <Compile Include="Mapping\Addresses\NeighborhoodMap.cs" />
     <Compile Include="Mapping\Collaborator\CollaboratorProducerMap.cs" />
-    <Compile Include="Mapping\Common\AddressMap.cs" />
     <Compile Include="Mapping\Common\ActivityMap.cs" />
+    <Compile Include="Mapping\Addresses\AddressMap.cs" />
     <Compile Include="Mapping\Conference\RoleLecturerTitleMap.cs" />
     <Compile Include="Mapping\Conference\LecturerJobTitleMap.cs" />
     <Compile Include="Mapping\Conference\LecturerMap.cs" />
@@ -88,9 +90,9 @@
     <Compile Include="Mapping\Conference\ConferenceTitleMap.cs" />
     <Compile Include="Mapping\Conference\ConferenceMap.cs" />
     <Compile Include="Mapping\Conference\RoleLecturerMap.cs" />
-    <Compile Include="Mapping\Country\CityMap.cs" />
-    <Compile Include="Mapping\Country\CountryMap.cs" />
-    <Compile Include="Mapping\Country\StateMap.cs" />
+    <Compile Include="Mapping\Addresses\CityMap.cs" />
+    <Compile Include="Mapping\Addresses\CountryMap.cs" />
+    <Compile Include="Mapping\Addresses\StateMap.cs" />
     <Compile Include="Mapping\Logistics\LogisticsMap.cs" />
     <Compile Include="Mapping\Mail\MailCollaboratorMap.cs" />
     <Compile Include="Mapping\Mail\MailMap.cs" />

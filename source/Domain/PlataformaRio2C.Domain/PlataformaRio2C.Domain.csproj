@@ -72,6 +72,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dtos\Cities\CityBaseDto.cs" />
+    <Compile Include="Dtos\States\StateBaseDto.cs" />
+    <Compile Include="Dtos\Countries\CountryBaseDto.cs" />
     <Compile Include="Dtos\OrganizationDescriptions\OrganizationDescriptionBaseDto.cs" />
     <Compile Include="Dtos\OrganizationDescriptions\OrganizationDescriptionDto.cs" />
     <Compile Include="Dtos\HoldingDescriptions\HoldingDescriptionDto.cs" />
@@ -84,6 +87,9 @@
     <Compile Include="Dtos\Languages\LanguageDto.cs" />
     <Compile Include="Dtos\Languages\LanguageBaseDto.cs" />
     <Compile Include="Dtos\Users\UserBaseDto.cs" />
+    <Compile Include="Entities\Addresses\Address.cs" />
+    <Compile Include="Entities\Addresses\Street.cs" />
+    <Compile Include="Entities\Addresses\Neighborhood.cs" />
     <Compile Include="Entities\Base\AggregateRoot.cs" />
     <Compile Include="Entities\Collaborator\CollaboratorProducer.cs" />
     <Compile Include="Entities\Collaborator\CollaboratorSpeaker.cs" />
@@ -96,9 +102,9 @@
     <Compile Include="Entities\Conference\ConferenceSynopsis.cs" />
     <Compile Include="Entities\Conference\ConferenceTitle.cs" />
     <Compile Include="Entities\Conference\RoleLecturer.cs" />
-    <Compile Include="Entities\Country\City.cs" />
-    <Compile Include="Entities\Country\Country.cs" />
-    <Compile Include="Entities\Country\State.cs" />
+    <Compile Include="Entities\Addresses\City.cs" />
+    <Compile Include="Entities\Addresses\Country.cs" />
+    <Compile Include="Entities\Addresses\State.cs" />
     <Compile Include="Entities\Logistics\Logistics.cs" />
     <Compile Include="Entities\Mail\Mail.cs" />
     <Compile Include="Entities\Mail\MailCollaborator.cs" />
@@ -156,9 +162,9 @@
     <Compile Include="Interfaces\Repositories\Conference\IConferenceRepository.cs" />
     <Compile Include="Interfaces\Repositories\Conference\IRoleLecturerTitleRepository.cs" />
     <Compile Include="Interfaces\Repositories\Conference\IRoleLecturerRepository.cs" />
-    <Compile Include="Interfaces\Repositories\Country\ICityRepository.cs" />
-    <Compile Include="Interfaces\Repositories\Country\ICountryRepository.cs" />
-    <Compile Include="Interfaces\Repositories\Country\IStateRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Addresses\ICityRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Addresses\ICountryRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Addresses\IStateRepository.cs" />
     <Compile Include="Interfaces\Repositories\Organizations\IOrganizationTypeRepository.cs" />
     <Compile Include="Interfaces\Repositories\Organizations\IOrganizationRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAddressRepository.cs" />
@@ -332,7 +338,7 @@
     <Compile Include="Entities\Common\Interest.cs" />
     <Compile Include="Entities\Base\Entity.cs" />
     <Compile Include="Entities\Collaborator\Collaborator.cs" />
-    <Compile Include="Entities\Common\Address.cs" />
+    <Compile Include="Entities\Addresses\AddressOld.cs" />
     <Compile Include="Entities\Collaborator\CollaboratorMiniBio.cs" />
     <Compile Include="Entities\Common\Activity.cs" />
     <Compile Include="Entities\Editions\Edition.cs" />

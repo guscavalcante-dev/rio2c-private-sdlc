@@ -8,7 +8,7 @@ namespace PlataformaRio2C.Application.ViewModels
 {
     public class AddressAppViewModel : EntityViewModel<AddressAppViewModel, Address>, IEntityViewModel<Address>
     {
-        public static readonly int AddressValueMaxLength = Address.AddressValueMaxLength;
+        //public static readonly int AddressValueMaxLength = Address.AddressValueMaxLength;
 
         [Display(Name = "ZipCode", ResourceType = typeof(Labels))]
         public string ZipCode { get; set; }
@@ -35,16 +35,16 @@ namespace PlataformaRio2C.Application.ViewModels
 
         public AddressAppViewModel(Address entity)
         {
-            Uid = entity.Uid;
-            ZipCode = entity.ZipCode;
-            Country = entity.CountryId;
-            State = entity.State;
-            City = entity.City;
-            AddressValue = entity.AddressValue;
+            //Uid = entity.Uid;
+            //ZipCode = entity.ZipCode;
+            //Country = entity.CountryId;
+            //State = entity.State;
+            //City = entity.City;
+            //AddressValue = entity.AddressValue;
 
-            CountryId = entity.CountryId;
-            CityId = entity.CityId;
-            StateId = entity.StateId;
+            //CountryId = entity.CountryId;
+            //CityId = entity.CityId;
+            //StateId = entity.StateId;
         }       
 
         public Address MapReverse()
@@ -53,26 +53,28 @@ namespace PlataformaRio2C.Application.ViewModels
             int stateid = (StateId == null ? 0 : (int)StateId);
             int cityid = (CityId == null ? 0 : (int)CityId);
 
-            var address = new Address(this.ZipCode);
-            address.SetCountry(countryid);
-            address.SetState(stateid); 
-            address.SetCity(cityid);           
-            address.SetAddressValue(AddressValue);
+            //var address = new Address(this.ZipCode);
+            //address.SetCountry(countryid);
+            //address.SetState(stateid); 
+            //address.SetCity(cityid);           
+            //address.SetAddressValue(AddressValue);
 
-            return address;
+            //return address;
+
+            return null;
         }
 
         public Address MapReverse(Address entity)
         {
-            int stateid = (int)entity.StateId;
-            int cityid = (int)entity.CityId;
-            int countryid = (int)entity.CountryId;
+            //int stateid = (int)entity.StateId;
+            //int cityid = (int)entity.CityId;
+            //int countryid = (int)entity.CountryId;
 
-            entity.SetZipCode(ZipCode);
-            entity.SetCountry(countryid);
-            entity.SetState(stateid);
-            entity.SetCity(cityid);
-            entity.SetAddressValue(AddressValue);
+            //entity.SetZipCode(ZipCode);
+            //entity.SetCountry(countryid);
+            //entity.SetState(stateid);
+            //entity.SetCity(cityid);
+            //entity.SetAddressValue(AddressValue);
 
             return entity;
         }

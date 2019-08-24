@@ -103,7 +103,7 @@ namespace PlataformaRio2C.Domain.Services
         {
             _validationResult.Add(new CollaboratorProducerIsComplete().Valid(entity));
 
-            _validationResult.Add(new AddressIsConsistent().Valid(entity.Address));
+            //_validationResult.Add(new AddressIsConsistent().Valid(entity.Address));
 
             _validationResult.Add(new ImageIsConsistent().Valid(entity.Image));
 

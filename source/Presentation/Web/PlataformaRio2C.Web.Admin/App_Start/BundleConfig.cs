@@ -263,6 +263,16 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+            #region Select2
+
+            bundles.Add(new StyleBundle("~/bundles/css/select2.css")
+                .Include("~/Assets/themes/metronic/vendors/general/select2/dist/css/select2.css"/*, new CssRewriteUrlTransform()*/));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/select2.js").Include(
+                "~/Assets/themes/metronic/vendors/general/select2/dist/js/select2.js"));
+
+            #endregion
+
             #endregion
 
             #region Pages Bundles
@@ -304,6 +314,13 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/organizations.delete.js").Include(
                 "~/Assets/js/organizations/organizations.delete.js"));
+
+            #endregion
+
+            #region Addresses
+
+            bundles.Add(new ScriptBundle("~/bundles/js/addresses.js").Include(
+                "~/Assets/js/addresses/addresses.form.js"));
 
             #endregion
 
