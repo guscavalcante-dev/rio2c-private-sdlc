@@ -1282,7 +1282,7 @@
     <comment>Complemento</comment>
   </data>
   <data name="Neighborhood" xml:space="preserve">
-    <value>Neighborhood</value>
+    <value>County</value>
     <comment>Bairro</comment>
   </data>
   <data name="StreetName" xml:space="preserve">

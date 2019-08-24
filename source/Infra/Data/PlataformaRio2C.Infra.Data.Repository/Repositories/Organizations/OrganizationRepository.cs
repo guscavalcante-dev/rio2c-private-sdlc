@@ -237,7 +237,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     Name = h.Updater.Name,
                                     Email =h.Updater.Email 
                                 },
-                                AddressBaseDto = new AddressBaseDto
+                                AddressBaseDto = h.Address.IsDeleted ? null : new AddressBaseDto
                                 {
                                     Id = h.Address.Id,
                                     Uid = h.Address.Uid,
