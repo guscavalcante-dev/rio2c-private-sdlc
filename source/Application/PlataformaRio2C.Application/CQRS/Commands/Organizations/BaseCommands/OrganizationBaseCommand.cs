@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-23-2019
+// Last Modified On : 08-24-2019
 // ***********************************************************************
 // <copyright file="OrganizationBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -97,8 +97,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
         private void UpdateAddress(OrganizationDto entity, List<CountryBaseDto> countriesBaseDtos)
         {
-            this.Address = new AddressBaseCommand(null, countriesBaseDtos);
-            //this.Address = new AddressBaseCommand(entity?.Address, countriesBaseDtos);
+            this.Address = new AddressBaseCommand(entity?.AddressBaseDto, countriesBaseDtos);
         }
 
         /// <summary>Updates the descriptions.</summary>

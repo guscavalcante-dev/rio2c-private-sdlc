@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-23-2019
+// Last Modified On : 08-24-2019
 // ***********************************************************************
 // <copyright file="State.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,6 +16,8 @@ using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -45,7 +47,8 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.Country = country;
             this.Name = name?.Trim();
-            this.Code = code?.Trim();
+            this.Code = code?.Trim() ?? 
+                        name?.Trim().GetTwoLetterCode();
             this.IsManual = isManual;
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
@@ -103,6 +106,75 @@ namespace PlataformaRio2C.Domain.Entities
         private List<City> FindAllCitiesNotDeleted()
         {
             return this.Cities?.Where(c => !c.IsDeleted)?.ToList();
+        }
+
+        /// <summary>Finds the city not deleted by uid.</summary>
+        /// <param name="cityUid">The city uid.</param>
+        /// <returns></returns>
+        private City FindCityNotDeletedByUid(Guid cityUid)
+        {
+            return this.Cities?.FirstOrDefault(c => c.Uid == cityUid && !c.IsDeleted);
+        }
+
+        /// <summary>Finds the name of the city not deleted by.</summary>
+        /// <param name="cityName">Name of the city.</param>
+        /// <returns></returns>
+        private City FindCityNotDeletedByName(string cityName)
+        {
+            return this.Cities?.FirstOrDefault(s => s.Name.Trim().ToLowerInvariant() == cityName?.Trim()?.ToLowerInvariant() && !s.IsDeleted);
+        }
+
+        /// <summary>Finds the or create city.</summary>
+        /// <param name="cityUid">The city uid.</param>
+        /// <param name="cityName">Name of the city.</param>
+        /// <param name="isManual">if set to <c>true</c> [is manual].</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        private City FindOrCreateCity(Guid? cityUid, string cityName, bool isManual, int userId)
+        {
+            if (this.Cities == null)
+            {
+                this.Cities = new List<City>();
+            }
+
+            City city = null;
+            if (cityUid.HasValue)
+            {
+                city = this.FindCityNotDeletedByUid(cityUid.Value);
+            }
+            else if (!string.IsNullOrEmpty(cityName?.Trim()))
+            {
+                city = this.FindCityNotDeletedByName(cityName) ??
+                       new City(this, cityName, isManual, userId);
+            }
+
+            if (city == null)
+            {
+                throw new DomainException("Could not create the city."); //TODO: Translate state error
+            }
+
+            return city;
+        }
+
+        #endregion
+
+        #region Streets
+
+        /// <summary>Finds the street.</summary>
+        /// <param name="cityUid">The city uid.</param>
+        /// <param name="cityName">Name of the city.</param>
+        /// <param name="neighborhoodUid">The neighborhood uid.</param>
+        /// <param name="neighborhoodName">Name of the neighborhood.</param>
+        /// <param name="streetUid">The street uid.</param>
+        /// <param name="streetName">Name of the street.</param>
+        /// <param name="streetZipCode">The street zip code.</param>
+        /// <param name="isManual">if set to <c>true</c> [is manual].</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public Street FindStreet(Guid? cityUid, string cityName, Guid? neighborhoodUid, string neighborhoodName, Guid? streetUid, string streetName, string streetZipCode, bool isManual, int userId)
+        {
+            var city = this.FindOrCreateCity(cityUid, cityName, isManual, userId);
+            return city?.FindStreet(neighborhoodUid, neighborhoodName, streetUid, streetName, streetZipCode, isManual, userId);
         }
 
         #endregion

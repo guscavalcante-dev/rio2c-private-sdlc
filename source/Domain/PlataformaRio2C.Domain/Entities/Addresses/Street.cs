@@ -4,7 +4,7 @@
 // Created          : 08-22-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-23-2019
+// Last Modified On : 08-24-2019
 // ***********************************************************************
 // <copyright file="Street.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -55,21 +55,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Initializes a new instance of the <see cref="Street"/> class.</summary>
         protected Street()
         {
-        }
-
-        /// <summary>Updates the specified name.</summary>
-        /// <param name="name">The name.</param>
-        /// <param name="zipCode">The zip code.</param>
-        /// <param name="isManual">if set to <c>true</c> [is manual].</param>
-        /// <param name="userId">The user identifier.</param>
-        public void Update(string name, string zipCode, bool isManual, int userId)
-        {
-            this.Name = name?.Trim();
-            this.ZipCode = zipCode?.Trim();
-            this.IsManual = isManual;
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
-            this.UpdateUserId = userId;
         }
 
         /// <summary>Deletes the specified user identifier.</summary>

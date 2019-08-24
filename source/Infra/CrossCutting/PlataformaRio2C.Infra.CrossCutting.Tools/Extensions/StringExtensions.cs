@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-07-2019
+// Last Modified On : 08-24-2019
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -134,6 +134,35 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             }
 
             return output;
+        }
+
+        /// <summary>Gets the two letter code.</summary>
+        /// <param name="s">The s.</param>
+        /// <returns></returns>
+        public static string GetTwoLetterCode(this string s)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                return null;
+            }
+
+            string code = null;
+
+            var splitString = s.Split(' ');
+            if (splitString.Length == 1)
+            {
+                code = splitString[0].Substring(0, 2);
+            }
+            else if (splitString.Length >= 3)
+            {
+                code = splitString[0].Substring(0, 1) + splitString[2].Substring(0, 1);
+            }
+            else
+            {
+                code = splitString[0].Substring(0, 1) + splitString[1].Substring(0, 1);
+            }
+
+            return code?.ToUpperInvariant();
         }
     }
 }

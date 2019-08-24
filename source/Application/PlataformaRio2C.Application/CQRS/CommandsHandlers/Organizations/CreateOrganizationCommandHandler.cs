@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-21-2019
+// Last Modified On : 08-24-2019
 // ***********************************************************************
 // <copyright file="CreateOrganizationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,6 +34,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IEditionRepository editionRepo;
         private readonly IOrganizationTypeRepository organizationTypeRepo;
         private readonly ILanguageRepository languageRepo;
+        private readonly ICountryRepository countryRepo;
 
         /// <summary>Initializes a new instance of the <see cref="CreateOrganizationCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
@@ -43,6 +44,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="organizationTypeRepository">The organization type repository.</param>
         /// <param name="languageRepository">The language repository.</param>
+        /// <param name="countryRepository">The country repository.</param>
         public CreateOrganizationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
@@ -50,13 +52,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IHoldingRepository holdingRepository,
             IEditionRepository editionRepository,
             IOrganizationTypeRepository organizationTypeRepository,
-            ILanguageRepository languageRepository)
+            ILanguageRepository languageRepository,
+            ICountryRepository countryRepository)
             : base(eventBus, uow, organizationRepository)
         {
             this.holdingRepo = holdingRepository;
             this.editionRepo = editionRepository;
             this.organizationTypeRepo = organizationTypeRepository;
             this.languageRepo = languageRepository;
+            this.countryRepo = countryRepository;
         }
 
         /// <summary>Handles the specified create organization.</summary>
@@ -88,15 +92,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #endregion
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
-            var holding = await this.holdingRepo.GetAsync(cmd.HoldingUid ?? Guid.Empty);
-            var edition = await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty);
-            var organizationType = await this.organizationTypeRepo.GetAsync(cmd.OrganizationType?.Uid ?? Guid.Empty);
 
             var organization = new Organization(
                 organizationUid,
-                holding,
-                edition,
-                organizationType,
+                await this.holdingRepo.GetAsync(cmd.HoldingUid ?? Guid.Empty),
+                await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
+                await this.organizationTypeRepo.GetAsync(cmd.OrganizationType?.Uid ?? Guid.Empty),
                 cmd.Name,
                 cmd.CompanyName,
                 cmd.TradeName,
@@ -104,7 +105,19 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.Website,
                 cmd.SocialMedia,
                 cmd.PhoneNumber,
-                null,
+                await this.countryRepo.GetAsync(cmd.Address?.CountryUid ?? Guid.Empty),
+                cmd.Address?.StateUid,
+                cmd.Address?.StateName,
+                cmd.Address?.CityUid,
+                cmd.Address?.CityName,
+                cmd.Address?.NeighborhoodUid,
+                cmd.Address?.NeighborhoodName,
+                cmd.Address?.StreetUid,
+                cmd.Address?.StreetName,
+                cmd.Address?.StreetZipCode,
+                cmd.Address?.AddressNumber,
+                cmd.Address?.AddressComplement,
+                true, //TODO: get AddressIsManual from form
                 cmd.CropperImage?.ImageFile != null,
                 cmd.Descriptions?.Select(d => new OrganizationDescription(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.UserId);

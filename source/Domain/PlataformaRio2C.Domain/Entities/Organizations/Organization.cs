@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-23-2019
+// Last Modified On : 08-24-2019
 // ***********************************************************************
 // <copyright file="Organization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -42,12 +42,11 @@ namespace PlataformaRio2C.Domain.Entities
         
         public virtual Holding Holding { get; private set; }
         public virtual User Updater { get; private set; }
+        public virtual Address Address { get; private set; }
 
         public virtual ICollection<OrganizationDescription> Descriptions { get; private set; }
         public virtual ICollection<AttendeeOrganization> AttendeeOrganizations { get; private set; }
 
-        //public virtual Address Address { get; private set; }
-        //public virtual ICollection<PlayerDescription> Descriptions { get; private set; }
         //public virtual ICollection<PlayerInterest> Interests { get; private set; }
         //public virtual ICollection<Collaborator> Collaborators { get; private set; }
         //public virtual ICollection<Collaborator> CollaboratorsOld { get; private set; }
@@ -67,7 +66,19 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="website">The website.</param>
         /// <param name="socialMedia">The social media.</param>
         /// <param name="phoneNumber">The phone number.</param>
-        /// <param name="addressId">The address identifier.</param>
+        /// <param name="country">The country.</param>
+        /// <param name="stateUid">The state uid.</param>
+        /// <param name="stateName">Name of the state.</param>
+        /// <param name="cityUid">The city uid.</param>
+        /// <param name="cityName">Name of the city.</param>
+        /// <param name="neighborhoodUid">The neighborhood uid.</param>
+        /// <param name="neighborhoodName">Name of the neighborhood.</param>
+        /// <param name="streetUid">The street uid.</param>
+        /// <param name="streetName">Name of the street.</param>
+        /// <param name="streetZipCode">The street zip code.</param>
+        /// <param name="addressNumber">The address number.</param>
+        /// <param name="addressComplement">The address complement.</param>
+        /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="descriptions">The descriptions.</param>
         /// <param name="userId">The user identifier.</param>
@@ -83,7 +94,19 @@ namespace PlataformaRio2C.Domain.Entities
             string website, 
             string socialMedia, 
             string phoneNumber, 
-            int? addressId, 
+            Country country,
+            Guid? stateUid,
+            string stateName,
+            Guid? cityUid,
+            string cityName,
+            Guid? neighborhoodUid,
+            string neighborhoodName,
+            Guid? streetUid,
+            string streetName,
+            string streetZipCode,
+            string addressNumber,
+            string addressComplement,
+            bool addressIsManual,
             bool isImageUploaded, 
             List<OrganizationDescription> descriptions, 
             int userId)
@@ -98,13 +121,13 @@ namespace PlataformaRio2C.Domain.Entities
             this.Website = website?.Trim();
             this.SocialMedia = socialMedia?.Trim();
             this.PhoneNumber = phoneNumber?.Trim();
-            this.AddressId = addressId;
             this.UpdateImageUploadDate(isImageUploaded, false);
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeDescriptions(descriptions, userId);
             this.SynchronizeAttendeeOrganizations(edition, organizationType, true, userId);
+            this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, neighborhoodUid, neighborhoodName, streetUid, streetName, streetZipCode, addressNumber, addressComplement, addressIsManual, userId);
         }
 
         /// <summary>Initializes a new instance of the <see cref="Organization"/> class.</summary>
@@ -123,7 +146,19 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="website">The website.</param>
         /// <param name="socialMedia">The social media.</param>
         /// <param name="phoneNumber">The phone number.</param>
-        /// <param name="addressId">The address identifier.</param>
+        /// <param name="country">The country.</param>
+        /// <param name="stateUid">The state uid.</param>
+        /// <param name="stateName">Name of the state.</param>
+        /// <param name="cityUid">The city uid.</param>
+        /// <param name="cityName">Name of the city.</param>
+        /// <param name="neighborhoodUid">The neighborhood uid.</param>
+        /// <param name="neighborhoodName">Name of the neighborhood.</param>
+        /// <param name="streetUid">The street uid.</param>
+        /// <param name="streetName">Name of the street.</param>
+        /// <param name="streetZipCode">The street zip code.</param>
+        /// <param name="addressNumber">The address number.</param>
+        /// <param name="addressComplement">The address complement.</param>
+        /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
         /// <param name="descriptions">The descriptions.</param>
@@ -140,7 +175,19 @@ namespace PlataformaRio2C.Domain.Entities
             string website,
             string socialMedia,
             string phoneNumber,
-            int? addressId,
+            Country country,
+            Guid? stateUid,
+            string stateName,
+            Guid? cityUid,
+            string cityName,
+            Guid? neighborhoodUid,
+            string neighborhoodName,
+            Guid? streetUid,
+            string streetName,
+            string streetZipCode,
+            string addressNumber,
+            string addressComplement,
+            bool addressIsManual,
             bool isImageUploaded,
             bool isImageDeleted,
             List<OrganizationDescription> descriptions,
@@ -157,13 +204,13 @@ namespace PlataformaRio2C.Domain.Entities
             this.Website = website?.Trim();
             this.SocialMedia = socialMedia?.Trim();
             this.PhoneNumber = phoneNumber?.Trim();
-            this.AddressId = addressId;
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeDescriptions(descriptions, userId);
             this.SynchronizeAttendeeOrganizations(edition, organizationType, isAddingToCurrentEdition, userId);
+            this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, neighborhoodUid, neighborhoodName, streetUid, streetName, streetZipCode, addressNumber, addressComplement, addressIsManual, userId);
         }
 
         /// <summary>Deletes the specified edition.</summary>
@@ -197,6 +244,83 @@ namespace PlataformaRio2C.Domain.Entities
                 this.ImageUploadDate = null;
             }
         }
+
+        #region Address
+
+        /// <summary>Updates the address.</summary>
+        /// <param name="country">The country.</param>
+        /// <param name="stateUid">The state uid.</param>
+        /// <param name="stateName">Name of the state.</param>
+        /// <param name="cityUid">The city uid.</param>
+        /// <param name="cityName">Name of the city.</param>
+        /// <param name="neighborhoodUid">The neighborhood uid.</param>
+        /// <param name="neighborhoodName">Name of the neighborhood.</param>
+        /// <param name="streetUid">The street uid.</param>
+        /// <param name="streetName">Name of the street.</param>
+        /// <param name="streetZipCode">The street zip code.</param>
+        /// <param name="addressNumber">The address number.</param>
+        /// <param name="addressComplement">The address complement.</param>
+        /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateAddress(
+            Country country,
+            Guid? stateUid,
+            string stateName,
+            Guid? cityUid,
+            string cityName,
+            Guid? neighborhoodUid,
+            string neighborhoodName,
+            Guid? streetUid,
+            string streetName,
+            string streetZipCode,
+            string addressNumber,
+            string addressComplement,
+            bool addressIsManual,
+            int userId)
+        {
+            if (country == null)
+            {
+                this.Address.Delete(userId);
+            }
+            else if (this.Address == null)
+            {
+                this.Address = new Address(
+                    country, 
+                    stateUid, 
+                    stateName, 
+                    cityUid, 
+                    cityName, 
+                    neighborhoodUid,
+                    neighborhoodName, 
+                    streetUid, 
+                    streetName, 
+                    streetZipCode, 
+                    addressNumber, 
+                    addressComplement, 
+                    addressIsManual, 
+                    userId);
+            }
+            else
+            {
+                this.Address.Update(
+                    country, 
+                    stateUid, 
+                    stateName, 
+                    cityUid, 
+                    cityName, 
+                    neighborhoodUid, 
+                    neighborhoodName, 
+                    streetUid, 
+                    streetName, 
+                    streetZipCode, 
+                    addressNumber, 
+                    addressComplement, 
+                    addressIsManual, 
+                    userId);
+            }
+        }
+
+        #endregion
 
         #region Descriptions
 

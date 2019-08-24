@@ -4,7 +4,7 @@
 // Created          : 08-22-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-23-2019
+// Last Modified On : 08-24-2019
 // ***********************************************************************
 // <copyright file="Address.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -37,27 +37,47 @@ namespace PlataformaRio2C.Domain.Entities
 
         public virtual Street Street { get; private set; }
 
+        public virtual ICollection<Organization> Organizations { get; private set; }
+
         /// <summary>Initializes a new instance of the <see cref="Address"/> class.</summary>
-        /// <param name="street">The street.</param>
-        /// <param name="number">The number.</param>
-        /// <param name="complement">The complement.</param>
+        /// <param name="country">The country.</param>
+        /// <param name="stateUid">The state uid.</param>
+        /// <param name="stateName">Name of the state.</param>
+        /// <param name="cityUid">The city uid.</param>
+        /// <param name="cityName">Name of the city.</param>
+        /// <param name="neighborhoodUid">The neighborhood uid.</param>
+        /// <param name="neighborhoodName">Name of the neighborhood.</param>
+        /// <param name="streetUid">The street uid.</param>
+        /// <param name="streetName">Name of the street.</param>
+        /// <param name="streetZipCode">The street zip code.</param>
+        /// <param name="addressNumber">The address number.</param>
+        /// <param name="addressComplement">The address complement.</param>
         /// <param name="isManual">if set to <c>true</c> [is manual].</param>
-        /// <param name="latitude">The latitude.</param>
-        /// <param name="longitude">The longitude.</param>
-        /// <param name="isGeoLocationUpdated">if set to <c>true</c> [is geo location updated].</param>
         /// <param name="userId">The user identifier.</param>
-        public Address(Street street, string number, string complement, bool isManual, decimal? latitude, decimal? longitude, bool isGeoLocationUpdated, int userId)
+        public Address(
+            Country country, 
+            Guid? stateUid, 
+            string stateName, 
+            Guid? cityUid, 
+            string cityName, 
+            Guid? neighborhoodUid, 
+            string neighborhoodName, 
+            Guid? streetUid, 
+            string streetName, 
+            string streetZipCode, 
+            string addressNumber, 
+            string addressComplement, 
+            bool isManual, 
+            int userId)
         {
-            this.Street = street;
-            this.Number = number?.Trim();
-            this.Complement = complement?.Trim();
-            this.IsManual = isManual;
-            this.Latitude = latitude;
-            this.Longitude = longitude;
-            this.IsGeoLocationUpdated = isGeoLocationUpdated;
+            this.Number = addressNumber?.Trim();
+            this.Complement = addressComplement?.Trim();
+            this.IsGeoLocationUpdated = false;
+            this.IsManual = IsManual;
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
+            this.UpdateStreet(country, stateUid, stateName, cityUid, cityName, neighborhoodUid, neighborhoodName, streetUid, streetName, streetZipCode, isManual, userId);
         }
 
         /// <summary>Initializes a new instance of the <see cref="Address"/> class.</summary>
@@ -65,26 +85,45 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Updates the specified number.</summary>
-        /// <param name="number">The number.</param>
-        /// <param name="complement">The complement.</param>
+        /// <summary>Updates the specified country.</summary>
+        /// <param name="country">The country.</param>
+        /// <param name="stateUid">The state uid.</param>
+        /// <param name="stateName">Name of the state.</param>
+        /// <param name="cityUid">The city uid.</param>
+        /// <param name="cityName">Name of the city.</param>
+        /// <param name="neighborhoodUid">The neighborhood uid.</param>
+        /// <param name="neighborhoodName">Name of the neighborhood.</param>
+        /// <param name="streetUid">The street uid.</param>
+        /// <param name="streetName">Name of the street.</param>
+        /// <param name="streetZipCode">The street zip code.</param>
+        /// <param name="addressNumber">The address number.</param>
+        /// <param name="addressComplement">The address complement.</param>
         /// <param name="isManual">if set to <c>true</c> [is manual].</param>
-        /// <param name="latitude">The latitude.</param>
-        /// <param name="longitude">The longitude.</param>
-        /// <param name="isGeoLocationUpdated">if set to <c>true</c> [is geo location updated].</param>
         /// <param name="userId">The user identifier.</param>
-        public void Update(string number, string complement, bool isManual, decimal? latitude, decimal? longitude, bool isGeoLocationUpdated, int userId)
+        public void Update(
+            Country country, 
+            Guid? stateUid, 
+            string stateName, 
+            Guid? cityUid, 
+            string cityName, 
+            Guid? neighborhoodUid, 
+            string neighborhoodName, 
+            Guid? streetUid, 
+            string streetName, 
+            string streetZipCode, 
+            string addressNumber, 
+            string addressComplement, 
+            bool isManual,
+            int userId)
         {
-            this.Number = number?.Trim();
-            this.Complement = complement?.Trim();
-            this.IsManual = isManual;
-            this.Latitude = latitude;
-            this.Longitude = longitude;
-            this.IsGeoLocationUpdated = isGeoLocationUpdated;
-            this.IsManual = isManual;
+            this.Number = addressNumber?.Trim();
+            this.Complement = addressComplement?.Trim();
+            this.IsGeoLocationUpdated = false;
+            this.IsManual = IsManual;
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
-            this.UpdateUserId = userId;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateUserId = this.UpdateUserId = userId;
+            this.UpdateStreet(country, stateUid, stateName, cityUid, cityName, neighborhoodUid, neighborhoodName, streetUid, streetName, streetZipCode, isManual, userId);
         }
 
         /// <summary>Deletes the specified user identifier.</summary>
@@ -94,34 +133,41 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
             this.IsDeleted = true;
-            //this.DeleteStreets(userId);
-
-            //if (this.FindAllStreetsNotDeleted()?.Any() == false)
-            //{
-            //    this.IsDeleted = true;
-            //}
         }
 
-        //#region Streets
+        #region Street
 
-        ///// <summary>Deletes the streets.</summary>
-        ///// <param name="userId">The user identifier.</param>
-        //private void DeleteStreets(int userId)
-        //{
-        //    foreach (var street in this.FindAllStreetsNotDeleted())
-        //    {
-        //        street?.Delete(userId);
-        //    }
-        //}
+        /// <summary>Updates the street.</summary>
+        /// <param name="country">The country.</param>
+        /// <param name="stateUid">The state uid.</param>
+        /// <param name="stateName">Name of the state.</param>
+        /// <param name="cityUid">The city uid.</param>
+        /// <param name="cityName">Name of the city.</param>
+        /// <param name="neighborhoodUid">The neighborhood uid.</param>
+        /// <param name="neighborhoodName">Name of the neighborhood.</param>
+        /// <param name="streetUid">The street uid.</param>
+        /// <param name="streetName">Name of the street.</param>
+        /// <param name="streetZipCode">The street zip code.</param>
+        /// <param name="isManual">if set to <c>true</c> [is manual].</param>
+        /// <param name="userId">The user identifier.</param>
+        private void UpdateStreet(
+            Country country, 
+            Guid? stateUid, 
+            string stateName, 
+            Guid? cityUid, 
+            string cityName,
+            Guid? neighborhoodUid, 
+            string neighborhoodName, 
+            Guid? streetUid, 
+            string streetName, 
+            string streetZipCode, 
+            bool isManual,
+            int userId)
+        {
+            this.Street = country?.FindStreet(stateUid, stateName, cityUid, cityName, neighborhoodUid, neighborhoodName, streetUid, streetName, streetZipCode, isManual, userId);
+        }
 
-        ///// <summary>Finds all streets not deleted.</summary>
-        ///// <returns></returns>
-        //private List<Street> FindAllStreetsNotDeleted()
-        //{
-        //    return this.Streets?.Where(c => !c.IsDeleted)?.ToList();
-        //}
-
-        //#endregion
+        #endregion
 
         #region Validations
 

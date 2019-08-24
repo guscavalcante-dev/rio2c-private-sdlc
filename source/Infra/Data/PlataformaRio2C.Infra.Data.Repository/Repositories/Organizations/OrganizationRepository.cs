@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-22-2019
+// Last Modified On : 08-24-2019
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -236,6 +236,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     Uid = h.Updater.Uid,
                                     Name = h.Updater.Name,
                                     Email =h.Updater.Email 
+                                },
+                                AddressBaseDto = new AddressBaseDto
+                                {
+                                    Id = h.Address.Id,
+                                    Uid = h.Address.Uid,
+                                    AddressNumber = h.Address.Number,
+                                    AddressComplement = h.Address.Complement,
+                                    StreetUid = h.Address.Street.Uid,
+                                    StreetName = h.Address.Street.Name, //TODO: Remove after dropdown implementation
+                                    StreetZipCode = h.Address.Street.ZipCode,
+                                    NeighborhoodUid = h.Address.Street.Neighborhood.Uid,
+                                    NeighborhoodName = h.Address.Street.Neighborhood.Name, //TODO: Remove after dropdown implementation
+                                    CityUid = h.Address.Street.Neighborhood.City.Uid,
+                                    StateUid = h.Address.Street.Neighborhood.City.State.Uid,
+                                    CountryUid = h.Address.Street.Neighborhood.City.State.Country.Uid,
                                 },
                                 DescriptionsDtos = h.Descriptions.Select(d => new OrganizationDescriptionDto
                                 {

@@ -15,7 +15,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
@@ -25,7 +24,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         //TODO: Missing data annotations on AddressBaseCommand
 
-        public Guid? AddressUid { get; set; }
         [Display(Name = "Number", ResourceType = typeof(Labels))]
         public string AddressNumber { get; set; }
         [Display(Name = "AddressComplement", ResourceType = typeof(Labels))]
@@ -55,11 +53,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<CountryBaseDto> CountriesBaseDtos { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="AddressBaseCommand"/> class.</summary>
-        /// <param name="address">The address.</param>
+        /// <param name="addressBaseDto">The address base dto.</param>
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
-        public AddressBaseCommand(Address address, List<CountryBaseDto> countriesBaseDtos)
+        public AddressBaseCommand(AddressBaseDto addressBaseDto, List<CountryBaseDto> countriesBaseDtos)
         {
-            this.UpdateBaseProperties(address, countriesBaseDtos);
+            this.UpdateBaseProperties(addressBaseDto, countriesBaseDtos);
         }
 
         /// <summary>Initializes a new instance of the <see cref="AddressBaseCommand"/> class.</summary>
@@ -68,18 +66,20 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         }
 
         /// <summary>Updates the base properties.</summary>
-        /// <param name="address">The address.</param>
+        /// <param name="addressBaseDto">The address base dto.</param>
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
-        private void UpdateBaseProperties(Address address, List<CountryBaseDto> countriesBaseDtos)
+        private void UpdateBaseProperties(AddressBaseDto addressBaseDto, List<CountryBaseDto> countriesBaseDtos)
         {
-            this.AddressUid = address?.Uid;
-            this.AddressNumber = address?.Number;
-            this.AddressComplement = address?.Complement;
-            this.StreetUid = address?.Street?.Uid;
-            this.NeighborhoodUid = address?.Street?.Neighborhood?.Uid;
-            this.CityUid = address?.Street?.Neighborhood?.City?.Uid;
-            this.StateUid = address?.Street?.Neighborhood?.City?.State?.Uid;
-            this.CountryUid = address?.Street?.Neighborhood?.City?.State?.Country?.Uid;
+            this.AddressNumber = addressBaseDto?.AddressNumber;
+            this.AddressComplement = addressBaseDto?.AddressComplement;
+            this.StreetUid = addressBaseDto?.StreetUid;
+            this.StreetZipCode = addressBaseDto?.StreetZipCode;
+            this.StreetName = addressBaseDto?.StreetName; //TODO: Remove after dropdown implementation
+            this.NeighborhoodUid = addressBaseDto?.NeighborhoodUid;
+            this.NeighborhoodName = addressBaseDto?.NeighborhoodName; //TODO: Remove after dropdown implementation
+            this.CityUid = addressBaseDto?.CityUid;
+            this.StateUid = addressBaseDto?.StateUid;
+            this.CountryUid = addressBaseDto?.CountryUid;
             this.UpdateDropdownProperties(countriesBaseDtos);
         }
 

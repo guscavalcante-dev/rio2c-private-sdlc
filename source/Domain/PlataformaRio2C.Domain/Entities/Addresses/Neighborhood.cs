@@ -4,7 +4,7 @@
 // Created          : 08-22-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-23-2019
+// Last Modified On : 08-24-2019
 // ***********************************************************************
 // <copyright file="Neighborhood.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -95,7 +96,71 @@ namespace PlataformaRio2C.Domain.Entities
         /// <returns></returns>
         private List<Street> FindAllStreetsNotDeleted()
         {
-            return this.Streets?.Where(c => !c.IsDeleted)?.ToList();
+            return this.Streets?.Where(s => !s.IsDeleted)?.ToList();
+        }
+
+        /// <summary>Finds the street not deleted by uid.</summary>
+        /// <param name="streetUid">The street uid.</param>
+        /// <returns></returns>
+        private Street FindStreetNotDeletedByUid(Guid streetUid)
+        {
+            return this.Streets?.FirstOrDefault(s => s.Uid == streetUid && !s.IsDeleted);
+        }
+
+        /// <summary>Finds the street not deleted by name and by zip code.</summary>
+        /// <param name="streetName">Name of the street.</param>
+        /// <param name="streetZipCode">The street zip code.</param>
+        /// <returns></returns>
+        private Street FindStreetNotDeletedByNameAndByZipCode(string streetName, string streetZipCode)
+        {
+            return this.Streets?.FirstOrDefault(s => s.Name.Trim().ToLowerInvariant() == streetName?.Trim()?.ToLowerInvariant() 
+                                                     && s.ZipCode.Trim().ToLowerInvariant() == streetZipCode?.Trim()?.ToLowerInvariant()
+                                                     && !s.IsDeleted);
+        }
+
+        /// <summary>Finds the or create street.</summary>
+        /// <param name="streetUid">The street uid.</param>
+        /// <param name="streetName">Name of the street.</param>
+        /// <param name="streetZipCode">The street zip code.</param>
+        /// <param name="isManual">if set to <c>true</c> [is manual].</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        private Street FindOrCreateStreet(Guid? streetUid, string streetName, string streetZipCode, bool isManual, int userId)
+        {
+            if (this.Streets == null)
+            {
+                this.Streets = new List<Street>();
+            }
+
+            Street street = null;
+            if (streetUid.HasValue)
+            {
+                street = this.FindStreetNotDeletedByUid(streetUid.Value);
+            }
+            else if (!string.IsNullOrEmpty(streetName?.Trim()))
+            {
+                street = this.FindStreetNotDeletedByNameAndByZipCode(streetName, streetZipCode) ??
+                               new Street(this, streetName, streetZipCode, isManual, userId);
+            }
+
+            if (street == null)
+            {
+                throw new DomainException("Could not create the neighborhood."); //TODO: Translate neighborhood error
+            }
+
+            return street;
+        }
+
+        /// <summary>Finds the street.</summary>
+        /// <param name="streetUid">The street uid.</param>
+        /// <param name="streetName">Name of the street.</param>
+        /// <param name="streetZipCode">The street zip code.</param>
+        /// <param name="isManual">if set to <c>true</c> [is manual].</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public Street FindStreet(Guid? streetUid, string streetName, string streetZipCode, bool isManual, int userId)
+        {
+            return this.FindOrCreateStreet(streetUid, streetName, streetZipCode, isManual, userId);
         }
 
         #endregion

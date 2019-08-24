@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-23-2019
+// Last Modified On : 08-24-2019
 // ***********************************************************************
 // <copyright file="PlayersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -194,7 +194,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    throw new DomainException();
+                    throw new DomainException(Messages.CorrectFormValues);
                 }
 
                 cmd.UpdatePreSendProperties(
@@ -207,10 +207,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
                 {
-                    throw new DomainException();
+                    throw new DomainException(Messages.CorrectFormValues);
                 }
             }
-            catch (DomainException)
+            catch (DomainException ex)
             {
                 foreach (var error in result.Errors)
                 {
@@ -225,7 +225,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = Messages.CorrectFormValues,
+                    message = ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
                         new { page = this.RenderRazorViewToString("Modals/_Form", cmd), divIdOrClass = "#form-container" },
@@ -290,7 +290,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    throw new DomainException();
+                    throw new DomainException(Messages.CorrectFormValues);
                 }
 
                 cmd.UpdatePreSendProperties(
@@ -303,10 +303,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
                 {
-                    throw new DomainException();
+                    throw new DomainException(Messages.CorrectFormValues);
                 }
             }
-            catch (DomainException)
+            catch (DomainException ex)
             {
                 foreach (var error in result.Errors)
                 {
@@ -321,7 +321,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = Messages.CorrectFormValues,
+                    message = ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
                         new { page = this.RenderRazorViewToString("Modals/_Form", cmd), divIdOrClass = "#form-container" },
@@ -353,7 +353,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    throw new DomainException();
+                    throw new DomainException(Messages.CorrectFormValues);
                 }
 
                 cmd.UpdatePreSendProperties(
@@ -367,10 +367,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
                 {
-                    throw new DomainException();
+                    throw new DomainException(Messages.CorrectFormValues);
                 }
             }
-            catch (DomainException)
+            catch (DomainException ex)
             {
                 foreach (var error in result.Errors)
                 {
@@ -381,7 +381,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = Messages.CorrectFormValues,
+                    message = ex.GetInnerMessage(),
                 }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

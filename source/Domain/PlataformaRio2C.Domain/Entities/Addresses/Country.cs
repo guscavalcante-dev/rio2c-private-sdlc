@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-23-2019
+// Last Modified On : 08-24-2019
 // ***********************************************************************
 // <copyright file="Country.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -99,6 +100,88 @@ namespace PlataformaRio2C.Domain.Entities
         private List<State> FindAllStatesNotDeleted()
         {
             return this.States?.Where(s => !s.IsDeleted)?.ToList();
+        }
+
+        /// <summary>Finds the state not deleted by uid.</summary>
+        /// <param name="stateUid">The state uid.</param>
+        /// <returns></returns>
+        private State FindStateNotDeletedByUid(Guid stateUid)
+        {
+            return this.States?.FirstOrDefault(s => s.Uid == stateUid && !s.IsDeleted);
+        }
+
+        /// <summary>Finds the name of the state not deleted by.</summary>
+        /// <param name="stateName">Name of the state.</param>
+        /// <returns></returns>
+        private State FindStateNotDeletedByName(string stateName)
+        {
+            return this.States?.FirstOrDefault(s => s.Name.Trim().ToLowerInvariant() == stateName?.Trim()?.ToLowerInvariant() && !s.IsDeleted);
+        }
+
+        /// <summary>Finds the state of the or create.</summary>
+        /// <param name="stateUid">The state uid.</param>
+        /// <param name="stateName">Name of the state.</param>
+        /// <param name="isManual">if set to <c>true</c> [is manual].</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        private State FindOrCreateState(Guid? stateUid, string stateName, bool isManual, int userId)
+        {
+            if (this.States == null)
+            {
+                this.States = new List<State>();
+            }
+
+            State state = null;
+            if (stateUid.HasValue)
+            {
+                state = this.FindStateNotDeletedByUid(stateUid.Value);
+            }
+            else if (!string.IsNullOrEmpty(stateName?.Trim()))
+            {
+                state = this.FindStateNotDeletedByName(stateName) ?? 
+                        new State(this, stateName, null, isManual, userId);
+            }
+
+            if (state == null)
+            {
+                throw new DomainException("Could not create the state."); //TODO: Translate country error
+            }
+
+            return state;
+        }
+
+        #endregion
+
+        #region Streets
+
+        /// <summary>Finds the street.</summary>
+        /// <param name="stateUid">The state uid.</param>
+        /// <param name="stateName">Name of the state.</param>
+        /// <param name="cityUid">The city uid.</param>
+        /// <param name="cityName">Name of the city.</param>
+        /// <param name="neighborhoodUid">The neighborhood uid.</param>
+        /// <param name="neighborhoodName">Name of the neighborhood.</param>
+        /// <param name="streetUid">The street uid.</param>
+        /// <param name="streetName">Name of the street.</param>
+        /// <param name="streetZipCode">The street zip code.</param>
+        /// <param name="isManual">if set to <c>true</c> [is manual].</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public Street FindStreet(
+            Guid? stateUid, 
+            string stateName, 
+            Guid? cityUid, 
+            string cityName, 
+            Guid? neighborhoodUid, 
+            string neighborhoodName, 
+            Guid? streetUid, 
+            string streetName, 
+            string streetZipCode, 
+            bool isManual,
+            int userId)
+        {
+            var state = this.FindOrCreateState(stateUid, stateName, isManual, userId);
+            return state?.FindStreet(cityUid, cityName, neighborhoodUid, neighborhoodName, streetUid, streetName, streetZipCode, isManual, userId);
         }
 
         #endregion

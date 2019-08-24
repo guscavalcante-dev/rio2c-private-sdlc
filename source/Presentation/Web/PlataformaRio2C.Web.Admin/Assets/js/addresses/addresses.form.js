@@ -19,22 +19,28 @@ var AddressesForm = function (formId) {
     var cityDataId = 'City';
 
     var countryUid = '#Address_CountryUid';
+    var initialstateUid = '#Address_InitialStateUid';
     var stateUid = '#Address_StateUid';
     var stateName = '#Address_StateName';
+    var initialCityUid = '#Address_InitialCityUid';
     var cityUid = '#Address_CityUid';
     var cityName = '#Address_CityName';
 
     var countryUidElement;
+    var initialStateUidElement;
     var stateUidElement;
     var stateNameElement;
+    var initialCityUidElement;
     var cityUidElement;
     var cityNameElement;
 
     // Init elements ------------------------------------------------------------------------------
     var initElements = function () {
         countryUidElement = $(countryUid);
+        initialStateUidElement = $(initialstateUid);
         stateUidElement = $(stateUid);
         stateNameElement = $(stateName);
+        initialCityUidElement = $(initialCityUid);
         cityUidElement = $(cityUid);
         cityNameElement = $(cityName);
     };
@@ -64,13 +70,27 @@ var AddressesForm = function (formId) {
         return false;
     };
 
+    var disableNewState = function () {
+        cityNameElement.val('').trigger('change');
+        MyRio2cCommon.disableFieldEdit({ dataId: stateDataId });
+
+        return false;
+    };
+
     var toggleNewStateButton = function () {
         if (MyRio2cCommon.isNullOrEmpty(countryUidElement.val())) {
             $('[data-id="' + stateDataId + '"] .btn-edit').addClass('disabled');
-            MyRio2cCommon.disableFieldEdit({ dataId: stateDataId });
+
+            if (MyRio2cCommon.isNullOrEmpty(stateNameElement.val())) {
+                MyRio2cCommon.disableFieldEdit({ dataId: stateDataId });
+            }
         }
         else {
             $('[data-id="' + stateDataId + '"] .btn-edit').removeClass('disabled');
+
+            //if (!MyRio2cCommon.isNullOrEmpty(stateNameElement.val())) {
+            //    MyRio2cCommon.enableFieldEdit({ dataId: stateDataId });
+            //}
         }
     };
 
@@ -87,7 +107,11 @@ var AddressesForm = function (formId) {
         stateUidElement.prop("disabled", true);
     };
 
-    var enableStateSelect2 = function () {
+    var enableStateSelect2 = function (isParentChanged) {
+        if (!MyRio2cCommon.isNullOrEmpty(isParentChanged) && isParentChanged === true) {
+            stateUidElement.val('').trigger('change');
+        }
+
         var countryUid = countryUidElement.val();
 
         if (MyRio2cCommon.isNullOrEmpty(countryUid)) {
@@ -124,14 +148,22 @@ var AddressesForm = function (formId) {
                             }
                         }
 
-                        stateUidElement.val('').trigger('change');
-
                         stateUidElement.empty().select2({
+                            width: '100%',
                             placeholder: labels.selectPlaceholder,
                             triggerChange: true,
                             allowClear: true,
                             data: statesData
                         });
+
+                        var initialStateNameValue = stateNameElement.val();
+                        var initialStateUidValue = initialStateUidElement.val();
+                        if (!MyRio2cCommon.isNullOrEmpty(initialStateNameValue)) {
+                            enableNewState();
+                        }
+                        else if (!MyRio2cCommon.isNullOrEmpty(initialStateUidValue)) {
+                            stateUidElement.val(initialStateUidValue).trigger('change');
+                        }
 
                         stateUidElement.prop("disabled", false);
                     },
@@ -158,13 +190,27 @@ var AddressesForm = function (formId) {
         return false;
     };
 
+    var disableNewCity = function () {
+        //neighborhoodNameElement.val('').trigger('change');
+        MyRio2cCommon.disableFieldEdit({ dataId: cityDataId });
+
+        return false;
+    };
+
     var toggleNewCityButton = function () {
         if (MyRio2cCommon.isNullOrEmpty(stateUidElement.val()) && MyRio2cCommon.isNullOrEmpty(stateNameElement.val())) {
             $('[data-id="' + cityDataId + '"] .btn-edit').addClass('disabled');
-            MyRio2cCommon.disableFieldEdit({ dataId: cityDataId });
+
+            if (MyRio2cCommon.isNullOrEmpty(cityNameElement.val())) {
+                MyRio2cCommon.disableFieldEdit({ dataId: cityDataId });
+            }
         }
         else {
             $('[data-id="' + cityDataId + '"] .btn-edit').removeClass('disabled');
+
+            //if (!MyRio2cCommon.isNullOrEmpty(cityNameElement.val())) {
+            //    MyRio2cCommon.enableFieldEdit({ dataId: cityDataId });
+            //}
         }
     };
 
@@ -181,7 +227,11 @@ var AddressesForm = function (formId) {
         cityUidElement.prop("disabled", true);
     };
 
-    var enableCitySelect2 = function () {
+    var enableCitySelect2 = function (isParentChanged) {
+        if (!MyRio2cCommon.isNullOrEmpty(isParentChanged) && isParentChanged === true) {
+            cityUidElement.val('').trigger('change');
+        }
+
         var stateUid = stateUidElement.val();
 
         if (MyRio2cCommon.isNullOrEmpty(stateUid)) {
@@ -217,14 +267,22 @@ var AddressesForm = function (formId) {
                             }
                         }
 
-                        cityUidElement.val('').trigger('change');
-
                         cityUidElement.empty().select2({
+                            width: '100%',
                             placeholder: labels.selectPlaceholder,
                             triggerChange: true,
                             allowClear: true,
                             data: citiesData
                         });
+
+                        var initialCityNameValue = cityNameElement.val();
+                        var initialCityUidValue = initialCityUidElement.val();
+                        if (!MyRio2cCommon.isNullOrEmpty(initialCityNameValue)) {
+                            enableNewCity();
+                        }
+                        else if (!MyRio2cCommon.isNullOrEmpty(initialCityUidValue)) {
+                            cityUidElement.val(initialCityUidValue).trigger('change');
+                        }
 
                         cityUidElement.prop("disabled", false);
                     },
@@ -245,14 +303,14 @@ var AddressesForm = function (formId) {
 
     var enableSelect2 = function () {
         enableCountrySelect2();
-        enableStateSelect2();
-        enableCitySelect2();
+        enableStateSelect2(false);
+        enableCitySelect2(false);
     };
 
     // Enable change events -----------------------------------------------------------------------
     var enableCountryChangeEvent = function() {
         countryUidElement.not('.change-event-enabled').on('change', function() {
-            enableStateSelect2();
+            enableStateSelect2(true);
             toggleNewStateButton();
         });
         countryUidElement.addClass('change-event-enabled');
@@ -260,7 +318,7 @@ var AddressesForm = function (formId) {
 
     var enableStateChangeEvent = function () {
         stateUidElement.not('.change-event-enabled').on('change', function () {
-            enableCitySelect2();
+            enableCitySelect2(true);
             toggleNewCityButton();
         });
         stateUidElement.addClass('change-event-enabled');
@@ -306,8 +364,14 @@ var AddressesForm = function (formId) {
         enableNewState: function () {
             return enableNewState();
         },
+        disableNewState: function() {
+            return disableNewState();
+        },
         enableNewCity: function () {
             return enableNewCity();
+        },
+        disableNewCity: function () {
+            return disableNewCity();
         }
     };
 }();

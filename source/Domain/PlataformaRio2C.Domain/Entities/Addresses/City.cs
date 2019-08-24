@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-23-2019
+// Last Modified On : 08-24-2019
 // ***********************************************************************
 // <copyright file="City.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -95,7 +96,74 @@ namespace PlataformaRio2C.Domain.Entities
         /// <returns></returns>
         private List<Neighborhood> FindAllNeighborhoodsNotDeleted()
         {
-            return this.Neighborhoods?.Where(c => !c.IsDeleted)?.ToList();
+            return this.Neighborhoods?.Where(n => !n.IsDeleted)?.ToList();
+        }
+
+        /// <summary>Finds the neighborhood not deleted by uid.</summary>
+        /// <param name="neighborhoodUid">The neighborhood uid.</param>
+        /// <returns></returns>
+        private Neighborhood FindNeighborhoodNotDeletedByUid(Guid neighborhoodUid)
+        {
+            return this.Neighborhoods?.FirstOrDefault(n => n.Uid == neighborhoodUid && !n.IsDeleted);
+        }
+
+        /// <summary>Finds the name of the neighborhood not deleted by.</summary>
+        /// <param name="neighborhoodName">Name of the neighborhood.</param>
+        /// <returns></returns>
+        private Neighborhood FindNeighborhoodNotDeletedByName(string neighborhoodName)
+        {
+            return this.Neighborhoods?.FirstOrDefault(n => n.Name.Trim().ToLowerInvariant() == neighborhoodName?.Trim()?.ToLowerInvariant() && !n.IsDeleted);
+        }
+
+        /// <summary>Finds the or create neighborhood.</summary>
+        /// <param name="neighborhoodUid">The neighborhood uid.</param>
+        /// <param name="neighborhoodName">Name of the neighborhood.</param>
+        /// <param name="isManual">if set to <c>true</c> [is manual].</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        private Neighborhood FindOrCreateNeighborhood(Guid? neighborhoodUid, string neighborhoodName, bool isManual, int userId)
+        {
+            if (this.Neighborhoods == null)
+            {
+                this.Neighborhoods = new List<Neighborhood>();
+            }
+
+            Neighborhood neighborhood = null;
+            if (neighborhoodUid.HasValue)
+            {
+                neighborhood = this.FindNeighborhoodNotDeletedByUid(neighborhoodUid.Value);
+            }
+            else if (!string.IsNullOrEmpty(neighborhoodName?.Trim()))
+            {
+                neighborhood = this.FindNeighborhoodNotDeletedByName(neighborhoodName) ??
+                               new Neighborhood(this, neighborhoodName, isManual, userId);
+            }
+
+            if (neighborhood == null)
+            {
+                throw new DomainException("Could not create the neighborhood."); //TODO: Translate city error
+            }
+
+            return neighborhood;
+        }
+
+        #endregion
+
+        #region Streets
+
+        /// <summary>Finds the street.</summary>
+        /// <param name="neighborhoodUid">The neighborhood uid.</param>
+        /// <param name="neighborhoodName">Name of the neighborhood.</param>
+        /// <param name="streetUid">The street uid.</param>
+        /// <param name="streetName">Name of the street.</param>
+        /// <param name="streetZipCode">The street zip code.</param>
+        /// <param name="isManual">if set to <c>true</c> [is manual].</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public Street FindStreet(Guid? neighborhoodUid, string neighborhoodName, Guid? streetUid, string streetName, string streetZipCode, bool isManual, int userId)
+        {
+            var neighborhood = this.FindOrCreateNeighborhood(neighborhoodUid, neighborhoodName, isManual, userId);
+            return neighborhood?.FindStreet(streetUid, streetName, streetZipCode, isManual, userId);
         }
 
         #endregion
