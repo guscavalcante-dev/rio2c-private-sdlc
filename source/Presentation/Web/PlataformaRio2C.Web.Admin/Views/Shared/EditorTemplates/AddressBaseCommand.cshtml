@@ -3,16 +3,8 @@
 <div class="form-group row">
     <div class="col-md-8" data-id="Country">
         @Html.LabelFor(m => m.CountryUid, new { @class = "control-label" })
-        <div class="view">
-            @Html.DropDownList("CountryUid", new SelectList(Model.CountriesBaseDtos, "Uid", "Name", Model.CountryUid), $"{Labels.Select}...", new { @class = "form-control" })
-            <span class="form-text text-muted text-right"><a href="" onclick="return AddressesForm.enableNewCountry();" class="btn-link btn-edit">@(Labels.NewM.ToLowerInvariant()) @(Labels.Country.ToLowerInvariant())</a></span>
-            @Html.ValidationMessageFor(m => m.CountryUid, "", new { @class = "text-danger" })
-        </div>
-        <div class="edit d-none">
-            @Html.TextBoxFor(m => m.CountryName, new { @class = "form-control" })
-            <span class="form-text text-muted text-right"><a href="" onclick="return MyRio2cCommon.disableFieldEdit({ dataId: 'Country' });" class="btn-link">@(Labels.Cancel.ToLowerInvariant())</a></span>
-            @Html.ValidationMessageFor(m => m.CountryName, "", new { @class = "text-danger" })
-        </div>
+        @Html.DropDownList("CountryUid", new SelectList(Model.CountriesBaseDtos, "Uid", "Name", Model.CountryUid), $"{Labels.Select}...", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CountryUid, "", new { @class = "text-danger" })
     </div>
     <div class="col-md-4">
         @Html.LabelFor(m => m.StreetZipCode, new { @class = "control-label" })

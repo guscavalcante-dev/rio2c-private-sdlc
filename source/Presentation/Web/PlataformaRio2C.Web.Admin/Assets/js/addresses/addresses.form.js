@@ -4,7 +4,7 @@
 // Created          : 08-23-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-23-2019
+// Last Modified On : 08-24-2019
 // ***********************************************************************
 // <copyright file="addresses.form.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,14 +19,12 @@ var AddressesForm = function (formId) {
     var cityDataId = 'City';
 
     var countryUid = '#Address_CountryUid';
-    var countryName = '#Address_CountryName';
     var stateUid = '#Address_StateUid';
     var stateName = '#Address_StateName';
     var cityUid = '#Address_CityUid';
     var cityName = '#Address_CityName';
 
     var countryUidElement;
-    var countryNameElement;
     var stateUidElement;
     var stateNameElement;
     var cityUidElement;
@@ -35,7 +33,6 @@ var AddressesForm = function (formId) {
     // Init elements ------------------------------------------------------------------------------
     var initElements = function () {
         countryUidElement = $(countryUid);
-        countryNameElement = $(countryName);
         stateUidElement = $(stateUid);
         stateNameElement = $(stateName);
         cityUidElement = $(cityUid);
@@ -68,7 +65,7 @@ var AddressesForm = function (formId) {
     };
 
     var toggleNewStateButton = function () {
-        if (MyRio2cCommon.isNullOrEmpty(countryUidElement.val()) && MyRio2cCommon.isNullOrEmpty(countryNameElement.val())) {
+        if (MyRio2cCommon.isNullOrEmpty(countryUidElement.val())) {
             $('[data-id="' + stateDataId + '"] .btn-edit').addClass('disabled');
             MyRio2cCommon.disableFieldEdit({ dataId: stateDataId });
         }
@@ -259,11 +256,6 @@ var AddressesForm = function (formId) {
             toggleNewStateButton();
         });
         countryUidElement.addClass('change-event-enabled');
-
-        countryNameElement.not('.change-event-enabled').on('change keyup', function () {
-            toggleNewStateButton();
-        });
-        countryNameElement.addClass('change-event-enabled');
     };
 
     var enableStateChangeEvent = function () {
