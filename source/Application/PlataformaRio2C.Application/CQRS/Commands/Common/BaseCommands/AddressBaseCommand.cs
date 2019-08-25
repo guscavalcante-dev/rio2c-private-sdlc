@@ -4,7 +4,7 @@
 // Created          : 08-23-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-24-2019
+// Last Modified On : 08-25-2019
 // ***********************************************************************
 // <copyright file="AddressBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,24 +24,28 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>AddressBaseCommand</summary>
     public class AddressBaseCommand
     {
+        // Number
         [Display(Name = "Number", ResourceType = typeof(Labels))]
         [RequiredIfNotEmpty("CountryUid", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(16, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string AddressNumber { get; set; }
         [Display(Name = "AddressComplement", ResourceType = typeof(Labels))]
 
+        // Complement
         [StringLength(40, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string AddressComplement { get; set; }
 
+        // Street
         [Display(Name = "StreetName", ResourceType = typeof(Labels))]
-        [RequiredIfNotEmpty("CountryUid", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "StreetName")]
         public Guid? StreetUid { get; set; }
 
         [Display(Name = "StreetName", ResourceType = typeof(Labels))]
-        [RequiredIfNotEmpty("CountryUid", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "StreetUid")]
         [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string StreetName { get; set; }
 
+        // ZipCode
         [Display(Name = "ZipCode", ResourceType = typeof(Labels))]
         [RequiredIfNotEmpty("CountryUid", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(10, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]

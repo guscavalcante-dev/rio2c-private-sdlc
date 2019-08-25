@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-23-2019
+// Last Modified On : 08-25-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -87,29 +87,6 @@ namespace PlataformaRio2C.Web.Admin
                 .Include("~/Assets/themes/metronic/vendors/general/socicon/css/socicon.css", new CssRewriteUrlTransform())
                 .Include("~/Assets/themes/metronic/vendors/custom/vendors/line-awesome/css/line-awesome.css", new CssRewriteUrlTransform())
                 .Include("~/Assets/themes/metronic/vendors/general/fortawesome/fontawesome-free/css/all.min.css", new CssRewriteUrlTransform()));
-
-            /*
-                <!--begin:: Global Optional Vendors -->
-                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/tether/dist/css/tether.css" />
-                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" />
-                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/bootstrap-datetime-picker/css/bootstrap-datetimepicker.css" />
-                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/bootstrap-timepicker/css/bootstrap-timepicker.css" />
-                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/bootstrap-daterangepicker/daterangepicker.css" />
-                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.css" />
-                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/bootstrap-select/dist/css/bootstrap-select.css" />
-                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" />
-                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/select2/dist/css/select2.css" />
-                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/ion-rangeslider/css/ion.rangeSlider.css" />
-                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/nouislider/distribute/nouislider.css" />
-                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/dropzone/dist/dropzone.css" />
-                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/summernote/dist/summernote.css" />
-                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/bootstrap-markdown/css/bootstrap-markdown.min.css" />
-                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/animate.css/animate.css" />
-                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/toastr/build/toastr.css" />
-                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/morris.js/morris.css" />
-                <link rel="stylesheet" type="text/css" href="~/Assets/themes/metronic/vendors/general/sweetalert2/dist/sweetalert2.css" />
-                <!--end:: Global Optional Vendors -->
-             */
 
             #endregion
 
@@ -218,7 +195,8 @@ namespace PlataformaRio2C.Web.Admin
                 .Include("~/Assets/themes/metronic/vendors/general/select2/dist/css/select2.css"/*, new CssRewriteUrlTransform()*/));
 
             bundles.Add(new ScriptBundle("~/bundles/js/select2.js").Include(
-                "~/Assets/themes/metronic/vendors/general/select2/dist/js/select2.js"));
+                "~/Assets/themes/metronic/vendors/general/select2/dist/js/select2.js",
+                "~/Assets/themes/metronic/vendors/general/select2/dist/js/i18n/pt-BR.js"));
 
             #endregion
 

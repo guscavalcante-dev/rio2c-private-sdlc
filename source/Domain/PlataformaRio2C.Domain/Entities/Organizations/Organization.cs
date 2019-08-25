@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-24-2019
+// Last Modified On : 08-25-2019
 // ***********************************************************************
 // <copyright file="Organization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -280,7 +280,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             if (country == null)
             {
-                this.Address.Delete(userId);
+                this.Address?.Delete(userId);
             }
             else if (this.Address == null)
             {

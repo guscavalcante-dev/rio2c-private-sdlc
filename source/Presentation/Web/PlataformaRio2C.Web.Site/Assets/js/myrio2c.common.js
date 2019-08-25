@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-24-2019
+// Last Modified On : 08-25-2019
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,10 +17,12 @@ var MyRio2cCommon = function () {
     // Global Variables --------------------------------------------------------------------------
     var globalVariables = new Object();
     globalVariables.userInterfaceLanguage = '';
+    globalVariables.userInterfaceLanguageUppercase = '';
     globalVariables.editionUrlCode = '';
 
     var setGlobalVariables = function (userInterfaceLanguage, editionUrlCode) {
         globalVariables.userInterfaceLanguage = userInterfaceLanguage;
+        globalVariables.userInterfaceLanguageUppercade = MyRio2cCommon.getCultureUppercase(userInterfaceLanguage);
         globalVariables.editionUrlCode = editionUrlCode;
     };
 
@@ -92,6 +94,20 @@ var MyRio2cCommon = function () {
         return urlPrefix + url;
     };
 
+    var getCultureUppercase = function (culture) {
+        if (isNullOrEmpty(culture)) {
+            return '';
+        }
+
+        var split = culture.split('-');
+        if (split.length === 1) {
+            return culture;
+        }
+        else {
+            return split[0] + '-' + split[1].toUpperCase();
+        }
+    };
+
     // Forms --------------------------------------------------------------------------------------
     var enableCustomValidation = function () {
         jQuery.validator.addMethod("requiredifonenotemptyandotherempty", function (value, element, params) {
@@ -156,7 +172,10 @@ var MyRio2cCommon = function () {
             options.inputIdOrClass = '.enable-select2';
         }
 
-        $(options.inputIdOrClass).select2({ width: '100%' });
+        $(options.inputIdOrClass).select2({
+            language: globalVariables.userInterfaceLanguageUppercade,
+            width: '100%'
+        });
     };
 
     // Hide/Show Element --------------------------------------------------------------------------
@@ -199,6 +218,8 @@ var MyRio2cCommon = function () {
                 show(showElement);
             }
         }
+
+        return false;
     };
 
     var enableFieldEdit = function (options) {
@@ -257,7 +278,7 @@ var MyRio2cCommon = function () {
         }
 
         var data = options.data;
-        
+
         // Undefined Error (no data.status)
         if (!hasProperty(data, 'status') || isNullOrEmpty(data.status)) {
             data.status = 'error';
@@ -266,11 +287,11 @@ var MyRio2cCommon = function () {
         if (data.status === "success") {
             // Redirect
             if (hasProperty(data, 'redirect') && !isNullOrEmpty(data.redirect)) {
-                showAlert({
+                MyRio2cCommon.showAlert({
                     message: data.message + " " + redirectMessage,
                     messageType: data.status,
                     isFixed: data.isFixed,
-                    callbackOnHidden: function() {
+                    callbackOnHidden: function () {
                         window.location.replace(data.redirect);
                     }
                 });
@@ -280,7 +301,7 @@ var MyRio2cCommon = function () {
 
             // Submit search form
             if (hasProperty(options, 'searchFormIdOrClass') && !isNullOrEmpty(options.searchFormIdOrClass)) {
-                showAlert({
+                MyRio2cCommon.showAlert({
                     message: data.message + " " + redirectMessage,
                     messageType: data.status,
                     isFixed: data.isFixed,
@@ -294,7 +315,7 @@ var MyRio2cCommon = function () {
 
             //// Hide modal
             //if (typeof modalDivIdOrClass !== "undefined" && modalDivIdOrClass != null && modalDivIdOrClass != '') {
-            //    showAlert(data.message, data.status, data.isFixed);
+            //    MyRio2cCommon.showAlert(data.message, data.status, data.isFixed);
             //    $(modalDivIdOrClass).modal('hide');
 
             //    if (typeof callbackSuccess !== "undefined" && callbackSuccess != null && callbackSuccess != '') {
@@ -305,7 +326,7 @@ var MyRio2cCommon = function () {
 
             // Replace pages
             if (hasProperty(data, 'pages') && !isNullOrEmpty(data.pages)) {
-                showAlert({ message: data.message, messageType: data.status, isFixed: data.isFixed });
+                MyRio2cCommon.showAlert({ message: data.message, messageType: data.status, isFixed: data.isFixed });
 
                 $.each(data.pages, function (key, value) {
                     $(value.divIdOrClass).html(value.page);
@@ -320,7 +341,7 @@ var MyRio2cCommon = function () {
             }
 
             if (hasProperty(options, 'formDivIdOrClass') && !isNullOrEmpty(options.formDivIdOrClass)) {
-                showAlert({ message: data.message, messageType: data.status, isFixed: data.isFixed });
+                MyRio2cCommon.showAlert({ message: data.message, messageType: data.status, isFixed: data.isFixed });
 
                 if (typeof data.page !== "undefined" && data.page != null && data.page !== '') {
                     $(options.formDivIdOrClass).html(data.page);
@@ -337,12 +358,12 @@ var MyRio2cCommon = function () {
             }
 
             if (hasProperty(options, 'onSuccess')) {
-                showAlert({ message: data.message, messageType: data.status, isFixed: data.isFixed });
+                MyRio2cCommon.showAlert({ message: data.message, messageType: data.status, isFixed: data.isFixed });
 
                 return options.onSuccess();
             }
 
-            showAlert({ message: data.message, messageType: data.status, isFixed: data.isFixed });
+            MyRio2cCommon.showAlert({ message: data.message, messageType: data.status, isFixed: data.isFixed });
 
             return null;
         }
@@ -351,12 +372,12 @@ var MyRio2cCommon = function () {
         if (data.status === "error") {
             // User is not logged in
             if (hasProperty(data, 'redirect') && !isNullOrEmpty(data.redirect)) {
-                showAlert({
+                MyRio2cCommon.showAlert({
                     message: data.message + " " + redirectMessage,
                     messageType: data.status,
                     isFixed: data.isFixed,
-                    callbackOnHidden: function() {
-                        if (data.redirect.toLowerCase() == "/accounts/login")
+                    callbackOnHidden: function () {
+                        if (data.redirect.toLowerCase() === "/accounts/login")
                             window.location.replace(data.redirect +
                                 "?ReturnUrl=" +
                                 encodeURIComponent(window.location.pathname) +
@@ -370,7 +391,7 @@ var MyRio2cCommon = function () {
             }
 
             if (hasProperty(data, 'pages') && !isNullOrEmpty(data.pages)) {
-                showAlert({ message: data.message, messageType: data.status, isFixed: data.isFixed });
+                MyRio2cCommon.showAlert({ message: data.message, messageType: data.status, isFixed: data.isFixed });
 
                 $.each(data.pages, function (key, value) {
                     $(value.divIdOrClass).html(value.page);
@@ -385,8 +406,8 @@ var MyRio2cCommon = function () {
             }
 
             // Form with error
-            if (hasProperty(options, 'formDivIdOrClass') && !isNullOrEmpty(options.formDivIdOrClass) && hasProperty(data, 'page') && !isNullOrEmpty(data.page) ) {
-                showAlert({ message: data.message, messageType: data.status, isFixed: data.isFixed });
+            if (hasProperty(options, 'formDivIdOrClass') && !isNullOrEmpty(options.formDivIdOrClass) && hasProperty(data, 'page') && !isNullOrEmpty(data.page)) {
+                MyRio2cCommon.showAlert({ message: data.message, messageType: data.status, isFixed: data.isFixed });
 
                 $(options.formDivIdOrClass).html(data.page);
 
@@ -394,20 +415,21 @@ var MyRio2cCommon = function () {
                     return options.onError();
                 }
 
-                return;
+                return null;
             }
 
             if (hasProperty(options, 'onError')) {
-                showAlert({ message: data.message, messageType: data.status, isFixed: data.isFixed });
+                MyRio2cCommon.showAlert({ message: data.message, messageType: data.status, isFixed: data.isFixed });
 
                 return options.onError();
             }
 
-            showAlert({ message: data.message, messageType: data.status, isFixed: data.isFixed });
+            MyRio2cCommon.showAlert({ message: data.message, messageType: data.status, isFixed: data.isFixed });
 
             return null;
         }
 
+        return null;
         //showAlert();
     };
 
@@ -423,7 +445,7 @@ var MyRio2cCommon = function () {
         }
 
         $(options.idOrClass).each(function () {
-            var ck = CKEDITOR.replace($(this)[0], {
+            CKEDITOR.replace($(this)[0], {
                 customConfig: '/Content/js/ckeditor_config.js'
             });
         });
@@ -434,8 +456,10 @@ var MyRio2cCommon = function () {
             return;
         }
 
-        for (instance in CKEDITOR.instances) {
-            CKEDITOR.instances[instance].updateElement();
+        for (var instance in CKEDITOR.instances) {
+            if (CKEDITOR.instances.hasOwnProperty(instance)) {
+                CKEDITOR.instances[instance].updateElement();
+            }
         }
     };
 
@@ -580,7 +604,7 @@ var MyRio2cCommon = function () {
                 fixSelect2Modal();
             });
         },
-        getGlobalVariables: function() {
+        getGlobalVariables: function () {
             return getGlobalVariables();
         },
         hasProperty: function (obj, key) {
@@ -588,6 +612,15 @@ var MyRio2cCommon = function () {
         },
         isNullOrEmpty: function (value) {
             return isNullOrEmpty(value);
+        },
+        enableFormValidation: function (options) {
+            enableFormValidation(options);
+        },
+        enableSelect2: function (options) {
+            enableSelect2(options);
+        },
+        hide: function (element) {
+            hide(element);
         },
         show: function (element) {
             show(element);
@@ -601,17 +634,11 @@ var MyRio2cCommon = function () {
         disableFieldEdit: function (options) {
             return disableFieldEdit(options);
         },
-        enableFormValidation: function (options) {
-            enableFormValidation(options);
-        },
-        enableSelect2: function (options) {
-            enableSelect2(options);
-        },
-        hide: function (element) {
-            hide(element);
-        },
         getUrlWithCultureAndEdition: function (url) {
             return getUrlWithCultureAndEdition(url);
+        },
+        getCultureUppercase: function (culture) {
+            return getCultureUppercase(culture);
         },
         block: function (options) {
             block(options);
@@ -622,10 +649,10 @@ var MyRio2cCommon = function () {
         handleAjaxReturn: function (options) {
             return handleAjaxReturn(options);
         },
-        enableCkEditor: function(options) {
+        enableCkEditor: function (options) {
             enableCkEditor(options);
         },
-        updateCkEditorElements: function() {
+        updateCkEditorElements: function () {
             updateCkEditorElements();
         },
         enableAjaxForm: function (options) {

@@ -4,7 +4,7 @@
 // Created          : 08-23-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-24-2019
+// Last Modified On : 08-25-2019
 // ***********************************************************************
 // <copyright file="addresses.form.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,7 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 
-var AddressesForm = function (formId) {
+var AddressesForm = function () {
 
     var countryDataId = 'Country';
     var stateDataId = 'State';
@@ -34,6 +34,8 @@ var AddressesForm = function (formId) {
     var cityUidElement;
     var cityNameElement;
 
+    var userInterfaceLanguage = 'en';
+
     // Init elements ------------------------------------------------------------------------------
     var initElements = function () {
         countryUidElement = $(countryUid);
@@ -43,6 +45,9 @@ var AddressesForm = function (formId) {
         initialCityUidElement = $(initialCityUid);
         cityUidElement = $(cityUid);
         cityNameElement = $(cityName);
+
+        var globalVariables = MyRio2cCommon.getGlobalVariables();
+        userInterfaceLanguage = globalVariables.userInterfaceLanguageUppercade;
     };
 
     // Country select2 ----------------------------------------------------------------------------
@@ -55,6 +60,7 @@ var AddressesForm = function (formId) {
 
     var enableCountrySelect2 = function () {
         countryUidElement.select2({
+            language: userInterfaceLanguage,
             width: '100%',
             placeholder: labels.selectPlaceholder,
             triggerChange: true,
@@ -98,6 +104,7 @@ var AddressesForm = function (formId) {
         stateUidElement.val('').trigger('change');
 
         stateUidElement.select2({
+            language: userInterfaceLanguage,
             width: '100%',
             placeholder: labels.selectPlaceholder,
             data: []
@@ -149,6 +156,7 @@ var AddressesForm = function (formId) {
                         }
 
                         stateUidElement.empty().select2({
+                            language: userInterfaceLanguage,
                             width: '100%',
                             placeholder: labels.selectPlaceholder,
                             triggerChange: true,
@@ -218,6 +226,7 @@ var AddressesForm = function (formId) {
         cityUidElement.val('').trigger('change');
 
         cityUidElement.select2({
+            language: userInterfaceLanguage,
             width: '100%',
             placeholder: labels.selectPlaceholder,
             data: []
@@ -268,6 +277,7 @@ var AddressesForm = function (formId) {
                         }
 
                         cityUidElement.empty().select2({
+                            language: userInterfaceLanguage,
                             width: '100%',
                             placeholder: labels.selectPlaceholder,
                             triggerChange: true,
