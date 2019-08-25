@@ -30,7 +30,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Attributes
         /// <param name="dependentPropertyNotEmpty">The dependent property not empty.</param>
         /// <param name="dependentPropertyEmpty">The dependent property empty.</param>
         /// <param name="errorMessage">The error message.</param>
-        public RequiredIfOneNotEmptyAndOtherEmptyAttribute(string dependentPropertyNotEmpty, string dependentPropertyEmpty, string errorMessage)
+        public RequiredIfOneNotEmptyAndOtherEmptyAttribute(string dependentPropertyNotEmpty, string dependentPropertyEmpty, string errorMessage = null)
             : base(errorMessage)
         {
             this.dependentPropertyNotEmpty = dependentPropertyNotEmpty;

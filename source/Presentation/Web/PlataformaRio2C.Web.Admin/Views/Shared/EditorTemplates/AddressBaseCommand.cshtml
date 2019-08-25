@@ -19,13 +19,12 @@
             @Html.Hidden("InitialStateUid", Model.StateUid)
             @Html.DropDownList("StateUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new {@class = "form-control"})
             <span class="form-text text-muted text-right"><a href="" onclick="return AddressesForm.enableNewState();" class="btn-link btn-edit">@(Labels.NewM.ToLowerInvariant()) @(Labels.State.ToLowerInvariant())</a></span>
-            @Html.ValidationMessageFor(m => m.StateUid, "", new {@class = "text-danger"})
         </div>
         <div class="edit d-none">
             @Html.TextBoxFor(m => m.StateName, new { @class = "form-control" })
             <span class="form-text text-muted text-right"><a href="" onclick="return AddressesForm.disableNewState();" class="btn-link">@(Labels.Cancel.ToLowerInvariant())</a></span>
-            @Html.ValidationMessageFor(m => m.StateName, "", new { @class = "text-danger" })
         </div>
+        @Html.ValidationMessageFor(m => m.StateName, "", new { @class = "text-danger" })
     </div>
     <div class="col-md-6" data-id="City">
         @Html.LabelFor(m => m.CityUid, new { @class = "control-label" })
@@ -33,12 +32,10 @@
             @Html.Hidden("InitialCityUid", Model.CityUid)
             @Html.DropDownList("CityUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control" })
             <span class="form-text text-muted text-right"><a href="" onclick="return AddressesForm.enableNewCity();" class="btn-link btn-edit">@(Labels.NewF.ToLowerInvariant()) @(Labels.City.ToLowerInvariant())</a></span>
-            @Html.ValidationMessageFor(m => m.CityUid, "", new { @class = "text-danger" })
         </div>
         <div class="edit d-none">
             @Html.TextBoxFor(m => m.CityName, new { @class = "form-control" })
             <span class="form-text text-muted text-right"><a href="" onclick="return AddressesForm.disableNewCity();" class="btn-link">@(Labels.Cancel.ToLowerInvariant())</a></span>
-            @Html.ValidationMessageFor(m => m.CityName, "", new { @class = "text-danger" })
         </div>
         @Html.ValidationMessageFor(m => m.CityName, "", new { @class = "text-danger" })
     </div>

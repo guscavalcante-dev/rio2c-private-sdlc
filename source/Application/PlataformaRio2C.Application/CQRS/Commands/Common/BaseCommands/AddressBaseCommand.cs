@@ -26,9 +26,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         [Display(Name = "Number", ResourceType = typeof(Labels))]
         [RequiredIfNotEmpty("CountryUid", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [StringLength(16, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string AddressNumber { get; set; }
         [Display(Name = "AddressComplement", ResourceType = typeof(Labels))]
 
+        [StringLength(40, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string AddressComplement { get; set; }
 
         [Display(Name = "StreetName", ResourceType = typeof(Labels))]
@@ -37,28 +39,45 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = "StreetName", ResourceType = typeof(Labels))]
         [RequiredIfNotEmpty("CountryUid", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string StreetName { get; set; }
 
         [Display(Name = "ZipCode", ResourceType = typeof(Labels))]
         [RequiredIfNotEmpty("CountryUid", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [StringLength(10, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string StreetZipCode { get; set; }
 
+        // Neighborhood
         [Display(Name = "Neighborhood", ResourceType = typeof(Labels))]
-        [RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "NeighborhoodName", "Error")]
+        [RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "NeighborhoodName")]
         public Guid? NeighborhoodUid { get; set; }
 
         [Display(Name = "Neighborhood", ResourceType = typeof(Labels))]
-        [RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "NeighborhoodUid", "Error")]
+        [RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "NeighborhoodUid")]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string NeighborhoodName { get; set; }
 
+        // City
         [Display(Name = "City", ResourceType = typeof(Labels))]
+        [RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "CityName")]
         public Guid? CityUid { get; set; }
+
+        [Display(Name = "City", ResourceType = typeof(Labels))]
+        [RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "CityUid")]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string CityName { get; set; }
 
+        // State
         [Display(Name = "State", ResourceType = typeof(Labels))]
+        [RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "StateName")]
         public Guid? StateUid { get; set; }
+
+        [Display(Name = "State", ResourceType = typeof(Labels))]
+        [RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "StateUid")]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string StateName { get; set; }
 
+        // Country
         [Display(Name = "Country", ResourceType = typeof(Labels))]
         public Guid? CountryUid { get; set; }
 
