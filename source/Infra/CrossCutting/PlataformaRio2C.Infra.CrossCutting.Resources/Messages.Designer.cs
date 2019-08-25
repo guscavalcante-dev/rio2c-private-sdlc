@@ -214,6 +214,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Não foi possível criar {0} {1}..
+        /// </summary>
+        public static string CouldNotCreate {
+            get {
+                return ResourceManager.GetString("CouldNotCreate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to País inválido.
         /// </summary>
         public static string CountryIsInvalid {

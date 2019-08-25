@@ -536,4 +536,8 @@
     <value>Por favor, confirme para excluir da edição {0}.</value>
     <comment>Por favor, confirme para excluir da edição {0}.</comment>
   </data>
+  <data name="CouldNotCreate" xml:space="preserve">
+    <value>Não foi possível criar {0} {1}.</value>
+    <comment>Não foi possível criar {0} {1}.</comment>
+  </data>
 </root>

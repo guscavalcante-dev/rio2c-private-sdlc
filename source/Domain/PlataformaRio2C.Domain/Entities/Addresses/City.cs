@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-24-2019
+// Last Modified On : 08-25-2019
 // ***********************************************************************
 // <copyright file="City.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -141,7 +141,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             if (neighborhood == null)
             {
-                throw new DomainException("Could not create the neighborhood."); //TODO: Translate city error
+                throw new DomainException(string.Format(Messages.CouldNotCreate, Labels.TheM, Labels.Neighborhood.ToLowerInvariant()));
             }
 
             return neighborhood;

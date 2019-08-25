@@ -2662,6 +2662,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rus.
+        /// </summary>
+        public static string Street {
+            get {
+                return ResourceManager.GetString("Street", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Logradouro.
         /// </summary>
         public static string StreetName {
@@ -2748,6 +2757,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string TheEvent {
             get {
                 return ResourceManager.GetString("TheEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to a.
+        /// </summary>
+        public static string TheF {
+            get {
+                return ResourceManager.GetString("TheF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to o.
+        /// </summary>
+        public static string TheM {
+            get {
+                return ResourceManager.GetString("TheM", resourceCulture);
             }
         }
         

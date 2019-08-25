@@ -4,7 +4,7 @@
 // Created          : 08-22-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-24-2019
+// Last Modified On : 08-25-2019
 // ***********************************************************************
 // <copyright file="Neighborhood.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -145,7 +145,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             if (street == null)
             {
-                throw new DomainException("Could not create the neighborhood."); //TODO: Translate neighborhood error
+                throw new DomainException(string.Format(Messages.CouldNotCreate, Labels.TheF, Labels.Street.ToLowerInvariant()));
             }
 
             return street;

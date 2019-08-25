@@ -1289,4 +1289,16 @@
     <value>Street</value>
     <comment>Logradouro</comment>
   </data>
+  <data name="Street" xml:space="preserve">
+    <value>Street</value>
+    <comment>Rua</comment>
+  </data>
+  <data name="TheF" xml:space="preserve">
+    <value>the</value>
+    <comment>a</comment>
+  </data>
+  <data name="TheM" xml:space="preserve">
+    <value>the</value>
+    <comment>o</comment>
+  </data>
 </root>

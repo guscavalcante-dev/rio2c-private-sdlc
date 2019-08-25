@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-24-2019
+// Last Modified On : 08-25-2019
 // ***********************************************************************
 // <copyright file="Country.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -144,7 +144,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             if (state == null)
             {
-                throw new DomainException("Could not create the state."); //TODO: Translate country error
+                throw new DomainException(string.Format(Messages.CouldNotCreate, Labels.TheM, Labels.State.ToLowerInvariant()));
             }
 
             return state;

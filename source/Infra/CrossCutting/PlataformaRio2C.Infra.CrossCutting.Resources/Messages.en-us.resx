@@ -531,4 +531,8 @@
     <value>Please, confirm to delete from {0} edition.</value>
     <comment>Por favor, confirme para excluir da edição {0}.</comment>
   </data>
+  <data name="CouldNotCreate" xml:space="preserve">
+    <value>Could not create {0} {1}.</value>
+    <comment>Não foi possível criar {0} {1}.</comment>
+  </data>
 </root>
