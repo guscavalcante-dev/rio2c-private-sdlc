@@ -47,59 +47,6 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/themes/metronic/vendors/general/block-ui/jquery.blockUI.js",
                 "~/Assets/themes/metronic/vendors/general/owl.carousel/dist/owl.carousel.js"));
 
-            /*
-                <!--begin:: Global Optional Vendors -->
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/jquery-form/dist/jquery.form.min.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/custom/js/vendors/bootstrap-datepicker.init.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/bootstrap-datetime-picker/js/bootstrap-datetimepicker.min.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/custom/js/vendors/bootstrap-timepicker.init.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/bootstrap-daterangepicker/daterangepicker.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/bootstrap-maxlength/src/bootstrap-maxlength.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/custom/vendors/bootstrap-multiselectsplitter/bootstrap-multiselectsplitter.min.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/bootstrap-select/dist/js/bootstrap-select.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/custom/js/vendors/bootstrap-switch.init.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/select2/dist/js/select2.full.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/ion-rangeslider/js/ion.rangeSlider.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/typeahead.js/dist/typeahead.bundle.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/handlebars/dist/handlebars.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/inputmask/dist/jquery.inputmask.bundle.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/inputmask/dist/inputmask/inputmask.date.extensions.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/inputmask/dist/inputmask/inputmask.numeric.extensions.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/nouislider/distribute/nouislider.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/autosize/dist/autosize.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/clipboard/dist/clipboard.min.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/dropzone/dist/dropzone.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/summernote/dist/summernote.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/markdown/lib/markdown.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/bootstrap-markdown/js/bootstrap-markdown.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/custom/js/vendors/bootstrap-markdown.init.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/bootstrap-notify/bootstrap-notify.min.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/custom/js/vendors/bootstrap-notify.init.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/jquery-validation/dist/jquery.validate.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/jquery-validation/dist/additional-methods.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/custom/js/vendors/jquery-validation.init.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/toastr/build/toastr.min.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/raphael/raphael.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/morris.js/morris.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/chart.js/dist/Chart.bundle.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/custom/vendors/bootstrap-session-timeout/dist/bootstrap-session-timeout.min.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/custom/vendors/jquery-idletimer/idle-timer.min.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/waypoints/lib/jquery.waypoints.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/counterup/jquery.counterup.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/es6-promise-polyfill/promise.min.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/sweetalert2/dist/sweetalert2.min.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/custom/js/vendors/sweetalert2.init.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/jquery.repeater/src/lib.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/jquery.repeater/src/jquery.input.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/jquery.repeater/src/repeater.js"></script>
-                <script type="text/javascript" src="~/Assets/themes/metronic/vendors/general/dompurify/dist/purify.js"></script>
-                <!--end:: Global Optional Vendors -->             
-             */
-
             #endregion
 
             #region Global Theme Bundle
@@ -209,7 +156,9 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/jqueryval.js").Include(
                 "~/Scripts/jquery.validate.min.js",
                 "~/Scripts/jquery.validate-vsdoc.min.js",
-                "~/Scripts/jquery.validate.unobtrusive.min.js"));
+                "~/Scripts/jquery.validate.unobtrusive.min.js",
+                "~/Client Scripts/mvcfoolproof.unobtrusive.js"
+                ));
 
             #endregion
 

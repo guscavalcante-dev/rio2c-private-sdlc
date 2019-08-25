@@ -159,6 +159,7 @@
     <Compile Include="Model\ValidationResultExtend.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Log\LogService.cs" />
+    <Compile Include="Attributes\RequiredIfOneNotEmptyAndOtherEmptyAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -166,6 +167,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\NewFolder1\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PlataformaRio2C.Infra.CrossCutting.Resources\PlataformaRio2C.Infra.CrossCutting.Resources.csproj">
+      <Project>{7E1DE835-DDC4-416A-A2B7-9B4F5FFFFBF4}</Project>
+      <Name>PlataformaRio2C.Infra.CrossCutting.Resources</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\..\..\packages\PostSharp.4.3.37\tools\PostSharp.targets" Condition="Exists('..\..\..\..\packages\PostSharp.4.3.37\tools\PostSharp.targets')" />

@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-23-2019
+// Last Modified On : 08-24-2019
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -93,7 +93,38 @@ var MyRio2cCommon = function () {
     };
 
     // Forms --------------------------------------------------------------------------------------
+    var enableCustomValidation = function () {
+        jQuery.validator.addMethod("requiredifonenotemptyandotherempty", function (value, element, params) {
+            var dependentPropertyNotEmpty = foolproof.getId(element, params["dependentpropertynotempty"]);
+            var dependentPropertyNotEmptyValue = $('#' + dependentPropertyNotEmpty).val();
+            if (MyRio2cCommon.isNullOrEmpty(dependentPropertyNotEmptyValue)) {
+                return true;
+            }
+
+            var dependentPropertyEmpty = foolproof.getId(element, params["dependentpropertyempty"]);
+            var dependentPropertyEmptyValue = $('#' + dependentPropertyEmpty).val();
+            if (!MyRio2cCommon.isNullOrEmpty(dependentPropertyEmptyValue) || !MyRio2cCommon.isNullOrEmpty(value)) {
+                return true;
+            }
+
+            return false;
+        });
+
+        $.validator.unobtrusive.adapters.add("requiredifonenotemptyandotherempty", ["dependentpropertynotempty", "dependentpropertyempty"], function (options) {
+            var value = {
+                dependentpropertynotempty: options.params.dependentpropertynotempty,
+                dependentpropertyempty: options.params.dependentpropertyempty
+            };
+
+            options.rules["requiredifonenotemptyandotherempty"] = value;
+            if (options.message) {
+                options.messages["requiredifonenotemptyandotherempty"] = options.message;
+            }
+        });
+    };
+
     var enableFormValidation = function (options) {
+        enableCustomValidation();
 
         if (!hasProperty(options, 'formIdOrClass') || isNullOrEmpty(options.formIdOrClass)) {
             return;
@@ -108,10 +139,11 @@ var MyRio2cCommon = function () {
         $(options.formIdOrClass).removeData('unobtrusiveValidation');
         $.validator.unobtrusive.parse(options.formIdOrClass);
 
-        if (enableHiddenInputsValidation == true) {
+        if (enableHiddenInputsValidation === true) {
             var validator = $(options.formIdOrClass).data('validator');
-            if (undefined != validator)
+            if (undefined != validator) {
                 validator.settings.ignore = "";
+            }
         }
     };
 

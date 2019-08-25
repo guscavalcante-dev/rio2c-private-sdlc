@@ -16,27 +16,39 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using Foolproof;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>AddressBaseCommand</summary>
     public class AddressBaseCommand
     {
-        //TODO: Missing data annotations on AddressBaseCommand
-
         [Display(Name = "Number", ResourceType = typeof(Labels))]
+        [RequiredIfNotEmpty("CountryUid", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public string AddressNumber { get; set; }
         [Display(Name = "AddressComplement", ResourceType = typeof(Labels))]
+
         public string AddressComplement { get; set; }
 
         [Display(Name = "StreetName", ResourceType = typeof(Labels))]
+        [RequiredIfNotEmpty("CountryUid", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? StreetUid { get; set; }
+
+        [Display(Name = "StreetName", ResourceType = typeof(Labels))]
+        [RequiredIfNotEmpty("CountryUid", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public string StreetName { get; set; }
+
         [Display(Name = "ZipCode", ResourceType = typeof(Labels))]
+        [RequiredIfNotEmpty("CountryUid", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public string StreetZipCode { get; set; }
 
         [Display(Name = "Neighborhood", ResourceType = typeof(Labels))]
+        [RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "NeighborhoodName", "Error")]
         public Guid? NeighborhoodUid { get; set; }
+
+        [Display(Name = "Neighborhood", ResourceType = typeof(Labels))]
+        [RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "NeighborhoodUid", "Error")]
         public string NeighborhoodName { get; set; }
 
         [Display(Name = "City", ResourceType = typeof(Labels))]

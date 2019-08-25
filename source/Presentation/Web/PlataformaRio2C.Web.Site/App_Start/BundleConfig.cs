@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-20-2019
+// Last Modified On : 08-24-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -209,7 +209,9 @@ namespace PlataformaRio2C.Web.Site
             bundles.Add(new ScriptBundle("~/bundles/js/jqueryval.js").Include(
                 "~/Scripts/jquery.validate.min.js",
                 "~/Scripts/jquery.validate-vsdoc.min.js",
-                "~/Scripts/jquery.validate.unobtrusive.min.js"));
+                "~/Scripts/jquery.validate.unobtrusive.min.js",
+                "~/Client Scripts/mvcfoolproof.unobtrusive.js"
+            ));
 
             #endregion
 
