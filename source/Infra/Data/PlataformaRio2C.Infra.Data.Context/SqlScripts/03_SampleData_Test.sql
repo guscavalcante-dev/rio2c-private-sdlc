@@ -1,6 +1,4 @@
-﻿USE [Rio2C_Dev]
-GO
-SET IDENTITY_INSERT [dbo].[Holdings] ON 
+﻿SET IDENTITY_INSERT [dbo].[Holdings] ON 
 
 GO
 INSERT [dbo].[Holdings] ([Id], [Uid], [Name], [ImageUploadDate], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (1, N'e3e7990f-7a2f-40b9-8e0b-9cea4ea5323c', N'2DLab', NULL, 0, CAST(N'2019-08-09 13:30:17.410' AS DateTime), 1, CAST(N'2019-08-09 13:30:17.410' AS DateTime), 1)

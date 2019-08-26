@@ -1,6 +1,4 @@
-﻿USE [Rio2C_Dev]
-GO
-SET IDENTITY_INSERT [dbo].[Users] ON 
+﻿SET IDENTITY_INSERT [dbo].[Users] ON 
 
 GO
 INSERT [dbo].[Users] ([Id], [Uid], [Active], [Name], [UserName], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDateUtc], [LockoutEnabled], [AccessFailedCount], [PasswordNew], [IsDeleted], [CreationDate]) VALUES (1, N'4003e6dd-3da8-45b5-9a68-0b67759dbd0e', 1, N'Admin', N'admin@rio2c.com', N'admin@rio2c.com', 1, N'AASiG74iuI5m4netRri1IAcxrLRh7oRHMozrKLUJRbs8ghGm4gYM7NrAJmCkRyP1IA==', N'71e9d659-1645-4c1b-a41a-c67a3ae4f42c', NULL, 0, 0, NULL, 0, 0, NULL, 0, CAST(N'2019-08-05 13:44:07.667' AS DateTime))
