@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-25-2019
+// Last Modified On : 08-26-2019
 // ***********************************************************************
 // <copyright file="State.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -156,25 +156,15 @@ namespace PlataformaRio2C.Domain.Entities
             return city;
         }
 
-        #endregion
-
-        #region Streets
-
-        /// <summary>Finds the street.</summary>
+        /// <summary>Finds the city.</summary>
         /// <param name="cityUid">The city uid.</param>
         /// <param name="cityName">Name of the city.</param>
-        /// <param name="neighborhoodUid">The neighborhood uid.</param>
-        /// <param name="neighborhoodName">Name of the neighborhood.</param>
-        /// <param name="streetUid">The street uid.</param>
-        /// <param name="streetName">Name of the street.</param>
-        /// <param name="streetZipCode">The street zip code.</param>
         /// <param name="isManual">if set to <c>true</c> [is manual].</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public Street FindStreet(Guid? cityUid, string cityName, Guid? neighborhoodUid, string neighborhoodName, Guid? streetUid, string streetName, string streetZipCode, bool isManual, int userId)
+        public City FindCity(Guid? cityUid, string cityName, bool isManual, int userId)
         {
-            var city = this.FindOrCreateCity(cityUid, cityName, isManual, userId);
-            return city?.FindStreet(neighborhoodUid, neighborhoodName, streetUid, streetName, streetZipCode, isManual, userId);
+            return this.FindOrCreateCity(cityUid, cityName, isManual, userId);
         }
 
         #endregion
@@ -190,7 +180,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.ValidateName();
             this.ValidateCode();
-            this.ValidateCities();
+            this.ValidateCountry();
 
             return this.ValidationResult.IsValid;
         }
@@ -223,12 +213,12 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        /// <summary>Validates the cities.</summary>
-        public void ValidateCities()
+        /// <summary>Validates the country.</summary>
+        public void ValidateCountry()
         {
-            foreach (var city in this.Cities?.Where(d => !d.IsValid())?.ToList())
+            if (this.Country != null && !this.Country.IsValid() == false)
             {
-                this.ValidationResult.Add(city.ValidationResult);
+                this.ValidationResult.Add(this.Country.ValidationResult);
             }
         }
 

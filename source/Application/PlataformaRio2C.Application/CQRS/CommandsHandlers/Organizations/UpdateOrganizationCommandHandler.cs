@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-24-2019
+// Last Modified On : 08-26-2019
 // ***********************************************************************
 // <copyright file="UpdateOrganizationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -116,13 +116,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.Address?.StateName,
                 cmd.Address?.CityUid,
                 cmd.Address?.CityName,
-                cmd.Address?.NeighborhoodUid,
-                cmd.Address?.NeighborhoodName,
-                cmd.Address?.StreetUid,
-                cmd.Address?.StreetName,
-                cmd.Address?.StreetZipCode,
-                cmd.Address?.AddressNumber,
-                cmd.Address?.AddressComplement,
+                cmd.Address?.Address1,
+                cmd.Address?.Address2,
+                cmd.Address?.AddressZipCode,
                 true, //TODO: get AddressIsManual from form
                 cmd.CropperImage?.ImageFile != null,
                 cmd.CropperImage?.IsImageDeleted == true,

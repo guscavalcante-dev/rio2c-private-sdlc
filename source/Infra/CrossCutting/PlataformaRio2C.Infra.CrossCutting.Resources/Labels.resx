@@ -1312,4 +1312,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>o</value>
     <comment>o</comment>
   </data>
+  <data name="Address1" xml:space="preserve">
+    <value>Endereço</value>
+    <comment>Endereço</comment>
+  </data>
+  <data name="Address2" xml:space="preserve">
+    <value>Complemento</value>
+    <comment>Complemento</comment>
+  </data>
 </root>

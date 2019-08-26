@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-25-2019
+// Last Modified On : 08-26-2019
 // ***********************************************************************
 // <copyright file="Country.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -152,36 +152,26 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        #region Streets
+        #region Cities
 
-        /// <summary>Finds the street.</summary>
+        /// <summary>Finds the city.</summary>
         /// <param name="stateUid">The state uid.</param>
         /// <param name="stateName">Name of the state.</param>
         /// <param name="cityUid">The city uid.</param>
         /// <param name="cityName">Name of the city.</param>
-        /// <param name="neighborhoodUid">The neighborhood uid.</param>
-        /// <param name="neighborhoodName">Name of the neighborhood.</param>
-        /// <param name="streetUid">The street uid.</param>
-        /// <param name="streetName">Name of the street.</param>
-        /// <param name="streetZipCode">The street zip code.</param>
         /// <param name="isManual">if set to <c>true</c> [is manual].</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public Street FindStreet(
+        public City FindCity(
             Guid? stateUid, 
             string stateName, 
             Guid? cityUid, 
             string cityName, 
-            Guid? neighborhoodUid, 
-            string neighborhoodName, 
-            Guid? streetUid, 
-            string streetName, 
-            string streetZipCode, 
             bool isManual,
             int userId)
         {
             var state = this.FindOrCreateState(stateUid, stateName, isManual, userId);
-            return state?.FindStreet(cityUid, cityName, neighborhoodUid, neighborhoodName, streetUid, streetName, streetZipCode, isManual, userId);
+            return state?.FindCity(cityUid, cityName, isManual, userId);
         }
 
         #endregion
@@ -197,7 +187,6 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.ValidateName();
             this.ValidateCode();
-            this.ValidateStates();
 
             return this.ValidationResult.IsValid;
         }
@@ -227,15 +216,6 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.Code?.Trim().Length < CodeMinLength || this.Code?.Trim().Length > CodeMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Code, CodeMaxLength, CodeMinLength), new string[] { "Code" }));
-            }
-        }
-
-        /// <summary>Validates the states.</summary>
-        public void ValidateStates()
-        {
-            foreach (var state in this.States?.Where(d => !d.IsValid())?.ToList())
-            {
-                this.ValidationResult.Add(state.ValidationResult);
             }
         }
 

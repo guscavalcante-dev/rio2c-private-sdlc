@@ -4,7 +4,7 @@
 // Created          : 08-23-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-25-2019
+// Last Modified On : 08-26-2019
 // ***********************************************************************
 // <copyright file="AddressBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,52 +24,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>AddressBaseCommand</summary>
     public class AddressBaseCommand
     {
-        // Number
-        [Display(Name = "Number", ResourceType = typeof(Labels))]
-        [RequiredIfNotEmpty("CountryUid", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [StringLength(16, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        public string AddressNumber { get; set; }
-        [Display(Name = "AddressComplement", ResourceType = typeof(Labels))]
-
-        // Complement
-        [StringLength(40, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        public string AddressComplement { get; set; }
-
-        // Street
-        [Display(Name = "StreetName", ResourceType = typeof(Labels))]
-        [RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "StreetName")]
-        public Guid? StreetUid { get; set; }
-
-        [Display(Name = "StreetName", ResourceType = typeof(Labels))]
-        [RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "StreetUid")]
-        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        public string StreetName { get; set; }
-
-        // ZipCode
-        [Display(Name = "ZipCode", ResourceType = typeof(Labels))]
-        [RequiredIfNotEmpty("CountryUid", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [StringLength(10, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        public string StreetZipCode { get; set; }
-
-        // Neighborhood
-        [Display(Name = "Neighborhood", ResourceType = typeof(Labels))]
-        [RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "NeighborhoodName")]
-        public Guid? NeighborhoodUid { get; set; }
-
-        [Display(Name = "Neighborhood", ResourceType = typeof(Labels))]
-        [RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "NeighborhoodUid")]
-        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        public string NeighborhoodName { get; set; }
-
-        // City
-        [Display(Name = "City", ResourceType = typeof(Labels))]
-        [RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "CityName")]
-        public Guid? CityUid { get; set; }
-
-        [Display(Name = "City", ResourceType = typeof(Labels))]
-        [RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "CityUid")]
-        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        public string CityName { get; set; }
+        // Country
+        [Display(Name = "Country", ResourceType = typeof(Labels))]
+        public Guid? CountryUid { get; set; }
 
         // State
         [Display(Name = "State", ResourceType = typeof(Labels))]
@@ -81,9 +38,31 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string StateName { get; set; }
 
-        // Country
-        [Display(Name = "Country", ResourceType = typeof(Labels))]
-        public Guid? CountryUid { get; set; }
+        // City
+        [Display(Name = "City", ResourceType = typeof(Labels))]
+        [RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "CityName")]
+        public Guid? CityUid { get; set; }
+
+        [Display(Name = "City", ResourceType = typeof(Labels))]
+        [RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "CityUid")]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string CityName { get; set; }
+
+        // Address
+        [Display(Name = "Address1", ResourceType = typeof(Labels))]
+        [RequiredIfNotEmpty("CountryUid", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [StringLength(200, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string Address1 { get; set; }
+
+        [Display(Name = "Address2", ResourceType = typeof(Labels))]
+        [StringLength(200, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string Address2 { get; set; }
+
+        [Display(Name = "ZipCode", ResourceType = typeof(Labels))]
+        [RequiredIfNotEmpty("CountryUid", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [StringLength(10, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string AddressZipCode { get; set; }
+
 
         public List<CountryBaseDto> CountriesBaseDtos { get; private set; }
 
@@ -105,16 +84,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
         private void UpdateBaseProperties(AddressBaseDto addressBaseDto, List<CountryBaseDto> countriesBaseDtos)
         {
-            this.AddressNumber = addressBaseDto?.AddressNumber;
-            this.AddressComplement = addressBaseDto?.AddressComplement;
-            this.StreetUid = addressBaseDto?.StreetUid;
-            this.StreetZipCode = addressBaseDto?.StreetZipCode;
-            this.StreetName = addressBaseDto?.StreetName; //TODO: Remove after dropdown implementation
-            this.NeighborhoodUid = addressBaseDto?.NeighborhoodUid;
-            this.NeighborhoodName = addressBaseDto?.NeighborhoodName; //TODO: Remove after dropdown implementation
-            this.CityUid = addressBaseDto?.CityUid;
-            this.StateUid = addressBaseDto?.StateUid;
             this.CountryUid = addressBaseDto?.CountryUid;
+            this.StateUid = addressBaseDto?.StateUid;
+            this.CityUid = addressBaseDto?.CityUid;
+            this.Address1 = addressBaseDto?.Address1;
+            this.Address2 = addressBaseDto?.Address2;
+            this.AddressZipCode = addressBaseDto?.AddressZipCode;
             this.UpdateDropdownProperties(countriesBaseDtos);
         }
 

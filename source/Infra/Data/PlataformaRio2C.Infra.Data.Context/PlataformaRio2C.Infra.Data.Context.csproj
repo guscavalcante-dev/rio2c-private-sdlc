@@ -77,8 +77,6 @@
     <Compile Include="Config\BaseContext.cs" />
     <Compile Include="Interfaces\IDbContext.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
-    <Compile Include="Mapping\Addresses\StreetMap.cs" />
-    <Compile Include="Mapping\Addresses\NeighborhoodMap.cs" />
     <Compile Include="Mapping\Collaborator\CollaboratorProducerMap.cs" />
     <Compile Include="Mapping\Common\ActivityMap.cs" />
     <Compile Include="Mapping\Addresses\AddressMap.cs" />

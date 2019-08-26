@@ -36,9 +36,10 @@ GO
 CREATE TABLE [dbo].[Addresses](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
-	[StreetId] [int] NOT NULL,
-	[Number] [varchar](16) NULL,
-	[Complement] [varchar](40) NULL,
+	[CityId] [int] NOT NULL,
+	[Address1] [varchar](200) NOT NULL,
+	[Address2] [varchar](200) NULL,
+	[ZipCode] [varchar](10) NOT NULL,
 	[IsManual] [bit] NOT NULL,
 	[Latitude] [decimal](9, 6) NULL,
 	[Longitude] [decimal](9, 6) NULL,
@@ -978,36 +979,6 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[Neighborhoods](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[CityId] [int] NOT NULL,
-	[Name] [varchar](100) NOT NULL,
-	[IsManual] [bit] NOT NULL,
-	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
-	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
-	[UpdateUserId] [int] NOT NULL,
- CONSTRAINT [PK_Neighborhoods] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
- CONSTRAINT [IDX_UQ_Neighborhoods_Uid] UNIQUE NONCLUSTERED 
-(
-	[Uid] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
 CREATE TABLE [dbo].[OrganizationActivities](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
@@ -1896,41 +1867,6 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_PADDING ON
 GO
-CREATE TABLE [dbo].[Streets](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[NeighborhoodId] [int] NOT NULL,
-	[Name] [varchar](100) NOT NULL,
-	[ZipCode] [varchar](10) NOT NULL,
-	[IsManual] [bit] NOT NULL,
-	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
-	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
-	[UpdateUserId] [int] NOT NULL,
- CONSTRAINT [PK_Streets] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
- CONSTRAINT [IDX_UQ_Streets_Uid] UNIQUE NONCLUSTERED 
-(
-	[Uid] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
- CONSTRAINT [IDX_UQ_Streets_ZipCode] UNIQUE NONCLUSTERED 
-(
-	[ZipCode] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
 CREATE TABLE [dbo].[SystemParameters](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
@@ -2131,10 +2067,10 @@ REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[Activities] CHECK CONSTRAINT [FK_Users_Activities_UpdateUserId]
 GO
-ALTER TABLE [dbo].[Addresses]  WITH CHECK ADD  CONSTRAINT [FK_Streets_Addresses_StreetId] FOREIGN KEY([StreetId])
-REFERENCES [dbo].[Streets] ([Id])
+ALTER TABLE [dbo].[Addresses]  WITH CHECK ADD  CONSTRAINT [FK_Cities_Addresses_CityId] FOREIGN KEY([CityId])
+REFERENCES [dbo].[Cities] ([Id])
 GO
-ALTER TABLE [dbo].[Addresses] CHECK CONSTRAINT [FK_Streets_Addresses_StreetId]
+ALTER TABLE [dbo].[Addresses] CHECK CONSTRAINT [FK_Cities_Addresses_CityId]
 GO
 ALTER TABLE [dbo].[Addresses]  WITH CHECK ADD  CONSTRAINT [FK_Users_Addresses_CreateUserId] FOREIGN KEY([CreateUserId])
 REFERENCES [dbo].[Users] ([Id])
@@ -2651,21 +2587,6 @@ REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[Negotiations] CHECK CONSTRAINT [FK_Users_Negotiations_UpdateUserId]
 GO
-ALTER TABLE [dbo].[Neighborhoods]  WITH CHECK ADD  CONSTRAINT [FK_Cities_Neighborhoods_CityId] FOREIGN KEY([CityId])
-REFERENCES [dbo].[Cities] ([Id])
-GO
-ALTER TABLE [dbo].[Neighborhoods] CHECK CONSTRAINT [FK_Cities_Neighborhoods_CityId]
-GO
-ALTER TABLE [dbo].[Neighborhoods]  WITH CHECK ADD  CONSTRAINT [FK_Users_Neighborhoods_CreateUserId] FOREIGN KEY([CreateUserId])
-REFERENCES [dbo].[Users] ([Id])
-GO
-ALTER TABLE [dbo].[Neighborhoods] CHECK CONSTRAINT [FK_Users_Neighborhoods_CreateUserId]
-GO
-ALTER TABLE [dbo].[Neighborhoods]  WITH CHECK ADD  CONSTRAINT [FK_Users_Neighborhoods_UpdateUserId] FOREIGN KEY([UpdateUserId])
-REFERENCES [dbo].[Users] ([Id])
-GO
-ALTER TABLE [dbo].[Neighborhoods] CHECK CONSTRAINT [FK_Users_Neighborhoods_UpdateUserId]
-GO
 ALTER TABLE [dbo].[OrganizationActivities]  WITH CHECK ADD  CONSTRAINT [FK_Activities_OrganizationActivities_ActivityId] FOREIGN KEY([ActivityId])
 REFERENCES [dbo].[Activities] ([Id])
 GO
@@ -3155,21 +3076,6 @@ ALTER TABLE [dbo].[States]  WITH CHECK ADD  CONSTRAINT [FK_Users_States_UpdateUs
 REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[States] CHECK CONSTRAINT [FK_Users_States_UpdateUserId]
-GO
-ALTER TABLE [dbo].[Streets]  WITH CHECK ADD  CONSTRAINT [FK_Neighborhoods_Streets_NeighborhoodId] FOREIGN KEY([NeighborhoodId])
-REFERENCES [dbo].[Neighborhoods] ([Id])
-GO
-ALTER TABLE [dbo].[Streets] CHECK CONSTRAINT [FK_Neighborhoods_Streets_NeighborhoodId]
-GO
-ALTER TABLE [dbo].[Streets]  WITH CHECK ADD  CONSTRAINT [FK_Users_Streets_CreateUserId] FOREIGN KEY([CreateUserId])
-REFERENCES [dbo].[Users] ([Id])
-GO
-ALTER TABLE [dbo].[Streets] CHECK CONSTRAINT [FK_Users_Streets_CreateUserId]
-GO
-ALTER TABLE [dbo].[Streets]  WITH CHECK ADD  CONSTRAINT [FK_Users_Streets_UpdateUserId] FOREIGN KEY([UpdateUserId])
-REFERENCES [dbo].[Users] ([Id])
-GO
-ALTER TABLE [dbo].[Streets] CHECK CONSTRAINT [FK_Users_Streets_UpdateUserId]
 GO
 ALTER TABLE [dbo].[TargetAudiences]  WITH CHECK ADD  CONSTRAINT [FK_ProjectTypes_TargetAudiences_ProjectTypeId] FOREIGN KEY([ProjectTypeId])
 REFERENCES [dbo].[ProjectTypes] ([Id])

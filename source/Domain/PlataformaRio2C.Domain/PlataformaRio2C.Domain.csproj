@@ -89,8 +89,6 @@
     <Compile Include="Dtos\Languages\LanguageBaseDto.cs" />
     <Compile Include="Dtos\Users\UserBaseDto.cs" />
     <Compile Include="Entities\Addresses\Address.cs" />
-    <Compile Include="Entities\Addresses\Street.cs" />
-    <Compile Include="Entities\Addresses\Neighborhood.cs" />
     <Compile Include="Entities\Base\AggregateRoot.cs" />
     <Compile Include="Entities\Collaborator\CollaboratorProducer.cs" />
     <Compile Include="Entities\Collaborator\CollaboratorSpeaker.cs" />

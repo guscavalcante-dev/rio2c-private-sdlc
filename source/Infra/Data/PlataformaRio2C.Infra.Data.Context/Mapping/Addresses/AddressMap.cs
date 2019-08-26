@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-24-2019
+// Last Modified On : 08-26-2019
 // ***********************************************************************
 // <copyright file="CityMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,16 +24,19 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         {
             this.ToTable("Addresses");
 
-            Property(u => u.Number)
-              .HasMaxLength(Address.NumberMaxLength);
+            Property(u => u.Address1)
+              .HasMaxLength(Address.Address1MaxLength);
 
-            Property(u => u.Complement)
-                .HasMaxLength(Address.ComplementMaxLength);
+            Property(u => u.Address2)
+                .HasMaxLength(Address.Address2MaxLength);
+
+            Property(u => u.ZipCode)
+                .HasMaxLength(Address.ZipCodeMaxLength);
 
             // Relationships
-            this.HasRequired(t => t.Street)
+            this.HasRequired(t => t.City)
                 .WithMany()
-                .HasForeignKey(d => d.StreetId);
+                .HasForeignKey(d => d.CityId);
 
             this.HasMany(t => t.Organizations)
                 .WithOptional(e => e.Address)

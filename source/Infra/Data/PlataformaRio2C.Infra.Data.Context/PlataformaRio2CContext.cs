@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-23-2019
+// Last Modified On : 08-26-2019
 // ***********************************************************************
 // <copyright file="PlataformaRio2CContext.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -58,8 +58,6 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new CountryMap());
             modelBuilder.Configurations.Add(new StateMap());
             modelBuilder.Configurations.Add(new CityMap());
-            modelBuilder.Configurations.Add(new NeighborhoodMap());
-            modelBuilder.Configurations.Add(new StreetMap());
             modelBuilder.Configurations.Add(new AddressMap());
 
 

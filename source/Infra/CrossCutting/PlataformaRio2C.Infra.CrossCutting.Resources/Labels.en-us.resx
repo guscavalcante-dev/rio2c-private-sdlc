@@ -1301,4 +1301,12 @@
     <value>the</value>
     <comment>o</comment>
   </data>
+  <data name="Address1" xml:space="preserve">
+    <value>Address</value>
+    <comment>Endereço</comment>
+  </data>
+  <data name="Address2" xml:space="preserve">
+    <value>Address (continued)</value>
+    <comment>Complemento</comment>
+  </data>
 </root>
