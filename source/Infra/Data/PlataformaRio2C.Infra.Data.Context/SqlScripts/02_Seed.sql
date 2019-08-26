@@ -167,7 +167,7 @@ INSERT [dbo].[Countries] ([Id], [Uid], [Name], [Code], [IsManual], [IsDeleted], 
 GO
 INSERT [dbo].[Countries] ([Id], [Uid], [Name], [Code], [IsManual], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (29, N'629b85fb-8ee0-46f4-8d89-1278ce4c3613', N'Bouvet Island', N'BV', 0, 0, CAST(N'2019-08-05 13:52:04.167' AS DateTime), 1, CAST(N'2019-08-05 13:52:04.167' AS DateTime), 1)
 GO
-INSERT [dbo].[Countries] ([Id], [Uid], [Name], [Code], [IsManual], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (30, N'a062676b-23bd-4534-889e-58369434c63e', N'Brazil', N'BR', 0, 0, CAST(N'2019-08-05 13:52:04.167' AS DateTime), 1, CAST(N'2019-08-05 13:52:04.167' AS DateTime), 1)
+INSERT [dbo].[Countries] ([Id], [Uid], [Name], [Code], [IsManual], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (30, N'a062676b-23bd-4534-889e-58369434c63e', N'Brasil', N'BR', 0, 0, CAST(N'2019-08-05 13:52:04.167' AS DateTime), 1, CAST(N'2019-08-05 13:52:04.167' AS DateTime), 1)
 GO
 INSERT [dbo].[Countries] ([Id], [Uid], [Name], [Code], [IsManual], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (31, N'b2afce3f-3441-4d80-af10-d0efc08922a3', N'British Indian Ocean Territory', N'IO', 0, 0, CAST(N'2019-08-05 13:52:04.167' AS DateTime), 1, CAST(N'2019-08-05 13:52:04.167' AS DateTime), 1)
 GO
