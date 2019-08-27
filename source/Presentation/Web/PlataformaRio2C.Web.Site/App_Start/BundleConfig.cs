@@ -124,6 +124,12 @@ namespace PlataformaRio2C.Web.Site
             bundles.Add(new ScriptBundle("~/bundles/js/layoutGlobalCustomized.js").Include(
                 "~/Assets/js/myrio2c.common.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js/homeOnboarding").Include(
+                "~/Assets/js/pages/home/home.js",
+                "~/Assets/js/pages/home/wizard-3.js",
+                "~/Assets/themes/metronic/vendors/general/jquery-validation/dist/jquery.validate.js",
+                "~/Assets/themes/metronic/vendors/general/sweetalert2/dist/sweetalert2.all.js"));
+
             #endregion
 
             #region Components Bundles
@@ -317,13 +323,17 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/themes/metronic/vendors/custom/fullcalendar/fullcalendar.bundle.css"));
 
             bundles.Add(new StyleBundle("~/bundles/css/projectSubmitCustomStyles").Include(
-    "~/Assets/themes/metronic/css/demo4/pages/wizard/wizard-3.css"));
+                "~/Assets/themes/metronic/css/demo4/pages/wizard/wizard-3.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/css/homeOnboarding").Include(
+                "~/Assets/css/pages/home/wizard-3.css",
+                "~/Assets/css/pages/home/home.css"));
             #endregion
 
             // Required to generate bundles on release running in visual studio
-            #if !DEBUG
+#if !DEBUG
             BundleTable.EnableOptimizations = true;
-            #endif
+#endif
         }
     }
 }
