@@ -34,6 +34,7 @@
             <div class="col-md-12">
                 @Html.LabelFor(m => m.Email, new { @class = "control-label" })
                 @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                <span class="form-text text-muted">@Messages.EmailInputMessage</span>
                 @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
             </div>
         </div>

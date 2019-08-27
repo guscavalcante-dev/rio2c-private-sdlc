@@ -242,18 +242,18 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         #region Update
 
         /// <summary>Shows the update modal.</summary>
-        /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <param name="isAddingToCurrentEdition">The is adding to current edition.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowUpdateModal(Guid? organizationUid, bool? isAddingToCurrentEdition)
+        public async Task<ActionResult> ShowUpdateModal(Guid? collaboratorUid, bool? isAddingToCurrentEdition)
         {
             UpdateCollaborator cmd;
 
             try
             {
                 cmd = new UpdateCollaborator(
-                    await this.CommandBus.Send(new FindCollaboratorDtoByUidAsync(organizationUid, this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindCollaboratorDtoByUidAsync(collaboratorUid, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),

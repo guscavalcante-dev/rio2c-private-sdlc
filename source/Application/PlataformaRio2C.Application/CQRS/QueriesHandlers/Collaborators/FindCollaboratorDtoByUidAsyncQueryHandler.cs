@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 08-27-2019
 // ***********************************************************************
 // <copyright file="FindCollaboratorDtoByUidAsyncQueryHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,11 +23,11 @@ namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
     /// <summary>FindCollaboratorDtoByUidAsyncQueryHandler</summary>
     public class FindCollaboratorDtoByUidAsyncQueryHandler : IRequestHandler<FindCollaboratorDtoByUidAsync, CollaboratorDto>
     {
-        private readonly IOrganizationRepository repo;
+        private readonly ICollaboratorRepository repo;
 
         /// <summary>Initializes a new instance of the <see cref="FindCollaboratorDtoByUidAsyncQueryHandler"/> class.</summary>
         /// <param name="repository">The repository.</param>
-        public FindCollaboratorDtoByUidAsyncQueryHandler(IOrganizationRepository repository)
+        public FindCollaboratorDtoByUidAsyncQueryHandler(ICollaboratorRepository repository)
         {
             this.repo = repository;
         }
@@ -38,8 +38,7 @@ namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
         /// <returns></returns>
         public async Task<CollaboratorDto> Handle(FindCollaboratorDtoByUidAsync cmd, CancellationToken cancellationToken)
         {
-            return null;
-            //return await this.repo.FindDtoByUidAsync(cmd.HoldingUid);
+            return await this.repo.FindDtoByUidAsync(cmd.HoldingUid);
         }
     }
 }

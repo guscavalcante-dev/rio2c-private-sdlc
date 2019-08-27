@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 08-27-2019
 // ***********************************************************************
 // <copyright file="collaborators.update.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -36,11 +36,11 @@ var CollaboratorsUpdate = function () {
     };
 
     // Show modal ---------------------------------------------------------------------------------
-    var showModal = function (organizationUid, isAddingToCurrentEdition) {
+    var showModal = function (collaboratorUid, isAddingToCurrentEdition) {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
-        jsonParameters.organizationUid = organizationUid;
+        jsonParameters.collaboratorUid = collaboratorUid;
         jsonParameters.isAddingToCurrentEdition = isAddingToCurrentEdition;
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/PlayersExecutives/ShowUpdateModal'), jsonParameters, function (data) {
@@ -91,8 +91,8 @@ var CollaboratorsUpdate = function () {
     };
 
     return {
-        showModal: function (organizationUid, isAddingToCurrentEdition) {
-            showModal(organizationUid, isAddingToCurrentEdition);
+        showModal: function (collaboratorUid, isAddingToCurrentEdition) {
+            showModal(collaboratorUid, isAddingToCurrentEdition);
         }
     };
 }();

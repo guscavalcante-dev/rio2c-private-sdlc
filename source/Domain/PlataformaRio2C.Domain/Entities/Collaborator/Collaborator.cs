@@ -93,12 +93,53 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeMiniBios(miniBios, userId);
             this.SynchronizeAttendeeCollaborators(edition, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, address2, addressZipCode, addressIsManual, userId);
-            this.CreateUser(email);
+            this.UpdateUser(email);
         }
 
         /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class.</summary>
         protected Collaborator()
         {
+        }
+
+        public void Update(
+            Organization organization,
+            Edition edition,
+            OrganizationType organizationType,
+            string firstName,
+            string lastNames,
+            string badge,
+            string email,
+            string phoneNumber,
+            string cellPhone,
+            Country country,
+            Guid? stateUid,
+            string stateName,
+            Guid? cityUid,
+            string cityName,
+            string address1,
+            string address2,
+            string addressZipCode,
+            bool addressIsManual,
+            bool isImageUploaded,
+            List<CollaboratorJobTitle> jobTitles,
+            List<CollaboratorMiniBio> miniBios,
+            int userId)
+        {
+            //this.Uid = uid;
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.Badge = badge?.Trim();
+            this.PhoneNumber = phoneNumber?.Trim();
+            this.CellPhone = cellPhone?.Trim();
+            this.UpdateImageUploadDate(isImageUploaded, false);
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            this.SynchronizeJobTitles(jobTitles, userId);
+            this.SynchronizeMiniBios(miniBios, userId);
+            this.SynchronizeAttendeeCollaborators(edition, true, userId);
+            this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, address2, addressZipCode, addressIsManual, userId);
+            this.UpdateUser(email);
         }
 
         /// <summary>Updates the image upload date.</summary>
@@ -125,16 +166,18 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Users
 
-        /// <summary>Creates the user.</summary>
+        /// <summary>Updates the user.</summary>
         /// <param name="email">The email.</param>
-        public void CreateUser(string email)
+        public void UpdateUser(string email)
         {
             if (this.User != null)
             {
-                return;
+                this.User.Update(this.GetFullName(), email);
             }
-
-            this.User = new User(this.GetFullName(), email);
+            else
+            {
+                this.User = new User(this.GetFullName(), email);
+            }
         }
 
         #endregion
@@ -380,8 +423,10 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateBadge();
             this.ValidatePhoneNumber();
             this.ValidateCellPhone();
-            //this.ValidateDescriptions();
+            this.ValidateJobTitles();
+            this.ValidateMiniBios();
             this.ValidateAddress();
+            this.ValidateUser();
 
             return this.ValidationResult.IsValid;
         }
@@ -396,7 +441,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             if (this.FirstName?.Trim().Length < FirstNameMinLength || this.FirstName?.Trim().Length > FirstNameMaxLength)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, FirstNameMaxLength, FirstNameMinLength), new string[] { "Name" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, FirstNameMaxLength, FirstNameMinLength), new string[] { "FirstName" }));
             }
         }
 
@@ -436,14 +481,23 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        ///// <summary>Validates the descriptions.</summary>
-        //public void ValidateDescriptions()
-        //{
-        //    foreach (var description in this.Descriptions?.Where(d => !d.IsValid())?.ToList())
-        //    {
-        //        this.ValidationResult.Add(description.ValidationResult);
-        //    }
-        //}
+        /// <summary>Validates the job titles.</summary>
+        public void ValidateJobTitles()
+        {
+            foreach (var jobTitle in this.JobTitles?.Where(d => !d.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(jobTitle.ValidationResult);
+            }
+        }
+
+        /// <summary>Validates the mini bios.</summary>
+        public void ValidateMiniBios()
+        {
+            foreach (var miniBio in this.MiniBios?.Where(d => !d.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(miniBio.ValidationResult);
+            }
+        }
 
         /// <summary>Validates the address.</summary>
         public void ValidateAddress()
@@ -451,6 +505,15 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.Address != null && !this.Address.IsValid())
             {
                 this.ValidationResult.Add(this.Address.ValidationResult);
+            }
+        }
+
+        /// <summary>Validates the user.</summary>
+        public void ValidateUser()
+        {
+            if (this.User != null && !this.User.IsDeleted)
+            {
+                this.ValidationResult.Add(this.User.ValidationResult);
             }
         }
 

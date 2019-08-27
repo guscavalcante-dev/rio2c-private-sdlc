@@ -6,11 +6,11 @@
                 <h5 class="modal-title">
                     @if (!Model.IsAddingToCurrentEdition)
                     {
-                        @(Labels.Update + " " + Labels.Player)
+                        @(Labels.Update + " " + Labels.Executive)
                     }
                     else
                     {
-                        @(Labels.NewM + " " + Labels.Player + " " + string.Format(Labels.InEditionYear, ViewBag.EditionUrlCode))
+                        @(Labels.NewM + " " + Labels.Executive + " " + string.Format(Labels.InEditionYear, ViewBag.EditionUrlCode))
                     }
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
