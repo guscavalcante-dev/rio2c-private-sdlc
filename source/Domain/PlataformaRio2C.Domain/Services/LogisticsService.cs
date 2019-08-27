@@ -19,7 +19,7 @@ namespace PlataformaRio2C.Domain.Services
                 var entityExistByCollaborator = _repository.Get(e => e.CollaboratorId == entity.CollaboratorId && e.EventId == entity.EventId);
                 if (entityExistByCollaborator != null)
                 {
-                    var error = new ValidationError(string.Format("Já existe uma logística para o colaborador '{0}'.", entity.Collaborator.Name), new string[] { "CollaboratorUid" });
+                    var error = new ValidationError(string.Format("Já existe uma logística para o colaborador '{0}'.", entity.Collaborator.FirstName), new string[] { "CollaboratorUid" });
                     _validationResult.Add(error);
                 }
             }
@@ -34,7 +34,7 @@ namespace PlataformaRio2C.Domain.Services
                 var entityExistByCollaborator = _repository.Get(e => e.CollaboratorId == entity.CollaboratorId && e.EventId == entity.EventId && e.Uid != entity.Uid);
                 if (entityExistByCollaborator != null)
                 {
-                    var error = new ValidationError(string.Format("Já existe uma logística para o colaborador '{0}'.", entity.Collaborator.Name), new string[] { "CollaboratorUid" });
+                    var error = new ValidationError(string.Format("Já existe uma logística para o colaborador '{0}'.", entity.Collaborator.FirstName), new string[] { "CollaboratorUid" });
                     _validationResult.Add(error);
                 }
             }

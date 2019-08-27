@@ -44,7 +44,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             return _context.MailCollaborators
                 .Where(a => a.Mail.Subject == subject
-                && (a.Collaborator.User.Email == search || a.Collaborator.Name == search))
+                && (a.Collaborator.User.Email == search || a.Collaborator.FirstName == search))
                 .FirstOrDefault();
         }
 

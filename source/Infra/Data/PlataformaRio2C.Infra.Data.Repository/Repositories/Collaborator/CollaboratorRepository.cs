@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-06-2019
+// Last Modified On : 08-26-2019
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,13 +15,155 @@ using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Collections.Generic;
+using System.Threading.Tasks;
+using LinqKit;
+using PlataformaRio2C.Domain.Dtos;
+using X.PagedList;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
+    #region Collaborator IQueryable Extensions
+
+    /// <summary>
+    /// CollaboratorIQueryableExtensions
+    /// </summary>
+    internal static class CollaboratorIQueryableExtensions
+    {
+        /// <summary>Finds the by uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="collaboratorId">The collaborator identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> FindByUid(this IQueryable<Collaborator> query, Guid collaboratorId)
+        {
+            query = query.Where(c => c.Uid == collaboratorId);
+
+            return query;
+        }
+
+        /// <summary>Finds the by organization type uid and by edition identifier.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="organizationTypeUid">The organization type uid.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="showAllOrganizations">if set to <c>true</c> [show all organizations].</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> FindByOrganizationTypeUidAndByEditionId(this IQueryable<Collaborator> query, Guid organizationTypeUid, bool showAllEditions, bool showAllOrganizations, int? editionId)
+        {
+            //if (!showAllEditions && editionId.HasValue)
+            //{
+            //    query = query.Where(o => o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
+            //                                                               && !ao.IsDeleted
+            //                                                               && ao.AttendeeOrganizationTypes.Any(aot => (showAllOrganizations || aot.OrganizationType.Uid == organizationTypeUid)
+            //                                                                                                          && !aot.IsDeleted)));
+            //}
+            //else
+            //{
+            //    query = query.Where(o => o.AttendeeOrganizations.Any(ao => ao.AttendeeOrganizationTypes.Any(aot => (showAllOrganizations || aot.OrganizationType.Uid == organizationTypeUid)
+            //                                                                                                       && !aot.IsDeleted)
+            //                                                               && !ao.IsDeleted));
+            //}
+
+            return query;
+        }
+
+        /// <summary>Finds the by edition identifier.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> FindByEditionId(this IQueryable<Collaborator> query, bool showAllEditions, int? editionId)
+        {
+            //if (!showAllEditions && editionId.HasValue)
+            //{
+            //    query = query.Where(o => o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
+            //                                                               && !ao.IsDeleted
+            //                                                               && !ao.Edition.IsDeleted));
+            //}
+
+            return query;
+        }
+
+        /// <summary>Finds the by keywords.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> FindByKeywords(this IQueryable<Collaborator> query, string keywords)
+        {
+            if (!string.IsNullOrEmpty(keywords))
+            {
+                var outerWhere = PredicateBuilder.New<Collaborator>(false);
+                var innerOrganizationNameWhere = PredicateBuilder.New<Collaborator>(true);
+                var innerHoldingNameWhere = PredicateBuilder.New<Collaborator>(true);
+                var innerDocumentWhere = PredicateBuilder.New<Collaborator>(true);
+
+                foreach (var keyword in keywords.Split(' '))
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        innerOrganizationNameWhere = innerOrganizationNameWhere.And(c => (c.FirstName + c.LastNames).Contains(keyword));
+                        //innerHoldingNameWhere = innerHoldingNameWhere.And(c => c.Holding.Name.Contains(keyword));
+                        //innerDocumentWhere = innerDocumentWhere.And(c => c.Document.Contains(keyword));
+
+                    }
+                }
+
+                outerWhere = outerWhere.Or(innerOrganizationNameWhere);
+                outerWhere = outerWhere.Or(innerHoldingNameWhere);
+                outerWhere = outerWhere.Or(innerDocumentWhere);
+                query = query.Where(outerWhere);
+                //query = query.AsExpandable().Where(predicate);
+            }
+
+            return query;
+        }
+
+        /// <summary>Determines whether [is not deleted].</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> IsNotDeleted(this IQueryable<Collaborator> query)
+        {
+            query = query.Where(c => !c.IsDeleted);
+
+            return query;
+        }
+    }
+
+    #endregion
+
+    #region CollaboratorBaseDto IQueryable Extensions
+
+    /// <summary>
+    /// CollaboratorBaseDtoIQueryableExtensions
+    /// </summary>
+    internal static class CollaboratorBaseDtoIQueryableExtensions
+    {
+        /// <summary>
+        /// To the list paged.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        internal static async Task<IPagedList<CollaboratorBaseDto>> ToListPagedAsync(this IQueryable<CollaboratorBaseDto> query, int page, int pageSize)
+        {
+            page++;
+
+            // Page the list
+            var pagedList = await query.ToPagedListAsync(page, pageSize);
+            if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
+                pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
+
+            return pagedList;
+        }
+    }
+
+    #endregion
+
     /// <summary>CollaboratorRepository</summary>
     public class CollaboratorRepository : Repository<PlataformaRio2CContext, Collaborator>, ICollaboratorRepository
     {
@@ -32,6 +174,186 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
         }
 
+        /// <summary>Gets the base query.</summary>
+        /// <param name="readonly">if set to <c>true</c> [readonly].</param>
+        /// <returns></returns>
+        private IQueryable<Collaborator> GetBaseQuery(bool @readonly = false)
+        {
+            var consult = this.dbSet
+                                .IsNotDeleted();
+
+            return @readonly
+                        ? consult.AsNoTracking()
+                        : consult;
+        }
+
+        /// <summary>Finds the dto by uid asynchronous.</summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <returns></returns>
+        public async Task<CollaboratorDto> FindDtoByUidAsync(Guid collaboratorUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(collaboratorUid);
+
+            return await query
+                            .Select(c => new CollaboratorDto
+                            {
+                                Id = c.Id,
+                                Uid = c.Uid,
+                                FirstName = c.FirstName,
+                                LastNames = c.LastNames,
+                                Badge = c.Badge,
+                                PhoneNumber = c.PhoneNumber,
+                                CellPhone = c.CellPhone,
+                                //HoldingBaseDto = new HoldingBaseDto
+                                //{
+                                //    Id = c.Holding.Id,
+                                //    Uid = c.Holding.Uid,
+                                //    Name = c.Holding.Name
+                                //},
+                                ImageUploadDate = c.ImageUploadDate,
+                                CreateDate = c.CreateDate,
+                                CreateUserId = c.CreateUserId,
+                                UpdateDate = c.UpdateDate,
+                                UpdateUserId = c.UpdateUserId,
+                                //Creator = h.Creator,
+                                //HoldingBaseDto = new HoldingBaseDto
+                                //{
+                                //    Id = c.Holding.Id,
+                                //    Uid = c.Holding.Uid,
+                                //    Name = c.Holding.Name
+                                //},
+                                UpdaterDto = new UserBaseDto
+                                {
+                                    Uid = c.Updater.Uid,
+                                    Name = c.Updater.Name,
+                                    Email = c.Updater.Email
+                                },
+                                AddressBaseDto = c.Address.IsDeleted ? null : new AddressBaseDto
+                                {
+                                    Id = c.Address.Id,
+                                    Uid = c.Address.Uid,
+                                    CountryUid = c.Address.City.State.Country.Uid,
+                                    StateUid = c.Address.City.State.Uid,
+                                    CityUid = c.Address.City.Uid,
+                                    Address1 = c.Address.Address1,
+                                    Address2 = c.Address.Address2,
+                                    AddressZipCode = c.Address.ZipCode,
+                                },
+                                JobTitlesDtos = c.JobTitles.Select(d => new CollaboratorJobTitleBaseDto
+                                {
+                                    Id = d.Id,
+                                    Uid = d.Uid,
+                                    Value = d.Value,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = d.Language.Id,
+                                        Uid = d.Language.Uid,
+                                        Name = d.Language.Name,
+                                        Code = d.Language.Code
+                                    }
+                                }),
+                                MiniBiosDtos = c.JobTitles.Select(d => new CollaboratorMiniBioBaseDto
+                                {
+                                    Id = d.Id,
+                                    Uid = d.Uid,
+                                    Value = d.Value,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = d.Language.Id,
+                                        Uid = d.Language.Uid,
+                                        Name = d.Language.Name,
+                                        Code = d.Language.Code
+                                    }
+                                })
+                            }).FirstOrDefaultAsync();
+        }
+
+        /// <summary>Finds all by data table.</summary>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="sortColumns">The sort columns.</param>
+        /// <param name="organizationTypeUid">The organization type uid.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="showAllOrganizations">if set to <c>true</c> [show all organizations].</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<CollaboratorBaseDto>> FindAllByDataTable(
+            int page,
+            int pageSize,
+            string keywords,
+            List<Tuple<string, string>> sortColumns,
+            Guid organizationTypeUid,
+            bool showAllEditions,
+            bool showAllOrganizations,
+            int? editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByKeywords(keywords)
+                                .FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, showAllEditions, showAllOrganizations, editionId);
+
+            /*
+            public HoldingBaseDto HoldingBaseDto { get; set; }
+            public OrganizationBaseDto OrganizatioBaseDto { get; set; }
+            public bool IsInCurrentEdition { get; set; }
+            public bool IsInOtherEdition { get; set; }
+            */
+            return await query
+                            .DynamicOrder<Collaborator>(
+                                sortColumns,
+                                new List<Tuple<string, string>>
+                                {
+                                    new Tuple<string, string>("Name", "FirstName"),
+                                    new Tuple<string, string>("HoldingBaseDto.Name", "Holding.Name"),
+                                    new Tuple<string, string>("OrganizationBaseDto.Name", "Organization.Name")
+                                },
+                                new List<string> { "FirstName", "Email", "Holding.Name", "Organization.Name", "CreateDate", "UpdateDate" },
+                                "FirstName")
+                            .Select(c => new CollaboratorBaseDto
+                            {
+                                Id = c.Id,
+                                Uid = c.Uid,
+                                FirstName = c.FirstName,
+                                LastNames = c.LastNames,
+                                Badge = c.Badge,
+                                PhoneNumber = c.PhoneNumber,
+                                CellPhone = c.CellPhone,
+                                //HoldingBaseDto = new HoldingBaseDto
+                                //{
+                                //    Id = c.Holding.Id,
+                                //    Uid = c.Holding.Uid,
+                                //    Name = c.Holding.Name
+                                //},
+                                ImageUploadDate = c.ImageUploadDate,
+                                CreateDate = c.CreateDate,
+                                UpdateDate = c.UpdateDate,
+                                //IsInCurrentEdition = editionId.HasValue && c.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
+                                //                                                                             && !ao.Edition.IsDeleted
+                                //                                                                             && !ao.IsDeleted
+                                //                                                                             && ao.AttendeeOrganizationTypes.Any(aot => aot.OrganizationType.Uid == organizationTypeUid
+                                //                                                                                                                        && !aot.IsDeleted)),
+                                //IsInOtherEdition = editionId.HasValue && c.AttendeeOrganizations.Any(ao => ao.EditionId != editionId
+                                //                                                                           && !ao.IsDeleted)
+                            })
+                            .ToListPagedAsync(page, pageSize);
+        }
+
+        /// <summary>Counts all by data table.</summary>
+        /// <param name="organizationTypeId">The organization type identifier.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<int> CountAllByDataTable(Guid organizationTypeId, bool showAllEditions, int? editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByOrganizationTypeUidAndByEditionId(organizationTypeId, showAllEditions, false, editionId);
+
+            return await query.CountAsync();
+        }
+
+        #region Old
+
         /// <summary>Método que traz todos os registros</summary>
         /// <param name="readonly"></param>
         /// <returns></returns>
@@ -39,23 +361,23 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var consult = this.dbSet
                                 .Include(i => i.Address)
-                                .Include(i => i.User)
-                                .Include(i => i.MiniBios)
-                                .Include(i => i.MiniBios.Select(j => j.Language))
-                                .Include(i => i.JobTitles)
-                                .Include(i => i.JobTitles.Select(j => j.Language))
-                                .Include(i => i.Players)
-                                .Include(i => i.Players.Select(e => e.Holding))
-                                .Include(i => i.Players.Select(e => e.Address))
-                                .Include(i => i.ProducersEvents)
-                                //.Include(i => i.Countries)
-                                //.Include(i => i.Country)
-                                .Include(i => i.ProducersEvents.Select(e => e.Producer))
-                                .Include(i => i.ProducersEvents.Select(e => e.Producer.Address));
+                                .Include(i => i.User);
+                                //.Include(i => i.MiniBios)
+                                //.Include(i => i.MiniBios.Select(j => j.Language))
+                                //.Include(i => i.JobTitles)
+                                //.Include(i => i.JobTitles.Select(j => j.Language))
+                                //.Include(i => i.Players)
+                                //.Include(i => i.Players.Select(e => e.Holding))
+                                //.Include(i => i.Players.Select(e => e.Address))
+                                //.Include(i => i.ProducersEvents)
+                                ////.Include(i => i.Countries)
+                                ////.Include(i => i.Country)
+                                //.Include(i => i.ProducersEvents.Select(e => e.Producer))
+                                //.Include(i => i.ProducersEvents.Select(e => e.Producer.Address));
 
             return @readonly
-              ? consult.AsNoTracking()
-              : consult;
+                          ? consult.AsNoTracking()
+                          : consult;
         }
 
         //public override IQueryable<Collaborator> GetAll(Expression<Func<Collaborator, bool>> filter)
@@ -80,45 +402,45 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var UserRepository = new UserRepository(_context);
 
-            entity.Players.Clear();
+            //entity.Players.Clear();
 
-            if (entity.Image != null)
-            {
-                _context.Entry(entity.Image).State = EntityState.Deleted;
-            }
+            //if (entity.Image != null)
+            //{
+            //    _context.Entry(entity.Image).State = EntityState.Deleted;
+            //}
 
-            if (entity.User != null)
-            {
-                UserRepository.Delete(entity.User);
-            }
+            //if (entity.User != null)
+            //{
+            //    UserRepository.Delete(entity.User);
+            //}
 
-            if (entity.Address != null)
-            {
-                _context.Entry(entity.Address).State = EntityState.Deleted;
-            }
+            //if (entity.Address != null)
+            //{
+            //    _context.Entry(entity.Address).State = EntityState.Deleted;
+            //}
 
-            if (entity.JobTitles != null && entity.JobTitles.Any())
-            {
-                var items = entity.JobTitles.ToList();
-                foreach (var item in items)
-                {
-                    _context.Entry(item).State = EntityState.Deleted;
-                }
-            }
+            //if (entity.JobTitles != null && entity.JobTitles.Any())
+            //{
+            //    var items = entity.JobTitles.ToList();
+            //    foreach (var item in items)
+            //    {
+            //        _context.Entry(item).State = EntityState.Deleted;
+            //    }
+            //}
 
-            if (entity.MiniBios != null && entity.MiniBios.Any())
-            {
-                var items = entity.MiniBios.ToList();
-                foreach (var item in items)
-                {
-                    _context.Entry(item).State = EntityState.Deleted;
-                }
-            }
+            //if (entity.MiniBios != null && entity.MiniBios.Any())
+            //{
+            //    var items = entity.MiniBios.ToList();
+            //    foreach (var item in items)
+            //    {
+            //        _context.Entry(item).State = EntityState.Deleted;
+            //    }
+            //}
 
-            if (entity.ProducersEvents != null && entity.ProducersEvents.Any())
-            {
-                entity.ProducersEvents.Clear();
-            }
+            //if (entity.ProducersEvents != null && entity.ProducersEvents.Any())
+            //{
+            //    entity.ProducersEvents.Clear();
+            //}
 
             base.Delete(entity);
         }
@@ -130,15 +452,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             return this.dbSet
                                 .Include(i => i.Address)
-                                .Include(i => i.Players)
-                                .Include(i => i.Players.Select(j => j.Address))
-                                .Include(i => i.Players.Select(j => j.Interests))
-                                .Include(i => i.ProducersEvents)
+                                //.Include(i => i.Players)
+                                //.Include(i => i.Players.Select(j => j.Address))
+                                //.Include(i => i.Players.Select(j => j.Interests))
+                                //.Include(i => i.ProducersEvents)
                                 //.Include(i => i.Countries)
                                 //.Include(i => i.Country)
-                                .Include(i => i.ProducersEvents.Select(pe => pe.Producer))
-                                .Include(i => i.ProducersEvents.Select(pe => pe.Producer.Address))
-                                .FirstOrDefault(e => e.UserId == id);
+                                //.Include(i => i.ProducersEvents.Select(pe => pe.Producer))
+                                //.Include(i => i.ProducersEvents.Select(pe => pe.Producer.Address))
+                                .FirstOrDefault(e => e.Id == id);
         }
 
         /// <summary>Gets the with producer by user identifier.</summary>
@@ -147,12 +469,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public Collaborator GetWithProducerByUserId(int id)
         {
             return this.dbSet
-                .Include(i => i.ProducersEvents)
-                .Include(i => i.ProducersEvents.Select(e => e.Edition))
-                .Include(i => i.ProducersEvents.Select(e => e.Producer))
+                //.Include(i => i.ProducersEvents)
+                //.Include(i => i.ProducersEvents.Select(e => e.Edition))
+                //.Include(i => i.ProducersEvents.Select(e => e.Producer))
                 //.Include(i => i.Countries)
                 //.Include(i => i.Country)
-                .FirstOrDefault(e => e.UserId == id);
+                .FirstOrDefault(e => e.Id == id);
         }
 
         /// <summary>Gets the image.</summary>
@@ -161,7 +483,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public Collaborator GetImage(Guid uid)
         {
             return this.dbSet
-                              .Include(i => i.Image)
+                              //.Include(i => i.Image)
                               .FirstOrDefault(e => e.Uid == uid);
         }
 
@@ -171,10 +493,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public Collaborator GetWithPlayerAndProducerUserId(int id)
         {
             return this.dbSet
-                       .Include(i => i.Players)
-                       .Include(i => i.ProducersEvents.Select(pe => pe.Producer))
+                       //.Include(i => i.Players)
+                       //.Include(i => i.ProducersEvents.Select(pe => pe.Producer))
                        .Include(i => i.Address)
-                       .FirstOrDefault(e => e.UserId == id);
+                       .FirstOrDefault(e => e.Id == id);
         }
 
         /// <summary>Gets the with player and producer uid.</summary>
@@ -183,10 +505,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public Collaborator GetWithPlayerAndProducerUid(Guid id)
         {
             return this.dbSet
-                       .Include(i => i.Players)
-                       .Include(i => i.Players.Select(e => e.Holding))
-                       .Include(i => i.ProducersEvents)
-                       .Include(i => i.ProducersEvents.Select(pe => pe.Producer))
+                       //.Include(i => i.Players)
+                       //.Include(i => i.Players.Select(e => e.Holding))
+                       //.Include(i => i.ProducersEvents)
+                       //.Include(i => i.ProducersEvents.Select(pe => pe.Producer))
                        .FirstOrDefault(e => e.Uid == id);
         }
 
@@ -196,10 +518,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public IEnumerable<Collaborator> GetOptions(Expression<Func<Collaborator, bool>> filter)
         {
             return this.dbSet
-                                .Include(i => i.Players)
-                                .Include(i => i.Players.Select(e => e.Holding))
-                                .Include(i => i.ProducersEvents)
-                                .Include(i => i.ProducersEvents.Select(e => e.Producer))
+                                //.Include(i => i.Players)
+                                //.Include(i => i.Players.Select(e => e.Holding))
+                                //.Include(i => i.ProducersEvents)
+                                //.Include(i => i.ProducersEvents.Select(e => e.Producer))
                                 //.Include(i => i.Countries)
                                 //.Include(i => i.Country)
                                 .AsNoTracking()
@@ -213,8 +535,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public IEnumerable<Collaborator> GetCollaboratorProducerOptions(Expression<Func<Collaborator, bool>> filter)
         {
             return this.dbSet
-                             .Include(i => i.ProducersEvents)
-                             .Include(i => i.ProducersEvents.Select(e => e.Producer))
+                             //.Include(i => i.ProducersEvents)
+                             //.Include(i => i.ProducersEvents.Select(e => e.Producer))
                              //.Include(i => i.Countries)
                              //.Include(i => i.Country)
                              .AsNoTracking()
@@ -227,8 +549,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public IEnumerable<Collaborator> GetCollaboratorPlayerOptions(Expression<Func<Collaborator, bool>> filter)
         {
             return this.dbSet
-                             .Include(i => i.Players)
-                             .Include(i => i.Players.Select(e => e.Holding))
+                             //.Include(i => i.Players)
+                             //.Include(i => i.Players.Select(e => e.Holding))
                              //.Include(i => i.Countries)
                              //.Include(i => i.Country)
                              .AsNoTracking()
@@ -241,16 +563,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public IEnumerable<Collaborator> GetOptionsChat(int userId)
         {
             return this.dbSet
-                            .Include(i => i.User)
-                            .Include(i => i.Players)
-                            .Include(i => i.JobTitles)
-                            .Include(i => i.JobTitles.Select(e => e.Language))
-                            .Include(i => i.Players.Select(e => e.Holding))
-                            .Include(i => i.ProducersEvents)
-                            .Include(i => i.ProducersEvents.Select(e => e.Edition))
-                            .Include(i => i.ProducersEvents.Select(e => e.Producer))
+                            //.Include(i => i.User)
+                            //.Include(i => i.Players)
+                            //.Include(i => i.JobTitles)
+                            //.Include(i => i.JobTitles.Select(e => e.Language))
+                            //.Include(i => i.Players.Select(e => e.Holding))
+                            //.Include(i => i.ProducersEvents)
+                            //.Include(i => i.ProducersEvents.Select(e => e.Edition))
+                            //.Include(i => i.ProducersEvents.Select(e => e.Producer))
                             .AsNoTracking()
-                            .Where(e => e.UserId != userId);
+                            .Where(e => e.Id != userId);
         }
 
         /// <summary>Gets the by schedule.</summary>
@@ -259,13 +581,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public Collaborator GetBySchedule(Expression<Func<Collaborator, bool>> filter)
         {
             return this.dbSet
-                                .Include(i => i.ProducersEvents)
-                                .Include(i => i.ProducersEvents.Select(e => e.Edition))
-                                .Include(i => i.ProducersEvents.Select(e => e.Producer))
-                                .Include(i => i.ProducersEvents.Select(e => e.Producer.EventsCollaborators))
-                                .Include(i => i.ProducersEvents.Select(e => e.Producer.EventsCollaborators.Select(ev => ev.Collaborator)))
-                                .Include(i => i.Players)
-                                .Include(i => i.Players.Select(e => e.Collaborators))
+                                //.Include(i => i.ProducersEvents)
+                                //.Include(i => i.ProducersEvents.Select(e => e.Edition))
+                                //.Include(i => i.ProducersEvents.Select(e => e.Producer))
+                                //.Include(i => i.ProducersEvents.Select(e => e.Producer.EventsCollaborators))
+                                //.Include(i => i.ProducersEvents.Select(e => e.Producer.EventsCollaborators.Select(ev => ev.Collaborator)))
+                                //.Include(i => i.Players)
+                                //.Include(i => i.Players.Select(e => e.Collaborators))
                                 .FirstOrDefault(filter);
         }
 
@@ -280,24 +602,26 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public override IQueryable<Collaborator> GetAllSimple(Expression<Func<Collaborator, bool>> filter)
         {
-            return this.dbSet
-                            .Include(i => i.User)
-                            .Include(i => i.Players)
+            return this.dbSet;
+                            //.Include(i => i.User)
+                            //.Include(i => i.Players)
                             //.Include(i => i.Countries)
                             //.Include(i => i.Country)
-                            .Include(i => i.Players.Select(e => e.Holding));
+                            //.Include(i => i.Players.Select(e => e.Holding));
         }
 
         /// <summary>Gets all simple.</summary>
         /// <returns></returns>
         public override IQueryable<Collaborator> GetAllSimple()
         {
-            return this.dbSet
-                            .Include(i => i.User)
-                            .Include(i => i.Players)
+            return this.dbSet;
+                            //.Include(i => i.User)
+                            //.Include(i => i.Players)
                             //.Include(i => i.Countries)
                             //.Include(i => i.Country)
-                            .Include(i => i.Players.Select(e => e.Holding));
+                            //.Include(i => i.Players.Select(e => e.Holding));
         }
+
+        #endregion
     }
 }

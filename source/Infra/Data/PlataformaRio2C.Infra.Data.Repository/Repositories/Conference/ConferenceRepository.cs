@@ -43,9 +43,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Include(i => i.Lecturers)
                                 .Include(i => i.Lecturers.Select(e => e.Lecturer))
                                 .Include(i => i.Lecturers.Select(e => e.Collaborator))
-                                .Include(i => i.Lecturers.Select(e => e.Collaborator.Players))
-                                .Include(i => i.Lecturers.Select(e => e.Collaborator.ProducersEvents))
-                                .Include(i => i.Lecturers.Select(e => e.Collaborator.ProducersEvents.Select(pe => pe.Producer)))
+                                //.Include(i => i.Lecturers.Select(e => e.Collaborator.Players))
+                                //.Include(i => i.Lecturers.Select(e => e.Collaborator.ProducersEvents))
+                                //.Include(i => i.Lecturers.Select(e => e.Collaborator.ProducersEvents.Select(pe => pe.Producer)))
                                 .AsNoTracking();
         }
 
@@ -65,10 +65,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Include(i => i.Lecturers.Select(l => l.Lecturer.JobTitles))
                                 .Include(i => i.Lecturers.Select(l => l.Lecturer.JobTitles.Select(j => j.Language)))
                                 .Include(i => i.Lecturers.Select(e => e.Collaborator))
-                                .Include(i => i.Lecturers.Select(e => e.Collaborator.Players))
-                                .Include(i => i.Lecturers.Select(e => e.Collaborator.Players.Select(pl => pl.Holding)))
-                                .Include(i => i.Lecturers.Select(e => e.Collaborator.ProducersEvents))
-                                .Include(i => i.Lecturers.Select(e => e.Collaborator.ProducersEvents.Select(pe => pe.Producer)))
+                                //.Include(i => i.Lecturers.Select(e => e.Collaborator.Players))
+                                //.Include(i => i.Lecturers.Select(e => e.Collaborator.Players.Select(pl => pl.Holding)))
+                                //.Include(i => i.Lecturers.Select(e => e.Collaborator.ProducersEvents))
+                                //.Include(i => i.Lecturers.Select(e => e.Collaborator.ProducersEvents.Select(pe => pe.Producer)))
                                 .AsNoTracking()
                                 .Where(filter);
         }
@@ -88,10 +88,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Include(i => i.Lecturers.Select(e => e.RoleLecturer.Titles))
                                 .Include(i => i.Lecturers.Select(e => e.RoleLecturer.Titles.Select(t => t.Language)))
                                 .Include(i => i.Lecturers.Select(e => e.Collaborator))
-                                .Include(i => i.Lecturers.Select(e => e.Collaborator.Players))
-                                .Include(i => i.Lecturers.Select(e => e.Collaborator.Players.Select(p => p.Holding)))
-                                .Include(i => i.Lecturers.Select(e => e.Collaborator.ProducersEvents))
-                                .Include(i => i.Lecturers.Select(e => e.Collaborator.ProducersEvents.Select(p => p.Producer)))
+                                //.Include(i => i.Lecturers.Select(e => e.Collaborator.Players))
+                                //.Include(i => i.Lecturers.Select(e => e.Collaborator.Players.Select(p => p.Holding)))
+                                //.Include(i => i.Lecturers.Select(e => e.Collaborator.ProducersEvents))
+                                //.Include(i => i.Lecturers.Select(e => e.Collaborator.ProducersEvents.Select(p => p.Producer)))
                                 .Include(i => i.Lecturers.Select(e => e.Lecturer))
                                 .Include(i => i.Lecturers.Select(e => e.Lecturer))
                                 .Include(i => i.Lecturers.Select(e => e.Lecturer.Image))

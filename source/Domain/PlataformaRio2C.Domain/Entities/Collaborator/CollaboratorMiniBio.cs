@@ -1,58 +1,109 @@
-﻿namespace PlataformaRio2C.Domain.Entities
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Domain
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-26-2019
+// ***********************************************************************
+// <copyright file="CollaboratorMiniBio.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
+using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
+
+namespace PlataformaRio2C.Domain.Entities
 {
+    /// <summary>CollaboratorMiniBio</summary>
     public class CollaboratorMiniBio : Entity
     {
         public static readonly int ValueMinLength = 2;
         public static readonly int ValueMaxLength = 8000;
 
+        public int CollaboratorId { get; private set; }
+        public int LanguageId { get; private set; }
         public string Value { get; private set; }
 
-        public int LanguageId { get; private set; }
-        public virtual string LanguageCode { get; private set; }
         public virtual Language Language { get; private set; }
-
-        public int CollaboratoId { get; private set; }
         public virtual Collaborator Collaborator { get; private set; }
 
+        /// <summary>Initializes a new instance of the <see cref="CollaboratorMiniBio"/> class.</summary>
+        /// <param name="value">The value.</param>
+        /// <param name="language">The language.</param>
+        /// <param name="userId">The user identifier.</param>
+        public CollaboratorMiniBio(string value, Language language, int userId)
+        {
+            this.Value = value?.Trim();
+            this.Language = language;
+            this.LanguageId = language?.Id ?? 0;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="CollaboratorMiniBio"/> class.</summary>
         protected CollaboratorMiniBio()
         {
-
         }
 
-        public CollaboratorMiniBio(string value, Language language, Collaborator collaborator)
+        /// <summary>Updates the specified mini bio.</summary>
+        /// <param name="miniBio">The mini bio.</param>
+        public void Update(CollaboratorMiniBio miniBio)
         {
-            Value = value;
-            Language = language;
-            LanguageId = language.Id;
-
-            Collaborator = collaborator;
-            CollaboratoId = collaborator.Id;
+            this.Value = miniBio.Value?.Trim();
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = miniBio.UpdateUserId;
         }
 
-        public CollaboratorMiniBio(string value, string languageCode)
+        /// <summary>Deletes the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(int userId)
         {
-            Value = value;
-            LanguageCode = languageCode;
+            this.IsDeleted = true;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
         }
 
-        public void SetLanguage(Language language)
+        #region Validations
+
+        /// <summary>Returns true if ... is valid.</summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
+        public override bool IsValid()
         {
-            Language = language;
-            LanguageId = language.Id;
+            this.ValidationResult = new ValidationResult();
+
+            this.ValidateValue();
+            this.ValidateLanguage();
+
+            return this.ValidationResult.IsValid;
         }
 
-        public void SetCollaborator(Collaborator collaborator)
+        /// <summary>Validates the value.</summary>
+        public void ValidateValue()
         {
-            Collaborator = collaborator;
-            if (collaborator != null)
+            //if (string.IsNullOrEmpty(this.Value?.Trim()))
+            //{
+            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Descriptions), new string[] { "Descriptions" }));
+            //}
+
+            if (this.Value?.Trim().Length < ValueMinLength || this.Value?.Trim().Length > ValueMaxLength)
             {
-                CollaboratoId = collaborator.Id;
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Descriptions, ValueMaxLength, ValueMinLength), new string[] { "MiniBios" }));
             }
         }
 
-        public override bool IsValid()
+        /// <summary>Validates the language.</summary>
+        public void ValidateLanguage()
         {
-            return true;
+            if (this.Language == null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Language), new string[] { "MiniBios" }));
+            }
         }
+
+        #endregion
     }
 }

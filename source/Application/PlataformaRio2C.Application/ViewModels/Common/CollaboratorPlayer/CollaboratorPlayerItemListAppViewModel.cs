@@ -32,22 +32,22 @@ namespace PlataformaRio2C.Application.ViewModels
         public CollaboratorPlayerItemListAppViewModel(Collaborator entity)
             : base(entity)
         {
-            Name = entity.Name;
+            //Name = entity.Name;
 
-            if (entity.User != null)
-            {
-                Email = entity.User.Email;
-            }
+            //if (entity.User != null)
+            //{
+            //    Email = entity.User.Email;
+            //}
 
-            if (entity.Players != null && entity.Players.Any())
-            {
-                PlayersName = string.Join(", ", entity.Players.Select(e => e.Name));
-            }
+            //if (entity.Players != null && entity.Players.Any())
+            //{
+            //    PlayersName = string.Join(", ", entity.Players.Select(e => e.Name));
+            //}
 
-            if (entity.Players != null && entity.Players.Any())
-            {
-                HoldingsName = string.Join(", ", entity.Players.Select(e => e.Holding.Name).Distinct());
-            }
+            //if (entity.Players != null && entity.Players.Any())
+            //{
+            //    HoldingsName = string.Join(", ", entity.Players.Select(e => e.Holding.Name).Distinct());
+            //}
         }
     }
 }

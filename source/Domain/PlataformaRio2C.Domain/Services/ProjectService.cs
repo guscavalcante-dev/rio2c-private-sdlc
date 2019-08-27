@@ -334,19 +334,19 @@ namespace PlataformaRio2C.Domain.Services
         public bool ExceededProjectMaximumPerProducer(int userId)
         {
             var collaborator = _collaboratorRepository.GetWithProducerByUserId(userId);
-            if (collaborator != null && collaborator.ProducersEvents != null)
-            {
-                var producerId = collaborator.ProducersEvents.Where(e => e.Edition.Name.Contains("2018")).Select(e => e.ProducerId).FirstOrDefault();
-                var producer = _producerRepository.Get(producerId);
+            //if (collaborator != null && collaborator.ProducersEvents != null)
+            //{
+            //    var producerId = collaborator.ProducersEvents.Where(e => e.Edition.Name.Contains("2018")).Select(e => e.ProducerId).FirstOrDefault();
+            //    var producer = _producerRepository.Get(producerId);
 
-                var r = _repository as IProjectRepository;
-                var numberMaxProject = r.GetMaxNumberProjectPerProducer();
+            //    var r = _repository as IProjectRepository;
+            //    var numberMaxProject = r.GetMaxNumberProjectPerProducer();
 
-                if (producer.Projects != null && producer.Projects.Any())
-                {
-                    return producer.Projects.Count >= numberMaxProject;
-                }
-            }
+            //    if (producer.Projects != null && producer.Projects.Any())
+            //    {
+            //        return producer.Projects.Count >= numberMaxProject;
+            //    }
+            //}
 
             return false;
         }

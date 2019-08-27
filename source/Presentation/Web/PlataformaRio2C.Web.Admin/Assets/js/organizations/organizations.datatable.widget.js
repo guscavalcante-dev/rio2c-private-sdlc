@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-22-2019
+// Last Modified On : 08-26-2019
 // ***********************************************************************
 // <copyright file="organizations.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,13 +14,13 @@
 
 var OrganizationsDataTableWidget = function () {
 
-    var widgetElementId = '#PlayerCompanyDataTableWidget';
-    var widgetElement = $(widgetElementId);
+    var widgetElementId = '#PlayerCompaniesDataTableWidget';
+    var tableElementId = '#playercompanies-list-table';
     var table;
 
     var initiListTable = function () {
 
-        var tableElementId = $('#holdings-list-table');
+        var tableElement = $(tableElementId);
 
         // Disable datatable alert
         $.fn.dataTable.ext.errMode = 'none';
@@ -40,7 +40,7 @@ var OrganizationsDataTableWidget = function () {
 
         var globalVariables = MyRio2cCommon.getGlobalVariables();
 
-        table = tableElementId.DataTable({
+        table = tableElement.DataTable({
             "language": {
                 "url": "/Assets/components/datatables/datatables." + globalVariables.userInterfaceLanguage + ".js"
             },
@@ -88,7 +88,7 @@ var OrganizationsDataTableWidget = function () {
                     });
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    $('#organizations-list-table_processing').hide();
+                    $(tableElementId + '_processing').hide();
                     MyRio2cCommon.showAlert();
                 }
             },

@@ -171,6 +171,8 @@
     <Compile Include="Common\EntityViewModel.cs" />
     <Compile Include="Common\StatusProjectCodes.cs" />
     <Compile Include="CQRS\CommandsHandlers\BaseCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Collaborators\BaseCollaboratorCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Collaborators\CreateCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\BaseHoldingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\DeleteHoldingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\UpdateHoldingCommandHandler.cs" />
@@ -184,8 +186,14 @@
     <Compile Include="CQRS\CommandsHandlers\SalesPlatformWebhookRequests\ProcessSalesPlatformWebhookRequestsCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\SalesPlatformWebhookRequests\CreateSalesPlatformWebhookRequestCommandHandler.cs" />
     <Compile Include="CQRS\Commands\BaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Collaborators\BaseCommands\CollaboratorMiniBioBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Common\BaseCommands\AddressBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Common\BaseCommands\CropperImageBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Collaborators\BaseCommands\CollaboratorBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Collaborators\BaseCommands\CollaboratorJobTitleBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Collaborators\CreateCollaborator.cs" />
+    <Compile Include="CQRS\Commands\Collaborators\DeleteCollaborator.cs" />
+    <Compile Include="CQRS\Commands\Collaborators\UpdateCollaborator.cs" />
     <Compile Include="CQRS\Commands\Organizations\BaseCommands\OrganizationBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Organizations\BaseCommands\OrganizationDescriptionBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Organizations\CreateOrganization.cs" />
@@ -202,6 +210,9 @@
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\CreateSalesPlatformWebhookRequest.cs" />
     <Compile Include="CQRS\BaseUserRequest.cs" />
     <Compile Include="CQRS\QueriesHandlers\Cities\FindAllCitiesBaseDtosByStateUidAsyncQueryHandler.cs" />
+    <Compile Include="CQRS\QueriesHandlers\Collaborators\CountAllCollaboratorsAsyncQueryHandler.cs" />
+    <Compile Include="CQRS\QueriesHandlers\Collaborators\FindAllCollaboratorsBaseDtosAsyncQueryHandler.cs" />
+    <Compile Include="CQRS\QueriesHandlers\Collaborators\FindCollaboratorDtoByUidAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\States\FindAllStatesBaseDtosByCountryUidAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Countries\FindAllCountriesBaseDtosAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Editions\FindAllEditionsByActiveQueryHandler.cs" />
@@ -218,6 +229,9 @@
     <Compile Include="CQRS\QueriesHandlers\SalesPlatforms\FindSalesPlatformByNameQueryHandler.cs" />
     <Compile Include="CQRS\Queries\BaseQuery.cs" />
     <Compile Include="CQRS\Queries\Cities\FindAllCitiesBaseDtosByStateUidAsync.cs" />
+    <Compile Include="CQRS\Queries\Collaborators\CountAllCollaboratorsAsync.cs" />
+    <Compile Include="CQRS\Queries\Collaborators\FindAllCollaboratorsBaseDtosAsync.cs" />
+    <Compile Include="CQRS\Queries\Collaborators\FindCollaboratorDtoByUidAsync.cs" />
     <Compile Include="CQRS\Queries\States\FindAllStatesBaseDtosByCountryUidAsync.cs" />
     <Compile Include="CQRS\Queries\Countries\FindAllCountriesBaseDtosAsync.cs" />
     <Compile Include="CQRS\Queries\Editions\FindAllEditionsByIsActive.cs" />

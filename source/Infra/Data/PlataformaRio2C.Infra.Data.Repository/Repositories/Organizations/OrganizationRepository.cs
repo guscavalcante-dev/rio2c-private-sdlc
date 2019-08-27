@@ -45,14 +45,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
-        /// <summary>Finds the by organization typeuid and edition identifier.</summary>
+        /// <summary>Finds the by organization type uid and by edition identifier.</summary>
         /// <param name="query">The query.</param>
         /// <param name="organizationTypeUid">The organization type uid.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="showAllOrganizations">if set to <c>true</c> [show all organizations].</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        internal static IQueryable<Organization> FindByOrganizationTypeuidAndEditionId(this IQueryable<Organization> query, Guid organizationTypeUid, bool showAllEditions, bool showAllOrganizations, int? editionId)
+        internal static IQueryable<Organization> FindByOrganizationTypeUidAndByEditionId(this IQueryable<Organization> query, Guid organizationTypeUid, bool showAllEditions, bool showAllOrganizations, int? editionId)
         {
             if (!showAllEditions && editionId.HasValue)
             {
@@ -174,29 +174,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
         }
 
-        /// <summary>Método que traz todos os registros</summary>
-        /// <param name="readonly"></param>
+        /// <summary>Gets the base query.</summary>
+        /// <param name="readonly">if set to <c>true</c> [readonly].</param>
         /// <returns></returns>
-        public override IQueryable<Organization> GetAll(bool @readonly = false)
+        private IQueryable<Organization> GetBaseQuery(bool @readonly = false)
         {
             var consult = this.dbSet
-                                    .IsNotDeleted();
-                                    //.Include(i => i.Descriptions)
-                                    //.Include(i => i.Descriptions.Select(t => t.Language));
-
+                                .IsNotDeleted();
 
             return @readonly
                         ? consult.AsNoTracking()
                         : consult;
-        }
-
-        /// <summary>Gets all asynchronous.</summary>
-        /// <returns></returns>
-        public async Task<List<Organization>> GetAllAsync()
-        {
-            var query = this.GetAll();
-
-            return await query.ToListAsync();
         }
 
         /// <summary>Finds the dto by uid asynchronous.</summary>
@@ -204,7 +192,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<OrganizationDto> FindDtoByUidAsync(Guid organizationUid)
         {
-            var query = this.GetAll()
+            var query = this.GetBaseQuery()
                                 .FindByUid(organizationUid);
 
             return await query
@@ -284,9 +272,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             bool showAllOrganizations,
             int? editionId)
         {
-            var query = this.GetAll()
+            var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords)
-                                .FindByOrganizationTypeuidAndEditionId(organizationTypeUid, showAllEditions, showAllOrganizations, editionId);
+                                .FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, showAllEditions, showAllOrganizations, editionId);
 
             return await query
                             .DynamicOrder<Organization>(
@@ -332,10 +320,37 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<int> CountAllByDataTable(Guid organizationTypeId, bool showAllEditions, int? editionId)
         {
-            var query = this.GetAll()
-                                .FindByOrganizationTypeuidAndEditionId(organizationTypeId, showAllEditions, false, editionId);
+            var query = this.GetBaseQuery()
+                                .FindByOrganizationTypeUidAndByEditionId(organizationTypeId, showAllEditions, false, editionId);
 
             return await query.CountAsync();
+        }
+
+        #region Old
+
+        /// <summary>Método que traz todos os registros</summary>
+        /// <param name="readonly"></param>
+        /// <returns></returns>
+        public override IQueryable<Organization> GetAll(bool @readonly = false)
+        {
+            var consult = this.dbSet
+                .IsNotDeleted();
+            //.Include(i => i.Descriptions)
+            //.Include(i => i.Descriptions.Select(t => t.Language));
+
+
+            return @readonly
+                ? consult.AsNoTracking()
+                : consult;
+        }
+
+        /// <summary>Gets all asynchronous.</summary>
+        /// <returns></returns>
+        public async Task<List<Organization>> GetAllAsync()
+        {
+            var query = this.GetAll();
+
+            return await query.ToListAsync();
         }
 
         public override IQueryable<Organization> GetAll(Expression<Func<Organization, bool>> filter)
@@ -354,5 +369,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             //.Include(i => i.Image)
                             .SingleOrDefault(x => x.Id == (int)id);
         }
+
+        #endregion
     }
 }

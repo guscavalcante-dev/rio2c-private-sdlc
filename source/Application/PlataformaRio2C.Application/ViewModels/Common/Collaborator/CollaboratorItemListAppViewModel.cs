@@ -54,7 +54,7 @@ namespace PlataformaRio2C.Application.ViewModels
         {
             CreationDate = entity.CreateDate;
             Uid = entity.Uid;
-            Name = entity.Name;
+            Name = entity.FirstName;
             PhoneNumber = entity.PhoneNumber;
             CellPhone = entity.CellPhone;
 
@@ -63,20 +63,20 @@ namespace PlataformaRio2C.Application.ViewModels
                 Email = entity.User.Email;
             }
 
-            if (entity.Players != null && entity.Players.Any())
-            {
-                PlayersName = string.Join(", ", entity.Players.Select(e => e.Name));
-            }
+            //if (entity.Players != null && entity.Players.Any())
+            //{
+            //    PlayersName = string.Join(", ", entity.Players.Select(e => e.Name));
+            //}
 
-            if (entity.Players != null && entity.Players.Any())
-            {
-                HoldingsName = string.Join(", ", entity.Players.Select(e => e.Holding.Name).Distinct());
-            }
+            //if (entity.Players != null && entity.Players.Any())
+            //{
+            //    HoldingsName = string.Join(", ", entity.Players.Select(e => e.Holding.Name).Distinct());
+            //}
 
-            if(entity.SpeakerId != null)
-            {
-                SpeakerId = entity.SpeakerId;
-            }
+            //if(entity.SpeakerId != null)
+            //{
+            //    SpeakerId = entity.SpeakerId;
+            //}
 
             //if (entity.MusicalCommissionId != null)
             //{

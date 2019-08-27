@@ -22,20 +22,20 @@ namespace PlataformaRio2C.Application.ViewModels
         {
             //RegisterComplete = entity.Address != null && !string.IsNullOrWhiteSpace(entity.Address.ZipCode);
 
-            if (entity.Players != null && entity.Players.Any())
-            {
-                //PlayersRegisterComplete = !entity.Players.Any(p => p.TradeName == null  || p.Address == null || string.IsNullOrWhiteSpace(p.Address.ZipCode));
+            //if (entity.Players != null && entity.Players.Any())
+            //{
+            //    //PlayersRegisterComplete = !entity.Players.Any(p => p.TradeName == null  || p.Address == null || string.IsNullOrWhiteSpace(p.Address.ZipCode));
 
-                //PlayersRegisterComplete = !entity.Players.Any(p => p.CompanyName == null || p.Address == null || string.IsNullOrWhiteSpace(p.Address.ZipCode));
-                PlayersInterestFilled = !entity.Players.Any(p => p.Interests == null || !p.Interests.Any());
-            }
+            //    //PlayersRegisterComplete = !entity.Players.Any(p => p.CompanyName == null || p.Address == null || string.IsNullOrWhiteSpace(p.Address.ZipCode));
+            //    PlayersInterestFilled = !entity.Players.Any(p => p.Interests == null || !p.Interests.Any());
+            //}
 
-            if (entity.ProducersEvents != null && entity.ProducersEvents.Any())
-            {
-                var producers = entity.ProducersEvents.Select(e => e.Producer);
+            //if (entity.ProducersEvents != null && entity.ProducersEvents.Any())
+            //{
+            //    var producers = entity.ProducersEvents.Select(e => e.Producer);
 
-                //ProducersRegisterComplete = !producers.Any(p => p.Address == null || string.IsNullOrWhiteSpace(p.Address.ZipCode));
-            }
+            //    //ProducersRegisterComplete = !producers.Any(p => p.Address == null || string.IsNullOrWhiteSpace(p.Address.ZipCode));
+            //}
         }
     }
 }

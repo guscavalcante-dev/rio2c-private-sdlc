@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-06-2019
+// Last Modified On : 08-26-2019
 // ***********************************************************************
 // <copyright file="UserMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,29 +22,31 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         /// <summary>Initializes a new instance of the <see cref="UserMap"/> class.</summary>
         public UserMap()
         {
-            ToTable("Users");
-            HasKey(u => u.Id);
+            this.ToTable("Users");
 
-            Property(u => u.Name)
+            this.HasKey(u => u.Id);
+
+            this.Property(u => u.Name)
                 .IsRequired()
                 .HasMaxLength(150);
 
-            Property(u => u.Email)                
+            this.Property(u => u.Email)                
                 .HasMaxLength(256);
 
-            Property(u => u.UserName)
+            this.Property(u => u.UserName)
                 .IsRequired()
                 .HasMaxLength(256);
 
-            Property(u => u.PasswordHash)               
+            this.Property(u => u.PasswordHash)               
                .HasMaxLength(8000);
 
-            Property(u => u.SecurityStamp)
+            this.Property(u => u.SecurityStamp)
                .HasMaxLength(8000);
 
-            Property(u => u.PhoneNumber)
+            this.Property(u => u.PhoneNumber)
               .HasMaxLength(8000);
 
+            // Relationships
             this.HasMany(t => t.Roles)                
                 .WithMany()
                 .Map(cs =>

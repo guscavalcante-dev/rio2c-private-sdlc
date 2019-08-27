@@ -1042,6 +1042,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Executivos cadastrados.
+        /// </summary>
+        public static string ExecutivesRegistered {
+            get {
+                return ResourceManager.GetString("ExecutivesRegistered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Esqueceu a senha.
         /// </summary>
         public static string ForgotPassword {
@@ -1326,6 +1335,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Language {
             get {
                 return ResourceManager.GetString("Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sobrenomes.
+        /// </summary>
+        public static string LastNames {
+            get {
+                return ResourceManager.GetString("LastNames", resourceCulture);
             }
         }
         
@@ -1911,6 +1929,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Players {
             get {
                 return ResourceManager.GetString("Players", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Executivos dos Players.
+        /// </summary>
+        public static string PlayersExecutives {
+            get {
+                return ResourceManager.GetString("PlayersExecutives", resourceCulture);
             }
         }
         

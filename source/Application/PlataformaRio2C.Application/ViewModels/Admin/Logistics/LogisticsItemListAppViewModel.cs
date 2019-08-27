@@ -66,24 +66,24 @@ namespace PlataformaRio2C.Application.ViewModels
 
         public void SetCollaborator(Collaborator collaborator)
         {
-            if (collaborator != null)
-            {
-                var nameCollaborator = collaborator.Name;
+            //if (collaborator != null)
+            //{
+            //    var nameCollaborator = collaborator.Name;
 
-                if (collaborator.Players != null && collaborator.Players.Any())
-                {
-                    nameCollaborator = string.Format("{0} - {1} - {2}", collaborator.Name, string.Join(",", collaborator.Players.Select(e => e.Name)), string.Join(",", collaborator.Players.Select(e => e.Holding.Name)));
-                }
-                else if (collaborator.ProducersEvents != null && collaborator.ProducersEvents.Any(e => !string.IsNullOrWhiteSpace(e.Producer.Name)))
-                {
-                    var namesProducers = collaborator.ProducersEvents.Select(e => e.Producer.Name).Where(e => !string.IsNullOrWhiteSpace(e)).Distinct();
-                    nameCollaborator = string.Format("{0} - {1}", collaborator.Name, string.Join(",", namesProducers));
-                }
+            //    if (collaborator.Players != null && collaborator.Players.Any())
+            //    {
+            //        nameCollaborator = string.Format("{0} - {1} - {2}", collaborator.Name, string.Join(",", collaborator.Players.Select(e => e.Name)), string.Join(",", collaborator.Players.Select(e => e.Holding.Name)));
+            //    }
+            //    else if (collaborator.ProducersEvents != null && collaborator.ProducersEvents.Any(e => !string.IsNullOrWhiteSpace(e.Producer.Name)))
+            //    {
+            //        var namesProducers = collaborator.ProducersEvents.Select(e => e.Producer.Name).Where(e => !string.IsNullOrWhiteSpace(e)).Distinct();
+            //        nameCollaborator = string.Format("{0} - {1}", collaborator.Name, string.Join(",", namesProducers));
+            //    }
 
-                Collaborator = nameCollaborator;
+            //    Collaborator = nameCollaborator;
 
-                //Collaborator = new LogisticsCollaboratorAppViewModel() { Name = nameCollaborator, Uid = collaborator.Uid };
-            }            
+            //    //Collaborator = new LogisticsCollaboratorAppViewModel() { Name = nameCollaborator, Uid = collaborator.Uid };
+            //}            
         }      
     }
 }

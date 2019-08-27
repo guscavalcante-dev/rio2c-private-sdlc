@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-22-2019
+// Last Modified On : 08-26-2019
 // ***********************************************************************
 // <copyright file="IOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,9 +23,14 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>IOrganizationRepository</summary>
     public interface IOrganizationRepository : IRepository<Organization>
     {
-        Task<OrganizationDto> FindDtoByUidAsync(Guid holdingUid);
+        Task<OrganizationDto> FindDtoByUidAsync(Guid organizationUid);
         Task<IPagedList<OrganizationBaseDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, Guid organizationTypeId, bool showAllEditions, bool showAllOrganizations, int? editionId);
-        Task<List<Organization>> GetAllAsync();
         Task<int> CountAllByDataTable(Guid organizationTypeId, bool showAllEditions, int? editionId);
+
+        #region Old
+
+        Task<List<Organization>> GetAllAsync();
+
+        #endregion
     }
 }

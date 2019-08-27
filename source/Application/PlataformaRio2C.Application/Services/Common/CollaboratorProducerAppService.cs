@@ -189,14 +189,14 @@ namespace PlataformaRio2C.Application.Services
 
             if (entityCollaborator != null)
             {
-                var producers = entityCollaborator.ProducersEvents.Select(e => e.Producer).Distinct();
-                if (producers != null)
-                {
-                    foreach (var producer in producers)
-                    {
-                        viewModel.Add(new ProducerAppViewModel(producer));
-                    }
-                }
+                //var producers = entityCollaborator.ProducersEvents.Select(e => e.Producer).Distinct();
+                //if (producers != null)
+                //{
+                //    foreach (var producer in producers)
+                //    {
+                //        viewModel.Add(new ProducerAppViewModel(producer));
+                //    }
+                //}
             }
 
             return viewModel;
@@ -293,10 +293,10 @@ namespace PlataformaRio2C.Application.Services
             var s = service as ICollaboratorService;
             var entity = s.GetImage(uid);
 
-            if (entity != null && entity.ImageId > 0 && entity.ProducersEvents != null && entity.ProducersEvents.Any())
-            {
-                return new ImageFileAppViewModel(entity.Image);
-            }
+            //if (entity != null && entity.ImageId > 0 && entity.ProducersEvents != null && entity.ProducersEvents.Any())
+            //{
+            //    return new ImageFileAppViewModel(entity.Image);
+            //}
 
             return null;
         }
@@ -306,10 +306,10 @@ namespace PlataformaRio2C.Application.Services
             var s = service as ICollaboratorService;
             var entity = s.GetImage(uid);
 
-            if (entity != null && entity.ImageId > 0 && entity.ProducersEvents != null && entity.ProducersEvents.Any())
-            {
-                return ImageFileAppViewModel.GetThumbImage(entity.Image);
-            }
+            //if (entity != null && entity.ImageId > 0 && entity.ProducersEvents != null && entity.ProducersEvents.Any())
+            //{
+            //    return ImageFileAppViewModel.GetThumbImage(entity.Image);
+            //}
 
             return null;
         }
@@ -326,7 +326,7 @@ namespace PlataformaRio2C.Application.Services
         {
             if (entityCollaborator != null)
             {
-                return entityCollaborator.ProducersEvents.Any(e => e.EventId == entityEvent.Id && e.CollaboratorId == entityCollaborator.Id);
+                //return entityCollaborator.ProducersEvents.Any(e => e.EventId == entityEvent.Id && e.CollaboratorId == entityCollaborator.Id);
             }
 
             return false;
@@ -343,12 +343,12 @@ namespace PlataformaRio2C.Application.Services
                     if (!alreadyRegistered)
                     {
                         string password = PasswordHelper.GetNewRandomPassword(8, false, true, true, false);
-                        var resultOperationAddPassword = _identityController.AddPassword(collaborator.UserId, password);
+                        var resultOperationAddPassword = _identityController.AddPassword(collaborator.Id, password);
 
                         if (resultOperationAddPassword.Succeeded)
                         {
                             message = message.Replace("@{Message}", Texts.WelcomeText);
-                            message = message.Replace("@{Name}", collaborator.Name);
+                            message = message.Replace("@{Name}", collaborator.FirstName);
                             message = message.Replace("@{UrlSite}", _systemParameterRepository.Get<string>(SystemParameterCodes.SiteUrl));
                             message = message.Replace("@{NameEvent}", eventRio2c.Name);
                             message = message.Replace("@{Email}", collaborator.User.Email);
@@ -360,7 +360,7 @@ namespace PlataformaRio2C.Application.Services
                     else
                     {
                         message = message.Replace("@{Message}", Texts.WelcomeTextProducer);
-                        message = message.Replace("@{Name}", collaborator.Name);
+                        message = message.Replace("@{Name}", collaborator.FirstName);
                         message = message.Replace("@{UrlSite}", _systemParameterRepository.Get<string>(SystemParameterCodes.SiteUrl));
                         message = message.Replace("@{NameEvent}", eventRio2c.Name);
                         message = message.Replace("@{Email}", collaborator.User.Email);

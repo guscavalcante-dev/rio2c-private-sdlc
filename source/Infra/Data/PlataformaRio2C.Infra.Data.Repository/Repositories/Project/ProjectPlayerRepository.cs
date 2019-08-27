@@ -52,7 +52,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                        .Include(i => i.Project.Producer.EventsCollaborators)
                        .Include(i => i.Project.Producer.EventsCollaborators.Select(e => e.Collaborator))
                        .Include(i => i.Player)
-                       .Include(i => i.Player.Collaborators)
+                       //.Include(i => i.Player.Collaborators)
                        .Include(i => i.Evaluation)
                        .Include(i => i.Evaluation.Status)
                        .Where(e => e.Evaluation.Status.Code == "Accepted");

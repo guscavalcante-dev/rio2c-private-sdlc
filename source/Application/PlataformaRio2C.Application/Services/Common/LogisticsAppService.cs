@@ -121,7 +121,7 @@ namespace PlataformaRio2C.Application.Services
         public IEnumerable<LogisticsCollaboratorAppViewModel> GetCollaboratorsOptions(string term)
         {
 
-            var entities = _collaboratorRepository.GetAll(GetPredicateForGetCollaboratorsOptions(term)).OrderBy(e => e.Name).Take(5).ToList();
+            var entities = _collaboratorRepository.GetAll(GetPredicateForGetCollaboratorsOptions(term)).OrderBy(e => e.FirstName).Take(5).ToList();
            
             if (entities != null && entities.Any())
             {
@@ -146,10 +146,10 @@ namespace PlataformaRio2C.Application.Services
 
                 var predicateTerm = PredicateBuilder.New<Collaborator>(false);
 
-                predicateTerm = predicateTerm.Or(c => c.Name.ToLower().Contains(term));
-                predicateTerm = predicateTerm.Or(c => c.Players.Any(p => p.Name.ToLower().Contains(term)));
-                predicateTerm = predicateTerm.Or(c => c.Players.Any() && c.Players.Select(p => p.Holding.Name.ToLower()).Any(h => h.Contains(term)));
-                predicateTerm = predicateTerm.Or(c => c.ProducersEvents.Any() && c.ProducersEvents.Select(p => p.Producer.Name.ToLower()).Any(h => h.Contains(term)));
+                predicateTerm = predicateTerm.Or(c => c.FirstName.ToLower().Contains(term));
+                //predicateTerm = predicateTerm.Or(c => c.Players.Any(p => p.Name.ToLower().Contains(term)));
+                //predicateTerm = predicateTerm.Or(c => c.Players.Any() && c.Players.Select(p => p.Holding.Name.ToLower()).Any(h => h.Contains(term)));
+                //predicateTerm = predicateTerm.Or(c => c.ProducersEvents.Any() && c.ProducersEvents.Select(p => p.Producer.Name.ToLower()).Any(h => h.Contains(term)));
 
                 predicate = PredicateBuilder.And<Collaborator>(predicate, predicateTerm);
             }

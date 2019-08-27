@@ -107,13 +107,13 @@ namespace PlataformaRio2C.Domain.Services
         public override ValidationResult Delete(Player entity)
         {                 
 
-            var countCollaboratorAssociated = _collaboratorRepository.Count(e => e.PlayerId == entity.Id);
+            //var countCollaboratorAssociated = _collaboratorRepository.Count(e => e.PlayerId == entity.Id);
 
-            if (countCollaboratorAssociated > 0)
-            {
-                var error = new ValidationError(string.Format("Existem '{0}' colaborador(es) associado(s) ao player '{1}'.", countCollaboratorAssociated, entity.Name), new string[] { "" });
-                _validationResult.Add(error);
-            }
+            //if (countCollaboratorAssociated > 0)
+            //{
+            //    var error = new ValidationError(string.Format("Existem '{0}' colaborador(es) associado(s) ao player '{1}'.", countCollaboratorAssociated, entity.Name), new string[] { "" });
+            //    _validationResult.Add(error);
+            //}
 
             return base.Delete(entity);
         }

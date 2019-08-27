@@ -66,7 +66,7 @@ namespace PlataformaRio2C.Domain.Services
 
             if (executivesWithCommonConference != null && executivesWithCommonConference.Any())
             {
-                var error = new ValidationError(string.Format("O executivo {0} já estará participando de uma palestra neste momento.", collaborator.Name), new string[] { "Lecturers" });
+                var error = new ValidationError(string.Format("O executivo {0} já estará participando de uma palestra neste momento.", collaborator.FirstName), new string[] { "Lecturers" });
                 _validationResult.Add(error);
             }
         }

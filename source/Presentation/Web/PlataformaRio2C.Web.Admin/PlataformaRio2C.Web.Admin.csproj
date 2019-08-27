@@ -327,6 +327,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\FinancialReportController.cs" />
     <Compile Include="Controllers\CitiesController.cs" />
+    <Compile Include="Controllers\PlayersExecutivesController.cs" />
     <Compile Include="Controllers\StatesController.cs" />
     <Compile Include="Controllers\PlayersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -385,6 +386,12 @@
     <Content Include="Assets\js\holdings\holdings.editioncount.widget.js" />
     <Content Include="Assets\js\holdings\holdings.totalcount.widget.js" />
     <Content Include="Assets\js\holdings\holdings.datatable.widget.js" />
+    <Content Include="Assets\js\collaborators\collaborators.create.js" />
+    <Content Include="Assets\js\collaborators\collaborators.datatable.widget.js" />
+    <Content Include="Assets\js\collaborators\collaborators.delete.js" />
+    <Content Include="Assets\js\collaborators\collaborators.editioncount.widget.js" />
+    <Content Include="Assets\js\collaborators\collaborators.totalcount.widget.js" />
+    <Content Include="Assets\js\collaborators\collaborators.update.js" />
     <Content Include="Assets\js\organizations\organizations.create.js" />
     <Content Include="Assets\js\organizations\organizations.datatable.widget.js" />
     <Content Include="Assets\js\organizations\organizations.delete.js" />
@@ -8091,6 +8098,18 @@
     <Content Include="Views\Collaborator\Edit.cshtml" />
     <Content Include="Views\Collaborator\_Editor.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AddressBaseCommand.cshtml" />
+    <Content Include="Views\PlayersExecutives\_Editor.cshtml" />
+    <Content Include="Views\PlayersExecutives\Create.cshtml" />
+    <Content Include="Views\PlayersExecutives\Edit.cshtml" />
+    <Content Include="Views\PlayersExecutives\EditorTemplates\CollaboratorJobTitleBaseCommand.cshtml" />
+    <Content Include="Views\PlayersExecutives\Index.cshtml" />
+    <Content Include="Views\PlayersExecutives\Modals\_Form.cshtml" />
+    <Content Include="Views\PlayersExecutives\Modals\CreateModal.cshtml" />
+    <Content Include="Views\PlayersExecutives\Modals\UpdateModal.cshtml" />
+    <Content Include="Views\PlayersExecutives\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Views\PlayersExecutives\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Views\PlayersExecutives\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Views\PlayersExecutives\EditorTemplates\CollaboratorMiniBioBaseCommand.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

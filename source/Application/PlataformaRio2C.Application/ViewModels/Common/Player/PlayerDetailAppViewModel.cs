@@ -26,10 +26,10 @@ namespace PlataformaRio2C.Application.ViewModels
         public PlayerDetailAppViewModel(Player entity)
             :base(entity)
         {
-            if (entity.Collaborators != null && entity.Collaborators.Any())
-            {
-                Collaborators = CollaboratorBasicDetailAppViewModel.MapList(entity.Collaborators);
-            }
+            //if (entity.Collaborators != null && entity.Collaborators.Any())
+            //{
+            //    Collaborators = CollaboratorBasicDetailAppViewModel.MapList(entity.Collaborators);
+            //}
         }
 
         #endregion

@@ -32,7 +32,7 @@ namespace PlataformaRio2C.Application.ViewModels
         public MailCollaboratorListItemAppViewModel(Collaborator collaborator, DateTime sendDate)
         //: base(collaborator)
         {
-            Name = collaborator.Name;
+            Name = collaborator.FirstName;
             SendDate = sendDate;
 
             if (collaborator.User != null)
@@ -40,15 +40,15 @@ namespace PlataformaRio2C.Application.ViewModels
                 Email = collaborator.User.Email;
             }
 
-            if (collaborator.Players != null && collaborator.Players.Any())
-            {
-                PlayersName = string.Join(", ", collaborator.Players.Select(e => e.Name));
-            }
+            //if (collaborator.Players != null && collaborator.Players.Any())
+            //{
+            //    PlayersName = string.Join(", ", collaborator.Players.Select(e => e.Name));
+            //}
 
-            if (collaborator.Players != null && collaborator.Players.Any())
-            {
-                HoldingsName = string.Join(", ", collaborator.Players.Select(e => e.Holding.Name).Distinct());
-            }
+            //if (collaborator.Players != null && collaborator.Players.Any())
+            //{
+            //    HoldingsName = string.Join(", ", collaborator.Players.Select(e => e.Holding.Name).Distinct());
+            //}
 
         }
     }

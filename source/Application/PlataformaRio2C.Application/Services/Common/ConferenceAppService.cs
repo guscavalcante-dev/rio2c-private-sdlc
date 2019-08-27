@@ -153,14 +153,14 @@ namespace PlataformaRio2C.Application.Services
 
             if (entity != null)
             {
-                if (entity.Collaborator != null && entity.Collaborator.ImageId > 0)
-                {
-                    return ImageFileAppViewModel.GetThumbImage(entity.Collaborator.Image);
-                }
-                else if (entity.Lecturer != null && entity.Lecturer.ImageId > 0)
-                {
-                    return ImageFileAppViewModel.GetThumbImage(entity.Lecturer.Image);
-                }
+                //if (entity.Collaborator != null && entity.Collaborator.ImageId > 0)
+                //{
+                //    return ImageFileAppViewModel.GetThumbImage(entity.Collaborator.Image);
+                //}
+                //else if (entity.Lecturer != null && entity.Lecturer.ImageId > 0)
+                //{
+                //    return ImageFileAppViewModel.GetThumbImage(entity.Lecturer.Image);
+                //}
             }
 
             return null;
@@ -173,14 +173,14 @@ namespace PlataformaRio2C.Application.Services
 
             if (entity != null)
             {
-                if (entity.Collaborator != null && entity.Collaborator.ImageId > 0)
-                {
-                    return new ImageFileAppViewModel(entity.Collaborator.Image);
-                }
-                else if (entity.Lecturer != null && entity.Lecturer.ImageId > 0)
-                {
-                    return new ImageFileAppViewModel(entity.Lecturer.Image);
-                }
+                //if (entity.Collaborator != null && entity.Collaborator.ImageId > 0)
+                //{
+                //    return new ImageFileAppViewModel(entity.Collaborator.Image);
+                //}
+                //else if (entity.Lecturer != null && entity.Lecturer.ImageId > 0)
+                //{
+                //    return new ImageFileAppViewModel(entity.Lecturer.Image);
+                //}
             }
 
 

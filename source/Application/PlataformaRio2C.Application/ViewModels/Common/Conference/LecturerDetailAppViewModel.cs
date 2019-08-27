@@ -73,35 +73,35 @@ namespace PlataformaRio2C.Application.ViewModels
             if (IsPreRegistered && entity.Collaborator != null)
             {
                 Collaborator = new CollaboratorOptionAppViewModel(entity.Collaborator);
-                Name = entity.Collaborator.Name;
+                //Name = entity.Collaborator.Name;
 
-                CompanyName = "";
+                //CompanyName = "";
 
-                if (entity.Collaborator.Players != null && entity.Collaborator.Players.Any())
-                {
-                    CompanyName = string.Format("{0} - {1}", string.Join(",", entity.Collaborator.Players.Select(e => e.Holding.Name)), string.Join(", ", entity.Collaborator.Players.Select(e => e.Name)));
-                }
+                //if (entity.Collaborator.Players != null && entity.Collaborator.Players.Any())
+                //{
+                //    CompanyName = string.Format("{0} - {1}", string.Join(",", entity.Collaborator.Players.Select(e => e.Holding.Name)), string.Join(", ", entity.Collaborator.Players.Select(e => e.Name)));
+                //}
 
-                if (entity.Collaborator.ProducersEvents != null && entity.Collaborator.ProducersEvents.Any(e => !string.IsNullOrWhiteSpace(e.Producer.Name)))
-                {
-                    var namesProducers = entity.Collaborator.ProducersEvents.Select(e => e.Producer.Name).Where(e => !string.IsNullOrWhiteSpace(e)).Distinct();
-                    CompanyName += string.Format("{0}", string.Join(", ", namesProducers));
-                }
+                //if (entity.Collaborator.ProducersEvents != null && entity.Collaborator.ProducersEvents.Any(e => !string.IsNullOrWhiteSpace(e.Producer.Name)))
+                //{
+                //    var namesProducers = entity.Collaborator.ProducersEvents.Select(e => e.Producer.Name).Where(e => !string.IsNullOrWhiteSpace(e)).Distinct();
+                //    CompanyName += string.Format("{0}", string.Join(", ", namesProducers));
+                //}
 
 
-                if (entity.Collaborator.JobTitles != null && entity.Collaborator.JobTitles.Any())
-                {
-                    var jobTitles = CollaboratorJobTitleAppViewModel.MapList(entity.Collaborator.JobTitles).ToList();
+                //if (entity.Collaborator.JobTitles != null && entity.Collaborator.JobTitles.Any())
+                //{
+                //    var jobTitles = CollaboratorJobTitleAppViewModel.MapList(entity.Collaborator.JobTitles).ToList();
 
-                    if (currentCulture != null && currentCulture.Name == "pt-BR")
-                    {
-                        JobTitle = jobTitles.Where(e => e.LanguageCode == "PtBr").Select(e => e.Value).FirstOrDefault();
-                    }
-                    else
-                    {
-                        JobTitle = jobTitles.Where(e => e.LanguageCode == "En").Select(e => e.Value).FirstOrDefault();
-                    }
-                }
+                //    if (currentCulture != null && currentCulture.Name == "pt-BR")
+                //    {
+                //        JobTitle = jobTitles.Where(e => e.LanguageCode == "PtBr").Select(e => e.Value).FirstOrDefault();
+                //    }
+                //    else
+                //    {
+                //        JobTitle = jobTitles.Where(e => e.LanguageCode == "En").Select(e => e.Value).FirstOrDefault();
+                //    }
+                //}
             }
             else
             {

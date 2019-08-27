@@ -30,17 +30,17 @@ namespace PlataformaRio2C.Application.ViewModels
         public CollaboratorBasicDetailAppViewModel(Collaborator entity)
             : base(entity)
         {
-            Name = entity.Name;
+            Name = entity.FirstName;
 
             if (entity.Address != null)
             {
                 //RegisterComplete = entity.Address.ZipCode != null && !string.IsNullOrWhiteSpace(entity.Address.ZipCode);
             }
 
-            if (entity.JobTitles != null && entity.JobTitles.Any())
-            {
-                JobTitles = CollaboratorJobTitleAppViewModel.MapList(entity.JobTitles).ToList();
-            }
+            //if (entity.JobTitles != null && entity.JobTitles.Any())
+            //{
+            //    JobTitles = CollaboratorJobTitleAppViewModel.MapList(entity.JobTitles).ToList();
+            //}
 
             //if (entity.Image != null)
             //{

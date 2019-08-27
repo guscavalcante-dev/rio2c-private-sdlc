@@ -77,7 +77,7 @@ namespace PlataformaRio2C.Application.ViewModels
             UidByEdit = entity.Uid;
             Uid = entity.Uid;
             CreationDate = entity.CreateDate;
-            Name = entity.Name;
+            Name = entity.FirstName;
 
             PhoneNumber = entity.PhoneNumber;
             CellPhone = entity.CellPhone;
@@ -98,17 +98,17 @@ namespace PlataformaRio2C.Application.ViewModels
                 Address = new AddressAppViewModel();
             }
 
-            if (entity.JobTitles != null && entity.JobTitles.Any())
-            {
-                JobTitles = CollaboratorJobTitleAppViewModel.MapList(entity.JobTitles).ToList();
-                JobTitle = entity.GetJobTitle();
-            }
+            //if (entity.JobTitles != null && entity.JobTitles.Any())
+            //{
+            //    JobTitles = CollaboratorJobTitleAppViewModel.MapList(entity.JobTitles).ToList();
+            //    JobTitle = entity.GetJobTitle();
+            //}
 
-            if (entity.MiniBios != null && entity.MiniBios.Any())
-            {
-                MiniBios = CollaboratorMiniBioAppViewModel.MapList(entity.MiniBios).ToList();
-                MiniBio = entity.GetMiniBio();
-            }
+            //if (entity.MiniBios != null && entity.MiniBios.Any())
+            //{
+            //    MiniBios = CollaboratorMiniBioAppViewModel.MapList(entity.MiniBios).ToList();
+            //    MiniBio = entity.GetMiniBio();
+            //}
 
             //if (entity.Image != null)
             //{
@@ -201,14 +201,14 @@ namespace PlataformaRio2C.Application.ViewModels
 
             if (Image != null)
             {
-                if (entity.Image != null)
-                {
-                    entity.SetImage(Image.MapReverse(entity.Image));
-                }
-                else
-                {
-                    entity.SetImage(Image.MapReverse());
-                }
+                //if (entity.Image != null)
+                //{
+                //    entity.SetImage(Image.MapReverse(entity.Image));
+                //}
+                //else
+                //{
+                //    entity.SetImage(Image.MapReverse());
+                //}
             }
             else
             {

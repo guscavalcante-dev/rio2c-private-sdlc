@@ -1,0 +1,12 @@
+﻿@model int
+<div class="kt-portlet__body kt-portlet__body--fluid">
+    <div class="kt-widget20">
+        <div class="kt-widget20__content kt-portlet__space-x">
+            <span class="kt-widget20__number kt-font-danger">@Model</span>
+            <span class="kt-widget20__desc">@Labels.Executives @Labels.InEditionYear.Replace("{0}", ViewBag.EditionUrlCode.ToString())</span>
+        </div>
+        <div class="kt-widget20__chart" style="height:130px;">
+            <canvas id="PlayersExecutivesEditionCountChart"></canvas>
+        </div>
+    </div>
+</div>

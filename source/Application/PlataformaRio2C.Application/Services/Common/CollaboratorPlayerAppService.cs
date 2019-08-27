@@ -156,7 +156,7 @@ namespace PlataformaRio2C.Application.Services
 
                 if (entityAlter != null)
                 {
-                    viewModel.Players = PlayerCollaboratorAppViewModel.MapList(entityAlter.Players.ToList());
+                    //viewModel.Players = PlayerCollaboratorAppViewModel.MapList(entityAlter.Players.ToList());
                 }
 
                 if (ValidationResult.IsValid)
@@ -178,10 +178,10 @@ namespace PlataformaRio2C.Application.Services
         {
             MapEntityUserRole(ref entity);
 
-            if (entity.Players != null && entity.Players.Any())
-            {
-                entity.Players.Clear();
-            }
+            //if (entity.Players != null && entity.Players.Any())
+            //{
+            //    entity.Players.Clear();
+            //}
 
             if (viewModel.Players != null && viewModel.Players.Any(e => e.Uid != Guid.Empty))
             {
@@ -208,10 +208,10 @@ namespace PlataformaRio2C.Application.Services
             var s = service as ICollaboratorService;
             var entity = s.GetImage(uid);
 
-            if (entity != null && entity.ImageId > 0 && entity.Players != null && entity.Players.Any())
-            {
-                return new ImageFileAppViewModel(entity.Image);
-            }
+            //if (entity != null && entity.ImageId > 0 && entity.Players != null && entity.Players.Any())
+            //{
+            //    return new ImageFileAppViewModel(entity.Image);
+            //}
 
             return null;
         }
@@ -221,10 +221,10 @@ namespace PlataformaRio2C.Application.Services
             var s = service as ICollaboratorService;
             var entity = s.GetImage(uid);
 
-            if (entity != null && entity.ImageId > 0 && entity.Players != null && entity.Players.Any())
-            {
-                return ImageFileAppViewModel.GetThumbImage(entity.Image);
-            }
+            //if (entity != null && entity.ImageId > 0 && entity.Players != null && entity.Players.Any())
+            //{
+            //    return ImageFileAppViewModel.GetThumbImage(entity.Image);
+            //}
 
             return null;
         }

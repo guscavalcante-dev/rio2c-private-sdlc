@@ -35,8 +35,8 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual Holding Holding { get; private set; }
         public virtual ICollection<PlayerDescription> Descriptions { get; private set; }
         public virtual ICollection<PlayerInterest> Interests { get; private set; }
-        public virtual ICollection<Collaborator> Collaborators { get; private set; }
-        public virtual ICollection<Collaborator> CollaboratorsOld { get; private set; }
+        //public virtual ICollection<Collaborator> Collaborators { get; private set; }
+        //public virtual ICollection<Collaborator> CollaboratorsOld { get; private set; }
         public virtual ICollection<PlayerActivity> PlayerActivitys { get; private set; }
         public virtual ICollection<PlayerTargetAudience> PlayerTargetAudience { get; private set; }
         public virtual ICollection<PlayerRestrictionsSpecifics> RestrictionsSpecifics { get; private set; }

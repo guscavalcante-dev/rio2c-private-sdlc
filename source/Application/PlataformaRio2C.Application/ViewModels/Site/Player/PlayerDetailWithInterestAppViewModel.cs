@@ -56,11 +56,11 @@ namespace PlataformaRio2C.Application.ViewModels
         public PlayerDetailWithInterestAppViewModel(Player entity)
             :base(entity)
         {
-            if (entity.Collaborators != null && entity.Collaborators.Any())
-            {
-                Collaborators = CollaboratorBasicDetailAppViewModel.MapList(entity.Collaborators);
-                Executives = CollaboratorOptionMessageAppViewModel.MapList(entity.Collaborators);
-            }
+            //if (entity.Collaborators != null && entity.Collaborators.Any())
+            //{
+            //    Collaborators = CollaboratorBasicDetailAppViewModel.MapList(entity.Collaborators);
+            //    Executives = CollaboratorOptionMessageAppViewModel.MapList(entity.Collaborators);
+            //}
 
             if (entity.PlayerActivitys != null && entity.PlayerActivitys.Any())
             {

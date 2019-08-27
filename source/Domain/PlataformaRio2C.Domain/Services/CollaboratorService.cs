@@ -93,7 +93,7 @@ namespace PlataformaRio2C.Domain.Services
 
         public Collaborator GetByUserId(int id)
         {
-            return _repository.Get(e => e.UserId == id);
+            return _repository.Get(e => e.Id == id);
         }
 
         public Collaborator GetByUserEmail(string email)
@@ -134,7 +134,7 @@ namespace PlataformaRio2C.Domain.Services
         public IEnumerable<Collaborator> GetOptionsChat(int userId)
         {
             var r = _repository as ICollaboratorRepository;
-            return r.GetOptionsChat(userId).OrderBy(e => e.Name);
+            return r.GetOptionsChat(userId).OrderBy(e => e.FirstName);
         }
 
         #endregion

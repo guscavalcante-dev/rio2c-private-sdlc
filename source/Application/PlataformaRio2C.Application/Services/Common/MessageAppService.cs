@@ -126,7 +126,7 @@ namespace PlataformaRio2C.Application.Services
 
             var predicateUser = PredicateBuilder.New<Collaborator>(false);
 
-            predicateUser = predicateUser.Or(c => c.UserId != userId);
+            predicateUser = predicateUser.Or(c => c.Id != userId);
 
             predicate = PredicateBuilder.And<Collaborator>(predicate, predicateUser);
 
@@ -136,7 +136,7 @@ namespace PlataformaRio2C.Application.Services
                 {
                     var predicateName = PredicateBuilder.New<Collaborator>(false);
 
-                    predicateName = predicateName.Or(c => c.Name.ToLower().Contains(filter.Name));
+                    predicateName = predicateName.Or(c => c.FirstName.ToLower().Contains(filter.Name));
 
                     predicate = PredicateBuilder.And<Collaborator>(predicate, predicateName);
                 }
@@ -151,7 +151,7 @@ namespace PlataformaRio2C.Application.Services
 
             var predicateUser = PredicateBuilder.New<Collaborator>(false);
 
-            predicateUser = predicateUser.Or(c => c.UserId != userId);
+            predicateUser = predicateUser.Or(c => c.Id != userId);
 
             predicate = PredicateBuilder.And<Collaborator>(predicate, predicateUser);
 
@@ -161,7 +161,7 @@ namespace PlataformaRio2C.Application.Services
                 {
                     var predicateName = PredicateBuilder.New<Collaborator>(false);
 
-                    predicateName = predicateName.Or(c => c.Name.ToLower().Contains(filter.Name));
+                    predicateName = predicateName.Or(c => c.FirstName.ToLower().Contains(filter.Name));
 
                     predicate = PredicateBuilder.And<Collaborator>(predicate, predicateName);
                 }
@@ -209,34 +209,34 @@ namespace PlataformaRio2C.Application.Services
 
             row++;
 
-            foreach (var collaborator in collaborators.Where(e => e.Players != null && e.Players.Any()))
-            {
-                column = 1;
+            //foreach (var collaborator in collaborators.Where(e => e.Players != null && e.Players.Any()))
+            //{
+            //    column = 1;
 
-                worksheetPlayers.Cells[row, column++].Value = string.Join(", ", collaborator.Players.Select(e => e.Name));
+            //    worksheetPlayers.Cells[row, column++].Value = string.Join(", ", collaborator.Players.Select(e => e.Name));
 
-                if (currentCulture != null && currentCulture.Name == "pt-BR")
-                {
-                    worksheetPlayers.Cells[row, column++].Value = string.Join(", ", collaborator.JobTitles.Where(e => e.Language.Code == "PtBr").Select(e => e.Value));
-                }
-                else
-                {
-                    worksheetPlayers.Cells[row, column++].Value = string.Join(", ", collaborator.JobTitles.Where(e => e.Language.Code == "En").Select(e => e.Value));
-                }
+            //    if (currentCulture != null && currentCulture.Name == "pt-BR")
+            //    {
+            //        worksheetPlayers.Cells[row, column++].Value = string.Join(", ", collaborator.JobTitles.Where(e => e.Language.Code == "PtBr").Select(e => e.Value));
+            //    }
+            //    else
+            //    {
+            //        worksheetPlayers.Cells[row, column++].Value = string.Join(", ", collaborator.JobTitles.Where(e => e.Language.Code == "En").Select(e => e.Value));
+            //    }
 
-                worksheetPlayers.Cells[row, column++].Value = collaborator.Name;
+            //    worksheetPlayers.Cells[row, column++].Value = collaborator.Name;
 
-                //if (emailsHidden.Contains(collaborator.User.Email))
-                //{
-                //    worksheetPlayers.Cells[row, column++].Value = " - ";
-                //}
-                //else
-                //{
-                //    worksheetPlayers.Cells[row, column++].Value = collaborator.User.Email;
-                //}
+            //    //if (emailsHidden.Contains(collaborator.User.Email))
+            //    //{
+            //    //    worksheetPlayers.Cells[row, column++].Value = " - ";
+            //    //}
+            //    //else
+            //    //{
+            //    //    worksheetPlayers.Cells[row, column++].Value = collaborator.User.Email;
+            //    //}
 
-                row++;
-            }
+            //    row++;
+            //}
 
 
             //ExcelWorksheet worksheetProducers = excelFile.Workbook.Worksheets.Add(Labels.Producers);
@@ -345,33 +345,33 @@ namespace PlataformaRio2C.Application.Services
 
             row++;
 
-            foreach (var collaborator in collaborators.Where(e => e.Players != null && e.Players.Any()))
-            {
-                column = 1;
+            //foreach (var collaborator in collaborators.Where(e => e.Players != null && e.Players.Any()))
+            //{
+            //    column = 1;
 
-                worksheetPlayers.Cells[row, column++].Value = string.Join(", ", collaborator.Players.Select(e => e.Name));
+            //    worksheetPlayers.Cells[row, column++].Value = string.Join(", ", collaborator.Players.Select(e => e.Name));
 
-                if (currentCulture != null && currentCulture.Name == "pt-BR")
-                {
-                    worksheetPlayers.Cells[row, column++].Value = string.Join(", ", collaborator.JobTitles.Where(e => e.Language.Code == "PtBr").Select(e => e.Value));
-                }
-                else
-                {
-                    worksheetPlayers.Cells[row, column++].Value = string.Join(", ", collaborator.JobTitles.Where(e => e.Language.Code == "En").Select(e => e.Value));
-                }
+            //    if (currentCulture != null && currentCulture.Name == "pt-BR")
+            //    {
+            //        worksheetPlayers.Cells[row, column++].Value = string.Join(", ", collaborator.JobTitles.Where(e => e.Language.Code == "PtBr").Select(e => e.Value));
+            //    }
+            //    else
+            //    {
+            //        worksheetPlayers.Cells[row, column++].Value = string.Join(", ", collaborator.JobTitles.Where(e => e.Language.Code == "En").Select(e => e.Value));
+            //    }
 
-                worksheetPlayers.Cells[row, column++].Value = collaborator.Name;
+            //    worksheetPlayers.Cells[row, column++].Value = collaborator.Name;
 
-                worksheetPlayers.Cells[row, column++].Value = collaborator.User.Email;
+            //    worksheetPlayers.Cells[row, column++].Value = collaborator.User.Email;
 
-                worksheetPlayers.Cells[row, column++].Value = string.Join(", ", collaborator.Players.Select(e => e.PhoneNumber));
+            //    worksheetPlayers.Cells[row, column++].Value = string.Join(", ", collaborator.Players.Select(e => e.PhoneNumber));
 
-                worksheetPlayers.Cells[row, column++].Value = collaborator.PhoneNumber;
+            //    worksheetPlayers.Cells[row, column++].Value = collaborator.PhoneNumber;
 
-                worksheetPlayers.Cells[row, column++].Value = collaborator.CellPhone;
+            //    worksheetPlayers.Cells[row, column++].Value = collaborator.CellPhone;
 
-                row++;
-            }
+            //    row++;
+            //}
 
             /*Aba de Produtoras*/
             //ExcelWorksheet worksheetProducers = excelFile.Workbook.Worksheets.Add(Labels.Producers);

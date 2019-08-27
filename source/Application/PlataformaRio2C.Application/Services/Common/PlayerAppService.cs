@@ -336,30 +336,30 @@ namespace PlataformaRio2C.Application.Services
 
             var entity = _collaboratorService.GetByUserId(id);
 
-            if (entity != null && entity.Players != null && entity.Players.Any())
-            {
-                var playersId = entity.Players.Select(e => e.Id);
+            //if (entity != null && entity.Players != null && entity.Players.Any())
+            //{
+            //    var playersId = entity.Players.Select(e => e.Id);
 
-                var players = _playerRepository.GetAll(e => playersId.Contains(e.Id));
+            //    var players = _playerRepository.GetAll(e => playersId.Contains(e.Id));
 
-                if (players != null && players.Any())
-                {
-                    var interest = _interestRepository.GetAll().ToList();
-                    var languages = _languageRepository.GetAll().ToList();
-                    var activities = _activityRepository.GetAll().ToList();
-                    var targetAudienceOptions = _targetAudienceRepository.GetAll().ToList();
+            //    if (players != null && players.Any())
+            //    {
+            //        var interest = _interestRepository.GetAll().ToList();
+            //        var languages = _languageRepository.GetAll().ToList();
+            //        var activities = _activityRepository.GetAll().ToList();
+            //        var targetAudienceOptions = _targetAudienceRepository.GetAll().ToList();
 
-                    foreach (var player in players)
-                    {
-                        var playerViewModel = new PlayerAppViewModel(player);
-                        playerViewModel.LanguagesOptions = LanguageAppViewModel.MapList(languages).ToList();
-                        playerViewModel.Interests = PlayerInterestAppViewModel.MapList(interest, player).ToList();
-                        playerViewModel.Activitys = PlayerActivityAppViewModel.MapList(activities, player).ToList();
-                        playerViewModel.TargetAudience = PlayerTargetAudienceAppViewModel.MapList(targetAudienceOptions, player).ToList();
-                        viewModel.Add(playerViewModel);
-                    }
-                }
-            }
+            //        foreach (var player in players)
+            //        {
+            //            var playerViewModel = new PlayerAppViewModel(player);
+            //            playerViewModel.LanguagesOptions = LanguageAppViewModel.MapList(languages).ToList();
+            //            playerViewModel.Interests = PlayerInterestAppViewModel.MapList(interest, player).ToList();
+            //            playerViewModel.Activitys = PlayerActivityAppViewModel.MapList(activities, player).ToList();
+            //            playerViewModel.TargetAudience = PlayerTargetAudienceAppViewModel.MapList(targetAudienceOptions, player).ToList();
+            //            viewModel.Add(playerViewModel);
+            //        }
+            //    }
+            //}
 
             return viewModel;
         }
@@ -451,27 +451,27 @@ namespace PlataformaRio2C.Application.Services
 
             var entity = _collaboratorService.GetByUserId(id);
 
-            if (entity != null && entity.Players != null && entity.Players.Any())
-            {
-                var playersId = entity.Players.Select(e => e.Id);
+            //if (entity != null && entity.Players != null && entity.Players.Any())
+            //{
+            //    var playersId = entity.Players.Select(e => e.Id);
 
-                var players = _playerRepository.GetAllNoImage(e => playersId.Contains(e.Id)).ToList();
+            //    var players = _playerRepository.GetAllNoImage(e => playersId.Contains(e.Id)).ToList();
 
-                if (players != null && players.Any())
-                {
-                    var interest = _interestRepository.GetAll().ToList();
-                    var eventRio2c = _eventRepository.Get(e => e.Id == 1);
-                    var activities = _activityRepository.GetAll().ToList();
-                    var targetAudienceOptions = _targetAudienceRepository.GetAll().ToList();
+            //    if (players != null && players.Any())
+            //    {
+            //        var interest = _interestRepository.GetAll().ToList();
+            //        var eventRio2c = _eventRepository.Get(e => e.Id == 1);
+            //        var activities = _activityRepository.GetAll().ToList();
+            //        var targetAudienceOptions = _targetAudienceRepository.GetAll().ToList();
 
-                    foreach (var player in players)
-                    {
-                        var playerViewModel = new PlayerDetailAppViewModel(player);
+            //        foreach (var player in players)
+            //        {
+            //            var playerViewModel = new PlayerDetailAppViewModel(player);
 
-                        viewModel.Add(playerViewModel);
-                    }
-                }
-            }
+            //            viewModel.Add(playerViewModel);
+            //        }
+            //    }
+            //}
 
             return viewModel;
         }
@@ -489,52 +489,52 @@ namespace PlataformaRio2C.Application.Services
 
             var entity = _collaboratorService.GetWithPlayerAndProducerUserId(id);
 
-            if (entity != null && entity.Players != null && entity.Players.Any())
-            {
-                var playersId = entity.Players.Select(e => e.Id);
-                var players = _playerRepository.GetAll(e => playersId.Contains(e.Id)).ToList();
+            //if (entity != null && entity.Players != null && entity.Players.Any())
+            //{
+            //    var playersId = entity.Players.Select(e => e.Id);
+            //    var players = _playerRepository.GetAll(e => playersId.Contains(e.Id)).ToList();
 
-                if (entity != null && players != null && players.Any())
-                {
-                    var interest = _interestRepository.GetAll().ToList();
-                    var eventRio2c = _eventRepository.Get(e => e.Id == 1);
-                    var languages = _languageRepository.GetAll().ToList();
-                    var activities = _activityRepository.GetAll().ToList();
-                    var targetAudienceOptions = _targetAudienceRepository.GetAll().ToList();
+            //    if (entity != null && players != null && players.Any())
+            //    {
+            //        var interest = _interestRepository.GetAll().ToList();
+            //        var eventRio2c = _eventRepository.Get(e => e.Id == 1);
+            //        var languages = _languageRepository.GetAll().ToList();
+            //        var activities = _activityRepository.GetAll().ToList();
+            //        var targetAudienceOptions = _targetAudienceRepository.GetAll().ToList();
 
-                    var countries = _countryRepository.GetAll().ToList();
+            //        var countries = _countryRepository.GetAll().ToList();
 
-                    foreach (var player in players)
-                    {
-                        var addressEntity = player.Address;
+            //        foreach (var player in players)
+            //        {
+            //            var addressEntity = player.Address;
 
-                        List<State> states = null;
-                        //if (addressEntity.CountryId != null)
-                        //{
-                        //    states = _stateRepository.GetAll(a => a.CountryId == addressEntity.CountryId).ToList();
-                        //}
+            //            List<State> states = null;
+            //            //if (addressEntity.CountryId != null)
+            //            //{
+            //            //    states = _stateRepository.GetAll(a => a.CountryId == addressEntity.CountryId).ToList();
+            //            //}
 
-                        List<City> cities = null;
-                        //if (addressEntity.StateId != null)
-                        //{
-                        //    cities = _cityRepository.GetAll(a => a.StateId == addressEntity.StateId).ToList();
-                        //}
+            //            List<City> cities = null;
+            //            //if (addressEntity.StateId != null)
+            //            //{
+            //            //    cities = _cityRepository.GetAll(a => a.StateId == addressEntity.StateId).ToList();
+            //            //}
 
-                        //addressEntity.Countries = countries;
-                        //addressEntity.States = states;
-                        //addressEntity.Cities = cities;
+            //            //addressEntity.Countries = countries;
+            //            //addressEntity.States = states;
+            //            //addressEntity.Cities = cities;
 
-                        var playerViewModel = new PlayerEditAppViewModel(player);
-                        playerViewModel.LanguagesOptions = LanguageAppViewModel.MapList(languages);
-                        playerViewModel.Activitys = PlayerActivityAppViewModel.MapList(activities, player).ToList();
-                        playerViewModel.TargetAudience = PlayerTargetAudienceAppViewModel.MapList(targetAudienceOptions, player).ToList();
-                        playerViewModel.Address = new AddressAppViewModel(addressEntity);
-                        playerViewModel.Countries = countries;
+            //            var playerViewModel = new PlayerEditAppViewModel(player);
+            //            playerViewModel.LanguagesOptions = LanguageAppViewModel.MapList(languages);
+            //            playerViewModel.Activitys = PlayerActivityAppViewModel.MapList(activities, player).ToList();
+            //            playerViewModel.TargetAudience = PlayerTargetAudienceAppViewModel.MapList(targetAudienceOptions, player).ToList();
+            //            playerViewModel.Address = new AddressAppViewModel(addressEntity);
+            //            playerViewModel.Countries = countries;
 
-                        viewModel.Add(playerViewModel);
-                    }
-                }
-            }
+            //            viewModel.Add(playerViewModel);
+            //        }
+            //    }
+            //}
 
             return viewModel;
         }
@@ -571,10 +571,10 @@ namespace PlataformaRio2C.Application.Services
             var entity = _collaboratorService.GetByUserId(userId);
             IEnumerable<int> playersId = new List<int>();
 
-            if (entity != null)
-            {
-                playersId = entity.Players.Select(e => e.Id);
-            }
+            //if (entity != null)
+            //{
+            //    playersId = entity.Players.Select(e => e.Id);
+            //}
 
             var entities = _playerRepository.GetAllNoImageWithInterest(GetPredicateForGetAllOption(filter, playersId)).OrderBy(e => e.Name).ToList();
             if (entities != null && entities.Any())
@@ -591,10 +591,10 @@ namespace PlataformaRio2C.Application.Services
             var entity = _collaboratorService.GetByUserId(userId);
 
             IEnumerable<int> playersId = new List<int>();
-            if (entity != null)
-            {
-                playersId = entity.Players.Select(e => e.Id);
-            }
+            //if (entity != null)
+            //{
+            //    playersId = entity.Players.Select(e => e.Id);
+            //}
 
             var entities = _playerRepository.GetAllNoImageWithInterest(GetPredicateForGetAllOption(filter, playersId)).OrderBy(e => e.Holding.Name).ToList();
             var groupEntities = entities.GroupBy(e => e.Holding.Name).ToList();
@@ -610,10 +610,10 @@ namespace PlataformaRio2C.Application.Services
         {
             var entity = _collaboratorService.GetByUserId(userId);
             IEnumerable<int> playersId = new List<int>();
-            if (entity != null)
-            {
-                playersId = entity.Players.Select(e => e.Id);
-            }
+            //if (entity != null)
+            //{
+            //    playersId = entity.Players.Select(e => e.Id);
+            //}
 
             var entities = _playerRepository.GetAllNoImageWithInterest(GetPredicateForGetAllOptionByUser(filter, playersId)).OrderBy(e => e.Name).ToList();
             if (entities != null && entities.Any())
@@ -631,10 +631,10 @@ namespace PlataformaRio2C.Application.Services
 
             IEnumerable<int> playersId = new List<int>();
 
-            if (entity != null)
-            {
-                playersId = entity.Players.Select(e => e.Id);
-            }
+            //if (entity != null)
+            //{
+            //    playersId = entity.Players.Select(e => e.Id);
+            //}
 
             var entities = _playerRepository.GetAllNoImageWithInterest(GetPredicateForGetAllOption(filter, playersId)).OrderBy(e => e.Name).ToList();
             if (entities != null && entities.Any())
@@ -651,10 +651,10 @@ namespace PlataformaRio2C.Application.Services
             var entity = _collaboratorService.GetByUserId(userId);
             IEnumerable<int> playersId = new List<int>();
 
-            if (entity != null)
-            {
-                playersId = entity.Players.Select(e => e.Id);
-            }
+            //if (entity != null)
+            //{
+            //    playersId = entity.Players.Select(e => e.Id);
+            //}
 
             var entities = _playerRepository.GetAllNoImageWithInterest(GetPredicateForGetAllOption(filter, playersId)).OrderBy(e => e.Holding.Name).ToList();
             var groupEntities = entities.GroupBy(e => e.Holding.Name).ToList();

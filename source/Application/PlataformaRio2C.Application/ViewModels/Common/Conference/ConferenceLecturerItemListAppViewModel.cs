@@ -23,7 +23,7 @@ namespace PlataformaRio2C.Application.ViewModels
 
             if (entity.Collaborator != null)
             {
-                Collaborator = new CollaboratorOptionAppViewModel() { Name = entity.Collaborator.Name, Uid = entity.Collaborator.Uid};
+                Collaborator = new CollaboratorOptionAppViewModel() { Name = entity.Collaborator.FirstName, Uid = entity.Collaborator.Uid};
                 Name = Collaborator.Name;
             }
 

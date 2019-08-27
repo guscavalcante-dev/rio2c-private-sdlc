@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-23-2019
+// Last Modified On : 08-26-2019
 // ***********************************************************************
 // <copyright file="HoldingRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -139,29 +139,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
         }
 
-        /// <summary>Método que traz todos os registros</summary>
-        /// <param name="readonly"></param>
+        /// <summary>Gets the base query.</summary>
+        /// <param name="readonly">if set to <c>true</c> [readonly].</param>
         /// <returns></returns>
-        public override IQueryable<Holding> GetAll(bool @readonly = false)
+        private IQueryable<Holding> GetBaseQuery(bool @readonly = false)
         {
             var consult = this.dbSet
-                                .IsNotDeleted();
-                                //.Include(i => i.Descriptions)
-                                //.Include(i => i.Descriptions.Select(t => t.Language));
-
+                .IsNotDeleted();
 
             return @readonly
                         ? consult.AsNoTracking()
                         : consult;
-        }
-
-        /// <summary>Gets all asynchronous.</summary>
-        /// <returns></returns>
-        public async Task<List<Holding>> GetAllAsync()
-        {
-            var query = this.GetAll();
-
-            return await query.ToListAsync();
         }
 
         /// <summary>Finds the dto by uid asynchronous.</summary>
@@ -169,7 +157,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<HoldingDto> FindDtoByUidAsync(Guid holdingUid)
         {
-            var query = this.GetAll()
+            var query = this.GetBaseQuery()
                                 .FindByUid(holdingUid);
 
             return await query
@@ -211,7 +199,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<List<HoldingBaseDto>> FindAllBaseDto(string keywords)
         {
-            var query = this.GetAll()
+            var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords);
 
             return await query
@@ -238,7 +226,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<IPagedList<HoldingBaseDto>> FindAllBaseDtoByPage(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllEditions, int? editionId)
         {
-            var query = this.GetAll()
+            var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords)
                                 .FindByEditionId(showAllEditions, editionId);
 
@@ -270,10 +258,37 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<int> CountAllByDataTable(bool showAllEditions, int? editionId)
         {
-            var query = this.GetAll()
+            var query = this.GetBaseQuery()
                                 .FindByEditionId(showAllEditions, editionId);
 
             return await query.CountAsync();
+        }
+
+        #region Old
+
+        /// <summary>Método que traz todos os registros</summary>
+        /// <param name="readonly"></param>
+        /// <returns></returns>
+        public override IQueryable<Holding> GetAll(bool @readonly = false)
+        {
+            var consult = this.dbSet
+                .IsNotDeleted();
+            //.Include(i => i.Descriptions)
+            //.Include(i => i.Descriptions.Select(t => t.Language));
+
+
+            return @readonly
+                ? consult.AsNoTracking()
+                : consult;
+        }
+
+        /// <summary>Gets all asynchronous.</summary>
+        /// <returns></returns>
+        public async Task<List<Holding>> GetAllAsync()
+        {
+            var query = this.GetAll();
+
+            return await query.ToListAsync();
         }
 
         public override IQueryable<Holding> GetAll(Expression<Func<Holding, bool>> filter)
@@ -292,5 +307,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             //.Include(i => i.Image)
                             .SingleOrDefault(x => x.Id == (int)id);
         }
+
+        #endregion
     }
 }

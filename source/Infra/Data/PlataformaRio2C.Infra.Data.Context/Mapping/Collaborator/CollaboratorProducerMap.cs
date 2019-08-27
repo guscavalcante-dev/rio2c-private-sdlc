@@ -29,9 +29,9 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.HasKey(d => new { d.CollaboratorId, d.ProducerId, d.EventId });
 
             //Relationships
-            this.HasRequired(t => t.Collaborator)
-                .WithMany(t => t.ProducersEvents)
-                .HasForeignKey(d => d.CollaboratorId);
+            //this.HasRequired(t => t.Collaborator)
+            //    .WithMany(t => t.ProducersEvents)
+            //    .HasForeignKey(d => d.CollaboratorId);
 
             this.HasRequired(t => t.Producer)
                 .WithMany(t => t.EventsCollaborators)
