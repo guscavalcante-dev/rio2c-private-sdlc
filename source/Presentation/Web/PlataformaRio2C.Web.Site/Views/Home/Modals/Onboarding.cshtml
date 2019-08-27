@@ -16,7 +16,7 @@
                                         <a class="kt-wizard-v3__nav-item" href="#" data-ktwizard-type="step" data-ktwizard-state="current">
                                             <div class="kt-wizard-v3__nav-body">
                                                 <div class="kt-wizard-v3__nav-label">
-                                                    <span>1</span> Seus interesses
+                                                    <span>1</span> Seus dados
                                                 </div>
                                                 <div class="kt-wizard-v3__nav-bar"></div>
                                             </div>
@@ -24,7 +24,7 @@
                                         <a class="kt-wizard-v3__nav-item" href="#" data-ktwizard-type="step" data-ktwizard-state="pending">
                                             <div class="kt-wizard-v3__nav-body">
                                                 <div class="kt-wizard-v3__nav-label">
-                                                    <span>2</span> Públic-alvo
+                                                    <span>2</span> Seus interesses
                                                 </div>
                                                 <div class="kt-wizard-v3__nav-bar"></div>
                                             </div>
@@ -32,7 +32,15 @@
                                         <a class="kt-wizard-v3__nav-item" href="#" data-ktwizard-type="step" data-ktwizard-state="pending">
                                             <div class="kt-wizard-v3__nav-body">
                                                 <div class="kt-wizard-v3__nav-label">
-                                                    <span>3</span> Atividades
+                                                    <span>3</span> Públic-alvo
+                                                </div>
+                                                <div class="kt-wizard-v3__nav-bar"></div>
+                                            </div>
+                                        </a>
+                                        <a class="kt-wizard-v3__nav-item" href="#" data-ktwizard-type="step" data-ktwizard-state="pending">
+                                            <div class="kt-wizard-v3__nav-body">
+                                                <div class="kt-wizard-v3__nav-label">
+                                                    <span>4</span> Atividades
                                                 </div>
                                                 <div class="kt-wizard-v3__nav-bar"></div>
                                             </div>
@@ -46,6 +54,41 @@
                                 <!--begin: Form Wizard Form-->
                                 <form class="kt-form" id="kt_form" novalidate="novalidate">
                                     <!--begin: Form Wizard Step 1-->
+                                    <div class="kt-wizard-v3__content" data-ktwizard-type="step-content" data-ktwizard-state="current">
+                                        <div class="kt-heading kt-heading--md">Informe os detalhes da sua conta</div>
+                                        <div class="kt-form__section kt-form__section--first">
+                                            <div class="kt-wizard-v3__form">
+                                                <div class="row">
+                                                    <div class="col-xl-6">
+                                                        <div class="form-group">
+                                                            <label>Primeiro nome</label>
+                                                            <input type="text" class="form-control" name="firstname" placeholder="" value="">
+                                                            <span class="form-text text-muted"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-6">
+                                                        <div class="form-group">
+                                                            <label>Último nome</label>
+                                                            <input type="text" class="form-control" name="lastname" placeholder="" value="">
+                                                            <span class="form-text text-muted"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Informe uma senha de acesso à conta</label>
+                                                    <input type="password" class="form-control" name="password" placeholder="" value="">
+                                                    <span class="form-text text-muted"></span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Confirmação da senha</label>
+                                                    <input type="password" class="form-control" name="passwordconfirmation" placeholder="" value="">
+                                                    <span class="form-text text-muted"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end: Form Wizard Step 1-->
+                                    <!--begin: Form Wizard Step 2-->
                                     <div class="kt-wizard-v3__content" data-ktwizard-type="step-content" data-ktwizard-state="current">
                                         <div class="kt-heading kt-heading--md">Escolha os interesses da empresa</div>
                                         <div class="kt-form__section kt-form__section--first">
@@ -114,8 +157,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!--end: Form Wizard Step 1-->
-                                    <!--begin: Form Wizard Step 2-->
+                                    <!--end: Form Wizard Step 2-->
+                                    <!--begin: Form Wizard Step 3-->
                                     <div class="kt-wizard-v3__content" data-ktwizard-type="step-content">
                                         <div class="kt-heading kt-heading--md">Selecione o público-alvo da empresa</div>
                                         <div class="kt-form__section kt-form__section--first">
@@ -128,8 +171,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!--end: Form Wizard Step 2-->
-                                    <!--begin: Form Wizard Step 3-->
+                                    <!--end: Form Wizard Step 3-->
+                                    <!--begin: Form Wizard Step 4-->
                                     <div class="kt-wizard-v3__content" data-ktwizard-type="step-content">
                                         <div class="kt-heading kt-heading--md">Selecione as atividades</div>
                                         <div class="kt-form__section kt-form__section--first">
@@ -144,7 +187,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!--end: Form Wizard Step 3-->
+                                    <!--end: Form Wizard Step 4-->
                                     <!--begin: Form Actions -->
                                     <div class="kt-form__actions">
                                         <button class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" data-ktwizard-type="action-prev">

@@ -42,66 +42,64 @@ var KTWizard3 = function () {
 			// Validation rules
 			rules: {
 				//= Step 1
-				address1: {
+				firstname: {
 					required: true 
 				},
-				postcode: {
+				lastname: {
 					required: true
 				},	   
-				city: {
+				password: {
 					required: true
 				},	 
-				state: {
+				passwordconfirmation: {
 					required: true
 				},	 
-				country: {
-					required: true
-				},	 
+
 
 				//= Step 2
-				package: {
-					required: true
-				},
-				weight: {
-					required: true
-				},	
-				width: {
-					required: true
-				},
-				height: {
-					required: true
-				},	
-				length: {
-					required: true
-				},			   
+				//package: {
+				//	required: true
+				//},
+				//weight: {
+				//	required: true
+				//},	
+				//width: {
+				//	required: true
+				//},
+				//height: {
+				//	required: true
+				//},	
+				//length: {
+				//	required: true
+				//},			   
 
-				//= Step 3
-				delivery: {
-					required: true
-				},
-				packaging: {
-					required: true
-				},	
-				preferreddelivery: {
-					required: true
-				},	
+				////= Step 3
+				//delivery: {
+				//	required: true
+				//},
+				//packaging: {
+				//	required: true
+				//},	
+				//preferreddelivery: {
+				//	required: true
+				//},	
 
-				//= Step 4
-				locaddress1: {
-					required: true 
-				},
-				locpostcode: {
-					required: true
-				},	   
-				loccity: {
-					required: true
-				},	 
-				locstate: {
-					required: true
-				},	 
-				loccountry: {
-					required: true
-				},
+				////= Step 4
+				//locaddress1: {
+				//	required: true 
+				//},
+				//locpostcode: {
+				//	required: true
+				//},	   
+				//loccity: {
+				//	required: true
+				//},	 
+				//locstate: {
+				//	required: true
+				//},	 
+				//loccountry: {
+				//	required: true
+				//},
 			},
 			
 			// Display error  
@@ -110,7 +108,7 @@ var KTWizard3 = function () {
 
 				swal.fire({
 					"title": "", 
-					"text": "There are some errors in your submission. Please correct them.", 
+					"text": "Existem alguns erros no formulario. Por favor, corrija-os.", 
 					"type": "error",
 					"confirmButtonClass": "btn btn-secondary"
 				});
