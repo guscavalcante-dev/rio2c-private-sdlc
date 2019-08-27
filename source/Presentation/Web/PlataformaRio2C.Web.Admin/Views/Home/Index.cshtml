@@ -2,15 +2,20 @@
     ViewBag.Title = Labels.Dashboard;
 }
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-4">
         <!--begin:: Holdings Edition Count-->
         <div id="HoldingsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
         <!--end:: Holdings Edition Count-->
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-4">
         <!--begin:: Players Edition Count-->
         <div id="PlayersEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
         <!--end:: Players Edition Count-->
+    </div>
+    <div class="col-sm-4">
+        <!--begin:: Players Executives Edition Count-->
+        <div id="PlayersExecutivesEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <!--end:: Players Executives Edition Count-->
     </div>
 </div>
 @section Styles {
@@ -19,10 +24,12 @@
     @Scripts.Render("~/bundles/js/chart.js")
     @Scripts.Render("~/bundles/js/holdings.editioncount.js")
     @Scripts.Render("~/bundles/js/organizations.editioncount.js")
+    @Scripts.Render("~/bundles/js/collaborators.editioncount.js")
     <script>
         jQuery(document).ready(function () {
             HoldingsEditionCountWidget.init();
             OrganizationsEditionCountWidget.init();
+            CollaboratorsEditionCountWidget.init();
         });
     </script>
 }
