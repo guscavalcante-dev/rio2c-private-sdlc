@@ -84,6 +84,13 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.Now;
         }
 
+        /// <summary>Deletes this instance.</summary>
+        public void Delete()
+        {
+            this.IsDeleted = true;
+            this.UpdateDate = DateTime.Now;
+        }
+
         #region Old
 
         public User(string email)
@@ -172,5 +179,4 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
     }
-
 }

@@ -54,6 +54,30 @@ namespace PlataformaRio2C.Domain.Entities
         //public int? MusicalCommissionId { get;  set; }
         //public virtual ICollection<Speaker> Speaker { get;  set; }
 
+        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class.</summary>
+        /// <param name="uid">The uid.</param>
+        /// <param name="organization">The organization.</param>
+        /// <param name="edition">The edition.</param>
+        /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="badge">The badge.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="country">The country.</param>
+        /// <param name="stateUid">The state uid.</param>
+        /// <param name="stateName">Name of the state.</param>
+        /// <param name="cityUid">The city uid.</param>
+        /// <param name="cityName">Name of the city.</param>
+        /// <param name="address1">The address1.</param>
+        /// <param name="address2">The address2.</param>
+        /// <param name="addressZipCode">The address zip code.</param>
+        /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
+        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="jobTitles">The job titles.</param>
+        /// <param name="miniBios">The mini bios.</param>
+        /// <param name="userId">The user identifier.</param>
         public Collaborator(
             Guid uid,
             Organization organization,
@@ -101,6 +125,29 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
+        /// <summary>Updates the specified organization.</summary>
+        /// <param name="organization">The organization.</param>
+        /// <param name="edition">The edition.</param>
+        /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="badge">The badge.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="country">The country.</param>
+        /// <param name="stateUid">The state uid.</param>
+        /// <param name="stateName">Name of the state.</param>
+        /// <param name="cityUid">The city uid.</param>
+        /// <param name="cityName">Name of the city.</param>
+        /// <param name="address1">The address1.</param>
+        /// <param name="address2">The address2.</param>
+        /// <param name="addressZipCode">The address zip code.</param>
+        /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
+        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="jobTitles">The job titles.</param>
+        /// <param name="miniBios">The mini bios.</param>
+        /// <param name="userId">The user identifier.</param>
         public void Update(
             Organization organization,
             Edition edition,
@@ -142,6 +189,24 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUser(email);
         }
 
+        /// <summary>Deletes the specified edition.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(Edition edition, OrganizationType organizationType, int userId)
+        {
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            this.DeleteAttendeeCollaborators(edition, userId);
+
+            if (this.FindAllAttendeeCollaboratorsNotDeleted(edition)?.Any() == false)
+            {
+                this.IsDeleted = true;
+                this.UpdateImageUploadDate(false, true);
+                this.Deleteuser();
+            }
+        }
+
         /// <summary>Updates the image upload date.</summary>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
@@ -178,6 +243,12 @@ namespace PlataformaRio2C.Domain.Entities
             {
                 this.User = new User(this.GetFullName(), email);
             }
+        }
+
+        /// <summary>Deleteusers the specified user identifier.</summary>
+        private void Deleteuser()
+        {
+            this.User?.Delete();
         }
 
         #endregion
@@ -388,10 +459,10 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        /// <summary>Deletes the attendee collaborator.</summary>
+        /// <summary>Deletes the attendee collaborators.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="userId">The user identifier.</param>
-        private void DeleteAttendeeCollaborator(Edition edition, int userId)
+        private void DeleteAttendeeCollaborators(Edition edition, int userId)
         {
             foreach (var attendeeOrganization in this.FindAllAttendeeCollaboratorsNotDeleted(edition))
             {

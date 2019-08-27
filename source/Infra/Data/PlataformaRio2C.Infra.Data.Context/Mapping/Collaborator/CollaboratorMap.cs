@@ -35,13 +35,6 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.HasRequired(t => t.User)
                 .WithOptional(e => e.Collaborator);
 
-            //modelBuilder.Entity<Foo>()
-            //    .HasOptional(a => a.Bar)
-            //    .WithOptionalPrincipal(x => x.Foo)
-            //    .Map(m => m.MapKey("Bar_Foo_ID"))
-            //    .WillCascadeOnDelete(true);
-            //.HasForeignKey(d => d.Id);
-
             //this.HasOptional(t => t.Holding)
             //    .WithMany(e => e.Organizations)
             //    .HasForeignKey(d => d.HoldingId);
