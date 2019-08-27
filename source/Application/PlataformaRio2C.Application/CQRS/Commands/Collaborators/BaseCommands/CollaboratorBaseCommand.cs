@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 08-27-2019
 // ***********************************************************************
 // <copyright file="CollaboratorBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -42,6 +42,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Badge { get; set; }
 
+        [Display(Name = "Email", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [EmailAddress(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [StringLength(256, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        [DataType(DataType.EmailAddress)]
+        public string Email { get; set; }
+
         [Display(Name = "PhoneNumber", ResourceType = typeof(Labels))]
         [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string PhoneNumber { get; set; }
@@ -75,6 +82,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.FirstName = entity?.FirstName;
             this.LastNames = entity?.LastNames;
             this.Badge = entity?.Badge;
+            this.Email = entity?.Email;
             this.PhoneNumber = entity?.PhoneNumber;
             this.CellPhone = entity?.CellPhone;
             this.UpdateAddress(entity, countriesBaseDtos);

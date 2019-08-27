@@ -2023,7 +2023,8 @@ CREATE TABLE [dbo].[Users](
 	[AccessFailedCount] [int] NOT NULL,
 	[PasswordNew] [varchar](50) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
  CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 08-27-2019
 // ***********************************************************************
 // <copyright file="UserMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,14 +30,14 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                 .IsRequired()
                 .HasMaxLength(150);
 
-            this.Property(u => u.Email)                
+            this.Property(u => u.Email)
                 .HasMaxLength(256);
 
             this.Property(u => u.UserName)
                 .IsRequired()
                 .HasMaxLength(256);
 
-            this.Property(u => u.PasswordHash)               
+            this.Property(u => u.PasswordHash)
                .HasMaxLength(8000);
 
             this.Property(u => u.SecurityStamp)
@@ -47,14 +47,22 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
               .HasMaxLength(8000);
 
             // Relationships
-            this.HasMany(t => t.Roles)                
+            //this.HasOptional(t => t.Collaborator)
+            //    .WithRequired(e => e.User);
+            //.HasForeignKey(d => d.Id);
+
+            this.HasMany(t => t.Roles)
                 .WithMany()
                 .Map(cs =>
                 {
                     cs.MapLeftKey("UserId");
                     cs.MapRightKey("RoleId");
                     cs.ToTable("UserRoles");
-                });           
+                });
+
+            // Ignores
+            this.Ignore(u => u.CreateUserId);
+            this.Ignore(u => u.UpdateUserId);
         }
     }
 }

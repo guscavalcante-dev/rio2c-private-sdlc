@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 08-27-2019
 // ***********************************************************************
 // <copyright file="CollaboratorMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,7 +34,13 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             // Relationships
             this.HasRequired(t => t.User)
                 .WithOptional(e => e.Collaborator);
-                //.HasForeignKey(d => d.UpdateUserId);
+
+            //modelBuilder.Entity<Foo>()
+            //    .HasOptional(a => a.Bar)
+            //    .WithOptionalPrincipal(x => x.Foo)
+            //    .Map(m => m.MapKey("Bar_Foo_ID"))
+            //    .WillCascadeOnDelete(true);
+            //.HasForeignKey(d => d.Id);
 
             //this.HasOptional(t => t.Holding)
             //    .WithMany(e => e.Organizations)

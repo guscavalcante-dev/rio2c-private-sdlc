@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-04-2019
+// Last Modified On : 08-27-2019
 // ***********************************************************************
 // <copyright file="Configuration.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -80,22 +80,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Identity.Migrations
             //    //UserRoles_Administrator
             //}
 
-            if (!context.Users.Any(u => u.UserName == "projeto.rio2c@marlin.com.br"))
-            {
-                var store = new CustomUserStore<ApplicationUser>(context);
-                var manager = new UserManager<ApplicationUser, int>(store);
-                var user = new ApplicationUser
-                {
-                    UserName = "projeto.rio2c@marlin.com.br",
-                    Email = "projeto.rio2c@marlin.com.br",
-                    CreationDate = DateTime.Now,
-                    Uid = Guid.NewGuid(),
-                    Active = true,
-                    Name = "Master"
-                };
-                manager.Create(user, "r!o2c@2017");
-                manager.AddToRole(user.Id, "Administrator");
-            }
+            //if (!context.Users.Any(u => u.UserName == "projeto.rio2c@marlin.com.br"))
+            //{
+            //    var store = new CustomUserStore<ApplicationUser>(context);
+            //    var manager = new UserManager<ApplicationUser, int>(store);
+            //    var user = new ApplicationUser
+            //    {
+            //        Uid = Guid.NewGuid(),
+            //        UserName = "projeto.rio2c@marlin.com.br",
+            //        Email = "projeto.rio2c@marlin.com.br",
+            //        CreateDate = DateTime.Now,
+            //        UpdateDate = DateTime.Now,
+            //        Active = true,
+            //        IsDeleted = false,
+            //        Name = "Master"
+            //    };
+            //    manager.Create(user, "r!o2c@2017");
+            //    manager.AddToRole(user.Id, "Administrator");
+            //}
 
             //if (!context.Users.Any(u => u.UserName == "ldomingues@marlin.com.br"))
             //{
@@ -134,23 +136,23 @@ namespace PlataformaRio2C.Infra.CrossCutting.Identity.Migrations
             //    manager.AddToRole(user.Id, "Administrator");
             //}
 
-            if (!context.Users.Any(u => u.UserName == "juliana@rio2c.com"))
-            {
-                var store = new CustomUserStore<ApplicationUser>(context);
-                var manager = new UserManager<ApplicationUser, int>(store);
-                var user = new ApplicationUser
-                {
-                    UserName = "juliana@rio2c.com",
-                    Email = "juliana@rio2c.com",
-                    CreationDate = DateTime.Now,
-                    Uid = Guid.NewGuid(),
-                    Active = true,
-                    Name = "Juliana Eberienos"                   
+            //if (!context.Users.Any(u => u.UserName == "juliana@rio2c.com"))
+            //{
+            //    var store = new CustomUserStore<ApplicationUser>(context);
+            //    var manager = new UserManager<ApplicationUser, int>(store);
+            //    var user = new ApplicationUser
+            //    {
+            //        UserName = "juliana@rio2c.com",
+            //        Email = "juliana@rio2c.com",
+            //        CreationDate = DateTime.Now,
+            //        Uid = Guid.NewGuid(),
+            //        Active = true,
+            //        Name = "Juliana Eberienos"                   
 
-                };
-                manager.Create(user, "280713Jg");
-                manager.AddToRole(user.Id, "Administrator");
-            }
+            //    };
+            //    manager.Create(user, "280713Jg");
+            //    manager.AddToRole(user.Id, "Administrator");
+            //}
 
             //if (!context.Users.Any(u => u.UserName == "ldomingues@marlin.com.br"))
             //{

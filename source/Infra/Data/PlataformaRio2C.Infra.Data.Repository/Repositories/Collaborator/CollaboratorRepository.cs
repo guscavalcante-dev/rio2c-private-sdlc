@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 08-27-2019
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -203,6 +203,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 FirstName = c.FirstName,
                                 LastNames = c.LastNames,
                                 Badge = c.Badge,
+                                Email = c.User.Email,
                                 PhoneNumber = c.PhoneNumber,
                                 CellPhone = c.CellPhone,
                                 //HoldingBaseDto = new HoldingBaseDto
@@ -293,12 +294,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByKeywords(keywords)
                                 .FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, showAllEditions, showAllOrganizations, editionId);
 
-            /*
-            public HoldingBaseDto HoldingBaseDto { get; set; }
-            public OrganizationBaseDto OrganizatioBaseDto { get; set; }
-            public bool IsInCurrentEdition { get; set; }
-            public bool IsInOtherEdition { get; set; }
-            */
             return await query
                             .DynamicOrder<Collaborator>(
                                 sortColumns,
@@ -317,6 +312,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 FirstName = c.FirstName,
                                 LastNames = c.LastNames,
                                 Badge = c.Badge,
+                                Email = c.User.Email,
                                 PhoneNumber = c.PhoneNumber,
                                 CellPhone = c.CellPhone,
                                 //HoldingBaseDto = new HoldingBaseDto
@@ -328,13 +324,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 ImageUploadDate = c.ImageUploadDate,
                                 CreateDate = c.CreateDate,
                                 UpdateDate = c.UpdateDate,
-                                //IsInCurrentEdition = editionId.HasValue && c.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
-                                //                                                                             && !ao.Edition.IsDeleted
-                                //                                                                             && !ao.IsDeleted
-                                //                                                                             && ao.AttendeeOrganizationTypes.Any(aot => aot.OrganizationType.Uid == organizationTypeUid
-                                //                                                                                                                        && !aot.IsDeleted)),
-                                //IsInOtherEdition = editionId.HasValue && c.AttendeeOrganizations.Any(ao => ao.EditionId != editionId
-                                //                                                                           && !ao.IsDeleted)
+                                IsInCurrentEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId
+                                                                                                             && !ac.Edition.IsDeleted
+                                                                                                             && !ac.IsDeleted),
+                                IsInOtherEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId
+                                                                                                           && !ac.IsDeleted)
                             })
                             .ToListPagedAsync(page, pageSize);
         }

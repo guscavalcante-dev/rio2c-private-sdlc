@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 08-27-2019
 // ***********************************************************************
 // <copyright file="collaborators.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -96,7 +96,7 @@ var CollaboratorsDataTableWidget = function () {
                 $(row).attr('data-id', data.Uid);
             },
             columns: [
-                { data: 'Name' },
+                { data: 'FullName' },
                 { data: 'Email' },
                 { data: 'HoldingBaseDto.Name' },
                 { data: 'PlayerBaseDto.Name' },
@@ -130,13 +130,13 @@ var CollaboratorsDataTableWidget = function () {
                                         <td>';
 
                         if (!MyRio2cCommon.isNullOrEmpty(full.ImageUploadDate)) {
-                            html += '<img src="https://dev.assets.my.rio2c.com/img/organizations/' + full.Uid + '_thumbnail.png?v=' + moment(full.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
+                            html += '<img src="https://dev.assets.my.rio2c.com/img/users/' + full.Uid + '_thumbnail.png?v=' + moment(full.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
                         }
                         else {
-                            html += '<img src="https://dev.assets.my.rio2c.com/img/organizations/no-image.png?v=20190818200849" /> ';
+                            html += '<img src="https://dev.assets.my.rio2c.com/img/users/no-image.png?v=20190818200849" /> ';
                         }
 
-                        html += '       <td> ' + full.Name + '</td>\
+                        html += '       <td> ' + full.FullName + '</td>\
                                     </tr>\
                                 </table>';
 
@@ -148,15 +148,7 @@ var CollaboratorsDataTableWidget = function () {
                     }
                 },
                 {
-                    targets: [1],
-                    width: "25%"
-                },
-                {
-                    targets: [4],
-                    className: "dt-center"
-                },
-                {
-                    targets: [5,6],
+                    targets: [4,5],
                     className: "dt-center",
                     render: function (data) {
                         return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');

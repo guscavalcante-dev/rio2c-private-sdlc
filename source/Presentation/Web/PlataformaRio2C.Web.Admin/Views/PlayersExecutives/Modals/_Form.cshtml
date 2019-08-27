@@ -30,6 +30,13 @@
                 @Html.ValidationMessageFor(m => m.Badge, "", new { @class = "text-danger" })
             </div>
         </div>
+        <div class="form-group row">
+            <div class="col-md-12">
+                @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
     </div>
 </div>
 <div class="form-group row">

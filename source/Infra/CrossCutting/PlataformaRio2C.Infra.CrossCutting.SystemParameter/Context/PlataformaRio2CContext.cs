@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-06-2019
+// Last Modified On : 08-27-2019
 // ***********************************************************************
 // <copyright file="PlataformaRio2CContext.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -62,7 +62,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SystemParameter.Context
 
         public override int SaveChanges()
         {
-            SetupDateRegisterFieldForAllEntities("CreationDate");
+            //SetupDateRegisterFieldForAllEntities("CreationDate");
             SetupUidRegisterFieldForAllEntities("Uid");
 
             return base.SaveChanges();

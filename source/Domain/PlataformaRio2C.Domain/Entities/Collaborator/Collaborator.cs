@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 08-27-2019
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -62,6 +62,7 @@ namespace PlataformaRio2C.Domain.Entities
             string firstName,
             string lastNames,
             string badge,
+            string email,
             string phoneNumber,
             string cellPhone,
             Country country,
@@ -92,6 +93,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeMiniBios(miniBios, userId);
             this.SynchronizeAttendeeCollaborators(edition, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, address2, addressZipCode, addressIsManual, userId);
+            this.CreateUser(email);
         }
 
         /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class.</summary>
@@ -121,7 +123,23 @@ namespace PlataformaRio2C.Domain.Entities
             return this.FirstName + (!string.IsNullOrEmpty(this.LastNames) ? " " + this.LastNames : String.Empty);
         }
 
-        #region Address
+        #region Users
+
+        /// <summary>Creates the user.</summary>
+        /// <param name="email">The email.</param>
+        public void CreateUser(string email)
+        {
+            if (this.User != null)
+            {
+                return;
+            }
+
+            this.User = new User(this.GetFullName(), email);
+        }
+
+        #endregion
+
+        #region Addresses
 
         /// <summary>Updates the address.</summary>
         /// <param name="country">The country.</param>

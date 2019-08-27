@@ -20,44 +20,47 @@ namespace PlataformaRio2C.Domain.Entities
     /// <summary>User</summary>
     public class User : Entity
     {
-        public virtual string UserName { get; set; }
-
         public string Name { get; set; }
-
         public bool Active { get; set; }
-
-        public virtual string Email { get; set; }
-
-        public virtual bool EmailConfirmed { get; set; }
-
-        public virtual string PasswordHash { get; set; }
-
-        public virtual string PasswordNew { get; set; }
-
-        public virtual string SecurityStamp { get; set; }
-
-        public virtual string PhoneNumber { get; set; }
-
-        public virtual bool PhoneNumberConfirmed { get; set; }
-
-        public virtual bool TwoFactorEnabled { get; set; }
-
-        public virtual DateTime? LockoutEndDateUtc { get; set; }
-
-        public virtual bool LockoutEnabled { get; set; }
-
-        public virtual int AccessFailedCount { get; set; }        
-
-        public override ValidationResult ValidationResult { get; set; }
+        public string UserName { get; set; }
+        public string Email { get; set; }
+        public bool EmailConfirmed { get; set; }
+        public string PasswordHash { get; set; }
+        public string PasswordNew { get; set; }
+        public string SecurityStamp { get; set; }
+        public string PhoneNumber { get; set; }
+        public bool PhoneNumberConfirmed { get; set; }
+        public bool TwoFactorEnabled { get; set; }
+        public DateTime? LockoutEndDateUtc { get; set; }
+        public bool LockoutEnabled { get; set; }
+        public int AccessFailedCount { get; set; }        
 
         public virtual ICollection<Role> Roles { get; set; }
-
         public virtual ICollection<UserUseTerm> UserUseTerms { get; set; }
 
         public virtual Collaborator Collaborator { get; set; }
         public virtual ICollection<Holding> UpdatedHoldings { get; set; }
         public virtual ICollection<Organization> UpdatedOrganizations { get; set; }
         public virtual ICollection<Collaborator> UpdatedCollaborators { get; set; }
+
+        //public override ValidationResult ValidationResult { get; set; }
+
+        /// <summary>Initializes a new instance of the <see cref="User"/> class for pre-register.</summary>
+        /// <param name="fullName">The full name.</param>
+        /// <param name="email">The email.</param>
+        public User(string fullName, string email)
+        {
+            this.Active = true;
+            this.Name = fullName?.Trim();
+            this.UserName = this.Email = email?.Trim();
+            this.EmailConfirmed = false;
+            this.SecurityStamp = Guid.NewGuid().ToString().ToLowerInvariant();
+            this.PhoneNumberConfirmed = false;
+            this.TwoFactorEnabled = false;
+            this.LockoutEnabled = false;
+            this.AccessFailedCount = 0;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+        }
 
         /// <summary>Initializes a new instance of the <see cref="User"/> class.</summary>
         protected User()

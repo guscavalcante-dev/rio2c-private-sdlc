@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 08-27-2019
 // ***********************************************************************
 // <copyright file="OrganizationDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,9 +18,6 @@ namespace PlataformaRio2C.Domain.Dtos
     /// <summary>CollaboratorDto</summary>
     public class CollaboratorDto : CollaboratorBaseDto
     {
-        public string CompanyName { get; set; }
-        public string TradeName { get; set; }
-        public string SocialMedia { get; set; }
         public int CreateUserId { get; set; }
         public int UpdateUserId { get; set; }
 

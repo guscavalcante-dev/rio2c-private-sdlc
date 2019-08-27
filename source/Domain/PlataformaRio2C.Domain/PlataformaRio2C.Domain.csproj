@@ -354,9 +354,9 @@
     <Compile Include="Entities\Player\Player.cs" />
     <Compile Include="Entities\Holdings\HoldingDescription.cs" />
     <Compile Include="Entities\Common\TargetAudience.cs" />
-    <Compile Include="Entities\User\User.cs" />
-    <Compile Include="Entities\User\Role.cs" />
-    <Compile Include="Entities\User\UserUseTerm.cs" />
+    <Compile Include="Entities\Users\User.cs" />
+    <Compile Include="Entities\Users\Role.cs" />
+    <Compile Include="Entities\Users\UserUseTerm.cs" />
     <Compile Include="Statics\Files\FileRepositoryPathType.cs" />
     <Compile Include="Statics\User\Role.cs" />
     <Compile Include="Validations\Address\AddressIsConsistent.cs" />
@@ -470,7 +470,7 @@
     <Compile Include="Services\LanguageService.cs" />
     <Compile Include="Services\PlayerService.cs" />
     <Compile Include="Services\HoldingService.cs" />
-    <Compile Include="Entities\User\UserRole.cs" />
+    <Compile Include="Entities\Users\UserRole.cs" />
     <Compile Include="Validation\Validation.cs" />
     <Compile Include="Validation\ValidationError.cs" />
     <Compile Include="Validation\ValidationResult.cs" />
