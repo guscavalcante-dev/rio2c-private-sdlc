@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-25-2019
+// Last Modified On : 08-27-2019
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,15 +19,25 @@ var MyRio2cCommon = function () {
     globalVariables.userInterfaceLanguage = '';
     globalVariables.userInterfaceLanguageUppercase = '';
     globalVariables.editionUrlCode = '';
+    globalVariables.bucket = '';
 
-    var setGlobalVariables = function (userInterfaceLanguage, editionUrlCode) {
+    var setGlobalVariables = function (userInterfaceLanguage, editionUrlCode, bucket) {
         globalVariables.userInterfaceLanguage = userInterfaceLanguage;
         globalVariables.userInterfaceLanguageUppercade = MyRio2cCommon.getCultureUppercase(userInterfaceLanguage);
         globalVariables.editionUrlCode = editionUrlCode;
+        globalVariables.bucket = bucket;
     };
 
     var getGlobalVariables = function () {
         return globalVariables;
+    };
+
+    var getGlobalVariable = function (key) {
+        if (!MyRio2cCommon.hasProperty(globalVariables, key)) {
+            return null;
+        }
+
+        return globalVariables[key];
     };
 
     // Layout -------------------------------------------------------------------------------------
@@ -594,8 +604,8 @@ var MyRio2cCommon = function () {
     };
 
     return {
-        init: function (userInterfaceLanguage, editionUrlCode) {
-            setGlobalVariables(userInterfaceLanguage, editionUrlCode);
+        init: function (userInterfaceLanguage, editionUrlCode, bucket) {
+            setGlobalVariables(userInterfaceLanguage, editionUrlCode, bucket);
 
             // Functions that need jquery
             $(function () {
@@ -606,6 +616,9 @@ var MyRio2cCommon = function () {
         },
         getGlobalVariables: function () {
             return getGlobalVariables();
+        },
+        getGlobalVariable: function (key) {
+            return getGlobalVariable(key);
         },
         hasProperty: function (obj, key) {
             return hasProperty(obj, key);

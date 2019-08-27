@@ -39,6 +39,7 @@ var CollaboratorsDataTableWidget = function () {
         }
 
         var globalVariables = MyRio2cCommon.getGlobalVariables();
+        var imageDirectory = 'https://' + globalVariables.bucket + '/img/users/';
 
         table = tableElement.DataTable({
             "language": {
@@ -130,10 +131,10 @@ var CollaboratorsDataTableWidget = function () {
                                         <td>';
 
                         if (!MyRio2cCommon.isNullOrEmpty(full.ImageUploadDate)) {
-                            html += '<img src="https://dev.assets.my.rio2c.com/img/users/' + full.Uid + '_thumbnail.png?v=' + moment(full.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
+                            html += '<img src="' + imageDirectory + full.Uid + '_thumbnail.png?v=' + moment(full.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
                         }
                         else {
-                            html += '<img src="https://dev.assets.my.rio2c.com/img/users/no-image.png?v=20190818200849" /> ';
+                            html += '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" /> ';
                         }
 
                         html += '       <td> ' + full.FullName + '</td>\
