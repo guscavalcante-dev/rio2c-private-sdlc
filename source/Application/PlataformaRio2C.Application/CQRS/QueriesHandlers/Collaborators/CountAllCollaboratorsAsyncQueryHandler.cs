@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 08-27-2019
 // ***********************************************************************
 // <copyright file="CountAllCollaboratorsAsyncQueryHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,11 +22,11 @@ namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
     /// <summary>CountAllCollaboratorsAsyncQueryHandler</summary>
     public class CountAllCollaboratorsAsyncQueryHandler : IRequestHandler<CountAllCollaboratorsAsync, int>
     {
-        private readonly IOrganizationRepository repo;
+        private readonly ICollaboratorRepository repo;
 
         /// <summary>Initializes a new instance of the <see cref="CountAllCollaboratorsAsyncQueryHandler"/> class.</summary>
         /// <param name="repository">The repository.</param>
-        public CountAllCollaboratorsAsyncQueryHandler(IOrganizationRepository repository)
+        public CountAllCollaboratorsAsyncQueryHandler(ICollaboratorRepository repository)
         {
             this.repo = repository;
         }

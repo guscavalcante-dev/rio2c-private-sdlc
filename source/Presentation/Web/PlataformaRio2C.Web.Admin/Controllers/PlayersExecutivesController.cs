@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 08-27-2019
 // ***********************************************************************
 // <copyright file="PlayersExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -108,7 +108,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowTotalCountWidget()
         {
-            var holdingsCount = await this.CommandBus.Send(new CountAllOrganizationsAsync(
+            var holdingsCount = await this.CommandBus.Send(new CountAllCollaboratorsAsync(
                 OrganizationType.Player.Uid,
                 true,
                 this.UserId,
@@ -135,7 +135,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <returns></returns>
         public async Task<ActionResult> ShowEditionCountWidget()
         {
-            var holdingsCount = await this.CommandBus.Send(new CountAllOrganizationsAsync(
+            var holdingsCount = await this.CommandBus.Send(new CountAllCollaboratorsAsync(
                 OrganizationType.Player.Uid,
                 false,
                 this.UserId,
