@@ -295,7 +295,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Áudio Visual.
+        ///   Looks up a localized string similar to Audiovisual.
         /// </summary>
         public static string AudioVisual {
             get {

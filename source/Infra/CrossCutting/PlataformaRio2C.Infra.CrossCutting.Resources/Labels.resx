@@ -1177,8 +1177,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>editado</comment>
   </data>
   <data name="AudioVisual" xml:space="preserve">
-    <value>Áudio Visual</value>
-    <comment>Áudio Visual</comment>
+    <value>Audiovisual</value>
+    <comment>Audiovisual</comment>
   </data>
   <data name="CompanyDocument" xml:space="preserve">
     <value>CNPJ</value>
