@@ -361,6 +361,7 @@
     <Content Include="Assets\img\bg-1.jpg" />
     <Content Include="Assets\img\bg-2.jpg" />
     <Content Include="Assets\img\bg-3.jpg" />
+    <Content Include="Assets\img\logo-rio2c-footer.png" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
     <Content Include="Assets\js\holdings\holdings.delete.js" />
     <Content Include="Assets\js\myrio2c.cropper.js" />
