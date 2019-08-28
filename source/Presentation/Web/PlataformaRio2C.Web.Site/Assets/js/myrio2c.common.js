@@ -249,8 +249,6 @@ var MyRio2cCommon = function () {
 
         changeElementsVisibilityByDataId({ dataId: options.dataId, hideElementIdOrClass: '.edit', showElementIdOrClass: '.view' });
 
-        $('[data-id="' + options.dataId + '"] .edit :input').val('').trigger('change');
-
         return false;
     };
 
