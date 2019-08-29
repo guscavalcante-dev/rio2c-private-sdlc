@@ -107,8 +107,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             {
                 this.AttendeeOrganizationBaseCommands = entity?.AttendeeOrganizationBasesDtos?.Select(aobd => new AttendeeOrganizationBaseCommand(aobd, attendeeOrganizationsBaseDtos))?.ToList();
             }
-
-            this.UpdateOrganizationTemplate(attendeeOrganizationsBaseDtos);
         }
 
         /// <summary>Updates the organization template.</summary>
