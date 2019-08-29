@@ -358,7 +358,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\img\bg-1.jpg" />
     <Content Include="Assets\img\bg-2.jpg" />
     <Content Include="Assets\img\bg-3.jpg" />
     <Content Include="Assets\img\logo-rio2c-footer.png" />
