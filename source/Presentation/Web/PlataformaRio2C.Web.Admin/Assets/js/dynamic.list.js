@@ -4,7 +4,7 @@
 // Created          : 08-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-28-2019
+// Last Modified On : 08-29-2019
 // ***********************************************************************
 // <copyright file="dynamic.list.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -85,16 +85,25 @@ var DynamicList = function () {
     //  prefix: prefix of the Id and the Name attributes
     var recalculateIndexes = function (itemClass, prefix) {
         var regExprId = new RegExp(prefix + '_\\d', 'g');
-        var regExprId2 = new RegExp(prefix + '\\d', 'g');
         var regExprName = new RegExp(prefix + '\\[\\d\\]', 'g');
 
         $('.' + itemClass).each(function (index) {
-            $(this)
-                .html($(this).html()
-                    .replace(regExprId, prefix + '_' + index)
-                    .replace(regExprName, prefix + '[' + index + ']')
-                    .replace(regExprId2, prefix + index)
-                );
+            // Recalculate the Id and Name
+            $(this).find('[id^=' + prefix + ']').each(function () {
+                $(this).attr('id', $(this).attr('id').replace(regExprId, prefix + '_' + index));
+                if ($(this).attr('name') != undefined)
+                    $(this).attr('name', $(this).attr('name').replace(regExprName, prefix + '[' + index + ']'));
+            });
+
+            // Recalculate the validation
+            $(this).find('[data-valmsg-for^=' + prefix + ']').each(function () {
+                $(this).attr('data-valmsg-for', $(this).attr('data-valmsg-for').replace(regExprName, prefix + '[' + index + ']'));
+            });
+
+            // Recalculate the Id of select2
+            $(this).find('[data-select2-id^=' + prefix + ']').each(function () {
+                $(this).attr('data-select2-id', $(this).attr('data-select2-id').replace(regExprId, prefix + '_' + index));
+            });
         });
     };
 
