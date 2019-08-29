@@ -67,7 +67,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = true;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.DeleteAttendeeOrganizationCollaborators(null, userId);
+            this.DeleteAttendeeOrganizationCollaborators(new List<AttendeeOrganization>(), userId);
         }
 
         #region Attendee Organization Collaborators
