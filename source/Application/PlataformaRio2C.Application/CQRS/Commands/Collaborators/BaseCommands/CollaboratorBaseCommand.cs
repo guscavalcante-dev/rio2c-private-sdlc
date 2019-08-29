@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-27-2019
+// Last Modified On : 08-29-2019
 // ***********************************************************************
 // <copyright file="CollaboratorBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -61,7 +61,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public CropperImageBaseCommand CropperImage { get; set; }
 
         public List<AttendeeOrganizationBaseCommand> TemplateAttendeeOrganizationBaseCommands { get; set; }
-        public List<AttendeeOrganizationBaseDto> AttendeeOrganizationsBaseDtos { get; private set; }
         public OrganizationType OrganizationType { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="CollaboratorBaseCommand"/> class.</summary>
@@ -109,16 +108,19 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 this.AttendeeOrganizationBaseCommands = entity?.AttendeeOrganizationBasesDtos?.Select(aobd => new AttendeeOrganizationBaseCommand(aobd, attendeeOrganizationsBaseDtos))?.ToList();
             }
 
-            #region Html template to add new items to list
+            this.UpdateOrganizationTemplate(attendeeOrganizationsBaseDtos);
+        }
 
+        /// <summary>Updates the organization template.</summary>
+        /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
+        private void UpdateOrganizationTemplate(List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos)
+        {
             if (this.TemplateAttendeeOrganizationBaseCommands == null)
             {
                 this.TemplateAttendeeOrganizationBaseCommands = new List<AttendeeOrganizationBaseCommand>();
             }
 
             this.TemplateAttendeeOrganizationBaseCommands.Add(new AttendeeOrganizationBaseCommand(null, attendeeOrganizationsBaseDtos));
-
-            #endregion
         }
 
         /// <summary>Updates the address.</summary>
@@ -169,7 +171,15 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
         public void UpdateDropdownProperties(List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, List<CountryBaseDto> countriesBaseDtos)
         {
-            this.AttendeeOrganizationsBaseDtos = attendeeOrganizationsBaseDtos;
+            // Attendee organizations
+            foreach (var attendeeOrganizationBaseCommand in this.AttendeeOrganizationBaseCommands)
+            {
+                attendeeOrganizationBaseCommand.UpdateDropdownProperties(attendeeOrganizationsBaseDtos);
+            }
+
+            this.UpdateOrganizationTemplate(attendeeOrganizationsBaseDtos);
+
+            // Addresses
             this.Address?.UpdateDropdownProperties(countriesBaseDtos);
         }
 

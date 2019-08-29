@@ -4,7 +4,7 @@
 // Created          : 08-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-27-2019
+// Last Modified On : 08-29-2019
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,6 +30,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>UpdateCollaboratorCommandHandler</summary>
     public class UpdateCollaboratorCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<UpdateCollaborator, AppValidationResult>
     {
+        private readonly IUserRepository userRepo;
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IEditionRepository editionRepo;
         private readonly ILanguageRepository languageRepo;
@@ -39,6 +40,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
+        /// <param name="userRepository">The user repository.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="languageRepository">The language repository.</param>
@@ -47,12 +49,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IMediator eventBus,
             IUnitOfWork uow,
             ICollaboratorRepository collaboratorRepository,
+            IUserRepository userRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IEditionRepository editionRepository,
             ILanguageRepository languageRepository,
             ICountryRepository countryRepository)
             : base(eventBus, uow, collaboratorRepository)
         {
+            this.userRepo = userRepository;
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.editionRepo = editionRepository;
             this.languageRepo = languageRepository;
@@ -69,24 +73,22 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var collaborator = await this.GetCollaboratorByUid(cmd.CollaboratorUid);
 
-            //#region Initial validations
+            #region Initial validations
 
-            //var existingOrganizationByName = this.OrganizationRepo.Get(o => o.Name == cmd.Name 
-            //                                                                && o.Holding.Uid == cmd.HoldingUid 
-            //                                                                && o.Uid != cmd.OrganizationUid
-            //                                                                && !o.IsDeleted);
-            //if (existingOrganizationByName != null)
-            //{
-            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.APlayer, Labels.TheName, cmd.Name), new string[] { "Name" }));
-            //}
+            // Check if exists an user with the same email
+            var user = await this.userRepo.GetAsync(u => u.Email == cmd.Email.Trim());
+            if (user != null && (collaborator?.User == null || user.Uid != collaborator?.User?.Uid))
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.Executive.ToLowerInvariant(), $"{Labels.TheM} {Labels.Email}", cmd.Email), new string[] { "Email" }));
+            }
 
-            //if (!this.ValidationResult.IsValid)
-            //{
-            //    this.AppValidationResult.Add(this.ValidationResult);
-            //    return this.AppValidationResult;
-            //}
+            if (!this.ValidationResult.IsValid)
+            {
+                this.AppValidationResult.Add(this.ValidationResult);
+                return this.AppValidationResult;
+            }
 
-            //#endregion
+            #endregion
 
             // Before update values
             var beforeImageUploadDate = collaborator.ImageUploadDate;

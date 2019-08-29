@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 08-29-2019
 // ***********************************************************************
 // <copyright file="UpdateOrganizationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -75,6 +75,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #region Initial validations
 
+            // Check if the name already exists
             var existingOrganizationByName = this.OrganizationRepo.Get(o => o.Name == cmd.Name 
                                                                             && o.Holding.Uid == cmd.HoldingUid 
                                                                             && o.Uid != cmd.OrganizationUid

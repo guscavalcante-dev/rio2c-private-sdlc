@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-27-2019
+// Last Modified On : 08-29-2019
 // ***********************************************************************
 // <copyright file="CreateCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,21 +30,33 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>CreateCollaboratorCommandHandler</summary>
     public class CreateCollaboratorCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<CreateCollaborator, AppValidationResult>
     {
+        private readonly IUserRepository userRepo;
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IEditionRepository editionRepo;
         private readonly ILanguageRepository languageRepo;
         private readonly ICountryRepository countryRepo;
 
+        /// <summary>Initializes a new instance of the <see cref="CreateCollaboratorCommandHandler"/> class.</summary>
+        /// <param name="eventBus">The event bus.</param>
+        /// <param name="uow">The uow.</param>
+        /// <param name="collaboratorRepository">The collaborator repository.</param>
+        /// <param name="userRepository">The user repository.</param>
+        /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
+        /// <param name="editionRepository">The edition repository.</param>
+        /// <param name="languageRepository">The language repository.</param>
+        /// <param name="countryRepository">The country repository.</param>
         public CreateCollaboratorCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             ICollaboratorRepository collaboratorRepository,
+            IUserRepository userRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IEditionRepository editionRepository,
             ILanguageRepository languageRepository,
             ICountryRepository countryRepository)
             : base(eventBus, uow, collaboratorRepository)
         {
+            this.userRepo = userRepository;
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.editionRepo = editionRepository;
             this.languageRepo = languageRepository;
@@ -61,63 +73,89 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var collaboratorUid = Guid.NewGuid();
 
-            //#region Initial validations
+            #region Initial validations
 
-            //var existingOrganizationByName = this.CollaboratorRepo.Get(o => o.Name == cmd.Name
-            //                                                                && o.Holding.Uid == cmd.HoldingUid
-            //                                                                && !o.IsDeleted);
-            //if (existingOrganizationByName != null)
-            //{
-            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.APlayer, Labels.TheName, cmd.Name), new string[] { "Name" }));
-            //}
+            var user = await this.userRepo.GetAsync(u => u.Email == cmd.Email.Trim());
 
-            //if (!this.ValidationResult.IsValid)
-            //{
-            //    this.AppValidationResult.Add(this.ValidationResult);
-            //    return this.AppValidationResult;
-            //}
-
-            //#endregion
-
-            var languageDtos = await this.languageRepo.FindAllDtosAsync();
-
-            var collaborator = new Collaborator(
-                collaboratorUid,
-                await this.attendeeOrganizationRepo.FindAllByUidsAsync(cmd.AttendeeOrganizationBaseCommands?.Where(aobc => aobc.AttendeeOrganizationUid.HasValue)?.Select(aobc => aobc.AttendeeOrganizationUid.Value)?.ToList()),
-                await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
-                cmd.FirstName,
-                cmd.LastNames,
-                cmd.Badge,
-                cmd.Email,
-                cmd.PhoneNumber,
-                cmd.CellPhone,
-                await this.countryRepo.GetAsync(cmd.Address?.CountryUid ?? Guid.Empty),
-                cmd.Address?.StateUid,
-                cmd.Address?.StateName,
-                cmd.Address?.CityUid,
-                cmd.Address?.CityName,
-                cmd.Address?.Address1,
-                cmd.Address?.Address2,
-                cmd.Address?.AddressZipCode,
-                true, //TODO: get AddressIsManual from form
-                cmd.CropperImage?.ImageFile != null,
-                cmd.JobTitles?.Select(d => new CollaboratorJobTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
-                cmd.MiniBios?.Select(d => new CollaboratorMiniBio(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
-                cmd.UserId);
-            if (!collaborator.IsValid())
+            // Return error only if the user is not deleted
+            if (user != null && !user.IsDeleted)
             {
-                this.AppValidationResult.Add(collaborator.ValidationResult);
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.Executive.ToLowerInvariant(), $"{Labels.TheM} {Labels.Email}", cmd.Email), new string[] { "Email" }));
+            }
+
+            if (!this.ValidationResult.IsValid)
+            {
+                this.AppValidationResult.Add(this.ValidationResult);
                 return this.AppValidationResult;
             }
 
-            this.CollaboratorRepo.Create(collaborator);
-            this.Uow.SaveChanges();
-            this.AppValidationResult.Data = collaborator;
+            #endregion
+
+            var languageDtos = await this.languageRepo.FindAllDtosAsync();
+
+            // Create if the user was not found in database
+            if (user == null)
+            {
+                var collaborator = new Collaborator(
+                    collaboratorUid,
+                    await this.attendeeOrganizationRepo.FindAllByUidsAsync(cmd.AttendeeOrganizationBaseCommands?.Where(aobc => aobc.AttendeeOrganizationUid.HasValue)?.Select(aobc => aobc.AttendeeOrganizationUid.Value)?.ToList()),
+                    await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
+                    cmd.FirstName,
+                    cmd.LastNames,
+                    cmd.Badge,
+                    cmd.Email,
+                    cmd.PhoneNumber,
+                    cmd.CellPhone,
+                    await this.countryRepo.GetAsync(cmd.Address?.CountryUid ?? Guid.Empty),
+                    cmd.Address?.StateUid,
+                    cmd.Address?.StateName,
+                    cmd.Address?.CityUid,
+                    cmd.Address?.CityName,
+                    cmd.Address?.Address1,
+                    cmd.Address?.Address2,
+                    cmd.Address?.AddressZipCode,
+                    true, //TODO: get AddressIsManual from form
+                    cmd.CropperImage?.ImageFile != null,
+                    cmd.JobTitles?.Select(d => new CollaboratorJobTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
+                    cmd.MiniBios?.Select(d => new CollaboratorMiniBio(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
+                    cmd.UserId);
+                if (!collaborator.IsValid())
+                {
+                    this.AppValidationResult.Add(collaborator.ValidationResult);
+                    return this.AppValidationResult;
+                }
+
+                this.CollaboratorRepo.Create(collaborator);
+                this.Uow.SaveChanges();
+                this.AppValidationResult.Data = collaborator;
+            }
+            else
+            {
+                var updateCmd = new UpdateCollaborator
+                {
+                    CollaboratorUid = user.Collaborator.Uid,
+                    IsAddingToCurrentEdition = true,
+                    FirstName = cmd.FirstName,
+                    LastNames = cmd.LastNames,
+                    Badge = cmd.Badge,
+                    Email = cmd.Email,
+                    PhoneNumber = cmd.PhoneNumber,
+                    CellPhone = cmd.CellPhone,
+                    Address = cmd.Address,
+                    AttendeeOrganizationBaseCommands = cmd.AttendeeOrganizationBaseCommands,
+                    JobTitles = cmd.JobTitles,
+                    MiniBios = cmd.MiniBios,
+                    CropperImage = cmd.CropperImage
+                };
+                updateCmd.UpdatePreSendProperties(cmd.OrganizationType, cmd.UserId, cmd.UserUid, cmd.EditionId, cmd.EditionUid, cmd.UserInterfaceLanguage);
+
+                this.AppValidationResult = await this.EventBus.Send(updateCmd, cancellationToken);
+            }
 
             if (cmd.CropperImage?.ImageFile != null)
             {
                 ImageHelper.UploadOriginalAndCroppedImages(
-                    collaborator.Uid,
+                    ((Collaborator)this.AppValidationResult.Data).Uid,
                     cmd.CropperImage.ImageFile,
                     cmd.CropperImage.DataX,
                     cmd.CropperImage.DataY,

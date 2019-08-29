@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 08-29-2019
 // ***********************************************************************
 // <copyright file="BaseCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -43,9 +43,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         public async Task<Collaborator> GetCollaboratorByUid(Guid collaboratorUid)
         {
             var collaborator = await this.CollaboratorRepo.GetAsync(collaboratorUid);
-            if (collaborator == null || collaborator.IsDeleted)
+            if (collaborator == null) // Do not check IsDeleted because the Collaborator/User can be restored
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundM)));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundM), new string[] { "FirstName" }));
                 return null;
             }
 
