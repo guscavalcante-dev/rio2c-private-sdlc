@@ -26,6 +26,10 @@ var MyRio2cCropper = function () {
 
         var internalOptions = {
             //preview: '.img-preview',
+            minContainerWidth: 200,
+            minContainerHeight: 200,
+            minCropBoxWidth: 170,
+            minCropBoxHeight: 170,
             cropBoxMovable: false,
             cropBoxResizable: false,
             aspectRatio: 1 / 1,
