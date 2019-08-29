@@ -127,7 +127,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[AttendeeOrganizationCollaborators](
-	[Id] [int] NOT NULL,
+	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
 	[AttendeeOrganizationId] [int] NOT NULL,
 	[AttendeeCollaboratorId] [int] NOT NULL,
@@ -1416,7 +1416,7 @@ GO
 SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[Projects](
-	[Id] [int] NOT NULL,
+	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
 	[ProjectTypeId] [int] NOT NULL,
 	[SellerAttendeeOrganizationId] [int] NULL,

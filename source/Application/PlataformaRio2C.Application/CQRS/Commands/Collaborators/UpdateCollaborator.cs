@@ -29,11 +29,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaborator"/> class.</summary>
         /// <param name="entity">The entity.</param>
-        /// <param name="holdingBaseDtos">The holding base dtos.</param>
+        /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
         /// <param name="isAddingToCurrentEdition">The is adding to current edition.</param>
-        public UpdateCollaborator(CollaboratorDto entity, List<HoldingBaseDto> holdingBaseDtos, List<LanguageDto> languagesDtos, List<CountryBaseDto> countriesBaseDtos, bool? isAddingToCurrentEdition)
+        /// <exception cref="DomainException"></exception>
+        public UpdateCollaborator(CollaboratorDto entity, List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, List<LanguageDto> languagesDtos, List<CountryBaseDto> countriesBaseDtos, bool? isAddingToCurrentEdition)
         {
             if (entity == null)
             {
@@ -44,7 +45,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.IsAddingToCurrentEdition = isAddingToCurrentEdition ?? false;
             this.UpdaterBaseDto = entity.UpdaterDto;
             this.UpdateDate = entity.UpdateDate;
-            this.UpdateBaseProperties(entity, holdingBaseDtos, languagesDtos, countriesBaseDtos);
+            this.UpdateBaseProperties(entity, attendeeOrganizationsBaseDtos, languagesDtos, countriesBaseDtos);
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaborator"/> class.</summary>

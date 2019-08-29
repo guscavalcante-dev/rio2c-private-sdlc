@@ -20,12 +20,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     public class CreateCollaborator : CollaboratorBaseCommand
     {
         /// <summary>Initializes a new instance of the <see cref="CreateCollaborator"/> class.</summary>
-        /// <param name="holdingBaseDtos">The holding base dtos.</param>
+        /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
-        public CreateCollaborator(List<HoldingBaseDto> holdingBaseDtos, List<LanguageDto> languagesDtos, List<CountryBaseDto> countriesBaseDtos)
+        public CreateCollaborator(List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, List<LanguageDto> languagesDtos, List<CountryBaseDto> countriesBaseDtos)
         {
-            this.UpdateBaseProperties(null, holdingBaseDtos, languagesDtos, countriesBaseDtos);
+            this.UpdateBaseProperties(null, attendeeOrganizationsBaseDtos, languagesDtos, countriesBaseDtos);
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateCollaborator"/> class.</summary>

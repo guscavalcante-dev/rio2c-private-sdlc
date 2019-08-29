@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-27-2019
+// Last Modified On : 08-28-2019
 // ***********************************************************************
 // <copyright file="AttendeeOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,7 +25,9 @@ namespace PlataformaRio2C.Domain.Entities
 
         public virtual Edition Edition { get; private set; }
         public virtual Organization Organization { get; private set; }
+
         public virtual ICollection<AttendeeOrganizationType> AttendeeOrganizationTypes { get; private set; }
+        public virtual ICollection<AttendeeOrganizationCollaborator> AttendeeOrganizationCollaborators { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeOrganization"/> class.</summary>
         /// <param name="edition">The edition.</param>
@@ -116,6 +118,8 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
+        #region Validations
+
         /// <summary>Returns true if ... is valid.</summary>
         /// <returns>
         ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
@@ -124,9 +128,6 @@ namespace PlataformaRio2C.Domain.Entities
             return true;
         }
 
-        internal void Delete(OrganizationType organizationType)
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
     }
 }

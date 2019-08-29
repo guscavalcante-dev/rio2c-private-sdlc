@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-27-2019
+// Last Modified On : 08-28-2019
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -187,10 +187,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
-        /// <summary>Finds the dto by uid asynchronous.</summary>
+        /// <summary>Finds the dto by uid and by edition identifier asynchronous.</summary>
         /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<CollaboratorDto> FindDtoByUidAsync(Guid collaboratorUid)
+        public async Task<CollaboratorDto> FindDtoByUidAndByEditionIdAsync(Guid collaboratorUid, int editionId)
         {
             var query = this.GetBaseQuery()
                                 .FindByUid(collaboratorUid);
@@ -266,7 +267,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         Name = d.Language.Name,
                                         Code = d.Language.Code
                                     }
-                                })
+                                }),
+                                AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
+                                                                    .Where(at => !at.IsDeleted && at.EditionId == editionId)
+                                                                    .SelectMany(at => at.AttendeeOrganizationCollaborators
+                                                                                            .Where(aoc => !aoc.IsDeleted)
+                                                                                            .Select(aoc => aoc.AttendeeOrganization))
+                                                                                            .Where(ao => !ao.IsDeleted && ao.EditionId == editionId)
+                                                                                            .Select(ao => new AttendeeOrganizationBaseDto
+                                                                                            {
+                                                                                                Uid = ao.Uid
+                                                                                            })
                             }).FirstOrDefaultAsync();
         }
 

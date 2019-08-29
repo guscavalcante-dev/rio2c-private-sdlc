@@ -4,9 +4,9 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-27-2019
+// Last Modified On : 08-28-2019
 // ***********************************************************************
-// <copyright file="FindCollaboratorDtoByUidAsyncQueryHandler.cs" company="Softo">
+// <copyright file="FindCollaboratorDtoByUidAndByEditionIdAsyncQueryHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -20,25 +20,25 @@ using PlataformaRio2C.Domain.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
 {
-    /// <summary>FindCollaboratorDtoByUidAsyncQueryHandler</summary>
-    public class FindCollaboratorDtoByUidAsyncQueryHandler : IRequestHandler<FindCollaboratorDtoByUidAsync, CollaboratorDto>
+    /// <summary>FindCollaboratorDtoByUidAndByEditionIdAsyncQueryHandler</summary>
+    public class FindCollaboratorDtoByUidAndByEditionIdAsyncQueryHandler : IRequestHandler<FindCollaboratorDtoByUidAndByEditionIdAsync, CollaboratorDto>
     {
         private readonly ICollaboratorRepository repo;
 
-        /// <summary>Initializes a new instance of the <see cref="FindCollaboratorDtoByUidAsyncQueryHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="FindCollaboratorDtoByUidAndByEditionIdAsyncQueryHandler"/> class.</summary>
         /// <param name="repository">The repository.</param>
-        public FindCollaboratorDtoByUidAsyncQueryHandler(ICollaboratorRepository repository)
+        public FindCollaboratorDtoByUidAndByEditionIdAsyncQueryHandler(ICollaboratorRepository repository)
         {
             this.repo = repository;
         }
 
-        /// <summary>Handles the specified find collaborator dto by uid asynchronous.</summary>
+        /// <summary>Handles the specified find collaborator dto by uid and by edition identifier asynchronous.</summary>
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<CollaboratorDto> Handle(FindCollaboratorDtoByUidAsync cmd, CancellationToken cancellationToken)
+        public async Task<CollaboratorDto> Handle(FindCollaboratorDtoByUidAndByEditionIdAsync cmd, CancellationToken cancellationToken)
         {
-            return await this.repo.FindDtoByUidAsync(cmd.HoldingUid);
+            return await this.repo.FindDtoByUidAndByEditionIdAsync(cmd.CollaboratorUid, cmd.EditionId);
         }
     }
 }

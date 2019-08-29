@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 08-28-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -200,6 +200,13 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+            #region Dynamic List
+
+            bundles.Add(new ScriptBundle("~/bundles/js/dynamic.list.js").Include(
+                "~/Assets/js/dynamic.list.js"));
+
+            #endregion
+
             #endregion
 
             #region Pages Bundles
@@ -261,6 +268,13 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/collaborators.delete.js").Include(
                 "~/Assets/js/collaborators/collaborators.delete.js"));
+
+            #endregion
+
+            #region Attendee Organizations
+
+            bundles.Add(new ScriptBundle("~/bundles/js/attendeeorganizations.form.js").Include(
+                "~/Assets/js/attendeeorganizations/attendeeorganizations.form.js"));
 
             #endregion
 

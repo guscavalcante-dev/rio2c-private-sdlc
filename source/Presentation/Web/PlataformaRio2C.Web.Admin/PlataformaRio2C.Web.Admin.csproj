@@ -363,6 +363,7 @@
     <Content Include="Assets\img\bg-3.jpg" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
     <Content Include="Assets\js\holdings\holdings.delete.js" />
+    <Content Include="Assets\js\dynamic.list.js" />
     <Content Include="Assets\js\myrio2c.cropper.js" />
     <Content Include="Assets\components\cropper\demo\css\main.css" />
     <Content Include="Assets\components\cropper\demo\index.html" />
@@ -392,6 +393,7 @@
     <Content Include="Assets\js\collaborators\collaborators.editioncount.widget.js" />
     <Content Include="Assets\js\collaborators\collaborators.totalcount.widget.js" />
     <Content Include="Assets\js\collaborators\collaborators.update.js" />
+    <Content Include="Assets\js\attendeeorganizations\attendeeorganizations.form.js" />
     <Content Include="Assets\js\organizations\organizations.create.js" />
     <Content Include="Assets\js\organizations\organizations.datatable.widget.js" />
     <Content Include="Assets\js\organizations\organizations.delete.js" />
@@ -8111,6 +8113,7 @@
     <Content Include="Views\PlayersExecutives\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Views\PlayersExecutives\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Views\PlayersExecutives\EditorTemplates\CollaboratorMiniBioBaseCommand.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\AttendeeOrganizationBaseCommand.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

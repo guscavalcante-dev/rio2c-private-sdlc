@@ -24,7 +24,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>ICollaboratorRepository</summary>
     public interface ICollaboratorRepository : IRepository<Collaborator>
     {
-        Task<CollaboratorDto> FindDtoByUidAsync(Guid collaboratorUid);
+        Task<CollaboratorDto> FindDtoByUidAndByEditionIdAsync(Guid collaboratorUid, int editionId);
         Task<IPagedList<CollaboratorBaseDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, Guid organizationTypeId, bool showAllEditions, bool showAllOrganizations, int? editionId);
         Task<int> CountAllByDataTable(Guid organizationTypeId, bool showAllEditions, int? editionId);
 

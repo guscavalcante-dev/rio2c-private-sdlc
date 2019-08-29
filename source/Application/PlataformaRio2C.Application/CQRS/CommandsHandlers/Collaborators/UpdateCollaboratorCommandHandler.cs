@@ -30,9 +30,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>UpdateCollaboratorCommandHandler</summary>
     public class UpdateCollaboratorCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<UpdateCollaborator, AppValidationResult>
     {
-        private readonly IHoldingRepository holdingRepo;
+        private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IEditionRepository editionRepo;
-        private readonly IOrganizationTypeRepository organizationTypeRepo;
         private readonly ILanguageRepository languageRepo;
         private readonly ICountryRepository countryRepo;
 
@@ -40,25 +39,22 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
-        /// <param name="holdingRepository">The holding repository.</param>
+        /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="editionRepository">The edition repository.</param>
-        /// <param name="organizationTypeRepository">The organization type repository.</param>
         /// <param name="languageRepository">The language repository.</param>
         /// <param name="countryRepository">The country repository.</param>
         public UpdateCollaboratorCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             ICollaboratorRepository collaboratorRepository,
-            IHoldingRepository holdingRepository,
+            IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IEditionRepository editionRepository,
-            IOrganizationTypeRepository organizationTypeRepository,
             ILanguageRepository languageRepository,
             ICountryRepository countryRepository)
             : base(eventBus, uow, collaboratorRepository)
         {
-            this.holdingRepo = holdingRepository;
+            this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.editionRepo = editionRepository;
-            this.organizationTypeRepo = organizationTypeRepository;
             this.languageRepo = languageRepository;
             this.countryRepo = countryRepository;
         }
@@ -96,15 +92,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var beforeImageUploadDate = collaborator.ImageUploadDate;
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
-            var holding = await this.holdingRepo.GetAsync(cmd.HoldingUid ?? Guid.Empty);
-            var edition = await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty);
-            var organizationType = await this.organizationTypeRepo.GetAsync(cmd.OrganizationType?.Uid ?? Guid.Empty);
 
             collaborator.Update(
-                //await this.holdingRepo.GetAsync(cmd.HoldingUid ?? Guid.Empty),
-                null,
+                await this.attendeeOrganizationRepo.FindAllByUidsAsync(cmd.AttendeeOrganizationBaseCommands?.Where(aobc => aobc.AttendeeOrganizationUid.HasValue)?.Select(aobc => aobc.AttendeeOrganizationUid.Value)?.ToList()),
                 await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
-                await this.organizationTypeRepo.GetAsync(cmd.OrganizationType?.Uid ?? Guid.Empty),
                 cmd.FirstName,
                 cmd.LastNames,
                 cmd.Badge,
@@ -123,6 +114,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.CropperImage?.ImageFile != null,
                 cmd.JobTitles?.Select(d => new CollaboratorJobTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.MiniBios?.Select(d => new CollaboratorMiniBio(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
+                true, // TODO: Get isAddingToCurrentEdition from command for UpdateCollaborator
                 cmd.UserId);
             if (!collaborator.IsValid())
             {

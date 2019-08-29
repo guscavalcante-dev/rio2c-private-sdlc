@@ -4,7 +4,7 @@
 // Created          : 08-23-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 08-28-2019
 // ***********************************************************************
 // <copyright file="AddressBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -62,7 +62,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [RequiredIfNotEmpty("CountryUid", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(10, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string AddressZipCode { get; set; }
-
 
         public List<CountryBaseDto> CountriesBaseDtos { get; private set; }
 

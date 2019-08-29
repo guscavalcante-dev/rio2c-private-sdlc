@@ -62,12 +62,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #endregion
 
             var edition = await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty);
-            var organizationType = await this.organizationTypeRepo.GetAsync(cmd.OrganizationType?.Uid ?? Guid.Empty);
 
             // Before update values
             var beforeImageUploadDate = collaborator.ImageUploadDate;
 
-            collaborator.Delete(edition, organizationType, cmd.UserId);
+            collaborator.Delete(edition, cmd.UserId);
             if (!collaborator.IsValid())
             {
                 this.AppValidationResult.Add(collaborator.ValidationResult);

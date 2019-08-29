@@ -56,9 +56,8 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class.</summary>
         /// <param name="uid">The uid.</param>
-        /// <param name="organization">The organization.</param>
+        /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="edition">The edition.</param>
-        /// <param name="organizationType">Type of the organization.</param>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastNames">The last names.</param>
         /// <param name="badge">The badge.</param>
@@ -80,9 +79,8 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public Collaborator(
             Guid uid,
-            Organization organization,
+            List<AttendeeOrganization> attendeeOrganizations,
             Edition edition,
-            OrganizationType organizationType,
             string firstName,
             string lastNames,
             string badge,
@@ -115,7 +113,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
-            this.SynchronizeAttendeeCollaborators(edition, true, userId);
+            this.SynchronizeAttendeeCollaborators(edition, attendeeOrganizations, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, address2, addressZipCode, addressIsManual, userId);
             this.UpdateUser(email);
         }
@@ -125,10 +123,9 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Updates the specified organization.</summary>
-        /// <param name="organization">The organization.</param>
+        /// <summary>Updates the specified attendee organizations.</summary>
+        /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="edition">The edition.</param>
-        /// <param name="organizationType">Type of the organization.</param>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastNames">The last names.</param>
         /// <param name="badge">The badge.</param>
@@ -147,11 +144,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="jobTitles">The job titles.</param>
         /// <param name="miniBios">The mini bios.</param>
+        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
         /// <param name="userId">The user identifier.</param>
         public void Update(
-            Organization organization,
+            List<AttendeeOrganization> attendeeOrganizations,
             Edition edition,
-            OrganizationType organizationType,
             string firstName,
             string lastNames,
             string badge,
@@ -170,6 +167,7 @@ namespace PlataformaRio2C.Domain.Entities
             bool isImageUploaded,
             List<CollaboratorJobTitle> jobTitles,
             List<CollaboratorMiniBio> miniBios,
+            bool isAddingToCurrentEdition,
             int userId)
         {
             //this.Uid = uid;
@@ -184,16 +182,15 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
-            this.SynchronizeAttendeeCollaborators(edition, true, userId);
+            this.SynchronizeAttendeeCollaborators(edition, attendeeOrganizations, isAddingToCurrentEdition, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, address2, addressZipCode, addressIsManual, userId);
             this.UpdateUser(email);
         }
 
         /// <summary>Deletes the specified edition.</summary>
         /// <param name="edition">The edition.</param>
-        /// <param name="organizationType">Type of the organization.</param>
         /// <param name="userId">The user identifier.</param>
-        public void Delete(Edition edition, OrganizationType organizationType, int userId)
+        public void Delete(Edition edition, int userId)
         {
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
@@ -428,9 +425,10 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Synchronizes the attendee collaborators.</summary>
         /// <param name="edition">The edition.</param>
+        /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeAttendeeCollaborators(Edition edition, bool isAddingToCurrentEdition, int userId)
+        private void SynchronizeAttendeeCollaborators(Edition edition, List<AttendeeOrganization> attendeeOrganizations, bool isAddingToCurrentEdition, int userId)
         {
             // Synchronize only when is adding to current edition
             if (!isAddingToCurrentEdition)
@@ -451,11 +449,11 @@ namespace PlataformaRio2C.Domain.Entities
             var attendeeCollaborator = this.AttendeeCollaborators.FirstOrDefault(ao => ao.EditionId == edition.Id);
             if (attendeeCollaborator != null)
             {
-                attendeeCollaborator.Restore(userId);
+                attendeeCollaborator.Update(edition, attendeeOrganizations, userId);
             }
             else
             {
-                this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, this, userId));
+                this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, attendeeOrganizations, this, userId));
             }
         }
 
@@ -464,9 +462,9 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         private void DeleteAttendeeCollaborators(Edition edition, int userId)
         {
-            foreach (var attendeeOrganization in this.FindAllAttendeeCollaboratorsNotDeleted(edition))
+            foreach (var attendeeCollaborator in this.FindAllAttendeeCollaboratorsNotDeleted(edition))
             {
-                attendeeOrganization?.Delete(userId);
+                attendeeCollaborator?.Delete(userId);
             }
         }
 

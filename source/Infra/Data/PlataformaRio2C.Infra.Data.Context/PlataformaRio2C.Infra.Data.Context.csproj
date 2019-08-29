@@ -100,6 +100,7 @@
     <Compile Include="Mapping\NegotiationConfig\NegotiationRoomConfigMap.cs" />
     <Compile Include="Mapping\NegotiationConfig\NegotiationConfigMap.cs" />
     <Compile Include="Mapping\Negotiation\NegotiationMap.cs" />
+    <Compile Include="Mapping\Organizations\AttendeeOrganizationCollaboratorMap.cs" />
     <Compile Include="Mapping\Organizations\AttendeeOrganizationTypeMap.cs" />
     <Compile Include="Mapping\Organizations\AttendeeOrganizationMap.cs" />
     <Compile Include="Mapping\Organizations\OrganizationDescriptionMap.cs" />

@@ -73,11 +73,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dtos\Addresses\AddressBaseDto.cs" />
+    <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationBaseDto.cs" />
     <Compile Include="Dtos\Cities\CityBaseDto.cs" />
     <Compile Include="Dtos\Collaborators\CollaboratorBaseDto.cs" />
     <Compile Include="Dtos\Collaborators\CollaboratorDto.cs" />
     <Compile Include="Dtos\Collaborators\CollaboratorMiniBioBaseDto.cs" />
     <Compile Include="Dtos\Collaborators\CollaboratorJobTitleBaseDto.cs" />
+    <Compile Include="Dtos\Editions\EditionBaseDto.cs" />
     <Compile Include="Dtos\States\StateBaseDto.cs" />
     <Compile Include="Dtos\Countries\CountryBaseDto.cs" />
     <Compile Include="Dtos\OrganizationDescriptions\OrganizationDescriptionBaseDto.cs" />
@@ -117,6 +119,7 @@
     <Compile Include="Entities\NegotiationConfig\NegotiationRoomConfig.cs" />
     <Compile Include="Entities\NegotiationConfig\NegotiationConfig.cs" />
     <Compile Include="Entities\Negotiation\Negotiation.cs" />
+    <Compile Include="Entities\Organizations\AttendeeOrganizationCollaborator.cs" />
     <Compile Include="Entities\Organizations\AttendeeOrganizationType.cs" />
     <Compile Include="Entities\Organizations\AttendeeOrganization.cs" />
     <Compile Include="Entities\Organizations\OrganizationDescription.cs" />
@@ -157,6 +160,7 @@
     <Compile Include="Enums\NegotiationTypeCodes.cs" />
     <Compile Include="Enums\StatusProjectCodes.cs" />
     <Compile Include="Interfaces\IMailCollaboratorRepository.cs" />
+    <Compile Include="Interfaces\Repositories\AttendeeOrganizations\IAttendeeOrganizationRepository.cs" />
     <Compile Include="Interfaces\Repositories\Collaborators\ICollaboratorProducerRepository.cs" />
     <Compile Include="Interfaces\Repositories\Conference\ILecturerJobTitleRepository.cs" />
     <Compile Include="Interfaces\Repositories\Conference\ILecturerRepository.cs" />

@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-27-2019
+// Last Modified On : 08-28-2019
 // ***********************************************************************
 // <copyright file="PlayersExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -164,7 +164,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         public async Task<ActionResult> ShowCreateModal()
         {
             var cmd = new CreateCollaborator(
-                await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
+                await this.CommandBus.Send(new FindAllAttendeeOrganizationsBaseDtosByEditionUidAsync(this.EditionId, false, this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)));
 
@@ -215,7 +215,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd.UpdateDropdownProperties(
-                    await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllAttendeeOrganizationsBaseDtosByEditionUidAsync(this.EditionId, false, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)));
 
                 return Json(new
@@ -253,8 +253,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             try
             {
                 cmd = new UpdateCollaborator(
-                    await this.CommandBus.Send(new FindCollaboratorDtoByUidAsync(collaboratorUid, this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionId, this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllAttendeeOrganizationsBaseDtosByEditionUidAsync(this.EditionId, false, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                     isAddingToCurrentEdition);
@@ -311,7 +311,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd.UpdateDropdownProperties(
-                    await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllAttendeeOrganizationsBaseDtosByEditionUidAsync(this.EditionId, false, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)));
 
                 return Json(new

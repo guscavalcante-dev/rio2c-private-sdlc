@@ -30,9 +30,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>CreateCollaboratorCommandHandler</summary>
     public class CreateCollaboratorCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<CreateCollaborator, AppValidationResult>
     {
-        private readonly IHoldingRepository holdingRepo;
+        private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IEditionRepository editionRepo;
-        private readonly IOrganizationTypeRepository organizationTypeRepo;
         private readonly ILanguageRepository languageRepo;
         private readonly ICountryRepository countryRepo;
 
@@ -40,16 +39,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IMediator eventBus,
             IUnitOfWork uow,
             ICollaboratorRepository collaboratorRepository,
-            IHoldingRepository holdingRepository,
+            IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IEditionRepository editionRepository,
-            IOrganizationTypeRepository organizationTypeRepository,
             ILanguageRepository languageRepository,
             ICountryRepository countryRepository)
             : base(eventBus, uow, collaboratorRepository)
         {
-            this.holdingRepo = holdingRepository;
+            this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.editionRepo = editionRepository;
-            this.organizationTypeRepo = organizationTypeRepository;
             this.languageRepo = languageRepository;
             this.countryRepo = countryRepository;
         }
@@ -86,10 +83,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var collaborator = new Collaborator(
                 collaboratorUid,
-                //await this.holdingRepo.GetAsync(cmd.HoldingUid ?? Guid.Empty),
-                null,
+                await this.attendeeOrganizationRepo.FindAllByUidsAsync(cmd.AttendeeOrganizationBaseCommands?.Where(aobc => aobc.AttendeeOrganizationUid.HasValue)?.Select(aobc => aobc.AttendeeOrganizationUid.Value)?.ToList()),
                 await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
-                await this.organizationTypeRepo.GetAsync(cmd.OrganizationType?.Uid ?? Guid.Empty),
                 cmd.FirstName,
                 cmd.LastNames,
                 cmd.Badge,

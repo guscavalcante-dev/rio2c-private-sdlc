@@ -1,16 +1,10 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.CollaboratorBaseCommand
+﻿@using PlataformaRio2C.Application.CQRS.Commands
+@model PlataformaRio2C.Application.CQRS.Commands.CollaboratorBaseCommand
 <div class="form-group row">
     <div class="col-lg-4 text-center">
         @Html.EditorFor(m => m.CropperImage)
     </div>
     <div class="col-lg-8">
-        <div class="form-group row">
-            <div class="col-md-12">
-                @Html.LabelFor(m => m.HoldingUid, new { @class = "control-label" })
-                @Html.DropDownList("HoldingUid", new SelectList(Model.HoldingBaseDtos, "Uid", "Name", Model.HoldingUid), $"{Labels.Select}...", new { @class = "form-control enable-select2" })
-                @Html.ValidationMessageFor(m => m.HoldingUid, "", new { @class = "text-danger" })
-            </div>
-        </div>
         <div class="form-group row">
             <div class="col-md-5">
                 @Html.LabelFor(m => m.FirstName, new { @class = "control-label" })
@@ -54,10 +48,25 @@
 </div>
 <div class="kt-separator kt-separator--border-dashed kt-separator--space-xl"></div>
 <div class="kt-section">
+    <h3 class="kt-section__title mb-0">@Labels.Players</h3>
+    @Html.ValidationMessage("Players", new { @class = "text-danger" })
+    <div class="kt-section__content mt-3">
+        <div id="attendeeorganization-list">
+            @Html.EditorFor(m => m.AttendeeOrganizationBaseCommands)
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-primary" onclick="AttendeeOrganizationsForm.add(); return false;">@Labels.NewM @Labels.Player</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="kt-separator kt-separator--border-dashed kt-separator--space-xl"></div>
+<div class="kt-section">
     <h3 class="kt-section__title mb-0">@Labels.JobTitle</h3>
     @Html.ValidationMessage("JobTitles", new { @class = "text-danger" })
     <div class="kt-section__content mt-3">
-        @Html.EditorFor(m => m.JobTitles)
+        @Html.EditorFor(m => m.JobTitles, new { id = "vasco"})
     </div>
 </div>
 <div class="kt-separator kt-separator--border-dashed kt-separator--space-xl"></div>
@@ -75,3 +84,15 @@
         @Html.EditorFor(m => m.MiniBios)
     </div>
 </div>
+<!-- BEGIN TEMPLATE INSTALLMENT -->
+<div id="atendeeorganization-template" style="display: none">
+    @Html.EditorFor(m => m.TemplateAttendeeOrganizationBaseCommands)
+</div>
+<!-- END TEMPLATE INSTALLMENT -->
+<script>
+    // Templates ----------------------------------------------------------
+    var templates = {
+        AttendeeOrganization: $("#atendeeorganization-template").html().replace(new RegExp('Template', 'g'), '')
+    };
+    $("#atendeeorganization-template").remove();
+</script>

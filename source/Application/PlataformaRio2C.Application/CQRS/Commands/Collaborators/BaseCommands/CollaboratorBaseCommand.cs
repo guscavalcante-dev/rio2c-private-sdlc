@@ -25,10 +25,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>CollaboratorBaseCommand</summary>
     public class CollaboratorBaseCommand : BaseCommand
     {
-        [Display(Name = "Holding", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public Guid? HoldingUid { get; set; }
-
         [Display(Name = "Name", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
@@ -59,11 +55,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public AddressBaseCommand Address { get; set; }
 
+        public List<AttendeeOrganizationBaseCommand> AttendeeOrganizationBaseCommands { get; set; }
         public List<CollaboratorJobTitleBaseCommand> JobTitles { get; set; }
         public List<CollaboratorMiniBioBaseCommand> MiniBios { get; set; }
         public CropperImageBaseCommand CropperImage { get; set; }
 
-        public List<HoldingBaseDto> HoldingBaseDtos { get; private set; }
+        public List<AttendeeOrganizationBaseCommand> TemplateAttendeeOrganizationBaseCommands { get; set; }
+        public List<AttendeeOrganizationBaseDto> AttendeeOrganizationsBaseDtos { get; private set; }
         public OrganizationType OrganizationType { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="CollaboratorBaseCommand"/> class.</summary>
@@ -73,23 +71,54 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Updates the base properties.</summary>
         /// <param name="entity">The entity.</param>
-        /// <param name="holdingBaseDtos">The holding base dtos.</param>
+        /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
-        public void UpdateBaseProperties(CollaboratorDto entity, List<HoldingBaseDto> holdingBaseDtos, List<LanguageDto> languagesDtos, List<CountryBaseDto> countriesBaseDtos)
+        public void UpdateBaseProperties(CollaboratorDto entity, List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, List<LanguageDto> languagesDtos, List<CountryBaseDto> countriesBaseDtos)
         {
-            this.HoldingUid = entity?.HoldingBaseDto?.Uid;
             this.FirstName = entity?.FirstName;
             this.LastNames = entity?.LastNames;
             this.Badge = entity?.Badge;
             this.Email = entity?.Email;
             this.PhoneNumber = entity?.PhoneNumber;
             this.CellPhone = entity?.CellPhone;
+            this.UpdateOrganizations(entity, attendeeOrganizationsBaseDtos);
             this.UpdateAddress(entity, countriesBaseDtos);
             this.UpdateJobTitles(entity, languagesDtos);
             this.UpdateMiniBios(entity, languagesDtos);
             this.UpdateCropperImage(entity);
-            this.UpdateDropdownProperties(holdingBaseDtos, countriesBaseDtos);
+            this.UpdateDropdownProperties(attendeeOrganizationsBaseDtos, countriesBaseDtos);
+        }
+
+        /// <summary>Updates the organizations.</summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
+        private void UpdateOrganizations(CollaboratorDto entity, List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos)
+        {
+            if (this.AttendeeOrganizationBaseCommands == null)
+            {
+                this.AttendeeOrganizationBaseCommands = new List<AttendeeOrganizationBaseCommand>();
+            }
+
+            if (entity?.AttendeeOrganizationBasesDtos?.Any() != true)
+            {
+                this.AttendeeOrganizationBaseCommands.Add(new AttendeeOrganizationBaseCommand(null, attendeeOrganizationsBaseDtos));
+            }
+            else
+            {
+                this.AttendeeOrganizationBaseCommands = entity?.AttendeeOrganizationBasesDtos?.Select(aobd => new AttendeeOrganizationBaseCommand(aobd, attendeeOrganizationsBaseDtos))?.ToList();
+            }
+
+            #region Html template to add new items to list
+
+            if (this.TemplateAttendeeOrganizationBaseCommands == null)
+            {
+                this.TemplateAttendeeOrganizationBaseCommands = new List<AttendeeOrganizationBaseCommand>();
+            }
+
+            this.TemplateAttendeeOrganizationBaseCommands.Add(new AttendeeOrganizationBaseCommand(null, attendeeOrganizationsBaseDtos));
+
+            #endregion
         }
 
         /// <summary>Updates the address.</summary>
@@ -136,11 +165,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         }
 
         /// <summary>Updates the dropdown properties.</summary>
-        /// <param name="holdingBaseDtos">The holding base dtos.</param>
+        /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
-        public void UpdateDropdownProperties(List<HoldingBaseDto> holdingBaseDtos, List<CountryBaseDto> countriesBaseDtos)
+        public void UpdateDropdownProperties(List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, List<CountryBaseDto> countriesBaseDtos)
         {
-            this.HoldingBaseDtos = holdingBaseDtos;
+            this.AttendeeOrganizationsBaseDtos = attendeeOrganizationsBaseDtos;
             this.Address?.UpdateDropdownProperties(countriesBaseDtos);
         }
 
