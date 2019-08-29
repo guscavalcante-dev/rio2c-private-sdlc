@@ -315,6 +315,7 @@
     <Compile Include="Controllers\CollaboratorController.cs" />
     <Compile Include="Controllers\ConferenceController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\OnboardingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuizController.cs" />
     <Compile Include="Controllers\Rio2CNetworkController.cs" />
@@ -344,9 +345,8 @@
     <Content Include="Areas\Producer\Views\Collaborator\ProfileEdit.cshtml" />
     <Content Include="Assets\css\myrio2c.common.responsive.css" />
     <Content Include="Assets\css\myrio2c.common.css" />
-    <Content Include="Assets\css\pages\home\home.css" />
-    <Content Include="Assets\css\pages\home\wizard-3.css" />
-    <Content Include="Assets\img\bg-1.jpg" />
+    <Content Include="Assets\css\pages\onboarding\onboarding.css" />
+    <Content Include="Assets\css\pages\onboarding\wizard-2.css" />
     <Content Include="Assets\img\bg-2.jpg" />
     <Content Include="Assets\img\bg-3.jpg" />
     <Content Include="Assets\img\favicon.png" />
@@ -354,10 +354,9 @@
     <Content Include="Assets\img\logo-rio2c-footer.png" />
     <Content Include="Assets\img\logo_rio2c_color.png" />
     <Content Include="Assets\img\logo_rio2c_white.png" />
-    <Content Include="Assets\js\pages\home\home.js" />
     <Content Include="Assets\js\myrio2c.common.js" />
     <Content Include="Assets\js\myrio2c.cropper.js" />
-    <Content Include="Assets\js\pages\home\wizard-3.js" />
+    <Content Include="Assets\js\pages\onboarding\wizard-2.js" />
     <Content Include="Assets\js\pages\schedule\components\calendar\basic.js" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.css" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.min.css" />
@@ -7012,6 +7011,7 @@
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -7036,6 +7036,7 @@
     <Content Include="Views\Shared\_LayoutBasic.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Modals\Onboarding.cshtml" />
+    <Content Include="Views\Onboarding\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
