@@ -6402,6 +6402,7 @@
       <DependentUpon>style.css</DependentUpon>
     </Content>
     <Content Include="favicon.png" />
+    <Content Include="HealthCheck.html" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\angular-signalr-hub.js" />
     <Content Include="Scripts\angular-signalr-hub.min.js" />

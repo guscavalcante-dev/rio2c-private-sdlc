@@ -361,6 +361,7 @@
     <Content Include="Assets\img\bg-1.jpg" />
     <Content Include="Assets\img\bg-2.jpg" />
     <Content Include="Assets\img\bg-3.jpg" />
+    <Content Include="Assets\img\logo-rio2c-footer.png" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
     <Content Include="Assets\js\holdings\holdings.delete.js" />
     <Content Include="Assets\js\dynamic.list.js" />
@@ -5669,6 +5670,7 @@
     <Content Include="Content\css\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\css\Site.css" />
     <Content Include="favicon.png" />
+    <Content Include="HealthCheck.html" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
