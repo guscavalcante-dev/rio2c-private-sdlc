@@ -3,7 +3,7 @@
 <div class="form-group row attendeeorganization-list-item">
     <div class="col-md-10">
         @*@Html.LabelFor(m => m.AttendeeOrganizationUid, new { @class = "control-label" })*@
-        @Html.DropDownList("AttendeeOrganizationUid", new SelectList(Model.AttendeeOrganizationsBaseDtos, "Uid", "DropdownDisplay", Model.AttendeeOrganizationUid), $"{Labels.Select}...", new { @class = "form-control enable-select2-attendeeorganization" })
+        @Html.DropDownList("AttendeeOrganizationUid", new SelectList(Model.AttendeeOrganizationsBaseDtos, "Uid", "DisplayName", Model.AttendeeOrganizationUid), $"{Labels.Select}...", new { @class = "form-control enable-select2-attendeeorganization" })
         @Html.ValidationMessageFor(m => m.AttendeeOrganizationUid, "", new { @class = "text-danger" })
     </div>
     <div class="col-md-2">

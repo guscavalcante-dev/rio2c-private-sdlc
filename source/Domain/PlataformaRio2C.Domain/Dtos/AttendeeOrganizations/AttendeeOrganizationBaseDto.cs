@@ -30,9 +30,9 @@ namespace PlataformaRio2C.Domain.Dtos
         {
         }
 
-        /// <summary>Gets the dropdown display.</summary>
-        /// <value>The dropdown display.</value>
-        public string DropdownDisplay
+        /// <summary>Gets the display name.</summary>
+        /// <value>The display name.</value>
+        public string DisplayName
         {
             get
             {

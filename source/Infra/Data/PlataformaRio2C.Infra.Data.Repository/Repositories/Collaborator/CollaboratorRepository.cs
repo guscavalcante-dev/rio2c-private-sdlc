@@ -272,12 +272,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                     .Where(at => !at.IsDeleted && at.EditionId == editionId)
                                                                     .SelectMany(at => at.AttendeeOrganizationCollaborators
                                                                                             .Where(aoc => !aoc.IsDeleted)
-                                                                                            .Select(aoc => aoc.AttendeeOrganization))
-                                                                                            .Where(ao => !ao.IsDeleted && ao.EditionId == editionId)
-                                                                                            .Select(ao => new AttendeeOrganizationBaseDto
+                                                                                            .Select(aoc => new AttendeeOrganizationBaseDto
                                                                                             {
-                                                                                                Uid = ao.Uid
-                                                                                            })
+                                                                                                Uid = aoc.AttendeeOrganization.Uid,
+                                                                                                OrganizationBaseDto = new OrganizationBaseDto
+                                                                                                {
+                                                                                                    Name = aoc.AttendeeOrganization.Organization.Name,
+                                                                                                    HoldingBaseDto = aoc.AttendeeOrganization.Organization.Holding == null ? null :new HoldingBaseDto
+                                                                                                    {
+                                                                                                        Name = aoc.AttendeeOrganization.Organization.Holding.Name
+                                                                                                    }
+                                                                                                }
+                                                                                            }))
                             }).FirstOrDefaultAsync();
         }
 
@@ -326,12 +332,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 Email = c.User.Email,
                                 PhoneNumber = c.PhoneNumber,
                                 CellPhone = c.CellPhone,
-                                //HoldingBaseDto = new HoldingBaseDto
-                                //{
-                                //    Id = c.Holding.Id,
-                                //    Uid = c.Holding.Uid,
-                                //    Name = c.Holding.Name
-                                //},
                                 ImageUploadDate = c.ImageUploadDate,
                                 CreateDate = c.CreateDate,
                                 UpdateDate = c.UpdateDate,
@@ -339,7 +339,23 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                              && !ac.Edition.IsDeleted
                                                                                                              && !ac.IsDeleted),
                                 IsInOtherEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId
-                                                                                                           && !ac.IsDeleted)
+                                                                                                           && !ac.IsDeleted),
+                                AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
+                                                                    .Where(at => !at.IsDeleted && at.EditionId == editionId)
+                                                                    .SelectMany(at => at.AttendeeOrganizationCollaborators
+                                                                                            .Where(aoc => !aoc.IsDeleted)
+                                                                                            .Select(aoc => new AttendeeOrganizationBaseDto
+                                                                                            {
+                                                                                                Uid = aoc.AttendeeOrganization.Uid,
+                                                                                                OrganizationBaseDto = new OrganizationBaseDto
+                                                                                                {
+                                                                                                    Name = aoc.AttendeeOrganization.Organization.Name,
+                                                                                                    HoldingBaseDto = aoc.AttendeeOrganization.Organization.Holding == null ? null : new HoldingBaseDto
+                                                                                                    {
+                                                                                                        Name = aoc.AttendeeOrganization.Organization.Holding.Name
+                                                                                                    }
+                                                                                                }
+                                                                                            }))
                             })
                             .ToListPagedAsync(page, pageSize);
         }

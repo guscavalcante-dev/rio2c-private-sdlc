@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-27-2019
+// Last Modified On : 08-28-2019
 // ***********************************************************************
 // <copyright file="CollaboratorBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -34,6 +35,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTime UpdateDate { get; set; }
         public bool IsInCurrentEdition { get; set; }
         public bool IsInOtherEdition { get; set; }
+
+        public IEnumerable<AttendeeOrganizationBaseDto> AttendeeOrganizationBasesDtos { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CollaboratorBaseDto"/> class.</summary>
         public CollaboratorBaseDto()

@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-27-2019
+// Last Modified On : 08-28-2019
 // ***********************************************************************
 // <copyright file="collaborators.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -99,24 +99,26 @@ var CollaboratorsDataTableWidget = function () {
             columns: [
                 { data: 'FullName' },
                 { data: 'Email' },
-                { data: 'HoldingBaseDto.Name' },
-                { data: 'PlayerBaseDto.Name' },
+                {
+                    data: 'Player',
+                    render: function (data, type, row, meta) {
+                        var html = '<ul class="m-0 pl-4">';
+
+                        //loop through all the row details to build output string
+                        for (var item in row.AttendeeOrganizationBasesDtos) {
+                            if (row.AttendeeOrganizationBasesDtos.hasOwnProperty(item)) {
+                                var r = row.AttendeeOrganizationBasesDtos[item];
+                                html += '<li>' + r.DisplayName + '</li>';
+                            }
+                        }
+
+                        html += '</ul>';
+
+                        return html;
+                    }
+                },
                 { data: 'CreateDate' },
                 { data: 'UpdateDate' },
-                //{
-                //    data: null,
-                //    render: function (data, type, row, meta) {
-                //        var descriptionsDtos = '';
-                //        //loop through all the row details to build output string
-                //        for (var item in row.descriptionsDtos) {
-                //            if (row.descriptionsDtos.hasOwnProperty(item)) {
-                //                var r = row.descriptionsDtos[item];
-                //                descriptionsDtos += r.value + ' (' + r.languageDto.name + ')' + '</br>';
-                //            }
-                //        }
-                //        return descriptionsDtos;
-                //    }
-                //},
                 { data: 'Actions', responsivePriority: -1 }
             ],
             columnDefs: [
@@ -149,7 +151,7 @@ var CollaboratorsDataTableWidget = function () {
                     }
                 },
                 {
-                    targets: [4,5],
+                    targets: [3,4],
                     className: "dt-center",
                     render: function (data) {
                         return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
