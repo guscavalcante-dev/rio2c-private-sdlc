@@ -4,7 +4,7 @@
 // Created          : 08-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-16-2019
+// Last Modified On : 08-29-2019
 // ***********************************************************************
 // <copyright file="BaseCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,7 +20,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>BaseCommandHandler</summary>
     public class BaseCommandHandler
     {
-        protected readonly AppValidationResult AppValidationResult;
+        protected AppValidationResult AppValidationResult;
         protected readonly ValidationResult ValidationResult;
         protected readonly IMediator EventBus;
         protected readonly IUnitOfWork Uow;

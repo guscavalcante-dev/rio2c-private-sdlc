@@ -61,7 +61,7 @@ namespace PlataformaRio2C.Application.ViewModels
             if (entity.Lecturers != null && entity.Lecturers.Any())
             {
                 List<string> namesLecturers = new List<string>();
-                var namesLecturersPreregister = entity.Lecturers.Where(e => e.Collaborator != null).Select(e => e.Collaborator.Name).ToList();
+                var namesLecturersPreregister = entity.Lecturers.Where(e => e.Collaborator != null).Select(e => e.Collaborator.FirstName).ToList();
 
                 if (namesLecturersPreregister != null && namesLecturersPreregister.Any())
                 {

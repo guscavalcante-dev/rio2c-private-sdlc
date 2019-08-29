@@ -1,59 +1,63 @@
-﻿using PlataformaRio2C.Domain.Entities;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.Infrastructure.Annotations;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Infra.Data.Context
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-27-2019
+// ***********************************************************************
+// <copyright file="CollaboratorMap.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Domain.Entities;
 using System.Data.Entity.ModelConfiguration;
 
 namespace PlataformaRio2C.Infra.Data.Context.Mapping
 {
+    /// <summary>CollaboratorMap</summary>
     public class CollaboratorMap : EntityTypeConfiguration<Collaborator>
     {
-
+        /// <summary>Initializes a new instance of the <see cref="CollaboratorMap"/> class.</summary>
         public CollaboratorMap()
         {
-            this.Ignore(p => p.PlayerUid);
+            this.ToTable("Collaborators");
 
-            this.Property(t => t.UserId)               
-               .HasColumnAnnotation(IndexAnnotation.AnnotationName,
-                                       new IndexAnnotation(
-                                                               new IndexAttribute("IX_UserId", 2)
-                                                               {
-                                                                   IsUnique = true
-                                                               }
-                                                           )
-                                                   )
-               .IsRequired();
+            this.Property(t => t.FirstName)
+                .HasMaxLength(Collaborator.FirstNameMaxLength)
+                .IsRequired();
 
-            //Relationships
-            this.HasOptional(t => t.Image)
-              .WithMany()
-              .HasForeignKey(d => d.ImageId);
+            this.Property(t => t.LastNames)
+                .HasMaxLength(Collaborator.LastNamesMaxLength);
 
-            this.HasOptional(t => t.Player)                
-               .WithMany(p => p.CollaboratorsOld)
-               .HasForeignKey(d => d.PlayerId);
-
+            // Relationships
             this.HasRequired(t => t.User)
-              .WithMany()
-              .HasForeignKey(d => d.UserId);
+                .WithOptional(e => e.Collaborator);
+
+            //this.HasOptional(t => t.Holding)
+            //    .WithMany(e => e.Organizations)
+            //    .HasForeignKey(d => d.HoldingId);
+
+            this.HasRequired(t => t.Updater)
+                .WithMany(e => e.UpdatedCollaborators)
+                .HasForeignKey(d => d.UpdateUserId);
 
             this.HasOptional(t => t.Address)
-                .WithMany()
+                .WithMany(e => e.Collaborators)
                 .HasForeignKey(d => d.AddressId);
 
-            this.HasMany(t => t.Players)
-                .WithMany(p => p.Collaborators)
-                .Map(cs =>
-                {
-                   cs.MapLeftKey("CollaboratorId");
-                   cs.MapRightKey("PlayerId");                    
-                });
+            this.HasMany(t => t.AttendeeCollaborators)
+                .WithRequired(e => e.Collaborator)
+                .HasForeignKey(e => e.CollaboratorId);
 
-            //this.HasOptional(t => t.Speaker)
-            //    .WithMany()
-            //    .HasForeignKey(d => d.SpeakerId);
+            this.HasMany(t => t.JobTitles)
+                .WithRequired(e => e.Collaborator)
+                .HasForeignKey(e => e.CollaboratorId);
 
-
-            this.ToTable("Collaborator");
+            this.HasMany(t => t.MiniBios)
+                .WithRequired(e => e.Collaborator)
+                .HasForeignKey(e => e.CollaboratorId);
         }
     }
 }

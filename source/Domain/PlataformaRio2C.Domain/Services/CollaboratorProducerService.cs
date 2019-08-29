@@ -85,15 +85,15 @@ namespace PlataformaRio2C.Domain.Services
                 }
             }           
 
-            if (entityCollaborator.ProducersEvents == null || !entityCollaborator.ProducersEvents.Any())
-            {
-                entityCollaborator.AddEventsProducers(new CollaboratorProducer
-                {
-                    CollaboratorId = entityCollaborator.Id,
-                    ProducerId = entityProducer.Id,
-                    EventId = eventEntity.Id
-                });
-            }
+            //if (entityCollaborator.ProducersEvents == null || !entityCollaborator.ProducersEvents.Any())
+            //{
+            //    entityCollaborator.AddEventsProducers(new CollaboratorProducer
+            //    {
+            //        CollaboratorId = entityCollaborator.Id,
+            //        ProducerId = entityProducer.Id,
+            //        EventId = eventEntity.Id
+            //    });
+            //}
 
             return isCreate ? base.Create(entityCollaborator) : base.Update(entityCollaborator);
         }
@@ -101,11 +101,11 @@ namespace PlataformaRio2C.Domain.Services
 
         public ValidationResult UpdateByPortal(Collaborator entity)
         {
-            _validationResult.Add(new CollaboratorProducerIsComplete().Valid(entity));
+            //_validationResult.Add(new CollaboratorProducerIsComplete().Valid(entity));
 
             //_validationResult.Add(new AddressIsConsistent().Valid(entity.Address));
 
-            _validationResult.Add(new ImageIsConsistent().Valid(entity.Image));
+            //_validationResult.Add(new ImageIsConsistent().Valid(entity.Image));
 
             //_validationResult.Add(new PhoneNumberIsConsistent("PhoneNumber").Valid(entity.PhoneNumber));
 

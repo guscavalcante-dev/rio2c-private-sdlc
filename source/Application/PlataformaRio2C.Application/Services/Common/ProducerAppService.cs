@@ -171,18 +171,18 @@ namespace PlataformaRio2C.Application.Services
 
             var entityCollaborator = _collaboratorService.GetWithProducerByUserId(id);
 
-            if (entityCollaborator != null && entityCollaborator.ProducersEvents != null && entityCollaborator.ProducersEvents.Any())
-            {
-                var producersId = entityCollaborator.ProducersEvents.Select(e => e.ProducerId).Distinct();
-                var producers = _producerRepository.GetAll(e => producersId.Contains(e.Id));
-                if (producers != null)
-                {
-                    foreach (var producer in producers)
-                    {
-                        viewModel.Add(new ProducerAppViewModel(producer));
-                    }
-                }
-            }
+            //if (entityCollaborator != null && entityCollaborator.ProducersEvents != null && entityCollaborator.ProducersEvents.Any())
+            //{
+            //    var producersId = entityCollaborator.ProducersEvents.Select(e => e.ProducerId).Distinct();
+            //    var producers = _producerRepository.GetAll(e => producersId.Contains(e.Id));
+            //    if (producers != null)
+            //    {
+            //        foreach (var producer in producers)
+            //        {
+            //            viewModel.Add(new ProducerAppViewModel(producer));
+            //        }
+            //    }
+            //}
 
             return viewModel;
         }
@@ -199,16 +199,16 @@ namespace PlataformaRio2C.Application.Services
 
             var entityCollaborator = _collaboratorService.GetWithProducerByUserId(id);
 
-            if (entityCollaborator != null && entityCollaborator.ProducersEvents != null && entityCollaborator.ProducersEvents.Any())
-            {
-                var producersId = entityCollaborator.ProducersEvents.Select(e => e.ProducerId).Distinct();
-                var producers = _producerRepository.GetAll(e => producersId.Contains(e.Id));
-                if (producers.FirstOrDefault() != null)
-                {
-                    viewModel = new ProducerDetailAppViewModel(producers.FirstOrDefault());
-                    var a = viewModel.Address.Uid.ToString();
-                }
-            }
+            //if (entityCollaborator != null && entityCollaborator.ProducersEvents != null && entityCollaborator.ProducersEvents.Any())
+            //{
+            //    var producersId = entityCollaborator.ProducersEvents.Select(e => e.ProducerId).Distinct();
+            //    var producers = _producerRepository.GetAll(e => producersId.Contains(e.Id));
+            //    if (producers.FirstOrDefault() != null)
+            //    {
+            //        viewModel = new ProducerDetailAppViewModel(producers.FirstOrDefault());
+            //        var a = viewModel.Address.Uid.ToString();
+            //    }
+            //}
             //viewModel = new ProducerDetailAppViewModel(entityCollaborator.);
 
             return viewModel;
@@ -220,15 +220,15 @@ namespace PlataformaRio2C.Application.Services
 
             var entityCollaborator = _collaboratorService.GetWithProducerByUserId(id);
 
-            if (entityCollaborator != null && entityCollaborator.ProducersEvents != null && entityCollaborator.ProducersEvents.Any())
-            {
-                var producersId = entityCollaborator.ProducersEvents.Select(e => e.ProducerId).Distinct();
-                var producers = _producerRepository.GetAll(e => producersId.Contains(e.Id));
-                if (producers.FirstOrDefault(e => e.Uid == producerUid) != null)
-                {
-                    viewModel = new ProducerDetailAppViewModel(producers.FirstOrDefault(e => e.Uid == producerUid));
-                }
-            }
+            //if (entityCollaborator != null && entityCollaborator.ProducersEvents != null && entityCollaborator.ProducersEvents.Any())
+            //{
+            //    var producersId = entityCollaborator.ProducersEvents.Select(e => e.ProducerId).Distinct();
+            //    var producers = _producerRepository.GetAll(e => producersId.Contains(e.Id));
+            //    if (producers.FirstOrDefault(e => e.Uid == producerUid) != null)
+            //    {
+            //        viewModel = new ProducerDetailAppViewModel(producers.FirstOrDefault(e => e.Uid == producerUid));
+            //    }
+            //}
 
             return viewModel;
         }
@@ -239,22 +239,22 @@ namespace PlataformaRio2C.Application.Services
 
             var entityCollaborator = _collaboratorService.GetWithProducerByUserId(id);
 
-            if (entityCollaborator != null && entityCollaborator.ProducersEvents != null && entityCollaborator.ProducersEvents.Any())
-            {
-                var languages = _languageRepository.GetAll().ToList();
-                var activities = _activityRepository.GetAll().ToList();
-                var targetAudienceOptions = _targetAudienceRepository.GetAll().ToList();
-                var producersId = entityCollaborator.ProducersEvents.Select(e => e.ProducerId).Distinct();
-                var producers = _producerRepository.GetAll(e => producersId.Contains(e.Id));
+            //if (entityCollaborator != null && entityCollaborator.ProducersEvents != null && entityCollaborator.ProducersEvents.Any())
+            //{
+            //    var languages = _languageRepository.GetAll().ToList();
+            //    var activities = _activityRepository.GetAll().ToList();
+            //    var targetAudienceOptions = _targetAudienceRepository.GetAll().ToList();
+            //    var producersId = entityCollaborator.ProducersEvents.Select(e => e.ProducerId).Distinct();
+            //    var producers = _producerRepository.GetAll(e => producersId.Contains(e.Id));
 
-                if (producers.FirstOrDefault() != null)
-                {
-                    viewModel = new ProducerEditAppViewModel(producers.FirstOrDefault());
-                    viewModel.LanguagesOptions = LanguageAppViewModel.MapList(languages);
-                    viewModel.Activitys = ProducerActivityAppViewModel.MapList(activities, producers.FirstOrDefault()).ToList();
-                    viewModel.TargetAudience = ProducerTargetAudienceAppViewModel.MapList(targetAudienceOptions, producers.FirstOrDefault()).ToList();
-                }
-            }
+            //    if (producers.FirstOrDefault() != null)
+            //    {
+            //        viewModel = new ProducerEditAppViewModel(producers.FirstOrDefault());
+            //        viewModel.LanguagesOptions = LanguageAppViewModel.MapList(languages);
+            //        viewModel.Activitys = ProducerActivityAppViewModel.MapList(activities, producers.FirstOrDefault()).ToList();
+            //        viewModel.TargetAudience = ProducerTargetAudienceAppViewModel.MapList(targetAudienceOptions, producers.FirstOrDefault()).ToList();
+            //    }
+            //}
 
             return viewModel;
         }

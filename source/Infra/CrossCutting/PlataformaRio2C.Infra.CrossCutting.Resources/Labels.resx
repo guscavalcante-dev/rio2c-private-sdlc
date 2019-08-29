@@ -1177,8 +1177,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>editado</comment>
   </data>
   <data name="AudioVisual" xml:space="preserve">
-    <value>Áudio Visual</value>
-    <comment>Áudio Visual</comment>
+    <value>Audiovisual</value>
+    <comment>Audiovisual</comment>
   </data>
   <data name="CompanyDocument" xml:space="preserve">
     <value>CNPJ</value>
@@ -1319,5 +1319,17 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Address2" xml:space="preserve">
     <value>Complemento</value>
     <comment>Complemento</comment>
+  </data>
+  <data name="ExecutivesRegistered" xml:space="preserve">
+    <value>Executivos cadastrados</value>
+    <comment>Executivos cadastrados</comment>
+  </data>
+  <data name="LastNames" xml:space="preserve">
+    <value>Sobrenomes</value>
+    <comment>Sobrenomes</comment>
+  </data>
+  <data name="PlayersExecutives" xml:space="preserve">
+    <value>Executivos dos Players</value>
+    <comment>Executivos dos Players</comment>
   </data>
 </root>

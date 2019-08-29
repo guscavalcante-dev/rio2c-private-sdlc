@@ -1,0 +1,13 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.AttendeeOrganizationBaseCommand
+<!--begin:: Attendee Organization Form-->
+<div class="form-group row attendeeorganization-list-item">
+    <div class="col-md-10">
+        @*@Html.LabelFor(m => m.AttendeeOrganizationUid, new { @class = "control-label" })*@
+        @Html.DropDownList("AttendeeOrganizationUid", new SelectList(Model.AttendeeOrganizationsBaseDtos, "Uid", "DisplayName", Model.AttendeeOrganizationUid), $"{Labels.Select}...", new { @class = "form-control enable-select2-attendeeorganization" })
+        @Html.ValidationMessageFor(m => m.AttendeeOrganizationUid, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-2">
+        <button type="button" class="btn btn-danger btn-icon attendeeorganization-remove" onclick="AttendeeOrganizationsForm.remove(this);return false;"><i class="flaticon2-trash"></i></button>
+    </div>
+</div>
+<!--end:: Attendee Organization Form-->

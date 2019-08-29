@@ -18,7 +18,7 @@ namespace PlataformaRio2C.Domain.Interfaces
 
         IQueryable<Player> GetAllWithHoldingSimple();
 
-        System.Linq.IQueryable<Collaborator> GetAllCollaborators(Expression<Func<Player, bool>> filter);
+        //System.Linq.IQueryable<Collaborator> GetAllCollaborators(Expression<Func<Player, bool>> filter);
 
         IQueryable<Player> GetAllWithAddress();
 

@@ -35,10 +35,10 @@ namespace PlataformaRio2C.Application.ViewModels.Api
                 if (entity.Collaborator != null)
                 {
                     Collaborator = new CollaboratorOptionAppViewModel(entity.Collaborator);
-                    Name = entity.Collaborator.Name;
+                    Name = entity.Collaborator.FirstName;
                     Email = entity.Collaborator.User.Email;
                     JobTitle = entity.Collaborator.GetJobTitle();
-                    HasImage = entity.Collaborator.ImageId > 0;
+                    //HasImage = entity.Collaborator.ImageId > 0;
                     CompanyName = entity.Collaborator.GetCompanyName();
                 }                         
             }

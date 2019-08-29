@@ -38,9 +38,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                  .Include(i => i.Edition)
                                 .Include(i => i.Producer)
                                 .Include(i => i.Collaborator)
-                                .Include(i => i.Collaborator.ProducersEvents)
-                                .Include(i => i.Collaborator.ProducersEvents.Select(p => p.Edition))
-                                .Include(i => i.Collaborator.ProducersEvents.Select(p => p.Producer))
+                                //.Include(i => i.Collaborator.ProducersEvents)
+                                //.Include(i => i.Collaborator.ProducersEvents.Select(p => p.Edition))
+                                //.Include(i => i.Collaborator.ProducersEvents.Select(p => p.Producer))
                                 .Include(i => i.Collaborator.User)
                                 .Include(i => i.Collaborator.User.UserUseTerms);
 
@@ -59,9 +59,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Include(i => i.Edition)
                                 .Include(i => i.Producer)
                                 .Include(i => i.Collaborator)
-                                .Include(i => i.Collaborator.ProducersEvents)
-                                .Include(i => i.Collaborator.ProducersEvents.Select(p => p.Edition))
-                                .Include(i => i.Collaborator.ProducersEvents.Select(p => p.Producer))
+                                //.Include(i => i.Collaborator.ProducersEvents)
+                                //.Include(i => i.Collaborator.ProducersEvents.Select(p => p.Edition))
+                                //.Include(i => i.Collaborator.ProducersEvents.Select(p => p.Producer))
                                 .Include(i => i.Collaborator.User)
                                 .Include(i => i.Collaborator.User.UserUseTerms)
                                 .Select(e => e.Collaborator);

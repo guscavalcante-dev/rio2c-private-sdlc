@@ -1,9 +1,9 @@
 ﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateOrganization
-<div class="modal fade" id="UpdatePlayerModal" role="dialog" aria-labelledby="CreateHoldingModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<div class="modal fade" id="UpdatePlayerModal" role="dialog" aria-labelledby="UpdatePlayerModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">
+                <h5 class="modal-title">
                     @if (!Model.IsAddingToCurrentEdition)
                     {
                         @(Labels.Update + " " + Labels.Player)

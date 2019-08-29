@@ -4,7 +4,7 @@
 // Created          : 08-17-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-21-2019
+// Last Modified On : 08-29-2019
 // ***********************************************************************
 // <copyright file="UpdateHoldingCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -58,6 +58,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #region Initial Validations
 
+            // Check if the name already exists
             var existHoldingByName = this.HoldingRepo.Get(h => h.Name == cmd.Name 
                                                                && h.Uid != cmd.HoldingUid
                                                                && !h.IsDeleted);

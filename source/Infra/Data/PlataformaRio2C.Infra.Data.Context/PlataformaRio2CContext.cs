@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 08-28-2019
 // ***********************************************************************
 // <copyright file="PlataformaRio2CContext.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -49,7 +49,14 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new OrganizationDescriptionMap());
             modelBuilder.Configurations.Add(new AttendeeOrganizationMap());
             modelBuilder.Configurations.Add(new AttendeeOrganizationTypeMap());
+            modelBuilder.Configurations.Add(new AttendeeOrganizationCollaboratorMap());
             modelBuilder.Configurations.Add(new OrganizationTypeMap());
+
+            // Collaborator
+            modelBuilder.Configurations.Add(new CollaboratorMap());
+            modelBuilder.Configurations.Add(new CollaboratorJobTitleMap());
+            modelBuilder.Configurations.Add(new CollaboratorMiniBioMap());
+            modelBuilder.Configurations.Add(new AttendeeCollaboratorMap());
 
             // Projects
             modelBuilder.Configurations.Add(new ProjectTypeMap());
@@ -64,11 +71,8 @@ namespace PlataformaRio2C.Infra.Data.Context
             // TODO: Old mapping that must be reviewed
             modelBuilder.Configurations.Add(new LanguageMap());
             modelBuilder.Configurations.Add(new ImageFileMap());            
-            modelBuilder.Configurations.Add(new PlayerMap());
+            //modelBuilder.Configurations.Add(new PlayerMap());
             modelBuilder.Configurations.Add(new PlayerDescriptionMap());
-            modelBuilder.Configurations.Add(new CollaboratorMap());
-            modelBuilder.Configurations.Add(new CollaboratorJobTitleMap());
-            modelBuilder.Configurations.Add(new CollaboratorMiniBioMap());
             modelBuilder.Configurations.Add(new UserMap());
             modelBuilder.Configurations.Add(new UserUseTermMap());
             modelBuilder.Configurations.Add(new RoleMap());            
@@ -134,17 +138,20 @@ namespace PlataformaRio2C.Infra.Data.Context
 
         // Holding
         public DbSet<Holding> Holdings { get; set; }
-        public DbSet<HoldingDescription> HoldingDescriptions { get; set; }
+        public DbSet<HoldingDescription> HoldingDescriptions { get; set; } //TODO: Try to remove this (Holding Descriptions)
 
         // Organization
         public DbSet<Organization> Organizations { get; set; }
-        public DbSet<AttendeeOrganization> AttendeeOrganizations { get; set; }
+        public DbSet<AttendeeOrganization> AttendeeOrganizations { get; set; } //TODO: Try to remove this (AttendeeOrganizations)
+
+        // Collaborators
+        public DbSet<Collaborator> Collaborators { get; set; }
+
 
         // TODO: Old dbsets that must be reviewed
         public DbSet<Language> Languages { get; set; }
         public DbSet<ImageFile> ImageFiles { get; set; }
-        public DbSet<Player> Players { get; set; }
-        public DbSet<Collaborator> Collaborators { get; set; }
+        //public DbSet<Player> Players { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserUseTerm> UserUseTerms { get; set; }
         public DbSet<InterestGroup> InterestGroups { get; set; }

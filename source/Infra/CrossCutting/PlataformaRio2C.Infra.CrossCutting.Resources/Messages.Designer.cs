@@ -250,6 +250,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O email é utilizado para o login do usuário..
+        /// </summary>
+        public static string EmailInputMessage {
+            get {
+                return ResourceManager.GetString("EmailInputMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to E-mail inválido..
         /// </summary>
         public static string EmailISInvalid {

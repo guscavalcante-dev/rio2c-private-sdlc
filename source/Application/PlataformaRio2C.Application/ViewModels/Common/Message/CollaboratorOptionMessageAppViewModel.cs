@@ -46,38 +46,38 @@ namespace PlataformaRio2C.Application.ViewModels
         {
             CultureInfo currentCulture = Thread.CurrentThread.CurrentCulture;
 
-            Name = entity.Name;
+            Name = entity.FirstName;
             Email = entity.User.Email;
-            HasImage = entity.ImageId > 0;
+            //HasImage = entity.ImageId > 0;
 
-            IsProducer = entity.ProducersEvents != null && entity.ProducersEvents.Any(e => e.Producer != null && e.Edition.Name.Contains("2018"));
+            //IsProducer = entity.ProducersEvents != null && entity.ProducersEvents.Any(e => e.Producer != null && e.Edition.Name.Contains("2018"));
 
-            if (IsProducer)
-            {
-                var producer = entity.ProducersEvents.Where(e => e.Producer != null && e.Edition.Name.Contains("2018")).Select(e => e.Producer).FirstOrDefault();
+            //if (IsProducer)
+            //{
+            //    var producer = entity.ProducersEvents.Where(e => e.Producer != null && e.Edition.Name.Contains("2018")).Select(e => e.Producer).FirstOrDefault();
 
-                if (producer != null)
-                {
-                    ProducerName = producer.Name;
-                    ProducerUid = producer.Uid;
-                }
-            }
+            //    if (producer != null)
+            //    {
+            //        ProducerName = producer.Name;
+            //        ProducerUid = producer.Uid;
+            //    }
+            //}
 
-            IsPlayer = entity.Players != null && entity.Players.Any();
-            if (IsPlayer)
-            {
-                PlayersName = string.Join(", ", entity.Players.Select(e => e.Name));
-                PlayersUids = entity.Players.Select(e => e.Uid).ToArray();
-            }
+            //IsPlayer = entity.Players != null && entity.Players.Any();
+            //if (IsPlayer)
+            //{
+            //    PlayersName = string.Join(", ", entity.Players.Select(e => e.Name));
+            //    PlayersUids = entity.Players.Select(e => e.Uid).ToArray();
+            //}
 
-            if (currentCulture != null && currentCulture.Name == "pt-BR")
-            {
-                JobTitle = string.Join(", ", entity.JobTitles.Where(e => e.Language.Code == "PtBr").Select(e => e.Value));
-            }
-            else
-            {
-                JobTitle = string.Join(", ", entity.JobTitles.Where(e => e.Language.Code == "En").Select(e => e.Value));
-            }
+            //if (currentCulture != null && currentCulture.Name == "pt-BR")
+            //{
+            //    JobTitle = string.Join(", ", entity.JobTitles.Where(e => e.Language.Code == "PtBr").Select(e => e.Value));
+            //}
+            //else
+            //{
+            //    JobTitle = string.Join(", ", entity.JobTitles.Where(e => e.Language.Code == "En").Select(e => e.Value));
+            //}
         }
     }
 }

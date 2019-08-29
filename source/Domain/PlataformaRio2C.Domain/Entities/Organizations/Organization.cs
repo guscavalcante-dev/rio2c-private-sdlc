@@ -20,14 +20,16 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 namespace PlataformaRio2C.Domain.Entities
 {
     /// <summary>Organization</summary>
-    public class Organization : Entity
+    public class Organization : AggregateRoot
     {
         public static readonly int NameMinLength = 2;
         public static readonly int NameMaxLength = 100;
         public static readonly int CompanyNameMaxLength = 100;
         public static readonly int TradeNameMaxLength = 100;
-        public static readonly int WebSiteMaxLength = 100;
+        public static readonly int DocumentMaxLength = 50;
+        public static readonly int WebsiteMaxLength = 100;
         public static readonly int SocialMediaMaxLength = 256;
+        public static readonly int PhoneNumberMaxLength = 50;
 
         public int? HoldingId { get; private set; }
         public string Name { get; private set; }
@@ -41,8 +43,8 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTime? ImageUploadDate { get; private set; }
         
         public virtual Holding Holding { get; private set; }
-        public virtual User Updater { get; private set; }
         public virtual Address Address { get; private set; }
+        public virtual User Updater { get; private set; }
 
         public virtual ICollection<OrganizationDescription> Descriptions { get; private set; }
         public virtual ICollection<AttendeeOrganization> AttendeeOrganizations { get; private set; }
@@ -413,6 +415,12 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidationResult = new ValidationResult();
 
             this.ValidateName();
+            this.ValidateCompanyName();
+            this.ValidateTradeName();
+            this.ValidateDocument();
+            this.ValidateWebsite();
+            this.ValidateSocialMedia();
+            this.ValidatePhoneNumber();
             this.ValidateDescriptions();
             this.ValidateAddress();
 
@@ -430,6 +438,60 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.Name?.Trim().Length < NameMinLength || this.Name?.Trim().Length > NameMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, NameMaxLength, NameMinLength), new string[] { "Name" }));
+            }
+        }
+
+        /// <summary>Validates the name of the company.</summary>
+        public void ValidateCompanyName()
+        {
+            if (!string.IsNullOrEmpty(this.CompanyName) && this.CompanyName?.Trim().Length > CompanyNameMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.CompanyName, CompanyNameMaxLength, 1), new string[] { "CompanyName" }));
+            }
+        }
+
+        /// <summary>Validates the name of the trade.</summary>
+        public void ValidateTradeName()
+        {
+            if (!string.IsNullOrEmpty(this.TradeName) && this.TradeName?.Trim().Length > TradeNameMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.TradeName, TradeNameMaxLength, 1), new string[] { "TradeName" }));
+            }
+        }
+
+        /// <summary>Validates the document.</summary>
+        public void ValidateDocument()
+        {
+            if (!string.IsNullOrEmpty(this.Document) && this.Document?.Trim().Length > DocumentMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.CompanyDocument, DocumentMaxLength, 1), new string[] { "CompanyDocument" }));
+            }
+        }
+
+        /// <summary>Validates the website.</summary>
+        public void ValidateWebsite()
+        {
+            if (!string.IsNullOrEmpty(this.Website) && this.Website?.Trim().Length > WebsiteMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Website, WebsiteMaxLength, 1), new string[] { "Website" }));
+            }
+        }
+
+        /// <summary>Validates the social media.</summary>
+        public void ValidateSocialMedia()
+        {
+            if (!string.IsNullOrEmpty(this.SocialMedia) && this.SocialMedia?.Trim().Length > SocialMediaMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.SocialMedia, SocialMediaMaxLength, 1), new string[] { "SocialMedia" }));
+            }
+        }
+
+        /// <summary>Validates the phone number.</summary>
+        public void ValidatePhoneNumber()
+        {
+            if (!string.IsNullOrEmpty(this.PhoneNumber) && this.PhoneNumber?.Trim().Length > PhoneNumberMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.PhoneNumber, PhoneNumberMaxLength, 1), new string[] { "PhoneNumber" }));
             }
         }
 

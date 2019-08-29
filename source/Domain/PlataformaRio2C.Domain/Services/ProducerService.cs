@@ -32,14 +32,14 @@ namespace PlataformaRio2C.Domain.Services
 
         public Producer GetByUserIdAndEventId(int userId, int eventId)
         {
-            var entityCollaborator = _collaboratorRepository.Get(e => e.UserId == userId);
+            var entityCollaborator = _collaboratorRepository.Get(e => e.Id == userId);
             if (entityCollaborator != null)
             {
-                var entityProducers = entityCollaborator.ProducersEvents.Where(e => e.EventId == eventId).Select(e => e.Producer);
-                if (entityProducers != null)
-                {
-                    return entityProducers.FirstOrDefault();
-                }
+                //var entityProducers = entityCollaborator.ProducersEvents.Where(e => e.EventId == eventId).Select(e => e.Producer);
+                //if (entityProducers != null)
+                //{
+                //    return entityProducers.FirstOrDefault();
+                //}
             }
 
             return null;

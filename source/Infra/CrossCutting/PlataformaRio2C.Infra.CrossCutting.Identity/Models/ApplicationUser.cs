@@ -1,14 +1,20 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using PlataformaRio2C.Domain.Enums;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Web.Admin
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-27-2019
+// ***********************************************************************
+// <copyright file="ApplicationUser.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Configuration;
 using System.Net;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace PlataformaRio2C.Infra.CrossCutting.Identity.Models
@@ -17,16 +23,21 @@ namespace PlataformaRio2C.Infra.CrossCutting.Identity.Models
     public class ApplicationUser : User
     {   
         public Guid Uid { get; set; }
-
-        public DateTime CreationDate { get; set; }        
         public bool Active { get; set; }
+        public bool IsDeleted { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime UpdateDate { get; set; }
 
+        /// <summary>Initializes a new instance of the <see cref="ApplicationUser"/> class.</summary>
         public ApplicationUser()
         {
             this.Active = true;
             Uid = Guid.NewGuid();
-        }       
+        }
 
+        /// <summary>Gets the ip.</summary>
+        /// <param name="GetLan">if set to <c>true</c> [get lan].</param>
+        /// <returns></returns>
         private string GetIp(bool GetLan = false)
         {
             string visitorIPAddress = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
@@ -81,6 +92,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.Identity.Models
             return visitorIPAddress;
         }
 
+        /// <summary>Método para injetar outros Claims ao user identity corrente
+        /// Ao sobrescrever usar a codificação base caso queira que email, nome completo e id do usuário estejam nos claims</summary>
+        /// <param name="userIdentity"></param>
         protected override void SetClaims(ClaimsIdentity userIdentity)
         {
             var claims = new List<Claim>();

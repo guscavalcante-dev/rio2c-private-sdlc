@@ -71,8 +71,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Include(i => i.ProducerTargetAudience.Select(e => e.TargetAudience))
                                 .Include(i => i.EventsCollaborators)
                                 .Include(i => i.EventsCollaborators.Select(e => e.Collaborator))
-                                .Include(i => i.EventsCollaborators.Select(e => e.Collaborator.JobTitles))
-                                .Include(i => i.EventsCollaborators.Select(e => e.Collaborator.JobTitles.Select(j => j.Language)))
+                                //.Include(i => i.EventsCollaborators.Select(e => e.Collaborator.JobTitles))
+                                //.Include(i => i.EventsCollaborators.Select(e => e.Collaborator.JobTitles.Select(j => j.Language)))
                 .FirstOrDefault(x => x.Uid == uid);
 
         }

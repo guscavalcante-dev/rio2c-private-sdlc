@@ -30,7 +30,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Include(i => i.PlayerActivitys.Select(e => e.Activity))
                                 .Include(i => i.PlayerTargetAudience)
                                 .Include(i => i.PlayerTargetAudience.Select(e => e.TargetAudience))
-                                .Include(i => i.Collaborators)
+                                //.Include(i => i.Collaborators)
                                 .Include(i => i.RestrictionsSpecifics)
                                 .Include(i => i.RestrictionsSpecifics.Select(e => e.Language));
 
@@ -70,7 +70,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Include(i => i.PlayerActivitys.Select(e => e.Activity))
                                 .Include(i => i.PlayerTargetAudience)
                                 .Include(i => i.PlayerTargetAudience.Select(e => e.TargetAudience))
-                                .Include(i => i.Collaborators)
+                                //.Include(i => i.Collaborators)
                                 .Include(i => i.RestrictionsSpecifics)
                 .SingleOrDefault(x => x.Id == (int)id);
 
@@ -163,7 +163,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Include(i => i.RestrictionsSpecifics)
                                 .Include(i => i.RestrictionsSpecifics.Select(e => e.Language))
                                 .Include(i => i.Interests)
-                                .Include(i => i.Collaborators)
+                                //.Include(i => i.Collaborators)
                                .Where(filter);
         }
 
@@ -200,17 +200,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                               .AsNoTracking();
         }
 
-        public IQueryable<Collaborator> GetAllCollaborators(Expression<Func<Player, bool>> filter)
-        {
-            return this.dbSet
+        //public IQueryable<Collaborator> GetAllCollaborators(Expression<Func<Player, bool>> filter)
+        //{
+        //    return this.dbSet
 
-                               .Include(i => i.Collaborators)
-                               .Include(i => i.Collaborators.Select(c => c.User))
-                               .Where(filter)
-                               .SelectMany(e => e.Collaborators)
-                               .AsNoTracking();
+        //                       //.Include(i => i.Collaborators)
+        //                       //.Include(i => i.Collaborators.Select(c => c.User))
+        //                       //.Where(filter)
+        //                       //.SelectMany(e => e.Collaborators)
+        //                       .AsNoTracking();
 
-        }
+        //}
 
 
         public IQueryable<Player> GetAllWithAddress()
@@ -230,12 +230,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             IQueryable<Player> query = null;
 
-            query = this._context.Players;
-            foreach (var param in fields)
-            {
-                query = query.Include(param);
-            }
-            var result = query.ToList();
+            //query = this._context.Players;
+            //foreach (var param in fields)
+            //{
+            //    query = query.Include(param);
+            //}
+            //var result = query.ToList();
 
 
             throw new NotImplementedException();
@@ -272,10 +272,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Include(i => i.PlayerTargetAudience.Select(e => e.TargetAudience))
                                 .Include(i => i.RestrictionsSpecifics)
                                 .Include(i => i.RestrictionsSpecifics.Select(e => e.Language))
-                                .Include(i => i.Collaborators)
-                                .Include(i => i.Collaborators.Select(e => e.Address))
-                                .Include(i => i.Collaborators.Select(e => e.JobTitles))
-                                .Include(i => i.Collaborators.Select(e => e.JobTitles.Select(j => j.Language)))
+                                //.Include(i => i.Collaborators)
+                                //.Include(i => i.Collaborators.Select(e => e.Address))
+                                //.Include(i => i.Collaborators.Select(e => e.JobTitles))
+                                //.Include(i => i.Collaborators.Select(e => e.JobTitles.Select(j => j.Language)))
                                 .FirstOrDefault(e => e.Uid == uid);
         }
     }

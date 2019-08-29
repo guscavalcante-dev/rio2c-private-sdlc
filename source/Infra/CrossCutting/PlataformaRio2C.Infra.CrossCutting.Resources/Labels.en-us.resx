@@ -1166,8 +1166,8 @@
     <comment>atualizado</comment>
   </data>
   <data name="AudioVisual" xml:space="preserve">
-    <value>Audio Visual</value>
-    <comment>Áudio Visual</comment>
+    <value>Audiovisual</value>
+    <comment>Audiovisual</comment>
   </data>
   <data name="CompanyDocument" xml:space="preserve">
     <value>Company Document</value>
@@ -1308,5 +1308,17 @@
   <data name="Address2" xml:space="preserve">
     <value>Address (continued)</value>
     <comment>Complemento</comment>
+  </data>
+  <data name="ExecutivesRegistered" xml:space="preserve">
+    <value>Registered executives</value>
+    <comment>Executivos cadastrados</comment>
+  </data>
+  <data name="LastNames" xml:space="preserve">
+    <value>Last Names</value>
+    <comment>Sobrenomes</comment>
+  </data>
+  <data name="PlayersExecutives" xml:space="preserve">
+    <value>Players Executives</value>
+    <comment>Executivos dos Players</comment>
   </data>
 </root>

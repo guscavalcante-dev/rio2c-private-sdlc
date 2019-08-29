@@ -42,20 +42,20 @@ namespace PlataformaRio2C.Application.Services
         {
             List<ScheduleDayAppViewModel> result = new List<ScheduleDayAppViewModel>();
 
-            var collaborator = _collaboratorRepository.GetBySchedule(e => e.UserId == userId);
-            if (collaborator != null && collaborator.Players != null && collaborator.Players.Any())
-            {
-                result.AddRange(GetConferencesByPlayer(collaborator));
+            //var collaborator = _collaboratorRepository.GetBySchedule(e => e.UserId == userId);
+            //if (collaborator != null && collaborator.Players != null && collaborator.Players.Any())
+            //{
+            //    result.AddRange(GetConferencesByPlayer(collaborator));
 
-                result.AddRange(GetNegotiationsByPlayer(collaborator));
+            //    result.AddRange(GetNegotiationsByPlayer(collaborator));
 
-                result = result.GroupBy(e => e.Date).Select(e => new ScheduleDayAppViewModel
-                {
-                    Date = e.Key,
-                    DayOfWeek = e.Select(i => i.DayOfWeek).FirstOrDefault(),
-                    Items = e.SelectMany(i => i.Items)
-                }).OrderBy(e => e.Date).ToList();                
-            }
+            //    result = result.GroupBy(e => e.Date).Select(e => new ScheduleDayAppViewModel
+            //    {
+            //        Date = e.Key,
+            //        DayOfWeek = e.Select(i => i.DayOfWeek).FirstOrDefault(),
+            //        Items = e.SelectMany(i => i.Items)
+            //    }).OrderBy(e => e.Date).ToList();                
+            //}
 
             return result;
         }
@@ -65,20 +65,20 @@ namespace PlataformaRio2C.Application.Services
 
             List<ScheduleDayAppViewModel> result = new List<ScheduleDayAppViewModel>();
 
-            var collaborator = _collaboratorRepository.GetBySchedule(e => e.UserId == userId);
-            if (collaborator != null && collaborator.ProducersEvents != null && collaborator.ProducersEvents.Any())
-            {
-                result.AddRange(GetConferencesByProducer(collaborator));
+            //var collaborator = _collaboratorRepository.GetBySchedule(e => e.UserId == userId);
+            //if (collaborator != null && collaborator.ProducersEvents != null && collaborator.ProducersEvents.Any())
+            //{
+            //    result.AddRange(GetConferencesByProducer(collaborator));
 
-                result.AddRange(GetNegotiationsByProducer(collaborator));
+            //    result.AddRange(GetNegotiationsByProducer(collaborator));
 
-                result = result.GroupBy(e => e.Date).Select(e => new ScheduleDayAppViewModel
-                {
-                    Date = e.Key,
-                    DayOfWeek = e.Select(i => i.DayOfWeek).FirstOrDefault(),
-                    Items = e.SelectMany(i => i.Items)
-                }).OrderBy(e => e.Date).ToList();
-            }
+            //    result = result.GroupBy(e => e.Date).Select(e => new ScheduleDayAppViewModel
+            //    {
+            //        Date = e.Key,
+            //        DayOfWeek = e.Select(i => i.DayOfWeek).FirstOrDefault(),
+            //        Items = e.SelectMany(i => i.Items)
+            //    }).OrderBy(e => e.Date).ToList();
+            //}
 
 
             return result;
@@ -109,8 +109,8 @@ namespace PlataformaRio2C.Application.Services
 
             if (collaborator != null)
             {
-                result.AddRange(GetSchedulePlayer(collaborator.UserId));
-                result.AddRange(GetScheduleProducer(collaborator.UserId));
+                result.AddRange(GetSchedulePlayer(collaborator.Id));
+                result.AddRange(GetScheduleProducer(collaborator.Id));
 
                 result = result.GroupBy(e => e.Date).Select(e => new ScheduleDayAppViewModel
                 {
@@ -131,7 +131,7 @@ namespace PlataformaRio2C.Application.Services
 
             if (collaborator != null)
             {
-                result.AddRange(GetSchedulePlayer(collaborator.UserId));              
+                result.AddRange(GetSchedulePlayer(collaborator.Id));              
             }
 
             return result;
@@ -146,7 +146,7 @@ namespace PlataformaRio2C.Application.Services
             if (collaborator != null)
             {
               
-                result.AddRange(GetScheduleProducer(collaborator.UserId));               
+                result.AddRange(GetScheduleProducer(collaborator.Id));               
             }
 
             return result;
@@ -158,11 +158,11 @@ namespace PlataformaRio2C.Application.Services
         {
             List<ScheduleDayAppViewModel> result = new List<ScheduleDayAppViewModel>();
 
-            var collaboratorsIds = collaborator.Players.SelectMany(e => e.Collaborators.Select(c => c.Id)).ToList();
+            //var collaboratorsIds = collaborator.Players.SelectMany(e => e.Collaborators.Select(c => c.Id)).ToList();
 
-            var conferences = _conferenceRepository.GetAllBySchedule(e => e.Lecturers.Any(l => l.CollaboratorId != null && collaboratorsIds.Contains(l.CollaboratorId.Value))).ToList();
+            //var conferences = _conferenceRepository.GetAllBySchedule(e => e.Lecturers.Any(l => l.CollaboratorId != null && collaboratorsIds.Contains(l.CollaboratorId.Value))).ToList();
 
-            result.AddRange(ScheduleDayAppViewModel.GetByConference(conferences.Distinct()));
+            //result.AddRange(ScheduleDayAppViewModel.GetByConference(conferences.Distinct()));
 
             return result;
         }
@@ -171,39 +171,39 @@ namespace PlataformaRio2C.Application.Services
         {
             List<ScheduleDayAppViewModel> result = new List<ScheduleDayAppViewModel>();
 
-            var collaboratorsIds = collaborator.ProducersEvents.Select(e => e.Producer).SelectMany(e => e.EventsCollaborators.Select(ev => ev.CollaboratorId)).ToList();
+            //var collaboratorsIds = collaborator.ProducersEvents.Select(e => e.Producer).SelectMany(e => e.EventsCollaborators.Select(ev => ev.CollaboratorId)).ToList();
 
-            var conferences = _conferenceRepository.GetAllBySchedule(e => e.Lecturers.Any(l => l.CollaboratorId != null && collaboratorsIds.Contains(l.CollaboratorId.Value))).ToList();
+            //var conferences = _conferenceRepository.GetAllBySchedule(e => e.Lecturers.Any(l => l.CollaboratorId != null && collaboratorsIds.Contains(l.CollaboratorId.Value))).ToList();
 
-            result.AddRange(ScheduleDayAppViewModel.GetByConference(conferences.Distinct()));
+            //result.AddRange(ScheduleDayAppViewModel.GetByConference(conferences.Distinct()));
 
             return result;
         }
 
         private IEnumerable<ScheduleDayAppViewModel> GetNegotiationsByPlayer(Collaborator collaborator)
         {
-            var playersIds = collaborator.Players.Select(e => e.Id);
+            //var playersIds = collaborator.Players.Select(e => e.Id);
 
-            var negotiations = _negotiationRepository.GetAllBySchedule(n => playersIds.Contains(n.PlayerId)).OrderBy(e => e.Date).ToList();
+            //var negotiations = _negotiationRepository.GetAllBySchedule(n => playersIds.Contains(n.PlayerId)).OrderBy(e => e.Date).ToList();
 
-            if (negotiations != null && negotiations.Any())
-            {
-                return ScheduleDayAppViewModel.GetByNegotiations(negotiations);
-            }
+            //if (negotiations != null && negotiations.Any())
+            //{
+            //    return ScheduleDayAppViewModel.GetByNegotiations(negotiations);
+            //}
 
             return new List<ScheduleDayAppViewModel>();
         }
 
         private IEnumerable<ScheduleDayAppViewModel> GetNegotiationsByProducer(Collaborator collaborator)
         {
-            var producerIds = collaborator.ProducersEvents.Select(e => e.ProducerId).Distinct();
+            //var producerIds = collaborator.ProducersEvents.Select(e => e.ProducerId).Distinct();
 
-            var negotiations = _negotiationRepository.GetAllBySchedule(n => producerIds.Contains(n.Project.ProducerId)).OrderBy(e => e.Date).ToList();
+            //var negotiations = _negotiationRepository.GetAllBySchedule(n => producerIds.Contains(n.Project.ProducerId)).OrderBy(e => e.Date).ToList();
 
-            if (negotiations != null && negotiations.Any())
-            {
-                return ScheduleDayAppViewModel.GetByNegotiations(negotiations);
-            }
+            //if (negotiations != null && negotiations.Any())
+            //{
+            //    return ScheduleDayAppViewModel.GetByNegotiations(negotiations);
+            //}
 
             return new List<ScheduleDayAppViewModel>();
         }

@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-22-2019
+// Last Modified On : 08-29-2019
 // ***********************************************************************
 // <copyright file="AttendeeOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,7 +25,9 @@ namespace PlataformaRio2C.Domain.Entities
 
         public virtual Edition Edition { get; private set; }
         public virtual Organization Organization { get; private set; }
+
         public virtual ICollection<AttendeeOrganizationType> AttendeeOrganizationTypes { get; private set; }
+        public virtual ICollection<AttendeeOrganizationCollaborator> AttendeeOrganizationCollaborators { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeOrganization"/> class.</summary>
         /// <param name="edition">The edition.</param>
@@ -36,6 +38,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.Edition = edition;
             this.Organization = organization;
+            this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeAttendeeOrganizationTypes(organizationType, userId);
@@ -53,13 +56,11 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
+            this.DeleteOrganizationType(organizationType, userId);
+            this.DeleteAttendeeOrganizationCollaborators(userId);
 
-            foreach (var attendeeOrganizationType in this.FindAllAttendeeOrganizationTypesNotDeleted(organizationType))
-            {
-                attendeeOrganizationType?.Delete(userId);
-            }
-
-            if (this.FindAllAttendeeOrganizationTypesNotDeleted(organizationType)?.Any() == false)
+            if (this.FindAllAttendeeOrganizationTypesNotDeleted(organizationType)?.Any() != true
+                && this.FindAllAttendeeOrganizationCollaboratorsNotDeleted()?.Any() != true)
             {
                 this.IsDeleted = true;
             }
@@ -74,7 +75,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
             this.SynchronizeAttendeeOrganizationTypes(organizationType, userId);
-
         }
 
         #region Attendee Organization Types
@@ -102,7 +102,17 @@ namespace PlataformaRio2C.Domain.Entities
             else
             {
                 this.AttendeeOrganizationTypes.Add(new AttendeeOrganizationType(this, organizationType, userId));
+            }
+        }
 
+        /// <summary>Deletes the type of the organization.</summary>
+        /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteOrganizationType(OrganizationType organizationType, int userId)
+        {
+            foreach (var attendeeOrganizationType in this.FindAllAttendeeOrganizationTypesNotDeleted(organizationType))
+            {
+                attendeeOrganizationType?.Delete(userId);
             }
         }
 
@@ -116,6 +126,29 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
+        #region Attendee Organization Collaborators
+
+        /// <summary>Deletes the attendee organization collaborators.</summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteAttendeeOrganizationCollaborators(int userId)
+        {
+            foreach (var attendeeOrganizationCollaborator in this.FindAllAttendeeOrganizationCollaboratorsNotDeleted())
+            {
+                attendeeOrganizationCollaborator.Delete(userId);
+            }
+        }
+
+        /// <summary>Finds all attendee organization collaborators not deleted.</summary>
+        /// <returns></returns>
+        private List<AttendeeOrganizationCollaborator> FindAllAttendeeOrganizationCollaboratorsNotDeleted()
+        {
+            return this.AttendeeOrganizationCollaborators?.Where(aoc => !aoc.IsDeleted)?.ToList();
+        }
+
+        #endregion
+
+        #region Validations
+
         /// <summary>Returns true if ... is valid.</summary>
         /// <returns>
         ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
@@ -124,9 +157,6 @@ namespace PlataformaRio2C.Domain.Entities
             return true;
         }
 
-        internal void Delete(OrganizationType organizationType)
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
     }
 }

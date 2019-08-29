@@ -4,7 +4,7 @@
 // Created          : 08-15-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-18-2019
+// Last Modified On : 08-27-2019
 // ***********************************************************************
 // <copyright file="FileAwsRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,7 +29,6 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
         private readonly string awsAccessKey;
         private readonly string awsSecretKey;
         private readonly string awsBucket;
-        private readonly string awsBucketUrl;
         private readonly string imagesHoldingsDirectory;
         private readonly string imagesOrganizationsDirectory;
         private readonly string imagesUsersDirectory;
@@ -42,7 +41,6 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
             this.awsAccessKey = ConfigurationManager.AppSettings["AWSAccessKey"];
             this.awsSecretKey = ConfigurationManager.AppSettings["AWSSecretKey"];
             this.awsBucket = ConfigurationManager.AppSettings["AWSBucket"];
-            this.awsBucketUrl = ConfigurationManager.AppSettings["AWSBucketUrl"];
             this.imagesHoldingsDirectory = ConfigurationManager.AppSettings["AwsImagesHoldingsDirectory"];
             this.imagesOrganizationsDirectory = ConfigurationManager.AppSettings["AwsImagesOrganizationsDirectory"];
             this.imagesUsersDirectory = ConfigurationManager.AppSettings["AwsImagesUsersDirectory"];

@@ -20,6 +20,17 @@ namespace PlataformaRio2C.Application.CQRS.Queries
     {
         public string UserInterfaceLanguage { get; private set; }
 
+        /// <summary>Initializes a new instance of the <see cref="BaseQuery{T}"/> class.</summary>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        public BaseQuery(string userInterfaceLanguage)
+        {
+            this.UpdatePreSendProperties(userInterfaceLanguage);
+        }
+
+        public BaseQuery()
+        {
+        }
+
         /// <summary>Updates the pre send properties.</summary>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public void UpdatePreSendProperties(string userInterfaceLanguage)

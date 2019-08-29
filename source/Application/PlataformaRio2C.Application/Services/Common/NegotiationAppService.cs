@@ -400,26 +400,26 @@ namespace PlataformaRio2C.Application.Services
             if (submission.Project != null && submission.Project.Producer != null)
             {
                 //logistic
-                var logisticsProducers = _logistics.Where(e => (e.Collaborator.ProducersEvents.Any() && e.Collaborator.ProducersEvents.Select(p => p.ProducerId).Any(p => p == submission.Project.ProducerId)));
-                if (logisticsProducers != null && logisticsProducers.Any())
-                {
-                    List<Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>> dateTimesLogistics = new List<Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>>();
+                //var logisticsProducers = _logistics.Where(e => (e.Collaborator.ProducersEvents.Any() && e.Collaborator.ProducersEvents.Select(p => p.ProducerId).Any(p => p == submission.Project.ProducerId)));
+                //if (logisticsProducers != null && logisticsProducers.Any())
+                //{
+                //    List<Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>> dateTimesLogistics = new List<Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>>();
 
-                    foreach (var logistic in logisticsProducers)
-                    {
-                        dateTimesLogistics.Add(new Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>(logistic.ArrivalDate, logistic.ArrivalTime.Value.Add(TimeSpan.FromHours(4)), logistic.DepartureDate, logistic.DepartureTime.Value.Add(TimeSpan.FromHours(-4))));
-                    }
+                //    foreach (var logistic in logisticsProducers)
+                //    {
+                //        dateTimesLogistics.Add(new Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>(logistic.ArrivalDate, logistic.ArrivalTime.Value.Add(TimeSpan.FromHours(4)), logistic.DepartureDate, logistic.DepartureTime.Value.Add(TimeSpan.FromHours(-4))));
+                //    }
 
-                    var slotsExpectionByLogistic = reservationForNegotiation
-                                                  .Where(reserva => dateTimesLogistics
-                                                                  .Any(logistica =>
-                                                                  (reserva.Date < logistica.Item1) || (reserva.Date == logistica.Item1 && reserva.StarTime < logistica.Item2)
-                                                                  || (reserva.Date > logistica.Item3) || (reserva.Date == logistica.Item3 && reserva.EndTime > logistica.Item4)
-                                                                  )
-                                                         ).Select(e => e.RoundNumber).Distinct().ToList();
+                //    var slotsExpectionByLogistic = reservationForNegotiation
+                //                                  .Where(reserva => dateTimesLogistics
+                //                                                  .Any(logistica =>
+                //                                                  (reserva.Date < logistica.Item1) || (reserva.Date == logistica.Item1 && reserva.StarTime < logistica.Item2)
+                //                                                  || (reserva.Date > logistica.Item3) || (reserva.Date == logistica.Item3 && reserva.EndTime > logistica.Item4)
+                //                                                  )
+                //                                         ).Select(e => e.RoundNumber).Distinct().ToList();
 
-                    result.AddRange(slotsExpectionByLogistic);
-                }
+                //    result.AddRange(slotsExpectionByLogistic);
+                //}
             }
 
             return result;
@@ -429,28 +429,28 @@ namespace PlataformaRio2C.Application.Services
             List<int> result = new List<int>();
 
             //logistic
-            var logisticsPlayers = _logistics.Where(e => (e.Collaborator.Players.Any(p => p.Id == submission.PlayerId)));
-            if (logisticsPlayers != null && logisticsPlayers.Any())
-            {
-                List<Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>> dateTimesLogistics = new List<Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>>();
+            //var logisticsPlayers = _logistics.Where(e => (e.Collaborator.Players.Any(p => p.Id == submission.PlayerId)));
+            //if (logisticsPlayers != null && logisticsPlayers.Any())
+            //{
+            //    List<Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>> dateTimesLogistics = new List<Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>>();
 
-                foreach (var logistic in logisticsPlayers)
-                {
-                    dateTimesLogistics.Add(new Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>(logistic.ArrivalDate, logistic.ArrivalTime.Value.Add(TimeSpan.FromHours(4)), logistic.DepartureDate, logistic.DepartureTime.Value.Add(TimeSpan.FromHours(-4))));
-                }
+            //    foreach (var logistic in logisticsPlayers)
+            //    {
+            //        dateTimesLogistics.Add(new Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>(logistic.ArrivalDate, logistic.ArrivalTime.Value.Add(TimeSpan.FromHours(4)), logistic.DepartureDate, logistic.DepartureTime.Value.Add(TimeSpan.FromHours(-4))));
+            //    }
 
              
 
-                var slotsExpectionByLogistic = reservationForNegotiation
-                                                   .Where(reserva => dateTimesLogistics
-                                                                   .Any(logistica =>
-                                                                   (reserva.Date < logistica.Item1) || (reserva.Date == logistica.Item1 && reserva.StarTime < logistica.Item2)
-                                                                   || (reserva.Date > logistica.Item3) || (reserva.Date == logistica.Item3 && reserva.EndTime > logistica.Item4)
-                                                                   )
-                                                          ).Select(e => e.RoundNumber).Distinct().ToList();
+            //    var slotsExpectionByLogistic = reservationForNegotiation
+            //                                       .Where(reserva => dateTimesLogistics
+            //                                                       .Any(logistica =>
+            //                                                       (reserva.Date < logistica.Item1) || (reserva.Date == logistica.Item1 && reserva.StarTime < logistica.Item2)
+            //                                                       || (reserva.Date > logistica.Item3) || (reserva.Date == logistica.Item3 && reserva.EndTime > logistica.Item4)
+            //                                                       )
+            //                                              ).Select(e => e.RoundNumber).Distinct().ToList();
 
-                result.AddRange(slotsExpectionByLogistic);
-            }
+            //    result.AddRange(slotsExpectionByLogistic);
+            //}
 
             return result;
         }
@@ -468,31 +468,31 @@ namespace PlataformaRio2C.Application.Services
         {
             List<int> result = new List<int>();
 
-            var conferencePlayers = _conferences.Where(e => (e.Lecturers.Where(l => l.Collaborator != null).SelectMany(l => l.Collaborator.Players).Any(p => p.Id == submission.PlayerId)));
-            if (conferencePlayers != null && conferencePlayers.Any())
-            {
-                List<Tuple<DateTime?, TimeSpan, TimeSpan>> dateTimes = new List<Tuple<DateTime?, TimeSpan, TimeSpan>>();
+            //var conferencePlayers = _conferences.Where(e => (e.Lecturers.Where(l => l.Collaborator != null).SelectMany(l => l.Collaborator.Players).Any(p => p.Id == submission.PlayerId)));
+            //if (conferencePlayers != null && conferencePlayers.Any())
+            //{
+            //    List<Tuple<DateTime?, TimeSpan, TimeSpan>> dateTimes = new List<Tuple<DateTime?, TimeSpan, TimeSpan>>();
 
-                foreach (var conference in conferencePlayers)
-                {
-                    dateTimes.Add(new Tuple<DateTime?, TimeSpan, TimeSpan>(conference.Date, conference.StartTime.Value.Add(TimeSpan.FromMinutes(-30)), conference.EndTime.Value.Add(TimeSpan.FromMinutes(30))));
-                }
+            //    foreach (var conference in conferencePlayers)
+            //    {
+            //        dateTimes.Add(new Tuple<DateTime?, TimeSpan, TimeSpan>(conference.Date, conference.StartTime.Value.Add(TimeSpan.FromMinutes(-30)), conference.EndTime.Value.Add(TimeSpan.FromMinutes(30))));
+            //    }
 
-                var slotsExpectionByConference = reservationForNegotiation
-                                                       .Where(r => dateTimes
-                                                                       .Any(c => (
-                                                                                    c.Item1 == r.Date &&
-                                                                                    (
-                                                                                        (r.StarTime > c.Item2 && r.StarTime < c.Item3) ||
-                                                                                        (r.EndTime < c.Item3 && r.EndTime > c.Item2)
-                                                                                     )
+            //    var slotsExpectionByConference = reservationForNegotiation
+            //                                           .Where(r => dateTimes
+            //                                                           .Any(c => (
+            //                                                                        c.Item1 == r.Date &&
+            //                                                                        (
+            //                                                                            (r.StarTime > c.Item2 && r.StarTime < c.Item3) ||
+            //                                                                            (r.EndTime < c.Item3 && r.EndTime > c.Item2)
+            //                                                                         )
 
-                                                                                  )
-                                                                            )
-                                                              ).Select(e => e.RoundNumber).Distinct().ToList();
+            //                                                                      )
+            //                                                                )
+            //                                                  ).Select(e => e.RoundNumber).Distinct().ToList();
 
-                result.AddRange(slotsExpectionByConference);
-            }
+            //    result.AddRange(slotsExpectionByConference);
+            //}
 
             return result;
         }
@@ -501,31 +501,31 @@ namespace PlataformaRio2C.Application.Services
         {
             List<int> result = new List<int>();
 
-            var conferenceProducer = _conferences.Where(e => (e.Lecturers.Where(l => l.Collaborator != null).SelectMany(l => l.Collaborator.ProducersEvents.Select(p => p.Producer)).Any(p => p.Id == submission.Project.ProducerId)));
-            if (conferenceProducer != null && conferenceProducer.Any())
-            {
-                List<Tuple<DateTime?, TimeSpan, TimeSpan>> dateTimes = new List<Tuple<DateTime?, TimeSpan, TimeSpan>>();
+            //var conferenceProducer = _conferences.Where(e => (e.Lecturers.Where(l => l.Collaborator != null).SelectMany(l => l.Collaborator.ProducersEvents.Select(p => p.Producer)).Any(p => p.Id == submission.Project.ProducerId)));
+            //if (conferenceProducer != null && conferenceProducer.Any())
+            //{
+            //    List<Tuple<DateTime?, TimeSpan, TimeSpan>> dateTimes = new List<Tuple<DateTime?, TimeSpan, TimeSpan>>();
 
-                foreach (var conference in conferenceProducer)
-                {
-                    dateTimes.Add(new Tuple<DateTime?, TimeSpan, TimeSpan>(conference.Date, conference.StartTime.Value.Add(TimeSpan.FromMinutes(-30)), conference.EndTime.Value.Add(TimeSpan.FromMinutes(30))));
-                }
+            //    foreach (var conference in conferenceProducer)
+            //    {
+            //        dateTimes.Add(new Tuple<DateTime?, TimeSpan, TimeSpan>(conference.Date, conference.StartTime.Value.Add(TimeSpan.FromMinutes(-30)), conference.EndTime.Value.Add(TimeSpan.FromMinutes(30))));
+            //    }
 
-                var slotsExpectionByConference = reservationForNegotiation
-                                                       .Where(r => dateTimes
-                                                                       .Any(c => (
-                                                                                    c.Item1 == r.Date &&
-                                                                                    (
-                                                                                        (r.StarTime > c.Item2 && r.StarTime < c.Item3) ||
-                                                                                        (r.EndTime < c.Item3 && r.EndTime > c.Item2)
-                                                                                     )
+            //    var slotsExpectionByConference = reservationForNegotiation
+            //                                           .Where(r => dateTimes
+            //                                                           .Any(c => (
+            //                                                                        c.Item1 == r.Date &&
+            //                                                                        (
+            //                                                                            (r.StarTime > c.Item2 && r.StarTime < c.Item3) ||
+            //                                                                            (r.EndTime < c.Item3 && r.EndTime > c.Item2)
+            //                                                                         )
 
-                                                                                  )
-                                                                            )
-                                                              ).Select(e => e.RoundNumber).Distinct().ToList();
+            //                                                                      )
+            //                                                                )
+            //                                                  ).Select(e => e.RoundNumber).Distinct().ToList();
 
-                result.AddRange(slotsExpectionByConference);
-            }
+            //    result.AddRange(slotsExpectionByConference);
+            //}
 
             return result;
         }
@@ -766,28 +766,28 @@ namespace PlataformaRio2C.Application.Services
         {
             if (uidsPlayers != null && uidsPlayers.Any())
             {
-                var collaborators = _playerRepository.GetAllCollaborators(e => uidsPlayers.Contains(e.Uid)).ToList().Distinct();
+                //var collaborators = _playerRepository.GetAllCollaborators(e => uidsPlayers.Contains(e.Uid)).ToList().Distinct();
 
-                if (collaborators != null && collaborators.Any())
-                {
-                    IList<Tuple<bool, CollaboratorItemListAppViewModel, string>> tupleresult = new List<Tuple<bool, CollaboratorItemListAppViewModel, string>>();
+                //if (collaborators != null && collaborators.Any())
+                //{
+                //    IList<Tuple<bool, CollaboratorItemListAppViewModel, string>> tupleresult = new List<Tuple<bool, CollaboratorItemListAppViewModel, string>>();
 
-                    foreach (var collaborator in collaborators)
-                    {
-                        var result = SendEmailSchedule(collaborator);
+                //    foreach (var collaborator in collaborators)
+                //    {
+                //        var result = SendEmailSchedule(collaborator);
 
-                        if (result.IsValid)
-                        {
-                            tupleresult.Add(new Tuple<bool, CollaboratorItemListAppViewModel, string>(true, new CollaboratorItemListAppViewModel() { Email = collaborator.User.Email }, ""));
-                        }
-                        else
-                        {
-                            tupleresult.Add(new Tuple<bool, CollaboratorItemListAppViewModel, string>(false, new CollaboratorItemListAppViewModel() { Email = collaborator.User.Email }, string.Join(",", result.Errors.Select(e => e.Message))));
-                        }
-                    }
+                //        if (result.IsValid)
+                //        {
+                //            tupleresult.Add(new Tuple<bool, CollaboratorItemListAppViewModel, string>(true, new CollaboratorItemListAppViewModel() { Email = collaborator.User.Email }, ""));
+                //        }
+                //        else
+                //        {
+                //            tupleresult.Add(new Tuple<bool, CollaboratorItemListAppViewModel, string>(false, new CollaboratorItemListAppViewModel() { Email = collaborator.User.Email }, string.Join(",", result.Errors.Select(e => e.Message))));
+                //        }
+                //    }
 
-                    ValidationResult.Data = new { SendSuccess = tupleresult.Where(e => e.Item1).Select(e => e.Item2.Email), SendError = tupleresult.Where(e => !e.Item1).Select(e => new { Email = e.Item2.Email, Reason = e.Item3 }) };
-                }
+                //    ValidationResult.Data = new { SendSuccess = tupleresult.Where(e => e.Item1).Select(e => e.Item2.Email), SendError = tupleresult.Where(e => !e.Item1).Select(e => new { Email = e.Item2.Email, Reason = e.Item3 }) };
+                //}
             }
 
 
@@ -835,7 +835,7 @@ namespace PlataformaRio2C.Application.Services
             {
                 var message = CompileHtmlMessageTemplateDefault();
                 message = message.Replace("@{Message}", Texts.EmailProducer);
-                message = message.Replace("@{Name}", collaborator.Name);
+                message = message.Replace("@{Name}", collaborator.FirstName);
                 message = message.Replace("@{urlSistema}", _systemParameterRepository.Get<string>(SystemParameterCodes.SiteUrl));
 
                 _emailAppService.SeendEmailTemplateDefault(collaborator.User.Email, "Rio2C - Agenda", message);
@@ -856,7 +856,7 @@ namespace PlataformaRio2C.Application.Services
             {
                 var message = CompileHtmlMessageTemplateDefault();
                 message = message.Replace("@{Message}", Texts.EmailAgenda);
-                message = message.Replace("@{Name}", collaborator.Name);
+                message = message.Replace("@{Name}", collaborator.FirstName);
                 message = message.Replace("@{urlSistema}", _systemParameterRepository.Get<string>(SystemParameterCodes.SiteUrl));
 
                 _emailAppService.SeendEmailTemplateDefault(collaborator.User.Email, "Rio2C - Agenda", message);

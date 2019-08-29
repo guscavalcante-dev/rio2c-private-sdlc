@@ -19,15 +19,15 @@ namespace PlataformaRio2C.Application.ViewModels
         public CollaboratorDetailAppViewModel(Collaborator entity)
             : base(entity)
         {
-            if (entity.Players != null && entity.Players.Any())
-            {
-                Players = PlayerCollaboratorDetailAppViewModel.MapList(entity.Players);
-            }
+            //if (entity.Players != null && entity.Players.Any())
+            //{
+            //    Players = PlayerCollaboratorDetailAppViewModel.MapList(entity.Players);
+            //}
 
-            if (entity.ProducersEvents != null && entity.ProducersEvents.Any())
-            {
-                Producers = ProducerCollaboratorDetailAppViewModel.MapList(entity.ProducersEvents.Select(e => e.Producer));
-            }            
+            //if (entity.ProducersEvents != null && entity.ProducersEvents.Any())
+            //{
+            //    Producers = ProducerCollaboratorDetailAppViewModel.MapList(entity.ProducersEvents.Select(e => e.Producer));
+            //}            
         }
     }
 }

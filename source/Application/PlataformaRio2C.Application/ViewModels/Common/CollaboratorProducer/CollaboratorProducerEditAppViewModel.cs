@@ -25,10 +25,10 @@ namespace PlataformaRio2C.Application.ViewModels
         public CollaboratorProducerEditAppViewModel(Domain.Entities.Collaborator entity)
             :base(entity)
         {
-            if (entity.Image != null)
-            {
-                Image = new ImageFileAppViewModel(entity.Image);
-            }
+            //if (entity.Image != null)
+            //{
+            //    Image = new ImageFileAppViewModel(entity.Image);
+            //}
         }
     }
 }

@@ -1,0 +1,55 @@
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Application
+// Author           : Rafael Dantas Ruiz
+// Created          : 08-26-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-29-2019
+// ***********************************************************************
+// <copyright file="BaseCollaboratorCommandHandler.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
+using System.Threading.Tasks;
+using MediatR;
+using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.Data.Context.Interfaces;
+
+namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
+{
+    /// <summary>BaseCollaboratorCommandHandler</summary>
+    public class BaseCollaboratorCommandHandler : BaseCommandHandler
+    {
+        protected readonly ICollaboratorRepository CollaboratorRepo;
+
+        /// <summary>Initializes a new instance of the <see cref="BaseCollaboratorCommandHandler"/> class.</summary>
+        /// <param name="eventBus">The event bus.</param>
+        /// <param name="uow">The uow.</param>
+        /// <param name="collaboratorRepository">The collaborator repository.</param>
+        public BaseCollaboratorCommandHandler(IMediator eventBus, IUnitOfWork uow, ICollaboratorRepository collaboratorRepository)
+            : base(eventBus, uow)
+        {
+            this.CollaboratorRepo = collaboratorRepository;
+        }
+
+        /// <summary>Gets the collaborator by uid.</summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <returns></returns>
+        public async Task<Collaborator> GetCollaboratorByUid(Guid collaboratorUid)
+        {
+            var collaborator = await this.CollaboratorRepo.GetAsync(collaboratorUid);
+            if (collaborator == null) // Do not check IsDeleted because the Collaborator/User can be restored
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundM), new string[] { "FirstName" }));
+                return null;
+            }
+
+            return collaborator;
+        }
+    }
+}

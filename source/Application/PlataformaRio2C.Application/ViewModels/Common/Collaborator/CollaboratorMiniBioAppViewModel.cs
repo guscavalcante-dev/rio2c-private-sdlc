@@ -61,9 +61,10 @@ namespace PlataformaRio2C.Application.ViewModels
 
         public CollaboratorMiniBio MapReverse()
         {
-            var entity = new CollaboratorMiniBio(Value, LanguageCode);
+            //var entity = new CollaboratorMiniBio(Value, LanguageCode);
 
-            return entity;
+            //return entity;
+            return null;
         }
 
         public CollaboratorMiniBio MapReverse(CollaboratorMiniBio entity)

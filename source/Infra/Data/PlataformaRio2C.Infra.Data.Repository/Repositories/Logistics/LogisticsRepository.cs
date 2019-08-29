@@ -16,11 +16,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public override IQueryable<Logistics> GetAll(bool @readonly = false)
         {
             var consult = this.dbSet
-                                .Include(i => i.Collaborator)
-                                .Include(i => i.Collaborator.Players)
-                                .Include(i => i.Collaborator.Players.Select(e => e.Holding))
-                                .Include(i => i.Collaborator.ProducersEvents)
-                                .Include(i => i.Collaborator.ProducersEvents.Select(e => e.Producer));
+                                .Include(i => i.Collaborator);
+                                //.Include(i => i.Collaborator.Players)
+                                //.Include(i => i.Collaborator.Players.Select(e => e.Holding))
+                                //.Include(i => i.Collaborator.ProducersEvents)
+                                //.Include(i => i.Collaborator.ProducersEvents.Select(e => e.Producer));
 
             return @readonly
               ? consult.AsNoTracking()

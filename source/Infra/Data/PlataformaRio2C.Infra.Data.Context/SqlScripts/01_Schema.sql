@@ -67,7 +67,7 @@ CREATE TABLE [dbo].[AttendeeCollaborators](
 	[Uid] [uniqueidentifier] NOT NULL,
 	[EditionId] [int] NOT NULL,
 	[CollaboratorId] [int] NOT NULL,
-	[IsDeleted] [int] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,
 	[UpdateDate] [datetime] NOT NULL,
@@ -127,7 +127,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[AttendeeOrganizationCollaborators](
-	[Id] [int] NOT NULL,
+	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
 	[AttendeeOrganizationId] [int] NOT NULL,
 	[AttendeeCollaboratorId] [int] NOT NULL,
@@ -843,7 +843,7 @@ CREATE TABLE [dbo].[Logistics](
 	[AttendeeCollaboratorId] [int] NULL,
 	[ArrivalDate] [datetime] NOT NULL,
 	[DepartureDate] [datetime] NOT NULL,
-	[IsDeleted] [int] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,
 	[UpdateDate] [datetime] NOT NULL,
@@ -1416,7 +1416,7 @@ GO
 SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[Projects](
-	[Id] [int] NOT NULL,
+	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
 	[ProjectTypeId] [int] NOT NULL,
 	[SellerAttendeeOrganizationId] [int] NULL,
@@ -2023,7 +2023,8 @@ CREATE TABLE [dbo].[Users](
 	[AccessFailedCount] [int] NOT NULL,
 	[PasswordNew] [varchar](50) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
  CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

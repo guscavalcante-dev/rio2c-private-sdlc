@@ -259,10 +259,10 @@ namespace PlataformaRio2C.Application.Services
 
         public void MapPlayersEntity(ref Collaborator entity, CollaboratorPlayerEditAppViewModel viewModel)
         {
-            if (entity.Players != null && entity.Players.Any())
-            {
-                entity.Players.Clear();
-            }
+            //if (entity.Players != null && entity.Players.Any())
+            //{
+            //    entity.Players.Clear();
+            //}
 
             if (viewModel.Players != null && viewModel.Players.Any(e => e.Uid != Guid.Empty))
             {
@@ -315,10 +315,10 @@ namespace PlataformaRio2C.Application.Services
             var s = service as ICollaboratorService;
             var entity = s.GetImage(uid);
 
-            if (entity != null && entity.ImageId > 0)
-            {
-                return ImageFileAppViewModel.GetThumbImage(entity.Image);
-            }
+            //if (entity != null && entity.ImageId > 0)
+            //{
+            //    return ImageFileAppViewModel.GetThumbImage(entity.Image);
+            //}
 
             return null;
         }
@@ -328,10 +328,10 @@ namespace PlataformaRio2C.Application.Services
             var s = service as ICollaboratorService;
             var entity = s.GetImage(uid);
 
-            if (entity != null && entity.ImageId > 0)
-            {
-                return new ImageFileAppViewModel(entity.Image);
-            }
+            //if (entity != null && entity.ImageId > 0)
+            //{
+            //    return new ImageFileAppViewModel(entity.Image);
+            //}
 
             return null;
         }
@@ -355,13 +355,13 @@ namespace PlataformaRio2C.Application.Services
         public IEnumerable<CollaboratorOptionAppViewModel> GetOptions(string term)
         {
             var s = service as ICollaboratorService;
-            var entities = s.GetOptions(GetPredicateForGetCollaboratorsOptions(term)).OrderBy(e => e.Name).Take(5).ToList();
+            //var entities = s.GetOptions(GetPredicateForGetCollaboratorsOptions(term)).OrderBy(e => e.Name).Take(5).ToList();
 
-            if (entities != null && entities.Any())
-            {
-                IEnumerable<CollaboratorOptionAppViewModel> results = CollaboratorOptionAppViewModel.MapList(entities).ToList();
-                return results;
-            }
+            //if (entities != null && entities.Any())
+            //{
+            //    IEnumerable<CollaboratorOptionAppViewModel> results = CollaboratorOptionAppViewModel.MapList(entities).ToList();
+            //    return results;
+            //}
 
             return new List<CollaboratorOptionAppViewModel>() { };
         }
@@ -392,7 +392,7 @@ namespace PlataformaRio2C.Application.Services
 
             var collaborator = service.GetAll().FirstOrDefault(e => e.User.Email == email);
 
-            var resultOperationAddPassword = _identityController.AddPassword(collaborator.UserId, password);
+            var resultOperationAddPassword = _identityController.AddPassword(collaborator.Id, password);
 
             var currentPath = AppDomain.CurrentDomain.BaseDirectory;
 
@@ -402,7 +402,7 @@ namespace PlataformaRio2C.Application.Services
                 {
                     string message = CompileHtmlMessageInvitationToCollaborator();
                     message = message.Replace("@{Message}", Texts.EmailInviteCollaborator);
-                    message = message.Replace("@{Name}", collaborator.Name);
+                    message = message.Replace("@{Name}", collaborator.FirstName);
                     message = message.Replace("@{UrlSite}", _systemParameterRepository.Get<string>(SystemParameterCodes.SiteUrl));
                     message = message.Replace("@{NameEvent}", eventRio2c.Name);
                     message = message.Replace("@{Email}", collaborator.User.Email);
@@ -476,10 +476,10 @@ namespace PlataformaRio2C.Application.Services
 
         private void MapJobTitles(ref Collaborator entity, IEnumerable<CollaboratorJobTitleAppViewModel> jobTitles)
         {
-            if (entity.JobTitles != null && entity.JobTitles.Any())
-            {
-                _collaboratorJobTitleRepository.DeleteAll(entity.JobTitles);
-            }
+            //if (entity.JobTitles != null && entity.JobTitles.Any())
+            //{
+            //    _collaboratorJobTitleRepository.DeleteAll(entity.JobTitles);
+            //}
 
             if (jobTitles != null && jobTitles.Any())
             {
@@ -488,7 +488,7 @@ namespace PlataformaRio2C.Application.Services
                 {
                     var entityJobTitle = jobTitleViewModel.MapReverse();
                     var language = _languageRepository.Get(e => e.Code == jobTitleViewModel.LanguageCode);
-                    entityJobTitle.SetLanguage(language);
+                    //entityJobTitle.SetLanguage(language);
                     entitiesJobTitles.Add(entityJobTitle);
                 }
                 entity.SetJobTitles(entitiesJobTitles);
@@ -497,10 +497,10 @@ namespace PlataformaRio2C.Application.Services
 
         private void MapMiniBios(ref Collaborator entity, IEnumerable<CollaboratorMiniBioAppViewModel> miniBios)
         {
-            if (entity.MiniBios != null && entity.MiniBios.Any())
-            {
-                _collaboratorMiniBioRepository.DeleteAll(entity.MiniBios);
-            }
+            //if (entity.MiniBios != null && entity.MiniBios.Any())
+            //{
+            //    _collaboratorMiniBioRepository.DeleteAll(entity.MiniBios);
+            //}
 
             if (miniBios != null && miniBios.Any())
             {
@@ -509,7 +509,7 @@ namespace PlataformaRio2C.Application.Services
                 {
                     var entityMiniBio = miniBiosViewModel.MapReverse();
                     var language = _languageRepository.Get(e => e.Code == miniBiosViewModel.LanguageCode);
-                    entityMiniBio.SetLanguage(language);
+                    //entityMiniBio.SetLanguage(language);
                     entitiesMiniBios.Add(entityMiniBio);
                 }
                 entity.SetMiniBios(entitiesMiniBios);
@@ -545,10 +545,10 @@ namespace PlataformaRio2C.Application.Services
 
                 var predicateTerm = PredicateBuilder.New<Collaborator>(false);
 
-                predicateTerm = predicateTerm.Or(c => c.Name.ToLower().Contains(term));
-                predicateTerm = predicateTerm.Or(c => c.Players.Any(p => p.Name.ToLower().Contains(term)));
-                predicateTerm = predicateTerm.Or(c => c.Players.Any() && c.Players.Select(p => p.Holding.Name.ToLower()).Any(h => h.Contains(term)));
-                predicateTerm = predicateTerm.Or(c => c.ProducersEvents.Any() && c.ProducersEvents.Select(p => p.Producer.Name.ToLower()).Any(h => h.Contains(term)));
+                //predicateTerm = predicateTerm.Or(c => c.Name.ToLower().Contains(term));
+                //predicateTerm = predicateTerm.Or(c => c.Players.Any(p => p.Name.ToLower().Contains(term)));
+                //predicateTerm = predicateTerm.Or(c => c.Players.Any() && c.Players.Select(p => p.Holding.Name.ToLower()).Any(h => h.Contains(term)));
+                //predicateTerm = predicateTerm.Or(c => c.ProducersEvents.Any() && c.ProducersEvents.Select(p => p.Producer.Name.ToLower()).Any(h => h.Contains(term)));
 
                 predicate = PredicateBuilder.And<Collaborator>(predicate, predicateTerm);
             }

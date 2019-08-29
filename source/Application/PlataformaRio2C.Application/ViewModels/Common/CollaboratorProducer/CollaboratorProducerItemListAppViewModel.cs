@@ -40,7 +40,7 @@ namespace PlataformaRio2C.Application.ViewModels
         public CollaboratorProducerItemListAppViewModel(Collaborator entity)
             : base(entity)
         {
-            Name = entity.Name;
+            Name = entity.FirstName;
 
             if (entity.User != null)
             {
@@ -49,10 +49,10 @@ namespace PlataformaRio2C.Application.ViewModels
                 HasAcceptTerm = entity.User.UserUseTerms.Any();
             }            
 
-            if (entity.ProducersEvents.Any(e => e.Edition.Name.Contains("2018")))
-            {
-                ProducerName = entity.ProducersEvents.Where(e => e.Edition.Name.Contains("2018")).Select(e => e.Producer.Name).FirstOrDefault();
-            }
+            //if (entity.ProducersEvents.Any(e => e.Edition.Name.Contains("2018")))
+            //{
+            //    ProducerName = entity.ProducersEvents.Where(e => e.Edition.Name.Contains("2018")).Select(e => e.Producer.Name).FirstOrDefault();
+            //}
         }
     }
 }

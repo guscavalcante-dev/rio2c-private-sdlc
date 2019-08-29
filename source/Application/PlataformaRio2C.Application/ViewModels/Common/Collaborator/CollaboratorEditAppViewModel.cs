@@ -47,29 +47,29 @@ namespace PlataformaRio2C.Application.ViewModels
         public CollaboratorEditAppViewModel(Collaborator entity)
             : base(entity)
         {
-            if (entity.Players != null && entity.Players.Any())
-            {
-                Players = PlayerCollaboratorAppViewModel.MapList(entity.Players).ToList();
-            }
-            else
-            {
-                Players = new List<PlayerCollaboratorAppViewModel>() { new PlayerCollaboratorAppViewModel() { } };
-            }
+            //if (entity.Players != null && entity.Players.Any())
+            //{
+            //    Players = PlayerCollaboratorAppViewModel.MapList(entity.Players).ToList();
+            //}
+            //else
+            //{
+            //    Players = new List<PlayerCollaboratorAppViewModel>() { new PlayerCollaboratorAppViewModel() { } };
+            //}
 
 
-            if (entity.ProducersEvents != null && entity.ProducersEvents.Any())
-            {
-                Producers = ProducerCollaboratorAppViewModel.MapList(entity.ProducersEvents.Select(e => e.Producer)).ToList();
-            }
-            else
-            {
-                Producers = new List<ProducerCollaboratorAppViewModel>() { new ProducerCollaboratorAppViewModel() { } };
-            }
+            //if (entity.ProducersEvents != null && entity.ProducersEvents.Any())
+            //{
+            //    Producers = ProducerCollaboratorAppViewModel.MapList(entity.ProducersEvents.Select(e => e.Producer)).ToList();
+            //}
+            //else
+            //{
+            //    Producers = new List<ProducerCollaboratorAppViewModel>() { new ProducerCollaboratorAppViewModel() { } };
+            //}
 
-            if (entity.Image != null)
-            {
-                Image = new ImageFileAppViewModel(entity.Image);
-            }
+            //if (entity.Image != null)
+            //{
+            //    Image = new ImageFileAppViewModel(entity.Image);
+            //}
         }
 
         #endregion

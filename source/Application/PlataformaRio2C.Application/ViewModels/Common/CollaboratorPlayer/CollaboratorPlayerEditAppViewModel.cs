@@ -33,19 +33,19 @@ namespace PlataformaRio2C.Application.ViewModels
         public CollaboratorPlayerEditAppViewModel(Collaborator entity)
             : base(entity)
         {
-            if (entity.Players != null && entity.Players.Any())
-            {
-                Players = PlayerCollaboratorAppViewModel.MapList(entity.Players).ToList();
-            }
-            else
-            {
-                Players = new List<PlayerCollaboratorAppViewModel>() { new PlayerCollaboratorAppViewModel() { } };
-            }
+            //if (entity.Players != null && entity.Players.Any())
+            //{
+            //    Players = PlayerCollaboratorAppViewModel.MapList(entity.Players).ToList();
+            //}
+            //else
+            //{
+            //    Players = new List<PlayerCollaboratorAppViewModel>() { new PlayerCollaboratorAppViewModel() { } };
+            //}
 
-            if (entity.Image != null)
-            {
-                Image = new ImageFileAppViewModel(entity.Image);
-            }
+            //if (entity.Image != null)
+            //{
+            //    Image = new ImageFileAppViewModel(entity.Image);
+            //}
         }
 
 

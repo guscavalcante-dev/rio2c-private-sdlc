@@ -4,7 +4,7 @@
 // Created          : 08-07-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-22-2019
+// Last Modified On : 08-27-2019
 // ***********************************************************************
 // <copyright file="holdings.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,12 +15,12 @@
 var HoldingsDataTableWidget = function () {
 
     var widgetElementId = '#HoldingDataTableWidget';
-    var widgetElement = $(widgetElementId);
+    var tableElementId = '#holdings-list-table';
     var table;
 
     var initiListTable = function () {
 
-        var tableElementId = $('#holdings-list-table');
+        var tableElement = $(tableElementId);
 
         // Disable datatable alert
         $.fn.dataTable.ext.errMode = 'none';
@@ -39,8 +39,9 @@ var HoldingsDataTableWidget = function () {
         }
 
         var globalVariables = MyRio2cCommon.getGlobalVariables();
+        var imageDirectory = 'https://' + globalVariables.bucket + '/img/holdings/';
 
-        table = tableElementId.DataTable({
+        table = tableElement.DataTable({
             "language": {
                 "url": "/Assets/components/datatables/datatables." + globalVariables.userInterfaceLanguage + ".js"
             },
@@ -87,7 +88,7 @@ var HoldingsDataTableWidget = function () {
                     });
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    $('#holdings-list-table_processing').hide();
+                    $(tableElementId + '_processing').hide();
                     MyRio2cCommon.showAlert();
                 }
             },
@@ -124,10 +125,10 @@ var HoldingsDataTableWidget = function () {
                                         <td>';
 
                         if (!MyRio2cCommon.isNullOrEmpty(full.ImageUploadDate)) {
-                            html += '<img src="https://dev.assets.my.rio2c.com/img/holdings/' + full.Uid + '_thumbnail.png?v=' + moment(full.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
+                            html += '<img src="' + imageDirectory + full.Uid + '_thumbnail.png?v=' + moment(full.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
                         }
                         else {
-                            html += '<img src="https://dev.assets.my.rio2c.com/img/holdings/no-image.png?v=20190818200849" /> ';
+                            html += '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" /> ';
                         }
 
                         html += '       <td> ' + full.Name + '</td>\

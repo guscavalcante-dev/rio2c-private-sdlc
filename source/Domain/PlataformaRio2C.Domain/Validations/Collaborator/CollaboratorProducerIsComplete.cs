@@ -1,27 +1,27 @@
-﻿using PlataformaRio2C.Domain.Entities.Specifications;
-using PlataformaRio2C.Domain.Validation;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
-using System.Globalization;
-using System.Threading;
+﻿//using PlataformaRio2C.Domain.Entities.Specifications;
+//using PlataformaRio2C.Domain.Validation;
+//using PlataformaRio2C.Infra.CrossCutting.Resources;
+//using System.Globalization;
+//using System.Threading;
 
-namespace PlataformaRio2C.Domain.Entities.Validations
-{
-    public class CollaboratorProducerIsComplete : Validation<Collaborator>
-    {
-        public CollaboratorProducerIsComplete()
-        {
-            CultureInfo currentCulture = Thread.CurrentThread.CurrentCulture;
+//namespace PlataformaRio2C.Domain.Entities.Validations
+//{
+//    public class CollaboratorProducerIsComplete : Validation<Collaborator>
+//    {
+//        public CollaboratorProducerIsComplete()
+//        {
+//            CultureInfo currentCulture = Thread.CurrentThread.CurrentCulture;
 
-            base.AddRule(new ValidationRule<Collaborator>(new CollaboratorJobTitleEnIsRequired(), Messages.JobTitleEnIsRequired));
-            base.AddRule(new ValidationRule<Collaborator>(new CollaboratorMiniBioEnIsRequired(), Messages.MiniBioEnIsRequired));
-            base.AddRule(new ValidationRule<Collaborator>(new CollaboratorMustHaveBadge(), Messages.BadgeIsRequired));
-            base.AddRule(new ValidationRule<Collaborator>(new CollaboratorMustHaveAProducer(), Messages.CollaboratorMustHaveAPlayer));
+//            base.AddRule(new ValidationRule<Collaborator>(new CollaboratorJobTitleEnIsRequired(), Messages.JobTitleEnIsRequired));
+//            base.AddRule(new ValidationRule<Collaborator>(new CollaboratorMiniBioEnIsRequired(), Messages.MiniBioEnIsRequired));
+//            base.AddRule(new ValidationRule<Collaborator>(new CollaboratorMustHaveBadge(), Messages.BadgeIsRequired));
+//            base.AddRule(new ValidationRule<Collaborator>(new CollaboratorMustHaveAProducer(), Messages.CollaboratorMustHaveAPlayer));
 
-            if (currentCulture != null && currentCulture.Name == "pt-BR")
-            {
-                base.AddRule(new ValidationRule<Collaborator>(new CollaboratorJobTitlePtBrIsRequired(), Messages.JobTitlePtBrIsRequired));
-                base.AddRule(new ValidationRule<Collaborator>(new CollaboratorMiniBioPtBrIsRequired(), Messages.MiniBioPtBrIsRequired));
-            }
-        }
-    }
-}
+//            if (currentCulture != null && currentCulture.Name == "pt-BR")
+//            {
+//                base.AddRule(new ValidationRule<Collaborator>(new CollaboratorJobTitlePtBrIsRequired(), Messages.JobTitlePtBrIsRequired));
+//                base.AddRule(new ValidationRule<Collaborator>(new CollaboratorMiniBioPtBrIsRequired(), Messages.MiniBioPtBrIsRequired));
+//            }
+//        }
+//    }
+//}

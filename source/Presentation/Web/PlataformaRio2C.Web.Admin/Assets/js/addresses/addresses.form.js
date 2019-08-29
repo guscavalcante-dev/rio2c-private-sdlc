@@ -4,7 +4,7 @@
 // Created          : 08-23-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-25-2019
+// Last Modified On : 08-27-2019
 // ***********************************************************************
 // <copyright file="addresses.form.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -71,32 +71,46 @@ var AddressesForm = function () {
     // State select2 ------------------------------------------------------------------------------
     var enableNewState = function () {
         MyRio2cCommon.enableFieldEdit({ dataId: stateDataId });
-        stateUidElement.val('').trigger('change');
+
+        if (!MyRio2cCommon.isNullOrEmpty(stateUidElement.val())) {
+            stateUidElement.val('').trigger('change');
+        }
+        else {
+            stateUidElement.val('');
+        }
 
         return false;
     };
 
     var disableNewState = function () {
-        cityNameElement.val('').trigger('change');
         MyRio2cCommon.disableFieldEdit({ dataId: stateDataId });
+
+        if (!MyRio2cCommon.isNullOrEmpty(stateNameElement.val())) {
+            stateNameElement.val('').trigger('change');
+        }
+        else {
+            stateNameElement.val('');
+        }
 
         return false;
     };
 
-    var toggleNewStateButton = function () {
-        if (MyRio2cCommon.isNullOrEmpty(countryUidElement.val())) {
-            $('[data-id="' + stateDataId + '"] .btn-edit').addClass('disabled');
-
-            if (MyRio2cCommon.isNullOrEmpty(stateNameElement.val())) {
-                MyRio2cCommon.disableFieldEdit({ dataId: stateDataId });
-            }
+    var toggleState = function () {
+        if (!MyRio2cCommon.isNullOrEmpty(countryUidElement.val())) {
+            $('[data-id="' + stateDataId + '"] .btn-edit').removeClass('disabled');
+            stateUidElement.prop("disabled", false);
         }
         else {
-            $('[data-id="' + stateDataId + '"] .btn-edit').removeClass('disabled');
+            $('[data-id="' + stateDataId + '"] .btn-edit').addClass('disabled');
+            stateUidElement.prop("disabled", true);
+            stateNameElement.val('');
+        }
 
-            //if (!MyRio2cCommon.isNullOrEmpty(stateNameElement.val())) {
-            //    MyRio2cCommon.enableFieldEdit({ dataId: stateDataId });
-            //}
+        if (!MyRio2cCommon.isNullOrEmpty(stateNameElement.val())) {
+            enableNewState();
+        }
+        else {
+            disableNewState();
         }
     };
 
@@ -111,13 +125,19 @@ var AddressesForm = function () {
         });
 
         stateUidElement.empty();
-        stateUidElement.prop("disabled", true);
     };
 
     var enableStateSelect2 = function (isParentChanged) {
         if (!MyRio2cCommon.isNullOrEmpty(isParentChanged) && isParentChanged === true) {
-            stateUidElement.val('').trigger('change');
+            if (!MyRio2cCommon.isNullOrEmpty(stateUidElement.val())) {
+                stateUidElement.val('').trigger('change');
+            }
+            else {
+                stateUidElement.val('');
+            }
         }
+
+        toggleState();
 
         var countryUid = countryUidElement.val();
 
@@ -171,9 +191,8 @@ var AddressesForm = function () {
                         }
                         else if (!MyRio2cCommon.isNullOrEmpty(initialStateUidValue)) {
                             stateUidElement.val(initialStateUidValue).trigger('change');
+                            initialStateUidElement.val('');
                         }
-
-                        stateUidElement.prop("disabled", false);
                     },
                     // Error
                     onError: function () {
@@ -193,32 +212,46 @@ var AddressesForm = function () {
     // City select2 ------------------------------------------------------------------------------
     var enableNewCity = function () {
         MyRio2cCommon.enableFieldEdit({ dataId: cityDataId });
-        cityUidElement.val('').trigger('change');
+
+        if (!MyRio2cCommon.isNullOrEmpty(cityUidElement.val())) {
+            cityUidElement.val('').trigger('change');
+        }
+        else {
+            cityUidElement.val('');
+        }
 
         return false;
     };
 
     var disableNewCity = function () {
-        //neighborhoodNameElement.val('').trigger('change');
         MyRio2cCommon.disableFieldEdit({ dataId: cityDataId });
+
+        if (!MyRio2cCommon.isNullOrEmpty(cityNameElement.val())) {
+            cityNameElement.val('').trigger('change');
+        }
+        else {
+            cityNameElement.val('');
+        }
 
         return false;
     };
 
-    var toggleNewCityButton = function () {
-        if (MyRio2cCommon.isNullOrEmpty(stateUidElement.val()) && MyRio2cCommon.isNullOrEmpty(stateNameElement.val())) {
-            $('[data-id="' + cityDataId + '"] .btn-edit').addClass('disabled');
-
-            if (MyRio2cCommon.isNullOrEmpty(cityNameElement.val())) {
-                MyRio2cCommon.disableFieldEdit({ dataId: cityDataId });
-            }
+    var toggleCity = function () {
+        if (!MyRio2cCommon.isNullOrEmpty(initialStateUidElement.val()) || !MyRio2cCommon.isNullOrEmpty(stateUidElement.val()) || !MyRio2cCommon.isNullOrEmpty(stateNameElement.val())) {
+            $('[data-id="' + cityDataId + '"] .btn-edit').removeClass('disabled');
+            cityUidElement.prop("disabled", false);
         }
         else {
-            $('[data-id="' + cityDataId + '"] .btn-edit').removeClass('disabled');
+            $('[data-id="' + cityDataId + '"] .btn-edit').addClass('disabled');
+            cityUidElement.prop("disabled", true);
+            cityNameElement.val('');
+        }
 
-            //if (!MyRio2cCommon.isNullOrEmpty(cityNameElement.val())) {
-            //    MyRio2cCommon.enableFieldEdit({ dataId: cityDataId });
-            //}
+        if (!MyRio2cCommon.isNullOrEmpty(cityNameElement.val())) {
+            enableNewCity();
+        }
+        else {
+            disableNewCity();
         }
     };
 
@@ -233,13 +266,19 @@ var AddressesForm = function () {
         });
 
         cityUidElement.empty();
-        cityUidElement.prop("disabled", true);
     };
 
     var enableCitySelect2 = function (isParentChanged) {
         if (!MyRio2cCommon.isNullOrEmpty(isParentChanged) && isParentChanged === true) {
-            cityUidElement.val('').trigger('change');
+            if (!MyRio2cCommon.isNullOrEmpty(cityUidElement.val())) {
+                cityUidElement.val('').trigger('change');
+            }
+            else {
+                cityUidElement.val('');
+            }
         }
+
+        toggleCity();
 
         var stateUid = stateUidElement.val();
 
@@ -292,9 +331,8 @@ var AddressesForm = function () {
                         }
                         else if (!MyRio2cCommon.isNullOrEmpty(initialCityUidValue)) {
                             cityUidElement.val(initialCityUidValue).trigger('change');
+                            initialCityUidElement.val('');
                         }
-
-                        cityUidElement.prop("disabled", false);
                     },
                     // Error
                     onError: function () {
@@ -321,7 +359,6 @@ var AddressesForm = function () {
     var enableCountryChangeEvent = function() {
         countryUidElement.not('.change-event-enabled').on('change', function() {
             enableStateSelect2(true);
-            toggleNewStateButton();
         });
         countryUidElement.addClass('change-event-enabled');
     };
@@ -329,12 +366,11 @@ var AddressesForm = function () {
     var enableStateChangeEvent = function () {
         stateUidElement.not('.change-event-enabled').on('change', function () {
             enableCitySelect2(true);
-            toggleNewCityButton();
         });
         stateUidElement.addClass('change-event-enabled');
 
         stateNameElement.not('.change-event-enabled').on('change keyup', function () {
-            toggleNewCityButton();
+            toggleCity();
         });
         stateNameElement.addClass('change-event-enabled');
     };
@@ -357,10 +393,8 @@ var AddressesForm = function () {
 
     // Enable plugins -----------------------------------------------------------------------------
     var enablePlugins = function () {
-        enableSelect2();
         enableChangeEvents();
-        toggleNewStateButton();
-        toggleNewCityButton();
+        enableSelect2();
     };
 
     return {

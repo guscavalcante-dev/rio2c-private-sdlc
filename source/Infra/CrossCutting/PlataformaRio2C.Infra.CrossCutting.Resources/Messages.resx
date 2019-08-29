@@ -540,4 +540,8 @@
     <value>Não foi possível criar {0} {1}.</value>
     <comment>Não foi possível criar {0} {1}.</comment>
   </data>
+  <data name="EmailInputMessage" xml:space="preserve">
+    <value>O email é utilizado para o login do usuário.</value>
+    <comment>O email é utilizado para o login do usuário.</comment>
+  </data>
 </root>

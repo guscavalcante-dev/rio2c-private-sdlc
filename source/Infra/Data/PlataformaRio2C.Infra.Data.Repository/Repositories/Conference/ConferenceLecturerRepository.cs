@@ -22,7 +22,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Include(i => i.Lecturer)
                             .Include(i => i.Lecturer.Image)
                             .Include(i => i.Collaborator)
-                            .Include(i => i.Collaborator.Image)                          
+                            //.Include(i => i.Collaborator.Image)                          
                             .FirstOrDefault(e => e.Uid == uid);
         }
 

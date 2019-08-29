@@ -1,4 +1,17 @@
-﻿using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Infra.Data.Context
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 08-27-2019
+// ***********************************************************************
+// <copyright file="BaseContext.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,8 +22,11 @@ using System.Linq;
 
 namespace PlataformaRio2C.Infra.Data.Context.Config
 {
+    /// <summary>BaseContext</summary>
     public class BaseContext : DbContext, IDbContext
     {
+        /// <summary>Initializes a new instance of the <see cref="BaseContext"/> class.</summary>
+        /// <param name="connectionString">The connection string.</param>
         public BaseContext(string connectionString)
             : base(connectionString)
         {
@@ -47,7 +63,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Config
 
         public override int SaveChanges()
         {
-            SetupDateRegisterFieldForAllEntities("CreationDate");
+            //SetupDateRegisterFieldForAllEntities("CreationDate");
             SetupUidRegisterFieldForAllEntities("Uid");
             SetupUidStringRegisterFieldForAllEntities("SecurityStamp");
             return base.SaveChanges();

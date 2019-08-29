@@ -63,7 +63,7 @@ namespace PlataformaRio2C.Application.ViewModels
                 if (entity.Collaborator != null)
                 {
                     Collaborator = new CollaboratorOptionAppViewModel(entity.Collaborator);
-                    Name = entity.Collaborator.Name;
+                    Name = entity.Collaborator.FirstName;
                     Email = entity.Collaborator.User.Email;
                     JobTitle = entity.Collaborator.GetJobTitle();
                 }                         

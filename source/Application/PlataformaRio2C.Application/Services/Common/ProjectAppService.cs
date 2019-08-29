@@ -187,25 +187,25 @@ namespace PlataformaRio2C.Application.Services
             var entityEvent = _eventRepository.Get(e => e.Name.Contains("2018"));
             var entityCollaborator = _collaboratorService.GetByUserId(id);
 
-            if (entityCollaborator != null && entityCollaborator.ProducersEvents != null && entityCollaborator.ProducersEvents.Any(e => e.EventId == entityEvent.Id))
-            {
-                var entityProducerEvent = entityCollaborator.ProducersEvents.Where(e => e.EventId == entityEvent.Id).FirstOrDefault();
+            //if (entityCollaborator != null && entityCollaborator.ProducersEvents != null && entityCollaborator.ProducersEvents.Any(e => e.EventId == entityEvent.Id))
+            //{
+            //    var entityProducerEvent = entityCollaborator.ProducersEvents.Where(e => e.EventId == entityEvent.Id).FirstOrDefault();
 
-                if (entityProducerEvent != null && entityProducerEvent.ProducerId > 0)
-                {
-                    var entitiesProjects = service.GetAll(e => e.ProducerId == entityProducerEvent.ProducerId);
+            //    if (entityProducerEvent != null && entityProducerEvent.ProducerId > 0)
+            //    {
+            //        var entitiesProjects = service.GetAll(e => e.ProducerId == entityProducerEvent.ProducerId);
 
-                    if (entitiesProjects != null && entitiesProjects.Any())
-                    {
-                        foreach (var entityProducerProject in entitiesProjects)
-                        {
-                            var itemViewModel = new ProjectItemListAppViewModel(entityProducerProject);
+            //        if (entitiesProjects != null && entitiesProjects.Any())
+            //        {
+            //            foreach (var entityProducerProject in entitiesProjects)
+            //            {
+            //                var itemViewModel = new ProjectItemListAppViewModel(entityProducerProject);
 
-                            result.Add(itemViewModel);
-                        }
-                    }
-                }
-            }
+            //                result.Add(itemViewModel);
+            //            }
+            //        }
+            //    }
+            //}
 
             return result;
         }
@@ -216,19 +216,19 @@ namespace PlataformaRio2C.Application.Services
             var entityEvent = _eventRepository.Get(e => e.Name.Contains("2018"));
             var entityCollaborator = _collaboratorService.GetByUserId(userId);
 
-            if (entityCollaborator != null && entityCollaborator.ProducersEvents != null && entityCollaborator.ProducersEvents.Any(e => e.EventId == entityEvent.Id))
-            {
-                var entityProducer = entityCollaborator.ProducersEvents.Where(e => e.EventId == entityEvent.Id).Select(e => e.Producer).FirstOrDefault();
-                if (entityProducer != null && entityProducer.Projects != null && entityProducer.Projects.Any())
-                {
-                    var project = entityProducer.Projects.FirstOrDefault(e => e.Uid == projectUid);
-                    if (project != null)
-                    {
-                        result = new ProjectEditAppViewModel(project);
-                        LoadViewModelOptions(result, project);
-                    }
-                }
-            }
+            //if (entityCollaborator != null && entityCollaborator.ProducersEvents != null && entityCollaborator.ProducersEvents.Any(e => e.EventId == entityEvent.Id))
+            //{
+            //    var entityProducer = entityCollaborator.ProducersEvents.Where(e => e.EventId == entityEvent.Id).Select(e => e.Producer).FirstOrDefault();
+            //    if (entityProducer != null && entityProducer.Projects != null && entityProducer.Projects.Any())
+            //    {
+            //        var project = entityProducer.Projects.FirstOrDefault(e => e.Uid == projectUid);
+            //        if (project != null)
+            //        {
+            //            result = new ProjectEditAppViewModel(project);
+            //            LoadViewModelOptions(result, project);
+            //        }
+            //    }
+            //}
 
             return result;
         }
@@ -255,19 +255,19 @@ namespace PlataformaRio2C.Application.Services
             var entityEvent = _eventRepository.Get(e => e.Name.Contains("2018"));
             var entityCollaborator = _collaboratorService.GetByUserId(userId);
 
-            if (entityCollaborator != null && entityCollaborator.ProducersEvents != null && entityCollaborator.ProducersEvents.Any(e => e.EventId == entityEvent.Id))
-            {
-                var entityProducer = entityCollaborator.ProducersEvents.Where(e => e.EventId == entityEvent.Id).Select(e => e.Producer).FirstOrDefault();
+            //if (entityCollaborator != null && entityCollaborator.ProducersEvents != null && entityCollaborator.ProducersEvents.Any(e => e.EventId == entityEvent.Id))
+            //{
+            //    var entityProducer = entityCollaborator.ProducersEvents.Where(e => e.EventId == entityEvent.Id).Select(e => e.Producer).FirstOrDefault();
 
-                if (entityProducer != null && entityProducer.Projects != null && entityProducer.Projects.Any())
-                {
-                    var project = service.Get(e => e.ProducerId == entityProducer.Id && e.Uid == projectUid);
-                    if (project != null)
-                    {
-                        result = new ProjectDetailAppViewModel(project);
-                    }
-                }
-            }
+            //    if (entityProducer != null && entityProducer.Projects != null && entityProducer.Projects.Any())
+            //    {
+            //        var project = service.Get(e => e.ProducerId == entityProducer.Id && e.Uid == projectUid);
+            //        if (project != null)
+            //        {
+            //            result = new ProjectDetailAppViewModel(project);
+            //        }
+            //    }
+            //}
 
             return result;
         }
@@ -364,18 +364,18 @@ namespace PlataformaRio2C.Application.Services
             var entityEvent = _eventRepository.Get(e => e.Name.Contains("2018"));
             var entityCollaborator = _collaboratorService.GetByUserId(userId);
 
-            if (entityCollaborator != null && entityCollaborator.ProducersEvents != null && entityCollaborator.ProducersEvents.Any(e => e.EventId == entityEvent.Id))
-            {
-                var entityProducer = entityCollaborator.ProducersEvents.Where(e => e.EventId == entityEvent.Id).Select(e => e.Producer).FirstOrDefault();
-                if (entityProducer != null && entityProducer.Projects != null && entityProducer.Projects.Any())
-                {
-                    var project = entityProducer.Projects.FirstOrDefault(e => e.Uid == uidProject);
-                    if (project != null)
-                    {
-                        result = project.PlayersRelated != null && project.PlayersRelated.Any(e => e.Sent);
-                    }
-                }
-            }
+            //if (entityCollaborator != null && entityCollaborator.ProducersEvents != null && entityCollaborator.ProducersEvents.Any(e => e.EventId == entityEvent.Id))
+            //{
+            //    var entityProducer = entityCollaborator.ProducersEvents.Where(e => e.EventId == entityEvent.Id).Select(e => e.Producer).FirstOrDefault();
+            //    if (entityProducer != null && entityProducer.Projects != null && entityProducer.Projects.Any())
+            //    {
+            //        var project = entityProducer.Projects.FirstOrDefault(e => e.Uid == uidProject);
+            //        if (project != null)
+            //        {
+            //            result = project.PlayersRelated != null && project.PlayersRelated.Any(e => e.Sent);
+            //        }
+            //    }
+            //}
 
             return result;
         }
@@ -386,27 +386,27 @@ namespace PlataformaRio2C.Application.Services
             var entityEvent = _eventRepository.Get(e => e.Name.Contains("2018"));
             var entityCollaborator = _collaboratorService.GetByUserId(userId);
 
-            if (entityCollaborator != null && entityCollaborator.Players != null && entityCollaborator.Players.Any())
-            {
-                var idsPlayers = entityCollaborator.Players.Select(e => e.Id);
+            //if (entityCollaborator != null && entityCollaborator.Players != null && entityCollaborator.Players.Any())
+            //{
+            //    var idsPlayers = entityCollaborator.Players.Select(e => e.Id);
 
-                var projectsPlayers = _projectPlayerRepository.GetAll(GetPredicateByPlayer(filter, idsPlayers));
+            //    var projectsPlayers = _projectPlayerRepository.GetAll(GetPredicateByPlayer(filter, idsPlayers));
 
-                if (projectsPlayers != null && projectsPlayers.Any())
-                {
-                    var listProjectsPlayers = projectsPlayers.ToList().GroupBy(e => e.ProjectId).Select(e => e.First()).OrderBy(e => e.DateSending);
+            //    if (projectsPlayers != null && projectsPlayers.Any())
+            //    {
+            //        var listProjectsPlayers = projectsPlayers.ToList().GroupBy(e => e.ProjectId).Select(e => e.First()).OrderBy(e => e.DateSending);
 
-                    foreach (var project in listProjectsPlayers)
-                    {
-                        var itemViewModel = new ProjectPlayerItemListAppViewModel(project);
-                        itemViewModel.Players = itemViewModel.Players.Where(e => idsPlayers.Contains(e.Id)).ToList();
+            //        foreach (var project in listProjectsPlayers)
+            //        {
+            //            var itemViewModel = new ProjectPlayerItemListAppViewModel(project);
+            //            itemViewModel.Players = itemViewModel.Players.Where(e => idsPlayers.Contains(e.Id)).ToList();
 
-                        result.Add(itemViewModel);
-                    }
+            //            result.Add(itemViewModel);
+            //        }
 
-                    result = result.ToList();
-                }
-            }
+            //        result = result.ToList();
+            //    }
+            //}
 
             return result;
         }
@@ -432,18 +432,18 @@ namespace PlataformaRio2C.Application.Services
             var entityEvent = _eventRepository.Get(e => e.Name.Contains("2018"));
             var entityCollaborator = _collaboratorService.GetByUserId(userId);
 
-            if (entityCollaborator != null && entityCollaborator.Players != null && entityCollaborator.Players.Any())
-            {
-                var idsPlayers = entityCollaborator.Players.Select(e => e.Id);
+            //if (entityCollaborator != null && entityCollaborator.Players != null && entityCollaborator.Players.Any())
+            //{
+            //    var idsPlayers = entityCollaborator.Players.Select(e => e.Id);
 
-                var projectsPlayer = _projectPlayerRepository.GetAll(GetPredicateByPlayer(null, idsPlayers)).FirstOrDefault(e => e.Project.Uid == uidProject);
+            //    var projectsPlayer = _projectPlayerRepository.GetAll(GetPredicateByPlayer(null, idsPlayers)).FirstOrDefault(e => e.Project.Uid == uidProject);
 
-                if (projectsPlayer != null)
-                {
-                    result = new ProjectPlayerDetailAppViewModel(projectsPlayer);
-                    result.Players = result.Players.Where(e => idsPlayers.Contains(e.Id)).OrderBy(e => e.Name);
-                }
-            }
+            //    if (projectsPlayer != null)
+            //    {
+            //        result = new ProjectPlayerDetailAppViewModel(projectsPlayer);
+            //        result.Players = result.Players.Where(e => idsPlayers.Contains(e.Id)).OrderBy(e => e.Name);
+            //    }
+            //}
 
             return result;
         }

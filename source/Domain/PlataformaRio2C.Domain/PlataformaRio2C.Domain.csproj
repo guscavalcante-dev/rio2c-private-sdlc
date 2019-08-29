@@ -73,7 +73,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dtos\Addresses\AddressBaseDto.cs" />
+    <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationBaseDto.cs" />
     <Compile Include="Dtos\Cities\CityBaseDto.cs" />
+    <Compile Include="Dtos\Collaborators\CollaboratorBaseDto.cs" />
+    <Compile Include="Dtos\Collaborators\CollaboratorDto.cs" />
+    <Compile Include="Dtos\Collaborators\CollaboratorMiniBioBaseDto.cs" />
+    <Compile Include="Dtos\Collaborators\CollaboratorJobTitleBaseDto.cs" />
+    <Compile Include="Dtos\Editions\EditionBaseDto.cs" />
     <Compile Include="Dtos\States\StateBaseDto.cs" />
     <Compile Include="Dtos\Countries\CountryBaseDto.cs" />
     <Compile Include="Dtos\OrganizationDescriptions\OrganizationDescriptionBaseDto.cs" />
@@ -90,6 +96,7 @@
     <Compile Include="Dtos\Users\UserBaseDto.cs" />
     <Compile Include="Entities\Addresses\Address.cs" />
     <Compile Include="Entities\Base\AggregateRoot.cs" />
+    <Compile Include="Entities\Collaborator\AttendeeCollaborator.cs" />
     <Compile Include="Entities\Collaborator\CollaboratorProducer.cs" />
     <Compile Include="Entities\Collaborator\CollaboratorSpeaker.cs" />
     <Compile Include="Entities\Common\InterestGroup.cs" />
@@ -112,6 +119,7 @@
     <Compile Include="Entities\NegotiationConfig\NegotiationRoomConfig.cs" />
     <Compile Include="Entities\NegotiationConfig\NegotiationConfig.cs" />
     <Compile Include="Entities\Negotiation\Negotiation.cs" />
+    <Compile Include="Entities\Organizations\AttendeeOrganizationCollaborator.cs" />
     <Compile Include="Entities\Organizations\AttendeeOrganizationType.cs" />
     <Compile Include="Entities\Organizations\AttendeeOrganization.cs" />
     <Compile Include="Entities\Organizations\OrganizationDescription.cs" />
@@ -152,7 +160,8 @@
     <Compile Include="Enums\NegotiationTypeCodes.cs" />
     <Compile Include="Enums\StatusProjectCodes.cs" />
     <Compile Include="Interfaces\IMailCollaboratorRepository.cs" />
-    <Compile Include="Interfaces\Repositories\Collaborator\ICollaboratorProducerRepository.cs" />
+    <Compile Include="Interfaces\Repositories\AttendeeOrganizations\IAttendeeOrganizationRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Collaborators\ICollaboratorProducerRepository.cs" />
     <Compile Include="Interfaces\Repositories\Conference\ILecturerJobTitleRepository.cs" />
     <Compile Include="Interfaces\Repositories\Conference\ILecturerRepository.cs" />
     <Compile Include="Interfaces\Repositories\Conference\IConferenceSynopsisRepository.cs" />
@@ -349,9 +358,9 @@
     <Compile Include="Entities\Player\Player.cs" />
     <Compile Include="Entities\Holdings\HoldingDescription.cs" />
     <Compile Include="Entities\Common\TargetAudience.cs" />
-    <Compile Include="Entities\User\User.cs" />
-    <Compile Include="Entities\User\Role.cs" />
-    <Compile Include="Entities\User\UserUseTerm.cs" />
+    <Compile Include="Entities\Users\User.cs" />
+    <Compile Include="Entities\Users\Role.cs" />
+    <Compile Include="Entities\Users\UserUseTerm.cs" />
     <Compile Include="Statics\Files\FileRepositoryPathType.cs" />
     <Compile Include="Statics\User\Role.cs" />
     <Compile Include="Validations\Address\AddressIsConsistent.cs" />
@@ -406,8 +415,8 @@
     <Compile Include="Interfaces\Repositories\Player\IPlayerRestrictionsSpecificsRepository..cs" />
     <Compile Include="Interfaces\Repositories\Player\IPlayerTargetAudienceRepository.cs" />
     <Compile Include="Interfaces\Repositories\Common\ITargetAudienceRepository.cs" />
-    <Compile Include="Interfaces\Repositories\Collaborator\ICollaboratorMiniBioRepository.cs" />
-    <Compile Include="Interfaces\Repositories\Collaborator\ICollaboratorJobTitleRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Collaborators\ICollaboratorMiniBioRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Collaborators\ICollaboratorJobTitleRepository.cs" />
     <Compile Include="Interfaces\Repositories\Activity\IActivityRepository.cs" />
     <Compile Include="Interfaces\Repositories\Common\IInterestGroupRepository.cs" />
     <Compile Include="Interfaces\Repositories\Producer\IProducerDescriptionRepository.cs" />
@@ -415,7 +424,7 @@
     <Compile Include="Interfaces\Repositories\Player\IPlayerDescriptionRepository.cs" />
     <Compile Include="Interfaces\Repositories\Common\IImageFileRepository.cs" />
     <Compile Include="Interfaces\Repositories\Editions\IEditionRepository.cs" />
-    <Compile Include="Interfaces\Repositories\Collaborator\ICollaboratorRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Collaborators\ICollaboratorRepository.cs" />
     <Compile Include="Interfaces\Repositories\Common\ILanguageRepository.cs" />
     <Compile Include="Interfaces\Repositories\Producer\IProducerRepository.cs" />
     <Compile Include="Interfaces\Repositories\IRepositoryFactory.cs" />
@@ -465,7 +474,7 @@
     <Compile Include="Services\LanguageService.cs" />
     <Compile Include="Services\PlayerService.cs" />
     <Compile Include="Services\HoldingService.cs" />
-    <Compile Include="Entities\User\UserRole.cs" />
+    <Compile Include="Entities\Users\UserRole.cs" />
     <Compile Include="Validation\Validation.cs" />
     <Compile Include="Validation\ValidationError.cs" />
     <Compile Include="Validation\ValidationResult.cs" />

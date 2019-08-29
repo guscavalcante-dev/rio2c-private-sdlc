@@ -4,7 +4,7 @@
 // Created          : 08-15-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-18-2019
+// Last Modified On : 08-27-2019
 // ***********************************************************************
 // <copyright file="FileLocalRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,11 +12,8 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Globalization;
 using System.IO;
-using System.Linq;
 using PlataformaRio2C.Domain.Statics;
 
 namespace PlataformaRio2c.Infra.Data.FileRepository
@@ -24,6 +21,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
     /// <summary>FileLocalRepository</summary>
     public class FileLocalRepository : IFileRepository
     {
+        private readonly string localBucket;
         private readonly string imagesHoldingsDirectory;
         private readonly string imagesOrganizationsDirectory;
         private readonly string imagesUsersDirectory;
@@ -33,6 +31,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
         /// </summary>
         public FileLocalRepository()
         {
+            this.localBucket = ConfigurationManager.AppSettings["LocalBucket"];
             this.imagesHoldingsDirectory = ConfigurationManager.AppSettings["LocalImagesHoldingsDirectory"];
             this.imagesOrganizationsDirectory = ConfigurationManager.AppSettings["LocalImagesOrganizationsDirectory"];
             this.imagesUsersDirectory = ConfigurationManager.AppSettings["LocalImagesUsersDirectory"];
@@ -156,7 +155,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
         /// <returns></returns>
         private string GetBaseUrl()
         {
-            return "/";
+            return "/" + this.localBucket + "/";
         }
 
         #endregion

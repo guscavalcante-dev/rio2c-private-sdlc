@@ -13,7 +13,6 @@
 // ***********************************************************************
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
@@ -41,6 +40,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual City City { get; private set; }
 
         public virtual ICollection<Organization> Organizations { get; private set; }
+        public virtual ICollection<Collaborator> Collaborators { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="Address"/> class.</summary>
         /// <param name="country">The country.</param>

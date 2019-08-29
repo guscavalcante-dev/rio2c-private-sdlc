@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-22-2019
+// Last Modified On : 08-27-2019
 // ***********************************************************************
 // <copyright file="organizations.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,13 +14,13 @@
 
 var OrganizationsDataTableWidget = function () {
 
-    var widgetElementId = '#PlayerCompanyDataTableWidget';
-    var widgetElement = $(widgetElementId);
+    var widgetElementId = '#PlayerCompaniesDataTableWidget';
+    var tableElementId = '#playercompanies-list-table';
     var table;
 
     var initiListTable = function () {
 
-        var tableElementId = $('#holdings-list-table');
+        var tableElement = $(tableElementId);
 
         // Disable datatable alert
         $.fn.dataTable.ext.errMode = 'none';
@@ -39,8 +39,9 @@ var OrganizationsDataTableWidget = function () {
         }
 
         var globalVariables = MyRio2cCommon.getGlobalVariables();
+        var imageDirectory = 'https://' + globalVariables.bucket + '/img/organizations/';
 
-        table = tableElementId.DataTable({
+        table = tableElement.DataTable({
             "language": {
                 "url": "/Assets/components/datatables/datatables." + globalVariables.userInterfaceLanguage + ".js"
             },
@@ -88,7 +89,7 @@ var OrganizationsDataTableWidget = function () {
                     });
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    $('#organizations-list-table_processing').hide();
+                    $(tableElementId + '_processing').hide();
                     MyRio2cCommon.showAlert();
                 }
             },
@@ -131,10 +132,10 @@ var OrganizationsDataTableWidget = function () {
                                         <td>';
 
                         if (!MyRio2cCommon.isNullOrEmpty(full.ImageUploadDate)) {
-                            html += '<img src="https://dev.assets.my.rio2c.com/img/organizations/' + full.Uid + '_thumbnail.png?v=' + moment(full.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
+                            html += '<img src="' + imageDirectory + full.Uid + '_thumbnail.png?v=' + moment(full.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
                         }
                         else {
-                            html += '<img src="https://dev.assets.my.rio2c.com/img/organizations/no-image.png?v=20190818200849" /> ';
+                            html += '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" /> ';
                         }
 
                         html += '       <td> ' + full.Name + '</td>\

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-24-2019
+// Last Modified On : 08-26-2019
 // ***********************************************************************
 // <copyright file="OrganizationMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,7 +35,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                 .HasMaxLength(Organization.TradeNameMaxLength);
 
             this.Property(t => t.Website)
-                .HasMaxLength(Organization.WebSiteMaxLength);
+                .HasMaxLength(Organization.WebsiteMaxLength);
 
             this.Property(t => t.SocialMedia)
                 .HasMaxLength(Organization.SocialMediaMaxLength);

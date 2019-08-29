@@ -59,9 +59,10 @@ namespace PlataformaRio2C.Application.ViewModels
 
         public CollaboratorJobTitle MapReverse()
         {
-            var entity = new CollaboratorJobTitle(Value, LanguageCode);
+            //var entity = new CollaboratorJobTitle(Value, LanguageCode);
 
-            return entity;
+            //return entity;
+            return null;
         }
 
         public CollaboratorJobTitle MapReverse(CollaboratorJobTitle entity)
