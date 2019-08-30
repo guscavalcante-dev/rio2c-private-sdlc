@@ -332,12 +332,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 sortColumns,
                                 new List<Tuple<string, string>>
                                 {
-                                    new Tuple<string, string>("Name", "FirstName"),
-                                    new Tuple<string, string>("HoldingBaseDto.Name", "Holding.Name"),
-                                    new Tuple<string, string>("OrganizationBaseDto.Name", "Organization.Name")
+                                    new Tuple<string, string>("FullName", "User.Name"),
+                                    new Tuple<string, string>("Email", "User.Email"),
                                 },
-                                new List<string> { "FirstName", "Email", "Holding.Name", "Organization.Name", "CreateDate", "UpdateDate" },
-                                "FirstName")
+                                new List<string> { "User.Name", "User.Email", "CreateDate", "UpdateDate" },
+                                "User.Name")
                             .Select(c => new CollaboratorBaseDto
                             {
                                 Id = c.Id,

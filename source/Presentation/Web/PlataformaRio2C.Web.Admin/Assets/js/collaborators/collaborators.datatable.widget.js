@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-28-2019
+// Last Modified On : 08-29-2019
 // ***********************************************************************
 // <copyright file="collaborators.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -97,35 +97,8 @@ var CollaboratorsDataTableWidget = function () {
                 $(row).attr('data-id', data.Uid);
             },
             columns: [
-                { data: 'FullName' },
-                { data: 'Email' },
                 {
-                    data: 'Player',
-                    render: function (data, type, row, meta) {
-                        var html = '<ul class="m-0 pl-4">';
-
-                        //loop through all the row details to build output string
-                        for (var item in row.AttendeeOrganizationBasesDtos) {
-                            if (row.AttendeeOrganizationBasesDtos.hasOwnProperty(item)) {
-                                var r = row.AttendeeOrganizationBasesDtos[item];
-                                html += '<li>' + r.DisplayName + '</li>';
-                            }
-                        }
-
-                        html += '</ul>';
-
-                        return html;
-                    }
-                },
-                { data: 'CreateDate' },
-                { data: 'UpdateDate' },
-                { data: 'Actions', responsivePriority: -1 }
-            ],
-            columnDefs: [
-                {
-                    targets: [0],
-                    width: "25%",
-                    className: "dt-center",
+                    data: 'FullName',
                     render: function (data, type, full, meta) {
                         var html = '\
                                 <table class="image-side-text text-left">\
@@ -150,20 +123,41 @@ var CollaboratorsDataTableWidget = function () {
                         return html;
                     }
                 },
+                { data: 'Email' },
                 {
-                    targets: [3,4],
-                    className: "dt-center",
+                    data: 'Player',
+                    render: function (data, type, row, meta) {
+                        var html = '<ul class="m-0 pl-4">';
+
+                        //loop through all the row details to build output string
+                        for (var item in row.AttendeeOrganizationBasesDtos) {
+                            if (row.AttendeeOrganizationBasesDtos.hasOwnProperty(item)) {
+                                var r = row.AttendeeOrganizationBasesDtos[item];
+                                html += '<li>' + r.DisplayName + '</li>';
+                            }
+                        }
+
+                        html += '</ul>';
+
+                        return html;
+                    }
+                },
+                {
+                    data: 'CreateDate',
+                    render: function (data) {
+                        return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                    }
+                    
+                },
+                {
+                    data: 'UpdateDate',
                     render: function (data) {
                         return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
                 },
                 {
-                    targets: -1,
-                    title: 'Actions',
-                    width: "10%",
-                    orderable: false,
-                    searchable: false,
-                    className: "dt-center",
+                    data: 'Actions',
+                    responsivePriority: -1,
                     render: function (data, type, full, meta) {
                         var html = '\
                                         <span class="dropdown">\
@@ -173,7 +167,7 @@ var CollaboratorsDataTableWidget = function () {
                                             <div class="dropdown-menu dropdown-menu-right">';
 
                         if (!full.IsInCurrentEdition) {
-                            html += '<button class="dropdown-item" onclick="CollaboratorsUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition +'</button>';
+                            html += '<button class="dropdown-item" onclick="CollaboratorsUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
                         }
 
                         html += '<button class="dropdown-item" onclick="CollaboratorsUpdate.showModal(\'' + full.Uid + '\', false);"><i class="la la-edit"></i> ' + labels.edit + '</button>';
@@ -191,6 +185,29 @@ var CollaboratorsDataTableWidget = function () {
 
                         return html;
                     }
+                }
+            ],
+            columnDefs: [
+                {
+                    targets: [0],
+                    width: "25%",
+                    className: "dt-center"
+                },
+                {
+                    targets: [2],
+                    orderable: false
+                },
+                {
+                    targets: [3,4],
+                    className: "dt-center"
+                },
+                {
+                    targets: -1,
+                    title: 'Actions',
+                    width: "10%",
+                    orderable: false,
+                    searchable: false,
+                    className: "dt-center"
                 }
             ]
         });
