@@ -19,6 +19,11 @@ go
 
 
 
+DROP TABLE "dbo"."SalesPlatformWebhooRequests"
+go
+
+
+
 CREATE TABLE "SalesPlatformWebhookRequests"
 ( 
 	"Id"                 int IDENTITY ( 1,1 ) ,
