@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-27-2019
+// Last Modified On : 08-29-2019
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -452,23 +452,51 @@ var MyRio2cCommon = function () {
             return;
         }
 
+        if (!hasProperty(options, 'maxCharCount')) {
+            options.maxCharCount = 8000;
+        }
+
         $(options.idOrClass).each(function () {
             CKEDITOR.replace($(this)[0], {
-                customConfig: '/Content/js/ckeditor_config.js'
+                customConfig: '/Content/js/ckeditor_config.js',
+                language: globalVariables.userInterfaceLanguage,
+                wordcount: {
+                    countBytesAsChars: false,
+                    countLineBreaks: false,
+                    // Whether or not you want to show the Paragraphs Count
+                    showParagraphs: false,
+
+                    // Whether or not you want to show the Word Count
+                    showWordCount: false,
+
+                    // Whether or not you want to show the Char Count
+                    showCharCount: true,
+
+                    // Whether or not you want to count Spaces as Chars
+                    countSpacesAsChars: true,
+
+                    // Whether or not to include Html chars in the Char Count
+                    countHTML: false,
+
+                    // Maximum allowed Word Count, -1 is default for unlimited
+                    maxWordCount: -1,
+
+                    // Maximum allowed Char Count, -1 is default for unlimited
+                    maxCharCount: options.maxCharCount,
+
+                    // Add filter to add or remove element before counting (see CKEDITOR.htmlParser.filter), Default value : null (no filter)
+                    filter: new CKEDITOR.htmlParser.filter({
+                        elements: {
+                            div: function (element) {
+                                if (element.attributes.class == 'mediaembed') {
+                                    return false;
+                                }
+                            }
+                        }
+                    })
+                }
             });
         });
-    };
-
-    var updateCkEditorElements = function () {
-        if (isNullOrEmpty(window.CKEDITOR)) {
-            return;
-        }
-
-        for (var instance in CKEDITOR.instances) {
-            if (CKEDITOR.instances.hasOwnProperty(instance)) {
-                CKEDITOR.instances[instance].updateElement();
-            }
-        }
     };
 
     // Ajax Form ----------------------------------------------------------------------------------

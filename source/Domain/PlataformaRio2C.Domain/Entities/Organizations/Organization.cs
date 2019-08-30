@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 08-29-2019
 // ***********************************************************************
 // <copyright file="Organization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,7 +23,7 @@ namespace PlataformaRio2C.Domain.Entities
     public class Organization : AggregateRoot
     {
         public static readonly int NameMinLength = 2;
-        public static readonly int NameMaxLength = 100;
+        public static readonly int NameMaxLength = 81;
         public static readonly int CompanyNameMaxLength = 100;
         public static readonly int TradeNameMaxLength = 100;
         public static readonly int DocumentMaxLength = 50;

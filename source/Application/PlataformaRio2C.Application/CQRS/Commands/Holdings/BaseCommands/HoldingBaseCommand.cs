@@ -4,7 +4,7 @@
 // Created          : 08-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-23-2019
+// Last Modified On : 08-29-2019
 // ***********************************************************************
 // <copyright file="HoldingBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,7 +25,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         [Display(Name = "Name", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [StringLength(100, MinimumLength = 2, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        [StringLength(81, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Name { get; set; }
 
         public List<HoldingDescriptionBaseCommand> Descriptions { get; set; }

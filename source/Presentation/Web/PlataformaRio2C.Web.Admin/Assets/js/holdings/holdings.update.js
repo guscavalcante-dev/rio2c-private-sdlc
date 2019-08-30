@@ -4,7 +4,7 @@
 // Created          : 08-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-25-2019
+// Last Modified On : 08-29-2019
 // ***********************************************************************
 // <copyright file="holdings.update.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,7 +28,7 @@ var HoldingsUpdate = function () {
     // Enable plugins -----------------------------------------------------------------------------
     var enablelugins = function () {
         MyRio2cCropper.init({ formIdOrClass: formId });
-        MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c' });
+        MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c', maxCharCount: 710 });
         enableAjaxForm();
         enableFormValidation();
     };

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-22-2019
+// Last Modified On : 08-29-2019
 // ***********************************************************************
 // <copyright file="Holding.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,7 +23,7 @@ namespace PlataformaRio2C.Domain.Entities
     public class Holding : AggregateRoot
     {
         public static readonly int NameMinLength = 2;
-        public static readonly int NameMaxLength = 100;
+        public static readonly int NameMaxLength = 81;
 
         public string Name { get; private set; }
         public DateTime? ImageUploadDate { get; private set; }
