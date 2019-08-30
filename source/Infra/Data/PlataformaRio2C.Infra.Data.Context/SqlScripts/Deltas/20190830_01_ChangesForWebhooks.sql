@@ -79,3 +79,6 @@ go
 ALTER TABLE "SalesPlatformWebhookRequests"
 	ADD CONSTRAINT "FK_Users_SalesPlatformWebhookRequests_ManualProcessingUserId" FOREIGN KEY ("ManualProcessingUserId") REFERENCES "dbo"."Users"("Id")
 go
+
+drop table SalesPlatformWebhooRequests
+go
