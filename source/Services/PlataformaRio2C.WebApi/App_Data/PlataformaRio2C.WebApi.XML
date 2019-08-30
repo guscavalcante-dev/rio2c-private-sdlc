@@ -89,29 +89,6 @@
             <param name="fieldsToRemove">The fields to remove.</param>
             <returns></returns>
         </member>
-        <member name="T:PlataformaRio2C.WebApi.Areas.Api.V1.Controllers.SalesPlatformController">
-            <summary>
-            Class for Eventbrite endpoints
-            </summary>
-        </member>
-        <member name="M:PlataformaRio2C.WebApi.Areas.Api.V1.Controllers.SalesPlatformController.#ctor(MediatR.IMediator,PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.ISalesPlatformServiceFactory)">
-            <summary>Initializes a new instance of the <see cref="T:PlataformaRio2C.WebApi.Areas.Api.V1.Controllers.SalesPlatformController"/> class.</summary>
-            <param name="commandBus">The command bus.</param>
-            <param name="salesPlatformServiceFactory">The sales platform service factory.</param>
-        </member>
-        <member name="M:PlataformaRio2C.WebApi.Areas.Api.V1.Controllers.SalesPlatformController.Ping">
-            <summary>Pings this instance.</summary>
-            <returns></returns>
-        </member>
-        <member name="M:PlataformaRio2C.WebApi.Areas.Api.V1.Controllers.SalesPlatformController.Eventbrite(System.String)">
-            <summary>Tests this instance.</summary>
-            <returns></returns>
-        </member>
-        <member name="M:PlataformaRio2C.WebApi.Areas.Api.V1.Controllers.SalesPlatformController.ProcessRequests(System.String)">
-            <summary>Processes the requests.</summary>
-            <param name="key">The key.</param>
-            <returns></returns>
-        </member>
         <member name="T:PlataformaRio2C.WebApi.Areas.Api.V1.Controllers.ConferenceController">
             <summary>
             Classe que fornece os endpoints sobre conferencias

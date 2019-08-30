@@ -295,7 +295,6 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Api\Controllers\BaseApiController.cs" />
-    <Compile Include="Areas\Api\V1\Controllers\SalesPlatformController.cs" />
     <Compile Include="Areas\Api\V1\Controllers\ConferenceController.cs" />
     <Compile Include="Areas\Api\V1\Controllers\ExecutivePlayerController.cs" />
     <Compile Include="Areas\Api\V1\Controllers\ExecutiveProducerController.cs" />

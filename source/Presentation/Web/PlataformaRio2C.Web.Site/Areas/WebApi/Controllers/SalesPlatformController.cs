@@ -1,44 +1,34 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.WebApi
+// Assembly         : PlataformaRio2C.Web.Site
 // Author           : Rafael Dantas Ruiz
 // Created          : 07-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-23-2019
+// Last Modified On : 08-30-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Application.Interfaces.Services;
-using PlataformaRio2C.WebApi.Areas.Api.Controllers;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using System.Web.Http.Description;
-using System.Web.Http.Results;
 using MediatR;
-using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms;
-using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
-using WebApi.OutputCache.V2;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
-namespace PlataformaRio2C.WebApi.Areas.Api.V1.Controllers
+namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 {
     /// <summary>
-    /// Class for Eventbrite endpoints
+    /// Class for sales platforms endpoints
     /// </summary>
-    //[Authorize]
-    [Microsoft.Web.Http.ApiVersion("1.0")]
-    [RoutePrefix("api/v{api-version:apiVersion}/salesplatforms")]
+    [RoutePrefix("api/v1.0/salesplatforms")]
     public class SalesPlatformController : BaseApiController
     {
         private readonly IMediator commandBus;
@@ -53,6 +43,8 @@ namespace PlataformaRio2C.WebApi.Areas.Api.V1.Controllers
             this.salesPlatformServiceFactory = salesPlatformServiceFactory;
         }
 
+        #region Ping
+
         /// <summary>Pings this instance.</summary>
         /// <returns></returns>
         [HttpGet]
@@ -61,6 +53,10 @@ namespace PlataformaRio2C.WebApi.Areas.Api.V1.Controllers
         {
             return await Json(new { status = "success", message = "Pong" });
         }
+
+        #endregion
+
+        #region Eventbrite requests
 
         /// <summary>Tests this instance.</summary>
         /// <returns></returns>
@@ -100,6 +96,10 @@ namespace PlataformaRio2C.WebApi.Areas.Api.V1.Controllers
 
             return await Json(new { status = "success", message = "Eventbrite event saved successfully." });
         }
+
+        #endregion
+
+        #region Requests processing
 
         /// <summary>Processes the requests.</summary>
         /// <param name="key">The key.</param>
@@ -151,91 +151,6 @@ namespace PlataformaRio2C.WebApi.Areas.Api.V1.Controllers
             return await Json(new { status = "success", message = "Requests processed successfully." });
         }
 
-        //[Route("")]
-        //[HttpGet]
-        //[ResponseType(typeof(IEnumerable<Application.ViewModels.Api.ConferenceItemListAppViewModel>))]
-        //public async Task<IHttpActionResult> ListAll([FromUri]string orderBy = "Name", [FromUri]bool? orderByDesc = false, [FromUri]string fields = null)
-        //{
-        //    IEnumerable<Application.ViewModels.Api.ConferenceItemListAppViewModel> result = null;
-
-        //    result = await Task.FromResult(_conferenceAppService.GetAllByApi());            
-
-        //    //ordena
-        //    try
-        //    {
-        //        var pi = typeof(Application.ViewModels.Api.ConferenceItemListAppViewModel).GetProperty(orderBy);
-
-        //        if (orderByDesc != null && orderByDesc == true)
-        //        {
-        //            result = await Task.FromResult(result.OrderByDescending(x => pi.GetValue(x, null)).ToList());
-        //        }
-        //        else
-        //        {
-        //            result = await Task.FromResult(result.OrderBy(x => pi.GetValue(x, null)).ToList());
-        //        }
-        //    }
-        //    catch (System.Exception)
-        //    {
-        //    }
-
-        //    if (result != null && result.Any())
-        //    {
-        //        return await Json(result, fields);
-        //    }
-
-        //    return NotFound();
-        //}
-
-        ///// <summary>
-        ///// Retorna a imagem de um participante da palestra específico
-        ///// </summary> 
-        ///// <remarks>Retorna a imagem de um participante da palestra específico</remarks>
-        ///// <param name="fields">Campos que serão retornados</param>
-        ///// <param name="uid">Guid do participante da palestra</param>
-        ///// <response code="200">Ok</response>
-        ///// <response code="400">Bad Request</response>
-        ///// <response code="401">Unauthorized</response>
-        ///// <response code="403">Forbidden</response>        
-        ///// <response code="500">Internal Server Error</response>
-        //[Route("{uid}/lecturerfullimage")]
-        //[HttpGet]
-        //[CacheOutput(ServerTimeSpan = 300, ExcludeQueryStringFromCacheKey = false)]
-        //public async Task<IHttpActionResult> GetImage([FromUri]Guid uid, [FromUri]string fields = null)
-        //{
-        //    var result = await Task.FromResult(_conferenceAppService.GetLecturerImage(uid));
-
-        //    if (result != null)
-        //    {
-        //        return await Json(result, fields);
-        //    }
-
-        //    return NotFound();
-        //}
-
-        ///// <summary>
-        ///// Retorna a imagem de um participante da palestra específico
-        ///// </summary> 
-        ///// <remarks>Retorna a miniatura da imagem de um participante da palestra específico</remarks>
-        ///// <param name="fields">Campos que serão retornados</param>
-        ///// <param name="uid">Guid do participante da palestra</param>
-        ///// <response code="200">Ok</response>
-        ///// <response code="400">Bad Request</response>
-        ///// <response code="401">Unauthorized</response>
-        ///// <response code="403">Forbidden</response>        
-        ///// <response code="500">Internal Server Error</response>
-        //[Route("{uid}/lecturerthumbnailimage")]
-        //[HttpGet]
-        //[CacheOutput(ServerTimeSpan = 300, ExcludeQueryStringFromCacheKey = false)]
-        //public async Task<IHttpActionResult> GetThumbImage([FromUri]Guid uid, [FromUri]string fields = null)
-        //{
-        //    var result = await Task.FromResult(_conferenceAppService.GetLecturerThumbImage(uid));
-
-        //    if (result != null)
-        //    {
-        //        return await Json(result, fields);
-        //    }
-
-        //    return NotFound();
-        //}        
+        #endregion
     }
 }

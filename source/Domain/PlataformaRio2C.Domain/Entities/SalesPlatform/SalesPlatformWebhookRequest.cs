@@ -4,7 +4,7 @@
 // Created          : 07-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-23-2019
+// Last Modified On : 08-30-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformWebhookRequest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -62,10 +62,12 @@ namespace PlataformaRio2C.Domain.Entities
             string payload,
             string ipAddress)
         {
-            if (!salesPlatform.IsValidWebhookSecurityKey(webhookSecurityKey))
+            if (salesPlatform == null || salesPlatform.IsDeleted)
             {
-                throw new DomainException("Invalid security key");
+                throw new DomainException("The sales platform was not found");
             }
+
+            salesPlatform.ValidateWebhookSecurityKey(webhookSecurityKey);
 
             this.Uid = salesPlatformWebhookRequestUid;
             this.SalesPlatformId = salesPlatform.Id;
@@ -78,6 +80,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsProcessing = false;
             this.ProcessingCount = 0;
             this.NextProcessingDate = this.GetNextProcessingDate();
+            this.CreateDate = DateTime.Now;
             this.SecurityStamp = Guid.NewGuid().ToString();
         }
 

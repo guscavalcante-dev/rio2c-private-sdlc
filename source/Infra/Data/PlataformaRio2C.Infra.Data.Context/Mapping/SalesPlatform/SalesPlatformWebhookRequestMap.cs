@@ -4,7 +4,7 @@
 // Created          : 07-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-23-2019
+// Last Modified On : 08-30-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformWebhookRequestMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,7 +22,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         /// <summary>Initializes a new instance of the <see cref="SalesPlatformWebhookRequestMap"/> class.</summary>
         public SalesPlatformWebhookRequestMap()
         {
-            this.ToTable("SalesPlatformWebhookRequest");
+            this.ToTable("SalesPlatformWebhookRequests");
 
             //this.Property(t => t.Date)
             //    .IsRequired();
@@ -51,6 +51,12 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.HasRequired(m => m.SalesPlatform)
                 .WithMany()
                 .HasForeignKey(d => d.SalesPlatformId);
+
+            // Ignores
+            this.Ignore(p => p.IsDeleted);
+            this.Ignore(p => p.CreateUserId);
+            this.Ignore(p => p.UpdateDate);
+            this.Ignore(p => p.UpdateUserId);
         }
     }
 }

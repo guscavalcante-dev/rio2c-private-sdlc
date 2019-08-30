@@ -4,7 +4,7 @@
 // Created          : 07-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-19-2019
+// Last Modified On : 08-30-2019
 // ***********************************************************************
 // <copyright file="SalesPlatform.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,6 +14,7 @@
 using PlataformaRio2C.Domain.Entities.Validations;
 using PlataformaRio2C.Domain.Validation;
 using System;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -21,14 +22,10 @@ namespace PlataformaRio2C.Domain.Entities
     public class SalesPlatform : Entity
     {
         public string Name { get; private set; }
-        public bool IsActive { get; private set; }
         public Guid WebhookSecurityKey { get; private set; }
         public string ApiKey { get; private set; }
         public string ApiSecret { get; private set; }
         public int MaxProcessingCount { get; private set; }
-        public int CreationUserId { get; private set; }
-        public int UpdateUserId { get; private set; }
-        public DateTime UpdateDate { get; private set; }
         public string SecurityStamp { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="SalesPlatform"/> class.</summary>
@@ -48,13 +45,12 @@ namespace PlataformaRio2C.Domain.Entities
             return ValidationResult.IsValid;
         }
 
-        /// <summary>Determines whether [is valid webhook security key] [the specified webhook security key string].</summary>
-        /// <param name="webhookSecurityKeyString">The webhook security key string.</param>
-        /// <returns>
-        ///   <c>true</c> if [is valid webhook security key] [the specified webhook security key string]; otherwise, <c>false</c>.</returns>
-        public bool IsValidWebhookSecurityKey(string webhookSecurityKeyString)
+        public void ValidateWebhookSecurityKey(string webhookSecurityKeyString)
         {
-            return string.Equals(this.WebhookSecurityKey.ToString(), webhookSecurityKeyString, StringComparison.OrdinalIgnoreCase);
+            if (!string.Equals(this.WebhookSecurityKey.ToString(), webhookSecurityKeyString, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new DomainException("Invalid sales platform security key.");
+            }
         }
     }
 }

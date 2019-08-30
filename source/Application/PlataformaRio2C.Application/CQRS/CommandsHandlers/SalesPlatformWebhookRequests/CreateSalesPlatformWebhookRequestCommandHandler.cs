@@ -4,7 +4,7 @@
 // Created          : 07-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-23-2019
+// Last Modified On : 08-30-2019
 // ***********************************************************************
 // <copyright file="CreateSalesPlatformWebhookRequestCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -54,14 +54,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         public async Task<Guid?> Handle(CreateSalesPlatformWebhookRequest cmd, CancellationToken cancellationToken)
         {
             this.uow.BeginTransaction();
-
-            ////Validation
-            //AssertionConcern.AssertArgumentNotEmpty(obj.Title, "O Titulo não pode ser vazio");
-            //AssertionConcern.AssertArgumentNotEmpty(obj.Localization, "O Localização não pode ser vazio");
-            //AssertionConcern.AssertArgumentNotEmpty(obj.Description, "O Descrição não pode ser vazio");
-            //AssertionConcern.AssertArgumentNotNull(obj.Active, "O Ativo não pode ser vazio");
-            //AssertionConcern.AssertArgumentNotEmpty(obj.Serial, "O Serial não pode ser vazio");
-            //AssertionConcern.AssertArgumentFalse(_repository.HasExists(obj.Serial), "Ja existe cadastro com esse serial");
 
             var salesPlatform = await this.salesPlatformRepo.GetByNameAsync(cmd.SalesPlatformName);
 

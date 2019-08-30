@@ -4,7 +4,7 @@
 // Created          : 07-22-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-06-2019
+// Last Modified On : 08-30-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -50,12 +50,10 @@ namespace PlataformaRio2C.Application.Dtos
 
             this.Uid = entity.Uid;
             this.Name = entity.Name;
-            this.IsActive = entity.IsActive;
             this.WebhookSecurityKey = entity.WebhookSecurityKey;
             this.ApiKey = entity.ApiKey;
             this.ApiSecret = entity.ApiSecret;
             this.MaxProcessingCount = entity.MaxProcessingCount;
-            this.CreationUserId = entity.CreationUserId;
             this.CreationDate = entity.CreateDate;
             this.UpdateUserId = entity.UpdateUserId;
             this.UpdateDate = entity.UpdateDate;

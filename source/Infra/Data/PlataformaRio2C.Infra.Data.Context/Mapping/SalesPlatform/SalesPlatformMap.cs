@@ -4,7 +4,7 @@
 // Created          : 07-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-12-2019
+// Last Modified On : 08-30-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,10 +22,10 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         /// <summary>Initializes a new instance of the <see cref="SalesPlatformMap"/> class.</summary>
         public SalesPlatformMap()
         {
+            this.ToTable("SalesPlatforms");
+
             //this.Property(t => t.Date)
             //    .IsRequired();
-
-            this.ToTable("SalesPlatform");
         }
     }
 }

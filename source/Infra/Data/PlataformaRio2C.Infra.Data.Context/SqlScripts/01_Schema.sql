@@ -1803,7 +1803,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_PADDING ON
 GO
-CREATE TABLE [dbo].[SalesPlatformWebhooRequests](
+CREATE TABLE [dbo].[SalesPlatformWebhookRequests](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
 	[SalesPlatformId] [int] NOT NULL,
@@ -1820,10 +1820,14 @@ CREATE TABLE [dbo].[SalesPlatformWebhooRequests](
 	[ProcessingErrorCode] [varchar](10) NULL,
 	[ProcessingErrorMessage] [varchar](250) NULL,
 	[ManualProcessingUserId] [int] NULL,
-	[SecurityStamp] [varchar](36) NULL,
- CONSTRAINT [PK_SalesPlatformWebhooRequests] PRIMARY KEY CLUSTERED 
+	[SecurityStamp] [varchar](36) NOT NULL,
+ CONSTRAINT [PK_SalesPlatformWebhookRequests] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_SalesPlatformWebhookRequests_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
@@ -3053,15 +3057,15 @@ REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[SalesPlatforms] CHECK CONSTRAINT [FK_Users_SalesPlatforms_UpdateUserId]
 GO
-ALTER TABLE [dbo].[SalesPlatformWebhooRequests]  WITH CHECK ADD  CONSTRAINT [FK_SalesPlatforms_SalesPlatformWebhooRequests_SalesPlatformId] FOREIGN KEY([SalesPlatformId])
+ALTER TABLE [dbo].[SalesPlatformWebhookRequests]  WITH CHECK ADD  CONSTRAINT [FK_SalesPlatforms_SalesPlatformWebhookRequests_SalesPlatformId] FOREIGN KEY([SalesPlatformId])
 REFERENCES [dbo].[SalesPlatforms] ([Id])
 GO
-ALTER TABLE [dbo].[SalesPlatformWebhooRequests] CHECK CONSTRAINT [FK_SalesPlatforms_SalesPlatformWebhooRequests_SalesPlatformId]
+ALTER TABLE [dbo].[SalesPlatformWebhookRequests] CHECK CONSTRAINT [FK_SalesPlatforms_SalesPlatformWebhookRequests_SalesPlatformId]
 GO
-ALTER TABLE [dbo].[SalesPlatformWebhooRequests]  WITH CHECK ADD  CONSTRAINT [FK_Users_SalesPlatformWebhooRequests_ManualProcessingUserId] FOREIGN KEY([ManualProcessingUserId])
+ALTER TABLE [dbo].[SalesPlatformWebhookRequests]  WITH CHECK ADD  CONSTRAINT [FK_Users_SalesPlatformWebhookRequests_ManualProcessingUserId] FOREIGN KEY([ManualProcessingUserId])
 REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[SalesPlatformWebhooRequests] CHECK CONSTRAINT [FK_Users_SalesPlatformWebhooRequests_ManualProcessingUserId]
+ALTER TABLE [dbo].[SalesPlatformWebhookRequests] CHECK CONSTRAINT [FK_Users_SalesPlatformWebhookRequests_ManualProcessingUserId]
 GO
 ALTER TABLE [dbo].[States]  WITH CHECK ADD  CONSTRAINT [FK_Countries_States_CountryId] FOREIGN KEY([CountryId])
 REFERENCES [dbo].[Countries] ([Id])
