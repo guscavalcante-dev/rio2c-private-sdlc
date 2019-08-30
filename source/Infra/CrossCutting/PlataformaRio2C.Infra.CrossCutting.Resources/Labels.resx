@@ -1332,4 +1332,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Executivos dos Players</value>
     <comment>Executivos dos Players</comment>
   </data>
+  <data name="ExecutiveName" xml:space="preserve">
+    <value>Nome do Executivo</value>
+    <comment>Nome do Executivo</comment>
+  </data>
+  <data name="ShowAllExecutives" xml:space="preserve">
+    <value>Exibir todos os executivos</value>
+    <comment>Exibir todos os executivos</comment>
+  </data>
 </root>

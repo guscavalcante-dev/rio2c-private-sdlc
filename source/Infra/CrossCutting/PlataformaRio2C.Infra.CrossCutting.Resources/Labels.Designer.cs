@@ -1033,6 +1033,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nome do Executivo.
+        /// </summary>
+        public static string ExecutiveName {
+            get {
+                return ResourceManager.GetString("ExecutiveName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Executivos.
         /// </summary>
         public static string Executives {
@@ -2595,6 +2604,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ShowAllEditions {
             get {
                 return ResourceManager.GetString("ShowAllEditions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exibir todos os executivos.
+        /// </summary>
+        public static string ShowAllExecutives {
+            get {
+                return ResourceManager.GetString("ShowAllExecutives", resourceCulture);
             }
         }
         

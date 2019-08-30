@@ -352,6 +352,7 @@
     <Compile Include="ViewModels\Common\CollaboratorPlayer\CollaboratorPlayerItemListAppViewModel.cs" />
     <Compile Include="ViewModels\Common\CollaboratorProducer\CollaboratorProducerItemListAppViewModel.cs" />
     <Compile Include="ViewModels\Common\CollaboratorProducer\CollaboratorProducerEditAppViewModel.cs" />
+    <Compile Include="ViewModels\Common\Collaborators\CollaboratorSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Collaborator\CollaboratorBasicDetailAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Collaborator\CollaboratorDetailsAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Collaborator\CollaboratorEditAppViewModel.cs" />

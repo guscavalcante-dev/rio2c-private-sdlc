@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-28-2019
+// Last Modified On : 08-29-2019
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -49,24 +49,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="query">The query.</param>
         /// <param name="organizationTypeUid">The organization type uid.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
-        /// <param name="showAllOrganizations">if set to <c>true</c> [show all organizations].</param>
+        /// <param name="showAllExecutives">if set to <c>true</c> [show all executives].</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        internal static IQueryable<Collaborator> FindByOrganizationTypeUidAndByEditionId(this IQueryable<Collaborator> query, Guid organizationTypeUid, bool showAllEditions, bool showAllOrganizations, int? editionId)
+        internal static IQueryable<Collaborator> FindByOrganizationTypeUidAndByEditionId(this IQueryable<Collaborator> query, Guid organizationTypeUid, bool showAllEditions, bool showAllExecutives, int? editionId)
         {
-            //if (!showAllEditions && editionId.HasValue)
-            //{
-            //    query = query.Where(o => o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
-            //                                                               && !ao.IsDeleted
-            //                                                               && ao.AttendeeOrganizationTypes.Any(aot => (showAllOrganizations || aot.OrganizationType.Uid == organizationTypeUid)
-            //                                                                                                          && !aot.IsDeleted)));
-            //}
-            //else
-            //{
-            //    query = query.Where(o => o.AttendeeOrganizations.Any(ao => ao.AttendeeOrganizationTypes.Any(aot => (showAllOrganizations || aot.OrganizationType.Uid == organizationTypeUid)
-            //                                                                                                       && !aot.IsDeleted)
-            //                                                               && !ao.IsDeleted));
-            //}
+            query = query.Where(c => c.AttendeeCollaborators.Any(ac => (showAllEditions || ac.EditionId == editionId)
+                                                                       && !ac.IsDeleted
+                                                                       && !ac.Edition.IsDeleted
+                                                                       && ac.AttendeeOrganizationCollaborators
+                                                                               .Any(aoc => !aoc.IsDeleted
+                                                                                           && (showAllEditions || aoc.AttendeeOrganization.EditionId == editionId)
+                                                                                           && !aoc.AttendeeOrganization.IsDeleted
+                                                                                           && aoc.AttendeeOrganization.AttendeeOrganizationTypes
+                                                                                                   .Any(aot => !aot.IsDeleted
+                                                                                                               && (showAllExecutives || aot.OrganizationType.Uid == organizationTypeUid)))));
 
             return query;
         }
@@ -78,12 +75,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<Collaborator> FindByEditionId(this IQueryable<Collaborator> query, bool showAllEditions, int? editionId)
         {
-            //if (!showAllEditions && editionId.HasValue)
-            //{
-            //    query = query.Where(o => o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
-            //                                                               && !ao.IsDeleted
-            //                                                               && !ao.Edition.IsDeleted));
-            //}
+            if (!showAllEditions && editionId.HasValue)
+            {
+                query = query.Where(o => o.AttendeeCollaborators.Any(ac => ac.EditionId == editionId
+                                                                           && !ac.IsDeleted
+                                                                           && !ac.Edition.IsDeleted));
+            }
 
             return query;
         }
@@ -92,31 +89,50 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="query">The query.</param>
         /// <param name="keywords">The keywords.</param>
         /// <returns></returns>
-        internal static IQueryable<Collaborator> FindByKeywords(this IQueryable<Collaborator> query, string keywords)
+        internal static IQueryable<Collaborator> FindByKeywords(this IQueryable<Collaborator> query, string keywords, int? editionId)
         {
             if (!string.IsNullOrEmpty(keywords))
             {
                 var outerWhere = PredicateBuilder.New<Collaborator>(false);
+                var innerExecutiveNameWhere = PredicateBuilder.New<Collaborator>(true);
+                var innerExecutiveEmailWhere = PredicateBuilder.New<Collaborator>(true);
                 var innerOrganizationNameWhere = PredicateBuilder.New<Collaborator>(true);
                 var innerHoldingNameWhere = PredicateBuilder.New<Collaborator>(true);
-                var innerDocumentWhere = PredicateBuilder.New<Collaborator>(true);
 
                 foreach (var keyword in keywords.Split(' '))
                 {
                     if (!string.IsNullOrEmpty(keyword))
                     {
-                        innerOrganizationNameWhere = innerOrganizationNameWhere.And(c => (c.FirstName + c.LastNames).Contains(keyword));
-                        //innerHoldingNameWhere = innerHoldingNameWhere.And(c => c.Holding.Name.Contains(keyword));
-                        //innerDocumentWhere = innerDocumentWhere.And(c => c.Document.Contains(keyword));
+                        innerExecutiveNameWhere = innerExecutiveNameWhere.And(c => (c.User.Name).Contains(keyword));
+                        innerExecutiveEmailWhere = innerExecutiveEmailWhere.And(c => (c.User.Email).Contains(keyword));
+                        innerOrganizationNameWhere = innerOrganizationNameWhere
+                                                        .And(c => c.AttendeeCollaborators.Any(ac => (!editionId.HasValue || ac.EditionId == editionId)
+                                                                                                    && !ac.IsDeleted
+                                                                                                    && !ac.Edition.IsDeleted
+                                                                                                    && ac.AttendeeOrganizationCollaborators
+                                                                                                            .Any(aoc => !aoc.IsDeleted
+                                                                                                                        && !aoc.AttendeeOrganization.IsDeleted
+                                                                                                                        && !aoc.AttendeeOrganization.Organization.IsDeleted
+                                                                                                                        && aoc.AttendeeOrganization.Organization.Name.Contains(keyword))));
+                        innerHoldingNameWhere = innerHoldingNameWhere
+                                                        .And(c => c.AttendeeCollaborators.Any(ac => (!editionId.HasValue || ac.EditionId == editionId)
+                                                                                                    && !ac.IsDeleted
+                                                                                                    && !ac.Edition.IsDeleted
+                                                                                                    && ac.AttendeeOrganizationCollaborators
+                                                                                                        .Any(aoc => !aoc.IsDeleted
+                                                                                                                    && !aoc.AttendeeOrganization.IsDeleted
+                                                                                                                    && !aoc.AttendeeOrganization.Organization.IsDeleted
+                                                                                                                    && !aoc.AttendeeOrganization.Organization.Holding.IsDeleted
+                                                                                                                    && aoc.AttendeeOrganization.Organization.Holding.Name.Contains(keyword))));
 
                     }
                 }
 
+                outerWhere = outerWhere.Or(innerExecutiveNameWhere);
+                outerWhere = outerWhere.Or(innerExecutiveEmailWhere);
                 outerWhere = outerWhere.Or(innerOrganizationNameWhere);
                 outerWhere = outerWhere.Or(innerHoldingNameWhere);
-                outerWhere = outerWhere.Or(innerDocumentWhere);
                 query = query.Where(outerWhere);
-                //query = query.AsExpandable().Where(predicate);
             }
 
             return query;
@@ -308,7 +324,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             int? editionId)
         {
             var query = this.GetBaseQuery()
-                                .FindByKeywords(keywords)
+                                .FindByKeywords(keywords, editionId)
                                 .FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, showAllEditions, showAllOrganizations, editionId);
 
             return await query

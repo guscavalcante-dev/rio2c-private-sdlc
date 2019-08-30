@@ -1321,4 +1321,12 @@
     <value>Players Executives</value>
     <comment>Executivos dos Players</comment>
   </data>
+  <data name="ExecutiveName" xml:space="preserve">
+    <value>Executive Name</value>
+    <comment>Nome do Executivo</comment>
+  </data>
+  <data name="ShowAllExecutives" xml:space="preserve">
+    <value>Show all executives</value>
+    <comment>Exibir todos os executivos</comment>
+  </data>
 </root>

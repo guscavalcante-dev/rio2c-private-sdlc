@@ -1,4 +1,4 @@
-﻿@model PlayerCompanySearchViewModel
+﻿@model CollaboratorSearchViewModel
 <!--begin:: DataTable Widget-->
 <div id="PlayersExecutivesDataTableWidget" class="kt-portlet kt-portlet--mobile">
     <div class="kt-portlet__head kt-portlet__head--lg">
@@ -69,7 +69,7 @@
         <div class="form-group row">
             <div class="col-lg-6">
                 <label>@Labels.Search:</label>
-                @Html.TextBoxFor(m => m.Search, new { type = "search", @class = "form-control", autocomplete = "off", placeholder = $"{Labels.PlayerName.ToLowerInvariant()}, {Labels.HoldingName.ToLowerInvariant()} {Labels.Or.ToLowerInvariant()} {Labels.CompanyDocument.ToLowerInvariant()}" })
+                @Html.TextBoxFor(m => m.Search, new { type = "search", @class = "form-control", autocomplete = "off", placeholder = $"{Labels.ExecutiveName.ToLowerInvariant()}, {Labels.Email.ToLowerInvariant()}, {Labels.PlayerName.ToLowerInvariant()} {Labels.Or.ToLowerInvariant()} {Labels.HoldingName.ToLowerInvariant()}" })
                 @*<span class="form-text text-muted">Please enter your full name</span>*@
             </div>
             <div class="col-lg-3">
@@ -83,17 +83,17 @@
                     </div>
                 </div>
             </div>
-            @*<div class="col-lg-3">
-                    <div class="form-group">
-                        <label>&nbsp;</label>
-                        <div class="kt-checkbox-list">
-                            <label class="kt-checkbox mt-2">
-                                @Html.CheckBoxFor(m => m.ShowAllOrganizations, new { @class = "enable-datatable-reload" }) @Labels.ShowAllExecutives
-                                <span></span>
-                            </label>
-                        </div>
+            <div class="col-lg-3">
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <div class="kt-checkbox-list">
+                        <label class="kt-checkbox mt-2">
+                            @Html.CheckBoxFor(m => m.ShowAllCollaborators, new { @class = "enable-datatable-reload" }) @Labels.ShowAllExecutives
+                            <span></span>
+                        </label>
                     </div>
-                </div>*@
+                </div>
+            </div>
         </div>
         <!--end: SearchForm-->
         <!--begin: Datatable -->

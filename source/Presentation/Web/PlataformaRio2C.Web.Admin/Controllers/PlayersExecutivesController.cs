@@ -50,7 +50,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="searchViewModel">The search view model.</param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Index(PlayerCompanySearchViewModel searchViewModel)
+        public ActionResult Index(CollaboratorSearchViewModel searchViewModel)
         {
             #region Breadcrumb
 
