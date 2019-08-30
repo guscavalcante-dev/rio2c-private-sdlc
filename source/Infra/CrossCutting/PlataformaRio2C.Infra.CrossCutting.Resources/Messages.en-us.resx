@@ -273,7 +273,7 @@
     <value>Incorrect Login or Password.</value>
   </data>
   <data name="EntityActionSuccessfull" xml:space="preserve">
-    <value>{0} {1] successfully.</value>
+    <value>{0} {1} successfully.</value>
     <comment>{0} {1} com sucesso.</comment>
   </data>
   <data name="MandatoryToSubmitYourProject" xml:space="preserve">
