@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-27-2019
+// Last Modified On : 08-29-2019
 // ***********************************************************************
 // <copyright file="organizations.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -97,34 +97,8 @@ var OrganizationsDataTableWidget = function () {
                 $(row).attr('data-id', data.Uid);
             },
             columns: [
-                { data: 'Name' },
-                { data: 'HoldingBaseDto.Name' },
-                { data: 'Document' },
-                { data: 'Website' },
-                { data: 'PhoneNumber' },
-                { data: 'CreateDate' },
-                { data: 'UpdateDate' },
-                //{
-                //    data: null,
-                //    render: function (data, type, row, meta) {
-                //        var descriptionsDtos = '';
-                //        //loop through all the row details to build output string
-                //        for (var item in row.descriptionsDtos) {
-                //            if (row.descriptionsDtos.hasOwnProperty(item)) {
-                //                var r = row.descriptionsDtos[item];
-                //                descriptionsDtos += r.value + ' (' + r.languageDto.name + ')' + '</br>';
-                //            }
-                //        }
-                //        return descriptionsDtos;
-                //    }
-                //},
-                { data: 'Actions', responsivePriority: -1 }
-            ],
-            columnDefs: [
                 {
-                    targets: [0],
-                    width: "25%",
-                    className: "dt-center",
+                    data: 'Name',
                     render: function (data, type, full, meta) {
                         var html = '\
                                 <table class="image-side-text text-left">\
@@ -149,28 +123,25 @@ var OrganizationsDataTableWidget = function () {
                         return html;
                     }
                 },
+                { data: 'HoldingBaseDto.Name' },
+                { data: 'Document' },
+                { data: 'Website' },
+                { data: 'PhoneNumber' },
                 {
-                    targets: [1],
-                    width: "25%"
-                },
-                {
-                    targets: [4],
-                    className: "dt-center"
-                },
-                {
-                    targets: [5,6],
-                    className: "dt-center",
+                    data: 'CreateDate',
                     render: function (data) {
                         return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
                 },
                 {
-                    targets: -1,
-                    title: 'Actions',
-                    width: "10%",
-                    orderable: false,
-                    searchable: false,
-                    className: "dt-center",
+                    data: 'UpdateDate',
+                    render: function (data) {
+                        return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                    }
+                },
+                {
+                    data: 'Actions',
+                    responsivePriority: -1,
                     render: function (data, type, full, meta) {
                         var html = '\
                                         <span class="dropdown">\
@@ -180,7 +151,7 @@ var OrganizationsDataTableWidget = function () {
                                             <div class="dropdown-menu dropdown-menu-right">';
 
                         if (!full.IsInCurrentEdition) {
-                            html += '<button class="dropdown-item" onclick="OrganizationsUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition +'</button>';
+                            html += '<button class="dropdown-item" onclick="OrganizationsUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
                         }
 
                         html += '<button class="dropdown-item" onclick="OrganizationsUpdate.showModal(\'' + full.Uid + '\', false);"><i class="la la-edit"></i> ' + labels.edit + '</button>';
@@ -198,6 +169,33 @@ var OrganizationsDataTableWidget = function () {
 
                         return html;
                     }
+                }
+            ],
+            columnDefs: [
+                {
+                    targets: [0],
+                    width: "25%",
+                    className: "dt-center"
+                },
+                {
+                    targets: [1],
+                    width: "25%"
+                },
+                {
+                    targets: [4],
+                    className: "dt-center"
+                },
+                {
+                    targets: [5,6],
+                    className: "dt-center"
+                },
+                {
+                    targets: -1,
+                    title: 'Actions',
+                    width: "10%",
+                    orderable: false,
+                    searchable: false,
+                    className: "dt-center"
                 }
             ]
         });

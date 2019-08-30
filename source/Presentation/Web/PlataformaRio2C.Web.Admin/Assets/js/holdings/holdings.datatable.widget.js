@@ -4,7 +4,7 @@
 // Created          : 08-07-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-27-2019
+// Last Modified On : 08-29-2019
 // ***********************************************************************
 // <copyright file="holdings.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -96,28 +96,8 @@ var HoldingsDataTableWidget = function () {
                 $(row).attr('data-id', data.Uid);
             },
             columns: [
-                { data: 'Name' },
-                { data: 'CreateDate' },
-                { data: 'UpdateDate' },
-                //{
-                //    data: null,
-                //    render: function (data, type, row, meta) {
-                //        var descriptionsDtos = '';
-                //        //loop through all the row details to build output string
-                //        for (var item in row.descriptionsDtos) {
-                //            if (row.descriptionsDtos.hasOwnProperty(item)) {
-                //                var r = row.descriptionsDtos[item];
-                //                descriptionsDtos += r.value + ' (' + r.languageDto.name + ')' + '</br>';
-                //            }
-                //        }
-                //        return descriptionsDtos;
-                //    }
-                //},
-                { data: 'Actions', responsivePriority: -1 }
-            ],
-            columnDefs: [
                 {
-                    targets: [0],
+                    data: 'Name',
                     render: function (data, type, full, meta) {
                         var html = '\
                                 <table class="image-side-text text-left">\
@@ -143,20 +123,20 @@ var HoldingsDataTableWidget = function () {
                     }
                 },
                 {
-                    targets: [1,2],
-                    width: "12%",
-                    className: "dt-center",
+                    data: 'CreateDate',
                     render: function (data) {
                         return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
                 },
                 {
-                    targets: -1,
-                    title: 'Actions',
-                    width: "10%",
-                    orderable: false,
-                    searchable: false,
-                    className: "dt-center",
+                    data: 'UpdateDate',
+                    render: function (data) {
+                        return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                    }
+                },
+                {
+                    data: 'Actions',
+                    responsivePriority: -1,
                     render: function (data, type, full, meta) {
                         return '\
                             <span class="dropdown">\
@@ -164,11 +144,26 @@ var HoldingsDataTableWidget = function () {
                                   <i class="la la-ellipsis-h"></i>\
                                 </a>\
                                 <div class="dropdown-menu dropdown-menu-right">\
-                                    <button class="dropdown-item" onclick="HoldingsUpdate.showModal(\'' + full.Uid + '\');"><i class="la la-edit"></i> ' + labels.edit +'</button>\
-                                    <button class="dropdown-item" onclick="HoldingsDelete.showModal(\'' + full.Uid + '\');"><i class="la la-remove"></i> ' + labels.remove +'</button>\
+                                    <button class="dropdown-item" onclick="HoldingsUpdate.showModal(\'' + full.Uid + '\');"><i class="la la-edit"></i> ' + labels.edit + '</button>\
+                                    <button class="dropdown-item" onclick="HoldingsDelete.showModal(\'' + full.Uid + '\');"><i class="la la-remove"></i> ' + labels.remove + '</button>\
                                 </div>\
                             </span>';
                     }
+                }
+            ],
+            columnDefs: [
+                {
+                    targets: [1,2],
+                    width: "12%",
+                    className: "dt-center"
+                },
+                {
+                    targets: -1,
+                    title: 'Actions',
+                    width: "10%",
+                    orderable: false,
+                    searchable: false,
+                    className: "dt-center"
                 }
             ]
         });
