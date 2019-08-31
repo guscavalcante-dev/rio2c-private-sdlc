@@ -99,6 +99,7 @@
     <Compile Include="Entities\Addresses\Address.cs" />
     <Compile Include="Entities\Base\AggregateRoot.cs" />
     <Compile Include="Entities\Collaborator\AttendeeCollaborator.cs" />
+    <Compile Include="Entities\Collaborator\AttendeeCollaboratorTicket.cs" />
     <Compile Include="Entities\Collaborator\CollaboratorProducer.cs" />
     <Compile Include="Entities\Collaborator\CollaboratorSpeaker.cs" />
     <Compile Include="Entities\Common\InterestGroup.cs" />
@@ -156,9 +157,12 @@
     <Compile Include="Entities\Quiz\QuizQuestion.cs" />
     <Compile Include="Entities\Room\RoomName.cs" />
     <Compile Include="Entities\Room\Room.cs" />
+    <Compile Include="Entities\SalesPlatform\AttendeeSalesPlatformTicketType.cs" />
+    <Compile Include="Entities\SalesPlatform\AttendeeSalesPlatform.cs" />
     <Compile Include="Entities\SalesPlatform\SalesPlatformWebhookRequest.cs" />
     <Compile Include="Entities\SalesPlatform\SalesPlatform.cs" />
     <Compile Include="Entities\Speaker\Speaker.cs" />
+    <Compile Include="Entities\TicketTypes\TicketType.cs" />
     <Compile Include="Enums\NegotiationTypeCodes.cs" />
     <Compile Include="Enums\StatusProjectCodes.cs" />
     <Compile Include="Interfaces\IMailCollaboratorRepository.cs" />

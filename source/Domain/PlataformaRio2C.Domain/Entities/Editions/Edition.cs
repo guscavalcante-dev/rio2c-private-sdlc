@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 08-31-2019
 // ***********************************************************************
 // <copyright file="Edition.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -41,6 +41,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         public virtual ICollection<AttendeeOrganization> AttendeeOrganizations { get; private set; }
         public virtual ICollection<AttendeeCollaborator> AttendeeCollaborators { get; private set; }
+        public virtual ICollection<AttendeeSalesPlatform> AttendeeSalesPlatforms { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="Edition"/> class.</summary>
         /// <param name="name">The name.</param>

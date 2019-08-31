@@ -78,6 +78,7 @@
     <Compile Include="Interfaces\IDbContext.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Mapping\Collaborator\AttendeeCollaboratorMap.cs" />
+    <Compile Include="Mapping\Collaborator\AttendeeCollaboratorTicketMap.cs" />
     <Compile Include="Mapping\Collaborator\CollaboratorProducerMap.cs" />
     <Compile Include="Mapping\Common\ActivityMap.cs" />
     <Compile Include="Mapping\Addresses\AddressMap.cs" />
@@ -136,10 +137,13 @@
     <Compile Include="Mapping\Quiz\QuizQuestionMap.cs" />
     <Compile Include="Mapping\Room\RoomNameMap.cs" />
     <Compile Include="Mapping\Room\RoomMap.cs" />
+    <Compile Include="Mapping\SalesPlatform\AttendeeSalesPlatformTicketTypeMap.cs" />
+    <Compile Include="Mapping\SalesPlatform\AttendeeSalesPlatformMap.cs" />
     <Compile Include="Mapping\SalesPlatform\SalesPlatformWebhookRequestMap.cs" />
     <Compile Include="Mapping\SalesPlatform\SalesPlatformMap.cs" />
     <Compile Include="Mapping\Speaker\SpeakerMap.cs" />
     <Compile Include="Mapping\TargetAudienceMap.cs" />
+    <Compile Include="Mapping\SalesPlatform\TicketTypeMap.cs" />
     <Compile Include="Mapping\User\UserRoleMap.cs" />
     <Compile Include="Mapping\User\RoleMap.cs" />
     <Compile Include="Mapping\User\UserUseTermMap.cs" />

@@ -118,7 +118,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 result = await this.commandBus.Send(new ProcessPendingPlatformWebhookRequestsAsync());
                 if (!result.IsValid)
                 {
-                    throw new DomainException("Sales platform webhook requests processed with some errors");
+                    throw new DomainException("Sales platform webhook requests processed with some errors.");
                 }
             }
             catch (DomainException ex)
@@ -131,7 +131,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 return await Json(new { status = "error", message = "Sales platform webhook requests failed." });
             }
 
-            return await Json(new { status = "success", message = "Sales platform webhook requests processed successfully without errors" });
+            return await Json(new { status = "success", message = "Sales platform webhook requests processed successfully without errors." });
         }
 
         #endregion

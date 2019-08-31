@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-28-2019
+// Last Modified On : 08-31-2019
 // ***********************************************************************
 // <copyright file="PlataformaRio2CContext.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -57,6 +57,7 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new CollaboratorJobTitleMap());
             modelBuilder.Configurations.Add(new CollaboratorMiniBioMap());
             modelBuilder.Configurations.Add(new AttendeeCollaboratorMap());
+            //modelBuilder.Configurations.Add(new AttendeeCollaboratorTicketMap());
 
             // Projects
             modelBuilder.Configurations.Add(new ProjectTypeMap());
@@ -66,6 +67,13 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new StateMap());
             modelBuilder.Configurations.Add(new CityMap());
             modelBuilder.Configurations.Add(new AddressMap());
+
+            // Sales Platforms
+            modelBuilder.Configurations.Add(new SalesPlatformMap());
+            modelBuilder.Configurations.Add(new SalesPlatformWebhookRequestMap());
+            modelBuilder.Configurations.Add(new AttendeeSalesPlatformMap());
+            modelBuilder.Configurations.Add(new AttendeeSalesPlatformTicketTypeMap());
+            modelBuilder.Configurations.Add(new TicketTypeMap());
 
 
             // TODO: Old mapping that must be reviewed
@@ -126,9 +134,6 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new SpeakerMap());
 
             modelBuilder.Configurations.Add(new MusicalCommissionMap());
-
-            modelBuilder.Configurations.Add(new SalesPlatformMap());
-            modelBuilder.Configurations.Add(new SalesPlatformWebhookRequestMap());
 
             base.OnModelCreating(modelBuilder);
         }

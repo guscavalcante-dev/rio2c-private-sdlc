@@ -13,6 +13,7 @@
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
 using System;
+using System.Collections.Generic;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 
 namespace PlataformaRio2C.Domain.Entities
@@ -26,6 +27,8 @@ namespace PlataformaRio2C.Domain.Entities
         public string ApiSecret { get; private set; }
         public int MaxProcessingCount { get; private set; }
         public string SecurityStamp { get; private set; }
+
+        public virtual ICollection<AttendeeSalesPlatform> AttendeeSalesPlatforms { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="SalesPlatform"/> class.</summary>
         private SalesPlatform()
