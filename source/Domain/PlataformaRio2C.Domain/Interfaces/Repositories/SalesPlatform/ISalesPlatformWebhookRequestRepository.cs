@@ -4,7 +4,7 @@
 // Created          : 07-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-22-2019
+// Last Modified On : 08-31-2019
 // ***********************************************************************
 // <copyright file="ISalesPlatformWebhookRequestRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Domain.Interfaces
@@ -20,6 +21,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>ISalesPlatformWebhookRequestRepository</summary>
     public interface ISalesPlatformWebhookRequestRepository : IRepository<SalesPlatformWebhookRequest>
     {
-        Task<List<SalesPlatformWebhookRequest>> GetAllByPendingAsync();
+        Task<List<SalesPlatformWebhookRequest>> FindAllByPendingAsync();
+        Task<List<SalesPlatformWebhookRequestDto>> FindAllDtoByPendingAsync();
     }    
 }

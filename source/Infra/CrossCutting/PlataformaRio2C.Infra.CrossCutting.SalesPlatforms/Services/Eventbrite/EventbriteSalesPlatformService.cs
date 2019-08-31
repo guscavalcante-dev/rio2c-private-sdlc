@@ -4,18 +4,19 @@
 // Created          : 07-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-24-2019
+// Last Modified On : 08-31-2019
 // ***********************************************************************
 // <copyright file="EventbriteSalesPlatformService.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.IO;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using Newtonsoft.Json;
-using PlataformaRio2C.Application.Dtos;
+using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.Models;
 
@@ -26,8 +27,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite
     {
         private string ApiUrl = "https://www.eventbriteapi.com/v3/";
 
-        private readonly string appKey; //Rio2C: WZNU5FWLAVRAQCIWCMNW // Rafael: D4ZOJ2GY6VK2ECV6IIPD
-        private readonly string eventId = "63245927271"; // Rio2C: 63245927271 // Rafael: 65120229359
+        private readonly string appKey;
         private readonly SalesPlatformWebhookRequestDto salesPlatformWebhookRequestDto;
 
         /// <summary>Initializes a new instance of the <see cref="EventbriteSalesPlatformService"/> class.</summary>
@@ -35,19 +35,18 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite
         public EventbriteSalesPlatformService(SalesPlatformWebhookRequestDto salesPlatformWebhookRequestDto)
         {
             this.appKey = salesPlatformWebhookRequestDto.SalesPlatformDto.ApiKey;
-            //this.eventId = ConfigurationManager.AppSettings["EventbriteEventId"];
             this.salesPlatformWebhookRequestDto = salesPlatformWebhookRequestDto;
         }
 
         /// <summary>Executes the request.</summary>
-        public void ExecuteRequest()
+        public List<SalesPlatformAttendeeDto> ExecuteRequest()
         {
             if (this.salesPlatformWebhookRequestDto == null)
             {
                 throw new DomainException("The webhook request is required.");
             }
 
-            var payload = this.DeserializePayload(this.salesPlatformWebhookRequestDto.Payload);
+            var payload = this.DeserializePayload(this.salesPlatformWebhookRequestDto.SalesPlatformWebhookRequest.Payload);
 
             switch (payload.Config.Action)
             {
@@ -55,15 +54,13 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite
                 case Action.EventbriteAttendeeUpdated:
                 case Action.EventbriteAttendeeCheckedIn:
                 case Action.EventbriteAttendeeCheckedOut:
-                    this.GetAttendee(payload.ApiUrl);
-                    break;
+                    return this.GetAttendee(payload.ApiUrl);
 
                 // Orders updates
                 case Action.EventbriteOrderPlaced:
                 case Action.EventbriteOrderRefunded:
                 case Action.EventbriteOrderUpdated:
-                    this.GetOrder(payload.ApiUrl);
-                    break;
+                    return this.GetOrder(payload.ApiUrl);
 
                 // Other Updates
                 default:
@@ -73,16 +70,37 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite
 
         /// <summary>Gets the attendee.</summary>
         /// <param name="apiUrl">The API URL.</param>
-        public void GetAttendee(string apiUrl)
+        public List<SalesPlatformAttendeeDto> GetAttendee(string apiUrl)
         {
-            var response = this.ExecuteRequest<Attendee>(apiUrl, HttpMethod.Get, null);
+            var attendee = this.ExecuteRequest<Attendee>(apiUrl, HttpMethod.Get, null);
+            if (attendee == null)
+            {
+                return null;
+            }
+
+            var attendees = new List<SalesPlatformAttendeeDto>();
+            attendees.Add(new SalesPlatformAttendeeDto(attendee));
+
+            return attendees;
         }
 
         /// <summary>Gets the order.</summary>
         /// <param name="apiUrl">The API URL.</param>
-        public void GetOrder(string apiUrl)
+        public List<SalesPlatformAttendeeDto> GetOrder(string apiUrl)
         {
             var response = this.ExecuteRequest<Order>(apiUrl + "?expand=attendees", HttpMethod.Get, null);
+            if (response == null)
+            {
+                return null;
+            }
+
+            var attendees = new List<SalesPlatformAttendeeDto>();
+            foreach (var attendee in response.Attendees)
+            {
+                attendees.Add(new SalesPlatformAttendeeDto(attendee));
+            }
+
+            return attendees;
         }
 
         //public void GetEvent()

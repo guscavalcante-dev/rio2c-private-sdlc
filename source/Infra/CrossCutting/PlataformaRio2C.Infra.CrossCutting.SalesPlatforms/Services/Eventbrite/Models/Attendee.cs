@@ -4,7 +4,7 @@
 // Created          : 07-23-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-23-2019
+// Last Modified On : 08-31-2019
 // ***********************************************************************
 // <copyright file="Attendee.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -43,7 +43,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.
         public string Status { get; set; }
 
         [JsonProperty("ticket_class_id")]
-        public long TicketClassId { get; set; }
+        public string TicketClassId { get; set; }
 
         [JsonProperty("ticket_class_name")]
         public string TicketClassName { get; set; }
@@ -51,8 +51,11 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.
         [JsonProperty("delivery_method")]
         public string DeliveryMethod { get; set; }
 
+        [JsonProperty("event_id")]
+        public string EventId { get; set; }
+
         [JsonProperty("order_id")]
-        public long OrderId { get; set; }
+        public string OrderId { get; set; }
     }
 
     /// <summary>AttendeeProfile</summary>

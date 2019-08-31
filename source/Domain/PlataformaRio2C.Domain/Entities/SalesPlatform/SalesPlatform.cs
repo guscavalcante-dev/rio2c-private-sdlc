@@ -4,14 +4,13 @@
 // Created          : 07-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-30-2019
+// Last Modified On : 08-31-2019
 // ***********************************************************************
 // <copyright file="SalesPlatform.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Domain.Entities.Validations;
 using PlataformaRio2C.Domain.Validation;
 using System;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
@@ -38,13 +37,14 @@ namespace PlataformaRio2C.Domain.Entities
         ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
         public override bool IsValid()
         {
-            ValidationResult = new ValidationResult();
-
-            ValidationResult.Add(new SalesPlatformIsConsistent().Valid(this));
+            this.ValidationResult = new ValidationResult();
 
             return ValidationResult.IsValid;
         }
 
+        /// <summary>Validates the webhook security key.</summary>
+        /// <param name="webhookSecurityKeyString">The webhook security key string.</param>
+        /// <exception cref="DomainException">Invalid sales platform security key.</exception>
         public void ValidateWebhookSecurityKey(string webhookSecurityKeyString)
         {
             if (!string.Equals(this.WebhookSecurityKey.ToString(), webhookSecurityKeyString, StringComparison.OrdinalIgnoreCase))

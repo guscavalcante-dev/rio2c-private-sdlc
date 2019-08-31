@@ -4,7 +4,7 @@
 // Created          : 07-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-30-2019
+// Last Modified On : 08-31-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,8 +17,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using MediatR;
+using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
@@ -28,7 +28,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
     /// <summary>
     /// Class for sales platforms endpoints
     /// </summary>
-    [RoutePrefix("api/v1.0/salesplatforms")]
+    [System.Web.Http.RoutePrefix("api/v1.0/salesplatforms")]
     public class SalesPlatformController : BaseApiController
     {
         private readonly IMediator commandBus;
@@ -47,8 +47,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
         /// <summary>Pings this instance.</summary>
         /// <returns></returns>
-        [HttpGet]
-        [Route("ping")]
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("ping")]
         public async Task<IHttpActionResult> Ping()
         {
             return await Json(new { status = "success", message = "Pong" });
@@ -60,8 +60,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
         /// <summary>Tests this instance.</summary>
         /// <returns></returns>
-        [HttpPost]
-        [Route("eventbrite/{key?}")]
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("eventbrite/{key?}")]
         public async Task<IHttpActionResult> Eventbrite(string key)
         {
             try
@@ -101,54 +101,37 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
         #region Requests processing
 
-        /// <summary>Processes the requests.</summary>
-        /// <param name="key">The key.</param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("processrequests/{key?}")]
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("processrequests/{key?}")]
         public async Task<IHttpActionResult> ProcessRequests(string key)
         {
+            var result = new AppValidationResult();
+
             try
             {
-                var pendingRequests = await this.commandBus.Send(new FindAllSalesPlatformWebhooRequestsByPending());
-                if (pendingRequests == null)
+                //TODO: Validate the key with web.config
+                //if (!ModelState.IsValid)
+                //{
+                //    throw new DomainException(Messages.CorrectFormValues);
+                //}
+
+                result = await this.commandBus.Send(new ProcessPendingPlatformWebhookRequestsAsync());
+                if (!result.IsValid)
                 {
-                    return null;
-                }
-
-                // Mark all requests as processing
-                var processingRequestsUids = await this.commandBus.Send(new ProcessSalesPlatformWebhookRequests(pendingRequests.Select(m => m.Uid).ToList()));
-
-                foreach (var pendingRequest in pendingRequests.Where(m => processingRequestsUids.Contains(m.Uid)))
-                {
-                    try
-                    {
-                        //throw new DomainException("teste");
-                        var salesPlatformService = this.salesPlatformServiceFactory.Get(pendingRequest);
-                        salesPlatformService.ExecuteRequest();
-
-                        // Set as processed
-                        await this.commandBus.Send(new ConcludeSalesPlatformWebhookRequest(pendingRequest.Uid, pendingRequest.SecurityStamp));
-                    }
-                    catch (Exception ex)
-                    {
-                        // Set to process again
-                        await this.commandBus.Send(new PostponeSalesPlatformWebhookRequest(pendingRequest.Uid, null, ex.GetInnerMessage(), pendingRequest.SecurityStamp));
-                    }
+                    throw new DomainException("Sales platform webhook requests processed with some errors");
                 }
             }
             catch (DomainException ex)
             {
-                return await Json(new { status = "error", message = ex.GetInnerMessage() });
+                return await Json(new { status = "success", message = ex.GetInnerMessage(), errors = result?.Errors?.Select(e => new { e.Code, e.Message }) });
             }
             catch (Exception ex)
             {
-                return await Json(new { status = "error", message = "Undefined error." });
-                //HttpContext.RiseError(ex);
-                //return BadRequest(ex.Message);
+                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
+                return await Json(new { status = "error", message = "Sales platform webhook requests failed." });
             }
 
-            return await Json(new { status = "success", message = "Requests processed successfully." });
+            return await Json(new { status = "success", message = "Sales platform webhook requests processed successfully without errors" });
         }
 
         #endregion

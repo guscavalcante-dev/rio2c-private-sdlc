@@ -183,10 +183,9 @@
     <Compile Include="CQRS\CommandsHandlers\Organizations\DeleteOrganizationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\UpdateOrganizationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\CreateOrganizationCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\SalesPlatformWebhookRequests\PostponeSalesPlatformWebhookRequestsCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\SalesPlatformWebhookRequests\ConcludeSalesPlatformWebhookRequestsCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\SalesPlatformWebhookRequests\ProcessSalesPlatformWebhookRequestsCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\SalesPlatformWebhookRequests\BaseSalesPlatformWebhookRequestCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\SalesPlatformWebhookRequests\CreateSalesPlatformWebhookRequestCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\SalesPlatformWebhookRequests\ProcessPendingPlatformWebhookRequestsAsyncCommandHandler.cs" />
     <Compile Include="CQRS\Commands\Attendees\BaseCommands\AttendeeOrganizationBaseCommand.cs" />
     <Compile Include="CQRS\Commands\BaseCommand.cs" />
     <Compile Include="CQRS\Commands\Collaborators\BaseCommands\CollaboratorMiniBioBaseCommand.cs" />
@@ -207,9 +206,7 @@
     <Compile Include="CQRS\Commands\Holdings\UpdateHolding.cs" />
     <Compile Include="CQRS\Commands\Holdings\CreateHolding.cs" />
     <Compile Include="CQRS\Commands\Holdings\BaseCommands\HoldingDescriptionBaseCommand.cs" />
-    <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\PostponeSalesPlatformWebhookRequest.cs" />
-    <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\ConcludeSalesPlatformWebhookRequest.cs" />
-    <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\ProcessSalesPlatformWebhookRequests.cs" />
+    <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\ProcessPendingPlatformWebhookRequestsAsync.cs" />
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\CreateSalesPlatformWebhookRequest.cs" />
     <Compile Include="CQRS\BaseUserRequest.cs" />
     <Compile Include="CQRS\QueriesHandlers\AttendeeOrganizations\FindAllAttendeeOrganizationsBaseDtosByEditionUidAsyncQueryHandler.cs" />
@@ -229,8 +226,8 @@
     <Compile Include="CQRS\QueriesHandlers\Holdings\FindAllHoldingsBaseDtosByPageAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Languages\FindAllLanguagesDtosAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Quizzes\FindActiveQuizQueryHandler.cs" />
-    <Compile Include="CQRS\QueriesHandlers\SalesPlatformWebhookRequests\FindAllSalesPlatformWebhooRequestsByPendingQueryHandler.cs" />
-    <Compile Include="CQRS\QueriesHandlers\SalesPlatforms\FindSalesPlatformByNameQueryHandler.cs" />
+    <Compile Include="CQRS\QueriesHandlers\SalesPlatformWebhookRequests\FindAllSalesPlatformWebhooRequestsDtoByPendingQueryHandler.cs" />
+    <Compile Include="CQRS\QueriesHandlers\SalesPlatforms\FindSalesPlatformDtoByNameQueryHandler.cs" />
     <Compile Include="CQRS\Queries\AttendeeOrganizations\FindAllAttendeeOrganizationsBaseDtosByEditionUidAsync.cs" />
     <Compile Include="CQRS\Queries\BaseQuery.cs" />
     <Compile Include="CQRS\Queries\Cities\FindAllCitiesBaseDtosByStateUidAsync.cs" />
@@ -249,8 +246,8 @@
     <Compile Include="CQRS\Queries\Organizations\CountAllOrganizationsAsync.cs" />
     <Compile Include="CQRS\Queries\Organizations\FindOrganizationDtoByUidAsync.cs" />
     <Compile Include="CQRS\Queries\Quizzes\FindActiveQuiz.cs" />
-    <Compile Include="CQRS\Queries\SalesPlatformWebhookRequests\FindAllSalesPlatformWebhooRequestsByPending.cs" />
-    <Compile Include="CQRS\Queries\SalesPlatforms\FindSalesPlatformByName.cs" />
+    <Compile Include="CQRS\Queries\SalesPlatformWebhookRequests\FindAllSalesPlatformWebhooRequestsDtoByPending.cs" />
+    <Compile Include="CQRS\Queries\SalesPlatforms\FindSalesPlatformDtoByName.cs" />
     <Compile Include="Dtos\CustomFormSympla.cs" />
     <Compile Include="Dtos\Editions\EditionDto.cs" />
     <Compile Include="Dtos\GroupCountryDto.cs" />
@@ -424,8 +421,6 @@
     <Compile Include="ViewModels\Common\Room\RoomEditAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Room\RoomNameAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Room\RoomAppViewModel.cs" />
-    <Compile Include="Dtos\SalesPlatformWebhookRequests\SalesPlatformWebhookRequestDto.cs" />
-    <Compile Include="Dtos\SalesPlatforms\SalesPlatformDto.cs" />
     <Compile Include="ViewModels\Common\Schedule\ScheduleDayAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Schedule\ScheduleEventAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Speaker\SpeakerBasicAppViewModel.cs" />
@@ -505,6 +500,10 @@
     <ProjectReference Include="..\..\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.Resources\PlataformaRio2C.Infra.CrossCutting.Resources.csproj">
       <Project>{7e1de835-ddc4-416a-a2b7-9b4f5ffffbf4}</Project>
       <Name>PlataformaRio2C.Infra.CrossCutting.Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.SalesPlatforms\PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.csproj">
+      <Project>{73e650a2-a5c8-4035-b206-586c4e4b0846}</Project>
+      <Name>PlataformaRio2C.Infra.CrossCutting.SalesPlatforms</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.SystemParameter\PlataformaRio2C.Infra.CrossCutting.SystemParameter.csproj">
       <Project>{0c86c61e-c23c-4469-90a1-6ed8e75814db}</Project>

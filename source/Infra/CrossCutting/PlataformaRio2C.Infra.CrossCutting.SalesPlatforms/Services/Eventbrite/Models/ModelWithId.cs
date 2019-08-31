@@ -4,7 +4,7 @@
 // Created          : 07-23-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-23-2019
+// Last Modified On : 08-31-2019
 // ***********************************************************************
 // <copyright file="ModelWithId.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,6 +19,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.
     public class ModelWithId
     {
         [JsonProperty("id")]
-        public long Id;
+        public string Id;
     }
 }

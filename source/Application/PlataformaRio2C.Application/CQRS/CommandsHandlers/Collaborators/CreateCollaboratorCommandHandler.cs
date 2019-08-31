@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-29-2019
+// Last Modified On : 08-31-2019
 // ***********************************************************************
 // <copyright file="CreateCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -149,7 +149,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 };
                 updateCmd.UpdatePreSendProperties(cmd.OrganizationType, cmd.UserId, cmd.UserUid, cmd.EditionId, cmd.EditionUid, cmd.UserInterfaceLanguage);
 
-                this.AppValidationResult = await this.EventBus.Send(updateCmd, cancellationToken);
+                this.AppValidationResult = await this.CommandBus.Send(updateCmd, cancellationToken);
             }
 
             if (cmd.CropperImage?.ImageFile != null)

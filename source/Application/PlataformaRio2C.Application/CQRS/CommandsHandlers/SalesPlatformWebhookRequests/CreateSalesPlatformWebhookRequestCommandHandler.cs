@@ -4,7 +4,7 @@
 // Created          : 07-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-30-2019
+// Last Modified On : 08-31-2019
 // ***********************************************************************
 // <copyright file="CreateSalesPlatformWebhookRequestCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -55,7 +55,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.uow.BeginTransaction();
 
-            var salesPlatform = await this.salesPlatformRepo.GetByNameAsync(cmd.SalesPlatformName);
+            var salesPlatform = await this.salesPlatformRepo.FindByNameAsync(cmd.SalesPlatformName);
 
             var salesPlatformWebhookRequest = new SalesPlatformWebhookRequest(
                 cmd.SalesPlatformWebhookRequestUid,

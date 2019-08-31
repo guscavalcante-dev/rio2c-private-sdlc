@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 08-31-2019
 // ***********************************************************************
 // <copyright file="HoldingRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -145,7 +145,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         private IQueryable<Holding> GetBaseQuery(bool @readonly = false)
         {
             var consult = this.dbSet
-                .IsNotDeleted();
+                                .IsNotDeleted();
 
             return @readonly
                         ? consult.AsNoTracking()

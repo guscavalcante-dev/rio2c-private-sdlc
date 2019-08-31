@@ -80,6 +80,8 @@
     <Compile Include="Dtos\Collaborators\CollaboratorMiniBioBaseDto.cs" />
     <Compile Include="Dtos\Collaborators\CollaboratorJobTitleBaseDto.cs" />
     <Compile Include="Dtos\Editions\EditionBaseDto.cs" />
+    <Compile Include="Dtos\SalesPlatforms\SalesPlatformDto.cs" />
+    <Compile Include="Dtos\SalesPlatformWebhookRequests\SalesPlatformWebhookRequestDto.cs" />
     <Compile Include="Dtos\States\StateBaseDto.cs" />
     <Compile Include="Dtos\Countries\CountryBaseDto.cs" />
     <Compile Include="Dtos\OrganizationDescriptions\OrganizationDescriptionBaseDto.cs" />
@@ -391,8 +393,6 @@
     <Compile Include="Validations\Producer\ProducerIsConsistentForPortal.cs" />
     <Compile Include="Validations\ProjectPlayerEvaluation\ProjectPlayerEvaluationRecuseIsConsistent.cs" />
     <Compile Include="Validations\Project\ProjectIsConsistent.cs" />
-    <Compile Include="Validations\SalesPlatform\SalesPlatformWebhookRequestIsConsistent.cs" />
-    <Compile Include="Validations\SalesPlatform\SalesPlatformIsConsistent.cs" />
     <Compile Include="Validations\User\UserIsConsistent.cs" />
     <Compile Include="Enums\ClaimCodes.cs" />
     <Compile Include="Enums\ErrorCodes.cs" />

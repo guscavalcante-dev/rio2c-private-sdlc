@@ -4,14 +4,13 @@
 // Created          : 07-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-30-2019
+// Last Modified On : 08-31-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformWebhookRequest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Domain.Entities.Validations;
 using PlataformaRio2C.Domain.Validation;
 using System;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
@@ -102,9 +101,9 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Concludes the specified security stamp.</summary>
         /// <param name="securityStamp">The security stamp.</param>
-        public void Conclude(string securityStamp)
+        public void Conclude(/*string securityStamp*/)
         {
-            this.ValidateSecurityStamp(securityStamp);
+            //this.ValidateSecurityStamp(securityStamp);
             this.ValidateProcessing();
 
             if (this.IsProcessed)
@@ -126,9 +125,9 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="errorCode">The error code.</param>
         /// <param name="errorMessage">The error message.</param>
         /// <param name="securityStamp">The security stamp.</param>
-        public void Postpone(string errorCode, string errorMessage, string securityStamp)
+        public void Postpone(string errorCode, string errorMessage/*, string securityStamp*/)
         {
-            this.ValidateSecurityStamp(securityStamp);
+            //this.ValidateSecurityStamp(securityStamp);
             this.ValidateProcessing();
 
             this.IsProcessing = false;
@@ -184,9 +183,7 @@ namespace PlataformaRio2C.Domain.Entities
         ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
         public override bool IsValid()
         {
-            ValidationResult = new ValidationResult();
-
-            ValidationResult.Add(new SalesPlatformWebhookRequestIsConsistent().Valid(this));
+            this.ValidationResult = new ValidationResult();
 
             return ValidationResult.IsValid;
         }

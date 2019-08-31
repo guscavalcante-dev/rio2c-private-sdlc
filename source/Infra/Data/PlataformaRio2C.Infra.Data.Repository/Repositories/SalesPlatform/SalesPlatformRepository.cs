@@ -4,22 +4,97 @@
 // Created          : 07-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-06-2019
+// Last Modified On : 08-31-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using LinqKit;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context;
+using X.PagedList;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
+    #region Sales Platform IQueryable Extensions
+
+    /// <summary>
+    /// SalesPlatformIQueryableExtensions
+    /// </summary>
+    internal static class SalesPlatformIQueryableExtensions
+    {
+        /// <summary>Finds the by uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="salesPlatformUid">The sales platform uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<SalesPlatform> FindByUid(this IQueryable<SalesPlatform> query, Guid salesPlatformUid)
+        {
+            query = query.Where(sp => sp.Uid == salesPlatformUid);
+
+            return query;
+        }
+
+        /// <summary>Finds the name of the by.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="salesPlatformName">Name of the sales platform.</param>
+        /// <returns></returns>
+        internal static IQueryable<SalesPlatform> FindByName(this IQueryable<SalesPlatform> query, string salesPlatformName)
+        {
+            query = query.Where(sp => sp.Name == salesPlatformName);
+
+            return query;
+        }
+
+        /// <summary>Determines whether [is not deleted].</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<SalesPlatform> IsNotDeleted(this IQueryable<SalesPlatform> query)
+        {
+            query = query.Where(sp => !sp.IsDeleted);
+
+            return query;
+        }
+    }
+
+    #endregion
+
+    //#region SalesPlatformBaseDto IQueryable Extensions
+
+    ///// <summary>
+    ///// SalesPlatformBaseDtoIQueryableExtensions
+    ///// </summary>
+    //internal static class SalesPlatformBaseDtoIQueryableExtensions
+    //{
+    //    /// <summary>
+    //    /// To the list paged.
+    //    /// </summary>
+    //    /// <param name="query">The query.</param>
+    //    /// <param name="page">The page.</param>
+    //    /// <param name="pageSize">Size of the page.</param>
+    //    /// <returns></returns>
+    //    internal static async Task<IPagedList<SalesPlatformDto>> ToListPagedAsync(this IQueryable<SalesPlatformDto> query, int page, int pageSize)
+    //    {
+    //        page++;
+
+    //        // Page the list
+    //        var pagedList = await query.ToPagedListAsync(page, pageSize);
+    //        if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
+    //            pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
+
+    //        return pagedList;
+    //    }
+    //}
+
+    //#endregion
+
     /// <summary>SalesPlatformRepository</summary>
     public class SalesPlatformRepository : Repository<PlataformaRio2CContext, SalesPlatform>, ISalesPlatformRepository
     {
@@ -30,25 +105,50 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
         }
 
-        /// <summary>Método que traz todos os registros</summary>
-        /// <param name="readonly"></param>
+        /// <summary>Gets the base query.</summary>
+        /// <param name="readonly">if set to <c>true</c> [readonly].</param>
         /// <returns></returns>
-        public override IQueryable<SalesPlatform> GetAll(bool @readonly = false)
+        private IQueryable<SalesPlatform> GetBaseQuery(bool @readonly = false)
         {
-            var consult = this.dbSet;
+            var consult = this.dbSet
+                                    .IsNotDeleted();
 
             return @readonly
                         ? consult.AsNoTracking()
                         : consult;
         }
 
-        /// <summary>Gets the by name asynchronous.</summary>
+        /// <summary>Finds the by name asynchronous.</summary>
         /// <param name="name">The name.</param>
         /// <returns></returns>
-        public async Task<SalesPlatform> GetByNameAsync(string name)
+        public async Task<SalesPlatform> FindByNameAsync(string name)
         {
-            return await this.GetAll()
-                                   .FirstOrDefaultAsync(m => m.Name == name);
+            return await this.GetBaseQuery()
+                                .FindByName(name)
+                                .FirstOrDefaultAsync();
+        }
+
+        /// <summary>Finds the dto by name asynchronous.</summary>
+        /// <param name="name">The name.</param>
+        /// <returns></returns>
+        public async Task<SalesPlatformDto> FindDtoByNameAsync(string name)
+        {
+            return await this.GetBaseQuery()
+                                .FindByName(name)
+                                .Select(sp => new SalesPlatformDto
+                                {
+                                    Uid = sp.Uid,
+                                    Name = sp.Name,
+                                    WebhookSecurityKey = sp.WebhookSecurityKey,
+                                    ApiKey = sp.ApiKey,
+                                    ApiSecret = sp.ApiSecret,
+                                    MaxProcessingCount = sp.MaxProcessingCount,
+                                    CreationDate = sp.CreateDate,
+                                    UpdateUserId = sp.UpdateUserId,
+                                    UpdateDate = sp.UpdateDate,
+                                    SecurityStamp = sp.SecurityStamp
+                                })
+                                .FirstOrDefaultAsync();
         }
     }
 }

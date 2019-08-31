@@ -4,7 +4,7 @@
 // Created          : 07-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-06-2019
+// Last Modified On : 08-31-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformWebhookRequestRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,12 +16,76 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
+    #region Sales Platform Webhook Request IQueryable Extensions
+
+    /// <summary>
+    /// SalesPlatformWebhooRequestIQueryableExtensions
+    /// </summary>
+    internal static class SalesPlatformWebhooRequestIQueryableExtensions
+    {
+        /// <summary>Finds the by uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="salesPlatformWebhookRequestUid">The sales platform webhook request uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<SalesPlatformWebhookRequest> FindByUid(this IQueryable<SalesPlatformWebhookRequest> query, Guid salesPlatformWebhookRequestUid)
+        {
+            query = query.Where(spwr => spwr.Uid == salesPlatformWebhookRequestUid);
+
+            return query;
+        }
+
+        /// <summary>Determines whether this instance is pending.</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<SalesPlatformWebhookRequest> IsPending(this IQueryable<SalesPlatformWebhookRequest> query)
+        {
+            query = query.Where(spwr => !spwr.IsProcessed
+                                        && !spwr.IsProcessing
+                                        && spwr.ProcessingCount <= 15
+                                        && spwr.NextProcessingDate < DateTime.UtcNow);
+
+            return query;
+        }
+    }
+
+    #endregion
+
+    //#region SalesPlatformBaseDto IQueryable Extensions
+
+    ///// <summary>
+    ///// SalesPlatformBaseDtoIQueryableExtensions
+    ///// </summary>
+    //internal static class SalesPlatformBaseDtoIQueryableExtensions
+    //{
+    //    /// <summary>
+    //    /// To the list paged.
+    //    /// </summary>
+    //    /// <param name="query">The query.</param>
+    //    /// <param name="page">The page.</param>
+    //    /// <param name="pageSize">Size of the page.</param>
+    //    /// <returns></returns>
+    //    internal static async Task<IPagedList<SalesPlatformDto>> ToListPagedAsync(this IQueryable<SalesPlatformDto> query, int page, int pageSize)
+    //    {
+    //        page++;
+
+    //        // Page the list
+    //        var pagedList = await query.ToPagedListAsync(page, pageSize);
+    //        if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
+    //            pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
+
+    //        return pagedList;
+    //    }
+    //}
+
+    //#endregion
+
     /// <summary>SalesPlatformWebhookRequestRepository</summary>
     public class SalesPlatformWebhookRequestRepository : Repository<PlataformaRio2CContext, SalesPlatformWebhookRequest>, ISalesPlatformWebhookRequestRepository
     {
@@ -32,13 +96,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
         }
 
-        /// <summary>Método que traz todos os registros</summary>
-        /// <param name="readonly"></param>
+        /// <summary>Gets the base query.</summary>
+        /// <param name="readonly">if set to <c>true</c> [readonly].</param>
         /// <returns></returns>
-        public override IQueryable<SalesPlatformWebhookRequest> GetAll(bool @readonly = false)
+        private IQueryable<SalesPlatformWebhookRequest> GetBaseQuery(bool @readonly = false)
         {
-            var consult = this.dbSet
-                                .Include(i => i.SalesPlatform);
+            var consult = this.dbSet;
 
             return @readonly
                         ? consult.AsNoTracking()
@@ -47,13 +110,38 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         /// <summary>Gets all by pending asynchronous.</summary>
         /// <returns></returns>
-        public async Task<List<SalesPlatformWebhookRequest>> GetAllByPendingAsync()
+        public async Task<List<SalesPlatformWebhookRequest>> FindAllByPendingAsync()
         {
-            var query = this.GetAll()
-                                .Where(m => !m.IsProcessed
-                                            && !m.IsProcessing
-                                            && m.ProcessingCount <= 15
-                                            && m.NextProcessingDate < DateTime.UtcNow);
+            var query = this.GetBaseQuery()
+                                .IsPending();
+
+            return await query.ToListAsync();
+        }
+
+        /// <summary>Finds all dto by pending dto asynchronous.</summary>
+        /// <returns></returns>
+        public async Task<List<SalesPlatformWebhookRequestDto>> FindAllDtoByPendingAsync()
+        {
+            var query = this.GetBaseQuery()
+                                .IsPending()
+                                .Select(spwr => new SalesPlatformWebhookRequestDto
+                                {
+                                    Uid = spwr.Uid,
+                                    SalesPlatformWebhookRequest = spwr,
+                                    SalesPlatformDto = new SalesPlatformDto
+                                    {
+                                        Uid = spwr.SalesPlatform.Uid,
+                                        Name = spwr.SalesPlatform.Name,
+                                        WebhookSecurityKey = spwr.SalesPlatform.WebhookSecurityKey,
+                                        ApiKey = spwr.SalesPlatform.ApiKey,
+                                        ApiSecret = spwr.SalesPlatform.ApiSecret,
+                                        MaxProcessingCount = spwr.SalesPlatform.MaxProcessingCount,
+                                        CreationDate = spwr.SalesPlatform.CreateDate,
+                                        UpdateUserId = spwr.SalesPlatform.UpdateUserId,
+                                        UpdateDate = spwr.SalesPlatform.UpdateDate,
+                                        SecurityStamp = spwr.SalesPlatform.SecurityStamp,
+        }
+                                });
 
             return await query.ToListAsync();
         }
