@@ -33,18 +33,23 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>ProcessPendingPlatformWebhookRequestsAsyncCommandHandler</summary>
     public class ProcessPendingPlatformWebhookRequestsAsyncCommandHandler : BaseSalesPlatformWebhookRequestCommandHandler, IRequestHandler<ProcessPendingPlatformWebhookRequestsAsync, AppValidationResult>
     {
+        private readonly IAttendeeSalesPlatformRepository attendeeSalesPlatformRepo;
+
         /// <summary>Initializes a new instance of the <see cref="ProcessPendingPlatformWebhookRequestsAsyncCommandHandler"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="salesPlatformWebhookRequestRepository">The sales platform webhook request repository.</param>
         /// <param name="salesPlatformServiceFactory">The sales platform service factory.</param>
+        /// <param name="attendeeSalesPlatformRepository">The attendee sales platform repository.</param>
         public ProcessPendingPlatformWebhookRequestsAsyncCommandHandler(
             IMediator commandBus,
             IUnitOfWork uow,
             ISalesPlatformWebhookRequestRepository salesPlatformWebhookRequestRepository,
-            ISalesPlatformServiceFactory salesPlatformServiceFactory)
+            ISalesPlatformServiceFactory salesPlatformServiceFactory,
+            IAttendeeSalesPlatformRepository attendeeSalesPlatformRepository)
             : base(commandBus, uow, salesPlatformWebhookRequestRepository, salesPlatformServiceFactory)
         {
+            this.attendeeSalesPlatformRepo = attendeeSalesPlatformRepository;
         }
 
         /// <summary>Handles the specified process pending platform webhook requests asynchronous.</summary>
@@ -55,10 +60,21 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.Uow.BeginTransaction();
 
+            var attendeeSalesPlatformsDtos = await this.attendeeSalesPlatformRepo.FindAllDtoByIsActiveAsync();
+            if (attendeeSalesPlatformsDtos?.Any() != true)
+            {
+                this.ValidationResult.Add(new ValidationError("Webhook requests will not be processed because there is no active sales platform."));
+            }
+
             var pendingRequestsDtos = await this.CommandBus.Send(new FindAllSalesPlatformWebhooRequestsDtoByPending(), cancellationToken);
             if (pendingRequestsDtos?.Any() != true)
             {
                 this.ValidationResult.Add(new ValidationError("No pending webhook requests to process."));
+            }
+
+            // Check to stop processing
+            if (!this.ValidationResult.IsValid)
+            {
                 this.AppValidationResult.Add(this.ValidationResult);
                 return this.AppValidationResult;
             }
@@ -75,6 +91,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
+            #region Process requests
+
+            // Loop webhook requests
             foreach (var processingRequestDto in pendingRequestsDtos)
             {
                 List<SalesPlatformAttendeeDto> salesPlatformAttendeeDtos;
@@ -87,15 +106,18 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     salesPlatformAttendeeDtos = salesPlatformService.ExecuteRequest();
                     if (salesPlatformAttendeeDtos?.Any() != true)
                     {
-                        throw new DomainException($"No attendee returned by api for Uid: {processingRequestDto.Uid}");
+                        var errorMessage = $"No attendee returned by api for Uid: {processingRequestDto.Uid}";
+                        this.ValidationResult.Add(new ValidationError(errorMessage));
+                        processingRequestDto.SalesPlatformWebhookRequest.Postpone("000000001", errorMessage);
+                        this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
+                        continue;
                     }
                 }
                 catch (Exception ex)
                 {
-                    this.ValidationResult.Add(new ValidationError($"Error processing the webhook request Uid {processingRequestDto.Uid} (Error: {ex.GetInnerMessage()})."));
-                    this.AppValidationResult.Add(this.ValidationResult);
-
-                    processingRequestDto.SalesPlatformWebhookRequest.Postpone(null, ex.GetInnerMessage());
+                    var errorMessage = $"Error processing the webhook request Uid {processingRequestDto.Uid} (Error: {ex.GetInnerMessage()}).";
+                    this.ValidationResult.Add(new ValidationError(errorMessage));
+                    processingRequestDto.SalesPlatformWebhookRequest.Postpone("000000002", errorMessage);
                     this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
                     continue;
                 }
@@ -104,11 +126,48 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
                 #region Process the attendees
 
-                //if (!organization.IsValid())
-                //{
-                //    this.AppValidationResult.Add(organization.ValidationResult);
-                //    return this.AppValidationResult;
-                //}
+                var currentValidationResult = new ValidationResult();
+
+                // Loop platform attendees
+                foreach (var salesPlatformAttendeeDto in salesPlatformAttendeeDtos)
+                {
+                    // Check if the edition exits
+                    var attendeeSalesPlatformDto = attendeeSalesPlatformsDtos?.FirstOrDefault(asp => asp.AttendeeSalesPlatform.SalesPlatformEventid == salesPlatformAttendeeDto.EventId);
+                    if (attendeeSalesPlatformDto == null)
+                    {
+                        var errorMessage = $"Edition not found or not active " +
+                                           $"(SalesPlatformAttendeeId: {salesPlatformAttendeeDto.AttendeeId}; " +
+                                           $"SalesPlatformEventId: {salesPlatformAttendeeDto.EventId}).";
+                        currentValidationResult.Add(new ValidationError(errorMessage));
+                        this.AppValidationResult.Add(this.ValidationResult);
+                        continue;
+                    }
+
+                    // Check if the ticket type exists
+                    var attendeeSalesPlatformTicketType = attendeeSalesPlatformDto.AttendeeSalesPlatformTicketTypes.FirstOrDefault(asptt => asptt.TicketClassId == salesPlatformAttendeeDto.TicketClassId);
+                    if (attendeeSalesPlatformTicketType == null)
+                    {
+                        var errorMessage = $"Ticket class not found or not active " +
+                                           $"(SalesPlatformAttendeeId: {salesPlatformAttendeeDto.AttendeeId}; " +
+                                           $"TicketClassId: {salesPlatformAttendeeDto.TicketClassId}; " +
+                                           $"TicketClassName: {salesPlatformAttendeeDto.TicketClassName}).";
+                        processingRequestDto.SalesPlatformWebhookRequest.Postpone("000000004", errorMessage);
+                        currentValidationResult.Add(new ValidationError(errorMessage));
+                        continue;
+                    }
+
+                    // Create/Update Collaborator
+                }
+
+                if (!currentValidationResult.IsValid)
+                {
+                    this.AppValidationResult.Add(currentValidationResult);
+
+                    var firstError = currentValidationResult?.Errors?.FirstOrDefault();
+                    processingRequestDto.SalesPlatformWebhookRequest.Postpone(firstError?.Code, firstError?.Message);
+                    this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
+                    continue;
+                }
 
                 processingRequestDto.SalesPlatformWebhookRequest.Conclude();
                 this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
@@ -117,6 +176,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             this.Uow.SaveChanges();
+
+            #endregion
+
+            if (!this.ValidationResult.IsValid)
+            {
+                this.AppValidationResult.Add(this.ValidationResult);
+            }
 
             return this.AppValidationResult;
 

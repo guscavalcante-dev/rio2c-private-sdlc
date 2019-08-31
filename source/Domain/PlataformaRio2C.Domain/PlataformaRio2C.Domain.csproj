@@ -80,6 +80,7 @@
     <Compile Include="Dtos\Collaborators\CollaboratorMiniBioBaseDto.cs" />
     <Compile Include="Dtos\Collaborators\CollaboratorJobTitleBaseDto.cs" />
     <Compile Include="Dtos\Editions\EditionBaseDto.cs" />
+    <Compile Include="Dtos\SalesPlatforms\AttendeeSalesPlatformDto.cs" />
     <Compile Include="Dtos\SalesPlatforms\SalesPlatformDto.cs" />
     <Compile Include="Dtos\SalesPlatformWebhookRequests\SalesPlatformWebhookRequestDto.cs" />
     <Compile Include="Dtos\States\StateBaseDto.cs" />
@@ -198,6 +199,7 @@
     <Compile Include="Interfaces\Repositories\Quiz\IQuizRepository.cs" />
     <Compile Include="Interfaces\Repositories\Room\IRoomNameRepository.cs" />
     <Compile Include="Interfaces\Repositories\Room\IRoomRepository.cs" />
+    <Compile Include="Interfaces\Repositories\SalesPlatform\IAttendeeSalesPlatformRepository.cs" />
     <Compile Include="Interfaces\Repositories\SalesPlatform\ISalesPlatformWebhookRequestRepository.cs" />
     <Compile Include="Interfaces\Repositories\SalesPlatform\ISalesPlatformRepository.cs" />
     <Compile Include="Interfaces\Repositories\Speaker\ISpeakerRepository.cs" />

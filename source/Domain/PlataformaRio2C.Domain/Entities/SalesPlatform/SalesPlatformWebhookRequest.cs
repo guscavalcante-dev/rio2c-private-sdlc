@@ -142,13 +142,14 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Gets the next processing date.</summary>
         /// <returns></returns>
-        private DateTime GetNextProcessingDate()
+        private DateTime? GetNextProcessingDate()
         {
-            var visibilityTimeouts = new[] { 0, 60, 120, 180, 300, 480, 780, 1260, 2040, 3300, 5340, 8640, 13980, 22620, 36600, 42000 };
+            var visibilityTimeouts = new[] { 0, 60, 120, 180, 300, 480, 780, 1260, 2040, 3300, 5340, 8640, 13980, 22620, 36600, 42000, 84000 };
 
             if (this.ProcessingCount > 15)
             {
                 this.ProcessingCount = 15;
+                return null;
             }
 
             return (this.LastProcessingDate ?? DateTime.UtcNow).AddSeconds(visibilityTimeouts[this.ProcessingCount]);
