@@ -4,7 +4,7 @@
 // Created          : 08-31-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-31-2019
+// Last Modified On : 09-01-2019
 // ***********************************************************************
 // <copyright file="AttendeeSalesPlatformRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -118,7 +118,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     AttendeeSalesPlatform = asp,
                                     SalesPlatform = asp.SalesPlatform,
                                     Edition = asp.Edition,
-                                    AttendeeSalesPlatformTicketTypes = asp.AttendeeSalesPlatformTicketTypes.Where(asptt => !asptt.IsDeleted),
+                                    AttendeeSalesPlatformTicketTypesDtos = asp.AttendeeSalesPlatformTicketTypes
+                                                                                    .Where(asptt => !asptt.IsDeleted)
+                                                                                    .Select(asptt => new AttendeeSalesPlatformTicketTypeDto
+                                                                                    {
+                                                                                        AttendeeSalesPlatformTicketType =  asptt,
+                                                                                        TicketType = asptt.TicketType,
+                                                                                        Role = asptt.TicketType.Role
+                                                                                    })
                                 })
                                 .ToListAsync();
         }

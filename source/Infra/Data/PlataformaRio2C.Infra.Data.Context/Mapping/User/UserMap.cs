@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-27-2019
+// Last Modified On : 09-01-2019
 // ***********************************************************************
 // <copyright file="UserMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -57,7 +57,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                 {
                     cs.MapLeftKey("UserId");
                     cs.MapRightKey("RoleId");
-                    cs.ToTable("UserRoles");
+                    cs.ToTable("UsersRoles");
                 });
 
             // Ignores

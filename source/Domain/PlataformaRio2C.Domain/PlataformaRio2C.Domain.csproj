@@ -80,6 +80,7 @@
     <Compile Include="Dtos\Collaborators\CollaboratorMiniBioBaseDto.cs" />
     <Compile Include="Dtos\Collaborators\CollaboratorJobTitleBaseDto.cs" />
     <Compile Include="Dtos\Editions\EditionBaseDto.cs" />
+    <Compile Include="Dtos\SalesPlatforms\AttendeeSalesPlatformTicketTypeDto.cs" />
     <Compile Include="Dtos\SalesPlatforms\AttendeeSalesPlatformDto.cs" />
     <Compile Include="Dtos\SalesPlatforms\SalesPlatformDto.cs" />
     <Compile Include="Dtos\SalesPlatformWebhookRequests\SalesPlatformWebhookRequestDto.cs" />

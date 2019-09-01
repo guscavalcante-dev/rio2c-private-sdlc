@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-29-2019
+// Last Modified On : 09-01-2019
 // ***********************************************************************
 // <copyright file="User.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,6 +14,7 @@
 using PlataformaRio2C.Domain.Validation;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
@@ -52,10 +53,11 @@ namespace PlataformaRio2C.Domain.Entities
 
         //public override ValidationResult ValidationResult { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="User"/> class for pre-register.</summary>
+        /// <summary>Initializes a new instance of the <see cref="User"/> class.</summary>
         /// <param name="fullName">The full name.</param>
         /// <param name="email">The email.</param>
-        public User(string fullName, string email)
+        /// <param name="role">The role.</param>
+        public User(string fullName, string email, Role role)
         {
             this.Active = true;
             this.Name = fullName?.Trim();
@@ -67,6 +69,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.LockoutEnabled = false;
             this.AccessFailedCount = 0;
             this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.SynchronizeRoles(role);
         }
 
         /// <summary>Initializes a new instance of the <see cref="User"/> class.</summary>
@@ -77,12 +80,14 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Updates the specified full name.</summary>
         /// <param name="fullName">The full name.</param>
         /// <param name="email">The email.</param>
-        public void Update(string fullName, string email)
+        /// <param name="role">The role.</param>
+        public void Update(string fullName, string email, Role role)
         {
             this.Name = fullName?.Trim();
             this.UserName = this.Email = email?.Trim();
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
+            this.SynchronizeRoles(role);
         }
 
         /// <summary>Deletes this instance.</summary>
@@ -91,6 +96,27 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = true;
             this.UpdateDate = DateTime.Now;
         }
+
+        #region Roles
+
+        /// <summary>Synchronizes the roles.</summary>
+        /// <param name="role">The role.</param>
+        public void SynchronizeRoles(Role role)
+        {
+            if (this.Roles == null)
+            {
+                this.Roles = new List<Role>();
+            }
+
+            if (role == null || this.Roles.Any(r => r.Id == role.Id))
+            {
+                return;
+            }
+
+            this.Roles.Add(role);
+        }
+
+        #endregion
 
         #region Old
 

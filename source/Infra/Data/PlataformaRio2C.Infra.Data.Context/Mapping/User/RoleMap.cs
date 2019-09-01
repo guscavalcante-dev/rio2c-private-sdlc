@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-06-2019
+// Last Modified On : 09-01-2019
 // ***********************************************************************
 // <copyright file="RoleMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,7 +25,11 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.ToTable("Roles");
 
             this.Ignore(p => p.Uid);
-            this.Ignore(p => p.CreateDate);           
+            this.Ignore(p => p.IsDeleted);
+            this.Ignore(p => p.CreateDate);
+            this.Ignore(p => p.CreateUserId);
+            this.Ignore(p => p.UpdateDate);
+            this.Ignore(p => p.UpdateUserId);
         }
     }
 }

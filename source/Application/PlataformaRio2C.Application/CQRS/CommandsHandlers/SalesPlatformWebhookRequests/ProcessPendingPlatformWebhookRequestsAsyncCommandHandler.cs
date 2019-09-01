@@ -4,7 +4,7 @@
 // Created          : 08-31-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-31-2019
+// Last Modified On : 09-01-2019
 // ***********************************************************************
 // <copyright file="ProcessPendingPlatformWebhookRequestsAsyncCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,12 +19,10 @@ using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
-using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
@@ -148,8 +146,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     }
 
                     // Check if the ticket type exists
-                    var attendeeSalesPlatformTicketType = attendeeSalesPlatformDto.AttendeeSalesPlatformTicketTypes.FirstOrDefault(asptt => asptt.TicketClassId == salesPlatformAttendeeDto.TicketClassId);
-                    if (attendeeSalesPlatformTicketType == null)
+                    var attendeeSalesPlatformTicketTypeDto = attendeeSalesPlatformDto.AttendeeSalesPlatformTicketTypesDtos.FirstOrDefault(asptt => asptt.AttendeeSalesPlatformTicketType.TicketClassId == salesPlatformAttendeeDto.TicketClassId);
+                    if (attendeeSalesPlatformTicketTypeDto == null)
                     {
                         var errorMessage = $"Ticket class not found or not active " +
                                            $"(SalesPlatformAttendeeId: {salesPlatformAttendeeDto.AttendeeId}; " +
@@ -164,7 +162,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     var collaborator = await this.collaboratorRepo.FindBySalesPlatformAttendeeIdAsync(salesPlatformAttendeeDto.AttendeeId);
                     if (collaborator == null)
                     {
-                        var response = await this.CommandBus.Send(new CreateCollaboratorTicket(salesPlatformAttendeeDto, attendeeSalesPlatformDto.Edition, attendeeSalesPlatformTicketType), cancellationToken);
+                        var response = await this.CommandBus.Send(new CreateCollaboratorTicket(
+                            salesPlatformAttendeeDto, 
+                            attendeeSalesPlatformDto.Edition, 
+                            attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType, 
+                            attendeeSalesPlatformTicketTypeDto.Role), cancellationToken);
                         foreach (var error in response?.Errors)
                         {
                             currentValidationResult.Add(new ValidationError(error.Message));
@@ -172,7 +174,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     }
                     else
                     {
-                        var response = await this.CommandBus.Send(new UpdateCollaboratorTicket(collaborator, salesPlatformAttendeeDto, attendeeSalesPlatformDto.Edition, attendeeSalesPlatformTicketType), cancellationToken);
+                        var response = await this.CommandBus.Send(new UpdateCollaboratorTicket(
+                            collaborator, salesPlatformAttendeeDto, 
+                            attendeeSalesPlatformDto.Edition,
+                            attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType,
+                            attendeeSalesPlatformTicketTypeDto.Role), cancellationToken);
                         foreach (var error in response?.Errors)
                         {
                             currentValidationResult.Add(new ValidationError(error.Message));

@@ -4,7 +4,7 @@
 // Created          : 08-31-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-31-2019
+// Last Modified On : 09-01-2019
 // ***********************************************************************
 // <copyright file="TicketTypeMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -31,6 +31,10 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                 .HasMaxLength(TicketType.CodeMaxLength);
 
             // Relationships
+            this.HasRequired(t => t.Role)
+                .WithMany(e => e.TicketTypes)
+                .HasForeignKey(e => e.RoleId);
+
             this.HasMany(t => t.AttendeeSalesPlatformTicketTypes)
                 .WithRequired(e => e.TicketType)
                 .HasForeignKey(e => e.TicketTypeId);

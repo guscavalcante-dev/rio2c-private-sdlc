@@ -4,20 +4,17 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-31-2019
+// Last Modified On : 09-01-2019
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Domain.Entities.Validations;
 using PlataformaRio2C.Domain.Validation;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Threading;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
@@ -115,7 +112,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeMiniBios(miniBios, userId);
             this.SynchronizeAttendeeCollaborators(edition, attendeeOrganizations, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, address2, addressZipCode, addressIsManual, userId);
-            this.UpdateUser(email);
+            this.UpdateUser(email, null);
         }
 
         /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class.</summary>
@@ -150,7 +147,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeAttendeeCollaborators(edition, attendeeSalesPlatformTicketType, salesPlatformAttendeeId, firstName, lastMame, cellPhone, jobTitle, userId);
-            this.UpdateUser(email);
+            this.UpdateUser(email, attendeeSalesPlatformTicketType?.TicketType?.Role);
         }
 
         /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class.</summary>
@@ -219,7 +216,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeMiniBios(miniBios, userId);
             this.SynchronizeAttendeeCollaborators(edition, attendeeOrganizations, isAddingToCurrentEdition, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, address2, addressZipCode, addressIsManual, userId);
-            this.UpdateUser(email);
+            this.UpdateUser(email, null);
         }
 
         /// <summary>Deletes the specified edition.</summary>
@@ -265,15 +262,16 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Updates the user.</summary>
         /// <param name="email">The email.</param>
-        public void UpdateUser(string email)
+        /// <param name="role">The role.</param>
+        public void UpdateUser(string email, Role role)
         {
             if (this.User != null)
             {
-                this.User.Update(this.GetFullName(), email);
+                this.User.Update(this.GetFullName(), email, role);
             }
             else
             {
-                this.User = new User(this.GetFullName(), email);
+                this.User = new User(this.GetFullName(), email, role);
             }
         }
 
