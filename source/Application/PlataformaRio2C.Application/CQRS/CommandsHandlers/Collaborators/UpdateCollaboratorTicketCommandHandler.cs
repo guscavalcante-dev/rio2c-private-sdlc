@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Rafael Dantas Ruiz
-// Created          : 08-31-2019
+// Created          : 09-01-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 09-01-2019
 // ***********************************************************************
-// <copyright file="CreateCollaboratorWithTicketsHandler.cs" company="Softo">
+// <copyright file="UpdateCollaboratorTicketCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -18,12 +18,14 @@ using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>CreateCollaboratorWithTicketsHandler</summary>
-    public class CreateCollaboratorWithTicketsHandler : BaseCollaboratorCommandHandler, IRequestHandler<CreateCollaboratorTicket, AppValidationResult>
+    /// <summary>UpdateCollaboratorTicketCommandHandler</summary>
+    public class UpdateCollaboratorTicketCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<UpdateCollaboratorTicket, AppValidationResult>
     {
         private readonly IUserRepository userRepo;
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
@@ -40,7 +42,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="languageRepository">The language repository.</param>
         /// <param name="countryRepository">The country repository.</param>
-        public CreateCollaboratorWithTicketsHandler(
+        public UpdateCollaboratorTicketCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             ICollaboratorRepository collaboratorRepository,
@@ -58,70 +60,50 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.countryRepo = countryRepository;
         }
 
-        /// <summary>Handles the specified create collaborator ticket.</summary>
+        /// <summary>Handles the specified update collaborator ticket.</summary>
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(CreateCollaboratorTicket cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(UpdateCollaboratorTicket cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
-            var collaboratorUid = Guid.NewGuid();
-
             #region Initial validations
 
-            var user = await this.userRepo.GetAsync(u => u.Email == cmd.SalesPlatformAttendeeDto.Email);
+            if (cmd.Collaborator == null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.User.ToLowerInvariant(), Labels.FoundM)));
+            }
+
+            if (!this.ValidationResult.IsValid)
+            {
+                this.AppValidationResult.Add(this.ValidationResult);
+                return this.AppValidationResult;
+            }
 
             #endregion
 
-            // Create if the user was not found in database
-            if (user == null)
+            cmd.Collaborator.Update(
+                cmd.Edition,
+                cmd.AttendeeSalesPlatformTicketType,
+                cmd.TicketType,
+                cmd.Role,
+                cmd.SalesPlatformAttendeeDto.AttendeeId,
+                cmd.SalesPlatformAttendeeDto.FirstName,
+                cmd.SalesPlatformAttendeeDto.LastMame,
+                cmd.SalesPlatformAttendeeDto.Email,
+                cmd.SalesPlatformAttendeeDto.CellPhone,
+                cmd.SalesPlatformAttendeeDto.JobTitle,
+                1);
+            if (!cmd.Collaborator.IsValid())
             {
-                var collaborator = new Collaborator(
-                    collaboratorUid,
-                    cmd.Edition,
-                    cmd.AttendeeSalesPlatformTicketType,
-                    cmd.TicketType,
-                    cmd.Role,
-                    cmd.SalesPlatformAttendeeDto.AttendeeId,
-                    cmd.SalesPlatformAttendeeDto.FirstName,
-                    cmd.SalesPlatformAttendeeDto.LastMame,
-                    cmd.SalesPlatformAttendeeDto.Email,
-                    cmd.SalesPlatformAttendeeDto.CellPhone,
-                    cmd.SalesPlatformAttendeeDto.JobTitle,
-                    1);
-                if (!collaborator.IsValid())
-                {
-                    this.AppValidationResult.Add(collaborator.ValidationResult);
-                    return this.AppValidationResult;
-                }
-
-                this.CollaboratorRepo.Create(collaborator);
-                this.Uow.SaveChanges();
-                this.AppValidationResult.Data = collaborator;
+                this.AppValidationResult.Add(cmd.Collaborator.ValidationResult);
+                return this.AppValidationResult;
             }
-            else
-            {
-                //var updateCmd = new UpdateCollaborator
-                //{
-                //    CollaboratorUid = user.Collaborator.Uid,
-                //    IsAddingToCurrentEdition = true,
-                //    FirstName = cmd.FirstName,
-                //    LastNames = cmd.LastNames,
-                //    Badge = cmd.Badge,
-                //    Email = cmd.Email,
-                //    PhoneNumber = cmd.PhoneNumber,
-                //    CellPhone = cmd.CellPhone,
-                //    Address = cmd.Address,
-                //    AttendeeOrganizationBaseCommands = cmd.AttendeeOrganizationBaseCommands,
-                //    JobTitles = cmd.JobTitles,
-                //    MiniBios = cmd.MiniBios,
-                //    CropperImage = cmd.CropperImage
-                //};
-                //updateCmd.UpdatePreSendProperties(cmd.OrganizationType, cmd.UserId, cmd.UserUid, cmd.EditionId, cmd.EditionUid, cmd.UserInterfaceLanguage);
 
-                //this.AppValidationResult = await this.CommandBus.Send(updateCmd, cancellationToken);
-            }
+            this.CollaboratorRepo.Update(cmd.Collaborator);
+            this.Uow.SaveChanges();
+            this.AppValidationResult.Data = cmd.Collaborator;
 
             return this.AppValidationResult;
 

@@ -172,6 +172,7 @@
     <Compile Include="Common\StatusProjectCodes.cs" />
     <Compile Include="CQRS\CommandsHandlers\BaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\BaseCollaboratorCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorTicketCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\CreateCollaboratorTicketCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\CreateCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\DeleteCollaboratorCommandHandler.cs" />

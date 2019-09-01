@@ -161,34 +161,77 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                             continue;
                         }
 
-                        var collaborator = await this.collaboratorRepo.FindBySalesPlatformAttendeeIdAsync(salesPlatformAttendeeDto.AttendeeId);
+                        var collaboratorByAttendeeId = await this.collaboratorRepo.FindBySalesPlatformAttendeeIdAsync(salesPlatformAttendeeDto.AttendeeId);
+                        var collaboratorByEmail = await this.collaboratorRepo.GetAsync(c => c.User.Email == salesPlatformAttendeeDto.Email);
 
                         // The person is attending to the event
                         if (salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.Attending)
                         {
-                            if (collaborator == null)
+                            // Collaborator not found by attendee id and email
+                            if (collaboratorByAttendeeId == null && collaboratorByEmail == null)
                             {
                                 var response = await this.CommandBus.Send(new CreateCollaboratorTicket(
                                     salesPlatformAttendeeDto,
                                     attendeeSalesPlatformDto.Edition,
                                     attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType,
+                                    attendeeSalesPlatformTicketTypeDto.TicketType,
                                     attendeeSalesPlatformTicketTypeDto.Role), cancellationToken);
                                 foreach (var error in response?.Errors)
                                 {
                                     currentValidationResult.Add(new ValidationError(error.Message));
                                 }
                             }
-                            else
+                            // Collaborator attendee not exits or is the same of the email
+                            else if ((collaboratorByAttendeeId == null && collaboratorByEmail != null)
+                                     || (collaboratorByAttendeeId != null && collaboratorByEmail != null && collaboratorByAttendeeId.Uid == collaboratorByEmail.Uid))
                             {
-                                var response = await this.CommandBus.Send(new UpdateCollaboratorTicket(
-                                    collaborator, salesPlatformAttendeeDto,
+                                // Update collaborator ticket
+                                var response1 = await this.CommandBus.Send(new UpdateCollaboratorTicket(
+                                    collaboratorByEmail, 
+                                    salesPlatformAttendeeDto,
                                     attendeeSalesPlatformDto.Edition,
                                     attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType,
+                                    attendeeSalesPlatformTicketTypeDto.TicketType,
                                     attendeeSalesPlatformTicketTypeDto.Role), cancellationToken);
-                                foreach (var error in response?.Errors)
+                                foreach (var error in response1?.Errors)
                                 {
                                     currentValidationResult.Add(new ValidationError(error.Message));
                                 }
+                            }
+                            // Collaborator attendee exists but is not the same email
+                            else if ((collaboratorByAttendeeId != null && collaboratorByEmail == null && collaboratorByAttendeeId.User.Email != salesPlatformAttendeeDto.Email)
+                                     || (collaboratorByAttendeeId != null && collaboratorByEmail != null && collaboratorByAttendeeId.Uid != collaboratorByEmail.Uid))
+                            {
+                                // Delete ticket from collaboratorAttendeeId
+                                //var response1 = await this.CommandBus.Send(new UpdateCollaboratorTicket(
+                                //    collaboratorByEmail, salesPlatformAttendeeDto,
+                                //    attendeeSalesPlatformDto.Edition,
+                                //    attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType,
+                                //    attendeeSalesPlatformTicketTypeDto.Role), cancellationToken);
+                                //foreach (var error in response1?.Errors)
+                                //{
+                                //    currentValidationResult.Add(new ValidationError(error.Message));
+                                //}
+
+                                // Create collaborator ant ticket for new email
+                                var response2 = await this.CommandBus.Send(new CreateCollaboratorTicket(
+                                    salesPlatformAttendeeDto,
+                                    attendeeSalesPlatformDto.Edition,
+                                    attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType,
+                                    attendeeSalesPlatformTicketTypeDto.TicketType,
+                                    attendeeSalesPlatformTicketTypeDto.Role), cancellationToken);
+                                foreach (var error in response2?.Errors)
+                                {
+                                    currentValidationResult.Add(new ValidationError(error.Message));
+                                }
+                            }
+                            else 
+                            {
+                                var errorMessage = $"No logic found for webhook request (Uid: {processingRequestDto.Uid}).";
+                                this.ValidationResult.Add(new ValidationError(errorMessage));
+                                processingRequestDto.SalesPlatformWebhookRequest.Abort("000000005", errorMessage);
+                                this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
+                                continue;
                             }
 
                             //var status = await this.CommandBus.Send(new CreateCollaboratorWithTickets(), cancellationToken);
@@ -198,9 +241,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                  || salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.Attending)
                         {
                             //TODO: Delete tickets, roles, etc
-                            var errorMessage = $"Attended not attending or unpaid in not implemented: {processingRequestDto.Uid}";
+                            var errorMessage = $"Attended not attending or unpaid in not implemented (Uid: {processingRequestDto.Uid}).";
                             this.ValidationResult.Add(new ValidationError(errorMessage));
-                            processingRequestDto.SalesPlatformWebhookRequest.Abort("000000005", errorMessage);
+                            processingRequestDto.SalesPlatformWebhookRequest.Abort("000000008", errorMessage);
                             this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
                             continue;
                         }
@@ -208,7 +251,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         {
                             var errorMessage = $"Attendee status not configured (Uid: {processingRequestDto.Uid}; SalesPlatformAttendeeStatus: {salesPlatformAttendeeDto.SalesPlatformAttendeeStatus})";
                             this.ValidationResult.Add(new ValidationError(errorMessage));
-                            processingRequestDto.SalesPlatformWebhookRequest.Abort("000000006", errorMessage);
+                            processingRequestDto.SalesPlatformWebhookRequest.Abort("000000007", errorMessage);
                             this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
                             continue;
                         }
@@ -217,27 +260,27 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     else if (salesPlatformResponse.Item1 == SalesPlatformAction.AttendeeCheckedIn)
                     {
                         //TODO: Implement attendee checked in
-                        var errorMessage = $"Attended checked in not implemented: {processingRequestDto.Uid}";
+                        var errorMessage = $"Attended checked in not implemented (Uid: {processingRequestDto.Uid}).";
                         this.ValidationResult.Add(new ValidationError(errorMessage));
-                        processingRequestDto.SalesPlatformWebhookRequest.Abort("000000007", errorMessage);
+                        processingRequestDto.SalesPlatformWebhookRequest.Abort("000000008", errorMessage);
                         this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
                         continue;
                     }
                     // Attendee checked out
                     else if (salesPlatformResponse.Item1 == SalesPlatformAction.AttendeeCheckedOut)
                     {
-                        var errorMessage = $"Attended checked out not implemented: {processingRequestDto.Uid}";
+                        var errorMessage = $"Attended checked out not implemented (Uid: {processingRequestDto.Uid}).";
                         this.ValidationResult.Add(new ValidationError(errorMessage));
-                        processingRequestDto.SalesPlatformWebhookRequest.Abort("000000008", errorMessage);
+                        processingRequestDto.SalesPlatformWebhookRequest.Abort("000000009", errorMessage);
                         this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
                         continue;
                     }
                     // Action not mapped
                     else
                     {
-                        var errorMessage = $"Sales platform action not configured: {processingRequestDto.Uid}";
+                        var errorMessage = $"Sales platform action not configured (Uid: {processingRequestDto.Uid}).";
                         this.ValidationResult.Add(new ValidationError(errorMessage));
-                        processingRequestDto.SalesPlatformWebhookRequest.Abort("000000009", errorMessage);
+                        processingRequestDto.SalesPlatformWebhookRequest.Abort("000000010", errorMessage);
                         this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
                         continue;
                     }

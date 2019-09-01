@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-31-2019
+// Last Modified On : 09-01-2019
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -51,7 +51,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<Collaborator> FindBySalesPlatformAttendeeId(this IQueryable<Collaborator> query, string salesPlatformAttendeeId)
         {
-            query = query.Where(c => c.AttendeeCollaborators.Any(ac => ac.AttendeeCollaboratorTickets.Any(act => act.SalesPlatformAttendeeId == salesPlatformAttendeeId)));
+            query = query.Where(c => c.AttendeeCollaborators.Any(ac => ac.AttendeeCollaboratorTickets.Any(act => !act.IsDeleted 
+                                                                                                                 && act.SalesPlatformAttendeeId == salesPlatformAttendeeId)));
 
             return query;
         }

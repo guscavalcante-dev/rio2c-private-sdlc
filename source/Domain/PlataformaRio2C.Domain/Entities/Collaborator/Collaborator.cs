@@ -115,10 +115,12 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUser(email, null);
         }
 
-        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class for tickets.</summary>
         /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <param name="edition">The edition.</param>
         /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
+        /// <param name="ticketType">Type of the ticket.</param>
+        /// <param name="role">The role.</param>
         /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastMame">The last mame.</param>
@@ -130,6 +132,8 @@ namespace PlataformaRio2C.Domain.Entities
             Guid collaboratorUid, 
             Edition edition,
             AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
+            TicketType ticketType,
+            Role role,
             string salesPlatformAttendeeId,
             string firstName, 
             string lastMame, 
@@ -147,7 +151,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeAttendeeCollaborators(edition, attendeeSalesPlatformTicketType, salesPlatformAttendeeId, firstName, lastMame, cellPhone, jobTitle, userId);
-            this.UpdateUser(email, attendeeSalesPlatformTicketType?.TicketType?.Role);
+            this.UpdateUser(email, role);
         }
 
         /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class.</summary>
@@ -155,7 +159,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Updates the specified attendee organizations.</summary>
+        /// <summary>Updates the collaborator for admin.</summary>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="edition">The edition.</param>
         /// <param name="firstName">The first name.</param>
@@ -217,6 +221,43 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeAttendeeCollaborators(edition, attendeeOrganizations, isAddingToCurrentEdition, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, address2, addressZipCode, addressIsManual, userId);
             this.UpdateUser(email, null);
+        }
+
+        /// <summary>Updates the collaborator tickets.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
+        /// <param name="ticketType">Type of the ticket.</param>
+        /// <param name="role">The role.</param>
+        /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastMame">The last mame.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="jobTitle">The job title.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Update(
+            Edition edition,
+            AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
+            TicketType ticketType,
+            Role role,
+            string salesPlatformAttendeeId,
+            string firstName,
+            string lastMame,
+            string email,
+            string cellPhone,
+            string jobTitle,
+            int userId)
+        {
+            //this.Uid = collaboratorUid;
+            this.FirstName = !string.IsNullOrEmpty(this.FirstName) ? this.FirstName : firstName?.Trim();
+            this.LastNames = !string.IsNullOrEmpty(this.LastNames) ? this.LastNames : lastMame?.Trim();
+            this.Badge = !string.IsNullOrEmpty(this.Badge) ? this.Badge : (firstName?.Trim() + (!string.IsNullOrEmpty(lastMame) ? " " + lastMame?.Trim() : string.Empty));
+            this.CellPhone = !string.IsNullOrEmpty(this.CellPhone) ? this.CellPhone : cellPhone?.Trim();
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            this.SynchronizeAttendeeCollaborators(edition, attendeeSalesPlatformTicketType, salesPlatformAttendeeId, firstName, lastMame, cellPhone, jobTitle, userId);
+            this.UpdateUser(this.User.Email, role);
         }
 
         /// <summary>Deletes the specified edition.</summary>

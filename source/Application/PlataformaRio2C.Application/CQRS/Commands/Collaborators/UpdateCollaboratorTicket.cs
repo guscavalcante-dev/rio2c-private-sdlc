@@ -22,21 +22,31 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public Collaborator Collaborator { get; private set; }
         public SalesPlatformAttendeeDto SalesPlatformAttendeeDto { get; private set; }
         public Edition Edition { get; private set; }
-        public AttendeeSalesPlatformTicketType AttendeeSalesPlatformTicketType { get; private set; }
-        public Role Role { get; private set; }
+        public AttendeeSalesPlatformTicketType AttendeeSalesPlatformTicketType { get; set; }
+        public TicketType TicketType { get; set; }
+        public Role Role { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorTicket"/> class.</summary>
         /// <param name="collaborator">The collaborator.</param>
         /// <param name="salesPlatformAttendeeDto">The sales platform attendee dto.</param>
         /// <param name="edition">The edition.</param>
         /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
+        /// <param name="ticketType">Type of the ticket.</param>
         /// <param name="role">The role.</param>
-        public UpdateCollaboratorTicket(Collaborator collaborator, SalesPlatformAttendeeDto salesPlatformAttendeeDto, Edition edition, AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType, Role role)
+        public UpdateCollaboratorTicket(
+            Collaborator collaborator, 
+            SalesPlatformAttendeeDto salesPlatformAttendeeDto, 
+            Edition edition,
+            AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
+            TicketType ticketType,
+            Role role)
+
         {
             this.Collaborator = collaborator;
             this.SalesPlatformAttendeeDto = salesPlatformAttendeeDto;
             this.Edition = edition;
             this.AttendeeSalesPlatformTicketType = attendeeSalesPlatformTicketType;
+            this.TicketType = ticketType;
             this.Role = role;
         }
     }
