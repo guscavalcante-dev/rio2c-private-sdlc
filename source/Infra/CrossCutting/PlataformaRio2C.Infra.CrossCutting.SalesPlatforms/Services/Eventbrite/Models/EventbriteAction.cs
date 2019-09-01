@@ -4,23 +4,23 @@
 // Created          : 07-24-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-24-2019
+// Last Modified On : 09-01-2019
 // ***********************************************************************
-// <copyright file="Action.cs" company="Softo">
+// <copyright file="EventbriteAction.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.Models
 {
-    /// <summary>Action</summary>
-    public class Action
+    /// <summary>EventbriteAction</summary>
+    public class EventbriteAction
     {
-        public const string EventbriteAttendeeUpdated  = "attendee.updated";
-        public const string EventbriteAttendeeCheckedIn = "barcode.checked_in";
-        public const string EventbriteAttendeeCheckedOut = "barcode.un_checked_in";
-        public const string EventbriteOrderPlaced = "order.placed";
-        public const string EventbriteOrderRefunded = "order.refunded";
-        public const string EventbriteOrderUpdated = "order.updated";
+        public const string AttendeeUpdated  = "attendee.updated";
+        public const string AttendeeCheckedIn = "barcode.checked_in";
+        public const string AttendeeCheckedOut = "barcode.un_checked_in";
+        public const string OrderPlaced = "order.placed";
+        public const string OrderRefunded = "order.refunded";
+        public const string OrderUpdated = "order.updated";
     }
 }

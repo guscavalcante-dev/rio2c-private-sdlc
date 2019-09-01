@@ -1,25 +1,22 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Infra.CrossCutting.SalesPlatforms
 // Author           : Rafael Dantas Ruiz
-// Created          : 07-12-2019
+// Created          : 07-23-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 09-01-2019
 // ***********************************************************************
-// <copyright file="ISalesPlatformService.cs" company="Softo">
+// <copyright file="EventbriteErrors.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
-using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos;
-
-namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services
+namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.Models
 {
-    /// <summary>ISalesPlatformService</summary>
-    public interface ISalesPlatformService
+    /// <summary>EventbriteErrors</summary>
+    public class EventbriteErrors
     {
-        Tuple<string, List<SalesPlatformAttendeeDto>> ExecuteRequest();
+        public string ErrorType { get; set; }
+        public string ErrorMessage { get; set; }
     }
 }

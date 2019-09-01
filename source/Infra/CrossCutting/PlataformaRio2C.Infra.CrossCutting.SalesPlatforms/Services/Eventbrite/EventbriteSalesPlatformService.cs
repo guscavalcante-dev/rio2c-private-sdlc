@@ -4,13 +4,14 @@
 // Created          : 07-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-31-2019
+// Last Modified On : 09-01-2019
 // ***********************************************************************
 // <copyright file="EventbriteSalesPlatformService.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -39,7 +40,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite
         }
 
         /// <summary>Executes the request.</summary>
-        public List<SalesPlatformAttendeeDto> ExecuteRequest()
+        public Tuple<string, List<SalesPlatformAttendeeDto>> ExecuteRequest()
         {
             if (this.salesPlatformWebhookRequestDto == null)
             {
@@ -51,16 +52,16 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite
             switch (payload.Config.Action)
             {
                 // Attendees updates
-                case Action.EventbriteAttendeeUpdated:
-                case Action.EventbriteAttendeeCheckedIn:
-                case Action.EventbriteAttendeeCheckedOut:
-                    return this.GetAttendee(payload.ApiUrl);
+                case EventbriteAction.AttendeeUpdated:
+                case EventbriteAction.AttendeeCheckedIn:
+                case EventbriteAction.AttendeeCheckedOut:
+                    return new Tuple<string, List<SalesPlatformAttendeeDto>>(payload.Config.GetSalesPlatformAction(), this.GetAttendee(payload.ApiUrl));
 
-                // Orders updates
-                case Action.EventbriteOrderPlaced:
-                case Action.EventbriteOrderRefunded:
-                case Action.EventbriteOrderUpdated:
-                    return this.GetOrder(payload.ApiUrl);
+                //// Orders updates
+                //case Action.EventbriteOrderPlaced:
+                //case Action.EventbriteOrderRefunded:
+                //case Action.EventbriteOrderUpdated:
+                //    return new Tuple<string, List<SalesPlatformAttendeeDto>>(payload.Config.GetAction(), this.GetOrder(payload.ApiUrl));
 
                 // Other Updates
                 default:
@@ -72,7 +73,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite
         /// <param name="apiUrl">The API URL.</param>
         public List<SalesPlatformAttendeeDto> GetAttendee(string apiUrl)
         {
-            var attendee = this.ExecuteRequest<Attendee>(apiUrl, HttpMethod.Get, null);
+            var attendee = this.ExecuteRequest<EventbriteAttendee>(apiUrl, HttpMethod.Get, null);
             if (attendee == null)
             {
                 return null;
@@ -88,7 +89,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite
         /// <param name="apiUrl">The API URL.</param>
         public List<SalesPlatformAttendeeDto> GetOrder(string apiUrl)
         {
-            var response = this.ExecuteRequest<Order>(apiUrl + "?expand=attendees", HttpMethod.Get, null);
+            var response = this.ExecuteRequest<EventbriteOrder>(apiUrl + "?expand=attendees", HttpMethod.Get, null);
             if (response == null)
             {
                 return null;
@@ -113,9 +114,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite
         /// <summary>Deserializes the payload.</summary>
         /// <param name="payload">The payload.</param>
         /// <returns></returns>
-        private Payload DeserializePayload(string payload)
+        private EventbritePayload DeserializePayload(string payload)
         {
-            return JsonConvert.DeserializeObject<Payload>(payload);
+            return JsonConvert.DeserializeObject<EventbritePayload>(payload);
         }
 
         /// <summary>Executes the request.</summary>
@@ -148,6 +149,12 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite
 }
 
 /*
+
+--- Attendee status
+    + attending (i.e. checked into the Event)
+    + not_attending (i.e. not checked into the Event)
+    + unpaid
+
 
 --- Statuses
     + started     - order is created

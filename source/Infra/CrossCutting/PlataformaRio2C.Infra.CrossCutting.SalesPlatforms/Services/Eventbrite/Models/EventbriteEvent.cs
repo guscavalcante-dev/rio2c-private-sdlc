@@ -4,9 +4,9 @@
 // Created          : 07-23-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-23-2019
+// Last Modified On : 09-01-2019
 // ***********************************************************************
-// <copyright file="Event.cs" company="Softo">
+// <copyright file="EventbriteEvent.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -15,14 +15,14 @@ using Newtonsoft.Json;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.Models
 {
-    /// <summary>Event</summary>
-    public class Event : ModelWithId
+    /// <summary>EventbriteEvent</summary>
+    public class EventbriteEvent : EventbriteModelWithId
     {
         [JsonProperty("name")]
-        public EventName Name { get; set; }
+        public EventbriteEventName Name { get; set; }
 
         [JsonProperty("description")]
-        public EventDescription Description { get; set; }
+        public EventbriteEventDescription Description { get; set; }
 
         [JsonProperty("url")]
         public string Url { get; set; }
@@ -43,15 +43,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.
         public int? Capacity { get; set; }
     }
 
-    /// <summary>EventName</summary>
-    public class EventName
+    /// <summary>EventbriteEventName</summary>
+    public class EventbriteEventName
     {
         [JsonProperty("Text")]
         public string Text { get; set; }
     }
 
-    /// <summary>EventDescription</summary>
-    public class EventDescription
+    /// <summary>EventbriteEventDescription</summary>
+    public class EventbriteEventDescription
     {
         [JsonProperty("Text")]
         public string Text { get; set; }

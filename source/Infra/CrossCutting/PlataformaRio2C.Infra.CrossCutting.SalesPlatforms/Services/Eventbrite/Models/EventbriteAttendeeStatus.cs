@@ -1,22 +1,23 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Infra.CrossCutting.SalesPlatforms
 // Author           : Rafael Dantas Ruiz
-// Created          : 07-23-2019
+// Created          : 09-01-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-23-2019
+// Last Modified On : 09-01-2019
 // ***********************************************************************
-// <copyright file="Error.cs" company="Softo">
+// <copyright file="EventbriteAttendeeStatus.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.Models
 {
-    /// <summary>Error</summary>
-    public class Error
+    /// <summary>EventbriteAttendeeStatus</summary>
+    public class EventbriteAttendeeStatus
     {
-        public string ErrorType { get; set; }
-        public string ErrorMessage { get; set; }
+        public const string Attending  = "attending";
+        public const string NotAttending = "not_attending";
+        public const string Unpaid = "unpaid";
     }
 }

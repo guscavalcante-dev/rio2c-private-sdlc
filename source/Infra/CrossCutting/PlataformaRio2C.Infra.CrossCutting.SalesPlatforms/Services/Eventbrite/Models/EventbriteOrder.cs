@@ -4,9 +4,9 @@
 // Created          : 07-24-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-24-2019
+// Last Modified On : 09-01-2019
 // ***********************************************************************
-// <copyright file="Order.cs" company="Softo">
+// <copyright file="EventbriteOrder.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -16,8 +16,8 @@ using Newtonsoft.Json;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.Models
 {
-    /// <summary>Order</summary>
-    public class Order : ModelWithId
+    /// <summary>EventbriteOrder</summary>
+    public class EventbriteOrder : EventbriteModelWithId
     {
         [JsonProperty("Created")]
         public string Created { get; set; }
@@ -47,6 +47,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.
         public string EventId { get; set; }
 
         [JsonProperty("attendees")]
-        public List<Attendee> Attendees { get; set; }
+        public List<EventbriteAttendee> Attendees { get; set; }
     }
 }

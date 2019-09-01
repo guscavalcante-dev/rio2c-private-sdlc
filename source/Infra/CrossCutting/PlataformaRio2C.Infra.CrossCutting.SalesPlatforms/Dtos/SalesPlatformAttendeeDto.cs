@@ -4,7 +4,7 @@
 // Created          : 08-30-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-31-2019
+// Last Modified On : 09-01-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformAttendeeDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,7 +27,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
 
         // Attendee
         public string AttendeeId { get; private set; }
-        public string AttendeeStatus { get; private set; }
+        public string SalesPlatformAttendeeStatus { get; private set; }
         public bool IsCancelled { get; private set; }
         public bool IsCheckedIn { get; private set; }
         public string TicketClassId { get; private set; }
@@ -49,7 +49,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
         {
         }
 
-        public SalesPlatformAttendeeDto(Attendee eventBriteAttendee)
+        public SalesPlatformAttendeeDto(EventbriteAttendee eventBriteAttendee)
         {
             // Event
             this.EventId = eventBriteAttendee.EventId;
@@ -60,7 +60,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
 
             // Attendee
             this.AttendeeId = eventBriteAttendee.Id;
-            this.AttendeeStatus = eventBriteAttendee.Status;
+            this.SalesPlatformAttendeeStatus = eventBriteAttendee.GetSalesPlatformAttendeeStatus();
             this.IsCancelled = eventBriteAttendee.Cancelled;
             this.IsCheckedIn = eventBriteAttendee.CheckedIn;
             this.TicketClassId = eventBriteAttendee.TicketClassId;

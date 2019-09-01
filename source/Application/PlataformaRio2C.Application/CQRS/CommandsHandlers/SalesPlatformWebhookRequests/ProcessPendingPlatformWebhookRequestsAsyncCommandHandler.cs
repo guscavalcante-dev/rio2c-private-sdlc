@@ -98,15 +98,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             // Loop webhook requests
             foreach (var processingRequestDto in pendingRequestsDtos)
             {
-                List<SalesPlatformAttendeeDto> salesPlatformAttendeeDtos;
+                Tuple<string, List<SalesPlatformAttendeeDto>> salesPlatformResponse;
 
                 #region Get info from api
 
                 try
                 {
                     var salesPlatformService = this.SalesPlatformServiceFactory.Get(processingRequestDto);
-                    salesPlatformAttendeeDtos = salesPlatformService.ExecuteRequest();
-                    if (salesPlatformAttendeeDtos?.Any() != true)
+                    salesPlatformResponse = salesPlatformService.ExecuteRequest();
+                    if (salesPlatformResponse?.Item2?.Any() != true)
                     {
                         var errorMessage = $"No attendee returned by api for Uid: {processingRequestDto.Uid}";
                         this.ValidationResult.Add(new ValidationError(errorMessage));
@@ -119,73 +119,128 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 {
                     var errorMessage = $"Error processing the webhook request Uid {processingRequestDto.Uid} (Error: {ex.GetInnerMessage()}).";
                     this.ValidationResult.Add(new ValidationError(errorMessage));
-                    processingRequestDto.SalesPlatformWebhookRequest.Postpone("000000002", errorMessage);
+                    processingRequestDto.SalesPlatformWebhookRequest.Abort("000000002", ex.GetInnerMessage());
                     this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
                     continue;
                 }
 
                 #endregion
 
-                #region Process the attendees
+                #region Process the attendees 
 
                 var currentValidationResult = new ValidationResult();
 
                 // Loop platform attendees
-                foreach (var salesPlatformAttendeeDto in salesPlatformAttendeeDtos)
+                foreach (var salesPlatformAttendeeDto in salesPlatformResponse.Item2)
                 {
-                    // Check if the edition exits
-                    var attendeeSalesPlatformDto = attendeeSalesPlatformsDtos?.FirstOrDefault(asp => asp.AttendeeSalesPlatform.SalesPlatformEventid == salesPlatformAttendeeDto.EventId);
-                    if (attendeeSalesPlatformDto == null)
+                    // Attendee updated
+                    if (salesPlatformResponse.Item1 == SalesPlatformAction.AttendeeUpdated)
                     {
-                        var errorMessage = $"Edition not found or not active " +
-                                           $"(SalesPlatformAttendeeId: {salesPlatformAttendeeDto.AttendeeId}; " +
-                                           $"SalesPlatformEventId: {salesPlatformAttendeeDto.EventId}).";
-                        currentValidationResult.Add(new ValidationError(errorMessage));
-                        this.AppValidationResult.Add(this.ValidationResult);
-                        continue;
-                    }
-
-                    // Check if the ticket type exists
-                    var attendeeSalesPlatformTicketTypeDto = attendeeSalesPlatformDto.AttendeeSalesPlatformTicketTypesDtos.FirstOrDefault(asptt => asptt.AttendeeSalesPlatformTicketType.TicketClassId == salesPlatformAttendeeDto.TicketClassId);
-                    if (attendeeSalesPlatformTicketTypeDto == null)
-                    {
-                        var errorMessage = $"Ticket class not found or not active " +
-                                           $"(SalesPlatformAttendeeId: {salesPlatformAttendeeDto.AttendeeId}; " +
-                                           $"TicketClassId: {salesPlatformAttendeeDto.TicketClassId}; " +
-                                           $"TicketClassName: {salesPlatformAttendeeDto.TicketClassName}).";
-                        processingRequestDto.SalesPlatformWebhookRequest.Postpone("000000004", errorMessage);
-                        currentValidationResult.Add(new ValidationError(errorMessage));
-                        continue;
-                    }
-
-                    // Create/Update Collaborator
-                    var collaborator = await this.collaboratorRepo.FindBySalesPlatformAttendeeIdAsync(salesPlatformAttendeeDto.AttendeeId);
-                    if (collaborator == null)
-                    {
-                        var response = await this.CommandBus.Send(new CreateCollaboratorTicket(
-                            salesPlatformAttendeeDto, 
-                            attendeeSalesPlatformDto.Edition, 
-                            attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType, 
-                            attendeeSalesPlatformTicketTypeDto.Role), cancellationToken);
-                        foreach (var error in response?.Errors)
+                        // Check if the edition exits
+                        var attendeeSalesPlatformDto = attendeeSalesPlatformsDtos?.FirstOrDefault(asp => asp.AttendeeSalesPlatform.SalesPlatformEventid == salesPlatformAttendeeDto.EventId);
+                        if (attendeeSalesPlatformDto == null)
                         {
-                            currentValidationResult.Add(new ValidationError(error.Message));
+                            var errorMessage = $"Edition not found or not active " +
+                                               $"(SalesPlatformAttendeeId: {salesPlatformAttendeeDto.AttendeeId}; " +
+                                               $"SalesPlatformEventId: {salesPlatformAttendeeDto.EventId}).";
+                            currentValidationResult.Add(new ValidationError(errorMessage));
+                            this.AppValidationResult.Add(this.ValidationResult);
+                            continue;
+                        }
+
+                        // Check if the ticket type exists
+                        var attendeeSalesPlatformTicketTypeDto = attendeeSalesPlatformDto.AttendeeSalesPlatformTicketTypesDtos.FirstOrDefault(asptt => asptt.AttendeeSalesPlatformTicketType.TicketClassId == salesPlatformAttendeeDto.TicketClassId);
+                        if (attendeeSalesPlatformTicketTypeDto == null)
+                        {
+                            var errorMessage = $"Ticket class not found or not active " +
+                                               $"(SalesPlatformAttendeeId: {salesPlatformAttendeeDto.AttendeeId}; " +
+                                               $"TicketClassId: {salesPlatformAttendeeDto.TicketClassId}; " +
+                                               $"TicketClassName: {salesPlatformAttendeeDto.TicketClassName}).";
+                            processingRequestDto.SalesPlatformWebhookRequest.Postpone("000000004", errorMessage);
+                            currentValidationResult.Add(new ValidationError(errorMessage));
+                            continue;
+                        }
+
+                        var collaborator = await this.collaboratorRepo.FindBySalesPlatformAttendeeIdAsync(salesPlatformAttendeeDto.AttendeeId);
+
+                        // The person is attending to the event
+                        if (salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.Attending)
+                        {
+                            if (collaborator == null)
+                            {
+                                var response = await this.CommandBus.Send(new CreateCollaboratorTicket(
+                                    salesPlatformAttendeeDto,
+                                    attendeeSalesPlatformDto.Edition,
+                                    attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType,
+                                    attendeeSalesPlatformTicketTypeDto.Role), cancellationToken);
+                                foreach (var error in response?.Errors)
+                                {
+                                    currentValidationResult.Add(new ValidationError(error.Message));
+                                }
+                            }
+                            else
+                            {
+                                var response = await this.CommandBus.Send(new UpdateCollaboratorTicket(
+                                    collaborator, salesPlatformAttendeeDto,
+                                    attendeeSalesPlatformDto.Edition,
+                                    attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType,
+                                    attendeeSalesPlatformTicketTypeDto.Role), cancellationToken);
+                                foreach (var error in response?.Errors)
+                                {
+                                    currentValidationResult.Add(new ValidationError(error.Message));
+                                }
+                            }
+
+                            //var status = await this.CommandBus.Send(new CreateCollaboratorWithTickets(), cancellationToken);
+                        }
+                        // The person is not attending or unpaid the event
+                        else if (salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.NotAttending
+                                 || salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.Attending)
+                        {
+                            //TODO: Delete tickets, roles, etc
+                            var errorMessage = $"Attended not attending or unpaid in not implemented: {processingRequestDto.Uid}";
+                            this.ValidationResult.Add(new ValidationError(errorMessage));
+                            processingRequestDto.SalesPlatformWebhookRequest.Abort("000000005", errorMessage);
+                            this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
+                            continue;
+                        }
+                        else
+                        {
+                            var errorMessage = $"Attendee status not configured (Uid: {processingRequestDto.Uid}; SalesPlatformAttendeeStatus: {salesPlatformAttendeeDto.SalesPlatformAttendeeStatus})";
+                            this.ValidationResult.Add(new ValidationError(errorMessage));
+                            processingRequestDto.SalesPlatformWebhookRequest.Abort("000000006", errorMessage);
+                            this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
+                            continue;
                         }
                     }
+                    // Attendee checked in
+                    else if (salesPlatformResponse.Item1 == SalesPlatformAction.AttendeeCheckedIn)
+                    {
+                        //TODO: Implement attendee checked in
+                        var errorMessage = $"Attended checked in not implemented: {processingRequestDto.Uid}";
+                        this.ValidationResult.Add(new ValidationError(errorMessage));
+                        processingRequestDto.SalesPlatformWebhookRequest.Abort("000000007", errorMessage);
+                        this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
+                        continue;
+                    }
+                    // Attendee checked out
+                    else if (salesPlatformResponse.Item1 == SalesPlatformAction.AttendeeCheckedOut)
+                    {
+                        var errorMessage = $"Attended checked out not implemented: {processingRequestDto.Uid}";
+                        this.ValidationResult.Add(new ValidationError(errorMessage));
+                        processingRequestDto.SalesPlatformWebhookRequest.Abort("000000008", errorMessage);
+                        this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
+                        continue;
+                    }
+                    // Action not mapped
                     else
                     {
-                        var response = await this.CommandBus.Send(new UpdateCollaboratorTicket(
-                            collaborator, salesPlatformAttendeeDto, 
-                            attendeeSalesPlatformDto.Edition,
-                            attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType,
-                            attendeeSalesPlatformTicketTypeDto.Role), cancellationToken);
-                        foreach (var error in response?.Errors)
-                        {
-                            currentValidationResult.Add(new ValidationError(error.Message));
-                        }
+                        var errorMessage = $"Sales platform action not configured: {processingRequestDto.Uid}";
+                        this.ValidationResult.Add(new ValidationError(errorMessage));
+                        processingRequestDto.SalesPlatformWebhookRequest.Abort("000000009", errorMessage);
+                        this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
+                        continue;
                     }
-
-                    //var status = await this.CommandBus.Send(new CreateCollaboratorWithTickets(), cancellationToken);
                 }
 
                 if (!currentValidationResult.IsValid)

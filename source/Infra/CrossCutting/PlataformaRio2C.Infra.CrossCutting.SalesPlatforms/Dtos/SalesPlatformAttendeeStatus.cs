@@ -1,24 +1,23 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Infra.CrossCutting.SalesPlatforms
 // Author           : Rafael Dantas Ruiz
-// Created          : 07-23-2019
+// Created          : 09-01-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-31-2019
+// Last Modified On : 09-01-2019
 // ***********************************************************************
-// <copyright file="ModelWithId.cs" company="Softo">
+// <copyright file="SalesPlatformAttendeeStatus.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using Newtonsoft.Json;
-
-namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.Models
+namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
 {
-    /// <summary>ModelWithId</summary>
-    public class ModelWithId
+    /// <summary>SalesPlatformAttendeeStatus</summary>
+    public class SalesPlatformAttendeeStatus
     {
-        [JsonProperty("id")]
-        public string Id;
+        public const string Attending  = "attending";
+        public const string NotAttending = "not_attending";
+        public const string Unpaid = "upaind";
     }
 }

@@ -4,7 +4,7 @@
 // Created          : 07-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-31-2019
+// Last Modified On : 09-01-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformWebhookRequest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -135,6 +135,24 @@ namespace PlataformaRio2C.Domain.Entities
             this.ProcessingCount += 1;
             this.LastProcessingDate = DateTime.UtcNow;
             this.NextProcessingDate = this.GetNextProcessingDate();
+            this.ProcessingErrorCode = errorCode;
+            this.ProcessingErrorMessage = errorMessage;
+            this.SecurityStamp = Guid.NewGuid().ToString();
+        }
+
+        /// <summary>Aborts the specified error code.</summary>
+        /// <param name="errorCode">The error code.</param>
+        /// <param name="errorMessage">The error message.</param>
+        public void Abort(string errorCode, string errorMessage/*, string securityStamp*/)
+        {
+            //this.ValidateSecurityStamp(securityStamp);
+            this.ValidateProcessing();
+
+            this.IsProcessing = false;
+            this.IsProcessed = true;
+            this.ProcessingCount = 99;
+            this.LastProcessingDate = DateTime.UtcNow;
+            this.NextProcessingDate = null;
             this.ProcessingErrorCode = errorCode;
             this.ProcessingErrorMessage = errorMessage;
             this.SecurityStamp = Guid.NewGuid().ToString();

@@ -4,19 +4,20 @@
 // Created          : 07-23-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-31-2019
+// Last Modified On : 09-01-2019
 // ***********************************************************************
-// <copyright file="Attendee.cs" company="Softo">
+// <copyright file="EventbriteAttendee.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 using Newtonsoft.Json;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.Models
 {
-    /// <summary>Attendee</summary>
-    public class Attendee : ModelWithId
+    /// <summary>EventbriteAttendee</summary>
+    public class EventbriteAttendee : EventbriteModelWithId
     {
         [JsonProperty("Created")]
         public string Created { get; set; }
@@ -28,7 +29,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.
         public int? Quantity { get; set; }
 
         [JsonProperty("profile")]
-        public AttendeeProfile Profile { get; set; }
+        public EventbriteAttendeeProfile Profile { get; set; }
 
         [JsonProperty("checked_in")]
         public bool CheckedIn { get; set; }
@@ -56,10 +57,31 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.
 
         [JsonProperty("order_id")]
         public string OrderId { get; set; }
+
+        /// <summary>Gets the sales platform attendee status.</summary>
+        /// <returns></returns>
+        public string GetSalesPlatformAttendeeStatus()
+        {
+            switch (Status.ToLowerInvariant())
+            {
+                case EventbriteAttendeeStatus.Attending:
+                    return SalesPlatformAttendeeStatus.Attending;
+
+                case EventbriteAttendeeStatus.NotAttending:
+                    return SalesPlatformAttendeeStatus.NotAttending;
+
+                case EventbriteAttendeeStatus.Unpaid:
+                    return SalesPlatformAttendeeStatus.Unpaid;
+
+                // Other Updates
+                default:
+                    return Status;
+            }
+        }
     }
 
-    /// <summary>AttendeeProfile</summary>
-    public class AttendeeProfile
+    /// <summary>EventbriteAttendeeProfile</summary>
+    public class EventbriteAttendeeProfile
     {
         [JsonProperty("first_name")]
         public string FirstName { get; set; }
