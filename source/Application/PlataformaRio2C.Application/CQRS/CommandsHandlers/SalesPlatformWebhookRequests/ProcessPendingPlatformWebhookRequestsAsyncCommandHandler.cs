@@ -274,10 +274,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         }
                         // The person is not attending or unpaid the event
                         else if (salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.NotAttending
-                                 || salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.Attending)
+                                 || salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.Unpaid)
                         {
                             //TODO: Delete tickets, roles, etc
-                            var errorMessage = $"Attended not attending or unpaid in not implemented (Uid: {processingRequestDto.Uid}).";
+                            var errorMessage = $"Person not attending or unpaid in not implemented (Uid: {processingRequestDto.Uid}).";
                             this.ValidationResult.Add(new ValidationError(errorMessage));
                             processingRequestDto.SalesPlatformWebhookRequest.Abort("000000008", errorMessage);
                             this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
