@@ -4,7 +4,7 @@
 // Created          : 08-31-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-31-2019
+// Last Modified On : 09-01-2019
 // ***********************************************************************
 // <copyright file="CreateCollaboratorWithTicketsHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,17 +12,12 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Domain.Statics;
-using PlataformaRio2C.Domain.Validation;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -91,7 +86,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.SalesPlatformAttendeeDto.LastMame,
                     cmd.SalesPlatformAttendeeDto.Email,
                     cmd.SalesPlatformAttendeeDto.CellPhone,
-                    null,
+                    cmd.SalesPlatformAttendeeDto.JobTitle,
                     1);
                 if (!collaborator.IsValid())
                 {
