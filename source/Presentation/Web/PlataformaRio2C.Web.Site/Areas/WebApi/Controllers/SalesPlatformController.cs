@@ -4,7 +4,7 @@
 // Created          : 07-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-31-2019
+// Last Modified On : 09-01-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -101,6 +102,12 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
         #region Requests processing
 
+        /// <summary>Processes the requests.</summary>
+        /// <param name="key">The key.</param>
+        /// <returns></returns>
+        /// <exception cref="DomainException">Invalid key.
+        /// or
+        /// Sales platform webhook requests processed with some errors.</exception>
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("processrequests/{key?}")]
         public async Task<IHttpActionResult> ProcessRequests(string key)
@@ -109,11 +116,10 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
             try
             {
-                //TODO: Validate the key with web.config
-                //if (!ModelState.IsValid)
-                //{
-                //    throw new DomainException(Messages.CorrectFormValues);
-                //}
+                if (key?.ToLowerInvariant() != ConfigurationManager.AppSettings["ProcessWebhookRequestsApiKey"]?.ToLowerInvariant())
+                {
+                    throw new DomainException("Invalid key to execute process webhook requests.");
+                }
 
                 result = await this.commandBus.Send(new ProcessPendingPlatformWebhookRequestsAsync());
                 if (!result.IsValid)
