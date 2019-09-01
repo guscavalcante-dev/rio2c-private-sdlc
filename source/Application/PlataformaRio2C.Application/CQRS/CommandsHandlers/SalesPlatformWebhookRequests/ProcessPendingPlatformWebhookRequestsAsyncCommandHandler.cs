@@ -186,8 +186,24 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                      || (collaboratorByAttendeeId != null && collaboratorByEmail != null && collaboratorByAttendeeId.Uid == collaboratorByEmail.Uid))
                             {
                                 // Update collaborator ticket
-                                var response1 = await this.CommandBus.Send(new UpdateCollaboratorTicket(
+                                var response = await this.CommandBus.Send(new UpdateCollaboratorTicket(
                                     collaboratorByEmail, 
+                                    salesPlatformAttendeeDto,
+                                    attendeeSalesPlatformDto.Edition,
+                                    attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType,
+                                    attendeeSalesPlatformTicketTypeDto.TicketType,
+                                    attendeeSalesPlatformTicketTypeDto.Role), cancellationToken);
+                                foreach (var error in response?.Errors)
+                                {
+                                    currentValidationResult.Add(new ValidationError(error.Message));
+                                }
+                            }
+                            // Collaborator attendee exists but is not the same email
+                            else if (collaboratorByAttendeeId != null && collaboratorByEmail == null && collaboratorByAttendeeId.User.Email != salesPlatformAttendeeDto.Email)
+                            {
+                                // Delete ticket from collaboratorAttendeeId
+                                var response1 = await this.CommandBus.Send(new DeleteCollaboratorTicket(
+                                    collaboratorByAttendeeId, 
                                     salesPlatformAttendeeDto,
                                     attendeeSalesPlatformDto.Edition,
                                     attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType,
@@ -197,21 +213,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                 {
                                     currentValidationResult.Add(new ValidationError(error.Message));
                                 }
-                            }
-                            // Collaborator attendee exists but is not the same email
-                            else if ((collaboratorByAttendeeId != null && collaboratorByEmail == null && collaboratorByAttendeeId.User.Email != salesPlatformAttendeeDto.Email)
-                                     || (collaboratorByAttendeeId != null && collaboratorByEmail != null && collaboratorByAttendeeId.Uid != collaboratorByEmail.Uid))
-                            {
-                                // Delete ticket from collaboratorAttendeeId
-                                //var response1 = await this.CommandBus.Send(new UpdateCollaboratorTicket(
-                                //    collaboratorByEmail, salesPlatformAttendeeDto,
-                                //    attendeeSalesPlatformDto.Edition,
-                                //    attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType,
-                                //    attendeeSalesPlatformTicketTypeDto.Role), cancellationToken);
-                                //foreach (var error in response1?.Errors)
-                                //{
-                                //    currentValidationResult.Add(new ValidationError(error.Message));
-                                //}
 
                                 // Create collaborator ant ticket for new email
                                 var response2 = await this.CommandBus.Send(new CreateCollaboratorTicket(
@@ -225,7 +226,36 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                     currentValidationResult.Add(new ValidationError(error.Message));
                                 }
                             }
-                            else 
+                            // Collaborator attendee exists and collaborator email exists but area differente emails
+                            else if (collaboratorByAttendeeId != null && collaboratorByEmail != null && collaboratorByAttendeeId.Uid != collaboratorByEmail.Uid)
+                            {
+                                // Delete ticket from collaboratorAttendeeId
+                                var response1 = await this.CommandBus.Send(new DeleteCollaboratorTicket(
+                                    collaboratorByAttendeeId,
+                                    salesPlatformAttendeeDto,
+                                    attendeeSalesPlatformDto.Edition,
+                                    attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType,
+                                    attendeeSalesPlatformTicketTypeDto.TicketType,
+                                    attendeeSalesPlatformTicketTypeDto.Role), cancellationToken);
+                                foreach (var error in response1?.Errors)
+                                {
+                                    currentValidationResult.Add(new ValidationError(error.Message));
+                                }
+
+                                // Update collaborator ticket
+                                var response2 = await this.CommandBus.Send(new UpdateCollaboratorTicket(
+                                    collaboratorByEmail,
+                                    salesPlatformAttendeeDto,
+                                    attendeeSalesPlatformDto.Edition,
+                                    attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType,
+                                    attendeeSalesPlatformTicketTypeDto.TicketType,
+                                    attendeeSalesPlatformTicketTypeDto.Role), cancellationToken);
+                                foreach (var error in response2?.Errors)
+                                {
+                                    currentValidationResult.Add(new ValidationError(error.Message));
+                                }
+                            }
+                            else
                             {
                                 var errorMessage = $"No logic found for webhook request (Uid: {processingRequestDto.Uid}).";
                                 this.ValidationResult.Add(new ValidationError(errorMessage));

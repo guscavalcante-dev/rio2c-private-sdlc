@@ -216,6 +216,40 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
+        /// <summary>Deletes the attendee collaborator ticket.</summary>
+        /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
+        /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void DeleteAttendeeCollaboratorTicket(
+            AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
+            string salesPlatformAttendeeId,
+            int userId)
+        {
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+
+            if (this.AttendeeCollaboratorTickets == null)
+            {
+                return;
+            }
+
+            var attendeeCollaboratorTicket = this.AttendeeCollaboratorTickets.FirstOrDefault(act => act.SalesPlatformAttendeeId == salesPlatformAttendeeId 
+                                                                                                    && !act.IsDeleted);
+            attendeeCollaboratorTicket?.Delete(userId);
+
+            if (this.FindAllAttendeeCollaboratorTicketsNotDeleted()?.Any() != true)
+            {
+                this.IsDeleted = true;
+            }
+        }
+
+        /// <summary>Finds all attendee collaborator tickets not deleted.</summary>
+        /// <returns></returns>
+        private List<AttendeeCollaboratorTicket> FindAllAttendeeCollaboratorTicketsNotDeleted()
+        {
+            return this.AttendeeCollaboratorTickets?.Where(act => !act.IsDeleted).ToList();
+        }
+
         #endregion
 
         #region Validations

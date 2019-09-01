@@ -4,7 +4,7 @@
 // Created          : 07-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-31-2019
+// Last Modified On : 09-01-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformWebhookRequestRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -124,6 +124,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery()
                                 .IsPending()
+                                .OrderBy(spwr => spwr.CreateDate)
                                 .Select(spwr => new SalesPlatformWebhookRequestDto
                                 {
                                     Uid = spwr.Uid,
@@ -140,7 +141,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         UpdateUserId = spwr.SalesPlatform.UpdateUserId,
                                         UpdateDate = spwr.SalesPlatform.UpdateDate,
                                         SecurityStamp = spwr.SalesPlatform.SecurityStamp,
-        }
+                                    }
                                 });
 
             return await query.ToListAsync();

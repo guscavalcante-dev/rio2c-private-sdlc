@@ -223,43 +223,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUser(email, null);
         }
 
-        /// <summary>Updates the collaborator tickets.</summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
-        /// <param name="ticketType">Type of the ticket.</param>
-        /// <param name="role">The role.</param>
-        /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
-        /// <param name="firstName">The first name.</param>
-        /// <param name="lastMame">The last mame.</param>
-        /// <param name="email">The email.</param>
-        /// <param name="cellPhone">The cell phone.</param>
-        /// <param name="jobTitle">The job title.</param>
-        /// <param name="userId">The user identifier.</param>
-        public void Update(
-            Edition edition,
-            AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
-            TicketType ticketType,
-            Role role,
-            string salesPlatformAttendeeId,
-            string firstName,
-            string lastMame,
-            string email,
-            string cellPhone,
-            string jobTitle,
-            int userId)
-        {
-            //this.Uid = collaboratorUid;
-            this.FirstName = !string.IsNullOrEmpty(this.FirstName) ? this.FirstName : firstName?.Trim();
-            this.LastNames = !string.IsNullOrEmpty(this.LastNames) ? this.LastNames : lastMame?.Trim();
-            this.Badge = !string.IsNullOrEmpty(this.Badge) ? this.Badge : (firstName?.Trim() + (!string.IsNullOrEmpty(lastMame) ? " " + lastMame?.Trim() : string.Empty));
-            this.CellPhone = !string.IsNullOrEmpty(this.CellPhone) ? this.CellPhone : cellPhone?.Trim();
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
-            this.UpdateUserId = userId;
-            this.SynchronizeAttendeeCollaborators(edition, attendeeSalesPlatformTicketType, salesPlatformAttendeeId, firstName, lastMame, cellPhone, jobTitle, userId);
-            this.UpdateUser(this.User.Email, role);
-        }
-
         /// <summary>Deletes the specified edition.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="userId">The user identifier.</param>
@@ -594,6 +557,94 @@ namespace PlataformaRio2C.Domain.Entities
             {
                 this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, this, attendeeSalesPlatformTicketType, salesPlatformAttendeeId, firstName, lastName, cellPhone, jobTitle, userId));
             }
+        }
+
+        /// <summary>Deletes the ticket.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
+        /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteTicket(
+            Edition edition,
+            AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
+            string salesPlatformAttendeeId,
+            int userId)
+        {
+            if (this.AttendeeCollaborators == null)
+            {
+                return;
+            }
+
+            if (edition == null)
+            {
+                return;
+            }
+
+            var attendeeCollaborator = this.AttendeeCollaborators.FirstOrDefault(ao => ao.EditionId == edition.Id);
+            attendeeCollaborator?.DeleteAttendeeCollaboratorTicket(attendeeSalesPlatformTicketType, salesPlatformAttendeeId, userId);
+        }
+
+        #endregion
+
+        #region Tickets
+
+        /// <summary>Updates the ticket.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
+        /// <param name="ticketType">Type of the ticket.</param>
+        /// <param name="role">The role.</param>
+        /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastMame">The last mame.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="jobTitle">The job title.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateTicket(
+            Edition edition,
+            AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
+            TicketType ticketType,
+            Role role,
+            string salesPlatformAttendeeId,
+            string firstName,
+            string lastMame,
+            string email,
+            string cellPhone,
+            string jobTitle,
+            int userId)
+        {
+            //this.Uid = collaboratorUid;
+            this.FirstName = !string.IsNullOrEmpty(this.FirstName) ? this.FirstName : firstName?.Trim();
+            this.LastNames = !string.IsNullOrEmpty(this.LastNames) ? this.LastNames : lastMame?.Trim();
+            this.Badge = !string.IsNullOrEmpty(this.Badge) ? this.Badge : (firstName?.Trim() + (!string.IsNullOrEmpty(lastMame) ? " " + lastMame?.Trim() : string.Empty));
+            this.CellPhone = !string.IsNullOrEmpty(this.CellPhone) ? this.CellPhone : cellPhone?.Trim();
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            this.SynchronizeAttendeeCollaborators(edition, attendeeSalesPlatformTicketType, salesPlatformAttendeeId, firstName, lastMame, cellPhone, jobTitle, userId);
+            this.UpdateUser(this.User.Email, role);
+        }
+
+        /// <summary>Deletes the ticket.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
+        /// <param name="ticketType">Type of the ticket.</param>
+        /// <param name="role">The role.</param>
+        /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void DeleteTicket(
+            Edition edition,
+            AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
+            TicketType ticketType,
+            Role role,
+            string salesPlatformAttendeeId,
+            int userId)
+        {
+            //this.Uid = collaboratorUid;
+            this.DeleteTicket(edition, attendeeSalesPlatformTicketType, salesPlatformAttendeeId, userId);
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            //this.DeleteRole(this.User.Email, role);
         }
 
         #endregion

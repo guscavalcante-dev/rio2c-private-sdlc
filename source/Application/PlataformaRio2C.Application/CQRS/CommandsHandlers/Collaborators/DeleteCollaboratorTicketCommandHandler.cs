@@ -25,7 +25,7 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
     /// <summary>UpdateCollaboratorTicketCommandHandler</summary>
-    public class UpdateCollaboratorTicketCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<UpdateCollaboratorTicket, AppValidationResult>
+    public class DeleteCollaboratorTicketCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<DeleteCollaboratorTicket, AppValidationResult>
     {
         private readonly IUserRepository userRepo;
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
@@ -33,7 +33,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly ILanguageRepository languageRepo;
         private readonly ICountryRepository countryRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="CreateCollaboratorCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="DeleteCollaboratorTicketCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
@@ -42,7 +42,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="languageRepository">The language repository.</param>
         /// <param name="countryRepository">The country repository.</param>
-        public UpdateCollaboratorTicketCommandHandler(
+        public DeleteCollaboratorTicketCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             ICollaboratorRepository collaboratorRepository,
@@ -60,11 +60,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.countryRepo = countryRepository;
         }
 
-        /// <summary>Handles the specified update collaborator ticket.</summary>
-        /// <param name="cmd">The command.</param>
+        /// <summary>Handles the specified delete collaborator ticket.</summary>
+        /// <param name="cmd">The command</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(UpdateCollaboratorTicket cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(DeleteCollaboratorTicket cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
@@ -83,17 +83,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            cmd.Collaborator.UpdateTicket(
+            cmd.Collaborator.DeleteTicket(
                 cmd.Edition,
                 cmd.AttendeeSalesPlatformTicketType,
                 cmd.TicketType,
                 cmd.Role,
                 cmd.SalesPlatformAttendeeDto.AttendeeId,
-                cmd.SalesPlatformAttendeeDto.FirstName,
-                cmd.SalesPlatformAttendeeDto.LastMame,
-                cmd.SalesPlatformAttendeeDto.Email,
-                cmd.SalesPlatformAttendeeDto.CellPhone,
-                cmd.SalesPlatformAttendeeDto.JobTitle,
                 1);
             if (!cmd.Collaborator.IsValid())
             {
