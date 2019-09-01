@@ -214,6 +214,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                     currentValidationResult.Add(new ValidationError(error.Message));
                                 }
 
+                                // Avoid to create collaborator ticket if the other one was not deleted
+                                if (response1?.Errors?.Any() == true)
+                                {
+                                    continue;
+                                }
+
                                 // Create collaborator ant ticket for new email
                                 var response2 = await this.CommandBus.Send(new CreateCollaboratorTicket(
                                     salesPlatformAttendeeDto,

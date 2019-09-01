@@ -748,7 +748,10 @@ namespace PlataformaRio2C.Domain.Entities
         ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
         public override bool IsValid()
         {
-            this.ValidationResult = new ValidationResult();
+            if (this.ValidationResult == null)
+            {
+                this.ValidationResult = new ValidationResult();
+            }
 
             this.ValidateFirstName();
             this.ValidateLastNames();
@@ -759,6 +762,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateMiniBios();
             this.ValidateAddress();
             this.ValidateUser();
+            this.ValidateAttendeeCollaborators();
 
             return this.ValidationResult.IsValid;
         }
@@ -856,6 +860,20 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.User != null && !this.User.IsDeleted)
             {
                 this.ValidationResult.Add(this.User.ValidationResult);
+            }
+        }
+
+        /// <summary>Validates the attendee collaborators.</summary>
+        public void ValidateAttendeeCollaborators()
+        {
+            if (this.AttendeeCollaborators?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var attendeeCollaborator in this.AttendeeCollaborators?.Where(d => !d.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(attendeeCollaborator.ValidationResult);
             }
         }
 

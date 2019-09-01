@@ -12,8 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
@@ -135,6 +133,12 @@ namespace PlataformaRio2C.Domain.Entities
             // Check if the update date is before the last update
             if (salesPlatformUpdateDate < this.SalesPlatformUpdateDate)
             {
+                if (this.ValidationResult == null)
+                {
+                    this.ValidationResult = new ValidationResult();
+                }
+
+                this.ValidationResult.Add(new ValidationError($"Request is older than the last update (Current: {salesPlatformUpdateDate.ToString("yyyyMMddHHmmss")}; Last: {this.SalesPlatformUpdateDate.ToString("yyyyMMddHHmmss")})."));
                 return;
             }
 
@@ -167,6 +171,12 @@ namespace PlataformaRio2C.Domain.Entities
         {
             if (barcodeUpdateDate.HasValue && barcodeUpdateDate.Value < this.BarcodeUpdateDate)
             {
+                if (this.ValidationResult == null)
+                {
+                    this.ValidationResult = new ValidationResult();
+                }
+
+                this.ValidationResult.Add(new ValidationError($"Barcode update is older than the last update (Current: {salesPlatformUpdateDate.ToString("yyyyMMddHHmmss")}; Last: {this.SalesPlatformUpdateDate.ToString("yyyyMMddHHmmss")})."));
                 return;
             }
 
@@ -189,7 +199,10 @@ namespace PlataformaRio2C.Domain.Entities
         ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
         public override bool IsValid()
         {
-            this.ValidationResult = new ValidationResult();
+            if (this.ValidationResult == null)
+            {
+                this.ValidationResult = new ValidationResult();
+            }
 
             this.ValidateSalesPlatformAttendeeId();
             this.ValidateFirstName();

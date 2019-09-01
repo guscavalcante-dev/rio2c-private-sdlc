@@ -14,6 +14,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using PlataformaRio2C.Domain.Validation;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -341,7 +342,28 @@ namespace PlataformaRio2C.Domain.Entities
         ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
         public override bool IsValid()
         {
-            return true;
+            if (this.ValidationResult == null)
+            {
+                this.ValidationResult = new ValidationResult();
+            }
+
+            this.ValidateAttendeeCollaboratorTickets();
+
+            return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>Validates the attendee collaborator tickets.</summary>
+        public void ValidateAttendeeCollaboratorTickets()
+        {
+            if (this.AttendeeCollaboratorTickets?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var jobTitle in this.AttendeeCollaboratorTickets?.Where(d => !d.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(jobTitle.ValidationResult);
+            }
         }
 
         #endregion
