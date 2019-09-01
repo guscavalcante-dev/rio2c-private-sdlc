@@ -122,11 +122,16 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="ticketType">Type of the ticket.</param>
         /// <param name="role">The role.</param>
         /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
+        /// <param name="salesPlatformUpdateDate">The sales platform update date.</param>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastMame">The last mame.</param>
         /// <param name="email">The email.</param>
         /// <param name="cellPhone">The cell phone.</param>
         /// <param name="jobTitle">The job title.</param>
+        /// <param name="barcode">The barcode.</param>
+        /// <param name="isBarcodePrinted">if set to <c>true</c> [is barcode printed].</param>
+        /// <param name="isBarcodeUsed">if set to <c>true</c> [is barcode used].</param>
+        /// <param name="barcodeUpdateDate">The barcode update date.</param>
         /// <param name="userId">The user identifier.</param>
         public Collaborator(
             Guid collaboratorUid, 
@@ -135,11 +140,16 @@ namespace PlataformaRio2C.Domain.Entities
             TicketType ticketType,
             Role role,
             string salesPlatformAttendeeId,
+            DateTime salesPlatformUpdateDate,
             string firstName, 
             string lastMame, 
             string email, 
             string cellPhone, 
             string jobTitle,
+            string barcode,
+            bool isBarcodePrinted,
+            bool isBarcodeUsed,
+            DateTime? barcodeUpdateDate,
             int userId)
         {
             //this.Uid = collaboratorUid;
@@ -150,7 +160,20 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
-            this.SynchronizeAttendeeCollaborators(edition, attendeeSalesPlatformTicketType, salesPlatformAttendeeId, firstName, lastMame, cellPhone, jobTitle, userId);
+            this.SynchronizeAttendeeCollaborators(
+                edition, 
+                attendeeSalesPlatformTicketType, 
+                salesPlatformAttendeeId,
+                salesPlatformUpdateDate,
+                firstName, 
+                lastMame, 
+                cellPhone, 
+                jobTitle,
+                barcode,
+                isBarcodePrinted,
+                isBarcodeUsed,
+                barcodeUpdateDate,
+                userId);
             this.UpdateUser(email, role);
         }
 
@@ -523,19 +546,29 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="edition">The edition.</param>
         /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
         /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
+        /// <param name="salesPlatformUpdateDate">The sales platform update date.</param>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastName">The last name.</param>
         /// <param name="cellPhone">The cell phone.</param>
         /// <param name="jobTitle">The job title.</param>
+        /// <param name="barcode">The barcode.</param>
+        /// <param name="isBarcodePrinted">if set to <c>true</c> [is barcode printed].</param>
+        /// <param name="isBarcodeUsed">if set to <c>true</c> [is barcode used].</param>
+        /// <param name="barcodeUpdateDate">The barcode update date.</param>
         /// <param name="userId">The user identifier.</param>
         private void SynchronizeAttendeeCollaborators(
             Edition edition,
             AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
-            string salesPlatformAttendeeId, 
+            string salesPlatformAttendeeId,
+            DateTime salesPlatformUpdateDate,
             string firstName, 
             string lastName, 
             string cellPhone, 
             string jobTitle,
+            string barcode,
+            bool isBarcodePrinted,
+            bool isBarcodeUsed,
+            DateTime? barcodeUpdateDate,
             int userId)
         {
             if (this.AttendeeCollaborators == null)
@@ -551,11 +584,37 @@ namespace PlataformaRio2C.Domain.Entities
             var attendeeCollaborator = this.AttendeeCollaborators.FirstOrDefault(ao => ao.EditionId == edition.Id);
             if (attendeeCollaborator != null)
             {
-                attendeeCollaborator.UpdateAttendeeCollaboratorTicket(attendeeSalesPlatformTicketType, salesPlatformAttendeeId, firstName, lastName, cellPhone, jobTitle, userId);
+                attendeeCollaborator.UpdateAttendeeCollaboratorTicket(
+                    attendeeSalesPlatformTicketType, 
+                    salesPlatformAttendeeId,
+                    salesPlatformUpdateDate,
+                    firstName, 
+                    lastName, 
+                    cellPhone, 
+                    jobTitle,
+                    barcode,
+                    isBarcodePrinted,
+                    isBarcodeUsed,
+                    barcodeUpdateDate,
+                    userId);
             }
             else
             {
-                this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, this, attendeeSalesPlatformTicketType, salesPlatformAttendeeId, firstName, lastName, cellPhone, jobTitle, userId));
+                this.AttendeeCollaborators.Add(new AttendeeCollaborator(
+                    edition, 
+                    this, 
+                    attendeeSalesPlatformTicketType, 
+                    salesPlatformAttendeeId,
+                    salesPlatformUpdateDate,
+                    firstName, 
+                    lastName, 
+                    cellPhone, 
+                    jobTitle,
+                    barcode,
+                    isBarcodePrinted,
+                    isBarcodeUsed,
+                    barcodeUpdateDate,
+                    userId));
             }
         }
 
@@ -563,11 +622,15 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="edition">The edition.</param>
         /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
         /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
+        /// <param name="salesPlatformUpdateDate">The sales platform update date.</param>
+        /// <param name="barcodeUpdateDate">The barcode update date.</param>
         /// <param name="userId">The user identifier.</param>
         private void DeleteTicket(
             Edition edition,
             AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
             string salesPlatformAttendeeId,
+            DateTime salesPlatformUpdateDate,
+            DateTime? barcodeUpdateDate,
             int userId)
         {
             if (this.AttendeeCollaborators == null)
@@ -581,7 +644,7 @@ namespace PlataformaRio2C.Domain.Entities
             }
 
             var attendeeCollaborator = this.AttendeeCollaborators.FirstOrDefault(ao => ao.EditionId == edition.Id);
-            attendeeCollaborator?.DeleteAttendeeCollaboratorTicket(attendeeSalesPlatformTicketType, salesPlatformAttendeeId, userId);
+            attendeeCollaborator?.DeleteAttendeeCollaboratorTicket(attendeeSalesPlatformTicketType, salesPlatformAttendeeId, salesPlatformUpdateDate, barcodeUpdateDate, userId);
         }
 
         #endregion
@@ -594,11 +657,16 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="ticketType">Type of the ticket.</param>
         /// <param name="role">The role.</param>
         /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
+        /// <param name="salesPlatformUpdateDate">The sales platform update date.</param>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastMame">The last mame.</param>
         /// <param name="email">The email.</param>
         /// <param name="cellPhone">The cell phone.</param>
         /// <param name="jobTitle">The job title.</param>
+        /// <param name="barcode">The barcode.</param>
+        /// <param name="isBarcodePrinted">if set to <c>true</c> [is barcode printed].</param>
+        /// <param name="isBarcodeUsed">if set to <c>true</c> [is barcode used].</param>
+        /// <param name="barcodeUpdateDate">The barcode update date.</param>
         /// <param name="userId">The user identifier.</param>
         public void UpdateTicket(
             Edition edition,
@@ -606,11 +674,16 @@ namespace PlataformaRio2C.Domain.Entities
             TicketType ticketType,
             Role role,
             string salesPlatformAttendeeId,
+            DateTime salesPlatformUpdateDate, 
             string firstName,
             string lastMame,
             string email,
             string cellPhone,
             string jobTitle,
+            string barcode,
+            bool isBarcodePrinted,
+            bool isBarcodeUsed,
+            DateTime? barcodeUpdateDate,
             int userId)
         {
             //this.Uid = collaboratorUid;
@@ -621,7 +694,20 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.SynchronizeAttendeeCollaborators(edition, attendeeSalesPlatformTicketType, salesPlatformAttendeeId, firstName, lastMame, cellPhone, jobTitle, userId);
+            this.SynchronizeAttendeeCollaborators(
+                edition, 
+                attendeeSalesPlatformTicketType, 
+                salesPlatformAttendeeId,
+                salesPlatformUpdateDate,
+                firstName, 
+                lastMame, 
+                cellPhone, 
+                jobTitle,
+                barcode,
+                isBarcodePrinted,
+                isBarcodeUsed,
+                barcodeUpdateDate,
+                userId);
             this.UpdateUser(this.User.Email, role);
         }
 
@@ -631,6 +717,8 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="ticketType">Type of the ticket.</param>
         /// <param name="role">The role.</param>
         /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
+        /// <param name="salesPlatformUpdateDate">The sales platform update date.</param>
+        /// <param name="barcodeUpdateDate">The barcode update date.</param>
         /// <param name="userId">The user identifier.</param>
         public void DeleteTicket(
             Edition edition,
@@ -638,10 +726,12 @@ namespace PlataformaRio2C.Domain.Entities
             TicketType ticketType,
             Role role,
             string salesPlatformAttendeeId,
+            DateTime salesPlatformUpdateDate,
+            DateTime? barcodeUpdateDate,
             int userId)
         {
             //this.Uid = collaboratorUid;
-            this.DeleteTicket(edition, attendeeSalesPlatformTicketType, salesPlatformAttendeeId, userId);
+            this.DeleteTicket(edition, attendeeSalesPlatformTicketType, salesPlatformAttendeeId, salesPlatformUpdateDate, barcodeUpdateDate, userId);
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
             //this.DeleteRole(this.User.Email, role);

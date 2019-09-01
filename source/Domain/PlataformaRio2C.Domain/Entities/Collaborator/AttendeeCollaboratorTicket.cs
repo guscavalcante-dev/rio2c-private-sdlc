@@ -32,14 +32,23 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int CellPhoneMaxLength = 30;
         public static readonly int JobTitleMinLength = 1;
         public static readonly int JobTitleMaxLength = 30;
+        public static readonly int BarcodeMinLength = 1;
+        public static readonly int BarcodeMaxLength = 40;
 
         public int AttendeeCollaboratorId { get; private set; }
         public int AttendeeSalesPlatformTicketTypeId { get; private set; }
         public string SalesPlatformAttendeeId { get; private set; }
+        public DateTime SalesPlatformUpdateDate { get; private set; }
         public string FirstName { get; private set; }
         public string LastNames { get; private set; }
         public string CellPhone { get; private set; }
         public string JobTitle { get; private set; }
+
+        // Barcode
+        public string Barcode { get; private set; }
+        public bool IsBarcodePrinted { get; private set; }
+        public bool IsBarcodeUsed { get; private set; }
+        public DateTime? BarcodeUpdateDate { get; private set; }
 
         public virtual AttendeeCollaborator AttendeeCollaborator { get; private set; }
         public virtual AttendeeSalesPlatformTicketType AttendeeSalesPlatformTicketType { get; private set; }
@@ -48,28 +57,46 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
         /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
         /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
+        /// <param name="salesPlatformUpdateDate">The sales platform update date.</param>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastName">The last name.</param>
         /// <param name="cellPhone">The cell phone.</param>
         /// <param name="jobTitle">The job title.</param>
+        /// <param name="barcode">The barcode.</param>
+        /// <param name="isBarcodePrinted">if set to <c>true</c> [is barcode printed].</param>
+        /// <param name="isBarcodeUsed">if set to <c>true</c> [is barcode used].</param>
+        /// <param name="barcodeUpdateDate">The barcode update date.</param>
         /// <param name="userId">The user identifier.</param>
         public AttendeeCollaboratorTicket(
             AttendeeCollaborator attendeeCollaborator, 
             AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType, 
             string salesPlatformAttendeeId, 
+            DateTime salesPlatformUpdateDate,
             string firstName, 
             string lastName, 
             string cellPhone, 
             string jobTitle,
+            string barcode,
+            bool isBarcodePrinted,
+            bool isBarcodeUsed,
+            DateTime? barcodeUpdateDate,
             int userId)
         {
             this.AttendeeCollaborator = attendeeCollaborator;
             this.AttendeeSalesPlatformTicketType = attendeeSalesPlatformTicketType;
             this.SalesPlatformAttendeeId = salesPlatformAttendeeId;
+            this.SalesPlatformUpdateDate = salesPlatformUpdateDate;
             this.FirstName = firstName?.Trim();
             this.LastNames = lastName?.Trim();
             this.CellPhone = cellPhone?.Trim();
             this.JobTitle = jobTitle?.Trim();
+
+            // Barcode
+            this.Barcode = barcode?.Trim();
+            this.IsBarcodePrinted = isBarcodePrinted;
+            this.IsBarcodeUsed = isBarcodeUsed;
+            this.BarcodeUpdateDate = barcodeUpdateDate;
+            
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId= userId;
@@ -82,38 +109,74 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Updates the specified attendee sales platform ticket type.</summary>
         /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
+        /// <param name="salesPlatformUpdateDate">The sales platform update date.</param>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastName">The last name.</param>
         /// <param name="cellPhone">The cell phone.</param>
         /// <param name="jobTitle">The job title.</param>
+        /// <param name="barcode">The barcode.</param>
+        /// <param name="isBarcodePrinted">if set to <c>true</c> [is barcode printed].</param>
+        /// <param name="isBarcodeUsed">if set to <c>true</c> [is barcode used].</param>
+        /// <param name="barcodeUpdateDate">The barcode update date.</param>
         /// <param name="userId">The user identifier.</param>
         public void Update(
             AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
+            DateTime salesPlatformUpdateDate,
             string firstName,
             string lastName,
             string cellPhone,
             string jobTitle,
+            string barcode,
+            bool isBarcodePrinted,
+            bool isBarcodeUsed,
+            DateTime? barcodeUpdateDate,
             int userId)
         {
+            // Check if the update date is before the last update
+            if (salesPlatformUpdateDate < this.SalesPlatformUpdateDate)
+            {
+                return;
+            }
+
+            this.SalesPlatformUpdateDate = salesPlatformUpdateDate;
             this.AttendeeSalesPlatformTicketType = attendeeSalesPlatformTicketType;
             this.FirstName = firstName?.Trim();
             this.LastNames = lastName?.Trim();
             this.CellPhone = cellPhone?.Trim();
             this.JobTitle = jobTitle?.Trim();
+
+            // Barcode
+            this.Barcode = barcode?.Trim();
+            this.IsBarcodePrinted = isBarcodePrinted;
+            this.IsBarcodeUsed = isBarcodeUsed;
+            this.BarcodeUpdateDate = barcodeUpdateDate;
+
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
         }
 
-        /// <summary>Deletes the specified user identifier.</summary>
+        /// <summary>Deletes the specified sales platform update date.</summary>
+        /// <param name="salesPlatformUpdateDate">The sales platform update date.</param>
+        /// <param name="barcodeUpdateDate">The barcode update date.</param>
         /// <param name="userId">The user identifier.</param>
-        public void Delete(int userId)
+        public void Delete(
+            DateTime salesPlatformUpdateDate,
+            DateTime? barcodeUpdateDate,
+            int userId)
         {
+            if (barcodeUpdateDate.HasValue && barcodeUpdateDate.Value < this.BarcodeUpdateDate)
+            {
+                return;
+            }
+
             if (this.IsDeleted)
             {
                 return;
             }
 
+            this.SalesPlatformUpdateDate = salesPlatformUpdateDate;
+            this.BarcodeUpdateDate = barcodeUpdateDate;
             this.IsDeleted = true;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
@@ -133,6 +196,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateLastNames();
             this.ValidateCellPhone();
             this.ValidateJobTitle();
+            this.ValidateBarcode();
 
             return this.ValidationResult.IsValid;
         }
@@ -189,6 +253,15 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.JobTitle?.Trim().Length < JobTitleMinLength || this.JobTitle?.Trim().Length > JobTitleMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.JobTitle, JobTitleMaxLength, JobTitleMinLength), new string[] { "JobTitle" }));
+            }
+        }
+
+        /// <summary>Validates the barcode.</summary>
+        public void ValidateBarcode()
+        {
+            if (this.Barcode?.Trim().Length < BarcodeMinLength || this.Barcode?.Trim().Length > BarcodeMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "Barcode", BarcodeMaxLength, BarcodeMinLength), new string[] { "Barcode" }));
             }
         }
 

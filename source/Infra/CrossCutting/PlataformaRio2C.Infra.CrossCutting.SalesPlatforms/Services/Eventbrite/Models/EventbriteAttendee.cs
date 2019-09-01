@@ -11,6 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos;
 
@@ -20,10 +23,10 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.
     public class EventbriteAttendee : EventbriteModelWithId
     {
         [JsonProperty("Created")]
-        public string Created { get; set; }
+        public DateTime Created { get; set; }
 
         [JsonProperty("changed")]
-        public string Changed { get; set; }
+        public DateTime Changed { get; set; }
 
         [JsonProperty("quantity")]
         public int? Quantity { get; set; }
@@ -58,6 +61,8 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.
         [JsonProperty("order_id")]
         public string OrderId { get; set; }
 
+        public List<EventbriteAttendeeBarcodes> Barcodes { get; set; }
+
         /// <summary>Gets the sales platform attendee status.</summary>
         /// <returns></returns>
         public string GetSalesPlatformAttendeeStatus()
@@ -77,6 +82,13 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.
                 default:
                     return Status;
             }
+        }
+
+        /// <summary>Gets the barcode.</summary>
+        /// <returns></returns>
+        public EventbriteAttendeeBarcodes GetBarcode()
+        {
+            return this.Barcodes?.FirstOrDefault();
         }
     }
 
@@ -109,5 +121,35 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.
 
         [JsonProperty("job_title")]
         public string JobTitle { get; set; }
+    }
+
+    /// <summary>EventbriteAttendeeBarcodes</summary>
+    public class EventbriteAttendeeBarcodes
+    {
+        [JsonProperty("status")]
+        public string Status { get; set; }
+
+        [JsonProperty("barcode")]
+        public string Barcode { get; set; }
+
+        [JsonProperty("created")]
+        public DateTime Created { get; set; }
+
+        [JsonProperty("changed")]
+        public DateTime Changed { get; set; }
+
+        [JsonProperty("checkin_type")]
+        public int CheckinType { get; set; }
+
+        [JsonProperty("is_printed")]
+        public bool IsPrinted { get; set; }
+
+        /// <summary>Determines whether [is barcode used].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is barcode used]; otherwise, <c>false</c>.</returns>
+        public bool IsBarcodeUsed()
+        {
+            return this.Status.ToLowerInvariant() == "used";
+        }
     }
 }

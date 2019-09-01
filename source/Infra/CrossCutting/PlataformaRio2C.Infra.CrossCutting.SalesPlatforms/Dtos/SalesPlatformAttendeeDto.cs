@@ -11,6 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+
+using System;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.Models;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
@@ -27,6 +29,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
 
         // Attendee
         public string AttendeeId { get; private set; }
+        public DateTime SalesPlatformUpdateDate { get; private set; }
         public string SalesPlatformAttendeeStatus { get; private set; }
         public bool IsCancelled { get; private set; }
         public bool IsCheckedIn { get; private set; }
@@ -44,6 +47,12 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
         public string Email { get; private set; }
         public string JobTitle { get; private set; }
 
+        // Barcode
+        public string Barcode { get; private set; }
+        public bool IsBarcodePrinted { get; private set; }
+        public bool IsBarcodeUsed { get; private set; }
+        public DateTime? BarcodeUpdateDate { get; private set; }
+
         /// <summary>Initializes a new instance of the <see cref="SalesPlatformAttendeeDto"/> class.</summary>
         public SalesPlatformAttendeeDto()
         {
@@ -60,6 +69,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
 
             // Attendee
             this.AttendeeId = eventBriteAttendee.Id;
+            this.SalesPlatformUpdateDate = eventBriteAttendee.Changed;
             this.SalesPlatformAttendeeStatus = eventBriteAttendee.GetSalesPlatformAttendeeStatus();
             this.IsCancelled = eventBriteAttendee.Cancelled;
             this.IsCheckedIn = eventBriteAttendee.CheckedIn;
@@ -76,6 +86,13 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
             this.CellPhone = eventBriteAttendee.Profile.CellPhone;
             this.Email = eventBriteAttendee.Profile.Email;
             this.JobTitle = eventBriteAttendee.Profile.JobTitle;
+
+            // Barcode
+            var barcode = eventBriteAttendee.GetBarcode();
+            this.Barcode = barcode?.Barcode;
+            this.IsBarcodePrinted = barcode?.IsPrinted ?? false;
+            this.IsBarcodeUsed = barcode?.IsBarcodeUsed() ?? false;
+            this.BarcodeUpdateDate = barcode?.Changed;
         }
     }
 }
