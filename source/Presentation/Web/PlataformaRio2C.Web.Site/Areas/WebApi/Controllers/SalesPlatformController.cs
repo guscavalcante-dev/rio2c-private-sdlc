@@ -85,14 +85,12 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             }
             catch (DomainException ex)
             {
-                return await Json(new { status = "error", message = ex.GetInnerMessage() });
-                //this.SetResultMessage(new ResultMessage(this.localizer[ex.GetInnerMessage()], ResultMessageType.Error));
+                return await BadRequest(ex.GetInnerMessage());
             }
             catch (Exception ex)
             {
-                return await Json(new { status = "error", message = "Undefined error." });
-                //HttpContext.RiseError(ex);
-                //return BadRequest(ex.Message);
+                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
+                return await BadRequest(ex.GetInnerMessage());
             }
 
             return await Json(new { status = "success", message = "Eventbrite event saved successfully." });
