@@ -57,7 +57,7 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new CollaboratorJobTitleMap());
             modelBuilder.Configurations.Add(new CollaboratorMiniBioMap());
             modelBuilder.Configurations.Add(new AttendeeCollaboratorMap());
-            //modelBuilder.Configurations.Add(new AttendeeCollaboratorTicketMap());
+            modelBuilder.Configurations.Add(new AttendeeCollaboratorTicketMap());
 
             // Projects
             modelBuilder.Configurations.Add(new ProjectTypeMap());

@@ -29,7 +29,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeOrganizationCollaborator> AttendeeOrganizationCollaborators { get; private set; }
         public virtual ICollection<AttendeeCollaboratorTicket> AttendeeCollaboratorTickets { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="AttendeeCollaborator"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="AttendeeCollaborator"/> class for admin.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="collaborator">The collaborator.</param>
@@ -45,11 +45,40 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeCollaborator"/> class.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaborator">The collaborator.</param>
+        /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
+        /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastName">The last name.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="jobTitle">The job title.</param>
+        /// <param name="userId">The user identifier.</param>
+        public AttendeeCollaborator(
+            Edition edition, 
+            Collaborator collaborator, 
+            AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType, 
+            string salesPlatformAttendeeId, 
+            string firstName, 
+            string lastName, 
+            string cellPhone, 
+            string jobTitle,
+            int userId)
+        {
+            this.Edition = edition;
+            this.Collaborator = collaborator;
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateUserId = this.UpdateUserId = userId;
+            this.SynchronizeAttendeeCollaboratorTickets(attendeeSalesPlatformTicketType, salesPlatformAttendeeId, firstName, lastName, cellPhone, jobTitle, userId);
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="AttendeeCollaborator"/> class.</summary>
         protected AttendeeCollaborator()
         {
         }
 
-        /// <summary>Updates the specified edition.</summary>
+        /// <summary>Updates the specified edition for admin.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="userId">The user identifier.</param>
@@ -125,6 +154,66 @@ namespace PlataformaRio2C.Domain.Entities
         private void CreateAttendeeOrganizationCollaborator(AttendeeOrganization attendeeOrganization, int userId)
         {
             this.AttendeeOrganizationCollaborators.Add(new AttendeeOrganizationCollaborator(attendeeOrganization, this, userId));
+        }
+
+        #endregion
+
+        #region Attendee Collaborator Tickets
+
+        /// <summary>Updates the attendee collaborator ticket.</summary>
+        /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
+        /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastName">The last name.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="jobTitle">The job title.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateAttendeeCollaboratorTicket(
+            AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
+            string salesPlatformAttendeeId,
+            string firstName,
+            string lastName,
+            string cellPhone,
+            string jobTitle,
+            int userId)
+        {
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            this.SynchronizeAttendeeCollaboratorTickets(attendeeSalesPlatformTicketType, salesPlatformAttendeeId, firstName, lastName, cellPhone, jobTitle, userId);
+        }
+
+        /// <summary>Synchronizes the attendee collaborator tickets.</summary>
+        /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
+        /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastName">The last name.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="jobTitle">The job title.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeAttendeeCollaboratorTickets(
+            AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType, 
+            string salesPlatformAttendeeId, 
+            string firstName, 
+            string lastName, 
+            string cellPhone, 
+            string jobTitle,
+            int userId)
+        {
+            if (this.AttendeeCollaboratorTickets == null)
+            {
+                this.AttendeeCollaboratorTickets = new List<AttendeeCollaboratorTicket>();
+            }
+
+            var attendeeCollaboratorTicket = this.AttendeeCollaboratorTickets.FirstOrDefault(act => act.SalesPlatformAttendeeId == salesPlatformAttendeeId);
+            if (attendeeCollaboratorTicket == null)
+            {
+                this.AttendeeCollaboratorTickets.Add(new AttendeeCollaboratorTicket(this, attendeeSalesPlatformTicketType, salesPlatformAttendeeId, firstName, lastName, cellPhone, jobTitle, userId));
+            }
+            else
+            {
+                attendeeCollaboratorTicket.Update(attendeeSalesPlatformTicketType, firstName, lastName, cellPhone, jobTitle, userId);
+            }
         }
 
         #endregion

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-27-2019
+// Last Modified On : 08-31-2019
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -54,7 +54,7 @@ namespace PlataformaRio2C.Domain.Entities
         //public int? MusicalCommissionId { get;  set; }
         //public virtual ICollection<Speaker> Speaker { get;  set; }
 
-        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class for admin.</summary>
         /// <param name="uid">The uid.</param>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="edition">The edition.</param>
@@ -115,6 +115,41 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeMiniBios(miniBios, userId);
             this.SynchronizeAttendeeCollaborators(edition, attendeeOrganizations, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, address2, addressZipCode, addressIsManual, userId);
+            this.UpdateUser(email);
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class.</summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="edition">The edition.</param>
+        /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
+        /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastMame">The last mame.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="jobTitle">The job title.</param>
+        /// <param name="userId">The user identifier.</param>
+        public Collaborator(
+            Guid collaboratorUid, 
+            Edition edition,
+            AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
+            string salesPlatformAttendeeId,
+            string firstName, 
+            string lastMame, 
+            string email, 
+            string cellPhone, 
+            string jobTitle,
+            int userId)
+        {
+            //this.Uid = collaboratorUid;
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastMame?.Trim();
+            this.Badge = firstName?.Trim() + (!string.IsNullOrEmpty(lastMame) ? " " + lastMame?.Trim() : string.Empty);
+            this.CellPhone = cellPhone?.Trim();
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateUserId = this.UpdateUserId = userId;
+            this.SynchronizeAttendeeCollaborators(edition, attendeeSalesPlatformTicketType, salesPlatformAttendeeId, firstName, lastMame, cellPhone, jobTitle, userId);
             this.UpdateUser(email);
         }
 
@@ -423,6 +458,8 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Attendee Collaborators
 
+        #region Admin
+
         /// <summary>Synchronizes the attendee collaborators.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
@@ -475,6 +512,52 @@ namespace PlataformaRio2C.Domain.Entities
         {
             return this.AttendeeCollaborators?.Where(ac => (edition == null || ac.EditionId == edition.Id) && !ac.IsDeleted)?.ToList();
         }
+
+        #endregion
+
+        #region Webhook request
+
+        /// <summary>Synchronizes the attendee collaborators.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
+        /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastName">The last name.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="jobTitle">The job title.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeAttendeeCollaborators(
+            Edition edition,
+            AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
+            string salesPlatformAttendeeId, 
+            string firstName, 
+            string lastName, 
+            string cellPhone, 
+            string jobTitle,
+            int userId)
+        {
+            if (this.AttendeeCollaborators == null)
+            {
+                this.AttendeeCollaborators = new List<AttendeeCollaborator>();
+            }
+
+            if (edition == null)
+            {
+                return;
+            }
+
+            var attendeeCollaborator = this.AttendeeCollaborators.FirstOrDefault(ao => ao.EditionId == edition.Id);
+            if (attendeeCollaborator != null)
+            {
+                attendeeCollaborator.UpdateAttendeeCollaboratorTicket(attendeeSalesPlatformTicketType, salesPlatformAttendeeId, firstName, lastName, cellPhone, jobTitle, userId);
+            }
+            else
+            {
+                this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, this, attendeeSalesPlatformTicketType, salesPlatformAttendeeId, firstName, lastName, cellPhone, jobTitle, userId));
+            }
+        }
+
+        #endregion
 
         #endregion
 
@@ -553,6 +636,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Validates the job titles.</summary>
         public void ValidateJobTitles()
         {
+            if (this.JobTitles?.Any() != true)
+            {
+                return;
+            }
+
             foreach (var jobTitle in this.JobTitles?.Where(d => !d.IsValid())?.ToList())
             {
                 this.ValidationResult.Add(jobTitle.ValidationResult);
@@ -562,6 +650,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Validates the mini bios.</summary>
         public void ValidateMiniBios()
         {
+            if (this.MiniBios?.Any() != true)
+            {
+                return;
+            }
+
             foreach (var miniBio in this.MiniBios?.Where(d => !d.IsValid())?.ToList())
             {
                 this.ValidationResult.Add(miniBio.ValidationResult);
@@ -602,7 +695,7 @@ namespace PlataformaRio2C.Domain.Entities
             //SetPlayer(player);
             //SetUser(user);
         }
-        
+
         public void SetName(string name)
         {
             //Name = name;

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-29-2019
+// Last Modified On : 08-31-2019
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -41,6 +41,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static IQueryable<Collaborator> FindByUid(this IQueryable<Collaborator> query, Guid collaboratorId)
         {
             query = query.Where(c => c.Uid == collaboratorId);
+
+            return query;
+        }
+
+        /// <summary>Finds the by sales platform attendee identifier.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> FindBySalesPlatformAttendeeId(this IQueryable<Collaborator> query, string salesPlatformAttendeeId)
+        {
+            query = query.Where(c => c.AttendeeCollaborators.Any(ac => ac.AttendeeCollaboratorTickets.Any(act => act.SalesPlatformAttendeeId == salesPlatformAttendeeId)));
 
             return query;
         }
@@ -386,6 +397,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByOrganizationTypeUidAndByEditionId(organizationTypeId, showAllEditions, false, editionId);
 
             return await query.CountAsync();
+        }
+
+        /// <summary>Finds the by sales platform attendee identifier asynchronous.</summary>
+        /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
+        /// <returns></returns>
+        public async Task<Collaborator> FindBySalesPlatformAttendeeIdAsync(string salesPlatformAttendeeId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindBySalesPlatformAttendeeId(salesPlatformAttendeeId);
+
+            return await query.FirstOrDefaultAsync();
         }
 
         #region Old

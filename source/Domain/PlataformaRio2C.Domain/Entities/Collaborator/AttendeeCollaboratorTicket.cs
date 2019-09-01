@@ -44,19 +44,65 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual AttendeeCollaborator AttendeeCollaborator { get; private set; }
         public virtual AttendeeSalesPlatformTicketType AttendeeSalesPlatformTicketType { get; private set; }
 
-        //public AttendeeSalesPlatform(Edition edition, List<AttendeeOrganization> attendeeOrganizations, Collaborator collaborator, int userId)
-        //{
-        //    this.Edition = edition;
-        //    this.Collaborator = collaborator;
-        //    this.IsDeleted = false;
-        //    this.CreateDate = this.UpdateDate = DateTime.Now;
-        //    this.CreateUserId = this.UpdateUserId = userId;
-        //    this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, userId);
-        //}
+        /// <summary>Initializes a new instance of the <see cref="AttendeeCollaboratorTicket"/> class.</summary>
+        /// <param name="attendeeCollaborator">The attendee collaborator.</param>
+        /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
+        /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastName">The last name.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="jobTitle">The job title.</param>
+        /// <param name="userId">The user identifier.</param>
+        public AttendeeCollaboratorTicket(
+            AttendeeCollaborator attendeeCollaborator, 
+            AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType, 
+            string salesPlatformAttendeeId, 
+            string firstName, 
+            string lastName, 
+            string cellPhone, 
+            string jobTitle,
+            int userId)
+        {
+            this.AttendeeCollaborator = attendeeCollaborator;
+            this.AttendeeSalesPlatformTicketType = attendeeSalesPlatformTicketType;
+            this.SalesPlatformAttendeeId = salesPlatformAttendeeId;
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastName?.Trim();
+            this.CellPhone = cellPhone?.Trim();
+            this.JobTitle = jobTitle?.Trim();
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateUserId = this.UpdateUserId= userId;
+        }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeCollaboratorTicket"/> class.</summary>
         protected AttendeeCollaboratorTicket()
         {
+        }
+
+        /// <summary>Updates the specified attendee sales platform ticket type.</summary>
+        /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastName">The last name.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="jobTitle">The job title.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Update(
+            AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
+            string firstName,
+            string lastName,
+            string cellPhone,
+            string jobTitle,
+            int userId)
+        {
+            this.AttendeeSalesPlatformTicketType = attendeeSalesPlatformTicketType;
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastName?.Trim();
+            this.CellPhone = cellPhone?.Trim();
+            this.JobTitle = jobTitle?.Trim();
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
         }
 
         ///// <summary>Updates the specified edition.</summary>

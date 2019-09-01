@@ -34,6 +34,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     public class ProcessPendingPlatformWebhookRequestsAsyncCommandHandler : BaseSalesPlatformWebhookRequestCommandHandler, IRequestHandler<ProcessPendingPlatformWebhookRequestsAsync, AppValidationResult>
     {
         private readonly IAttendeeSalesPlatformRepository attendeeSalesPlatformRepo;
+        private readonly ICollaboratorRepository collaboratorRepo;
 
         /// <summary>Initializes a new instance of the <see cref="ProcessPendingPlatformWebhookRequestsAsyncCommandHandler"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -41,15 +42,18 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="salesPlatformWebhookRequestRepository">The sales platform webhook request repository.</param>
         /// <param name="salesPlatformServiceFactory">The sales platform service factory.</param>
         /// <param name="attendeeSalesPlatformRepository">The attendee sales platform repository.</param>
+        /// <param name="collaboratorRepository">The collaborator repository.</param>
         public ProcessPendingPlatformWebhookRequestsAsyncCommandHandler(
             IMediator commandBus,
             IUnitOfWork uow,
             ISalesPlatformWebhookRequestRepository salesPlatformWebhookRequestRepository,
             ISalesPlatformServiceFactory salesPlatformServiceFactory,
-            IAttendeeSalesPlatformRepository attendeeSalesPlatformRepository)
+            IAttendeeSalesPlatformRepository attendeeSalesPlatformRepository,
+            ICollaboratorRepository collaboratorRepository)
             : base(commandBus, uow, salesPlatformWebhookRequestRepository, salesPlatformServiceFactory)
         {
             this.attendeeSalesPlatformRepo = attendeeSalesPlatformRepository;
+            this.collaboratorRepo = collaboratorRepository;
         }
 
         /// <summary>Handles the specified process pending platform webhook requests asynchronous.</summary>
@@ -157,6 +161,25 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     }
 
                     // Create/Update Collaborator
+                    var collaborator = await this.collaboratorRepo.FindBySalesPlatformAttendeeIdAsync(salesPlatformAttendeeDto.AttendeeId);
+                    if (collaborator == null)
+                    {
+                        var response = await this.CommandBus.Send(new CreateCollaboratorTicket(salesPlatformAttendeeDto, attendeeSalesPlatformDto.Edition, attendeeSalesPlatformTicketType), cancellationToken);
+                        foreach (var error in response?.Errors)
+                        {
+                            currentValidationResult.Add(new ValidationError(error.Message));
+                        }
+                    }
+                    else
+                    {
+                        var response = await this.CommandBus.Send(new UpdateCollaboratorTicket(collaborator, salesPlatformAttendeeDto, attendeeSalesPlatformDto.Edition, attendeeSalesPlatformTicketType), cancellationToken);
+                        foreach (var error in response?.Errors)
+                        {
+                            currentValidationResult.Add(new ValidationError(error.Message));
+                        }
+                    }
+
+                    //var status = await this.CommandBus.Send(new CreateCollaboratorWithTickets(), cancellationToken);
                 }
 
                 if (!currentValidationResult.IsValid)
