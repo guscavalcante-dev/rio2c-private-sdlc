@@ -52,7 +52,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("testwelcomeemail")]
         public async Task<IHttpActionResult> TestWelcomeEmail()
         {
-            await this.commandBus.Send(new SendWelmcomeEmailAsync("Rafael", "Rafael Ruiz", "rafadr@hotmail.com", "MyRio2C 2020", 2020, "pt-BR"));
+            await this.commandBus.Send(new SendWelmcomeEmailAsync(1, new Guid("4003E6DD-3DA8-45B5-9A68-0B67759DBD0E"),  "Admin", "Admin MyRio2c", "rafadr@hotmail.com", 2, "MyRio2C 2020", 2020, "pt-BR"));
             return await Json(new { status = "success", message = "Welcome email sent." });
         }
 

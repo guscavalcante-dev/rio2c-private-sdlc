@@ -11,6 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+
+using System;
 using System.Configuration;
 using System.Net.Mail;
 using System.Threading;
@@ -41,8 +43,9 @@ namespace PlataformaRio2C.Web.Site.Services
 
         /// <summary>Sends the welcome email.</summary>
         /// <param name="cmd">The command.</param>
+        /// <param name="sentEmailUid">The sent email uid.</param>
         /// <returns></returns>
-        public MvcMailMessage SendWelcomeEmail(SendWelmcomeEmailAsync cmd)
+        public MvcMailMessage SendWelcomeEmail(SendWelmcomeEmailAsync cmd, Guid sentEmailUid)
         {
             this.SetCulture(cmd.UserInterfaceLanguage);
 
@@ -53,7 +56,8 @@ namespace PlataformaRio2C.Web.Site.Services
                 x.Subject = this.GetSubject(string.Format(Labels.WelcomeToEdition, cmd.EditionName));
                 x.ViewName = "Welcome";
                 x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
-                x.To.Add(this.GetToEmailRecipient(cmd.Email));
+                x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
+                ViewBag.SentEmailUid = sentEmailUid;
 
                 if (!string.IsNullOrEmpty(this.GetBccEmailRecipient()))
                 {

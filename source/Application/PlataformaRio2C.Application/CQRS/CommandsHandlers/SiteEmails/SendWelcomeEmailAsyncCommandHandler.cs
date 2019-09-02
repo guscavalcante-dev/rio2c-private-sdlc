@@ -11,11 +11,15 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.Services;
+using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -27,11 +31,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="commandBus">The command bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="mailerService">The mailer service.</param>
+        /// <param name="sentEmailRepository">The sent email repository.</param>
         public SendWelmcomeEmailAsyncCommandHandler(
             IMediator commandBus,
             IUnitOfWork uow,
-            ISiteMailerService mailerService)
-            : base(commandBus, uow, mailerService)
+            ISiteMailerService mailerService,
+            ISentEmailRepository sentEmailRepository)
+            : base(commandBus, uow, mailerService, sentEmailRepository)
         {
         }
 
@@ -43,56 +49,22 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.Uow.BeginTransaction();
 
-            await this.MailerService.SendWelcomeEmail(cmd).SendAsync();
+            // Save sent email
+            var sentEmailUid = Guid.NewGuid();
+            var sentEmail = new SentEmail(sentEmailUid, cmd.RecipientUserId, cmd.EditionId, "Welcome");
+            if (!sentEmail.IsValid())
+            {
+                this.AppValidationResult.Add(sentEmail.ValidationResult);
+                return this.AppValidationResult;
+            }
 
-            //var holdingUid = Guid.NewGuid();
+            this.SentEmailRepo.Create(sentEmail);
+            this.Uow.SaveChanges();
 
-            //#region Initial validations
+            // Sends the email
+            await this.MailerService.SendWelcomeEmail(cmd, sentEmail.Uid).SendAsync();
 
-            //var existHoldingByName = this.HoldingRepo.Get(h => h.Name == cmd.Name && !h.IsDeleted);
-            //if (existHoldingByName != null)
-            //{
-            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.AHolding, Labels.TheName, cmd.Name), new string[] { "Name" }));
-            //}
-
-            //if (!this.ValidationResult.IsValid)
-            //{
-            //    this.AppValidationResult.Add(this.ValidationResult);
-            //    return this.AppValidationResult;
-            //}
-
-            //#endregion
-
-            //var languageDtos = await this.languageRepo.FindAllDtosAsync();
-
-            //var holding = new Holding(
-            //    holdingUid,
-            //    cmd.Name,
-            //    cmd.CropperImage?.ImageFile != null,
-            //    cmd.Descriptions?.Select(d => new HoldingDescription(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
-            //    cmd.UserId);
-            //if (!holding.IsValid())
-            //{
-            //    this.AppValidationResult.Add(holding.ValidationResult);
-            //    return this.AppValidationResult;
-            //}
-
-            //this.HoldingRepo.Create(holding);
-            //this.Uow.SaveChanges();
-            //this.AppValidationResult.Data = holding;
-
-            //if (cmd.CropperImage?.ImageFile != null)
-            //{
-            //    ImageHelper.UploadOriginalAndCroppedImages(
-            //        holding.Uid,
-            //        cmd.CropperImage.ImageFile,
-            //        cmd.CropperImage.DataX,
-            //        cmd.CropperImage.DataY,
-            //        cmd.CropperImage.DataWidth,
-            //        cmd.CropperImage.DataHeight,
-            //        FileRepositoryPathType.HoldingImage);
-            //}
-
+            this.AppValidationResult.Data = sentEmail;
             return this.AppValidationResult;
 
             //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);

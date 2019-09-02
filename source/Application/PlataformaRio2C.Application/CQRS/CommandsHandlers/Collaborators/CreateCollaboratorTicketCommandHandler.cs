@@ -107,7 +107,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
                 #region Send welcome email
 
-                await this.CommandBus.Send(new SendWelmcomeEmailAsync(collaborator.FirstName, collaborator.GetFullName(), cmd.SalesPlatformAttendeeDto.Email, cmd.Edition.Name, cmd.Edition.UrlCode, "pt-BR"), cancellationToken);
+                await this.CommandBus.Send(new SendWelmcomeEmailAsync(
+                    collaborator.User.Id,
+                    collaborator.User.Uid,
+                    collaborator.FirstName, 
+                    collaborator.GetFullName(), 
+                    cmd.SalesPlatformAttendeeDto.Email, 
+                    cmd.EditionId,
+                    cmd.Edition.Name, 
+                    cmd.Edition.UrlCode, 
+                    "pt-BR"), cancellationToken);
 
                 #endregion
             }

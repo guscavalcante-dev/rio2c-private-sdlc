@@ -150,7 +150,11 @@
                         </tr>
                         <tr>
                             <td>
-                                <center><span class="emailinfo">@string.Format(Messages.EmailSentTo, Model.Email)</span></center>
+                                <center><span class="emailinfo">@string.Format(Messages.EmailSentTo, Model.RecipientEmail)</span></center>
+                                @*
+                                    //TODO: Pixel to confirm read
+                                    @ViewBag.SentEmailUid
+                                *@
                             </td>
                         </tr>
                     </table>

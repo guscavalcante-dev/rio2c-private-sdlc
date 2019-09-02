@@ -141,6 +141,7 @@
     <Compile Include="Mapping\SalesPlatform\AttendeeSalesPlatformMap.cs" />
     <Compile Include="Mapping\SalesPlatform\SalesPlatformWebhookRequestMap.cs" />
     <Compile Include="Mapping\SalesPlatform\SalesPlatformMap.cs" />
+    <Compile Include="Mapping\SentEmails\SentEmailMap.cs" />
     <Compile Include="Mapping\Speaker\SpeakerMap.cs" />
     <Compile Include="Mapping\TargetAudienceMap.cs" />
     <Compile Include="Mapping\SalesPlatform\TicketTypeMap.cs" />

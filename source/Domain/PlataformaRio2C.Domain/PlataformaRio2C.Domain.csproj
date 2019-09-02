@@ -163,6 +163,7 @@
     <Compile Include="Entities\SalesPlatform\AttendeeSalesPlatform.cs" />
     <Compile Include="Entities\SalesPlatform\SalesPlatformWebhookRequest.cs" />
     <Compile Include="Entities\SalesPlatform\SalesPlatform.cs" />
+    <Compile Include="Entities\SentEmails\SentEmail.cs" />
     <Compile Include="Entities\Speaker\Speaker.cs" />
     <Compile Include="Entities\TicketTypes\TicketType.cs" />
     <Compile Include="Enums\NegotiationTypeCodes.cs" />
@@ -181,6 +182,7 @@
     <Compile Include="Interfaces\Repositories\Addresses\ICityRepository.cs" />
     <Compile Include="Interfaces\Repositories\Addresses\ICountryRepository.cs" />
     <Compile Include="Interfaces\Repositories\Addresses\IStateRepository.cs" />
+    <Compile Include="Interfaces\Repositories\SentEmails\ISentEmailRepository.cs" />
     <Compile Include="Interfaces\Repositories\Organizations\IOrganizationTypeRepository.cs" />
     <Compile Include="Interfaces\Repositories\Organizations\IOrganizationRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAddressRepository.cs" />

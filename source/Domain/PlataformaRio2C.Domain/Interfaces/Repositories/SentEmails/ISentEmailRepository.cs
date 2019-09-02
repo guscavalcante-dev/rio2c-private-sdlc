@@ -1,25 +1,22 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Application
+// Assembly         : PlataformaRio2C.Domain
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 09-02-2019
 // ***********************************************************************
-// <copyright file="ISiteMailerService.cs" company="Softo">
+// <copyright file="ISentEmailRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using Mvc.Mailer;
-using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Domain.Entities;
 
-namespace PlataformaRio2C.Application.Services
+namespace PlataformaRio2C.Domain.Interfaces
 {
-    /// <summary>ISiteMailerService</summary>
-    public interface ISiteMailerService
+    /// <summary>ISentEmailRepository</summary>
+    public interface ISentEmailRepository : IRepository<SentEmail>
     {
-        MvcMailMessage SendWelcomeEmail(SendWelmcomeEmailAsync cmd, Guid sentEmailUid);
     }
 }
