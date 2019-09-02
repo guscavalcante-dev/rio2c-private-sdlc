@@ -187,6 +187,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Complete o cadastro da {0}.
+        /// </summary>
+        public static string CompleteYourSignup {
+            get {
+                return ResourceManager.GetString("CompleteYourSignup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Por favor, confirme para excluir..
         /// </summary>
         public static string ConfirmDelete {
@@ -201,6 +210,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ConfirmDeleteEdition {
             get {
                 return ResourceManager.GetString("ConfirmDeleteEdition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirme e complete seus dados pessoais.
+        /// </summary>
+        public static string ConfirmeAndCompletePersonalInfo {
+            get {
+                return ResourceManager.GetString("ConfirmeAndCompletePersonalInfo", resourceCulture);
             }
         }
         

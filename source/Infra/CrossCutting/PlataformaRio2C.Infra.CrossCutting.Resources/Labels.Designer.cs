@@ -1843,6 +1843,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dados pessoais.
+        /// </summary>
+        public static string PersonalInfo {
+            get {
+                return ResourceManager.GetString("PersonalInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Telefone.
         /// </summary>
         public static string PhoneNumber {
@@ -1920,6 +1929,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string PlayerDidNotDefinedGenre {
             get {
                 return ResourceManager.GetString("PlayerDidNotDefinedGenre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dados do Player.
+        /// </summary>
+        public static string PlayerInfo {
+            get {
+                return ResourceManager.GetString("PlayerInfo", resourceCulture);
             }
         }
         
@@ -3112,7 +3130,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ben-vindo ao {0}.
+        ///   Looks up a localized string similar to Bem vindo ao {0}.
         /// </summary>
         public static string WelcomeToEdition {
             get {

@@ -1341,7 +1341,14 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Exibir todos os executivos</comment>
   </data>
   <data name="WelcomeToEdition" xml:space="preserve">
-    <value>Ben-vindo ao {0}</value>
-    <comment>Ben-vindo ao {0}</comment>
+    <value>Bem vindo ao {0}</value>
+    <comment>Bem vindo ao {0}</comment>
+  </data>
+  <data name="PersonalInfo" xml:space="preserve">
+    <value>Dados pessoais</value>
+    <comment>Dados pessoais</comment>
+  </data>
+  <data name="PlayerInfo" xml:space="preserve">
+    <value>Dados do Player</value>
   </data>
 </root>

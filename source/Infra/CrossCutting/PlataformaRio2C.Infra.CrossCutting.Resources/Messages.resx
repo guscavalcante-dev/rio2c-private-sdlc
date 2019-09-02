@@ -548,4 +548,10 @@
     <value>E-mail enviado para {0}.</value>
     <comment>E-mail enviado para {0}.</comment>
   </data>
+  <data name="CompleteYourSignup" xml:space="preserve">
+    <value>Complete o cadastro da {0}</value>
+  </data>
+  <data name="ConfirmeAndCompletePersonalInfo" xml:space="preserve">
+    <value>Confirme e complete seus dados pessoais</value>
+  </data>
 </root>
