@@ -730,7 +730,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Se já tiver login e senha</value>
   </data>
   <data name="ClickHere" xml:space="preserve">
-    <value>clique aqui</value>
+    <value>Clique aqui</value>
   </data>
   <data name="ArrivalTime" xml:space="preserve">
     <value>Hora de Chegada</value>

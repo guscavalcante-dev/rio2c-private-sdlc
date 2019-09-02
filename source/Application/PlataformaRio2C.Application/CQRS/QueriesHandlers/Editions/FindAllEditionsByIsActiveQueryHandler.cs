@@ -4,9 +4,9 @@
 // Created          : 08-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-07-2019
+// Last Modified On : 09-02-2019
 // ***********************************************************************
-// <copyright file="FindEditionsByCurrentQueryHandler.cs" company="Softo">
+// <copyright file="FindAllEditionsByIsActiveQueryHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -20,14 +20,14 @@ using PlataformaRio2C.Domain.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
 {
-    /// <summary>FindAllEditionsByActiveQueryHandler</summary>
-    public class FindAllEditionsByActiveQueryHandler : RequestHandler<FindAllEditionsByIsActive, List<EditionDto>>
+    /// <summary>FindAllEditionsByIsActiveQueryHandler</summary>
+    public class FindAllEditionsByIsActiveQueryHandler : RequestHandler<FindAllEditionsByIsActive, List<EditionDto>>
     {
         private readonly IEditionRepository repo;
 
-        /// <summary>Initializes a new instance of the <see cref="FindAllEditionsByActiveQueryHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="FindAllEditionsByIsActiveQueryHandler"/> class.</summary>
         /// <param name="editionRepository">The edition repository.</param>
-        public FindAllEditionsByActiveQueryHandler(IEditionRepository editionRepository)
+        public FindAllEditionsByIsActiveQueryHandler(IEditionRepository editionRepository)
         {
             this.repo = editionRepository;
         }

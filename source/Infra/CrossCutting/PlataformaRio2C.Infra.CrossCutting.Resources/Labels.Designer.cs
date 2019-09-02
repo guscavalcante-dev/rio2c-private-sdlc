@@ -421,7 +421,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to clique aqui.
+        ///   Looks up a localized string similar to Clique aqui.
         /// </summary>
         public static string ClickHere {
             get {

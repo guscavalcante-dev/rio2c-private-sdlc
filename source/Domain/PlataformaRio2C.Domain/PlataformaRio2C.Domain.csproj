@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dtos\Addresses\AddressBaseDto.cs" />
+    <Compile Include="Dtos\AttendeeCollaborator\AccessControlAttendeeCollaboratorDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationBaseDto.cs" />
     <Compile Include="Dtos\Cities\CityBaseDto.cs" />
     <Compile Include="Dtos\Collaborators\CollaboratorBaseDto.cs" />
@@ -169,6 +170,7 @@
     <Compile Include="Enums\NegotiationTypeCodes.cs" />
     <Compile Include="Enums\StatusProjectCodes.cs" />
     <Compile Include="Interfaces\IMailCollaboratorRepository.cs" />
+    <Compile Include="Interfaces\Repositories\AttendeeCollaborators\IAttendeeCollaboratorRepository.cs" />
     <Compile Include="Interfaces\Repositories\AttendeeOrganizations\IAttendeeOrganizationRepository.cs" />
     <Compile Include="Interfaces\Repositories\Collaborators\ICollaboratorProducerRepository.cs" />
     <Compile Include="Interfaces\Repositories\Conference\ILecturerJobTitleRepository.cs" />

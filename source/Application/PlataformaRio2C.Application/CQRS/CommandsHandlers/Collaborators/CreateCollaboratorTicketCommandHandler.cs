@@ -108,6 +108,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 #region Send welcome email
 
                 await this.CommandBus.Send(new SendWelmcomeEmailAsync(
+                    collaborator.User.SecurityStamp,
                     collaborator.User.Id,
                     collaborator.User.Uid,
                     collaborator.FirstName, 

@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-07-2019
+// Last Modified On : 09-02-2019
 // ***********************************************************************
 // <copyright file="AccountController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using MediatR;
+using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 
 namespace PlataformaRio2C.Web.Site.Controllers
@@ -183,21 +184,33 @@ namespace PlataformaRio2C.Web.Site.Controllers
         #region Onboarding
 
         [AllowAnonymous]
-        public ActionResult Onboarding(string email, Guid userId, string securityStamp)
+        public async Task<ActionResult> Onboarding(string email, Guid? uid, string token)
         {
-            //var user = this.userRepo.FindById(userId);
-            //if (user == null)
-            //{
-            //    return RedirectToAction("Index", "Error");
-            //}
-
             try
             {
-                if (!ModelState.IsValid)
+                this.authenticationManager.SignOut();
+
+                if (string.IsNullOrEmpty(email) || !uid.HasValue || string.IsNullOrEmpty(token))
                 {
-                    throw new DomainException(Messages.CorrectFormValues);
+                    return RedirectToAction("Forbidden", "Error");
                 }
 
+                var user = await this._identityController.FindByEmailAsync(email);
+                if (user == null || email != user.Email || uid.Value != user.Uid || token != user.SecurityStamp)
+                {
+                    return RedirectToAction("Forbidden", "Error");
+                }
+                
+                await _identityController.SignInAsync(this.authenticationManager, user, true);
+
+                if (!await _identityController.IsInRoleAsync(user.Id, Domain.Statics.Role.User.Name) &&
+                    !await _identityController.IsInRoleAsync(user.Id, Domain.Statics.Role.Admin.Name))
+                {
+                    this.StatusMessage(Messages.AccessDenied, StatusMessageType.Danger);
+                    return RedirectToAction("LogOff");
+                }
+
+                //TODO: Confirm onboarding start
                 //cmd.UpdatePreSendProperties(
                 //    this.UserId,
                 //    this.UserUid,
@@ -234,41 +247,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 //return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-
-            //try
-            //{
-            //    var cmd = new ConfirmUser(userId, email, securityStamp);
-            //    var result = this.commandBus.Send(cmd);
-            //    if (!result.IsExecuted)
-            //    {
-            //        throw result.Exception;
-            //    }
-            //}
-            //catch (DomainException ex)
-            //{
-            //    this.SetResultMessage(new ResultMessage(ex.GetInnerMessage(), ResultMessageType.Error));
-            //    return RedirectToAction("Index", "Home");
-            //}
-            //catch (Exception ex)
-            //{
-            //    Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-            //    this.SetResultMessage(new ResultMessage("[[[We found an error confirming your email. We are already working on it.]]]", ResultMessageType.Error));
-            //    return RedirectToAction("Index", "Error");
-            //}
-
-            // TODO: Send welcome e-mail
-            //this.userMailer.SendQueueEmail(new QueueEmailViewModel(user.Email, HttpContext.GetPrincipalAppLanguageForRequest().ToString(), user.ReferrerCode)).SendAsync();
-            //TempData["successMessage"] = "[[[Your email]]] " + user.Email + " [[[was confirmed.]]]";
-
-            //AuthenticationManager.SignOut();
-            Session.Clear();
-
-            // Log in the user
-            //var userIdentity = UserManager.FindByEmail(email);
-            //SignInManager.SignIn(userIdentity, isPersistent: false, rememberBrowser: false);
-            //this.SetLoginSessionValues(email);
-
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Quiz");
         }
 
         #endregion

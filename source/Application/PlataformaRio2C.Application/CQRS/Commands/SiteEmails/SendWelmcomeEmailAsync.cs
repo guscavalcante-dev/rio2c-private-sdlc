@@ -18,7 +18,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>SendWelmcomeEmailAsync</summary>
     public class SendWelmcomeEmailAsync : EmailBaseCommand
     {
+        public string UserSecurityToken { get; private set; }
+
         /// <summary>Initializes a new instance of the <see cref="SendWelmcomeEmailAsync"/> class.</summary>
+        /// <param name="userSecurityToken">The user security token.</param>
         /// <param name="recipientUserId">The recipient user identifier.</param>
         /// <param name="recipientUserUid">The recipient user uid.</param>
         /// <param name="recipientFirstName">First name of the recipient.</param>
@@ -29,6 +32,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="editionUrlCode">The edition URL code.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public SendWelmcomeEmailAsync(
+            string userSecurityToken,
             int recipientUserId, 
             Guid recipientUserUid, 
             string recipientFirstName, 
@@ -40,6 +44,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string userInterfaceLanguage)
             : base(recipientUserId, recipientUserUid, recipientFirstName, recipientFullName, recipientEmail, editionId, editionName, editionUrlCode, userInterfaceLanguage)
         {
+            this.UserSecurityToken = userSecurityToken;
         }
 
         /// <summary>Initializes a new instance of the <see cref="SendWelmcomeEmailAsync"/> class.</summary>

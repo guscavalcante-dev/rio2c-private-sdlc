@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-01-2019
+// Last Modified On : 09-02-2019
 // ***********************************************************************
 // <copyright file="UserMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -50,6 +50,10 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             //this.HasOptional(t => t.Collaborator)
             //    .WithRequired(e => e.User);
             //.HasForeignKey(d => d.Id);
+
+            this.HasOptional(t => t.UserInterfaceLanguage)
+                .WithMany(d => d.Users)
+                .HasForeignKey(t => t.UserInterfaceLanguageId);
 
             this.HasMany(t => t.Roles)
                 .WithMany()

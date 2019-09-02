@@ -11,6 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System.Collections.Generic;
+
 namespace PlataformaRio2C.Domain.Entities
 {
     /// <summary>Language</summary>
@@ -21,6 +23,8 @@ namespace PlataformaRio2C.Domain.Entities
 
         public string Name { get; private set; }
         public string Code { get; private set; }
+
+        public virtual ICollection<User> Users { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="Language"/> class.</summary>
         protected Language()

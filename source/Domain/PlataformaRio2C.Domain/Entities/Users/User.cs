@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-01-2019
+// Last Modified On : 09-02-2019
 // ***********************************************************************
 // <copyright file="User.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -41,12 +41,14 @@ namespace PlataformaRio2C.Domain.Entities
         public bool TwoFactorEnabled { get; set; }
         public DateTime? LockoutEndDateUtc { get; set; }
         public bool LockoutEnabled { get; set; }
-        public int AccessFailedCount { get; set; }        
+        public int AccessFailedCount { get; set; }
+        public int? UserInterfaceLanguageId { get; set; }
+
+        public virtual Collaborator Collaborator { get; set; }
+        public virtual Language UserInterfaceLanguage { get; set; }
 
         public virtual ICollection<Role> Roles { get; set; }
         public virtual ICollection<UserUseTerm> UserUseTerms { get; set; }
-
-        public virtual Collaborator Collaborator { get; set; }
         public virtual ICollection<Holding> UpdatedHoldings { get; set; }
         public virtual ICollection<Organization> UpdatedOrganizations { get; set; }
         public virtual ICollection<Collaborator> UpdatedCollaborators { get; set; }

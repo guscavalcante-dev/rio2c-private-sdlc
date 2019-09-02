@@ -724,7 +724,7 @@
     <value>If you already have a login and password</value>
   </data>
   <data name="ClickHere" xml:space="preserve">
-    <value>click here</value>
+    <value>Click here</value>
   </data>
   <data name="ArrivalTime" xml:space="preserve">
     <value>Arrival Time</value>

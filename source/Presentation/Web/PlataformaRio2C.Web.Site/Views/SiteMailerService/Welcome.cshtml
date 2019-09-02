@@ -1,4 +1,5 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.SendWelmcomeEmailAsync
+﻿@using Mvc.Mailer
+@model PlataformaRio2C.Application.CQRS.Commands.SendWelmcomeEmailAsync
 <td valign="top">
     <!-- content -->
     <h1>@Labels.Hi @Model.RecipientFirstName,</h1>
@@ -12,8 +13,8 @@
 
     <![endif]-->
         <center>
-            <a href="http://rio2.com"
-               style="background-color:#ea202c;border-radius:6px;color:#ffffff;display:inline-block;font-family:sans-serif;font-size:13px;font-weight:bold;line-height:40px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;">Click here!</a>
+            <a href="@Url.Abs(Url.Action("Onboarding", "Account", new { culture = Model.UserInterfaceLanguage, edition = Model.EditionUrlCode, email = Model.RecipientEmail, uid = Model.RecipientUserUid, token = Model.UserSecurityToken }))"
+               style="background-color:#ea202c;border-radius:6px;color:#ffffff;display:inline-block;font-family:sans-serif;font-size:13px;font-weight:bold;line-height:40px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;">@Labels.ClickHere!</a>
         </center>
             <!--[if mso]>
             
@@ -22,5 +23,4 @@
     </div>
 </td>
 @section Styles {
-
 }

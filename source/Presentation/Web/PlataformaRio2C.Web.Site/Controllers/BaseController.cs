@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-09-2019
+// Last Modified On : 09-02-2019
 // ***********************************************************************
 // <copyright file="BaseController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,6 +21,7 @@ using System.Web.Routing;
 using MediatR;
 using Microsoft.AspNet.Identity;
 using PlataformaRio2C.Application.CQRS.Queries;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
@@ -37,7 +38,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
         protected int UserId;
         protected Guid UserUid;
         protected string UserName;
-        protected IList<string> UserRoles;
+        protected IList<Role> UserRoles;
+        protected IList<TicketType> UserTicketTypes;
         protected string Area;
 
         /// <summary>Initializes a new instance of the <see cref="BaseController"/> class.</summary>
@@ -203,17 +205,17 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return;
             }
 
-            var user = this.identityController.FindByIdAsync(this.UserId).Result;
-            if (user == null)
+            var accessControllDto = this.commandBus.Send(new FindAccessControlDto(this.EditionUid ?? Guid.NewGuid(), this.UserId, this.UserInterfaceLanguage)).Result;
+            if (accessControllDto == null)
             {
                 return;
             }
 
-            ViewBag.UserUid = this.UserUid = user.Uid;
-            ViewBag.FullName = this.UserName = user.Name.UppercaseFirstOfEachWord(this.UserInterfaceLanguage);
+            ViewBag.UserUid = this.UserUid = accessControllDto.User.Uid;
+            ViewBag.FullName = this.UserName = accessControllDto.User.Name.UppercaseFirstOfEachWord(this.UserInterfaceLanguage);
             ViewBag.FirstName = this.UserName?.GetFirstWord();
-            ViewBag.UserRoles = this.UserRoles = this.identityController.FindAllRolesByUserIdAsync(this.UserId).Result;
-            ViewBag.UserTicketTypes = new[] { "Industry", "Player" }; //TODO: Get from database
+            ViewBag.UserRoles = this.UserRoles = accessControllDto.Roles?.ToList();
+            ViewBag.UserTicketTypes = this.UserTicketTypes = accessControllDto.TicketTypes?.ToList();
         }
 
         //protected void CheckRegisterIsComplete()
