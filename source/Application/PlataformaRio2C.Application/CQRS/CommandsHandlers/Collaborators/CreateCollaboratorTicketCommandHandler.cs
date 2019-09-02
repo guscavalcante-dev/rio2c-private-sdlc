@@ -4,7 +4,7 @@
 // Created          : 08-31-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-01-2019
+// Last Modified On : 09-02-2019
 // ***********************************************************************
 // <copyright file="CreateCollaboratorWithTicketsHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -104,6 +104,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 this.CollaboratorRepo.Create(collaborator);
                 this.Uow.SaveChanges();
                 this.AppValidationResult.Data = collaborator;
+
+                await this.CommandBus.Send(new SendWelmcomeEmailAsync(cmd.Edition.Name, collaborator.FirstName, collaborator.GetFullName(), cmd.SalesPlatformAttendeeDto.Email), cancellationToken);
             }
             else
             {

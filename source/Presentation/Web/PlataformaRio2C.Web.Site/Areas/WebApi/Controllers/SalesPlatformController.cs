@@ -4,7 +4,7 @@
 // Created          : 07-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-01-2019
+// Last Modified On : 09-02-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -44,12 +44,26 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             this.salesPlatformServiceFactory = salesPlatformServiceFactory;
         }
 
+        #region Test Welcome Email
+
+        /// <summary>Pings this instance.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("testwelcomeemail")]
+        public async Task<IHttpActionResult> TestWelcomeEmail()
+        {
+            await this.commandBus.Send(new SendWelmcomeEmailAsync("MyRio2C 2020", "Rafael", "Rafael Ruiz", "rafadr@hotmail.com"));
+            return await Json(new { status = "success", message = "Welcome email sent." });
+        }
+
+        #endregion
+
         #region Ping
 
         /// <summary>Pings this instance.</summary>
         /// <returns></returns>
-        [System.Web.Http.HttpGet]
-        [System.Web.Http.Route("ping")]
+        [HttpGet]
+        [Route("ping")]
         public async Task<IHttpActionResult> Ping()
         {
             return await Json(new { status = "success", message = "Pong" });
@@ -61,8 +75,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
         /// <summary>Tests this instance.</summary>
         /// <returns></returns>
-        [System.Web.Http.HttpPost]
-        [System.Web.Http.Route("eventbrite/{key?}")]
+        [HttpPost]
+        [Route("eventbrite/{key?}")]
         public async Task<IHttpActionResult> Eventbrite(string key)
         {
             try
@@ -103,11 +117,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <summary>Processes the requests.</summary>
         /// <param name="key">The key.</param>
         /// <returns></returns>
-        /// <exception cref="DomainException">Invalid key.
-        /// or
-        /// Sales platform webhook requests processed with some errors.</exception>
-        [System.Web.Http.HttpGet]
-        [System.Web.Http.Route("processrequests/{key?}")]
+        [HttpGet]
+        [Route("processrequests/{key?}")]
         public async Task<IHttpActionResult> ProcessRequests(string key)
         {
             var result = new AppValidationResult();

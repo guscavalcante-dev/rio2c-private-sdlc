@@ -268,6 +268,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to E-mail enviado para {0}..
+        /// </summary>
+        public static string EmailSentTo {
+            get {
+                return ResourceManager.GetString("EmailSentTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} {1} com sucesso..
         /// </summary>
         public static string EntityActionSuccessfull {

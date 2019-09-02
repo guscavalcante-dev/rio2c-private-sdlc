@@ -104,6 +104,9 @@
     <Reference Include="Migrations, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Migrations.1.0.1.0\lib\net40-Client\Migrations.dll</HintPath>
     </Reference>
+    <Reference Include="Mvc.Mailer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\MvcMailer.4.5\lib\45\Mvc.Mailer.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -182,6 +185,8 @@
     <Compile Include="CQRS\CommandsHandlers\Holdings\DeleteHoldingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\UpdateHoldingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\CreateHoldingCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\SiteEmails\SiteMailerBaseCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\SiteEmails\SendWelcomeEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\BaseOrganizationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\DeleteOrganizationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\UpdateOrganizationCommandHandler.cs" />
@@ -202,6 +207,8 @@
     <Compile Include="CQRS\Commands\Collaborators\CreateCollaborator.cs" />
     <Compile Include="CQRS\Commands\Collaborators\DeleteCollaborator.cs" />
     <Compile Include="CQRS\Commands\Collaborators\UpdateCollaborator.cs" />
+    <Compile Include="CQRS\Commands\SiteEmails\BaseCommands\EmailBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\SiteEmails\SendWelmcomeEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Organizations\BaseCommands\OrganizationBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Organizations\BaseCommands\OrganizationDescriptionBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Organizations\CreateOrganization.cs" />
@@ -331,6 +338,7 @@
     <Compile Include="Services\Common\LanguageAppService.cs" />
     <Compile Include="Services\Common\HoldingAppService.cs" />
     <Compile Include="Services\Common\ScheduleAppService.cs" />
+    <Compile Include="Services\Emails\ISiteMailerService.cs" />
     <Compile Include="ViewModels\Admin\ConfigNetworkRio2C\ConfigNetworkRio2CAppViewModel.cs" />
     <Compile Include="ViewModels\Admin\Dashboard\DataItemChartAppViewModel.cs" />
     <Compile Include="ViewModels\Admin\FinancialReport\ItemFinancialReportAppViewModel.cs" />
@@ -543,6 +551,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Controllers\" />
     <Folder Include="CQRS\CommandsHandlers\SalesPlatforms\" />
     <Folder Include="CQRS\Commands\SalesPlatforms\" />
     <Folder Include="CQRS\EventsHandlers\" />

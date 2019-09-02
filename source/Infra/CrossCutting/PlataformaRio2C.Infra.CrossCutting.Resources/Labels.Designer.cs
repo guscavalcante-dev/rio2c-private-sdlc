@@ -3112,6 +3112,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ben-vindo ao {0}.
+        /// </summary>
+        public static string WelcomeToEdition {
+            get {
+                return ResourceManager.GetString("WelcomeToEdition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sim.
         /// </summary>
         public static string Yes {

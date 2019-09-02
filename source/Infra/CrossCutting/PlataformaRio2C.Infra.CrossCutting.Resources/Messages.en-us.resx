@@ -539,4 +539,8 @@
     <value>The email is used for user login.</value>
     <comment>O email é utilizado para o login do usuário.</comment>
   </data>
+  <data name="EmailSentTo" xml:space="preserve">
+    <value>Email sent to {0}.</value>
+    <comment>E-mail enviado para {0}.</comment>
+  </data>
 </root>

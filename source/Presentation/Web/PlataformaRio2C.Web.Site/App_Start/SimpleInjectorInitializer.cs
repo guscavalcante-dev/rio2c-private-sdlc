@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-15-2019
+// Last Modified On : 09-02-2019
 // ***********************************************************************
 // <copyright file="SimpleInjectorInitializer.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,8 +28,10 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using PlataformaRio2C.Application.CQRS.CommandsHandlers;
+using PlataformaRio2C.Application.Services;
 using PlataformaRio2C.Infra.CrossCutting.CQRS;
 using PlataformaRio2C.Infra.Data.FileRepository;
+using PlataformaRio2C.Web.Site.Services;
 
 namespace PlataformaRio2C.Web.Site
 {
@@ -76,6 +78,7 @@ namespace PlataformaRio2C.Web.Site
             IoCBootStrapper.RegisterServices(container);
             SiteIoCBootStrapper.RegisterServices(container);
             FileRepositoryBootStrapper.RegisterServices(container);
+            container.Register<ISiteMailerService, SiteMailerService>(Lifestyle.Scoped);
             CqrsBootStrapper.RegisterServices(container, new[]
             {
                 typeof(CreateSalesPlatformWebhookRequestCommandHandler).Assembly

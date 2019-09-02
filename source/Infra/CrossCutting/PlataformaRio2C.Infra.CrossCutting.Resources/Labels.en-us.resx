@@ -1329,4 +1329,8 @@
     <value>Show all executives</value>
     <comment>Exibir todos os executivos</comment>
   </data>
+  <data name="WelcomeToEdition" xml:space="preserve">
+    <value>Welcome to {0}</value>
+    <comment>Ben-vindo ao {0}</comment>
+  </data>
 </root>

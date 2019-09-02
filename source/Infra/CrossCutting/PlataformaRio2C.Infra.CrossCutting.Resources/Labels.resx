@@ -1340,4 +1340,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Exibir todos os executivos</value>
     <comment>Exibir todos os executivos</comment>
   </data>
+  <data name="WelcomeToEdition" xml:space="preserve">
+    <value>Ben-vindo ao {0}</value>
+    <comment>Ben-vindo ao {0}</comment>
+  </data>
 </root>

@@ -170,6 +170,9 @@
     <Reference Include="Migrations, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Migrations.1.0.1.0\lib\net40-Client\Migrations.dll</HintPath>
     </Reference>
+    <Reference Include="Mvc.Mailer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\MvcMailer.4.5\lib\45\Mvc.Mailer.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -316,6 +319,7 @@
     <Compile Include="Controllers\CollaboratorController.cs" />
     <Compile Include="Controllers\ConferenceController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Services\SiteMailerService.cs" />
     <Compile Include="Controllers\OnboardingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuizController.cs" />
@@ -7038,6 +7042,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Modals\Onboarding.cshtml" />
     <Content Include="Views\Onboarding\Index.cshtml" />
+    <Content Include="Views\SiteMailerService\Welcome.cshtml" />
+    <Content Include="Views\SiteMailerService\_SiteEmailLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
