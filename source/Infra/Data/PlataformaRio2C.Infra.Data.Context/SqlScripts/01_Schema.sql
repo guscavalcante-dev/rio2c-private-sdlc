@@ -67,6 +67,8 @@ CREATE TABLE [dbo].[AttendeeCollaborators](
 	[Uid] [uniqueidentifier] NOT NULL,
 	[EditionId] [int] NOT NULL,
 	[CollaboratorId] [int] NOT NULL,
+	[WelcomeEmailSendDate] [datetime] NULL,
+	[OnboardingFinishDate] [datetime] NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,
@@ -166,6 +168,7 @@ CREATE TABLE [dbo].[AttendeeOrganizations](
 	[Uid] [uniqueidentifier] NOT NULL,
 	[EditionId] [int] NOT NULL,
 	[OrganizationId] [int] NOT NULL,
+	[OnboardingFinishDate] [datetime] NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,
@@ -621,6 +624,7 @@ CREATE TABLE [dbo].[Countries](
 	[Name] [varchar](100) NOT NULL,
 	[Code] [varchar](3) NULL,
 	[IsManual] [bit] NOT NULL,
+	[DefaultLanguageId] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,
@@ -1845,6 +1849,29 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_PADDING ON
 GO
+CREATE TABLE [dbo].[SentEmails](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[RecipientUserId] [int] NOT NULL,
+	[EditionId] [int] NULL,
+	[EmailType] [varchar](50) NOT NULL,
+	[EmailSendDate] [datetime] NOT NULL,
+	[EmailReadDate] [datetime] NULL,
+ CONSTRAINT [PK_SentEmails] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
 CREATE TABLE [dbo].[States](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
@@ -2031,6 +2058,7 @@ CREATE TABLE [dbo].[Users](
 	[LockoutEnabled] [bit] NOT NULL,
 	[AccessFailedCount] [int] NOT NULL,
 	[PasswordNew] [varchar](50) NULL,
+	[UserInterfaceLanguageId] [int] NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[UpdateDate] [datetime] NOT NULL,
@@ -2421,6 +2449,11 @@ ALTER TABLE [dbo].[ConferenceTitles]  WITH CHECK ADD  CONSTRAINT [FK_Users_Confe
 REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[ConferenceTitles] CHECK CONSTRAINT [FK_Users_ConferenceTitles_UpdateUserId]
+GO
+ALTER TABLE [dbo].[Countries]  WITH CHECK ADD  CONSTRAINT [FK_Languages_Countries_DefaultLanguageId] FOREIGN KEY([DefaultLanguageId])
+REFERENCES [dbo].[Languages] ([Id])
+GO
+ALTER TABLE [dbo].[Countries] CHECK CONSTRAINT [FK_Languages_Countries_DefaultLanguageId]
 GO
 ALTER TABLE [dbo].[Countries]  WITH CHECK ADD  CONSTRAINT [FK_Users_Countries_CreateUserId] FOREIGN KEY([CreateUserId])
 REFERENCES [dbo].[Users] ([Id])
@@ -3072,6 +3105,16 @@ REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[SalesPlatformWebhookRequests] CHECK CONSTRAINT [FK_Users_SalesPlatformWebhookRequests_ManualProcessingUserId]
 GO
+ALTER TABLE [dbo].[SentEmails]  WITH CHECK ADD  CONSTRAINT [FK_Editions_SentEmails_EditionId] FOREIGN KEY([EditionId])
+REFERENCES [dbo].[Editions] ([Id])
+GO
+ALTER TABLE [dbo].[SentEmails] CHECK CONSTRAINT [FK_Editions_SentEmails_EditionId]
+GO
+ALTER TABLE [dbo].[SentEmails]  WITH CHECK ADD  CONSTRAINT [FK_Users_SentEmails_RecipientUserId] FOREIGN KEY([RecipientUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[SentEmails] CHECK CONSTRAINT [FK_Users_SentEmails_RecipientUserId]
+GO
 ALTER TABLE [dbo].[States]  WITH CHECK ADD  CONSTRAINT [FK_Countries_States_CountryId] FOREIGN KEY([CountryId])
 REFERENCES [dbo].[Countries] ([Id])
 GO
@@ -3126,6 +3169,11 @@ ALTER TABLE [dbo].[UserLogins]  WITH CHECK ADD  CONSTRAINT [FK_Users_UserLogins_
 REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[UserLogins] CHECK CONSTRAINT [FK_Users_UserLogins_UserId]
+GO
+ALTER TABLE [dbo].[Users]  WITH CHECK ADD  CONSTRAINT [FK_Languages_Users_UserInterfaceLanguageId] FOREIGN KEY([UserInterfaceLanguageId])
+REFERENCES [dbo].[Languages] ([Id])
+GO
+ALTER TABLE [dbo].[Users] CHECK CONSTRAINT [FK_Languages_Users_UserInterfaceLanguageId]
 GO
 ALTER TABLE [dbo].[UsersRoles]  WITH CHECK ADD  CONSTRAINT [FK_Roles_UsersRoles_RoleId] FOREIGN KEY([RoleId])
 REFERENCES [dbo].[Roles] ([Id])
