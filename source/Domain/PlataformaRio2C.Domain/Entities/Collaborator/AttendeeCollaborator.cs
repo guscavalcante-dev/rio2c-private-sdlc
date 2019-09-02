@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-01-2019
+// Last Modified On : 09-02-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,6 +23,7 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public int EditionId { get; private set; }
         public int CollaboratorId { get; private set; }
+        public DateTime? OnboardingFinishDate { get; private set; }
 
         public virtual Edition Edition { get; private set; }
         public virtual Collaborator Collaborator { get; private set; }

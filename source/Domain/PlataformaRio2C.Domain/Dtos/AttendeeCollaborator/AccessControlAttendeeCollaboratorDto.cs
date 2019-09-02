@@ -23,6 +23,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public Collaborator Collaborator { get; set; }
         public User User { get; set; }
         public Language Language { get; set; }
+        public bool IsPendingAttendeeCollaboratorOnboarding { get; set; }
+        public bool IsPendingAttendeeOrganizationOnboarding { get; set; }
 
         public IEnumerable<Role> Roles { get; set; }
         public IEnumerable<AttendeeCollaboratorTicket> AttendeeCollaboratorTickets { get; set; }

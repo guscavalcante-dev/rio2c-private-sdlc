@@ -319,6 +319,7 @@
     <Compile Include="Controllers\CollaboratorController.cs" />
     <Compile Include="Controllers\ConferenceController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Helpers\OnboardingAllowedRoutesHelper.cs" />
     <Compile Include="Services\SiteMailerService.cs" />
     <Compile Include="Controllers\OnboardingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

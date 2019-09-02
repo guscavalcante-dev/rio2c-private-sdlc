@@ -24,6 +24,7 @@ using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Web.Site.Helpers;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -41,6 +42,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         protected IList<Role> UserRoles;
         protected IList<TicketType> UserTicketTypes;
         protected string Area;
+        protected bool OnboardingPending;
 
         /// <summary>Initializes a new instance of the <see cref="BaseController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -71,6 +73,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             this.SetUserInfo();
             this.SetArea();
+            this.ValidateOnboarding();
 
             return base.BeginExecuteCore(callback, state);
         }
@@ -185,12 +188,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
             return true;
         }
 
-        /// <summary>Sets the area.</summary>
-        private void SetArea()
-        {
-            this.Area = ViewBag.Area = RouteData.Values["Area"] as string;
-        }
-
         /// <summary>Sets the user information.</summary>
         private void SetUserInfo()
         {
@@ -216,88 +213,34 @@ namespace PlataformaRio2C.Web.Site.Controllers
             ViewBag.FirstName = this.UserName?.GetFirstWord();
             ViewBag.UserRoles = this.UserRoles = accessControllDto.Roles?.ToList();
             ViewBag.UserTicketTypes = this.UserTicketTypes = accessControllDto.TicketTypes?.ToList();
+            this.OnboardingPending = accessControllDto.IsPendingAttendeeCollaboratorOnboarding || accessControllDto.IsPendingAttendeeOrganizationOnboarding;
         }
 
-        //protected void CheckRegisterIsComplete()
-        //{
-        //    var method = Request.HttpMethod;
+        /// <summary>Sets the area.</summary>
+        private void SetArea()
+        {
+            this.Area = ViewBag.Area = RouteData.Values["Area"] as string;
+        }
 
-        //    var collaboratorAppService = (ICollaboratorAppService)DependencyResolver.Current.GetService(typeof(ICollaboratorAppService));
-        //    int userId = User.Identity.GetUserId<int>();
-        //    var collaborator = collaboratorAppService.GetStatusRegisterCollaboratorByUserId(userId);
+        /// <summary>Validates the onboarding.</summary>
+        private void ValidateOnboarding()
+        {
+            var controllerName = RouteData.Values["controller"] as string;
+            var actionName = RouteData.Values["action"] as string;
 
-        //    var userIdentity = (ClaimsIdentity)User.Identity;
-        //    var claims = userIdentity.Claims;
-        //    var roleClaimType = userIdentity.RoleClaimType;
-        //    var roles = claims.Where(c => c.Type == ClaimTypes.Role).ToList();
+            // Onboarding urls validation
+            if (!OnboardingAllowedRoutesHelper.IsRouteAllowed(controllerName, actionName))
+            {
+                if (!this.OnboardingPending)
+                {
+                    return;
+                }
 
-        //    if (collaborator != null)
-        //    {
-        //        ViewBag.PlayerComplete = true;
-        //        ViewBag.InterestComplete = true;
-        //        ViewBag.ProducerComplete = true;
-
-        //        ViewBag.ProfileComplete = collaborator.RegisterComplete;
-
-        //        if (User.IsInRole("Player"))
-        //        {
-        //            ViewBag.PlayerComplete = collaborator.PlayersRegisterComplete;
-        //            ViewBag.InterestComplete = collaborator.PlayersInterestFilled;
-        //        }
-
-        //        if (User.IsInRole("Producer"))
-        //        {
-        //            ViewBag.ProducerComplete = collaborator.ProducersRegisterComplete;
-        //        }
-
-        //        if (!ViewBag.ProfileComplete && method == "GET")
-        //        {
-        //            this.StatusMessage(@Messages.ProfileIncompleteMessage, Infra.CrossCutting.Tools.Enums.StatusMessageType.Danger);
-        //        }
-
-        //        if (!ViewBag.PlayerComplete && method == "GET")
-        //        {
-        //            this.StatusMessage(Messages.PlayerIncompleteMessage, Infra.CrossCutting.Tools.Enums.StatusMessageType.Danger);
-        //        }
-
-        //        if (!ViewBag.InterestComplete && method == "GET")
-        //        {
-        //            this.StatusMessage(Messages.InterestsIncompleteMessage, Infra.CrossCutting.Tools.Enums.StatusMessageType.Danger);
-        //        }
-
-        //        if (!ViewBag.ProducerComplete && method == "GET")
-        //        {
-        //            //this.StatusMessage("Produtora incompleta", Infra.CrossCutting.Tools.Enums.StatusMessageType.Danger);
-        //        }
-
-        //        if ( method == "POST" && ViewBag.ProfileComplete && ViewBag.PlayerComplete && ViewBag.InterestComplete && ViewBag.ProducerComplete)
-        //        {
-        //            if (roles.Count() == 1 && User.IsInRole("Player"))
-        //            {
-        //                this.StatusMessageModal(Messages.SuccessfulRegistrationMessage, Infra.CrossCutting.Tools.Enums.StatusMessageType.Success);
-        //            }
-        //            else if (roles.Count() == 1 && User.IsInRole("Producer"))
-        //            {
-        //                this.StatusMessageModal(string.Format(Messages.SuccessfulRegistrationMessageByProducer, "/ProducerArea/Project"), Infra.CrossCutting.Tools.Enums.StatusMessageType.Success);
-        //            }
-        //            else if (roles.Count() == 2 && User.IsInRole("Player") && User.IsInRole("Producer"))
-        //            {
-        //                this.StatusMessageModal(string.Format(Messages.SuccessfulRegistrationMessageByProducerAndPlayer, "/ProducerArea/Project"), Infra.CrossCutting.Tools.Enums.StatusMessageType.Success);
-        //            }                    
-        //        }
-        //    }
-        //}
-
-
-        //[AllowAnonymous]
-        //public ActionResult SetArea(string area, string returnUrl = null)
-        //{
-        //    if (area == "Produtora")
-        //    {
-        //        return RedirectToAction("Index", "Dashboard", new { area = "ProducerArea"});
-        //    }
-
-        //    return RedirectToAction("Index", "Dashboard", new { area = "" });
-        //}
+                var routes = new RouteValueDictionary(RouteData.Values);
+                routes["controller"] = "Onboarding";
+                routes["action"] = "Index";
+                HttpContext.Response.RedirectToRoute(routes);
+            }
+        }
     }
 }

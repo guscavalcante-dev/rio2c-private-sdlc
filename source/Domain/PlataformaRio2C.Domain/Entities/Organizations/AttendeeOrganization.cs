@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-29-2019
+// Last Modified On : 09-02-2019
 // ***********************************************************************
 // <copyright file="AttendeeOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,6 +22,7 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public int EditionId { get; private set; }
         public int OrganizationId { get; private set; }
+        public DateTime? OnboardingFinishDate { get; private set; }
 
         public virtual Edition Edition { get; private set; }
         public virtual Organization Organization { get; private set; }

@@ -119,7 +119,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             Language = ac.Collaborator.User.UserInterfaceLanguage,
                             Roles = ac.Collaborator.User.Roles,
                             AttendeeCollaboratorTickets = ac.AttendeeCollaboratorTickets,
-                            TicketTypes = ac.AttendeeCollaboratorTickets.Select(act => act.AttendeeSalesPlatformTicketType.TicketType)
+                            TicketTypes = ac.AttendeeCollaboratorTickets.Select(act => act.AttendeeSalesPlatformTicketType.TicketType),
+                            IsPendingAttendeeCollaboratorOnboarding = !ac.OnboardingFinishDate.HasValue,
+                            IsPendingAttendeeOrganizationOnboarding = !ac.AttendeeOrganizationCollaborators.Any()
+                                                                      || ac.AttendeeOrganizationCollaborators.All(aoc => aoc.IsDeleted)
+                                                                      || ac.AttendeeOrganizationCollaborators.Any(aoc => !aoc.IsDeleted 
+                                                                                                                         && !aoc.AttendeeOrganization.IsDeleted
+                                                                                                                         && !aoc.AttendeeOrganization.OnboardingFinishDate.HasValue)
                         })
                         .FirstOrDefault();
         }
