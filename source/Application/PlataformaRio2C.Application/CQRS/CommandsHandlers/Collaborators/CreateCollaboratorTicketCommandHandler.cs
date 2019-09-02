@@ -114,7 +114,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     collaborator.FirstName, 
                     collaborator.GetFullName(), 
                     cmd.SalesPlatformAttendeeDto.Email, 
-                    cmd.EditionId,
+                    cmd.Edition.Id,
                     cmd.Edition.Name, 
                     cmd.Edition.UrlCode, 
                     "pt-BR"), cancellationToken);
