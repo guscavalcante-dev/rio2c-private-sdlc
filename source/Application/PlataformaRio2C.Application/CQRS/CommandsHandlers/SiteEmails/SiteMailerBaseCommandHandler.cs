@@ -26,7 +26,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>SiteMailerBaseCommandHandler</summary>
     public class SiteMailerBaseCommandHandler : BaseCommandHandler
     {
-        protected readonly ISiteMailerService MailerService;
+        protected readonly IMailerService MailerService;
         protected readonly ISentEmailRepository SentEmailRepo;
 
         /// <summary>Initializes a new instance of the <see cref="SiteMailerBaseCommandHandler"/> class.</summary>
@@ -34,7 +34,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="uow">The uow.</param>
         /// <param name="mailerService">The mailer service.</param>
         /// <param name="sentEmailRepository">The sent email repository.</param>
-        public SiteMailerBaseCommandHandler(IMediator commandBus, IUnitOfWork uow, ISiteMailerService mailerService, ISentEmailRepository sentEmailRepository)
+        public SiteMailerBaseCommandHandler(IMediator commandBus, IUnitOfWork uow, IMailerService mailerService, ISentEmailRepository sentEmailRepository)
             : base(commandBus, uow)
         {
             this.MailerService = mailerService;

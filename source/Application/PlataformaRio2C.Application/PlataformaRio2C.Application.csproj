@@ -340,7 +340,7 @@
     <Compile Include="Services\Common\LanguageAppService.cs" />
     <Compile Include="Services\Common\HoldingAppService.cs" />
     <Compile Include="Services\Common\ScheduleAppService.cs" />
-    <Compile Include="Services\Emails\ISiteMailerService.cs" />
+    <Compile Include="Services\Emails\IMailerService.cs" />
     <Compile Include="ViewModels\Admin\ConfigNetworkRio2C\ConfigNetworkRio2CAppViewModel.cs" />
     <Compile Include="ViewModels\Admin\Dashboard\DataItemChartAppViewModel.cs" />
     <Compile Include="ViewModels\Admin\FinancialReport\ItemFinancialReportAppViewModel.cs" />

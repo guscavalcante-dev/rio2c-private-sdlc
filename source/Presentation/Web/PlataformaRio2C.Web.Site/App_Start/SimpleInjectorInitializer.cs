@@ -78,7 +78,7 @@ namespace PlataformaRio2C.Web.Site
             IoCBootStrapper.RegisterServices(container);
             SiteIoCBootStrapper.RegisterServices(container);
             FileRepositoryBootStrapper.RegisterServices(container);
-            container.Register<ISiteMailerService, SiteMailerService>(Lifestyle.Scoped);
+            container.Register<IMailerService, MailerService>(Lifestyle.Scoped);
             CqrsBootStrapper.RegisterServices(container, new[]
             {
                 typeof(CreateSalesPlatformWebhookRequestCommandHandler).Assembly

@@ -320,7 +320,7 @@
     <Compile Include="Controllers\ConferenceController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Helpers\OnboardingAllowedRoutesHelper.cs" />
-    <Compile Include="Services\SiteMailerService.cs" />
+    <Compile Include="Services\MailerService.cs" />
     <Compile Include="Controllers\OnboardingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuizController.cs" />
@@ -7043,8 +7043,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Modals\Onboarding.cshtml" />
     <Content Include="Views\Onboarding\Index.cshtml" />
-    <Content Include="Views\SiteMailerService\Welcome.cshtml" />
-    <Content Include="Views\SiteMailerService\_SiteEmailLayout.cshtml" />
+    <Content Include="Views\MailerService\Welcome.cshtml" />
+    <Content Include="Views\MailerService\_SiteEmailLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

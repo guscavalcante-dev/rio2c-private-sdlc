@@ -11,7 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,7 +34,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         public SendWelmcomeEmailAsyncCommandHandler(
             IMediator commandBus,
             IUnitOfWork uow,
-            ISiteMailerService mailerService,
+            IMailerService mailerService,
             ISentEmailRepository sentEmailRepository)
             : base(commandBus, uow, mailerService, sentEmailRepository)
         {

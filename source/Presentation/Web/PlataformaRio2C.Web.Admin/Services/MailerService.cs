@@ -1,17 +1,16 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Application
+// Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 09-02-2019
 // ***********************************************************************
-// <copyright file="SiteMailerService.cs" company="Softo">
+// <copyright file="MailerService.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
 using System;
 using System.Configuration;
 using System.Net.Mail;
@@ -22,17 +21,17 @@ using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.Services;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
-namespace PlataformaRio2C.Web.Site.Services
+namespace PlataformaRio2C.Web.Admin.Services
 {
-    /// <summary>SiteMailerService</summary>
-    public class SiteMailerService : MailerBase, ISiteMailerService
+    /// <summary>MailerService</summary>
+    public class MailerService : MailerBase, IMailerService
     {
         private readonly string environment;
         private readonly string toEmail;
         private readonly string bccEmail;
 
-        /// <summary>Initializes a new instance of the <see cref="SiteMailerService"/> class.</summary>
-        public SiteMailerService()
+        /// <summary>Initializes a new instance of the <see cref="MailerService"/> class.</summary>
+        public MailerService()
         {
             environment = ConfigurationManager.AppSettings["MvcMailer.Environment"];
             toEmail = ConfigurationManager.AppSettings["MvcMailer.ToEmail"];
@@ -47,23 +46,25 @@ namespace PlataformaRio2C.Web.Site.Services
         /// <returns></returns>
         public MvcMailMessage SendWelcomeEmail(SendWelmcomeEmailAsync cmd, Guid sentEmailUid)
         {
-            this.SetCulture(cmd.UserInterfaceLanguage);
+            throw new NotImplementedException();
 
-            this.ViewData = new ViewDataDictionary(cmd);
+            //this.SetCulture(cmd.UserInterfaceLanguage);
 
-            return Populate(x =>
-            {
-                x.Subject = this.GetSubject(string.Format(Labels.WelcomeToEdition, cmd.EditionName));
-                x.ViewName = "Welcome";
-                x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
-                x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
-                ViewBag.SentEmailUid = sentEmailUid;
+            //this.ViewData = new ViewDataDictionary(cmd);
 
-                if (!string.IsNullOrEmpty(this.GetBccEmailRecipient()))
-                {
-                    x.Bcc.Add(this.GetBccEmailRecipient());
-                }
-            });
+            //return Populate(x =>
+            //{
+            //    x.Subject = this.GetSubject(string.Format(Labels.WelcomeToEdition, cmd.EditionName));
+            //    x.ViewName = "Welcome";
+            //    x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
+            //    x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
+            //    ViewBag.SentEmailUid = sentEmailUid;
+
+            //    if (!string.IsNullOrEmpty(this.GetBccEmailRecipient()))
+            //    {
+            //        x.Bcc.Add(this.GetBccEmailRecipient());
+            //    }
+            //});
         }
 
         #region Private methods
