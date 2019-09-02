@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using MediatR;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -179,6 +180,99 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #endregion
 
+        #region Onboarding
+
+        [AllowAnonymous]
+        public ActionResult Onboarding(string email, Guid userId, string securityStamp)
+        {
+            //var user = this.userRepo.FindById(userId);
+            //if (user == null)
+            //{
+            //    return RedirectToAction("Index", "Error");
+            //}
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                //cmd.UpdatePreSendProperties(
+                //    this.UserId,
+                //    this.UserUid,
+                //    this.EditionId,
+                //    this.EditionUid,
+                //    this.UserInterfaceLanguage);
+                //result = await this.CommandBus.Send(cmd);
+                //if (!result.IsValid)
+                //{
+                //    throw new DomainException(Messages.CorrectFormValues);
+                //}
+            }
+            catch (DomainException ex)
+            {
+                //foreach (var error in result.Errors)
+                //{
+                //    var target = error.Target ?? "";
+                //    ModelState.AddModelError(target, error.Message);
+                //}
+
+                //return Json(new
+                //{
+                //    status = "error",
+                //    message = ex.GetInnerMessage(),
+                //    pages = new List<dynamic>
+                //    {
+                //        new { page = this.RenderRazorViewToString("Modals/_Form", cmd), divIdOrClass = "#form-container" },
+                //    }
+                //}, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
+                //return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+
+            //try
+            //{
+            //    var cmd = new ConfirmUser(userId, email, securityStamp);
+            //    var result = this.commandBus.Send(cmd);
+            //    if (!result.IsExecuted)
+            //    {
+            //        throw result.Exception;
+            //    }
+            //}
+            //catch (DomainException ex)
+            //{
+            //    this.SetResultMessage(new ResultMessage(ex.GetInnerMessage(), ResultMessageType.Error));
+            //    return RedirectToAction("Index", "Home");
+            //}
+            //catch (Exception ex)
+            //{
+            //    Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+            //    this.SetResultMessage(new ResultMessage("[[[We found an error confirming your email. We are already working on it.]]]", ResultMessageType.Error));
+            //    return RedirectToAction("Index", "Error");
+            //}
+
+            // TODO: Send welcome e-mail
+            //this.userMailer.SendQueueEmail(new QueueEmailViewModel(user.Email, HttpContext.GetPrincipalAppLanguageForRequest().ToString(), user.ReferrerCode)).SendAsync();
+            //TempData["successMessage"] = "[[[Your email]]] " + user.Email + " [[[was confirmed.]]]";
+
+            //AuthenticationManager.SignOut();
+            Session.Clear();
+
+            // Log in the user
+            //var userIdentity = UserManager.FindByEmail(email);
+            //SignInManager.SignIn(userIdentity, isPersistent: false, rememberBrowser: false);
+            //this.SetLoginSessionValues(email);
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        #endregion
+
         // GET: /Account/SendCode
         [AllowAnonymous]
         public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
@@ -275,16 +369,16 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 var code = await _identityController.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
 
-                var bodyMessage = string.Format(Texts.EmailBodyForgotPassword, callbackUrl);
+                //var bodyMessage = string.Format(Texts.EmailBodyForgotPassword, callbackUrl);
 
-                var messageEmail = CompileHtmlDefaultTemplateMessage().Replace("@{Message}", bodyMessage);
+                //var messageEmail = CompileHtmlDefaultTemplateMessage().Replace("@{Message}", bodyMessage);
 
-                var path = VirtualPathUtility.ToAbsolute("/");
-                var url = new Uri(Request.Url, path).AbsoluteUri;
+                //var path = VirtualPathUtility.ToAbsolute("/");
+                //var url = new Uri(Request.Url, path).AbsoluteUri;
 
-                messageEmail = messageEmail.Replace("@{UrlSite}", url);
+                //messageEmail = messageEmail.Replace("@{UrlSite}", url);
 
-                await _identityController.SendEmailAsync(user.Id, Texts.EmailSubjectForgotPassword, messageEmail);
+                //await _identityController.SendEmailAsync(user.Id, Texts.EmailSubjectForgotPassword, messageEmail);
                 return View("ForgotPasswordConfirmation");
             }
 

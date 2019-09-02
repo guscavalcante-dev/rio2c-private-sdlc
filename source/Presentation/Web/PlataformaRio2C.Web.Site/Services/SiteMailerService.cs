@@ -11,10 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
-using System;
 using System.Configuration;
 using System.Net.Mail;
+using System.Threading;
 using System.Web.Mvc;
 using Mvc.Mailer;
 using PlataformaRio2C.Application.CQRS.Commands;
@@ -45,6 +44,8 @@ namespace PlataformaRio2C.Web.Site.Services
         /// <returns></returns>
         public MvcMailMessage SendWelcomeEmail(SendWelmcomeEmailAsync cmd)
         {
+            this.SetCulture(cmd.UserInterfaceLanguage);
+
             this.ViewData = new ViewDataDictionary(cmd);
 
             return Populate(x =>
@@ -87,6 +88,20 @@ namespace PlataformaRio2C.Web.Site.Services
         private string GetBccEmailRecipient()
         {
             return this.bccEmail;
+        }
+
+        /// <summary>Sets the culture.</summary>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        private void SetCulture(string userInterfaceLanguage)
+        {
+            // Modify current thread's cultures            
+            if (string.IsNullOrEmpty(userInterfaceLanguage))
+            {
+                return;
+            }
+
+            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(userInterfaceLanguage);
+            Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
         }
 
         #endregion
