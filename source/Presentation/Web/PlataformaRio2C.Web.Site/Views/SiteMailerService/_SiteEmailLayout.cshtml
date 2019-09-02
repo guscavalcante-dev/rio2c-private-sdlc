@@ -104,6 +104,13 @@
             color: #e10080;
             font-size: 18pt;
         }
+
+        .emailinfo a, .emailinfo {
+            color: #6d6d6d !important;
+            text-decoration: underline !important;
+            font-size: 10px !important;
+            line-height: 10px !important;
+        }
     </style>
     <!-- BEGIN EMAIL STYLES -->
     @RenderSection("Styles", false)
@@ -124,7 +131,7 @@
                                     <tr>
                                         <td align="center" valign="top" colspan="3">
                                             <!-- header -->
-                                            <img height="250" width="600" border="0" src="https://dev.assets.my.rio2c.com/img/email/templates/default/header.jpg" style="margin-bottom:30px" />
+                                            <a href="http://www.rio2.com"><img height="250" width="600" border="0" src="https://dev.assets.my.rio2c.com/img/email/templates/default/header.jpg" style="margin-bottom:30px" /></a>
                                         </td>
                                     </tr>
                                     <tr>
@@ -135,15 +142,15 @@
                                     <tr>
                                         <td align="center" valign="top" colspan="3">
                                             <!-- footer -->
-                                            <img height="193" width="600" border="0" src="https://dev.assets.my.rio2c.com/img/email/templates/default/footer.jpg" style="margin-top:30px" />
+                                            <a href="http://www.rio2.com"><img height="193" width="600" border="0" src="https://dev.assets.my.rio2c.com/img/email/templates/default/footer.jpg" style="margin-top:30px" /></a>
                                         </td>
                                     </tr>
                                 </table>
                             </td>
                         </tr>
                         <tr>
-                            <td height="10" style="font-size: 10px; line-height: 10px;">
-                                <center>@string.Format(Messages.EmailSentTo, Model.Email)</center>
+                            <td>
+                                <center><span class="emailinfo">@string.Format(Messages.EmailSentTo, Model.Email)</span></center>
                             </td>
                         </tr>
                     </table>
