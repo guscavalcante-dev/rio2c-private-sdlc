@@ -17,12 +17,14 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     public class SendWelmcomeEmailAsync : EmailBaseCommand
     {
         /// <summary>Initializes a new instance of the <see cref="SendWelmcomeEmailAsync"/> class.</summary>
-        /// <param name="editionName">Name of the edition.</param>
         /// <param name="firstName">The first name.</param>
         /// <param name="fullName">The full name.</param>
         /// <param name="email">The email.</param>
-        public SendWelmcomeEmailAsync(string editionName, string firstName, string fullName, string email)
-            : base(editionName, firstName, fullName, email)
+        /// <param name="editionName">Name of the edition.</param>
+        /// <param name="editionUrlCode">The edition URL code.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        public SendWelmcomeEmailAsync(string firstName, string fullName, string email, string editionName, int editionUrlCode, string userInterfaceLanguage)
+            : base(firstName, fullName, email, editionName, editionUrlCode, userInterfaceLanguage)
         {
         }
 
