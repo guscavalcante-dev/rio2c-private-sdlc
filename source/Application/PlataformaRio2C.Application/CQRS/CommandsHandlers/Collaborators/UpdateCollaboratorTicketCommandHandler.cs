@@ -4,19 +4,17 @@
 // Created          : 09-01-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-01-2019
+// Last Modified On : 09-02-2019
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorTicketCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -109,6 +107,22 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.CollaboratorRepo.Update(cmd.Collaborator);
             this.Uow.SaveChanges();
             this.AppValidationResult.Data = cmd.Collaborator;
+
+            #region Send welcome email
+
+            await this.CommandBus.Send(new SendWelmcomeEmailAsync(
+                cmd.Collaborator.User.SecurityStamp,
+                cmd.Collaborator.User.Id,
+                cmd.Collaborator.User.Uid,
+                cmd.Collaborator.FirstName,
+                cmd.Collaborator.GetFullName(),
+                cmd.SalesPlatformAttendeeDto.Email,
+                cmd.Edition.Id,
+                cmd.Edition.Name,
+                cmd.Edition.UrlCode,
+                "pt-BR"), cancellationToken);
+
+            #endregion
 
             return this.AppValidationResult;
 
