@@ -4,7 +4,7 @@
 // Created          : 08-31-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-01-2019
+// Last Modified On : 09-03-2019
 // ***********************************************************************
 // <copyright file="ProcessPendingPlatformWebhookRequestsAsyncCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -173,6 +173,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                 var response = await this.CommandBus.Send(new CreateCollaboratorTicket(
                                     salesPlatformAttendeeDto,
                                     attendeeSalesPlatformDto.Edition,
+                                    collaboratorByAttendeeId?.GetAttendeeCollaboratorByEditionId(attendeeSalesPlatformDto.Edition.Id)?.GetAllAttendeeOrganizations(),
                                     attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType,
                                     attendeeSalesPlatformTicketTypeDto.TicketType,
                                     attendeeSalesPlatformTicketTypeDto.Role), cancellationToken);
@@ -190,6 +191,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                     collaboratorByEmail, 
                                     salesPlatformAttendeeDto,
                                     attendeeSalesPlatformDto.Edition,
+                                    collaboratorByAttendeeId?.GetAttendeeCollaboratorByEditionId(attendeeSalesPlatformDto.Edition.Id)?.GetAllAttendeeOrganizations(),
                                     attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType,
                                     attendeeSalesPlatformTicketTypeDto.TicketType,
                                     attendeeSalesPlatformTicketTypeDto.Role), cancellationToken);
@@ -224,6 +226,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                 var response2 = await this.CommandBus.Send(new CreateCollaboratorTicket(
                                     salesPlatformAttendeeDto,
                                     attendeeSalesPlatformDto.Edition,
+                                    collaboratorByAttendeeId?.GetAttendeeCollaboratorByEditionId(attendeeSalesPlatformDto.Edition.Id)?.GetAllAttendeeOrganizations(),
                                     attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType,
                                     attendeeSalesPlatformTicketTypeDto.TicketType,
                                     attendeeSalesPlatformTicketTypeDto.Role), cancellationToken);
@@ -248,11 +251,18 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                     currentValidationResult.Add(new ValidationError(error.Message));
                                 }
 
+                                // Avoid to create collaborator ticket if the other one was not deleted
+                                if (response1?.Errors?.Any() == true)
+                                {
+                                    continue;
+                                }
+
                                 // Update collaborator ticket
                                 var response2 = await this.CommandBus.Send(new UpdateCollaboratorTicket(
                                     collaboratorByEmail,
                                     salesPlatformAttendeeDto,
                                     attendeeSalesPlatformDto.Edition,
+                                    collaboratorByAttendeeId?.GetAttendeeCollaboratorByEditionId(attendeeSalesPlatformDto.Edition.Id)?.GetAllAttendeeOrganizations(),
                                     attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType,
                                     attendeeSalesPlatformTicketTypeDto.TicketType,
                                     attendeeSalesPlatformTicketTypeDto.Role), cancellationToken);
@@ -276,12 +286,19 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         else if (salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.NotAttending
                                  || salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.Unpaid)
                         {
-                            //TODO: Delete tickets, roles, etc
-                            var errorMessage = $"Person not attending or unpaid in not implemented (Uid: {processingRequestDto.Uid}).";
-                            this.ValidationResult.Add(new ValidationError(errorMessage));
-                            processingRequestDto.SalesPlatformWebhookRequest.Abort("000000008", errorMessage);
-                            this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
-                            continue;
+                            // Delete ticket from collaboratorAttendeeId
+                            var response1 = await this.CommandBus.Send(new DeleteCollaboratorTicket(
+                                collaboratorByAttendeeId,
+                                salesPlatformAttendeeDto,
+                                attendeeSalesPlatformDto.Edition,
+                                attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType,
+                                attendeeSalesPlatformTicketTypeDto.TicketType,
+                                attendeeSalesPlatformTicketTypeDto.Role), cancellationToken);
+
+                            foreach (var error in response1?.Errors)
+                            {
+                                currentValidationResult.Add(new ValidationError(error.Message));
+                            }
                         }
                         else
                         {

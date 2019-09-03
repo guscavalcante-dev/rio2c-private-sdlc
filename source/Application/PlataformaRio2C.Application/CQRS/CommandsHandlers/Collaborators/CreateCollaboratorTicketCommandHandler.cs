@@ -4,7 +4,7 @@
 // Created          : 08-31-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-02-2019
+// Last Modified On : 09-03-2019
 // ***********************************************************************
 // <copyright file="CreateCollaboratorWithTicketsHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -80,6 +80,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 var collaborator = new Collaborator(
                     collaboratorUid,
                     cmd.Edition,
+                    cmd.AttendeeOrganizations,
                     cmd.AttendeeSalesPlatformTicketType,
                     cmd.TicketType,
                     cmd.Role,

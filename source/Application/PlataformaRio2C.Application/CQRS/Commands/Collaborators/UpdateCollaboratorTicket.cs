@@ -4,13 +4,14 @@
 // Created          : 08-31-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-01-2019
+// Last Modified On : 09-03-2019
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorTicket.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System.Collections.Generic;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos;
 
@@ -22,6 +23,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public Collaborator Collaborator { get; private set; }
         public SalesPlatformAttendeeDto SalesPlatformAttendeeDto { get; private set; }
         public Edition Edition { get; private set; }
+        public List<AttendeeOrganization> AttendeeOrganizations { get; set; }
         public AttendeeSalesPlatformTicketType AttendeeSalesPlatformTicketType { get; set; }
         public TicketType TicketType { get; set; }
         public Role Role { get; set; }
@@ -30,6 +32,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="collaborator">The collaborator.</param>
         /// <param name="salesPlatformAttendeeDto">The sales platform attendee dto.</param>
         /// <param name="edition">The edition.</param>
+        /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
         /// <param name="ticketType">Type of the ticket.</param>
         /// <param name="role">The role.</param>
@@ -37,6 +40,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             Collaborator collaborator, 
             SalesPlatformAttendeeDto salesPlatformAttendeeDto, 
             Edition edition,
+            List<AttendeeOrganization> attendeeOrganizations,
             AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
             TicketType ticketType,
             Role role)
@@ -45,6 +49,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Collaborator = collaborator;
             this.SalesPlatformAttendeeDto = salesPlatformAttendeeDto;
             this.Edition = edition;
+            this.AttendeeOrganizations = attendeeOrganizations;
             this.AttendeeSalesPlatformTicketType = attendeeSalesPlatformTicketType;
             this.TicketType = ticketType;
             this.Role = role;
