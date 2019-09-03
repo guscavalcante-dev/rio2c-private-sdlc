@@ -1,4 +1,4 @@
-﻿--must run on deploy: yes, not done
+﻿--must run on deploy: yes, done
 --possible values are: "no", "yes, not done" and "yes, done"
 
 ALTER TABLE "dbo"."Users"
