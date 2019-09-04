@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-02-2019
+// Last Modified On : 09-04-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,12 +15,8 @@ using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
-using PlataformaRio2C.Domain.Dtos;
-using X.PagedList;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -98,36 +94,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return @readonly
                         ? consult.AsNoTracking()
                         : consult;
-        }
-
-        /// <summary>Finds the access dto by edition uid and by user identifier asynchronous.</summary>
-        /// <param name="editionUid">The edition uid.</param>
-        /// <param name="userId">The user identifier.</param>
-        /// <returns></returns>
-        public AccessControlAttendeeCollaboratorDto FindAccessDtoByEditionUidAndByUserId(Guid editionUid, int userId)
-        {
-            var query = this.GetBaseQuery()
-                                .FindByEditionUid(editionUid)
-                                .FindByUserId(userId);
-
-            return query
-                        .Select(ac => new AccessControlAttendeeCollaboratorDto
-                        {
-                            AttendeeCollaborator = ac,
-                            Collaborator = ac.Collaborator,
-                            User = ac.Collaborator.User,
-                            Language = ac.Collaborator.User.UserInterfaceLanguage,
-                            Roles = ac.Collaborator.User.Roles,
-                            AttendeeCollaboratorTickets = ac.AttendeeCollaboratorTickets,
-                            TicketTypes = ac.AttendeeCollaboratorTickets.Select(act => act.AttendeeSalesPlatformTicketType.TicketType),
-                            IsPendingAttendeeCollaboratorOnboarding = !ac.OnboardingFinishDate.HasValue,
-                            IsPendingAttendeeOrganizationOnboarding = !ac.AttendeeOrganizationCollaborators.Any()
-                                                                      || ac.AttendeeOrganizationCollaborators.All(aoc => aoc.IsDeleted)
-                                                                      || ac.AttendeeOrganizationCollaborators.Any(aoc => !aoc.IsDeleted 
-                                                                                                                         && !aoc.AttendeeOrganization.IsDeleted
-                                                                                                                         && !aoc.AttendeeOrganization.OnboardingFinishDate.HasValue)
-                        })
-                        .FirstOrDefault();
         }
     }
 }

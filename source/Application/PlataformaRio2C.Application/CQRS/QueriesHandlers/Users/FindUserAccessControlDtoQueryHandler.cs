@@ -4,9 +4,9 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-02-2019
+// Last Modified On : 09-04-2019
 // ***********************************************************************
-// <copyright file="FindAccessControlDtoQueryHandler.cs" company="Softo">
+// <copyright file="FindUserAccessControlDtoQueryHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -20,24 +20,24 @@ using PlataformaRio2C.Domain.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
 {
-    /// <summary>FindAccessControlDtoQueryHandler</summary>
-    public class FindAccessControlDtoQueryHandler : RequestHandler<FindAccessControlDto, AccessControlAttendeeCollaboratorDto>
+    /// <summary>FindUserAccessControlDtoQueryHandler</summary>
+    public class FindUserAccessControlDtoQueryHandler : RequestHandler<FindUserAccessControlDto, UserAccessControlDto>
     {
-        private readonly IAttendeeCollaboratorRepository repo;
+        private readonly IUserRepository repo;
 
-        /// <summary>Initializes a new instance of the <see cref="FindAccessControlDtoQueryHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="FindUserAccessControlDtoQueryHandler"/> class.</summary>
         /// <param name="repository">The repository.</param>
-        public FindAccessControlDtoQueryHandler(IAttendeeCollaboratorRepository repository)
+        public FindUserAccessControlDtoQueryHandler(IUserRepository repository)
         {
             this.repo = repository;
         }
 
-        /// <summary>Handles the specified command.</summary>
-        /// <param name="cmd">The command.</param>
+        /// <summary>Handles the specified find user access control dto.</summary>
+        /// <param name="cmd"></param>
         /// <returns></returns>
-        protected override AccessControlAttendeeCollaboratorDto Handle(FindAccessControlDto cmd)
+        protected override UserAccessControlDto Handle(FindUserAccessControlDto cmd)
         {
-            return this.repo.FindAccessDtoByEditionUidAndByUserId(cmd.EditionUid, cmd.UserId);
+            return this.repo.FindAccessControlDtoByUserIdAndByEditionId(cmd.UserId, cmd.EditionId);
         }
     }
 }

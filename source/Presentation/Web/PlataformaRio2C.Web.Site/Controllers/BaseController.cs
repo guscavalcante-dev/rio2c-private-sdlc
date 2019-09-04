@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-02-2019
+// Last Modified On : 09-04-2019
 // ***********************************************************************
 // <copyright file="BaseController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,6 +21,7 @@ using System.Web.Routing;
 using MediatR;
 using Microsoft.AspNet.Identity;
 using PlataformaRio2C.Application.CQRS.Queries;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
@@ -42,7 +43,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         protected IList<Role> UserRoles;
         protected IList<TicketType> UserTicketTypes;
         protected string Area;
-        protected bool OnboardingPending;
+        protected UserAccessControlDto UserAccessControlDto;
 
         /// <summary>Initializes a new instance of the <see cref="BaseController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -59,12 +60,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <returns>Returns an IAsyncController instance.</returns>
         protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, object state)
         {
+            // Culture
             var changedCultureRouteValue = this.ValidateCulture();
             if (changedCultureRouteValue)
             {
                 return base.BeginExecuteCore(callback, state);
             }
 
+            // Edition
             var changedEditionRouteValue = this.ValidateEdition();
             if (changedEditionRouteValue)
             {
@@ -73,7 +76,13 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             this.SetUserInfo();
             this.SetArea();
-            this.ValidateOnboarding();
+
+            // Onboarding
+            var changedOnboardingRoute = this.ValidateOnboarding();
+            if (changedOnboardingRoute)
+            {
+                return base.BeginExecuteCore(callback, state);
+            }
 
             return base.BeginExecuteCore(callback, state);
         }
@@ -196,24 +205,23 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return;
             }
 
-            ViewBag.UserId = this.UserId = User.Identity.GetUserId<int>();
+            //ViewBag.UserId = 
+            this.UserId = User.Identity.GetUserId<int>();
             if (!User.Identity.IsAuthenticated || this.UserId <= 0)
             {
                 return;
             }
 
-            var accessControllDto = this.commandBus.Send(new FindAccessControlDto(this.EditionUid ?? Guid.NewGuid(), this.UserId, this.UserInterfaceLanguage)).Result;
-            if (accessControllDto == null)
+            ViewBag.UserAccessControlDto = this.UserAccessControlDto = this.commandBus.Send(new FindUserAccessControlDto(this.UserId, this.EditionId ?? 0, this.UserInterfaceLanguage)).Result;
+            if (this.UserAccessControlDto == null)
             {
                 return;
             }
 
-            ViewBag.UserUid = this.UserUid = accessControllDto.User.Uid;
-            ViewBag.FullName = this.UserName = accessControllDto.User.Name.UppercaseFirstOfEachWord(this.UserInterfaceLanguage);
-            ViewBag.FirstName = this.UserName?.GetFirstWord();
-            ViewBag.UserRoles = this.UserRoles = accessControllDto.Roles?.ToList();
-            ViewBag.UserTicketTypes = this.UserTicketTypes = accessControllDto.TicketTypes?.ToList();
-            this.OnboardingPending = accessControllDto.IsPendingAttendeeCollaboratorOnboarding || accessControllDto.IsPendingAttendeeOrganizationOnboarding;
+            //TODO: Remove this data and use only UserAccessControlDto
+            //ViewBag.UserUid = this.UserUid = this.UserAccessControlDto.User.Uid;
+            //ViewBag.UserRoles = this.UserRoles = this.UserAccessControlDto.Roles?.ToList();
+            //ViewBag.UserTicketTypes = this.UserTicketTypes = this.UserAccessControlDto.EditionUserTicketTypes?.ToList();
         }
 
         /// <summary>Sets the area.</summary>
@@ -223,24 +231,31 @@ namespace PlataformaRio2C.Web.Site.Controllers
         }
 
         /// <summary>Validates the onboarding.</summary>
-        private void ValidateOnboarding()
+        /// <returns></returns>
+        private bool ValidateOnboarding()
         {
-            var controllerName = RouteData.Values["controller"] as string;
-            var actionName = RouteData.Values["action"] as string;
-
-            // Onboarding urls validation
-            if (!OnboardingAllowedRoutesHelper.IsRouteAllowed(controllerName, actionName))
+            if (this.UserAccessControlDto?.IsOnboardingPending() != true 
+                || OnboardingAllowedRoutesHelper.IsRouteAllowed(RouteData.Values["controller"] as string, RouteData.Values["action"] as string))
             {
-                if (!this.OnboardingPending)
-                {
-                    return;
-                }
-
-                var routes = new RouteValueDictionary(RouteData.Values);
-                routes["controller"] = "Onboarding";
-                routes["action"] = "Index";
-                HttpContext.Response.RedirectToRoute(routes);
+                return false;
             }
+
+            var routes = new RouteValueDictionary(RouteData.Values);
+            routes["controller"] = "Onboarding";
+            routes["action"] = "Index";
+
+            // Add other parameters to route
+            foreach (string key in HttpContext.Request.QueryString.Keys)
+            {
+                if (key != null)
+                {
+                    routes[key] = HttpContext.Request.QueryString[key];
+                }
+            }
+
+            HttpContext.Response.RedirectToRoute(routes);
+
+            return true;
         }
     }
 }

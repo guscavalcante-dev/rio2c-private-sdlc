@@ -222,7 +222,7 @@
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\ProcessPendingPlatformWebhookRequestsAsync.cs" />
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\CreateSalesPlatformWebhookRequest.cs" />
     <Compile Include="CQRS\BaseUserRequest.cs" />
-    <Compile Include="CQRS\QueriesHandlers\AttendeeCollaborators\FindAccessControlDtoQueryHandler.cs" />
+    <Compile Include="CQRS\QueriesHandlers\Users\FindUserAccessControlDtoQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\AttendeeOrganizations\FindAllAttendeeOrganizationsBaseDtosByEditionUidAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Cities\FindAllCitiesBaseDtosByStateUidAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Collaborators\CountAllCollaboratorsAsyncQueryHandler.cs" />
@@ -242,7 +242,7 @@
     <Compile Include="CQRS\QueriesHandlers\Quizzes\FindActiveQuizQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\SalesPlatformWebhookRequests\FindAllSalesPlatformWebhooRequestsDtoByPendingQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\SalesPlatforms\FindSalesPlatformDtoByNameQueryHandler.cs" />
-    <Compile Include="CQRS\Queries\AttendeeCollaborators\FindAccessControlDto.cs" />
+    <Compile Include="CQRS\Queries\Users\FindUserAccessControlDto.cs" />
     <Compile Include="CQRS\Queries\AttendeeOrganizations\FindAllAttendeeOrganizationsBaseDtosByEditionUidAsync.cs" />
     <Compile Include="CQRS\Queries\BaseQuery.cs" />
     <Compile Include="CQRS\Queries\Cities\FindAllCitiesBaseDtosByStateUidAsync.cs" />

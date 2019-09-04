@@ -4,7 +4,7 @@
 // Created          : 08-29-2019
 //
 // Last Modified By : Fabio Seixas
-// Last Modified On : 08-29-2019
+// Last Modified On : 09-04-2019
 // ***********************************************************************
 // <copyright file="OnboardingController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,13 +21,12 @@ using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using System.Collections.Generic;
-using System.Web.Routing;
-
+using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
     /// <summary>OnboardingController</summary>
-    [Authorize(Order = 1)]
+    [AjaxAuthorize(Order = 1)]
     public class OnboardingController : BaseController
     {
         private readonly IdentityAutenticationService identityController;
@@ -47,7 +46,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
         {
             try
             {
-
                 #region Breadcrumb
 
                 ViewBag.Breadcrumb = new BreadcrumbHelper("Bem-vindo", new List<BreadcrumbItemHelper> {
@@ -55,6 +53,16 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 });
 
                 #endregion
+
+                // Redirect to index
+                if (this.UserAccessControlDto?.IsOnboardingPending() != true)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                //TODO: Command to update OnboardingStartDate
+
+
 
                 return View("Index");
 

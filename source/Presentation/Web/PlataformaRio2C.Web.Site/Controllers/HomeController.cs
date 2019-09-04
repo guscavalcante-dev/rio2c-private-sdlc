@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-07-2019
+// Last Modified On : 09-04-2019
 // ***********************************************************************
 // <copyright file="HomeController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,13 +21,12 @@ using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using System.Collections.Generic;
-using System.Web.Routing;
-
+using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
     /// <summary>HomeController</summary>
-    [Authorize(Order = 1)]
+    [AjaxAuthorize(Order = 1)]
     public class HomeController : BaseController
     {
         private readonly IdentityAutenticationService identityController;
