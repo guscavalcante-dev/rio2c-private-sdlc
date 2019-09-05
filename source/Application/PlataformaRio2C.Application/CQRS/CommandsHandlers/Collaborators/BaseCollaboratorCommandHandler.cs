@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-29-2019
+// Last Modified On : 09-05-2019
 // ***********************************************************************
 // <copyright file="BaseCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -46,7 +46,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             if (collaborator == null) // Do not check IsDeleted because the Collaborator/User can be restored
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundM), new string[] { "FirstName" }));
-                return null;
             }
 
             return collaborator;

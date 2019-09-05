@@ -1,4 +1,17 @@
-﻿using PlataformaRio2C.Infra.CrossCutting.Tools.Enums;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Infra.CrossCutting.Tools
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 09-05-2019
+// ***********************************************************************
+// <copyright file="HtmlExtensions.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Infra.CrossCutting.Tools.Enums;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Interfaces;
 using LinqKit;
 using System;
@@ -17,6 +30,7 @@ using System.Security.Claims;
 
 namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
 {
+    /// <summary>HtmlExtensions</summary>
     public static class HtmlExtensions
     {
         public static MvcHtmlString ToMvcHtmlString(this MvcHtmlString htmlString)
@@ -903,6 +917,26 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
 
         #region Status Message
 
+        /// <summary>Statuses the message toastr.</summary>
+        /// <param name="helper">The helper.</param>
+        /// <returns></returns>
+        public static MvcHtmlString StatusMessageToastr(this HtmlHelper helper)
+        {
+            var msg = helper.ViewContext.TempData["ToastrStatusMessageText"]?.ToString() ?? "";
+            var type = helper.ViewContext.TempData["ToastrStatusMessageType"]?.ToString() ?? "";
+            var isFixed = helper.ViewContext.TempData["ToastrStatusMessageIsFixed"]?.ToString() ?? "";
+
+            var html = string.Empty;
+            if (!string.IsNullOrEmpty(msg))
+            {
+                html = $"MyRio2cCommon.showAlert({{ message: '{msg}', messageType: '{type}', isFixed: {isFixed} }});";
+            }
+
+            var htmlOutput = MvcHtmlString.Create(html);
+
+            return new MvcHtmlString(htmlOutput.ToHtmlString());
+        }
+
         /// <summary>
         /// Método que captura variaveis de mensagem de status no tempData do controller e apresenta com utilização do jquery.
         /// Tem dependência com o Js da aplicação hospedeira.
@@ -937,10 +971,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
 
             return new MvcHtmlString(htmlOutput.ToHtmlString());
         }
-
-
-
-
 
         // <summary>
         /// Método que captura variaveis de mensagem de status no tempData do controller e apresenta com utilização do jquery.

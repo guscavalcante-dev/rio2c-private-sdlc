@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-04-2019
+// Last Modified On : 09-05-2019
 // ***********************************************************************
 // <copyright file="BaseController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -32,8 +32,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
     /// <summary>BaseController</summary>
     public class BaseController : Controller
     {
-        protected IMediator commandBus;
-        private readonly IdentityAutenticationService identityController;
+        protected IMediator CommandBus;
+        protected IdentityAutenticationService IdentityController;
         protected string UserInterfaceLanguage;
         protected int? EditionId;
         protected Guid? EditionUid;
@@ -50,8 +50,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="identityController">The identity controller.</param>
         public BaseController(IMediator commandBus, IdentityAutenticationService identityController)
         {
-            this.commandBus = commandBus;
-            this.identityController = identityController;
+            this.CommandBus = commandBus;
+            this.IdentityController = identityController;
         }
 
         /// <summary>Begins to invoke the action in the current controller context.</summary>
@@ -144,7 +144,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             // Attempt to read the edition cookie from Request
             var routeEdition = (RouteData.Values["edition"] as string).ToInt();
 
-            var activeEditions = this.commandBus.Send(new FindAllEditionsByIsActive()).Result;
+            var activeEditions = this.CommandBus.Send(new FindAllEditionsByIsActive()).Result;
             if (activeEditions?.Any() != true)
             {
                 return false;
@@ -200,7 +200,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <summary>Sets the user information.</summary>
         private void SetUserInfo()
         {
-            if (this.identityController == null)
+            if (this.IdentityController == null)
             {
                 return;
             }
@@ -212,7 +212,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return;
             }
 
-            ViewBag.UserAccessControlDto = this.UserAccessControlDto = this.commandBus.Send(new FindUserAccessControlDto(this.UserId, this.EditionId ?? 0, this.UserInterfaceLanguage)).Result;
+            ViewBag.UserAccessControlDto = this.UserAccessControlDto = this.CommandBus.Send(new FindUserAccessControlDto(this.UserId, this.EditionId ?? 0, this.UserInterfaceLanguage)).Result;
             if (this.UserAccessControlDto == null)
             {
                 return;

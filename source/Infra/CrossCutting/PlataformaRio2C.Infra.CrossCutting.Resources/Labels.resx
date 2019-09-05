@@ -334,8 +334,8 @@
     <comment>Termo de uso</comment>
   </data>
   <data name="Welcome" xml:space="preserve">
-    <value>Bem vindo ao MyRio2C | RioContentMarket 2019!</value>
-    <comment>Bem vindo ao MyRio2C | RioContentMarket 2019!</comment>
+    <value>Bem-vindo ao MyRio2C | RioContentMarket 2019!</value>
+    <comment>Bem-vindo ao MyRio2C | RioContentMarket 2019!</comment>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>Confirme a senha</value>
@@ -508,7 +508,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
 </value>
   </data>
   <data name="WelcomeTitle" xml:space="preserve">
-    <value>Bem vindo!</value>
+    <value>Bem-vindo!</value>
+    <comment>Bem-vindo!</comment>
   </data>
   <data name="Register" xml:space="preserve">
     <value>Registrar</value>
@@ -967,8 +968,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Entrar</comment>
   </data>
   <data name="WelcomeSmall" xml:space="preserve">
-    <value>Bem vindo ao MyRio2C!</value>
-    <comment>Bem vindo ao MyRio2C!</comment>
+    <value>Bem-vindo ao MyRio2C!</value>
+    <comment>Bem-vindo ao MyRio2C!</comment>
   </data>
   <data name="DevelopedBy" xml:space="preserve">
     <value>Desenvolvido por</value>
@@ -993,8 +994,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>MyRio2C Admin</comment>
   </data>
   <data name="WelcomeSmallAdmin" xml:space="preserve">
-    <value>Bem vindo ao MyRio2C Admin!</value>
-    <comment>Bem vindo ao MyRio2C Admin!</comment>
+    <value>Bem-vindo ao MyRio2C Admin!</value>
+    <comment>Bem-vindo ao MyRio2C Admin!</comment>
   </data>
   <data name="BusinessRoundtable" xml:space="preserve">
     <value>Rodada de Negócios</value>
@@ -1341,8 +1342,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Exibir todos os executivos</comment>
   </data>
   <data name="WelcomeToEdition" xml:space="preserve">
-    <value>Bem vindo ao {0}</value>
-    <comment>Bem vindo ao {0}</comment>
+    <value>Bem-vindo ao {0}</value>
+    <comment>Bem-vindo ao {0}</comment>
   </data>
   <data name="PersonalInfo" xml:space="preserve">
     <value>Dados pessoais</value>
@@ -1350,5 +1351,17 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   </data>
   <data name="PlayerInfo" xml:space="preserve">
     <value>Dados do Player</value>
+  </data>
+  <data name="AccessData" xml:space="preserve">
+    <value>Dados de acesso</value>
+    <comment>Dados de acesso</comment>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>Primeiro Nome</value>
+    <comment>Primeiro Nome</comment>
+  </data>
+  <data name="NextStep" xml:space="preserve">
+    <value>Próximo passo</value>
+    <comment>Próximo passo</comment>
   </data>
 </root>

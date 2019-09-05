@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-03-2019
+// Last Modified On : 09-05-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -31,19 +31,20 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeOrganizationCollaborator> AttendeeOrganizationCollaborators { get; private set; }
         public virtual ICollection<AttendeeCollaboratorTicket> AttendeeCollaboratorTickets { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="AttendeeCollaborator"/> class for admin.</summary>
+        /// <summary>Initializes a new instance of the <see cref="AttendeeCollaborator"/> class.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="collaborator">The collaborator.</param>
+        /// <param name="shouldDeleteOrganizations">if set to <c>true</c> [should delete organizations].</param>
         /// <param name="userId">The user identifier.</param>
-        public AttendeeCollaborator(Edition edition, List<AttendeeOrganization> attendeeOrganizations, Collaborator collaborator, int userId)
+        public AttendeeCollaborator(Edition edition, List<AttendeeOrganization> attendeeOrganizations, Collaborator collaborator, bool shouldDeleteOrganizations, int userId)
         {
             this.Edition = edition;
             this.Collaborator = collaborator;
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
-            this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, true, userId);
+            this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
         }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeCollaborator"/> class for ticket.</summary>
@@ -105,16 +106,17 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Updates the specified edition for admin.</summary>
+        /// <summary>Updates the specified edition.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
+        /// <param name="shouldDeleteOrganizations">if set to <c>true</c> [should delete organizations].</param>
         /// <param name="userId">The user identifier.</param>
-        public void Update(Edition edition, List<AttendeeOrganization> attendeeOrganizations, int userId)
+        public void Update(Edition edition, List<AttendeeOrganization> attendeeOrganizations, bool shouldDeleteOrganizations , int userId)
         {
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, true, userId);
+            this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
         }
 
         /// <summary>Deletes the specified user identifier.</summary>
@@ -127,20 +129,30 @@ namespace PlataformaRio2C.Domain.Entities
             this.DeleteAttendeeOrganizationCollaborators(new List<AttendeeOrganization>(), userId);
         }
 
+        /// <summary>Called when [access data].</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardAccessData(int userId)
+        {
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            //this.OnboardingStartDate = DateTime.Now; //TODO: Create AttendeeCollaborator.OnboardingStartDate
+        }
+
         #region Attendee Organization Collaborators
 
         /// <summary>Synchronizes the attendee organization collaborators.</summary>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
-        /// <param name="shouldDelete">if set to <c>true</c> [should delete].</param>
+        /// <param name="shouldDeleteOrganizations">if set to <c>true</c> [should delete organizations].</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeAttendeeOrganizationCollaborators(List<AttendeeOrganization> attendeeOrganizations, bool shouldDelete, int userId)
+        private void SynchronizeAttendeeOrganizationCollaborators(List<AttendeeOrganization> attendeeOrganizations, bool shouldDeleteOrganizations, int userId)
         {
             if (this.AttendeeOrganizationCollaborators == null)
             {
                 this.AttendeeOrganizationCollaborators = new List<AttendeeOrganizationCollaborator>();
             }
 
-            if (shouldDelete)
+            if (shouldDeleteOrganizations)
             {
                 this.DeleteAttendeeOrganizationCollaborators(attendeeOrganizations, userId);
             }

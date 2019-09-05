@@ -1,4 +1,17 @@
-﻿using PlataformaRio2C.Infra.CrossCutting.Tools.Enums;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Infra.CrossCutting.Tools
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 09-05-2019
+// ***********************************************************************
+// <copyright file="ControllerExtensions.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Infra.CrossCutting.Tools.Enums;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Model;
 using System;
 using System.Collections.Generic;
@@ -12,6 +25,7 @@ using System.Web.Mvc;
 
 namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
 {
+    /// <summary>ControllerExtensions</summary>
     public static class ControllerExtensions
     {
         /// <summary>
@@ -267,6 +281,18 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         public static void StatusMessage(this Controller controller, string message)
         {
             controller.StatusMessage(message, StatusMessageType.Success);
+        }
+
+        /// <summary>Statuses the message toastr.</summary>
+        /// <param name="controller">The controller.</param>
+        /// <param name="message">The message.</param>
+        /// <param name="statusMessageType">Type of the status message.</param>
+        /// <param name="isFixed">The is fixed.</param>
+        public static void StatusMessageToastr(this Controller controller, string message, StatusMessageTypeToastr statusMessageType, bool? isFixed = false)
+        {
+            controller.TempData["ToastrStatusMessageText"] = message;
+            controller.TempData["ToastrStatusMessageType"] = statusMessageType.ToString().ToLower();
+            controller.TempData["ToastrStatusMessageIsFixed"] = isFixed.ToString().ToLowerInvariant();
         }
 
         /// <summary>

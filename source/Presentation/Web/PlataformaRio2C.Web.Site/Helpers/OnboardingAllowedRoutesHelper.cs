@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-04-2019
+// Last Modified On : 09-05-2019
 // ***********************************************************************
 // <copyright file="OnboardingAllowedRoutesHelper.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,6 +34,8 @@ namespace PlataformaRio2C.Web.Site.Helpers
             new OnboardingAllowedRoute("Error", "NotFound"),
             new OnboardingAllowedRoute("Home", "SetCulture"),
             new OnboardingAllowedRoute("Onboarding", "Index"),
+            new OnboardingAllowedRoute("Onboarding", "AccessData"),
+            new OnboardingAllowedRoute("Onboarding", "CollaboratorData"),
         };
 
         /// <summary>

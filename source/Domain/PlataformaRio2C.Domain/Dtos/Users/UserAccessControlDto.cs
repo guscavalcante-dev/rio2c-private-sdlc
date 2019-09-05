@@ -4,7 +4,7 @@
 // Created          : 09-04-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-04-2019
+// Last Modified On : 09-05-2019
 // ***********************************************************************
 // <copyright file="UserAccessControlDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -100,10 +100,18 @@ namespace PlataformaRio2C.Domain.Dtos
             return this.IsUser() && (!this.IsAttendeeCollaboratorOnboardingFinished() || !this.IsAttendeeOrganizationsOnboardingFinished());
         }
 
+        /// <summary>Determines whether [is user onboarding finished].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is user onboarding finished]; otherwise, <c>false</c>.</returns>
+        public bool IsUserOnboardingFinished()
+        {
+            return !string.IsNullOrEmpty(this.User?.PasswordHash);
+        }
+
         /// <summary>Determines whether [is attendee collaborator onboarding finished].</summary>
         /// <returns>
         ///   <c>true</c> if [is attendee collaborator onboarding finished]; otherwise, <c>false</c>.</returns>
-        private bool IsAttendeeCollaboratorOnboardingFinished()
+        public bool IsAttendeeCollaboratorOnboardingFinished()
         {
             return this.EditionAttendeeCollaborator?.OnboardingFinishDate != null;
         }
@@ -111,7 +119,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <summary>Determines whether [is attendee organizations onboarding finished].</summary>
         /// <returns>
         ///   <c>true</c> if [is attendee organizations onboarding finished]; otherwise, <c>false</c>.</returns>
-        private bool IsAttendeeOrganizationsOnboardingFinished()
+        public bool IsAttendeeOrganizationsOnboardingFinished()
         {
             return this.EditionAttendeeOrganizations?.Any() == true                                                // Has at least one organization linked
                    && this.EditionAttendeeOrganizations?.All(eao => eao.OnboardingFinishDate.HasValue) == true;    // and all organizations onboarding are finished

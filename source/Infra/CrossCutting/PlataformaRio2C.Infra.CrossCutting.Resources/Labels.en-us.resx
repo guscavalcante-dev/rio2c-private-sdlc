@@ -1339,4 +1339,16 @@
   <data name="PlayerInfo" xml:space="preserve">
     <value>Player info</value>
   </data>
+  <data name="AccessData" xml:space="preserve">
+    <value>Access data</value>
+    <comment>Dados de acesso</comment>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>First Name</value>
+    <comment>Primeiro Nome</comment>
+  </data>
+  <data name="NextStep" xml:space="preserve">
+    <value>Next step</value>
+    <comment>Próximo passo</comment>
+  </data>
 </root>

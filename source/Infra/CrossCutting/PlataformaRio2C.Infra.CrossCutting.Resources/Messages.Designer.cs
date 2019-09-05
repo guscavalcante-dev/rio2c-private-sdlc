@@ -187,11 +187,38 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Complete seu cadastro.
+        /// </summary>
+        public static string CompleteYourRegistration {
+            get {
+                return ResourceManager.GetString("CompleteYourRegistration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Complete o cadastro da {0}.
         /// </summary>
         public static string CompleteYourSignup {
             get {
                 return ResourceManager.GetString("CompleteYourSignup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configure uma senha de acesso ao MyRio2C.
+        /// </summary>
+        public static string ConfigurePasswordToMyRio2c {
+            get {
+                return ResourceManager.GetString("ConfigurePasswordToMyRio2c", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirme e complete seus dados de acesso.
+        /// </summary>
+        public static string ConfirmAndCompleteYourAccessData {
+            get {
+                return ResourceManager.GetString("ConfirmAndCompleteYourAccessData", resourceCulture);
             }
         }
         

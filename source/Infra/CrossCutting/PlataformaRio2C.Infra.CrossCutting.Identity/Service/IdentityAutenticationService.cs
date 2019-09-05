@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-03-2019
+// Last Modified On : 09-05-2019
 // ***********************************************************************
 // <copyright file="IdentityAutenticationService.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -325,8 +325,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Identity.Service
         /// <returns></returns>
         public IdentityResult AddPassword(int userId, string newPassword)
         {
-            var teste = _userManager.RemovePassword<ApplicationUser, int>(userId);
             return _userManager.AddPassword(userId, newPassword);
+        }
+
+        /// <summary>Hashes the password.</summary>
+        /// <param name="password">The password.</param>
+        /// <returns></returns>
+        public string HashPassword(string password)
+        {
+            return _userManager.PasswordHasher.HashPassword(password);
         }
 
         #endregion

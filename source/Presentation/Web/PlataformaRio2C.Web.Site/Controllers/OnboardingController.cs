@@ -3,8 +3,8 @@
 // Author           : Fabio Seixas
 // Created          : 08-29-2019
 //
-// Last Modified By : Fabio Seixas
-// Last Modified On : 09-04-2019
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 09-05-2019
 // ***********************************************************************
 // <copyright file="OnboardingController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,7 +21,12 @@ using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using System.Collections.Generic;
+using PlataformaRio2C.Application;
+using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -29,108 +34,221 @@ namespace PlataformaRio2C.Web.Site.Controllers
     [AjaxAuthorize(Order = 1)]
     public class OnboardingController : BaseController
     {
-        private readonly IdentityAutenticationService identityController;
-
         /// <summary>Initializes a new instance of the <see cref="HomeController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         public OnboardingController(IMediator commandBus, IdentityAutenticationService identityController)
             : base(commandBus, identityController)
         {
-            this.identityController = identityController;
         }
 
         /// <summary>Indexes this instance.</summary>
         /// <returns></returns>
+        [HttpGet]
         public async Task<ActionResult> Index()
         {
-            try
+            // Redirect if onboarding is not pending
+            if (this.UserAccessControlDto?.IsOnboardingPending() != true)
             {
-                #region Breadcrumb
-
-                ViewBag.Breadcrumb = new BreadcrumbHelper("Bem-vindo", new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper("Complete seu cadastro", Url.Action("Index", "Onboarding"))
-                });
-
-                #endregion
-
-                // Redirect to index
-                if (this.UserAccessControlDto?.IsOnboardingPending() != true)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-
-                //TODO: Command to update OnboardingStartDate
-
-
-
-                return View("Index");
-
-                return RedirectToAction("Index", "Onboarding", new { Area = "Player" });
-
-                var userId = User.Identity.GetUserId<int>();
-
-                if (await this.identityController.IsInRoleAsync(userId, "Player"))
-                {
-                    return RedirectToAction("Index", "Onboarding", new { Area = "Player" });
-                }
-
-                if (await this.identityController.IsInRoleAsync(userId, "Producer"))
-                {
-                    return RedirectToAction("Index", "Onboarding", new { Area = "Producer" });
-                }
-
-                return RedirectToAction("LogOff", "Account");
+                return RedirectToAction("Index", "Home");
             }
-            catch (Exception)
+
+            // Redirect to access data if not finished
+            if (this.UserAccessControlDto?.IsUserOnboardingFinished() != true)
             {
-                return RedirectToAction("LogOff", "Account");
+                return RedirectToAction("AccessData", "Onboarding");
             }
+
+            // Redirect to collaborator data if not finished
+            if (this.UserAccessControlDto?.IsAttendeeCollaboratorOnboardingFinished() != true)
+            {
+                return RedirectToAction("CollaboratorData", "Onboarding");
+            }
+
+            return View("Index");
         }
 
-        /// <summary>Sets the culture.</summary>
-        /// <param name="culture">The culture.</param>
-        /// <param name="oldCulture">The old culture.</param>
-        /// <param name="returnUrl">The return URL.</param>
+        #region Access Data
+
+        /// <summary>Accesses the data.</summary>
         /// <returns></returns>
-        [AllowAnonymous]
-        public ActionResult SetCulture(string culture, string oldCulture, string returnUrl = null)
+        [HttpGet]
+        public async Task<ActionResult> AccessData()
         {
-            // Validate input
-            culture = CultureHelper.GetImplementedCulture(culture);
-            RouteData.Values["culture"] = culture;  // set culture
-
-            #region Create/Update cookie culture
-
-            var cookie = Request.Cookies["MyRio2CCulture"];
-            if (cookie != null)
+            if (this.UserAccessControlDto?.IsUserOnboardingFinished() == true)
             {
-                cookie.Value = culture;   // update cookie value
-            }
-            else
-            {
-                cookie = new HttpCookie("MyRio2CCulture");
-                cookie.Value = culture;
-                cookie.Expires = DateTime.Now.AddYears(1);
+                return RedirectToAction("Index", "Onboarding");
             }
 
-            Response.Cookies.Add(cookie);
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.WelcomeTitle, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Messages.CompleteYourRegistration, Url.Action("Index", "Onboarding"))
+            });
 
             #endregion
 
-            if (returnUrl == null && Request.UrlReferrer != null)
+            var cmd = new OnboardCollaboratorAccessData(this.UserAccessControlDto?.Collaborator);
+
+            return View(cmd);
+        }
+
+        /// <summary>Accesses the data.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> AccessData(OnboardCollaboratorAccessData cmd)
+        {
+            if (this.UserAccessControlDto?.IsUserOnboardingFinished() == true)
             {
-                returnUrl = Request.UrlReferrer.PathAndQuery;
+                return RedirectToAction("Index", "Onboarding");
             }
 
-            returnUrl = returnUrl?.Replace(oldCulture.ToLowerInvariant(), culture?.ToLowerInvariant());
+            #region Breadcrumb
 
-            if (Url.IsLocalUrl(returnUrl))
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.WelcomeTitle, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Messages.CompleteYourRegistration, Url.Action("Index", "Onboarding"))
+            });
+
+            #endregion
+
+            var result = new AppValidationResult();
+
+            try
             {
-                return Redirect(returnUrl);
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.UserAccessControlDto.Collaborator.Uid,
+                    this.IdentityController.HashPassword(cmd.Password),
+                    this.UserAccessControlDto.User.Id,
+                    this.UserAccessControlDto.User.Uid,
+                    this.EditionId,
+                    this.EditionUid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
             }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                this.StatusMessageToastr(ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+
+                return View(cmd);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
+                this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+
+                return View(cmd);
+            }
+
+            this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Labels.AccessData, Labels.UpdatedM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
 
             return RedirectToAction("Index", "Onboarding");
         }
+
+        #endregion
+
+        #region Collaborator Data
+
+        [HttpGet]
+        public async Task<ActionResult> CollaboratorData()
+        {
+            if (this.UserAccessControlDto?.IsAttendeeCollaboratorOnboardingFinished() == true)
+            {
+                return RedirectToAction("Index", "Onboarding");
+            }
+
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.WelcomeTitle, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Messages.CompleteYourRegistration, Url.Action("Index", "Onboarding"))
+            });
+
+            #endregion
+
+            var cmd = new OnboardCollaboratorAccessData(this.UserAccessControlDto?.Collaborator);
+
+            return View(cmd);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CollaboratorData(OnboardCollaboratorAccessData cmd)
+        {
+            if (this.UserAccessControlDto?.IsAttendeeCollaboratorOnboardingFinished() == true)
+            {
+                return RedirectToAction("Index", "Onboarding");
+            }
+
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.WelcomeTitle, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Messages.CompleteYourRegistration, Url.Action("Index", "Onboarding"))
+            });
+
+            #endregion
+
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.UserAccessControlDto.Collaborator.Uid,
+                    this.IdentityController.HashPassword(cmd.Password),
+                    this.UserAccessControlDto.User.Id,
+                    this.UserAccessControlDto.User.Uid,
+                    this.EditionId,
+                    this.EditionUid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                this.StatusMessageToastr(ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+
+                return View(cmd);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
+                this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+
+                return View(cmd);
+            }
+
+            this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Labels.AccessData, Labels.UpdatedM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
+
+            return RedirectToAction("Index", "Onboarding");
+        }
+
+        #endregion
     }
 }

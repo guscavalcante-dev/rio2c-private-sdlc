@@ -88,6 +88,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dados de acesso.
+        /// </summary>
+        public static string AccessData {
+            get {
+                return ResourceManager.GetString("AccessData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Credenciamento.
         /// </summary>
         public static string Accreditation {
@@ -1060,6 +1069,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Primeiro Nome.
+        /// </summary>
+        public static string FirstName {
+            get {
+                return ResourceManager.GetString("FirstName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Esqueceu a senha.
         /// </summary>
         public static string ForgotPassword {
@@ -1668,6 +1686,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string NewProject {
             get {
                 return ResourceManager.GetString("NewProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Próximo passo.
+        /// </summary>
+        public static string NextStep {
+            get {
+                return ResourceManager.GetString("NextStep", resourceCulture);
             }
         }
         
@@ -3094,7 +3121,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bem vindo ao MyRio2C | RioContentMarket 2019!.
+        ///   Looks up a localized string similar to Bem-vindo ao MyRio2C | RioContentMarket 2019!.
         /// </summary>
         public static string Welcome {
             get {
@@ -3103,7 +3130,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bem vindo ao MyRio2C!.
+        ///   Looks up a localized string similar to Bem-vindo ao MyRio2C!.
         /// </summary>
         public static string WelcomeSmall {
             get {
@@ -3112,7 +3139,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bem vindo ao MyRio2C Admin!.
+        ///   Looks up a localized string similar to Bem-vindo ao MyRio2C Admin!.
         /// </summary>
         public static string WelcomeSmallAdmin {
             get {
@@ -3121,7 +3148,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bem vindo!.
+        ///   Looks up a localized string similar to Bem-vindo!.
         /// </summary>
         public static string WelcomeTitle {
             get {
@@ -3130,7 +3157,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bem vindo ao {0}.
+        ///   Looks up a localized string similar to Bem-vindo ao {0}.
         /// </summary>
         public static string WelcomeToEdition {
             get {

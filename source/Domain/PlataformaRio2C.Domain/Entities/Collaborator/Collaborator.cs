@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-03-2019
+// Last Modified On : 09-05-2019
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -311,6 +311,13 @@ namespace PlataformaRio2C.Domain.Entities
             this.User?.Delete();
         }
 
+        /// <summary>Called when [user].</summary>
+        /// <param name="passwordHash">The password hash.</param>
+        private void OnboardUser(string passwordHash)
+        {
+            this.User.OnboardAccessData(this.GetFullName(), passwordHash);
+        }
+
         #endregion
 
         #region Addresses
@@ -494,6 +501,27 @@ namespace PlataformaRio2C.Domain.Entities
             return this.AttendeeCollaborators?.FirstOrDefault(ac => ac.EditionId == editionId);
         }
 
+        /// <summary>Called when [attendee collaborator access data].</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardAttendeeCollaboratorAccessData(Edition edition, int userId)
+        {
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+            if (attendeeCollaborator != null)
+            {
+                attendeeCollaborator.OnboardAccessData(userId);
+            }
+            else
+            {
+                if (this.AttendeeCollaborators == null)
+                {
+                    this.AttendeeCollaborators = new List<AttendeeCollaborator>();
+                }
+
+                this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, null, this, false, userId));
+            }
+        }
+
         #region Admin
 
         /// <summary>Synchronizes the attendee collaborators.</summary>
@@ -519,14 +547,14 @@ namespace PlataformaRio2C.Domain.Entities
                 return;
             }
 
-            var attendeeCollaborator = this.AttendeeCollaborators.FirstOrDefault(ao => ao.EditionId == edition.Id);
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
             if (attendeeCollaborator != null)
             {
-                attendeeCollaborator.Update(edition, attendeeOrganizations, userId);
+                attendeeCollaborator.Update(edition, attendeeOrganizations, true, userId);
             }
             else
             {
-                this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, attendeeOrganizations, this, userId));
+                this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, attendeeOrganizations, this, true, userId));
             }
         }
 
@@ -756,6 +784,33 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         #endregion
+
+        #endregion
+
+        #region Onboarding
+
+        /// <summary>Called when [access data].</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="badge">The badge.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <param name="passwordHash">The password hash.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardAccessData(Edition edition, string firstName, string lastNames, string badge, string cellPhone, string phoneNumber, string passwordHash, int userId)
+        {
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.Badge = badge?.Trim();
+            this.PhoneNumber = phoneNumber?.Trim();
+            this.CellPhone = cellPhone?.Trim();
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            this.OnboardAttendeeCollaboratorAccessData(edition, userId);
+            this.OnboardUser(passwordHash);
+        }
 
         #endregion
 

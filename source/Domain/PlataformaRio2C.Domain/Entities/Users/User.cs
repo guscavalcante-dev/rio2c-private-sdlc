@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-02-2019
+// Last Modified On : 09-05-2019
 // ***********************************************************************
 // <copyright file="User.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -97,6 +97,17 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.IsDeleted = true;
             this.UpdateDate = DateTime.Now;
+        }
+
+        /// <summary>Called when [access data].</summary>
+        /// <param name="fullName">The full name.</param>
+        /// <param name="passwordHash">The password hash.</param>
+        public void OnboardAccessData(string fullName, string passwordHash)
+        {
+            this.Name = fullName?.Trim();
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.PasswordHash = passwordHash;
         }
 
         #region Roles

@@ -302,6 +302,7 @@
   </data>
   <data name="PasswordConfirmationDoesNotMatch" xml:space="preserve">
     <value>Senha de confirmação incorreta.</value>
+    <comment>Senha de confirmação incorreta.</comment>
   </data>
   <data name="PlayerDataSuccessfullyUpdated" xml:space="preserve">
     <value>Dados do player '{0}' atualizados com sucesso!</value>
@@ -553,5 +554,17 @@
   </data>
   <data name="ConfirmeAndCompletePersonalInfo" xml:space="preserve">
     <value>Confirme e complete seus dados pessoais</value>
+  </data>
+  <data name="CompleteYourRegistration" xml:space="preserve">
+    <value>Complete seu cadastro</value>
+    <comment>Complete seu cadastro</comment>
+  </data>
+  <data name="ConfigurePasswordToMyRio2c" xml:space="preserve">
+    <value>Configure uma senha de acesso ao MyRio2C</value>
+    <comment>Configure uma senha de acesso ao MyRio2C</comment>
+  </data>
+  <data name="ConfirmAndCompleteYourAccessData" xml:space="preserve">
+    <value>Confirme e complete seus dados de acesso</value>
+    <comment>Confirme e complete seus dados de acesso</comment>
   </data>
 </root>
