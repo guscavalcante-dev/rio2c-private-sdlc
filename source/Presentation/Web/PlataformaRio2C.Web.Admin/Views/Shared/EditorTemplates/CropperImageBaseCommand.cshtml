@@ -41,7 +41,7 @@
     <div class="col-12">
         <div class="container cropper-container">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 ml-3">
                     @Html.HiddenFor(m => m.IsImageDeleted)
                     @Html.HiddenFor(m => m.ImageUid)
                     @Html.HiddenFor(m => m.ImageUploadDate)
@@ -53,8 +53,8 @@
                     @Html.HiddenFor(m => m.DataRotate)
                     @Html.HiddenFor(m => m.DataScaleX)
                     @Html.HiddenFor(m => m.DataScaleY)
-                    <div class="img-container">
-                        <img id="image" src="" alt="@Labels.Image" style="max-width: 100%;">
+                    <div class="img-container" style="width: 200px; height: 200px;">
+                        <img id="image" src="" alt="@Labels.Image" style="max-width: 100%; max-height: 100%;">
                     </div>
                 </div>
             </div>

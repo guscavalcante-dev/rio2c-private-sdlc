@@ -4,7 +4,7 @@
 // Created          : 08-14-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-29-2019
+// Last Modified On : 09-05-2019
 // ***********************************************************************
 // <copyright file="myrio2c.cropper.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,10 +26,10 @@ var MyRio2cCropper = function () {
 
         var internalOptions = {
             //preview: '.img-preview',
-            minContainerWidth: 200,
-            minContainerHeight: 200,
-            minCropBoxWidth: 170,
-            minCropBoxHeight: 170,
+            //minContainerWidth: 200,
+            //minContainerHeight: 200,
+            minCropBoxWidth: 200,
+            minCropBoxHeight: 200,
             cropBoxMovable: false,
             cropBoxResizable: false,
             aspectRatio: 1 / 1,
@@ -42,6 +42,10 @@ var MyRio2cCropper = function () {
                 $dataRotate.val(e.rotate);
                 $dataScaleX.val(e.scaleX);
                 $dataScaleY.val(e.scaleY);
+            },
+            built: function () {
+                // Width and Height params are number types instead of string
+                //$image.cropper("setCropBoxData", { width: 200, height: 200 });
             }
         };
 
