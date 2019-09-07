@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-05-2019
+// Last Modified On : 09-06-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -137,6 +137,16 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
             //this.OnboardingStartDate = DateTime.Now; //TODO: Create AttendeeCollaborator.OnboardingStartDate
+        }
+
+        /// <summary>Called when [data].</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardData(int userId)
+        {
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            this.OnboardingFinishDate = DateTime.Now;
         }
 
         #region Attendee Organization Collaborators

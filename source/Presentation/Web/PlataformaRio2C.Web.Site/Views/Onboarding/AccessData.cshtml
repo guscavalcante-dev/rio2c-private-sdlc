@@ -11,7 +11,7 @@
         <div class="kt-grid  kt-wizard-v2 kt-wizard-v2--white" id="kt_wizard_v2" data-ktwizard-state="first">
             <div class="kt-grid__item kt-wizard-v2__aside">
                 <!--begin: Form Wizard Nav -->
-                @Html.Partial("Shared/_OnboardingMenu")
+                @Html.Partial("Shared/_OnboardingMenu", 1)
                 <!--end: Form Wizard Nav -->
             </div>
             <div class="kt-grid__item kt-grid__item--fluid kt-wizard-v2__wrapper">
@@ -91,7 +91,7 @@
                         </button>*@
                         @if (userAccessControlDto?.IsAttendeeCollaboratorOnboardingFinished() == false || userAccessControlDto?.IsAttendeeOrganizationsOnboardingFinished() == false)
                         {
-                            <button class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto">
+                            <button class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="OnboardWizard.submit('#AccessDataForm');">
                                 @Labels.NextStep
                             </button>
                         }
@@ -114,5 +114,5 @@
 }
 @section Scripts {
     @Scripts.Render("~/bundles/js/jqueryval.js")
-    @*@Scripts.Render("~/bundles/js/onboardingIndex")*@
+    @Scripts.Render("~/bundles/js/onboarding.wizard.js")
 }

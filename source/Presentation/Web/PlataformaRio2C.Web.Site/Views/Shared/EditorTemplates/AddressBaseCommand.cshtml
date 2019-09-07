@@ -1,0 +1,57 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.AddressBaseCommand
+<!--begin:: Address Form-->
+<div class="form-group row">
+    <div class="col-md-8" data-id="Country">
+        @Html.LabelFor(m => m.CountryUid, new { @class = "control-label" })
+        @Html.DropDownList("CountryUid", new SelectList(Model.CountriesBaseDtos, "Uid", "Name", Model.CountryUid), $"{Labels.Select}...", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CountryUid, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-4">
+        @Html.LabelFor(m => m.AddressZipCode, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.AddressZipCode, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.AddressZipCode, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group row">
+    <div class="col-md-6" data-id="State">
+        @Html.LabelFor(m => m.StateUid, new { @class = "control-label" })
+        <div class="view">
+            @Html.Hidden("InitialStateUid", Model.StateUid)
+            @Html.DropDownList("StateUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new {@class = "form-control"})
+            <span class="form-text text-muted text-right"><a href="" onclick="return AddressesForm.enableNewState();" class="btn-link btn-edit">@(Labels.NewM.ToLowerInvariant()) @(Labels.State.ToLowerInvariant())</a></span>
+        </div>
+        <div class="edit d-none">
+            @Html.TextBoxFor(m => m.StateName, new { @class = "form-control" })
+            <span class="form-text text-muted text-right"><a href="" onclick="return AddressesForm.disableNewState();" class="btn-link">@(Labels.Cancel.ToLowerInvariant())</a></span>
+        </div>
+        @Html.ValidationMessageFor(m => m.StateName, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-6" data-id="City">
+        @Html.LabelFor(m => m.CityUid, new { @class = "control-label" })
+        <div class="view">
+            @Html.Hidden("InitialCityUid", Model.CityUid)
+            @Html.DropDownList("CityUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control" })
+            <span class="form-text text-muted text-right"><a href="" onclick="return AddressesForm.enableNewCity();" class="btn-link btn-edit">@(Labels.NewF.ToLowerInvariant()) @(Labels.City.ToLowerInvariant())</a></span>
+        </div>
+        <div class="edit d-none">
+            @Html.TextBoxFor(m => m.CityName, new { @class = "form-control" })
+            <span class="form-text text-muted text-right"><a href="" onclick="return AddressesForm.disableNewCity();" class="btn-link">@(Labels.Cancel.ToLowerInvariant())</a></span>
+        </div>
+        @Html.ValidationMessageFor(m => m.CityName, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group row">
+    <div class="col-md-12">
+        @Html.LabelFor(m => m.Address1, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Address1, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Address1, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group row">
+    <div class="col-md-12">
+        @Html.LabelFor(m => m.Address2, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Address2, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Address2, "", new { @class = "text-danger" })
+    </div>
+</div>
+<!--end:: Address Form-->

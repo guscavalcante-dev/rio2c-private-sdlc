@@ -316,9 +316,11 @@
     <Compile Include="Areas\WebApi\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CitiesController.cs" />
     <Compile Include="Controllers\CollaboratorController.cs" />
     <Compile Include="Controllers\ConferenceController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\StatesController.cs" />
     <Compile Include="Helpers\OnboardingAllowedRoutesHelper.cs" />
     <Compile Include="Services\MailerService.cs" />
     <Compile Include="Controllers\OnboardingController.cs" />
@@ -349,6 +351,16 @@
   <ItemGroup>
     <Content Include="Areas\Producer\Views\Collaborator\ProfileDetails.cshtml" />
     <Content Include="Areas\Producer\Views\Collaborator\ProfileEdit.cshtml" />
+    <Content Include="Assets\components\cropper\demo\css\main.css" />
+    <Content Include="Assets\components\cropper\demo\index.html" />
+    <Content Include="Assets\components\cropper\demo\js\main.js" />
+    <Content Include="Assets\components\cropper\dist\cropper.css" />
+    <Content Include="Assets\components\cropper\dist\cropper.js" />
+    <Content Include="Assets\components\cropper\dist\cropper.min.css" />
+    <Content Include="Assets\components\cropper\dist\cropper.min.js" />
+    <Content Include="Assets\components\datatables\datatables.en-us.js" />
+    <Content Include="Assets\components\datatables\datatables.pt-br.js" />
+    <Content Include="Assets\components\jquery.form\jquery.form.js" />
     <Content Include="Assets\css\myrio2c.common.responsive.css" />
     <Content Include="Assets\css\myrio2c.common.css" />
     <Content Include="Assets\css\pages\onboarding\onboarding.css" />
@@ -360,9 +372,12 @@
     <Content Include="Assets\img\logo-rio2c-footer.png" />
     <Content Include="Assets\img\logo_rio2c_color.png" />
     <Content Include="Assets\img\logo_rio2c_white.png" />
+    <Content Include="Assets\js\addresses\addresses.form.js" />
     <Content Include="Assets\js\myrio2c.common.js" />
     <Content Include="Assets\js\myrio2c.cropper.js" />
-    <Content Include="Assets\js\pages\onboarding\wizard-2.js" />
+    <Content Include="Assets\js\onboarding\onboarding.collaboratordata.js" />
+    <Content Include="Assets\js\onboarding\onboarding.wizard.js" />
+    <Content Include="Assets\js\onboarding\wizard-2.js" />
     <Content Include="Assets\js\pages\schedule\components\calendar\basic.js" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.css" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.min.css" />
@@ -7048,6 +7063,11 @@
     <Content Include="Views\Onboarding\AccessData.cshtml" />
     <Content Include="Views\Onboarding\Shared\_OnboardingMenu.cshtml" />
     <Content Include="Views\Onboarding\CollaboratorData.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\AddressBaseCommand.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\CropperImageBaseCommand.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\CollaboratorJobTitleBaseCommand.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\CollaboratorMiniBioBaseCommand.cshtml" />
+    <Content Include="Views\Onboarding\PlayerData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -567,4 +567,16 @@
     <value>Confirme e complete seus dados de acesso</value>
     <comment>Confirme e complete seus dados de acesso</comment>
   </data>
+  <data name="CompleteYourData" xml:space="preserve">
+    <value>Complete seus dados</value>
+    <comment>Complete seus dados</comment>
+  </data>
+  <data name="DescribeYourMiniBiography" xml:space="preserve">
+    <value>Descreva sua mini-biografia</value>
+    <comment>Descreva sua mini-biografia</comment>
+  </data>
+  <data name="InformYourAddress" xml:space="preserve">
+    <value>Informe seu endereço</value>
+    <comment>Informe seu endereço</comment>
+  </data>
 </root>

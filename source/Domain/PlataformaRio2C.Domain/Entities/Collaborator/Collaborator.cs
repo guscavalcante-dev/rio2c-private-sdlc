@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-05-2019
+// Last Modified On : 09-06-2019
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -522,6 +522,15 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
+        /// <summary>Called when [attendee collaborator data].</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardAttendeeCollaboratorData(Edition edition, int userId)
+        {
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+            attendeeCollaborator?.OnboardData(userId);
+        }
+
         #region Admin
 
         /// <summary>Synchronizes the attendee collaborators.</summary>
@@ -810,6 +819,47 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
             this.OnboardAttendeeCollaboratorAccessData(edition, userId);
             this.OnboardUser(passwordHash);
+        }
+
+        /// <summary>Called when [data].</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="country">The country.</param>
+        /// <param name="stateUid">The state uid.</param>
+        /// <param name="stateName">Name of the state.</param>
+        /// <param name="cityUid">The city uid.</param>
+        /// <param name="cityName">Name of the city.</param>
+        /// <param name="address1">The address1.</param>
+        /// <param name="address2">The address2.</param>
+        /// <param name="addressZipCode">The address zip code.</param>
+        /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
+        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="jobTitles">The job titles.</param>
+        /// <param name="miniBios">The mini bios.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardData(
+            Edition edition,
+            Country country,
+            Guid? stateUid,
+            string stateName,
+            Guid? cityUid,
+            string cityName,
+            string address1,
+            string address2,
+            string addressZipCode,
+            bool addressIsManual,
+            bool isImageUploaded,
+            List<CollaboratorJobTitle> jobTitles,
+            List<CollaboratorMiniBio> miniBios,
+            int userId)
+        {
+            this.UpdateImageUploadDate(isImageUploaded, false);
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            this.SynchronizeJobTitles(jobTitles, userId);
+            this.SynchronizeMiniBios(miniBios, userId);
+            this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, address2, addressZipCode, addressIsManual, userId);
+            this.OnboardAttendeeCollaboratorData(edition, userId);
         }
 
         #endregion

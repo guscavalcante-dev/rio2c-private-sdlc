@@ -187,6 +187,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Complete seus dados.
+        /// </summary>
+        public static string CompleteYourData {
+            get {
+                return ResourceManager.GetString("CompleteYourData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Complete seu cadastro.
         /// </summary>
         public static string CompleteYourRegistration {
@@ -291,6 +300,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string CurrentlyBrowsingAs {
             get {
                 return ResourceManager.GetString("CurrentlyBrowsingAs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Descreva sua mini-biografia.
+        /// </summary>
+        public static string DescribeYourMiniBiography {
+            get {
+                return ResourceManager.GetString("DescribeYourMiniBiography", resourceCulture);
             }
         }
         
@@ -488,6 +506,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ImageIsRequired {
             get {
                 return ResourceManager.GetString("ImageIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Informe seu endereço.
+        /// </summary>
+        public static string InformYourAddress {
+            get {
+                return ResourceManager.GetString("InformYourAddress", resourceCulture);
             }
         }
         

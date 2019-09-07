@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-25-2019
+// Last Modified On : 09-06-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -207,6 +207,27 @@ namespace PlataformaRio2C.Web.Site
 
             #endregion
 
+            #region Pages Bundles
+
+            #region Onboarding Wizard
+
+            bundles.Add(new ScriptBundle("~/bundles/js/onboarding.wizard.js").Include(
+                "~/Assets/js/onboarding/onboarding.wizard.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/onboarding.collaboratordata.js").Include(
+                "~/Assets/js/onboarding/onboarding.collaboratordata.js"));
+
+            #endregion
+
+            #region Addresses
+
+            bundles.Add(new ScriptBundle("~/bundles/js/addresses.form.js").Include(
+                "~/Assets/js/addresses/addresses.form.js"));
+
+            #endregion
+
+            #endregion
+
             #region Scripts
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
@@ -330,9 +351,9 @@ namespace PlataformaRio2C.Web.Site
             #endregion
 
             // Required to generate bundles on release running in visual studio
-#if !DEBUG
+            #if !DEBUG
             BundleTable.EnableOptimizations = true;
-#endif
+            #endif
         }
     }
 }

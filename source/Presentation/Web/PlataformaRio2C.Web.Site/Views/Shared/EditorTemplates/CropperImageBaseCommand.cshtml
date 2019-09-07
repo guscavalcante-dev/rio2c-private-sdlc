@@ -1,0 +1,89 @@
+﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Statics
+@model PlataformaRio2C.Application.CQRS.Commands.CropperImageBaseCommand
+<!-- EXISTENT IMAGE CONTAINER - BEGIN -->
+<div class="row existent-image-container">
+    <div class="col-md-12">
+        <div class="kt-avatar kt-avatar--outline" id="kt_apps_user_add_avatar">
+            @if (Model.GetImageUploadDate().HasValue)
+            {
+                var fileRepositoryPathType = Model.FileRepositoryPathTypeUid == FileRepositoryPathType.HoldingImage.Uid ? FileRepositoryPathType.HoldingImage :
+                                             Model.FileRepositoryPathTypeUid == FileRepositoryPathType.OrganizationImage.Uid ? FileRepositoryPathType.OrganizationImage : 
+                                             FileRepositoryPathType.UserImage;
+                <div id="current-image" class="kt-avatar__holder wh-200" style="background-color: rgba(255, 255, 255, 0.1); background-image: url(@ImageHelper.GetImageUrl(fileRepositoryPathType, Model.ImageUid.Value, Model.GetImageUploadDate().Value, true))"></div>
+            }
+            <div id="no-image" class="kt-avatar__holder wh-200 @(Model.GetImageUploadDate().HasValue ? "d-none" : string.Empty)" style="background-color: rgba(255, 255, 255, 0.1);"></div>
+            @Html.TextBoxFor(m => m.ImageFile, new { id = "ImageFile", @class = "sr-only", type = "file", @accept = "image/*" })
+        </div>
+        @*@if (Model.IsImageUploaded)
+            {
+                <img class="thumbnail" src="@Html.GetSiteLogo(Model.SiteId, Model.SiteLogoUpdateDate)" style="max-width: 100%;">
+            }*@
+    </div>
+    <div class="col-md-12">
+        @if (Model.GetImageUploadDate().HasValue)
+        {
+            <label class="btn default btn-file">
+                <span class="btn btn-secondary" onclick="MyRio2cCropper.remove();">@Labels.Remove</span>
+            </label>
+        }
+        <label class="btn default btn-file" for="ImageFile">
+            <span class="btn btn-primary">@(Model.GetImageUploadDate().HasValue ? Labels.Alter : Labels.SelectImage)</span>
+        </label>
+    </div>
+    <div class="col-md-12">
+        @Html.ValidationMessageFor(m => m.ImageFile, null, new { @class = "text-danger" })
+    </div>
+</div>
+<!-- EXISTENT IMAGE CONTAINER - END -->
+<!-- CROPPER CONTAINER - BEGIN -->
+<div class="row cropper-control-hide d-none">
+    <div class="col-12">
+        <div class="container cropper-container">
+            <div class="row">
+                <div class="col-md-12 ml-3">
+                    @Html.HiddenFor(m => m.IsImageDeleted)
+                    @Html.HiddenFor(m => m.ImageUid)
+                    @Html.HiddenFor(m => m.ImageUploadDate)
+                    @Html.HiddenFor(m => m.FileRepositoryPathTypeUid)
+                    @Html.HiddenFor(m => m.DataX)
+                    @Html.HiddenFor(m => m.DataY)
+                    @Html.HiddenFor(m => m.DataHeight)
+                    @Html.HiddenFor(m => m.DataWidth)
+                    @Html.HiddenFor(m => m.DataRotate)
+                    @Html.HiddenFor(m => m.DataScaleX)
+                    @Html.HiddenFor(m => m.DataScaleY)
+                    <div class="img-container" style="width: 200px; height: 200px;">
+                        <img id="image" src="" alt="@Labels.Image" style="max-width: 100%; max-height: 100%;">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-1">
+                <div class="col-md-12 docs-buttons text-center">
+                    <!-- <h3 class="page-header">Toolbar:</h3> -->
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary" data-method="zoom" data-option="0.1" title="@Labels.ZoomIn">
+                            <span class="fa fa-search-plus"></span>
+                        </button>
+                        <button type="button" class="btn btn-primary" data-method="zoom" data-option="-0.1" title="@Labels.ZoomOut">
+                            <span class="fa fa-search-minus"></span>
+                        </button>
+                        <button type="button" class="btn btn-primary ml-2" data-method="reset" title="@Labels.Reset">
+                            <span class="fa fa-undo"></span>
+                        </button>
+                        <button type="button" onclick="MyRio2cCropper.cancel(); return false;" class="btn btn-primary ml-2" data-method="reset" title="@Labels.Cancel">
+                            <span class="fa fa-window-close"></span>
+                        </button>
+                    </div>
+                </div><!-- /.docs-buttons -->
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-12 text-center">
+                <span class="badge badge-danger">@Labels.Warning</span><br />
+                <span class="text">@Html.Raw(Labels.InfoImagePlayer)</span>
+            </div>
+        </div>
+
+    </div>
+</div>

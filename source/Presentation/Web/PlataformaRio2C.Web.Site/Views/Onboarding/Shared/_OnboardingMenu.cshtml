@@ -1,10 +1,11 @@
-﻿<div class="kt-wizard-v2__nav">
+﻿@model int
+<div class="kt-wizard-v2__nav">
     <div class="kt-wizard-v2__nav-items">
         <div class="row mb-3">
-            <div class="col-md-12 text-center"><h3>Passos</h3></div>
+            <div class="col-md-12 text-center"><h3>@Labels.Steps</h3></div>
         </div>
         <!--doc: Replace A tag with SPAN tag to disable the step link click -->
-        <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="current">
+        <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == 1 ? "current" : (Model > 1 ? "done" : "pending"))">
             <div class="kt-wizard-v2__nav-body">
                 <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">
                     1
@@ -15,7 +16,7 @@
                 </div>
             </div>
         </span>
-        <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="pending">
+        <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == 2 ? "current" : (Model > 2 ? "done" : "pending"))">
             <div class="kt-wizard-v2__nav-body">
                 <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">
                     2
@@ -26,7 +27,7 @@
                 </div>
             </div>
         </span>
-        <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="pending">
+        <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == 3 ? "current" : (Model > 3 ? "done" : "pending"))">
             <div class="kt-wizard-v2__nav-body">
                 <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">
                     3
@@ -38,7 +39,7 @@
                 </div>
             </div>
         </span>
-        <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="pending">
+        <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == 4 ? "current" : (Model > 4 ? "done" : "pending"))">
             <div class="kt-wizard-v2__nav-body">
                 <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">
                     4

@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-05-2019
+// Last Modified On : 09-06-2019
 // ***********************************************************************
 // <copyright file="OnboardingAllowedRoutesHelper.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,9 +33,12 @@ namespace PlataformaRio2C.Web.Site.Helpers
             new OnboardingAllowedRoute("Error", "Forbidden"),
             new OnboardingAllowedRoute("Error", "NotFound"),
             new OnboardingAllowedRoute("Home", "SetCulture"),
+            new OnboardingAllowedRoute("States", "FindAllByCountryUid"),
+            new OnboardingAllowedRoute("Cities", "FindAllByStateUid"),
             new OnboardingAllowedRoute("Onboarding", "Index"),
             new OnboardingAllowedRoute("Onboarding", "AccessData"),
             new OnboardingAllowedRoute("Onboarding", "CollaboratorData"),
+            new OnboardingAllowedRoute("Onboarding", "PlayerData"),
         };
 
         /// <summary>

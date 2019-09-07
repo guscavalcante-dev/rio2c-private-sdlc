@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Site
 // Author           : Rafael Dantas Ruiz
-// Created          : 08-20-2019
+// Created          : 08-14-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-20-2019
+// Last Modified On : 09-06-2019
 // ***********************************************************************
 // <copyright file="myrio2c.cropper.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,6 +26,10 @@ var MyRio2cCropper = function () {
 
         var internalOptions = {
             //preview: '.img-preview',
+            //minContainerWidth: 200,
+            //minContainerHeight: 200,
+            minCropBoxWidth: 200,
+            minCropBoxHeight: 200,
             cropBoxMovable: false,
             cropBoxResizable: false,
             aspectRatio: 1 / 1,
@@ -38,6 +42,10 @@ var MyRio2cCropper = function () {
                 $dataRotate.val(e.rotate);
                 $dataScaleX.val(e.scaleX);
                 $dataScaleY.val(e.scaleY);
+            },
+            built: function () {
+                // Width and Height params are number types instead of string
+                //$image.cropper("setCropBoxData", { width: 200, height: 200 });
             }
         };
 
@@ -107,34 +115,34 @@ var MyRio2cCropper = function () {
             }
         });
 
-        // Keyboard
-        $(document.body).on('keydown', function (e) {
-            if (!$image.data('cropper') || this.scrollTop > 300) {
-                return;
-            }
+        //// Keyboard
+        //$(document.body).on('keydown', function (e) {
+        //    if (!$image.data('cropper') || this.scrollTop > 300) {
+        //        return;
+        //    }
 
-            switch (e.which) {
-            case 37:
-                e.preventDefault();
-                $image.cropper('move', -1, 0);
-                break;
+        //    switch (e.which) {
+        //    case 37:
+        //        e.preventDefault();
+        //        $image.cropper('move', -1, 0);
+        //        break;
 
-            case 38:
-                e.preventDefault();
-                $image.cropper('move', 0, -1);
-                break;
+        //    case 38:
+        //        e.preventDefault();
+        //        $image.cropper('move', 0, -1);
+        //        break;
 
-            case 39:
-                e.preventDefault();
-                $image.cropper('move', 1, 0);
-                break;
+        //    case 39:
+        //        e.preventDefault();
+        //        $image.cropper('move', 1, 0);
+        //        break;
 
-            case 40:
-                e.preventDefault();
-                $image.cropper('move', 0, 1);
-                break;
-            }
-        });
+        //    case 40:
+        //        e.preventDefault();
+        //        $image.cropper('move', 0, 1);
+        //        break;
+        //    }
+        //});
 
         // Import image
         var $inputImage = $('#ImageFile');

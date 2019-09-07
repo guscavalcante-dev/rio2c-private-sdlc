@@ -1351,4 +1351,8 @@
     <value>Next step</value>
     <comment>Próximo passo</comment>
   </data>
+  <data name="Steps" xml:space="preserve">
+    <value>Steps</value>
+    <comment>Passos</comment>
+  </data>
 </root>
