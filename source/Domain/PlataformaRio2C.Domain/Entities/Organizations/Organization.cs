@@ -50,6 +50,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeOrganization> AttendeeOrganizations { get; private set; }
         public virtual ICollection<OrganizationActivity> OrganizationActivities { get; private set; }
         public virtual ICollection<OrganizationTargetAudience> OrganizationTargetAudiences { get; private set; }
+        public virtual ICollection<OrganizationInterest> OrganizationInterests { get; private set; }
 
         //public virtual ICollection<PlayerInterest> Interests { get; private set; }
         //public virtual ICollection<Collaborator> Collaborators { get; private set; }
@@ -235,6 +236,27 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Onboarding
 
+        /// <summary>Called when [data].</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="companyName">Name of the company.</param>
+        /// <param name="document">The document.</param>
+        /// <param name="country">The country.</param>
+        /// <param name="stateUid">The state uid.</param>
+        /// <param name="stateName">Name of the state.</param>
+        /// <param name="cityUid">The city uid.</param>
+        /// <param name="cityName">Name of the city.</param>
+        /// <param name="address1">The address1.</param>
+        /// <param name="address2">The address2.</param>
+        /// <param name="addressZipCode">The address zip code.</param>
+        /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
+        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
+        /// <param name="descriptions">The descriptions.</param>
+        /// <param name="activities">The activities.</param>
+        /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="userId">The user identifier.</param>
         public void OnboardData(
             Edition edition,
             OrganizationType organizationType,
@@ -277,6 +299,21 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeAttendeeOrganizations(edition, organizationType, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, address2, addressZipCode, addressIsManual, userId);
             this.OnboardAttendeeOrganizationData(edition, userId);
+        }
+
+        /// <summary>Called when [interests].</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="interests">The interests.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardInterests(
+            Edition edition,
+            OrganizationType organizationType,
+            List<Interest> interests,
+            int userId)
+        {
+            this.SynchronizeOrganizationInterests(interests, userId);
+            this.OnboardAttendeeOrganizationInterests(edition, userId);
         }
 
         #endregion
@@ -572,10 +609,10 @@ namespace PlataformaRio2C.Domain.Entities
                 return;
             }
 
-            // Create or update activities
+            // Create or update target audiences
             foreach (var targetAudience in targetAudiences)
             {
-                var organizationTargetAudienceDb = this.OrganizationActivities.FirstOrDefault(a => a.Activity.Uid == targetAudience.Uid);
+                var organizationTargetAudienceDb = this.OrganizationTargetAudiences.FirstOrDefault(a => a.TargetAudience.Uid == targetAudience.Uid);
                 if (organizationTargetAudienceDb != null)
                 {
                     organizationTargetAudienceDb.Update(userId);
@@ -593,9 +630,9 @@ namespace PlataformaRio2C.Domain.Entities
         private void DeleteOrganizationTargetAudiences(List<TargetAudience> newTargetAudiences, int userId)
         {
             var organizationTargetAudiencesToDelete = this.OrganizationTargetAudiences.Where(db => newTargetAudiences?.Select(a => a.Uid)?.Contains(db.TargetAudience.Uid) == false).ToList();
-            foreach (var organizatioNTargetAudienceToDelete in organizationTargetAudiencesToDelete)
+            foreach (var organizationTargetAudienceToDelete in organizationTargetAudiencesToDelete)
             {
-                organizatioNTargetAudienceToDelete.Delete(userId);
+                organizationTargetAudienceToDelete.Delete(userId);
             }
         }
 
@@ -605,6 +642,62 @@ namespace PlataformaRio2C.Domain.Entities
         private void CreateOrganizationTargetAudience(TargetAudience targetAudience, int userId)
         {
             this.OrganizationTargetAudiences.Add(new OrganizationTargetAudience(this, targetAudience, userId));
+        }
+
+        #endregion
+
+        #region Organization Interests
+
+        /// <summary>Synchronizes the organization interests.</summary>
+        /// <param name="interests">The interests.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeOrganizationInterests(List<Interest> interests, int userId)
+        {
+            if (this.OrganizationInterests == null)
+            {
+                this.OrganizationInterests = new List<OrganizationInterest>();
+            }
+
+            this.DeleteOrganizationInterests(interests, userId);
+
+            if (interests?.Any() != true)
+            {
+                return;
+            }
+
+            // Create or update interests
+            foreach (var interest in interests)
+            {
+                var organizationInterestDb = this.OrganizationInterests.FirstOrDefault(a => a.Interest.Uid == interest.Uid);
+                if (organizationInterestDb != null)
+                {
+                    organizationInterestDb.Update(userId);
+                }
+                else
+                {
+                    this.CreateOrganizationInterest(interest, userId);
+                }
+            }
+        }
+
+        /// <summary>Deletes the organization interests.</summary>
+        /// <param name="newInterests">The new interests.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteOrganizationInterests(List<Interest> newInterests, int userId)
+        {
+            var organizationInterestsToDelete = this.OrganizationInterests.Where(db => newInterests?.Select(a => a.Uid)?.Contains(db.Interest.Uid) == false).ToList();
+            foreach (var organizationInterestToDelete in organizationInterestsToDelete)
+            {
+                organizationInterestToDelete.Delete(userId);
+            }
+        }
+
+        /// <summary>Creates the organization interest.</summary>
+        /// <param name="intestest">The intestest.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void CreateOrganizationInterest(Interest intestest, int userId)
+        {
+            this.OrganizationInterests.Add(new OrganizationInterest(this, intestest, userId));
         }
 
         #endregion

@@ -149,6 +149,16 @@ namespace PlataformaRio2C.Domain.Dtos
                    && this.EditionAttendeeOrganizations?.All(eao => eao.OnboardingOrganizationDate.HasValue) == true;  // and all organizations interests onboarding are finished
         }
 
+        /// <summary>Determines whether [has organization interests onboarding pending].</summary>
+        /// <returns>
+        ///   <c>true</c> if [has organization interests onboarding pending]; otherwise, <c>false</c>.</returns>
+        public bool HasOrganizationInterestsOnboardingPending()
+        {
+            return this.EditionAttendeeOrganizations?.Any() == true                                                    // Has at least one organization linked
+                   && this.EditionAttendeeOrganizations?.Any(eao => eao.OnboardingOrganizationDate.HasValue            // and at least one organization onboarded
+                                                                    && !eao.OnboardingInterestsDate.HasValue) == true; // and this  organization interests area not onboarded
+        }
+
         /// <summary>Determines whether [is organizations interests onboarding finished].</summary>
         /// <returns>
         ///   <c>true</c> if [is organizations interests onboarding finished]; otherwise, <c>false</c>.</returns>

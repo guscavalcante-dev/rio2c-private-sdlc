@@ -23,6 +23,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public string SocialMedia { get; set; }
         public IEnumerable<OrganizationActivityDto> OrganizationActivitiesDtos { get; set; }
         public IEnumerable<OrganizationTargetAudienceDto> OrganizationTargetAudiencesDtos { get; set; }
+        public IEnumerable<OrganizationInterestDto> OrganizationInterestsDtos { get; set; }
         public int CreateUserId { get; set; }
         public int UpdateUserId { get; set; }
 

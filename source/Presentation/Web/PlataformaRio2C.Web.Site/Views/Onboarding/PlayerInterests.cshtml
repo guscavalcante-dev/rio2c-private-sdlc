@@ -1,0 +1,116 @@
+﻿@using System.Globalization
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Entities
+@model PlataformaRio2C.Application.CQRS.Commands.OnboardPlayerInterests
+@{
+    ViewBag.Title = Labels.Welcome;
+}
+@{
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var playerAttendeeOrganizations = ViewBag.PlayerAttendeeOrganizations as List<AttendeeOrganization>;
+    var player = playerAttendeeOrganizations?.FirstOrDefault(pao => pao.Organization.Uid == Model.OrganizationUid)?.Organization;
+    var initialPlayerIndex = 4;
+    var playerIndex = playerAttendeeOrganizations?.FindIndex(pao => pao.Organization.Uid == Model.OrganizationUid) ?? 0;
+    var additionIndex = playerIndex == 0 ? 0 : 1;
+}
+<div class="kt-portlet">
+    <div class="kt-portlet__body kt-portlet__body--fit">
+        <div class="kt-grid  kt-wizard-v2 kt-wizard-v2--white" id="kt_wizard_v2" data-ktwizard-state="first">
+            <div class="kt-grid__item kt-wizard-v2__aside">
+                <!--begin: Form Wizard Nav -->
+                @Html.Partial("Shared/_OnboardingMenu", playerIndex + initialPlayerIndex + additionIndex)
+                <!--end: Form Wizard Nav -->
+            </div>
+            <div class="kt-grid__item kt-grid__item--fluid kt-wizard-v2__wrapper">
+                @using (Html.BeginForm("PlayerInterests", "Onboarding", FormMethod.Post, new { enctype = "multipart/form-data", id = "PlayerInterestssDataForm", @class = "kt-form", novalidate = "novalidate" }))
+                {
+                    @Html.HiddenFor(m => m.OrganizationUid)
+                    <!--begin: Form Wizard Step 1-->
+                    <div class="kt-wizard-v2__content" data-ktwizard-type="step-content" data-ktwizard-state="current">
+                        <div class="kt-heading kt-heading--md">@string.Format(Messages.ChoosePlayerInterestsFor, player?.Name ?? string.Empty)</div>
+                        <div class="kt-form__section kt-form__section--first">
+                            <div class="kt-wizard-v2__form">
+                                <div id="form-container">
+                                    <div class="kt-section mt-50">
+                                        @Html.ValidationMessage("ActivitiesUids", new { @class = "text-danger" })
+                                        <div class="kt-section__content mt-3">
+                                            <div class="kt-checkbox-list">
+                                                @foreach (var interestGroup in Model.GroupedInterests)
+                                                {
+                                                    <h3 class="kt-heading kt-heading--md mt-50">@interestGroup.Key.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')</h3>
+
+                                                    foreach (var interest in interestGroup)
+                                                    {
+                                                        <label class="kt-checkbox">
+                                                            <input type="checkbox"
+                                                                   name="InterestsUids"
+                                                                   value="@interest.Uid"
+                                                                   @if(Model.InterestsUids?.Contains(interest.Uid) == true)
+                                                                   {
+                                                                       <text> checked </text> 
+                                                                   } 
+                                                            /> @interest.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')
+                                                            <span></span>
+                                                        </label>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end: Form Wizard Step 1-->
+                    <!--begin: Form Actions -->
+                    <div class="kt-form__actions">
+                        @*<button class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" data-ktwizard-type="action-prev">
+                                Voltar
+                            </button>*@
+                        @*<button class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" data-ktwizard-type="action-submit">
+                                Salvar
+                            </button>*@
+                        @if (userAccessControlDto?.IsAttendeeCollaboratorOnboardingFinished() == false || userAccessControlDto?.IsAttendeeOrganizationsOnboardingFinished() == false)
+                        {
+                            <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="OnboardWizard.submit('#PlayerInterestssDataForm');">
+                                @Labels.NextStep
+                            </button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto">
+                                @Labels.Save
+                            </button>
+                        }
+                    </div>
+                    <!--end: Form Actions -->
+                }
+                <!--end: Form Wizard Form-->
+            </div>
+        </div>
+    </div>
+</div>
+@section Styles {
+    @Styles.Render("~/bundles/css/cropper.css")
+    @Styles.Render("~/bundles/css/select2.css")
+    @Styles.Render("~/bundles/css/onboardingIndex")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/jqueryval.js")
+    @Scripts.Render("~/bundles/js/cropper.js")
+    @Scripts.Render("~/bundles/js/select2.js")
+    @Scripts.Render("~/bundles/js/ckEditor.js")
+    @Scripts.Render("~/bundles/js/addresses.form.js")
+    @Scripts.Render("~/bundles/js/onboarding.organizationdata.js")
+    @Scripts.Render("~/bundles/js/onboarding.wizard.js")
+    @*@Scripts.Render("~/bundles/js/onboarding
+        Index")*@
+    <script>
+        jQuery(document).ready(function () {
+            OnboardingCollaboratorData.init();
+            //CollaboratorsTotalCountWidget.init();
+            //CollaboratorsEditionCountWidget.init();
+            //CollaboratorsDataTableWidget.init();
+        });
+    </script>
+}

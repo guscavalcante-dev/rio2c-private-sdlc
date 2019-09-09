@@ -1,19 +1,119 @@
-﻿using PlataformaRio2C.Domain.Entities;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Domain
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 09-09-2019
+// ***********************************************************************
+// <copyright file="InterestRepository.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context;
 using System.Linq;
 using System.Data.Entity;
 using System.Linq.Expressions;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
+    #region Interest IQueryable Extensions
+
+    /// <summary>
+    /// InterestIQueryableExtensions
+    /// </summary>
+    internal static class InterestIQueryableExtensions
+    {
+        /// <summary>Finds the by uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="interestUid">The interest uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<Interest> FindByUid(this IQueryable<Interest> query, Guid interestUid)
+        {
+            query = query.Where(i => i.Uid == interestUid);
+
+            return query;
+        }
+
+        /// <summary>Finds the by uids.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="interestsUids">The interests uids.</param>
+        /// <returns></returns>
+        internal static IQueryable<Interest> FindByUids(this IQueryable<Interest> query, List<Guid> interestsUids)
+        {
+            if (interestsUids?.Any() == true)
+            {
+                query = query.Where(i => interestsUids.Contains(i.Uid));
+            }
+
+            return query;
+        }
+
+        /// <summary>Determines whether [is not deleted].</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<Interest> IsNotDeleted(this IQueryable<Interest> query)
+        {
+            query = query.Where(i => !i.IsDeleted
+                                     && !i.InterestGroup.IsDeleted);
+
+            return query;
+        }
+    }
+
+    #endregion
+
+    /// <summary>InterestRepository</summary>
     public class InterestRepository : Repository<PlataformaRio2CContext, Interest>, IInterestRepository
     {
+        /// <summary>Initializes a new instance of the <see cref="InterestRepository"/> class.</summary>
+        /// <param name="context">The context.</param>
         public InterestRepository(PlataformaRio2CContext context)
             : base(context)
         {
         }
+
+        /// <summary>Gets the base query.</summary>
+        /// <param name="readonly">if set to <c>true</c> [readonly].</param>
+        /// <returns></returns>
+        private IQueryable<Interest> GetBaseQuery(bool @readonly = false)
+        {
+            var consult = this.dbSet
+                                .IsNotDeleted();
+
+            return @readonly
+                        ? consult.AsNoTracking()
+                        : consult;
+        }
+
+        /// <summary>Finds all grouped by interest groups asynchronous.</summary>
+        /// <returns></returns>
+        public async Task<List<IGrouping<InterestGroup, Interest>>> FindAllGroupedByInterestGroupsAsync()
+        {
+            var query = this.GetBaseQuery()
+                                    .GroupBy(i => i.InterestGroup);
+
+            return await query.ToListAsync();
+        }
+
+        /// <summary>Finds all by uids asynchronous.</summary>
+        /// <param name="interestsUids">The interests uids.</param>
+        /// <returns></returns>
+        public async Task<List<Interest>> FindAllByUidsAsync(List<Guid> interestsUids)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUids(interestsUids);
+
+            return await query.ToListAsync();
+        }
+
+        #region Old
 
         public override IQueryable<Interest> GetAll(bool @readonly = false)
         {
@@ -49,6 +149,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             
         }
 
-       
+        #endregion
     }
 }

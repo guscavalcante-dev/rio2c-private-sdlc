@@ -7068,8 +7068,9 @@
     <Content Include="Views\Shared\EditorTemplates\CropperImageBaseCommand.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CollaboratorJobTitleBaseCommand.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CollaboratorMiniBioBaseCommand.cshtml" />
-    <Content Include="Views\Onboarding\OrganizationData.cshtml" />
+    <Content Include="Views\Onboarding\PlayerInfo.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\OrganizationDescriptionBaseCommand.cshtml" />
+    <Content Include="Views\Onboarding\PlayerInterests.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

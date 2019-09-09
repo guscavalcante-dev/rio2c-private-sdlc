@@ -576,10 +576,18 @@
   </data>
   <data name="CompletePlayerInfo" xml:space="preserve">
     <value>Complete player info for {0}</value>
-    <comment>Comple as informações do player {0}</comment>
+    <comment>Complete as informações do player {0}</comment>
   </data>
   <data name="CompletePlayerInterestsFor" xml:space="preserve">
     <value>Inform the interest areas for player {0}</value>
     <comment>Informe quais as áreas de interesse do player {0}</comment>
+  </data>
+  <data name="ChoosePlayerInterestsFor" xml:space="preserve">
+    <value>Choose the interests for player {0}</value>
+    <comment>Escolha os interesses do player Giros</comment>
+  </data>
+  <data name="PlayerInfoFor" xml:space="preserve">
+    <value>Informations for player {0}</value>
+    <comment>Dados do player {0}</comment>
   </data>
 </root>

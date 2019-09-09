@@ -8,23 +8,26 @@
 @{
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var playerAttendeeOrganizations = ViewBag.PlayerAttendeeOrganizations as List<AttendeeOrganization>;
+    var player = playerAttendeeOrganizations?.FirstOrDefault(pao => pao.Organization.Uid == Model.OrganizationUid)?.Organization;
     var initialPlayerIndex = 3;
+    var playerIndex = playerAttendeeOrganizations?.FindIndex(pao => pao.Organization.Uid == Model.OrganizationUid) ?? 0;
+    var additionIndex = playerIndex == 0 ? 0 : 1;
 }
 <div class="kt-portlet">
     <div class="kt-portlet__body kt-portlet__body--fit">
         <div class="kt-grid  kt-wizard-v2 kt-wizard-v2--white" id="kt_wizard_v2" data-ktwizard-state="first">
             <div class="kt-grid__item kt-wizard-v2__aside">
                 <!--begin: Form Wizard Nav -->
-                @Html.Partial("Shared/_OnboardingMenu", (playerAttendeeOrganizations?.FindIndex(pao => pao.Organization.Uid == Model.OrganizationUid) ?? 0) + initialPlayerIndex)
+                @Html.Partial("Shared/_OnboardingMenu", playerIndex + initialPlayerIndex + additionIndex)
                 <!--end: Form Wizard Nav -->
             </div>
             <div class="kt-grid__item kt-grid__item--fluid kt-wizard-v2__wrapper">
-                @using (Html.BeginForm("OrganizationData", "Onboarding", FormMethod.Post, new { enctype = "multipart/form-data", id = "OrganizationDataForm", @class = "kt-form", novalidate = "novalidate" }))
+                @using (Html.BeginForm("PlayerInfo", "Onboarding", FormMethod.Post, new { enctype = "multipart/form-data", id = "OrganizationDataForm", @class = "kt-form", novalidate = "novalidate" }))
                 {
                     @Html.HiddenFor(m => m.OrganizationUid)
                     <!--begin: Form Wizard Step 1-->
                     <div class="kt-wizard-v2__content" data-ktwizard-type="step-content" data-ktwizard-state="current">
-                        <div class="kt-heading kt-heading--md">@Labels.PlayerInfo</div>
+                        <div class="kt-heading kt-heading--md">@string.Format(Messages.PlayerInfoFor, player?.Name ?? string.Empty)</div>
                         <div class="kt-form__section kt-form__section--first">
                             <div class="kt-wizard-v2__form">
                                 <div id="form-container">
@@ -64,7 +67,6 @@
                                                 @foreach (var activity in Model.Activities)
                                                 {
                                                     <label class="kt-checkbox">
-                                                        
                                                         <input type="checkbox"
                                                                name="ActivitiesUids"
                                                                value="@activity.Uid"
@@ -73,7 +75,6 @@
                                                                    <text> checked </text> 
                                                                } 
                                                         /> @activity.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')
-                                                        @*@Html.CheckBox("ActivitiesUids", false, new {value = activity.Uid}) @activity.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')*@
                                                         <span></span>
                                                     </label>
                                                 }
@@ -96,7 +97,6 @@
                                                                    <text> checked </text> 
                                                                } 
                                                         /> @targetAudience.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')
-                                                        @*@Html.CheckBox("TargetAudiencesUids", false, new {value = targetAudience.Uid}) @targetAudience.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')*@
                                                         <span></span>
                                                     </label>
                                                 }
@@ -131,7 +131,7 @@
                             </button>*@
                         @if (userAccessControlDto?.IsAttendeeCollaboratorOnboardingFinished() == false || userAccessControlDto?.IsAttendeeOrganizationsOnboardingFinished() == false)
                         {
-                            <button class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="OnboardWizard.submit('#OrganizationDataForm');">
+                            <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="OnboardWizard.submit('#OrganizationDataForm');">
                                 @Labels.NextStep
                             </button>
                         }

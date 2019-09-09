@@ -22,8 +22,6 @@ using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
-using PlataformaRio2C.Domain.Validation;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -31,8 +29,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>OnboardOrganizationDataCommandHandler</summary>
     public class OnboardOrganizationDataCommandHandler : BaseOrganizationCommandHandler, IRequestHandler<OnboardOrganizationData, AppValidationResult>
     {
-        private readonly IUserRepository userRepo;
-        private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IEditionRepository editionRepo;
         private readonly IOrganizationTypeRepository organizationTypeRepo;
         private readonly ILanguageRepository languageRepo;
@@ -44,8 +40,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IMediator eventBus,
             IUnitOfWork uow,
             IOrganizationRepository organizationRepository,
-            IUserRepository userRepository,
-            IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IEditionRepository editionRepository,
             IOrganizationTypeRepository organizationTypeRepository,
             ILanguageRepository languageRepository,
@@ -54,8 +48,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             ICountryRepository countryRepository)
             : base(eventBus, uow, organizationRepository)
         {
-            this.userRepo = userRepository;
-            this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.editionRepo = editionRepository;
             this.organizationTypeRepo = organizationTypeRepository;
             this.languageRepo = languageRepository;

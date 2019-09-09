@@ -106,6 +106,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Escolha os interesses do player {0}.
+        /// </summary>
+        public static string ChoosePlayerInterestsFor {
+            get {
+                return ResourceManager.GetString("ChoosePlayerInterestsFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cidade inválida..
         /// </summary>
         public static string CityIsInvalid {
@@ -187,7 +196,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Comple as informações do player {0}.
+        ///   Looks up a localized string similar to Complete as informações do player {0}.
         /// </summary>
         public static string CompletePlayerInfo {
             get {
@@ -752,6 +761,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string PlayerIncompleteMessage {
             get {
                 return ResourceManager.GetString("PlayerIncompleteMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dados do player {0}.
+        /// </summary>
+        public static string PlayerInfoFor {
+            get {
+                return ResourceManager.GetString("PlayerInfoFor", resourceCulture);
             }
         }
         

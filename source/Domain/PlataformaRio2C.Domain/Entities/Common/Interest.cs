@@ -1,7 +1,21 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Domain
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 09-09-2019
+// ***********************************************************************
+// <copyright file="Interest.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 
 namespace PlataformaRio2C.Domain.Entities
 {
+    /// <summary>Interest</summary>
     public class Interest : Entity
     {
         public static readonly int NameMinLength = 2;
@@ -13,9 +27,9 @@ namespace PlataformaRio2C.Domain.Entities
 
         public string Name { get; private set; }
 
+        /// <summary>Initializes a new instance of the <see cref="Interest"/> class.</summary>
         protected Interest()
         {
-
         }
         
         public Interest(string name, InterestGroup interestGroup)

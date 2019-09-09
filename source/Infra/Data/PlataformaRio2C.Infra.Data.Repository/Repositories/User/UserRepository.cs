@@ -122,7 +122,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                 .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
                                                                 .SelectMany(ac => ac.AttendeeOrganizationCollaborators
                                                                                         .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted)
-                                                                                        .Select(aoc => aoc.AttendeeOrganization)),
+                                                                                        .Select(aoc => aoc.AttendeeOrganization)).OrderBy(ao => ao.CreateDate),
                             EditionAttendeeCollaboratorTickets = u.Collaborator.AttendeeCollaborators
                                                                 .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
                                                                 .SelectMany(ac => ac.AttendeeCollaboratorTickets

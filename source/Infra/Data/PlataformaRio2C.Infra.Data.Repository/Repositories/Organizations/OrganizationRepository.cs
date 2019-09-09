@@ -265,6 +265,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     TargetAudienceUid = oa.TargetAudience.Uid,
                                     TargetAudienceName = oa.TargetAudience.Name
                                 }),
+                                OrganizationInterestsDtos = o.OrganizationInterests.Where(ota => !ota.IsDeleted).Select(oi => new OrganizationInterestDto
+                                {
+                                    OrganizationInterestId = oi.Id,
+                                    OrganizationInterestUid = oi.Uid,
+                                    InterestGroupId = oi.Interest.InterestGroup.Id,
+                                    InterestGroupUid = oi.Interest.InterestGroup.Uid,
+                                    InterestGroupName = oi.Interest.InterestGroup.Name,
+                                    InterestId = oi.Interest.Id,
+                                    InterestUid = oi.Interest.Uid,
+                                    InterestName = oi.Interest.Name
+                                })
                             }).FirstOrDefaultAsync();
         }
 

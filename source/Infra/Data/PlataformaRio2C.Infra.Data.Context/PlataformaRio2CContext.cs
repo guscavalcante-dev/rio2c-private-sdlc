@@ -53,6 +53,7 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new OrganizationTypeMap());
             modelBuilder.Configurations.Add(new OrganizationActivityMap());
             modelBuilder.Configurations.Add(new OrganizationTargetAudienceMap());
+            modelBuilder.Configurations.Add(new OrganizationInterestMap());
 
             // Collaborator
             modelBuilder.Configurations.Add(new CollaboratorMap());
@@ -83,6 +84,8 @@ namespace PlataformaRio2C.Infra.Data.Context
             // Common
             modelBuilder.Configurations.Add(new ActivityMap());
             modelBuilder.Configurations.Add(new TargetAudienceMap());
+            modelBuilder.Configurations.Add(new InterestGroupMap());
+            modelBuilder.Configurations.Add(new InterestMap());
 
 
             // TODO: Old mapping that must be reviewed
@@ -93,8 +96,6 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new UserMap());
             modelBuilder.Configurations.Add(new UserUseTermMap());
             modelBuilder.Configurations.Add(new RoleMap());            
-            modelBuilder.Configurations.Add(new InterestGroupMap());
-            modelBuilder.Configurations.Add(new InterestMap());
             modelBuilder.Configurations.Add(new PlayerInterestMap());            
             //modelBuilder.Configurations.Add(new PlayerTargetAudienceMap());
             modelBuilder.Configurations.Add(new PlayerRestrictionsSpecificsMap());

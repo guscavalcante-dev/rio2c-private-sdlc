@@ -54,7 +54,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
-
         /// <summary>Determines whether [is not deleted].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
@@ -71,6 +70,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     /// <summary>TargetAudienceRepository</summary>
     public class TargetAudienceRepository : Repository<PlataformaRio2CContext, TargetAudience>, ITargetAudienceRepository
     {
+        /// <summary>Initializes a new instance of the <see cref="TargetAudienceRepository"/> class.</summary>
+        /// <param name="context">The context.</param>
         public TargetAudienceRepository(PlataformaRio2CContext context)
             : base(context)
         {
@@ -99,6 +100,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return await query.ToListAsync();
         }
 
+        /// <summary>Finds all by uids asynchronous.</summary>
+        /// <param name="targetAudiencesUids">The target audiences uids.</param>
+        /// <returns></returns>
         public async Task<List<TargetAudience>> FindAllByUidsAsync(List<Guid> targetAudiencesUids)
         {
             var query = this.GetBaseQuery()
@@ -106,6 +110,5 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return await query.ToListAsync();
         }
-
     }
 }
