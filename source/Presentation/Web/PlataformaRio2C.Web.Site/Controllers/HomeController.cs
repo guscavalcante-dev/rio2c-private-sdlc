@@ -22,11 +22,13 @@ using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using System.Collections.Generic;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
+using PlataformaRio2C.Web.Site.Filters;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
     /// <summary>HomeController</summary>
     [AjaxAuthorize(Order = 1)]
+    [AuthorizeTicketType(Order = 2, AllowedTicketTypes = new[] { "Player", "Industry" })]
     public class HomeController : BaseController
     {
         private readonly IdentityAutenticationService identityController;
