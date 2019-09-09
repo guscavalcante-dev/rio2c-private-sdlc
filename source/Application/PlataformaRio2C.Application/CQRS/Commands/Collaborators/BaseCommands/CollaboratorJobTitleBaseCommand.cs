@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 09-09-2019
 // ***********************************************************************
 // <copyright file="CollaboratorJobTitleBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,8 +21,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>CollaboratorJobTitleBaseCommand</summary>
     public class CollaboratorJobTitleBaseCommand
     {
-        [AllowHtml]
-        [StringLength(8000, MinimumLength = 2, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        [StringLength(81, MinimumLength = 2, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Value { get; set; }
         public string LanguageCode { get; set; }
         public string LanguageName { get; set; }

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-01-2019
+// Last Modified On : 09-09-2019
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -283,7 +283,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         Code = d.Language.Code
                                     }
                                 }),
-                                MiniBiosDtos = c.JobTitles.Select(d => new CollaboratorMiniBioBaseDto
+                                MiniBiosDtos = c.MiniBios.Select(d => new CollaboratorMiniBioBaseDto
                                 {
                                     Id = d.Id,
                                     Uid = d.Uid,
