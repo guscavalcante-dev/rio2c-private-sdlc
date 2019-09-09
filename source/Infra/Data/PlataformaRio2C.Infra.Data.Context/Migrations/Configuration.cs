@@ -448,9 +448,9 @@ namespace PlataformaRio2C.Infra.Data.Context.Migrations
 
         private void SeedActivitys(PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext context)
         {
-            if (!context.Activitys.Any())
+            if (!context.Activities.Any())
             {
-                context.Activitys.AddRange(
+                context.Activities.AddRange(
                    new List<Activity>()
                    {
                        new Activity("Distribuidor | Distributor"),

@@ -187,6 +187,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Comple as informações do player {0}.
+        /// </summary>
+        public static string CompletePlayerInfo {
+            get {
+                return ResourceManager.GetString("CompletePlayerInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Informe quais as áreas de interesse do player {0}.
+        /// </summary>
+        public static string CompletePlayerInterestsFor {
+            get {
+                return ResourceManager.GetString("CompletePlayerInterestsFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Complete seus dados.
         /// </summary>
         public static string CompleteYourData {

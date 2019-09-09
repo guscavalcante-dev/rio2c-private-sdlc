@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-29-2019
+// Last Modified On : 09-09-2019
 // ***********************************************************************
 // <copyright file="Organization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -48,6 +48,8 @@ namespace PlataformaRio2C.Domain.Entities
 
         public virtual ICollection<OrganizationDescription> Descriptions { get; private set; }
         public virtual ICollection<AttendeeOrganization> AttendeeOrganizations { get; private set; }
+        public virtual ICollection<OrganizationActivity> OrganizationActivities { get; private set; }
+        public virtual ICollection<OrganizationTargetAudience> OrganizationTargetAudiences { get; private set; }
 
         //public virtual ICollection<PlayerInterest> Interests { get; private set; }
         //public virtual ICollection<Collaborator> Collaborators { get; private set; }
@@ -231,6 +233,54 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
+        #region Onboarding
+
+        public void OnboardData(
+            Edition edition,
+            OrganizationType organizationType,
+            string name,
+            string companyName,
+            string document,
+            Country country,
+            Guid? stateUid,
+            string stateName,
+            Guid? cityUid,
+            string cityName,
+            string address1,
+            string address2,
+            string addressZipCode,
+            bool addressIsManual,
+            bool isImageUploaded,
+            bool isImageDeleted,
+            List<OrganizationDescription> descriptions,
+            List<Activity> activities,
+            List<TargetAudience> targetAudiences,
+            int userId)
+        {
+            //this.Uid = uid;
+            //this.Holding = holding;
+            //this.HoldingId = holding?.Id;
+            this.Name = name?.Trim();
+            this.CompanyName = companyName?.Trim();
+            //this.TradeName = tradeName?.Trim();
+            this.Document = document?.Trim();
+            //this.Website = website?.Trim();
+            //this.SocialMedia = socialMedia?.Trim();
+            //this.PhoneNumber = phoneNumber?.Trim();
+            this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateUserId = this.UpdateUserId = userId;
+            this.SynchronizeDescriptions(descriptions, userId);
+            this.SynchronizeOrganizationActivities(activities, userId);
+            this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
+            this.SynchronizeAttendeeOrganizations(edition, organizationType, true, userId);
+            this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, address2, addressZipCode, addressIsManual, userId);
+            this.OnboardAttendeeOrganizationData(edition, userId);
+        }
+
+        #endregion
+
         #region Address
 
         /// <summary>Updates the address.</summary>
@@ -349,6 +399,43 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Attendee Organizations
 
+        /// <summary>Called when [attendee organization data].</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardAttendeeOrganizationData(Edition edition, int userId)
+        {
+            var attendeeOrganization = this.GetAttendeeOrganizationByEditionId(edition.Id);
+            attendeeOrganization?.OnboardOrganizationData(userId);
+            //else
+            //{
+            //    if (this.AttendeeCollaborators == null)
+            //    {
+            //        this.AttendeeCollaborators = new List<AttendeeCollaborator>();
+            //    }
+
+            //    this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, null, this, false, userId));
+            //}
+        }
+
+        /// <summary>Called when [attendee organization interests].</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardAttendeeOrganizationInterests(Edition edition, int userId)
+        {
+            var attendeeOrganization = this.GetAttendeeOrganizationByEditionId(edition.Id);
+            attendeeOrganization?.OnboardInterests(userId);
+            //else
+            //{
+            //    if (this.AttendeeCollaborators == null)
+            //    {
+            //        this.AttendeeCollaborators = new List<AttendeeCollaborator>();
+            //    }
+
+            //    this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, null, this, false, userId));
+            //}
+        }
+
+
         /// <summary>Synchronizes the attendee organizations.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="organizationType">Type of the organization.</param>
@@ -395,12 +482,129 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
+        /// <summary>Gets the attendee organization by edition identifier.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        private AttendeeOrganization GetAttendeeOrganizationByEditionId(int editionId)
+        {
+            return this.AttendeeOrganizations?.FirstOrDefault(ao => ao.EditionId == editionId);
+        }
+
         /// <summary>Finds all attendee organizations not deleted.</summary>
         /// <param name="edition">The edition.</param>
         /// <returns></returns>
         private List<AttendeeOrganization> FindAllAttendeeOrganizationsNotDeleted(Edition edition)
         {
             return this.AttendeeOrganizations?.Where(ao => (edition == null || ao.EditionId == edition.Id) && !ao.IsDeleted)?.ToList();
+        }
+
+        #endregion
+
+        #region Organization Activities
+
+        /// <summary>Synchronizes the organization activities.</summary>
+        /// <param name="activities">The activities.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeOrganizationActivities(List<Activity> activities, int userId)
+        {
+            if (this.OrganizationActivities == null)
+            {
+                this.OrganizationActivities = new List<OrganizationActivity>();
+            }
+
+            this.DeleteOrganizationActivities(activities, userId);
+
+            if (activities?.Any() != true)
+            {
+                return;
+            }
+
+            // Create or update activities
+            foreach (var activity in activities)
+            {
+                var organizationActivityDb = this.OrganizationActivities.FirstOrDefault(a => a.Activity.Uid == activity.Uid);
+                if (organizationActivityDb != null)
+                {
+                    organizationActivityDb.Update(userId);
+                }
+                else
+                {
+                    this.CreateOrganizationActivity(activity, userId);
+                }
+            }
+        }
+
+        /// <summary>Deletes the organization activities.</summary>
+        /// <param name="newActivities">The new activities.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteOrganizationActivities(List<Activity> newActivities, int userId)
+        {
+            var activitiesToDelete = this.OrganizationActivities.Where(db => newActivities?.Select(a => a.Uid)?.Contains(db.Activity.Uid) == false).ToList();
+            foreach (var activityToDelete in activitiesToDelete)
+            {
+                activityToDelete.Delete(userId);
+            }
+        }
+
+        private void CreateOrganizationActivity(Activity activity, int userId)
+        {
+            this.OrganizationActivities.Add(new OrganizationActivity(this, activity, userId));
+        }
+
+        #endregion
+
+        #region Organization Target Audiences
+
+        /// <summary>Synchronizes the organization target audiences.</summary>
+        /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeOrganizationTargetAudiences(List<TargetAudience> targetAudiences, int userId)
+        {
+            if (this.OrganizationTargetAudiences == null)
+            {
+                this.OrganizationTargetAudiences = new List<OrganizationTargetAudience>();
+            }
+
+            this.DeleteOrganizationTargetAudiences(targetAudiences, userId);
+
+            if (targetAudiences?.Any() != true)
+            {
+                return;
+            }
+
+            // Create or update activities
+            foreach (var targetAudience in targetAudiences)
+            {
+                var organizationTargetAudienceDb = this.OrganizationActivities.FirstOrDefault(a => a.Activity.Uid == targetAudience.Uid);
+                if (organizationTargetAudienceDb != null)
+                {
+                    organizationTargetAudienceDb.Update(userId);
+                }
+                else
+                {
+                    this.CreateOrganizationTargetAudience(targetAudience, userId);
+                }
+            }
+        }
+
+        /// <summary>Deletes the organization target audiences.</summary>
+        /// <param name="newTargetAudiences">The new target audiences.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteOrganizationTargetAudiences(List<TargetAudience> newTargetAudiences, int userId)
+        {
+            var organizationTargetAudiencesToDelete = this.OrganizationTargetAudiences.Where(db => newTargetAudiences?.Select(a => a.Uid)?.Contains(db.TargetAudience.Uid) == false).ToList();
+            foreach (var organizatioNTargetAudienceToDelete in organizationTargetAudiencesToDelete)
+            {
+                organizatioNTargetAudienceToDelete.Delete(userId);
+            }
+        }
+
+        /// <summary>Creates the organization target audience.</summary>
+        /// <param name="targetAudience">The target audience.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void CreateOrganizationTargetAudience(TargetAudience targetAudience, int userId)
+        {
+            this.OrganizationTargetAudiences.Add(new OrganizationTargetAudience(this, targetAudience, userId));
         }
 
         #endregion

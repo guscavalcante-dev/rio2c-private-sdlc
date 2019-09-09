@@ -375,6 +375,7 @@
     <Content Include="Assets\js\addresses\addresses.form.js" />
     <Content Include="Assets\js\myrio2c.common.js" />
     <Content Include="Assets\js\myrio2c.cropper.js" />
+    <Content Include="Assets\js\onboarding\onboarding.organizationdata.js" />
     <Content Include="Assets\js\onboarding\onboarding.collaboratordata.js" />
     <Content Include="Assets\js\onboarding\onboarding.wizard.js" />
     <Content Include="Assets\js\onboarding\wizard-2.js" />
@@ -7067,7 +7068,8 @@
     <Content Include="Views\Shared\EditorTemplates\CropperImageBaseCommand.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CollaboratorJobTitleBaseCommand.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CollaboratorMiniBioBaseCommand.cshtml" />
-    <Content Include="Views\Onboarding\PlayerData.cshtml" />
+    <Content Include="Views\Onboarding\OrganizationData.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\OrganizationDescriptionBaseCommand.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

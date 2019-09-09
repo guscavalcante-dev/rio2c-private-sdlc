@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 09-09-2019
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -196,47 +196,47 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByUid(organizationUid);
 
             return await query
-                            .Select(h => new OrganizationDto
+                            .Select(o => new OrganizationDto
                             {
-                                Id = h.Id,
-                                Uid = h.Uid,
-                                Name = h.Name,
-                                CompanyName = h.CompanyName,
-                                TradeName = h.TradeName,
-                                Document = h.Document,
-                                Website = h.Website,
-                                SocialMedia = h.SocialMedia,
-                                PhoneNumber = h.PhoneNumber,
-                                ImageUploadDate = h.ImageUploadDate,
-                                CreateDate = h.CreateDate,
-                                CreateUserId = h.CreateUserId,
-                                UpdateDate = h.UpdateDate,
-                                UpdateUserId = h.UpdateUserId,
+                                Id = o.Id,
+                                Uid = o.Uid,
+                                Name = o.Name,
+                                CompanyName = o.CompanyName,
+                                TradeName = o.TradeName,
+                                Document = o.Document,
+                                Website = o.Website,
+                                SocialMedia = o.SocialMedia,
+                                PhoneNumber = o.PhoneNumber,
+                                ImageUploadDate = o.ImageUploadDate,
+                                CreateDate = o.CreateDate,
+                                CreateUserId = o.CreateUserId,
+                                UpdateDate = o.UpdateDate,
+                                UpdateUserId = o.UpdateUserId,
                                 //Creator = h.Creator,
                                 HoldingBaseDto = new HoldingBaseDto
                                 {
-                                    Id = h.Holding.Id,
-                                    Uid = h.Holding.Uid,
-                                    Name = h.Holding.Name
+                                    Id = o.Holding.Id,
+                                    Uid = o.Holding.Uid,
+                                    Name = o.Holding.Name
                                 },
                                 UpdaterDto = new UserBaseDto
                                 {
-                                    Uid = h.Updater.Uid,
-                                    Name = h.Updater.Name,
-                                    Email =h.Updater.Email 
+                                    Uid = o.Updater.Uid,
+                                    Name = o.Updater.Name,
+                                    Email =o.Updater.Email 
                                 },
-                                AddressBaseDto = h.Address.IsDeleted ? null : new AddressBaseDto
+                                AddressBaseDto = o.Address.IsDeleted ? null : new AddressBaseDto
                                 {
-                                    Id = h.Address.Id,
-                                    Uid = h.Address.Uid,
-                                    CountryUid = h.Address.City.State.Country.Uid,
-                                    StateUid = h.Address.City.State.Uid,
-                                    CityUid = h.Address.City.Uid,
-                                    Address1 = h.Address.Address1,
-                                    Address2 = h.Address.Address2,
-                                    AddressZipCode = h.Address.ZipCode,
+                                    Id = o.Address.Id,
+                                    Uid = o.Address.Uid,
+                                    CountryUid = o.Address.City.State.Country.Uid,
+                                    StateUid = o.Address.City.State.Uid,
+                                    CityUid = o.Address.City.Uid,
+                                    Address1 = o.Address.Address1,
+                                    Address2 = o.Address.Address2,
+                                    AddressZipCode = o.Address.ZipCode,
                                 },
-                                DescriptionsDtos = h.Descriptions.Select(d => new OrganizationDescriptionDto
+                                DescriptionsDtos = o.Descriptions.Select(d => new OrganizationDescriptionDto
                                 {
                                     Id = d.Id,
                                     Uid = d.Uid,
@@ -248,7 +248,23 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         Name = d.Language.Name,
                                         Code = d.Language.Code
                                     }
-                                })
+                                }),
+                                OrganizationActivitiesDtos = o.OrganizationActivities.Where(oa => !oa.IsDeleted).Select(oa => new OrganizationActivityDto
+                                {
+                                    OrganizationActivityId = oa.Id,
+                                    OrganizationActivityUid = oa.Uid,
+                                    ActivityId = oa.Activity.Id,
+                                    ActivityUid = oa.Activity.Uid,
+                                    ActivityName = oa.Activity.Name
+                                }),
+                                OrganizationTargetAudiencesDtos = o.OrganizationTargetAudiences.Where(ota => !ota.IsDeleted).Select(oa => new OrganizationTargetAudienceDto
+                                {
+                                    OrganizationTargetAudienceId = oa.Id,
+                                    OrganizationTargetAudienceUid = oa.Uid,
+                                    TargetAudienceId = oa.TargetAudience.Id,
+                                    TargetAudienceUid = oa.TargetAudience.Uid,
+                                    TargetAudienceName = oa.TargetAudience.Name
+                                }),
                             }).FirstOrDefaultAsync();
         }
 

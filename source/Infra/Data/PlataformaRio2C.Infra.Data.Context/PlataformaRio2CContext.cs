@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-02-2019
+// Last Modified On : 09-09-2019
 // ***********************************************************************
 // <copyright file="PlataformaRio2CContext.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -51,6 +51,8 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new AttendeeOrganizationTypeMap());
             modelBuilder.Configurations.Add(new AttendeeOrganizationCollaboratorMap());
             modelBuilder.Configurations.Add(new OrganizationTypeMap());
+            modelBuilder.Configurations.Add(new OrganizationActivityMap());
+            modelBuilder.Configurations.Add(new OrganizationTargetAudienceMap());
 
             // Collaborator
             modelBuilder.Configurations.Add(new CollaboratorMap());
@@ -78,6 +80,10 @@ namespace PlataformaRio2C.Infra.Data.Context
             // Sent emails
             modelBuilder.Configurations.Add(new SentEmailMap());
 
+            // Common
+            modelBuilder.Configurations.Add(new ActivityMap());
+            modelBuilder.Configurations.Add(new TargetAudienceMap());
+
 
             // TODO: Old mapping that must be reviewed
             modelBuilder.Configurations.Add(new LanguageMap());
@@ -90,7 +96,7 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new InterestGroupMap());
             modelBuilder.Configurations.Add(new InterestMap());
             modelBuilder.Configurations.Add(new PlayerInterestMap());            
-            modelBuilder.Configurations.Add(new PlayerTargetAudienceMap());
+            //modelBuilder.Configurations.Add(new PlayerTargetAudienceMap());
             modelBuilder.Configurations.Add(new PlayerRestrictionsSpecificsMap());
             modelBuilder.Configurations.Add(new ProducerMap());
             modelBuilder.Configurations.Add(new ProducerDescriptionMap());
@@ -155,6 +161,10 @@ namespace PlataformaRio2C.Infra.Data.Context
         // Collaborators
         public DbSet<Collaborator> Collaborators { get; set; }
 
+        // Common
+        public DbSet<Activity> Activities { get; set; }
+        public DbSet<TargetAudience> TargetAudiences { get; set; }
+
 
         // TODO: Old dbsets that must be reviewed
         public DbSet<Language> Languages { get; set; }
@@ -165,8 +175,6 @@ namespace PlataformaRio2C.Infra.Data.Context
         public DbSet<InterestGroup> InterestGroups { get; set; }
         public DbSet<Interest> Interests { get; set; }
         public DbSet<PlayerInterest> PlayerInterests { get; set; }        
-        public DbSet<Activity> Activitys { get; set; }
-        public DbSet<TargetAudience> TargetAudiences { get; set; }
         public DbSet<Producer> Producers { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectStatus> ProjectStatus { get; set; }

@@ -80,6 +80,8 @@
     <Compile Include="Dtos\Collaborators\CollaboratorMiniBioBaseDto.cs" />
     <Compile Include="Dtos\Collaborators\CollaboratorJobTitleBaseDto.cs" />
     <Compile Include="Dtos\Editions\EditionBaseDto.cs" />
+    <Compile Include="Dtos\Organizations\OrganizationTargetAudienceDto.cs" />
+    <Compile Include="Dtos\Organizations\OrganizationActivityDto.cs" />
     <Compile Include="Dtos\SalesPlatforms\AttendeeSalesPlatformTicketTypeDto.cs" />
     <Compile Include="Dtos\SalesPlatforms\AttendeeSalesPlatformDto.cs" />
     <Compile Include="Dtos\SalesPlatforms\SalesPlatformDto.cs" />
@@ -128,6 +130,8 @@
     <Compile Include="Entities\Organizations\AttendeeOrganizationCollaborator.cs" />
     <Compile Include="Entities\Organizations\AttendeeOrganizationType.cs" />
     <Compile Include="Entities\Organizations\AttendeeOrganization.cs" />
+    <Compile Include="Entities\Organizations\OrganizationTargetAudience.cs" />
+    <Compile Include="Entities\Organizations\OrganizationActivity.cs" />
     <Compile Include="Entities\Organizations\OrganizationDescription.cs" />
     <Compile Include="Entities\Organizations\OrganizationType.cs" />
     <Compile Include="Entities\Organizations\Organization.cs" />

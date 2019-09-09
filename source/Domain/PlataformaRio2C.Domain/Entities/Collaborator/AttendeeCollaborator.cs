@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-06-2019
+// Last Modified On : 09-09-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,7 +23,10 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public int EditionId { get; private set; }
         public int CollaboratorId { get; private set; }
+        public DateTime? OnboardingStartDate { get; private set; }
         public DateTime? OnboardingFinishDate { get; private set; }
+        public DateTime? OnboardingUserDate { get; private set; }
+        public DateTime? OnboardingCollaboratorDate { get; private set; }
 
         public virtual Edition Edition { get; private set; }
         public virtual Collaborator Collaborator { get; private set; }
@@ -136,7 +139,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            //this.OnboardingStartDate = DateTime.Now; //TODO: Create AttendeeCollaborator.OnboardingStartDate
+            this.OnboardingStartDate = this.OnboardingUserDate = DateTime.Now;
         }
 
         /// <summary>Called when [data].</summary>
@@ -146,7 +149,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.OnboardingFinishDate = DateTime.Now;
+            this.OnboardingFinishDate = this.OnboardingCollaboratorDate = DateTime.Now;
         }
 
         #region Attendee Organization Collaborators

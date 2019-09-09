@@ -574,4 +574,12 @@
     <value>Inform you address</value>
     <comment>Informe seu endereço</comment>
   </data>
+  <data name="CompletePlayerInfo" xml:space="preserve">
+    <value>Complete player info for {0}</value>
+    <comment>Comple as informações do player {0}</comment>
+  </data>
+  <data name="CompletePlayerInterestsFor" xml:space="preserve">
+    <value>Inform the interest areas for player {0}</value>
+    <comment>Informe quais as áreas de interesse do player {0}</comment>
+  </data>
 </root>

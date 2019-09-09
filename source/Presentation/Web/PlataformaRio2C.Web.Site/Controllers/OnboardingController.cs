@@ -4,26 +4,26 @@
 // Created          : 08-29-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-06-2019
+// Last Modified On : 09-09-2019
 // ***********************************************************************
 // <copyright file="OnboardingController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using Microsoft.AspNet.Identity;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using System;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using MediatR;
-using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using System.Collections.Generic;
+using System.Linq;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
+using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
@@ -35,12 +35,23 @@ namespace PlataformaRio2C.Web.Site.Controllers
     [AjaxAuthorize(Order = 1)]
     public class OnboardingController : BaseController
     {
-        /// <summary>Initializes a new instance of the <see cref="HomeController"/> class.</summary>
+        private IActivityRepository activityRepo;
+        private ITargetAudienceRepository targetAudienceRepo;
+
+        /// <summary>Initializes a new instance of the <see cref="OnboardingController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        public OnboardingController(IMediator commandBus, IdentityAutenticationService identityController)
+        /// <param name="activityRepository">The activity repository.</param>
+        /// <param name="targetAudienceRepository">The target audience repository.</param>
+        public OnboardingController(
+            IMediator commandBus, 
+            IdentityAutenticationService identityController,
+            IActivityRepository activityRepository,
+            ITargetAudienceRepository targetAudienceRepository)
             : base(commandBus, identityController)
         {
+            this.activityRepo = activityRepository;
+            this.targetAudienceRepo = targetAudienceRepository;
         }
 
         /// <summary>Indexes this instance.</summary>
@@ -61,15 +72,15 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
 
             // Redirect to collaborator data if not finished
-            if (this.UserAccessControlDto?.IsAttendeeCollaboratorOnboardingFinished() != true)
+            if (this.UserAccessControlDto?.IsCollaboratorOnboardingFinished() != true)
             {
                 return RedirectToAction("CollaboratorData", "Onboarding");
             }
             
-            // Redirect to player data if not finished
-            if (this.UserAccessControlDto?.IsAttendeeOrganizationsOnboardingFinished() != true)
+            // Redirect to organization data if not finished
+            if (this.UserAccessControlDto?.IsOrganizatiosnOnboardingFinished() != true)
             {
-                return RedirectToAction("PlayerData", "Onboarding");
+                return RedirectToAction("OrganizationData", "Onboarding");
             }
 
             return View("Index");
@@ -95,6 +106,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             #endregion
 
+            this.SetViewBags();
+
             var cmd = new OnboardCollaboratorAccessData(this.UserAccessControlDto?.Collaborator);
 
             return View(cmd);
@@ -118,6 +131,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
             });
 
             #endregion
+
+            this.SetViewBags();
 
             var result = new AppValidationResult();
 
@@ -176,7 +191,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> CollaboratorData()
         {
-            if (this.UserAccessControlDto?.IsAttendeeCollaboratorOnboardingFinished() == true)
+            if (this.UserAccessControlDto?.IsCollaboratorOnboardingFinished() == true)
             {
                 return RedirectToAction("Index", "Onboarding");
             }
@@ -188,6 +203,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
             });
 
             #endregion
+
+            this.SetViewBags();
 
             var cmd = new OnboardCollaboratorData(
                 await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(this.UserAccessControlDto?.Collaborator?.Uid ?? Guid.Empty, this.EditionId, this.UserInterfaceLanguage)),
@@ -203,7 +220,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpPost]
         public async Task<ActionResult> CollaboratorData(OnboardCollaboratorData cmd)
         {
-            if (this.UserAccessControlDto?.IsAttendeeCollaboratorOnboardingFinished() == true)
+            if (this.UserAccessControlDto?.IsCollaboratorOnboardingFinished() == true)
             {
                 return RedirectToAction("Index", "Onboarding");
             }
@@ -215,6 +232,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
             });
 
             #endregion
+
+            this.SetViewBags();
 
             var result = new AppValidationResult();
 
@@ -245,6 +264,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     var target = error.Target ?? "";
                     ModelState.AddModelError(target, error.Message);
                 }
+
+                cmd.UpdateDropdownProperties(
+                    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)));
 
                 this.StatusMessageToastr(ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
 
@@ -265,12 +287,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #endregion
 
-        #region Player Data
+        #region Organization Data
 
+        /// <summary>Organizations the data.</summary>
+        /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> PlayerData()
+        public async Task<ActionResult> OrganizationData()
         {
-            if (this.UserAccessControlDto?.IsAttendeeOrganizationsOnboardingFinished() == true)
+            if (this.UserAccessControlDto?.IsOrganizatiosnOnboardingFinished() == true)
             {
                 return RedirectToAction("Index", "Onboarding");
             }
@@ -283,22 +307,34 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             #endregion
 
-            var cmd = new OnboardCollaboratorData(
-                await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(this.UserAccessControlDto?.Collaborator?.Uid ?? Guid.Empty, this.EditionId, this.UserInterfaceLanguage)),
+            this.SetViewBags();
+
+            var currentOrganization = this.UserAccessControlDto?.EditionAttendeeOrganizations?.FirstOrDefault(eao => !eao.OnboardingFinishDate.HasValue
+                                                                                                                     && eao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted
+                                                                                                                                                                 && aot.OrganizationType.Name == "Player"))?.Organization;
+            if (currentOrganization == null)
+            {
+                return RedirectToAction("Index", "Onboarding");
+            }
+
+            var cmd = new OnboardOrganizationData(
+                await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(currentOrganization.Uid, this.UserInterfaceLanguage)),
+                await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
-                await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)));
+                await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
+                await this.activityRepo.FindAllAsync(),
+                await this.targetAudienceRepo.FindAllAsync());
 
             return View(cmd);
         }
 
-        /// <summary>Collaborators the data.</summary>
+        /// <summary>Organizations the data.</summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
-        /// <exception cref="DomainException"></exception>
         [HttpPost]
-        public async Task<ActionResult> PlayerData(OnboardCollaboratorAccessData cmd)
+        public async Task<ActionResult> OrganizationData(OnboardOrganizationData cmd)
         {
-            if (this.UserAccessControlDto?.IsAttendeeCollaboratorOnboardingFinished() == true)
+            if (this.UserAccessControlDto?.IsOrganizatiosnOnboardingFinished() == true)
             {
                 return RedirectToAction("Index", "Onboarding");
             }
@@ -310,6 +346,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
             });
 
             #endregion
+
+            this.SetViewBags();
 
             var result = new AppValidationResult();
 
@@ -321,8 +359,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    this.UserAccessControlDto.Collaborator.Uid,
-                    this.IdentityController.HashPassword(cmd.Password),
+                    OrganizationType.Player,
                     this.UserAccessControlDto.User.Id,
                     this.UserAccessControlDto.User.Uid,
                     this.EditionId,
@@ -344,6 +381,12 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
                 this.StatusMessageToastr(ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
 
+                cmd.UpdateDropdownProperties(
+                    await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
+                    await this.activityRepo.FindAllAsync(),
+                    await this.targetAudienceRepo.FindAllAsync());
+
                 return View(cmd);
             }
             catch (Exception ex)
@@ -354,9 +397,26 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return View(cmd);
             }
 
-            this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Labels.AccessData, Labels.UpdatedM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
+            this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Labels.PlayerInfo, Labels.UpdatedM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
 
             return RedirectToAction("Index", "Onboarding");
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>Sets the view bags.</summary>
+        private void SetViewBags()
+        {
+            ViewBag.PlayerAttendeeOrganizations = this.UserAccessControlDto?.EditionAttendeeOrganizations?
+                                                                                    .Where(eao => eao.AttendeeOrganizationTypes?
+                                                                                                            .Any(aot => !aot.IsDeleted 
+                                                                                                                        && aot.OrganizationType.Name == "Player") == true)?.ToList();
+            ViewBag.ProducerAttendeeOrganizations = this.UserAccessControlDto?.EditionAttendeeOrganizations?
+                                                                                    .Where(eao => eao.AttendeeOrganizationTypes?
+                                                                                                            .Any(aot => !aot.IsDeleted 
+                                                                                                                        && aot.OrganizationType.Name == "Producer") == true)?.ToList();
         }
 
         #endregion

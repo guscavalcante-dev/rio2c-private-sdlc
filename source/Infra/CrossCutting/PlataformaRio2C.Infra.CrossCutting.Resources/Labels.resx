@@ -1368,4 +1368,20 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Passos</value>
     <comment>Passos</comment>
   </data>
+  <data name="Activities" xml:space="preserve">
+    <value>Atividades</value>
+    <comment>Atividades</comment>
+  </data>
+  <data name="CompanyResume" xml:space="preserve">
+    <value>Resumo da empresa</value>
+    <comment>Resumo da empresa</comment>
+  </data>
+  <data name="TargetAudiences" xml:space="preserve">
+    <value>Público-alvo/Faixa-etária</value>
+    <comment>Público-alvo/Faixa-etária</comment>
+  </data>
+  <data name="PlayerInterests" xml:space="preserve">
+    <value>Interesses do Player</value>
+    <comment>Interesses do Player</comment>
+  </data>
 </root>

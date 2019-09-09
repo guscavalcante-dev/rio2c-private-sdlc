@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-06-2019
+// Last Modified On : 09-09-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -217,6 +217,9 @@ namespace PlataformaRio2C.Web.Site
             bundles.Add(new ScriptBundle("~/bundles/js/onboarding.collaboratordata.js").Include(
                 "~/Assets/js/onboarding/onboarding.collaboratordata.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js/onboarding.organizationdata.js").Include(
+                "~/Assets/js/onboarding/onboarding.organizationdata.js"));
+
             #endregion
 
             #region Addresses
@@ -236,7 +239,7 @@ namespace PlataformaRio2C.Web.Site
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                        "~/Scripts/jquery.validate.min.js",
-                       "~/Scripts/jquery.validate-vsdoc.min.js",
+                       //"~/Scripts/jquery.validate-vsdoc.min.js",
                        "~/Scripts/jquery.validate.unobtrusive.min.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're

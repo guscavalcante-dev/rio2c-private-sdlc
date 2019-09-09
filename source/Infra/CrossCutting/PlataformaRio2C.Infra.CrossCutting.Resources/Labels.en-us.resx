@@ -1355,4 +1355,20 @@
     <value>Steps</value>
     <comment>Passos</comment>
   </data>
+  <data name="Activities" xml:space="preserve">
+    <value>Activities</value>
+    <comment>Atividades</comment>
+  </data>
+  <data name="CompanyResume" xml:space="preserve">
+    <value>Company resume</value>
+    <comment>Resumo da empresa</comment>
+  </data>
+  <data name="TargetAudiences" xml:space="preserve">
+    <value>Target audiences</value>
+    <comment>Público-alvo/Faixa-etária</comment>
+  </data>
+  <data name="PlayerInterests" xml:space="preserve">
+    <value>Player Interests</value>
+    <comment>Interesses do Player</comment>
+  </data>
 </root>

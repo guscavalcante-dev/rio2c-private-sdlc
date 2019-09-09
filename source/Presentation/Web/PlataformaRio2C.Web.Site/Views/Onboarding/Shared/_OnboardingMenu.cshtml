@@ -1,22 +1,31 @@
-﻿@model int
+﻿@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Entities
+@model int
+@{
+    var counter = 1;
+    //var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var playerAttendeeOrganizations = ViewBag.PlayerAttendeeOrganizations as List<AttendeeOrganization>;
+    var producerAttendeeOrganizations = ViewBag.ProducerAttendeeOrganizations as List<AttendeeOrganization>;
+}
 <div class="kt-wizard-v2__nav">
     <div class="kt-wizard-v2__nav-items">
         <div class="row mb-3">
             <div class="col-md-12 text-center"><h3>@Labels.Steps</h3></div>
         </div>
         <!--doc: Replace A tag with SPAN tag to disable the step link click -->
-        <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == 1 ? "current" : (Model > 1 ? "done" : "pending"))">
+        <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
             <div class="kt-wizard-v2__nav-body">
-                <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">
-                    1
-                </div>
+                <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
                 <div class="kt-wizard-v2__nav-label">
                     <div class="kt-wizard-v2__nav-label-title">@Labels.AccessData</div>
                     <div class="kt-wizard-v2__nav-label-desc">@Messages.ConfirmAndCompleteYourAccessData</div>
                 </div>
             </div>
         </span>
-        <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == 2 ? "current" : (Model > 2 ? "done" : "pending"))">
+        @{
+            counter++;
+        }
+        <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
             <div class="kt-wizard-v2__nav-body">
                 <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">
                     2
@@ -27,28 +36,33 @@
                 </div>
             </div>
         </span>
-        <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == 3 ? "current" : (Model > 3 ? "done" : "pending"))">
-            <div class="kt-wizard-v2__nav-body">
-                <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">
-                    3
-                </div>
-                <div class="kt-wizard-v2__nav-label">
-                    <div class="kt-wizard-v2__nav-label-title">@Labels.PlayerInfo</div>
-                    <div class="kt-wizard-v2__nav-label-desc">@Messages.CompleteYourSignup
+        @if (playerAttendeeOrganizations?.Any() == true)
+        {
+            foreach (var playerAttendeeOrganization in playerAttendeeOrganizations)
+            {
+                counter++;
+                <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
+                    <div class="kt-wizard-v2__nav-body">
+                        <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
+                        <div class="kt-wizard-v2__nav-label">
+                            <div class="kt-wizard-v2__nav-label-title">@Labels.PlayerInfo</div>
+                            <div class="kt-wizard-v2__nav-label-desc">
+                                @string.Format(Messages.CompletePlayerInfo, playerAttendeeOrganization.Organization.Name)
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </span>
-        <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == 4 ? "current" : (Model > 4 ? "done" : "pending"))">
-            <div class="kt-wizard-v2__nav-body">
-                <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">
-                    4
-                </div>
-                <div class="kt-wizard-v2__nav-label">
-                    <div class="kt-wizard-v2__nav-label-title">Interesses do Player</div>
-                    <div class="kt-wizard-v2__nav-label-desc">Informe quais as áreas de interesse do Player Giros</div>
-                </div>
-            </div>
-        </span>
+                </span>
+                counter++;
+                <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
+                    <div class="kt-wizard-v2__nav-body">
+                        <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
+                        <div class="kt-wizard-v2__nav-label">
+                            <div class="kt-wizard-v2__nav-label-title">@Labels.PlayerInterests</div>
+                            <div class="kt-wizard-v2__nav-label-desc">@string.Format(Messages.CompletePlayerInterestsFor, playerAttendeeOrganization.Organization.Name)</div>
+                        </div>
+                    </div>
+                </span>
+            }
+        }
     </div>
 </div>

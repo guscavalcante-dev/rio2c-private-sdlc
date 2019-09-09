@@ -115,6 +115,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Atividades.
+        /// </summary>
+        public static string Activities {
+            get {
+                return ResourceManager.GetString("Activities", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Atividade.
         /// </summary>
         public static string Activity {
@@ -534,6 +543,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string CompanyProfile {
             get {
                 return ResourceManager.GetString("CompanyProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resumo da empresa.
+        /// </summary>
+        public static string CompanyResume {
+            get {
+                return ResourceManager.GetString("CompanyResume", resourceCulture);
             }
         }
         
@@ -1969,6 +1987,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Interesses do Player.
+        /// </summary>
+        public static string PlayerInterests {
+            get {
+                return ResourceManager.GetString("PlayerInterests", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nome do Player.
         /// </summary>
         public static string PlayerName {
@@ -2847,6 +2874,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string TargetAudience {
             get {
                 return ResourceManager.GetString("TargetAudience", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Público-alvo/Faixa-etária.
+        /// </summary>
+        public static string TargetAudiences {
+            get {
+                return ResourceManager.GetString("TargetAudiences", resourceCulture);
             }
         }
         

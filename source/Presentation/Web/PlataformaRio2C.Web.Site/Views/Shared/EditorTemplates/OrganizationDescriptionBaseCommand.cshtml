@@ -1,0 +1,12 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.OrganizationDescriptionBaseCommand
+<div class="form-group row">
+    <div class="col-lg-12">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Value, Model.LanguageName, new { @class = "control-label" })
+            @Html.TextAreaFor(m => m.Value, new { @class = "form-control ckeditor-rio2c" })
+            @Html.HiddenFor(m => m.LanguageCode)
+            @Html.HiddenFor(m => m.LanguageName)
+            @Html.ValidationMessageFor(m => m.Value, null, new { @class = "text-danger" })
+        </div>
+    </div>
+</div>

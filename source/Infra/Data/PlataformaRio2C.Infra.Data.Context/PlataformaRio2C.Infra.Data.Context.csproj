@@ -104,6 +104,8 @@
     <Compile Include="Mapping\Organizations\AttendeeOrganizationCollaboratorMap.cs" />
     <Compile Include="Mapping\Organizations\AttendeeOrganizationTypeMap.cs" />
     <Compile Include="Mapping\Organizations\AttendeeOrganizationMap.cs" />
+    <Compile Include="Mapping\Organizations\OrganizationTargetAudienceMap.cs" />
+    <Compile Include="Mapping\Organizations\OrganizationActivityMap.cs" />
     <Compile Include="Mapping\Organizations\OrganizationDescriptionMap.cs" />
     <Compile Include="Mapping\Organizations\OrganizationTypeMap.cs" />
     <Compile Include="Mapping\Organizations\OrganizationMap.cs" />
@@ -365,8 +367,9 @@
     <Content Include="SqlScripts\01_Schema.sql" />
     <Content Include="SqlScripts\03_TicketSettings.sql" />
     <Content Include="SqlScripts\04_InitialData.sql" />
-    <Content Include="SqlScripts\Deltas\20190902_145415_001_ChangesForOnboarding.sql" />
-    <Content Include="SqlScripts\Deltas\20190901_162130_001_ChangesForBarCode.sql" />
+    <Content Include="SqlScripts\Deltas\20190909_074621_0003_ChangesForOnboarding.sql" />
+    <Content Include="SqlScripts\Deltas\20190902_145415_0002_ChangesForOnboarding.sql" />
+    <Content Include="SqlScripts\Deltas\20190901_162130_0001_ChangesForBarCode.sql" />
     <None Include="App.config" />
     <None Include="bin\Debug\App_Data\Logs\PlataformaRio2C_Web_Site_DESKTOP-S4BP9HQ_2018.09.20.LOG" />
     <None Include="bin\Debug\App_Data\Logs\PlataformaRio2C_Web_Site_DESKTOP-S4BP9HQ_2018.09.21.LOG" />

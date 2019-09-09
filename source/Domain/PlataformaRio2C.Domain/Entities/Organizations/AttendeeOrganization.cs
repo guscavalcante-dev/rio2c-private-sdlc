@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-02-2019
+// Last Modified On : 09-09-2019
 // ***********************************************************************
 // <copyright file="AttendeeOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,7 +22,10 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public int EditionId { get; private set; }
         public int OrganizationId { get; private set; }
+        public DateTime? OnboardingStartDate { get; private set; }
         public DateTime? OnboardingFinishDate { get; private set; }
+        public DateTime? OnboardingOrganizationDate { get; private set; }
+        public DateTime? OnboardingInterestsDate { get; private set; }
 
         public virtual Edition Edition { get; private set; }
         public virtual Organization Organization { get; private set; }
@@ -144,6 +147,30 @@ namespace PlataformaRio2C.Domain.Entities
         private List<AttendeeOrganizationCollaborator> FindAllAttendeeOrganizationCollaboratorsNotDeleted()
         {
             return this.AttendeeOrganizationCollaborators?.Where(aoc => !aoc.IsDeleted)?.ToList();
+        }
+
+        #endregion
+
+        #region Onboarding
+
+        /// <summary>Called when [organization data].</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardOrganizationData(int userId)
+        {
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            this.OnboardingStartDate = this.OnboardingOrganizationDate = DateTime.Now;
+        }
+
+        /// <summary>Called when [interests].</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardInterests(int userId)
+        {
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            this.OnboardingFinishDate = this.OnboardingInterestsDate = DateTime.Now;
         }
 
         #endregion

@@ -4,7 +4,7 @@
 // Created          : 09-04-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-05-2019
+// Last Modified On : 09-09-2019
 // ***********************************************************************
 // <copyright file="UserAccessControlDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -92,7 +92,9 @@ namespace PlataformaRio2C.Domain.Dtos
 
         #region Onboarding
 
-        /// <summary>Determines whether [is onboarding pending].</summary>
+        //TODO: Check tickets
+
+            /// <summary>Determines whether [is onboarding pending].</summary>
         /// <returns>
         ///   <c>true</c> if [is onboarding pending]; otherwise, <c>false</c>.</returns>
         public bool IsOnboardingPending()
@@ -100,30 +102,63 @@ namespace PlataformaRio2C.Domain.Dtos
             return this.IsUser() && (!this.IsAttendeeCollaboratorOnboardingFinished() || !this.IsAttendeeOrganizationsOnboardingFinished());
         }
 
-        /// <summary>Determines whether [is user onboarding finished].</summary>
-        /// <returns>
-        ///   <c>true</c> if [is user onboarding finished]; otherwise, <c>false</c>.</returns>
-        public bool IsUserOnboardingFinished()
-        {
-            return !string.IsNullOrEmpty(this.User?.PasswordHash);
-        }
+        #region Collaborator
 
         /// <summary>Determines whether [is attendee collaborator onboarding finished].</summary>
         /// <returns>
         ///   <c>true</c> if [is attendee collaborator onboarding finished]; otherwise, <c>false</c>.</returns>
         public bool IsAttendeeCollaboratorOnboardingFinished()
         {
-            return this.EditionAttendeeCollaborator?.OnboardingFinishDate != null;
+            return this.IsUserOnboardingFinished() && this.IsCollaboratorOnboardingFinished();
         }
+
+        /// <summary>Determines whether [is user onboarding finished].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is user onboarding finished]; otherwise, <c>false</c>.</returns>
+        public bool IsUserOnboardingFinished()
+        {
+            return this.EditionAttendeeCollaborator?.OnboardingUserDate != null;
+        }
+
+        /// <summary>Determines whether [is collaborator onboarding finished].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is collaborator onboarding finished]; otherwise, <c>false</c>.</returns>
+        public bool IsCollaboratorOnboardingFinished()
+        {
+            return this.EditionAttendeeCollaborator?.OnboardingCollaboratorDate != null;
+        }
+
+        #endregion
+
+        #region Organizations
 
         /// <summary>Determines whether [is attendee organizations onboarding finished].</summary>
         /// <returns>
         ///   <c>true</c> if [is attendee organizations onboarding finished]; otherwise, <c>false</c>.</returns>
         public bool IsAttendeeOrganizationsOnboardingFinished()
         {
-            return this.EditionAttendeeOrganizations?.Any() == true                                                // Has at least one organization linked
-                   && this.EditionAttendeeOrganizations?.All(eao => eao.OnboardingFinishDate.HasValue) == true;    // and all organizations onboarding are finished
+            return this.IsOrganizatiosnOnboardingFinished() && this.IsOrganizationsInterestsOnboardingFinished();
         }
+
+        /// <summary>Determines whether [is organizatiosn onboarding finished].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is organizatiosn onboarding finished]; otherwise, <c>false</c>.</returns>
+        public bool IsOrganizatiosnOnboardingFinished()
+        {
+            return this.EditionAttendeeOrganizations?.Any() == true                                                    // Has at least one organization linked
+                   && this.EditionAttendeeOrganizations?.All(eao => eao.OnboardingOrganizationDate.HasValue) == true;  // and all organizations interests onboarding are finished
+        }
+
+        /// <summary>Determines whether [is organizations interests onboarding finished].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is organizations interests onboarding finished]; otherwise, <c>false</c>.</returns>
+        public bool IsOrganizationsInterestsOnboardingFinished()
+        {
+            return this.EditionAttendeeOrganizations?.Any() == true                                                    // Has at least one organization linked
+                   && this.EditionAttendeeOrganizations?.All(eao => eao.OnboardingInterestsDate.HasValue) == true;     // and all organizations interests onboarding are finished
+        }
+
+        #endregion
 
         #endregion
     }
