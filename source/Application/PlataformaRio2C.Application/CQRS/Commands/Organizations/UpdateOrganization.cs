@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-23-2019
+// Last Modified On : 09-10-2019
 // ***********************************************************************
 // <copyright file="UpdateOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,7 +13,9 @@
 // ***********************************************************************
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 
@@ -32,8 +34,20 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="holdingBaseDtos">The holding base dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
+        /// <param name="activities">The activities.</param>
+        /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="groupedInterests">The grouped interests.</param>
         /// <param name="isAddingToCurrentEdition">The is adding to current edition.</param>
-        public UpdateOrganization(OrganizationDto entity, List<HoldingBaseDto> holdingBaseDtos, List<LanguageDto> languagesDtos, List<CountryBaseDto> countriesBaseDtos, bool? isAddingToCurrentEdition)
+        /// <exception cref="DomainException"></exception>
+        public UpdateOrganization(
+            OrganizationDto entity, 
+            List<HoldingBaseDto> holdingBaseDtos,
+            List<LanguageDto> languagesDtos, 
+            List<CountryBaseDto> countriesBaseDtos,
+            List<Activity> activities,
+            List<TargetAudience> targetAudiences,
+            List<IGrouping<InterestGroup, Interest>> groupedInterests,
+            bool? isAddingToCurrentEdition)
         {
             if (entity == null)
             {
@@ -44,7 +58,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.IsAddingToCurrentEdition = isAddingToCurrentEdition ?? false;
             this.UpdaterBaseDto = entity.UpdaterDto;
             this.UpdateDate = entity.UpdateDate;
-            this.UpdateBaseProperties(entity, holdingBaseDtos, languagesDtos, countriesBaseDtos);
+            this.UpdateBaseProperties(entity, holdingBaseDtos, languagesDtos, countriesBaseDtos, activities, targetAudiences, groupedInterests);
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateOrganization"/> class.</summary>

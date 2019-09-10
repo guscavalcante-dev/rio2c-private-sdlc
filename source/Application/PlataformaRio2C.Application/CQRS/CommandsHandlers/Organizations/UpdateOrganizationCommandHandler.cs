@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-29-2019
+// Last Modified On : 09-10-2019
 // ***********************************************************************
 // <copyright file="UpdateOrganizationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,6 +36,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IOrganizationTypeRepository organizationTypeRepo;
         private readonly ILanguageRepository languageRepo;
         private readonly ICountryRepository countryRepo;
+        private readonly IActivityRepository activityRepo;
+        private readonly ITargetAudienceRepository targetAudienceRepo;
+        private readonly IInterestRepository interestRepo;
 
         /// <summary>Initializes a new instance of the <see cref="UpdateOrganizationCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
@@ -45,6 +49,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="organizationTypeRepository">The organization type repository.</param>
         /// <param name="languageRepository">The language repository.</param>
         /// <param name="countryRepository">The country repository.</param>
+        /// <param name="activityRepository">The activity repository.</param>
+        /// <param name="targetAudienceRepository">The target audience repository.</param>
+        /// <param name="interestRepository">The interest repository.</param>
         public UpdateOrganizationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
@@ -53,7 +60,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IEditionRepository editionRepository,
             IOrganizationTypeRepository organizationTypeRepository,
             ILanguageRepository languageRepository,
-            ICountryRepository countryRepository)
+            ICountryRepository countryRepository,
+            IActivityRepository activityRepository,
+            ITargetAudienceRepository targetAudienceRepository,
+            IInterestRepository interestRepository)
             : base(eventBus, uow, organizationRepository)
         {
             this.holdingRepo = holdingRepository;
@@ -61,6 +71,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.organizationTypeRepo = organizationTypeRepository;
             this.languageRepo = languageRepository;
             this.countryRepo = countryRepository;
+            this.activityRepo = activityRepository;
+            this.targetAudienceRepo = targetAudienceRepository;
+            this.interestRepo = interestRepository;
         }
 
         /// <summary>Handles the specified update organization.</summary>
@@ -124,6 +137,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.CropperImage?.ImageFile != null,
                 cmd.CropperImage?.IsImageDeleted == true,
                 cmd.Descriptions?.Select(d => new OrganizationDescription(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
+                cmd.ActivitiesUids?.Any() == true ? await this.activityRepo.FindAllByUidsAsync(cmd.ActivitiesUids) : new List<Activity>(),
+                cmd.TargetAudiencesUids?.Any() == true ? await this.targetAudienceRepo.FindAllByUidsAsync(cmd.TargetAudiencesUids) : new List<TargetAudience>(),
+                cmd.InterestsUids?.Any() == true ? await this.interestRepo.FindAllByUidsAsync(cmd.InterestsUids) : new List<Interest>(),
                 cmd.IsAddingToCurrentEdition,
                 cmd.UserId);
             if (!organization.IsValid())

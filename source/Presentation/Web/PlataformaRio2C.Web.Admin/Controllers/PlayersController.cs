@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-29-2019
+// Last Modified On : 09-10-2019
 // ***********************************************************************
 // <copyright file="PlayersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,11 +20,11 @@ using System.Web.Mvc;
 using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
-using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -37,16 +37,27 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     [AjaxAuthorize(Roles = "Admin")]
     public class PlayersController : BaseController
     {
-        private readonly IFileRepository fileRepo;
+        private readonly IActivityRepository activityRepo;
+        private readonly ITargetAudienceRepository targetAudienceRepo;
+        private readonly IInterestRepository interestRepo;
 
         /// <summary>Initializes a new instance of the <see cref="PlayersController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        /// <param name="fileRepository">The file repository.</param>
-        public PlayersController(IMediator commandBus, IdentityAutenticationService identityController, IFileRepository fileRepository)
+        /// <param name="activityRepository">The activity repository.</param>
+        /// <param name="targetAudienceRepository">The target audience repository.</param>
+        /// <param name="interestRepository">The interest repository.</param>
+        public PlayersController(
+            IMediator commandBus, 
+            IdentityAutenticationService identityController,
+            IActivityRepository activityRepository,
+            ITargetAudienceRepository targetAudienceRepository,
+            IInterestRepository interestRepository)
             : base(commandBus, identityController)
         {
-            this.fileRepo = fileRepository;
+            this.activityRepo = activityRepository;
+            this.targetAudienceRepo = targetAudienceRepository;
+            this.interestRepo = interestRepository;
         }
 
         #region List
@@ -170,7 +181,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             var cmd = new CreateOrganization(
                 await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
-                await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)));
+                await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
+                await this.activityRepo.FindAllAsync(),
+                await this.targetAudienceRepo.FindAllAsync(),
+                await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
 
             return Json(new
             {
@@ -220,7 +234,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd.UpdateDropdownProperties(
                     await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)));
+                    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
+                    await this.activityRepo.FindAllAsync(),
+                    await this.targetAudienceRepo.FindAllAsync(),
+                    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
 
                 return Json(new
                 {
@@ -261,6 +278,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
+                    await this.activityRepo.FindAllAsync(),
+                    await this.targetAudienceRepo.FindAllAsync(),
+                    await this.interestRepo.FindAllGroupedByInterestGroupsAsync(),
                     isAddingToCurrentEdition);
             }
             catch (DomainException ex)
@@ -316,7 +336,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd.UpdateDropdownProperties(
                     await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)));
+                    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
+                    await this.activityRepo.FindAllAsync(),
+                    await this.targetAudienceRepo.FindAllAsync(),
+                    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
 
                 return Json(new
                 {

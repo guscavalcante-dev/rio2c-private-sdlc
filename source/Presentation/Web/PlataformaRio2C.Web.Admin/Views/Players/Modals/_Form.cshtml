@@ -1,4 +1,5 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.OrganizationBaseCommand
+﻿@using System.Globalization
+@model PlataformaRio2C.Application.CQRS.Commands.OrganizationBaseCommand
 <div class="form-group row">
     <div class="col-lg-4 text-center">
         @Html.EditorFor(m => m.CropperImage)
@@ -75,5 +76,67 @@
     @Html.ValidationMessage("Descriptions", new { @class = "text-danger" })
     <div class="kt-section__content mt-3">
         @Html.EditorFor(m => m.Descriptions)
+    </div>
+</div>
+<div class="kt-separator kt-separator--border-dashed kt-separator--space-xl"></div>
+<div class="kt-section">
+    <h3 class="kt-section__title mb-0">@Labels.Activities</h3>
+    @Html.ValidationMessage("ActivitiesUids", new { @class = "text-danger" })
+    <div class="kt-section__content mt-3">
+        <div class="kt-checkbox-list">
+            @foreach (var activity in Model.Activities)
+            {
+                <label class="kt-checkbox">
+                    <input type="checkbox"
+                           name="ActivitiesUids"
+                           value="@activity.Uid"
+                           @if (Model.ActivitiesUids?.Contains(activity.Uid) == true) { <text> checked </text> } /> @activity.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')
+                        <span></span>
+                    </label>
+                }
+        </div>
+    </div>
+</div>
+<div class="kt-separator kt-separator--border-dashed kt-separator--space-xl"></div>
+<div class="kt-section">
+    <h3 class="kt-section__title mb-0">@Labels.TargetAudiences</h3>
+    @Html.ValidationMessage("TargetAudiencesUids", new { @class = "text-danger" })
+    <div class="kt-section__content mt-3">
+        <div class="kt-checkbox-list">
+            @foreach (var targetAudience in Model.TargetAudiences)
+            {
+                <label class="kt-checkbox">
+                    <input type="checkbox"
+                           name="TargetAudiencesUids"
+                           value="@targetAudience.Uid"
+                           @if (Model.TargetAudiencesUids?.Contains(targetAudience.Uid) == true) { <text> checked </text> } /> @targetAudience.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')
+                        <span></span>
+                    </label>
+                }
+        </div>
+    </div>
+</div>
+<div class="kt-separator kt-separator--border-dashed kt-separator--space-xl"></div>
+<div class="kt-section">
+    <h3 class="kt-section__title mb-0">@Labels.Interests</h3>
+    @Html.ValidationMessage("InterestsUids", new { @class = "text-danger" })
+    <div class="kt-section__content mt-3">
+        <div class="kt-checkbox-list">
+            @foreach (var interestGroup in Model.GroupedInterests)
+            {
+                <h3 class="kt-heading kt-heading--sm mt-50">@interestGroup.Key.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')</h3>
+
+                foreach (var interest in interestGroup)
+                {
+                    <label class="kt-checkbox">
+                        <input type="checkbox"
+                               name="InterestsUids"
+                               value="@interest.Uid"
+                               @if (Model.InterestsUids?.Contains(interest.Uid) == true) { <text> checked </text> } /> @interest.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')
+                            <span></span>
+                        </label>
+                    }
+                }
+        </div>
     </div>
 </div>

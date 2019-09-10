@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-29-2019
+// Last Modified On : 09-10-2019
 // ***********************************************************************
 // <copyright file="OrganizationBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -63,8 +63,15 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<OrganizationDescriptionBaseCommand> Descriptions { get; set; }
         public CropperImageBaseCommand CropperImage { get; set; }
 
+        public List<Guid> ActivitiesUids { get; set; }
+        public List<Guid> TargetAudiencesUids { get; set; }
+        public List<Guid> InterestsUids { get; set; }
+
         public List<HoldingBaseDto> HoldingBaseDtos { get; private set; }
         public OrganizationType OrganizationType { get; private set; }
+        public List<Activity> Activities { get; private set; }
+        public List<TargetAudience> TargetAudiences { get; private set; }
+        public List<IGrouping<InterestGroup, Interest>> GroupedInterests { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="OrganizationBaseCommand"/> class.</summary>
         public OrganizationBaseCommand()
@@ -76,7 +83,17 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="holdingBaseDtos">The holding base dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
-        public void UpdateBaseProperties(OrganizationDto entity, List<HoldingBaseDto> holdingBaseDtos, List<LanguageDto> languagesDtos, List<CountryBaseDto> countriesBaseDtos)
+        /// <param name="activities">The activities.</param>
+        /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="groupedInterests">The grouped interests.</param>
+        public void UpdateBaseProperties(
+            OrganizationDto entity, 
+            List<HoldingBaseDto> holdingBaseDtos, 
+            List<LanguageDto> languagesDtos, 
+            List<CountryBaseDto> countriesBaseDtos,
+            List<Activity> activities,
+            List<TargetAudience> targetAudiences,
+            List<IGrouping<InterestGroup, Interest>> groupedInterests)
         {
             this.HoldingUid = entity?.HoldingBaseDto?.Uid;
             this.Name = entity?.Name;
@@ -89,7 +106,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateAddress(entity, countriesBaseDtos);
             this.UpdateDescriptions(entity, languagesDtos);
             this.UpdateCropperImage(entity);
-            this.UpdateDropdownProperties(holdingBaseDtos, countriesBaseDtos);
+            this.UpdateDropdownProperties(holdingBaseDtos, countriesBaseDtos, activities, targetAudiences, groupedInterests);
+            this.ActivitiesUids = entity?.OrganizationActivitiesDtos?.Select(oad => oad.ActivityUid)?.ToList();
+            this.TargetAudiencesUids = entity?.OrganizationTargetAudiencesDtos?.Select(otad => otad.TargetAudienceUid)?.ToList();
+            this.InterestsUids = entity?.OrganizationInterestsDtos?.Select(oid => oid.InterestUid)?.ToList();
         }
 
         /// <summary>Updates the address.</summary>
@@ -124,10 +144,21 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Updates the dropdown properties.</summary>
         /// <param name="holdingBaseDtos">The holding base dtos.</param>
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
-        public void UpdateDropdownProperties(List<HoldingBaseDto> holdingBaseDtos, List<CountryBaseDto> countriesBaseDtos)
+        /// <param name="activities">The activities.</param>
+        /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="groupedInterests">The grouped interests.</param>
+        public void UpdateDropdownProperties(
+            List<HoldingBaseDto> holdingBaseDtos, 
+            List<CountryBaseDto> countriesBaseDtos,
+            List<Activity> activities,
+            List<TargetAudience> targetAudiences,
+            List<IGrouping<InterestGroup, Interest>> groupedInterests)
         {
             this.HoldingBaseDtos = holdingBaseDtos;
             this.Address?.UpdateDropdownProperties(countriesBaseDtos);
+            this.Activities = activities;
+            this.TargetAudiences = targetAudiences;
+            this.GroupedInterests = groupedInterests;
         }
 
         /// <summary>Updates the pre send properties.</summary>

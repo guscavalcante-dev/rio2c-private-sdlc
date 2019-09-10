@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-23-2019
+// Last Modified On : 09-10-2019
 // ***********************************************************************
 // <copyright file="CreateOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,7 +12,9 @@
 // <summary></summary>
 // ***********************************************************************
 using System.Collections.Generic;
+using System.Linq;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -23,9 +25,18 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="holdingBaseDtos">The holding base dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
-        public CreateOrganization(List<HoldingBaseDto> holdingBaseDtos, List<LanguageDto> languagesDtos, List<CountryBaseDto> countriesBaseDtos)
+        /// <param name="activities">The activities.</param>
+        /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="groupedInterests">The grouped interests.</param>
+        public CreateOrganization(
+            List<HoldingBaseDto> holdingBaseDtos,
+            List<LanguageDto> languagesDtos, 
+            List<CountryBaseDto> countriesBaseDtos,
+            List<Activity> activities,
+            List<TargetAudience> targetAudiences,
+            List<IGrouping<InterestGroup, Interest>> groupedInterests)
         {
-            this.UpdateBaseProperties(null, holdingBaseDtos, languagesDtos, countriesBaseDtos);
+            this.UpdateBaseProperties(null, holdingBaseDtos, languagesDtos, countriesBaseDtos, activities, targetAudiences, groupedInterests);
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateOrganization"/> class.</summary>

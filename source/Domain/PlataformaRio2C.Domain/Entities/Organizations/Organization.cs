@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-09-2019
+// Last Modified On : 09-10-2019
 // ***********************************************************************
 // <copyright file="Organization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -82,6 +82,9 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="descriptions">The descriptions.</param>
+        /// <param name="activities">The activities.</param>
+        /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="interests">The interests.</param>
         /// <param name="userId">The user identifier.</param>
         public Organization(
             Guid uid, 
@@ -105,7 +108,10 @@ namespace PlataformaRio2C.Domain.Entities
             string addressZipCode,
             bool addressIsManual,
             bool isImageUploaded, 
-            List<OrganizationDescription> descriptions, 
+            List<OrganizationDescription> descriptions,
+            List<Activity> activities,
+            List<TargetAudience> targetAudiences,
+            List<Interest> interests,
             int userId)
         {
             //this.Uid = uid;
@@ -125,6 +131,9 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeDescriptions(descriptions, userId);
             this.SynchronizeAttendeeOrganizations(edition, organizationType, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, address2, addressZipCode, addressIsManual, userId);
+            this.SynchronizeOrganizationActivities(activities, userId);
+            this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
+            this.SynchronizeOrganizationInterests(interests, userId);
         }
 
         /// <summary>Initializes a new instance of the <see cref="Organization"/> class.</summary>
@@ -155,6 +164,9 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
         /// <param name="descriptions">The descriptions.</param>
+        /// <param name="activities">The activities.</param>
+        /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="interests">The interests.</param>
         /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
         /// <param name="userId">The user identifier.</param>
         public void Update (
@@ -180,6 +192,9 @@ namespace PlataformaRio2C.Domain.Entities
             bool isImageUploaded,
             bool isImageDeleted,
             List<OrganizationDescription> descriptions,
+            List<Activity> activities,
+            List<TargetAudience> targetAudiences,
+            List<Interest> interests,
             bool isAddingToCurrentEdition,
             int userId)
         {
@@ -200,6 +215,9 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeDescriptions(descriptions, userId);
             this.SynchronizeAttendeeOrganizations(edition, organizationType, isAddingToCurrentEdition, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, address2, addressZipCode, addressIsManual, userId);
+            this.SynchronizeOrganizationActivities(activities, userId);
+            this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
+            this.SynchronizeOrganizationInterests(interests, userId);
         }
 
         /// <summary>Deletes the specified edition.</summary>
