@@ -17,7 +17,7 @@ update "dbo"."Countries"
 SET DefaultLanguageId  = 1
 go
 
-update "dbo"."Countries"
+update "dbo"."Countries"	
 SET DefaultLanguageId  = 2
 WHERE Code = 'BR'
 go
