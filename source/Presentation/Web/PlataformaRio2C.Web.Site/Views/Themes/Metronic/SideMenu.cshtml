@@ -34,7 +34,7 @@
                         @(userAccessControlDto?.GetJobTitle(ViewBag.UserInterfaceLanguage))
                         @if (organizations?.Any() == true)
                         {
-                            <ul class="mt-2 mb-0">
+                            <ul class="mt-2 mb-0 pl-4">
                                 @foreach (var organization in organizations?.OrderBy(o => o.Name))
                                 {
                                     <li>@organization.Name</li>
@@ -48,9 +48,9 @@
                 <div class="kt-widget__section">
                 </div>
             </div>
-            <div class="kt-section__content kt-section__content--solid">
+            <div class="kt-section__content kt-section__content--solid text-center">
                 <button type="button" class="btn btn-primary btn-sm" @(ViewBag.Environment != "dev" ? "disabled" : string.Empty)>@Labels.ViewProfile</button>
-                <button type="button" class="btn btn-secondary btn-sm" @(ViewBag.Environment != "dev" ? "disabled" : string.Empty)>@Labels.EditProfile</button>
+                <button type="button" class="btn btn-secondary btn-sm ml-2" @(ViewBag.Environment != "dev" ? "disabled" : string.Empty)>@Labels.EditProfile</button>
             </div>
         </div>
 
