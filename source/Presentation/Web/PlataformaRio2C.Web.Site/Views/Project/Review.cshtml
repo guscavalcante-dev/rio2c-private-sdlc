@@ -2,218 +2,206 @@
     ViewBag.Title = Labels.Projects;
     //Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <div class="row">
-    <!--begin:Left panel-->
-    <div class="col-md-3 col-lg-3">
-
-        @{ Html.RenderPartial("~/Views/Themes/Metronic/SideMenu.cshtml"); }
-    </div>
-    <!--end:Left panel-->
-    <!--begin:Right panel-->
-    <div class="col-md-9 col-lg-9">
-        <div class="row">
-            <!--begin:Right column-->
-            <div class="col-md-12">
-                <!--begin:Main-->
-                <div class="kt-portlet">
-                    <div class="kt-portlet__body">
-                        <div class="kt-infobox">
-                            <div class="kt-infobox__header">
-                                <h2 class="kt-infobox__title">Projetos para revisão</h2>
-                            </div>
-                            <div class="kt-infobox__body">
-                                <div class="kt-infobox__section">
-                                    <div class="kt-infobox__content">
-                                        Nessa área você tem a lista dos projetos enviados por produtoras para vocâ avaliar.
-                                    </div>
-                                </div>
+    <!--begin:Right column-->
+    <div class="col-md-12">
+        <!--begin:Main-->
+        <div class="kt-portlet">
+            <div class="kt-portlet__body">
+                <div class="kt-infobox">
+                    <div class="kt-infobox__header">
+                        <h2 class="kt-infobox__title">Projetos para revisão</h2>
+                    </div>
+                    <div class="kt-infobox__body">
+                        <div class="kt-infobox__section">
+                            <div class="kt-infobox__content">
+                                Nessa área você tem a lista dos projetos enviados por produtoras para vocâ avaliar.
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="kt-portlet kt-portlet--height-fluid">
-                            <div class="kt-portlet__head">
-                                <div class="kt-portlet__head-label">
-                                    <h3 class="kt-portlet__head-title">
-                                        Projetos
-                                    </h3>
-                                </div>
-                                <div class="kt-portlet__head-toolbar">
-                                    <a href="#" class="btn btn-label-brand btn-bold btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                        Gênero
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right" x-placement="top-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(220px, -236px, 0px);">
-                                        <ul class="kt-nav">
-                                            <li class="kt-nav__item">
-                                                <a href="#" class="kt-nav__link">
-                                                    <i class="kt-nav__link-icon flaticon2-graph-1"></i>
-                                                    <span class="kt-nav__link-text">Todos</span>
-                                                </a>
-                                            </li>
-                                            <li class="kt-nav__item">
-                                                <a href="#" class="kt-nav__link">
-                                                    <i class="kt-nav__link-icon flaticon2-calendar-4"></i>
-                                                    <span class="kt-nav__link-text">Animação</span>
-                                                </a>
-                                            </li>
-                                            <li class="kt-nav__item">
-                                                <a href="#" class="kt-nav__link">
-                                                    <i class="kt-nav__link-icon flaticon2-layers-1"></i>
-                                                    <span class="kt-nav__link-text">Documentário</span>
-                                                </a>
-                                            </li>
-                                            <li class="kt-nav__item">
-                                                <a href="#" class="kt-nav__link">
-                                                    <i class="kt-nav__link-icon flaticon2-calendar-4"></i>
-                                                    <span class="kt-nav__link-text">Notifications</span>
-                                                </a>
-                                            </li>
-                                            <li class="kt-nav__item">
-                                                <a href="#" class="kt-nav__link">
-                                                    <i class="kt-nav__link-icon flaticon2-file-1"></i>
-                                                    <span class="kt-nav__link-text">Ficção</span>
-                                                </a>
-                                            </li>
-                                            <li class="kt-nav__item">
-                                                <a href="#" class="kt-nav__link">
-                                                    <i class="kt-nav__link-icon flaticon2-file-1"></i>
-                                                    <span class="kt-nav__link-text">Kids</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <a href="#" class="btn btn-label-brand btn-bold btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                        Status
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right" x-placement="top-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(220px, -236px, 0px);">
-                                        <ul class="kt-nav">
-                                            <li class="kt-nav__item">
-                                                <a href="#" class="kt-nav__link">
-                                                    <i class="kt-nav__link-icon flaticon2-graph-1"></i>
-                                                    <span class="kt-nav__link-text">Todos</span>
-                                                </a>
-                                            </li>
-                                            <li class="kt-nav__item">
-                                                <a href="#" class="kt-nav__link">
-                                                    <i class="kt-nav__link-icon flaticon2-calendar-4"></i>
-                                                    <span class="kt-nav__link-text">Em avaliação</span>
-                                                </a>
-                                            </li>
-                                            <li class="kt-nav__item">
-                                                <a href="#" class="kt-nav__link">
-                                                    <i class="kt-nav__link-icon flaticon2-layers-1"></i>
-                                                    <span class="kt-nav__link-text">Aceito</span>
-                                                </a>
-                                            </li>
-                                            <li class="kt-nav__item">
-                                                <a href="#" class="kt-nav__link">
-                                                    <i class="kt-nav__link-icon flaticon2-calendar-4"></i>
-                                                    <span class="kt-nav__link-text">Recusado</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="kt-portlet kt-portlet--height-fluid">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">
+                                Projetos
+                            </h3>
+                        </div>
+                        <div class="kt-portlet__head-toolbar">
+                            <a href="#" class="btn btn-label-brand btn-bold btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                Gênero
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right" x-placement="top-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(220px, -236px, 0px);">
+                                <ul class="kt-nav">
+                                    <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                            <i class="kt-nav__link-icon flaticon2-graph-1"></i>
+                                            <span class="kt-nav__link-text">Todos</span>
+                                        </a>
+                                    </li>
+                                    <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                            <i class="kt-nav__link-icon flaticon2-calendar-4"></i>
+                                            <span class="kt-nav__link-text">Animação</span>
+                                        </a>
+                                    </li>
+                                    <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                            <i class="kt-nav__link-icon flaticon2-layers-1"></i>
+                                            <span class="kt-nav__link-text">Documentário</span>
+                                        </a>
+                                    </li>
+                                    <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                            <i class="kt-nav__link-icon flaticon2-calendar-4"></i>
+                                            <span class="kt-nav__link-text">Notifications</span>
+                                        </a>
+                                    </li>
+                                    <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                            <i class="kt-nav__link-icon flaticon2-file-1"></i>
+                                            <span class="kt-nav__link-text">Ficção</span>
+                                        </a>
+                                    </li>
+                                    <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                            <i class="kt-nav__link-icon flaticon2-file-1"></i>
+                                            <span class="kt-nav__link-text">Kids</span>
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
-                            <div class="kt-portlet__body">
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="kt_widget5_tab1_content" aria-expanded="true">
-                                        <div class="kt-widget5">
-                                            <div class="kt-widget5__item">
-                                                <div class="kt-widget5__content">
-                                                    <div class="kt-widget5__pic">
-                                                        <img class="kt-widget7__img" src="~/assets/themes/metronic/media/products/product27.jpg" alt="">
-                                                    </div>
-                                                    <div class="kt-widget5__section">
-                                                        <a href="#" class="kt-widget5__title">
-                                                            Vida de Rainha | Queen´s Life
-                                                        </a>
-                                                        <p class="kt-widget5__desc">
-                                                            Mostrar a vida real das Rainhas de Bateria e musas das escolas de samba.
-                                                        </p>
-                                                        <div class="kt-widget5__info">
-                                                            <span>Produtora:</span>
-                                                            <span class="kt-font-info"> Intervalo Produções Multimídia</span>
-                                                            <span>Gênero:</span>
-                                                            <span class="kt-font-info">Documentário</span>
-                                                            <span>Status:</span>
-                                                            <span class="kt-font-info">Rejeitado</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="kt-widget5__content">
-                                                    <div class="kt-widget5__stats">
-
-                                                    </div>
-                                                    <div class="kt-widget5__stats">
-
-                                                    </div>
+                            <a href="#" class="btn btn-label-brand btn-bold btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                Status
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right" x-placement="top-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(220px, -236px, 0px);">
+                                <ul class="kt-nav">
+                                    <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                            <i class="kt-nav__link-icon flaticon2-graph-1"></i>
+                                            <span class="kt-nav__link-text">Todos</span>
+                                        </a>
+                                    </li>
+                                    <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                            <i class="kt-nav__link-icon flaticon2-calendar-4"></i>
+                                            <span class="kt-nav__link-text">Em avaliação</span>
+                                        </a>
+                                    </li>
+                                    <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                            <i class="kt-nav__link-icon flaticon2-layers-1"></i>
+                                            <span class="kt-nav__link-text">Aceito</span>
+                                        </a>
+                                    </li>
+                                    <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                            <i class="kt-nav__link-icon flaticon2-calendar-4"></i>
+                                            <span class="kt-nav__link-text">Recusado</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="kt_widget5_tab1_content" aria-expanded="true">
+                                <div class="kt-widget5">
+                                    <div class="kt-widget5__item">
+                                        <div class="kt-widget5__content">
+                                            <div class="kt-widget5__pic">
+                                                <img class="kt-widget7__img" src="~/assets/themes/metronic/media/products/product27.jpg" alt="">
+                                            </div>
+                                            <div class="kt-widget5__section">
+                                                <a href="#" class="kt-widget5__title">
+                                                    Vida de Rainha | Queen´s Life
+                                                </a>
+                                                <p class="kt-widget5__desc">
+                                                    Mostrar a vida real das Rainhas de Bateria e musas das escolas de samba.
+                                                </p>
+                                                <div class="kt-widget5__info">
+                                                    <span>Produtora:</span>
+                                                    <span class="kt-font-info"> Intervalo Produções Multimídia</span>
+                                                    <span>Gênero:</span>
+                                                    <span class="kt-font-info">Documentário</span>
+                                                    <span>Status:</span>
+                                                    <span class="kt-font-info">Rejeitado</span>
                                                 </div>
                                             </div>
-                                            <div class="kt-widget5__item">
-                                                <div class="kt-widget5__content">
-                                                    <div class="kt-widget5__pic">
-                                                        <img class="kt-widget7__img" src="~/assets/themes/metronic/media/products/product22.jpg" alt="">
-                                                    </div>
-                                                    <div class="kt-widget5__section">
-                                                        <a href="#" class="kt-widget5__title">
-                                                            NEON | NEON
-                                                        </a>
-                                                        <p class="kt-widget5__desc">
-                                                            Um escritor entra fisicamente em um de seus livros para salvar o protagonista da morte.
-                                                        </p>
-                                                        <div class="kt-widget5__info">
-                                                            <span>Produtora:</span>
-                                                            <span class="kt-font-info">Prisma Vídeo Ltda - ME</span>
-                                                            <span>Gênero:</span>
-                                                            <span class="kt-font-info">Ficção</span>
-                                                            <span>Status:</span>
-                                                            <span class="kt-font-info">Rejeitado</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="kt-widget5__content">
-                                                    <div class="kt-widget5__stats">
+                                        </div>
+                                        <div class="kt-widget5__content">
+                                            <div class="kt-widget5__stats">
 
-                                                    </div>
-                                                    <div class="kt-widget5__stats">
+                                            </div>
+                                            <div class="kt-widget5__stats">
 
-                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="kt-widget5__item">
+                                        <div class="kt-widget5__content">
+                                            <div class="kt-widget5__pic">
+                                                <img class="kt-widget7__img" src="~/assets/themes/metronic/media/products/product22.jpg" alt="">
+                                            </div>
+                                            <div class="kt-widget5__section">
+                                                <a href="#" class="kt-widget5__title">
+                                                    NEON | NEON
+                                                </a>
+                                                <p class="kt-widget5__desc">
+                                                    Um escritor entra fisicamente em um de seus livros para salvar o protagonista da morte.
+                                                </p>
+                                                <div class="kt-widget5__info">
+                                                    <span>Produtora:</span>
+                                                    <span class="kt-font-info">Prisma Vídeo Ltda - ME</span>
+                                                    <span>Gênero:</span>
+                                                    <span class="kt-font-info">Ficção</span>
+                                                    <span>Status:</span>
+                                                    <span class="kt-font-info">Rejeitado</span>
                                                 </div>
                                             </div>
-                                            <div class="kt-widget5__item">
-                                                <div class="kt-widget5__content">
-                                                    <div class="kt-widget5__pic">
-                                                        <img class="kt-widget7__img" src="~/assets/themes/metronic/media/products/product15.jpg" alt="">
-                                                    </div>
-                                                    <div class="kt-widget5__section">
-                                                        <a href="#" class="kt-widget5__title">
-                                                            A pequena casa inexplicável para leigos | The Unexplainable Small House for Lay People
-                                                        </a>
-                                                        <p class="kt-widget5__desc">
-                                                            Mostrar a vida real das Rainhas de Bateria e musas das escolas de samba.
-                                                        </p>
-                                                        <div class="kt-widget5__info">
-                                                            <span>Produtora:</span>
-                                                            <span class="kt-font-info">COOPERATIVA DE PRODUÇÃO DE AUDIOVISUAIS DE SAÚDE, SANEAMENTO E MEIO AMBIENTE LTDA</span>
-                                                            <span>Gênero:</span>
-                                                            <span class="kt-font-info">Ficção</span>
-                                                            <span>Status:</span>
-                                                            <span class="kt-font-info">Em avaliação</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="kt-widget5__content">
-                                                    <div class="kt-widget5__stats">
+                                        </div>
+                                        <div class="kt-widget5__content">
+                                            <div class="kt-widget5__stats">
 
-                                                    </div>
-                                                    <div class="kt-widget5__stats">
+                                            </div>
+                                            <div class="kt-widget5__stats">
 
-                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="kt-widget5__item">
+                                        <div class="kt-widget5__content">
+                                            <div class="kt-widget5__pic">
+                                                <img class="kt-widget7__img" src="~/assets/themes/metronic/media/products/product15.jpg" alt="">
+                                            </div>
+                                            <div class="kt-widget5__section">
+                                                <a href="#" class="kt-widget5__title">
+                                                    A pequena casa inexplicável para leigos | The Unexplainable Small House for Lay People
+                                                </a>
+                                                <p class="kt-widget5__desc">
+                                                    Mostrar a vida real das Rainhas de Bateria e musas das escolas de samba.
+                                                </p>
+                                                <div class="kt-widget5__info">
+                                                    <span>Produtora:</span>
+                                                    <span class="kt-font-info">COOPERATIVA DE PRODUÇÃO DE AUDIOVISUAIS DE SAÚDE, SANEAMENTO E MEIO AMBIENTE LTDA</span>
+                                                    <span>Gênero:</span>
+                                                    <span class="kt-font-info">Ficção</span>
+                                                    <span>Status:</span>
+                                                    <span class="kt-font-info">Em avaliação</span>
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <div class="kt-widget5__content">
+                                            <div class="kt-widget5__stats">
+
+                                            </div>
+                                            <div class="kt-widget5__stats">
+
                                             </div>
                                         </div>
                                     </div>
@@ -222,16 +210,13 @@
                         </div>
                     </div>
                 </div>
-
-
-
-               
-                <!--end:Main-->
             </div>
-            <!--end:Right column-->
         </div>
-        <div class="row">
-        </div>
+
+
+
+
+        <!--end:Main-->
     </div>
-    <!--begin:Right panel-->
+    <!--end:Right column-->
 </div>

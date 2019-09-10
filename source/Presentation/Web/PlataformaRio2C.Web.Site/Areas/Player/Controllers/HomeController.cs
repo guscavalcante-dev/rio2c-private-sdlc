@@ -4,7 +4,7 @@
 // Created          : 07-01-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-07-2019
+// Last Modified On : 09-10-2019
 // ***********************************************************************
 // <copyright file="HomeController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,12 +12,11 @@
 // <summary></summary>
 // ***********************************************************************
 using System.Collections.Generic;
-using System.Linq;
 using PlataformaRio2C.Web.Site.Controllers;
 using System.Web.Mvc;
-using System.Web.Routing;
 using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 
 namespace PlataformaRio2C.Web.Site.Areas.Player.Controllers
@@ -35,13 +34,15 @@ namespace PlataformaRio2C.Web.Site.Areas.Player.Controllers
         {
         }
 
-        // GET: ProducerArea/Dashboard
+        /// <summary>Indexes this instance.</summary>
+        /// <returns></returns>
+        [HttpGet]
         public ActionResult Index()
         {
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper("Dashboard", new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper("Dashboard", Url.Action("Index", "Home", new { Area = "Player" }))
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Dashboard, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Dashboard, Url.Action("Index", "Home", new { Area = "Player" }))
             });
 
             #endregion

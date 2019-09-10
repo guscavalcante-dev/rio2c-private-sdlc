@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-07-2019
+// Last Modified On : 09-10-2019
 // ***********************************************************************
 // <copyright file="ConferenceController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,7 +23,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 {
     /// <summary>ConferenceController</summary>
     //[TermFilter(Order = 2)]
-    [Authorize(Order = 1, Roles = "Player, Producer")]
+    [Authorize(Order = 1)]
     public class ConferenceController : BaseController
     {
         private readonly IConferenceAppService _appService;

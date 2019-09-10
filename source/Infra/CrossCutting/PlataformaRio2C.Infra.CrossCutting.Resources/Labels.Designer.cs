@@ -376,6 +376,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Agenda.
+        /// </summary>
+        public static string Calendar {
+            get {
+                return ResourceManager.GetString("Calendar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Relatório da Agenda.
         /// </summary>
         public static string CalendarReport {
@@ -1654,6 +1663,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rede Rio2C.
+        /// </summary>
+        public static string NetworkRio2C {
+            get {
+                return ResourceManager.GetString("NetworkRio2C", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nova Empresa.
         /// </summary>
         public static string NewCompany {
@@ -2491,6 +2509,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Programação.
+        /// </summary>
+        public static string Schedule {
+            get {
+                return ResourceManager.GetString("Schedule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Agendar Negociação.
         /// </summary>
         public static string ScheduleNegotiation {
@@ -2865,6 +2892,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Table {
             get {
                 return ResourceManager.GetString("Table", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Talentos.
+        /// </summary>
+        public static string Talents {
+            get {
+                return ResourceManager.GetString("Talents", resourceCulture);
             }
         }
         

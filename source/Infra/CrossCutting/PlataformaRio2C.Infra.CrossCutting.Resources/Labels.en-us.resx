@@ -1371,4 +1371,20 @@
     <value>Player Interests</value>
     <comment>Interesses do Player</comment>
   </data>
+  <data name="Calendar" xml:space="preserve">
+    <value>Calendar</value>
+    <comment>Agenda</comment>
+  </data>
+  <data name="NetworkRio2C" xml:space="preserve">
+    <value>Rio2C Network</value>
+    <comment>Rede Rio2C</comment>
+  </data>
+  <data name="Schedule" xml:space="preserve">
+    <value>Schedule</value>
+    <comment>Programação</comment>
+  </data>
+  <data name="Talents" xml:space="preserve">
+    <value>Talents</value>
+    <comment>Talentos</comment>
+  </data>
 </root>

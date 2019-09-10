@@ -1,48 +1,27 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = Labels.Diary;
-
 }
 
 <div class="row">
-    <!--begin:Left panel-->
-    <div class="col-md-3 col-lg-3">
+    <!--begin:Right column-->
+    <div class="col-md-12">
+        <!--begin:Main-->
+        <div class="kt-portlet kt-portlet--mobile">
 
-        @{ Html.RenderPartial("~/Views/Themes/Metronic/SideMenu.cshtml"); }
-    </div>
-    <!--end:Left panel-->
-    <!--begin:Right panel-->
-    <div class="col-md-9 col-lg-9">
-        <div class="row">
-            <!--begin:Right column-->
-            <div class="col-md-12">
-                <!--begin:Main-->
-                <div class="kt-portlet kt-portlet--mobile">
-
-                    <div class="kt-portlet__body">
-                        <div id="kt_calendar"></div>
-                    </div>
-                </div>
-                <!--end:Main-->
+            <div class="kt-portlet__body">
+                <div id="kt_calendar"></div>
             </div>
-            <!--end:Right column-->
         </div>
-        <div class="row">
-        </div>
+        <!--end:Main-->
     </div>
-    <!--begin:Right panel-->
+    <!--end:Right column-->
 </div>
-
 @section Styles {
     @Styles.Render("~/bundles/css/scheduleCustomStyles")
 }
-
 @section Scripts {
     @Scripts.Render("~/bundles/js/scheduleCustomScripts")
-    
 }
-
-
 @*<div class="content content-header-button clearfix">
         <h1 class="page-title">@ViewBag.Title</h1>
 

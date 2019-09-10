@@ -4,7 +4,7 @@
 // Created          : 09-04-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-09-2019
+// Last Modified On : 09-10-2019
 // ***********************************************************************
 // <copyright file="UserAccessControlDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,6 +27,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public Language Language { get; set; }
         public AttendeeCollaborator EditionAttendeeCollaborator { get; set; }
 
+        public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }
         public IEnumerable<AttendeeOrganization> EditionAttendeeOrganizations { get; set; }
         public IEnumerable<AttendeeCollaboratorTicket> EditionAttendeeCollaboratorTickets { get; set; }
         public IEnumerable<TicketType> EditionUserTicketTypes { get; set; }
@@ -68,6 +69,20 @@ namespace PlataformaRio2C.Domain.Dtos
             return this.Collaborator?.ImageUploadDate != null;
         }
 
+        /// <summary>Gets the job title.</summary>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        /// <returns></returns>
+        public string GetJobTitle(string userInterfaceLanguage)
+        {
+            var cultureJobTitle = this.JobTitlesDtos?.FirstOrDefault(jb => jb.LanguageDto.Code == userInterfaceLanguage);
+            if (cultureJobTitle != null)
+            {
+                return cultureJobTitle.Value;
+            }
+
+            return this.JobTitlesDtos?.FirstOrDefault()?.Value;
+        }
+
         #endregion
 
         #region Permissions
@@ -94,7 +109,7 @@ namespace PlataformaRio2C.Domain.Dtos
 
         //TODO: Check tickets
 
-            /// <summary>Determines whether [is onboarding pending].</summary>
+        /// <summary>Determines whether [is onboarding pending].</summary>
         /// <returns>
         ///   <c>true</c> if [is onboarding pending]; otherwise, <c>false</c>.</returns>
         public bool IsOnboardingPending()

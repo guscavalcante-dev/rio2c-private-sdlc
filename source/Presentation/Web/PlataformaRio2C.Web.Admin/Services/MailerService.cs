@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-02-2019
+// Last Modified On : 09-10-2019
 // ***********************************************************************
 // <copyright file="MailerService.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,7 +33,7 @@ namespace PlataformaRio2C.Web.Admin.Services
         /// <summary>Initializes a new instance of the <see cref="MailerService"/> class.</summary>
         public MailerService()
         {
-            environment = ConfigurationManager.AppSettings["MvcMailer.Environment"];
+            environment = ConfigurationManager.AppSettings["Environment"];
             toEmail = ConfigurationManager.AppSettings["MvcMailer.ToEmail"];
             bccEmail = ConfigurationManager.AppSettings["MvcMailer.BccEmail"];
 

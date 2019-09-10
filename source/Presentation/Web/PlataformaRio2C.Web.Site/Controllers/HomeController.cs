@@ -4,14 +4,13 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-04-2019
+// Last Modified On : 09-10-2019
 // ***********************************************************************
 // <copyright file="HomeController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using Microsoft.AspNet.Identity;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using System;
 using System.Threading.Tasks;
@@ -22,6 +21,7 @@ using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using System.Collections.Generic;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Web.Site.Filters;
 
 namespace PlataformaRio2C.Web.Site.Controllers
@@ -31,54 +31,52 @@ namespace PlataformaRio2C.Web.Site.Controllers
     [AuthorizeTicketType(Order = 2, AllowedTicketTypes = new[] { "Player", "Industry" })]
     public class HomeController : BaseController
     {
-        private readonly IdentityAutenticationService identityController;
-
         /// <summary>Initializes a new instance of the <see cref="HomeController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         public HomeController(IMediator commandBus, IdentityAutenticationService identityController)
             : base(commandBus, identityController)
         {
-            this.identityController = identityController;
         }
 
         /// <summary>Indexes this instance.</summary>
         /// <returns></returns>
         public async Task<ActionResult> Index()
         {
-            try
-            {
+            #region Breadcrumb
 
-                #region Breadcrumb
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Dashboard, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Dashboard, Url.Action("Index", "Home"))
+            });
 
-                ViewBag.Breadcrumb = new BreadcrumbHelper("Dashboard", new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper("Dashboard", Url.Action("Index", "Home"))
-                });
+            #endregion
 
-                #endregion
+            return View("Index");
 
-                return View("Index");
+            //try
+            //{
 
-                return RedirectToAction("Index", "Home", new { Area = "Player" });
 
-                var userId = User.Identity.GetUserId<int>();
+            //    //return RedirectToAction("Index", "Home", new { Area = "Player" });
 
-                if (await this.identityController.IsInRoleAsync(userId, "Player"))
-                {
-                    return RedirectToAction("Index", "Home", new { Area = "Player" });
-                }
+            //    //var userId = User.Identity.GetUserId<int>();
 
-                if (await this.identityController.IsInRoleAsync(userId, "Producer"))
-                {
-                    return RedirectToAction("Index", "Home", new { Area = "Producer" });
-                }
+            //    //if (await this.identityController.IsInRoleAsync(userId, "Player"))
+            //    //{
+            //    //    return RedirectToAction("Index", "Home", new { Area = "Player" });
+            //    //}
 
-                return RedirectToAction("LogOff", "Account");
-            }
-            catch (Exception)
-            {
-                return RedirectToAction("LogOff", "Account");
-            }
+            //    //if (await this.identityController.IsInRoleAsync(userId, "Producer"))
+            //    //{
+            //    //    return RedirectToAction("Index", "Home", new { Area = "Producer" });
+            //    //}
+
+            //    //return RedirectToAction("LogOff", "Account");
+            //}
+            //catch (Exception)
+            //{
+            //    return RedirectToAction("LogOff", "Account");
+            //}
         }
 
         /// <summary>Sets the culture.</summary>

@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-05-2019
+// Last Modified On : 09-10-2019
 // ***********************************************************************
 // <copyright file="BaseController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,6 +14,7 @@
 using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading;
 using System.Web.Mvc;
@@ -34,6 +35,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
     {
         protected IMediator CommandBus;
         protected IdentityAutenticationService IdentityController;
+        protected string Environment;
         protected string UserInterfaceLanguage;
         protected int? EditionId;
         protected Guid? EditionUid;
@@ -60,6 +62,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <returns>Returns an IAsyncController instance.</returns>
         protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, object state)
         {
+            // Set environment
+            this.SetEnvironment();
+
             // Culture
             var changedCultureRouteValue = this.ValidateCulture();
             if (changedCultureRouteValue)
@@ -85,6 +90,12 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
 
             return base.BeginExecuteCore(callback, state);
+        }
+
+        /// <summary>Sets the environment.</summary>
+        private void SetEnvironment()
+        {
+            ViewBag.Environment = this.Environment = ConfigurationManager.AppSettings["Environment"];
         }
 
         /// <summary>Validates the culture.</summary>
