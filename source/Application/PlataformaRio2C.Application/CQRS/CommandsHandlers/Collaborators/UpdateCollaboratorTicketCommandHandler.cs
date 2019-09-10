@@ -4,7 +4,7 @@
 // Created          : 09-01-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-03-2019
+// Last Modified On : 09-10-2019
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorTicketCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -111,7 +111,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #region Send welcome email
 
-            await this.CommandBus.Send(new SendWelmcomeEmailAsync(
+            await this.CommandBus.Send(new SendWelcomeEmailAsync(
                 cmd.Collaborator.User.SecurityStamp,
                 cmd.Collaborator.User.Id,
                 cmd.Collaborator.User.Uid,

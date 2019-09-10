@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-02-2019
+// Last Modified On : 09-10-2019
 // ***********************************************************************
 // <copyright file="SendWelmcomeEmailAsyncCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,7 +24,7 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
     /// <summary>SendWelmcomeEmailAsyncCommandHandler</summary>
-    public class SendWelmcomeEmailAsyncCommandHandler : SiteMailerBaseCommandHandler, IRequestHandler<SendWelmcomeEmailAsync, AppValidationResult>
+    public class SendWelmcomeEmailAsyncCommandHandler : SiteMailerBaseCommandHandler, IRequestHandler<SendWelcomeEmailAsync, AppValidationResult>
     {
         /// <summary>Initializes a new instance of the <see cref="SendWelmcomeEmailAsyncCommandHandler"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -40,11 +40,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
         }
 
-        /// <summary>Handles the specified send welmcome email asynchronous.</summary>
+        /// <summary>Handles the specified send welcome email asynchronous.</summary>
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(SendWelmcomeEmailAsync cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(SendWelcomeEmailAsync cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 

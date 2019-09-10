@@ -44,7 +44,7 @@ namespace PlataformaRio2C.Web.Admin.Services
         /// <param name="cmd">The command.</param>
         /// <param name="sentEmailUid">The sent email uid.</param>
         /// <returns></returns>
-        public MvcMailMessage SendWelcomeEmail(SendWelmcomeEmailAsync cmd, Guid sentEmailUid)
+        public MvcMailMessage SendWelcomeEmail(SendWelcomeEmailAsync cmd, Guid sentEmailUid)
         {
             throw new NotImplementedException();
 

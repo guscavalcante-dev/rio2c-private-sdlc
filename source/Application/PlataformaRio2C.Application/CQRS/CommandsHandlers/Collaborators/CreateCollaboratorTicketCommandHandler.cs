@@ -4,7 +4,7 @@
 // Created          : 08-31-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-03-2019
+// Last Modified On : 09-10-2019
 // ***********************************************************************
 // <copyright file="CreateCollaboratorWithTicketsHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -108,7 +108,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
                 #region Send welcome email
 
-                await this.CommandBus.Send(new SendWelmcomeEmailAsync(
+                await this.CommandBus.Send(new SendWelcomeEmailAsync(
                     collaborator.User.SecurityStamp,
                     collaborator.User.Id,
                     collaborator.User.Uid,

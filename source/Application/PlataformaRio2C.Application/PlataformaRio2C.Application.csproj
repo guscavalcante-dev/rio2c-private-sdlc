@@ -216,7 +216,7 @@
     <Compile Include="CQRS\Commands\Onboardings\OnboardPlayerInterests.cs" />
     <Compile Include="CQRS\Commands\Onboardings\OnboardOrganizationData.cs" />
     <Compile Include="CQRS\Commands\SiteEmails\BaseCommands\EmailBaseCommand.cs" />
-    <Compile Include="CQRS\Commands\SiteEmails\SendWelmcomeEmailAsync.cs" />
+    <Compile Include="CQRS\Commands\SiteEmails\SendWelcomeEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Organizations\BaseCommands\OrganizationBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Organizations\BaseCommands\OrganizationDescriptionBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Organizations\CreateOrganization.cs" />
