@@ -83,6 +83,13 @@ namespace PlataformaRio2C.Domain.Dtos
             return this.JobTitlesDtos?.FirstOrDefault()?.Value;
         }
 
+        /// <summary>Gets the organizations.</summary>
+        /// <returns></returns>
+        public List<Organization> GetOrganizations()
+        {
+            return this.EditionAttendeeOrganizations?.Where(eao => !eao.IsDeleted && !eao.Organization.IsDeleted)?.Select(eao => eao.Organization)?.ToList();
+        }
+
         #endregion
 
         #region Permissions

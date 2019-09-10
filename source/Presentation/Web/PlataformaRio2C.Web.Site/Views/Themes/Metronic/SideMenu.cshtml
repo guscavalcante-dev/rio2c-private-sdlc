@@ -3,6 +3,7 @@
 @using PlataformaRio2C.Domain.Statics
 @{
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var organizations = userAccessControlDto?.GetOrganizations();
 }
 <!--Begin:Mini Personal Profile-->
 <div class="kt-portlet">
@@ -31,6 +32,15 @@
                     </a>
                     <span class="kt-widget__desc">
                         @(userAccessControlDto?.GetJobTitle(ViewBag.UserInterfaceLanguage))
+                        @if (organizations?.Any() == true)
+                        {
+                            <ul class="mt-2 mb-0">
+                                @foreach (var organization in organizations?.OrderBy(o => o.Name))
+                                {
+                                    <li>@organization.Name</li>
+                                }
+                            </ul>
+                        }
                     </span>
                 </div>
             </div>
