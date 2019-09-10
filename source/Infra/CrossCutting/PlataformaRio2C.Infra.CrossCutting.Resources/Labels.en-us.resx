@@ -334,8 +334,8 @@
     <comment>Termo de uso</comment>
   </data>
   <data name="Welcome" xml:space="preserve">
-    <value>Welcome to MyRio2C | RioContentMarket 2019!</value>
-    <comment>Bem vindo ao MyRio2C | RioContentMarket 2019!</comment>
+    <value>Welcome to Rio2C | RioContentMarket {0}!</value>
+    <comment>Bem-vindo ao Rio2C | RioContentMarket {0}!</comment>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>Confirm password</value>
@@ -953,7 +953,7 @@
   </data>
   <data name="WelcomeSmall" xml:space="preserve">
     <value>Welcome to MyRio2C!</value>
-    <comment>Bem vindo ao MyRio2C!</comment>
+    <comment>Bem-vindo ao MyRio2C!</comment>
   </data>
   <data name="DevelopedBy" xml:space="preserve">
     <value>Developed by</value>
@@ -979,7 +979,7 @@
   </data>
   <data name="WelcomeSmallAdmin" xml:space="preserve">
     <value>Welcome to MyRio2C Admin!</value>
-    <comment>Bem vindo ao MyRio2C!</comment>
+    <comment>Bem-vindo ao MyRio2C!</comment>
   </data>
   <data name="BusinessRoundtable" xml:space="preserve">
     <value>Business Roundtable</value>
@@ -1386,5 +1386,9 @@
   <data name="Talents" xml:space="preserve">
     <value>Talents</value>
     <comment>Talentos</comment>
+  </data>
+  <data name="Dear" xml:space="preserve">
+    <value>Dear</value>
+    <comment>Caro</comment>
   </data>
 </root>

@@ -4,7 +4,7 @@
 // Created          : 08-07-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-07-2019
+// Last Modified On : 09-10-2019
 // ***********************************************************************
 // <copyright file="FindEditionByCurrent.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,7 +13,7 @@
 // ***********************************************************************
 using System.Collections.Generic;
 using MediatR;
-using PlataformaRio2C.Application.Dtos;
+using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Application.CQRS.Queries
 {

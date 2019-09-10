@@ -4,7 +4,7 @@
 // Created          : 07-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-02-2019
+// Last Modified On : 09-10-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,15 +33,12 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
     public class SalesPlatformController : BaseApiController
     {
         private readonly IMediator commandBus;
-        private readonly ISalesPlatformServiceFactory salesPlatformServiceFactory;
 
         /// <summary>Initializes a new instance of the <see cref="SalesPlatformController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
-        /// <param name="salesPlatformServiceFactory">The sales platform service factory.</param>
-        public SalesPlatformController(IMediator commandBus, ISalesPlatformServiceFactory salesPlatformServiceFactory)
+        public SalesPlatformController(IMediator commandBus)
         {
             this.commandBus = commandBus;
-            this.salesPlatformServiceFactory = salesPlatformServiceFactory;
         }
 
         #region Test Welcome Email
@@ -60,7 +57,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 "Admin MyRio2c", 
                 "rafadr@hotmail.com", 
                 2, 
-                "MyRio2C 2020", 
+                "Rio2C 2020", 
                 2020, 
                 "pt-BR"));
             return await Json(new { status = "success", message = "Welcome email sent." });

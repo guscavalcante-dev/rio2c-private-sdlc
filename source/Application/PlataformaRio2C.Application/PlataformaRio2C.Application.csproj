@@ -272,7 +272,6 @@
     <Compile Include="CQRS\Queries\SalesPlatformWebhookRequests\FindAllSalesPlatformWebhooRequestsDtoByPending.cs" />
     <Compile Include="CQRS\Queries\SalesPlatforms\FindSalesPlatformDtoByName.cs" />
     <Compile Include="Dtos\CustomFormSympla.cs" />
-    <Compile Include="Dtos\Editions\EditionDto.cs" />
     <Compile Include="Dtos\GroupCountryDto.cs" />
     <Compile Include="Dtos\GroupCountrySearchDto.cs" />
     <Compile Include="Dtos\HeaderDtoSympla.cs" />
@@ -566,6 +565,7 @@
     <Folder Include="CQRS\Commands\SalesPlatforms\" />
     <Folder Include="CQRS\EventsHandlers\" />
     <Folder Include="CQRS\Events\" />
+    <Folder Include="Dtos\Editions\" />
     <Folder Include="Enums\" />
     <Folder Include="Interfaces\Api\" />
     <Folder Include="ViewModels\Common\ProducerProject\" />

@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Application
+// Assembly         : PlataformaRio2C.Domain
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-09-2019
+// Last Modified On : 09-10-2019
 // ***********************************************************************
 // <copyright file="EditionDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,7 +13,7 @@
 // ***********************************************************************
 using System;
 
-namespace PlataformaRio2C.Application.Dtos
+namespace PlataformaRio2C.Domain.Dtos
 {
     /// <summary>EditionDto</summary>
     public class EditionDto

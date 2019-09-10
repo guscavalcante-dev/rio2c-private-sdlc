@@ -754,6 +754,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Caro.
+        /// </summary>
+        public static string Dear {
+            get {
+                return ResourceManager.GetString("Dear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to excluída.
         /// </summary>
         public static string DeletedF {
@@ -3202,7 +3211,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bem-vindo ao MyRio2C | RioContentMarket 2019!.
+        ///   Looks up a localized string similar to Bem-vindo ao Rio2C | RioContentMarket {0}!.
         /// </summary>
         public static string Welcome {
             get {

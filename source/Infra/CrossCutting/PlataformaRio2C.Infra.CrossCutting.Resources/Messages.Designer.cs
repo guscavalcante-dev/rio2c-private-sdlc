@@ -1341,6 +1341,51 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A sua credencial foi adquirida com sucesso!.
+        /// </summary>
+        public static string WelcomeEmailMessage1 {
+            get {
+                return ResourceManager.GetString("WelcomeEmailMessage1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to É necessário acessar a plataforma &lt;b&gt;MyRio2C&lt;/b&gt; para realizar seu registro e de sua empresa nas Rodadas de Negócios. Por gentileza, clique no botão abaixo e utilize o mesmo endereço de e-mail para fazer o acesso..
+        /// </summary>
+        public static string WelcomeEmailMessage2 {
+            get {
+                return ResourceManager.GetString("WelcomeEmailMessage2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Em caso de dúvidas, entre em contato com a nossa equipe em:.
+        /// </summary>
+        public static string WelcomeEmailMessage3 {
+            get {
+                return ResourceManager.GetString("WelcomeEmailMessage3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VENHA FAZER PARTE DO RIO2C.
+        /// </summary>
+        public static string WelcomeEmailMessage4 {
+            get {
+                return ResourceManager.GetString("WelcomeEmailMessage4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sua oportunidade de viver dias incríveis de aprendizado, negócios, networking e experiências..
+        /// </summary>
+        public static string WelcomeEmailMessage5 {
+            get {
+                return ResourceManager.GetString("WelcomeEmailMessage5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Você pode selecionar no máximo {0} players.
         /// </summary>
         public static string YouCanSelectUpToXPlayers {

@@ -1,5 +1,6 @@
-﻿@{
-    ViewBag.Title = Labels.Welcome;
+﻿@using PlataformaRio2C.Domain.Dtos
+@{
+    ViewBag.Title = string.Format(Labels.Welcome, (ViewBag.EditionDto as EditionDto)?.UrlCode);
 }
 <div class="row">
     <!--begin:Middle column-->
@@ -20,7 +21,6 @@
                     </div>
                 </div>
             </div>*@
-
         <!--end:Welcome -->
     </div>
     <!--end:Middle column-->

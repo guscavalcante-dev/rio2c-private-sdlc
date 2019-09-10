@@ -334,8 +334,8 @@
     <comment>Termo de uso</comment>
   </data>
   <data name="Welcome" xml:space="preserve">
-    <value>Bem-vindo ao MyRio2C | RioContentMarket 2019!</value>
-    <comment>Bem-vindo ao MyRio2C | RioContentMarket 2019!</comment>
+    <value>Bem-vindo ao Rio2C | RioContentMarket {0}!</value>
+    <comment>Bem-vindo ao Rio2C | RioContentMarket {0}!</comment>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>Confirme a senha</value>
@@ -1399,5 +1399,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Talents" xml:space="preserve">
     <value>Talentos</value>
     <comment>Talentos</comment>
+  </data>
+  <data name="Dear" xml:space="preserve">
+    <value>Caro</value>
+    <comment>Caro</comment>
   </data>
 </root>

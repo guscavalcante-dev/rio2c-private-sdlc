@@ -595,4 +595,24 @@
     <value>Dados do player {0}</value>
     <comment>Dados do player {0}</comment>
   </data>
+  <data name="WelcomeEmailMessage1" xml:space="preserve">
+    <value>A sua credencial foi adquirida com sucesso!</value>
+    <comment>A sua credencial foi adquirida com sucesso!</comment>
+  </data>
+  <data name="WelcomeEmailMessage2" xml:space="preserve">
+    <value>É necessário acessar a plataforma &lt;b&gt;MyRio2C&lt;/b&gt; para realizar seu registro e de sua empresa nas Rodadas de Negócios. Por gentileza, clique no botão abaixo e utilize o mesmo endereço de e-mail para fazer o acesso.</value>
+    <comment>É necessário acessar a plataforma &lt;b&gt;MyRio2C&lt;/b&gt; para realizar seu registro e de sua empresa nas Rodadas de Negócios. Por gentileza, clique no botão abaixo e utilize o mesmo endereço de e-mail para fazer o acesso.</comment>
+  </data>
+  <data name="WelcomeEmailMessage3" xml:space="preserve">
+    <value>Em caso de dúvidas, entre em contato com a nossa equipe em:</value>
+    <comment>Em caso de dúvidas, entre em contato com a nossa equipe em:</comment>
+  </data>
+  <data name="WelcomeEmailMessage4" xml:space="preserve">
+    <value>VENHA FAZER PARTE DO RIO2C</value>
+    <comment>VENHA FAZER PARTE DO RIO2C</comment>
+  </data>
+  <data name="WelcomeEmailMessage5" xml:space="preserve">
+    <value>Sua oportunidade de viver dias incríveis de aprendizado, negócios, networking e experiências.</value>
+    <comment>Sua oportunidade de viver dias incríveis de aprendizado, negócios, networking e experiências.</comment>
+  </data>
 </root>

@@ -37,6 +37,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         protected IdentityAutenticationService IdentityController;
         protected string Environment;
         protected string UserInterfaceLanguage;
+        protected EditionDto EditionDto;
         protected int? EditionId;
         protected Guid? EditionUid;
         protected int UserId;
@@ -166,11 +167,12 @@ namespace PlataformaRio2C.Web.Site.Controllers
             // Check current edition on url parameter
             if (routeEdition.HasValue)
             {
-                var currentRoute = activeEditions.FirstOrDefault(ae => ae.UrlCode == routeEdition);
-                if (currentRoute != null)
+                var edition = activeEditions.FirstOrDefault(ae => ae.UrlCode == routeEdition);
+                if (edition != null)
                 {
-                    ViewBag.EditionId = this.EditionId = currentRoute.Id;
-                    ViewBag.EditionUid = this.EditionUid = currentRoute.Uid;
+                    ViewBag.EditionDto = this.EditionDto = edition;
+                    ViewBag.EditionId = this.EditionId = edition.Id;
+                    ViewBag.EditionUid = this.EditionUid = edition.Uid;
                     return false;
                 }
             }

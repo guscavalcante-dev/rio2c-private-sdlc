@@ -4,7 +4,7 @@
 // Created          : 08-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-02-2019
+// Last Modified On : 09-10-2019
 // ***********************************************************************
 // <copyright file="FindAllEditionsByIsActiveQueryHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Queries;
-using PlataformaRio2C.Application.Dtos;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.QueriesHandlers

@@ -590,4 +590,24 @@
     <value>Informations for player {0}</value>
     <comment>Dados do player {0}</comment>
   </data>
+  <data name="WelcomeEmailMessage1" xml:space="preserve">
+    <value>Your credential was successfully acquired!</value>
+    <comment>Your credential was successfully acquired!</comment>
+  </data>
+  <data name="WelcomeEmailMessage2" xml:space="preserve">
+    <value>It´s necessary to access and register yourself and your company for the One-to-One meetings at &lt;b&gt;MyRio2C&lt;/b&gt; platform. Please click on the button below and use the same email address to login.</value>
+    <comment>É necessário acessar a plataforma &lt;b&gt;MyRio2C&lt;/b&gt; para realizar seu registro e de sua empresa nas Rodadas de Negócios. Por gentileza, clique no botão abaixo e utilize o mesmo endereço de e-mail para fazer o acesso.</comment>
+  </data>
+  <data name="WelcomeEmailMessage3" xml:space="preserve">
+    <value>If you have any questions, please do not hesitate to get in touch with our team at:</value>
+    <comment>Em caso de dúvidas, entre em contato com a nossa equipe em:</comment>
+  </data>
+  <data name="WelcomeEmailMessage4" xml:space="preserve">
+    <value>COME BE A PART OF RIO2C</value>
+    <comment>VENHA FAZER PARTE DO RIO2C</comment>
+  </data>
+  <data name="WelcomeEmailMessage5" xml:space="preserve">
+    <value>This is your chance to experience days filled with great content, doing business, networking and sharing amazing experiences.</value>
+    <comment>Sua oportunidade de viver dias incríveis de aprendizado, negócios, networking e experiências.</comment>
+  </data>
 </root>
