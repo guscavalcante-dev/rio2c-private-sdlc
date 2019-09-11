@@ -15,6 +15,10 @@
     .r2c-side-menu {
         display: block !important;
     }
+
+    .r2c-header-menu {
+        display: none !important;
+    }
 }
 
 /* Large devices (desktops, 992px and up)*/

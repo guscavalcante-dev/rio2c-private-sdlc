@@ -5,7 +5,7 @@
     var menuOpenCssClass = "kt-menu__item--open";
 }
 
-<ul class="kt-menu__nav ">
+<ul class="kt-menu__nav r2c-header-menu">
     <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "Index", "Home", null)" aria-haspopup="true">
         <a href="@(ViewBag.Environment == "dev" ? "#" : Url.Action("Index", "Home", new { Area = "" }))" class="kt-menu__link">
             <span class="kt-menu__link-text">@Labels.Dashboard</span>
