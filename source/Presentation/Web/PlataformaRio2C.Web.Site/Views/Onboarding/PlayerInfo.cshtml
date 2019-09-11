@@ -3,9 +3,9 @@
 @using PlataformaRio2C.Domain.Entities
 @model PlataformaRio2C.Application.CQRS.Commands.OnboardOrganizationData
 @{
+    Layout = "~/Views/Themes/Metronic/_Internal.cshtml";
     ViewBag.Title = Labels.Welcome;
-}
-@{
+
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var playerAttendeeOrganizations = ViewBag.PlayerAttendeeOrganizations as List<AttendeeOrganization>;
     var player = playerAttendeeOrganizations?.FirstOrDefault(pao => pao.Organization.Uid == Model.OrganizationUid)?.Organization;

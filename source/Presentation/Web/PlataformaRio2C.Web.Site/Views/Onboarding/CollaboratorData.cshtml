@@ -1,9 +1,8 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @model PlataformaRio2C.Application.CQRS.Commands.OnboardCollaboratorData
 @{
+    Layout = "~/Views/Themes/Metronic/_Internal.cshtml";
     ViewBag.Title = Labels.Welcome;
-}
-@{
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
 }
 <div class="kt-portlet">

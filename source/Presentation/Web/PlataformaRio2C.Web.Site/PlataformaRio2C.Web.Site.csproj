@@ -7058,7 +7058,7 @@
     <Content Include="Views\Shared\_LayoutBasic.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Modals\Onboarding.cshtml" />
-    <Content Include="Views\Onboarding\Index.cshtml" />
+    <Content Include="Views\Onboarding\Index.Remove.cshtml" />
     <Content Include="Views\MailerService\Welcome.cshtml" />
     <Content Include="Views\MailerService\_SiteEmailLayout.cshtml" />
     <Content Include="Views\Onboarding\AccessData.cshtml" />
