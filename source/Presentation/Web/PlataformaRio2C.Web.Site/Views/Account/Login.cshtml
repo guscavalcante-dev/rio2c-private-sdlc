@@ -18,7 +18,7 @@
             @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
         </div>
         <div class="form-group">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Password) })
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control showhidepassword", placeholder = Html.DisplayNameFor(m => m.Password) })
             @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
         </div>
         <!--begin::Action-->
@@ -60,8 +60,13 @@
 <!--end::Signin-->
 @section Styles {
     @Styles.Render("~/bundles/css/loginCustomStyles.css")
+    @Styles.Render("~/bundles/css/hideshowpassword.css")
 }
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/js/loginCustomScripts.js")
+    @Scripts.Render("~/bundles/js/hideshowpassword.js")
+    <script type="text/javascript">
+        MyRio2cShowHidePassword.init();
+    </script>
 }

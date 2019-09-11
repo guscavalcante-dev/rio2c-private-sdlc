@@ -362,6 +362,12 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\components\hideshowpassword\css\example.minimal.css" />
+    <Content Include="Assets\components\hideshowpassword\css\example.wink.css" />
+    <Content Include="Assets\components\hideshowpassword\hideShowPassword.js" />
+    <Content Include="Assets\components\hideshowpassword\hideShowPassword.min.js" />
+    <Content Include="Assets\components\hideshowpassword\images\wink.png" />
+    <Content Include="Assets\components\hideshowpassword\images\wink.svg" />
     <Content Include="Assets\img\bg-2.jpg" />
     <Content Include="Assets\img\bg-3.jpg" />
     <Content Include="Assets\img\logo-rio2c-footer.png" />
@@ -398,6 +404,7 @@
     <Content Include="Assets\js\collaborators\collaborators.totalcount.widget.js" />
     <Content Include="Assets\js\collaborators\collaborators.update.js" />
     <Content Include="Assets\js\attendeeorganizations\attendeeorganizations.form.js" />
+    <Content Include="Assets\js\myrio2c.showhidepassword.js" />
     <Content Include="Assets\js\organizations\organizations.create.js" />
     <Content Include="Assets\js\organizations\organizations.datatable.widget.js" />
     <Content Include="Assets\js\organizations\organizations.delete.js" />
@@ -6927,6 +6934,8 @@
     <Content Include="Assets\themes\metronic\vendors\general\wnumb\bower.json" />
     <Content Include="Assets\themes\metronic\vendors\general\wnumb\package.json" />
     <Content Include="Assets\themes\metronic\vendors\general\wnumb\README.md" />
+    <Content Include="Assets\components\hideshowpassword\.gitignore" />
+    <Content Include="Assets\components\hideshowpassword\README.md" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

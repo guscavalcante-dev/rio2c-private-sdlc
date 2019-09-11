@@ -360,6 +360,12 @@
     <Content Include="Assets\components\cropper\dist\cropper.min.js" />
     <Content Include="Assets\components\datatables\datatables.en-us.js" />
     <Content Include="Assets\components\datatables\datatables.pt-br.js" />
+    <Content Include="Assets\components\hideshowpassword\css\example.minimal.css" />
+    <Content Include="Assets\components\hideshowpassword\css\example.wink.css" />
+    <Content Include="Assets\components\hideshowpassword\hideShowPassword.js" />
+    <Content Include="Assets\components\hideshowpassword\hideShowPassword.min.js" />
+    <Content Include="Assets\components\hideshowpassword\images\wink.png" />
+    <Content Include="Assets\components\hideshowpassword\images\wink.svg" />
     <Content Include="Assets\components\jquery.form\jquery.form.js" />
     <Content Include="Assets\css\myrio2c.common.responsive.css" />
     <Content Include="Assets\css\myrio2c.common.css" />
@@ -374,6 +380,7 @@
     <Content Include="Assets\img\logo_rio2c_white.png" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
     <Content Include="Assets\js\myrio2c.common.js" />
+    <Content Include="Assets\js\myrio2c.showhidepassword.js" />
     <Content Include="Assets\js\myrio2c.cropper.js" />
     <Content Include="Assets\js\onboarding\onboarding.organizationdata.js" />
     <Content Include="Assets\js\onboarding\onboarding.collaboratordata.js" />
@@ -6329,6 +6336,8 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Assets\components\hideshowpassword\.gitignore" />
+    <Content Include="Assets\components\hideshowpassword\README.md" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />

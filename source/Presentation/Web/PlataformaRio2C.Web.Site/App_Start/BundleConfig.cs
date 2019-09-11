@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-09-2019
+// Last Modified On : 09-11-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -184,6 +184,17 @@ namespace PlataformaRio2C.Web.Site
             bundles.Add(new ScriptBundle("~/bundles/js/cropper.js").Include(
                 "~/Assets/components/cropper/dist/cropper.js",
                 "~/Assets/js/myrio2c.cropper.js"));
+
+            #endregion
+
+            #region Hide Show Password
+
+            bundles.Add(new StyleBundle("~/bundles/css/hideshowpassword.css")
+                .Include("~/Assets/components/hideshowpassword/css/example.wink.css", new CssRewriteUrlTransform()));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/hideshowpassword.js").Include(
+                "~/Assets/components/hideshowpassword/hideShowPassword.js",
+                "~/Assets/js/myrio2c.showhidepassword.js"));
 
             #endregion
 
