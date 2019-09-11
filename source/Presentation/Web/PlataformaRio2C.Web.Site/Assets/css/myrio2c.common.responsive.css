@@ -12,6 +12,9 @@
         height: 150px;
         width: 150px;
     }
+    .r2c-side-menu {
+        display: block !important;
+    }
 }
 
 /* Large devices (desktops, 992px and up)*/

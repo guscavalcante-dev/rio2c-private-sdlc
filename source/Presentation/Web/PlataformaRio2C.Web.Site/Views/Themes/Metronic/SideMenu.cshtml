@@ -101,7 +101,7 @@
 </div>*@
 <!--End:Mini  Company Profile-->
 <!--Begin:Shortcuts-->
-<div class="kt-portlet">
+<div class="kt-portlet r2c-side-menu">
     <div class="kt-portlet__head">
         <div class="kt-portlet__head-label">
             <h3 class="kt-portlet__head-title">
@@ -155,7 +155,7 @@
                         </a>
                     </li>
                     <li class="kt-nav__item">
-                        <a class="kt-nav__link @(ViewBag.Environment != "dev" ? "btn-link disabled" : string.Empty)" href="@(ViewBag.Environment == "dev" ? "#" : Url.Action("Index", "Schedule", new { Area = "" }))">
+                        <a class="kt-nav__link @(ViewBag.Environment != "dev" ? "btn-link disabled" : string.Empty)" href="@(ViewBag.Environment == "dev" ? "#" : Url.Action("Index", "Conference", new { Area = "" }))">
                             <span class="kt-nav__link-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -169,7 +169,7 @@
                         </a>
                     </li>
                     <li class="kt-nav__item">
-                        <a class="kt-nav__link @(ViewBag.Environment != "dev" ? "btn-link disabled" : string.Empty)" href="@(ViewBag.Environment == "dev" ? "#" : Url.Action("Index", "Conference", new { Area = "" }))">
+                        <a class="kt-nav__link @(ViewBag.Environment != "dev" ? "btn-link disabled" : string.Empty)" href="@(ViewBag.Environment == "dev" ? "#" : Url.Action("Index", "Schedule", new { Area = "" }))">
                             <span class="kt-nav__link-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">

@@ -196,3 +196,10 @@ a.r2c-login__footer-link, a.r2c-footer-link {
 .blockUI.blockMsg.blockPage.blockUIModal {
     z-index: 2011 !important;
 }
+
+/*
+    Menu
+*/
+.r2c-side-menu{
+    display:none !important;
+}
