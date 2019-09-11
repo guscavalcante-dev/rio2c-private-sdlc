@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-23-2019
+// Last Modified On : 09-11-2019
 // ***********************************************************************
 // <copyright file="CountryRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -102,7 +102,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery();
 
             return await query
-                            .OrderBy(c => c.Name)
                             .Select(c => new CountryBaseDto
                             {
                                 Id = c.Id,
@@ -112,8 +111,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 CreateDate = c.CreateDate,
                                 CreateUserId = c.CreateUserId,
                                 UpdateDate = c.UpdateDate,
-                                UpdateUserId = c.UpdateUserId
-                            }).ToListAsync();
+                                UpdateUserId = c.UpdateUserId,
+                                Ordering = (c.Code == "BR" ? 0 : 1)
+                            })
+                            .OrderBy(c => c.Ordering).ThenBy(c => c.Name)
+                            .ToListAsync();
         }
     }
 }
