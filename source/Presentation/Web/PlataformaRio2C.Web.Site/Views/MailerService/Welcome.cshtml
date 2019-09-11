@@ -19,19 +19,22 @@
         <span style="font-style: italic; color: red;">It´s necessary to access and register yourself and your company for the One-to-One meetings at MyRio2C platform. Please click on the button below and use the same email address to login.</span>
     </p>
     <div>
-        <!--[if mso]>
-            <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="http://" style="height:40px;v-text-anchor:middle;width:200px;" arcsize="15%" stroke="f" fillcolor="#ea202c">
-            <w:anchorlock/>
-        <![endif]-->
-        <center>
-            <p style="margin-top: 40px; margin-bottom: 40px;">
-                <a href="@Url.Abs(Url.Action("Onboarding", "Account", new { culture = Model.UserInterfaceLanguage, edition = Model.EditionUrlCode, email = Model.RecipientEmail, uid = Model.RecipientUserUid, token = Model.UserSecurityToken }))"
-                   style="background-color:#ea202c;border-radius:6px;color:#ffffff;display:inline-block;font-family:sans-serif;font-size:16px;font-weight:bold;line-height:40px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;">Clique Aqui / Click here</a>
-            </p>
-        </center>
-        <!--[if mso]>
-            </v:roundrect>
-        <![endif]-->
+
+        <!--Button:begin-->
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tr>
+                <td align="center">
+                    <table cellpadding="0" cellspacing="0" width="250" border="0" style="border-collapse: separate !important;">
+                        <tr>
+                            <td style="background-color:#EA202C;color:#FFFFFF;font-family:sans-serif;font-size:16px;font-weight:bold;padding:10px 10px;border-radius:10px;text-align:center;">
+                                <a href="@Url.Abs(Url.Action("Onboarding", "Account", new { culture = Model.UserInterfaceLanguage, edition = Model.EditionUrlCode, email = Model.RecipientEmail, uid = Model.RecipientUserUid, token = Model.UserSecurityToken }))" style="color:#FFFFFF;text-decoration:none;">Clique Aqui / Click here</a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <!--Button:end-->
     </div>
     <p>
         <span>
