@@ -61,7 +61,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aceitar regulamento.
+        ///   Looks up a localized string similar to Declaro estar ciente e concordar com as regras e regulamentos acima..
         /// </summary>
         public static string AcceptTermsAndConditions {
             get {
@@ -1278,7 +1278,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Para prosseguir você deve aceitar o regulamento.
+        ///   Looks up a localized string similar to Para prosseguir você deve aceitar as regras e regulamentos.
         /// </summary>
         public static string ToProceedYouMustAcceptTheTerm {
             get {
