@@ -368,6 +368,7 @@
     <Content Include="SqlScripts\01_Schema.sql" />
     <Content Include="SqlScripts\03_TicketSettings.sql" />
     <Content Include="SqlScripts\04_InitialData.sql" />
+    <Content Include="SqlScripts\Deltas\20190912_160912_0005_ChangesForAddresses.sql" />
     <Content Include="SqlScripts\Deltas\20190911_201610_0004_ChangesForOnboardingUserTerms.sql" />
     <Content Include="SqlScripts\Deltas\20190909_074621_0003_ChangesForOnboarding.sql" />
     <Content Include="SqlScripts\Deltas\20190902_145415_0002_ChangesForOnboarding.sql" />
