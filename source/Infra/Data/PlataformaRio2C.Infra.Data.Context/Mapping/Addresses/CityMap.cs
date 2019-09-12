@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 09-12-2019
 // ***********************************************************************
 // <copyright file="CityMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,7 +33,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                 .HasForeignKey(d => d.StateId);
 
             this.HasMany(t => t.Addresses)
-                .WithRequired(e => e.City)
+                .WithOptional(e => e.City)
                 .HasForeignKey(e => e.CityId);
         }
     }

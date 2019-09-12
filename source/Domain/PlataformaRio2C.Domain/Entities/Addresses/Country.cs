@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 09-12-2019
 // ***********************************************************************
 // <copyright file="Country.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,6 +33,7 @@ namespace PlataformaRio2C.Domain.Entities
         public bool IsManual { get; private set; }
 
         public virtual ICollection<State> States { get; private set; }
+        public virtual ICollection<Address> Addresses { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="Country"/> class.</summary>
         /// <param name="name">The name.</param>
@@ -76,14 +77,30 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
             this.DeleteStates(userId);
+            this.DeleteAddresses(userId);
 
-            if (this.FindAllStatesNotDeleted()?.Any() == false)
+            if (this.FindAllStatesNotDeleted()?.Any() == false && this.FindAllAddressesNotDeleted()?.Any() == false)
             {
                 this.IsDeleted = true;
             }
         }
 
         #region States
+
+        /// <summary>Finds the state.</summary>
+        /// <param name="stateUid">The state uid.</param>
+        /// <param name="stateName">Name of the state.</param>
+        /// <param name="isManual">if set to <c>true</c> [is manual].</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public State FindState(
+            Guid? stateUid,
+            string stateName,
+            bool isManual,
+            int userId)
+        {
+            return this.FindOrCreateState(stateUid, stateName, isManual, userId);
+        }
 
         /// <summary>Deletes the states.</summary>
         /// <param name="userId">The user identifier.</param>
@@ -172,6 +189,27 @@ namespace PlataformaRio2C.Domain.Entities
         {
             var state = this.FindOrCreateState(stateUid, stateName, isManual, userId);
             return state?.FindCity(cityUid, cityName, isManual, userId);
+        }
+
+        #endregion
+
+        #region Addresses
+
+        /// <summary>Deletes the addresses.</summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteAddresses(int userId)
+        {
+            foreach (var address in this.FindAllAddressesNotDeleted())
+            {
+                address?.Delete(userId);
+            }
+        }
+
+        /// <summary>Finds all addresses not deleted.</summary>
+        /// <returns></returns>
+        private List<Address> FindAllAddressesNotDeleted()
+        {
+            return this.Addresses?.Where(n => !n.IsDeleted)?.ToList();
         }
 
         #endregion

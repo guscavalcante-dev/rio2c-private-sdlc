@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-09-2019
+// Last Modified On : 09-12-2019
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -263,8 +263,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 {
                                     Id = c.Address.Id,
                                     Uid = c.Address.Uid,
-                                    CountryUid = c.Address.City.State.Country.Uid,
-                                    StateUid = c.Address.City.State.Uid,
+                                    CountryUid = c.Address.Country.Uid,
+                                    StateUid = c.Address.State.Uid,
                                     CityUid = c.Address.City.Uid,
                                     Address1 = c.Address.Address1,
                                     Address2 = c.Address.Address2,

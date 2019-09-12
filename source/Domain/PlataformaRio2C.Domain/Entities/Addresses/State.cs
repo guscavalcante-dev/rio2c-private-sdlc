@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 09-12-2019
 // ***********************************************************************
 // <copyright file="State.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -36,6 +36,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         public virtual Country Country { get; private set; }
         public virtual ICollection<City> Cities { get; private set; }
+        public virtual ICollection<Address> Addresses { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="State"/> class.</summary>
         /// <param name="country">The country.</param>
@@ -82,8 +83,9 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
             this.DeleteCities(userId);
+            this.DeleteAddresses(userId);
 
-            if (this.FindAllCitiesNotDeleted()?.Any() == false)
+            if (this.FindAllCitiesNotDeleted()?.Any() == false && this.FindAllAddressesNotDeleted()?.Any() == false)
             {
                 this.IsDeleted = true;
             }
@@ -165,6 +167,27 @@ namespace PlataformaRio2C.Domain.Entities
         public City FindCity(Guid? cityUid, string cityName, bool isManual, int userId)
         {
             return this.FindOrCreateCity(cityUid, cityName, isManual, userId);
+        }
+
+        #endregion
+
+        #region Addresses
+
+        /// <summary>Deletes the addresses.</summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteAddresses(int userId)
+        {
+            foreach (var address in this.FindAllAddressesNotDeleted())
+            {
+                address?.Delete(userId);
+            }
+        }
+
+        /// <summary>Finds all addresses not deleted.</summary>
+        /// <returns></returns>
+        private List<Address> FindAllAddressesNotDeleted()
+        {
+            return this.Addresses?.Where(n => !n.IsDeleted)?.ToList();
         }
 
         #endregion

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 09-12-2019
 // ***********************************************************************
 // <copyright file="CityMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,7 +34,15 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                 .HasMaxLength(Address.ZipCodeMaxLength);
 
             // Relationships
-            this.HasRequired(t => t.City)
+            this.HasOptional(t => t.Country)
+                .WithMany()
+                .HasForeignKey(d => d.CountryId);
+
+            this.HasOptional(t => t.State)
+                .WithMany()
+                .HasForeignKey(d => d.StateId);
+
+            this.HasOptional(t => t.City)
                 .WithMany()
                 .HasForeignKey(d => d.CityId);
 

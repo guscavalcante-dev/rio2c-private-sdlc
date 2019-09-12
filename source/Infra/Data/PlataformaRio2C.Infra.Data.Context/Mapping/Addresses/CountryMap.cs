@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-23-2019
+// Last Modified On : 09-12-2019
 // ***********************************************************************
 // <copyright file="CountryMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,6 +33,10 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             // Relationships
             this.HasMany(t => t.States)
                 .WithRequired(e => e.Country)
+                .HasForeignKey(e => e.CountryId);
+
+            this.HasMany(t => t.Addresses)
+                .WithOptional(e => e.Country)
                 .HasForeignKey(e => e.CountryId);
         }
     }

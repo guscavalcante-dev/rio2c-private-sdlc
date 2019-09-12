@@ -15,6 +15,14 @@ ALTER COLUMN CityId  int  NULL
 go
 
 ALTER TABLE "dbo"."Addresses"
+ALTER COLUMN Address1  varchar(200)  NULL
+go
+
+ALTER TABLE "dbo"."Addresses"
+ALTER COLUMN ZipCode  varchar(10)  NULL
+go
+
+ALTER TABLE "dbo"."Addresses"
     ADD CONSTRAINT "FK_Countries_Addresses_CountryId" FOREIGN KEY ("CountryId") REFERENCES "dbo"."Countries"("Id")
 go
 

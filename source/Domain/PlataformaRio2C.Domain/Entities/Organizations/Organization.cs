@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-10-2019
+// Last Modified On : 09-12-2019
 // ***********************************************************************
 // <copyright file="Organization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -361,11 +361,7 @@ namespace PlataformaRio2C.Domain.Entities
             bool addressIsManual,
             int userId)
         {
-            if (country == null)
-            {
-                this.Address?.Delete(userId);
-            }
-            else if (this.Address == null)
+            if (this.Address == null)
             {
                 this.Address = new Address(
                     country, 

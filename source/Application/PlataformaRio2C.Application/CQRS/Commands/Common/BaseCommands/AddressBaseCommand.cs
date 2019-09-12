@@ -4,7 +4,7 @@
 // Created          : 08-23-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-28-2019
+// Last Modified On : 09-12-2019
 // ***********************************************************************
 // <copyright file="AddressBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,27 +30,27 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         // State
         [Display(Name = "State", ResourceType = typeof(Labels))]
-        [RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "StateName")]
+        //[RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "StateName")]
         public Guid? StateUid { get; set; }
 
         [Display(Name = "State", ResourceType = typeof(Labels))]
-        [RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "StateUid")]
+        //[RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "StateUid")]
         [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string StateName { get; set; }
 
         // City
         [Display(Name = "City", ResourceType = typeof(Labels))]
-        [RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "CityName")]
+        //[RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "CityName")]
         public Guid? CityUid { get; set; }
 
         [Display(Name = "City", ResourceType = typeof(Labels))]
-        [RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "CityUid")]
+        //[RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "CityUid")]
         [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string CityName { get; set; }
 
         // Address
         [Display(Name = "Address1", ResourceType = typeof(Labels))]
-        [RequiredIfNotEmpty("CountryUid", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        //[RequiredIfNotEmpty("CountryUid", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(200, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Address1 { get; set; }
 
@@ -59,7 +59,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string Address2 { get; set; }
 
         [Display(Name = "ZipCode", ResourceType = typeof(Labels))]
-        [RequiredIfNotEmpty("CountryUid", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        //[RequiredIfNotEmpty("CountryUid", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(10, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string AddressZipCode { get; set; }
 

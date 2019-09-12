@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-09-2019
+// Last Modified On : 09-12-2019
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -229,8 +229,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 {
                                     Id = o.Address.Id,
                                     Uid = o.Address.Uid,
-                                    CountryUid = o.Address.City.State.Country.Uid,
-                                    StateUid = o.Address.City.State.Uid,
+                                    CountryUid = o.Address.Country.Uid,
+                                    StateUid = o.Address.State.Uid,
                                     CityUid = o.Address.City.Uid,
                                     Address1 = o.Address.Address1,
                                     Address2 = o.Address.Address2,
