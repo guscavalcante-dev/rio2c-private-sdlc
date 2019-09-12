@@ -620,4 +620,8 @@
     <value>Declaro estar ciente e concordar com as regras e regulamentos acima.</value>
     <comment>Declaro estar ciente e concordar com as regras e regulamentos acima.</comment>
   </data>
+  <data name="PlayerTerms" xml:space="preserve">
+    <value>Regulamento de Players</value>
+    <comment>Regulamento de Players</comment>
+  </data>
 </root>

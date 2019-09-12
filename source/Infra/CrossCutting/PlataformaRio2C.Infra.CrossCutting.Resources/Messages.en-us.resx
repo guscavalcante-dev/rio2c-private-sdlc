@@ -615,4 +615,8 @@
     <value>I declare that I am aware and agree with the above-mentioned rules and regulations.</value>
     <comment>Declaro estar ciente e concordar com as regras e regulamentos acima.</comment>
   </data>
+  <data name="PlayerTerms" xml:space="preserve">
+    <value>Player’s Regulation</value>
+    <comment>Regulamento de Players</comment>
+  </data>
 </root>

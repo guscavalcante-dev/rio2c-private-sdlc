@@ -801,6 +801,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Regulamento de Players.
+        /// </summary>
+        public static string PlayerTerms {
+            get {
+                return ResourceManager.GetString("PlayerTerms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Por favor clique aqui para logar..
         /// </summary>
         public static string PleaseClickHereToLogin {
