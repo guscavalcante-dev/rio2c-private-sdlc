@@ -616,4 +616,8 @@
     <value>Sua oportunidade de viver dias incríveis de aprendizado, negócios, networking e experiências.</value>
     <comment>Sua oportunidade de viver dias incríveis de aprendizado, negócios, networking e experiências.</comment>
   </data>
+  <data name="AcceptTermsAndConditions" xml:space="preserve">
+    <value>Aceitar regulamento</value>
+    <comment>Aceitar regulamento</comment>
+  </data>
 </root>

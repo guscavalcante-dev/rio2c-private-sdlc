@@ -58,7 +58,7 @@ var MyRio2cCommon = function () {
     };
 
     var fixSelect2Modal = function () {
-        $.fn.modal.Constructor.prototype.enforceFocus = function() {};
+        $.fn.modal.Constructor.prototype.enforceFocus = function () { };
     };
 
     var initScroll = function () {
@@ -78,6 +78,21 @@ var MyRio2cCommon = function () {
                 }
             });
         });
+    };
+
+    var extendGlobalValidations = function () {
+        // extend jquery range validator to work for required checkboxes
+        var defaultRangeValidator = $.validator.methods.range;
+        $.validator.methods.range = function (value, element, param) {
+            if (element.type === 'checkbox') {
+                // if it's a checkbox return true if it is checked
+                return element.checked;
+            }
+            else {
+                // otherwise run the default validation function
+                return defaultRangeValidator.call(this, value, element, param);
+            }
+        };
     };
 
     // General ------------------------------------------------------------------------------------
@@ -123,7 +138,7 @@ var MyRio2cCommon = function () {
         return urlPrefix + url;
     };
 
-    var getCultureUppercase = function(culture) {
+    var getCultureUppercase = function (culture) {
         if (isNullOrEmpty(culture)) {
             return '';
         }
@@ -138,7 +153,7 @@ var MyRio2cCommon = function () {
     };
 
     // Forms --------------------------------------------------------------------------------------
-    var enableCustomValidation = function() {
+    var enableCustomValidation = function () {
         jQuery.validator.addMethod("requiredifonenotemptyandotherempty", function (value, element, params) {
             var dependentPropertyNotEmpty = foolproof.getId(element, params["dependentpropertynotempty"]);
             var dependentPropertyNotEmptyValue = $('#' + dependentPropertyNotEmpty).val();
@@ -187,7 +202,7 @@ var MyRio2cCommon = function () {
         if (enableHiddenInputsValidation === true) {
             var validator = $(options.formIdOrClass).data('validator');
             if (undefined != validator) {
-                 validator.settings.ignore = "";
+                validator.settings.ignore = "";
             }
         }
     };
@@ -203,8 +218,8 @@ var MyRio2cCommon = function () {
 
         $(options.inputIdOrClass).select2({
             language: globalVariables.userInterfaceLanguageUppercade,
-             width: '100%'
-        });  
+            width: '100%'
+        });
     };
 
     // Hide/Show Element --------------------------------------------------------------------------
@@ -251,7 +266,7 @@ var MyRio2cCommon = function () {
         return false;
     };
 
-    var enableFieldEdit = function(options) {
+    var enableFieldEdit = function (options) {
         if (!hasProperty(options, 'dataId') || isNullOrEmpty(options.dataId)) {
             return false;
         }
@@ -305,7 +320,7 @@ var MyRio2cCommon = function () {
         }
 
         var data = options.data;
-        
+
         // Undefined Error (no data.status)
         if (!hasProperty(data, 'status') || isNullOrEmpty(data.status)) {
             data.status = 'error';
@@ -318,7 +333,7 @@ var MyRio2cCommon = function () {
                     message: data.message + " " + redirectMessage,
                     messageType: data.status,
                     isFixed: data.isFixed,
-                    callbackOnHidden: function() {
+                    callbackOnHidden: function () {
                         window.location.replace(data.redirect);
                     }
                 });
@@ -403,7 +418,7 @@ var MyRio2cCommon = function () {
                     message: data.message + " " + redirectMessage,
                     messageType: data.status,
                     isFixed: data.isFixed,
-                    callbackOnHidden: function() {
+                    callbackOnHidden: function () {
                         if (data.redirect.toLowerCase() === "/accounts/login")
                             window.location.replace(data.redirect +
                                 "?ReturnUrl=" +
@@ -433,7 +448,7 @@ var MyRio2cCommon = function () {
             }
 
             // Form with error
-            if (hasProperty(options, 'formDivIdOrClass') && !isNullOrEmpty(options.formDivIdOrClass) && hasProperty(data, 'page') && !isNullOrEmpty(data.page) ) {
+            if (hasProperty(options, 'formDivIdOrClass') && !isNullOrEmpty(options.formDivIdOrClass) && hasProperty(data, 'page') && !isNullOrEmpty(data.page)) {
                 MyRio2cCommon.showAlert({ message: data.message, messageType: data.status, isFixed: data.isFixed });
 
                 $(options.formDivIdOrClass).html(data.page);
@@ -670,9 +685,10 @@ var MyRio2cCommon = function () {
                 enableAjaxForbiddenCatch();
                 fixSelect2Modal();
                 initScroll();
+                extendGlobalValidations();
             });
         },
-        getGlobalVariables: function() {
+        getGlobalVariables: function () {
             return getGlobalVariables();
         },
         getGlobalVariable: function (key) {
@@ -720,10 +736,10 @@ var MyRio2cCommon = function () {
         handleAjaxReturn: function (options) {
             return handleAjaxReturn(options);
         },
-        enableCkEditor: function(options) {
+        enableCkEditor: function (options) {
             enableCkEditor(options);
         },
-        updateCkEditorElements: function() {
+        updateCkEditorElements: function () {
             updateCkEditorElements();
         },
         enableAjaxForm: function (options) {

@@ -80,6 +80,21 @@ var MyRio2cCommon = function () {
         });
     };
 
+    var extendGlobalValidations = function () {
+        // extend jquery range validator to work for required checkboxes
+        var defaultRangeValidator = $.validator.methods.range;
+        $.validator.methods.range = function (value, element, param) {
+            if (element.type === 'checkbox') {
+                // if it's a checkbox return true if it is checked
+                return element.checked;
+            }
+            else {
+                // otherwise run the default validation function
+                return defaultRangeValidator.call(this, value, element, param);
+            }
+        };
+    };
+
     // General ------------------------------------------------------------------------------------
     var hasProperty = function (obj, key) {
         return key.split(".").every(function (x) {
@@ -518,6 +533,18 @@ var MyRio2cCommon = function () {
         });
     };
 
+    var updateCkEditorElements = function () {
+        if (isNullOrEmpty(window.CKEDITOR)) {
+            return;
+        }
+
+        for (var instance in CKEDITOR.instances) {
+            if (CKEDITOR.instances.hasOwnProperty(instance)) {
+                CKEDITOR.instances[instance].updateElement();
+            }
+        }
+    };
+
     // Ajax Form ----------------------------------------------------------------------------------
     var enableAjaxForm = function (options) {
 
@@ -658,6 +685,7 @@ var MyRio2cCommon = function () {
                 enableAjaxForbiddenCatch();
                 fixSelect2Modal();
                 initScroll();
+                extendGlobalValidations();
             });
         },
         getGlobalVariables: function () {

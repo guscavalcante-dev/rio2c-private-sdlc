@@ -4,7 +4,7 @@
 // Created          : 09-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-11-2019
+// Last Modified On : 09-12-2019
 // ***********************************************************************
 // <copyright file="OnboardPlayerTermsAcceptance.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,7 +13,6 @@
 // ***********************************************************************
 using System;
 using System.ComponentModel.DataAnnotations;
-using Foolproof;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
@@ -21,9 +20,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>OnboardPlayerTermsAcceptance</summary>
     public class OnboardPlayerTermsAcceptance : BaseCommand
     {
-        [Display(Name = "FirstName", ResourceType = typeof(Labels))]
-        //[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        //[RequiredIfTrue("True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [Range(typeof(bool), "true", "true", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "ToProceedYouMustAcceptTheTerm")]
         public bool AcceptTerms { get; set; }
 
         public Guid CollaboratorUid { get; private set; }

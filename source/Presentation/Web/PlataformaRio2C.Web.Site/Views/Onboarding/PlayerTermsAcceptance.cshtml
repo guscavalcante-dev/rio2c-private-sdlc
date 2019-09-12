@@ -10,7 +10,7 @@
         <div class="kt-grid  kt-wizard-v2 kt-wizard-v2--white" id="kt_wizard_v2" data-ktwizard-state="first">
             <div class="kt-grid__item kt-wizard-v2__aside">
                 <!--begin: Form Wizard Nav -->
-                @Html.Partial("Shared/_OnboardingMenu", 1)
+                @Html.Partial("Shared/_OnboardingMenu", 2)
                 <!--end: Form Wizard Nav -->
             </div>
             <div class="kt-grid__item kt-grid__item--fluid kt-wizard-v2__wrapper">
@@ -35,10 +35,10 @@
                                 <div class="row">
                                     <div class="form-group col-md-12">
                                         <label class="kt-checkbox">
-                                            @Html.CheckBoxFor(m => m.AcceptTerms, new { @class = "" }) @Messages.ToProceedYouMustAcceptTheTerm
+                                            @Html.CheckBoxFor(m => m.AcceptTerms, new { @class = "" }) @Messages.AcceptTermsAndConditions
                                             <span></span>
-                                            @Html.ValidationMessageFor(m => m.AcceptTerms, "", new { @class = "text-danger" })
-                                        </label>
+                                        </label><br/>
+                                        @Html.ValidationMessageFor(m => m.AcceptTerms, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>

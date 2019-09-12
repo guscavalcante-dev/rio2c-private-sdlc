@@ -4,7 +4,7 @@
 // Created          : 08-29-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-11-2019
+// Last Modified On : 09-12-2019
 // ***********************************************************************
 // <copyright file="OnboardingController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -69,16 +69,16 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            // Redirect if player terms acceptance is pending
-            if (this.UserAccessControlDto?.IsPlayerTermsAcceptanceFinished() != true)
-            {
-                return RedirectToAction("PlayerTermsAcceptance", "Onboarding");
-            }
-
             // Redirect to access data if not finished
             if (this.UserAccessControlDto?.IsUserOnboardingFinished() != true)
             {
                 return RedirectToAction("AccessData", "Onboarding");
+            }
+
+            // Redirect if player terms acceptance is pending
+            if (this.UserAccessControlDto?.IsPlayerTermsAcceptanceFinished() != true)
+            {
+                return RedirectToAction("PlayerTermsAcceptance", "Onboarding");
             }
 
             // Redirect to collaborator data if not finished
@@ -104,103 +104,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-
-        #region Player Terms Acceptance
-
-        /// <summary>Players the terms acceptance.</summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> PlayerTermsAcceptance()
-        {
-            if (this.UserAccessControlDto?.IsPlayerTermsAcceptanceFinished() == true)
-            {
-                return RedirectToAction("Index", "Onboarding");
-            }
-
-            #region Breadcrumb
-
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.WelcomeTitle, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Messages.CompleteYourRegistration, Url.Action("Index", "Onboarding"))
-            });
-
-            #endregion
-
-            this.SetViewBags();
-
-            var cmd = new OnboardPlayerTermsAcceptance();
-
-            return View(cmd);
-        }
-
-        /// <summary>Players the terms acceptance.</summary>
-        /// <param name="cmd">The command.</param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> PlayerTermsAcceptance(OnboardPlayerTermsAcceptance cmd)
-        {
-            if (this.UserAccessControlDto?.IsPlayerTermsAcceptanceFinished() == true)
-            {
-                return RedirectToAction("Index", "Onboarding");
-            }
-
-            #region Breadcrumb
-
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.WelcomeTitle, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Messages.CompleteYourRegistration, Url.Action("Index", "Onboarding"))
-            });
-
-            #endregion
-
-            this.SetViewBags();
-
-            var result = new AppValidationResult();
-
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-
-                cmd.UpdatePreSendProperties(
-                    this.UserAccessControlDto.Collaborator.Uid,
-                    this.UserAccessControlDto.User.Id,
-                    this.UserAccessControlDto.User.Uid,
-                    this.EditionId,
-                    this.EditionUid,
-                    this.UserInterfaceLanguage);
-                result = await this.CommandBus.Send(cmd);
-                if (!result.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-            }
-            catch (DomainException ex)
-            {
-                foreach (var error in result.Errors)
-                {
-                    var target = error.Target ?? "";
-                    ModelState.AddModelError(target, error.Message);
-                }
-
-                this.StatusMessageToastr(ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-
-                return View(cmd);
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
-                this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-
-                return View(cmd);
-            }
-
-            this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Labels.AccessData, Labels.UpdatedM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
-
-            return RedirectToAction("Index", "Onboarding");
-        }
-
-        #endregion
 
         #region Access Data
 
@@ -262,6 +165,103 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 cmd.UpdatePreSendProperties(
                     this.UserAccessControlDto.Collaborator.Uid,
                     this.IdentityController.HashPassword(cmd.Password),
+                    this.UserAccessControlDto.User.Id,
+                    this.UserAccessControlDto.User.Uid,
+                    this.EditionId,
+                    this.EditionUid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                this.StatusMessageToastr(ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+
+                return View(cmd);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
+                this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+
+                return View(cmd);
+            }
+
+            this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Labels.AccessData, Labels.UpdatedM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
+
+            return RedirectToAction("Index", "Onboarding");
+        }
+
+        #endregion
+
+        #region Player Terms Acceptance
+
+        /// <summary>Players the terms acceptance.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> PlayerTermsAcceptance()
+        {
+            if (this.UserAccessControlDto?.IsPlayerTermsAcceptanceFinished() == true)
+            {
+                return RedirectToAction("Index", "Onboarding");
+            }
+
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.WelcomeTitle, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Messages.CompleteYourRegistration, Url.Action("Index", "Onboarding"))
+            });
+
+            #endregion
+
+            this.SetViewBags();
+
+            var cmd = new OnboardPlayerTermsAcceptance();
+
+            return View(cmd);
+        }
+
+        /// <summary>Players the terms acceptance.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> PlayerTermsAcceptance(OnboardPlayerTermsAcceptance cmd)
+        {
+            if (this.UserAccessControlDto?.IsPlayerTermsAcceptanceFinished() == true)
+            {
+                return RedirectToAction("Index", "Onboarding");
+            }
+
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.WelcomeTitle, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Messages.CompleteYourRegistration, Url.Action("Index", "Onboarding"))
+            });
+
+            #endregion
+
+            this.SetViewBags();
+
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.UserAccessControlDto.Collaborator.Uid,
                     this.UserAccessControlDto.User.Id,
                     this.UserAccessControlDto.User.Uid,
                     this.EditionId,

@@ -61,6 +61,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aceitar regulamento.
+        /// </summary>
+        public static string AcceptTermsAndConditions {
+            get {
+                return ResourceManager.GetString("AcceptTermsAndConditions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Acesso negado..
         /// </summary>
         public static string AccessDenied {

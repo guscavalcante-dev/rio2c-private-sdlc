@@ -474,7 +474,7 @@
     <value>This project has already been submitted for the evaluation of players</value>
   </data>
   <data name="ToProceedYouMustAcceptTheTerm" xml:space="preserve">
-    <value>To proceed you must accept the terms</value>
+    <value>To proceed you must accept the terms and conditions</value>
     <comment>Para prosseguir você deve aceitar o regulamento</comment>
   </data>
   <data name="TradeNameIsRequired" xml:space="preserve">
@@ -610,5 +610,9 @@
   <data name="WelcomeEmailMessage5" xml:space="preserve">
     <value>This is your chance to experience days filled with great content, doing business, networking and sharing amazing experiences.</value>
     <comment>Sua oportunidade de viver dias incríveis de aprendizado, negócios, networking e experiências.</comment>
+  </data>
+  <data name="AcceptTermsAndConditions" xml:space="preserve">
+    <value>Accept terms and conditions</value>
+    <comment>Aceitar regulamento</comment>
   </data>
 </root>
