@@ -138,7 +138,7 @@
     <comment>Cancelar</comment>
   </data>
   <data name="CellPhone" xml:space="preserve">
-    <value>Cell Phone</value>
+    <value>Mobile</value>
     <comment>Celular</comment>
   </data>
   <data name="City" xml:space="preserve">
@@ -154,8 +154,8 @@
     <comment>Executivos</comment>
   </data>
   <data name="CompanyProfile" xml:space="preserve">
-    <value>Company Profile</value>
-    <comment>Resumo da Empresa</comment>
+    <value>Company profile</value>
+    <comment>Resumo sobre a empresa</comment>
   </data>
   <data name="Country" xml:space="preserve">
     <value>Country</value>
@@ -206,7 +206,7 @@
     <comment>Interesses</comment>
   </data>
   <data name="JobTitle" xml:space="preserve">
-    <value>Job Title</value>
+    <value>Job title</value>
     <comment>Cargo</comment>
   </data>
   <data name="Conferences" xml:space="preserve">
@@ -230,7 +230,7 @@
     <comment>Senha</comment>
   </data>
   <data name="PhoneNumber" xml:space="preserve">
-    <value>Phone Number</value>
+    <value>Phone number</value>
     <comment>Telefone</comment>
   </data>
   <data name="PhoneNumberConfirmed" xml:space="preserve">
@@ -266,8 +266,8 @@
     <comment>Selecionar imagem</comment>
   </data>
   <data name="SocialMedia" xml:space="preserve">
-    <value>Social Media</value>
-    <comment>Redes Sociais</comment>
+    <value>Social media</value>
+    <comment>Redes sociais</comment>
   </data>
   <data name="Soon" xml:space="preserve">
     <value>Soon</value>
@@ -278,8 +278,8 @@
     <comment>Estado</comment>
   </data>
   <data name="TradeName" xml:space="preserve">
-    <value>Trade Name</value>
-    <comment>Nome Fantasia</comment>
+    <value>Trade name</value>
+    <comment>Nome fantasia</comment>
   </data>
   <data name="User" xml:space="preserve">
     <value>User</value>
@@ -298,7 +298,7 @@
     <comment>Website</comment>
   </data>
   <data name="ZipCode" xml:space="preserve">
-    <value>Zip Code</value>
+    <value>Zip code</value>
     <comment>CEP</comment>
   </data>
   <data name="ChangePassword" xml:space="preserve">
@@ -349,8 +349,8 @@
     <value>Company name</value>
   </data>
   <data name="BadgeName" xml:space="preserve">
-    <value>Badge Name</value>
-    <comment>Nome no crachá</comment>
+    <value>Badge name</value>
+    <comment>Nome para credencial</comment>
   </data>
   <data name="Activity" xml:space="preserve">
     <value>Activity</value>
@@ -1170,7 +1170,7 @@
     <comment>Audiovisual</comment>
   </data>
   <data name="CompanyDocument" xml:space="preserve">
-    <value>Company Document</value>
+    <value>Company number</value>
     <comment>CNPJ</comment>
   </data>
   <data name="Inovation" xml:space="preserve">
@@ -1314,8 +1314,8 @@
     <comment>Executivos cadastrados</comment>
   </data>
   <data name="LastNames" xml:space="preserve">
-    <value>Last Names</value>
-    <comment>Sobrenomes</comment>
+    <value>Last names</value>
+    <comment>Sobrenome</comment>
   </data>
   <data name="PlayersExecutives" xml:space="preserve">
     <value>Players Executives</value>
@@ -1344,8 +1344,8 @@
     <comment>Dados de acesso</comment>
   </data>
   <data name="FirstName" xml:space="preserve">
-    <value>First Name</value>
-    <comment>Primeiro Nome</comment>
+    <value>First name</value>
+    <comment>Primeiro nome</comment>
   </data>
   <data name="NextStep" xml:space="preserve">
     <value>Next step</value>
@@ -1361,7 +1361,7 @@
   </data>
   <data name="CompanyResume" xml:space="preserve">
     <value>Company resume</value>
-    <comment>Resumo da empresa</comment>
+    <comment>Resumo sobre a empresa</comment>
   </data>
   <data name="TargetAudiences" xml:space="preserve">
     <value>Target audiences</value>
@@ -1390,5 +1390,25 @@
   <data name="Dear" xml:space="preserve">
     <value>Dear</value>
     <comment>Caro</comment>
+  </data>
+  <data name="CompanyProfiles" xml:space="preserve">
+    <value>Company profiles</value>
+    <comment>Resumos sobre a empresa</comment>
+  </data>
+  <data name="JobTitles" xml:space="preserve">
+    <value>Job titles</value>
+    <comment>Cargos</comment>
+  </data>
+  <data name="MiniBios" xml:space="preserve">
+    <value>Mini-bios</value>
+    <comment>Mini-biografias</comment>
+  </data>
+  <data name="PersonalInformation" xml:space="preserve">
+    <value>Personal Information</value>
+    <comment>Dados Pessoais</comment>
+  </data>
+  <data name="PlayerInformation" xml:space="preserve">
+    <value>Player Information</value>
+    <comment>Dados do Player</comment>
   </data>
 </root>

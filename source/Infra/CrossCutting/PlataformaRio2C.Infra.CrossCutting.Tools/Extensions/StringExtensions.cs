@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-09-2019
+// Last Modified On : 09-12-2019
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -185,6 +185,23 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             }
 
             return splitName[0];
+        }
+
+        /// <summary>Gets the splitted word.</summary>
+        /// <param name="s">The s.</param>
+        /// <param name="separator">The separator.</param>
+        /// <param name="position">The position.</param>
+        /// <returns></returns>
+        public static string GetSplittedWord(this string s, char separator, int position)
+        {
+            var splitName = s.Split(separator);
+
+            if (position > splitName.Length)
+            {
+                return splitName[splitName.Length];
+            }
+
+            return splitName[position];
         }
     }
 }

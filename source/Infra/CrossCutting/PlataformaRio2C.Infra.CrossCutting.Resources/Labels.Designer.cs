@@ -331,7 +331,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nome no crachá.
+        ///   Looks up a localized string similar to Nome para credencial.
         /// </summary>
         public static string BadgeName {
             get {
@@ -538,7 +538,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Razão Social.
+        ///   Looks up a localized string similar to Razão social.
         /// </summary>
         public static string CompanyName {
             get {
@@ -547,7 +547,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Resumo da Empresa.
+        ///   Looks up a localized string similar to Resumo sobre a empresa.
         /// </summary>
         public static string CompanyProfile {
             get {
@@ -556,7 +556,16 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Resumo da empresa.
+        ///   Looks up a localized string similar to Resumos sobre a empresa.
+        /// </summary>
+        public static string CompanyProfiles {
+            get {
+                return ResourceManager.GetString("CompanyProfiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resumo sobre a empresa.
         /// </summary>
         public static string CompanyResume {
             get {
@@ -1105,7 +1114,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Primeiro Nome.
+        ///   Looks up a localized string similar to Primeiro nome.
         /// </summary>
         public static string FirstName {
             get {
@@ -1393,6 +1402,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cargos.
+        /// </summary>
+        public static string JobTitles {
+            get {
+                return ResourceManager.GetString("JobTitles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Idioma.
         /// </summary>
         public static string Language {
@@ -1402,7 +1420,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sobrenomes.
+        ///   Looks up a localized string similar to Sobrenome.
         /// </summary>
         public static string LastNames {
             get {
@@ -1596,6 +1614,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string MiniBio {
             get {
                 return ResourceManager.GetString("MiniBio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mini-biografias.
+        /// </summary>
+        public static string MiniBios {
+            get {
+                return ResourceManager.GetString("MiniBios", resourceCulture);
             }
         }
         
@@ -1924,6 +1951,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dados Pessoais.
+        /// </summary>
+        public static string PersonalInformation {
+            get {
+                return ResourceManager.GetString("PersonalInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Telefone.
         /// </summary>
         public static string PhoneNumber {
@@ -2010,6 +2046,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string PlayerInfo {
             get {
                 return ResourceManager.GetString("PlayerInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dados do Player.
+        /// </summary>
+        public static string PlayerInformation {
+            get {
+                return ResourceManager.GetString("PlayerInformation", resourceCulture);
             }
         }
         
@@ -2734,7 +2779,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Redes Sociais.
+        ///   Looks up a localized string similar to Redes sociais.
         /// </summary>
         public static string SocialMedia {
             get {
@@ -3031,7 +3076,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nome Fantasia.
+        ///   Looks up a localized string similar to Nome fantasia.
         /// </summary>
         public static string TradeName {
             get {

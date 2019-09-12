@@ -154,8 +154,8 @@
     <comment>Executivos</comment>
   </data>
   <data name="CompanyProfile" xml:space="preserve">
-    <value>Resumo da Empresa</value>
-    <comment>Resumo da Empresa</comment>
+    <value>Resumo sobre a empresa</value>
+    <comment>Resumo sobre a empresa</comment>
   </data>
   <data name="Country" xml:space="preserve">
     <value>País</value>
@@ -266,8 +266,8 @@
     <comment>Selecionar imagem</comment>
   </data>
   <data name="SocialMedia" xml:space="preserve">
-    <value>Redes Sociais</value>
-    <comment>Redes Sociais</comment>
+    <value>Redes sociais</value>
+    <comment>Redes sociais</comment>
   </data>
   <data name="Soon" xml:space="preserve">
     <value>Em Breve</value>
@@ -278,8 +278,8 @@
     <comment>Estado</comment>
   </data>
   <data name="TradeName" xml:space="preserve">
-    <value>Nome Fantasia</value>
-    <comment>Nome Fantasia</comment>
+    <value>Nome fantasia</value>
+    <comment>Nome fantasia</comment>
   </data>
   <data name="User" xml:space="preserve">
     <value>Usuário</value>
@@ -362,11 +362,11 @@
     <comment>Players</comment>
   </data>
   <data name="CompanyName" xml:space="preserve">
-    <value>Razão Social</value>
+    <value>Razão social</value>
   </data>
   <data name="BadgeName" xml:space="preserve">
-    <value>Nome no crachá</value>
-    <comment>Nome no crachá</comment>
+    <value>Nome para credencial</value>
+    <comment>Nome para credencial</comment>
   </data>
   <data name="Activity" xml:space="preserve">
     <value>Atividade</value>
@@ -1326,8 +1326,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Executivos cadastrados</comment>
   </data>
   <data name="LastNames" xml:space="preserve">
-    <value>Sobrenomes</value>
-    <comment>Sobrenomes</comment>
+    <value>Sobrenome</value>
+    <comment>Sobrenome</comment>
   </data>
   <data name="PlayersExecutives" xml:space="preserve">
     <value>Executivos dos Players</value>
@@ -1357,8 +1357,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Dados de acesso</comment>
   </data>
   <data name="FirstName" xml:space="preserve">
-    <value>Primeiro Nome</value>
-    <comment>Primeiro Nome</comment>
+    <value>Primeiro nome</value>
+    <comment>Primeiro nome</comment>
   </data>
   <data name="NextStep" xml:space="preserve">
     <value>Próximo passo</value>
@@ -1373,8 +1373,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Atividades</comment>
   </data>
   <data name="CompanyResume" xml:space="preserve">
-    <value>Resumo da empresa</value>
-    <comment>Resumo da empresa</comment>
+    <value>Resumo sobre a empresa</value>
+    <comment>Resumo sobre a empresa</comment>
   </data>
   <data name="TargetAudiences" xml:space="preserve">
     <value>Público-alvo/Faixa-etária</value>
@@ -1403,5 +1403,25 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Dear" xml:space="preserve">
     <value>Caro</value>
     <comment>Caro</comment>
+  </data>
+  <data name="CompanyProfiles" xml:space="preserve">
+    <value>Resumos sobre a empresa</value>
+    <comment>Resumos sobre a empresa</comment>
+  </data>
+  <data name="JobTitles" xml:space="preserve">
+    <value>Cargos</value>
+    <comment>Cargos</comment>
+  </data>
+  <data name="MiniBios" xml:space="preserve">
+    <value>Mini-biografias</value>
+    <comment>Mini-biografias</comment>
+  </data>
+  <data name="PersonalInformation" xml:space="preserve">
+    <value>Dados Pessoais</value>
+    <comment>Dados Pessoais</comment>
+  </data>
+  <data name="PlayerInformation" xml:space="preserve">
+    <value>Dados do Player</value>
+    <comment>Dados do Player</comment>
   </data>
 </root>
