@@ -7081,6 +7081,8 @@
     <Content Include="Views\Shared\EditorTemplates\OrganizationDescriptionBaseCommand.cshtml" />
     <Content Include="Views\Onboarding\PlayerInterests.cshtml" />
     <Content Include="Views\Themes\Metronic\_InternalSidebar.cshtml" />
+    <Content Include="Views\Onboarding\PlayerTermsAcceptance.cshtml" />
+    <Content Include="Views\Onboarding\Shared\_PlayerTermsAcceptanceText.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

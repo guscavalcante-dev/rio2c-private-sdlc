@@ -4,14 +4,13 @@
 // Created          : 09-04-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-05-2019
+// Last Modified On : 09-11-2019
 // ***********************************************************************
 // <copyright file="OnboardCollaboratorAccessData.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
 using System;
 using System.ComponentModel.DataAnnotations;
 using PlataformaRio2C.Domain.Entities;

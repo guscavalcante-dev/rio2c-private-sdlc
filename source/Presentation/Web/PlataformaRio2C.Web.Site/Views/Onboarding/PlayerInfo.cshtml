@@ -8,8 +8,9 @@
 
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var playerAttendeeOrganizations = ViewBag.PlayerAttendeeOrganizations as List<AttendeeOrganization>;
+    var isPlayer = ViewBag.IsPlayer as bool?;
     var player = playerAttendeeOrganizations?.FirstOrDefault(pao => pao.Organization.Uid == Model.OrganizationUid)?.Organization;
-    var initialPlayerIndex = 3;
+    var initialPlayerIndex = 3 + (isPlayer == true ? 1 : 0);
     var playerIndex = playerAttendeeOrganizations?.FindIndex(pao => pao.Organization.Uid == Model.OrganizationUid) ?? 0;
     var additionIndex = playerIndex == 0 ? 0 : 1;
 }
@@ -123,12 +124,6 @@
                     <!--end: Form Wizard Step 1-->
                     <!--begin: Form Actions -->
                     <div class="kt-form__actions">
-                        @*<button class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" data-ktwizard-type="action-prev">
-                                Voltar
-                            </button>*@
-                        @*<button class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" data-ktwizard-type="action-submit">
-                                Salvar
-                            </button>*@
                         @if (userAccessControlDto?.IsAttendeeCollaboratorOnboardingFinished() == false || userAccessControlDto?.IsAttendeeOrganizationsOnboardingFinished() == false)
                         {
                             <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="OnboardWizard.submit('#OrganizationDataForm');">

@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-09-2019
+// Last Modified On : 09-11-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,6 +27,8 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTime? OnboardingFinishDate { get; private set; }
         public DateTime? OnboardingUserDate { get; private set; }
         public DateTime? OnboardingCollaboratorDate { get; private set; }
+        public DateTime? PlayerTermsAcceptanceDate { get; private set; }
+        public DateTime? ProducerTermsAcceptanceDate { get; private set; }
 
         public virtual Edition Edition { get; private set; }
         public virtual Collaborator Collaborator { get; private set; }
@@ -132,6 +134,16 @@ namespace PlataformaRio2C.Domain.Entities
             this.DeleteAttendeeOrganizationCollaborators(new List<AttendeeOrganization>(), userId);
         }
 
+        /// <summary>Called when [player terms acceptance].</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardPlayerTermsAcceptance(int userId)
+        {
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            this.OnboardingStartDate = this.PlayerTermsAcceptanceDate = DateTime.Now;
+        }
+
         /// <summary>Called when [access data].</summary>
         /// <param name="userId">The user identifier.</param>
         public void OnboardAccessData(int userId)
@@ -139,7 +151,13 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.OnboardingStartDate = this.OnboardingUserDate = DateTime.Now;
+
+            if (!this.OnboardingStartDate.HasValue)
+            {
+                this.OnboardingStartDate = DateTime.Now;
+            }
+
+            this.OnboardingUserDate = DateTime.Now;
         }
 
         /// <summary>Called when [data].</summary>
@@ -150,6 +168,16 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
             this.OnboardingFinishDate = this.OnboardingCollaboratorDate = DateTime.Now;
+        }
+
+        /// <summary>Accepts the producer terms.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void AcceptProducerTerms(int userId)
+        {
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            this.ProducerTermsAcceptanceDate = DateTime.Now;
         }
 
         #region Attendee Organization Collaborators

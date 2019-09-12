@@ -185,6 +185,7 @@
     <Compile Include="CQRS\CommandsHandlers\Holdings\DeleteHoldingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\UpdateHoldingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\CreateHoldingCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardPlayerTermsAcceptanceCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardPlayerInterestsCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardOrganizationDataCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardCollaboratorDataCommandHandler.cs" />
@@ -201,6 +202,7 @@
     <Compile Include="CQRS\Commands\Attendees\BaseCommands\AttendeeOrganizationBaseCommand.cs" />
     <Compile Include="CQRS\Commands\BaseCommand.cs" />
     <Compile Include="CQRS\Commands\Collaborators\BaseCommands\CollaboratorMiniBioBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Onboardings\OnboardPlayerTermsAcceptance.cs" />
     <Compile Include="CQRS\Commands\Onboardings\OnboardCollaboratorData.cs" />
     <Compile Include="CQRS\Commands\Onboardings\OnboardCollaboratorAccessData.cs" />
     <Compile Include="CQRS\Commands\Collaborators\DeleteCollaboratorTicket.cs" />

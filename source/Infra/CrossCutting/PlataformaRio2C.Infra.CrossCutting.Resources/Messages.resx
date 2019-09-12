@@ -476,7 +476,8 @@
     <value>Este projeto já foi enviado para avaliação de players</value>
   </data>
   <data name="ToProceedYouMustAcceptTheTerm" xml:space="preserve">
-    <value>Para prosseguir você deve aceitar o Regulamento! | &lt;em class='english'&gt;To proceed you must accept the terms!&lt;/em&gt;</value>
+    <value>Para prosseguir você deve aceitar o regulamento</value>
+    <comment>Para prosseguir você deve aceitar o regulamento</comment>
   </data>
   <data name="TradeNameIsRequired" xml:space="preserve">
     <value>Nome fantasia obrigatório.</value>

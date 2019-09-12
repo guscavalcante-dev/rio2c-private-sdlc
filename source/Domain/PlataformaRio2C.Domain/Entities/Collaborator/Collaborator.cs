@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-06-2019
+// Last Modified On : 09-11-2019
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -501,6 +501,15 @@ namespace PlataformaRio2C.Domain.Entities
             return this.AttendeeCollaborators?.FirstOrDefault(ac => ac.EditionId == editionId);
         }
 
+        /// <summary>Called when [attendee collaborator player terms acceptance].</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardAttendeeCollaboratorPlayerTermsAcceptance(Edition edition, int userId)
+        {
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+            attendeeCollaborator?.OnboardPlayerTermsAcceptance(userId);
+        }
+
         /// <summary>Called when [attendee collaborator access data].</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="userId">The user identifier.</param>
@@ -797,6 +806,19 @@ namespace PlataformaRio2C.Domain.Entities
         #endregion
 
         #region Onboarding
+
+        /// <summary>Called when [player terms acceptance].</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardPlayerTermsAcceptance(
+            Edition edition,
+            int userId)
+        {
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            this.OnboardAttendeeCollaboratorPlayerTermsAcceptance(edition, userId);
+        }
 
         /// <summary>Called when [access data].</summary>
         /// <param name="edition">The edition.</param>

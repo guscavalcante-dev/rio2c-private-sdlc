@@ -4,7 +4,7 @@
 // Created          : 09-04-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-10-2019
+// Last Modified On : 09-11-2019
 // ***********************************************************************
 // <copyright file="UserAccessControlDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -90,6 +90,16 @@ namespace PlataformaRio2C.Domain.Dtos
             return this.EditionAttendeeOrganizations?.Where(eao => !eao.IsDeleted && !eao.Organization.IsDeleted)?.Select(eao => eao.Organization)?.ToList();
         }
 
+        /// <summary>Determines whether [has player organization].</summary>
+        /// <returns>
+        ///   <c>true</c> if [has player organization]; otherwise, <c>false</c>.</returns>
+        public bool HasPlayerOrganization()
+        {
+            return this.EditionAttendeeOrganizations?.Any(eao => eao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted
+                                                                                                          && !aot.OrganizationType.IsDeleted
+                                                                                                          && aot.OrganizationType.Name == "Player")) == true;
+        }
+
         #endregion
 
         #region Permissions
@@ -131,7 +141,16 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is attendee collaborator onboarding finished]; otherwise, <c>false</c>.</returns>
         public bool IsAttendeeCollaboratorOnboardingFinished()
         {
-            return this.IsUserOnboardingFinished() && this.IsCollaboratorOnboardingFinished();
+            return this.IsPlayerTermsAcceptanceFinished() && this.IsUserOnboardingFinished() && this.IsCollaboratorOnboardingFinished();
+        }
+
+        /// <summary>Determines whether [is player terms acceptance finished].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is player terms acceptance finished]; otherwise, <c>false</c>.</returns>
+        public bool IsPlayerTermsAcceptanceFinished()
+        {
+            return !this.HasPlayerOrganization()
+                   || this.EditionAttendeeCollaborator?.PlayerTermsAcceptanceDate != null;
         }
 
         /// <summary>Determines whether [is user onboarding finished].</summary>

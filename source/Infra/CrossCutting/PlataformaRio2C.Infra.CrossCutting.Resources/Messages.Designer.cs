@@ -1269,7 +1269,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Para prosseguir você deve aceitar o Regulamento! | &lt;em class=&apos;english&apos;&gt;To proceed you must accept the terms!&lt;/em&gt;.
+        ///   Looks up a localized string similar to Para prosseguir você deve aceitar o regulamento.
         /// </summary>
         public static string ToProceedYouMustAcceptTheTerm {
             get {

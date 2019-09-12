@@ -1,11 +1,11 @@
-﻿@using PlataformaRio2C.Domain.Dtos
-@using PlataformaRio2C.Domain.Entities
+﻿@using PlataformaRio2C.Domain.Entities
 @model int
 @{
     var counter = 1;
     //var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var playerAttendeeOrganizations = ViewBag.PlayerAttendeeOrganizations as List<AttendeeOrganization>;
     var producerAttendeeOrganizations = ViewBag.ProducerAttendeeOrganizations as List<AttendeeOrganization>;
+    var isPlayer = ViewBag.IsPlayer as bool?;
 }
 <div class="kt-wizard-v2__nav">
     <div class="kt-wizard-v2__nav-items">
@@ -13,6 +13,20 @@
             <div class="col-md-12 text-center"><h3>@Labels.Steps</h3></div>
         </div>
         <!--doc: Replace A tag with SPAN tag to disable the step link click -->
+        @if (isPlayer == true)
+        {
+            <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
+                <div class="kt-wizard-v2__nav-body">
+                    <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
+                    <div class="kt-wizard-v2__nav-label">
+                        <div class="kt-wizard-v2__nav-label-title">@Labels.TermsOfUse</div>
+                        <div class="kt-wizard-v2__nav-label-desc">@Messages.ToProceedYouMustAcceptTheTerm</div>
+                    </div>
+                </div>
+            </span>
+
+            counter++;
+        }
         <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
             <div class="kt-wizard-v2__nav-body">
                 <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
@@ -27,16 +41,14 @@
         }
         <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
             <div class="kt-wizard-v2__nav-body">
-                <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">
-                    2
-                </div>
+                <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
                 <div class="kt-wizard-v2__nav-label">
                     <div class="kt-wizard-v2__nav-label-title">@Labels.PersonalInfo</div>
                     <div class="kt-wizard-v2__nav-label-desc">@Messages.ConfirmeAndCompletePersonalInfo</div>
                 </div>
             </div>
         </span>
-        @if (playerAttendeeOrganizations?.Any() == true)
+        @if (isPlayer == true)
         {
             foreach (var playerAttendeeOrganization in playerAttendeeOrganizations)
             {
