@@ -36,10 +36,12 @@ GO
 CREATE TABLE [dbo].[Addresses](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
-	[CityId] [int] NOT NULL,
-	[Address1] [varchar](200) NOT NULL,
+	[CountryId] [int] NULL,
+	[StateId] [int] NULL,
+	[CityId] [int] NULL,
+	[Address1] [varchar](200) NULL,
 	[Address2] [varchar](200) NULL,
-	[ZipCode] [varchar](10) NOT NULL,
+	[ZipCode] [varchar](10) NULL,
 	[IsManual] [bit] NOT NULL,
 	[Latitude] [decimal](9, 6) NULL,
 	[Longitude] [decimal](9, 6) NULL,
@@ -68,7 +70,12 @@ CREATE TABLE [dbo].[AttendeeCollaborators](
 	[EditionId] [int] NOT NULL,
 	[CollaboratorId] [int] NOT NULL,
 	[WelcomeEmailSendDate] [datetime] NULL,
+	[OnboardingStartDate] [datetime] NULL,
 	[OnboardingFinishDate] [datetime] NULL,
+	[OnboardingUserDate] [datetime] NULL,
+	[OnboardingCollaboratorDate] [datetime] NULL,
+	[PlayerTermsAcceptanceDate] [datetime] NULL,
+	[ProducerTermsAcceptanceDate] [datetime] NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,
@@ -168,7 +175,10 @@ CREATE TABLE [dbo].[AttendeeOrganizations](
 	[Uid] [uniqueidentifier] NOT NULL,
 	[EditionId] [int] NOT NULL,
 	[OrganizationId] [int] NOT NULL,
+	[OnboardingStartDate] [datetime] NULL,
 	[OnboardingFinishDate] [datetime] NULL,
+	[OnboardingOrganizationDate] [datetime] NULL,
+	[OnboardingInterestsDate] [date] NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,
@@ -2109,6 +2119,16 @@ ALTER TABLE [dbo].[Addresses]  WITH CHECK ADD  CONSTRAINT [FK_Cities_Addresses_C
 REFERENCES [dbo].[Cities] ([Id])
 GO
 ALTER TABLE [dbo].[Addresses] CHECK CONSTRAINT [FK_Cities_Addresses_CityId]
+GO
+ALTER TABLE [dbo].[Addresses]  WITH CHECK ADD  CONSTRAINT [FK_Countries_Addresses_CountryId] FOREIGN KEY([CountryId])
+REFERENCES [dbo].[Countries] ([Id])
+GO
+ALTER TABLE [dbo].[Addresses] CHECK CONSTRAINT [FK_Countries_Addresses_CountryId]
+GO
+ALTER TABLE [dbo].[Addresses]  WITH CHECK ADD  CONSTRAINT [FK_States_Addresses_StateId] FOREIGN KEY([StateId])
+REFERENCES [dbo].[States] ([Id])
+GO
+ALTER TABLE [dbo].[Addresses] CHECK CONSTRAINT [FK_States_Addresses_StateId]
 GO
 ALTER TABLE [dbo].[Addresses]  WITH CHECK ADD  CONSTRAINT [FK_Users_Addresses_CreateUserId] FOREIGN KEY([CreateUserId])
 REFERENCES [dbo].[Users] ([Id])
