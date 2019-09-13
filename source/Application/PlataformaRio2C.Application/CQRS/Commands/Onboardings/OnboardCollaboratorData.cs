@@ -39,11 +39,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Initializes a new instance of the <see cref="OnboardCollaboratorData"/> class.</summary>
         /// <param name="collaborator">The collaborator.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
-        public OnboardCollaboratorData(CollaboratorDto collaborator, List<LanguageDto> languagesDtos)
+        /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
+        /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
+        public OnboardCollaboratorData(CollaboratorDto collaborator, List<LanguageDto> languagesDtos, bool isJobTitleRequired, bool isMiniBioRequired)
         {
             this.PublicEmail = collaborator?.PublicEmail;
-            this.UpdateJobTitles(collaborator, languagesDtos);
-            this.UpdateMiniBios(collaborator, languagesDtos);
+            this.UpdateJobTitles(collaborator, languagesDtos, isJobTitleRequired);
+            this.UpdateMiniBios(collaborator, languagesDtos, isMiniBioRequired);
             this.UpdateCropperImage(collaborator);
         }
 
@@ -55,28 +57,30 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Updates the job titles.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
-        private void UpdateJobTitles(CollaboratorDto entity, List<LanguageDto> languagesDtos)
+        /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
+        private void UpdateJobTitles(CollaboratorDto entity, List<LanguageDto> languagesDtos, bool isJobTitleRequired)
         {
             this.JobTitles = new List<CollaboratorJobTitleBaseCommand>();
             foreach (var languageDto in languagesDtos)
             {
                 var jobTitle = entity?.JobTitlesDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
-                this.JobTitles.Add(jobTitle != null ? new CollaboratorJobTitleBaseCommand(jobTitle) :
-                    new CollaboratorJobTitleBaseCommand(languageDto));
+                this.JobTitles.Add(jobTitle != null ? new CollaboratorJobTitleBaseCommand(jobTitle, isJobTitleRequired) :
+                                                      new CollaboratorJobTitleBaseCommand(languageDto, isJobTitleRequired));
             }
         }
 
         /// <summary>Updates the mini bios.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
-        private void UpdateMiniBios(CollaboratorDto entity, List<LanguageDto> languagesDtos)
+        /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
+        private void UpdateMiniBios(CollaboratorDto entity, List<LanguageDto> languagesDtos, bool isMiniBioRequired)
         {
             this.MiniBios = new List<CollaboratorMiniBioBaseCommand>();
             foreach (var languageDto in languagesDtos)
             {
                 var miniBio = entity?.MiniBiosDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
-                this.MiniBios.Add(miniBio != null ? new CollaboratorMiniBioBaseCommand(miniBio) :
-                    new CollaboratorMiniBioBaseCommand(languageDto));
+                this.MiniBios.Add(miniBio != null ? new CollaboratorMiniBioBaseCommand(miniBio, isMiniBioRequired) :
+                                                    new CollaboratorMiniBioBaseCommand(languageDto, isMiniBioRequired));
             }
         }
 

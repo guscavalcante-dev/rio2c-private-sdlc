@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-11-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -59,6 +59,22 @@ var MyRio2cCommon = function () {
 
     var fixSelect2Modal = function () {
         $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+    };
+
+    var fixCkEditorValidation = function () {
+        if (typeof (CKEDITOR) === "undefined") {
+            return;
+        }
+
+        CKEDITOR.on('instanceReady', function () {
+            $.each(CKEDITOR.instances, function (instance) {
+                CKEDITOR.instances[instance].on("change", function (e) {
+                    for (instance in CKEDITOR.instances) {
+                        CKEDITOR.instances[instance].updateElement();
+                    }
+                });
+            });
+        });
     };
 
     var initScroll = function () {
@@ -684,6 +700,7 @@ var MyRio2cCommon = function () {
                 disableMetronicScripts();
                 enableAjaxForbiddenCatch();
                 fixSelect2Modal();
+                fixCkEditorValidation();
                 initScroll();
                 extendGlobalValidations();
             });

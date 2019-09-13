@@ -4,7 +4,7 @@
 // Created          : 08-23-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-12-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="AddressBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,6 +26,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         // Country
         [Display(Name = "Country", ResourceType = typeof(Labels))]
+        [RequiredIf("IsRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? CountryUid { get; set; }
 
         // State
@@ -50,27 +51,26 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         // Address
         [Display(Name = "Address1", ResourceType = typeof(Labels))]
-        //[RequiredIfNotEmpty("CountryUid", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [RequiredIf("IsRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(200, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Address1 { get; set; }
 
-        [Display(Name = "Address2", ResourceType = typeof(Labels))]
-        [StringLength(200, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        public string Address2 { get; set; }
-
         [Display(Name = "ZipCode", ResourceType = typeof(Labels))]
-        //[RequiredIfNotEmpty("CountryUid", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [RequiredIf("IsRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(10, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string AddressZipCode { get; set; }
+
+        public bool IsRequired { get; set; }
 
         public List<CountryBaseDto> CountriesBaseDtos { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="AddressBaseCommand"/> class.</summary>
         /// <param name="addressBaseDto">The address base dto.</param>
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
-        public AddressBaseCommand(AddressBaseDto addressBaseDto, List<CountryBaseDto> countriesBaseDtos)
+        /// <param name="isRequired">if set to <c>true</c> [is required].</param>
+        public AddressBaseCommand(AddressBaseDto addressBaseDto, List<CountryBaseDto> countriesBaseDtos, bool isRequired)
         {
-            this.UpdateBaseProperties(addressBaseDto, countriesBaseDtos);
+            this.UpdateBaseProperties(addressBaseDto, countriesBaseDtos, isRequired);
         }
 
         /// <summary>Initializes a new instance of the <see cref="AddressBaseCommand"/> class.</summary>
@@ -78,18 +78,15 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
         }
 
-        /// <summary>Updates the base properties.</summary>
-        /// <param name="addressBaseDto">The address base dto.</param>
-        /// <param name="countriesBaseDtos">The countries base dtos.</param>
-        private void UpdateBaseProperties(AddressBaseDto addressBaseDto, List<CountryBaseDto> countriesBaseDtos)
+        private void UpdateBaseProperties(AddressBaseDto addressBaseDto, List<CountryBaseDto> countriesBaseDtos, bool isRequired)
         {
             this.CountryUid = addressBaseDto?.CountryUid;
             this.StateUid = addressBaseDto?.StateUid;
             this.CityUid = addressBaseDto?.CityUid;
             this.Address1 = addressBaseDto?.Address1;
-            this.Address2 = addressBaseDto?.Address2;
             this.AddressZipCode = addressBaseDto?.AddressZipCode;
             this.UpdateDropdownProperties(countriesBaseDtos);
+            this.IsRequired = isRequired;
         }
 
         /// <summary>Updates the dropdown properties.</summary>

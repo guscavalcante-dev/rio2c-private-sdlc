@@ -78,7 +78,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="cityUid">The city uid.</param>
         /// <param name="cityName">Name of the city.</param>
         /// <param name="address1">The address1.</param>
-        /// <param name="address2">The address2.</param>
         /// <param name="addressZipCode">The address zip code.</param>
         /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
@@ -106,7 +105,6 @@ namespace PlataformaRio2C.Domain.Entities
             Guid? cityUid,
             string cityName,
             string address1,
-            string address2,
             string addressZipCode,
             bool addressIsManual,
             bool isImageUploaded, 
@@ -134,7 +132,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeDescriptions(descriptions, userId);
             this.SynchronizeDescriptions(restrictionSpecifics, userId);
             this.SynchronizeAttendeeOrganizations(edition, organizationType, true, userId);
-            this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, address2, addressZipCode, addressIsManual, userId);
+            this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.SynchronizeOrganizationActivities(activities, userId);
             this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
             this.SynchronizeOrganizationInterests(interests, userId);
@@ -162,7 +160,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="cityUid">The city uid.</param>
         /// <param name="cityName">Name of the city.</param>
         /// <param name="address1">The address1.</param>
-        /// <param name="address2">The address2.</param>
         /// <param name="addressZipCode">The address zip code.</param>
         /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
@@ -191,7 +188,6 @@ namespace PlataformaRio2C.Domain.Entities
             Guid? cityUid,
             string cityName,
             string address1,
-            string address2,
             string addressZipCode,
             bool addressIsManual,
             bool isImageUploaded,
@@ -221,7 +217,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeDescriptions(descriptions, userId);
             this.SynchronizeDescriptions(restrictionSpecifics, userId);
             this.SynchronizeAttendeeOrganizations(edition, organizationType, isAddingToCurrentEdition, userId);
-            this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, address2, addressZipCode, addressIsManual, userId);
+            this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.SynchronizeOrganizationActivities(activities, userId);
             this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
             this.SynchronizeOrganizationInterests(interests, userId);
@@ -298,7 +294,6 @@ namespace PlataformaRio2C.Domain.Entities
             Guid? cityUid,
             string cityName,
             string address1,
-            string address2,
             string addressZipCode,
             bool addressIsManual,
             bool isImageUploaded,
@@ -321,7 +316,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeOrganizationActivities(activities, userId);
             this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
             this.SynchronizeAttendeeOrganizations(edition, organizationType, true, userId);
-            this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, address2, addressZipCode, addressIsManual, userId);
+            this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.OnboardAttendeeOrganizationData(edition, userId);
         }
 
@@ -354,7 +349,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="cityUid">The city uid.</param>
         /// <param name="cityName">Name of the city.</param>
         /// <param name="address1">The address1.</param>
-        /// <param name="address2">The address2.</param>
         /// <param name="addressZipCode">The address zip code.</param>
         /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
         /// <param name="userId">The user identifier.</param>
@@ -365,7 +359,6 @@ namespace PlataformaRio2C.Domain.Entities
             Guid? cityUid,
             string cityName,
             string address1,
-            string address2,
             string addressZipCode,
             bool addressIsManual,
             int userId)
@@ -379,7 +372,6 @@ namespace PlataformaRio2C.Domain.Entities
                     cityUid, 
                     cityName, 
                     address1,
-                    address2, 
                     addressZipCode, 
                     addressIsManual, 
                     userId);
@@ -393,7 +385,6 @@ namespace PlataformaRio2C.Domain.Entities
                     cityUid, 
                     cityName,
                     address1,
-                    address2,
                     addressZipCode,
                     addressIsManual, 
                     userId);

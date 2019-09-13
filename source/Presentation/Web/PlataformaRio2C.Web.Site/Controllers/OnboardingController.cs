@@ -324,7 +324,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             var cmd = new OnboardCollaboratorData(
                 await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(this.UserAccessControlDto?.Collaborator?.Uid ?? Guid.Empty, this.EditionId, this.UserInterfaceLanguage)),
-                await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)));
+                await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
+                true,
+                true);
 
             return View(cmd);
         }
@@ -435,7 +437,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                 await this.activityRepo.FindAllAsync(),
-                await this.targetAudienceRepo.FindAllAsync());
+                await this.targetAudienceRepo.FindAllAsync(),
+                true,
+                true);
 
             return View(cmd);
         }

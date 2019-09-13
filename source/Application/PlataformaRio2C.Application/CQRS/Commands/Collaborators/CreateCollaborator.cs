@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="CreateCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,9 +23,16 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
-        public CreateCollaborator(List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, List<LanguageDto> languagesDtos, List<CountryBaseDto> countriesBaseDtos)
+        /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
+        /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
+        public CreateCollaborator(
+            List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, 
+            List<LanguageDto> languagesDtos, 
+            List<CountryBaseDto> countriesBaseDtos,
+            bool isJobTitleRequired,
+            bool isMiniBioRequired)
         {
-            this.UpdateBaseProperties(null, attendeeOrganizationsBaseDtos, languagesDtos, countriesBaseDtos);
+            this.UpdateBaseProperties(null, attendeeOrganizationsBaseDtos, languagesDtos, countriesBaseDtos, isJobTitleRequired, isMiniBioRequired);
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateCollaborator"/> class.</summary>

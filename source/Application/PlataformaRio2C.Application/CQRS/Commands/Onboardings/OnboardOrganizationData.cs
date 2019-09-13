@@ -25,10 +25,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>OnboardOrganizationData</summary>
     public class OnboardOrganizationData : BaseCommand
     {
-        //[Display(Name = "Holding", ResourceType = typeof(Labels))]
-        //[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        //public Guid? HoldingUid { get; set; }
-
         public Guid OrganizationUid { get; set; }
 
         [Display(Name = "CompanyDocument", ResourceType = typeof(Labels))]
@@ -84,19 +80,21 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
         /// <param name="activities">The activities.</param>
         /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="isDescriptionRequired">if set to <c>true</c> [is description required].</param>
+        /// <param name="isAddressRequired">if set to <c>true</c> [is address required].</param>
         public OnboardOrganizationData(
             OrganizationDto entity, 
             List<HoldingBaseDto> holdingBaseDtos, 
             List<LanguageDto> languagesDtos, 
             List<CountryBaseDto> countriesBaseDtos,
             List<Activity> activities,
-            List<TargetAudience> targetAudiences)
+            List<TargetAudience> targetAudiences,
+            bool isDescriptionRequired, 
+            bool isAddressRequired)
         {
             this.OrganizationUid = entity.Uid;
             this.UpdaterBaseDto = entity.UpdaterDto;
             this.UpdateDate = entity.UpdateDate;
-
-            //this.HoldingUid = entity?.HoldingBaseDto?.Uid;
             this.Document = entity?.Document;
             this.CompanyName = entity?.CompanyName;
             this.TradeName = entity?.TradeName;
@@ -104,12 +102,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.SocialMedia = entity?.SocialMedia;
             this.ActivitiesUids = entity?.OrganizationActivitiesDtos?.Select(oad => oad.ActivityUid)?.ToList();
             this.TargetAudiencesUids = entity?.OrganizationTargetAudiencesDtos?.Select(otad => otad.TargetAudienceUid)?.ToList();
-            //this.TradeName = entity?.TradeName;
-            //this.Website = entity?.Website;
-            //this.SocialMedia = entity?.SocialMedia;
-            //this.PhoneNumber = entity?.PhoneNumber;
-            this.UpdateAddress(entity, countriesBaseDtos);
-            this.UpdateDescriptions(entity, languagesDtos);
+            this.UpdateAddress(entity, countriesBaseDtos, isAddressRequired);
+            this.UpdateDescriptions(entity, languagesDtos, isDescriptionRequired);
             this.UpdateCropperImage(entity);
             this.UpdateDropdownProperties(holdingBaseDtos, countriesBaseDtos, activities, targetAudiences);
         }
@@ -122,22 +116,24 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Updates the address.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
-        private void UpdateAddress(OrganizationDto entity, List<CountryBaseDto> countriesBaseDtos)
+        /// <param name="isAddressRequired">if set to <c>true</c> [is address required].</param>
+        private void UpdateAddress(OrganizationDto entity, List<CountryBaseDto> countriesBaseDtos, bool isAddressRequired)
         {
-            this.Address = new AddressBaseCommand(entity?.AddressBaseDto, countriesBaseDtos);
+            this.Address = new AddressBaseCommand(entity?.AddressBaseDto, countriesBaseDtos, isAddressRequired);
         }
 
         /// <summary>Updates the descriptions.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
-        private void UpdateDescriptions(OrganizationDto entity, List<LanguageDto> languagesDtos)
+        /// <param name="isDescriptionRequired">if set to <c>true</c> [is description required].</param>
+        private void UpdateDescriptions(OrganizationDto entity, List<LanguageDto> languagesDtos, bool isDescriptionRequired)
         {
             this.Descriptions = new List<OrganizationDescriptionBaseCommand>();
             foreach (var languageDto in languagesDtos)
             {
                 var description = entity?.DescriptionsDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
-                this.Descriptions.Add(description != null ? new OrganizationDescriptionBaseCommand(description) : 
-                                                            new OrganizationDescriptionBaseCommand(languageDto));
+                this.Descriptions.Add(description != null ? new OrganizationDescriptionBaseCommand(description, isDescriptionRequired) : 
+                                                            new OrganizationDescriptionBaseCommand(languageDto, isDescriptionRequired));
             }
         }
 

@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="UpdateCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,8 +33,16 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
         /// <param name="isAddingToCurrentEdition">The is adding to current edition.</param>
-        /// <exception cref="DomainException"></exception>
-        public UpdateCollaborator(CollaboratorDto entity, List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, List<LanguageDto> languagesDtos, List<CountryBaseDto> countriesBaseDtos, bool? isAddingToCurrentEdition)
+        /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
+        /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
+        public UpdateCollaborator(
+            CollaboratorDto entity, 
+            List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, 
+            List<LanguageDto> languagesDtos, 
+            List<CountryBaseDto> countriesBaseDtos, 
+            bool? isAddingToCurrentEdition, 
+            bool isJobTitleRequired,
+            bool isMiniBioRequired)
         {
             if (entity == null)
             {
@@ -45,7 +53,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.IsAddingToCurrentEdition = isAddingToCurrentEdition ?? false;
             this.UpdaterBaseDto = entity.UpdaterDto;
             this.UpdateDate = entity.UpdateDate;
-            this.UpdateBaseProperties(entity, attendeeOrganizationsBaseDtos, languagesDtos, countriesBaseDtos);
+            this.UpdateBaseProperties(entity, attendeeOrganizationsBaseDtos, languagesDtos, countriesBaseDtos, isJobTitleRequired, isMiniBioRequired);
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaborator"/> class.</summary>

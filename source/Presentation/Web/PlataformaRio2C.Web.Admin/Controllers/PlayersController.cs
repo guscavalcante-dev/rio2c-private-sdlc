@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-10-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="PlayersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -184,7 +184,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                 await this.activityRepo.FindAllAsync(),
                 await this.targetAudienceRepo.FindAllAsync(),
-                await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
+                await this.interestRepo.FindAllGroupedByInterestGroupsAsync(),
+                false,
+                false);
 
             return Json(new
             {
@@ -281,7 +283,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     await this.activityRepo.FindAllAsync(),
                     await this.targetAudienceRepo.FindAllAsync(),
                     await this.interestRepo.FindAllGroupedByInterestGroupsAsync(),
-                    isAddingToCurrentEdition);
+                    isAddingToCurrentEdition,
+                    false,
+                    false);
             }
             catch (DomainException ex)
             {

@@ -59,8 +59,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [DataType(DataType.EmailAddress)]
         public string PublicEmail { get; set; }
 
-        public AddressBaseCommand Address { get; set; }
-
         public List<AttendeeOrganizationBaseCommand> AttendeeOrganizationBaseCommands { get; set; }
         public List<CollaboratorJobTitleBaseCommand> JobTitles { get; set; }
         public List<CollaboratorMiniBioBaseCommand> MiniBios { get; set; }
@@ -79,7 +77,15 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
-        public void UpdateBaseProperties(CollaboratorDto entity, List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, List<LanguageDto> languagesDtos, List<CountryBaseDto> countriesBaseDtos)
+        /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
+        /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
+        public void UpdateBaseProperties(
+            CollaboratorDto entity, 
+            List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, 
+            List<LanguageDto> languagesDtos, 
+            List<CountryBaseDto> countriesBaseDtos, 
+            bool isJobTitleRequired, 
+            bool isMiniBioRequired)
         {
             this.FirstName = entity?.FirstName;
             this.LastNames = entity?.LastNames;
@@ -89,9 +95,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.CellPhone = entity?.CellPhone;
             this.PublicEmail = entity?.PublicEmail;
             this.UpdateOrganizations(entity, attendeeOrganizationsBaseDtos);
-            this.UpdateAddress(entity, countriesBaseDtos);
-            this.UpdateJobTitles(entity, languagesDtos);
-            this.UpdateMiniBios(entity, languagesDtos);
+            this.UpdateJobTitles(entity, languagesDtos, isJobTitleRequired);
+            this.UpdateMiniBios(entity, languagesDtos, isMiniBioRequired);
             this.UpdateCropperImage(entity);
             this.UpdateDropdownProperties(attendeeOrganizationsBaseDtos, countriesBaseDtos);
         }
@@ -128,39 +133,33 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.TemplateAttendeeOrganizationBaseCommands.Add(new AttendeeOrganizationBaseCommand(null, attendeeOrganizationsBaseDtos));
         }
 
-        /// <summary>Updates the address.</summary>
-        /// <param name="entity">The entity.</param>
-        /// <param name="countriesBaseDtos">The countries base dtos.</param>
-        private void UpdateAddress(CollaboratorDto entity, List<CountryBaseDto> countriesBaseDtos)
-        {
-            this.Address = new AddressBaseCommand(entity?.AddressBaseDto, countriesBaseDtos);
-        }
-
         /// <summary>Updates the job titles.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
-        private void UpdateJobTitles(CollaboratorDto entity, List<LanguageDto> languagesDtos)
+        /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
+        private void UpdateJobTitles(CollaboratorDto entity, List<LanguageDto> languagesDtos, bool isJobTitleRequired)
         {
             this.JobTitles = new List<CollaboratorJobTitleBaseCommand>();
             foreach (var languageDto in languagesDtos)
             {
                 var jobTitle = entity?.JobTitlesDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
-                this.JobTitles.Add(jobTitle != null ? new CollaboratorJobTitleBaseCommand(jobTitle) :
-                                                      new CollaboratorJobTitleBaseCommand(languageDto));
+                this.JobTitles.Add(jobTitle != null ? new CollaboratorJobTitleBaseCommand(jobTitle, isJobTitleRequired) :
+                                                      new CollaboratorJobTitleBaseCommand(languageDto, isJobTitleRequired));
             }
         }
 
         /// <summary>Updates the mini bios.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
-        private void UpdateMiniBios(CollaboratorDto entity, List<LanguageDto> languagesDtos)
+        /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
+        private void UpdateMiniBios(CollaboratorDto entity, List<LanguageDto> languagesDtos, bool isMiniBioRequired)
         {
             this.MiniBios = new List<CollaboratorMiniBioBaseCommand>();
             foreach (var languageDto in languagesDtos)
             {
                 var miniBio = entity?.MiniBiosDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
-                this.MiniBios.Add(miniBio != null ? new CollaboratorMiniBioBaseCommand(miniBio) :
-                                                    new CollaboratorMiniBioBaseCommand(languageDto));
+                this.MiniBios.Add(miniBio != null ? new CollaboratorMiniBioBaseCommand(miniBio, isMiniBioRequired) :
+                                                    new CollaboratorMiniBioBaseCommand(languageDto, isMiniBioRequired));
             }
         }
 
@@ -183,9 +182,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             }
 
             this.UpdateOrganizationTemplate(attendeeOrganizationsBaseDtos);
-
-            // Addresses
-            this.Address?.UpdateDropdownProperties(countriesBaseDtos);
         }
 
         /// <summary>Updates the pre send properties.</summary>

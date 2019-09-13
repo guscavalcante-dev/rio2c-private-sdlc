@@ -131,7 +131,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.Address?.CityUid,
                 cmd.Address?.CityName,
                 cmd.Address?.Address1,
-                cmd.Address?.Address2,
                 cmd.Address?.AddressZipCode,
                 true, //TODO: get AddressIsManual from form
                 cmd.CropperImage?.ImageFile != null,

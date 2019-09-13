@@ -1,6 +1,7 @@
 ﻿@model PlataformaRio2C.Application.CQRS.Commands.AddressBaseCommand
 <!--begin:: Address Form-->
 <div class="form-group row">
+    @Html.HiddenFor(m => m.IsRequired)
     <div class="col-md-8" data-id="Country">
         @Html.LabelFor(m => m.CountryUid, new { @class = "control-label" })
         @Html.DropDownList("CountryUid", new SelectList(Model.CountriesBaseDtos, "Uid", "Name", Model.CountryUid), $"{Labels.Select}...", new { @class = "form-control" })

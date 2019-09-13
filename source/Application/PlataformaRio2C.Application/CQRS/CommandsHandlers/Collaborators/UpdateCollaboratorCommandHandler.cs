@@ -34,7 +34,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IEditionRepository editionRepo;
         private readonly ILanguageRepository languageRepo;
-        private readonly ICountryRepository countryRepo;
 
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
@@ -44,7 +43,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="languageRepository">The language repository.</param>
-        /// <param name="countryRepository">The country repository.</param>
         public UpdateCollaboratorCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
@@ -52,15 +50,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IUserRepository userRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IEditionRepository editionRepository,
-            ILanguageRepository languageRepository,
-            ICountryRepository countryRepository)
+            ILanguageRepository languageRepository)
             : base(eventBus, uow, collaboratorRepository)
         {
             this.userRepo = userRepository;
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.editionRepo = editionRepository;
             this.languageRepo = languageRepository;
-            this.countryRepo = countryRepository;
         }
 
         /// <summary>Handles the specified update collaborator.</summary>
@@ -105,15 +101,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.PhoneNumber,
                 cmd.CellPhone,
                 cmd.PublicEmail,
-                await this.countryRepo.GetAsync(cmd.Address?.CountryUid ?? Guid.Empty),
-                cmd.Address?.StateUid,
-                cmd.Address?.StateName,
-                cmd.Address?.CityUid,
-                cmd.Address?.CityName,
-                cmd.Address?.Address1,
-                cmd.Address?.Address2,
-                cmd.Address?.AddressZipCode,
-                true, //TODO: get AddressIsManual from form
                 cmd.CropperImage?.ImageFile != null,
                 cmd.JobTitles?.Select(d => new CollaboratorJobTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.MiniBios?.Select(d => new CollaboratorMiniBio(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
