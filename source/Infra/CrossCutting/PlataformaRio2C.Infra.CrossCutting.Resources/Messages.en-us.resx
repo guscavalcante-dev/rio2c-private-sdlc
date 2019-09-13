@@ -623,4 +623,8 @@
     <value>Describe what you are looking for in the Market (restrictions or specifics).</value>
     <comment>Descreva o tipo de conteúdo que está buscando no Mercado (restrições e especificações).</comment>
   </data>
+  <data name="PublicEmail" xml:space="preserve">
+    <value>Would you like to make available an e-mail for all Industry badge holders? This e-mail will only be part of a downloadable contact list.</value>
+    <comment>Gostaria de disponibilizar algum e-mail para contato entre os participantes da categoria Industry? Este e-mail fará parte somente de uma lista de contatos para download.</comment>
+  </data>
 </root>

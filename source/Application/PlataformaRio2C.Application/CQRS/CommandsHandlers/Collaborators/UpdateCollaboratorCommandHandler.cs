@@ -4,7 +4,7 @@
 // Created          : 08-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-29-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -104,6 +104,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.Email,
                 cmd.PhoneNumber,
                 cmd.CellPhone,
+                cmd.PublicEmail,
                 await this.countryRepo.GetAsync(cmd.Address?.CountryUid ?? Guid.Empty),
                 cmd.Address?.StateUid,
                 cmd.Address?.StateName,

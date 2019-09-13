@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-28-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="CollaboratorBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,6 +28,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string CellPhone { get; set; }
+        public string PublicEmail { get; set; }
         public HoldingBaseDto HoldingBaseDto { get; set; }
         public OrganizationBaseDto OrganizatioBaseDto { get; set; }
         public DateTime? ImageUploadDate { get; set; }

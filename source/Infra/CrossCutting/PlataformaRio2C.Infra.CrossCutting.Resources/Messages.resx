@@ -628,4 +628,8 @@
     <value>Descreva o tipo de conteúdo que está buscando no Mercado (restrições e especificações).</value>
     <comment>Descreva o tipo de conteúdo que está buscando no Mercado (restrições e especificações).</comment>
   </data>
+  <data name="PublicEmail" xml:space="preserve">
+    <value>Gostaria de disponibilizar algum e-mail para contato entre os participantes da categoria Industry? Este e-mail fará parte somente de uma lista de contatos para download.</value>
+    <comment>Gostaria de disponibilizar algum e-mail para contato entre os participantes da categoria Industry? Este e-mail fará parte somente de uma lista de contatos para download.</comment>
+  </data>
 </root>

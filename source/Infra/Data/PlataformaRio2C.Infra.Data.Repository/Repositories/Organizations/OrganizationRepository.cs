@@ -233,7 +233,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     StateUid = o.Address.State.Uid,
                                     CityUid = o.Address.City.Uid,
                                     Address1 = o.Address.Address1,
-                                    Address2 = o.Address.Address2,
                                     AddressZipCode = o.Address.ZipCode,
                                 },
                                 DescriptionsDtos = o.Descriptions.Select(d => new OrganizationDescriptionDto

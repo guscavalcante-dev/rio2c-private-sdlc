@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-12-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="CityMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,9 +26,6 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
 
             Property(u => u.Address1)
               .HasMaxLength(Address.Address1MaxLength);
-
-            Property(u => u.Address2)
-                .HasMaxLength(Address.Address2MaxLength);
 
             Property(u => u.ZipCode)
                 .HasMaxLength(Address.ZipCodeMaxLength);
