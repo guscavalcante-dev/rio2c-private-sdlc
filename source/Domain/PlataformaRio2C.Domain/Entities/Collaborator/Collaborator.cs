@@ -28,6 +28,7 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int BadgeMaxLength = 50;
         public static readonly int PhoneNumberMaxLength = 50;
         public static readonly int CellPhoneMaxLength = 50;
+        public static readonly int PublicEmailMaxLength = 50;
 
         public string FirstName { get; private set; }
         public string LastNames { get; private set; }
@@ -848,42 +849,26 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Called when [data].</summary>
         /// <param name="edition">The edition.</param>
-        /// <param name="country">The country.</param>
-        /// <param name="stateUid">The state uid.</param>
-        /// <param name="stateName">Name of the state.</param>
-        /// <param name="cityUid">The city uid.</param>
-        /// <param name="cityName">Name of the city.</param>
-        /// <param name="address1">The address1.</param>
-        /// <param name="address2">The address2.</param>
-        /// <param name="addressZipCode">The address zip code.</param>
-        /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
+        /// <param name="publicEmail">The public email.</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="jobTitles">The job titles.</param>
         /// <param name="miniBios">The mini bios.</param>
         /// <param name="userId">The user identifier.</param>
         public void OnboardData(
             Edition edition,
-            Country country,
-            Guid? stateUid,
-            string stateName,
-            Guid? cityUid,
-            string cityName,
-            string address1,
-            string address2,
-            string addressZipCode,
-            bool addressIsManual,
+            string publicEmail,
             bool isImageUploaded,
             List<CollaboratorJobTitle> jobTitles,
             List<CollaboratorMiniBio> miniBios,
             int userId)
         {
+            this.PublicEmail = publicEmail?.Trim();
             this.UpdateImageUploadDate(isImageUploaded, false);
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
-            this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, address2, addressZipCode, addressIsManual, userId);
             this.OnboardAttendeeCollaboratorData(edition, userId);
         }
 
@@ -906,6 +891,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateBadge();
             this.ValidatePhoneNumber();
             this.ValidateCellPhone();
+            this.ValidatePublicEmail();
             this.ValidateJobTitles();
             this.ValidateMiniBios();
             this.ValidateAddress();
@@ -962,6 +948,15 @@ namespace PlataformaRio2C.Domain.Entities
             if (!string.IsNullOrEmpty(this.CellPhone) && this.CellPhone?.Trim().Length > CellPhoneMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.CellPhone, CellPhoneMaxLength, 1), new string[] { "CellPhone" }));
+            }
+        }
+
+        /// <summary>Validates the public email.</summary>
+        public void ValidatePublicEmail()
+        {
+            if (!string.IsNullOrEmpty(this.PublicEmail) && this.PublicEmail?.Trim().Length > PublicEmailMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Email, PublicEmailMaxLength, 1), new string[] { "PublicEmail" }));
             }
         }
 

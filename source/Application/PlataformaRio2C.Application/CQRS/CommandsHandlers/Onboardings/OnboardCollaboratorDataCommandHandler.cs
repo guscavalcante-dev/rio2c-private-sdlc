@@ -4,7 +4,7 @@
 // Created          : 09-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-06-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="OnboardCollaboratorDataCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,8 +21,6 @@ using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
-using PlataformaRio2C.Domain.Validation;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -30,28 +28,25 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>OnboardCollaboratorDataCommandHandler</summary>
     public class OnboardCollaboratorDataCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<OnboardCollaboratorData, AppValidationResult>
     {
-        private readonly IUserRepository userRepo;
-        private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IEditionRepository editionRepo;
         private readonly ILanguageRepository languageRepo;
-        private readonly ICountryRepository countryRepo;
 
+        /// <summary>Initializes a new instance of the <see cref="OnboardCollaboratorDataCommandHandler"/> class.</summary>
+        /// <param name="eventBus">The event bus.</param>
+        /// <param name="uow">The uow.</param>
+        /// <param name="collaboratorRepository">The collaborator repository.</param>
+        /// <param name="editionRepository">The edition repository.</param>
+        /// <param name="languageRepository">The language repository.</param>
         public OnboardCollaboratorDataCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             ICollaboratorRepository collaboratorRepository,
-            IUserRepository userRepository,
-            IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IEditionRepository editionRepository,
-            ILanguageRepository languageRepository,
-            ICountryRepository countryRepository)
+            ILanguageRepository languageRepository)
             : base(eventBus, uow, collaboratorRepository)
         {
-            this.userRepo = userRepository;
-            this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.editionRepo = editionRepository;
             this.languageRepo = languageRepository;
-            this.countryRepo = countryRepository;
         }
 
         /// <summary>Handles the specified onboard collaborator data.</summary>
@@ -81,15 +76,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             collaborator.OnboardData(
                 await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
-                await this.countryRepo.GetAsync(cmd.Address?.CountryUid ?? Guid.Empty),
-                cmd.Address?.StateUid,
-                cmd.Address?.StateName,
-                cmd.Address?.CityUid,
-                cmd.Address?.CityName,
-                cmd.Address?.Address1,
-                cmd.Address?.Address2,
-                cmd.Address?.AddressZipCode,
-                true, //TODO: get AddressIsManual from form
+                cmd.PublicEmail,
                 cmd.CropperImage?.ImageFile != null,
                 cmd.JobTitles?.Select(d => new CollaboratorJobTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.MiniBios?.Select(d => new CollaboratorMiniBio(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
