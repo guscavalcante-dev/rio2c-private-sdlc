@@ -40,19 +40,15 @@
             <!--begin::Content-->
             <div class="kt-grid__item kt-grid__item--fluid  kt-grid__item--order-tablet-and-mobile-1  kt-login__wrapper">
                 <!--begin::Head-->
-                @*<div class="kt-login__head">
-                        <span class="kt-login__signup-label">Don't have an account yet?</span>&nbsp;&nbsp;
-                        <a href="#" class="kt-link kt-login__signup-link">Sign Up!</a>
-                    </div>*@
+                <div class="kt-login__head">
+                    <div class="kt-header__topbar kt-grid__item r2c-header__topbar" style="position: absolute">
+                        <!--begin: Language bar -->
+                        @{ Html.RenderPartial("~/Views/Themes/Metronic/_LanguageSelector.cshtml"); }
+                        <!--end: Language bar -->
+                    </div>
+                </div>
                 <!--end::Head-->
                 <!--begin::Body-->
-                <!-- begin:: Header Topbar -->
-                <div class="kt-header__topbar kt-grid__item r2c-header__topbar">
-                    <!--begin: Language bar -->
-                    @{ Html.RenderPartial("~/Views/Themes/Metronic/_LanguageSelector.cshtml"); }
-                    <!--end: Language bar -->
-                </div>
-                <!-- end:: Header Topbar -->
                 <div class="kt-login__body">
                     @RenderBody()
                 </div>
