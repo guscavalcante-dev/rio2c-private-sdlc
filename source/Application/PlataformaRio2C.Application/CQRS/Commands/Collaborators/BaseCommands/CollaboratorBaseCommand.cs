@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-12-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="CollaboratorBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -40,7 +40,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = "Email", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [EmailAddress(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [EmailAddress(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "EmailISInvalid")]
         [StringLength(256, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
@@ -52,6 +52,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Display(Name = "CellPhone", ResourceType = typeof(Labels))]
         [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string CellPhone { get; set; }
+
+        [Display(Name = "Email", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [EmailAddress(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "EmailISInvalid")]
+        [StringLength(256, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        [DataType(DataType.EmailAddress)]
+        public string PublicEmail { get; set; }
 
         public AddressBaseCommand Address { get; set; }
 
@@ -81,6 +88,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Email = entity?.Email;
             this.PhoneNumber = entity?.PhoneNumber;
             this.CellPhone = entity?.CellPhone;
+            this.PublicEmail = entity?.PublicEmail;
             this.UpdateOrganizations(entity, attendeeOrganizationsBaseDtos);
             this.UpdateAddress(entity, countriesBaseDtos);
             this.UpdateJobTitles(entity, languagesDtos);

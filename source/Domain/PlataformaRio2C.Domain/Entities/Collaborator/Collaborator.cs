@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-12-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,6 +34,7 @@ namespace PlataformaRio2C.Domain.Entities
         public string Badge { get; private set; }
         public string PhoneNumber { get; private set; }
         public string CellPhone { get; private set; }
+        public string PublicEmail { get; private set; }
         public int? AddressId { get; private set; }
         public DateTime? ImageUploadDate { get; private set; }
 
@@ -52,28 +53,29 @@ namespace PlataformaRio2C.Domain.Entities
         //public virtual ICollection<Speaker> Speaker { get;  set; }
 
         /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class for admin.</summary>
-        /// <param name="uid">The uid.</param>
-        /// <param name="attendeeOrganizations">The attendee organizations.</param>
-        /// <param name="edition">The edition.</param>
-        /// <param name="firstName">The first name.</param>
-        /// <param name="lastNames">The last names.</param>
-        /// <param name="badge">The badge.</param>
-        /// <param name="email">The email.</param>
-        /// <param name="phoneNumber">The phone number.</param>
-        /// <param name="cellPhone">The cell phone.</param>
-        /// <param name="country">The country.</param>
-        /// <param name="stateUid">The state uid.</param>
-        /// <param name="stateName">Name of the state.</param>
-        /// <param name="cityUid">The city uid.</param>
-        /// <param name="cityName">Name of the city.</param>
-        /// <param name="address1">The address1.</param>
-        /// <param name="address2">The address2.</param>
-        /// <param name="addressZipCode">The address zip code.</param>
-        /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
-        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
-        /// <param name="jobTitles">The job titles.</param>
-        /// <param name="miniBios">The mini bios.</param>
-        /// <param name="userId">The user identifier.</param>
+        /// <param name="uid"></param>
+        /// <param name="attendeeOrganizations"></param>
+        /// <param name="edition"></param>
+        /// <param name="firstName"></param>
+        /// <param name="lastNames"></param>
+        /// <param name="badge"></param>
+        /// <param name="email"></param>
+        /// <param name="phoneNumber"></param>
+        /// <param name="cellPhone"></param>
+        /// <param name="publicEmail"></param>
+        /// <param name="country"></param>
+        /// <param name="stateUid"></param>
+        /// <param name="stateName"></param>
+        /// <param name="cityUid"></param>
+        /// <param name="cityName"></param>
+        /// <param name="address1"></param>
+        /// <param name="address2"></param>
+        /// <param name="addressZipCode"></param>
+        /// <param name="addressIsManual"></param>
+        /// <param name="isImageUploaded"></param>
+        /// <param name="jobTitles"></param>
+        /// <param name="miniBios"></param>
+        /// <param name="userId"></param>
         public Collaborator(
             Guid uid,
             List<AttendeeOrganization> attendeeOrganizations,
@@ -84,6 +86,7 @@ namespace PlataformaRio2C.Domain.Entities
             string email,
             string phoneNumber,
             string cellPhone,
+            string publicEmail,
             Country country,
             Guid? stateUid,
             string stateName,
@@ -104,6 +107,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Badge = badge?.Trim();
             this.PhoneNumber = phoneNumber?.Trim();
             this.CellPhone = cellPhone?.Trim();
+            this.PublicEmail = publicEmail?.Trim();
             this.UpdateImageUploadDate(isImageUploaded, false);
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
@@ -194,6 +198,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="email">The email.</param>
         /// <param name="phoneNumber">The phone number.</param>
         /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="publicEmail">The public email.</param>
         /// <param name="country">The country.</param>
         /// <param name="stateUid">The state uid.</param>
         /// <param name="stateName">Name of the state.</param>
@@ -217,6 +222,7 @@ namespace PlataformaRio2C.Domain.Entities
             string email,
             string phoneNumber,
             string cellPhone,
+            string publicEmail,
             Country country,
             Guid? stateUid,
             string stateName,
@@ -238,6 +244,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Badge = badge?.Trim();
             this.PhoneNumber = phoneNumber?.Trim();
             this.CellPhone = cellPhone?.Trim();
+            this.PublicEmail = publicEmail?.Trim();
             this.UpdateImageUploadDate(isImageUploaded, false);
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;

@@ -1143,6 +1143,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gostaria de disponibilizar algum e-mail para contato entre os participantes da categoria Industry? Este e-mail fará parte somente de uma lista de contatos para download..
+        /// </summary>
+        public static string PublicEmail {
+            get {
+                return ResourceManager.GetString("PublicEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Motivo é obrigatorio..
         /// </summary>
         public static string ReasonIsRequired {

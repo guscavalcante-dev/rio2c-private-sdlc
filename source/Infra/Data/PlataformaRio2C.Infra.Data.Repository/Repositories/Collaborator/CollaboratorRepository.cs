@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-12-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -235,6 +235,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 Email = c.User.Email,
                                 PhoneNumber = c.PhoneNumber,
                                 CellPhone = c.CellPhone,
+                                PublicEmail = c.PublicEmail,
                                 //HoldingBaseDto = new HoldingBaseDto
                                 //{
                                 //    Id = c.Holding.Id,
@@ -267,7 +268,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     StateUid = c.Address.State.Uid,
                                     CityUid = c.Address.City.Uid,
                                     Address1 = c.Address.Address1,
-                                    Address2 = c.Address.Address2,
                                     AddressZipCode = c.Address.ZipCode,
                                 },
                                 JobTitlesDtos = c.JobTitles.Select(d => new CollaboratorJobTitleBaseDto
@@ -359,6 +359,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 Email = c.User.Email,
                                 PhoneNumber = c.PhoneNumber,
                                 CellPhone = c.CellPhone,
+                                PublicEmail = c.PublicEmail,
                                 ImageUploadDate = c.ImageUploadDate,
                                 CreateDate = c.CreateDate,
                                 UpdateDate = c.UpdateDate,

@@ -4,7 +4,7 @@
 // Created          : 08-22-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-12-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="Address.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,8 +23,6 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public static readonly int Address1MinLength = 1;
         public static readonly int Address1MaxLength = 200;
-        public static readonly int Address2MinLength = 1;
-        public static readonly int Address2MaxLength = 200;
         public static readonly int ZipCodeMinLength = 1;
         public static readonly int ZipCodeMaxLength = 10;
 
@@ -32,7 +30,6 @@ namespace PlataformaRio2C.Domain.Entities
         public int? StateId { get; private set; }
         public int? CityId { get; private set; }
         public string Address1 { get; private set; }
-        public string Address2 { get; private set; }
         public string ZipCode { get; private set; }
         public bool IsManual { get; private set; }
         public decimal? Latitude { get; private set; }
@@ -70,7 +67,6 @@ namespace PlataformaRio2C.Domain.Entities
             int userId)
         {
             this.Address1 = address1?.Trim();
-            this.Address2 = address2?.Trim();
             this.ZipCode = addressZipCode?.Trim();
             this.IsGeoLocationUpdated = false;
             this.IsManual = IsManual;
@@ -109,7 +105,6 @@ namespace PlataformaRio2C.Domain.Entities
             int userId)
         {
             this.Address1 = address1?.Trim();
-            this.Address2 = address2?.Trim();
             this.ZipCode = addressZipCode?.Trim();
             this.IsGeoLocationUpdated = false;
             this.IsManual = IsManual;
@@ -221,7 +216,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidationResult = new ValidationResult();
 
             this.ValidateAddress1();
-            this.ValidateAddress2();
             this.ValidateZipCode();
             this.ValidateCountry();
             this.ValidateState();
@@ -264,15 +258,6 @@ namespace PlataformaRio2C.Domain.Entities
             if (!string.IsNullOrEmpty(this.Address1?.Trim()) && (this.Address1?.Trim().Length < Address1MinLength || this.Address1?.Trim().Length > Address1MaxLength))
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Address1, Address1MaxLength, Address1MinLength), new string[] { "Address1" }));
-            }
-        }
-
-        /// <summary>Validates the address2.</summary>
-        public void ValidateAddress2()
-        {
-            if (!string.IsNullOrEmpty(this.Address2?.Trim()) && (this.Address2?.Trim().Length < Address2MinLength || this.Address2?.Trim().Length > Address2MaxLength))
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Address2, Address2MaxLength, Address2MinLength), new string[] { "Address2" }));
             }
         }
 
