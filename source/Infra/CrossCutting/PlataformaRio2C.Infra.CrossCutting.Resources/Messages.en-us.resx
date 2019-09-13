@@ -619,4 +619,8 @@
     <value>Player’s Regulation</value>
     <comment>Regulamento de Players</comment>
   </data>
+  <data name="PlayerRestrictionSpecifics" xml:space="preserve">
+    <value>Describe what you are looking for in the Market (restrictions or specifics).</value>
+    <comment>Descreva o tipo de conteúdo que está buscando no Mercado (restrições e especificações).</comment>
+  </data>
 </root>

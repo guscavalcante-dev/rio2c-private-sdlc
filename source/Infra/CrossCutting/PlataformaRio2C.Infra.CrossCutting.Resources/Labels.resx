@@ -377,8 +377,8 @@
     <comment>Público Alvo</comment>
   </data>
   <data name="RestrictionsSpecifics" xml:space="preserve">
-    <value>Descreva o tipo de conteúdo que está buscando no Mercado (restrições e especificidades)</value>
-    <comment>Descreva o tipo de conteúdo que está buscando no Mercado (restrições e especificidades)</comment>
+    <value>Restrições e especificidades</value>
+    <comment>Restrições e especificidades</comment>
   </data>
   <data name="Executive" xml:space="preserve">
     <value>Executivo</value>

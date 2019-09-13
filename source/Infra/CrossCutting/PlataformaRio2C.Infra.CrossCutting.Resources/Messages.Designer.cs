@@ -801,6 +801,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Descreva o tipo de conteúdo que está buscando no Mercado (restrições e especificações)..
+        /// </summary>
+        public static string PlayerRestrictionSpecifics {
+            get {
+                return ResourceManager.GetString("PlayerRestrictionSpecifics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Regulamento de Players.
         /// </summary>
         public static string PlayerTerms {

@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Infra.Data.Context
 // Author           : Rafael Dantas Ruiz
-// Created          : 08-19-2019
+// Created          : 09-13-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 09-13-2019
 // ***********************************************************************
-// <copyright file="OrganizationDescriptionMap.cs" company="Softo">
+// <copyright file="OrganizationRestrictionSpecificMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -16,20 +16,20 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace PlataformaRio2C.Infra.Data.Context.Mapping
 {
-    /// <summary>OrganizationDescriptionMap</summary>
-    public class OrganizationDescriptionMap : EntityTypeConfiguration<OrganizationDescription>
+    /// <summary>OrganizationRestrictionSpecificMap</summary>
+    public class OrganizationRestrictionSpecificMap : EntityTypeConfiguration<OrganizationRestrictionSpecific>
     {
-        /// <summary>Initializes a new instance of the <see cref="OrganizationDescriptionMap"/> class.</summary>
-        public OrganizationDescriptionMap()
+        /// <summary>Initializes a new instance of the <see cref="OrganizationRestrictionSpecificMap"/> class.</summary>
+        public OrganizationRestrictionSpecificMap()
         {
-            this.ToTable("OrganizationDescriptions");
+            this.ToTable("OrganizationRestrictionSpecifics");
 
             this.Property(p => p.Value)
                 .HasMaxLength(OrganizationDescription.ValueMaxLength);
 
             //Relationships
             this.HasRequired(t => t.Organization)
-                .WithMany(e => e.Descriptions)
+                .WithMany(e => e.RestrictionSpecifics)
                 .HasForeignKey(d => d.OrganizationId);
 
             this.HasRequired(t => t.Language)

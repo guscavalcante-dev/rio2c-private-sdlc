@@ -8131,6 +8131,7 @@
     <Content Include="Views\Shared\EditorTemplates\AttendeeOrganizationBaseCommand.cshtml" />
     <Content Include="Views\MailerService\_SiteEmailLayout.cshtml" />
     <Content Include="Views\MailerService\Welcome.cshtml" />
+    <Content Include="Views\Players\EditorTemplates\OrganizationRestrictionSpecificsBaseCommand.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

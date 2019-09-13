@@ -377,8 +377,8 @@
     <comment>Players</comment>
   </data>
   <data name="RestrictionsSpecifics" xml:space="preserve">
-    <value>Describe regarding what is being sought out in the market (restrictions or specifics)</value>
-    <comment>Descreva o tipo de conteúdo que está buscando no Mercado (restrições e especificidades)</comment>
+    <value>Restrictions or specifics</value>
+    <comment>Restrições e especificidades</comment>
   </data>
   <data name="Executive" xml:space="preserve">
     <value>Executive</value>

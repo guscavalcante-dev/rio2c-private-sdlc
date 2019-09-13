@@ -104,6 +104,7 @@
     <Compile Include="Mapping\Organizations\AttendeeOrganizationCollaboratorMap.cs" />
     <Compile Include="Mapping\Organizations\AttendeeOrganizationTypeMap.cs" />
     <Compile Include="Mapping\Organizations\AttendeeOrganizationMap.cs" />
+    <Compile Include="Mapping\Organizations\OrganizationRestrictionSpecificMap.cs" />
     <Compile Include="Mapping\Organizations\OrganizationInterestMap.cs" />
     <Compile Include="Mapping\Organizations\OrganizationTargetAudienceMap.cs" />
     <Compile Include="Mapping\Organizations\OrganizationActivityMap.cs" />

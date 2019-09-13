@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-12-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -237,6 +237,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     AddressZipCode = o.Address.ZipCode,
                                 },
                                 DescriptionsDtos = o.Descriptions.Select(d => new OrganizationDescriptionDto
+                                {
+                                    Id = d.Id,
+                                    Uid = d.Uid,
+                                    Value = d.Value,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = d.Language.Id,
+                                        Uid = d.Language.Uid,
+                                        Name = d.Language.Name,
+                                        Code = d.Language.Code
+                                    }
+                                }),
+                                RestrictionSpecificsDtos = o.RestrictionSpecifics.Select(d => new OrganizationRestrictionSpecificDto
                                 {
                                     Id = d.Id,
                                     Uid = d.Uid,

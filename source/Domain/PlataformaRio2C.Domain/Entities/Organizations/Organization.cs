@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-12-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="Organization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -47,6 +47,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual User Updater { get; private set; }
 
         public virtual ICollection<OrganizationDescription> Descriptions { get; private set; }
+        public virtual ICollection<OrganizationRestrictionSpecific> RestrictionSpecifics { get; private set; }
         public virtual ICollection<AttendeeOrganization> AttendeeOrganizations { get; private set; }
         public virtual ICollection<OrganizationActivity> OrganizationActivities { get; private set; }
         public virtual ICollection<OrganizationTargetAudience> OrganizationTargetAudiences { get; private set; }
@@ -59,7 +60,7 @@ namespace PlataformaRio2C.Domain.Entities
         //public virtual ICollection<PlayerTargetAudience> PlayerTargetAudience { get; private set; }
         //public virtual ICollection<PlayerRestrictionsSpecifics> RestrictionsSpecifics { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="Organization"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="Organization"/> class for admin.</summary>
         /// <param name="uid">The uid.</param>
         /// <param name="holding">The holding.</param>
         /// <param name="edition">The edition.</param>
@@ -82,6 +83,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="descriptions">The descriptions.</param>
+        /// <param name="restrictionSpecifics">The restriction specifics.</param>
         /// <param name="activities">The activities.</param>
         /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="interests">The interests.</param>
@@ -109,6 +111,7 @@ namespace PlataformaRio2C.Domain.Entities
             bool addressIsManual,
             bool isImageUploaded, 
             List<OrganizationDescription> descriptions,
+            List<OrganizationRestrictionSpecific> restrictionSpecifics,
             List<Activity> activities,
             List<TargetAudience> targetAudiences,
             List<Interest> interests,
@@ -129,6 +132,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeDescriptions(descriptions, userId);
+            this.SynchronizeDescriptions(restrictionSpecifics, userId);
             this.SynchronizeAttendeeOrganizations(edition, organizationType, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, address2, addressZipCode, addressIsManual, userId);
             this.SynchronizeOrganizationActivities(activities, userId);
@@ -141,7 +145,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Updates the specified holding.</summary>
+        /// <summary>Updates the organization for admin.</summary>
         /// <param name="holding">The holding.</param>
         /// <param name="edition">The edition.</param>
         /// <param name="organizationType">Type of the organization.</param>
@@ -164,6 +168,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
         /// <param name="descriptions">The descriptions.</param>
+        /// <param name="restrictionSpecifics">The restriction specifics.</param>
         /// <param name="activities">The activities.</param>
         /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="interests">The interests.</param>
@@ -192,6 +197,7 @@ namespace PlataformaRio2C.Domain.Entities
             bool isImageUploaded,
             bool isImageDeleted,
             List<OrganizationDescription> descriptions,
+            List<OrganizationRestrictionSpecific> restrictionSpecifics, 
             List<Activity> activities,
             List<TargetAudience> targetAudiences,
             List<Interest> interests,
@@ -213,6 +219,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeDescriptions(descriptions, userId);
+            this.SynchronizeDescriptions(restrictionSpecifics, userId);
             this.SynchronizeAttendeeOrganizations(edition, organizationType, isAddingToCurrentEdition, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, address2, addressZipCode, addressIsManual, userId);
             this.SynchronizeOrganizationActivities(activities, userId);
@@ -444,6 +451,61 @@ namespace PlataformaRio2C.Domain.Entities
         private void CreateDescription(OrganizationDescription description)
         {
             this.Descriptions.Add(description);
+        }
+
+        #endregion
+
+        #region Restriction Specifics
+
+        /// <summary>Synchronizes the descriptions.</summary>
+        /// <param name="restrictionSpecifics">The restriction specifics.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeDescriptions(List<OrganizationRestrictionSpecific> restrictionSpecifics, int userId)
+        {
+            if (this.RestrictionSpecifics == null)
+            {
+                this.RestrictionSpecifics = new List<OrganizationRestrictionSpecific>();
+            }
+
+            this.DeleteRestrictionSpecifics(restrictionSpecifics, userId);
+
+            if (restrictionSpecifics?.Any() != true)
+            {
+                return;
+            }
+
+            // Create or update restriction specifics
+            foreach (var restrictionSpecific in restrictionSpecifics)
+            {
+                var restrictionSpecificDb = this.RestrictionSpecifics.FirstOrDefault(d => d.Language.Code == restrictionSpecific.Language.Code);
+                if (restrictionSpecificDb != null)
+                {
+                    restrictionSpecificDb.Update(restrictionSpecific);
+                }
+                else
+                {
+                    this.CreateRestrictionSpecific(restrictionSpecific);
+                }
+            }
+        }
+
+        /// <summary>Deletes the restriction specifics.</summary>
+        /// <param name="newRestrictionSpecifics">The new restriction specifics.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteRestrictionSpecifics(List<OrganizationRestrictionSpecific> newRestrictionSpecifics, int userId)
+        {
+            var restrictionSpecificsToDelete = this.RestrictionSpecifics.Where(db => newRestrictionSpecifics?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false).ToList();
+            foreach (var restrictionSpecificToDelete in restrictionSpecificsToDelete)
+            {
+                restrictionSpecificToDelete.Delete(userId);
+            }
+        }
+
+        /// <summary>Creates the restriction specific.</summary>
+        /// <param name="restrictionSpecific">The restriction specific.</param>
+        private void CreateRestrictionSpecific(OrganizationRestrictionSpecific restrictionSpecific)
+        {
+            this.RestrictionSpecifics.Add(restrictionSpecific);
         }
 
         #endregion
@@ -733,6 +795,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateSocialMedia();
             this.ValidatePhoneNumber();
             this.ValidateDescriptions();
+            this.ValidateRestrictionSpecifics();
             this.ValidateAddress();
 
             return this.ValidationResult.IsValid;
@@ -812,6 +875,15 @@ namespace PlataformaRio2C.Domain.Entities
             foreach (var description in this.Descriptions?.Where(d => !d.IsValid())?.ToList())
             {
                 this.ValidationResult.Add(description.ValidationResult);
+            }
+        }
+
+        /// <summary>Validates the restriction specifics.</summary>
+        public void ValidateRestrictionSpecifics()
+        {
+            foreach (var restrictionSpecific in this.RestrictionSpecifics?.Where(d => !d.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(restrictionSpecific.ValidationResult);
             }
         }
 

@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-09-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="OrganizationDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -32,6 +32,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public AddressBaseDto AddressBaseDto { get; set; }
 
         public IEnumerable<OrganizationDescriptionBaseDto> DescriptionsDtos { get; set; }
+        public IEnumerable<OrganizationRestrictionSpecificBaseDto> RestrictionSpecificsDtos { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="HoldingDto"/> class.</summary>
         public OrganizationDto()

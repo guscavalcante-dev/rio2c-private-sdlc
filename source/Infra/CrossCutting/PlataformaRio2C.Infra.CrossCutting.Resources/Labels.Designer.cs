@@ -2482,7 +2482,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Descreva o tipo de conteúdo que está buscando no Mercado (restrições e especificidades).
+        ///   Looks up a localized string similar to Restrições e especificidades.
         /// </summary>
         public static string RestrictionsSpecifics {
             get {

@@ -81,6 +81,8 @@
     <Compile Include="Dtos\Collaborators\CollaboratorJobTitleBaseDto.cs" />
     <Compile Include="Dtos\Editions\EditionBaseDto.cs" />
     <Compile Include="Dtos\Editions\EditionDto.cs" />
+    <Compile Include="Dtos\OrganizationDescriptions\OrganizationRestrictionSpecificDto.cs" />
+    <Compile Include="Dtos\OrganizationDescriptions\OrganizationRestrictionSpecificBaseDto.cs" />
     <Compile Include="Dtos\Organizations\OrganizationInterestDto.cs" />
     <Compile Include="Dtos\Organizations\OrganizationTargetAudienceDto.cs" />
     <Compile Include="Dtos\Organizations\OrganizationActivityDto.cs" />
@@ -132,6 +134,7 @@
     <Compile Include="Entities\Organizations\AttendeeOrganizationCollaborator.cs" />
     <Compile Include="Entities\Organizations\AttendeeOrganizationType.cs" />
     <Compile Include="Entities\Organizations\AttendeeOrganization.cs" />
+    <Compile Include="Entities\Organizations\OrganizationRestrictionSpecific.cs" />
     <Compile Include="Entities\Organizations\OrganizationInterest.cs" />
     <Compile Include="Entities\Organizations\OrganizationTargetAudience.cs" />
     <Compile Include="Entities\Organizations\OrganizationActivity.cs" />
