@@ -16,32 +16,38 @@
         <!--begin::Widget -->
         <div class="kt-widget kt-widget--user-profile-2">
             <div class="kt-widget__head">
-                <div class="kt-widget__media">
-                    @if (userAccessControlDto?.HasImage() == true)
-                    {
-                        <img class="kt-widget__img" src="@ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, userAccessControlDto.Collaborator.Uid, userAccessControlDto.Collaborator.ImageUploadDate, true)" alt="">
-                    }
-                    else
-                    {
-                        <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest kt-font-light">@(userAccessControlDto?.GetNameFirstCharacter())</div>
-                    }
-                </div>
-                <div class="kt-widget__info">
-                    <a href="#" class="kt-widget__username">
-                        @(userAccessControlDto?.GetFullName(ViewBag.UserInterfaceLanguage))
-                    </a>
-                    <span class="kt-widget__desc">
-                        @(userAccessControlDto?.GetJobTitle(ViewBag.UserInterfaceLanguage))
-                        @if (organizations?.Any() == true)
-                        {
-                            <ul class="mt-2 mb-0 pl-4">
-                                @foreach (var organization in organizations?.OrderBy(o => o.Name))
+                <div class="row">
+                    <div class="col-4 col-sm-4 col-md-12 col-lg-5">
+                        <div class="kt-widget__media">
+                            @if (userAccessControlDto?.HasImage() == true)
+                            {
+                                <img class="kt-widget__img" src="@ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, userAccessControlDto.Collaborator.Uid, userAccessControlDto.Collaborator.ImageUploadDate, true)" alt="">
+                            }
+                            else
+                            {
+                                <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest kt-font-light">@(userAccessControlDto?.GetNameFirstCharacter())</div>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-8 col-sm-8 col-md-12 col-lg-7">
+                        <div class="kt-widget__info">
+                            <a href="#" class="kt-widget__username">
+                                @(userAccessControlDto?.GetFullName(ViewBag.UserInterfaceLanguage))
+                            </a>
+                            <span class="kt-widget__desc">
+                                @(userAccessControlDto?.GetJobTitle(ViewBag.UserInterfaceLanguage))
+                                @if (organizations?.Any() == true)
                                 {
-                                    <li>@organization.Name</li>
+                                    <ul class="mt-2 mb-0 pl-4">
+                                        @foreach (var organization in organizations?.OrderBy(o => o.Name))
+                                        {
+                                            <li>@organization.Name</li>
+                                        }
+                                    </ul>
                                 }
-                            </ul>
-                        }
-                    </span>
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="kt-widget__body">
