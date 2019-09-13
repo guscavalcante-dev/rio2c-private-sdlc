@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-09-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="Language.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,6 +23,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         public string Name { get; private set; }
         public string Code { get; private set; }
+        public bool IsDefault { get; private set; }
 
         public virtual ICollection<User> Users { get; set; }
 

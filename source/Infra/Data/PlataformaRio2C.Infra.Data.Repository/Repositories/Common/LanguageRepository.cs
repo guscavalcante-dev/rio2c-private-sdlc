@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-23-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="LanguageRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -36,6 +36,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static IQueryable<Language> IsNotDeleted(this IQueryable<Language> query)
         {
             query = query.Where(h => !h.IsDeleted);
+
+            return query;
+        }
+
+        /// <summary>Orders the specified query.</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<Language> Order(this IQueryable<Language> query)
+        {
+            query = query.OrderByDescending(l => l.IsDefault).ThenBy(l => l.Name);
 
             return query;
         }
@@ -97,7 +107,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<List<LanguageDto>> FindAllDtosAsync()
         {
-            var query = this.GetBaseQuery();
+            var query = this.GetBaseQuery()
+                                .Order();
 
             return await query.Select(l => new LanguageDto
             {
