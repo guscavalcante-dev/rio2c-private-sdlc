@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-09-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="TargetAudienceRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -63,6 +63,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>Orders the specified query.</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<TargetAudience> Order(this IQueryable<TargetAudience> query)
+        {
+            query = query.OrderBy(ta => ta.DisplayOrder);
+
+            return query;
+        }
     }
 
     #endregion
@@ -97,7 +107,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery();
 
-            return await query.ToListAsync();
+            return await query
+                            .Order()
+                            .ToListAsync();
         }
 
         /// <summary>Finds all by uids asynchronous.</summary>
@@ -108,7 +120,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                     .FindByUids(targetAudiencesUids);
 
-            return await query.ToListAsync();
+            return await query
+                            .Order()
+                            .ToListAsync();
         }
     }
 }

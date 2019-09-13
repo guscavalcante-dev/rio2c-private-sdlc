@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-09-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="InterestRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -65,6 +65,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>Orders the specified query.</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<Interest> Order(this IQueryable<Interest> query)
+        {
+            query = query.OrderBy(i => i.DisplayOrder);
+
+            return query;
+        }
     }
 
     #endregion
@@ -99,7 +109,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                     .GroupBy(i => i.InterestGroup);
 
-            return await query.ToListAsync();
+            return await query
+                            .OrderBy(ig => ig.Key.DisplayOrder)
+                            .ToListAsync();
         }
 
         /// <summary>Finds all by uids asynchronous.</summary>
@@ -108,6 +120,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<List<Interest>> FindAllByUidsAsync(List<Guid> interestsUids)
         {
             var query = this.GetBaseQuery()
+                                .Order()
                                 .FindByUids(interestsUids);
 
             return await query.ToListAsync();

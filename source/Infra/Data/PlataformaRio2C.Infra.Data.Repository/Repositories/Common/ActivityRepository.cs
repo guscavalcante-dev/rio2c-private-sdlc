@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-09-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="ActivityRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -63,6 +63,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>Orders the specified query.</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<Activity> Order(this IQueryable<Activity> query)
+        {
+            query = query.OrderBy(a => a.DisplayOrder);
+
+            return query;
+        }
     }
 
     #endregion
@@ -97,7 +107,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery();
 
-            return await query.ToListAsync();
+            return await query
+                            .Order()
+                            .ToListAsync();
         }
 
         public async Task<List<Activity>> FindAllByUidsAsync(List<Guid> activitiesUids)
@@ -105,7 +117,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                 .FindByUids(activitiesUids);
 
-            return await query.ToListAsync();
+            return await query
+                            .Order()
+                            .ToListAsync();
         }
     }
 }

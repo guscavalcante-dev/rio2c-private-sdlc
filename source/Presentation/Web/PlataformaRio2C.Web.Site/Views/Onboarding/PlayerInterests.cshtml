@@ -35,11 +35,11 @@
                                         @Html.ValidationMessage("InterestsUids", new { @class = "text-danger" })
                                         <div class="kt-section__content mt-3">
                                             <div class="kt-checkbox-list">
-                                                @foreach (var interestGroup in Model.GroupedInterests)
+                                                @foreach (var interests in Model.GroupedInterests)
                                                 {
-                                                    <h3 class="kt-heading kt-heading--md mt-50">@interestGroup.Key.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')</h3>
+                                                    <h3 class="kt-heading kt-heading--md mt-50">@interests.Key.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')</h3>
 
-                                                    foreach (var interest in interestGroup)
+                                                    foreach (var interest in interests?.OrderBy(ig => ig.DisplayOrder))
                                                     {
                                                         <label class="kt-checkbox">
                                                             <input type="checkbox"
