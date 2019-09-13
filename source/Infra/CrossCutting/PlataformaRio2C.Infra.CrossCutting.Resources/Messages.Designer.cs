@@ -241,7 +241,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Configure uma senha de acesso ao MyRio2C.
+        ///   Looks up a localized string similar to Informe uma senha de acesso à conta.
         /// </summary>
         public static string ConfigurePasswordToMyRio2c {
             get {

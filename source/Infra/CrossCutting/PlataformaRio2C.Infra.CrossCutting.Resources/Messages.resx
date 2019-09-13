@@ -562,8 +562,8 @@
     <comment>Complete seu cadastro</comment>
   </data>
   <data name="ConfigurePasswordToMyRio2c" xml:space="preserve">
-    <value>Configure uma senha de acesso ao MyRio2C</value>
-    <comment>Configure uma senha de acesso ao MyRio2C</comment>
+    <value>Informe uma senha de acesso à conta</value>
+    <comment>Informe uma senha de acesso à conta</comment>
   </data>
   <data name="ConfirmAndCompleteYourAccessData" xml:space="preserve">
     <value>Confirme e complete seus dados de acesso</value>

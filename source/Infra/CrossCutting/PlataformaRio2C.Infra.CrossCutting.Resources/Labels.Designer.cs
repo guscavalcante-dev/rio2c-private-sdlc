@@ -619,7 +619,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Confirme a senha.
+        ///   Looks up a localized string similar to Confirmação de senha.
         /// </summary>
         public static string ConfirmPassword {
             get {

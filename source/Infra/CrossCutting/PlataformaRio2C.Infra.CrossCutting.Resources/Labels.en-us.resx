@@ -338,8 +338,8 @@
     <comment>Bem-vindo ao Rio2C | RioContentMarket {0}!</comment>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
-    <value>Confirm password</value>
-    <comment>Confirme a senha</comment>
+    <value>Password confirmation</value>
+    <comment>Confirmação de senha</comment>
   </data>
   <data name="CurrentPassword" xml:space="preserve">
     <value>Current password</value>
