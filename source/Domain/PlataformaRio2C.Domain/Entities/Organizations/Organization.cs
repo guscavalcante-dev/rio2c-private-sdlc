@@ -328,14 +328,17 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Called when [interests].</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="restrictionSpecifics">The restriction specifics.</param>
         /// <param name="interests">The interests.</param>
         /// <param name="userId">The user identifier.</param>
         public void OnboardInterests(
             Edition edition,
             OrganizationType organizationType,
+            List<OrganizationRestrictionSpecific> restrictionSpecifics,
             List<Interest> interests,
             int userId)
         {
+            this.SynchronizeDescriptions(restrictionSpecifics, userId);
             this.SynchronizeOrganizationInterests(interests, userId);
             this.OnboardAttendeeOrganizationInterests(edition, userId);
         }

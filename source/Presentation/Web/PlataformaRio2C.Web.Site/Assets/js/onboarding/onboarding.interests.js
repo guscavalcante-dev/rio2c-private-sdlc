@@ -1,21 +1,21 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Site
 // Author           : Rafael Dantas Ruiz
-// Created          : 09-06-2019
+// Created          : 09-13-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 09-13-2019
 // ***********************************************************************
-// <copyright file="onboarding.collaboratordata.js" company="Softo">
+// <copyright file="onboarding.interests.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var OnboardingCollaboratorData = function () {
+var OnboardingInterests = function () {
 
     //var modalId = '#UpdatePlayerExecutiveModal';
-    var formId = '#CollaboratorDataForm';
+    var formId = '#PlayerInterestssDataForm';
 
     // Enable form validation ---------------------------------------------------------------------
     //var enableFormValidation = function () {
@@ -27,10 +27,7 @@ var OnboardingCollaboratorData = function () {
 
     // Enable plugins -----------------------------------------------------------------------------
     var enablePlugins = function () {
-        MyRio2cCropper.init({ formIdOrClass: formId });
-        MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });
-        AddressesForm.init();
-        MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-minibio', maxCharCount: 710 });
+        MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-restrictions', maxCharCount: 270 });
     };
 
     return {
