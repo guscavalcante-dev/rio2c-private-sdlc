@@ -560,7 +560,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
             var cmd = new OnboardPlayerInterests(
                 await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(currentOrganization.Uid, this.UserInterfaceLanguage)),
                 await this.interestRepo.FindAllGroupedByInterestGroupsAsync(),
-                await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)));
+                await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
+                true);
 
             return View(cmd);
         }

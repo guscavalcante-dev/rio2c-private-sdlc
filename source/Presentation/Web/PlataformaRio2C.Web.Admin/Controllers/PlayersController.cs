@@ -186,6 +186,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 await this.targetAudienceRepo.FindAllAsync(),
                 await this.interestRepo.FindAllGroupedByInterestGroupsAsync(),
                 false,
+                false,
                 false);
 
             return Json(new
@@ -284,6 +285,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     await this.targetAudienceRepo.FindAllAsync(),
                     await this.interestRepo.FindAllGroupedByInterestGroupsAsync(),
                     isAddingToCurrentEdition,
+                    false,
                     false,
                     false);
             }

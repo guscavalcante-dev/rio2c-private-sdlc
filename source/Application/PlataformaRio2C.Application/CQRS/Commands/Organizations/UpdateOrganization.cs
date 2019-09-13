@@ -40,6 +40,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isAddingToCurrentEdition">The is adding to current edition.</param>
         /// <param name="isDescriptionRequired">if set to <c>true</c> [is description required].</param>
         /// <param name="isAddressRequired">if set to <c>true</c> [is address required].</param>
+        /// <param name="isRestrictionSpecificRequired">if set to <c>true</c> [is restriction specific required].</param>
         public UpdateOrganization(
             OrganizationDto entity, 
             List<HoldingBaseDto> holdingBaseDtos,
@@ -50,7 +51,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<IGrouping<InterestGroup, Interest>> groupedInterests,
             bool? isAddingToCurrentEdition,
             bool isDescriptionRequired, 
-            bool isAddressRequired)
+            bool isAddressRequired, 
+            bool isRestrictionSpecificRequired)
         {
             if (entity == null)
             {
@@ -61,7 +63,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.IsAddingToCurrentEdition = isAddingToCurrentEdition ?? false;
             this.UpdaterBaseDto = entity.UpdaterDto;
             this.UpdateDate = entity.UpdateDate;
-            this.UpdateBaseProperties(entity, holdingBaseDtos, languagesDtos, countriesBaseDtos, activities, targetAudiences, groupedInterests, isDescriptionRequired, isAddressRequired);
+            this.UpdateBaseProperties(entity, holdingBaseDtos, languagesDtos, countriesBaseDtos, activities, targetAudiences, groupedInterests, isDescriptionRequired, isAddressRequired, isRestrictionSpecificRequired);
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateOrganization"/> class.</summary>

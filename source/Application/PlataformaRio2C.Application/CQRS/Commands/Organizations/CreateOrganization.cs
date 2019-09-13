@@ -30,6 +30,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="groupedInterests">The grouped interests.</param>
         /// <param name="isDescriptionRequired">if set to <c>true</c> [is description required].</param>
         /// <param name="isAddressRequired">if set to <c>true</c> [is address required].</param>
+        /// <param name="isRestrictionSpecificRequired">if set to <c>true</c> [is restriction specific required].</param>
         public CreateOrganization(
             List<HoldingBaseDto> holdingBaseDtos,
             List<LanguageDto> languagesDtos, 
@@ -38,9 +39,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<TargetAudience> targetAudiences,
             List<IGrouping<InterestGroup, Interest>> groupedInterests,
             bool isDescriptionRequired, 
-            bool isAddressRequired)
+            bool isAddressRequired, 
+            bool isRestrictionSpecificRequired)
         {
-            this.UpdateBaseProperties(null, holdingBaseDtos, languagesDtos, countriesBaseDtos, activities, targetAudiences, groupedInterests, isDescriptionRequired, isAddressRequired);
+            this.UpdateBaseProperties(null, holdingBaseDtos, languagesDtos, countriesBaseDtos, activities, targetAudiences, groupedInterests, isDescriptionRequired, isAddressRequired, isRestrictionSpecificRequired);
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateOrganization"/> class.</summary>

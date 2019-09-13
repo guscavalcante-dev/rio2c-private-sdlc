@@ -89,6 +89,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="groupedInterests">The grouped interests.</param>
         /// <param name="isDescriptionRequired">if set to <c>true</c> [is description required].</param>
         /// <param name="isAddressRequired">if set to <c>true</c> [is address required].</param>
+        /// <param name="isRestrictionSpecificRequired">if set to <c>true</c> [is restriction specific required].</param>
         public void UpdateBaseProperties(
             OrganizationDto entity, 
             List<HoldingBaseDto> holdingBaseDtos, 
@@ -98,7 +99,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<TargetAudience> targetAudiences,
             List<IGrouping<InterestGroup, Interest>> groupedInterests,
             bool isDescriptionRequired, 
-            bool isAddressRequired)
+            bool isAddressRequired, 
+            bool isRestrictionSpecificRequired)
         {
             this.HoldingUid = entity?.HoldingBaseDto?.Uid;
             this.Name = entity?.Name;
@@ -110,7 +112,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.PhoneNumber = entity?.PhoneNumber;
             this.UpdateAddress(entity, countriesBaseDtos, isAddressRequired);
             this.UpdateDescriptions(entity, languagesDtos, isDescriptionRequired);
-            this.UpdateRestrictionSpecifics(entity, languagesDtos);
+            this.UpdateRestrictionSpecifics(entity, languagesDtos, isRestrictionSpecificRequired);
             this.UpdateCropperImage(entity);
             this.UpdateDropdownProperties(holdingBaseDtos, countriesBaseDtos, activities, targetAudiences, groupedInterests);
             this.ActivitiesUids = entity?.OrganizationActivitiesDtos?.Select(oad => oad.ActivityUid)?.ToList();
@@ -145,14 +147,15 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Updates the restriction specifics.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
-        private void UpdateRestrictionSpecifics(OrganizationDto entity, List<LanguageDto> languagesDtos)
+        /// <param name="isRestrictionSpecificRequired">if set to <c>true</c> [is restriction specific required].</param>
+        private void UpdateRestrictionSpecifics(OrganizationDto entity, List<LanguageDto> languagesDtos, bool isRestrictionSpecificRequired)
         {
             this.RestrictionSpecifics = new List<OrganizationRestrictionSpecificsBaseCommand>();
             foreach (var languageDto in languagesDtos)
             {
                 var restrictionSpecific = entity?.RestrictionSpecificsDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
-                this.RestrictionSpecifics.Add(restrictionSpecific != null ? new OrganizationRestrictionSpecificsBaseCommand(restrictionSpecific) :
-                                                                            new OrganizationRestrictionSpecificsBaseCommand(languageDto));
+                this.RestrictionSpecifics.Add(restrictionSpecific != null ? new OrganizationRestrictionSpecificsBaseCommand(restrictionSpecific, isRestrictionSpecificRequired) :
+                                                                            new OrganizationRestrictionSpecificsBaseCommand(languageDto, isRestrictionSpecificRequired));
             }
         }
 
