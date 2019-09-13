@@ -2950,7 +2950,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Público Alvo / Faixa Etária.
+        ///   Looks up a localized string similar to Público Alvo.
         /// </summary>
         public static string TargetAudience {
             get {

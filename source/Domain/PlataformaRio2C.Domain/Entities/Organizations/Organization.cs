@@ -264,9 +264,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Called when [data].</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="organizationType">Type of the organization.</param>
-        /// <param name="name">The name.</param>
         /// <param name="companyName">Name of the company.</param>
+        /// <param name="tradeName">Name of the trade.</param>
         /// <param name="document">The document.</param>
+        /// <param name="webSite">The web site.</param>
+        /// <param name="socialMedia">The social media.</param>
         /// <param name="country">The country.</param>
         /// <param name="stateUid">The state uid.</param>
         /// <param name="stateName">Name of the state.</param>
@@ -285,9 +287,11 @@ namespace PlataformaRio2C.Domain.Entities
         public void OnboardData(
             Edition edition,
             OrganizationType organizationType,
-            string name,
             string companyName,
+            string tradeName,
             string document,
+            string webSite,
+            string socialMedia,
             Country country,
             Guid? stateUid,
             string stateName,
@@ -304,16 +308,11 @@ namespace PlataformaRio2C.Domain.Entities
             List<TargetAudience> targetAudiences,
             int userId)
         {
-            //this.Uid = uid;
-            //this.Holding = holding;
-            //this.HoldingId = holding?.Id;
-            this.Name = name?.Trim();
             this.CompanyName = companyName?.Trim();
-            //this.TradeName = tradeName?.Trim();
+            this.TradeName = tradeName?.Trim();
             this.Document = document?.Trim();
-            //this.Website = website?.Trim();
-            //this.SocialMedia = socialMedia?.Trim();
-            //this.PhoneNumber = phoneNumber?.Trim();
+            this.Website = webSite?.Trim();
+            this.SocialMedia = socialMedia?.Trim();
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;

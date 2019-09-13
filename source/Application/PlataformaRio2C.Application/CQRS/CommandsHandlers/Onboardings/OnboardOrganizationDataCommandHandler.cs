@@ -4,7 +4,7 @@
 // Created          : 09-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-09-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="OnboardOrganizationDataCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -84,9 +84,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             organization.OnboardData(
                 await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
                 await this.organizationTypeRepo.GetAsync(cmd.OrganizationType?.Uid ?? Guid.Empty),
-                cmd.Name,
                 cmd.CompanyName,
+                cmd.TradeName,
                 cmd.Document,
+                cmd.Website,
+                cmd.SocialMedia,
                 await this.countryRepo.GetAsync(cmd.Address?.CountryUid ?? Guid.Empty),
                 cmd.Address?.StateUid,
                 cmd.Address?.StateName,

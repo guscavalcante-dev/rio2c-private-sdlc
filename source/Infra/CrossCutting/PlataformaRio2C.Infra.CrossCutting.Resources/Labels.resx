@@ -373,7 +373,7 @@
     <comment>Atividade</comment>
   </data>
   <data name="TargetAudience" xml:space="preserve">
-    <value>Público Alvo / Faixa Etária</value>
+    <value>Público Alvo</value>
     <comment>Público Alvo</comment>
   </data>
   <data name="RestrictionsSpecifics" xml:space="preserve">
