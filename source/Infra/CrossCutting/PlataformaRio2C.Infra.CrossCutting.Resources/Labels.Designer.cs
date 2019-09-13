@@ -1944,15 +1944,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Dados pessoais.
         /// </summary>
-        public static string PersonalInfo {
-            get {
-                return ResourceManager.GetString("PersonalInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Dados Pessoais.
-        /// </summary>
         public static string PersonalInformation {
             get {
                 return ResourceManager.GetString("PersonalInformation", resourceCulture);

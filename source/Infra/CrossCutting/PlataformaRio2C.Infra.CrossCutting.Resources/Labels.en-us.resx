@@ -1333,14 +1333,12 @@
     <value>Welcome to {0}</value>
     <comment>Bem vindo ao {0}</comment>
   </data>
-  <data name="PersonalInfo" xml:space="preserve">
-    <value>Personal Info</value>
-  </data>
   <data name="PlayerInfo" xml:space="preserve">
     <value>Player info</value>
+    <comment>Dados do Player</comment>
   </data>
   <data name="AccessData" xml:space="preserve">
-    <value>Access data</value>
+    <value>Login information</value>
     <comment>Dados de acesso</comment>
   </data>
   <data name="FirstName" xml:space="preserve">
@@ -1404,8 +1402,8 @@
     <comment>Mini-biografias</comment>
   </data>
   <data name="PersonalInformation" xml:space="preserve">
-    <value>Personal Information</value>
-    <comment>Dados Pessoais</comment>
+    <value>Personal information</value>
+    <comment>Dados pessoais</comment>
   </data>
   <data name="PlayerInformation" xml:space="preserve">
     <value>Player Information</value>
