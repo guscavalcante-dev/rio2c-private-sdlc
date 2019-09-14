@@ -4,7 +4,7 @@
 // Created          : 08-23-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 09-14-2019
 // ***********************************************************************
 // <copyright file="AddressBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,6 +14,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using Foolproof;
@@ -97,7 +98,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
         public void UpdateDropdownProperties(List<CountryBaseDto> countriesBaseDtos)
         {
-            this.CountriesBaseDtos = countriesBaseDtos;
+            this.CountriesBaseDtos = countriesBaseDtos?
+                                        .OrderBy(c => c.Ordering)?
+                                        .ThenBy(c => c.DisplayName)?
+                                        .ToList();
         }
     }
 }

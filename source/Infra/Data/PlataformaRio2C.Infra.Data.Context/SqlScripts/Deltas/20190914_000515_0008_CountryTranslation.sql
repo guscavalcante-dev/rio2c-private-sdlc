@@ -33,7 +33,7 @@ update countries set name = 'Bolívia | Bolivia' where id =27
 update countries set name = 'Bósnia e Herzegovina | Bosnia and Herzegovina' where id =28
 update countries set name = 'Botsuana | Botswana' where id =29
 update countries set name = 'Ilha Bouvet | Bouvet Island' where id =30
-update countries set name = 'Brasil | Brasil' where id =31
+update countries set name = 'Brasil | Brazil' where id =31
 update countries set name = 'Território Britânico do Oceano Índico | British Indian Ocean Territory' where id =32
 update countries set name = 'Brunei | Brunei' where id =33
 update countries set name = 'Bulgária | Bulgaria' where id =34

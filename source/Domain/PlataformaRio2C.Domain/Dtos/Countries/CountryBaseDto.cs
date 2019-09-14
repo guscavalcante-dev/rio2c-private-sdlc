@@ -4,7 +4,7 @@
 // Created          : 08-23-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-11-2019
+// Last Modified On : 09-14-2019
 // ***********************************************************************
 // <copyright file="CountryBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,6 +12,8 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Globalization;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -28,5 +30,9 @@ namespace PlataformaRio2C.Domain.Dtos
         public CountryBaseDto()
         {
         }
+
+        /// <summary>Gets the display name.</summary>
+        /// <value>The display name.</value>
+        public string DisplayName => this.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|');
     }
 }
