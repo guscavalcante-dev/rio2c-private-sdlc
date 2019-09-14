@@ -628,7 +628,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Confirme a senha.
+        ///   Looks up a localized string similar to Confirmação de senha.
         /// </summary>
         public static string ConfirmPassword {
             get {
@@ -1953,15 +1953,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Dados pessoais.
         /// </summary>
-        public static string PersonalInfo {
-            get {
-                return ResourceManager.GetString("PersonalInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Dados Pessoais.
-        /// </summary>
         public static string PersonalInformation {
             get {
                 return ResourceManager.GetString("PersonalInformation", resourceCulture);
@@ -2968,7 +2959,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Público Alvo / Faixa Etária.
+        ///   Looks up a localized string similar to Público Alvo.
         /// </summary>
         public static string TargetAudience {
             get {

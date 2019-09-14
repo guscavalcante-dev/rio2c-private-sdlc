@@ -50,7 +50,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="cityUid">The city uid.</param>
         /// <param name="cityName">Name of the city.</param>
         /// <param name="address1">The address1.</param>
-        /// <param name="address2">The address2.</param>
         /// <param name="addressZipCode">The address zip code.</param>
         /// <param name="isManual">if set to <c>true</c> [is manual].</param>
         /// <param name="userId">The user identifier.</param>
@@ -61,7 +60,6 @@ namespace PlataformaRio2C.Domain.Entities
             Guid? cityUid, 
             string cityName, 
             string address1,
-            string address2,
             string addressZipCode,
             bool isManual, 
             int userId)
@@ -88,7 +86,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="cityUid">The city uid.</param>
         /// <param name="cityName">Name of the city.</param>
         /// <param name="address1">The address1.</param>
-        /// <param name="address2">The address2.</param>
         /// <param name="addressZipCode">The address zip code.</param>
         /// <param name="isManual">if set to <c>true</c> [is manual].</param>
         /// <param name="userId">The user identifier.</param>
@@ -99,7 +96,6 @@ namespace PlataformaRio2C.Domain.Entities
             Guid? cityUid, 
             string cityName, 
             string address1,
-            string address2,
             string addressZipCode, 
             bool isManual,
             int userId)

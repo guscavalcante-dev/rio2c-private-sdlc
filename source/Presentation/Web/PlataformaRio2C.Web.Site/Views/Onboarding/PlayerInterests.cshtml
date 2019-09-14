@@ -27,10 +27,17 @@
                     @Html.HiddenFor(m => m.OrganizationUid)
                     <!--begin: Form Wizard Step 1-->
                     <div class="kt-wizard-v2__content" data-ktwizard-type="step-content" data-ktwizard-state="current">
-                        <div class="kt-heading kt-heading--md">@string.Format(Messages.ChoosePlayerInterestsFor, player?.Name ?? string.Empty)</div>
+                        <div class="kt-heading kt-heading--md">@string.Format(Messages.CompletePlayerInterestsFor, player?.Name ?? string.Empty)</div>
                         <div class="kt-form__section kt-form__section--first">
                             <div class="kt-wizard-v2__form">
                                 <div id="form-container">
+                                    <div class="kt-section pt-4">
+                                        <h3 class="kt-section__title mb-0">@Messages.PlayerRestrictionSpecifics</h3>
+                                        @Html.ValidationMessage("RestrictionSpecifics", new { @class = "text-danger" })
+                                        <div class="kt-section__content mt-3">
+                                            @Html.EditorFor(m => m.RestrictionSpecifics)
+                                        </div>
+                                    </div>
                                     <div class="kt-section mt-50">
                                         @Html.ValidationMessage("InterestsUids", new { @class = "text-danger" })
                                         <div class="kt-section__content mt-3">
@@ -95,16 +102,11 @@
     @Scripts.Render("~/bundles/js/select2.js")
     @Scripts.Render("~/bundles/js/ckEditor.js")
     @Scripts.Render("~/bundles/js/addresses.form.js")
-    @Scripts.Render("~/bundles/js/onboarding.organizationdata.js")
+    @Scripts.Render("~/bundles/js/onboarding.interests.js")
     @Scripts.Render("~/bundles/js/onboarding.wizard.js")
-    @*@Scripts.Render("~/bundles/js/onboarding
-        Index")*@
     <script>
         jQuery(document).ready(function () {
-            OnboardingCollaboratorData.init();
-            //CollaboratorsTotalCountWidget.init();
-            //CollaboratorsEditionCountWidget.init();
-            //CollaboratorsDataTableWidget.init();
+            OnboardingInterests.init();
         });
     </script>
 }

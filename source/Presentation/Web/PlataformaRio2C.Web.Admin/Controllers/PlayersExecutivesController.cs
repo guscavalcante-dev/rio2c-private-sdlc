@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-29-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="PlayersExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -166,7 +166,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             var cmd = new CreateCollaborator(
                 await this.CommandBus.Send(new FindAllAttendeeOrganizationsBaseDtosByEditionUidAsync(this.EditionId, false, this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
-                await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)));
+                await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
+                false,
+                false);
 
             return Json(new
             {
@@ -257,7 +259,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     await this.CommandBus.Send(new FindAllAttendeeOrganizationsBaseDtosByEditionUidAsync(this.EditionId, false, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                    isAddingToCurrentEdition);
+                    isAddingToCurrentEdition,
+                    false,
+                    false);
             }
             catch (DomainException ex)
             {

@@ -474,8 +474,8 @@
     <value>This project has already been submitted for the evaluation of players</value>
   </data>
   <data name="ToProceedYouMustAcceptTheTerm" xml:space="preserve">
-    <value>To proceed you must accept the rules and regulations</value>
-    <comment>Para prosseguir você deve aceitar as regras e regulamentos</comment>
+    <value>To proceed you must accept the plyer rules</value>
+    <comment>Para prosseguir você deve aceitar os regulamentos de player</comment>
   </data>
   <data name="TradeNameIsRequired" xml:space="preserve">
     <value>Trade name required.</value>
@@ -548,19 +548,20 @@
   <data name="CompleteYourSignup" xml:space="preserve">
     <value>Complete the signup info for {0}</value>
   </data>
-  <data name="ConfirmeAndCompletePersonalInfo" xml:space="preserve">
-    <value>Confirme and complete your personal info</value>
+  <data name="ConfirmAndCompletePersonalInfo" xml:space="preserve">
+    <value>Confirm and complete your personal information</value>
+    <comment>Confirme e complete seus dados pessoais</comment>
   </data>
   <data name="CompleteYourRegistration" xml:space="preserve">
     <value>Complete your registration</value>
     <comment>Complete seu cadastro</comment>
   </data>
   <data name="ConfigurePasswordToMyRio2c" xml:space="preserve">
-    <value>Configure a password to access MyRio2C</value>
-    <comment>Configure uma senha de acesso ao MyRio2C</comment>
+    <value>Insert an account access password</value>
+    <comment>Informe uma senha de acesso à conta</comment>
   </data>
   <data name="ConfirmAndCompleteYourAccessData" xml:space="preserve">
-    <value>Confirm and complete your access data</value>
+    <value>Confirm and complete your login information</value>
     <comment>Confirme e complete seus dados de acesso</comment>
   </data>
   <data name="CompleteYourData" xml:space="preserve">
@@ -576,19 +577,15 @@
     <comment>Informe seu endereço</comment>
   </data>
   <data name="CompletePlayerInfo" xml:space="preserve">
-    <value>Complete player info for {0}</value>
+    <value>Complete the player information for {0}</value>
     <comment>Complete as informações do player {0}</comment>
   </data>
   <data name="CompletePlayerInterestsFor" xml:space="preserve">
     <value>Inform the interest areas for player {0}</value>
     <comment>Informe quais as áreas de interesse do player {0}</comment>
   </data>
-  <data name="ChoosePlayerInterestsFor" xml:space="preserve">
-    <value>Choose the interests for player {0}</value>
-    <comment>Escolha os interesses do player Giros</comment>
-  </data>
   <data name="PlayerInfoFor" xml:space="preserve">
-    <value>Informations for player {0}</value>
+    <value>Player information for {0}</value>
     <comment>Dados do player {0}</comment>
   </data>
   <data name="WelcomeEmailMessage1" xml:space="preserve">
@@ -616,7 +613,7 @@
     <comment>Declaro estar ciente e concordar com as regras e regulamentos acima.</comment>
   </data>
   <data name="PlayerTerms" xml:space="preserve">
-    <value>Player’s Regulation</value>
+    <value>Player rules</value>
     <comment>Regulamento de Players</comment>
   </data>
   <data name="PlayerRestrictionSpecifics" xml:space="preserve">
@@ -626,5 +623,9 @@
   <data name="PublicEmail" xml:space="preserve">
     <value>Would you like to make available an e-mail for all Industry badge holders? This e-mail will only be part of a downloadable contact list.</value>
     <comment>Gostaria de disponibilizar algum e-mail para contato entre os participantes da categoria Industry? Este e-mail fará parte somente de uma lista de contatos para download.</comment>
+  </data>
+  <data name="SelectAtLeastOneOption" xml:space="preserve">
+    <value>Please select at least one option from the group.</value>
+    <comment>Selecione pelo menos uma opção do grupo.</comment>
   </data>
 </root>

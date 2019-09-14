@@ -4,7 +4,7 @@
 // Created          : 09-04-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-11-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="OnboardCollaboratorAccessData.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,18 +27,22 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string FirstName { get; set; }
 
         [Display(Name = "LastNames", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(200, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string LastNames { get; set; }
 
         [Display(Name = "BadgeName", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Badge { get; set; }
 
         [Display(Name = "PhoneNumber", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string PhoneNumber { get; set; }
 
         [Display(Name = "CellPhone", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string CellPhone { get; set; }
 
@@ -49,6 +53,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string Password { get; set; }
 
         [Display(Name = "ConfirmPassword", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [Compare("Password", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PasswordConfirmationDoesNotMatch")]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }

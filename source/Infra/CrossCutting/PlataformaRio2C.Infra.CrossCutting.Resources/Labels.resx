@@ -338,8 +338,8 @@
     <comment>Bem-vindo ao Rio2C | RioContentMarket {0}!</comment>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
-    <value>Confirme a senha</value>
-    <comment>Confirme a senha</comment>
+    <value>Confirmação de senha</value>
+    <comment>Confirmação de senha</comment>
   </data>
   <data name="CurrentPassword" xml:space="preserve">
     <value>Senha atual</value>
@@ -373,7 +373,7 @@
     <comment>Atividade</comment>
   </data>
   <data name="TargetAudience" xml:space="preserve">
-    <value>Público Alvo / Faixa Etária</value>
+    <value>Público Alvo</value>
     <comment>Público Alvo</comment>
   </data>
   <data name="RestrictionsSpecifics" xml:space="preserve">
@@ -1345,13 +1345,6 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Bem-vindo ao {0}</value>
     <comment>Bem-vindo ao {0}</comment>
   </data>
-  <data name="PersonalInfo" xml:space="preserve">
-    <value>Dados pessoais</value>
-    <comment>Dados pessoais</comment>
-  </data>
-  <data name="PlayerInfo" xml:space="preserve">
-    <value>Dados do Player</value>
-  </data>
   <data name="AccessData" xml:space="preserve">
     <value>Dados de acesso</value>
     <comment>Dados de acesso</comment>
@@ -1417,8 +1410,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Mini-biografias</comment>
   </data>
   <data name="PersonalInformation" xml:space="preserve">
-    <value>Dados Pessoais</value>
-    <comment>Dados Pessoais</comment>
+    <value>Dados pessoais</value>
+    <comment>Dados pessoais</comment>
   </data>
   <data name="PlayerInformation" xml:space="preserve">
     <value>Dados do Player</value>

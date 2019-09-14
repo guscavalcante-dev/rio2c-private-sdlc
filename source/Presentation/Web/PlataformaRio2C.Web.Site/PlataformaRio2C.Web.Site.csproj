@@ -382,6 +382,7 @@
     <Content Include="Assets\js\myrio2c.common.js" />
     <Content Include="Assets\js\myrio2c.showhidepassword.js" />
     <Content Include="Assets\js\myrio2c.cropper.js" />
+    <Content Include="Assets\js\onboarding\onboarding.interests.js" />
     <Content Include="Assets\js\onboarding\onboarding.organizationdata.js" />
     <Content Include="Assets\js\onboarding\onboarding.collaboratordata.js" />
     <Content Include="Assets\js\onboarding\onboarding.wizard.js" />
@@ -7083,6 +7084,7 @@
     <Content Include="Views\Themes\Metronic\_InternalSidebar.cshtml" />
     <Content Include="Views\Onboarding\PlayerTermsAcceptance.cshtml" />
     <Content Include="Views\Onboarding\Shared\_PlayerTermsAcceptanceText.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\OrganizationRestrictionSpecificsBaseCommand.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

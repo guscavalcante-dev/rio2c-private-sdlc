@@ -4,7 +4,7 @@
 // Created          : 09-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-09-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="OnboardPlayerInterestsCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,13 +17,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Domain.Statics;
-using PlataformaRio2C.Domain.Validation;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -34,19 +30,30 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IEditionRepository editionRepo;
         private readonly IOrganizationTypeRepository organizationTypeRepo;
         private readonly IInterestRepository interestRepo;
+        private readonly ILanguageRepository languageRepo;
 
+        /// <summary>Initializes a new instance of the <see cref="OnboardPlayerInterestsCommandHandler"/> class.</summary>
+        /// <param name="eventBus">The event bus.</param>
+        /// <param name="uow">The uow.</param>
+        /// <param name="organizationRepository">The organization repository.</param>
+        /// <param name="editionRepository">The edition repository.</param>
+        /// <param name="organizationTypeRepository">The organization type repository.</param>
+        /// <param name="interestRepository">The interest repository.</param>
+        /// <param name="languageRepository">The language repository.</param>
         public OnboardPlayerInterestsCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IOrganizationRepository organizationRepository,
             IEditionRepository editionRepository,
             IOrganizationTypeRepository organizationTypeRepository,
-            IInterestRepository interestRepository)
+            IInterestRepository interestRepository,
+            ILanguageRepository languageRepository)
             : base(eventBus, uow, organizationRepository)
         {
             this.editionRepo = editionRepository;
             this.organizationTypeRepo = organizationTypeRepository;
             this.interestRepo = interestRepository;
+            this.languageRepo = languageRepository;
         }
 
         /// <summary>Handles the specified onboard player interests.</summary>
@@ -69,12 +76,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            // Before update values
-            var beforeImageUploadDate = organization.ImageUploadDate;
+            var languageDtos = await this.languageRepo.FindAllDtosAsync();
 
             organization.OnboardInterests(
                 await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
                 await this.organizationTypeRepo.GetAsync(cmd.OrganizationType?.Uid ?? Guid.Empty),
+                cmd.RestrictionSpecifics?.Select(d => new OrganizationRestrictionSpecific(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.InterestsUids?.Any() == true ? await this.interestRepo.FindAllByUidsAsync(cmd.InterestsUids) : new List<Interest>(),
                 cmd.UserId);
             if (!organization.IsValid())

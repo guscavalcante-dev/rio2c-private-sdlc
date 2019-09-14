@@ -115,15 +115,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Escolha os interesses do player {0}.
-        /// </summary>
-        public static string ChoosePlayerInterestsFor {
-            get {
-                return ResourceManager.GetString("ChoosePlayerInterestsFor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Cidade inválida..
         /// </summary>
         public static string CityIsInvalid {
@@ -250,11 +241,20 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Configure uma senha de acesso ao MyRio2C.
+        ///   Looks up a localized string similar to Informe uma senha de acesso à conta.
         /// </summary>
         public static string ConfigurePasswordToMyRio2c {
             get {
                 return ResourceManager.GetString("ConfigurePasswordToMyRio2c", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirme e complete seus dados pessoais.
+        /// </summary>
+        public static string ConfirmAndCompletePersonalInfo {
+            get {
+                return ResourceManager.GetString("ConfirmAndCompletePersonalInfo", resourceCulture);
             }
         }
         
@@ -282,15 +282,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ConfirmDeleteEdition {
             get {
                 return ResourceManager.GetString("ConfirmDeleteEdition", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Confirme e complete seus dados pessoais.
-        /// </summary>
-        public static string ConfirmeAndCompletePersonalInfo {
-            get {
-                return ResourceManager.GetString("ConfirmeAndCompletePersonalInfo", resourceCulture);
             }
         }
         
@@ -1215,6 +1206,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Selecione pelo menos uma opção do grupo..
+        /// </summary>
+        public static string SelectAtLeastOneOption {
+            get {
+                return ResourceManager.GetString("SelectAtLeastOneOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Algo está incorreto..
         /// </summary>
         public static string SomethingIsWrong {
@@ -1305,7 +1305,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Para prosseguir você deve aceitar as regras e regulamentos.
+        ///   Looks up a localized string similar to Para prosseguir você deve aceitar os regulamentos de player.
         /// </summary>
         public static string ToProceedYouMustAcceptTheTerm {
             get {

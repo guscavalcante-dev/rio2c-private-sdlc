@@ -5,6 +5,7 @@
         @Html.TextAreaFor(m => m.Value, new { @class = "form-control ckeditor-rio2c-minibio" })
         @Html.HiddenFor(m => m.LanguageCode)
         @Html.HiddenFor(m => m.LanguageName)
+        @Html.HiddenFor(m => m.IsRequired)
         @Html.ValidationMessageFor(m => m.Value, null, new { @class = "text-danger" })
     </div>
 </div>

@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
@@ -22,26 +23,33 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     public class OrganizationRestrictionSpecificsBaseCommand
     {
         [AllowHtml]
+        [Display(Name = "RestrictionsSpecifics", ResourceType = typeof(Labels))]
+        [RequiredIf("IsRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(8000, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Value { get; set; }
         public string LanguageCode { get; set; }
         public string LanguageName { get; set; }
+        public bool IsRequired { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="OrganizationRestrictionSpecificsBaseCommand"/> class.</summary>
         /// <param name="entity">The entity.</param>
-        public OrganizationRestrictionSpecificsBaseCommand(OrganizationRestrictionSpecificBaseDto entity)
+        /// <param name="isRequired">if set to <c>true</c> [is required].</param>
+        public OrganizationRestrictionSpecificsBaseCommand(OrganizationRestrictionSpecificBaseDto entity, bool isRequired)
         {
             this.Value = entity.Value;
             this.LanguageCode = entity.LanguageDto.Code;
             this.LanguageName = entity.LanguageDto.Name;
+            this.IsRequired = isRequired;
         }
 
         /// <summary>Initializes a new instance of the <see cref="OrganizationRestrictionSpecificsBaseCommand"/> class.</summary>
         /// <param name="languageDto">The language dto.</param>
-        public OrganizationRestrictionSpecificsBaseCommand(LanguageDto languageDto)
+        /// <param name="isRequired">if set to <c>true</c> [is required].</param>
+        public OrganizationRestrictionSpecificsBaseCommand(LanguageDto languageDto, bool isRequired)
         {
             this.LanguageCode = languageDto.Code;
             this.LanguageName = languageDto.Name;
+            this.IsRequired = isRequired;
         }
 
         /// <summary>Initializes a new instance of the <see cref="OrganizationRestrictionSpecificsBaseCommand"/> class.</summary>

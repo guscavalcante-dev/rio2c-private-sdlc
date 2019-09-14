@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="CollaboratorMiniBioBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
@@ -22,26 +23,33 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     public class CollaboratorMiniBioBaseCommand
     {
         [AllowHtml]
+        [Display(Name = "MiniBio", ResourceType = typeof(Labels))]
+        [RequiredIf("IsRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(8000, MinimumLength = 2, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Value { get; set; }
         public string LanguageCode { get; set; }
         public string LanguageName { get; set; }
+        public bool IsRequired { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CollaboratorMiniBioBaseCommand"/> class.</summary>
         /// <param name="entity">The entity.</param>
-        public CollaboratorMiniBioBaseCommand(CollaboratorMiniBioBaseDto entity)
+        /// <param name="isRequired">if set to <c>true</c> [is required].</param>
+        public CollaboratorMiniBioBaseCommand(CollaboratorMiniBioBaseDto entity, bool isRequired)
         {
             this.Value = entity.Value;
             this.LanguageCode = entity.LanguageDto.Code;
             this.LanguageName = entity.LanguageDto.Name;
+            this.IsRequired = isRequired;
         }
 
         /// <summary>Initializes a new instance of the <see cref="CollaboratorMiniBioBaseCommand"/> class.</summary>
         /// <param name="languageDto">The language dto.</param>
-        public CollaboratorMiniBioBaseCommand(LanguageDto languageDto)
+        /// <param name="isRequired">if set to <c>true</c> [is required].</param>
+        public CollaboratorMiniBioBaseCommand(LanguageDto languageDto, bool isRequired)
         {
             this.LanguageCode = languageDto.Code;
             this.LanguageName = languageDto.Name;
+            this.IsRequired = isRequired;
         }
 
         /// <summary>Initializes a new instance of the <see cref="CollaboratorMiniBioBaseCommand"/> class.</summary>

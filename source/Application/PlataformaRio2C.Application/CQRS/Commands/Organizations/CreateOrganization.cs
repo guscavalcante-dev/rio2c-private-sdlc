@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-10-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="CreateOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,15 +28,21 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="activities">The activities.</param>
         /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="groupedInterests">The grouped interests.</param>
+        /// <param name="isDescriptionRequired">if set to <c>true</c> [is description required].</param>
+        /// <param name="isAddressRequired">if set to <c>true</c> [is address required].</param>
+        /// <param name="isRestrictionSpecificRequired">if set to <c>true</c> [is restriction specific required].</param>
         public CreateOrganization(
             List<HoldingBaseDto> holdingBaseDtos,
             List<LanguageDto> languagesDtos, 
             List<CountryBaseDto> countriesBaseDtos,
             List<Activity> activities,
             List<TargetAudience> targetAudiences,
-            List<IGrouping<InterestGroup, Interest>> groupedInterests)
+            List<IGrouping<InterestGroup, Interest>> groupedInterests,
+            bool isDescriptionRequired, 
+            bool isAddressRequired, 
+            bool isRestrictionSpecificRequired)
         {
-            this.UpdateBaseProperties(null, holdingBaseDtos, languagesDtos, countriesBaseDtos, activities, targetAudiences, groupedInterests);
+            this.UpdateBaseProperties(null, holdingBaseDtos, languagesDtos, countriesBaseDtos, activities, targetAudiences, groupedInterests, isDescriptionRequired, isAddressRequired, isRestrictionSpecificRequired);
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateOrganization"/> class.</summary>

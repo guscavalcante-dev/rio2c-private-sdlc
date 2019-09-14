@@ -4,7 +4,7 @@
 // Created          : 09-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-09-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="OnboardPlayerInterests.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,12 +13,9 @@
 // ***********************************************************************
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Domain.Statics;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -27,6 +24,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         public Guid OrganizationUid { get; set; }
         public List<Guid> InterestsUids { get; set; }
+        public List<OrganizationRestrictionSpecificsBaseCommand> RestrictionSpecifics { get; set; }
 
         public List<IGrouping<InterestGroup, Interest>> GroupedInterests { get; private set; }
         public UserBaseDto UpdaterBaseDto { get; private set; }
@@ -38,11 +36,14 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Initializes a new instance of the <see cref="OnboardPlayerInterests"/> class.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="groupedInterests">The grouped interests.</param>
-        public OnboardPlayerInterests(OrganizationDto entity, List<IGrouping<InterestGroup, Interest>> groupedInterests)
+        /// <param name="languagesDtos">The languages dtos.</param>
+        /// <param name="isRestrictionSpecificRequired">if set to <c>true</c> [is restriction specific required].</param>
+        public OnboardPlayerInterests(OrganizationDto entity, List<IGrouping<InterestGroup, Interest>> groupedInterests, List<LanguageDto> languagesDtos, bool isRestrictionSpecificRequired)
         {
             this.OrganizationUid = entity.Uid;
             this.UpdaterBaseDto = entity.UpdaterDto;
             this.UpdateDate = entity.UpdateDate;
+            this.UpdateRestrictionSpecifics(entity, languagesDtos, isRestrictionSpecificRequired);
             this.InterestsUids = entity?.OrganizationInterestsDtos?.Select(oid => oid.InterestUid)?.ToList();
             this.UpdateDropdownProperties(groupedInterests);
         }
@@ -50,6 +51,21 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Initializes a new instance of the <see cref="OnboardPlayerInterests"/> class.</summary>
         public OnboardPlayerInterests()
         {
+        }
+
+        /// <summary>Updates the restriction specifics.</summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="languagesDtos">The languages dtos.</param>
+        /// <param name="isRestrictionSpecificRequired">if set to <c>true</c> [is restriction specific required].</param>
+        private void UpdateRestrictionSpecifics(OrganizationDto entity, List<LanguageDto> languagesDtos, bool isRestrictionSpecificRequired)
+        {
+            this.RestrictionSpecifics = new List<OrganizationRestrictionSpecificsBaseCommand>();
+            foreach (var languageDto in languagesDtos)
+            {
+                var restrictionSpecific = entity?.RestrictionSpecificsDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
+                this.RestrictionSpecifics.Add(restrictionSpecific != null ? new OrganizationRestrictionSpecificsBaseCommand(restrictionSpecific, isRestrictionSpecificRequired) :
+                                                                            new OrganizationRestrictionSpecificsBaseCommand(languageDto, isRestrictionSpecificRequired));
+            }
         }
 
         /// <summary>Updates the dropdown properties.</summary>

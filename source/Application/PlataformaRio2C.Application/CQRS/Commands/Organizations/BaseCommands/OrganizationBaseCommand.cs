@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-10-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="OrganizationBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -87,6 +87,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="activities">The activities.</param>
         /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="groupedInterests">The grouped interests.</param>
+        /// <param name="isDescriptionRequired">if set to <c>true</c> [is description required].</param>
+        /// <param name="isAddressRequired">if set to <c>true</c> [is address required].</param>
+        /// <param name="isRestrictionSpecificRequired">if set to <c>true</c> [is restriction specific required].</param>
         public void UpdateBaseProperties(
             OrganizationDto entity, 
             List<HoldingBaseDto> holdingBaseDtos, 
@@ -94,7 +97,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<CountryBaseDto> countriesBaseDtos,
             List<Activity> activities,
             List<TargetAudience> targetAudiences,
-            List<IGrouping<InterestGroup, Interest>> groupedInterests)
+            List<IGrouping<InterestGroup, Interest>> groupedInterests,
+            bool isDescriptionRequired, 
+            bool isAddressRequired, 
+            bool isRestrictionSpecificRequired)
         {
             this.HoldingUid = entity?.HoldingBaseDto?.Uid;
             this.Name = entity?.Name;
@@ -104,9 +110,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Website = entity?.Website;
             this.SocialMedia = entity?.SocialMedia;
             this.PhoneNumber = entity?.PhoneNumber;
-            this.UpdateAddress(entity, countriesBaseDtos);
-            this.UpdateDescriptions(entity, languagesDtos);
-            this.UpdateRestrictionSpecifics(entity, languagesDtos);
+            this.UpdateAddress(entity, countriesBaseDtos, isAddressRequired);
+            this.UpdateDescriptions(entity, languagesDtos, isDescriptionRequired);
+            this.UpdateRestrictionSpecifics(entity, languagesDtos, isRestrictionSpecificRequired);
             this.UpdateCropperImage(entity);
             this.UpdateDropdownProperties(holdingBaseDtos, countriesBaseDtos, activities, targetAudiences, groupedInterests);
             this.ActivitiesUids = entity?.OrganizationActivitiesDtos?.Select(oad => oad.ActivityUid)?.ToList();
@@ -117,36 +123,39 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Updates the address.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
-        private void UpdateAddress(OrganizationDto entity, List<CountryBaseDto> countriesBaseDtos)
+        /// <param name="isAddressRequired">if set to <c>true</c> [is address required].</param>
+        private void UpdateAddress(OrganizationDto entity, List<CountryBaseDto> countriesBaseDtos, bool isAddressRequired)
         {
-            this.Address = new AddressBaseCommand(entity?.AddressBaseDto, countriesBaseDtos);
+            this.Address = new AddressBaseCommand(entity?.AddressBaseDto, countriesBaseDtos, isAddressRequired);
         }
 
         /// <summary>Updates the descriptions.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
-        private void UpdateDescriptions(OrganizationDto entity, List<LanguageDto> languagesDtos)
+        /// <param name="isDescriptionRequired">if set to <c>true</c> [is description required].</param>
+        private void UpdateDescriptions(OrganizationDto entity, List<LanguageDto> languagesDtos, bool isDescriptionRequired)
         {
             this.Descriptions = new List<OrganizationDescriptionBaseCommand>();
             foreach (var languageDto in languagesDtos)
             {
                 var description = entity?.DescriptionsDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
-                this.Descriptions.Add(description != null ? new OrganizationDescriptionBaseCommand(description) : 
-                                                            new OrganizationDescriptionBaseCommand(languageDto));
+                this.Descriptions.Add(description != null ? new OrganizationDescriptionBaseCommand(description, isDescriptionRequired) : 
+                                                            new OrganizationDescriptionBaseCommand(languageDto, isDescriptionRequired));
             }
         }
 
         /// <summary>Updates the restriction specifics.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
-        private void UpdateRestrictionSpecifics(OrganizationDto entity, List<LanguageDto> languagesDtos)
+        /// <param name="isRestrictionSpecificRequired">if set to <c>true</c> [is restriction specific required].</param>
+        private void UpdateRestrictionSpecifics(OrganizationDto entity, List<LanguageDto> languagesDtos, bool isRestrictionSpecificRequired)
         {
             this.RestrictionSpecifics = new List<OrganizationRestrictionSpecificsBaseCommand>();
             foreach (var languageDto in languagesDtos)
             {
                 var restrictionSpecific = entity?.RestrictionSpecificsDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
-                this.RestrictionSpecifics.Add(restrictionSpecific != null ? new OrganizationRestrictionSpecificsBaseCommand(restrictionSpecific) :
-                                                                            new OrganizationRestrictionSpecificsBaseCommand(languageDto));
+                this.RestrictionSpecifics.Add(restrictionSpecific != null ? new OrganizationRestrictionSpecificsBaseCommand(restrictionSpecific, isRestrictionSpecificRequired) :
+                                                                            new OrganizationRestrictionSpecificsBaseCommand(languageDto, isRestrictionSpecificRequired));
             }
         }
 

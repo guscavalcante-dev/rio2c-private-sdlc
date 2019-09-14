@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-11-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -61,6 +61,22 @@ var MyRio2cCommon = function () {
         $.fn.modal.Constructor.prototype.enforceFocus = function () { };
     };
 
+    var fixCkEditorValidation = function () {
+        if (typeof (CKEDITOR) === "undefined") {
+            return;
+        }
+
+        CKEDITOR.on('instanceReady', function () {
+            $.each(CKEDITOR.instances, function (instance) {
+                CKEDITOR.instances[instance].on("change", function (e) {
+                    for (instance in CKEDITOR.instances) {
+                        CKEDITOR.instances[instance].updateElement();
+                    }
+                });
+            });
+        });
+    };
+
     var initScroll = function () {
         $('.rio2c-scroll').each(function () {
             var el = $(this);
@@ -93,6 +109,102 @@ var MyRio2cCommon = function () {
                 return defaultRangeValidator.call(this, value, element, param);
             }
         };
+
+        // Required if one not empty and other empty
+        jQuery.validator.addMethod("requiredifonenotemptyandotherempty", function (value, element, params) {
+            var dependentPropertyNotEmpty = foolproof.getId(element, params["dependentpropertynotempty"]);
+            var dependentPropertyNotEmptyValue = $('#' + dependentPropertyNotEmpty).val();
+            if (MyRio2cCommon.isNullOrEmpty(dependentPropertyNotEmptyValue)) {
+                return true;
+            }
+
+            var dependentPropertyEmpty = foolproof.getId(element, params["dependentpropertyempty"]);
+            var dependentPropertyEmptyValue = $('#' + dependentPropertyEmpty).val();
+            if (!MyRio2cCommon.isNullOrEmpty(dependentPropertyEmptyValue) || !MyRio2cCommon.isNullOrEmpty(value)) {
+                return true;
+            }
+
+            return false;
+        });
+
+        $.validator.unobtrusive.adapters.add("requiredifonenotemptyandotherempty", ["dependentpropertynotempty", "dependentpropertyempty"], function (options) {
+            var value = {
+                dependentpropertynotempty: options.params.dependentpropertynotempty,
+                dependentpropertyempty: options.params.dependentpropertyempty
+            };
+
+            options.rules["requiredifonenotemptyandotherempty"] = value;
+            if (options.message) {
+                options.messages["requiredifonenotemptyandotherempty"] = options.message;
+            }
+        });
+
+        // Required if one with value and other empty
+        jQuery.validator.addMethod("requiredifonewithvalueandotherempty", function (value, element, params) {
+            var dependentPropertyWithValue = foolproof.getId(element, params["dependentpropertywithvalue"]);
+            var dependentPropertyValue = $('#' + dependentPropertyWithValue).val();
+            if (MyRio2cCommon.isNullOrEmpty(dependentPropertyValue)) {
+                return true;
+            }
+
+            if (dependentPropertyValue != params["dependentpropertyvalue"]) {
+                return true;
+            }
+
+            var dependentPropertyEmpty = foolproof.getId(element, params["dependentpropertyempty"]);
+            var dependentPropertyEmptyValue = $('#' + dependentPropertyEmpty).val();
+            if (!MyRio2cCommon.isNullOrEmpty(dependentPropertyEmptyValue) || !MyRio2cCommon.isNullOrEmpty(value)) {
+                return true;
+            }
+
+            return false;
+        });
+
+        $.validator.unobtrusive.adapters.add("requiredifonewithvalueandotherempty", ["dependentpropertywithvalue", "dependentpropertyvalue", "dependentpropertyempty"], function (options) {
+            var value = {
+                dependentpropertywithvalue: options.params.dependentpropertywithvalue,
+                dependentpropertyvalue: options.params.dependentpropertyvalue,
+                dependentpropertyempty: options.params.dependentpropertyempty
+            };
+
+            options.rules["requiredifonewithvalueandotherempty"] = value;
+            if (options.message) {
+                options.messages["requiredifonewithvalueandotherempty"] = options.message;
+            }
+        });
+    };
+
+    var enableAtLeastOnCheckboxByNameValidation = function (formIdOrClass) {
+        $.validator.addMethod('require-one', function (value, element) {
+            var dataId = $(element).attr("data-id");
+            if (!MyRio2cCommon.isNullOrEmpty(dataId)) {
+                return $('[data-id="' + $(element).attr("data-id") + '"].require-one:checked').length > 0;
+            }
+            else {
+                return $('.require-one:checked').length > 0;
+            }
+            //return $('[name="' + element.name + '"].require-one:checked').length > 0;
+            //return $('.require-one:checked').length > 0;
+        }, labels.selectAtLeastOneOption);
+
+        var checkboxes = $('.require-one');
+        var checkbox_names = $.map(checkboxes, function (e, i) {
+            return $(e).attr("name");
+        }).join(" ");
+
+        $(formIdOrClass).validate({
+            groups: {
+                checks: checkbox_names
+            },
+            errorPlacement: function (error, element) {
+                if (element.attr("type") == "checkbox") {
+                    error.insertAfter(checkboxes.last());
+                }
+                else {
+                    error.insertAfter(element);
+                }
+            }
+        });
     };
 
     // General ------------------------------------------------------------------------------------
@@ -153,38 +265,8 @@ var MyRio2cCommon = function () {
     };
 
     // Forms --------------------------------------------------------------------------------------
-    var enableCustomValidation = function () {
-        jQuery.validator.addMethod("requiredifonenotemptyandotherempty", function (value, element, params) {
-            var dependentPropertyNotEmpty = foolproof.getId(element, params["dependentpropertynotempty"]);
-            var dependentPropertyNotEmptyValue = $('#' + dependentPropertyNotEmpty).val();
-            if (MyRio2cCommon.isNullOrEmpty(dependentPropertyNotEmptyValue)) {
-                return true;
-            }
-
-            var dependentPropertyEmpty = foolproof.getId(element, params["dependentpropertyempty"]);
-            var dependentPropertyEmptyValue = $('#' + dependentPropertyEmpty).val();
-            if (!MyRio2cCommon.isNullOrEmpty(dependentPropertyEmptyValue) || !MyRio2cCommon.isNullOrEmpty(value)) {
-                return true;
-            }
-
-            return false;
-        });
-
-        $.validator.unobtrusive.adapters.add("requiredifonenotemptyandotherempty", ["dependentpropertynotempty", "dependentpropertyempty"], function (options) {
-            var value = {
-                dependentpropertynotempty: options.params.dependentpropertynotempty,
-                dependentpropertyempty: options.params.dependentpropertyempty
-            };
-
-            options.rules["requiredifonenotemptyandotherempty"] = value;
-            if (options.message) {
-                options.messages["requiredifonenotemptyandotherempty"] = options.message;
-            }
-        });
-    };
-
     var enableFormValidation = function (options) {
-        enableCustomValidation();
+        extendGlobalValidations();
 
         if (!hasProperty(options, 'formIdOrClass') || isNullOrEmpty(options.formIdOrClass)) {
             return;
@@ -684,6 +766,7 @@ var MyRio2cCommon = function () {
                 disableMetronicScripts();
                 enableAjaxForbiddenCatch();
                 fixSelect2Modal();
+                fixCkEditorValidation();
                 initScroll();
                 extendGlobalValidations();
             });
@@ -693,6 +776,9 @@ var MyRio2cCommon = function () {
         },
         getGlobalVariable: function (key) {
             return getGlobalVariable(key);
+        },
+        enableAtLeastOnCheckboxByNameValidation: function (formIdOrClass) {
+            enableAtLeastOnCheckboxByNameValidation(formIdOrClass);
         },
         hasProperty: function (obj, key) {
             return hasProperty(obj, key);

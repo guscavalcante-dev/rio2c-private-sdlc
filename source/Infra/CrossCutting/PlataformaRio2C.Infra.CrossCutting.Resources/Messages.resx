@@ -476,8 +476,8 @@
     <value>Este projeto já foi enviado para avaliação de players</value>
   </data>
   <data name="ToProceedYouMustAcceptTheTerm" xml:space="preserve">
-    <value>Para prosseguir você deve aceitar as regras e regulamentos</value>
-    <comment>Para prosseguir você deve aceitar as regras e regulamentos</comment>
+    <value>Para prosseguir você deve aceitar os regulamentos de player</value>
+    <comment>Para prosseguir você deve aceitar os regulamentos de player</comment>
   </data>
   <data name="TradeNameIsRequired" xml:space="preserve">
     <value>Nome fantasia obrigatório.</value>
@@ -553,16 +553,17 @@
   <data name="CompleteYourSignup" xml:space="preserve">
     <value>Complete o cadastro da {0}</value>
   </data>
-  <data name="ConfirmeAndCompletePersonalInfo" xml:space="preserve">
+  <data name="ConfirmAndCompletePersonalInfo" xml:space="preserve">
     <value>Confirme e complete seus dados pessoais</value>
+    <comment>Confirme e complete seus dados pessoais</comment>
   </data>
   <data name="CompleteYourRegistration" xml:space="preserve">
     <value>Complete seu cadastro</value>
     <comment>Complete seu cadastro</comment>
   </data>
   <data name="ConfigurePasswordToMyRio2c" xml:space="preserve">
-    <value>Configure uma senha de acesso ao MyRio2C</value>
-    <comment>Configure uma senha de acesso ao MyRio2C</comment>
+    <value>Informe uma senha de acesso à conta</value>
+    <comment>Informe uma senha de acesso à conta</comment>
   </data>
   <data name="ConfirmAndCompleteYourAccessData" xml:space="preserve">
     <value>Confirme e complete seus dados de acesso</value>
@@ -587,10 +588,6 @@
   <data name="CompletePlayerInterestsFor" xml:space="preserve">
     <value>Informe quais as áreas de interesse do player {0}</value>
     <comment>Informe quais as áreas de interesse do player {0}</comment>
-  </data>
-  <data name="ChoosePlayerInterestsFor" xml:space="preserve">
-    <value>Escolha os interesses do player {0}</value>
-    <comment>Escolha os interesses do player Giros</comment>
   </data>
   <data name="PlayerInfoFor" xml:space="preserve">
     <value>Dados do player {0}</value>
@@ -631,5 +628,9 @@
   <data name="PublicEmail" xml:space="preserve">
     <value>Gostaria de disponibilizar algum e-mail para contato entre os participantes da categoria Industry? Este e-mail fará parte somente de uma lista de contatos para download.</value>
     <comment>Gostaria de disponibilizar algum e-mail para contato entre os participantes da categoria Industry? Este e-mail fará parte somente de uma lista de contatos para download.</comment>
+  </data>
+  <data name="SelectAtLeastOneOption" xml:space="preserve">
+    <value>Selecione pelo menos uma opção do grupo.</value>
+    <comment>Selecione pelo menos uma opção do grupo.</comment>
   </data>
 </root>

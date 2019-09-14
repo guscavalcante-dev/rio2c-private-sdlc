@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-10-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
 // <copyright file="UpdateOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -38,7 +38,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="groupedInterests">The grouped interests.</param>
         /// <param name="isAddingToCurrentEdition">The is adding to current edition.</param>
-        /// <exception cref="DomainException"></exception>
+        /// <param name="isDescriptionRequired">if set to <c>true</c> [is description required].</param>
+        /// <param name="isAddressRequired">if set to <c>true</c> [is address required].</param>
+        /// <param name="isRestrictionSpecificRequired">if set to <c>true</c> [is restriction specific required].</param>
         public UpdateOrganization(
             OrganizationDto entity, 
             List<HoldingBaseDto> holdingBaseDtos,
@@ -47,7 +49,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<Activity> activities,
             List<TargetAudience> targetAudiences,
             List<IGrouping<InterestGroup, Interest>> groupedInterests,
-            bool? isAddingToCurrentEdition)
+            bool? isAddingToCurrentEdition,
+            bool isDescriptionRequired, 
+            bool isAddressRequired, 
+            bool isRestrictionSpecificRequired)
         {
             if (entity == null)
             {
@@ -58,7 +63,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.IsAddingToCurrentEdition = isAddingToCurrentEdition ?? false;
             this.UpdaterBaseDto = entity.UpdaterDto;
             this.UpdateDate = entity.UpdateDate;
-            this.UpdateBaseProperties(entity, holdingBaseDtos, languagesDtos, countriesBaseDtos, activities, targetAudiences, groupedInterests);
+            this.UpdateBaseProperties(entity, holdingBaseDtos, languagesDtos, countriesBaseDtos, activities, targetAudiences, groupedInterests, isDescriptionRequired, isAddressRequired, isRestrictionSpecificRequired);
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateOrganization"/> class.</summary>
