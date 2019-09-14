@@ -1425,4 +1425,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Ingresso</value>
     <comment>Ticket</comment>
   </data>
+  <data name="PlayerInfo" xml:space="preserve">
+    <value>Dados do Player</value>
+    <comment>Dados do Player</comment>
+  </data>
 </root>
