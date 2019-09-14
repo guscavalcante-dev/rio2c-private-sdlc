@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 09-14-2019
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -97,6 +97,10 @@ var MyRio2cCommon = function () {
     };
 
     var extendGlobalValidations = function () {
+        if (typeof ($.validator) === 'undefined') {
+            return;
+        }
+
         // extend jquery range validator to work for required checkboxes
         var defaultRangeValidator = $.validator.methods.range;
         $.validator.methods.range = function (value, element, param) {
