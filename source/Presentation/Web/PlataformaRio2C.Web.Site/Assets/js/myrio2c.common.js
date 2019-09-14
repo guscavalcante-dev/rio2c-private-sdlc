@@ -174,6 +174,39 @@ var MyRio2cCommon = function () {
         });
     };
 
+    var enableAtLeastOnCheckboxByNameValidation = function (formIdOrClass) {
+        $.validator.addMethod('require-one', function (value, element) {
+            var dataId = $(element).attr("data-id");
+            if (!MyRio2cCommon.isNullOrEmpty(dataId)) {
+                return $('[data-id="' + $(element).attr("data-id") + '"].require-one:checked').length > 0;
+            }
+            else {
+                return $('.require-one:checked').length > 0;
+            }
+            //return $('[name="' + element.name + '"].require-one:checked').length > 0;
+            //return $('.require-one:checked').length > 0;
+        }, labels.selectAtLeastOneOption);
+
+        var checkboxes = $('.require-one');
+        var checkbox_names = $.map(checkboxes, function (e, i) {
+            return $(e).attr("name");
+        }).join(" ");
+
+        $(formIdOrClass).validate({
+            groups: {
+                checks: checkbox_names
+            },
+            errorPlacement: function (error, element) {
+                if (element.attr("type") == "checkbox") {
+                    error.insertAfter(checkboxes.last());
+                } 
+                else {
+                    error.insertAfter(element);
+                }
+            }
+        });
+    };
+
     // General ------------------------------------------------------------------------------------
     var hasProperty = function (obj, key) {
         return key.split(".").every(function (x) {
@@ -743,6 +776,9 @@ var MyRio2cCommon = function () {
         },
         getGlobalVariable: function (key) {
             return getGlobalVariable(key);
+        },
+        enableAtLeastOnCheckboxByNameValidation: function (formIdOrClass) {
+            enableAtLeastOnCheckboxByNameValidation(formIdOrClass);
         },
         hasProperty: function (obj, key) {
             return hasProperty(obj, key);

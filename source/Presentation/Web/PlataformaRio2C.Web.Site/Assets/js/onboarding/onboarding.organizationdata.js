@@ -31,6 +31,7 @@ var OnboardingCollaboratorData = function () {
         MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });
         AddressesForm.init();
         MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c', maxCharCount: 710 });
+        MyRio2cCommon.enableAtLeastOnCheckboxByNameValidation(formId);
     };
 
     return {

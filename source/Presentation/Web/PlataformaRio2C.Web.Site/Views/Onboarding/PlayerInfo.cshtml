@@ -100,6 +100,8 @@
                                                                 <input type="checkbox"
                                                                        name="ActivitiesUids"
                                                                        value="@activity.Uid"
+                                                                       class="require-one"
+                                                                       data-id="activity-group"
                                                                        @if (Model.ActivitiesUids?.Contains(activity.Uid) == true) { <text> checked </text>  } /> @activity.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')
                                                                 <span></span>
                                                             </label>
@@ -120,6 +122,8 @@
                                                                 <input type="checkbox"
                                                                        name="TargetAudiencesUids"
                                                                        value="@targetAudience.Uid"
+                                                                       class="require-one"
+                                                                       data-id="targetaudience-group"
                                                                        @if (Model.TargetAudiencesUids?.Contains(targetAudience.Uid) == true) { <text> checked </text>  } /> @targetAudience.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')
                                                                 <span></span>
                                                             </label>

@@ -629,4 +629,8 @@
     <value>Gostaria de disponibilizar algum e-mail para contato entre os participantes da categoria Industry? Este e-mail fará parte somente de uma lista de contatos para download.</value>
     <comment>Gostaria de disponibilizar algum e-mail para contato entre os participantes da categoria Industry? Este e-mail fará parte somente de uma lista de contatos para download.</comment>
   </data>
+  <data name="SelectAtLeastOneOption" xml:space="preserve">
+    <value>Selecione pelo menos uma opção do grupo.</value>
+    <comment>Selecione pelo menos uma opção do grupo.</comment>
+  </data>
 </root>
