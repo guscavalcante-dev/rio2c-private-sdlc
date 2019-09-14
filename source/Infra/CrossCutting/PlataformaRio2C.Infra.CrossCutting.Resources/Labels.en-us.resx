@@ -1411,4 +1411,12 @@
     <value>Player Information</value>
     <comment>Dados do Player</comment>
   </data>
+  <data name="ComingSoon" xml:space="preserve">
+    <value>Coming Soon</value>
+    <comment>Em Breve</comment>
+  </data>
+  <data name="Ticket" xml:space="preserve">
+    <value>Ticket</value>
+    <comment>Ingresso</comment>
+  </data>
 </root>

@@ -502,6 +502,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Em Breve.
+        /// </summary>
+        public static string ComingSoon {
+            get {
+                return ResourceManager.GetString("ComingSoon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Comercial.
         /// </summary>
         public static string Commercial {
@@ -3036,6 +3045,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ThreeDotsToAnimation {
             get {
                 return ResourceManager.GetString("ThreeDotsToAnimation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ingresso.
+        /// </summary>
+        public static string Ticket {
+            get {
+                return ResourceManager.GetString("Ticket", resourceCulture);
             }
         }
         

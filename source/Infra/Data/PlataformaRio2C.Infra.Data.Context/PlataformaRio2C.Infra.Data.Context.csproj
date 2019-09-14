@@ -369,6 +369,7 @@
     <Content Include="SqlScripts\01_Schema.sql" />
     <Content Include="SqlScripts\03_TicketSettings.sql" />
     <Content Include="SqlScripts\04_InitialData.sql" />
+    <Content Include="SqlScripts\Deltas\20190914_000515_0008_CountryTranslation.sql" />
     <Content Include="SqlScripts\Deltas\20190913_141751_0007_ChangesForAddressAndPublicEmail.sql" />
     <Content Include="SqlScripts\Deltas\20190913_121605_0006_ChangesForDataOrdering.sql" />
     <Content Include="SqlScripts\Deltas\20190912_160912_0005_ChangesForAddresses.sql" />
