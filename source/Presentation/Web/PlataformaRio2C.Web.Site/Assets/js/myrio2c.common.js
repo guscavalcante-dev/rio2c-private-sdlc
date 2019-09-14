@@ -109,6 +109,69 @@ var MyRio2cCommon = function () {
                 return defaultRangeValidator.call(this, value, element, param);
             }
         };
+
+        // Required if one not empty and other empty
+        jQuery.validator.addMethod("requiredifonenotemptyandotherempty", function (value, element, params) {
+            var dependentPropertyNotEmpty = foolproof.getId(element, params["dependentpropertynotempty"]);
+            var dependentPropertyNotEmptyValue = $('#' + dependentPropertyNotEmpty).val();
+            if (MyRio2cCommon.isNullOrEmpty(dependentPropertyNotEmptyValue)) {
+                return true;
+            }
+
+            var dependentPropertyEmpty = foolproof.getId(element, params["dependentpropertyempty"]);
+            var dependentPropertyEmptyValue = $('#' + dependentPropertyEmpty).val();
+            if (!MyRio2cCommon.isNullOrEmpty(dependentPropertyEmptyValue) || !MyRio2cCommon.isNullOrEmpty(value)) {
+                return true;
+            }
+
+            return false;
+        });
+
+        $.validator.unobtrusive.adapters.add("requiredifonenotemptyandotherempty", ["dependentpropertynotempty", "dependentpropertyempty"], function (options) {
+            var value = {
+                dependentpropertynotempty: options.params.dependentpropertynotempty,
+                dependentpropertyempty: options.params.dependentpropertyempty
+            };
+
+            options.rules["requiredifonenotemptyandotherempty"] = value;
+            if (options.message) {
+                options.messages["requiredifonenotemptyandotherempty"] = options.message;
+            }
+        });
+
+        // Required if one with value and other empty
+        jQuery.validator.addMethod("requiredifonewithvalueandotherempty", function (value, element, params) {
+            var dependentPropertyWithValue = foolproof.getId(element, params["dependentpropertywithvalue"]);
+            var dependentPropertyValue = $('#' + dependentPropertyWithValue).val();
+            if (MyRio2cCommon.isNullOrEmpty(dependentPropertyValue)) {
+                return true;
+            }
+
+            if (dependentPropertyValue != params["dependentpropertyvalue"]) {
+                return true;
+            }
+
+            var dependentPropertyEmpty = foolproof.getId(element, params["dependentpropertyempty"]);
+            var dependentPropertyEmptyValue = $('#' + dependentPropertyEmpty).val();
+            if (!MyRio2cCommon.isNullOrEmpty(dependentPropertyEmptyValue) || !MyRio2cCommon.isNullOrEmpty(value)) {
+                return true;
+            }
+
+            return false;
+        });
+
+        $.validator.unobtrusive.adapters.add("requiredifonewithvalueandotherempty", ["dependentpropertywithvalue", "dependentpropertyvalue", "dependentpropertyempty"], function (options) {
+            var value = {
+                dependentpropertywithvalue: options.params.dependentpropertywithvalue,
+                dependentpropertyvalue: options.params.dependentpropertyvalue,
+                dependentpropertyempty: options.params.dependentpropertyempty
+            };
+
+            options.rules["requiredifonewithvalueandotherempty"] = value;
+            if (options.message) {
+                options.messages["requiredifonewithvalueandotherempty"] = options.message;
+            }
+        });
     };
 
     // General ------------------------------------------------------------------------------------
@@ -169,38 +232,8 @@ var MyRio2cCommon = function () {
     };
 
     // Forms --------------------------------------------------------------------------------------
-    var enableCustomValidation = function () {
-        jQuery.validator.addMethod("requiredifonenotemptyandotherempty", function (value, element, params) {
-            var dependentPropertyNotEmpty = foolproof.getId(element, params["dependentpropertynotempty"]);
-            var dependentPropertyNotEmptyValue = $('#' + dependentPropertyNotEmpty).val();
-            if (MyRio2cCommon.isNullOrEmpty(dependentPropertyNotEmptyValue)) {
-                return true;
-            }
-
-            var dependentPropertyEmpty = foolproof.getId(element, params["dependentpropertyempty"]);
-            var dependentPropertyEmptyValue = $('#' + dependentPropertyEmpty).val();
-            if (!MyRio2cCommon.isNullOrEmpty(dependentPropertyEmptyValue) || !MyRio2cCommon.isNullOrEmpty(value)) {
-                return true;
-            }
-
-            return false;
-        });
-
-        $.validator.unobtrusive.adapters.add("requiredifonenotemptyandotherempty", ["dependentpropertynotempty", "dependentpropertyempty"], function (options) {
-            var value = {
-                dependentpropertynotempty: options.params.dependentpropertynotempty,
-                dependentpropertyempty: options.params.dependentpropertyempty
-            };
-
-            options.rules["requiredifonenotemptyandotherempty"] = value;
-            if (options.message) {
-                options.messages["requiredifonenotemptyandotherempty"] = options.message;
-            }
-        });
-    };
-
     var enableFormValidation = function (options) {
-        enableCustomValidation();
+        extendGlobalValidations();
 
         if (!hasProperty(options, 'formIdOrClass') || isNullOrEmpty(options.formIdOrClass)) {
             return;

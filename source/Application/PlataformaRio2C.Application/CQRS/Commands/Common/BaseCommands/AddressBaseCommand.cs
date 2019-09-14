@@ -31,20 +31,24 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         // State
         [Display(Name = "State", ResourceType = typeof(Labels))]
+        [RequiredIfOneWithValueAndOtherEmptyAttribute("IsRequired", "True", "StateName")]
         //[RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "StateName")]
         public Guid? StateUid { get; set; }
 
         [Display(Name = "State", ResourceType = typeof(Labels))]
+        [RequiredIfOneWithValueAndOtherEmptyAttribute("IsRequired", "True", "StateUid")]
         //[RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "StateUid")]
         [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string StateName { get; set; }
 
         // City
         [Display(Name = "City", ResourceType = typeof(Labels))]
+        [RequiredIfOneWithValueAndOtherEmptyAttribute("IsRequired", "True", "CityName")]
         //[RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "CityName")]
         public Guid? CityUid { get; set; }
 
         [Display(Name = "City", ResourceType = typeof(Labels))]
+        [RequiredIfOneWithValueAndOtherEmptyAttribute("IsRequired", "True", "CityUid")]
         //[RequiredIfOneNotEmptyAndOtherEmpty("CountryUid", "CityUid")]
         [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string CityName { get; set; }

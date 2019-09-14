@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Infra.CrossCutting.Tools
 // Author           : Rafael Dantas Ruiz
-// Created          : 08-24-2019
+// Created          : 09-13-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-24-2019
+// Last Modified On : 09-13-2019
 // ***********************************************************************
-// <copyright file="RequiredIfOneNotEmptyAndOtherEmptyAttribute.cs" company="Softo">
+// <copyright file="RequiredIfOneWithValueAndOtherEmptyAttribute.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -19,21 +19,19 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Infra.CrossCutting.Tools.Attributes
 {
-    /// <summary>RequiredIfOneNotEmptyAndOtherEmptyAttribute</summary>
+    /// <summary>RequiredIfOneWithValueAndOtherEmptyAttribute</summary>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
-    public class RequiredIfOneNotEmptyAndOtherEmptyAttribute : ValidationAttribute, IClientValidatable
+    public class RequiredIfOneWithValueAndOtherEmptyAttribute : ValidationAttribute, IClientValidatable
     {
-        private readonly string dependentPropertyNotEmpty;
+        private readonly string dependentPropertyWithValue;
+        private readonly string dependentPropertyValue;
         private readonly string dependentPropertyEmpty;
 
-        /// <summary>Initializes a new instance of the <see cref="RequiredIfOneNotEmptyAndOtherEmptyAttribute"/> class.</summary>
-        /// <param name="dependentPropertyNotEmpty">The dependent property not empty.</param>
-        /// <param name="dependentPropertyEmpty">The dependent property empty.</param>
-        /// <param name="errorMessage">The error message.</param>
-        public RequiredIfOneNotEmptyAndOtherEmptyAttribute(string dependentPropertyNotEmpty, string dependentPropertyEmpty, string errorMessage = null)
+        public RequiredIfOneWithValueAndOtherEmptyAttribute(string dependentPropertyWithValue, string dependentPropertyValue, string dependentPropertyEmpty, string errorMessage = null)
             : base(errorMessage)
         {
-            this.dependentPropertyNotEmpty = dependentPropertyNotEmpty;
+            this.dependentPropertyWithValue = dependentPropertyWithValue;
+            this.dependentPropertyValue = dependentPropertyValue;
             this.dependentPropertyEmpty = dependentPropertyEmpty;
         }
 
@@ -44,9 +42,14 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Attributes
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             // Validate first property (should be not empty to continue validation)
-            var propertyNotEmptyObject = validationContext.ObjectType.GetProperty(this.dependentPropertyEmpty);
-            var propertyNotEmptyObjectValue = propertyNotEmptyObject?.GetValue(validationContext.ObjectInstance, null);
-            if (propertyNotEmptyObjectValue == null)
+            var propertyWithValue = validationContext.ObjectType.GetProperty(this.dependentPropertyWithValue);
+            var propertyWithValueValue = propertyWithValue?.GetValue(validationContext.ObjectInstance, null);
+            if (propertyWithValueValue == null)
+            {
+                return ValidationResult.Success;
+            }
+
+            if (propertyWithValueValue.ToString().ToLowerInvariant() != this.dependentPropertyValue.ToLowerInvariant())
             {
                 return ValidationResult.Success;
             }
@@ -72,11 +75,12 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Attributes
         {
             var rule = new ModelClientValidationRule
             {
-                ValidationType = "requiredifonenotemptyandotherempty",
+                ValidationType = "requiredifonewithvalueandotherempty",
                 ErrorMessage = this.ErrorMessage ?? string.Format(Messages.TheFieldIsRequired, metadata.GetDisplayName())
             };
 
-            rule.ValidationParameters.Add("dependentpropertynotempty", this.dependentPropertyNotEmpty);
+            rule.ValidationParameters.Add("dependentpropertywithvalue", this.dependentPropertyWithValue);
+            rule.ValidationParameters.Add("dependentpropertyvalue", this.dependentPropertyValue);
             rule.ValidationParameters.Add("dependentpropertyempty", this.dependentPropertyEmpty);
 
             yield return rule;
