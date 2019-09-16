@@ -4,7 +4,7 @@
 // Created          : 09-13-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 09-16-2019
 // ***********************************************************************
 // <copyright file="onboarding.interests.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,11 +28,60 @@ var OnboardingInterests = function () {
     // Enable plugins -----------------------------------------------------------------------------
     var enablePlugins = function () {
         MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-restrictions', maxCharCount: 270 });
+        MyRio2cCommon.enableAtLeastOnCheckboxByNameValidation(formId);
+    };
+
+    // Custom validation --------------------------------------------------------------------------
+    var validateInterests = function () {
+        var isValid = true;
+
+        $(".require-one-group").each(function (index, element) {
+
+            var dataId = $(element).data("id");
+            if (MyRio2cCommon.isNullOrEmpty(dataId)) {
+                return;
+            }
+
+            if ($('[data-id="' + dataId + '"].require-one-item:checked').length > 0 === false) {
+                $('[data-valmsg-for="' + dataId + '"]').html('<span for="'+ dataId + '" generated="true" class="">' + labels.selectAtLeastOneOption + '</span>');
+                $('[data-valmsg-for="' + dataId + '"]').removeClass('field-validation-valid');
+                $('[data-valmsg-for="' + dataId + '"]').addClass('field-validation-error');
+
+                isValid = false;
+            }
+            else {
+                $('[data-valmsg-for="' + dataId + '"]').html('');
+                $('[data-valmsg-for="' + dataId + '"]').addClass('field-validation-valid');
+                $('[data-valmsg-for="' + dataId + '"]').removeClass('field-validation-error');
+            }
+        });
+
+        // Enable checkbox change on first submit
+        $(".require-one-item").not('.change-event-enabled').on('change', function () {
+            validateInterests();
+        });
+
+        $(".require-one-item").addClass('change-event-enabled');
+
+        return isValid;
+    };
+
+    // Form submit --------------------------------------------------------------------------------
+    var submit = function () {
+        if (validateInterests()) {
+            OnboardWizard.submit(formId);
+        }
     };
 
     return {
-        init: function() {
+        init: function () {
             enablePlugins();
+        },
+        validateInterests: function () {
+            return validateInterests();
+        },
+        submit: function () {
+            submit();
         }
     };
 }();
