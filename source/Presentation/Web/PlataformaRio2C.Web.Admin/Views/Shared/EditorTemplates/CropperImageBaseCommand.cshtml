@@ -8,12 +8,12 @@
             @if (Model.GetImageUploadDate().HasValue)
             {
                 var fileRepositoryPathType = Model.FileRepositoryPathTypeUid == FileRepositoryPathType.HoldingImage.Uid ? FileRepositoryPathType.HoldingImage :
-                                             Model.FileRepositoryPathTypeUid == FileRepositoryPathType.OrganizationImage.Uid ? FileRepositoryPathType.OrganizationImage : 
+                                             Model.FileRepositoryPathTypeUid == FileRepositoryPathType.OrganizationImage.Uid ? FileRepositoryPathType.OrganizationImage :
                                              FileRepositoryPathType.UserImage;
                 <div id="current-image" class="kt-avatar__holder wh-200" style="background-color: rgba(255, 255, 255, 0.1); background-image: url(@ImageHelper.GetImageUrl(fileRepositoryPathType, Model.ImageUid.Value, Model.GetImageUploadDate().Value, true))"></div>
             }
             <div id="no-image" class="kt-avatar__holder wh-200 @(Model.GetImageUploadDate().HasValue ? "d-none" : string.Empty)" style="background-color: rgba(255, 255, 255, 0.1);"></div>
-            @Html.TextBoxFor(m => m.ImageFile, new { id = "ImageFile", @class = "sr-only", type = "file", @accept = "image/*" })
+            @Html.TextBoxFor(m => m.ImageFile, new { @class = "sr-only", type = "file", @accept = "image/*" })
         </div>
         @*@if (Model.IsImageUploaded)
             {
@@ -27,7 +27,7 @@
                 <span class="btn btn-secondary" onclick="MyRio2cCropper.remove();">@Labels.Remove</span>
             </label>
         }
-        <label class="btn default btn-file" for="ImageFile">
+        <label class="btn default btn-file" for="CropperImage_ImageFile">
             <span class="btn btn-primary">@(Model.GetImageUploadDate().HasValue ? Labels.Alter : Labels.SelectImage)</span>
         </label>
     </div>
@@ -42,6 +42,7 @@
         <div class="container cropper-container">
             <div class="row">
                 <div class="col-md-12 ml-3">
+                    @Html.HiddenFor(m => m.IsRequired)
                     @Html.HiddenFor(m => m.IsImageDeleted)
                     @Html.HiddenFor(m => m.ImageUid)
                     @Html.HiddenFor(m => m.ImageUploadDate)

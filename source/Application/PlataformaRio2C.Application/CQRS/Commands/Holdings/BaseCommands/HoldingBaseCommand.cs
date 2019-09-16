@@ -4,7 +4,7 @@
 // Created          : 08-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-29-2019
+// Last Modified On : 09-16-2019
 // ***********************************************************************
 // <copyright file="HoldingBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -40,11 +40,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Updates the base properties.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
-        protected void UpdateBaseProperties(HoldingDto entity, List<LanguageDto> languagesDtos)
+        /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
+        protected void UpdateBaseProperties(HoldingDto entity, List<LanguageDto> languagesDtos, bool isImageRequired)
         {
             this.Name = entity?.Name;
             this.UpdateDescriptions(entity, languagesDtos);
-            this.UpdateCropperImage(entity);
+            this.UpdateCropperImage(entity, isImageRequired);
         }
 
         /// <summary>Updates the descriptions.</summary>
@@ -63,9 +64,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Updates the cropper image.</summary>
         /// <param name="entity">The entity.</param>
-        private void UpdateCropperImage(HoldingDto entity)
+        /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
+        private void UpdateCropperImage(HoldingDto entity, bool isImageRequired)
         {
-            this.CropperImage = new CropperImageBaseCommand(entity?.ImageUploadDate, entity?.Uid, FileRepositoryPathType.HoldingImage);
+            this.CropperImage = new CropperImageBaseCommand(entity?.ImageUploadDate, entity?.Uid, FileRepositoryPathType.HoldingImage, isImageRequired);
         }
     }
 }

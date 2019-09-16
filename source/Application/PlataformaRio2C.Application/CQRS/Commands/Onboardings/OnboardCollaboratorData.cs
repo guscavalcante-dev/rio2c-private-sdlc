@@ -4,7 +4,7 @@
 // Created          : 09-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 09-16-2019
 // ***********************************************************************
 // <copyright file="OnboardCollaboratorData.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -41,12 +41,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
         /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
-        public OnboardCollaboratorData(CollaboratorDto collaborator, List<LanguageDto> languagesDtos, bool isJobTitleRequired, bool isMiniBioRequired)
+        /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
+        public OnboardCollaboratorData(CollaboratorDto collaborator, List<LanguageDto> languagesDtos, bool isJobTitleRequired, bool isMiniBioRequired, bool isImageRequired)
         {
             this.PublicEmail = collaborator?.PublicEmail;
             this.UpdateJobTitles(collaborator, languagesDtos, isJobTitleRequired);
             this.UpdateMiniBios(collaborator, languagesDtos, isMiniBioRequired);
-            this.UpdateCropperImage(collaborator);
+            this.UpdateCropperImage(collaborator, isImageRequired);
         }
 
         /// <summary>Initializes a new instance of the <see cref="OnboardCollaboratorData"/> class.</summary>
@@ -86,9 +87,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Updates the cropper image.</summary>
         /// <param name="entity">The entity.</param>
-        private void UpdateCropperImage(CollaboratorDto entity)
+        /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
+        private void UpdateCropperImage(CollaboratorDto entity, bool isImageRequired)
         {
-            this.CropperImage = new CropperImageBaseCommand(entity?.ImageUploadDate, entity?.Uid, FileRepositoryPathType.UserImage);
+            this.CropperImage = new CropperImageBaseCommand(entity?.ImageUploadDate, entity?.Uid, FileRepositoryPathType.UserImage, isImageRequired);
         }
 
         /// <summary>Updates the pre send properties.</summary>

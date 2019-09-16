@@ -4,7 +4,7 @@
 // Created          : 08-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-23-2019
+// Last Modified On : 09-16-2019
 // ***********************************************************************
 // <copyright file="UpdateHolding.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,7 +29,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Initializes a new instance of the <see cref="UpdateHolding"/> class.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
-        public UpdateHolding(HoldingDto entity, List<LanguageDto> languagesDtos)
+        /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
+        /// <exception cref="DomainException"></exception>
+        public UpdateHolding(HoldingDto entity, List<LanguageDto> languagesDtos, bool isImageRequired)
         {
             if (entity == null)
             {
@@ -39,7 +41,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.HoldingUid = entity.Uid;
             this.UpdaterBaseDto = entity.UpdaterDto;
             this.UpdateDate = entity.UpdateDate;
-            this.UpdateBaseProperties(entity, languagesDtos);
+            this.UpdateBaseProperties(entity, languagesDtos, isImageRequired);
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateHolding"/> class.</summary>

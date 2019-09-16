@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 09-16-2019
 // ***********************************************************************
 // <copyright file="OnboardOrganizationData.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -82,6 +82,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="isDescriptionRequired">if set to <c>true</c> [is description required].</param>
         /// <param name="isAddressRequired">if set to <c>true</c> [is address required].</param>
+        /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         public OnboardOrganizationData(
             OrganizationDto entity, 
             List<HoldingBaseDto> holdingBaseDtos, 
@@ -90,7 +91,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<Activity> activities,
             List<TargetAudience> targetAudiences,
             bool isDescriptionRequired, 
-            bool isAddressRequired)
+            bool isAddressRequired, 
+            bool isImageRequired)
         {
             this.OrganizationUid = entity.Uid;
             this.UpdaterBaseDto = entity.UpdaterDto;
@@ -104,7 +106,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.TargetAudiencesUids = entity?.OrganizationTargetAudiencesDtos?.Select(otad => otad.TargetAudienceUid)?.ToList();
             this.UpdateAddress(entity, countriesBaseDtos, isAddressRequired);
             this.UpdateDescriptions(entity, languagesDtos, isDescriptionRequired);
-            this.UpdateCropperImage(entity);
+            this.UpdateCropperImage(entity, isImageRequired);
             this.UpdateDropdownProperties(holdingBaseDtos, countriesBaseDtos, activities, targetAudiences);
         }
 
@@ -139,9 +141,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Updates the cropper image.</summary>
         /// <param name="entity">The entity.</param>
-        private void UpdateCropperImage(OrganizationDto entity)
+        /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
+        private void UpdateCropperImage(OrganizationDto entity, bool isImageRequired)
         {
-            this.CropperImage = new CropperImageBaseCommand(entity?.ImageUploadDate, entity?.Uid, FileRepositoryPathType.OrganizationImage);
+            this.CropperImage = new CropperImageBaseCommand(entity?.ImageUploadDate, entity?.Uid, FileRepositoryPathType.OrganizationImage, isImageRequired);
         }
 
         /// <summary>Updates the dropdown properties.</summary>

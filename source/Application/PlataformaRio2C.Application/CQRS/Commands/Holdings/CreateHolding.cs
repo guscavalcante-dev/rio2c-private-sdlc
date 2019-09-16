@@ -4,7 +4,7 @@
 // Created          : 08-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-23-2019
+// Last Modified On : 09-16-2019
 // ***********************************************************************
 // <copyright file="CreateHolding.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,9 +21,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         /// <summary>Initializes a new instance of the <see cref="CreateHolding"/> class.</summary>
         /// <param name="languagesDtos">The languages dtos.</param>
-        public CreateHolding(List<LanguageDto> languagesDtos)
+        /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
+        public CreateHolding(List<LanguageDto> languagesDtos, bool isImageRequired)
         {
-            this.UpdateBaseProperties(null, languagesDtos);
+            this.UpdateBaseProperties(null, languagesDtos, isImageRequired);
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateHolding"/> class.</summary>

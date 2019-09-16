@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-29-2019
+// Last Modified On : 09-16-2019
 // ***********************************************************************
 // <copyright file="HoldingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,7 +20,6 @@ using System.Web.Mvc;
 using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
-using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
@@ -36,16 +35,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     [AjaxAuthorize(Roles = "Admin")]
     public class HoldingsController : BaseController
     {
-        private readonly IFileRepository fileRepo;
-
         /// <summary>Initializes a new instance of the <see cref="HoldingsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        /// <param name="fileRepository">The file repository.</param>
-        public HoldingsController(IMediator commandBus, IdentityAutenticationService identityController, IFileRepository fileRepository)
+        public HoldingsController(IMediator commandBus, IdentityAutenticationService identityController)
             : base(commandBus, identityController)
         {
-            this.fileRepo = fileRepository;
         }
 
         #region List
@@ -161,7 +156,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowCreateModal()
         {
-            var cmd = new CreateHolding(await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)));
+            var cmd = new CreateHolding(
+                await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
+                false);
 
             return Json(new
             {
@@ -243,7 +240,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             {
                 cmd = new UpdateHolding(
                     await this.CommandBus.Send(new FindHoldingDtoByUidAsync(holdingUid, this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)));
+                    await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
+                    false);
             }
             catch (DomainException ex)
             {

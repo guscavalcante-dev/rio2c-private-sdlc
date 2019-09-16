@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-14-2019
+// Last Modified On : 09-16-2019
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -174,6 +174,49 @@ var MyRio2cCommon = function () {
             options.rules["requiredifonewithvalueandotherempty"] = value;
             if (options.message) {
                 options.messages["requiredifonewithvalueandotherempty"] = options.message;
+            }
+        });
+
+        // Required if one with value and other with value
+        jQuery.validator.addMethod("requiredimageoptional", function (value, element, params) {
+            var isRequired = foolproof.getId(element, "IsRequired");
+            var isRequiredValue = $('#' + isRequired).val();
+            if (isRequiredValue !== "True") {
+                return true;
+            }
+
+            var imageFile = foolproof.getId(element, "ImageFile");
+            var imageFileValue = $('#' + imageFile).val();
+            if (!MyRio2cCommon.isNullOrEmpty(imageFileValue)) {
+                return true;
+            }
+
+            var imageUploadDate = foolproof.getId(element, "ImageUploadDate");
+            var imageUploadDateValue = $('#' + imageUploadDate).val();
+            if (MyRio2cCommon.isNullOrEmpty(imageUploadDateValue)) {
+                return false;
+            }
+
+            var isImageDeleted = foolproof.getId(element, "IsImageDeleted");
+            var isImageDeletedValue = $('#' + isImageDeleted).val();
+            if (isImageDeletedValue === "True") {
+                return false;
+            }
+
+            return true;
+        });
+
+        $.validator.unobtrusive.adapters.add("requiredimageoptional", [], function (options) {
+            var value = {
+                //dependentproperty1withvalue: options.params.dependentproperty1withvalue,
+                //dependentproperty1value: options.params.dependentproperty1value,
+                //dependentproperty2withvalue: options.params.dependentproperty2withvalue,
+                //dependentproperty2value: options.params.dependentproperty2value
+            };
+
+            options.rules["requiredimageoptional"] = value;
+            if (options.message) {
+                options.messages["requiredimageoptional"] = options.message;
             }
         });
     };

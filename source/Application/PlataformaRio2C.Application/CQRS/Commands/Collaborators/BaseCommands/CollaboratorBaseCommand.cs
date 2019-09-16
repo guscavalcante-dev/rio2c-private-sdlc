@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 09-16-2019
 // ***********************************************************************
 // <copyright file="CollaboratorBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -79,13 +79,15 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
         /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
         /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
+        /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         public void UpdateBaseProperties(
             CollaboratorDto entity, 
             List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, 
             List<LanguageDto> languagesDtos, 
             List<CountryBaseDto> countriesBaseDtos, 
             bool isJobTitleRequired, 
-            bool isMiniBioRequired)
+            bool isMiniBioRequired, 
+            bool isImageRequired)
         {
             this.FirstName = entity?.FirstName;
             this.LastNames = entity?.LastNames;
@@ -97,7 +99,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateOrganizations(entity, attendeeOrganizationsBaseDtos);
             this.UpdateJobTitles(entity, languagesDtos, isJobTitleRequired);
             this.UpdateMiniBios(entity, languagesDtos, isMiniBioRequired);
-            this.UpdateCropperImage(entity);
+            this.UpdateCropperImage(entity, isImageRequired);
             this.UpdateDropdownProperties(attendeeOrganizationsBaseDtos, countriesBaseDtos);
         }
 
@@ -165,9 +167,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Updates the cropper image.</summary>
         /// <param name="entity">The entity.</param>
-        private void UpdateCropperImage(CollaboratorDto entity)
+        /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
+        private void UpdateCropperImage(CollaboratorDto entity, bool isImageRequired)
         {
-            this.CropperImage = new CropperImageBaseCommand(entity?.ImageUploadDate, entity?.Uid, FileRepositoryPathType.UserImage);
+            this.CropperImage = new CropperImageBaseCommand(entity?.ImageUploadDate, entity?.Uid, FileRepositoryPathType.UserImage, isImageRequired);
         }
 
         /// <summary>Updates the dropdown properties.</summary>

@@ -4,7 +4,7 @@
 // Created          : 08-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-18-2019
+// Last Modified On : 09-16-2019
 // ***********************************************************************
 // <copyright file="CropperImageBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,23 +33,27 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = "Image", ResourceType = typeof(Labels))]
         [HttpPostedFileExtensions(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "InvalidImage")]
+        [RequiredImageOptional]
         public HttpPostedFileBase ImageFile { get; set; }
 
         public string ImageUploadDate { get; set; }
         public Guid? ImageUid { get; set; }
         public bool IsImageDeleted { get; set; }
         public Guid? FileRepositoryPathTypeUid { get; set; }
+        public bool IsRequired { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CropperImageBaseCommand"/> class.</summary>
         /// <param name="imageUploadDate">The image upload date.</param>
         /// <param name="imageUid">The image uid.</param>
         /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
-        public CropperImageBaseCommand(DateTime? imageUploadDate, Guid? imageUid, FileRepositoryPathType fileRepositoryPathType)
+        /// <param name="isRequired">if set to <c>true</c> [is required].</param>
+        public CropperImageBaseCommand(DateTime? imageUploadDate, Guid? imageUid, FileRepositoryPathType fileRepositoryPathType, bool isRequired)
         {
             this.ImageUploadDate = imageUploadDate?.ToString("yyyyMMddHHmmss");
             this.ImageUid = imageUid;
             this.IsImageDeleted = false;
             this.FileRepositoryPathTypeUid = fileRepositoryPathType.Uid;
+            this.IsRequired = isRequired;
         }
 
         /// <summary>Initializes a new instance of the <see cref="CropperImageBaseCommand"/> class.</summary>

@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 09-16-2019
 // ***********************************************************************
 // <copyright file="UpdateCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,6 +35,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isAddingToCurrentEdition">The is adding to current edition.</param>
         /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
         /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
+        /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         public UpdateCollaborator(
             CollaboratorDto entity, 
             List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, 
@@ -42,7 +43,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<CountryBaseDto> countriesBaseDtos, 
             bool? isAddingToCurrentEdition, 
             bool isJobTitleRequired,
-            bool isMiniBioRequired)
+            bool isMiniBioRequired, 
+            bool isImageRequired)
         {
             if (entity == null)
             {
@@ -53,7 +55,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.IsAddingToCurrentEdition = isAddingToCurrentEdition ?? false;
             this.UpdaterBaseDto = entity.UpdaterDto;
             this.UpdateDate = entity.UpdateDate;
-            this.UpdateBaseProperties(entity, attendeeOrganizationsBaseDtos, languagesDtos, countriesBaseDtos, isJobTitleRequired, isMiniBioRequired);
+            this.UpdateBaseProperties(entity, attendeeOrganizationsBaseDtos, languagesDtos, countriesBaseDtos, isJobTitleRequired, isMiniBioRequired, isImageRequired);
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaborator"/> class.</summary>

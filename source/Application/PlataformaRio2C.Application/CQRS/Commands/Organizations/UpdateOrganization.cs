@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 09-16-2019
 // ***********************************************************************
 // <copyright file="UpdateOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -41,6 +41,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isDescriptionRequired">if set to <c>true</c> [is description required].</param>
         /// <param name="isAddressRequired">if set to <c>true</c> [is address required].</param>
         /// <param name="isRestrictionSpecificRequired">if set to <c>true</c> [is restriction specific required].</param>
+        /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         public UpdateOrganization(
             OrganizationDto entity, 
             List<HoldingBaseDto> holdingBaseDtos,
@@ -52,7 +53,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool? isAddingToCurrentEdition,
             bool isDescriptionRequired, 
             bool isAddressRequired, 
-            bool isRestrictionSpecificRequired)
+            bool isRestrictionSpecificRequired, 
+            bool isImageRequired)
         {
             if (entity == null)
             {
@@ -63,7 +65,18 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.IsAddingToCurrentEdition = isAddingToCurrentEdition ?? false;
             this.UpdaterBaseDto = entity.UpdaterDto;
             this.UpdateDate = entity.UpdateDate;
-            this.UpdateBaseProperties(entity, holdingBaseDtos, languagesDtos, countriesBaseDtos, activities, targetAudiences, groupedInterests, isDescriptionRequired, isAddressRequired, isRestrictionSpecificRequired);
+            this.UpdateBaseProperties(
+                entity, 
+                holdingBaseDtos, 
+                languagesDtos, 
+                countriesBaseDtos, 
+                activities, 
+                targetAudiences, 
+                groupedInterests, 
+                isDescriptionRequired, 
+                isAddressRequired, 
+                isRestrictionSpecificRequired,
+                isImageRequired);
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateOrganization"/> class.</summary>

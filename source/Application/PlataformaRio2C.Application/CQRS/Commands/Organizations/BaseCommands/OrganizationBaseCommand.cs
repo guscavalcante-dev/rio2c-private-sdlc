@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 09-16-2019
 // ***********************************************************************
 // <copyright file="OrganizationBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -90,6 +90,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isDescriptionRequired">if set to <c>true</c> [is description required].</param>
         /// <param name="isAddressRequired">if set to <c>true</c> [is address required].</param>
         /// <param name="isRestrictionSpecificRequired">if set to <c>true</c> [is restriction specific required].</param>
+        /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         public void UpdateBaseProperties(
             OrganizationDto entity, 
             List<HoldingBaseDto> holdingBaseDtos, 
@@ -100,7 +101,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<IGrouping<InterestGroup, Interest>> groupedInterests,
             bool isDescriptionRequired, 
             bool isAddressRequired, 
-            bool isRestrictionSpecificRequired)
+            bool isRestrictionSpecificRequired, 
+            bool isImageRequired)
         {
             this.HoldingUid = entity?.HoldingBaseDto?.Uid;
             this.Name = entity?.Name;
@@ -113,7 +115,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateAddress(entity, countriesBaseDtos, isAddressRequired);
             this.UpdateDescriptions(entity, languagesDtos, isDescriptionRequired);
             this.UpdateRestrictionSpecifics(entity, languagesDtos, isRestrictionSpecificRequired);
-            this.UpdateCropperImage(entity);
+            this.UpdateCropperImage(entity, isImageRequired);
             this.UpdateDropdownProperties(holdingBaseDtos, countriesBaseDtos, activities, targetAudiences, groupedInterests);
             this.ActivitiesUids = entity?.OrganizationActivitiesDtos?.Select(oad => oad.ActivityUid)?.ToList();
             this.TargetAudiencesUids = entity?.OrganizationTargetAudiencesDtos?.Select(otad => otad.TargetAudienceUid)?.ToList();
@@ -161,9 +163,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Updates the cropper image.</summary>
         /// <param name="entity">The entity.</param>
-        private void UpdateCropperImage(OrganizationDto entity)
+        /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
+        private void UpdateCropperImage(OrganizationDto entity, bool isImageRequired)
         {
-            this.CropperImage = new CropperImageBaseCommand(entity?.ImageUploadDate, entity?.Uid, FileRepositoryPathType.OrganizationImage);
+            this.CropperImage = new CropperImageBaseCommand(entity?.ImageUploadDate, entity?.Uid, FileRepositoryPathType.OrganizationImage, isImageRequired);
         }
 
         /// <summary>Updates the dropdown properties.</summary>

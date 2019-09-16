@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 09-16-2019
 // ***********************************************************************
 // <copyright file="PlayersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -187,6 +187,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 await this.interestRepo.FindAllGroupedByInterestGroupsAsync(),
                 false,
                 false,
+                false,
                 false);
 
             return Json(new
@@ -285,6 +286,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     await this.targetAudienceRepo.FindAllAsync(),
                     await this.interestRepo.FindAllGroupedByInterestGroupsAsync(),
                     isAddingToCurrentEdition,
+                    false,
                     false,
                     false,
                     false);
