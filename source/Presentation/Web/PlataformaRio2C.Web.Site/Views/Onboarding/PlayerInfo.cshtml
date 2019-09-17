@@ -32,64 +32,69 @@
                         <div class="kt-form__section kt-form__section--first">
                             <div class="kt-wizard-v2__form">
                                 <div id="form-container">
-                                    <div class="form-group row">
-                                        <div class="col-lg-4 text-center">
+                                    <div class="row">
+                                        <div class="form-group col-lg-4 text-center">
                                             @Html.EditorFor(m => m.CropperImage)
                                         </div>
                                         <div class="col-lg-8">
-                                            <div class="form-group row">
-                                                <div class="col-md-12">
-                                                    @Html.LabelFor(m => m.Document, new { @class = "control-label" })
-                                                    @Html.TextBoxFor(m => m.Document, new { @class = "form-control" })
-                                                    @Html.ValidationMessageFor(m => m.Document, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="form-group col-md-12">
                                                     @Html.LabelFor(m => m.CompanyName, new { @class = "control-label" })
                                                     @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
                                                     @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
-                                            <div class="form-group row">
-                                                <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="form-group col-md-12">
                                                     @Html.LabelFor(m => m.TradeName, new { @class = "control-label" })
                                                     @Html.TextBoxFor(m => m.TradeName, new { @class = "form-control" })
                                                     @Html.ValidationMessageFor(m => m.TradeName, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6" data-id="Country">
+                                                    @Html.LabelFor(m => m.CountryUid, new { @class = "control-label" })
+                                                    @Html.DropDownList("CountryUid", new SelectList(Model.CountriesBaseDtos, "Uid", "DisplayName", Model.CountryUid), $"{Labels.Select}...", new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(m => m.CountryUid, "", new { @class = "text-danger" })
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    @Html.LabelFor(m => m.Document, new { @class = "control-label" })
+                                                    @Html.TextBoxFor(m => m.Document, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(m => m.Document, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
                                             @Html.LabelFor(m => m.Website, new { @class = "control-label" })
                                             @Html.TextBoxFor(m => m.Website, new { @class = "form-control" })
                                             @Html.ValidationMessageFor(m => m.Website, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
                                             @Html.LabelFor(m => m.SocialMedia, new { @class = "control-label" })
                                             @Html.TextBoxFor(m => m.SocialMedia, new { @class = "form-control" })
                                             @Html.ValidationMessageFor(m => m.SocialMedia, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
-                                    <div class="kt-section mt-50">
+                                    <div class="kt-section mt-30">
                                         <h3 class="kt-heading kt-heading--md">@Labels.Address</h3>
                                         <div class="kt-section__content mt-3">
                                             @Html.EditorFor(m => m.Address)
                                         </div>
                                     </div>
-                                    <div class="kt-section mt-50">
+                                    <div class="kt-section mt-30">
                                         <h3 class="kt-heading kt-heading--md">@Labels.CompanyResume</h3>
                                         @Html.ValidationMessage("Descriptions", new { @class = "text-danger" })
                                         <div class="kt-section__content mt-3">
                                             @Html.EditorFor(m => m.Descriptions)
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <div class="col-md-6">
-                                            <div class="kt-section mt-50">
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <div class="kt-section">
                                                 <h3 class="kt-heading kt-heading--md">@Labels.Activity</h3>
                                                 @Html.ValidationMessage("ActivitiesUids", new { @class = "text-danger" })
                                                 <div class="kt-section__content mt-3">
@@ -110,8 +115,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="kt-section mt-50">
+                                        <div class="form-group col-md-6">
+                                            <div class="kt-section">
                                                 <h3 class="kt-heading kt-heading--md">@Labels.TargetAudience</h3>
                                                 @Html.ValidationMessage("TargetAudiencesUids", new { @class = "text-danger" })
                                                 <div class="kt-section__content mt-3">

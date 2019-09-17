@@ -4,7 +4,7 @@
 // Created          : 09-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-06-2019
+// Last Modified On : 09-17-2019
 // ***********************************************************************
 // <copyright file="addresses.form.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,7 +18,7 @@ var AddressesForm = function () {
     var stateDataId = 'State';
     var cityDataId = 'City';
 
-    var countryUid = '#Address_CountryUid';
+    var countryUid = '#CountryUid';
     var initialstateUid = '#Address_InitialStateUid';
     var stateUid = '#Address_StateUid';
     var stateName = '#Address_StateName';

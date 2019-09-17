@@ -23,11 +23,11 @@
                         <div class="kt-form__section kt-form__section--first">
                             <div class="kt-wizard-v2__form">
                                 <div id="form-container">
-                                    <div class="form-group row">
-                                        <div class="col-lg-4 text-center">
+                                    <div class="row">
+                                        <div class="form-group col-lg-4 text-center">
                                             @Html.EditorFor(m => m.CropperImage)
                                         </div>
-                                        <div class="col-lg-8">
+                                        <div class="form-group col-lg-8">
                                             <div class="kt-section">
                                                 <h3 class="kt-section__title mb-0">@Labels.JobTitle</h3>
                                                 @Html.ValidationMessage("JobTitles", new { @class = "text-danger" })
@@ -37,15 +37,15 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="kt-section mt-50">
+                                    <div class="kt-section">
                                         <h3 class="kt-heading kt-heading--md">@Messages.DescribeYourMiniBiography</h3>
                                         @Html.ValidationMessage("MiniBios", new { @class = "text-danger" })
                                         <div class="kt-section__content mt-3">
                                             @Html.EditorFor(m => m.MiniBios)
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
                                             @Html.LabelFor(m => m.PublicEmail, Messages.PublicEmail, new { @class = "control-label" })
                                             @Html.TextBoxFor(m => m.PublicEmail, new { @class = "form-control" })
                                             @Html.ValidationMessageFor(m => m.PublicEmail, "", new { @class = "text-danger" })

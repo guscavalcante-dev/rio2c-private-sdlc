@@ -22,42 +22,40 @@
                         <div class="kt-heading kt-heading--md">@Labels.AccessData</div>
                         <div class="kt-form__section kt-form__section--first">
                             <div class="kt-wizard-v2__form">
-                                <div class="form-group">
-                                    <div class="form-group">
-                                        <div class="form-group">
-                                            <label>@Labels.Email/@Labels.User: @(userAccessControlDto?.User.Email)</label>
-                                        </div>
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label>@Labels.Email/@Labels.User: @(userAccessControlDto?.User.Email)</label>
                                     </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            @Html.LabelFor(m => m.FirstName, new { @class = "control-label" })
-                                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            @Html.LabelFor(m => m.LastNames, new { @class = "control-label" })
-                                            @Html.TextBoxFor(m => m.LastNames, new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(m => m.LastNames, "", new { @class = "text-danger" })
-                                        </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        @Html.LabelFor(m => m.FirstName, new { @class = "control-label" })
+                                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
                                     </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            @Html.LabelFor(m => m.Badge, new { @class = "control-label" })
-                                            @Html.TextBoxFor(m => m.Badge, new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(m => m.Badge, "", new { @class = "text-danger" })
-                                        </div>
+                                    <div class="form-group col-md-6">
+                                        @Html.LabelFor(m => m.LastNames, new { @class = "control-label" })
+                                        @Html.TextBoxFor(m => m.LastNames, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.LastNames, "", new { @class = "text-danger" })
                                     </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            @Html.LabelFor(m => m.CellPhone, new { @class = "control-label" })
-                                            @Html.TextBoxFor(m => m.CellPhone, new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(m => m.CellPhone, "", new { @class = "text-danger" })
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            @Html.LabelFor(m => m.PhoneNumber, new { @class = "control-label" })
-                                            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
-                                        </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        @Html.LabelFor(m => m.Badge, new { @class = "control-label" })
+                                        @Html.TextBoxFor(m => m.Badge, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.Badge, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        @Html.LabelFor(m => m.CellPhone, new { @class = "control-label" })
+                                        @Html.TextBoxFor(m => m.CellPhone, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.CellPhone, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        @Html.LabelFor(m => m.PhoneNumber, new { @class = "control-label" })
+                                        @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <hr />

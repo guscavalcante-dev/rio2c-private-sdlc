@@ -4,7 +4,7 @@
 // Created          : 08-23-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-14-2019
+// Last Modified On : 09-17-2019
 // ***********************************************************************
 // <copyright file="AddressBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,9 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using Foolproof;
@@ -25,11 +23,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>AddressBaseCommand</summary>
     public class AddressBaseCommand
     {
-        // Country
-        [Display(Name = "Country", ResourceType = typeof(Labels))]
-        [RequiredIf("IsRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public Guid? CountryUid { get; set; }
-
         // State
         [Display(Name = "State", ResourceType = typeof(Labels))]
         [RequiredIfOneWithValueAndOtherEmptyAttribute("IsRequired", "True", "StateName")]
@@ -67,15 +60,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public bool IsRequired { get; set; }
 
-        public List<CountryBaseDto> CountriesBaseDtos { get; private set; }
-
         /// <summary>Initializes a new instance of the <see cref="AddressBaseCommand"/> class.</summary>
         /// <param name="addressBaseDto">The address base dto.</param>
-        /// <param name="countriesBaseDtos">The countries base dtos.</param>
         /// <param name="isRequired">if set to <c>true</c> [is required].</param>
-        public AddressBaseCommand(AddressBaseDto addressBaseDto, List<CountryBaseDto> countriesBaseDtos, bool isRequired)
+        public AddressBaseCommand(AddressBaseDto addressBaseDto, bool isRequired)
         {
-            this.UpdateBaseProperties(addressBaseDto, countriesBaseDtos, isRequired);
+            this.UpdateBaseProperties(addressBaseDto, isRequired);
         }
 
         /// <summary>Initializes a new instance of the <see cref="AddressBaseCommand"/> class.</summary>
@@ -83,25 +73,16 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
         }
 
-        private void UpdateBaseProperties(AddressBaseDto addressBaseDto, List<CountryBaseDto> countriesBaseDtos, bool isRequired)
+        /// <summary>Updates the base properties.</summary>
+        /// <param name="addressBaseDto">The address base dto.</param>
+        /// <param name="isRequired">if set to <c>true</c> [is required].</param>
+        private void UpdateBaseProperties(AddressBaseDto addressBaseDto, bool isRequired)
         {
-            this.CountryUid = addressBaseDto?.CountryUid;
             this.StateUid = addressBaseDto?.StateUid;
             this.CityUid = addressBaseDto?.CityUid;
             this.Address1 = addressBaseDto?.Address1;
             this.AddressZipCode = addressBaseDto?.AddressZipCode;
-            this.UpdateDropdownProperties(countriesBaseDtos);
             this.IsRequired = isRequired;
-        }
-
-        /// <summary>Updates the dropdown properties.</summary>
-        /// <param name="countriesBaseDtos">The countries base dtos.</param>
-        public void UpdateDropdownProperties(List<CountryBaseDto> countriesBaseDtos)
-        {
-            this.CountriesBaseDtos = countriesBaseDtos?
-                                        .OrderBy(c => c.Ordering)?
-                                        .ThenBy(c => c.DisplayName)?
-                                        .ToList();
         }
     }
 }

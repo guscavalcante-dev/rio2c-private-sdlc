@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-16-2019
+// Last Modified On : 09-17-2019
 // ***********************************************************************
 // <copyright file="OrganizationBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,10 +34,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(81, MinimumLength = 2, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Name { get; set; }
 
-        [Display(Name = "CompanyDocument", ResourceType = typeof(Labels))]
-        [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        public string Document { get; set; }
-
         [Display(Name = "CompanyName", ResourceType = typeof(Labels))]
         [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string CompanyName { get; set; }
@@ -45,6 +41,14 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Display(Name = "TradeName", ResourceType = typeof(Labels))]
         [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string TradeName { get; set; }
+
+        [Display(Name = "Country", ResourceType = typeof(Labels))]
+        //[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public Guid? CountryUid { get; set; }
+
+        [Display(Name = "CompanyDocument", ResourceType = typeof(Labels))]
+        [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string Document { get; set; }
 
         [Display(Name = "Website", ResourceType = typeof(Labels))]
         [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
@@ -73,6 +77,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<Activity> Activities { get; private set; }
         public List<TargetAudience> TargetAudiences { get; private set; }
         public List<IGrouping<InterestGroup, Interest>> GroupedInterests { get; private set; }
+        public List<CountryBaseDto> CountriesBaseDtos { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="OrganizationBaseCommand"/> class.</summary>
         public OrganizationBaseCommand()
@@ -106,13 +111,14 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
             this.HoldingUid = entity?.HoldingBaseDto?.Uid;
             this.Name = entity?.Name;
-            this.Document = entity?.Document;
             this.CompanyName = entity?.CompanyName;
             this.TradeName = entity?.TradeName;
+            this.CountryUid = entity?.AddressBaseDto?.CountryUid;
+            this.Document = entity?.Document;
             this.Website = entity?.Website;
             this.SocialMedia = entity?.SocialMedia;
             this.PhoneNumber = entity?.PhoneNumber;
-            this.UpdateAddress(entity, countriesBaseDtos, isAddressRequired);
+            this.UpdateAddress(entity, isAddressRequired);
             this.UpdateDescriptions(entity, languagesDtos, isDescriptionRequired);
             this.UpdateRestrictionSpecifics(entity, languagesDtos, isRestrictionSpecificRequired);
             this.UpdateCropperImage(entity, isImageRequired);
@@ -124,11 +130,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Updates the address.</summary>
         /// <param name="entity">The entity.</param>
-        /// <param name="countriesBaseDtos">The countries base dtos.</param>
         /// <param name="isAddressRequired">if set to <c>true</c> [is address required].</param>
-        private void UpdateAddress(OrganizationDto entity, List<CountryBaseDto> countriesBaseDtos, bool isAddressRequired)
+        private void UpdateAddress(OrganizationDto entity, bool isAddressRequired)
         {
-            this.Address = new AddressBaseCommand(entity?.AddressBaseDto, countriesBaseDtos, isAddressRequired);
+            this.Address = new AddressBaseCommand(entity?.AddressBaseDto, isAddressRequired);
         }
 
         /// <summary>Updates the descriptions.</summary>
@@ -183,10 +188,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<IGrouping<InterestGroup, Interest>> groupedInterests)
         {
             this.HoldingBaseDtos = holdingBaseDtos;
-            this.Address?.UpdateDropdownProperties(countriesBaseDtos);
             this.Activities = activities;
             this.TargetAudiences = targetAudiences;
             this.GroupedInterests = groupedInterests;
+            this.CountriesBaseDtos = countriesBaseDtos?
+                                        .OrderBy(c => c.Ordering)?
+                                        .ThenBy(c => c.DisplayName)?
+                                        .ToList();
         }
 
         /// <summary>Updates the pre send properties.</summary>

@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 09-17-2019
 // ***********************************************************************
 // <copyright file="UpdateOrganizationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -125,7 +125,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.Website,
                 cmd.SocialMedia,
                 cmd.PhoneNumber,
-                await this.countryRepo.GetAsync(cmd.Address?.CountryUid ?? Guid.Empty),
+                await this.countryRepo.GetAsync(cmd?.CountryUid ?? Guid.Empty),
                 cmd.Address?.StateUid,
                 cmd.Address?.StateName,
                 cmd.Address?.CityUid,
