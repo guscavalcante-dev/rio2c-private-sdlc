@@ -108,6 +108,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 Uid = c.Uid,
                                 Name = c.Name,
                                 Code = c.Code,
+                                CompanyNumberMask = c.CompanyNumberMask,
                                 ZipCodeMask = c.ZipCodeMask,
                                 PhoneNumberMask = c.PhoneNumberMask,
                                 MobileMask = c.MobileMask,

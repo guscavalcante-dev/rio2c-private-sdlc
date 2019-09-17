@@ -636,6 +636,7 @@ CREATE TABLE [dbo].[Countries](
 	[Code] [varchar](3) NULL,
 	[IsManual] [bit] NOT NULL,
 	[DefaultLanguageId] [int] NOT NULL,
+	[CompanyNumberMask] [varchar](50) NULL,
 	[ZipCodeMask] [varchar](50) NULL,
 	[PhoneNumberMask] [varchar](50) NULL,
 	[MobileMask] [varchar](50) NULL,

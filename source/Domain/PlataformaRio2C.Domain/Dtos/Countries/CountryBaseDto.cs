@@ -24,6 +24,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public Guid Uid { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
+        public string CompanyNumberMask { get; set; }
         public string ZipCodeMask { get; set; }
         public string PhoneNumberMask { get; set; }
         public string MobileMask { get; set; }

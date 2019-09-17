@@ -30,6 +30,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         public string Name { get; private set; }
         public string Code { get; private set; }
+        public string CompanyNumberMask { get; set; }
         public string ZipCodeMask { get; private set; }
         public string PhoneNumberMask { get; private set; }
         public string MobileMask { get; private set; }

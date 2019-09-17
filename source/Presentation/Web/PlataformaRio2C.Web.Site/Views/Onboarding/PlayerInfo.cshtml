@@ -57,7 +57,7 @@
                                                     <select name="@Html.NameFor(m => m.CountryUid)" id="@Html.IdFor(m => m.CountryUid)" @Html.GetUnobtrusiveValidationAttributesFor(m => m.CountryUid) class="form-control">
                                                         @foreach(var countryBaseDto in Model.CountriesBaseDtos)
                                                         {
-                                                            <option value="@countryBaseDto.Uid" @(countryBaseDto.Uid == Model.CountryUid ? "selected" : "") data-country-code="@countryBaseDto.Code" data-zipcode-mask="@countryBaseDto.ZipCodeMask" data-phonenumber-mask="@countryBaseDto.PhoneNumberMask" data-mobile-mask="@countryBaseDto.MobileMask">
+                                                            <option value="@countryBaseDto.Uid" @(countryBaseDto.Uid == Model.CountryUid ? "selected" : "") data-country-code="@countryBaseDto.Code" data-companynumber-mask="@countryBaseDto.CompanyNumberMask" data-zipcode-mask="@countryBaseDto.ZipCodeMask" data-phonenumber-mask="@countryBaseDto.PhoneNumberMask" data-mobile-mask="@countryBaseDto.MobileMask">
                                                                 @countryBaseDto.DisplayName
                                                             </option>
                                                         }

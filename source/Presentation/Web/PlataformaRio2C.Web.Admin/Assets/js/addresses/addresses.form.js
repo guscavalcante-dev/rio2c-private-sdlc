@@ -376,6 +376,7 @@ var AddressesForm = function () {
         countryUidElement.not('.change-event-enabled').on('change', function () {
             enableStateSelect2(true);
             enableZipCodeMask();
+            MyRio2cCommon.enableCompanyNumberMask(countryUid, '#Document');
         });
         countryUidElement.addClass('change-event-enabled');
     };
@@ -413,6 +414,7 @@ var AddressesForm = function () {
         enableChangeEvents();
         enableSelect2();
         enableZipCodeMask();
+        MyRio2cCommon.enableCompanyNumberMask(countryUid, '#Document');
     };
 
     return {
