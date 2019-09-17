@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-12-2019
+// Last Modified On : 09-17-2019
 // ***********************************************************************
 // <copyright file="Country.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,6 +30,9 @@ namespace PlataformaRio2C.Domain.Entities
 
         public string Name { get; private set; }
         public string Code { get; private set; }
+        public string ZipCodeMask { get; private set; }
+        public string PhoneNumberMask { get; private set; }
+        public string MobileMask { get; private set; }
         public bool IsManual { get; private set; }
 
         public virtual ICollection<State> States { get; private set; }

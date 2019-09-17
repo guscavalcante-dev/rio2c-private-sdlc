@@ -4,7 +4,7 @@
 // Created          : 08-23-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-14-2019
+// Last Modified On : 09-17-2019
 // ***********************************************************************
 // <copyright file="CountryBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,6 +24,9 @@ namespace PlataformaRio2C.Domain.Dtos
         public Guid Uid { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
+        public string ZipCodeMask { get; set; }
+        public string PhoneNumberMask { get; set; }
+        public string MobileMask { get; set; }
         public int Ordering { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CountryBaseDto"/> class.</summary>

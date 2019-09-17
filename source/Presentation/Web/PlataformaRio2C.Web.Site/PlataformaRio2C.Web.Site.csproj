@@ -380,6 +380,7 @@
     <Content Include="Assets\img\logo_rio2c_white.png" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
     <Content Include="Assets\js\myrio2c.common.js" />
+    <Content Include="Assets\js\myrio2c.inputmask.js" />
     <Content Include="Assets\js\myrio2c.showhidepassword.js" />
     <Content Include="Assets\js\myrio2c.cropper.js" />
     <Content Include="Assets\js\onboarding\onboarding.interests.js" />

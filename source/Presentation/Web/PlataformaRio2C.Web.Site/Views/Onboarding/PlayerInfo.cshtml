@@ -54,7 +54,14 @@
                                             <div class="row">
                                                 <div class="form-group col-md-6" data-id="Country">
                                                     @Html.LabelFor(m => m.CountryUid, new { @class = "control-label" })
-                                                    @Html.DropDownList("CountryUid", new SelectList(Model.CountriesBaseDtos, "Uid", "DisplayName", Model.CountryUid), $"{Labels.Select}...", new { @class = "form-control" })
+                                                    <select name="@Html.NameFor(m => m.CountryUid)" id="@Html.IdFor(m => m.CountryUid)" @Html.GetUnobtrusiveValidationAttributesFor(m => m.CountryUid) class="form-control">
+                                                        @foreach(var countryBaseDto in Model.CountriesBaseDtos)
+                                                        {
+                                                            <option value="@countryBaseDto.Uid" @(countryBaseDto.Uid == Model.CountryUid ? "selected" : "") data-country-code="@countryBaseDto.Code" data-zipcode-mask="@countryBaseDto.ZipCodeMask" data-phonenumber-mask="@countryBaseDto.PhoneNumberMask" data-mobile-mask="@countryBaseDto.MobileMask">
+                                                                @countryBaseDto.DisplayName
+                                                            </option>
+                                                        }
+                                                    </select>
                                                     @Html.ValidationMessageFor(m => m.CountryUid, "", new { @class = "text-danger" })
                                                 </div>
                                                 <div class="form-group col-md-6">
@@ -175,6 +182,7 @@
     @Scripts.Render("~/bundles/js/cropper.js")
     @Scripts.Render("~/bundles/js/select2.js")
     @Scripts.Render("~/bundles/js/ckEditor.js")
+    @Scripts.Render("~/bundles/js/inputmask.js")
     @Scripts.Render("~/bundles/js/addresses.form.js")
     @Scripts.Render("~/bundles/js/onboarding.organizationdata.js")
     @Scripts.Render("~/bundles/js/onboarding.wizard.js")

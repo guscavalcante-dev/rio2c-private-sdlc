@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 09-17-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -213,6 +213,14 @@ namespace PlataformaRio2C.Web.Site
             bundles.Add(new ScriptBundle("~/bundles/js/select2.js").Include(
                 "~/Assets/themes/metronic/vendors/general/select2/dist/js/select2.js",
                 "~/Assets/themes/metronic/vendors/general/select2/dist/js/i18n/pt-BR.js"));
+
+            #endregion
+
+            #region Input Mask
+
+            bundles.Add(new ScriptBundle("~/bundles/js/inputmask.js").Include(
+                "~/Assets/themes/metronic/vendors/general/inputmask/dist/jquery.inputmask.bundle.js",
+                "~/Assets/js/myrio2c.inputmask.js"));
 
             #endregion
 

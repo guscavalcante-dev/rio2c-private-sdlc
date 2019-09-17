@@ -25,6 +25,7 @@ var AddressesForm = function () {
     var initialCityUid = '#Address_InitialCityUid';
     var cityUid = '#Address_CityUid';
     var cityName = '#Address_CityName';
+    var addressZipCode = "#Address_AddressZipCode";
 
     var countryUidElement;
     var initialStateUidElement;
@@ -308,7 +309,7 @@ var AddressesForm = function () {
 
                         for (var i in data.cities) {
                             if (data.cities.hasOwnProperty(i)) {
-                                cityObject= new Object();
+                                cityObject = new Object();
                                 cityObject.id = data.cities[i].Uid;
                                 cityObject.text = data.cities[i].Name;
                                 citiesData.push(cityObject);
@@ -355,10 +356,26 @@ var AddressesForm = function () {
         enableCitySelect2(false);
     };
 
+    // Enable zip code mask -----------------------------------------------------------------------
+    var enableZipCodeMask = function () {
+        if (MyRio2cCommon.isNullOrEmpty(MyRio2cInputMask)) {
+            return;
+        }
+
+        var countryZipCodeMask = countryUidElement.find(":selected").data("zipcode-mask");
+        if (!MyRio2cCommon.isNullOrEmpty(countryZipCodeMask)) {
+            MyRio2cInputMask.enableMask(addressZipCode, '9{5}-9{3}');
+        }
+        else {
+            MyRio2cInputMask.removeMask(addressZipCode);
+        }
+    };
+
     // Enable change events -----------------------------------------------------------------------
-    var enableCountryChangeEvent = function() {
-        countryUidElement.not('.change-event-enabled').on('change', function() {
+    var enableCountryChangeEvent = function () {
+        countryUidElement.not('.change-event-enabled').on('change', function () {
             enableStateSelect2(true);
+            enableZipCodeMask();
         });
         countryUidElement.addClass('change-event-enabled');
     };
@@ -395,6 +412,7 @@ var AddressesForm = function () {
     var enablePlugins = function () {
         enableChangeEvents();
         enableSelect2();
+        enableZipCodeMask();
     };
 
     return {
@@ -402,13 +420,13 @@ var AddressesForm = function () {
             initElements();
             enablePlugins();
         },
-        enableNewCountry: function() {
+        enableNewCountry: function () {
             return enableNewCountry();
         },
         enableNewState: function () {
             return enableNewState();
         },
-        disableNewState: function() {
+        disableNewState: function () {
             return disableNewState();
         },
         enableNewCity: function () {

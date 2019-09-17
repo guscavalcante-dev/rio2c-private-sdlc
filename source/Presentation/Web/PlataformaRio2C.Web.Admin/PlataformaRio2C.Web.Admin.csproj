@@ -404,6 +404,7 @@
     <Content Include="Assets\js\collaborators\collaborators.totalcount.widget.js" />
     <Content Include="Assets\js\collaborators\collaborators.update.js" />
     <Content Include="Assets\js\attendeeorganizations\attendeeorganizations.form.js" />
+    <Content Include="Assets\js\myrio2c.inputmask.js" />
     <Content Include="Assets\js\myrio2c.showhidepassword.js" />
     <Content Include="Assets\js\organizations\organizations.create.js" />
     <Content Include="Assets\js\organizations\organizations.datatable.widget.js" />

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-05-2019
+// Last Modified On : 09-17-2019
 // ***********************************************************************
 // <copyright file="HtmlExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1520,5 +1520,20 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         #endregion
 
         #endregion
+
+        /// <summary>Gets the unobtrusive validation attributes for.</summary>
+        /// <typeparam name="TModel">The type of the model.</typeparam>
+        /// <typeparam name="TProperty">The type of the property.</typeparam>
+        /// <param name="html">The HTML.</param>
+        /// <param name="propertySelector">The property selector.</param>
+        /// <returns></returns>
+        public static IHtmlString GetUnobtrusiveValidationAttributesFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> propertySelector)
+        {
+            string propertyName = html.NameFor(propertySelector).ToString();
+            ModelMetadata metaData = ModelMetadata.FromLambdaExpression(propertySelector, html.ViewData);
+            IDictionary<string, object> attributeCollection = html.GetUnobtrusiveValidationAttributes(propertyName, metaData);
+
+            return html.Raw(String.Join(" ", attributeCollection.Select(kvp => kvp.Key + "=\"" + kvp.Value.ToString() + "\"")));
+        }
     }
 }
