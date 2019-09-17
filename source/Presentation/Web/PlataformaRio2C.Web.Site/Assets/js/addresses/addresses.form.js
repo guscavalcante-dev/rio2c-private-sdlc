@@ -364,7 +364,7 @@ var AddressesForm = function () {
 
         var countryZipCodeMask = countryUidElement.find(":selected").data("zipcode-mask");
         if (!MyRio2cCommon.isNullOrEmpty(countryZipCodeMask)) {
-            MyRio2cInputMask.enableMask(addressZipCode, '9{5}-9{3}');
+            MyRio2cInputMask.enableMask(addressZipCode, countryZipCodeMask);
         }
         else {
             MyRio2cInputMask.removeMask(addressZipCode);
