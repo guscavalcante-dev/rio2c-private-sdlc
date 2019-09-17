@@ -358,7 +358,7 @@ var AddressesForm = function () {
 
     // Enable zip code mask -----------------------------------------------------------------------
     var enableZipCodeMask = function () {
-        if (MyRio2cCommon.isNullOrEmpty(MyRio2cInputMask)) {
+        if (typeof (MyRio2cInputMask) === 'undefined') {
             return;
         }
 
