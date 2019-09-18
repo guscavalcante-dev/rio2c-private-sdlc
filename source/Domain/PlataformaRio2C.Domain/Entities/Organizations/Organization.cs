@@ -630,11 +630,11 @@ namespace PlataformaRio2C.Domain.Entities
                 var organizationActivityDb = this.OrganizationActivities.FirstOrDefault(a => a.Activity.Uid == activity.Uid);
                 if (organizationActivityDb != null)
                 {
-                    organizationActivityDb.Update(userId);
+                    organizationActivityDb.Update(null, userId); //TODO: Change this to pass additional info
                 }
                 else
                 {
-                    this.CreateOrganizationActivity(activity, userId);
+                    this.CreateOrganizationActivity(activity, null, userId); //TODO: Change this to pass additional info
                 }
             }
         }
@@ -651,9 +651,13 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        private void CreateOrganizationActivity(Activity activity, int userId)
+        /// <summary>Creates the organization activity.</summary>
+        /// <param name="activity">The activity.</param>
+        /// <param name="additionalInfo">The additional information.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void CreateOrganizationActivity(Activity activity, string additionalInfo, int userId)
         {
-            this.OrganizationActivities.Add(new OrganizationActivity(this, activity, userId));
+            this.OrganizationActivities.Add(new OrganizationActivity(this, activity, additionalInfo, userId));
         }
 
         #endregion
