@@ -1287,6 +1287,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to texto em português | texto em inglês.
+        /// </summary>
+        public static string TextInPortugueseInEnglish {
+            get {
+                return ResourceManager.GetString("TextInPortugueseInEnglish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O campo &apos;{0}&apos; é obrigatório..
         /// </summary>
         public static string TheFieldIsRequired {

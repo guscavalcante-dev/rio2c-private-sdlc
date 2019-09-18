@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 09-18-2019
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -265,9 +265,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 {
                                     OrganizationActivityId = oa.Id,
                                     OrganizationActivityUid = oa.Uid,
+                                    OrganizationActivityAdditionalInfo = oa.AdditionalInfo,
                                     ActivityId = oa.Activity.Id,
                                     ActivityUid = oa.Activity.Uid,
-                                    ActivityName = oa.Activity.Name
+                                    ActivityName = oa.Activity.Name,
+                                    ActivityHasAdditionalInfo = oa.Activity.HasAdditionalInfo
                                 }),
                                 OrganizationTargetAudiencesDtos = o.OrganizationTargetAudiences.Where(ota => !ota.IsDeleted).Select(oa => new OrganizationTargetAudienceDto
                                 {

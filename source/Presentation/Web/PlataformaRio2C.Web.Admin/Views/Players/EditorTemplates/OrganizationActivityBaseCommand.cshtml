@@ -1,0 +1,12 @@
+﻿@using System.Globalization
+@model PlataformaRio2C.Application.CQRS.Commands.OrganizationActivityBaseCommand
+@Html.HiddenFor(m => m.ActivityUid)
+<label class="kt-checkbox">
+    @Html.CheckBoxFor(m => m.IsChecked, new { @class = "require-one", data_id = "activity-group" }) @Model.ActivityName.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')
+    <span></span>
+</label>
+@if (Model.ActivityHasAdditionalInfo)
+{
+    @Html.TextBoxFor(m => m.AdditionalInfo, new { @class = "form-control" })
+    <span class="form-text text-muted">@Messages.TextInPortugueseInEnglish</span>
+}

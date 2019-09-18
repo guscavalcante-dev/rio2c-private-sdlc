@@ -70,7 +70,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<OrganizationRestrictionSpecificsBaseCommand> RestrictionSpecifics { get; set; }
         public CropperImageBaseCommand CropperImage { get; set; }
 
-        public List<Guid> ActivitiesUids { get; set; }
+        [Display(Name = "Activities", ResourceType = typeof(Labels))]
+        public List<OrganizationActivityBaseCommand> OrganizationActivities { get; set; }
+
         public List<Guid> TargetAudiencesUids { get; set; }
         public List<Guid> InterestsUids { get; set; }
 
@@ -123,9 +125,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateAddress(entity, isAddressRequired);
             this.UpdateDescriptions(entity, languagesDtos, isDescriptionRequired);
             this.UpdateRestrictionSpecifics(entity, languagesDtos, isRestrictionSpecificRequired);
+            this.UpdateActivities(entity, activities);
             this.UpdateCropperImage(entity, isImageRequired);
             this.UpdateDropdownProperties(holdingBaseDtos, countriesBaseDtos, activities, targetAudiences, groupedInterests);
-            this.ActivitiesUids = entity?.OrganizationActivitiesDtos?.Select(oad => oad.ActivityUid)?.ToList();
             this.TargetAudiencesUids = entity?.OrganizationTargetAudiencesDtos?.Select(otad => otad.TargetAudienceUid)?.ToList();
             this.InterestsUids = entity?.OrganizationInterestsDtos?.Select(oid => oid.InterestUid)?.ToList();
         }
@@ -165,6 +167,20 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 var restrictionSpecific = entity?.RestrictionSpecificsDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
                 this.RestrictionSpecifics.Add(restrictionSpecific != null ? new OrganizationRestrictionSpecificsBaseCommand(restrictionSpecific, isRestrictionSpecificRequired) :
                                                                             new OrganizationRestrictionSpecificsBaseCommand(languageDto, isRestrictionSpecificRequired));
+            }
+        }
+
+        /// <summary>Updates the activities.</summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="activities">The activities.</param>
+        private void UpdateActivities(OrganizationDto entity, List<Activity> activities)
+        {
+            this.OrganizationActivities = new List<OrganizationActivityBaseCommand>();
+            foreach (var activity in activities)
+            {
+                var organizationActivity = entity?.OrganizationActivitiesDtos?.FirstOrDefault(oad => oad.ActivityUid == activity.Uid);
+                this.OrganizationActivities.Add(organizationActivity != null ? new OrganizationActivityBaseCommand(organizationActivity) :
+                    new OrganizationActivityBaseCommand(activity));
             }
         }
 

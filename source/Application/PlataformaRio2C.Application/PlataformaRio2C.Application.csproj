@@ -202,6 +202,7 @@
     <Compile Include="CQRS\Commands\Attendees\BaseCommands\AttendeeOrganizationBaseCommand.cs" />
     <Compile Include="CQRS\Commands\BaseCommand.cs" />
     <Compile Include="CQRS\Commands\Collaborators\BaseCommands\CollaboratorMiniBioBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Organizations\BaseCommands\OrganizationActivityBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Onboardings\OnboardPlayerTermsAcceptance.cs" />
     <Compile Include="CQRS\Commands\Onboardings\OnboardCollaboratorData.cs" />
     <Compile Include="CQRS\Commands\Onboardings\OnboardCollaboratorAccessData.cs" />

@@ -83,7 +83,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="descriptions">The descriptions.</param>
         /// <param name="restrictionSpecifics">The restriction specifics.</param>
-        /// <param name="activities">The activities.</param>
+        /// <param name="organizationActivities">The organization activities.</param>
         /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="interests">The interests.</param>
         /// <param name="userId">The user identifier.</param>
@@ -110,7 +110,7 @@ namespace PlataformaRio2C.Domain.Entities
             bool isImageUploaded, 
             List<OrganizationDescription> descriptions,
             List<OrganizationRestrictionSpecific> restrictionSpecifics,
-            List<Activity> activities,
+            List<OrganizationActivity> organizationActivities,
             List<TargetAudience> targetAudiences,
             List<Interest> interests,
             int userId)
@@ -133,7 +133,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeRestrictionSpecifics(restrictionSpecifics, userId);
             this.SynchronizeAttendeeOrganizations(edition, organizationType, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
-            this.SynchronizeOrganizationActivities(activities, userId);
+            this.SynchronizeOrganizationActivities(organizationActivities, userId);
             this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
             this.SynchronizeOrganizationInterests(interests, userId);
         }
@@ -166,7 +166,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
         /// <param name="descriptions">The descriptions.</param>
         /// <param name="restrictionSpecifics">The restriction specifics.</param>
-        /// <param name="activities">The activities.</param>
+        /// <param name="organizationActivities">The organization activities.</param>
         /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="interests">The interests.</param>
         /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
@@ -193,8 +193,8 @@ namespace PlataformaRio2C.Domain.Entities
             bool isImageUploaded,
             bool isImageDeleted,
             List<OrganizationDescription> descriptions,
-            List<OrganizationRestrictionSpecific> restrictionSpecifics, 
-            List<Activity> activities,
+            List<OrganizationRestrictionSpecific> restrictionSpecifics,
+            List<OrganizationActivity> organizationActivities,
             List<TargetAudience> targetAudiences,
             List<Interest> interests,
             bool isAddingToCurrentEdition,
@@ -218,7 +218,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeRestrictionSpecifics(restrictionSpecifics, userId);
             this.SynchronizeAttendeeOrganizations(edition, organizationType, isAddingToCurrentEdition, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
-            this.SynchronizeOrganizationActivities(activities, userId);
+            this.SynchronizeOrganizationActivities(organizationActivities, userId);
             this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
             this.SynchronizeOrganizationInterests(interests, userId);
         }
@@ -276,7 +276,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
         /// <param name="descriptions">The descriptions.</param>
-        /// <param name="activities">The activities.</param>
+        /// <param name="organizationActivities">The organization activities.</param>
         /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="userId">The user identifier.</param>
         public void OnboardData(
@@ -298,7 +298,7 @@ namespace PlataformaRio2C.Domain.Entities
             bool isImageUploaded,
             bool isImageDeleted,
             List<OrganizationDescription> descriptions,
-            List<Activity> activities,
+            List<OrganizationActivity> organizationActivities,
             List<TargetAudience> targetAudiences,
             int userId)
         {
@@ -312,7 +312,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeDescriptions(descriptions, userId);
-            this.SynchronizeOrganizationActivities(activities, userId);
+            this.SynchronizeOrganizationActivities(organizationActivities, userId);
             this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
             this.SynchronizeAttendeeOrganizations(edition, organizationType, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
@@ -431,7 +431,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         private void DeleteDescriptions(List<OrganizationDescription> newDescriptions, int userId)
         {
-            var descriptionsToDelete = this.Descriptions.Where(db => newDescriptions?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false).ToList();
+            var descriptionsToDelete = this.Descriptions.Where(db => newDescriptions?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false && !db.IsDeleted).ToList();
             foreach (var descriptionToDelete in descriptionsToDelete)
             {
                 descriptionToDelete.Delete(userId);
@@ -486,7 +486,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         private void DeleteRestrictionSpecifics(List<OrganizationRestrictionSpecific> newRestrictionSpecifics, int userId)
         {
-            var restrictionSpecificsToDelete = this.RestrictionSpecifics.Where(db => newRestrictionSpecifics?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false).ToList();
+            var restrictionSpecificsToDelete = this.RestrictionSpecifics.Where(db => newRestrictionSpecifics?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false && !db.IsDeleted).ToList();
             foreach (var restrictionSpecificToDelete in restrictionSpecificsToDelete)
             {
                 restrictionSpecificToDelete.Delete(userId);
@@ -608,43 +608,43 @@ namespace PlataformaRio2C.Domain.Entities
         #region Organization Activities
 
         /// <summary>Synchronizes the organization activities.</summary>
-        /// <param name="activities">The activities.</param>
+        /// <param name="organizationActivities">The organization activities.</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeOrganizationActivities(List<Activity> activities, int userId)
+        private void SynchronizeOrganizationActivities(List<OrganizationActivity> organizationActivities, int userId)
         {
             if (this.OrganizationActivities == null)
             {
                 this.OrganizationActivities = new List<OrganizationActivity>();
             }
 
-            this.DeleteOrganizationActivities(activities, userId);
+            this.DeleteOrganizationActivities(organizationActivities, userId);
 
-            if (activities?.Any() != true)
+            if (organizationActivities?.Any() != true)
             {
                 return;
             }
 
             // Create or update activities
-            foreach (var activity in activities)
+            foreach (var organizationActivity in organizationActivities)
             {
-                var organizationActivityDb = this.OrganizationActivities.FirstOrDefault(a => a.Activity.Uid == activity.Uid);
+                var organizationActivityDb = this.OrganizationActivities.FirstOrDefault(a => a.Activity.Uid == organizationActivity.Activity.Uid);
                 if (organizationActivityDb != null)
                 {
-                    organizationActivityDb.Update(null, userId); //TODO: Change this to pass additional info
+                    organizationActivityDb.Update(organizationActivity.AdditionalInfo, userId);
                 }
                 else
                 {
-                    this.CreateOrganizationActivity(activity, null, userId); //TODO: Change this to pass additional info
+                    this.CreateOrganizationActivity(organizationActivity.Activity, organizationActivity.AdditionalInfo, userId);
                 }
             }
         }
 
         /// <summary>Deletes the organization activities.</summary>
-        /// <param name="newActivities">The new activities.</param>
+        /// <param name="newOrganizationActivities">The new organization activities.</param>
         /// <param name="userId">The user identifier.</param>
-        private void DeleteOrganizationActivities(List<Activity> newActivities, int userId)
+        private void DeleteOrganizationActivities(List<OrganizationActivity> newOrganizationActivities, int userId)
         {
-            var activitiesToDelete = this.OrganizationActivities.Where(db => newActivities?.Select(a => a.Uid)?.Contains(db.Activity.Uid) == false).ToList();
+            var activitiesToDelete = this.OrganizationActivities.Where(db => newOrganizationActivities?.Select(oa => oa.Activity.Uid)?.Contains(db.Activity.Uid) == false && !db.IsDeleted).ToList();
             foreach (var activityToDelete in activitiesToDelete)
             {
                 activityToDelete.Delete(userId);
@@ -701,7 +701,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         private void DeleteOrganizationTargetAudiences(List<TargetAudience> newTargetAudiences, int userId)
         {
-            var organizationTargetAudiencesToDelete = this.OrganizationTargetAudiences.Where(db => newTargetAudiences?.Select(a => a.Uid)?.Contains(db.TargetAudience.Uid) == false).ToList();
+            var organizationTargetAudiencesToDelete = this.OrganizationTargetAudiences.Where(db => newTargetAudiences?.Select(a => a.Uid)?.Contains(db.TargetAudience.Uid) == false && !db.IsDeleted).ToList();
             foreach (var organizationTargetAudienceToDelete in organizationTargetAudiencesToDelete)
             {
                 organizationTargetAudienceToDelete.Delete(userId);
@@ -757,7 +757,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         private void DeleteOrganizationInterests(List<Interest> newInterests, int userId)
         {
-            var organizationInterestsToDelete = this.OrganizationInterests.Where(db => newInterests?.Select(a => a.Uid)?.Contains(db.Interest.Uid) == false).ToList();
+            var organizationInterestsToDelete = this.OrganizationInterests.Where(db => newInterests?.Select(a => a.Uid)?.Contains(db.Interest.Uid) == false && !db.IsDeleted).ToList();
             foreach (var organizationInterestToDelete in organizationInterestsToDelete)
             {
                 organizationInterestToDelete.Delete(userId);

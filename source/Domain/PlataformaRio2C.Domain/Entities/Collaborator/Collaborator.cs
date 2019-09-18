@@ -384,7 +384,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         private void DeleteJobTitles(List<CollaboratorJobTitle> newJobTitles, int userId)
         {
-            var jobTitlesToDelete = this.JobTitles.Where(db => newJobTitles?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false).ToList();
+            var jobTitlesToDelete = this.JobTitles.Where(db => newJobTitles?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false && !db.IsDeleted).ToList();
             foreach (var jobTitleToDelete in jobTitlesToDelete)
             {
                 jobTitleToDelete.Delete(userId);
@@ -439,7 +439,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         private void DeleteMiniBios(List<CollaboratorMiniBio> newMiniBios, int userId)
         {
-            var miniBiosToDelete = this.MiniBios.Where(db => newMiniBios?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false).ToList();
+            var miniBiosToDelete = this.MiniBios.Where(db => newMiniBios?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false && !db.IsDeleted).ToList();
             foreach (var miniBioToDelete in miniBiosToDelete)
             {
                 miniBioToDelete.Delete(userId);

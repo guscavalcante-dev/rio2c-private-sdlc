@@ -47,6 +47,20 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateUserId = this.UpdateUserId = userId;
         }
 
+        /// <summary>Initializes a new instance of the <see cref="OrganizationActivity"/> class.</summary>
+        /// <param name="activity">The activity.</param>
+        /// <param name="additionalInfo">The additional information.</param>
+        /// <param name="userId">The user identifier.</param>
+        public OrganizationActivity(Activity activity, string additionalInfo, int userId)
+        {
+            this.Activity = activity;
+            this.ActivityId = activity?.Id ?? 0;
+            this.AdditionalInfo = additionalInfo?.Trim();
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
         /// <summary>Initializes a new instance of the <see cref="OrganizationDescription"/> class.</summary>
         protected OrganizationActivity()
         {

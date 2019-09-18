@@ -637,4 +637,8 @@
     <value>CNPJ inválido.</value>
     <comment>CNPJ inválido.</comment>
   </data>
+  <data name="TextInPortugueseInEnglish" xml:space="preserve">
+    <value>texto em português | texto em inglês</value>
+    <comment>texto em português | texto em inglês</comment>
+  </data>
 </root>

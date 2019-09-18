@@ -7087,6 +7087,7 @@
     <Content Include="Views\Onboarding\PlayerTermsAcceptance.cshtml" />
     <Content Include="Views\Onboarding\Shared\_PlayerTermsAcceptanceText.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\OrganizationRestrictionSpecificsBaseCommand.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\OrganizationActivityBaseCommand.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

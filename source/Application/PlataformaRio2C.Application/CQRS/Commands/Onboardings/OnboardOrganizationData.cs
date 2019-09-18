@@ -61,8 +61,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public AddressBaseCommand Address { get; set; }
 
         [Display(Name = "Activities", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public List<Guid> ActivitiesUids { get; set; }
+        public List<OrganizationActivityBaseCommand> OrganizationActivities { get; set; }
 
         [Display(Name = "TargetAudiences", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -108,10 +107,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Document = entity?.Document;
             this.Website = entity?.Website;
             this.SocialMedia = entity?.SocialMedia;
-            this.ActivitiesUids = entity?.OrganizationActivitiesDtos?.Select(oad => oad.ActivityUid)?.ToList();
             this.TargetAudiencesUids = entity?.OrganizationTargetAudiencesDtos?.Select(otad => otad.TargetAudienceUid)?.ToList();
             this.UpdateAddress(entity, isAddressRequired);
             this.UpdateDescriptions(entity, languagesDtos, isDescriptionRequired);
+            this.UpdateActivities(entity, activities);
             this.UpdateCropperImage(entity, isImageRequired);
             this.UpdateDropdownProperties(holdingBaseDtos, countriesBaseDtos, activities, targetAudiences);
             this.UpdaterBaseDto = entity.UpdaterDto;
@@ -143,6 +142,20 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 var description = entity?.DescriptionsDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
                 this.Descriptions.Add(description != null ? new OrganizationDescriptionBaseCommand(description, isDescriptionRequired) : 
                                                             new OrganizationDescriptionBaseCommand(languageDto, isDescriptionRequired));
+            }
+        }
+
+        /// <summary>Updates the activities.</summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="activities">The activities.</param>
+        private void UpdateActivities(OrganizationDto entity, List<Activity> activities)
+        {
+            this.OrganizationActivities = new List<OrganizationActivityBaseCommand>();
+            foreach (var activity in activities)
+            {
+                var organizationActivity = entity?.OrganizationActivitiesDtos?.FirstOrDefault(oad => oad.ActivityUid == activity.Uid);
+                this.OrganizationActivities.Add(organizationActivity != null ? new OrganizationActivityBaseCommand(organizationActivity) :
+                                                                               new OrganizationActivityBaseCommand(activity));
             }
         }
 
