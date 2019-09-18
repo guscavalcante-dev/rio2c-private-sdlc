@@ -293,7 +293,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return View(cmd);
             }
 
-            this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Messages.PlayerTerms, Labels.UpdatedM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
+            this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Messages.PlayerTerms, Labels.Accepted.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
 
             return RedirectToAction("Index", "Onboarding");
         }
