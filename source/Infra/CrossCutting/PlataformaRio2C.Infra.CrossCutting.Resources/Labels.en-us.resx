@@ -1421,8 +1421,20 @@
     <value>One-to-One Meetings</value>
     <comment>One-to-One Meetings</comment>
   </data>
-  <data name="PlayerTermsAcceptedOn" xml:space="preserve">
-    <value>Player terms accepted on</value>
-    <comment>Player terms accepted on</comment>
+  <data name="FinishDate" xml:space="preserve">
+    <value>Finish date</value>
+    <comment>Data de conclusão</comment>
+  </data>
+  <data name="Onboarding" xml:space="preserve">
+    <value>Onboarding</value>
+    <comment>Onboarding</comment>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Start date</value>
+    <comment>Data de início</comment>
+  </data>
+  <data name="TermsAcceptanceDate" xml:space="preserve">
+    <value>Terms acceptance date</value>
+    <comment>Data de aceite do regulamento</comment>
   </data>
 </root>
