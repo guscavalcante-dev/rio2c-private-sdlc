@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 09-18-2019
 // ***********************************************************************
 // <copyright file="Organization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -130,7 +130,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeDescriptions(descriptions, userId);
-            this.SynchronizeDescriptions(restrictionSpecifics, userId);
+            this.SynchronizeRestrictionSpecifics(restrictionSpecifics, userId);
             this.SynchronizeAttendeeOrganizations(edition, organizationType, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.SynchronizeOrganizationActivities(activities, userId);
@@ -215,7 +215,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeDescriptions(descriptions, userId);
-            this.SynchronizeDescriptions(restrictionSpecifics, userId);
+            this.SynchronizeRestrictionSpecifics(restrictionSpecifics, userId);
             this.SynchronizeAttendeeOrganizations(edition, organizationType, isAddingToCurrentEdition, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.SynchronizeOrganizationActivities(activities, userId);
@@ -271,7 +271,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="cityUid">The city uid.</param>
         /// <param name="cityName">Name of the city.</param>
         /// <param name="address1">The address1.</param>
-        /// <param name="address2">The address2.</param>
         /// <param name="addressZipCode">The address zip code.</param>
         /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
@@ -333,7 +332,7 @@ namespace PlataformaRio2C.Domain.Entities
             List<Interest> interests,
             int userId)
         {
-            this.SynchronizeDescriptions(restrictionSpecifics, userId);
+            this.SynchronizeRestrictionSpecifics(restrictionSpecifics, userId);
             this.SynchronizeOrganizationInterests(interests, userId);
             this.OnboardAttendeeOrganizationInterests(edition, userId);
         }
@@ -450,10 +449,10 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Restriction Specifics
 
-        /// <summary>Synchronizes the descriptions.</summary>
+        /// <summary>Synchronizes the restriction specifics.</summary>
         /// <param name="restrictionSpecifics">The restriction specifics.</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeDescriptions(List<OrganizationRestrictionSpecific> restrictionSpecifics, int userId)
+        private void SynchronizeRestrictionSpecifics(List<OrganizationRestrictionSpecific> restrictionSpecifics, int userId)
         {
             if (this.RestrictionSpecifics == null)
             {

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 09-18-2019
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -182,6 +182,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="cellPhone">The cell phone.</param>
         /// <param name="publicEmail">The public email.</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
         /// <param name="jobTitles">The job titles.</param>
         /// <param name="miniBios">The mini bios.</param>
         /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
@@ -197,6 +198,7 @@ namespace PlataformaRio2C.Domain.Entities
             string cellPhone,
             string publicEmail,
             bool isImageUploaded,
+            bool isImageDeleted,
             List<CollaboratorJobTitle> jobTitles,
             List<CollaboratorMiniBio> miniBios,
             bool isAddingToCurrentEdition,
@@ -209,7 +211,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.PhoneNumber = phoneNumber?.Trim();
             this.CellPhone = cellPhone?.Trim();
             this.PublicEmail = publicEmail?.Trim();
-            this.UpdateImageUploadDate(isImageUploaded, false);
+            this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;

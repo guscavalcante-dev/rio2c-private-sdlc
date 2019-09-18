@@ -4,7 +4,7 @@
 // Created          : 08-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 09-18-2019
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -102,6 +102,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.CellPhone,
                 cmd.PublicEmail,
                 cmd.CropperImage?.ImageFile != null,
+                cmd.CropperImage?.IsImageDeleted == true,
                 cmd.JobTitles?.Select(d => new CollaboratorJobTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.MiniBios?.Select(d => new CollaboratorMiniBio(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 true, // TODO: Get isAddingToCurrentEdition from command for UpdateCollaborator
