@@ -4,15 +4,15 @@
 // Created          : 09-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 09-18-2019
 // ***********************************************************************
-// <copyright file="onboarding.collaboratordata.js" company="Softo">
+// <copyright file="onboarding.organizationdata.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var OnboardingCollaboratorData = function () {
+var OnboardingOrganizationData = function () {
 
     //var modalId = '#UpdatePlayerExecutiveModal';
     var formId = '#OrganizationDataForm';

@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-17-2019
+// Last Modified On : 09-18-2019
 // ***********************************************************************
 // <copyright file="OrganizationBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,6 +19,7 @@ using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -48,6 +49,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = "CompanyDocument", ResourceType = typeof(Labels))]
         [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        [ValidCompanyNumber]
         public string Document { get; set; }
 
         [Display(Name = "Website", ResourceType = typeof(Labels))]

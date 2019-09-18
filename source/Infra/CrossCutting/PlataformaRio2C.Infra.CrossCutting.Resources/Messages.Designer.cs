@@ -573,6 +573,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CNPJ inválido..
+        /// </summary>
+        public static string InvalidCompanyNumber {
+            get {
+                return ResourceManager.GetString("InvalidCompanyNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A logo deve ter a extensão .png ou .jpeg.
         /// </summary>
         public static string InvalidExtensionPng {

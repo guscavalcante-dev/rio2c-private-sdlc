@@ -633,4 +633,8 @@
     <value>Selecione pelo menos uma opção do grupo.</value>
     <comment>Selecione pelo menos uma opção do grupo.</comment>
   </data>
+  <data name="InvalidCompanyNumber" xml:space="preserve">
+    <value>CNPJ inválido.</value>
+    <comment>CNPJ inválido.</comment>
+  </data>
 </root>

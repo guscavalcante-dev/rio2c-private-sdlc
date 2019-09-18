@@ -628,4 +628,8 @@
     <value>Please select at least one option from the group.</value>
     <comment>Selecione pelo menos uma opção do grupo.</comment>
   </data>
+  <data name="InvalidCompanyNumber" xml:space="preserve">
+    <value>Invalid company number.</value>
+    <comment>CNPJ inválido.</comment>
+  </data>
 </root>

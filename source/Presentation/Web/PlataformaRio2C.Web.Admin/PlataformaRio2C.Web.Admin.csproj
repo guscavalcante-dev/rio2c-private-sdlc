@@ -374,6 +374,7 @@
     <Content Include="Assets\js\addresses\addresses.form.js" />
     <Content Include="Assets\js\holdings\holdings.delete.js" />
     <Content Include="Assets\js\dynamic.list.js" />
+    <Content Include="Assets\js\myrio2c.companynumber.js" />
     <Content Include="Assets\js\myrio2c.cropper.js" />
     <Content Include="Assets\components\cropper\demo\css\main.css" />
     <Content Include="Assets\components\cropper\demo\index.html" />

@@ -4,9 +4,9 @@
 // Created          : 09-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-16-2019
+// Last Modified On : 09-18-2019
 // ***********************************************************************
-// <copyright file="RequiredImageOptional.cs" company="Softo">
+// <copyright file="RequiredImageOptionalAttribute.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -19,12 +19,12 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Infra.CrossCutting.Tools.Attributes
 {
-    /// <summary>RequiredImageOptional</summary>
+    /// <summary>RequiredImageOptionalAttribute</summary>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
-    public class RequiredImageOptional : ValidationAttribute, IClientValidatable
+    public class RequiredImageOptionalAttribute : ValidationAttribute, IClientValidatable
     {
-        /// <summary>Initializes a new instance of the <see cref="RequiredImageOptional"/> class.</summary>
-        public RequiredImageOptional()
+        /// <summary>Initializes a new instance of the <see cref="RequiredImageOptionalAttribute"/> class.</summary>
+        public RequiredImageOptionalAttribute()
         {
         }
 

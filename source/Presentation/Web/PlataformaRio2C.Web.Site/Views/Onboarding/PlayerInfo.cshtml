@@ -55,7 +55,8 @@
                                                 <div class="form-group col-md-6" data-id="Country">
                                                     @Html.LabelFor(m => m.CountryUid, new { @class = "control-label" })
                                                     <select name="@Html.NameFor(m => m.CountryUid)" id="@Html.IdFor(m => m.CountryUid)" @Html.GetUnobtrusiveValidationAttributesFor(m => m.CountryUid) class="form-control">
-                                                        @foreach(var countryBaseDto in Model.CountriesBaseDtos)
+                                                        <option value="" data-country-code="" data-companynumber-mask="" data-zipcode-mask="" data-phonenumber-mask="" data-mobile-mask="">@(Labels.Select)...</option>
+                                                        @foreach (var countryBaseDto in Model.CountriesBaseDtos)
                                                         {
                                                             <option value="@countryBaseDto.Uid" @(countryBaseDto.Uid == Model.CountryUid ? "selected" : "") data-country-code="@countryBaseDto.Code" data-companynumber-mask="@countryBaseDto.CompanyNumberMask" data-zipcode-mask="@countryBaseDto.ZipCodeMask" data-phonenumber-mask="@countryBaseDto.PhoneNumberMask" data-mobile-mask="@countryBaseDto.MobileMask">
                                                                 @countryBaseDto.DisplayName
@@ -188,7 +189,7 @@
     @Scripts.Render("~/bundles/js/onboarding.wizard.js")
     <script>
         jQuery(document).ready(function () {
-            OnboardingCollaboratorData.init();
+            OnboardingOrganizationData.init();
         });
     </script>
 }

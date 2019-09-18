@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-17-2019
+// Last Modified On : 09-18-2019
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -217,6 +217,29 @@ var MyRio2cCommon = function () {
             options.rules["requiredimageoptional"] = value;
             if (options.message) {
                 options.messages["requiredimageoptional"] = options.message;
+            }
+        });
+
+        // Check if is a valid company number
+        jQuery.validator.addMethod("validcompanynumber", function (value, element, params) {
+            if (typeof (MyRio2cCompanyDocument) === 'undefined') {
+                return true;
+            }
+
+            return MyRio2cCompanyDocument.validate($('#CountryUid').find(":selected").data("country-code"), $('#Document').val());
+        });
+
+        $.validator.unobtrusive.adapters.add("validcompanynumber", [], function (options) {
+            var value = {
+                //dependentproperty1withvalue: options.params.dependentproperty1withvalue,
+                //dependentproperty1value: options.params.dependentproperty1value,
+                //dependentproperty2withvalue: options.params.dependentproperty2withvalue,
+                //dependentproperty2value: options.params.dependentproperty2value
+            };
+
+            options.rules["validcompanynumber"] = value;
+            if (options.message) {
+                options.messages["validcompanynumber"] = options.message;
             }
         });
     };
