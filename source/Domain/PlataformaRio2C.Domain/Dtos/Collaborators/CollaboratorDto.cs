@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-28-2019
+// Last Modified On : 09-18-2019
 // ***********************************************************************
 // <copyright file="OrganizationDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,6 +24,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public UserBaseDto CreatorDto { get; set; }
         public UserBaseDto UpdaterDto { get; set; }
         public AddressBaseDto AddressBaseDto { get; set; }
+
+        public AttendeeCollaboratorBaseDto EditionAttendeeCollaboratorBaseDto { get; set; }
 
         public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }
         public IEnumerable<CollaboratorMiniBioBaseDto> MiniBiosDtos { get; set; }

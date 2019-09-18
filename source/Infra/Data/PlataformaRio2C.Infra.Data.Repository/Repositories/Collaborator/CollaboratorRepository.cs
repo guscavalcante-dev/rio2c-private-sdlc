@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 09-18-2019
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -254,6 +254,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 //    Uid = c.Holding.Uid,
                                 //    Name = c.Holding.Name
                                 //},
+                                EditionAttendeeCollaboratorBaseDto = c.AttendeeCollaborators.Where(ac => !ac.IsDeleted && ac.EditionId == editionId).Select(ac => new AttendeeCollaboratorBaseDto
+                                {
+                                    Id = ac.Id,
+                                    Uid = ac.Uid,
+                                    OnboardingStartDate = ac.OnboardingStartDate,
+                                    OnboardingFinishDate = ac.OnboardingFinishDate,
+                                    OnboardingUserDate = ac.OnboardingUserDate,
+                                    OnboardingCollaboratorDate = ac.OnboardingCollaboratorDate,
+                                    PlayerTermsAcceptanceDate = ac.PlayerTermsAcceptanceDate,
+                                    ProducerTermsAcceptanceDate = ac.ProducerTermsAcceptanceDate
+                                }).FirstOrDefault(),
                                 UpdaterDto = new UserBaseDto
                                 {
                                     Uid = c.Updater.Uid,

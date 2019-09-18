@@ -1123,6 +1123,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data de conclusão.
+        /// </summary>
+        public static string FinishDate {
+            get {
+                return ResourceManager.GetString("FinishDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Primeiro nome.
         /// </summary>
         public static string FirstName {
@@ -1893,6 +1902,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Ok {
             get {
                 return ResourceManager.GetString("Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Onboarding.
+        /// </summary>
+        public static string Onboarding {
+            get {
+                return ResourceManager.GetString("Onboarding", resourceCulture);
             }
         }
         
@@ -2833,6 +2851,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data de início.
+        /// </summary>
+        public static string StartDate {
+            get {
+                return ResourceManager.GetString("StartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hora de início.
         /// </summary>
         public static string StartTime {
@@ -2982,6 +3009,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string TeaserLinks {
             get {
                 return ResourceManager.GetString("TeaserLinks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de aceite do regulamento.
+        /// </summary>
+        public static string TermsAcceptanceDate {
+            get {
+                return ResourceManager.GetString("TermsAcceptanceDate", resourceCulture);
             }
         }
         

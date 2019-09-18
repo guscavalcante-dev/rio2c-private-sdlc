@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dtos\Addresses\AddressBaseDto.cs" />
+    <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorBaseDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationBaseDto.cs" />
     <Compile Include="Dtos\Cities\CityBaseDto.cs" />
     <Compile Include="Dtos\Collaborators\CollaboratorBaseDto.cs" />
