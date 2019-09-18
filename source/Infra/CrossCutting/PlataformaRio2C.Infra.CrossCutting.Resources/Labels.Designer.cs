@@ -1897,6 +1897,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reuniões Individuais.
+        /// </summary>
+        public static string OneToOneMeetings {
+            get {
+                return ResourceManager.GetString("OneToOneMeetings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Em avaliação.
         /// </summary>
         public static string OnEvaluation {
@@ -2136,6 +2145,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string PlayersWithSimilarInterests {
             get {
                 return ResourceManager.GetString("PlayersWithSimilarInterests", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aceite dos Termos de Player em.
+        /// </summary>
+        public static string PlayerTermsAcceptedOn {
+            get {
+                return ResourceManager.GetString("PlayerTermsAcceptedOn", resourceCulture);
             }
         }
         

@@ -1417,4 +1417,12 @@
     <value>Ticket</value>
     <comment>Ingresso</comment>
   </data>
+  <data name="OneToOneMeetings" xml:space="preserve">
+    <value>One-to-One Meetings</value>
+    <comment>One-to-One Meetings</comment>
+  </data>
+  <data name="PlayerTermsAcceptedOn" xml:space="preserve">
+    <value>Player terms accepted on</value>
+    <comment>Player terms accepted on</comment>
+  </data>
 </root>

@@ -1429,4 +1429,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Dados do Player</value>
     <comment>Dados do Player</comment>
   </data>
+  <data name="OneToOneMeetings" xml:space="preserve">
+    <value>Reuniões Individuais</value>
+    <comment>Reuniões Individuais</comment>
+  </data>
+  <data name="PlayerTermsAcceptedOn" xml:space="preserve">
+    <value>Aceite dos Termos de Player em</value>
+    <comment>Aceite dos Termos de Player em</comment>
+  </data>
 </root>
