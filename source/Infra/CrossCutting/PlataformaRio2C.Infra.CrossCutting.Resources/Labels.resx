@@ -1429,20 +1429,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Dados do Player</value>
     <comment>Dados do Player</comment>
   </data>
-  <data name="FinishDate" xml:space="preserve">
-    <value>Data de conclusão</value>
-    <comment>Data de conclusão</comment>
+  <data name="OneToOneMeetings" xml:space="preserve">
+    <value>Reuniões Individuais</value>
+    <comment>Reuniões Individuais</comment>
   </data>
-  <data name="Onboarding" xml:space="preserve">
-    <value>Onboarding</value>
-    <comment>Onboarding</comment>
-  </data>
-  <data name="StartDate" xml:space="preserve">
-    <value>Data de início</value>
-    <comment>Data de início</comment>
-  </data>
-  <data name="TermsAcceptanceDate" xml:space="preserve">
-    <value>Data de aceite do regulamento</value>
-    <comment>Data de aceite do regulamento</comment>
+  <data name="PlayerTermsAcceptedOn" xml:space="preserve">
+    <value>Aceite dos Termos de Player em</value>
+    <comment>Aceite dos Termos de Player em</comment>
   </data>
 </root>

@@ -66,7 +66,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             // Redirect if onboarding is not pending
             if (this.UserAccessControlDto?.IsOnboardingPending() != true)
             {
-                return RedirectToAction("Index", "Home");
+                //return RedirectToAction("Index", "Home");
             }
 
             // Redirect to access data if not finished
