@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-10-2019
+// Last Modified On : 09-19-2019
 // ***********************************************************************
 // <copyright file="HomeController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -114,7 +114,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 returnUrl = Request.UrlReferrer.PathAndQuery;
             }
 
-            returnUrl = returnUrl?.Replace(oldCulture.ToLowerInvariant(), culture?.ToLowerInvariant());
+            returnUrl = returnUrl?
+                            .Replace(oldCulture.ToLowerInvariant(), culture?.ToLowerInvariant())
+                            .Replace(oldCulture, culture?.ToLowerInvariant());
 
             if (Url.IsLocalUrl(returnUrl))
             {
