@@ -4,7 +4,7 @@
 // Created          : 09-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-18-2019
+// Last Modified On : 09-19-2019
 // ***********************************************************************
 // <copyright file="onboarding.organizationdata.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -32,6 +32,11 @@ var OnboardingOrganizationData = function () {
         AddressesForm.init();
         MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c', maxCharCount: 710 });
         MyRio2cCommon.enableAtLeastOnCheckboxByNameValidation(formId);
+
+        // Enable activity additional info textbox
+        if (typeof (MyRio2cCommonActivity) !== 'undefined') {
+            MyRio2cCommonActivity.init();
+        }
     };
 
     return {

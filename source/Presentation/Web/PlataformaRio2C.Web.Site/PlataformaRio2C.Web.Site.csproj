@@ -384,6 +384,7 @@
     <Content Include="Assets\js\myrio2c.inputmask.js" />
     <Content Include="Assets\js\myrio2c.showhidepassword.js" />
     <Content Include="Assets\js\myrio2c.cropper.js" />
+    <Content Include="Assets\js\myrio2c.activity.js" />
     <Content Include="Assets\js\onboarding\onboarding.interests.js" />
     <Content Include="Assets\js\onboarding\onboarding.organizationdata.js" />
     <Content Include="Assets\js\onboarding\onboarding.collaboratordata.js" />

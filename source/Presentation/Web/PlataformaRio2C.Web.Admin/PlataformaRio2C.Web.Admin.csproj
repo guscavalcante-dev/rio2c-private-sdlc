@@ -413,6 +413,7 @@
     <Content Include="Assets\js\organizations\organizations.editioncount.widget.js" />
     <Content Include="Assets\js\organizations\organizations.totalcount.widget.js" />
     <Content Include="Assets\js\organizations\organizations.update.js" />
+    <Content Include="Assets\js\myrio2c.activity.js" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.css" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.min.css" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.rtl.css" />
