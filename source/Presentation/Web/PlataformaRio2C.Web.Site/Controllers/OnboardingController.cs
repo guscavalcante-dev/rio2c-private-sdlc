@@ -4,7 +4,7 @@
 // Created          : 08-29-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-17-2019
+// Last Modified On : 09-19-2019
 // ***********************************************************************
 // <copyright file="OnboardingController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -502,7 +502,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 cmd.UpdateDropdownProperties(
                     await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                    await this.activityRepo.FindAllAsync(),
                     await this.targetAudienceRepo.FindAllAsync());
 
                 return View(cmd);
@@ -515,7 +514,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 cmd.UpdateDropdownProperties(
                     await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                    await this.activityRepo.FindAllAsync(),
                     await this.targetAudienceRepo.FindAllAsync());
 
                 return View(cmd);

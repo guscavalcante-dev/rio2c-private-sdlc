@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-18-2019
+// Last Modified On : 09-19-2019
 // ***********************************************************************
 // <copyright file="OnboardOrganizationData.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -64,7 +64,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<OrganizationActivityBaseCommand> OrganizationActivities { get; set; }
 
         [Display(Name = "TargetAudiences", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneOption")]
         public List<Guid> TargetAudiencesUids { get; set; }
 
         public List<OrganizationDescriptionBaseCommand> Descriptions { get; set; }
@@ -72,7 +72,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public List<HoldingBaseDto> HoldingBaseDtos { get; private set; }
         public OrganizationType OrganizationType { get; private set; }
-        public List<Activity> Activities { get; private set; }
+        //public List<Activity> Activities { get; private set; }
         public List<TargetAudience> TargetAudiences { get; private set; }
         public List<CountryBaseDto> CountriesBaseDtos { get; private set; }
 
@@ -112,7 +112,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateDescriptions(entity, languagesDtos, isDescriptionRequired);
             this.UpdateActivities(entity, activities);
             this.UpdateCropperImage(entity, isImageRequired);
-            this.UpdateDropdownProperties(holdingBaseDtos, countriesBaseDtos, activities, targetAudiences);
+            this.UpdateDropdownProperties(holdingBaseDtos, countriesBaseDtos, targetAudiences);
             this.UpdaterBaseDto = entity.UpdaterDto;
             this.UpdateDate = entity.UpdateDate;
         }
@@ -170,16 +170,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Updates the dropdown properties.</summary>
         /// <param name="holdingBaseDtos">The holding base dtos.</param>
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
-        /// <param name="activities">The activities.</param>
         /// <param name="targetAudiences">The target audiences.</param>
         public void UpdateDropdownProperties(
             List<HoldingBaseDto> holdingBaseDtos, 
             List<CountryBaseDto> countriesBaseDtos,
-            List<Activity> activities,
             List<TargetAudience> targetAudiences)
         {
             this.HoldingBaseDtos = holdingBaseDtos;
-            this.Activities = activities;
             this.TargetAudiences = targetAudiences;
             this.CountriesBaseDtos = countriesBaseDtos?
                                             .OrderBy(c => c.Ordering)?

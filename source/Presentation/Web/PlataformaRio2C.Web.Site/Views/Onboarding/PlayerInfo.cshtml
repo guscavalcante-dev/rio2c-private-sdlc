@@ -104,7 +104,10 @@
                                         <div class="form-group col-md-6">
                                             <div class="kt-section">
                                                 <h3 class="kt-heading kt-heading--md">@Labels.Activity</h3>
-                                                @Html.ValidationMessage("OrganizationActivities", new { @class = "text-danger" })
+                                                @Html.ValidationMessage("OrganizationActivities", new { @class = "text-danger OrganizationActivities" })
+                                                <div class="error">
+                                                    <span></span>
+                                                </div>
                                                 <div class="kt-section__content mt-3">
                                                     <div class="kt-checkbox-list">
                                                         @Html.EditorFor(m => m.OrganizationActivities)

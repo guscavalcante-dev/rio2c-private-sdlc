@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-18-2019
+// Last Modified On : 09-19-2019
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -60,6 +60,16 @@ var MyRio2cCommon = function () {
     var fixSelect2Modal = function () {
         $.fn.modal.Constructor.prototype.enforceFocus = function () { };
     };
+
+    var enablePrototypes = function () {
+        Array.prototype.distinct = function () {
+            var unique = (value, index, self) => {
+                return self.indexOf(value) === index;
+            };
+
+            return this.filter(unique);
+        };
+    }
 
     var fixCkEditorValidation = function () {
         if (typeof (CKEDITOR) === "undefined") {
@@ -245,36 +255,51 @@ var MyRio2cCommon = function () {
     };
 
     var enableAtLeastOnCheckboxByNameValidation = function (formIdOrClass) {
-        $.validator.addMethod('require-one', function (value, element) {
-            var dataId = $(element).attr("data-id");
-            if (!MyRio2cCommon.isNullOrEmpty(dataId)) {
-                return $('[data-id="' + $(element).attr("data-id") + '"].require-one:checked').length > 0;
-            }
-            else {
-                return $('.require-one:checked').length > 0;
-            }
-            //return $('[name="' + element.name + '"].require-one:checked').length > 0;
-            //return $('.require-one:checked').length > 0;
-        }, labels.selectAtLeastOneOption);
+        $.validator.addMethod('require-one',
+            function (value, element) {
 
-        var checkboxes = $('.require-one');
-        var checkbox_names = $.map(checkboxes, function (e, i) {
-            return $(e).attr("name");
-        }).join(" ");
-
-        $(formIdOrClass).validate({
-            groups: {
-                checks: checkbox_names
-            },
-            errorPlacement: function (error, element) {
-                if (element.attr("type") == "checkbox") {
-                    error.insertAfter(checkboxes.last());
-                } 
-                else {
-                    error.insertAfter(element);
+                // Get the name without array[]
+                var name = element.name;
+                if (name.includes('[')) {
+                    var nameSplit = name.split('[');
+                    name = nameSplit[0];
                 }
-            }
-        });
+
+                var dataId = $(element).attr("data-id");
+                if (!MyRio2cCommon.isNullOrEmpty(dataId)) {
+
+                    if ($('[data-id="' + $(element).attr("data-id") + '"].require-one:checked').length > 0) {
+                        $('[data-valmsg-for="' + name + '"]').html('');
+                        $('[data-valmsg-for="' + name + '"]').addClass('field-validation-valid');
+                        $('[data-valmsg-for="' + name + '"]').removeClass('field-validation-error');
+
+                        return true;
+                    }
+                    else {
+                        $('[data-valmsg-for="' + name + '"]').html('<span for="' + name + '" generated="true" class="">' + labels.selectAtLeastOneOption + '</span>');
+                        $('[data-valmsg-for="' + name + '"]').removeClass('field-validation-valid');
+                        $('[data-valmsg-for="' + name + '"]').addClass('field-validation-error');
+
+                        return false;
+                    }
+                }
+                else {
+                    if ($('.require-one:checked').length > 0) {
+                        $('[data-valmsg-for="' + name + '"]').html('');
+                        $('[data-valmsg-for="' + name + '"]').addClass('field-validation-valid');
+                        $('[data-valmsg-for="' + name + '"]').removeClass('field-validation-error');
+
+                        return true;
+                    }
+                    else {
+                        $('[data-valmsg-for="' + name + '"]').html('<span for="' + name + '" generated="true" class="">' + labels.selectAtLeastOneOption + '</span>');
+                        $('[data-valmsg-for="' + name + '"]').removeClass('field-validation-valid');
+                        $('[data-valmsg-for="' + name + '"]').addClass('field-validation-error');
+
+                        return false;
+                    }
+                }
+            }, labels.selectAtLeastOneOption);
     };
 
     // General ------------------------------------------------------------------------------------
@@ -859,6 +884,7 @@ var MyRio2cCommon = function () {
                 disableMetronicScripts();
                 enableAjaxForbiddenCatch();
                 fixSelect2Modal();
+                enablePrototypes();
                 fixCkEditorValidation();
                 initScroll();
                 extendGlobalValidations();

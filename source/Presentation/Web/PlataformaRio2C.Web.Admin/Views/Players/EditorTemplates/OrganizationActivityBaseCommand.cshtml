@@ -2,6 +2,8 @@
 @model PlataformaRio2C.Application.CQRS.Commands.OrganizationActivityBaseCommand
 <div data-id="@Model.ActivityUid">
     @Html.HiddenFor(m => m.ActivityUid)
+    @Html.HiddenFor(m => m.ActivityName)
+    @Html.HiddenFor(m => m.ActivityHasAdditionalInfo)
     <label class="kt-checkbox" style="margin-bottom: 5px;">
         @if (!Model.ActivityHasAdditionalInfo)
         {
