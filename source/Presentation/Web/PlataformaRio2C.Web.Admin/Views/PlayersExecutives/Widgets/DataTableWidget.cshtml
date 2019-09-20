@@ -67,28 +67,25 @@
     <div class="kt-portlet__body">
         <!--begin: SearchForm-->
         <div class="form-group row">
-            <div class="col-lg-6">
+            <div class="col-lg-5">
                 <label>@Labels.Search:</label>
                 @Html.TextBoxFor(m => m.Search, new { type = "search", @class = "form-control", autocomplete = "off", placeholder = $"{Labels.ExecutiveName.ToLowerInvariant()}, {Labels.Email.ToLowerInvariant()}, {Labels.PlayerName.ToLowerInvariant()} {Labels.Or.ToLowerInvariant()} {Labels.HoldingName.ToLowerInvariant()}" })
                 @*<span class="form-text text-muted">Please enter your full name</span>*@
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-7">
                 <div class="form-group">
                     <label>&nbsp;</label>
-                    <div class="kt-checkbox-list">
-                        <label class="kt-checkbox mt-2">
+                    <div class="kt-checkbox-inline">
+                        <label class="kt-checkbox">
                             @Html.CheckBoxFor(m => m.ShowAllEditions, new { @class = "enable-datatable-reload" }) @Labels.ShowAllEditions
                             <span></span>
                         </label>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="form-group">
-                    <label>&nbsp;</label>
-                    <div class="kt-checkbox-list">
-                        <label class="kt-checkbox mt-2">
-                            @Html.CheckBoxFor(m => m.ShowAllCollaborators, new { @class = "enable-datatable-reload" }) @Labels.ShowAllExecutives
+                        <label class="kt-checkbox">
+                            @Html.CheckBoxFor(m => m.ShowAllExecutives, new { @class = "enable-datatable-reload" }) @Labels.ShowAllExecutives
+                            <span></span>
+                        </label>
+                        <label class="kt-checkbox">
+                            @Html.CheckBoxFor(m => m.ShowAllParticipants, new { @class = "enable-datatable-reload" }) @Labels.ShowAllParticipants
                             <span></span>
                         </label>
                     </div>

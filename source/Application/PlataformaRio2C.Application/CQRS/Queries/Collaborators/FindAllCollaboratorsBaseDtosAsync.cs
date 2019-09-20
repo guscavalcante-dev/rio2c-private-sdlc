@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 09-20-2019
 // ***********************************************************************
 // <copyright file="FindAllCollaboratorsBaseDtosAsync.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,7 +28,8 @@ namespace PlataformaRio2C.Application.CQRS.Queries
         public List<Tuple<string, string>> SortColumns { get; private set; }
         public Guid OrganizationTypeId { get; private set; }
         public bool ShowAllEditions { get; private set; }
-        public bool ShowAllCollaborators { get; private set; }
+        public bool ShowAllExecutives { get; private set; }
+        public bool ShowAllParticipants { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="FindAllCollaboratorsBaseDtosAsync"/> class.</summary>
         /// <param name="page">The page.</param>
@@ -37,7 +38,8 @@ namespace PlataformaRio2C.Application.CQRS.Queries
         /// <param name="sortColumns">The sort columns.</param>
         /// <param name="organizationTypeId">The organization type identifier.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
-        /// <param name="showAllCollaborators">if set to <c>true</c> [show all collaborators].</param>
+        /// <param name="showAllExecutives">if set to <c>true</c> [show all executives].</param>
+        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
         /// <param name="userId">The user identifier.</param>
         /// <param name="userUid">The user uid.</param>
         /// <param name="editionId">The edition identifier.</param>
@@ -50,7 +52,8 @@ namespace PlataformaRio2C.Application.CQRS.Queries
             List<Tuple<string, string>> sortColumns,
             Guid organizationTypeId,
             bool showAllEditions,
-            bool showAllCollaborators,
+            bool showAllExecutives,
+            bool showAllParticipants,
             int userId, 
             Guid userUid, 
             int? editionId, 
@@ -64,7 +67,8 @@ namespace PlataformaRio2C.Application.CQRS.Queries
             this.SortColumns = sortColumns;
             this.OrganizationTypeId = organizationTypeId;
             this.ShowAllEditions = showAllEditions;
-            this.ShowAllCollaborators = showAllCollaborators;
+            this.ShowAllExecutives = showAllExecutives;
+            this.ShowAllParticipants = showAllParticipants;
         }
     }
 }

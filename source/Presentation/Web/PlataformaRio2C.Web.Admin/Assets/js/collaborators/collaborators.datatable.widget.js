@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-29-2019
+// Last Modified On : 09-20-2019
 // ***********************************************************************
 // <copyright file="collaborators.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -63,7 +63,8 @@ var CollaboratorsDataTableWidget = function () {
                 url: MyRio2cCommon.getUrlWithCultureAndEdition('/PlayersExecutives/Search'),
                 data: function (d) {
                     d.showAllEditions = $('#ShowAllEditions').prop('checked');
-                    d.showAllCollaborators = 'False'//$('#ShowAllExecutives').prop('checked');
+                    d.showAllExecutives = $('#ShowAllExecutives').prop('checked');
+                    d.showAllParticipants = $('#ShowAllParticipants').prop('checked');
                 },
                 dataFilter: function (data) {
                     var jsonReturned = jQuery.parseJSON(data);

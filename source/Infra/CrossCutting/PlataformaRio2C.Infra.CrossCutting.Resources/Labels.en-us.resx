@@ -1437,4 +1437,8 @@
     <value>Terms acceptance date</value>
     <comment>Data de aceite do regulamento</comment>
   </data>
+  <data name="ShowAllParticipants" xml:space="preserve">
+    <value>Show all participants</value>
+    <comment>Exibir todos os participantes</comment>
+  </data>
 </root>

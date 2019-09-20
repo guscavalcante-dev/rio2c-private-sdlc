@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-18-2019
+// Last Modified On : 09-20-2019
 // ***********************************************************************
 // <copyright file="PlayersExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -71,10 +71,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <summary>Searches the specified request.</summary>
         /// <param name="request">The request.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
-        /// <param name="showAllCollaborators">if set to <c>true</c> [show all collaborators].</param>
+        /// <param name="showAllExecutives">if set to <c>true</c> [show all executives].</param>
+        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllCollaborators)
+        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllExecutives, bool showAllParticipants)
         {
             var holdings = await this.CommandBus.Send(new FindAllCollaboratorsBaseDtosAsync(
                 request.Start / request.Length,
@@ -83,7 +84,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 request.GetSortColumns(),
                 OrganizationType.Player.Uid,
                 showAllEditions,
-                showAllCollaborators,
+                showAllExecutives,
+                showAllParticipants,
                 this.UserId,
                 this.UserUid,
                 this.EditionId,

@@ -2797,6 +2797,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exibir todos os participantes.
+        /// </summary>
+        public static string ShowAllParticipants {
+            get {
+                return ResourceManager.GetString("ShowAllParticipants", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Entrar.
         /// </summary>
         public static string SignIn {
