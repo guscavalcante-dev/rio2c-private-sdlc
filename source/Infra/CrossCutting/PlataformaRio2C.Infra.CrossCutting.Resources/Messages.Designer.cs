@@ -196,7 +196,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Complete as informações do player {0}.
+        ///   Looks up a localized string similar to Complete os dados do player {0}.
         /// </summary>
         public static string CompletePlayerInfo {
             get {
