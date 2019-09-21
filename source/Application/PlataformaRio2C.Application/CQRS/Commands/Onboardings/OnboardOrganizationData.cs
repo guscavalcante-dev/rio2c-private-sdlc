@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-19-2019
+// Last Modified On : 09-21-2019
 // ***********************************************************************
 // <copyright file="OnboardOrganizationData.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -49,12 +49,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string Document { get; set; }
 
         [Display(Name = "Website", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Website { get; set; }
 
         [Display(Name = "SocialMedia", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(256, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string SocialMedia { get; set; }
 
