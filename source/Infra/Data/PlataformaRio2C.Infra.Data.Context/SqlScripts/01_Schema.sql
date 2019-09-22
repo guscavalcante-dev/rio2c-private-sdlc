@@ -641,6 +641,7 @@ CREATE TABLE [dbo].[Countries](
 	[ZipCodeMask] [varchar](50) NULL,
 	[PhoneNumberMask] [varchar](50) NULL,
 	[MobileMask] [varchar](50) NULL,
+	[IsCompanyNumberRequired] [bit] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,
