@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-20-2019
+// Last Modified On : 09-21-2019
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -282,6 +282,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     CityUid = c.Address.City.Uid,
                                     Address1 = c.Address.Address1,
                                     AddressZipCode = c.Address.ZipCode,
+                                    IsCompanyNumberRequired = c.Address.Country.IsCompanyNumberRequired
                                 },
                                 JobTitlesDtos = c.JobTitles.Select(d => new CollaboratorJobTitleBaseDto
                                 {

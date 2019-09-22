@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-17-2019
+// Last Modified On : 09-21-2019
 // ***********************************************************************
 // <copyright file="Country.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,6 +35,7 @@ namespace PlataformaRio2C.Domain.Entities
         public string PhoneNumberMask { get; private set; }
         public string MobileMask { get; private set; }
         public bool IsManual { get; private set; }
+        public bool IsCompanyNumberRequired { get; private set; }
 
         public virtual ICollection<State> States { get; private set; }
         public virtual ICollection<Address> Addresses { get; private set; }
@@ -49,6 +50,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Name = name?.Trim();
             this.Code = code?.Trim();
             this.IsManual = isManual;
+            this.IsCompanyNumberRequired = false;
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;

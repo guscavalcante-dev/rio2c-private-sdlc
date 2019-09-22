@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Statics;
@@ -42,8 +43,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? CountryUid { get; set; }
 
+        public bool IsCompanyNumberRequired { get; set; }
+
         [Display(Name = "CompanyDocument", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [RequiredIf("IsCompanyNumberRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [ValidCompanyNumber]
         [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Document { get; set; }
@@ -102,6 +105,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.CompanyName = entity?.CompanyName;
             this.TradeName = entity?.TradeName;
             this.CountryUid = entity?.AddressBaseDto?.CountryUid;
+            this.IsCompanyNumberRequired = entity?.AddressBaseDto?.IsCompanyNumberRequired == true;
             this.Document = entity?.Document;
             this.Website = entity?.Website;
             this.SocialMedia = entity?.SocialMedia;

@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-20-2019
+// Last Modified On : 09-21-2019
 // ***********************************************************************
 // <copyright file="OrganizationBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -46,6 +46,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Display(Name = "Country", ResourceType = typeof(Labels))]
         //[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? CountryUid { get; set; }
+
+        public bool IsCompanyNumberRequired { get; set; }
 
         [Display(Name = "CompanyDocument", ResourceType = typeof(Labels))]
         [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
@@ -118,6 +120,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.CompanyName = entity?.CompanyName;
             this.TradeName = entity?.TradeName;
             this.CountryUid = entity?.AddressBaseDto?.CountryUid;
+            this.IsCompanyNumberRequired = entity?.AddressBaseDto?.IsCompanyNumberRequired == true;
             this.Document = entity?.Document;
             this.Website = entity?.Website;
             this.SocialMedia = entity?.SocialMedia;

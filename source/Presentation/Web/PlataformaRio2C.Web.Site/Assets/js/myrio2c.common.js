@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-19-2019
+// Last Modified On : 09-21-2019
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -356,29 +356,6 @@ var MyRio2cCommon = function () {
         }
         else {
             return split[0] + '-' + split[1].toUpperCase();
-        }
-    };
-
-    var enableCompanyNumberMask = function (originDropdownIdOrClass, targetInputIdOrClass) {
-        if (typeof (MyRio2cInputMask) === 'undefined') {
-            return;
-        }
-
-        if (isNullOrEmpty(originDropdownIdOrClass) || isNullOrEmpty(targetInputIdOrClass)) {
-            return;
-        }
-
-        var element = $(originDropdownIdOrClass);
-        if (typeof (element) === 'undefined') {
-            return;
-        }
-
-        var companyNumberMask = element.find(":selected").data("companynumber-mask");
-        if (!MyRio2cCommon.isNullOrEmpty(companyNumberMask)) {
-            MyRio2cInputMask.enableMask(targetInputIdOrClass, companyNumberMask);
-        }
-        else {
-            MyRio2cInputMask.removeMask(targetInputIdOrClass);
         }
     };
 
@@ -931,9 +908,6 @@ var MyRio2cCommon = function () {
         },
         getCultureUppercase: function (culture) {
             return getCultureUppercase(culture);
-        },
-        enableCompanyNumberMask: function (originDropdownIdOrClass, targetInputIdOrClass) {
-            enableCompanyNumberMask(originDropdownIdOrClass, targetInputIdOrClass);
         },
         block: function (options) {
             block(options);

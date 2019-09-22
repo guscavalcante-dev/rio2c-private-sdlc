@@ -4,7 +4,7 @@
 // Created          : 09-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-17-2019
+// Last Modified On : 09-21-2019
 // ***********************************************************************
 // <copyright file="addresses.form.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -376,7 +376,11 @@ var AddressesForm = function () {
         countryUidElement.not('.change-event-enabled').on('change', function () {
             enableStateSelect2(true);
             enableZipCodeMask();
-            MyRio2cCommon.enableCompanyNumberMask(countryUid, '#Document');
+
+            if (typeof (MyRio2cCompanyDocument) !== 'undefined') {
+                MyRio2cCompanyDocument.enableCompanyNumberMask(countryUid, '#Document');
+                MyRio2cCompanyDocument.changeIsRequired(countryUid);
+            }
         });
         countryUidElement.addClass('change-event-enabled');
     };
@@ -414,7 +418,10 @@ var AddressesForm = function () {
         enableChangeEvents();
         enableSelect2();
         enableZipCodeMask();
-        MyRio2cCommon.enableCompanyNumberMask(countryUid, '#Document');
+
+        if (typeof (MyRio2cCompanyDocument) !== 'undefined') {
+            MyRio2cCompanyDocument.enableCompanyNumberMask(countryUid, '#Document');
+        }
     };
 
     return {

@@ -4,7 +4,7 @@
 // Created          : 09-18-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-18-2019
+// Last Modified On : 09-21-2019
 // ***********************************************************************
 // <copyright file="myrio2c.companynumber.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,7 +13,7 @@
 // ***********************************************************************
 var MyRio2cCompanyDocument = function () {
 
-    var validateBrazil = function(companyNumber) {
+    var validateBrazil = function (companyNumber) {
 
         var cnpj = companyNumber.replace(/[^\d]+/g, '');
 
@@ -86,9 +86,55 @@ var MyRio2cCompanyDocument = function () {
         return true;
     };
 
+    // Required -----------------------------------------------------------------------------------
+    var changeIsRequired = function (originDropdownIdOrClass) {
+        var element = $(originDropdownIdOrClass);
+        if (typeof (element) === 'undefined') {
+            return;
+        }
+
+        var isCompanyNumberRequired = element.find(":selected").data("companynumber-required");
+        if (!MyRio2cCommon.isNullOrEmpty(isCompanyNumberRequired)) {
+            $('#IsCompanyNumberRequired').val(isCompanyNumberRequired);
+        }
+        else {
+            $('#IsCompanyNumberRequired').val('False');
+        }
+    };
+
+    // Mask ---------------------------------------------------------------------------------------
+    var enableCompanyNumberMask = function (originDropdownIdOrClass, targetInputIdOrClass) {
+        if (typeof (MyRio2cInputMask) === 'undefined') {
+            return;
+        }
+
+        if (MyRio2cCommon.isNullOrEmpty(originDropdownIdOrClass) || MyRio2cCommon.isNullOrEmpty(targetInputIdOrClass)) {
+            return;
+        }
+
+        var element = $(originDropdownIdOrClass);
+        if (typeof (element) === 'undefined') {
+            return;
+        }
+
+        var companyNumberMask = element.find(":selected").data("companynumber-mask");
+        if (!MyRio2cCommon.isNullOrEmpty(companyNumberMask)) {
+            MyRio2cInputMask.enableMask(targetInputIdOrClass, companyNumberMask);
+        }
+        else {
+            MyRio2cInputMask.removeMask(targetInputIdOrClass);
+        }
+    };
+
     return {
         validate: function (countryCode, companyNumber) {
             return validate(countryCode, companyNumber);
+        },
+        changeIsRequired: function (originDropdownIdOrClass) {
+            changeIsRequired(originDropdownIdOrClass);
+        },
+        enableCompanyNumberMask: function (originDropdownIdOrClass, targetInputIdOrClass) {
+            enableCompanyNumberMask(originDropdownIdOrClass, targetInputIdOrClass);
         }
     };
 }();

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-17-2019
+// Last Modified On : 09-21-2019
 // ***********************************************************************
 // <copyright file="CountryRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -112,6 +112,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 ZipCodeMask = c.ZipCodeMask,
                                 PhoneNumberMask = c.PhoneNumberMask,
                                 MobileMask = c.MobileMask,
+                                IsCompanyNumberRequired = c.IsCompanyNumberRequired,
                                 CreateDate = c.CreateDate,
                                 CreateUserId = c.CreateUserId,
                                 UpdateDate = c.UpdateDate,
