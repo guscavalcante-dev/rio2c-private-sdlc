@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-18-2019
+// Last Modified On : 09-21-2019
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -809,6 +809,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Called when [data].</summary>
         /// <param name="edition">The edition.</param>
+        /// <param name="sharePublicEmail">if set to <c>true</c> [share public email].</param>
         /// <param name="publicEmail">The public email.</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="jobTitles">The job titles.</param>
@@ -816,13 +817,14 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void OnboardData(
             Edition edition,
+            bool? sharePublicEmail,
             string publicEmail,
             bool isImageUploaded,
             List<CollaboratorJobTitle> jobTitles,
             List<CollaboratorMiniBio> miniBios,
             int userId)
         {
-            this.PublicEmail = publicEmail?.Trim();
+            this.PublicEmail = sharePublicEmail == true ? publicEmail?.Trim() : null;
             this.UpdateImageUploadDate(isImageUploaded, false);
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;

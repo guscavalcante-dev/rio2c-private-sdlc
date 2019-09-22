@@ -1206,6 +1206,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Selecione uma opção..
+        /// </summary>
+        public static string SelectAnOption {
+            get {
+                return ResourceManager.GetString("SelectAnOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Selecione pelo menos uma opção do grupo {0}..
         /// </summary>
         public static string SelectAtLeastOneGroupOption {

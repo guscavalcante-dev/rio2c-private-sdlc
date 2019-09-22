@@ -4,7 +4,7 @@
 // Created          : 09-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 09-21-2019
 // ***********************************************************************
 // <copyright file="onboarding.collaboratordata.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,6 +27,10 @@ var OnboardingCollaboratorData = function () {
 
     // Enable plugins -----------------------------------------------------------------------------
     var enablePlugins = function () {
+        if (typeof (MyRio2cPublicEmail) !== 'undefined') {
+            MyRio2cPublicEmail.init();
+        }
+
         MyRio2cCropper.init({ formIdOrClass: formId });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });
         AddressesForm.init();

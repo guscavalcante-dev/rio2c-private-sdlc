@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-19-2019
+// Last Modified On : 09-21-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -282,7 +282,8 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/collaborators/collaborators.editioncount.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/collaborators.create.js").Include(
-                "~/Assets/js/collaborators/collaborators.create.js"));
+                "~/Assets/js/collaborators/collaborators.create.js",
+                "~/Assets/js/myrio2c.publicemail.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/collaborators.update.js").Include(
                 "~/Assets/js/collaborators/collaborators.update.js"));

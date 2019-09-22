@@ -382,6 +382,7 @@
     <Content Include="Assets\js\myrio2c.common.js" />
     <Content Include="Assets\js\myrio2c.companynumber.js" />
     <Content Include="Assets\js\myrio2c.inputmask.js" />
+    <Content Include="Assets\js\myrio2c.publicemail.js" />
     <Content Include="Assets\js\myrio2c.showhidepassword.js" />
     <Content Include="Assets\js\myrio2c.cropper.js" />
     <Content Include="Assets\js\myrio2c.activity.js" />

@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-09-2019
+// Last Modified On : 09-21-2019
 // ***********************************************************************
 // <copyright file="collaborators.update.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,6 +27,10 @@ var CollaboratorsUpdate = function () {
 
     // Enable plugins -----------------------------------------------------------------------------
     var enablePlugins = function () {
+        if (typeof (MyRio2cPublicEmail) !== 'undefined') {
+            MyRio2cPublicEmail.init();
+        }
+
         MyRio2cCropper.init({ formIdOrClass: formId });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });
         AttendeeOrganizationsForm.init(formId);

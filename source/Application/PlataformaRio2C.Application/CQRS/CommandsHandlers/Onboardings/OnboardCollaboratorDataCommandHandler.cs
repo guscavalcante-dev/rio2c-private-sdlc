@@ -4,7 +4,7 @@
 // Created          : 09-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 09-21-2019
 // ***********************************************************************
 // <copyright file="OnboardCollaboratorDataCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -76,6 +76,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             collaborator.OnboardData(
                 await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
+                cmd.SharePublicEmail,
                 cmd.PublicEmail,
                 cmd.CropperImage?.ImageFile != null,
                 cmd.JobTitles?.Select(d => new CollaboratorJobTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),

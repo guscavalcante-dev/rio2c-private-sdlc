@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-19-2019
+// Last Modified On : 09-21-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -234,7 +234,8 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/js/onboarding/onboarding.wizard.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/onboarding.collaboratordata.js").Include(
-                "~/Assets/js/onboarding/onboarding.collaboratordata.js"));
+                "~/Assets/js/onboarding/onboarding.collaboratordata.js",
+                "~/Assets/js/myrio2c.publicemail.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/onboarding.organizationdata.js").Include(
                 "~/Assets/js/onboarding/onboarding.organizationdata.js",

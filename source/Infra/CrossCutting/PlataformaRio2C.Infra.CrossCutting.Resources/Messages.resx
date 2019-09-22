@@ -641,4 +641,8 @@
     <value>texto em português | texto em inglês</value>
     <comment>texto em português | texto em inglês</comment>
   </data>
+  <data name="SelectAnOption" xml:space="preserve">
+    <value>Selecione uma opção.</value>
+    <comment>Selecione uma opção.</comment>
+  </data>
 </root>

@@ -4,7 +4,7 @@
 // Created          : 09-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-16-2019
+// Last Modified On : 09-21-2019
 // ***********************************************************************
 // <copyright file="OnboardCollaboratorData.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -24,7 +25,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>OnboardCollaboratorData</summary>
     public class OnboardCollaboratorData : BaseCommand
     {
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAnOption")]
+        public bool? SharePublicEmail { get; set; }
+
         [Display(Name = "Email", ResourceType = typeof(Labels))]
+        [RequiredIf("SharePublicEmail", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [EmailAddress(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "EmailISInvalid")]
         [StringLength(256, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         [DataType(DataType.EmailAddress)]
@@ -44,6 +49,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         public OnboardCollaboratorData(CollaboratorDto collaborator, List<LanguageDto> languagesDtos, bool isJobTitleRequired, bool isMiniBioRequired, bool isImageRequired)
         {
+            this.SharePublicEmail = !string.IsNullOrEmpty(collaborator.PublicEmail) ? (bool?)true : null;
             this.PublicEmail = collaborator?.PublicEmail;
             this.UpdateJobTitles(collaborator, languagesDtos, isJobTitleRequired);
             this.UpdateMiniBios(collaborator, languagesDtos, isMiniBioRequired);

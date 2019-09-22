@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-16-2019
+// Last Modified On : 09-21-2019
 // ***********************************************************************
 // <copyright file="CollaboratorBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Statics;
@@ -53,7 +54,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string CellPhone { get; set; }
 
+        public bool? SharePublicEmail { get; set; }
+
         [Display(Name = "Email", ResourceType = typeof(Labels))]
+        [RequiredIf("SharePublicEmail", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [EmailAddress(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "EmailISInvalid")]
         [StringLength(256, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         [DataType(DataType.EmailAddress)]
@@ -95,6 +99,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Email = entity?.Email;
             this.PhoneNumber = entity?.PhoneNumber;
             this.CellPhone = entity?.CellPhone;
+            this.SharePublicEmail = !string.IsNullOrEmpty(entity?.PublicEmail);
             this.PublicEmail = entity?.PublicEmail;
             this.UpdateOrganizations(entity, attendeeOrganizationsBaseDtos);
             this.UpdateJobTitles(entity, languagesDtos, isJobTitleRequired);
