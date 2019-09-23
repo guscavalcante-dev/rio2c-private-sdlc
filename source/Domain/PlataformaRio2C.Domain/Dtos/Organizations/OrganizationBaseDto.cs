@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-21-2019
+// Last Modified On : 09-23-2019
 // ***********************************************************************
 // <copyright file="OrganizationBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,6 +22,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public Guid Uid { get; set; }
         public string Name { get; set; }
         public HoldingBaseDto HoldingBaseDto { get; set; }
+        public bool IsCompanyNumberRequired { get; set; }
         public string Document { get; set; }
         public string Website { get; set; }
         public string PhoneNumber { get; set; }

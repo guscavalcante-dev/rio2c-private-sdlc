@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-21-2019
+// Last Modified On : 09-23-2019
 // ***********************************************************************
 // <copyright file="OnboardOrganizationData.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -105,7 +105,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.CompanyName = entity?.CompanyName;
             this.TradeName = entity?.TradeName;
             this.CountryUid = entity?.AddressBaseDto?.CountryUid;
-            this.IsCompanyNumberRequired = entity?.AddressBaseDto?.IsCompanyNumberRequired == true;
+            this.IsCompanyNumberRequired = entity?.IsCompanyNumberRequired == true;
             this.Document = entity?.Document;
             this.Website = entity?.Website;
             this.SocialMedia = entity?.SocialMedia;
