@@ -78,7 +78,8 @@ var CollaboratorsDataTableWidget = function () {
                 }
             },
             success: function (res, status, xhr) {
-                var csv = MyRio2cCommon.convertJsonToCsv(res.data);
+                var json = jQuery.parseJSON(res.data);
+                var csv = MyRio2cCommon.convertJsonToCsv(json);
                 var csvData = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
                 var csvUrl = window.URL.createObjectURL(csvData);
                 var tempLink = document.createElement('a');

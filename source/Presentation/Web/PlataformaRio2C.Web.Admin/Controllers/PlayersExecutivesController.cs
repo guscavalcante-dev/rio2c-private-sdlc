@@ -21,6 +21,7 @@ using System.Web.Mvc;
 using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
+using Newtonsoft.Json;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
@@ -29,6 +30,7 @@ using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.Models;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using Role = PlataformaRio2C.Domain.Constants.Role;
@@ -156,19 +158,19 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 this.EditionUid,
                 this.UserInterfaceLanguage));
 
-            var json = playersExecutives?.Select(pe => new
+            var json = playersExecutives?.Select(pe => new EventbriteCsv
             {
                 Name = pe.FirstName,
                 LastName = pe.LastNames,
                 Email = pe.Email,
-                TicketType = ticketClassName,
+                TicketClassName = ticketClassName,
                 Quantity = 1
             }).ToList();
 
             return Json(new
             {
                 status = "success",
-                data = json
+                data = JsonConvert.SerializeObject(json)
             }, JsonRequestBehavior.AllowGet);
         }
 

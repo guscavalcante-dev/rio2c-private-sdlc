@@ -66,6 +66,7 @@
     <Compile Include="ISalesPlatformServiceFactory.cs" />
     <Compile Include="SalesPlatformServiceFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Eventbrite\Models\EventbriteCsv.cs" />
     <Compile Include="Services\Eventbrite\Models\EventbriteAttendeeStatus.cs" />
     <Compile Include="Services\Eventbrite\Models\EventbriteAction.cs" />
     <Compile Include="Services\Eventbrite\Models\EventbriteOrder.cs" />

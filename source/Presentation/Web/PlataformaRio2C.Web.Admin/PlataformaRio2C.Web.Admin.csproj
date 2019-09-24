@@ -8197,6 +8197,10 @@
       <Project>{7e1de835-ddc4-416a-a2b7-9b4f5ffffbf4}</Project>
       <Name>PlataformaRio2C.Infra.CrossCutting.Resources</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.SalesPlatforms\PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.csproj">
+      <Project>{73E650A2-A5C8-4035-B206-586C4E4B0846}</Project>
+      <Name>PlataformaRio2C.Infra.CrossCutting.SalesPlatforms</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.SystemParameter\PlataformaRio2C.Infra.CrossCutting.SystemParameter.csproj">
       <Project>{0c86c61e-c23c-4469-90a1-6ed8e75814db}</Project>
       <Name>PlataformaRio2C.Infra.CrossCutting.SystemParameter</Name>
