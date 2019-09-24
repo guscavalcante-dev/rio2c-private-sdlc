@@ -369,7 +369,8 @@
     <Content Include="SqlScripts\01_Schema.sql" />
     <Content Include="SqlScripts\03_TicketSettings.sql" />
     <Content Include="SqlScripts\04_InitialData.sql" />
-    <Content Include="SqlScripts\Deltas\20190924_093311_0012_CreateAdminAudiovisual.sql" />
+    <Content Include="SqlScripts\Deltas\20190924_093311_0013_CreateAdminAudiovisual.sql" />
+    <Content Include="SqlScripts\Deltas\20190923_202810_0012_UpdatedOnSeederData.sql" />
     <Content Include="SqlScripts\Deltas\20190921_214152_0011_CreateIsCompanyNumberRequired.sql" />
     <Content Include="SqlScripts\Deltas\20190918_165121_0010_AdditionalActivity.sql" />
     <Content Include="SqlScripts\Deltas\20190917_162132_0009_ChangesForFieldsMasks.sql" />
