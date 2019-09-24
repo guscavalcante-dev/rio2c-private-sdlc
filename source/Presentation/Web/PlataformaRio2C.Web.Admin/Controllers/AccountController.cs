@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-07-2019
+// Last Modified On : 09-24-2019
 // ***********************************************************************
 // <copyright file="AccountController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,11 +23,15 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using MediatR;
+using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
+using Enumerable = System.Linq.Enumerable;
+using Role = PlataformaRio2C.Domain.Constants.Role;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>AccountController</summary>
-    [Authorize(Roles = "Admin")]
+    [AjaxAuthorize(Role.AnyAdmin)]
     public class AccountController : BaseController
     {
         private readonly IdentityAutenticationService _identityController;
@@ -87,7 +91,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             var user = AsyncHelpers.RunSync<ApplicationUser>(() => _identityController.FindByEmailAsync(model.Email));
             if (user == null)
             {
-                ModelState.AddModelError("", "Login ou Senha incorretos.");
+                ModelState.AddModelError("", Messages.InvalidLoginOrPassword);
                 return View(model);
             }
             else if (!user.Active)
@@ -135,6 +139,30 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                     await _identityController.SignInAsync(authenticationManager, user, model.RememberMe);
 
+                    #region Check if user has any admin role
+
+                    var hasAdminProfile = false;
+                    var userRoles = await this._identityController.FindAllRolesByUserIdAsync(user.Id);
+                    if (userRoles != null)
+                    {
+                        foreach (var role in userRoles)
+                        {
+                            if (Enumerable.Contains(Role.AnyAdminArray, role))
+                            {
+                                hasAdminProfile = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!hasAdminProfile)
+                    {
+                        ModelState.AddModelError("", Messages.YouDontHaveAdminProfile);
+                        return View(model);
+                    }
+
+                    #endregion
+
                     if (!string.IsNullOrEmpty(returnUrl?.Replace("/", string.Empty)))
                     {
                         return Redirect(returnUrl);
@@ -150,7 +178,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 case IdentitySignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Login ou Senha incorretos.");
+                    ModelState.AddModelError("", Messages.InvalidLoginOrPassword);
                     return View(model);
             }
         }

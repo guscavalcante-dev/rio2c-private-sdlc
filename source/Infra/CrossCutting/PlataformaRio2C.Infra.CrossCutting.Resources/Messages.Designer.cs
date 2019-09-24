@@ -609,6 +609,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Login ou senha incorretos..
+        /// </summary>
+        public static string InvalidLoginOrPassword {
+            get {
+                return ResourceManager.GetString("InvalidLoginOrPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A imagem deve ter entre 1KB e 10MB!.
         /// </summary>
         public static string InvalidResolution {
@@ -1463,6 +1472,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string YouCanSendUpToXPlayers {
             get {
                 return ResourceManager.GetString("YouCanSendUpToXPlayers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Você não tem perfil de administrador..
+        /// </summary>
+        public static string YouDontHaveAdminProfile {
+            get {
+                return ResourceManager.GetString("YouDontHaveAdminProfile", resourceCulture);
             }
         }
         

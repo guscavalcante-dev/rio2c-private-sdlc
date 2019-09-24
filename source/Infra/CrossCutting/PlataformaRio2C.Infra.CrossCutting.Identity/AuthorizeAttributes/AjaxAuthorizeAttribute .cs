@@ -4,7 +4,7 @@
 // Created          : 08-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-13-2019
+// Last Modified On : 09-24-2019
 // ***********************************************************************
 // <copyright file="AjaxAuthorizeAttribute.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,6 +19,14 @@ namespace PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes
     /// <summary>AjaxAuthorizeAttribute</summary>
     public class AjaxAuthorizeAttribute : AuthorizeAttribute
     {
+        /// <summary>Initializes a new instance of the <see cref="AjaxAuthorizeAttribute"/> class.</summary>
+        /// <param name="roles">The roles.</param>
+        public AjaxAuthorizeAttribute(params string[] roles) 
+            : base()
+        {
+            this.Roles = string.Join(",", roles);
+        }
+
         /// <summary>Handles the unauthorized request.</summary>
         /// <param name="context">The context.</param>
         protected override void HandleUnauthorizedRequest(AuthorizationContext context)

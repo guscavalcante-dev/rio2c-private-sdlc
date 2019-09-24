@@ -4,7 +4,7 @@
 // Created          : 08-23-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-23-2019
+// Last Modified On : 09-24-2019
 // ***********************************************************************
 // <copyright file="StatesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,11 +17,12 @@ using MediatR;
 using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
+using Role = PlataformaRio2C.Domain.Constants.Role;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>StatesController</summary>
-    [AjaxAuthorize(Roles = "Admin")]
+    [AjaxAuthorize(Role.AnyAdmin)]
     public class StatesController : BaseController
     {
         /// <summary>Initializes a new instance of the <see cref="StatesController"/> class.</summary>

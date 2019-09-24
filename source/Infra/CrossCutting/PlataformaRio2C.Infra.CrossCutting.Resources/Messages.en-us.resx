@@ -640,4 +640,12 @@
     <value>Select an option.</value>
     <comment>Selecione uma opção.</comment>
   </data>
+  <data name="InvalidLoginOrPassword" xml:space="preserve">
+    <value>Invalid login or password.</value>
+    <comment>Login ou senha incorretos.</comment>
+  </data>
+  <data name="YouDontHaveAdminProfile" xml:space="preserve">
+    <value>You don't have an admin profile.</value>
+    <comment>Você não tem perfil de administrador.</comment>
+  </data>
 </root>

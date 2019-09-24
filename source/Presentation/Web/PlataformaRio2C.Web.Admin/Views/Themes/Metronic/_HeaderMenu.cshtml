@@ -1,6 +1,8 @@
-﻿@{
+﻿@using PlataformaRio2C.Domain.Constants
+@{
     var userRoles = ViewBag.UserRoles as IList<string>;
-    var isAdministrator = userRoles.HasElement("Admin");
+    var isAdmin = userRoles.HasElement(Role.Admin);
+    var isAudiovisualAdmin = userRoles.HasElement(Role.AdminAudiovisual);
     var isProjectPitching = userRoles.HasElement("ProjectPitching");
     var isLogistics = userRoles.HasElement("Logistics");
     var menuOpenCssClass = "kt-menu__item--open kt-menu__item--here";
@@ -12,38 +14,45 @@
             <span class="kt-menu__link-text">@Labels.Dashboard</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
         </a>
     </li>
-    @if (isAdministrator)
+    @if (isAdmin 
+        || isAudiovisualAdmin 
+        || isProjectPitching)
     {
         <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel @this.IsOpen(menuOpenCssClass, null, "Holdings", null) @this.IsOpen(menuOpenCssClass, null, "Players", null) @this.IsOpen(menuOpenCssClass, null, "PlayersExecutives", null) @this.IsOpen(menuOpenCssClass, "Collaborators", "ManualMessage", null) @this.IsOpen(menuOpenCssClass, "Index", "Producer", null) @this.IsOpen(menuOpenCssClass, "Index", "CollaboratorProducer", null) @this.IsOpen(menuOpenCssClass, "Index,ProjectPitching", "Project", null)" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
             <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">@Labels.AudioVisual</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
             <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
                 <ul class="kt-menu__subnav">
-                    <li class="kt-menu__item  kt-menu__item--submenu @this.IsOpen(menuOpenCssClass, null, "Holdings", null) @this.IsOpen(menuOpenCssClass, null, "Players", null) @this.IsOpen(menuOpenCssClass, "Index", "CollaboratorPlayer", null) @this.IsOpen(menuOpenCssClass, "Collaborators", "ManualMessage", null)" data-ktmenu-submenu-toggle="hover" aria-haspopup="true">
-                        <a href="#" class="kt-menu__link kt-menu__toggle"><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Players</span><i class="kt-menu__hor-arrow la la-angle-right"></i><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
-                        <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--right">
-                            <ul class="kt-menu__subnav">
-                                <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "Holdings", null)" aria-haspopup="true">
-                                    <a href="@Url.Action("Index", "Holdings")" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.Holdings</span></a>
-                                </li>
-                                <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "Players", null)" aria-haspopup="true">
-                                    <a href="@Url.Action("Index", "Players")" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.Companies</span></a>
-                                </li>
-                                <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "PlayersExecutives", null)" aria-haspopup="true">
-                                    <a href="@Url.Action("Index", "PlayersExecutives")" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.Executives</span></a>
-                                </li>
-                                <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "ManualMessage", null)" aria-haspopup="true">
-                                    <a href="@Url.Action("Collaborators", "ManualMessage")" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.InvitationSending</span></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    @if (isAdministrator || isProjectPitching)
+                    @if (isAdmin 
+                        || isAudiovisualAdmin)
+                    {
+                        <li class="kt-menu__item  kt-menu__item--submenu @this.IsOpen(menuOpenCssClass, null, "Holdings", null) @this.IsOpen(menuOpenCssClass, null, "Players", null) @this.IsOpen(menuOpenCssClass, "Index", "CollaboratorPlayer", null) @this.IsOpen(menuOpenCssClass, "Collaborators", "ManualMessage", null)" data-ktmenu-submenu-toggle="hover" aria-haspopup="true">
+                            <a href="#" class="kt-menu__link kt-menu__toggle"><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Players</span><i class="kt-menu__hor-arrow la la-angle-right"></i><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
+                            <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--right">
+                                <ul class="kt-menu__subnav">
+                                    <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "Holdings", null)" aria-haspopup="true">
+                                        <a href="@Url.Action("Index", "Holdings")" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.Holdings</span></a>
+                                    </li>
+                                    <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "Players", null)" aria-haspopup="true">
+                                        <a href="@Url.Action("Index", "Players")" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.Companies</span></a>
+                                    </li>
+                                    <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "PlayersExecutives", null)" aria-haspopup="true">
+                                        <a href="@Url.Action("Index", "PlayersExecutives")" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.Executives</span></a>
+                                    </li>
+                                    <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "ManualMessage", null)" aria-haspopup="true">
+                                        <a href="@Url.Action("Collaborators", "ManualMessage")" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.InvitationSending</span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    }
+                    @if (isAdmin 
+                        || isProjectPitching)
                     {
                         <li class="kt-menu__item  kt-menu__item--submenu @this.IsOpen(menuOpenCssClass, "Index", "Producer", null) @this.IsOpen(menuOpenCssClass, "Index", "CollaboratorProducer", null) @this.IsOpen(menuOpenCssClass, "Index,ProjectPitching", "Project", null)" data-ktmenu-submenu-toggle="hover" aria-haspopup="true">
                             <a href="#" class="kt-menu__link kt-menu__toggle"><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Producers</span><i class="kt-menu__hor-arrow la la-angle-right"></i><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
                             <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--right">
                                 <ul class="kt-menu__subnav">
-                                    @if (isAdministrator)
+                                    @if (isAdmin)
                                     {
                                         <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "Index", "Producer", null)" aria-haspopup="true">
                                             <a href="@Url.Action("Index", "Producer")" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.Companies</span></a>
@@ -66,7 +75,7 @@
             </div>
         </li>
     }
-    @if (isAdministrator)
+    @if (isAdmin)
     {
         <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel @this.IsOpen(menuOpenCssClass, null, "Investors", null) @this.IsOpen(menuOpenCssClass, null, "MusicBands", null)" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
             <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">@Labels.Inovation</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
@@ -102,7 +111,7 @@
             </div>
         </li>
     }
-    @if (isAdministrator)
+    @if (isAdmin)
     {
         <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel @this.IsOpen(menuOpenCssClass, null, "Recorders", null) @this.IsOpen(menuOpenCssClass, null, "MusicBands", null)" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
             <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">@Labels.Music</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
@@ -138,7 +147,7 @@
             </div>
         </li>
     }
-    @if (isAdministrator)
+    @if (isAdmin)
     {
         <li class="kt-menu__item kt-menu__item--submenu kt-menu__item--rel @this.IsOpen(menuOpenCssClass, "Index", "Conference", null) @this.IsOpen(menuOpenCssClass, "Index", "RoleLecturer", null) @this.IsOpen(menuOpenCssClass, "Index", "Speaker", null) @this.IsOpen(menuOpenCssClass, "Index", "Room", null)" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
             <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">@Labels.Speeches</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
@@ -160,7 +169,7 @@
             </div>
         </li>
     }
-    @if (isAdministrator || isLogistics)
+    @if (isAdmin || isLogistics)
     {
         <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "Index", "Logistics", null)" aria-haspopup="true">
             <a href="@Url.Action("Index", "Logistics")" class="kt-menu__link">
@@ -168,7 +177,7 @@
             </a>
         </li>
     }
-    @if (isAdministrator)
+    @if (isAdmin)
     {
         <li class="kt-menu__item kt-menu__item--submenu kt-menu__item--rel @this.IsOpen(menuOpenCssClass, null, "ScheduleOneToOneMeetings", null) @this.IsOpen(menuOpenCssClass, null, "ScheduleOneToOneMeetingsConfig", null)" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
             <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">@Labels.OneToOneMeetings</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>

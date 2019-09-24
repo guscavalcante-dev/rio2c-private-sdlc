@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-20-2019
+// Last Modified On : 09-24-2019
 // ***********************************************************************
 // <copyright file="PlayersExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,11 +29,12 @@ using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
+using Role = PlataformaRio2C.Domain.Constants.Role;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>PlayersExecutivesController</summary>
-    [AjaxAuthorize(Roles = "Admin")]
+    [AjaxAuthorize(Role.Admin, Role.AdminAudiovisual)]
     public class PlayersExecutivesController : BaseController
     {
         /// <summary>Initializes a new instance of the <see cref="PlayersExecutivesController"/> class.</summary>

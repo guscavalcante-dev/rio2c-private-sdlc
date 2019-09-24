@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-19-2019
+// Last Modified On : 09-24-2019
 // ***********************************************************************
 // <copyright file="HomeController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,11 +21,12 @@ using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
+using Role = PlataformaRio2C.Domain.Constants.Role;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>HomeController</summary>
-    [AjaxAuthorize(Roles = "Admin")]
+    [AjaxAuthorize(Role.AnyAdmin)]
     public class HomeController : BaseController
     {
         /// <summary>Initializes a new instance of the <see cref="HomeController"/> class.</summary>

@@ -645,4 +645,12 @@
     <value>Selecione uma opção.</value>
     <comment>Selecione uma opção.</comment>
   </data>
+  <data name="InvalidLoginOrPassword" xml:space="preserve">
+    <value>Login ou senha incorretos.</value>
+    <comment>Login ou senha incorretos.</comment>
+  </data>
+  <data name="YouDontHaveAdminProfile" xml:space="preserve">
+    <value>Você não tem perfil de administrador.</value>
+    <comment>Você não tem perfil de administrador.</comment>
+  </data>
 </root>
