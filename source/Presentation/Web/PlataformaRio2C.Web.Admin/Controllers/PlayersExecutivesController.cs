@@ -15,6 +15,7 @@ using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using DataTables.AspNet.Core;
@@ -24,6 +25,7 @@ using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -37,12 +39,19 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     [AjaxAuthorize(Role.Admin, Role.AdminAudiovisual)]
     public class PlayersExecutivesController : BaseController
     {
+        private readonly IAttendeeSalesPlatformTicketTypeRepository attendeeSalesPlatformTicketTypeRepo;
+
         /// <summary>Initializes a new instance of the <see cref="PlayersExecutivesController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        public PlayersExecutivesController(IMediator commandBus, IdentityAutenticationService identityController)
+        /// <param name="attendeeSalesPlatformTicketTypeRepository">The attendee sales platform ticket type repository.</param>
+        public PlayersExecutivesController(
+            IMediator commandBus, 
+            IdentityAutenticationService identityController,
+            IAttendeeSalesPlatformTicketTypeRepository attendeeSalesPlatformTicketTypeRepository)
             : base(commandBus, identityController)
         {
+            this.attendeeSalesPlatformTicketTypeRepo = attendeeSalesPlatformTicketTypeRepository;
         }
 
         #region List
@@ -65,8 +74,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             return View(searchViewModel);
         }
 
-        #endregion
-
         #region DataTable Widget
 
         /// <summary>Searches the specified request.</summary>
@@ -78,11 +85,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllExecutives, bool showAllParticipants)
         {
-            var holdings = await this.CommandBus.Send(new FindAllCollaboratorsBaseDtosAsync(
+            var playersExecutives = await this.CommandBus.Send(new FindAllCollaboratorsBaseDtosAsync(
                 request.Start / request.Length,
                 request.Length,
                 request.Search?.Value,
                 request.GetSortColumns(),
+                null,
                 OrganizationType.Player.Uid,
                 showAllEditions,
                 showAllExecutives,
@@ -93,7 +101,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 this.EditionUid,
                 this.UserInterfaceLanguage));
 
-            var response = DataTablesResponse.Create(request, holdings.TotalItemCount, holdings.TotalItemCount, holdings);
+            var response = DataTablesResponse.Create(request, playersExecutives.TotalItemCount, playersExecutives.TotalItemCount, playersExecutives);
 
             return Json(new
             {
@@ -101,6 +109,70 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 dataTable = response
             }, JsonRequestBehavior.AllowGet);
         }
+
+        #endregion
+
+        #region Export Eventbrite CSV
+
+        /// <summary>Shows the export eventbrite CSV modal.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowExportEventbriteCsvModal()
+        {
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/EventbriteCsvModal", await this.attendeeSalesPlatformTicketTypeRepo.FindAllAsync()), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Exports the eventbrite CSV.</summary>
+        /// <param name="request">The request.</param>
+        /// <param name="selectedCollaboratorsUids">The selected collaborators uids.</param>
+        /// <param name="ticketClassName">Name of the ticket class.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="showAllExecutives">if set to <c>true</c> [show all executives].</param>
+        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ExportEventbriteCsv(IDataTablesRequest request, string selectedCollaboratorsUids, string ticketClassName, bool showAllEditions, bool showAllExecutives, bool showAllParticipants)
+        {
+            var playersExecutives = await this.CommandBus.Send(new FindAllCollaboratorsBaseDtosAsync(
+                1,
+                10000,
+                request?.Search?.Value,
+                request?.GetSortColumns(),
+                selectedCollaboratorsUids,
+                OrganizationType.Player.Uid,
+                showAllEditions,
+                showAllExecutives,
+                showAllParticipants,
+                this.UserId,
+                this.UserUid,
+                this.EditionId,
+                this.EditionUid,
+                this.UserInterfaceLanguage));
+
+            var json = playersExecutives?.Select(pe => new
+            {
+                Name = pe.FirstName,
+                LastName = pe.LastNames,
+                Email = pe.Email,
+                TicketType = ticketClassName,
+                Quantity = 1
+            }).ToList();
+
+            return Json(new
+            {
+                status = "success",
+                data = json
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
 
         #endregion
 

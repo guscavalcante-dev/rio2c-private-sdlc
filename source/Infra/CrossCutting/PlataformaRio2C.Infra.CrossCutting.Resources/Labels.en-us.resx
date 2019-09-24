@@ -1441,4 +1441,12 @@
     <value>Show all participants</value>
     <comment>Exibir todos os participantes</comment>
   </data>
+  <data name="Export" xml:space="preserve">
+    <value>Export</value>
+    <comment>Exportar</comment>
+  </data>
+  <data name="ExportToEventbrite" xml:space="preserve">
+    <value>Export to Eventbrite</value>
+    <comment>Exportar para Eventbrite</comment>
+  </data>
 </root>

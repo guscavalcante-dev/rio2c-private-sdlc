@@ -8137,6 +8137,7 @@
     <Content Include="Views\MailerService\Welcome.cshtml" />
     <Content Include="Views\Players\EditorTemplates\OrganizationRestrictionSpecificsBaseCommand.cshtml" />
     <Content Include="Views\Players\EditorTemplates\OrganizationActivityBaseCommand.cshtml" />
+    <Content Include="Views\PlayersExecutives\Modals\EventbriteCsvModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

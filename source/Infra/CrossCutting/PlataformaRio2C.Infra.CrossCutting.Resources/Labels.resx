@@ -1453,4 +1453,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Exibir todos os participantes</value>
     <comment>Exibir todos os participantes</comment>
   </data>
+  <data name="Export" xml:space="preserve">
+    <value>Exportar</value>
+    <comment>Exportar</comment>
+  </data>
+  <data name="ExportToEventbrite" xml:space="preserve">
+    <value>Exportar para Eventbrite</value>
+    <comment>Exportar para Eventbrite</comment>
+  </data>
 </root>

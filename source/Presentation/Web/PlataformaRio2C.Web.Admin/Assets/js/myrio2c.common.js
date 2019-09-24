@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-21-2019
+// Last Modified On : 09-24-2019
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -357,6 +357,27 @@ var MyRio2cCommon = function () {
         else {
             return split[0] + '-' + split[1].toUpperCase();
         }
+    };
+
+    var convertJsonToCsv = function(json) {
+        if (isNullOrEmpty(json)) {
+            return '';
+        }
+
+        if (json.length === 0) {
+            return '';
+        }
+
+        var fields = Object.keys(json[0]);
+        var replacer = function (key, value) { return value === null ? '' : value }
+        var csv = json.map(function (row) {
+            return fields.map(function (fieldName) {
+                return JSON.stringify(row[fieldName], replacer);
+            }).join(',');
+        });
+
+        csv.unshift(fields.join(',')); // add header column
+        return csv.join('\r\n');
     };
 
     // Forms --------------------------------------------------------------------------------------
@@ -908,6 +929,9 @@ var MyRio2cCommon = function () {
         },
         getCultureUppercase: function (culture) {
             return getCultureUppercase(culture);
+        },
+        convertJsonToCsv: function (json) {
+            return convertJsonToCsv(json);
         },
         block: function (options) {
             block(options);

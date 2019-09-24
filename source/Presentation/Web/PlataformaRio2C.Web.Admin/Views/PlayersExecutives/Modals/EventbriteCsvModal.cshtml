@@ -1,0 +1,24 @@
+﻿@model List<PlataformaRio2C.Domain.Entities.AttendeeSalesPlatformTicketType>
+<div class="modal fade" id="ExportEventbriteCsvModal" role="dialog" aria-labelledby="ExportEventbriteCsvModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@Labels.ExportToEventbrite</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        @Html.Label("AttendeeSalesPlatformTicketTypeName", Labels.Ticket, new { @class = "control-label" })
+                        @Html.DropDownList("AttendeeSalesPlatformTicketTypeName", new SelectList(Model, "TicketClassName", "TicketClassName", null), $"{Labels.Select}...", new { @class = "form-control enable-select2" })
+                        @Html.ValidationMessage("AttendeeSalesPlatformTicketTypeName", "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">@Labels.Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="CollaboratorsDataTableWidget.exportEventbriteCsv();">@Labels.Export</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-20-2019
+// Last Modified On : 09-24-2019
 // ***********************************************************************
 // <copyright file="collaborators.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,8 +16,80 @@ var CollaboratorsDataTableWidget = function () {
 
     var widgetElementId = '#PlayersExecutivesDataTableWidget';
     var tableElementId = '#playersexecutives-list-table';
+    var modalId = '#ExportEventbriteCsvModal';
     var table;
+    var eventbriteCsvExport;
 
+    // Show export eventbrite csv modal -----------------------------------------------------------
+    var enableExportEventbriteCsvPlugins = function () {
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: modalId + ' .enable-select2' });
+    };
+
+    var showExportEventbriteCsvModal = function () {
+        MyRio2cCommon.block({ isModal: true });
+
+        var jsonParameters = new Object();
+
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/PlayersExecutives/ShowExportEventbriteCsvModal'), jsonParameters, function (data) {
+            MyRio2cCommon.handleAjaxReturn({
+                data: data,
+                // Success
+                onSuccess: function () {
+                    enableExportEventbriteCsvPlugins();
+                    $(modalId).modal();
+                },
+                // Error
+                onError: function () {
+                }
+            });
+        })
+        .fail(function () {
+        })
+        .always(function () {
+            MyRio2cCommon.unblock();
+        });
+    };
+
+    var exportEventbriteCsv = function () {
+        var ticketTypeNameId = 'AttendeeSalesPlatformTicketTypeName';
+        var ticketTypeName = $('#' + ticketTypeNameId).val();
+
+        if (MyRio2cCommon.isNullOrEmpty(ticketTypeName)) {
+            $('[data-valmsg-for="' + ticketTypeNameId + '"]').html('<span for="' + ticketTypeNameId + '" generated="true" class="">' + theFieldIsRequired.replace('{0}', ticketType) + '</span>');
+            $('[data-valmsg-for="' + ticketTypeNameId + '"]').removeClass('field-validation-valid');
+            $('[data-valmsg-for="' + ticketTypeNameId + '"]').addClass('field-validation-error');
+
+            return false;
+        }
+        else {
+            $('[data-valmsg-for="' + ticketTypeNameId + '"]').html('');
+            $('[data-valmsg-for="' + ticketTypeNameId + '"]').addClass('field-validation-valid');
+            $('[data-valmsg-for="' + ticketTypeNameId + '"]').removeClass('field-validation-error');
+        }
+
+        eventbriteCsvExport.ticketClassName = ticketTypeName;
+
+        $.ajax({
+            url: MyRio2cCommon.getUrlWithCultureAndEdition('/PlayersExecutives/ExportEventbriteCsv'),
+            data: eventbriteCsvExport,
+            exportOptions: {
+                modifier: {
+                    selected: null
+                }
+            },
+            success: function (res, status, xhr) {
+                var csv = MyRio2cCommon.convertJsonToCsv(res.data);
+                var csvData = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                var csvUrl = window.URL.createObjectURL(csvData);
+                var tempLink = document.createElement('a');
+                tempLink.href = csvUrl;
+                tempLink.setAttribute('download', 'eventbrite.csv');
+                tempLink.click();
+            }
+        });
+    };
+
+    // Init datatable -----------------------------------------------------------------------------
     var initiListTable = function () {
 
         var tableElement = $(tableElementId);
@@ -41,9 +113,13 @@ var CollaboratorsDataTableWidget = function () {
         var globalVariables = MyRio2cCommon.getGlobalVariables();
         var imageDirectory = 'https://' + globalVariables.bucket + '/img/users/';
 
+        // Initiate datatable
         table = tableElement.DataTable({
             "language": {
                 "url": "/Assets/components/datatables/datatables." + globalVariables.userInterfaceLanguage + ".js"
+            },
+            select: {
+                style: 'multi'
             },
             lengthMenu: [pageLengthOptions, pageLengthOptions],
             displayStart: displayStart,
@@ -54,8 +130,22 @@ var CollaboratorsDataTableWidget = function () {
             searchDelay: 2000,
             processing: true,
             serverSide: true,
+            "buttons": [{
+                text: exportToEventbrite,
+                action: function (e, dt, node, config) {
+                    // TODO: Open modal
+
+                    eventbriteCsvExport = dt.ajax.params();
+                    eventbriteCsvExport.selectedCollaboratorsUids = $('#playersexecutives-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
+                    eventbriteCsvExport.showAllEditions = $('#ShowAllEditions').prop('checked');
+                    eventbriteCsvExport.showAllExecutives = $('#ShowAllExecutives').prop('checked');
+                    eventbriteCsvExport.showAllParticipants = $('#ShowAllParticipants').prop('checked');
+
+                    showExportEventbriteCsvModal();
+                }
+            }],
             order: [[0, "asc"]],
-            sDom: '<"row"<"col-sm-6"l>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+            sDom: '<"row"<"col-sm-6"l><"col-sm-6 text-right"B>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
             oSearch: {
                 sSearch: $('#Search').val()
             },
@@ -148,7 +238,7 @@ var CollaboratorsDataTableWidget = function () {
                     render: function (data) {
                         return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
-                    
+
                 },
                 {
                     data: 'UpdateDate',
@@ -199,7 +289,7 @@ var CollaboratorsDataTableWidget = function () {
                     orderable: false
                 },
                 {
-                    targets: [3,4],
+                    targets: [3, 4],
                     className: "dt-center"
                 },
                 {
@@ -235,8 +325,11 @@ var CollaboratorsDataTableWidget = function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             initiListTable();
         },
-        refreshData: function() {
+        refreshData: function () {
             refreshData();
+        },
+        exportEventbriteCsv: function() {
+            exportEventbriteCsv();
         }
     };
 }();

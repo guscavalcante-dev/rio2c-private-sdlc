@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-20-2019
+// Last Modified On : 09-24-2019
 // ***********************************************************************
 // <copyright file="FindAllCollaboratorsBaseDtosAsyncQueryHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -39,7 +39,17 @@ namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
         /// <returns></returns>
         public async Task<IPagedList<CollaboratorBaseDto>> Handle(FindAllCollaboratorsBaseDtosAsync cmd, CancellationToken cancellationToken)
         {
-            return await this.repo.FindAllByDataTable(cmd.Page, cmd.PageSize, cmd.Keywords, cmd.SortColumns, cmd.OrganizationTypeId, cmd.ShowAllEditions, cmd.ShowAllExecutives, cmd.ShowAllParticipants, cmd.EditionId);
+            return await this.repo.FindAllByDataTable(
+                cmd.Page, 
+                cmd.PageSize, 
+                cmd.Keywords, 
+                cmd.SortColumns, 
+                cmd.CollaboratorsUids,
+                cmd.OrganizationTypeId, 
+                cmd.ShowAllEditions, 
+                cmd.ShowAllExecutives, 
+                cmd.ShowAllParticipants, 
+                cmd.EditionId);
         }
     }
 }

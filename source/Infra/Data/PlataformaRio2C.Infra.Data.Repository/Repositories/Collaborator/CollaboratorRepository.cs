@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-23-2019
+// Last Modified On : 09-24-2019
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -36,11 +36,25 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     {
         /// <summary>Finds the by uid.</summary>
         /// <param name="query">The query.</param>
-        /// <param name="collaboratorId">The collaborator identifier.</param>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <returns></returns>
-        internal static IQueryable<Collaborator> FindByUid(this IQueryable<Collaborator> query, Guid collaboratorId)
+        internal static IQueryable<Collaborator> FindByUid(this IQueryable<Collaborator> query, Guid collaboratorUid)
         {
-            query = query.Where(c => c.Uid == collaboratorId);
+            query = query.Where(c => c.Uid == collaboratorUid);
+
+            return query;
+        }
+
+        /// <summary>Finds the by uids.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="collaboratorsUids">The collaborators uids.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> FindByUids(this IQueryable<Collaborator> query, List<Guid> collaboratorsUids)
+        {
+            if (collaboratorsUids?.Any() == true)
+            {
+                query = query.Where(c => collaboratorsUids.Contains(c.Uid));
+            }
 
             return query;
         }
@@ -323,6 +337,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="keywords">The keywords.</param>
         /// <param name="sortColumns">The sort columns.</param>
+        /// <param name="collaboratorsUids">The collaborators uids.</param>
         /// <param name="organizationTypeUid">The organization type uid.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="showAllExecutives">if set to <c>true</c> [show all executives].</param>
@@ -333,7 +348,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             int page,
             int pageSize,
             string keywords,
-            List<Tuple<string, string>> sortColumns,
+            List<Tuple<string, string>> sortColumns, 
+            List<Guid> collaboratorsUids,
             Guid organizationTypeUid,
             bool showAllEditions,
             bool showAllExecutives,
@@ -342,7 +358,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords, editionId)
-                                .FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, showAllEditions, showAllExecutives, showAllParticipants, editionId);
+                                .FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, showAllEditions, showAllExecutives, showAllParticipants, editionId)
+                                .FindByUids(collaboratorsUids);
 
             return await query
                             .DynamicOrder<Collaborator>(

@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-20-2019
+// Last Modified On : 09-24-2019
 // ***********************************************************************
 // <copyright file="FindAllCollaboratorsBaseDtosAsync.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,6 +26,7 @@ namespace PlataformaRio2C.Application.CQRS.Queries
         public int PageSize { get; private set; }
         public string Keywords { get; private set; }
         public List<Tuple<string, string>> SortColumns { get; private set; }
+        public List<Guid> CollaboratorsUids { get; private set; }
         public Guid OrganizationTypeId { get; private set; }
         public bool ShowAllEditions { get; private set; }
         public bool ShowAllExecutives { get; private set; }
@@ -36,6 +37,7 @@ namespace PlataformaRio2C.Application.CQRS.Queries
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="keywords">The keywords.</param>
         /// <param name="sortColumns">The sort columns.</param>
+        /// <param name="selectedCollaboratorsUids">The selected collaborators uids.</param>
         /// <param name="organizationTypeId">The organization type identifier.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="showAllExecutives">if set to <c>true</c> [show all executives].</param>
@@ -50,6 +52,7 @@ namespace PlataformaRio2C.Application.CQRS.Queries
             int pageSize, 
             string keywords, 
             List<Tuple<string, string>> sortColumns,
+            string selectedCollaboratorsUids,
             Guid organizationTypeId,
             bool showAllEditions,
             bool showAllExecutives,
@@ -69,6 +72,31 @@ namespace PlataformaRio2C.Application.CQRS.Queries
             this.ShowAllEditions = showAllEditions;
             this.ShowAllExecutives = showAllExecutives;
             this.ShowAllParticipants = showAllParticipants;
+            this.SetCollaboratorsUids(selectedCollaboratorsUids);
+        }
+
+        /// <summary>Sets the collaborators uids.</summary>
+        /// <param name="selectedCollaboratorsUids">The selected collaborators uids.</param>
+        private void SetCollaboratorsUids(string selectedCollaboratorsUids)
+        {
+            if (this.CollaboratorsUids == null)
+            {
+                this.CollaboratorsUids = new List<Guid>();
+            }
+
+            if (string.IsNullOrEmpty(selectedCollaboratorsUids))
+            {
+                return;
+            }
+
+            var selectedCollaboratorsUidsSplit = selectedCollaboratorsUids.Split(',');
+            foreach (var selectedCollaboratorUid in selectedCollaboratorsUidsSplit)
+            {
+                if (Guid.TryParse(selectedCollaboratorUid, out Guid collaboratorUid))
+                {
+                    this.CollaboratorsUids.Add(collaboratorUid);;
+                }
+            }
         }
     }
 }

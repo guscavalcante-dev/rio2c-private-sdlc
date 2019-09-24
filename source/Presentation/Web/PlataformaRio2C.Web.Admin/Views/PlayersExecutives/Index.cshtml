@@ -43,6 +43,9 @@
         // Page translations ----------------------------------------------------------------------
         var addToEdition = '@string.Format(Labels.AddToEdition, ViewBag.EditionUrlCode)';
         var removeFromEdition = '@string.Format(Labels.RemoveFromEdition, ViewBag.EditionUrlCode)';
+        var theFieldIsRequired = '@Messages.TheFieldIsRequired';
+        var ticketType = '@Labels.Ticket';
+        var exportToEventbrite = '@Labels.ExportToEventbrite';
 
         // Pagination -----------------------------------------------------------------------------
         var initialPage = @(Model.Page?.ToString() ?? "null");

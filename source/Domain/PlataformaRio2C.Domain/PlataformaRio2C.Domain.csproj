@@ -196,6 +196,7 @@
     <Compile Include="Interfaces\Repositories\Addresses\ICityRepository.cs" />
     <Compile Include="Interfaces\Repositories\Addresses\ICountryRepository.cs" />
     <Compile Include="Interfaces\Repositories\Addresses\IStateRepository.cs" />
+    <Compile Include="Interfaces\Repositories\SalesPlatform\IAttendeeSalesPlatformTicketTypeRepository.cs" />
     <Compile Include="Interfaces\Repositories\SentEmails\ISentEmailRepository.cs" />
     <Compile Include="Interfaces\Repositories\Organizations\IOrganizationTypeRepository.cs" />
     <Compile Include="Interfaces\Repositories\Organizations\IOrganizationRepository.cs" />

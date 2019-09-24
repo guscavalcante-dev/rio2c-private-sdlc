@@ -1123,6 +1123,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exportar.
+        /// </summary>
+        public static string Export {
+            get {
+                return ResourceManager.GetString("Export", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exportar para Eventbrite.
+        /// </summary>
+        public static string ExportToEventbrite {
+            get {
+                return ResourceManager.GetString("ExportToEventbrite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data de conclusão.
         /// </summary>
         public static string FinishDate {

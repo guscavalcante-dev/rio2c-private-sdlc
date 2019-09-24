@@ -198,6 +198,7 @@
     <Compile Include="Repositories\Quiz\QuizOptionRepository.cs" />
     <Compile Include="Repositories\Quiz\QuizQuestionReposiotry.cs" />
     <Compile Include="Repositories\Quiz\QuizRepository.cs" />
+    <Compile Include="Repositories\SalesPlatform\AttendeeSalesPlatformTicketTypeRepository.cs" />
     <Compile Include="Repositories\SalesPlatform\AttendeeSalesPlatformRepository.cs" />
     <Compile Include="Repositories\SentEmails\SentEmailRepository.cs" />
     <Compile Include="RepositoryFactory.cs" />
