@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-24-2019
+// Last Modified On : 09-25-2019
 // ***********************************************************************
 // <copyright file="collaborators.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -51,6 +51,8 @@ var CollaboratorsDataTableWidget = function () {
     };
 
     var exportEventbriteCsv = function () {
+        MyRio2cCommon.block({ isModal: true });
+
         var ticketTypeNameId = 'AttendeeSalesPlatformTicketTypeName';
         var ticketTypeName = $('#' + ticketTypeNameId).val();
 
@@ -69,25 +71,45 @@ var CollaboratorsDataTableWidget = function () {
 
         eventbriteCsvExport.ticketClassName = ticketTypeName;
 
-        $.ajax({
-            url: MyRio2cCommon.getUrlWithCultureAndEdition('/PlayersExecutives/ExportEventbriteCsv'),
-            data: eventbriteCsvExport,
-            exportOptions: {
-                modifier: {
-                    selected: null
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/PlayersExecutives/ExportEventbriteCsv'), eventbriteCsvExport, function (data) {
+            MyRio2cCommon.handleAjaxReturn({
+                data: data,
+                // Success
+                onSuccess: function () {
+                    var json = jQuery.parseJSON(data.data);
+                    var csv = MyRio2cCommon.convertJsonToCsv(json);
+                    var csvData = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                    var csvUrl = window.URL.createObjectURL(csvData);
+                    var tempLink = document.createElement('a');
+                    tempLink.href = csvUrl;
+                    tempLink.setAttribute('download', 'eventbrite.csv');
+                    tempLink.click();
+                },
+                // Error
+                onError: function () {
                 }
-            },
-            success: function (res, status, xhr) {
-                var json = jQuery.parseJSON(res.data);
-                var csv = MyRio2cCommon.convertJsonToCsv(json);
-                var csvData = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-                var csvUrl = window.URL.createObjectURL(csvData);
-                var tempLink = document.createElement('a');
-                tempLink.href = csvUrl;
-                tempLink.setAttribute('download', 'eventbrite.csv');
-                tempLink.click();
-            }
+            });
+        })
+        .fail(function () {
+        })
+        .always(function () {
+            MyRio2cCommon.unblock();
         });
+
+        //$.ajax({
+        //    url: MyRio2cCommon.getUrlWithCultureAndEdition('/PlayersExecutives/ExportEventbriteCsv'),
+        //    data: eventbriteCsvExport,
+        //    success: function (res, status, xhr) {
+        //        var json = jQuery.parseJSON(res.data);
+        //        var csv = MyRio2cCommon.convertJsonToCsv(json);
+        //        var csvData = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        //        var csvUrl = window.URL.createObjectURL(csvData);
+        //        var tempLink = document.createElement('a');
+        //        tempLink.href = csvUrl;
+        //        tempLink.setAttribute('download', 'eventbrite.csv');
+        //        tempLink.click();
+        //    }
+        //});
     };
 
     // Init datatable -----------------------------------------------------------------------------

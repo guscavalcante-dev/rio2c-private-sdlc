@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-24-2019
+// Last Modified On : 09-25-2019
 // ***********************************************************************
 // <copyright file="PlayersExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -121,12 +121,14 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowExportEventbriteCsvModal()
         {
+            var ticketTypes = await this.attendeeSalesPlatformTicketTypeRepo.FindAllByEditionIdAsync(this.EditionId ?? 0);
+
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Modals/EventbriteCsvModal", await this.attendeeSalesPlatformTicketTypeRepo.FindAllAsync()), divIdOrClass = "#GlobalModalContainer" },
+                    new { page = this.RenderRazorViewToString("Modals/EventbriteCsvModal", ticketTypes), divIdOrClass = "#GlobalModalContainer" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }

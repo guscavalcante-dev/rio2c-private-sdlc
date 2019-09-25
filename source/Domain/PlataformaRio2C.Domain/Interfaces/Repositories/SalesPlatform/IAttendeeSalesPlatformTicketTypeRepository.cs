@@ -4,7 +4,7 @@
 // Created          : 09-24-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-24-2019
+// Last Modified On : 09-25-2019
 // ***********************************************************************
 // <copyright file="IAttendeeSalesPlatformTicketTypeRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,6 +21,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>IAttendeeSalesPlatformTicketTypeRepository</summary>
     public interface IAttendeeSalesPlatformTicketTypeRepository : IRepository<AttendeeSalesPlatformTicketType>
     {
-        Task<List<AttendeeSalesPlatformTicketType>> FindAllAsync();
+        Task<List<AttendeeSalesPlatformTicketType>> FindAllByEditionIdAsync(int editionId);
+
     }    
 }

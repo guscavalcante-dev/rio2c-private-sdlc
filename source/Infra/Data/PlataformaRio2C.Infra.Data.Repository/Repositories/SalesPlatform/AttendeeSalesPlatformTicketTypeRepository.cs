@@ -4,7 +4,7 @@
 // Created          : 09-24-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-24-2019
+// Last Modified On : 09-25-2019
 // ***********************************************************************
 // <copyright file="AttendeeSalesPlatformTicketTypeRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,6 +28,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     /// </summary>
     internal static class AttendeeSalesPlatformTicketTypeIQueryableExtensions
     {
+        /// <summary>Finds the by edition identifier.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeSalesPlatformTicketType> FindByEditionId(this IQueryable<AttendeeSalesPlatformTicketType> query, int editionId)
+        {
+            query = query.Where(asp => asp.AttendeeSalesPlatform.EditionId == editionId);
+
+            return query;
+        }
+
         /// <summary>Determines whether [is not deleted].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
@@ -93,11 +104,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
-        /// <summary>Finds all asynchronous.</summary>
+        /// <summary>Finds all by edition identifier asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<List<AttendeeSalesPlatformTicketType>> FindAllAsync()
+        public async Task<List<AttendeeSalesPlatformTicketType>> FindAllByEditionIdAsync(int editionId)
         {
-            var query = this.GetBaseQuery();
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId);
 
             return await query
                             .ToListAsync();
