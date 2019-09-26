@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 09-25-2019
 // ***********************************************************************
 // <copyright file="IOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,6 +25,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     {
         Task<OrganizationDto> FindDtoByUidAsync(Guid organizationUid);
         Task<IPagedList<OrganizationBaseDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, Guid organizationTypeId, bool showAllEditions, bool showAllOrganizations, int? editionId);
+        Task<IPagedList<OrganizationDto>> FindAllPublicApiPaged(int editionId, Guid organizationTypeUid, int page, int pageSize);
         Task<int> CountAllByDataTable(Guid organizationTypeId, bool showAllEditions, int? editionId);
 
         #region Old

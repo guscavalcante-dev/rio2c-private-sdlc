@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-23-2019
+// Last Modified On : 09-25-2019
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -153,6 +153,33 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             page++;
 
+            // Page the list
+            var pagedList = await query.ToPagedListAsync(page, pageSize);
+            if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
+                pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
+
+            return pagedList;
+        }
+    }
+
+    #endregion
+
+    #region OrganizationDto IQueryable Extensions
+
+    /// <summary>
+    /// OrganizationDtoIQueryableExtensions
+    /// </summary>
+    internal static class OrganizationDtoIQueryableExtensions
+    {
+        /// <summary>
+        /// To the list paged.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        internal static async Task<IPagedList<OrganizationDto>> ToListPagedAsync(this IQueryable<OrganizationDto> query, int page, int pageSize)
+        {
             // Page the list
             var pagedList = await query.ToPagedListAsync(page, pageSize);
             if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
@@ -352,6 +379,33 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 IsInOtherEdition = editionId.HasValue && o.AttendeeOrganizations.Any(ao => ao.EditionId != editionId
                                                                                                            && !ao.IsDeleted)
                             })
+                            .ToListPagedAsync(page, pageSize);
+        }
+
+        /// <summary>Finds all public API paged.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="organizationTypeUid">The organization type uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<OrganizationDto>> FindAllPublicApiPaged(int editionId, Guid organizationTypeUid, int page, int pageSize)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, false, false, editionId);
+
+            return await query
+                            .Select(o => new OrganizationDto
+                            {
+                                Id = o.Id,
+                                Uid = o.Uid,
+                                CompanyName = o.CompanyName,
+                                TradeName = o.TradeName,
+                                Website = o.Website,
+                                ImageUploadDate = o.ImageUploadDate,
+                                CreateDate = o.CreateDate,
+                                UpdateDate = o.UpdateDate,
+                            })
+                            .OrderBy(o => o.TradeName)
                             .ToListPagedAsync(page, pageSize);
         }
 

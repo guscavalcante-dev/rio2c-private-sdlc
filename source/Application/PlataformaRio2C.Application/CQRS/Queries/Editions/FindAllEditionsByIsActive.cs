@@ -4,7 +4,7 @@
 // Created          : 08-07-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-10-2019
+// Last Modified On : 09-25-2019
 // ***********************************************************************
 // <copyright file="FindEditionByCurrent.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,12 +20,13 @@ namespace PlataformaRio2C.Application.CQRS.Queries
     /// <summary>FindAllEditionsByIsActive</summary>
     public class FindAllEditionsByIsActive : IRequest<List<EditionDto>>
     {
-        public bool IsActive { get; private set; }
+        public bool ShowInactive { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="FindAllEditionsByIsActive"/> class.</summary>
-        public FindAllEditionsByIsActive(bool? isActive = true)
+        /// <param name="showInactive">The show inactive.</param>
+        public FindAllEditionsByIsActive(bool? showInactive = false)
         {
-            this.IsActive = isActive.Value;
+            this.ShowInactive = showInactive.Value;
         }
     }
 }

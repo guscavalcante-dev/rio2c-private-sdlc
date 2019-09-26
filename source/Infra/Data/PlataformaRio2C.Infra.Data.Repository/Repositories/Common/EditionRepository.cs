@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-07-2019
+// Last Modified On : 09-25-2019
 // ***********************************************************************
 // <copyright file="EditionRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
@@ -19,6 +20,40 @@ using PlataformaRio2C.Infra.Data.Context;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
+    #region Edition IQueryable Extensions
+
+    /// <summary>
+    /// EditionIQueryableExtensions
+    /// </summary>
+    internal static class EditionIQueryableExtensions
+    {
+        /// <summary>Determines whether the specified show inactive is active.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="showInactive">if set to <c>true</c> [show inactive].</param>
+        /// <returns></returns>
+        internal static IQueryable<Edition> IsActive(this IQueryable<Edition> query, bool showInactive)
+        {
+            if (!showInactive)
+            {
+                query = query.Where(o => o.IsActive);
+            }
+
+            return query;
+        }
+
+        /// <summary>Determines whether [is not deleted].</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<Edition> IsNotDeleted(this IQueryable<Edition> query)
+        {
+            query = query.Where(o => !o.IsDeleted);
+
+            return query;
+        }
+    }
+
+    #endregion
+
     /// <summary>EditionRepository</summary>
     public class EditionRepository : Repository<PlataformaRio2CContext, Edition>, IEditionRepository
     {
@@ -34,20 +69,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public override IQueryable<Edition> GetAll(bool @readonly = false)
         {
-            var consult = this.dbSet;
+            var consult = this.dbSet
+                                    .IsNotDeleted();
 
             return @readonly
-                ? consult.AsNoTracking()
-                : consult;
+                        ? consult.AsNoTracking()
+                        : consult;
         }
 
         /// <summary>Finds all by is active.</summary>
-        /// <param name="isActive">if set to <c>true</c> [is active].</param>
+        /// <param name="showInactive">if set to <c>true</c> [show inactive].</param>
         /// <returns></returns>
-        public List<Edition> FindAllByIsActive(bool isActive)
+        public List<Edition> FindAllByIsActive(bool showInactive)
         {
             var query = this.GetAll()
-                                .Where(e => e.IsActive);
+                                .IsActive(showInactive);
 
             return query.ToList();
         }

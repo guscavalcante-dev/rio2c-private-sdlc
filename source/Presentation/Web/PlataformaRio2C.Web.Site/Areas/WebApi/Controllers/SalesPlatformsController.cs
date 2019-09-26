@@ -4,9 +4,9 @@
 // Created          : 07-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-20-2019
+// Last Modified On : 09-25-2019
 // ***********************************************************************
-// <copyright file="SalesPlatformController.cs" company="Softo">
+// <copyright file="SalesPlatformsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -29,13 +29,13 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
     /// Class for sales platforms endpoints
     /// </summary>
     [System.Web.Http.RoutePrefix("api/v1.0/salesplatforms")]
-    public class SalesPlatformController : BaseApiController
+    public class SalesPlatformsController : BaseApiController
     {
         private readonly IMediator commandBus;
 
-        /// <summary>Initializes a new instance of the <see cref="SalesPlatformController"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="SalesPlatformsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
-        public SalesPlatformController(IMediator commandBus)
+        public SalesPlatformsController(IMediator commandBus)
         {
             this.commandBus = commandBus;
         }

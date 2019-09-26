@@ -4,7 +4,7 @@
 // Created          : 08-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-10-2019
+// Last Modified On : 09-25-2019
 // ***********************************************************************
 // <copyright file="FindAllEditionsByIsActiveQueryHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -37,7 +37,7 @@ namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
         /// <returns></returns>
         protected override List<EditionDto> Handle(FindAllEditionsByIsActive cmd)
         {
-            var edition = this.repo.FindAllByIsActive(cmd.IsActive);
+            var edition = this.repo.FindAllByIsActive(cmd.ShowInactive);
             return edition?.Select(e => new EditionDto(e))?.ToList();
         }
     }
