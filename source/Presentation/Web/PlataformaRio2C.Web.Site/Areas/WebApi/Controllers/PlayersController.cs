@@ -46,9 +46,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             this.fileRepo = fileRepository;
         }
 
-        #region Players
-
-        /// <summary>Pings this instance.</summary>
+        /// <summary>Playerses the specified request.</summary>
+        /// <param name="request">The request.</param>
         /// <returns></returns>
         [HttpGet]
         [Route("players")]
@@ -57,9 +56,9 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             var editions = this.editionRepo.FindAllByIsActive(false);
             if (editions?.Any() == false)
             {
-                return await Json(new PlayersApiResponse
+                return await Json(new ApiBaseResponse
                 {
-                    Status = ApiStatus.Success,
+                    Status = ApiStatus.Error,
                     Error = new ApiError
                     {
                         Code = "00001",
@@ -68,21 +67,23 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 });
             }
 
-            var currentEdition = editions?.FirstOrDefault(e => e.IsCurrent);
-            if (currentEdition == null)
+            // Get edition from request otherwise get current
+            var edition = request?.Edition.HasValue == true ? editions?.FirstOrDefault(e => e.UrlCode == request.Edition) : 
+                                                              editions?.FirstOrDefault(e => e.IsCurrent);
+            if (edition == null)
             {
-                return await Json(new PlayersApiResponse
+                return await Json(new ApiBaseResponse
                 {
-                    Status = ApiStatus.Success,
+                    Status = ApiStatus.Error,
                     Error = new ApiError
                     {
                         Code = "00002",
-                        Message = "No editions set as current."
+                        Message = "No editions found."
                     }
                 });
             }
 
-            var organizations = await this.organizationRepo.FindAllPublicApiPaged(currentEdition.Id, OrganizationType.Player.Uid, request?.Page ?? 1, request?.PageSize ?? 10);
+            var organizations = await this.organizationRepo.FindAllPublicApiPaged(edition.Id, OrganizationType.Player.Uid, request?.Page ?? 1, request?.PageSize ?? 10);
 
             return await Json(new PlayersApiResponse
             {
@@ -105,6 +106,23 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             });
         }
 
-    #endregion
-}
+        //[HttpGet]
+        //[Route("player")]
+        //public async Task<IHttpActionResult> Player([FromUri]PlayerApiRequest request)
+        //{
+        //    var editions = this.editionRepo.FindAllByIsActive(false);
+        //    if (editions?.Any() == false)
+        //    {
+        //        return await Json(new PlayersApiResponse
+        //        {
+        //            Status = ApiStatus.Success,
+        //            Error = new ApiError
+        //            {
+        //                Code = "00001",
+        //                Message = "No active editions found."
+        //            }
+        //        });
+        //    }
+        //}
+    }
 }

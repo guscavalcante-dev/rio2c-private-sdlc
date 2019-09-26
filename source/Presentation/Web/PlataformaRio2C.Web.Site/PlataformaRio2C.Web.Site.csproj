@@ -317,6 +317,7 @@
     <Compile Include="Areas\WebApi\Models\ListBaseModel.cs" />
     <Compile Include="Areas\WebApi\Models\ApiBaseResponse.cs" />
     <Compile Include="Areas\WebApi\Models\Error.cs" />
+    <Compile Include="Areas\WebApi\Models\Players\Requests\PlayerApiRequest.cs" />
     <Compile Include="Areas\WebApi\Models\Players\Requests\PlayersApiRequest.cs" />
     <Compile Include="Areas\WebApi\Models\Players\Responses\PlayersApiResponse.cs" />
     <Compile Include="Areas\WebApi\WebApiConfig.cs" />
