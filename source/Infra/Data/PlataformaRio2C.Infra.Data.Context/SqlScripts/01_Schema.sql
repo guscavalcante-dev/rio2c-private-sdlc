@@ -2,7 +2,7 @@
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[Activities](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -33,7 +33,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[Addresses](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -102,7 +102,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[AttendeeCollaboratorTickets](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -136,6 +136,36 @@ CREATE TABLE [dbo].[AttendeeCollaboratorTickets](
 
 GO
 SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AttendeeCollaboratorTypes](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[AttendeeCollaboratorId] [int] NOT NULL,
+	[CollaboratorTypeId] [int] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_AttendeeCollaboratorTypes] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_AttendeeCollaboratorTypes_AttendeeCollaboratorId_CollaboratorTypeId] UNIQUE NONCLUSTERED 
+(
+	[AttendeeCollaboratorId] ASC,
+	[CollaboratorTypeId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_AttendeeCollaboratorTypes_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
 GO
 SET ANSI_NULLS ON
 GO
@@ -235,7 +265,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[AttendeeSalesPlatforms](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -273,7 +303,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[AttendeeSalesPlatformTicketTypes](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -281,7 +311,7 @@ CREATE TABLE [dbo].[AttendeeSalesPlatformTicketTypes](
 	[AttendeeSalesPlatformId] [int] NOT NULL,
 	[TicketClassId] [varchar](30) NOT NULL,
 	[TicketClassName] [varchar](200) NOT NULL,
-	[TicketTypeId] [int] NOT NULL,
+	[CollaboratorTypeId] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,
@@ -309,7 +339,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[Cities](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -339,7 +369,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[CollaboratorJobTitles](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -374,7 +404,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[CollaboratorMiniBios](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -409,7 +439,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[Collaborators](
 	[Id] [int] NOT NULL,
@@ -444,7 +474,36 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
+GO
+CREATE TABLE [dbo].[CollaboratorTypes](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Name] [varchar](256) NOT NULL,
+	[RoleId] [int] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_CollaboratorTypes] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_CollaboratorTypes_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[ConferenceParticipantRoles](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -473,7 +532,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[ConferenceParticipantRoleTitles](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -540,7 +599,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[Conferences](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -568,7 +627,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[ConferenceSynopsis](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -598,7 +657,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[ConferenceTitles](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -628,7 +687,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[Countries](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -664,7 +723,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[Editions](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -709,7 +768,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[HoldingDescriptions](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -744,7 +803,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[Holdings](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -773,7 +832,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[InterestGroups](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -804,7 +863,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[Interests](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -834,7 +893,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[Languages](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -916,7 +975,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[NegotiationConfigs](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -1038,7 +1097,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[OrganizationDescriptions](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -1099,7 +1158,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[OrganizationRestrictionSpecifics](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -1134,7 +1193,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[Organizations](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -1196,7 +1255,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[OrganizationTypes](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -1256,7 +1315,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[ProjectBuyerEvaluations](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -1291,7 +1350,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[ProjectEvaluationStatuses](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -1321,7 +1380,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[ProjectImageLinks](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -1376,7 +1435,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[ProjectLogLines](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -1442,7 +1501,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[Projects](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -1509,7 +1568,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[ProjectTeaserLinks](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -1538,7 +1597,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[ProjectTitles](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -1573,7 +1632,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[ProjectTypes](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -1597,7 +1656,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[QuizAnswers](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -1626,7 +1685,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[QuizOptions](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -1656,7 +1715,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[QuizQuestions](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -1686,7 +1745,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[Quizzes](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -1716,7 +1775,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[Roles](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -1738,7 +1797,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[RoomNames](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -1797,7 +1856,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[SalesPlatforms](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -1830,7 +1889,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[SalesPlatformWebhookRequests](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -1867,7 +1926,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[SentEmails](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -1890,7 +1949,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[States](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -1921,7 +1980,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[SystemParameters](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -1955,7 +2014,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[TargetAudiences](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -1985,41 +2044,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[TicketTypes](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[Name] [varchar](200) NOT NULL,
-	[Code] [varchar](50) NOT NULL,
-	[RoleId] [int] NOT NULL,
-	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
-	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
-	[UpdateUserId] [int] NOT NULL,
- CONSTRAINT [PK_TicketTypes] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
- CONSTRAINT [IDX_UQ_TicketTypes_Code] UNIQUE NONCLUSTERED 
-(
-	[Code] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
- CONSTRAINT [IDX_UQ_TicketTypes_Uid] UNIQUE NONCLUSTERED 
-(
-	[Uid] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
 SET ANSI_PADDING OFF
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[UserClaims](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -2039,7 +2064,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[UserLogins](
 	[LoginProvider] [varchar](128) NOT NULL,
@@ -2060,7 +2085,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[Users](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -2191,6 +2216,26 @@ REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[AttendeeCollaboratorTickets] CHECK CONSTRAINT [FK_Users_AttendeeCollaboratorTickets_UpdateUserId]
 GO
+ALTER TABLE [dbo].[AttendeeCollaboratorTypes]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeCollaborators_AttendeeCollaboratorTypes_AttendeeCollaboratorId] FOREIGN KEY([AttendeeCollaboratorId])
+REFERENCES [dbo].[AttendeeCollaborators] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeCollaboratorTypes] CHECK CONSTRAINT [FK_AttendeeCollaborators_AttendeeCollaboratorTypes_AttendeeCollaboratorId]
+GO
+ALTER TABLE [dbo].[AttendeeCollaboratorTypes]  WITH CHECK ADD  CONSTRAINT [FK_CollaboratorTypes_AttendeeCollaboratorTypes_CollaboratorTypeId] FOREIGN KEY([CollaboratorTypeId])
+REFERENCES [dbo].[CollaboratorTypes] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeCollaboratorTypes] CHECK CONSTRAINT [FK_CollaboratorTypes_AttendeeCollaboratorTypes_CollaboratorTypeId]
+GO
+ALTER TABLE [dbo].[AttendeeCollaboratorTypes]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeCollaboratorTypes_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeCollaboratorTypes] CHECK CONSTRAINT [FK_Users_AttendeeCollaboratorTypes_CreateUserId]
+GO
+ALTER TABLE [dbo].[AttendeeCollaboratorTypes]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeCollaboratorTypes_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeCollaboratorTypes] CHECK CONSTRAINT [FK_Users_AttendeeCollaboratorTypes_UpdateUserId]
+GO
 ALTER TABLE [dbo].[AttendeeOrganizationCollaborators]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeCollaborators_AttendeeOrganizationCollaborators_AttendeeCollaboratorId] FOREIGN KEY([AttendeeCollaboratorId])
 REFERENCES [dbo].[AttendeeCollaborators] ([Id])
 GO
@@ -2276,10 +2321,10 @@ REFERENCES [dbo].[AttendeeSalesPlatforms] ([Id])
 GO
 ALTER TABLE [dbo].[AttendeeSalesPlatformTicketTypes] CHECK CONSTRAINT [FK_AttendeeSalesPlatforms_AttendeeSalesPlatformTicketTypes_AttendeeSalesPlatformId]
 GO
-ALTER TABLE [dbo].[AttendeeSalesPlatformTicketTypes]  WITH CHECK ADD  CONSTRAINT [FK_TicketTypes_AttendeeSalesPlatformTicketTypes_TicketTypeId] FOREIGN KEY([TicketTypeId])
-REFERENCES [dbo].[TicketTypes] ([Id])
+ALTER TABLE [dbo].[AttendeeSalesPlatformTicketTypes]  WITH CHECK ADD  CONSTRAINT [FK_CollaboratorTypes_AttendeeSalesPlatformTicketTypes_CollaboratorTypeId] FOREIGN KEY([CollaboratorTypeId])
+REFERENCES [dbo].[CollaboratorTypes] ([Id])
 GO
-ALTER TABLE [dbo].[AttendeeSalesPlatformTicketTypes] CHECK CONSTRAINT [FK_TicketTypes_AttendeeSalesPlatformTicketTypes_TicketTypeId]
+ALTER TABLE [dbo].[AttendeeSalesPlatformTicketTypes] CHECK CONSTRAINT [FK_CollaboratorTypes_AttendeeSalesPlatformTicketTypes_CollaboratorTypeId]
 GO
 ALTER TABLE [dbo].[AttendeeSalesPlatformTicketTypes]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeSalesPlatformTicketTypes_CreateUserId] FOREIGN KEY([CreateUserId])
 REFERENCES [dbo].[Users] ([Id])
@@ -2365,6 +2410,21 @@ ALTER TABLE [dbo].[Collaborators]  WITH CHECK ADD  CONSTRAINT [FK_Users_Collabor
 REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[Collaborators] CHECK CONSTRAINT [FK_Users_Collaborators_UpdateUserId]
+GO
+ALTER TABLE [dbo].[CollaboratorTypes]  WITH CHECK ADD  CONSTRAINT [FK_Roles_CollaboratorTypes_RoleId] FOREIGN KEY([RoleId])
+REFERENCES [dbo].[Roles] ([Id])
+GO
+ALTER TABLE [dbo].[CollaboratorTypes] CHECK CONSTRAINT [FK_Roles_CollaboratorTypes_RoleId]
+GO
+ALTER TABLE [dbo].[CollaboratorTypes]  WITH CHECK ADD  CONSTRAINT [FK_Users_CollaboratorTypes_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[CollaboratorTypes] CHECK CONSTRAINT [FK_Users_CollaboratorTypes_CreateUserId]
+GO
+ALTER TABLE [dbo].[CollaboratorTypes]  WITH CHECK ADD  CONSTRAINT [FK_Users_CollaboratorTypes_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[CollaboratorTypes] CHECK CONSTRAINT [FK_Users_CollaboratorTypes_UpdateUserId]
 GO
 ALTER TABLE [dbo].[ConferenceParticipantRoles]  WITH CHECK ADD  CONSTRAINT [FK_Users_ConferenceParticipantRoles_CreateUserId] FOREIGN KEY([CreateUserId])
 REFERENCES [dbo].[Users] ([Id])
@@ -3175,21 +3235,6 @@ ALTER TABLE [dbo].[TargetAudiences]  WITH CHECK ADD  CONSTRAINT [FK_Users_Target
 REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[TargetAudiences] CHECK CONSTRAINT [FK_Users_TargetAudiences_UpdateUserId]
-GO
-ALTER TABLE [dbo].[TicketTypes]  WITH CHECK ADD  CONSTRAINT [FK_Roles_TicketTypes_RoleId] FOREIGN KEY([RoleId])
-REFERENCES [dbo].[Roles] ([Id])
-GO
-ALTER TABLE [dbo].[TicketTypes] CHECK CONSTRAINT [FK_Roles_TicketTypes_RoleId]
-GO
-ALTER TABLE [dbo].[TicketTypes]  WITH CHECK ADD  CONSTRAINT [FK_Users_TicketTypes_CreateUserId] FOREIGN KEY([CreateUserId])
-REFERENCES [dbo].[Users] ([Id])
-GO
-ALTER TABLE [dbo].[TicketTypes] CHECK CONSTRAINT [FK_Users_TicketTypes_CreateUserId]
-GO
-ALTER TABLE [dbo].[TicketTypes]  WITH CHECK ADD  CONSTRAINT [FK_Users_TicketTypes_UpdateUserId] FOREIGN KEY([UpdateUserId])
-REFERENCES [dbo].[Users] ([Id])
-GO
-ALTER TABLE [dbo].[TicketTypes] CHECK CONSTRAINT [FK_Users_TicketTypes_UpdateUserId]
 GO
 ALTER TABLE [dbo].[UserClaims]  WITH CHECK ADD  CONSTRAINT [FK_Users_UserClaims_UserId] FOREIGN KEY([UserId])
 REFERENCES [dbo].[Users] ([Id])
