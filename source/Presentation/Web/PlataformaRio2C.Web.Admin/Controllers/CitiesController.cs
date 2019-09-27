@@ -17,12 +17,12 @@ using MediatR;
 using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
-using Role = PlataformaRio2C.Domain.Constants.Role;
+using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>CitiesController</summary>
-    [AjaxAuthorize(Role.AnyAdmin)]
+    [AjaxAuthorize(Constants.Role.AnyAdmin)]
     public class CitiesController : BaseController
     {
         /// <summary>Initializes a new instance of the <see cref="CitiesController"/> class.</summary>

@@ -33,13 +33,14 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.Models;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
-using Role = PlataformaRio2C.Domain.Constants.Role;
+using PlataformaRio2C.Web.Admin.Filters;
+using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>PlayersExecutivesController</summary>
-    [AjaxAuthorize(Role.AnyAdmin)]
-    //[AuthorizeCollaboratorType(Order = 2, AllowedCollaboratorTypes = new[] { "Player", "Industry" })]
+    [AjaxAuthorize(Constants.Role.AnyAdmin)]
+    [AuthorizeCollaboratorType(Types = new[] { Constants.CollaboratorType.AdminAudiovisual })]
     public class PlayersExecutivesController : BaseController
     {
         private readonly IAttendeeSalesPlatformTicketTypeRepository attendeeSalesPlatformTicketTypeRepo;

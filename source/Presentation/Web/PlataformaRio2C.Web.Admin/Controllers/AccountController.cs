@@ -26,12 +26,12 @@ using System.Web.Mvc;
 using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
-using Role = PlataformaRio2C.Domain.Constants.Role;
+using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>AccountController</summary>
-    [AjaxAuthorize(Role.AnyAdmin)]
+    [AjaxAuthorize(Constants.Role.AnyAdmin)]
     public class AccountController : BaseController
     {
         private readonly IdentityAutenticationService _identityController;
@@ -117,7 +117,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                     // Check if user has admin roles
                     var userRoles = await this._identityController.FindAllRolesByUserIdAsync(user.Id);
-                    if (userRoles?.Any(role => Enumerable.Contains(Role.AnyAdminArray, role)) != true)
+                    if (userRoles?.Any(role => Enumerable.Contains(Constants.Role.AnyAdminArray, role)) != true)
                     {
                         ModelState.AddModelError("", Messages.YouDontHaveAdminProfile);
                         return View(model);

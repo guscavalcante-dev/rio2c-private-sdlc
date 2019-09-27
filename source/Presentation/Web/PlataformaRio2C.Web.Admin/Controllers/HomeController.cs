@@ -21,12 +21,12 @@ using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
-using Role = PlataformaRio2C.Domain.Constants.Role;
+using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>HomeController</summary>
-    [AjaxAuthorize(Role.AnyAdmin)]
+    [AjaxAuthorize(Constants.Role.AnyAdmin)]
     public class HomeController : BaseController
     {
         /// <summary>Initializes a new instance of the <see cref="HomeController"/> class.</summary>
