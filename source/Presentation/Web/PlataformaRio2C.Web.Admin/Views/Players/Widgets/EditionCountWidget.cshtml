@@ -3,7 +3,7 @@
     <div class="kt-widget20">
         <div class="kt-widget20__content kt-portlet__space-x">
             <span class="kt-widget20__number kt-font-danger">@Model</span>
-            <span class="kt-widget20__desc">@Labels.Players @Labels.InEditionYear.Replace("{0}", ViewBag.EditionUrlCode.ToString())</span>
+            <span class="kt-widget20__desc">@Labels.Players @Labels.InEditionYear.Replace("{0}", ViewBag.EditionDto.UrlCode.ToString())</span>
         </div>
         <div class="kt-widget20__chart" style="height:130px;">
             <canvas id="PlayersEditionCountChart"></canvas>

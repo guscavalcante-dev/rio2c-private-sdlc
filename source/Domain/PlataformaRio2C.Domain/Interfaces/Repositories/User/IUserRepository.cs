@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-04-2019
+// Last Modified On : 08-27-2019
 // ***********************************************************************
 // <copyright file="IUserRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,6 +19,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>IUserRepository</summary>
     public interface IUserRepository : IRepository<User>
     {
-        UserAccessControlDto FindAccessControlDtoByUserIdAndByEditionId(int userId, int editionId);
+        AdminAccessControlDto FindAdminAccessControlDtoByUserIdAndByEditionId(int userId, int editionId);
+        UserAccessControlDto FindUserAccessControlDtoByUserIdAndByEditionId(int userId, int editionId);
     }    
 }

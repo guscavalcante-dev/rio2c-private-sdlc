@@ -100,10 +100,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 OrganizationType.Player.Uid,
                 showAllEditions,
                 showAllOrganizations,
-                this.UserId,
-                this.UserUid,
-                this.EditionId,
-                this.EditionUid,
+                this.AdminAccessControlDto.User.Id,
+                this.AdminAccessControlDto.User.Uid,
+                this.EditionDto.Id,
+                this.EditionDto.Uid,
                 this.UserInterfaceLanguage));
 
             var response = DataTablesResponse.Create(request, holdings.TotalItemCount, holdings.TotalItemCount, holdings);
@@ -127,10 +127,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             var holdingsCount = await this.CommandBus.Send(new CountAllOrganizationsAsync(
                 OrganizationType.Player.Uid,
                 true,
-                this.UserId,
-                this.UserUid,
-                this.EditionId,
-                this.EditionUid,
+                this.AdminAccessControlDto.User.Id,
+                this.AdminAccessControlDto.User.Uid,
+                this.EditionDto.Id,
+                this.EditionDto.Uid,
                 this.UserInterfaceLanguage));
 
             return Json(new
@@ -154,10 +154,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             var holdingsCount = await this.CommandBus.Send(new CountAllOrganizationsAsync(
                 OrganizationType.Player.Uid,
                 false,
-                this.UserId,
-                this.UserUid,
-                this.EditionId,
-                this.EditionUid,
+                this.AdminAccessControlDto.User.Id,
+                this.AdminAccessControlDto.User.Uid,
+                this.EditionDto.Id,
+                this.EditionDto.Uid,
                 this.UserInterfaceLanguage));
 
             return Json(new
@@ -218,10 +218,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd.UpdatePreSendProperties(
                     OrganizationType.Player,
-                    this.UserId,
-                    this.UserUid,
-                    this.EditionId,
-                    this.EditionUid,
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
                     this.UserInterfaceLanguage);
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
@@ -324,10 +324,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd.UpdatePreSendProperties(
                     OrganizationType.Player,
-                    this.UserId,
-                    this.UserUid,
-                    this.EditionId,
-                    this.EditionUid,
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
                     this.UserInterfaceLanguage);
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
@@ -390,10 +390,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd.UpdatePreSendProperties(
                     OrganizationType.Player,
-                    this.UserId,
-                    this.UserUid,
-                    this.EditionId,
-                    this.EditionUid,
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
                     this.UserInterfaceLanguage);
 
                 result = await this.CommandBus.Send(cmd);

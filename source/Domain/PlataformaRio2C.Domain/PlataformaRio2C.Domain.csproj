@@ -106,6 +106,7 @@
     <Compile Include="Dtos\BaseDto.cs" />
     <Compile Include="Dtos\Languages\LanguageDto.cs" />
     <Compile Include="Dtos\Languages\LanguageBaseDto.cs" />
+    <Compile Include="Dtos\Users\AdminAccessControlDto.cs" />
     <Compile Include="Dtos\Users\UserAccessControlDto.cs" />
     <Compile Include="Dtos\Users\UserBaseDto.cs" />
     <Compile Include="Entities\Addresses\Address.cs" />

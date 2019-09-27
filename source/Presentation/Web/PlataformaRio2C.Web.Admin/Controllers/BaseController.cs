@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-09-2019
+// Last Modified On : 08-27-2019
 // ***********************************************************************
 // <copyright file="BaseController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,7 +13,6 @@
 // ***********************************************************************
 using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Web.Mvc;
@@ -21,6 +20,7 @@ using System.Web.Routing;
 using MediatR;
 using Microsoft.AspNet.Identity;
 using PlataformaRio2C.Application.CQRS.Queries;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
@@ -30,15 +30,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     public class BaseController : Controller
     {
         protected IMediator CommandBus;
-        private readonly IdentityAutenticationService identityController;
+        protected IdentityAutenticationService IdentityController;
+
+        protected EditionDto EditionDto;
+        protected AdminAccessControlDto AdminAccessControlDto;
+
         protected string UserInterfaceLanguage;
-        protected int? EditionUrlCode;
-        protected int? EditionId;
-        protected Guid? EditionUid;
-        protected int UserId;
-        protected Guid UserUid;
-        protected string UserName;
-        protected IList<string> UserRoles;
         protected string Area;
 
         /// <summary>Initializes a new instance of the <see cref="BaseController"/> class.</summary>
@@ -47,7 +44,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         public BaseController(IMediator commandBus, IdentityAutenticationService identityControlle)
         {
             this.CommandBus = commandBus;
-            this.identityController = identityControlle;
+            this.IdentityController = identityControlle;
         }
 
         /// <summary>Begins to invoke the action in the current controller context.</summary>
@@ -138,16 +135,14 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             }
 
             ViewBag.ActiveEditions = activeEditions;
-            ViewBag.EditionUrlCode = this.EditionUrlCode = routeEdition;
 
             // Check current edition on url parameter
             if (routeEdition.HasValue)
             {
-                var currentRoute = activeEditions.FirstOrDefault(ae => ae.UrlCode == routeEdition);
-                if (currentRoute != null)
+                var edition = activeEditions.FirstOrDefault(ae => ae.UrlCode == routeEdition);
+                if (edition != null)
                 {
-                    ViewBag.EditionId = this.EditionId = currentRoute.Id;
-                    ViewBag.EditionUid = this.EditionUid = currentRoute.Uid;
+                    ViewBag.EditionDto = this.EditionDto = edition;
                     return false;
                 }
             }
@@ -194,27 +189,19 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <summary>Sets the user information.</summary>
         private void SetUserInfo()
         {
-            if (this.identityController == null)
+            if (this.IdentityController == null)
             {
                 return;
             }
 
-            ViewBag.UserId = this.UserId = User.Identity.GetUserId<int>();
-            if (!User.Identity.IsAuthenticated || this.UserId <= 0)
+            //ViewBag.UserId = 
+            var userId = User.Identity.GetUserId<int>();
+            if (!User.Identity.IsAuthenticated || userId <= 0)
             {
                 return;
             }
 
-            var user = this.identityController.FindByIdAsync(this.UserId).Result;
-            if (user == null)
-            {
-                return;
-            }
-
-            ViewBag.UserUid = this.UserUid = user.Uid;
-            ViewBag.FullName = this.UserName = user.Name.UppercaseFirstOfEachWord(this.UserInterfaceLanguage);
-            ViewBag.FirstName = this.UserName?.GetFirstWord();
-            ViewBag.UserRoles = this.UserRoles = this.identityController.FindAllRolesByUserIdAsync(this.UserId).Result;
+            ViewBag.AdminAccessControlDto = this.AdminAccessControlDto = this.CommandBus.Send(new FindAdminAccessControlDto(userId, this.EditionDto?.Id ?? 0, this.UserInterfaceLanguage)).Result;
         }
 
         //// GET: Base

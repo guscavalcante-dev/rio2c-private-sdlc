@@ -98,10 +98,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 showAllEditions,
                 showAllExecutives,
                 showAllParticipants,
-                this.UserId,
-                this.UserUid,
-                this.EditionId,
-                this.EditionUid,
+                this.AdminAccessControlDto.User.Id,
+                this.AdminAccessControlDto.User.Uid,
+                this.EditionDto.Id,
+                this.EditionDto.Uid,
                 this.UserInterfaceLanguage));
 
             var response = DataTablesResponse.Create(request, playersExecutives.TotalItemCount, playersExecutives.TotalItemCount, playersExecutives);
@@ -122,7 +122,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowExportEventbriteCsvModal()
         {
-            var ticketTypes = await this.attendeeSalesPlatformTicketTypeRepo.FindAllByEditionIdAsync(this.EditionId ?? 0);
+            var ticketTypes = await this.attendeeSalesPlatformTicketTypeRepo.FindAllByEditionIdAsync(this.EditionDto.Id);
 
             return Json(new
             {
@@ -155,10 +155,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 showAllEditions,
                 showAllExecutives,
                 showAllParticipants,
-                this.UserId,
-                this.UserUid,
-                this.EditionId,
-                this.EditionUid,
+                this.AdminAccessControlDto.User.Id,
+                this.AdminAccessControlDto.User.Uid,
+                this.EditionDto.Id,
+                this.EditionDto.Uid,
                 this.UserInterfaceLanguage));
 
             var json = playersExecutives?.Select(pe => new EventbriteCsv
@@ -191,10 +191,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             var holdingsCount = await this.CommandBus.Send(new CountAllCollaboratorsAsync(
                 OrganizationType.Player.Uid,
                 true,
-                this.UserId,
-                this.UserUid,
-                this.EditionId,
-                this.EditionUid,
+                this.AdminAccessControlDto.User.Id,
+                this.AdminAccessControlDto.User.Uid,
+                this.EditionDto.Id,
+                this.EditionDto.Uid,
                 this.UserInterfaceLanguage));
 
             return Json(new
@@ -218,10 +218,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             var holdingsCount = await this.CommandBus.Send(new CountAllCollaboratorsAsync(
                 OrganizationType.Player.Uid,
                 false,
-                this.UserId,
-                this.UserUid,
-                this.EditionId,
-                this.EditionUid,
+                this.AdminAccessControlDto.User.Id,
+                this.AdminAccessControlDto.User.Uid,
+                this.EditionDto.Id,
+                this.EditionDto.Uid,
                 this.UserInterfaceLanguage));
 
             return Json(new
@@ -244,7 +244,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         public async Task<ActionResult> ShowCreateModal()
         {
             var cmd = new CreateCollaborator(
-                await this.CommandBus.Send(new FindAllAttendeeOrganizationsBaseDtosByEditionUidAsync(this.EditionId, false, this.UserInterfaceLanguage)),
+                await this.CommandBus.Send(new FindAllAttendeeOrganizationsBaseDtosByEditionUidAsync(this.EditionDto.Id, false, this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                 false,
@@ -278,10 +278,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd.UpdatePreSendProperties(
                     Domain.Constants.CollaboratorType.ExecutiveAudiovisual,
-                    this.UserId,
-                    this.UserUid,
-                    this.EditionId,
-                    this.EditionUid,
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
                     this.UserInterfaceLanguage);
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
@@ -298,7 +298,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd.UpdateDropdownProperties(
-                    await this.CommandBus.Send(new FindAllAttendeeOrganizationsBaseDtosByEditionUidAsync(this.EditionId, false, this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllAttendeeOrganizationsBaseDtosByEditionUidAsync(this.EditionDto.Id, false, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)));
 
                 return Json(new
@@ -336,8 +336,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             try
             {
                 cmd = new UpdateCollaborator(
-                    await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionId, this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllAttendeeOrganizationsBaseDtosByEditionUidAsync(this.EditionId, false, this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllAttendeeOrganizationsBaseDtosByEditionUidAsync(this.EditionDto.Id, false, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                     isAddingToCurrentEdition,
@@ -377,10 +377,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd.UpdatePreSendProperties(
                     Domain.Constants.CollaboratorType.ExecutiveAudiovisual,
-                    this.UserId,
-                    this.UserUid,
-                    this.EditionId,
-                    this.EditionUid,
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
                     this.UserInterfaceLanguage);
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
@@ -397,8 +397,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd.UpdateDropdownProperties(
-                    await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(cmd.CollaboratorUid, this.EditionId, this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllAttendeeOrganizationsBaseDtosByEditionUidAsync(this.EditionId, false, this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(cmd.CollaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllAttendeeOrganizationsBaseDtosByEditionUidAsync(this.EditionDto.Id, false, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)));
 
                 return Json(new
@@ -441,10 +441,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd.UpdatePreSendProperties(
                     Domain.Constants.CollaboratorType.ExecutiveAudiovisual,
-                    this.UserId,
-                    this.UserUid,
-                    this.EditionId,
-                    this.EditionUid,
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
                     this.UserInterfaceLanguage);
 
                 result = await this.CommandBus.Send(cmd);

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-26-2019
+// Last Modified On : 08-27-2019
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -101,11 +101,36 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             base.Delete(entity);
         }
 
-        /// <summary>Finds the access control dto by user identifier and by edition identifier.</summary>
+        /// <summary>Finds the admin access control dto by user identifier and by edition identifier.</summary>
         /// <param name="userId">The user identifier.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public UserAccessControlDto FindAccessControlDtoByUserIdAndByEditionId(int userId, int editionId)
+        public AdminAccessControlDto FindAdminAccessControlDtoByUserIdAndByEditionId(int userId, int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                 .FindById(userId);
+
+            return query
+                        .Select(u => new AdminAccessControlDto
+                        {
+                            User = u,
+                            Roles = u.Roles,
+                            Language = u.UserInterfaceLanguage,
+                            Collaborator = u.Collaborator,
+                            EditionCollaboratorTypes = u.Collaborator.AttendeeCollaborators
+                                                                            .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                                            .SelectMany(ac => ac.AttendeeCollaboratorTypes
+                                                                                                        .Where(act => !act.IsDeleted && !act.CollaboratorType.IsDeleted)
+                                                                                                        .Select(act => act.CollaboratorType)),
+                        })
+                        .FirstOrDefault();
+        }
+
+        /// <summary>Finds the user access control dto by user identifier and by edition identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public UserAccessControlDto FindUserAccessControlDtoByUserIdAndByEditionId(int userId, int editionId)
         {
             var query = this.GetBaseQuery()
                                     .FindById(userId);

@@ -118,7 +118,7 @@
         };
 
         // MyRio2CCommon script -----------------------------------------------
-        MyRio2cCommon.init('@ViewBag.UserInterfaceLanguage', '@ViewBag.EditionUrlCode', '@ConfigurationManager.AppSettings["AWSBucket"]');
+        MyRio2cCommon.init('@ViewBag.UserInterfaceLanguage', '@(ViewBag.EditionDto?.UrlCode)', '@ConfigurationManager.AppSettings["AWSBucket"]');
     </script>
     <!--end: MyRio2C Scripts-->
     <!--begin::Page Scripts -->

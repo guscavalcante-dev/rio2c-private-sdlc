@@ -41,8 +41,8 @@
     @Scripts.Render("~/bundles/js/addresses.form.js")
     <script>
         // Page translations ----------------------------------------------------------------------
-        var addToEdition = '@string.Format(Labels.AddToEdition, ViewBag.EditionUrlCode)';
-        var removeFromEdition = '@string.Format(Labels.RemoveFromEdition, ViewBag.EditionUrlCode)';
+        var addToEdition = '@string.Format(Labels.AddToEdition, ViewBag.EditionDto.UrlCode)';
+        var removeFromEdition = '@string.Format(Labels.RemoveFromEdition, ViewBag.EditionDto.UrlCode)';
         var theFieldIsRequired = '@Messages.TheFieldIsRequired';
         var ticketType = '@Labels.Ticket';
         var exportToEventbrite = '@Labels.ExportToEventbrite';
