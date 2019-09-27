@@ -4,13 +4,14 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-26-2019
+// Last Modified On : 09-27-2019
 // ***********************************************************************
 // <copyright file="AccountController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System.Linq;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using PlataformaRio2C.Application.Interfaces.Services;
@@ -30,7 +31,7 @@ using Role = PlataformaRio2C.Domain.Constants.Role;
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>AccountController</summary>
-    [AjaxAuthorize(Role.Admin)]
+    [AjaxAuthorize(Role.AnyAdmin)]
     public class AccountController : BaseController
     {
         private readonly IdentityAutenticationService _identityController;
@@ -107,6 +108,27 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                         TempData["AvisoEmail"] = "Usuário não confirmado, verifique seu e-mail.";
                     }
 
+                    // Check if user is deleted
+                    if (user.IsDeleted)
+                    {
+                        ModelState.AddModelError("", Messages.AccessDenied);
+                        return View(model);
+                    }
+
+                    // Check if user has admin roles
+                    var userRoles = await this._identityController.FindAllRolesByUserIdAsync(user.Id);
+                    if (userRoles?.Any(role => Enumerable.Contains(Role.AnyAdminArray, role)) != true)
+                    {
+                        ModelState.AddModelError("", Messages.YouDontHaveAdminProfile);
+                        return View(model);
+                    }
+
+                    //await _identityController.SignInAsync(authenticationManager, user, model.RememberMe);
+                    if (!string.IsNullOrEmpty(returnUrl?.Replace("/", string.Empty)))
+                    {
+                        return Redirect(returnUrl);
+                    }
+
                     //var identity = (ClaimsIdentity)User.Identity;
 
                     //IEnumerable<Claim> claims = identity.Claims;
@@ -135,27 +157,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     //        }
                     //    }
                     //}
-
-                    if (user.IsDeleted)
-                    {
-                        ModelState.AddModelError("", Messages.AccessDenied);
-                        return View(model);
-                    }
-
-                    // Check if user has admin role
-                    var userRoles = await this._identityController.FindAllRolesByUserIdAsync(user.Id);
-                    if (userRoles?.Contains(Role.Admin) != true)
-                    {
-                        ModelState.AddModelError("", Messages.YouDontHaveAdminProfile);
-                        return View(model);
-                    }
-
-                    await _identityController.SignInAsync(authenticationManager, user, model.RememberMe);
-
-                    if (!string.IsNullOrEmpty(returnUrl?.Replace("/", string.Empty)))
-                    {
-                        return Redirect(returnUrl);
-                    }
 
                     return RedirectToAction("Index", "Home");
 

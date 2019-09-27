@@ -4,7 +4,7 @@
 // Created          : 09-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-26-2019
+// Last Modified On : 09-27-2019
 // ***********************************************************************
 // <copyright file="CollaboratorType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,7 +16,6 @@ namespace PlataformaRio2C.Domain.Constants
     /// <summary>CollaboratorType</summary>
     public class CollaboratorType
     {
-        public const string Admin = "Admin";
         public const string AdminAudiovisual = "Admin | Audiovisual";
         public const string ExecutiveAudiovisual = "Executive | Audiovisual";
         public const string ExecutiveMusic = "Executive | Music";
@@ -29,10 +28,5 @@ namespace PlataformaRio2C.Domain.Constants
         public const string Creator = "Creator";
         public const string Summit = "Summit";
         public const string Festvalia = "Festvalia";
-
-        // Any Admin
-        public const string AnyAdmin = CollaboratorType.Admin + "," 
-                                       + CollaboratorType.AdminAudiovisual;
-        public static string[] AnyAdminArray = { CollaboratorType.Admin, CollaboratorType.AdminAudiovisual };
     }
 }

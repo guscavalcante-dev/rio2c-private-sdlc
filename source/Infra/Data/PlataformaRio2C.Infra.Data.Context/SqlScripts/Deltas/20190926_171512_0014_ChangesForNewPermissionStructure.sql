@@ -124,9 +124,7 @@ go
 
 SET IDENTITY_INSERT [dbo].[CollaboratorTypes] ON 
 GO
-INSERT [dbo].[CollaboratorTypes] ([Id], [Uid], [Name], [RoleId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (100, N'f886728d-6937-4ac9-8ebd-c06e2c524cb7', N'Admin', 1, 0, CAST(N'2019-09-26 17:48:45.390' AS DateTime), 1, CAST(N'2019-09-26 17:48:45.390' AS DateTime), 1)
-GO
-INSERT [dbo].[CollaboratorTypes] ([Id], [Uid], [Name], [RoleId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (101, N'3871f510-c081-4b69-9ecc-8889e791b0cc', N'Admin | Audiovisual', 1, 0, CAST(N'2019-09-26 17:48:45.397' AS DateTime), 1, CAST(N'2019-09-26 17:48:45.397' AS DateTime), 1)
+INSERT [dbo].[CollaboratorTypes] ([Id], [Uid], [Name], [RoleId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (100, N'3871f510-c081-4b69-9ecc-8889e791b0cc', N'Admin | Audiovisual', 3, 0, CAST(N'2019-09-26 17:48:45.397' AS DateTime), 1, CAST(N'2019-09-26 17:48:45.397' AS DateTime), 1)
 GO
 INSERT [dbo].[CollaboratorTypes] ([Id], [Uid], [Name], [RoleId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (200, N'2d6f0e07-7990-458a-8207-1471dc3d1833', N'Executive | Audiovisual', 2, 0, CAST(N'2019-09-26 17:48:45.397' AS DateTime), 1, CAST(N'2019-09-26 17:48:45.397' AS DateTime), 1)
 GO

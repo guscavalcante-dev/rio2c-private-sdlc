@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-26-2019
+// Last Modified On : 09-27-2019
 // ***********************************************************************
 // <copyright file="HoldingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,7 +33,7 @@ using Role = PlataformaRio2C.Domain.Constants.Role;
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>HoldingsController</summary>
-    [AjaxAuthorize(Role.Admin)]
+    [AjaxAuthorize(Role.AnyAdmin)]
     public class HoldingsController : BaseController
     {
         /// <summary>Initializes a new instance of the <see cref="HoldingsController"/> class.</summary>

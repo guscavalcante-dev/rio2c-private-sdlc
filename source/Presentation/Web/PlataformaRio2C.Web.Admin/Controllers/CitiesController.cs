@@ -4,7 +4,7 @@
 // Created          : 08-23-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-26-2019
+// Last Modified On : 09-27-2019
 // ***********************************************************************
 // <copyright file="CitiesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,7 +22,7 @@ using Role = PlataformaRio2C.Domain.Constants.Role;
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>CitiesController</summary>
-    [AjaxAuthorize(Role.Admin)]
+    [AjaxAuthorize(Role.AnyAdmin)]
     public class CitiesController : BaseController
     {
         /// <summary>Initializes a new instance of the <see cref="CitiesController"/> class.</summary>
