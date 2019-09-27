@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-26-2019
+// Last Modified On : 09-27-2019
 // ***********************************************************************
 // <copyright file="User.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -93,11 +93,11 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>Deletes this instance.</summary>
-        public void Delete()
+        public void Delete(List<Role> roles)
         {
             this.IsDeleted = true;
             this.UpdateDate = DateTime.Now;
-            this.SynchronizeRoles(new List<Role>());
+            this.SynchronizeRoles(roles);
         }
 
         /// <summary>Called when [access data].</summary>

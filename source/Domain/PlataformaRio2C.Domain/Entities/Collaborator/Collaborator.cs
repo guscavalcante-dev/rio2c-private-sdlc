@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-26-2019
+// Last Modified On : 09-27-2019
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -284,7 +284,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Deleteusers the specified user identifier.</summary>
         private void Deleteuser()
         {
-            this.User?.Delete();
+            this.User?.Delete(this.FindAllRolesByAttendeeCollaboratorTypes());
         }
 
         /// <summary>Called when [user].</summary>
