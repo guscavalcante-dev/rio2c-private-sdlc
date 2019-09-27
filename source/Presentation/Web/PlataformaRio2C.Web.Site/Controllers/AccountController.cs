@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-26-2019
+// Last Modified On : 09-27-2019
 // ***********************************************************************
 // <copyright file="AccountController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -100,48 +100,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return View(model);
             }
 
-            //transforma a senha digitada em md5
-            //byte[] encodedPassword = new UTF8Encoding().GetBytes(model.Password);
-            //byte[] bytePassword = ((HashAlgorithm)CryptoConfig.CreateFromName("MD5")).ComputeHash(encodedPassword);
-            //var md5Password = CreateMD5(model.Password);
-
-            ////busca o email no JSON da ticket4you
-            //Ticket4youController userByTicket = new Ticket4youController();
-
-            //if (userByTicket.SearchOne(model.Email) == null)
-            //{
-            //    ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
-            //    //ModelState.AddModelError("", Messages.LoginByTicket4YouIncorrect);
-            //    return View(model);
-
-            //}
-            //else if (userByTicket.UserTicket.senha != md5Password)
-            //{
-            //    ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
-            //    //ModelState.AddModelError("", Messages.LoginByTicket4YouIncorrect);
-            //    return View(model);
-            //}
-            ////else if (userByTicket.UserTicket.status_pedido != "Aprovado")
-            ////{
-            ////    //CRIAR TEXTO DE PAGAMANTO NÃO APROVADO
-            ////    ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
-            ////    //ModelState.AddModelError("", Messages.LoginByTicket4YouIncorrect);
-            ////    return View(model);
-            ////}
-            //else
-            //{
-
             //var md5Password = CryptoHelper.ToMD5(model.Password);
             var user = AsyncHelpers.RunSync<ApplicationUser>(() => _identityController.FindByEmailAsync(model.Email));
             if (user == null)
             {
                 ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
-                return View(model);
-            }
-
-            if (user.IsDeleted)
-            {
-                ModelState.AddModelError("", Messages.AccessDenied);
                 return View(model);
             }
 
@@ -154,19 +117,55 @@ namespace PlataformaRio2C.Web.Site.Controllers
             switch (result)
             {
                 case IdentitySignInStatus.Success:
-                    await _identityController.SignInAsync(this.authenticationManager, user, model.RememberMe);
+
+                    if (user.IsDeleted)
+                    {
+                        ModelState.AddModelError("", Messages.AccessDenied);
+                        return View(model);
+                    }
 
                     if (!string.IsNullOrEmpty(returnUrl?.Replace("/", string.Empty)))
                     {
                         return Redirect(returnUrl);
                     }
 
-                    if (!await _identityController.IsInRoleAsync(user.Id, Domain.Statics.Role.User.Name) &&
-                        !await _identityController.IsInRoleAsync(user.Id, Domain.Statics.Role.Admin.Name))
-                    {
-                        this.StatusMessage(Messages.AccessDenied, StatusMessageType.Danger);
-                        return RedirectToAction("LogOff");
-                    }
+                    //transforma a senha digitada em md5
+                    //byte[] encodedPassword = new UTF8Encoding().GetBytes(model.Password);
+                    //byte[] bytePassword = ((HashAlgorithm)CryptoConfig.CreateFromName("MD5")).ComputeHash(encodedPassword);
+                    //var md5Password = CreateMD5(model.Password);
+
+                    ////busca o email no JSON da ticket4you
+                    //Ticket4youController userByTicket = new Ticket4youController();
+
+                    //if (userByTicket.SearchOne(model.Email) == null)
+                    //{
+                    //    ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
+                    //    //ModelState.AddModelError("", Messages.LoginByTicket4YouIncorrect);
+                    //    return View(model);
+
+                    //}
+                    //else if (userByTicket.UserTicket.senha != md5Password)
+                    //{
+                    //    ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
+                    //    //ModelState.AddModelError("", Messages.LoginByTicket4YouIncorrect);
+                    //    return View(model);
+                    //}
+                    ////else if (userByTicket.UserTicket.status_pedido != "Aprovado")
+                    ////{
+                    ////    //CRIAR TEXTO DE PAGAMANTO NÃO APROVADO
+                    ////    ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
+                    ////    //ModelState.AddModelError("", Messages.LoginByTicket4YouIncorrect);
+                    ////    return View(model);
+                    ////}
+                    //else
+                    //{
+
+                    //if (!await _identityController.IsInRoleAsync(user.Id, Domain.Statics.Role.User.Name) &&
+                    //    !await _identityController.IsInRoleAsync(user.Id, Domain.Statics.Role.Admin.Name))
+                    //{
+                    //    this.StatusMessage(Messages.AccessDenied, StatusMessageType.Danger);
+                    //    return RedirectToAction("LogOff");
+                    //}
 
                     //returnUrl = returnUrl ?? "/";
                     //return RedirectToLocal(returnUrl);

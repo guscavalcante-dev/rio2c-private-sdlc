@@ -26,15 +26,17 @@ namespace PlataformaRio2C.Web.Admin.Services
     public class AdminMailerService : MailerBase, IMailerService
     {
         private readonly string environment;
+        private readonly string siteUrl;
         private readonly string toEmail;
         private readonly string bccEmail;
 
         /// <summary>Initializes a new instance of the <see cref="AdminMailerService"/> class.</summary>
         public AdminMailerService()
         {
-            environment = ConfigurationManager.AppSettings["Environment"];
-            toEmail = ConfigurationManager.AppSettings["MvcMailer.ToEmail"];
-            bccEmail = ConfigurationManager.AppSettings["MvcMailer.BccEmail"];
+            this.environment = ConfigurationManager.AppSettings["Environment"];
+            this.siteUrl = ConfigurationManager.AppSettings["SiteUrl"];
+            this.toEmail = ConfigurationManager.AppSettings["MvcMailer.ToEmail"];
+            this.bccEmail = ConfigurationManager.AppSettings["MvcMailer.BccEmail"];
 
             this.MasterName = "_AdminEmailLayout";
         }
@@ -57,6 +59,7 @@ namespace PlataformaRio2C.Web.Admin.Services
                 x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
                 x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
                 ViewBag.SentEmailUid = sentEmailUid;
+                ViewBag.SiteUrl = this.siteUrl;
 
                 if (!string.IsNullOrEmpty(this.GetBccEmailRecipient()))
                 {

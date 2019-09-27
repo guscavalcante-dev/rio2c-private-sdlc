@@ -94,7 +94,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 ModelState.AddModelError("", Messages.InvalidLoginOrPassword);
                 return View(model);
             }
-            else if (!user.Active)
+
+            if (!user.Active)
             {
                 return View("DisabledUser");
             }
