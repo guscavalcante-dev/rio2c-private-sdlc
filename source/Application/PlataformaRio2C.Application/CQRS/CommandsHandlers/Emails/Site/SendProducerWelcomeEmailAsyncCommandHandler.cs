@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Rafael Dantas Ruiz
-// Created          : 09-02-2019
+// Created          : 09-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-10-2019
+// Last Modified On : 09-27-2019
 // ***********************************************************************
-// <copyright file="SendWelmcomeEmailAsyncCommandHandler.cs" company="Softo">
+// <copyright file="SendProducerWelcomeEmailAsyncCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -23,15 +23,15 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>SendWelmcomeEmailAsyncCommandHandler</summary>
-    public class SendWelmcomeEmailAsyncCommandHandler : SiteMailerBaseCommandHandler, IRequestHandler<SendWelcomeEmailAsync, AppValidationResult>
+    /// <summary>SendProducerWelcomeEmailAsyncCommandHandler</summary>
+    public class SendProducerWelcomeEmailAsyncCommandHandler : MailerBaseCommandHandler, IRequestHandler<SendProducerWelcomeEmailAsync, AppValidationResult>
     {
-        /// <summary>Initializes a new instance of the <see cref="SendWelmcomeEmailAsyncCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="SendProducerWelcomeEmailAsyncCommandHandler"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="mailerService">The mailer service.</param>
         /// <param name="sentEmailRepository">The sent email repository.</param>
-        public SendWelmcomeEmailAsyncCommandHandler(
+        public SendProducerWelcomeEmailAsyncCommandHandler(
             IMediator commandBus,
             IUnitOfWork uow,
             IMailerService mailerService,
@@ -40,17 +40,17 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
         }
 
-        /// <summary>Handles the specified send welcome email asynchronous.</summary>
+        /// <summary>Handles the specified send producer welcome email asynchronous.</summary>
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(SendWelcomeEmailAsync cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(SendProducerWelcomeEmailAsync cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
             // Save sent email
             var sentEmailUid = Guid.NewGuid();
-            var sentEmail = new SentEmail(sentEmailUid, cmd.RecipientUserId, cmd.EditionId, "Welcome");
+            var sentEmail = new SentEmail(sentEmailUid, cmd.RecipientUserId, cmd.EditionId, "ProducerWelcome");
             if (!sentEmail.IsValid())
             {
                 this.AppValidationResult.Add(sentEmail.ValidationResult);
@@ -61,7 +61,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.Uow.SaveChanges();
 
             // Sends the email
-            await this.MailerService.SendWelcomeEmail(cmd, sentEmail.Uid).SendAsync();
+            await this.MailerService.SendProducerWelcomeEmail(cmd, sentEmail.Uid).SendAsync();
 
             this.AppValidationResult.Data = sentEmail;
             return this.AppValidationResult;

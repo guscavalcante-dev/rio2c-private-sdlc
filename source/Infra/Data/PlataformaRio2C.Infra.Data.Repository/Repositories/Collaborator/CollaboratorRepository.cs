@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-24-2019
+// Last Modified On : 09-27-2019
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -230,6 +230,32 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         ? consult.AsNoTracking()
                         : consult;
         }
+
+        /// <summary>Finds all collaborators by collaborators uids.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="collaboratorsUids">The collaborators uids.</param>
+        /// <returns></returns>
+        public async Task<List<AdminAccessControlDto>> FindAllCollaboratorsByCollaboratorsUids(int editionId, List<Guid> collaboratorsUids)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUids(collaboratorsUids);
+
+            return await query
+                            .Select(c => new AdminAccessControlDto
+                            {
+                                User = c.User,
+                                Roles = c.User.Roles,
+                                Language = c.User.UserInterfaceLanguage,
+                                Collaborator = c,
+                                EditionCollaboratorTypes = c.AttendeeCollaborators
+                                                                .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                                .SelectMany(ac => ac.AttendeeCollaboratorTypes
+                                                                                        .Where(act => !act.IsDeleted && !act.CollaboratorType.IsDeleted)
+                                                                                        .Select(act => act.CollaboratorType)),
+                            })
+                            .ToListAsync();
+        }
+
 
         /// <summary>Finds the dto by uid and by edition identifier asynchronous.</summary>
         /// <param name="collaboratorUid">The collaborator uid.</param>

@@ -43,18 +43,22 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     [AuthorizeCollaboratorType(Order = 2, Types = new[] { Constants.CollaboratorType.AdminAudiovisual })]
     public class PlayersExecutivesController : BaseController
     {
+        private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IAttendeeSalesPlatformTicketTypeRepository attendeeSalesPlatformTicketTypeRepo;
 
         /// <summary>Initializes a new instance of the <see cref="PlayersExecutivesController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
+        /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="attendeeSalesPlatformTicketTypeRepository">The attendee sales platform ticket type repository.</param>
         public PlayersExecutivesController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
+            ICollaboratorRepository collaboratorRepository,
             IAttendeeSalesPlatformTicketTypeRepository attendeeSalesPlatformTicketTypeRepository)
             : base(commandBus, identityController)
         {
+            this.collaboratorRepo = collaboratorRepository;
             this.attendeeSalesPlatformTicketTypeRepo = attendeeSalesPlatformTicketTypeRepository;
         }
 
@@ -116,6 +120,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #endregion
 
+        #endregion
+
         #region Export Eventbrite CSV
 
         /// <summary>Shows the export eventbrite CSV modal.</summary>
@@ -146,39 +152,115 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ExportEventbriteCsv(IDataTablesRequest request, string selectedCollaboratorsUids, string ticketClassName, bool showAllEditions, bool showAllExecutives, bool showAllParticipants)
         {
-            var playersExecutives = await this.CommandBus.Send(new FindAllCollaboratorsBaseDtosAsync(
-                1,
-                10000,
-                request?.Search?.Value,
-                request?.GetSortColumns(),
-                selectedCollaboratorsUids,
-                OrganizationType.Player.Uid,
-                showAllEditions,
-                showAllExecutives,
-                showAllParticipants,
-                this.AdminAccessControlDto.User.Id,
-                this.AdminAccessControlDto.User.Uid,
-                this.EditionDto.Id,
-                this.EditionDto.Uid,
-                this.UserInterfaceLanguage));
+            List<EventbriteCsv> eventbriteCsv = null;
 
-            var json = playersExecutives?.Select(pe => new EventbriteCsv
+            try
             {
-                Name = pe.FirstName,
-                LastName = pe.LastNames,
-                Email = pe.Email,
-                TicketClassName = ticketClassName,
-                Quantity = 1
-            }).ToList();
+                var playersExecutives = await this.CommandBus.Send(new FindAllCollaboratorsBaseDtosAsync(
+                    1,
+                    10000,
+                    request?.Search?.Value,
+                    request?.GetSortColumns(),
+                    selectedCollaboratorsUids,
+                    OrganizationType.Player.Uid,
+                    showAllEditions,
+                    showAllExecutives,
+                    showAllParticipants,
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage));
 
-            return Json(new
+                eventbriteCsv = playersExecutives?.Select(pe => new EventbriteCsv
+                {
+                    Name = pe.FirstName,
+                    LastName = pe.LastNames,
+                    Email = pe.Email,
+                    TicketClassName = ticketClassName,
+                    Quantity = 1
+                }).ToList();
+            }
+            catch (DomainException ex)
             {
-                status = "success",
-                data = JsonConvert.SerializeObject(json)
-            }, JsonRequestBehavior.AllowGet);
+                return Json(new { status = "error", message = ex.GetInnerMessage(), }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", data = JsonConvert.SerializeObject(eventbriteCsv) }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion
+
+        #region Send Invitation Emails
+
+        /// <summary>Sends the invitation emails.</summary>
+        /// <param name="selectedCollaboratorsUids">The selected collaborators uids.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> SendInvitationEmails(string selectedCollaboratorsUids)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(selectedCollaboratorsUids))
+                {
+                    throw new DomainException(Messages.SelectAtLeastOneOption);
+                }
+
+                var collaboratorsUids = new List<Guid>();
+                var selectedCollaboratorsUidsSplit = selectedCollaboratorsUids.Split(',');
+                foreach (var selectedCollaboratorUid in selectedCollaboratorsUidsSplit)
+                {
+                    if (Guid.TryParse(selectedCollaboratorUid, out Guid collaboratorUid))
+                    {
+                        collaboratorsUids.Add(collaboratorUid);
+                    }
+                }
+
+                if (!collaboratorsUids.Any())
+                {
+                    throw new DomainException(Messages.SelectAtLeastOneOption);
+                }
+
+                var collaborators = await this.collaboratorRepo.FindAllCollaboratorsByCollaboratorsUids(this.EditionDto.Id, collaboratorsUids);
+                if (collaborators?.Any() != true)
+                {
+                    throw new DomainException(Messages.SelectAtLeastOneOption);
+                }
+
+                foreach (var collaborator in collaborators)
+                {
+                    var collaboratorLanguageCode = collaborator.Language?.Code ?? this.UserInterfaceLanguage;
+
+                    await this.CommandBus.Send(new SendPlayerWelcomeEmailAsync(
+                        collaborator.User.SecurityStamp,
+                        collaborator.User.Id,
+                        collaborator.User.Uid,
+                        collaborator.GetFirstName(),
+                        collaborator.GetFullName(collaboratorLanguageCode),
+                        collaborator.User.Email,
+                        this.EditionDto.Id,
+                        this.EditionDto.Name,
+                        this.EditionDto.UrlCode,
+                        collaboratorLanguageCode));
+                }
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage(), }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Email.ToLowerInvariant(), Labels.Sent.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+        }
 
         #endregion
 

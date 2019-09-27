@@ -359,7 +359,7 @@
     <Compile Include="Filters\CustomExceptionFilterAttribute.cs" />
     <Compile Include="Models\LanguageMessageHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\MailerService.cs" />
+    <Compile Include="Services\AdminMailerService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -8134,8 +8134,8 @@
     <Content Include="Views\PlayersExecutives\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Views\PlayersExecutives\EditorTemplates\CollaboratorMiniBioBaseCommand.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AttendeeOrganizationBaseCommand.cshtml" />
-    <Content Include="Views\MailerService\_SiteEmailLayout.cshtml" />
-    <Content Include="Views\MailerService\Welcome.cshtml" />
+    <Content Include="Views\AdminMailerService\_AdminEmailLayout.cshtml" />
+    <Content Include="Views\AdminMailerService\PlayerWelcome.cshtml" />
     <Content Include="Views\Players\EditorTemplates\OrganizationRestrictionSpecificsBaseCommand.cshtml" />
     <Content Include="Views\Players\EditorTemplates\OrganizationActivityBaseCommand.cshtml" />
     <Content Include="Views\PlayersExecutives\Modals\EventbriteCsvModal.cshtml" />

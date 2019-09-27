@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-02-2019
+// Last Modified On : 09-27-2019
 // ***********************************************************************
 // <copyright file="EmailBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

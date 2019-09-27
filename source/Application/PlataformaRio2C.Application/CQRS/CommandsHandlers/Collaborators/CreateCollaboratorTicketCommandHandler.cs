@@ -4,7 +4,7 @@
 // Created          : 08-31-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-26-2019
+// Last Modified On : 09-27-2019
 // ***********************************************************************
 // <copyright file="CreateCollaboratorWithTicketsHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -90,21 +90,21 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 this.Uow.SaveChanges();
                 this.AppValidationResult.Data = collaborator;
 
-                #region Send welcome email
+                //#region Send welcome email
 
-                await this.CommandBus.Send(new SendWelcomeEmailAsync(
-                    collaborator.User.SecurityStamp,
-                    collaborator.User.Id,
-                    collaborator.User.Uid,
-                    collaborator.FirstName, 
-                    collaborator.GetFullName(), 
-                    cmd.SalesPlatformAttendeeDto.Email, 
-                    cmd.Edition.Id,
-                    cmd.Edition.Name, 
-                    cmd.Edition.UrlCode, 
-                    "pt-BR"), cancellationToken);
+                //await this.CommandBus.Send(new SendProducerWelcomeEmailAsync(
+                //    collaborator.User.SecurityStamp,
+                //    collaborator.User.Id,
+                //    collaborator.User.Uid,
+                //    collaborator.FirstName, 
+                //    collaborator.GetFullName(), 
+                //    cmd.SalesPlatformAttendeeDto.Email, 
+                //    cmd.Edition.Id,
+                //    cmd.Edition.Name, 
+                //    cmd.Edition.UrlCode, 
+                //    "pt-BR"), cancellationToken);
 
-                #endregion
+                //#endregion
             }
             else
             {

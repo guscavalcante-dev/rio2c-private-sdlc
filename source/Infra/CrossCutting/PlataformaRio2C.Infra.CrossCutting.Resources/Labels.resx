@@ -1461,4 +1461,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Exportar para Eventbrite</value>
     <comment>Exportar para Eventbrite</comment>
   </data>
+  <data name="SendInvitationEmail" xml:space="preserve">
+    <value>Enviar e-mail de convite</value>
+    <comment>Enviar e-mail de convite</comment>
+  </data>
+  <data name="Sent" xml:space="preserve">
+    <value>Enviado</value>
+    <comment>Enviado</comment>
+  </data>
 </root>

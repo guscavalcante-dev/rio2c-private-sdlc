@@ -4,7 +4,7 @@
 // Created          : 07-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-25-2019
+// Last Modified On : 09-27-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -39,30 +39,6 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         {
             this.commandBus = commandBus;
         }
-
-        #region Test Welcome Email
-
-        /// <summary>Pings this instance.</summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("testwelcomeemail")]
-        public async Task<IHttpActionResult> TestWelcomeEmail()
-        {
-            await this.commandBus.Send(new SendWelcomeEmailAsync(
-                "71e9d659-1645-4c1b-a41a-c67a3ae4f42c", 
-                1, 
-                new Guid("4003E6DD-3DA8-45B5-9A68-0B67759DBD0E"), 
-                "Rafael", 
-                "Fabio Seixas", 
-                "fseixas@gmail.com", 
-                2, 
-                "Rio2C 2020", 
-                2020, 
-                "pt-BR"));
-            return await Json(new { status = "success", message = "Welcome email sent." });
-        }
-
-        #endregion
 
         #region Ping
 

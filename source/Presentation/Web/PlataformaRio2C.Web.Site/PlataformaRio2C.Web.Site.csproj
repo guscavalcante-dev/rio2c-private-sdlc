@@ -330,7 +330,7 @@
     <Compile Include="Controllers\StatesController.cs" />
     <Compile Include="Filters\AuthorizeCollaboratorTypeAttribute.cs" />
     <Compile Include="Helpers\OnboardingAllowedRoutesHelper.cs" />
-    <Compile Include="Services\MailerService.cs" />
+    <Compile Include="Services\SiteMailerService.cs" />
     <Compile Include="Controllers\OnboardingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuizController.cs" />
@@ -7080,8 +7080,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Modals\Onboarding.cshtml" />
     <Content Include="Views\Onboarding\Index.Remove.cshtml" />
-    <Content Include="Views\MailerService\Welcome.cshtml" />
-    <Content Include="Views\MailerService\_SiteEmailLayout.cshtml" />
+    <Content Include="Views\SiteMailerService\ProducerWelcome.cshtml" />
+    <Content Include="Views\SiteMailerService\_SiteEmailLayout.cshtml" />
     <Content Include="Views\Onboarding\AccessData.cshtml" />
     <Content Include="Views\Onboarding\Shared\_OnboardingMenu.cshtml" />
     <Content Include="Views\Onboarding\CollaboratorData.cshtml" />

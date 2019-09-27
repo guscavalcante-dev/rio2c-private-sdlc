@@ -2779,11 +2779,29 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enviar e-mail de convite.
+        /// </summary>
+        public static string SendInvitationEmail {
+            get {
+                return ResourceManager.GetString("SendInvitationEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Finalizar e enviar.
         /// </summary>
         public static string SendToPlayers {
             get {
                 return ResourceManager.GetString("SendToPlayers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enviado.
+        /// </summary>
+        public static string Sent {
+            get {
+                return ResourceManager.GetString("Sent", resourceCulture);
             }
         }
         

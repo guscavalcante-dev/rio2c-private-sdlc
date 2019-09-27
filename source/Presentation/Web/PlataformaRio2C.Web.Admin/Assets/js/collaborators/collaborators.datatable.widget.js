@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-25-2019
+// Last Modified On : 09-27-2019
 // ***********************************************************************
 // <copyright file="collaborators.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,7 +20,53 @@ var CollaboratorsDataTableWidget = function () {
     var table;
     var eventbriteCsvExport;
 
-    // Show export eventbrite csv modal -----------------------------------------------------------
+    // Invitation email ---------------------------------------------------------------------------
+    var sendInvitationEmails = function () {
+        MyRio2cCommon.block();
+
+        var jsonParameters = new Object();
+        jsonParameters.selectedCollaboratorsUids = $('#playersexecutives-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
+
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/PlayersExecutives/SendInvitationEmails'), jsonParameters, function (data) {
+            MyRio2cCommon.handleAjaxReturn({
+                data: data,
+                // Success
+                onSuccess: function () {
+                },
+                // Error
+                onError: function () {
+                }
+            });
+        })
+        .fail(function () {
+        })
+        .always(function () {
+            MyRio2cCommon.unblock();
+        });
+    };
+
+    var showSendInvitationEmailsModal = function () {
+        bootbox.dialog({
+            message: confirmToSendInvitationEmails,
+            buttons: {
+                cancel: {
+                    label: labels.cancel,
+                    className: "btn btn-secondary btn-elevate mr-auto",
+                    callback: function () {
+                    }
+                },
+                confirm: {
+                    label: labels.send,
+                    className: "btn btn-brand btn-elevate",
+                    callback: function () {
+                        sendInvitationEmails();
+                    }
+                }
+            }
+        });
+    };
+
+    // Export csv ---------------------------------------------------------------------------------
     var enableExportEventbriteCsvPlugins = function () {
         MyRio2cCommon.enableSelect2({ inputIdOrClass: modalId + ' .enable-select2' });
     };
@@ -61,7 +107,8 @@ var CollaboratorsDataTableWidget = function () {
             $('[data-valmsg-for="' + ticketTypeNameId + '"]').removeClass('field-validation-valid');
             $('[data-valmsg-for="' + ticketTypeNameId + '"]').addClass('field-validation-error');
 
-            return false;
+            MyRio2cCommon.unblock({ isModal: true });
+            return;
         }
         else {
             $('[data-valmsg-for="' + ticketTypeNameId + '"]').html('');
@@ -95,21 +142,6 @@ var CollaboratorsDataTableWidget = function () {
         .always(function () {
             MyRio2cCommon.unblock();
         });
-
-        //$.ajax({
-        //    url: MyRio2cCommon.getUrlWithCultureAndEdition('/PlayersExecutives/ExportEventbriteCsv'),
-        //    data: eventbriteCsvExport,
-        //    success: function (res, status, xhr) {
-        //        var json = jQuery.parseJSON(res.data);
-        //        var csv = MyRio2cCommon.convertJsonToCsv(json);
-        //        var csvData = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        //        var csvUrl = window.URL.createObjectURL(csvData);
-        //        var tempLink = document.createElement('a');
-        //        tempLink.href = csvUrl;
-        //        tempLink.setAttribute('download', 'eventbrite.csv');
-        //        tempLink.click();
-        //    }
-        //});
     };
 
     // Init datatable -----------------------------------------------------------------------------
@@ -153,19 +185,29 @@ var CollaboratorsDataTableWidget = function () {
             searchDelay: 2000,
             processing: true,
             serverSide: true,
-            "buttons": [{
-                text: exportToEventbrite,
-                action: function (e, dt, node, config) {
-                    // TODO: Open modal
+            buttons: [
+            {
+                extend: 'collection',
+                text: labels.actions,
+                buttons: [
+                    {
+                        text: sendInvitationEmail,
+                        action: function (e, dt, node, config) {
+                            showSendInvitationEmailsModal();
+                        }
+                    },
+                    {
+                        text: exportToEventbrite,
+                        action: function (e, dt, node, config) {
+                            eventbriteCsvExport = dt.ajax.params();
+                            eventbriteCsvExport.selectedCollaboratorsUids = $('#playersexecutives-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
+                            eventbriteCsvExport.showAllEditions = $('#ShowAllEditions').prop('checked');
+                            eventbriteCsvExport.showAllExecutives = $('#ShowAllExecutives').prop('checked');
+                            eventbriteCsvExport.showAllParticipants = $('#ShowAllParticipants').prop('checked');
 
-                    eventbriteCsvExport = dt.ajax.params();
-                    eventbriteCsvExport.selectedCollaboratorsUids = $('#playersexecutives-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
-                    eventbriteCsvExport.showAllEditions = $('#ShowAllEditions').prop('checked');
-                    eventbriteCsvExport.showAllExecutives = $('#ShowAllExecutives').prop('checked');
-                    eventbriteCsvExport.showAllParticipants = $('#ShowAllParticipants').prop('checked');
-
-                    showExportEventbriteCsvModal();
-                }
+                            showExportEventbriteCsvModal();
+                        }
+                    }]
             }],
             order: [[0, "asc"]],
             sDom: '<"row"<"col-sm-6"l><"col-sm-6 text-right"B>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
@@ -323,7 +365,10 @@ var CollaboratorsDataTableWidget = function () {
                     searchable: false,
                     className: "dt-center"
                 }
-            ]
+            ],
+            initComplete: function() {
+                $('button.buttons-collection').attr('data-toggle', 'dropdown');
+            }
         });
 
         $('#Search').keyup(function (e) {

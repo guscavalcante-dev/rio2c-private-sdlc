@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Rafael Dantas Ruiz
-// Created          : 09-02-2019
+// Created          : 09-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-02-2019
+// Last Modified On : 09-27-2019
 // ***********************************************************************
-// <copyright file="SendWelcomeEmailAsync.cs" company="Softo">
+// <copyright file="SendProducerWelcomeEmailAsync.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -15,12 +15,12 @@ using System;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>SendWelcomeEmailAsync</summary>
-    public class SendWelcomeEmailAsync : EmailBaseCommand
+    /// <summary>SendProducerWelcomeEmailAsync</summary>
+    public class SendProducerWelcomeEmailAsync : EmailBaseCommand
     {
         public string UserSecurityToken { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="SendWelcomeEmailAsync"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="SendProducerWelcomeEmailAsync"/> class.</summary>
         /// <param name="userSecurityToken">The user security token.</param>
         /// <param name="recipientUserId">The recipient user identifier.</param>
         /// <param name="recipientUserUid">The recipient user uid.</param>
@@ -31,7 +31,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="editionName">Name of the edition.</param>
         /// <param name="editionUrlCode">The edition URL code.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
-        public SendWelcomeEmailAsync(
+        public SendProducerWelcomeEmailAsync(
             string userSecurityToken,
             int recipientUserId, 
             Guid recipientUserUid, 
@@ -47,8 +47,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UserSecurityToken = userSecurityToken;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="SendWelcomeEmailAsync"/> class.</summary>
-        public SendWelcomeEmailAsync()
+        /// <summary>Initializes a new instance of the <see cref="SendProducerWelcomeEmailAsync"/> class.</summary>
+        public SendProducerWelcomeEmailAsync()
         {
         }
     }

@@ -181,6 +181,7 @@
     <Compile Include="CQRS\CommandsHandlers\Collaborators\CreateCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\DeleteCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Emails\Site\SendProducerWelcomeEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\BaseHoldingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\DeleteHoldingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\UpdateHoldingCommandHandler.cs" />
@@ -190,8 +191,8 @@
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardOrganizationDataCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardCollaboratorDataCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardCollaboratorAccessDataCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\SiteEmails\SiteMailerBaseCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\SiteEmails\SendWelcomeEmailAsyncCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Emails\MailerBaseCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendPlayerWelcomeEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\BaseOrganizationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\DeleteOrganizationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\UpdateOrganizationCommandHandler.cs" />
@@ -202,6 +203,7 @@
     <Compile Include="CQRS\Commands\Attendees\BaseCommands\AttendeeOrganizationBaseCommand.cs" />
     <Compile Include="CQRS\Commands\BaseCommand.cs" />
     <Compile Include="CQRS\Commands\Collaborators\BaseCommands\CollaboratorMiniBioBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Emails\Site\SendProducerWelcomeEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Organizations\BaseCommands\OrganizationActivityBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Onboardings\OnboardPlayerTermsAcceptance.cs" />
     <Compile Include="CQRS\Commands\Onboardings\OnboardCollaboratorData.cs" />
@@ -219,8 +221,8 @@
     <Compile Include="CQRS\Commands\Onboardings\OnboardPlayerInterests.cs" />
     <Compile Include="CQRS\Commands\Onboardings\OnboardOrganizationData.cs" />
     <Compile Include="CQRS\Commands\Organizations\BaseCommands\OrganizationRestrictionSpecificsBaseCommand.cs" />
-    <Compile Include="CQRS\Commands\SiteEmails\BaseCommands\EmailBaseCommand.cs" />
-    <Compile Include="CQRS\Commands\SiteEmails\SendWelcomeEmailAsync.cs" />
+    <Compile Include="CQRS\Commands\Emails\EmailBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Emails\Admin\SendPlayerWelcomeEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Organizations\BaseCommands\OrganizationBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Organizations\BaseCommands\OrganizationDescriptionBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Organizations\CreateOrganization.cs" />
