@@ -4,7 +4,7 @@
 // Created          : 08-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-27-2019
+// Last Modified On : 09-26-2019
 // ***********************************************************************
 // <copyright file="DeleteCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,18 +27,24 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     public class DeleteCollaboratorCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<DeleteCollaborator, AppValidationResult>
     {
         private readonly IEditionRepository editionRepo;
-        private readonly IOrganizationTypeRepository organizationTypeRepo;
+        private readonly ICollaboratorTypeRepository collaboratorTypeRepo;
 
+        /// <summary>Initializes a new instance of the <see cref="DeleteCollaboratorCommandHandler"/> class.</summary>
+        /// <param name="eventBus">The event bus.</param>
+        /// <param name="uow">The uow.</param>
+        /// <param name="collaboratorRepository">The collaborator repository.</param>
+        /// <param name="editionRepository">The edition repository.</param>
+        /// <param name="collaboratorTypeRepository">The collaborator type repository.</param>
         public DeleteCollaboratorCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             ICollaboratorRepository collaboratorRepository,
             IEditionRepository editionRepository,
-            IOrganizationTypeRepository organizationTypeRepository)
+            ICollaboratorTypeRepository collaboratorTypeRepository)
             : base(eventBus, uow, collaboratorRepository)
         {
             this.editionRepo = editionRepository;
-            this.organizationTypeRepo = organizationTypeRepository;
+            this.collaboratorTypeRepo = collaboratorTypeRepository;
         }
 
         /// <summary>Handles the specified delete collaborator.</summary>
@@ -66,7 +72,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             // Before update values
             var beforeImageUploadDate = collaborator.ImageUploadDate;
 
-            collaborator.Delete(edition, cmd.UserId);
+            collaborator.Delete(
+                edition,
+                await this.collaboratorTypeRepo.FindByNameAsunc(cmd.CollaboratorTypeName),
+                cmd.UserId);
             if (!collaborator.IsValid())
             {
                 this.AppValidationResult.Add(collaborator.ValidationResult);

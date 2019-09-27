@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-19-2019
+// Last Modified On : 09-26-2019
 // ***********************************************************************
 // <copyright file="HomeController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,7 +28,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 {
     /// <summary>HomeController</summary>
     [AjaxAuthorize(Order = 1)]
-    [AuthorizeTicketType(Order = 2, AllowedTicketTypes = new[] { "Player", "Industry" })]
+    [AuthorizeCollaboratorType(Order = 2, AllowedCollaboratorTypes = new[] { "Player", "Industry" })]
     public class HomeController : BaseController
     {
         /// <summary>Initializes a new instance of the <see cref="HomeController"/> class.</summary>

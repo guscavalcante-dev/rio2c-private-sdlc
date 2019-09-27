@@ -4,7 +4,7 @@
 // Created          : 08-31-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-31-2019
+// Last Modified On : 09-26-2019
 // ***********************************************************************
 // <copyright file="AttendeeSalesPlatformTicketType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,12 +28,12 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int TicketClassNameMaxLength = 200;
 
         public int AttendeeSalesPlatformId { get; private set; }
-        public int TicketTypeId { get; private set; }
+        public int CollaboratorTypeId { get; private set; }
         public string TicketClassId { get; private set; }
         public string TicketClassName { get; private set; }
 
         public virtual AttendeeSalesPlatform AttendeeSalesPlatform { get; private set; }
-        public virtual TicketType TicketType { get; private set; }
+        public virtual CollaboratorType CollaboratorType { get; private set; }
 
         public virtual ICollection<AttendeeCollaboratorTicket> AttendeeCollaboratorTickets { get; private set; }
 

@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-12-2019
+// Last Modified On : 09-26-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,22 +33,25 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual Edition Edition { get; private set; }
         public virtual Collaborator Collaborator { get; private set; }
 
+        public virtual ICollection<AttendeeCollaboratorType> AttendeeCollaboratorTypes { get; private set; }
         public virtual ICollection<AttendeeOrganizationCollaborator> AttendeeOrganizationCollaborators { get; private set; }
         public virtual ICollection<AttendeeCollaboratorTicket> AttendeeCollaboratorTickets { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeCollaborator"/> class.</summary>
         /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="collaborator">The collaborator.</param>
         /// <param name="shouldDeleteOrganizations">if set to <c>true</c> [should delete organizations].</param>
         /// <param name="userId">The user identifier.</param>
-        public AttendeeCollaborator(Edition edition, List<AttendeeOrganization> attendeeOrganizations, Collaborator collaborator, bool shouldDeleteOrganizations, int userId)
+        public AttendeeCollaborator(Edition edition, CollaboratorType collaboratorType, List<AttendeeOrganization> attendeeOrganizations, Collaborator collaborator, bool shouldDeleteOrganizations, int userId)
         {
             this.Edition = edition;
             this.Collaborator = collaborator;
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
+            this.SynchronizeAttendeeCollaboratorType(collaboratorType, userId);
             this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
         }
 
@@ -113,21 +116,31 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Updates the specified edition.</summary>
         /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="shouldDeleteOrganizations">if set to <c>true</c> [should delete organizations].</param>
         /// <param name="userId">The user identifier.</param>
-        public void Update(Edition edition, List<AttendeeOrganization> attendeeOrganizations, bool shouldDeleteOrganizations , int userId)
+        public void Update(Edition edition, CollaboratorType collaboratorType, List<AttendeeOrganization> attendeeOrganizations, bool shouldDeleteOrganizations , int userId)
         {
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
+            this.SynchronizeAttendeeCollaboratorType(collaboratorType, userId);
             this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
         }
 
-        /// <summary>Deletes the specified user identifier.</summary>
+        /// <summary>Deletes the specified collaborator type.</summary>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="userId">The user identifier.</param>
-        public void Delete(int userId)
+        public void Delete(CollaboratorType collaboratorType, int userId)
         {
+            this.DeleteAttendeeCollaboratorType(collaboratorType, userId);
+
+            if (this.FindAllAttendeeCollaboratorTypesNotDeleted()?.Any() == true)
+            {
+                return;
+            }
+
             this.IsDeleted = true;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
@@ -174,6 +187,55 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
             this.ProducerTermsAcceptanceDate = DateTime.Now;
+        }
+
+        #endregion
+
+        #region Attendee Collaborators Types
+
+        /// <summary>Synchronizes the type of the attendee collaborator.</summary>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeAttendeeCollaboratorType(CollaboratorType collaboratorType, int userId)
+        {
+            if (this.AttendeeCollaboratorTypes == null)
+            {
+                this.AttendeeCollaboratorTypes = new List<AttendeeCollaboratorType>();
+            }
+
+            var attendeeCollaboratorType = this.FindAttendeeCollaboratorTypeByUid(collaboratorType?.Uid ?? Guid.Empty);
+            if (attendeeCollaboratorType == null)
+            {
+                this.AttendeeCollaboratorTypes.Add(new AttendeeCollaboratorType(this, collaboratorType, userId));
+            }
+            else
+            {
+                attendeeCollaboratorType.Update(userId);
+            }
+        }
+
+        /// <summary>Deletes the type of the attendee collaborator.</summary>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteAttendeeCollaboratorType(CollaboratorType collaboratorType, int userId)
+        {
+            var attendeeCollaboratorType = this.FindAttendeeCollaboratorTypeByUid(collaboratorType?.Uid ?? Guid.Empty);
+            attendeeCollaboratorType?.Delete(userId);
+        }
+
+        /// <summary>Finds the attendee collaborator type by uid.</summary>
+        /// <param name="collaboratorTypeUid">The collaborator type uid.</param>
+        /// <returns></returns>
+        private AttendeeCollaboratorType FindAttendeeCollaboratorTypeByUid(Guid collaboratorTypeUid)
+        {
+            return this.AttendeeCollaboratorTypes?.FirstOrDefault(act => act.CollaboratorType.Uid == collaboratorTypeUid);
+        }
+
+        /// <summary>Finds all attendee collaborator types not deleted.</summary>
+        /// <returns></returns>
+        private List<AttendeeCollaboratorType> FindAllAttendeeCollaboratorTypesNotDeleted()
+        {
+            return this.AttendeeCollaboratorTypes?.Where(act => !act.IsDeleted)?.ToList();
         }
 
         #endregion

@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-10-2019
+// Last Modified On : 09-26-2019
 // ***********************************************************************
 // <copyright file="BaseController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -44,7 +44,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         protected Guid UserUid;
         protected string UserName;
         protected IList<Role> UserRoles;
-        protected IList<TicketType> UserTicketTypes;
+        protected IList<CollaboratorType> CollaboratorTypes;
         protected string Area;
         protected UserAccessControlDto UserAccessControlDto;
 

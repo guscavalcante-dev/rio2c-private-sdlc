@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 09-26-2019
 // ***********************************************************************
 // <copyright file="PlataformaRio2CContext.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -60,7 +60,9 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new CollaboratorMap());
             modelBuilder.Configurations.Add(new CollaboratorJobTitleMap());
             modelBuilder.Configurations.Add(new CollaboratorMiniBioMap());
+            modelBuilder.Configurations.Add(new CollaboratorTypeMap());
             modelBuilder.Configurations.Add(new AttendeeCollaboratorMap());
+            modelBuilder.Configurations.Add(new AttendeeCollaboratorTypeMap());
             modelBuilder.Configurations.Add(new AttendeeCollaboratorTicketMap());
 
             // Projects
@@ -77,7 +79,6 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new SalesPlatformWebhookRequestMap());
             modelBuilder.Configurations.Add(new AttendeeSalesPlatformMap());
             modelBuilder.Configurations.Add(new AttendeeSalesPlatformTicketTypeMap());
-            modelBuilder.Configurations.Add(new TicketTypeMap());
 
             // Sent emails
             modelBuilder.Configurations.Add(new SentEmailMap());

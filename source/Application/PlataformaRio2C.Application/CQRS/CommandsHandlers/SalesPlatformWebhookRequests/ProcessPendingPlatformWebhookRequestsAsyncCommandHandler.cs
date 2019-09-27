@@ -4,7 +4,7 @@
 // Created          : 08-31-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-03-2019
+// Last Modified On : 09-26-2019
 // ***********************************************************************
 // <copyright file="ProcessPendingPlatformWebhookRequestsAsyncCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -175,7 +175,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                     attendeeSalesPlatformDto.Edition,
                                     collaboratorByAttendeeId?.GetAttendeeCollaboratorByEditionId(attendeeSalesPlatformDto.Edition.Id)?.GetAllAttendeeOrganizations(),
                                     attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType,
-                                    attendeeSalesPlatformTicketTypeDto.TicketType,
+                                    attendeeSalesPlatformTicketTypeDto.CollaboratorType,
                                     attendeeSalesPlatformTicketTypeDto.Role), cancellationToken);
                                 foreach (var error in response?.Errors)
                                 {
@@ -193,7 +193,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                     attendeeSalesPlatformDto.Edition,
                                     collaboratorByAttendeeId?.GetAttendeeCollaboratorByEditionId(attendeeSalesPlatformDto.Edition.Id)?.GetAllAttendeeOrganizations(),
                                     attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType,
-                                    attendeeSalesPlatformTicketTypeDto.TicketType,
+                                    attendeeSalesPlatformTicketTypeDto.CollaboratorType,
                                     attendeeSalesPlatformTicketTypeDto.Role), cancellationToken);
                                 foreach (var error in response?.Errors)
                                 {
@@ -209,7 +209,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                     salesPlatformAttendeeDto,
                                     attendeeSalesPlatformDto.Edition,
                                     attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType,
-                                    attendeeSalesPlatformTicketTypeDto.TicketType,
+                                    attendeeSalesPlatformTicketTypeDto.CollaboratorType,
                                     attendeeSalesPlatformTicketTypeDto.Role), cancellationToken);
                                 foreach (var error in response1?.Errors)
                                 {
@@ -228,7 +228,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                     attendeeSalesPlatformDto.Edition,
                                     collaboratorByAttendeeId?.GetAttendeeCollaboratorByEditionId(attendeeSalesPlatformDto.Edition.Id)?.GetAllAttendeeOrganizations(),
                                     attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType,
-                                    attendeeSalesPlatformTicketTypeDto.TicketType,
+                                    attendeeSalesPlatformTicketTypeDto.CollaboratorType,
                                     attendeeSalesPlatformTicketTypeDto.Role), cancellationToken);
                                 foreach (var error in response2?.Errors)
                                 {
@@ -244,7 +244,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                     salesPlatformAttendeeDto,
                                     attendeeSalesPlatformDto.Edition,
                                     attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType,
-                                    attendeeSalesPlatformTicketTypeDto.TicketType,
+                                    attendeeSalesPlatformTicketTypeDto.CollaboratorType,
                                     attendeeSalesPlatformTicketTypeDto.Role), cancellationToken);
                                 foreach (var error in response1?.Errors)
                                 {
@@ -264,7 +264,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                     attendeeSalesPlatformDto.Edition,
                                     collaboratorByAttendeeId?.GetAttendeeCollaboratorByEditionId(attendeeSalesPlatformDto.Edition.Id)?.GetAllAttendeeOrganizations(),
                                     attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType,
-                                    attendeeSalesPlatformTicketTypeDto.TicketType,
+                                    attendeeSalesPlatformTicketTypeDto.CollaboratorType,
                                     attendeeSalesPlatformTicketTypeDto.Role), cancellationToken);
                                 foreach (var error in response2?.Errors)
                                 {
@@ -292,7 +292,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                 salesPlatformAttendeeDto,
                                 attendeeSalesPlatformDto.Edition,
                                 attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType,
-                                attendeeSalesPlatformTicketTypeDto.TicketType,
+                                attendeeSalesPlatformTicketTypeDto.CollaboratorType,
                                 attendeeSalesPlatformTicketTypeDto.Role), cancellationToken);
 
                             foreach (var error in response1?.Errors)

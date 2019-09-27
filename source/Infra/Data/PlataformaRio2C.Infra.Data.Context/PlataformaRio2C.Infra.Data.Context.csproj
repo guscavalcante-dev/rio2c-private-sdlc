@@ -78,6 +78,7 @@
     <Compile Include="Interfaces\IDbContext.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Mapping\Collaborator\AttendeeCollaboratorMap.cs" />
+    <Compile Include="Mapping\Collaborator\AttendeeCollaboratorTypeMap.cs" />
     <Compile Include="Mapping\Collaborator\AttendeeCollaboratorTicketMap.cs" />
     <Compile Include="Mapping\Collaborator\CollaboratorProducerMap.cs" />
     <Compile Include="Mapping\Common\ActivityMap.cs" />
@@ -148,7 +149,7 @@
     <Compile Include="Mapping\SentEmails\SentEmailMap.cs" />
     <Compile Include="Mapping\Speaker\SpeakerMap.cs" />
     <Compile Include="Mapping\TargetAudienceMap.cs" />
-    <Compile Include="Mapping\SalesPlatform\TicketTypeMap.cs" />
+    <Compile Include="Mapping\Collaborator\CollaboratorTypeMap.cs" />
     <Compile Include="Mapping\User\UserRoleMap.cs" />
     <Compile Include="Mapping\User\RoleMap.cs" />
     <Compile Include="Mapping\User\UserUseTermMap.cs" />

@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-24-2019
+// Last Modified On : 09-26-2019
 // ***********************************************************************
 // <copyright file="AccountController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,13 +25,12 @@ using System.Web.Mvc;
 using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
-using Enumerable = System.Linq.Enumerable;
 using Role = PlataformaRio2C.Domain.Constants.Role;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>AccountController</summary>
-    [AjaxAuthorize(Role.AnyAdmin)]
+    [AjaxAuthorize(Role.Admin)]
     public class AccountController : BaseController
     {
         private readonly IdentityAutenticationService _identityController;
@@ -137,31 +136,21 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     //    }
                     //}
 
-                    await _identityController.SignInAsync(authenticationManager, user, model.RememberMe);
-
-                    #region Check if user has any admin role
-
-                    var hasAdminProfile = false;
-                    var userRoles = await this._identityController.FindAllRolesByUserIdAsync(user.Id);
-                    if (userRoles != null)
+                    if (user.IsDeleted)
                     {
-                        foreach (var role in userRoles)
-                        {
-                            if (Enumerable.Contains(Role.AnyAdminArray, role))
-                            {
-                                hasAdminProfile = true;
-                                break;
-                            }
-                        }
+                        ModelState.AddModelError("", Messages.AccessDenied);
+                        return View(model);
                     }
 
-                    if (!hasAdminProfile)
+                    // Check if user has admin role
+                    var userRoles = await this._identityController.FindAllRolesByUserIdAsync(user.Id);
+                    if (userRoles?.Contains(Role.Admin) != true)
                     {
                         ModelState.AddModelError("", Messages.YouDontHaveAdminProfile);
                         return View(model);
                     }
 
-                    #endregion
+                    await _identityController.SignInAsync(authenticationManager, user, model.RememberMe);
 
                     if (!string.IsNullOrEmpty(returnUrl?.Replace("/", string.Empty)))
                     {

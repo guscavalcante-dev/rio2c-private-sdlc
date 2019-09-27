@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-02-2019
+// Last Modified On : 09-26-2019
 // ***********************************************************************
 // <copyright file="AccountController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -138,7 +138,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
                 return View(model);
             }
-            else if (!user.Active)
+
+            if (user.IsDeleted)
+            {
+                ModelState.AddModelError("", Messages.AccessDenied);
+                return View(model);
+            }
+
+            if (!user.Active)
             {
                 return View("DisabledUser");
             }

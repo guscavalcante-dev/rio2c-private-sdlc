@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-10-2019
+// Last Modified On : 09-26-2019
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -127,13 +127,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                 .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
                                                                 .SelectMany(ac => ac.AttendeeCollaboratorTickets
                                                                                         .Where(act => !act.IsDeleted)),
-                            EditionUserTicketTypes = u.Collaborator.AttendeeCollaborators
+                            EditionCollaboratorTypes = u.Collaborator.AttendeeCollaborators
                                                                 .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
-                                                                .SelectMany(ac => ac.AttendeeCollaboratorTickets
-                                                                                        .Where(act => !act.IsDeleted 
-                                                                                                      && !act.AttendeeSalesPlatformTicketType.IsDeleted 
-                                                                                                      && !act.AttendeeSalesPlatformTicketType.TicketType.IsDeleted)
-                                                                                        .Select(act => act.AttendeeSalesPlatformTicketType.TicketType)),
+                                                                .SelectMany(ac => ac.AttendeeCollaboratorTypes
+                                                                                        .Where(act => !act.IsDeleted && !act.CollaboratorType.IsDeleted)
+                                                                                        .Select(act => act.CollaboratorType)),
                             JobTitlesDtos = u.Collaborator.JobTitles.Select(d => new CollaboratorJobTitleBaseDto
                             {
                                 Id = d.Id,

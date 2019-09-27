@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-01-2019
+// Last Modified On : 09-26-2019
 // ***********************************************************************
 // <copyright file="Role.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,7 +20,7 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public string Name { get; set; }
 
-        public virtual ICollection<TicketType> TicketTypes { get; private set; }
+        public virtual ICollection<CollaboratorType> CollaboratorTypes { get; private set; }
 
         /// <summary>Returns true if ... is valid.</summary>
         /// <returns>

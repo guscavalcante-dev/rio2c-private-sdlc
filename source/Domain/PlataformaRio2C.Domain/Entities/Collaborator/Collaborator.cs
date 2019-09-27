@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-21-2019
+// Last Modified On : 09-26-2019
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -57,6 +57,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="uid">The uid.</param>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastNames">The last names.</param>
         /// <param name="badge">The badge.</param>
@@ -72,6 +73,7 @@ namespace PlataformaRio2C.Domain.Entities
             Guid uid,
             List<AttendeeOrganization> attendeeOrganizations,
             Edition edition,
+            CollaboratorType collaboratorType,
             string firstName,
             string lastNames,
             string badge,
@@ -97,8 +99,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
-            this.SynchronizeAttendeeCollaborators(edition, attendeeOrganizations, true, userId);
-            this.UpdateUser(email, null);
+            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, attendeeOrganizations, true, userId);
+            this.UpdateUser(email);
         }
 
         /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class.</summary>
@@ -106,7 +108,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="edition">The edition.</param>
         /// <param name="newAttendeeOrganizations">The new attendee organizations.</param>
         /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
-        /// <param name="ticketType">Type of the ticket.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="role">The role.</param>
         /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
         /// <param name="salesPlatformUpdateDate">The sales platform update date.</param>
@@ -125,7 +127,7 @@ namespace PlataformaRio2C.Domain.Entities
             Edition edition,
             List<AttendeeOrganization> newAttendeeOrganizations,
             AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
-            TicketType ticketType,
+            CollaboratorType collaboratorType, //TODO: Use collaborator type
             Role role,
             string salesPlatformAttendeeId,
             DateTime salesPlatformUpdateDate,
@@ -163,7 +165,7 @@ namespace PlataformaRio2C.Domain.Entities
                 isBarcodeUsed,
                 barcodeUpdateDate,
                 userId);
-            this.UpdateUser(email, role);
+            this.UpdateUser(email);
         }
 
         /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class.</summary>
@@ -174,6 +176,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Updates the collaborator for admin.</summary>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastNames">The last names.</param>
         /// <param name="badge">The badge.</param>
@@ -190,6 +193,7 @@ namespace PlataformaRio2C.Domain.Entities
         public void Update(
             List<AttendeeOrganization> attendeeOrganizations,
             Edition edition,
+            CollaboratorType collaboratorType,
             string firstName,
             string lastNames,
             string badge,
@@ -217,18 +221,19 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
-            this.SynchronizeAttendeeCollaborators(edition, attendeeOrganizations, isAddingToCurrentEdition, userId);
-            this.UpdateUser(email, null);
+            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, attendeeOrganizations, isAddingToCurrentEdition, userId);
+            this.UpdateUser(email);
         }
 
         /// <summary>Deletes the specified edition.</summary>
         /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="userId">The user identifier.</param>
-        public void Delete(Edition edition, int userId)
+        public void Delete(Edition edition, CollaboratorType collaboratorType, int userId)
         {
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.DeleteAttendeeCollaborators(edition, userId);
+            this.DeleteAttendeeCollaborators(edition, collaboratorType, userId);
 
             if (this.FindAllAttendeeCollaboratorsNotDeleted(edition)?.Any() == false)
             {
@@ -264,16 +269,15 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Updates the user.</summary>
         /// <param name="email">The email.</param>
-        /// <param name="role">The role.</param>
-        public void UpdateUser(string email, Role role)
+        public void UpdateUser(string email)
         {
             if (this.User != null)
             {
-                this.User.Update(this.GetFullName(), email, role);
+                this.User.Update(this.GetFullName(), email, this.FindAllRolesByAttendeeCollaboratorTypes());
             }
             else
             {
-                this.User = new User(this.GetFullName(), email, role);
+                this.User = new User(this.GetFullName(), email, this.FindAllRolesByAttendeeCollaboratorTypes());
             }
         }
 
@@ -288,6 +292,21 @@ namespace PlataformaRio2C.Domain.Entities
         private void OnboardUser(string passwordHash)
         {
             this.User.OnboardAccessData(this.GetFullName(), passwordHash);
+        }
+
+        #endregion
+
+        #region Roles
+
+        /// <summary>Finds all roles by attendee collaborator types.</summary>
+        /// <returns></returns>
+        private List<Role> FindAllRolesByAttendeeCollaboratorTypes()
+        {
+            return this.AttendeeCollaborators?
+                            .Where(ac => !ac.IsDeleted)?
+                            .SelectMany(ac => ac.AttendeeCollaboratorTypes
+                                                    .Where(act => !act.IsDeleted && !act.CollaboratorType.IsDeleted)
+                                                    .Select(act => act.CollaboratorType.Role))?.Distinct()?.ToList();
         }
 
         #endregion
@@ -491,7 +510,7 @@ namespace PlataformaRio2C.Domain.Entities
                     this.AttendeeCollaborators = new List<AttendeeCollaborator>();
                 }
 
-                this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, null, this, false, userId));
+                this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, null, null, this, false, userId)); //TODO: Onboard collaborator when the attendee collaborator does not exists (collaborator type)
             }
         }
 
@@ -508,10 +527,11 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Synchronizes the attendee collaborators.</summary>
         /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeAttendeeCollaborators(Edition edition, List<AttendeeOrganization> attendeeOrganizations, bool isAddingToCurrentEdition, int userId)
+        private void SynchronizeAttendeeCollaborators(Edition edition, CollaboratorType collaboratorType, List<AttendeeOrganization> attendeeOrganizations, bool isAddingToCurrentEdition, int userId)
         {
             // Synchronize only when is adding to current edition
             if (!isAddingToCurrentEdition)
@@ -532,22 +552,23 @@ namespace PlataformaRio2C.Domain.Entities
             var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
             if (attendeeCollaborator != null)
             {
-                attendeeCollaborator.Update(edition, attendeeOrganizations, true, userId);
+                attendeeCollaborator.Update(edition, collaboratorType, attendeeOrganizations, true, userId);
             }
             else
             {
-                this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, attendeeOrganizations, this, true, userId));
+                this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, collaboratorType, attendeeOrganizations, this, true, userId));
             }
         }
 
         /// <summary>Deletes the attendee collaborators.</summary>
         /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="userId">The user identifier.</param>
-        private void DeleteAttendeeCollaborators(Edition edition, int userId)
+        private void DeleteAttendeeCollaborators(Edition edition, CollaboratorType collaboratorType, int userId)
         {
             foreach (var attendeeCollaborator in this.FindAllAttendeeCollaboratorsNotDeleted(edition))
             {
-                attendeeCollaborator?.Delete(userId);
+                attendeeCollaborator?.Delete(collaboratorType, userId);
             }
         }
 
@@ -680,7 +701,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="edition">The edition.</param>
         /// <param name="newAttendeeOrganizations">The new attendee organizations.</param>
         /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
-        /// <param name="ticketType">Type of the ticket.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="role">The role.</param>
         /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
         /// <param name="salesPlatformUpdateDate">The sales platform update date.</param>
@@ -698,7 +719,7 @@ namespace PlataformaRio2C.Domain.Entities
             Edition edition,
             List<AttendeeOrganization> newAttendeeOrganizations,
             AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
-            TicketType ticketType,
+            CollaboratorType collaboratorType, //TODO: Use collaborator type
             Role role,
             string salesPlatformAttendeeId,
             DateTime salesPlatformUpdateDate, 
@@ -736,13 +757,13 @@ namespace PlataformaRio2C.Domain.Entities
                 isBarcodeUsed,
                 barcodeUpdateDate,
                 userId);
-            this.UpdateUser(this.User.Email, role);
+            this.UpdateUser(this.User.Email);
         }
 
         /// <summary>Deletes the ticket.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
-        /// <param name="ticketType">Type of the ticket.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="role">The role.</param>
         /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
         /// <param name="salesPlatformUpdateDate">The sales platform update date.</param>
@@ -751,7 +772,7 @@ namespace PlataformaRio2C.Domain.Entities
         public void DeleteTicket(
             Edition edition,
             AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
-            TicketType ticketType,
+            CollaboratorType collaboratorType, //TODO: Use collaborator type
             Role role,
             string salesPlatformAttendeeId,
             DateTime salesPlatformUpdateDate,

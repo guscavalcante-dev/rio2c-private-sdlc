@@ -2,7 +2,7 @@
 @{
     var userRoles = ViewBag.UserRoles as IList<string>;
     var isAdmin = userRoles.HasElement(Role.Admin);
-    var isAudiovisualAdmin = userRoles.HasElement(Role.AdminAudiovisual);
+    var isAudiovisualAdmin = userRoles.HasElement(Role.Admin); //TODO: Change this to audiovisual admin
     var isProjectPitching = userRoles.HasElement("ProjectPitching");
     var isLogistics = userRoles.HasElement("Logistics");
     var menuOpenCssClass = "kt-menu__item--open kt-menu__item--here";

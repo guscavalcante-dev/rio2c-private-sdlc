@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-24-2019
+// Last Modified On : 09-26-2019
 // ***********************************************************************
 // <copyright file="PlayersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,7 +35,7 @@ using Role = PlataformaRio2C.Domain.Constants.Role;
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>PlayersController</summary>
-    [AjaxAuthorize(Role.Admin, Role.AdminAudiovisual)]
+    [AjaxAuthorize(Role.Admin)]
     public class PlayersController : BaseController
     {
         private readonly IActivityRepository activityRepo;

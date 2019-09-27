@@ -4,24 +4,21 @@
 // Created          : 08-31-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-01-2019
+// Last Modified On : 09-26-2019
 // ***********************************************************************
 // <copyright file="AttendeeSalesPlatformRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using LinqKit;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context;
-using X.PagedList;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -108,6 +105,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
+        /// <summary>Finds all dto by is active asynchronous.</summary>
         /// <returns></returns>
         public async Task<List<AttendeeSalesPlatformDto>> FindAllDtoByIsActiveAsync()
         {
@@ -123,8 +121,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     .Select(asptt => new AttendeeSalesPlatformTicketTypeDto
                                                                                     {
                                                                                         AttendeeSalesPlatformTicketType =  asptt,
-                                                                                        TicketType = asptt.TicketType,
-                                                                                        Role = asptt.TicketType.Role
+                                                                                        CollaboratorType = asptt.CollaboratorType,
+                                                                                        Role = asptt.CollaboratorType.Role
                                                                                     })
                                 })
                                 .ToListAsync();

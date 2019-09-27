@@ -143,9 +143,10 @@
     <Compile Include="Base\Repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Address\AddressRepository.cs" />
-    <Compile Include="Repositories\AttendeeCollaborators\AttendeeCollaboratorRepository.cs" />
+    <Compile Include="Repositories\Collaborator\AttendeeCollaboratorRepository.cs" />
     <Compile Include="Repositories\AttendeeOrganizations\AttendeeOrganizationRepository.cs" />
     <Compile Include="Repositories\Collaborator\CollaboratorProducerRepository.cs" />
+    <Compile Include="Repositories\Collaborator\CollaboratorTypeRepository.cs" />
     <Compile Include="Repositories\Conference\LecturerJobTitleRepository.cs" />
     <Compile Include="Repositories\Conference\LecturerRepository.cs" />
     <Compile Include="Repositories\Conference\ConferenceSynopsisRepository.cs" />

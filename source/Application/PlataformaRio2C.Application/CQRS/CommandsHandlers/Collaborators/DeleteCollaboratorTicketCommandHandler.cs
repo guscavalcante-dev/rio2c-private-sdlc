@@ -4,19 +4,17 @@
 // Created          : 09-01-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-01-2019
+// Last Modified On : 09-26-2019
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorTicketCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -86,7 +84,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             cmd.Collaborator.DeleteTicket(
                 cmd.Edition,
                 cmd.AttendeeSalesPlatformTicketType,
-                cmd.TicketType,
+                cmd.CollaboratorType,
                 cmd.Role,
                 cmd.SalesPlatformAttendeeDto.AttendeeId,
                 cmd.SalesPlatformAttendeeDto.SalesPlatformUpdateDate,

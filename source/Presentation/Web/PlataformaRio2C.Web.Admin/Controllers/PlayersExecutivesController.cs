@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-25-2019
+// Last Modified On : 09-26-2019
 // ***********************************************************************
 // <copyright file="PlayersExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,12 +33,14 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.Models;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
+using PlataformaRio2C.Web.Admin.Filters;
 using Role = PlataformaRio2C.Domain.Constants.Role;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>PlayersExecutivesController</summary>
-    [AjaxAuthorize(Role.Admin, Role.AdminAudiovisual)]
+    [AjaxAuthorize(Role.Admin)]
+    //[AuthorizeCollaboratorType(Order = 2, AllowedCollaboratorTypes = new[] { "Player", "Industry" })]
     public class PlayersExecutivesController : BaseController
     {
         private readonly IAttendeeSalesPlatformTicketTypeRepository attendeeSalesPlatformTicketTypeRepo;
@@ -276,7 +278,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    OrganizationType.Player,
+                    Domain.Constants.CollaboratorType.ExecutiveAudiovisual,
                     this.UserId,
                     this.UserUid,
                     this.EditionId,
@@ -375,7 +377,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    OrganizationType.Player,
+                    Domain.Constants.CollaboratorType.ExecutiveAudiovisual,
                     this.UserId,
                     this.UserUid,
                     this.EditionId,
@@ -439,7 +441,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    OrganizationType.Player,
+                    Domain.Constants.CollaboratorType.ExecutiveAudiovisual,
                     this.UserId,
                     this.UserUid,
                     this.EditionId,

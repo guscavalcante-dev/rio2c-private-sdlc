@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 09-26-2019
 // ***********************************************************************
 // <copyright file="CreateCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -31,8 +31,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     public class CreateCollaboratorCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<CreateCollaborator, AppValidationResult>
     {
         private readonly IUserRepository userRepo;
-        private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IEditionRepository editionRepo;
+        private readonly ICollaboratorTypeRepository collaboratorTypeRepo;
+        private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly ILanguageRepository languageRepo;
 
         /// <summary>Initializes a new instance of the <see cref="CreateCollaboratorCommandHandler"/> class.</summary>
@@ -40,22 +41,25 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="uow">The uow.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="userRepository">The user repository.</param>
-        /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="editionRepository">The edition repository.</param>
+        /// <param name="collaboratorTypeRepository">The collaborator type repository.</param>
+        /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="languageRepository">The language repository.</param>
         public CreateCollaboratorCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             ICollaboratorRepository collaboratorRepository,
             IUserRepository userRepository,
-            IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IEditionRepository editionRepository,
+            ICollaboratorTypeRepository collaboratorTypeRepository,
+            IAttendeeOrganizationRepository attendeeOrganizationRepository,
             ILanguageRepository languageRepository)
             : base(eventBus, uow, collaboratorRepository)
         {
             this.userRepo = userRepository;
-            this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.editionRepo = editionRepository;
+            this.collaboratorTypeRepo = collaboratorTypeRepository;
+            this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.languageRepo = languageRepository;
         }
 
@@ -96,6 +100,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     collaboratorUid,
                     await this.attendeeOrganizationRepo.FindAllByUidsAsync(cmd.AttendeeOrganizationBaseCommands?.Where(aobc => aobc.AttendeeOrganizationUid.HasValue)?.Select(aobc => aobc.AttendeeOrganizationUid.Value)?.ToList()),
                     await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
+                    await this.collaboratorTypeRepo.FindByNameAsunc(cmd.CollaboratorTypeName),
                     cmd.FirstName,
                     cmd.LastNames,
                     cmd.Badge,
@@ -134,7 +139,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     MiniBios = cmd.MiniBios,
                     CropperImage = cmd.CropperImage
                 };
-                updateCmd.UpdatePreSendProperties(cmd.OrganizationType, cmd.UserId, cmd.UserUid, cmd.EditionId, cmd.EditionUid, cmd.UserInterfaceLanguage);
+                updateCmd.UpdatePreSendProperties(cmd.CollaboratorTypeName, cmd.UserId, cmd.UserUid, cmd.EditionId, cmd.EditionUid, cmd.UserInterfaceLanguage);
 
                 this.AppValidationResult = await this.CommandBus.Send(updateCmd, cancellationToken);
             }

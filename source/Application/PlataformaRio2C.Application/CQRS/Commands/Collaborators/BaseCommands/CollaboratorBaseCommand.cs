@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-21-2019
+// Last Modified On : 09-26-2019
 // ***********************************************************************
 // <copyright file="CollaboratorBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -69,7 +69,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public CropperImageBaseCommand CropperImage { get; set; }
 
         public List<AttendeeOrganizationBaseCommand> TemplateAttendeeOrganizationBaseCommands { get; set; }
-        public OrganizationType OrganizationType { get; private set; }
+        public string CollaboratorTypeName { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="CollaboratorBaseCommand"/> class.</summary>
         public CollaboratorBaseCommand()
@@ -193,21 +193,21 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         }
 
         /// <summary>Updates the pre send properties.</summary>
-        /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="collabboratorTypeName">Name of the collabborator type.</param>
         /// <param name="userId">The user identifier.</param>
         /// <param name="userUid">The user uid.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="editionUid">The edition uid.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public void UpdatePreSendProperties(
-            OrganizationType organizationType,
+            string collabboratorTypeName,
             int userId,
             Guid userUid,
             int? editionId,
             Guid? editionUid,
             string userInterfaceLanguage)
         {
-            this.OrganizationType = organizationType;
+            this.CollaboratorTypeName = collabboratorTypeName;
             this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
         }
     }

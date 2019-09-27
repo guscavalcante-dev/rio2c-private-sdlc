@@ -4,7 +4,7 @@
 // Created          : 08-31-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-31-2019
+// Last Modified On : 09-26-2019
 // ***********************************************************************
 // <copyright file="AttendeeSalesPlatformTicketTypeMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,9 +35,9 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                 .WithMany(e => e.AttendeeSalesPlatformTicketTypes)
                 .HasForeignKey(d => d.AttendeeSalesPlatformId);
 
-            this.HasRequired(t => t.TicketType)
+            this.HasRequired(t => t.CollaboratorType)
                 .WithMany(e => e.AttendeeSalesPlatformTicketTypes)
-                .HasForeignKey(d => d.TicketTypeId);
+                .HasForeignKey(d => d.CollaboratorTypeId);
 
             this.HasMany(t => t.AttendeeCollaboratorTickets)
                 .WithRequired(e => e.AttendeeSalesPlatformTicketType)

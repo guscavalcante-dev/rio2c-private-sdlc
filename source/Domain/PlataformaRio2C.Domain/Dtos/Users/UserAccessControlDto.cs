@@ -4,7 +4,7 @@
 // Created          : 09-04-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-20-2019
+// Last Modified On : 09-26-2019
 // ***********************************************************************
 // <copyright file="UserAccessControlDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,7 +30,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }
         public IEnumerable<AttendeeOrganization> EditionAttendeeOrganizations { get; set; }
         public IEnumerable<AttendeeCollaboratorTicket> EditionAttendeeCollaboratorTickets { get; set; }
-        public IEnumerable<TicketType> EditionUserTicketTypes { get; set; }
+        public IEnumerable<CollaboratorType> EditionCollaboratorTypes { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="UserAccessControlDto"/> class.</summary>
         public UserAccessControlDto()

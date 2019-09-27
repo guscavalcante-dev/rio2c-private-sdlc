@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Infra.Data
 // Author           : Rafael Dantas Ruiz
-// Created          : 08-31-2019
+// Created          : 09-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-01-2019
+// Last Modified On : 09-26-2019
 // ***********************************************************************
-// <copyright file="TicketTypeMap.cs" company="Softo">
+// <copyright file="CollaboratorTypeMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -16,28 +16,29 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace PlataformaRio2C.Infra.Data.Context.Mapping
 {
-    /// <summary>TicketTypeMap</summary>
-    public class TicketTypeMap : EntityTypeConfiguration<TicketType>
+    /// <summary>CollaboratorTypeMap</summary>
+    public class CollaboratorTypeMap : EntityTypeConfiguration<CollaboratorType>
     {
-        /// <summary>Initializes a new instance of the <see cref="TicketTypeMap"/> class.</summary>
-        public TicketTypeMap()
+        /// <summary>Initializes a new instance of the <see cref="CollaboratorTypeMap"/> class.</summary>
+        public CollaboratorTypeMap()
         {
-            this.ToTable("TicketTypes");
+            this.ToTable("CollaboratorTypes");
 
             this.Property(t => t.Name)
-                .HasMaxLength(TicketType.NameMaxLength);
-
-            this.Property(t => t.Code)
-                .HasMaxLength(TicketType.CodeMaxLength);
+                .HasMaxLength(CollaboratorType.NameMaxLength);
 
             // Relationships
             this.HasRequired(t => t.Role)
-                .WithMany(e => e.TicketTypes)
+                .WithMany(e => e.CollaboratorTypes)
                 .HasForeignKey(e => e.RoleId);
 
+            this.HasMany(t => t.AttendeeCollaboratorTypes)
+                .WithRequired(e => e.CollaboratorType)
+                .HasForeignKey(e => e.CollaboratorTypeId);
+
             this.HasMany(t => t.AttendeeSalesPlatformTicketTypes)
-                .WithRequired(e => e.TicketType)
-                .HasForeignKey(e => e.TicketTypeId);
+                .WithRequired(e => e.CollaboratorType)
+                .HasForeignKey(e => e.CollaboratorTypeId);
         }
     }
 }

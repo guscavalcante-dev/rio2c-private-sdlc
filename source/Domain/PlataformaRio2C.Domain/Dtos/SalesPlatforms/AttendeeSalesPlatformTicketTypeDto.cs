@@ -4,7 +4,7 @@
 // Created          : 09-01-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-01-2019
+// Last Modified On : 09-26-2019
 // ***********************************************************************
 // <copyright file="AttendeeSalesPlatformTicketTypeDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,7 +19,7 @@ namespace PlataformaRio2C.Domain.Dtos
     public class AttendeeSalesPlatformTicketTypeDto
     {
         public AttendeeSalesPlatformTicketType AttendeeSalesPlatformTicketType { get; set; }
-        public TicketType TicketType { get; set; }
+        public CollaboratorType CollaboratorType { get; set; }
         public Role Role { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeSalesPlatformTicketTypeDto"/> class.</summary>

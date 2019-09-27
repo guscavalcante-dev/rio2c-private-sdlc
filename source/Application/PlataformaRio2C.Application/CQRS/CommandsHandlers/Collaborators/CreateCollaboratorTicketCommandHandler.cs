@@ -4,7 +4,7 @@
 // Created          : 08-31-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-10-2019
+// Last Modified On : 09-26-2019
 // ***********************************************************************
 // <copyright file="CreateCollaboratorWithTicketsHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,36 +26,20 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     public class CreateCollaboratorWithTicketsHandler : BaseCollaboratorCommandHandler, IRequestHandler<CreateCollaboratorTicket, AppValidationResult>
     {
         private readonly IUserRepository userRepo;
-        private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
-        private readonly IEditionRepository editionRepo;
-        private readonly ILanguageRepository languageRepo;
-        private readonly ICountryRepository countryRepo;
 
         /// <summary>Initializes a new instance of the <see cref="CreateCollaboratorCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="userRepository">The user repository.</param>
-        /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
-        /// <param name="editionRepository">The edition repository.</param>
-        /// <param name="languageRepository">The language repository.</param>
-        /// <param name="countryRepository">The country repository.</param>
         public CreateCollaboratorWithTicketsHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             ICollaboratorRepository collaboratorRepository,
-            IUserRepository userRepository,
-            IAttendeeOrganizationRepository attendeeOrganizationRepository,
-            IEditionRepository editionRepository,
-            ILanguageRepository languageRepository,
-            ICountryRepository countryRepository)
+            IUserRepository userRepository)
             : base(eventBus, uow, collaboratorRepository)
         {
             this.userRepo = userRepository;
-            this.attendeeOrganizationRepo = attendeeOrganizationRepository;
-            this.editionRepo = editionRepository;
-            this.languageRepo = languageRepository;
-            this.countryRepo = countryRepository;
         }
 
         /// <summary>Handles the specified create collaborator ticket.</summary>
@@ -82,7 +66,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.Edition,
                     cmd.AttendeeOrganizations,
                     cmd.AttendeeSalesPlatformTicketType,
-                    cmd.TicketType,
+                    cmd.CollaboratorType,
                     cmd.Role,
                     cmd.SalesPlatformAttendeeDto.AttendeeId,
                     cmd.SalesPlatformAttendeeDto.SalesPlatformUpdateDate,

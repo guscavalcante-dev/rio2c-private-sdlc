@@ -4,7 +4,7 @@
 // Created          : 09-01-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-10-2019
+// Last Modified On : 09-26-2019
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorTicketCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -85,7 +85,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.Edition,
                 cmd.AttendeeOrganizations,
                 cmd.AttendeeSalesPlatformTicketType,
-                cmd.TicketType,
+                cmd.CollaboratorType,
                 cmd.Role,
                 cmd.SalesPlatformAttendeeDto.AttendeeId,
                 cmd.SalesPlatformAttendeeDto.SalesPlatformUpdateDate,

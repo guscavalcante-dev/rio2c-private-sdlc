@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Domain
 // Author           : Rafael Dantas Ruiz
-// Created          : 08-31-2019
+// Created          : 09-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-01-2019
+// Last Modified On : 09-26-2019
 // ***********************************************************************
 // <copyright file="TicketType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,23 +17,22 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
-    /// <summary>TicketType</summary>
-    public class TicketType : Entity
+    /// <summary>CollaboratorType</summary>
+    public class CollaboratorType : Entity
     {
         public static readonly int NameMinLength = 1;
-        public static readonly int NameMaxLength = 200;
-        public static readonly int CodeMinLength = 1;
-        public static readonly int CodeMaxLength = 50;
+        public static readonly int NameMaxLength = 256;
 
         public string Name { get; private set; }
-        public string Code { get; private set; }
         public int RoleId { get; private set; }
 
         public virtual Role Role { get; private set; }
+
+        public virtual ICollection<AttendeeCollaboratorType> AttendeeCollaboratorTypes { get; private set; }
         public virtual ICollection<AttendeeSalesPlatformTicketType> AttendeeSalesPlatformTicketTypes { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="TicketType"/> class.</summary>
-        private TicketType()
+        /// <summary>Initializes a new instance of the <see cref="CollaboratorType"/> class.</summary>
+        private CollaboratorType()
         {
         }
 
@@ -47,7 +46,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidationResult = new ValidationResult();
 
             this.ValidateName();
-            this.ValidateCode();
 
             return this.ValidationResult.IsValid;
         }
@@ -63,20 +61,6 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.Name?.Trim().Length < NameMinLength || this.Name?.Trim().Length > NameMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, NameMaxLength, NameMinLength), new string[] { "Name" }));
-            }
-        }
-
-        /// <summary>Validates the code.</summary>
-        public void ValidateCode()
-        {
-            if (string.IsNullOrEmpty(this.Code?.Trim()))
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Code), new string[] { "Code" }));
-            }
-
-            if (this.Code?.Trim().Length < CodeMinLength || this.Code?.Trim().Length > CodeMaxLength)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Code, CodeMaxLength, CodeMinLength), new string[] { "Code" }));
             }
         }
 

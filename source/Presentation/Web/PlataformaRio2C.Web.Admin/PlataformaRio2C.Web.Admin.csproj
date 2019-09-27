@@ -355,6 +355,7 @@
     <Compile Include="Controllers\SpeakerController.cs" />
     <Compile Include="Controllers\SystemParameterController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Filters\AuthorizeCollaboratorTypeAttribute.cs" />
     <Compile Include="Filters\CustomExceptionFilterAttribute.cs" />
     <Compile Include="Models\LanguageMessageHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
