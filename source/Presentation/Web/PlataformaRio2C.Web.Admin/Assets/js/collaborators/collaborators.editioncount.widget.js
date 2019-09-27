@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 09-27-2019
 // ***********************************************************************
 // <copyright file="collaborators.editioncount.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -123,7 +123,6 @@ var CollaboratorsEditionCountWidget = function () {
                 // Success
                 onSuccess: function () {
                     enableShowPlugins();
-                    MyRio2cCommon.unblock({ idOrClass: widgetElementId });
                 },
                 // Error
                 onError: function () {
@@ -131,8 +130,9 @@ var CollaboratorsEditionCountWidget = function () {
             });
         })
         .fail(function () {
-            //showAlert();
-            //MyRio2cCommon.unblock(widgetElementId);
+        })
+        .always(function() {
+            MyRio2cCommon.unblock({ idOrClass: widgetElementId });
         });
     };
 

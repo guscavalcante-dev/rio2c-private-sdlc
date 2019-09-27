@@ -4,7 +4,7 @@
 // Created          : 07-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-13-2019
+// Last Modified On : 09-27-2019
 // ***********************************************************************
 // <copyright file="ErrorController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -88,7 +88,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 Response.StatusCode = ViewBag.ErrorCode;
             }
 
-            if (!Request.IsAjaxRequest())
+            bool.TryParse(Request.QueryString["isAjaxRequest"], out bool isAjaxRequest);
+            if (!Request.IsAjaxRequest() && isAjaxRequest != true)
             {
                 return View("Index");
             }

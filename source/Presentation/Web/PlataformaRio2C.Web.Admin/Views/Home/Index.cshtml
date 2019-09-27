@@ -1,23 +1,31 @@
-﻿@{
+﻿@using PlataformaRio2C.Domain.Constants
+@using PlataformaRio2C.Domain.Dtos
+@{
     ViewBag.Title = Labels.Dashboard;
+    var adminAccessControlDto = ViewBag.AdminAccessControlDto as AdminAccessControlDto;
+    var isAdminFull = adminAccessControlDto?.IsAdmin() == true;
+    var isAdminAudiovisual = adminAccessControlDto?.IsAdminPartial() == true && adminAccessControlDto?.HasType(CollaboratorType.AdminAudiovisual) == true;
 }
-<div class="row">
-    <div class="col-sm-4">
-        <!--begin:: Holdings Edition Count-->
-        <div id="HoldingsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-        <!--end:: Holdings Edition Count-->
+@if (isAdminFull || isAdminAudiovisual)
+{
+    <div class="row">
+        <div class="col-sm-4">
+            <!--begin:: Holdings Edition Count-->
+            <div id="HoldingsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+            <!--end:: Holdings Edition Count-->
+        </div>
+        <div class="col-sm-4">
+            <!--begin:: Players Edition Count-->
+            <div id="PlayersEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+            <!--end:: Players Edition Count-->
+        </div>
+        <div class="col-sm-4">
+            <!--begin:: Players Executives Edition Count-->
+            <div id="PlayersExecutivesEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+            <!--end:: Players Executives Edition Count-->
+        </div>
     </div>
-    <div class="col-sm-4">
-        <!--begin:: Players Edition Count-->
-        <div id="PlayersEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-        <!--end:: Players Edition Count-->
-    </div>
-    <div class="col-sm-4">
-        <!--begin:: Players Executives Edition Count-->
-        <div id="PlayersExecutivesEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-        <!--end:: Players Executives Edition Count-->
-    </div>
-</div>
+}
 @section Styles {
 }
 @section Scripts {
@@ -27,9 +35,14 @@
     @Scripts.Render("~/bundles/js/collaborators.editioncount.js")
     <script>
         jQuery(document).ready(function () {
-            HoldingsEditionCountWidget.init();
-            OrganizationsEditionCountWidget.init();
-            CollaboratorsEditionCountWidget.init();
+            @if (isAdminFull || isAdminAudiovisual)
+            {
+                <text>
+                    HoldingsEditionCountWidget.init();
+                    OrganizationsEditionCountWidget.init();
+                    CollaboratorsEditionCountWidget.init();
+                </text>
+            }
         });
     </script>
 }

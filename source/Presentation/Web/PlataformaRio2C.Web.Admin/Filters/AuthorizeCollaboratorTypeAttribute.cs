@@ -29,13 +29,19 @@ namespace PlataformaRio2C.Web.Admin.Filters
         {
             if (this.Types?.Any() == true)
             {
-                var userAccessControlDto = (UserAccessControlDto)filterContext.Controller.ViewBag.UserAccessControlDto;
-                if (userAccessControlDto != null && userAccessControlDto.IsAdmin() != true)
+                var adminAccessControlDto = filterContext.Controller.ViewBag.AdminAccessControlDto as AdminAccessControlDto;
+                if (adminAccessControlDto != null && adminAccessControlDto.IsAdmin() != true)
                 {
-                    var collaboratorTypes = userAccessControlDto?.EditionCollaboratorTypes?.Select(eutt => eutt.Name).ToList();
+                    var collaboratorTypes = adminAccessControlDto?.EditionCollaboratorTypes?.Select(eutt => eutt.Name).ToList();
                     if (this.Types.All(allowedCollaboratorType => collaboratorTypes?.Contains(allowedCollaboratorType) != true))
                     {
-                        filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Error", action = "Forbidden", area = "" }));
+                        filterContext.Result = new RedirectToRouteResult(
+                            new RouteValueDictionary {
+                                { "controller", "Error" },
+                                { "action", "Forbidden" },
+                                { "area", "" },
+                                { "isAjaxRequest", filterContext.HttpContext.Request.IsAjaxRequest() }
+                            });
                     }
                 }
             }
