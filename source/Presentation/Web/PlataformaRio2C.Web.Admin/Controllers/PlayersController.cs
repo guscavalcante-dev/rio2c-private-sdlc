@@ -36,8 +36,8 @@ using Constants = PlataformaRio2C.Domain.Constants;
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>PlayersController</summary>
-    [AjaxAuthorize(Constants.Role.AnyAdmin)]
-    [AuthorizeCollaboratorType(Types = new[] { Constants.CollaboratorType.AdminAudiovisual })]
+    [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
+    [AuthorizeCollaboratorType(Order = 2, Types = new[] { Constants.CollaboratorType.AdminAudiovisual })]
     public class PlayersController : BaseController
     {
         private readonly IActivityRepository activityRepo;

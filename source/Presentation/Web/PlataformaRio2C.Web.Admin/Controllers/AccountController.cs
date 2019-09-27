@@ -31,7 +31,7 @@ using Constants = PlataformaRio2C.Domain.Constants;
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>AccountController</summary>
-    [AjaxAuthorize(Constants.Role.AnyAdmin)]
+    [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
     public class AccountController : BaseController
     {
         private readonly IdentityAutenticationService _identityController;

@@ -34,8 +34,8 @@ using Constants = PlataformaRio2C.Domain.Constants;
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>HoldingsController</summary>
-    [AjaxAuthorize(Constants.Role.AnyAdmin)]
-    [AuthorizeCollaboratorType(Types = new []{ Constants.CollaboratorType.AdminAudiovisual })]
+    [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
+    [AuthorizeCollaboratorType(Order = 2, Types = new []{ Constants.CollaboratorType.AdminAudiovisual })]
     public class HoldingsController : BaseController
     {
         /// <summary>Initializes a new instance of the <see cref="HoldingsController"/> class.</summary>

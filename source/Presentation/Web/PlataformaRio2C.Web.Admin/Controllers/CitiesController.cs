@@ -22,7 +22,7 @@ using Constants = PlataformaRio2C.Domain.Constants;
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>CitiesController</summary>
-    [AjaxAuthorize(Constants.Role.AnyAdmin)]
+    [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
     public class CitiesController : BaseController
     {
         /// <summary>Initializes a new instance of the <see cref="CitiesController"/> class.</summary>

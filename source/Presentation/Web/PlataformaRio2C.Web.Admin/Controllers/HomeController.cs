@@ -26,7 +26,7 @@ using Constants = PlataformaRio2C.Domain.Constants;
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>HomeController</summary>
-    [AjaxAuthorize(Constants.Role.AnyAdmin)]
+    [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
     public class HomeController : BaseController
     {
         /// <summary>Initializes a new instance of the <see cref="HomeController"/> class.</summary>
