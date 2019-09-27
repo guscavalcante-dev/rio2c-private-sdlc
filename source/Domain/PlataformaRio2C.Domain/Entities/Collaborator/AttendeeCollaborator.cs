@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-26-2019
+// Last Modified On : 09-27-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,6 +23,7 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public int EditionId { get; private set; }
         public int CollaboratorId { get; private set; }
+        public DateTime? WelcomeEmailSendDate { get; private set; }
         public DateTime? OnboardingStartDate { get; private set; }
         public DateTime? OnboardingFinishDate { get; private set; }
         public DateTime? OnboardingUserDate { get; private set; }
@@ -145,6 +146,14 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
             this.DeleteAttendeeOrganizationCollaborators(new List<AttendeeOrganization>(), userId);
+        }
+
+        /// <summary>Sends the welcome email send date.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void SendWelcomeEmailSendDate(int userId)
+        {
+            this.WelcomeEmailSendDate = this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
         }
 
         #region Onboarding

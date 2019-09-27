@@ -204,6 +204,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> SendInvitationEmails(string selectedCollaboratorsUids)
         {
+            AppValidationResult result = null;
+
             try
             {
                 if (string.IsNullOrEmpty(selectedCollaboratorsUids))
@@ -226,27 +228,45 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     throw new DomainException(Messages.SelectAtLeastOneOption);
                 }
 
-                var collaborators = await this.collaboratorRepo.FindAllCollaboratorsByCollaboratorsUids(this.EditionDto.Id, collaboratorsUids);
-                if (collaborators?.Any() != true)
+                var collaboratorsDtos = await this.collaboratorRepo.FindAllCollaboratorsByCollaboratorsUids(this.EditionDto.Id, collaboratorsUids);
+                if (collaboratorsDtos?.Any() != true)
                 {
                     throw new DomainException(Messages.SelectAtLeastOneOption);
                 }
 
-                foreach (var collaborator in collaborators)
+                foreach (var collaboratorDto in collaboratorsDtos)
                 {
-                    var collaboratorLanguageCode = collaborator.Language?.Code ?? this.UserInterfaceLanguage;
+                    var collaboratorLanguageCode = collaboratorDto.Language?.Code ?? this.UserInterfaceLanguage;
 
-                    await this.CommandBus.Send(new SendPlayerWelcomeEmailAsync(
-                        collaborator.User.SecurityStamp,
-                        collaborator.User.Id,
-                        collaborator.User.Uid,
-                        collaborator.GetFirstName(),
-                        collaborator.GetFullName(collaboratorLanguageCode),
-                        collaborator.User.Email,
-                        this.EditionDto.Id,
-                        this.EditionDto.Name,
-                        this.EditionDto.UrlCode,
-                        collaboratorLanguageCode));
+                    try
+                    {
+                        result = await this.CommandBus.Send(new SendPlayerWelcomeEmailAsync(
+                            collaboratorDto.Collaborator.Uid,
+                            collaboratorDto.User.SecurityStamp,
+                            collaboratorDto.User.Id,
+                            collaboratorDto.User.Uid,
+                            collaboratorDto.GetFirstName(),
+                            collaboratorDto.GetFullName(collaboratorLanguageCode),
+                            collaboratorDto.User.Email,
+                            this.EditionDto.Id,
+                            this.EditionDto.Name,
+                            this.EditionDto.UrlCode,
+                            this.AdminAccessControlDto.User.Id,
+                            collaboratorLanguageCode));
+                        if (!result.IsValid)
+                        {
+                            throw new DomainException(Messages.CorrectFormValues);
+                        }
+                    }
+                    catch (DomainException ex)
+                    {
+                        //TODO: Check errors
+                        //var errors = result?.Errors?.Select(e => e.Message)?.Join(", ");
+                    }
+                    catch (Exception ex)
+                    {
+                        Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
+                    }
                 }
             }
             catch (DomainException ex)

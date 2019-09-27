@@ -484,6 +484,15 @@ namespace PlataformaRio2C.Domain.Entities
             return this.AttendeeCollaborators?.FirstOrDefault(ac => ac.EditionId == editionId);
         }
 
+        /// <summary>Sends the welcome email send date.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void SendWelcomeEmailSendDate(int editionId, int userId)
+        {
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(editionId);
+            attendeeCollaborator?.SendWelcomeEmailSendDate(userId);
+        }
+
         /// <summary>Called when [attendee collaborator player terms acceptance].</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="userId">The user identifier.</param>

@@ -18,9 +18,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>SendPlayerWelcomeEmailAsync</summary>
     public class SendPlayerWelcomeEmailAsync : EmailBaseCommand
     {
+        public Guid Collaboratoruid { get; private set; }
         public string UserSecurityToken { get; private set; }
+        public int UserId { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="SendPlayerWelcomeEmailAsync"/> class.</summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <param name="userSecurityToken">The user security token.</param>
         /// <param name="recipientUserId">The recipient user identifier.</param>
         /// <param name="recipientUserUid">The recipient user uid.</param>
@@ -30,8 +33,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="editionName">Name of the edition.</param>
         /// <param name="editionUrlCode">The edition URL code.</param>
+        /// <param name="userId">The user identifier.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public SendPlayerWelcomeEmailAsync(
+            Guid collaboratorUid,
             string userSecurityToken,
             int recipientUserId, 
             Guid recipientUserUid, 
@@ -41,10 +46,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             int? editionId,
             string editionName, 
             int editionUrlCode, 
+            int userId,
             string userInterfaceLanguage)
             : base(recipientUserId, recipientUserUid, recipientFirstName, recipientFullName, recipientEmail, editionId, editionName, editionUrlCode, userInterfaceLanguage)
         {
+            this.Collaboratoruid = collaboratorUid;
             this.UserSecurityToken = userSecurityToken;
+            this.UserId = userId;
         }
 
         /// <summary>Initializes a new instance of the <see cref="SendPlayerWelcomeEmailAsync"/> class.</summary>
