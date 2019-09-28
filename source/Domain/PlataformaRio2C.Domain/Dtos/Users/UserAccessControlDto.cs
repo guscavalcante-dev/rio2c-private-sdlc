@@ -4,7 +4,7 @@
 // Created          : 09-04-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-26-2019
+// Last Modified On : 09-28-2019
 // ***********************************************************************
 // <copyright file="UserAccessControlDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,14 +23,13 @@ namespace PlataformaRio2C.Domain.Dtos
     {
         public User User { get; set; }
         public IEnumerable<Role> Roles { get; set; }
-        public Collaborator Collaborator { get; set; }
         public Language Language { get; set; }
-        public AttendeeCollaborator EditionAttendeeCollaborator { get; set; }
 
-        public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }
-        public IEnumerable<AttendeeOrganization> EditionAttendeeOrganizations { get; set; }
-        public IEnumerable<AttendeeCollaboratorTicket> EditionAttendeeCollaboratorTickets { get; set; }
+        public Collaborator Collaborator { get; set; }
+        public AttendeeCollaborator EditionAttendeeCollaborator { get; set; }
         public IEnumerable<CollaboratorType> EditionCollaboratorTypes { get; set; }
+        public IEnumerable<AttendeeOrganization> EditionAttendeeOrganizations { get; set; }
+        public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="UserAccessControlDto"/> class.</summary>
         public UserAccessControlDto()
@@ -109,29 +108,19 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if this instance is admin; otherwise, <c>false</c>.</returns>
         public bool IsAdmin()
         {
-            return this.Roles?.Any(r => r.Name == "Admin") == true;
-        }
-
-        /// <summary>Determines whether this instance is user.</summary>
-        /// <returns>
-        ///   <c>true</c> if this instance is user; otherwise, <c>false</c>.</returns>
-        public bool IsUser()
-        {
-            return this.Roles?.Any(r => r.Name == "User") == true;
+            return this.Roles?.Any(r => Constants.Role.AnyAdminArray.Contains(r.Name)) == true;
         }
 
         #endregion
 
         #region Onboarding
 
-        //TODO: Check tickets
-
         /// <summary>Determines whether [is onboarding pending].</summary>
         /// <returns>
         ///   <c>true</c> if [is onboarding pending]; otherwise, <c>false</c>.</returns>
         public bool IsOnboardingPending()
         {
-            return this.IsUser() && (!this.IsAttendeeCollaboratorOnboardingFinished() || !this.IsAttendeeOrganizationsOnboardingFinished());
+            return !this.IsAdmin() && (!this.IsAttendeeCollaboratorOnboardingFinished() || !this.IsAttendeeOrganizationsOnboardingFinished());
         }
 
         #region Collaborator

@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-07-2019
+// Last Modified On : 09-28-2019
 // ***********************************************************************
 // <copyright file="QuizController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -65,7 +65,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return RedirectToAction("Index", "Home", new { Area = "" });
             }
 
-            if (this.AnsweredQuiz(this.UserId, 1))
+            if (this.AnsweredQuiz(this.UserAccessControlDto.User.Id, 1))
             {
                 //return RedirectToAction("ProfileEdit", "Collaborator", new { area = "" });
                 return RedirectToAction("Index", "Home", new { Area = "" });

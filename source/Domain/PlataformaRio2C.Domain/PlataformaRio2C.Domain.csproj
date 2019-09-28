@@ -392,7 +392,6 @@
     <Compile Include="Entities\Users\Role.cs" />
     <Compile Include="Entities\Users\UserUseTerm.cs" />
     <Compile Include="Statics\Files\FileRepositoryPathType.cs" />
-    <Compile Include="Statics\User\Role.cs" />
     <Compile Include="Validations\Address\AddressIsConsistent.cs" />
     <Compile Include="Validations\Collaborator\CollaboratorProducerIsComplete.cs" />
     <Compile Include="Validations\Collaborator\CollaboratorPlayerIsConsistent.cs" />

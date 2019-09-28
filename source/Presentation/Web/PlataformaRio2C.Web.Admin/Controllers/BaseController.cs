@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-27-2019
+// Last Modified On : 08-28-2019
 // ***********************************************************************
 // <copyright file="BaseController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -36,7 +36,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         protected AdminAccessControlDto AdminAccessControlDto;
 
         protected string UserInterfaceLanguage;
-        protected string Area;
+        protected string Area; //TODO: Remove area from BaseController
 
         /// <summary>Initializes a new instance of the <see cref="BaseController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -194,7 +194,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return;
             }
 
-            //ViewBag.UserId = 
             var userId = User.Identity.GetUserId<int>();
             if (!User.Identity.IsAuthenticated || userId <= 0)
             {

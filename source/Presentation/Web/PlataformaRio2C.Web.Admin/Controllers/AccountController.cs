@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-27-2019
+// Last Modified On : 09-28-2019
 // ***********************************************************************
 // <copyright file="AccountController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -95,22 +95,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return View(model);
             }
 
-            if (!user.Active)
-            {
-                return View("DisabledUser");
-            }
-
             var result = await _identityController.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, true);
             switch (result)
             {
                 case IdentitySignInStatus.Success:
-                    if (!user.EmailConfirmed)
-                    {
-                        TempData["AvisoEmail"] = "Usuário não confirmado, verifique seu e-mail.";
-                    }
 
-                    // Check if user is deleted
-                    if (user.IsDeleted)
+                    if (user.IsDeleted || !user.Active)
                     {
                         ModelState.AddModelError("", Messages.AccessDenied);
                         return View(model);
@@ -118,13 +108,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                     // Check if user has admin roles
                     var userRoles = await this._identityController.FindAllRolesByUserIdAsync(user.Id);
-                    if (userRoles?.Any(role => Enumerable.Contains(Constants.Role.AnyAdminArray, role)) != true)
+                    if (userRoles?.Any(role => Constants.Role.AnyAdminArray.Contains(role)) != true)
                     {
                         ModelState.AddModelError("", Messages.YouDontHaveAdminProfile);
                         return View(model);
                     }
 
-                    //await _identityController.SignInAsync(authenticationManager, user, model.RememberMe);
                     if (!string.IsNullOrEmpty(returnUrl?.Replace("/", string.Empty)))
                     {
                         return Redirect(returnUrl);

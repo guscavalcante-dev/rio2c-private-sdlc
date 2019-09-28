@@ -4,7 +4,7 @@
 // Created          : 08-29-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-19-2019
+// Last Modified On : 09-28-2019
 // ***********************************************************************
 // <copyright file="OnboardingController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -167,8 +167,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     this.IdentityController.HashPassword(cmd.Password),
                     this.UserAccessControlDto.User.Id,
                     this.UserAccessControlDto.User.Uid,
-                    this.EditionId,
-                    this.EditionUid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
                     this.UserInterfaceLanguage);
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
@@ -264,8 +264,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     this.UserAccessControlDto.Collaborator.Uid,
                     this.UserAccessControlDto.User.Id,
                     this.UserAccessControlDto.User.Uid,
-                    this.EditionId,
-                    this.EditionUid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
                     this.UserInterfaceLanguage);
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
@@ -323,7 +323,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             this.SetViewBags();
 
             var cmd = new OnboardCollaboratorData(
-                await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(this.UserAccessControlDto?.Collaborator?.Uid ?? Guid.Empty, this.EditionId, this.UserInterfaceLanguage)),
+                await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(this.UserAccessControlDto?.Collaborator?.Uid ?? Guid.Empty, this.EditionDto.Id, this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                 true,
                 true,
@@ -366,8 +366,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     this.UserAccessControlDto.Collaborator.Uid,
                     this.UserAccessControlDto.User.Id,
                     this.UserAccessControlDto.User.Uid,
-                    this.EditionId,
-                    this.EditionUid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
                     this.UserInterfaceLanguage);
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
@@ -480,8 +480,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     OrganizationType.Player,
                     this.UserAccessControlDto.User.Id,
                     this.UserAccessControlDto.User.Uid,
-                    this.EditionId,
-                    this.EditionUid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
                     this.UserInterfaceLanguage);
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
@@ -600,8 +600,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     OrganizationType.Player,
                     this.UserAccessControlDto.User.Id,
                     this.UserAccessControlDto.User.Uid,
-                    this.EditionId,
-                    this.EditionUid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
                     this.UserInterfaceLanguage);
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)

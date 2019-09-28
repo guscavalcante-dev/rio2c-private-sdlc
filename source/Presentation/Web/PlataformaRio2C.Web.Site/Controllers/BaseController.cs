@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-26-2019
+// Last Modified On : 09-28-2019
 // ***********************************************************************
 // <copyright file="BaseController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,7 +13,6 @@
 // ***********************************************************************
 using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Threading;
@@ -23,7 +22,6 @@ using MediatR;
 using Microsoft.AspNet.Identity;
 using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Web.Site.Helpers;
@@ -35,18 +33,13 @@ namespace PlataformaRio2C.Web.Site.Controllers
     {
         protected IMediator CommandBus;
         protected IdentityAutenticationService IdentityController;
+
+        protected EditionDto EditionDto;
+        protected UserAccessControlDto UserAccessControlDto;
+
         protected string Environment;
         protected string UserInterfaceLanguage;
-        protected EditionDto EditionDto;
-        protected int? EditionId;
-        protected Guid? EditionUid;
-        protected int UserId;
-        protected Guid UserUid;
-        protected string UserName;
-        protected IList<Role> UserRoles;
-        protected IList<CollaboratorType> CollaboratorTypes;
-        protected string Area;
-        protected UserAccessControlDto UserAccessControlDto;
+        protected string Area; //TODO: Remove area from BaseController
 
         /// <summary>Initializes a new instance of the <see cref="BaseController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -171,8 +164,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 if (edition != null)
                 {
                     ViewBag.EditionDto = this.EditionDto = edition;
-                    ViewBag.EditionId = this.EditionId = edition.Id;
-                    ViewBag.EditionUid = this.EditionUid = edition.Uid;
                     return false;
                 }
             }
@@ -218,23 +209,13 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return;
             }
 
-            //ViewBag.UserId = 
-            this.UserId = User.Identity.GetUserId<int>();
-            if (!User.Identity.IsAuthenticated || this.UserId <= 0)
+            var userId = User.Identity.GetUserId<int>();
+            if (!User.Identity.IsAuthenticated || userId <= 0)
             {
                 return;
             }
 
-            ViewBag.UserAccessControlDto = this.UserAccessControlDto = this.CommandBus.Send(new FindUserAccessControlDto(this.UserId, this.EditionId ?? 0, this.UserInterfaceLanguage)).Result;
-            if (this.UserAccessControlDto == null)
-            {
-                return;
-            }
-
-            //TODO: Remove this data and use only UserAccessControlDto
-            //ViewBag.UserUid = this.UserUid = this.UserAccessControlDto.User.Uid;
-            //ViewBag.UserRoles = this.UserRoles = this.UserAccessControlDto.Roles?.ToList();
-            //ViewBag.UserTicketTypes = this.UserTicketTypes = this.UserAccessControlDto.EditionUserTicketTypes?.ToList();
+            ViewBag.UserAccessControlDto = this.UserAccessControlDto = this.CommandBus.Send(new FindUserAccessControlDto(userId, this.EditionDto?.Id ?? 0, this.UserInterfaceLanguage)).Result;
         }
 
         /// <summary>Sets the area.</summary>

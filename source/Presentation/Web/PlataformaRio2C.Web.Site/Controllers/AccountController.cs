@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-27-2019
+// Last Modified On : 09-28-2019
 // ***********************************************************************
 // <copyright file="AccountController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Linq;
 using HtmlAgilityPack;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
@@ -25,7 +26,6 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using MediatR;
-using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 
 namespace PlataformaRio2C.Web.Site.Controllers
@@ -108,17 +108,20 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return View(model);
             }
 
-            if (!user.Active)
-            {
-                return View("DisabledUser");
-            }
-
             var result = await _identityController.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, true);
             switch (result)
             {
                 case IdentitySignInStatus.Success:
 
-                    if (user.IsDeleted)
+                    if (user.IsDeleted || !user.Active)
+                    {
+                        ModelState.AddModelError("", Messages.AccessDenied);
+                        return View(model);
+                    }
+
+                    // Check if user has any role
+                    var userRoles = await this._identityController.FindAllRolesByUserIdAsync(user.Id);
+                    if (userRoles?.Any() != true)
                     {
                         ModelState.AddModelError("", Messages.AccessDenied);
                         return View(model);
@@ -206,15 +209,27 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 {
                     return RedirectToAction("Forbidden", "Error");
                 }
-                
+
+                if (user.IsDeleted || !user.Active)
+                {
+                    return RedirectToAction("Forbidden", "Error");
+                }
+
+                // Check if user has any role
+                var userRoles = await this._identityController.FindAllRolesByUserIdAsync(user.Id);
+                if (userRoles?.Any() != true)
+                {
+                    return RedirectToAction("Forbidden", "Error");
+                }
+
                 await _identityController.SignInAsync(this.authenticationManager, user, true);
 
-                if (!await _identityController.IsInRoleAsync(user.Id, Domain.Statics.Role.User.Name) &&
-                    !await _identityController.IsInRoleAsync(user.Id, Domain.Statics.Role.Admin.Name))
-                {
-                    this.StatusMessage(Messages.AccessDenied, StatusMessageType.Danger);
-                    return RedirectToAction("LogOff");
-                }
+                //if (!await _identityController.IsInRoleAsync(user.Id, Domain.Statics.Role.User.Name) &&
+                //    !await _identityController.IsInRoleAsync(user.Id, Domain.Statics.Role.Admin.Name))
+                //{
+                //    this.StatusMessage(Messages.AccessDenied, StatusMessageType.Danger);
+                //    return RedirectToAction("LogOff");
+                //}
 
                 //TODO: Confirm onboarding start
                 //cmd.UpdatePreSendProperties(
