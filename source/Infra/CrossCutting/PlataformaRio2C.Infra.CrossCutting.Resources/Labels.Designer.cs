@@ -772,6 +772,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Datas.
+        /// </summary>
+        public static string Dates {
+            get {
+                return ResourceManager.GetString("Dates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Caro.
         /// </summary>
         public static string Dear {
@@ -1929,6 +1938,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Onboarding {
             get {
                 return ResourceManager.GetString("Onboarding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data término do onboarding.
+        /// </summary>
+        public static string OnboardingFinishDate {
+            get {
+                return ResourceManager.GetString("OnboardingFinishDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data início do onboarding.
+        /// </summary>
+        public static string OnboardingStartDate {
+            get {
+                return ResourceManager.GetString("OnboardingStartDate", resourceCulture);
             }
         }
         
@@ -3360,6 +3387,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Welcome {
             get {
                 return ResourceManager.GetString("Welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data envio e-mail de boas-vindas.
+        /// </summary>
+        public static string WelcomeEmailSendDate {
+            get {
+                return ResourceManager.GetString("WelcomeEmailSendDate", resourceCulture);
             }
         }
         

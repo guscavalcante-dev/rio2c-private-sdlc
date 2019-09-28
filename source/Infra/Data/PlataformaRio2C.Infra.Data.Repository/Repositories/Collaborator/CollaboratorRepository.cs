@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-27-2019
+// Last Modified On : 09-28-2019
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -300,6 +300,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 {
                                     Id = ac.Id,
                                     Uid = ac.Uid,
+                                    WelcomeEmailSendDate = ac.WelcomeEmailSendDate,
                                     OnboardingStartDate = ac.OnboardingStartDate,
                                     OnboardingFinishDate = ac.OnboardingFinishDate,
                                     OnboardingUserDate = ac.OnboardingUserDate,

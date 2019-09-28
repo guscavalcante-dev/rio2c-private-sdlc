@@ -1457,4 +1457,20 @@
     <value>Sent</value>
     <comment>Enviado</comment>
   </data>
+  <data name="Dates" xml:space="preserve">
+    <value>Dates</value>
+    <comment>Datas</comment>
+  </data>
+  <data name="OnboardingFinishDate" xml:space="preserve">
+    <value>Onboarding finish date</value>
+    <comment>Data término do onboarding</comment>
+  </data>
+  <data name="OnboardingStartDate" xml:space="preserve">
+    <value>Onboarding start date</value>
+    <comment>Data início do onboarding</comment>
+  </data>
+  <data name="WelcomeEmailSendDate" xml:space="preserve">
+    <value>Welcome email send date</value>
+    <comment>Data envio e-mail de boas-vindas</comment>
+  </data>
 </root>

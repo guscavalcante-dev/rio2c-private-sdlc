@@ -1469,4 +1469,20 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Enviado</value>
     <comment>Enviado</comment>
   </data>
+  <data name="Dates" xml:space="preserve">
+    <value>Datas</value>
+    <comment>Datas</comment>
+  </data>
+  <data name="OnboardingFinishDate" xml:space="preserve">
+    <value>Data término do onboarding</value>
+    <comment>Data término do onboarding</comment>
+  </data>
+  <data name="OnboardingStartDate" xml:space="preserve">
+    <value>Data início do onboarding</value>
+    <comment>Data início do onboarding</comment>
+  </data>
+  <data name="WelcomeEmailSendDate" xml:space="preserve">
+    <value>Data envio e-mail de boas-vindas</value>
+    <comment>Data envio e-mail de boas-vindas</comment>
+  </data>
 </root>

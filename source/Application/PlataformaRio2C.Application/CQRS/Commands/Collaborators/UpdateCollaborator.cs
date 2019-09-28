@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-18-2019
+// Last Modified On : 09-28-2019
 // ***********************************************************************
 // <copyright file="UpdateCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,6 +25,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public Guid CollaboratorUid { get; set; }
         public bool IsAddingToCurrentEdition { get; set; }
 
+        public DateTime? WelcomeEmailSendDate { get; private set; }
         public DateTime? OnboardingStartDate { get; private set; }
         public DateTime? OnboardingFinishDate { get; private set; }
         public DateTime? OnboardingUserDate { get; private set; }
@@ -78,6 +79,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos,
             List<CountryBaseDto> countriesBaseDtos)
         {
+            this.WelcomeEmailSendDate = entity.EditionAttendeeCollaboratorBaseDto?.WelcomeEmailSendDate;
             this.OnboardingStartDate = entity.EditionAttendeeCollaboratorBaseDto?.OnboardingStartDate;
             this.OnboardingFinishDate = entity.EditionAttendeeCollaboratorBaseDto?.OnboardingFinishDate;
             this.OnboardingUserDate = entity.EditionAttendeeCollaboratorBaseDto?.OnboardingUserDate;
