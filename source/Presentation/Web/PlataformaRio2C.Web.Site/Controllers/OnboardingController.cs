@@ -28,6 +28,7 @@ using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -648,13 +649,15 @@ namespace PlataformaRio2C.Web.Site.Controllers
         private void SetViewBags()
         {
             var playerAttendeeOrganizations = this.UserAccessControlDto?.EditionAttendeeOrganizations?
-                                                                                    .Where(eao => eao.AttendeeOrganizationTypes?
+                                                                                    .Where(eao => !eao.IsDeleted
+                                                                                                  && eao.AttendeeOrganizationTypes?
                                                                                                             .Any(aot => !aot.IsDeleted 
-                                                                                                                        && aot.OrganizationType.Name == "Player") == true)?.ToList();
+                                                                                                                        && aot.OrganizationType.Name == Constants.OrganizationType.AudiovisualBuyer) == true)?.ToList();
             var producerAttendeeOrganizations = this.UserAccessControlDto?.EditionAttendeeOrganizations?
-                                                                                    .Where(eao => eao.AttendeeOrganizationTypes?
+                                                                                    .Where(eao => !eao.IsDeleted
+                                                                                                  && eao.AttendeeOrganizationTypes?
                                                                                                             .Any(aot => !aot.IsDeleted 
-                                                                                                                        && aot.OrganizationType.Name == "Producer") == true)?.ToList();
+                                                                                                                        && aot.OrganizationType.Name == Constants.OrganizationType.AudiovisualSeller) == true)?.ToList();
 
             ViewBag.PlayerAttendeeOrganizations = playerAttendeeOrganizations;
             ViewBag.ProducerAttendeeOrganizations = producerAttendeeOrganizations;
