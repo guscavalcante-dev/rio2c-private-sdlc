@@ -494,6 +494,15 @@ namespace PlataformaRio2C.Domain.Entities
             attendeeCollaborator?.SendWelcomeEmailSendDate(userId);
         }
 
+        /// <summary>Called when [attendee collaborator].</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardAttendeeCollaborator(Edition edition, int userId)
+        {
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+            attendeeCollaborator?.Onboard(userId);
+        }
+
         /// <summary>Called when [attendee collaborator player terms acceptance].</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="userId">The user identifier.</param>
@@ -807,17 +816,15 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Onboarding
 
-        /// <summary>Called when [player terms acceptance].</summary>
+        /// <summary>Onboards the specified edition.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="userId">The user identifier.</param>
-        public void OnboardPlayerTermsAcceptance(
-            Edition edition,
-            int userId)
+        public void Onboard(Edition edition, int userId)
         {
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.OnboardAttendeeCollaboratorPlayerTermsAcceptance(edition, userId);
+            this.OnboardAttendeeCollaborator(edition, userId);
         }
 
         /// <summary>Called when [access data].</summary>
@@ -841,6 +848,19 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
             this.OnboardAttendeeCollaboratorAccessData(edition, userId);
             this.OnboardUser(passwordHash);
+        }
+
+        /// <summary>Called when [player terms acceptance].</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardPlayerTermsAcceptance(
+            Edition edition,
+            int userId)
+        {
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            this.OnboardAttendeeCollaboratorPlayerTermsAcceptance(edition, userId);
         }
 
         /// <summary>Called when [data].</summary>

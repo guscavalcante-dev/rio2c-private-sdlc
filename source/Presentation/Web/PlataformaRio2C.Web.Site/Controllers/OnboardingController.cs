@@ -118,6 +118,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return RedirectToAction("Index", "Onboarding");
             }
 
+            await this.CommandBus.Send(new OnboardCollaborator(
+                this.UserAccessControlDto.Collaborator.Uid,
+                this.UserAccessControlDto.User.Id,
+                this.UserAccessControlDto.User.Uid,
+                this.EditionDto.Id,
+                this.EditionDto.Uid,
+                this.UserInterfaceLanguage));
+
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.WelcomeTitle, new List<BreadcrumbItemHelper> {

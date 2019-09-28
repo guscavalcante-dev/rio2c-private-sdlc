@@ -167,6 +167,23 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Onboarding
 
+        /// <summary>Onboards the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Onboard(int userId)
+        {
+            if (!this.OnboardingStartDate.HasValue)
+            {
+                this.OnboardingStartDate = DateTime.Now;
+                this.UpdateDate = DateTime.Now;
+                this.UpdateUserId = userId;
+            }
+
+            if (!this.WelcomeEmailSendDate.HasValue)
+            {
+                this.WelcomeEmailSendDate = this.OnboardingStartDate;
+            }
+        }
+
         /// <summary>Called when [access data].</summary>
         /// <param name="userId">The user identifier.</param>
         public void OnboardAccessData(int userId)
@@ -174,7 +191,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.OnboardingStartDate = this.OnboardingUserDate = DateTime.Now;
+            this.OnboardingUserDate = DateTime.Now;
         }
 
         /// <summary>Called when [player terms acceptance].</summary>
