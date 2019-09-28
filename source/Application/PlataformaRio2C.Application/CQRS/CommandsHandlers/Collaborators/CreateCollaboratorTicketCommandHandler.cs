@@ -4,7 +4,7 @@
 // Created          : 08-31-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-27-2019
+// Last Modified On : 09-28-2019
 // ***********************************************************************
 // <copyright file="CreateCollaboratorWithTicketsHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -90,44 +90,44 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 this.Uow.SaveChanges();
                 this.AppValidationResult.Data = collaborator;
 
-                //#region Send welcome email
+                #region Send welcome email
 
-                //await this.CommandBus.Send(new SendProducerWelcomeEmailAsync(
-                //    collaborator.User.SecurityStamp,
-                //    collaborator.User.Id,
-                //    collaborator.User.Uid,
-                //    collaborator.FirstName, 
-                //    collaborator.GetFullName(), 
-                //    cmd.SalesPlatformAttendeeDto.Email, 
-                //    cmd.Edition.Id,
-                //    cmd.Edition.Name, 
-                //    cmd.Edition.UrlCode, 
-                //    "pt-BR"), cancellationToken);
+                await this.CommandBus.Send(new SendProducerWelcomeEmailAsync(
+                    collaborator.User.SecurityStamp,
+                    collaborator.User.Id,
+                    collaborator.User.Uid,
+                    collaborator.FirstName,
+                    collaborator.GetFullName(),
+                    cmd.SalesPlatformAttendeeDto.Email,
+                    cmd.Edition.Id,
+                    cmd.Edition.Name,
+                    cmd.Edition.UrlCode,
+                    "pt-BR"), cancellationToken);
 
-                //#endregion
+                #endregion
             }
-            else
-            {
-                //var updateCmd = new UpdateCollaborator
-                //{
-                //    CollaboratorUid = user.Collaborator.Uid,
-                //    IsAddingToCurrentEdition = true,
-                //    FirstName = cmd.FirstName,
-                //    LastNames = cmd.LastNames,
-                //    Badge = cmd.Badge,
-                //    Email = cmd.Email,
-                //    PhoneNumber = cmd.PhoneNumber,
-                //    CellPhone = cmd.CellPhone,
-                //    Address = cmd.Address,
-                //    AttendeeOrganizationBaseCommands = cmd.AttendeeOrganizationBaseCommands,
-                //    JobTitles = cmd.JobTitles,
-                //    MiniBios = cmd.MiniBios,
-                //    CropperImage = cmd.CropperImage
-                //};
-                //updateCmd.UpdatePreSendProperties(cmd.OrganizationType, cmd.UserId, cmd.UserUid, cmd.EditionId, cmd.EditionUid, cmd.UserInterfaceLanguage);
+            //else
+            //{
+            //    var updateCmd = new UpdateCollaborator
+            //    {
+            //        CollaboratorUid = user.Collaborator.Uid,
+            //        IsAddingToCurrentEdition = true,
+            //        FirstName = cmd.FirstName,
+            //        LastNames = cmd.LastNames,
+            //        Badge = cmd.Badge,
+            //        Email = cmd.Email,
+            //        PhoneNumber = cmd.PhoneNumber,
+            //        CellPhone = cmd.CellPhone,
+            //        Address = cmd.Address,
+            //        AttendeeOrganizationBaseCommands = cmd.AttendeeOrganizationBaseCommands,
+            //        JobTitles = cmd.JobTitles,
+            //        MiniBios = cmd.MiniBios,
+            //        CropperImage = cmd.CropperImage
+            //    };
+            //    updateCmd.UpdatePreSendProperties(cmd.OrganizationType, cmd.UserId, cmd.UserUid, cmd.EditionId, cmd.EditionUid, cmd.UserInterfaceLanguage);
 
-                //this.AppValidationResult = await this.CommandBus.Send(updateCmd, cancellationToken);
-            }
+            //    this.AppValidationResult = await this.CommandBus.Send(updateCmd, cancellationToken);
+            //}
 
             return this.AppValidationResult;
 

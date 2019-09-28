@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-27-2019
+// Last Modified On : 09-28-2019
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -127,7 +127,7 @@ namespace PlataformaRio2C.Domain.Entities
             Edition edition,
             List<AttendeeOrganization> newAttendeeOrganizations,
             AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
-            CollaboratorType collaboratorType, //TODO: Use collaborator type
+            CollaboratorType collaboratorType,
             Role role,
             string salesPlatformAttendeeId,
             DateTime salesPlatformUpdateDate,
@@ -152,6 +152,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeAttendeeCollaborators(
                 edition,
+                collaboratorType,
                 newAttendeeOrganizations,
                 attendeeSalesPlatformTicketType, 
                 salesPlatformAttendeeId,
@@ -595,6 +596,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Synchronizes the attendee collaborators.</summary>
         /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="newAttendeeOrganizations">The new attendee organizations.</param>
         /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
         /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
@@ -610,6 +612,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         private void SynchronizeAttendeeCollaborators(
             Edition edition,
+            CollaboratorType collaboratorType,
             List<AttendeeOrganization> newAttendeeOrganizations,
             AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
             string salesPlatformAttendeeId,
@@ -638,6 +641,7 @@ namespace PlataformaRio2C.Domain.Entities
             if (attendeeCollaborator != null)
             {
                 attendeeCollaborator.UpdateAttendeeCollaboratorTicket(
+                    collaboratorType,
                     newAttendeeOrganizations,
                     attendeeSalesPlatformTicketType, 
                     salesPlatformAttendeeId,
@@ -656,6 +660,7 @@ namespace PlataformaRio2C.Domain.Entities
             {
                 this.AttendeeCollaborators.Add(new AttendeeCollaborator(
                     edition,
+                    collaboratorType,
                     newAttendeeOrganizations,
                     this, 
                     attendeeSalesPlatformTicketType, 
@@ -728,7 +733,7 @@ namespace PlataformaRio2C.Domain.Entities
             Edition edition,
             List<AttendeeOrganization> newAttendeeOrganizations,
             AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
-            CollaboratorType collaboratorType, //TODO: Use collaborator type
+            CollaboratorType collaboratorType,
             Role role,
             string salesPlatformAttendeeId,
             DateTime salesPlatformUpdateDate, 
@@ -753,6 +758,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
             this.SynchronizeAttendeeCollaborators(
                 edition,
+                collaboratorType,
                 newAttendeeOrganizations,
                 attendeeSalesPlatformTicketType, 
                 salesPlatformAttendeeId,
