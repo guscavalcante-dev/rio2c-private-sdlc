@@ -28,12 +28,14 @@ using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Web.Site.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
     /// <summary>OnboardingController</summary>
     [AjaxAuthorize(Order = 1)]
+    [AuthorizeCollaboratorType(Order = 2)]
     public class OnboardingController : BaseController
     {
         private readonly IActivityRepository activityRepo;

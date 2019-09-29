@@ -4,7 +4,7 @@
 // Created          : 08-01-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-27-2019
+// Last Modified On : 09-28-2019
 // ***********************************************************************
 // <copyright file="AuthorizeCollaboratorTypeAttribute.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,29 +21,44 @@ namespace PlataformaRio2C.Web.Site.Filters
     /// <summary>AuthorizeCollaboratorTypeAttribute</summary>
     public class AuthorizeCollaboratorTypeAttribute : ActionFilterAttribute
     {
-        public string[] Types { get; set; }
+        public string Types { get; set; }
 
         /// <summary>Called by the ASP.NET MVC framework before the action method executes.</summary>
         /// <param name="filterContext">The filter context.</param>
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (this.Types?.Any() == true)
+            var isForbidden = false;
+
+            var userAccessControlDto = (UserAccessControlDto)filterContext.Controller.ViewBag.UserAccessControlDto;
+            if (userAccessControlDto != null && userAccessControlDto.IsAdmin() != true)
             {
-                var userAccessControlDto = (UserAccessControlDto)filterContext.Controller.ViewBag.UserAccessControlDto;
-                if (userAccessControlDto != null && userAccessControlDto.IsAdmin() != true)
+                var typesArray = this.Types?.Split(',');
+                if (typesArray?.Any() != true)
                 {
-                    var collaboratorTypes = userAccessControlDto?.EditionCollaboratorTypes?.Select(eutt => eutt.Name).ToList();
-                    if (this.Types.All(allowedCollaboratorType => collaboratorTypes?.Contains(allowedCollaboratorType) != true))
+                    if (userAccessControlDto.EditionCollaboratorTypes?.Any() != true)
                     {
-                        filterContext.Result = new RedirectToRouteResult(
-                            new RouteValueDictionary {
-                                { "controller", "Error" },
-                                { "action", "Forbidden" },
-                                { "area", "" },
-                                { "isAjaxRequest", filterContext.HttpContext.Request.IsAjaxRequest() }
-                            });
+                        isForbidden = true;
                     }
                 }
+                else
+                {
+                    var collaboratorTypes = userAccessControlDto?.EditionCollaboratorTypes?.Select(eutt => eutt.Name).ToList();
+                    if (typesArray.All(allowedType => collaboratorTypes?.Contains(allowedType) != true))
+                    {
+                        isForbidden = true;
+                    }
+                }
+            }
+
+            if (isForbidden)
+            {
+                filterContext.Result = new RedirectToRouteResult(
+                    new RouteValueDictionary {
+                        { "controller", "Error" },
+                        { "action", "Forbidden" },
+                        { "area", "" },
+                        { "isAjaxRequest", filterContext.HttpContext.Request.IsAjaxRequest() }
+                    });
             }
 
             base.OnActionExecuting(filterContext);
