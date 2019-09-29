@@ -114,8 +114,8 @@
             send: '@Labels.Send',
             cancel: '@Labels.Cancel',
             deleteConfirmationMessage: '@Messages.ConfirmDelete',
-            deleteCurrentEditionConfirmationMessage: '@(ViewBag.EditionUrlCode != null ? string.Format(Messages.ConfirmDeleteEdition, ViewBag.EditionUrlCode) : string.Empty)',
-            notInEdition: '@(ViewBag.EditionUrlCode != null ? string.Format(Labels.NotInEdition, ViewBag.EditionUrlCode) : string.Empty)',
+            deleteCurrentEditionConfirmationMessage: '@(ViewBag.EditionDto?.UrlCode != null ? string.Format(Messages.ConfirmDeleteEdition, ViewBag.EditionDto?.UrlCode) : string.Empty)',
+            notInEdition: '@(ViewBag.EditionDto?.UrlCode != null ? string.Format(Labels.NotInEdition, ViewBag.EditionDto?.UrlCode) : string.Empty)',
             selectAtLeastOneOption: '@Messages.SelectAtLeastOneOption'
         };
 
