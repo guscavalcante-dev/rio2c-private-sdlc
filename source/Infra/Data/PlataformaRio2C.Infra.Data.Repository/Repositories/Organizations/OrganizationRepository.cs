@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-25-2019
+// Last Modified On : 09-30-2019
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -98,6 +98,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             {
                 var outerWhere = PredicateBuilder.New<Organization>(false);
                 var innerOrganizationNameWhere = PredicateBuilder.New<Organization>(true);
+                var innerOrganizationCompanyNameWhere = PredicateBuilder.New<Organization>(true);
+                var innerOrganizationTradeNameWhere = PredicateBuilder.New<Organization>(true);
                 var innerHoldingNameWhere = PredicateBuilder.New<Organization>(true);
                 var innerDocumentWhere = PredicateBuilder.New<Organization>(true);
 
@@ -106,13 +108,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                     if (!string.IsNullOrEmpty(keyword))
                     {
                         innerOrganizationNameWhere = innerOrganizationNameWhere.And(o => o.Name.Contains(keyword));
+                        innerOrganizationCompanyNameWhere = innerOrganizationCompanyNameWhere.And(o => o.CompanyName.Contains(keyword));
+                        innerOrganizationTradeNameWhere = innerOrganizationTradeNameWhere.And(o => o.TradeName.Contains(keyword));
                         innerHoldingNameWhere = innerHoldingNameWhere.And(o => o.Holding.Name.Contains(keyword));
                         innerDocumentWhere = innerDocumentWhere.And(o => o.Document.Contains(keyword));
-
                     }
                 }
 
                 outerWhere = outerWhere.Or(innerOrganizationNameWhere);
+                outerWhere = outerWhere.Or(innerOrganizationCompanyNameWhere);
+                outerWhere = outerWhere.Or(innerOrganizationTradeNameWhere);
                 outerWhere = outerWhere.Or(innerHoldingNameWhere);
                 outerWhere = outerWhere.Or(innerDocumentWhere);
                 query = query.Where(outerWhere);
@@ -384,14 +389,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         /// <summary>Finds all public API paged.</summary>
         /// <param name="editionId">The edition identifier.</param>
+        /// <param name="keywords">The keywords.</param>
         /// <param name="organizationTypeUid">The organization type uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<OrganizationDto>> FindAllPublicApiPaged(int editionId, Guid organizationTypeUid, int page, int pageSize)
+        public async Task<IPagedList<OrganizationDto>> FindAllPublicApiPaged(int editionId, string keywords, Guid organizationTypeUid, int page, int pageSize)
         {
             var query = this.GetBaseQuery()
-                                .FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, false, false, editionId);
+                                .FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, false, false, editionId)
+                                .FindByKeywords(keywords);
 
             return await query
                             .Select(o => new OrganizationDto

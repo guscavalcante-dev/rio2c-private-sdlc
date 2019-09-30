@@ -4,7 +4,7 @@
 // Created          : 09-25-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-25-2019
+// Last Modified On : 09-30-2019
 // ***********************************************************************
 // <copyright file="PlayersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -83,7 +83,12 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 });
             }
 
-            var organizations = await this.organizationRepo.FindAllPublicApiPaged(edition.Id, OrganizationType.Player.Uid, request?.Page ?? 1, request?.PageSize ?? 10);
+            var organizations = await this.organizationRepo.FindAllPublicApiPaged(
+                edition.Id,
+                request?.Keywords,
+                OrganizationType.Player.Uid, 
+                request?.Page ?? 1, 
+                request?.PageSize ?? 10);
 
             return await Json(new PlayersApiResponse
             {
