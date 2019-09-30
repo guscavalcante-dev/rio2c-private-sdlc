@@ -127,6 +127,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Determines whether [is API display enabled] [the specified edition identifier].</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<Organization> IsApiDisplayEnabled(this IQueryable<Organization> query, int editionId)
+        {
+            query = query.Where(o => o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
+                                                                       && ao.IsApiDisplayEnabled));
+
+            return query;
+        }
+
         /// <summary>Determines whether [is not deleted].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
@@ -221,8 +233,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         /// <summary>Finds the dto by uid asynchronous.</summary>
         /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<OrganizationDto> FindDtoByUidAsync(Guid organizationUid)
+        public async Task<OrganizationDto> FindDtoByUidAsync(Guid organizationUid, int editionId)
         {
             var query = this.GetBaseQuery()
                                 .FindByUid(organizationUid);
@@ -241,6 +254,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 SocialMedia = o.SocialMedia,
                                 PhoneNumber = o.PhoneNumber,
                                 ImageUploadDate = o.ImageUploadDate,
+                                IsApiDisplayEnabled = (bool?)o.AttendeeOrganizations.FirstOrDefault(ao => !ao.IsDeleted && ao.EditionId == editionId).IsApiDisplayEnabled ?? false,
                                 CreateDate = o.CreateDate,
                                 CreateUserId = o.CreateUserId,
                                 UpdateDate = o.UpdateDate,
@@ -398,7 +412,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery()
                                 .FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, false, false, editionId)
-                                .FindByKeywords(keywords);
+                                .FindByKeywords(keywords)
+                                .IsApiDisplayEnabled(editionId);
 
             return await query
                             .Select(o => new OrganizationDto

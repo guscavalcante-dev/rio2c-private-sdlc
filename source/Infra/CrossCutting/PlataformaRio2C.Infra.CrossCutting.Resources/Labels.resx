@@ -1485,4 +1485,16 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Data envio e-mail de boas-vindas</value>
     <comment>Data envio e-mail de boas-vindas</comment>
   </data>
+  <data name="DisplayOnSite" xml:space="preserve">
+    <value>Exibir no site</value>
+    <comment>Exibir no site</comment>
+  </data>
+  <data name="DisplayOnSiteEdition" xml:space="preserve">
+    <value>Exbir na edição {0} do site</value>
+    <comment>Exbir na edição {0} do site</comment>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>Opções</value>
+    <comment>Opções</comment>
+  </data>
 </root>

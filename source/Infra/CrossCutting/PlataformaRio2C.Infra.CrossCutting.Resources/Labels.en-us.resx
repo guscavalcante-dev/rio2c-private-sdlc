@@ -1473,4 +1473,16 @@
     <value>Welcome email send date</value>
     <comment>Data envio e-mail de boas-vindas</comment>
   </data>
+  <data name="DisplayOnSite" xml:space="preserve">
+    <value>Display on site</value>
+    <comment>Exibir no site</comment>
+  </data>
+  <data name="DisplayOnSiteEdition" xml:space="preserve">
+    <value>Display on {0} site edition</value>
+    <comment>Exbir na edição {0} do site</comment>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>Options</value>
+    <comment>Opções</comment>
+  </data>
 </root>

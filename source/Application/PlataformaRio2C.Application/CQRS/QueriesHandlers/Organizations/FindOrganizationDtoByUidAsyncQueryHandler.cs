@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-19-2019
+// Last Modified On : 09-30-2019
 // ***********************************************************************
 // <copyright file="FindOrganizationDtoByUidAsyncQueryHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -38,7 +38,7 @@ namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
         /// <returns></returns>
         public async Task<OrganizationDto> Handle(FindOrganizationDtoByUidAsync cmd, CancellationToken cancellationToken)
         {
-            return await this.repo.FindDtoByUidAsync(cmd.HoldingUid);
+            return await this.repo.FindDtoByUidAsync(cmd.OrganizationUid, cmd.EditionId);
         }
     }
 }

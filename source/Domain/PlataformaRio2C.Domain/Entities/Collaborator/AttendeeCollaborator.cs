@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-28-2019
+// Last Modified On : 09-30-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,6 +30,7 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTime? OnboardingCollaboratorDate { get; private set; }
         public DateTime? PlayerTermsAcceptanceDate { get; private set; }
         public DateTime? ProducerTermsAcceptanceDate { get; private set; }
+        public bool IsApiDisplayEnabled { get; private set; }
 
         public virtual Edition Edition { get; private set; }
         public virtual Collaborator Collaborator { get; private set; }
@@ -55,6 +56,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.Edition = edition;
             this.Collaborator = collaborator;
+            this.IsApiDisplayEnabled = true; //TODO: Change for speakers
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;

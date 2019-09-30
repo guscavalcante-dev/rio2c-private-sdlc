@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-23-2019
+// Last Modified On : 09-30-2019
 // ***********************************************************************
 // <copyright file="OrganizationBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -78,6 +78,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<Guid> TargetAudiencesUids { get; set; }
         public List<Guid> InterestsUids { get; set; }
 
+        [Display(Name = "DisplayOnSite", ResourceType = typeof(Labels))]
+        public bool IsApiDisplayEnabled { get; set; }
+
         public List<HoldingBaseDto> HoldingBaseDtos { get; private set; }
         public OrganizationType OrganizationType { get; private set; }
         public List<Activity> Activities { get; private set; }
@@ -133,6 +136,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateDropdownProperties(holdingBaseDtos, countriesBaseDtos, activities, targetAudiences, groupedInterests);
             this.TargetAudiencesUids = entity?.OrganizationTargetAudiencesDtos?.Select(otad => otad.TargetAudienceUid)?.ToList();
             this.InterestsUids = entity?.OrganizationInterestsDtos?.Select(oid => oid.InterestUid)?.ToList();
+            this.IsApiDisplayEnabled = entity?.IsApiDisplayEnabled ?? false;
         }
 
         /// <summary>Updates the address.</summary>

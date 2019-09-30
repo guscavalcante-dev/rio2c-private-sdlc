@@ -889,6 +889,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exibir no site.
+        /// </summary>
+        public static string DisplayOnSite {
+            get {
+                return ResourceManager.GetString("DisplayOnSite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exbir na edição {0} do site.
+        /// </summary>
+        public static string DisplayOnSiteEdition {
+            get {
+                return ResourceManager.GetString("DisplayOnSiteEdition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Baixar lista de executivos.
         /// </summary>
         public static string DownloadListOfExecutives {
@@ -1992,6 +2010,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Optional {
             get {
                 return ResourceManager.GetString("Optional", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opções.
+        /// </summary>
+        public static string Options {
+            get {
+                return ResourceManager.GetString("Options", resourceCulture);
             }
         }
         

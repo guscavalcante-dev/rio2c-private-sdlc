@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-23-2019
+// Last Modified On : 09-30-2019
 // ***********************************************************************
 // <copyright file="FindOrganizationDtoByUidAsync.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,16 +19,20 @@ namespace PlataformaRio2C.Application.CQRS.Queries
     /// <summary>FindOrganizationDtoByUidAsync</summary>
     public class FindOrganizationDtoByUidAsync : BaseQuery<OrganizationDto>
     {
-        public Guid HoldingUid { get; private set; }
+        public Guid OrganizationUid { get; private set; }
+        public int EditionId { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="FindOrganizationDtoByUidAsync"/> class.</summary>
-        /// <param name="holdingUid">The holding uid.</param>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public FindOrganizationDtoByUidAsync(
-            Guid? holdingUid,
+            Guid? organizationUid,
+            int editionId,
             string userInterfaceLanguage)
         {
-            this.HoldingUid = holdingUid ?? Guid.Empty;
+            this.OrganizationUid = organizationUid ?? Guid.Empty;
+            this.EditionId = editionId;
             this.UpdatePreSendProperties(userInterfaceLanguage);
         }
     }

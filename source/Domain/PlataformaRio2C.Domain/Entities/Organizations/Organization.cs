@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-18-2019
+// Last Modified On : 09-30-2019
 // ***********************************************************************
 // <copyright file="Organization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -81,6 +81,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="addressZipCode">The address zip code.</param>
         /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="isApiDisplayEnabled">if set to <c>true</c> [is API display enabled].</param>
         /// <param name="descriptions">The descriptions.</param>
         /// <param name="restrictionSpecifics">The restriction specifics.</param>
         /// <param name="organizationActivities">The organization activities.</param>
@@ -107,7 +108,8 @@ namespace PlataformaRio2C.Domain.Entities
             string address1,
             string addressZipCode,
             bool addressIsManual,
-            bool isImageUploaded, 
+            bool isImageUploaded,
+            bool isApiDisplayEnabled,
             List<OrganizationDescription> descriptions,
             List<OrganizationRestrictionSpecific> restrictionSpecifics,
             List<OrganizationActivity> organizationActivities,
@@ -131,7 +133,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeDescriptions(descriptions, userId);
             this.SynchronizeRestrictionSpecifics(restrictionSpecifics, userId);
-            this.SynchronizeAttendeeOrganizations(edition, organizationType, true, userId);
+            this.SynchronizeAttendeeOrganizations(edition, organizationType, isApiDisplayEnabled, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
             this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
@@ -164,6 +166,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
+        /// <param name="isApiDisplayEnabled">if set to <c>true</c> [is API display enabled].</param>
         /// <param name="descriptions">The descriptions.</param>
         /// <param name="restrictionSpecifics">The restriction specifics.</param>
         /// <param name="organizationActivities">The organization activities.</param>
@@ -192,6 +195,7 @@ namespace PlataformaRio2C.Domain.Entities
             bool addressIsManual,
             bool isImageUploaded,
             bool isImageDeleted,
+            bool isApiDisplayEnabled,
             List<OrganizationDescription> descriptions,
             List<OrganizationRestrictionSpecific> restrictionSpecifics,
             List<OrganizationActivity> organizationActivities,
@@ -216,7 +220,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeDescriptions(descriptions, userId);
             this.SynchronizeRestrictionSpecifics(restrictionSpecifics, userId);
-            this.SynchronizeAttendeeOrganizations(edition, organizationType, isAddingToCurrentEdition, userId);
+            this.SynchronizeAttendeeOrganizations(edition, organizationType, isApiDisplayEnabled, isAddingToCurrentEdition, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
             this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
@@ -314,7 +318,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeDescriptions(descriptions, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
             this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
-            this.SynchronizeAttendeeOrganizations(edition, organizationType, true, userId);
+            this.SynchronizeAttendeeOrganizations(edition, organizationType, null, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.OnboardAttendeeOrganizationData(edition, userId);
         }
@@ -544,15 +548,16 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Synchronizes the attendee organizations.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="isApiDisplayEnabled">if set to <c>true</c> [is API display enabled].</param>
         /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeAttendeeOrganizations(Edition edition, OrganizationType organizationType, bool isAddingToCurrentEdition, int userId)
+        private void SynchronizeAttendeeOrganizations(Edition edition, OrganizationType organizationType, bool? isApiDisplayEnabled, bool isAddingToCurrentEdition, int userId)
         {
-            // Synchronize only when is adding to current edition
-            if (!isAddingToCurrentEdition)
-            {
-                return;
-            }
+            //// Synchronize only when is adding to current edition
+            //if (!isAddingToCurrentEdition)
+            //{
+            //    return;
+            //}
 
             if (this.AttendeeOrganizations == null)
             {
@@ -567,11 +572,11 @@ namespace PlataformaRio2C.Domain.Entities
             var attendeeOrganization = this.AttendeeOrganizations.FirstOrDefault(ao => ao.EditionId == edition.Id);
             if (attendeeOrganization != null)
             {
-                attendeeOrganization.Restore(organizationType, userId);
+                attendeeOrganization.Restore(organizationType, isApiDisplayEnabled, userId);
             }
             else
             {
-                this.AttendeeOrganizations.Add(new AttendeeOrganization(edition, this, organizationType, userId));
+                this.AttendeeOrganizations.Add(new AttendeeOrganization(edition, this, organizationType, isApiDisplayEnabled, userId));
             }
         }
 

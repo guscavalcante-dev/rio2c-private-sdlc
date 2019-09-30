@@ -23,7 +23,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>IOrganizationRepository</summary>
     public interface IOrganizationRepository : IRepository<Organization>
     {
-        Task<OrganizationDto> FindDtoByUidAsync(Guid organizationUid);
+        Task<OrganizationDto> FindDtoByUidAsync(Guid organizationUid, int editionId);
         Task<IPagedList<OrganizationBaseDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, Guid organizationTypeId, bool showAllEditions, bool showAllOrganizations, int? editionId);
         Task<IPagedList<OrganizationDto>> FindAllPublicApiPaged(int editionId, string keywords, Guid organizationTypeUid, int page, int pageSize);
         Task<int> CountAllByDataTable(Guid organizationTypeId, bool showAllEditions, int? editionId);

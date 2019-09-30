@@ -76,12 +76,12 @@
             </div>
         </div>
         @*<div class="form-group row">
-            <div class="col-md-12">
-                @Html.LabelFor(m => m.PhoneNumber, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
-                @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
+                <div class="col-md-12">
+                    @Html.LabelFor(m => m.PhoneNumber, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
         <div class="kt-section pt-4">
             <h3 class="kt-section__title mb-0">
                 @Labels.Address <span class="form-optional-input text-muted">@Labels.Optional</span>
@@ -121,10 +121,10 @@
                                     <input type="checkbox"
                                            name="TargetAudiencesUids"
                                            value="@targetAudience.Uid"
-                                           @if (Model.TargetAudiencesUids?.Contains(targetAudience.Uid) == true) { <text> checked </text>  } /> @targetAudience.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')
-                                    <span></span>
-                                </label>
-                            }
+                                           @if (Model.TargetAudiencesUids?.Contains(targetAudience.Uid) == true) { <text> checked </text> } /> @targetAudience.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')
+                                        <span></span>
+                                    </label>
+                                }
                         </div>
                     </div>
                 </div>
@@ -161,6 +161,22 @@
                         </label>
                     }
                 }
+        </div>
+    </div>
+</div>
+<div class="kt-section">
+    <div class="kt-separator kt-separator--border-dashed"></div>
+    <h3 class="kt-section__title mb-0">@Labels.Options</h3>
+    <div class="kt-separator kt-separator--border-dashed"></div>
+    <div class="kt-section__content mt-6">
+        @Html.Label($"{string.Format(Labels.DisplayOnSiteEdition, ViewBag.EditionDto.UrlCode)}", new { @class = "col-6 col-form-label" })
+        <div class="col-6">
+            <span class="kt-switch kt-switch--icon">
+                <label>
+                    @Html.CheckBoxFor(m => m.IsApiDisplayEnabled, true)
+                    <span></span>
+                </label>
+            </span>
         </div>
     </div>
 </div>
