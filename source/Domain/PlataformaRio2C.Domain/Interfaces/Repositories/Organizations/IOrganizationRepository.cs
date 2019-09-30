@@ -25,8 +25,13 @@ namespace PlataformaRio2C.Domain.Interfaces
     {
         Task<OrganizationDto> FindDtoByUidAsync(Guid organizationUid, int editionId);
         Task<IPagedList<OrganizationBaseDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, Guid organizationTypeId, bool showAllEditions, bool showAllOrganizations, int? editionId);
-        Task<IPagedList<OrganizationDto>> FindAllPublicApiPaged(int editionId, string keywords, Guid organizationTypeUid, int page, int pageSize);
         Task<int> CountAllByDataTable(Guid organizationTypeId, bool showAllEditions, int? editionId);
+
+        #region Api
+
+        Task<IPagedList<OrganizationApiListDto>> FindAllPublicApiPaged(int editionId, string keywords, Guid organizationTypeUid, int page, int pageSize);
+        Task<OrganizationDto> FindApiDtoByUidAsync(Guid organizationUid, int editionId, Guid organizationTypeUid);
+        #endregion
 
         #region Old
 

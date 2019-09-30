@@ -11,6 +11,7 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -56,15 +57,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             var editions = this.editionRepo.FindAllByIsActive(false);
             if (editions?.Any() == false)
             {
-                return await Json(new ApiBaseResponse
-                {
-                    Status = ApiStatus.Error,
-                    Error = new ApiError
-                    {
-                        Code = "00001",
-                        Message = "No active editions found."
-                    }
-                });
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." }});
             }
 
             // Get edition from request otherwise get current
@@ -72,18 +65,10 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                                                               editions?.FirstOrDefault(e => e.IsCurrent);
             if (edition == null)
             {
-                return await Json(new ApiBaseResponse
-                {
-                    Status = ApiStatus.Error,
-                    Error = new ApiError
-                    {
-                        Code = "00002",
-                        Message = "No editions found."
-                    }
-                });
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "No editions found." }});
             }
 
-            var organizations = await this.organizationRepo.FindAllPublicApiPaged(
+            var organizationsApiDtos = await this.organizationRepo.FindAllPublicApiPaged(
                 edition.Id,
                 request?.Keywords,
                 OrganizationType.Player.Uid, 
@@ -94,15 +79,14 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             {
                 Status = ApiStatus.Success,
                 Error = null,
-                HasPreviousPage = organizations.HasPreviousPage,
-                HasNextPage = organizations.HasNextPage,
-                TotalItemCount = organizations.TotalItemCount,
-                PageCount = organizations.PageCount,
-                PageNumber = organizations.PageNumber,
-                PageSize = organizations.PageSize,
-                Players = organizations?.Select(o => new PlayersApiListItem
+                HasPreviousPage = organizationsApiDtos.HasPreviousPage,
+                HasNextPage = organizationsApiDtos.HasNextPage,
+                TotalItemCount = organizationsApiDtos.TotalItemCount,
+                PageCount = organizationsApiDtos.PageCount,
+                PageNumber = organizationsApiDtos.PageNumber,
+                PageSize = organizationsApiDtos.PageSize,
+                Players = organizationsApiDtos?.Select(o => new PlayersApiListItem
                 {
-                    Id = o.Id,
                     Uid = o.Uid,
                     TradeName = o.TradeName,
                     CompanyName = o.CompanyName,
@@ -111,23 +95,77 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             });
         }
 
-        //[HttpGet]
-        //[Route("player")]
-        //public async Task<IHttpActionResult> Player([FromUri]PlayerApiRequest request)
-        //{
-        //    var editions = this.editionRepo.FindAllByIsActive(false);
-        //    if (editions?.Any() == false)
-        //    {
-        //        return await Json(new PlayersApiResponse
-        //        {
-        //            Status = ApiStatus.Success,
-        //            Error = new ApiError
-        //            {
-        //                Code = "00001",
-        //                Message = "No active editions found."
-        //            }
-        //        });
-        //    }
-        //}
+        /// <summary>Players the specified request.</summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("player/{uid?}")]
+        public async Task<IHttpActionResult> Player([FromUri]PlayerApiRequest request)
+        {
+            var editions = this.editionRepo.FindAllByIsActive(false);
+            if (editions?.Any() == false)
+            {
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." }});
+            }
+
+            // Get edition from request otherwise get current
+            var edition = request?.Edition.HasValue == true ? editions?.FirstOrDefault(e => e.UrlCode == request.Edition) :
+                editions?.FirstOrDefault(e => e.IsCurrent);
+            if (edition == null)
+            {
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "No editions found." }});
+            }
+
+            var organizationApiDto = await this.organizationRepo.FindApiDtoByUidAsync(
+                request?.Uid ?? Guid.Empty,
+                edition.Id,
+                OrganizationType.Player.Uid);
+            if (organizationApiDto == null)
+            {
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "Player not found." } });
+            }
+
+            var interestsGroups = organizationApiDto?.OrganizationInterestsDtos?.GroupBy(oid => new { oid.InterestGroupId, oid.InterestGroupUid, oid.InterestGroupName });
+
+            return await Json(new PlayerApiResponse
+            {
+                Status = ApiStatus.Success,
+                Error = null,
+                Uid = organizationApiDto.Uid,
+                TradeName = organizationApiDto.TradeName,
+                CompanyName = organizationApiDto.CompanyName,
+                Picture = organizationApiDto.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, organizationApiDto.Uid, organizationApiDto.ImageUploadDate, true) : null,
+                DescriptionsApiResponses = organizationApiDto.DescriptionsDtos?.Select(dd => new LanguageValueApiResponse
+                {
+                    Culture = dd.LanguageDto.Code,
+                    Value = dd.Value
+                })?.ToList(),
+                InterestGroupApiResponses = interestsGroups?.Select(ig => new InterestGroupApiResponse
+                {
+                    Uid = ig.Key.InterestGroupUid,
+                    Name = ig.Key.InterestGroupName,
+                    InterestsApiResponses = ig.Select(i => new InterestApiResponse
+                    {
+                        Name = i.InterestName
+                    })?.ToList()
+                })?.ToList(),
+                CollaboratorsApiResponses = organizationApiDto.CollaboratorsDtos?.Select(cd => new CollaboratorApiResponse
+                {
+                    Uid = cd.Uid,
+                    Name = cd.FullName,
+                    Picture = cd.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, cd.Uid, cd.ImageUploadDate, true) : null,
+                    JobTitlesApiResponses = cd.JobTitlesDtos?.Select(jtd => new LanguageValueApiResponse
+                    {
+                        Culture = jtd.LanguageDto.Code,
+                        Value = jtd.Value
+                    })?.ToList(),
+                    MiniBiosApiResponses = cd.MiniBiosDtos?.Select(jtd => new LanguageValueApiResponse
+                    {
+                        Culture = jtd.LanguageDto.Code,
+                        Value = jtd.Value
+                    })?.ToList()
+                })?.ToList()
+            });
+        }
     }
 }

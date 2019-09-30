@@ -34,6 +34,7 @@ namespace PlataformaRio2C.Domain.Dtos
 
         public IEnumerable<OrganizationDescriptionBaseDto> DescriptionsDtos { get; set; }
         public IEnumerable<OrganizationRestrictionSpecificBaseDto> RestrictionSpecificsDtos { get; set; }
+        public IEnumerable<CollaboratorDto> CollaboratorsDtos { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="HoldingDto"/> class.</summary>
         public OrganizationDto()

@@ -319,6 +319,7 @@
     <Compile Include="Areas\WebApi\Models\Error.cs" />
     <Compile Include="Areas\WebApi\Models\Players\Requests\PlayerApiRequest.cs" />
     <Compile Include="Areas\WebApi\Models\Players\Requests\PlayersApiRequest.cs" />
+    <Compile Include="Areas\WebApi\Models\Players\Responses\PlayerApiResponse.cs" />
     <Compile Include="Areas\WebApi\Models\Players\Responses\PlayersApiResponse.cs" />
     <Compile Include="Areas\WebApi\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
