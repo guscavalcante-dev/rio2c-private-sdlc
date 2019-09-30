@@ -653,4 +653,8 @@
     <value>Você não tem perfil de administrador.</value>
     <comment>Você não tem perfil de administrador.</comment>
   </data>
+  <data name="ConfirmToSendInvitationEmails" xml:space="preserve">
+    <value>Confirme para enviar os e-mails de convite</value>
+    <comment>Confirme para enviar os e-mails de convite</comment>
+  </data>
 </root>

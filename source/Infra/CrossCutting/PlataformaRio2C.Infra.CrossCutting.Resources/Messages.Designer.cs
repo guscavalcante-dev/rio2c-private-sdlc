@@ -286,6 +286,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirme para enviar os e-mails de convite.
+        /// </summary>
+        public static string ConfirmToSendInvitationEmails {
+            get {
+                return ResourceManager.GetString("ConfirmToSendInvitationEmails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Por favor, corrija os erros do formulário..
         /// </summary>
         public static string CorrectFormValues {
