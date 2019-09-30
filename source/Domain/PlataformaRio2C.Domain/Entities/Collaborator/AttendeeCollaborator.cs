@@ -101,6 +101,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.Edition = edition;
             this.Collaborator = collaborator;
+            this.IsApiDisplayEnabled = true; //TODO: Change for speakers
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
