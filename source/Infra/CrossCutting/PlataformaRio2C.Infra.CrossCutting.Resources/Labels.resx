@@ -1430,8 +1430,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Dados do Player</comment>
   </data>
   <data name="OneToOneMeetings" xml:space="preserve">
-    <value>Reuniões Individuais</value>
-    <comment>Reuniões Individuais</comment>
+    <value>Rodadas de Negócios</value>
+    <comment>Rodadas de Negócios</comment>
   </data>
   <data name="FinishDate" xml:space="preserve">
     <value>Data de conclusão</value>

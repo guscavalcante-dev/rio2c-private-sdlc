@@ -1978,7 +1978,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reuniões Individuais.
+        ///   Looks up a localized string similar to Rodadas de Negócios.
         /// </summary>
         public static string OneToOneMeetings {
             get {

@@ -1419,7 +1419,7 @@
   </data>
   <data name="OneToOneMeetings" xml:space="preserve">
     <value>One-to-One Meetings</value>
-    <comment>One-to-One Meetings</comment>
+    <comment>Rodadas de Negócios</comment>
   </data>
   <data name="FinishDate" xml:space="preserve">
     <value>Finish date</value>
