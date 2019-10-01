@@ -207,3 +207,10 @@ a.r2c-login__footer-link, a.r2c-footer-link {
 .r2c-header-menu {
     display: block !important;
 }
+
+/*
+    Onboarding Wizard
+*/
+.kt-wizard-v2 .kt-wizard-v2__wrapper .kt-form {
+    padding: 4rem 4rem 6rem !important;
+}

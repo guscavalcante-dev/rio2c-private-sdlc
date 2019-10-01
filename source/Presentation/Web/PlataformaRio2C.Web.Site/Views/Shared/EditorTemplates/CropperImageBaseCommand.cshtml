@@ -20,14 +20,14 @@
                 <img class="thumbnail" src="@Html.GetSiteLogo(Model.SiteId, Model.SiteLogoUpdateDate)" style="max-width: 100%;">
             }*@
     </div>
-    <div class="col-md-12">
+    <div class="col-md-12 pl-3">
         @if (Model.GetImageUploadDate().HasValue)
         {
-            <label class="btn default btn-file">
+            <label class="btn default btn-file p-1">
                 <span class="btn btn-secondary" onclick="MyRio2cCropper.remove();">@Labels.Remove</span>
             </label>
         }
-        <label class="btn default btn-file" for="CropperImage_ImageFile">
+        <label class="btn default btn-file p-1" for="CropperImage_ImageFile">
             <span class="btn btn-primary">@(Model.GetImageUploadDate().HasValue ? Labels.Alter : Labels.SelectImage)</span>
         </label>
     </div>
@@ -39,9 +39,9 @@
 <!-- CROPPER CONTAINER - BEGIN -->
 <div class="row cropper-control-hide d-none">
     <div class="col-12">
-        <div class="container cropper-container">
+        <div class="container cropper-container" style="margin-left: 0 !important;">
             <div class="row">
-                <div class="col-md-12 ml-3">
+                <div class="col-md-12">
                     @Html.HiddenFor(m => m.IsRequired)
                     @Html.HiddenFor(m => m.IsImageDeleted)
                     @Html.HiddenFor(m => m.ImageUid)
@@ -60,7 +60,7 @@
                 </div>
             </div>
             <div class="row mt-1">
-                <div class="col-md-12 docs-buttons text-center">
+                <div class="docs-buttons" style="padding-left: 18px;">
                     <!-- <h3 class="page-header">Toolbar:</h3> -->
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary" data-method="zoom" data-option="0.1" title="@Labels.ZoomIn">
@@ -80,7 +80,7 @@
             </div>
         </div>
         <div class="row mt-2">
-            <div class="col-md-12 text-center">
+            <div class="text-center" style="max-width: 240px; padding-left: 18px;">
                 <span class="badge badge-danger">@Labels.Warning</span><br />
                 <span class="text">@Html.Raw(Labels.InfoImagePlayer)</span>
             </div>
