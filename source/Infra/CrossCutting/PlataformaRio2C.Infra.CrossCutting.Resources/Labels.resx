@@ -395,8 +395,8 @@
     <value>Português</value>
   </data>
   <data name="InfoImagePlayer" xml:space="preserve">
-    <value>Favor inserir o logotipo da empresa em formato jpeg, jpg, gif ou png com fundo branco. &lt;br /&gt; Tamanho mínimo 1Kb.</value>
-    <comment>Favor inserir o logotipo da empresa em formato jpeg, jpg, gif ou png com fundo branco. &lt;br /&gt; Tamanho mínimo 1Kb.</comment>
+    <value>Favor enviar uma imagem em formato jpeg, jpg, gif ou png com fundo branco. &lt;br /&gt; Tamanho mínimo 1Kb.</value>
+    <comment>Favor enviar uma imagem em formato jpeg, jpg, gif ou png com fundo branco. &lt;br /&gt; Tamanho mínimo 1Kb.</comment>
   </data>
   <data name="ExecutiveCreate" xml:space="preserve">
     <value>Criar Executivo</value>
