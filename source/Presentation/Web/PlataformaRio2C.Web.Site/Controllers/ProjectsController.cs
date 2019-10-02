@@ -46,17 +46,18 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            // If the user is not player and industry, redirect to the correct page
-            if (this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual) == true
-                && this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) != true)
-            {
-                return RedirectToAction("Review", "Projects", new { Area = "" });
-            }
-            if (this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual) != true
-                && this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true)
-            {
-                return RedirectToAction("Submited", "Projects", new { Area = "" });
-            }
+            //TODO: Enable this projects redirection when projects is implemented
+            //// If the user is not player and industry, redirect to the correct page
+            //if (this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual) == true
+            //    && this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) != true)
+            //{
+            //    return RedirectToAction("Review", "Projects", new { Area = "" });
+            //}
+            //if (this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual) != true
+            //    && this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true)
+            //{
+            //    return RedirectToAction("Submited", "Projects", new { Area = "" });
+            //}
 
             #region Breadcrumb
 
