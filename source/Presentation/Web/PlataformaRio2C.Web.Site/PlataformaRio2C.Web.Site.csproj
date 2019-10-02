@@ -338,7 +338,7 @@
     <Compile Include="Controllers\Rio2CNetworkController.cs" />
     <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Controllers\ProducerController.cs" />
-    <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\ScheduleController.cs" />
     <Compile Include="Controllers\TermController.cs" />
     <Compile Include="Controllers\Ticket4youController.cs" />
@@ -6989,7 +6989,7 @@
     <Content Include="Views\Player\ProfileDetails.cshtml" />
     <Content Include="Views\Player\ProfileEdit.cshtml" />
     <Content Include="Views\Player\Interests.cshtml" />
-    <Content Include="Views\Project\Index.cshtml" />
+    <Content Include="Views\Projects\Index.cshtml" />
     <Content Include="Views\Schedule\Index.cshtml" />
     <Content Include="Views\Conference\Index.cshtml" />
     <Content Include="Views\Term\Player.cshtml" />
@@ -7006,7 +7006,7 @@
     <Content Include="Views\Term\Producer.cshtml" />
     <Content Include="Views\Collaborator\_Editor.cshtml" />
     <Content Include="Views\Collaborator\_Display.cshtml" />
-    <Content Include="Views\Project\Detail.cshtml" />
+    <Content Include="Views\Projects\Detail.cshtml" />
     <Content Include="Views\Producer\ProfileDetails.cshtml" />
     <Content Include="Views\Producer\ProfileEdit.cshtml" />
     <Content Include="Views\Conference\Detail.cshtml" />
@@ -7044,9 +7044,9 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Themes\Metronic\SideMenu.cshtml" />
-    <Content Include="Views\Project\Submited.cshtml" />
-    <Content Include="Views\Project\Review.cshtml" />
-    <Content Include="Views\Project\Submit.cshtml" />
+    <Content Include="Views\Projects\Submited.cshtml" />
+    <Content Include="Views\Projects\Review.cshtml" />
+    <Content Include="Views\Projects\Submit.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

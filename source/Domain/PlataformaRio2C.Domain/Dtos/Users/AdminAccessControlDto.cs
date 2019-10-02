@@ -4,7 +4,7 @@
 // Created          : 09-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-27-2019
+// Last Modified On : 10-02-2019
 // ***********************************************************************
 // <copyright file="AdminAccessControlDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -86,13 +86,27 @@ namespace PlataformaRio2C.Domain.Dtos
             return this.Roles?.Any(r => r.Name == Constants.Role.AdminPartial) == true;
         }
 
-        /// <summary>Determines whether the specified collaborator type has type.</summary>
+        /// <summary>Determines whether [has collaborator type] [the specified collaborator type].</summary>
         /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <returns>
-        ///   <c>true</c> if the specified collaborator type has type; otherwise, <c>false</c>.</returns>
-        public bool HasType(string collaboratorType)
+        ///   <c>true</c> if [has collaborator type] [the specified collaborator type]; otherwise, <c>false</c>.</returns>
+        public bool HasCollaboratorType(string collaboratorType)
         {
             return !string.IsNullOrEmpty(collaboratorType) && this.EditionCollaboratorTypes?.Any(r => r.Name == collaboratorType) == true;
+        }
+
+        /// <summary>Determines whether [has any collaborator type] [the specified collaborator types].</summary>
+        /// <param name="collaboratorTypes">The collaborator types.</param>
+        /// <returns>
+        ///   <c>true</c> if [has any collaborator type] [the specified collaborator types]; otherwise, <c>false</c>.</returns>
+        public bool HasAnyCollaboratorType(string[] collaboratorTypes)
+        {
+            if (collaboratorTypes?.Any() != true)
+            {
+                return false;
+            }
+
+            return this.EditionCollaboratorTypes?.Any(ect => collaboratorTypes.Contains(ect.Name)) == true;
         }
 
         #endregion

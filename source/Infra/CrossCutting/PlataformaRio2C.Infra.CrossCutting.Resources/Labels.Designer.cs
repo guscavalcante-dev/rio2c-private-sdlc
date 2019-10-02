@@ -322,6 +322,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Projetos Audiovisuais.
+        /// </summary>
+        public static string AudiovisualProjects {
+            get {
+                return ResourceManager.GetString("AudiovisualProjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Voltar.
         /// </summary>
         public static string Back {
@@ -1083,6 +1092,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string EvaluateProject {
             get {
                 return ResourceManager.GetString("EvaluateProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Avaliar projetos.
+        /// </summary>
+        public static string EvaluateProjects {
+            get {
+                return ResourceManager.GetString("EvaluateProjects", resourceCulture);
             }
         }
         
@@ -2423,6 +2441,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Avaliação de projetos.
+        /// </summary>
+        public static string ProjectsEvaluation {
+            get {
+                return ResourceManager.GetString("ProjectsEvaluation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Projetos para Pitching.
         /// </summary>
         public static string ProjectsForPitching {
@@ -2842,6 +2869,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enviar projeto.
+        /// </summary>
+        public static string SendProject {
+            get {
+                return ResourceManager.GetString("SendProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Finalizar e enviar.
         /// </summary>
         public static string SendToPlayers {
@@ -2856,6 +2892,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Sent {
             get {
                 return ResourceManager.GetString("Sent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Projetos enviados.
+        /// </summary>
+        public static string SentProjects {
+            get {
+                return ResourceManager.GetString("SentProjects", resourceCulture);
             }
         }
         

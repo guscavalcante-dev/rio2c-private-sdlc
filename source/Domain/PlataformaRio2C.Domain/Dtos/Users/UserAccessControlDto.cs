@@ -4,7 +4,7 @@
 // Created          : 09-04-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-28-2019
+// Last Modified On : 10-02-2019
 // ***********************************************************************
 // <copyright file="UserAccessControlDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -109,6 +109,44 @@ namespace PlataformaRio2C.Domain.Dtos
         public bool IsAdmin()
         {
             return this.Roles?.Any(r => Constants.Role.AnyAdminArray.Contains(r.Name)) == true;
+        }
+
+        /// <summary>Determines whether [has collaborator type] [the specified collaborator type].</summary>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <returns>
+        ///   <c>true</c> if [has collaborator type] [the specified collaborator type]; otherwise, <c>false</c>.</returns>
+        public bool HasCollaboratorType(string collaboratorType)
+        {
+            if (this.IsAdmin())
+            {
+                return true;
+            }
+
+            if (string.IsNullOrEmpty(collaboratorType))
+            {
+                return false;
+            }
+
+            return this.EditionCollaboratorTypes?.Any(ect => !ect.IsDeleted && ect.Name == collaboratorType) == true;
+        }
+
+        /// <summary>Determines whether [has any collaborator type] [the specified collaborator types].</summary>
+        /// <param name="collaboratorTypes">The collaborator types.</param>
+        /// <returns>
+        ///   <c>true</c> if [has any collaborator type] [the specified collaborator types]; otherwise, <c>false</c>.</returns>
+        public bool HasAnyCollaboratorType(string[] collaboratorTypes)
+        {
+            if (this.IsAdmin())
+            {
+                return true;
+            }
+
+            if (collaboratorTypes?.Any() != true)
+            {
+                return false;
+            }
+
+            return this.EditionCollaboratorTypes?.Any(ect => collaboratorTypes.Contains(ect.Name)) == true;
         }
 
         #endregion

@@ -3,8 +3,8 @@
 @{
     var adminAccessControlDto = ViewBag.AdminAccessControlDto as AdminAccessControlDto;
     var isAdminFull = adminAccessControlDto?.IsAdmin() == true;
-    var isAdminAudiovisual = adminAccessControlDto?.IsAdminPartial() == true && adminAccessControlDto?.HasType(CollaboratorType.AdminAudiovisual) == true;
-    var isComissionAudiovisual = adminAccessControlDto?.IsAdminPartial() == true && adminAccessControlDto?.HasType(CollaboratorType.CommissionAudiovisual) == true;
+    var isAdminAudiovisual = adminAccessControlDto?.IsAdminPartial() == true && adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminAudiovisual) == true;
+    var isComissionAudiovisual = adminAccessControlDto?.IsAdminPartial() == true && adminAccessControlDto?.HasCollaboratorType(CollaboratorType.CommissionAudiovisual) == true;
 
     var isLogistics = false; //userRoles.HasElement("Logistics");
     var menuOpenCssClass = "kt-menu__item--open kt-menu__item--here";

@@ -4,7 +4,7 @@
     ViewBag.Title = Labels.Dashboard;
     var adminAccessControlDto = ViewBag.AdminAccessControlDto as AdminAccessControlDto;
     var isAdminFull = adminAccessControlDto?.IsAdmin() == true;
-    var isAdminAudiovisual = adminAccessControlDto?.IsAdminPartial() == true && adminAccessControlDto?.HasType(CollaboratorType.AdminAudiovisual) == true;
+    var isAdminAudiovisual = adminAccessControlDto?.IsAdminPartial() == true && adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminAudiovisual) == true;
 }
 @if (isAdminFull || isAdminAudiovisual)
 {

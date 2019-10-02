@@ -1485,4 +1485,24 @@
     <value>Options</value>
     <comment>Opções</comment>
   </data>
+  <data name="AudiovisualProjects" xml:space="preserve">
+    <value>Audiovisual Projects</value>
+    <comment>Projetos Audiovisuais</comment>
+  </data>
+  <data name="EvaluateProjects" xml:space="preserve">
+    <value>Evaluate projects</value>
+    <comment>Avaliar projetos</comment>
+  </data>
+  <data name="ProjectsEvaluation" xml:space="preserve">
+    <value>Projects evaluation</value>
+    <comment>Avaliação de projetos</comment>
+  </data>
+  <data name="SendProject" xml:space="preserve">
+    <value>Send project</value>
+    <comment>Enviar projeto</comment>
+  </data>
+  <data name="SentProjects" xml:space="preserve">
+    <value>Sent projects</value>
+    <comment>Projetos enviados</comment>
+  </data>
 </root>
