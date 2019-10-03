@@ -286,7 +286,7 @@
     <comment>Usuário</comment>
   </data>
   <data name="ViewProfile" xml:space="preserve">
-    <value>Profile's View</value>
+    <value>View Profile</value>
     <comment>Ver Perfil</comment>
   </data>
   <data name="Warning" xml:space="preserve">
