@@ -961,6 +961,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edição.
+        /// </summary>
+        public static string Edition {
+            get {
+                return ResourceManager.GetString("Edition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Editar Comissão Musical.
         /// </summary>
         public static string EditMusicalCommission {
@@ -2617,6 +2626,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Resultado.
+        /// </summary>
+        public static string Result {
+            get {
+                return ResourceManager.GetString("Result", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Retornar.
         /// </summary>
         public static string Return {
@@ -3090,6 +3108,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string SubGenre {
             get {
                 return ResourceManager.GetString("SubGenre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inscrição.
+        /// </summary>
+        public static string Subscription {
+            get {
+                return ResourceManager.GetString("Subscription", resourceCulture);
             }
         }
         

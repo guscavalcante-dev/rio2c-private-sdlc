@@ -1505,4 +1505,16 @@
     <value>Sent projects</value>
     <comment>Projetos enviados</comment>
   </data>
+  <data name="Edition" xml:space="preserve">
+    <value>Edition</value>
+    <comment>Edição</comment>
+  </data>
+  <data name="Result" xml:space="preserve">
+    <value>Result</value>
+    <comment>Resultado</comment>
+  </data>
+  <data name="Subscription" xml:space="preserve">
+    <value>Subscription</value>
+    <comment>Inscrição</comment>
+  </data>
 </root>
