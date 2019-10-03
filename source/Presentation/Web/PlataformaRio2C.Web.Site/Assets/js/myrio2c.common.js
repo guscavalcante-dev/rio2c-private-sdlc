@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-27-2019
+// Last Modified On : 10-03-2019
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -692,6 +692,8 @@ var MyRio2cCommon = function () {
         }
 
         $(options.idOrClass).each(function () {
+            var elementName = $(this).attr('name');
+
             CKEDITOR.replace($(this)[0], {
                 customConfig: '/Content/js/ckeditor_config.js',
                 language: globalVariables.userInterfaceLanguage,
@@ -728,7 +730,19 @@ var MyRio2cCommon = function () {
                                 }
                             }
                         }
-                    })
+                    }),
+                    charCountGreaterThanMaxLengthEvent: function (currentLength, maxLength) {
+                        $('[data-valmsg-for="' + elementName + '"]').html('<span for="' + name + '" generated="true" class="">' + labels.propertyBetweenLengths.replace('{0} ', '').replace('{2}', 1).replace('{1}', maxLength) + '</span>');
+                        $('[data-valmsg-for="' + elementName + '"]').removeClass('field-validation-valid');
+                        $('[data-valmsg-for="' + elementName + '"]').addClass('field-validation-error');
+                    },
+                    charCountLessThanMaxLengthEvent: function (currentLength, maxLength) {
+                        if (currentLength > 0 && $('[data-valmsg-for="' + elementName + '"]').hasClass('field-validation-error')) {
+                            $('[data-valmsg-for="' + elementName + '"]').html('');
+                            $('[data-valmsg-for="' + elementName + '"]').addClass('field-validation-valid');
+                            $('[data-valmsg-for="' + elementName + '"]').removeClass('field-validation-error');
+                        }
+                    }
                 }
             });
         });
