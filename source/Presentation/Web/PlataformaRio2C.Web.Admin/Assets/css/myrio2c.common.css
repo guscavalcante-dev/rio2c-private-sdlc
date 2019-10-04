@@ -19,71 +19,49 @@ table.image-side-text td {
 /*
     Footer
 */
-.kt-footer__top {
-    width: 100%;
-    /*background: #20292C;*/
-    padding: 50px 0 35px 0;
-    text-align: center;
+.kt-footer {
+    background-color: #333 !important;
 }
 
-    .kt-footer__top ul,
-    .kt-footer__top ul li {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-    }
-
-        .kt-footer__top ul li,
-        .kt-footer__top ul li a {
-            font-size: 13px;
-            line-height: 24px;
-            color: #CDD3D6;
-            text-align: left;
-        }
-
-            .kt-footer__top ul li, .kt-footer__top ul li a:hover {
-                color: #CDD3D6;
-            }
-
-    .kt-footer__top .redes {
-        width: 100%;
-    }
-
-        .kt-footer__top .redes a {
-            margin-right: 16.222222px;
-        }
-
-            .kt-footer__top .redes a:hover {
-                text-decoration: none;
-                color: #CDD3D6;
-            }
-
-            .kt-footer__top .redes a:last-of-type {
-                margin-right: 0;
-            }
-
-.row .kt-footer__top .redes a {
-    margin-right: 13.5px;
+section.footer p {
+    color: #ccc;
+    font-size: 11px;
 }
 
-    .row .kt-footer__top .redes a:last-of-type {
-        margin-right: 0;
+section.footer .nav-item {
+    min-width: 180px;
+}
+
+    section.footer .nav-item .nav-link {
+        color: #ccc;
+        font-size: 16px;
     }
 
-.kt-footer__top .frase {
-    width: 100%;
-    margin-top: 60px;
-    padding-top: 40px;
-    border-top: 1px solid #778082;
-    font-size: 12px;
-    color: #CDD3D6;
+section.footer .social-networks a {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
     text-align: center;
-    -webkit-text-fill-color: #CDD3D6;
+    background-color: #fff;
+    border-radius: 50%;
+    color: #e92e22;
+    margin-left: 2px;
 }
 
 .kt-header__brand-logo-default, .kt-header__brand-logo-sticky, .r2c-header-mobile__logo {
     height: 40px !important;
     width: 40px !important;
+}
+
+@media (max-width: 576px) {
+    section.footer .nav-item .nav-link {
+        text-align: center;
+    }
+
+    section.footer .nav-item {
+        width: 100%;
+    }
 }
 
 
