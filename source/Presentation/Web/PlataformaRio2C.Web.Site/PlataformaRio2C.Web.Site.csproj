@@ -7079,7 +7079,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_LayoutBasic.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\Modals\Onboarding.cshtml" />
     <Content Include="Views\SiteMailerService\ProducerWelcome.cshtml" />
     <Content Include="Views\SiteMailerService\_SiteEmailLayout.cshtml" />
     <Content Include="Views\Onboarding\AccessData.cshtml" />
@@ -7097,6 +7096,9 @@
     <Content Include="Views\Onboarding\Shared\_PlayerTermsAcceptanceText.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\OrganizationRestrictionSpecificsBaseCommand.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\OrganizationActivityBaseCommand.cshtml" />
+    <Content Include="Views\Home\Widgets\BadgesWidget.cshtml" />
+    <Content Include="Views\Home\Widgets\ProjectsWidget.cshtml" />
+    <Content Include="Views\Home\Widgets\WeConnectedWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

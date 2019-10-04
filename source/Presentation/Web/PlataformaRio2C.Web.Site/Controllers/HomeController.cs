@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-28-2019
+// Last Modified On : 10-03-2019
 // ***********************************************************************
 // <copyright file="HomeController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,6 +20,7 @@ using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using System.Collections.Generic;
+using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Web.Site.Filters;
@@ -31,12 +32,19 @@ namespace PlataformaRio2C.Web.Site.Controllers
     [AuthorizeCollaboratorType(Order = 2)]
     public class HomeController : BaseController
     {
+        private readonly IAttendeeCollaboratorTicketRepository attendeeCollaboratorTicketRepo;
+
         /// <summary>Initializes a new instance of the <see cref="HomeController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        public HomeController(IMediator commandBus, IdentityAutenticationService identityController)
+        /// <param name="attendeeCollaboratorTicketRepository">The attendee collaborator ticket repository.</param>
+        public HomeController(
+            IMediator commandBus, 
+            IdentityAutenticationService identityController,
+            IAttendeeCollaboratorTicketRepository attendeeCollaboratorTicketRepository)
             : base(commandBus, identityController)
         {
+            this.attendeeCollaboratorTicketRepo = attendeeCollaboratorTicketRepository;
         }
 
         /// <summary>Indexes this instance.</summary>
@@ -50,6 +58,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
             });
 
             #endregion
+
+            ViewBag.TicketsDtos = await this.attendeeCollaboratorTicketRepo.FindAllDtoByEditionIdAndByCollaboratorId(this.EditionDto.Id, this.UserAccessControlDto.Collaborator.Id);
 
             return View("Index");
 

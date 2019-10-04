@@ -747,6 +747,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nenhum ingresso disponível..
+        /// </summary>
+        public static string NoBadgesAvaiable {
+            get {
+                return ResourceManager.GetString("NoBadgesAvaiable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Número inválido..
         /// </summary>
         public static string NumberIsInvalid {

@@ -349,6 +349,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ingressos.
+        /// </summary>
+        public static string Badges {
+            get {
+                return ResourceManager.GetString("Badges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Modo de Navegação.
         /// </summary>
         public static string BrowsingMode {

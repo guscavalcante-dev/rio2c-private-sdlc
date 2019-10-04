@@ -77,6 +77,7 @@
     <Compile Include="Constants\Authorizations\Role.cs" />
     <Compile Include="Dtos\Addresses\AddressBaseDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorBaseDto.cs" />
+    <Compile Include="Dtos\AttendeeCollaboratorTickets\AttendeeCollaboratorTicketDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationBaseDto.cs" />
     <Compile Include="Dtos\Cities\CityBaseDto.cs" />
     <Compile Include="Dtos\Collaborators\CollaboratorBaseDto.cs" />
@@ -187,6 +188,7 @@
     <Compile Include="Enums\NegotiationTypeCodes.cs" />
     <Compile Include="Enums\StatusProjectCodes.cs" />
     <Compile Include="Interfaces\IMailCollaboratorRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Collaborators\IAttendeeCollaboratorTicketRepository.cs" />
     <Compile Include="Interfaces\Repositories\Collaborators\IAttendeeCollaboratorRepository.cs" />
     <Compile Include="Interfaces\Repositories\AttendeeOrganizations\IAttendeeOrganizationRepository.cs" />
     <Compile Include="Interfaces\Repositories\Collaborators\ICollaboratorProducerRepository.cs" />

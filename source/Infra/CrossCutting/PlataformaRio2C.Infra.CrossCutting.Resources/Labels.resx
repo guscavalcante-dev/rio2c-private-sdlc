@@ -1529,4 +1529,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Inscrição</value>
     <comment>Inscrição</comment>
   </data>
+  <data name="Badges" xml:space="preserve">
+    <value>Ingressos</value>
+    <comment>Ingressos</comment>
+  </data>
 </root>

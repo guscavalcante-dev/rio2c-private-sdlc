@@ -1517,4 +1517,8 @@
     <value>Subscription</value>
     <comment>Inscrição</comment>
   </data>
+  <data name="Badges" xml:space="preserve">
+    <value>Badges</value>
+    <comment>Ingressos</comment>
+  </data>
 </root>

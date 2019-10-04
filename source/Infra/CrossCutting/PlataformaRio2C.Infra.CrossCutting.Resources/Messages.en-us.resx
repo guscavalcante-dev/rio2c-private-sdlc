@@ -660,4 +660,8 @@
 &lt;li&gt;Período de avaliação: 05/01 a 21/02/2020&lt;/li&gt;
 &lt;li&gt;Agenda das Rodadas de Negócios disponível online a partir de: 23/03/2020&lt;/li&gt;</comment>
   </data>
+  <data name="NoBadgesAvaiable" xml:space="preserve">
+    <value>No badges avaiable.</value>
+    <comment>Nenhum ingresso disponível.</comment>
+  </data>
 </root>
