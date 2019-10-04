@@ -1449,9 +1449,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Inovação.
         /// </summary>
-        public static string Inovation {
+        public static string Innovation {
             get {
-                return ResourceManager.GetString("Inovation", resourceCulture);
+                return ResourceManager.GetString("Innovation", resourceCulture);
             }
         }
         

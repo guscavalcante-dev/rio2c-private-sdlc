@@ -1185,7 +1185,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>CNPJ</value>
     <comment>CNPJ</comment>
   </data>
-  <data name="Inovation" xml:space="preserve">
+  <data name="Innovation" xml:space="preserve">
     <value>Inovação</value>
     <comment>Inovação</comment>
   </data>

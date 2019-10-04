@@ -4,14 +4,13 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-19-2019
+// Last Modified On : 10-04-2019
 // ***********************************************************************
 // <copyright file="ProjectType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
 using System;
 using System.Collections.Generic;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -90,7 +89,7 @@ namespace PlataformaRio2C.Domain.Entities
         #region Statics
 
         public static ProjectType AudioVisual = new ProjectType(new Guid("3CE14508-8F6F-4D9D-B5F2-C7B53BA031E0"), Labels.AudioVisual);
-        public static ProjectType Inovation = new ProjectType(new Guid("736A7169-EF69-4AFB-BD43-D7C3BDA8BD74"), Labels.Inovation);
+        public static ProjectType Inovation = new ProjectType(new Guid("736A7169-EF69-4AFB-BD43-D7C3BDA8BD74"), Labels.Innovation);
         public static ProjectType Music = new ProjectType(new Guid("EA460BF8-B7B5-4BAD-AC3F-242F3B6BFA0E"), Labels.Music);
 
         #endregion

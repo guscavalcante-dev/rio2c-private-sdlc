@@ -1173,8 +1173,8 @@
     <value>Company number</value>
     <comment>CNPJ</comment>
   </data>
-  <data name="Inovation" xml:space="preserve">
-    <value>Inovation</value>
+  <data name="Innovation" xml:space="preserve">
+    <value>Innovation</value>
     <comment>Inovação</comment>
   </data>
   <data name="Investor" xml:space="preserve">
