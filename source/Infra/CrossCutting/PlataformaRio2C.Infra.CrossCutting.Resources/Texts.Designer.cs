@@ -502,7 +502,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O maior encontro de criatividade e inovação da América Latina..
+        ///   Looks up a localized string similar to O maior evento de criatividade e inovação da América Latina..
         /// </summary>
         public static string WelcomeLogin {
             get {

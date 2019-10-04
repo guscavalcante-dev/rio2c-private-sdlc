@@ -344,7 +344,7 @@ CNPJ: 26.079.220/0001-46. Any unauthorized use of the names or their variations 
   </data>
   <data name="WelcomeLogin" xml:space="preserve">
     <value>Latin America’s leading event in creativity and innovation</value>
-    <comment>O maior encontro de criatividade e inovação da América Latina.</comment>
+    <comment>O maior evento de criatividade e inovação da América Latina.</comment>
   </data>
   <data name="ErrorMessage" xml:space="preserve">
     <value>Oops! Something went wrong. We are fixing it!</value>
