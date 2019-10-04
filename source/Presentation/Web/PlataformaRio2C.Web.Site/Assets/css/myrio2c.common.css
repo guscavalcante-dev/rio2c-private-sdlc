@@ -197,16 +197,6 @@ a.r2c-login__footer-link, a.r2c-footer-link {
     z-index: 2011 !important;
 }
 
-/*
-    Menu
-*/
-.r2c-side-menu{
-    display:none !important;
-}
-
-.r2c-header-menu {
-    display: block !important;
-}
 
 /*
     Onboarding Wizard
