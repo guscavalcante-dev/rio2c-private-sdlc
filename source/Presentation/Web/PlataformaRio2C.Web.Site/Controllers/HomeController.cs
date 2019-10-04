@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-03-2019
+// Last Modified On : 10-04-2019
 // ***********************************************************************
 // <copyright file="HomeController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -59,7 +59,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             #endregion
 
-            ViewBag.TicketsDtos = await this.attendeeCollaboratorTicketRepo.FindAllDtoByEditionIdAndByCollaboratorId(this.EditionDto.Id, this.UserAccessControlDto.Collaborator.Id);
+            ViewBag.TicketsDtos = await this.attendeeCollaboratorTicketRepo.FindAllDtoByEditionIdAndByCollaboratorId(this.EditionDto.Id, this.UserAccessControlDto.Collaborator?.Id ?? 0);
 
             return View("Index");
 

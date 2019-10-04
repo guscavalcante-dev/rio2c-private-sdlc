@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-28-2019
+// Last Modified On : 10-04-2019
 // ***********************************************************************
 // <copyright file="BaseController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -31,6 +31,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
     /// <summary>BaseController</summary>
     public class BaseController : Controller
     {
+        private ActionResult beginExecuteCoreActionResult;
+
         protected IMediator CommandBus;
         protected IdentityAutenticationService IdentityController;
 
@@ -86,6 +88,15 @@ namespace PlataformaRio2C.Web.Site.Controllers
             return base.BeginExecuteCore(callback, state);
         }
 
+        /// <summary>Called before the action method is invoked.</summary>
+        /// <param name="filterContext">Information about the current request and action.</param>
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            filterContext.Result = this.beginExecuteCoreActionResult;
+
+            base.OnActionExecuting(filterContext);
+        }
+
         /// <summary>Sets the environment.</summary>
         private void SetEnvironment()
         {
@@ -129,7 +140,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     }
                 }
 
-                HttpContext.Response.RedirectToRoute(routes);
+                //HttpContext.Response.RedirectToRoute(routes);
+                this.beginExecuteCoreActionResult = this.RedirectToRoute(routes);
+
                 return true;
             }
 
@@ -196,7 +209,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 }
             }
 
-            HttpContext.Response.RedirectToRoute(routes);
+            //HttpContext.Response.RedirectToRoute(routes);
+            this.beginExecuteCoreActionResult = this.RedirectToRoute(routes);
 
             return true;
         }
@@ -247,7 +261,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 }
             }
 
-            HttpContext.Response.RedirectToRoute(routes);
+            //HttpContext.Response.RedirectToRoute(routes);
+            this.beginExecuteCoreActionResult = this.RedirectToRoute(routes);
 
             return true;
         }
