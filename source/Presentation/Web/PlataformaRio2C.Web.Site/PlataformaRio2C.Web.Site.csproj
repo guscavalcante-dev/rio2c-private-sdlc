@@ -328,6 +328,7 @@
     <Compile Include="Controllers\CollaboratorController.cs" />
     <Compile Include="Controllers\ConferenceController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\CompaniesController.cs" />
     <Compile Include="Controllers\StatesController.cs" />
     <Compile Include="Filters\AuthorizeCollaboratorTypeAttribute.cs" />
     <Compile Include="Helpers\OnboardingAllowedRoutesHelper.cs" />
@@ -387,6 +388,11 @@
     <Content Include="Assets\img\logo_rio2c_color.png" />
     <Content Include="Assets\img\logo_rio2c_white.png" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
+    <Content Include="Assets\js\companies\companies.interest.widget.js" />
+    <Content Include="Assets\js\companies\companies.targetaudience.widget.js" />
+    <Content Include="Assets\js\companies\companies.activity.widget.js" />
+    <Content Include="Assets\js\companies\companies.address.widget.js" />
+    <Content Include="Assets\js\companies\companies.maininformation.widget.js" />
     <Content Include="Assets\js\myrio2c.common.js" />
     <Content Include="Assets\js\myrio2c.companynumber.js" />
     <Content Include="Assets\js\myrio2c.inputmask.js" />
@@ -7096,9 +7102,15 @@
     <Content Include="Views\Onboarding\Shared\_PlayerTermsAcceptanceText.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\OrganizationRestrictionSpecificsBaseCommand.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\OrganizationActivityBaseCommand.cshtml" />
-    <Content Include="Views\Home\Widgets\BadgesWidget.cshtml" />
-    <Content Include="Views\Home\Widgets\ProjectsWidget.cshtml" />
+    <Content Include="Views\Shared\Widgets\BadgesWidget.cshtml" />
+    <Content Include="Views\Shared\Widgets\ProjectsWidget.cshtml" />
     <Content Include="Views\Home\Widgets\WeConnectedWidget.cshtml" />
+    <Content Include="Views\Companies\Details.cshtml" />
+    <Content Include="Views\Companies\Widgets\AddressWidget.cshtml" />
+    <Content Include="Views\Companies\Widgets\MainInformationWidget.cshtml" />
+    <Content Include="Views\Companies\Widgets\ActivityWidget.cshtml" />
+    <Content Include="Views\Companies\Widgets\TargetAudienceWidget.cshtml" />
+    <Content Include="Views\Companies\Widgets\InterestWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

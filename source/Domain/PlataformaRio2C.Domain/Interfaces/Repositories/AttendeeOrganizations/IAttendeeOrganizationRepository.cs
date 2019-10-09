@@ -4,14 +4,13 @@
 // Created          : 08-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-28-2019
+// Last Modified On : 10-08-2019
 // ***********************************************************************
 // <copyright file="IAttendeeOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -25,5 +24,15 @@ namespace PlataformaRio2C.Domain.Interfaces
     {
         Task<List<AttendeeOrganizationBaseDto>> FindAllBaseDtosByEditionUidAsync(int editionId, bool showAllEditions);
         Task<List<AttendeeOrganization>> FindAllByUidsAsync(List<Guid> attendeeOrganizationsUids);
+
+        #region Site Widgets
+
+        Task<AttemdeeOrganizationSiteMainInformationDto> FindSiteMainInformationBaseDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId);
+        Task<AttendeeOrganizationSiteAddressWidgetDto> FindSiteAddressWidgetDtoByOrganizationUidAsync(Guid organizationUid, int editionId);
+        Task<AttendeeOrganizationSiteActivityWidgetDto> FindSiteActivityWidgetDtoByOrganizationUidAsync(Guid organizationUid, int editionId);
+        Task<AttendeeOrganizationSiteTargetAudienceWidgetDto> FindSiteTargetAudienceWidgetDtoByOrganizationUidAsync(Guid organizationUid, int editionId);
+        Task<AttendeeOrganizationSiteInterestWidgetDto> FindSiteInterestWidgetDtoByOrganizationUidAsync(Guid organizationUid, int editionId);
+
+        #endregion
     }
 }

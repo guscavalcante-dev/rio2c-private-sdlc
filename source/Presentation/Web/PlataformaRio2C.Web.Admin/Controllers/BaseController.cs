@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-04-2019
+// Last Modified On : 10-08-2019
 // ***********************************************************************
 // <copyright file="BaseController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,6 +14,7 @@
 using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -129,7 +130,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
             Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
 
-            ViewBag.UserInterfaceLanguage = this.UserInterfaceLanguage = cultureName;
+            ViewBag.UserInterfaceLanguage = this.UserInterfaceLanguage = Regex.Replace(cultureName, "en-us", "en", RegexOptions.IgnoreCase);
 
             return false;
         }

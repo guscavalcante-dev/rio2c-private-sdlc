@@ -1,0 +1,57 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model AttendeeOrganizationSiteAddressWidgetDto
+@{
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var isCollaborator = userAccessControlDto?.EditionAttendeeOrganizations?.Any(eao => eao.Uid == Model.AttendeeOrganization.Uid) == true;
+}
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+            @Labels.Address
+        </h3>
+    </div>
+    @if (isCollaborator)
+    {
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-actions">
+                <a class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="return false;" data-toggle="kt-tooltip" title="" data-placement="right" data-original-title="@Labels.ComingSoon...">
+                    <i class="flaticon2-edit"></i>
+                </a>
+            </div>
+        </div>
+    }
+</div>
+<div class="kt-portlet__body">
+    <div class="kt-widget12">
+        <div class="kt-widget12__content">
+            <div class="kt-widget12__item mb-3">
+                <div class="kt-widget12__info">
+                    <span class="kt-widget12__desc">@Labels.Country</span>
+                    <span class="kt-widget12__value"><h6>@(Model.GetCountryName(ViewBag.UserInterfaceLanguage) ?? "-")</h6></span>
+                </div>
+            </div>
+            <div class="kt-widget12__item mb-3">
+                <div class="kt-widget12__info">
+                    <span class="kt-widget12__desc">@Labels.State</span>
+                    <span class="kt-widget12__value"><h6>@(Model.State?.Name ?? "-")</h6></span>
+                </div>
+                <div class="kt-widget12__info">
+                    <span class="kt-widget12__desc">@Labels.City</span>
+                    <span class="kt-widget12__value"><h6>@(Model.City?.Name ?? "-")</h6></span>
+                </div>
+            </div>
+            <div class="kt-widget12__item mb-3">
+                <div class="kt-widget12__info">
+                    <span class="kt-widget12__desc">@Labels.ZipCode</span>
+                    <span class="kt-widget12__value"><h6>@(Model.Address?.ZipCode ?? "-")</h6></span>
+                </div>
+            </div>
+            <div class="kt-widget12__item mb-0">
+                <div class="kt-widget12__info">
+                    <span class="kt-widget12__desc">@Labels.Address</span>
+                    <span class="kt-widget12__value"><h6>@(Model.Address?.Address1 ?? "-")</h6></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

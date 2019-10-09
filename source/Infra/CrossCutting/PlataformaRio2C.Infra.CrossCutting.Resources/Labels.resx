@@ -1533,4 +1533,16 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Ingressos</value>
     <comment>Ingressos</comment>
   </data>
+  <data name="Complaints" xml:space="preserve">
+    <value>Denúncias</value>
+    <comment>Denúncias</comment>
+  </data>
+  <data name="Experience" xml:space="preserve">
+    <value>Experiência</value>
+    <comment>Experiência</comment>
+  </data>
+  <data name="Market" xml:space="preserve">
+    <value>Mercado</value>
+    <comment>Mercado</comment>
+  </data>
 </root>

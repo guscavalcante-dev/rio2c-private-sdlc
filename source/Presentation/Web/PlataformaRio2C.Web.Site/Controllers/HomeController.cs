@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-04-2019
+// Last Modified On : 10-08-2019
 // ***********************************************************************
 // <copyright file="HomeController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -50,6 +50,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         /// <summary>Indexes this instance.</summary>
         /// <returns></returns>
+        [HttpGet]
         public async Task<ActionResult> Index()
         {
             #region Breadcrumb

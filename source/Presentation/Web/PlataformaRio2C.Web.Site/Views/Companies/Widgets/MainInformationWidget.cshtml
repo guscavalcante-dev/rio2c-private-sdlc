@@ -1,0 +1,86 @@
+﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Statics
+@model AttemdeeOrganizationSiteMainInformationDto
+@{
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var isCollaborator = userAccessControlDto?.EditionAttendeeOrganizations?.Any(eao => eao.Uid == Model.AttendeeOrganization.Uid) == true;
+}
+<div class="kt-portlet__body">
+    <div class="kt-widget kt-widget--user-profile-3">
+        <div class="kt-widget__top">
+            @if (Model.HasImage())
+            {
+                <div class="kt-widget__media kt-hidden-">
+                    <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, Model.Organization.Uid, Model.Organization.ImageUploadDate, true)" alt="image">
+                </div>
+            }
+            else
+            {
+                <div class="kt-widget__pic kt-widget__pic--danger kt-font-danger kt-font-boldest kt-font-light">
+                    @(Model.GetTradeNameFirstCharacter())
+                </div>
+            }
+            <div class="kt-widget__content">
+                <div class="kt-widget__head">
+                    <span class="kt-widget__username">
+                        @Model.Organization.TradeName
+                        @if (Model.AttendeeOrganization.OnboardingFinishDate.HasValue)
+                        {
+                            <i class="flaticon2-correct"></i>
+                        }
+                    </span>
+                    @if (isCollaborator)
+                    {
+                        <div class="kt-widget__action">
+                            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="return false;" data-toggle="kt-tooltip" title="" data-placement="right" data-original-title="@Labels.ComingSoon...">
+                                <i class="flaticon2-edit"></i>
+                            </button>
+                        </div>
+                    }
+                </div>
+                <div class="kt-widget__subhead pt-0">
+                    @Model.Organization.CompanyName
+                    @if (isCollaborator && !string.IsNullOrEmpty(Model.Organization.Document))
+                    {
+                        @:- @Model.Organization.Document
+                    }
+                </div>
+                <div class="kt-widget__subhead">
+                    @{
+                        var location = Model.GetLocation(ViewBag.UserInterfaceLanguage);
+                    }
+                    @if (!string.IsNullOrEmpty(location))
+                    {
+                        <a onclick="return false;"><i class="flaticon-placeholder"></i>@location</a>
+                    }
+                </div>
+                <div class="kt-widget__info">
+                    @{
+                        var descriptionDto = Model.GetDescriptionDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
+                    }
+                    @if (descriptionDto != null)
+                    {
+                        <div class="kt-widget__desc">
+                            @Html.Raw(descriptionDto.Value)
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="kt-widget__bottom">
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.Website</span>
+                    <span class="kt-widget__value"><span>@(Model.Organization.Website ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.SocialMedia</span>
+                    <span class="kt-widget__value"><span>@(Model.Organization.SocialMedia ?? "-")</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

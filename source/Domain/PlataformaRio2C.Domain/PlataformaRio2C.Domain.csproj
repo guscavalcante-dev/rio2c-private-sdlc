@@ -75,6 +75,10 @@
     <Compile Include="Constants\Authorizations\OrganizationType.cs" />
     <Compile Include="Constants\Authorizations\CollaboratorType.cs" />
     <Compile Include="Constants\Authorizations\Role.cs" />
+    <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationSiteInterestWidgetDto.cs" />
+    <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationSiteTargetAudienceWidgetDto.cs" />
+    <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationSiteActivityWidgetDto.cs" />
+    <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationSiteAddressWidgetDto.cs" />
     <Compile Include="Dtos\Addresses\AddressBaseDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorBaseDto.cs" />
     <Compile Include="Dtos\AttendeeCollaboratorTickets\AttendeeCollaboratorTicketDto.cs" />
@@ -89,6 +93,7 @@
     <Compile Include="Dtos\OrganizationDescriptions\OrganizationRestrictionSpecificDto.cs" />
     <Compile Include="Dtos\OrganizationDescriptions\OrganizationRestrictionSpecificBaseDto.cs" />
     <Compile Include="Dtos\Organizations\OrganizationApiListDto.cs" />
+    <Compile Include="Dtos\AttendeeOrganizations\AttemdeeOrganizationSiteMainInformationDto.cs" />
     <Compile Include="Dtos\Organizations\OrganizationInterestDto.cs" />
     <Compile Include="Dtos\Organizations\OrganizationTargetAudienceDto.cs" />
     <Compile Include="Dtos\Organizations\OrganizationActivityDto.cs" />

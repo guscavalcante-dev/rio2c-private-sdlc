@@ -1,0 +1,61 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Entities
+@model AttendeeOrganizationSiteActivityWidgetDto
+@{
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var isCollaborator = userAccessControlDto?.EditionAttendeeOrganizations?.Any(eao => eao.Uid == Model.AttendeeOrganization.Uid) == true;
+    var activities = ViewBag.Activities as List<Activity>;
+}
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+            @Labels.Activity
+        </h3>
+    </div>
+    @if (isCollaborator)
+    {
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-actions">
+                <a class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="return false;" data-toggle="kt-tooltip" title="" data-placement="right" data-original-title="@Labels.ComingSoon...">
+                    <i class="flaticon2-edit"></i>
+                </a>
+            </div>
+        </div>
+    }
+</div>
+<div class="kt-portlet__body">
+    @if (activities?.Any() == true)
+    {
+        <div class="kt-widget4">
+            @foreach (var activity in activities.OrderBy(a => a.DisplayOrder))
+            {
+                var organizationActivityDto = Model.GetOrganizationActivityDtoByActivityUid(activity.Uid);
+                <div class="kt-widget4__item pt-2 pb-2">
+                    @if (organizationActivityDto != null)
+                    {
+                        <div class="kt-widget4__pic kt-font-success">
+                            <i class="la la-check"></i>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="kt-widget4__pic kt-font-danger">
+                            <i class="la la-close"></i>
+                        </div>
+                    }
+                    <div class="kt-widget4__info">
+                        <span class="kt-widget4__title">@activity.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
+                        @if (!string.IsNullOrEmpty(organizationActivityDto?.OrganizationActivityAdditionalInfo))
+                        {
+                            <p class="kt-widget4__text">@(organizationActivityDto?.OrganizationActivityAdditionalInfo?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</p>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.Activity, Labels.FoundF)</span>
+    }
+</div>

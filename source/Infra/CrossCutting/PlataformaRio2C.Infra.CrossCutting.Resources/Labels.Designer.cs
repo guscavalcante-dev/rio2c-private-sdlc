@@ -601,6 +601,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Denúncias.
+        /// </summary>
+        public static string Complaints {
+            get {
+                return ResourceManager.GetString("Complaints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Completo.
         /// </summary>
         public static string Complete {
@@ -1186,6 +1195,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Experiência.
+        /// </summary>
+        public static string Experience {
+            get {
+                return ResourceManager.GetString("Experience", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exportar.
         /// </summary>
         public static string Export {
@@ -1668,6 +1686,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string LogOut {
             get {
                 return ResourceManager.GetString("LogOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mercado.
+        /// </summary>
+        public static string Market {
+            get {
+                return ResourceManager.GetString("Market", resourceCulture);
             }
         }
         
