@@ -1,25 +1,26 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Rafael Dantas Ruiz
-// Created          : 10-08-2019
+// Created          : 10-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 10-09-2019
 // ***********************************************************************
-// <copyright file="companies.maininformation.widget.js" company="Softo">
+// <copyright file="companies.executive.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var CompaniesMainInformationWidget = function () {
+var CompaniesExecutiveWidget = function () {
 
-    var widgetElementId = '#CompanyMainInformationWidget';
+    var widgetElementId = '#CompanyExecutiveWidget';
     var widgetElement = $(widgetElementId);
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         KTApp.initTooltips();
+        MyRio2cCommon.initScroll();
     };
 
     var show = function () {
@@ -30,7 +31,7 @@ var CompaniesMainInformationWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.organizationUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Companies/ShowMainInformationWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Companies/ShowExecutiveWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

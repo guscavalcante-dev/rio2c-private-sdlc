@@ -1,7 +1,7 @@
 ﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
 @using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2C.Domain.Statics
-@model AttemdeeOrganizationSiteMainInformationDto
+@model AttemdeeOrganizationSiteMainInformationWidgetDto
 @{
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var isCollaborator = userAccessControlDto?.EditionAttendeeOrganizations?.Any(eao => eao.Uid == Model.AttendeeOrganization.Uid) == true;
