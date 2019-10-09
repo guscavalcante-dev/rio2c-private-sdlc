@@ -669,4 +669,8 @@
     <value>Nenhum ingresso disponível.</value>
     <comment>Nenhum ingresso disponível.</comment>
   </data>
+  <data name="RestrictionSpecifics" xml:space="preserve">
+    <value>Tipo de conteúdo que está buscando no Mercado (restrições e especificações)</value>
+    <comment>Tipo de conteúdo que está buscando no Mercado (restrições e especificações)</comment>
+  </data>
 </root>

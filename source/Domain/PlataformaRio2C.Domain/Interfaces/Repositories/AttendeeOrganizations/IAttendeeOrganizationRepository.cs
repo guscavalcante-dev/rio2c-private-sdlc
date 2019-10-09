@@ -31,6 +31,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<AttendeeOrganizationSiteAddressWidgetDto> FindSiteAddressWidgetDtoByOrganizationUidAsync(Guid organizationUid, int editionId);
         Task<AttendeeOrganizationSiteActivityWidgetDto> FindSiteActivityWidgetDtoByOrganizationUidAsync(Guid organizationUid, int editionId);
         Task<AttendeeOrganizationSiteTargetAudienceWidgetDto> FindSiteTargetAudienceWidgetDtoByOrganizationUidAsync(Guid organizationUid, int editionId);
+        Task<AttendeeOrganizationSiteInterestWidgetDto> FindSiteInterestWidgetDtoByOrganizationUidAsync(Guid organizationUid, int editionId);
 
         #endregion
     }

@@ -388,6 +388,7 @@
     <Content Include="Assets\img\logo_rio2c_color.png" />
     <Content Include="Assets\img\logo_rio2c_white.png" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
+    <Content Include="Assets\js\companies\companies.interest.widget.js" />
     <Content Include="Assets\js\companies\companies.targetaudience.widget.js" />
     <Content Include="Assets\js\companies\companies.activity.widget.js" />
     <Content Include="Assets\js\companies\companies.address.widget.js" />
@@ -7109,6 +7110,7 @@
     <Content Include="Views\Companies\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Views\Companies\Widgets\ActivityWidget.cshtml" />
     <Content Include="Views\Companies\Widgets\TargetAudienceWidget.cshtml" />
+    <Content Include="Views\Companies\Widgets\InterestWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

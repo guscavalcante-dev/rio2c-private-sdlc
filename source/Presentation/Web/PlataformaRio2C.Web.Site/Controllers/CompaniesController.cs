@@ -34,6 +34,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IActivityRepository activityRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
+        private readonly IInterestRepository interestRepo;
         private readonly IAttendeeCollaboratorTicketRepository attendeeCollaboratorTicketRepo;
 
         public CompaniesController(
@@ -42,12 +43,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IActivityRepository activityRepository,
             ITargetAudienceRepository targetAudienceRepository,
+            IInterestRepository interestRepository,
             IAttendeeCollaboratorTicketRepository attendeeCollaboratorTicketRepository)
             : base(commandBus, identityController)
         {
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.activityRepo = activityRepository;
             this.targetAudienceRepo = targetAudienceRepository;
+            this.interestRepo = interestRepository;
             this.attendeeCollaboratorTicketRepo = attendeeCollaboratorTicketRepository;
         }
 
@@ -86,8 +89,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowMainInformationWidget(Guid? organizationUid)
         {
-            var attendeeOrganizationDto = await this.attendeeOrganizationRepo.FindSiteMainInformationBaseDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id);
-            if (attendeeOrganizationDto == null)
+            var mainInformationWidgetDto = await this.attendeeOrganizationRepo.FindSiteMainInformationBaseDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id);
+            if (mainInformationWidgetDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
@@ -97,7 +100,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", attendeeOrganizationDto), divIdOrClass = "#CompanyMainInformationWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#CompanyMainInformationWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -112,8 +115,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowAddressWidget(Guid? organizationUid)
         {
-            var addressDto = await this.attendeeOrganizationRepo.FindSiteAddressWidgetDtoByOrganizationUidAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id);
-            if (addressDto == null)
+            var addressWidgetDto = await this.attendeeOrganizationRepo.FindSiteAddressWidgetDtoByOrganizationUidAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id);
+            if (addressWidgetDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Address, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
@@ -123,7 +126,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/AddressWidget", addressDto), divIdOrClass = "#CompanyAddressWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/AddressWidget", addressWidgetDto), divIdOrClass = "#CompanyAddressWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -138,10 +141,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowActivityWidget(Guid? organizationUid)
         {
-            var activitiesDtos = await this.attendeeOrganizationRepo.FindSiteActivityWidgetDtoByOrganizationUidAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id);
-            if (activitiesDtos == null)
+            var activityWidgetDto = await this.attendeeOrganizationRepo.FindSiteActivityWidgetDtoByOrganizationUidAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id);
+            if (activityWidgetDto == null)
             {
-                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Address, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Activity, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
             ViewBag.Activities = await this.activityRepo.FindAllAsync();
@@ -151,7 +154,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/ActivityWidget", activitiesDtos), divIdOrClass = "#CompanyActivityWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/ActivityWidget", activityWidgetDto), divIdOrClass = "#CompanyActivityWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -166,10 +169,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowTargetAudienceWidget(Guid? organizationUid)
         {
-            var targetAudiencesDtos = await this.attendeeOrganizationRepo.FindSiteTargetAudienceWidgetDtoByOrganizationUidAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id);
-            if (targetAudiencesDtos == null)
+            var targetAudienceWidgetDto = await this.attendeeOrganizationRepo.FindSiteTargetAudienceWidgetDtoByOrganizationUidAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id);
+            if (targetAudienceWidgetDto == null)
             {
-                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Address, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.TargetAudience, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
             ViewBag.TargetAudiences = await this.targetAudienceRepo.FindAllAsync();
@@ -179,11 +182,40 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/TargetAudienceWidget", targetAudiencesDtos), divIdOrClass = "#CompanyTargetAudienceWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/TargetAudienceWidget", targetAudienceWidgetDto), divIdOrClass = "#CompanyTargetAudienceWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion
+
+        #region Interest Widget
+
+        /// <summary>Shows the interest widget.</summary>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowInterestWidget(Guid? organizationUid)
+        {
+            var interestWidgetDto = await this.attendeeOrganizationRepo.FindSiteInterestWidgetDtoByOrganizationUidAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id);
+            if (interestWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Interests, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            ViewBag.GroupedInterests = await this.interestRepo.FindAllGroupedByInterestGroupsAsync();
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/InterestWidget", interestWidgetDto), divIdOrClass = "#CompanyInterestWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
     }
 }

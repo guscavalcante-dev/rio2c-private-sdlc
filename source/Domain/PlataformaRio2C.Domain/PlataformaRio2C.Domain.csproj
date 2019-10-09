@@ -75,6 +75,7 @@
     <Compile Include="Constants\Authorizations\OrganizationType.cs" />
     <Compile Include="Constants\Authorizations\CollaboratorType.cs" />
     <Compile Include="Constants\Authorizations\Role.cs" />
+    <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationSiteInterestWidgetDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationSiteTargetAudienceWidgetDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationSiteActivityWidgetDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationSiteAddressWidgetDto.cs" />

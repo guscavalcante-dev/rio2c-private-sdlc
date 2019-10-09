@@ -30,10 +30,10 @@ namespace PlataformaRio2C.Domain.Dtos
         {
         }
 
-        /// <summary>Gets the organization target audience dto by activity uid.</summary>
+        /// <summary>Gets the organization target audience dto by target audience uid.</summary>
         /// <param name="targetAudienceUid">The target audience uid.</param>
         /// <returns></returns>
-        public OrganizationTargetAudienceDto GetOrganizationTargetAudienceDtoByActivityUid(Guid targetAudienceUid)
+        public OrganizationTargetAudienceDto GetOrganizationTargetAudienceDtoByTargetAudienceUid(Guid targetAudienceUid)
         {
             return this.OrganizationTargetAudiencesDtos?.FirstOrDefault(otad => otad.TargetAudienceUid == targetAudienceUid);
         }

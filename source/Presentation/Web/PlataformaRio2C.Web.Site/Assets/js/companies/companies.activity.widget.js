@@ -19,6 +19,7 @@ var CompaniesActivityWidget = function () {
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
+        KTApp.initTooltips();
     };
 
     var show = function () {

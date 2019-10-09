@@ -208,7 +208,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             {
                                 AttendeeOrganization = ao,
                                 Organization = ao.Organization,
-                                DescriptionsDtos = ao.Organization.Descriptions.Select(d => new OrganizationDescriptionDto
+                                DescriptionsDtos = ao.Organization.Descriptions.Where(d => !d.IsDeleted).Select(d => new OrganizationDescriptionDto
                                 {
                                     Id = d.Id,
                                     Uid = d.Uid,
@@ -301,6 +301,48 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 })
                             })
                             .FirstOrDefaultAsync();
+        }
+
+        /// <summary>Finds the site interest widget dto by organization uid asynchronous.</summary>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttendeeOrganizationSiteInterestWidgetDto> FindSiteInterestWidgetDtoByOrganizationUidAsync(Guid organizationUid, int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByOrganizationUid(organizationUid)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                                .Select(ao => new AttendeeOrganizationSiteInterestWidgetDto
+                                {
+                                    AttendeeOrganization = ao,
+                                    RestrictionSpecificDtos = ao.Organization.RestrictionSpecifics.Where(rs => !rs.IsDeleted).Select(rs => new OrganizationRestrictionSpecificDto
+                                    {
+                                        Id = rs.Id,
+                                        Uid = rs.Uid,
+                                        Value = rs.Value,
+                                        LanguageDto = new LanguageBaseDto
+                                        {
+                                            Id = rs.Language.Id,
+                                            Uid = rs.Language.Uid,
+                                            Name = rs.Language.Name,
+                                            Code = rs.Language.Code
+                                        }
+                                    }),
+                                    OrganizationInterestDtos = ao.Organization.OrganizationInterests.Where(oi => !oi.IsDeleted).Select(oi => new OrganizationInterestDto
+                                    {
+                                        OrganizationInterestId = oi.Id,
+                                        OrganizationInterestUid = oi.Uid,
+                                        InterestGroupId = oi.Interest.InterestGroup.Id,
+                                        InterestGroupUid = oi.Interest.InterestGroup.Uid,
+                                        InterestGroupName = oi.Interest.InterestGroup.Name,
+                                        InterestId = oi.Interest.Id,
+                                        InterestUid = oi.Interest.Uid,
+                                        InterestName = oi.Interest.Name
+                                    })
+                                })
+                                .FirstOrDefaultAsync();
         }
 
         #endregion

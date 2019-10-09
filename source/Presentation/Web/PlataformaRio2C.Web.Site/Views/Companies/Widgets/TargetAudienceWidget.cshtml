@@ -16,7 +16,7 @@
     {
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-actions">
-                <a href="#" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle">
+                <a class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="return false;" data-toggle="kt-tooltip" title="" data-placement="right" data-original-title="@Labels.ComingSoon...">
                     <i class="flaticon2-edit"></i>
                 </a>
             </div>
@@ -29,7 +29,7 @@
         <div class="kt-widget4">
             @foreach (var targetAudience in targetAudiences.OrderBy(a => a.DisplayOrder))
             {
-                var organiationTargetAudienceDto = Model.GetOrganizationTargetAudienceDtoByActivityUid(targetAudience.Uid);
+                var organiationTargetAudienceDto = Model.GetOrganizationTargetAudienceDtoByTargetAudienceUid(targetAudience.Uid);
                 <div class="kt-widget4__item pt-2 pb-2">
                     @if (organiationTargetAudienceDto != null)
                     {
