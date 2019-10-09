@@ -189,6 +189,31 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+        /// <summary>Finds the site company widget dto by collaborator uid and by edition identifier asynchronous.</summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttendeeCollaboratorSiteCompanyWidgetDto> FindSiteCompanyWidgetDtoByCollaboratorUidAndByEditionIdAsync(Guid collaboratorUid, int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByCollaboratorUid(collaboratorUid)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(ac => new AttendeeCollaboratorSiteCompanyWidgetDto
+                            {
+                                AttendeeCollaborator = ac,
+                                Collaborator = ac.Collaborator,
+                                AttendeeOrganizationsDtos = ac.AttendeeOrganizationCollaborators
+                                                                    .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted && !aoc.AttendeeOrganization.Organization.IsDeleted)
+                                                                    .Select(aoc => new AttendeeOrganizationDto
+                                                                    {
+                                                                        AttendeeOrganization = aoc.AttendeeOrganization,
+                                                                        Organization = aoc.AttendeeOrganization.Organization
+                                                                    })
+                            })
+                            .FirstOrDefaultAsync();
+        }
         #endregion
     }
 }

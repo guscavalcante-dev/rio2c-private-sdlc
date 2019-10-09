@@ -3,6 +3,7 @@
 @model AttemdeeOrganizationSiteDetailsDto
 @{
     ViewBag.Title = $"{Labels.Company}  {Model.Organization.TradeName}";
+
     var isAudiovisualCompany = Model.HasAnyType(new[] { Constants.OrganizationType.AudiovisualBuyer, Constants.OrganizationType.AudiovisualSeller });
 }
 @Html.Hidden("AggregateId", Model.Organization.Uid)

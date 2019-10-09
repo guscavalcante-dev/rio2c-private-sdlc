@@ -1533,4 +1533,8 @@
     <value>Market</value>
     <comment>Mercado</comment>
   </data>
+  <data name="SeeDescription" xml:space="preserve">
+    <value>See description</value>
+    <comment>Ver descrição</comment>
+  </data>
 </root>

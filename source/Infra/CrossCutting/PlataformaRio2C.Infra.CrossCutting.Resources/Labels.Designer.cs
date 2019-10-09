@@ -2788,6 +2788,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ver descrição.
+        /// </summary>
+        public static string SeeDescription {
+            get {
+                return ResourceManager.GetString("SeeDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Está buscando para este projeto.
         /// </summary>
         public static string Seeking {

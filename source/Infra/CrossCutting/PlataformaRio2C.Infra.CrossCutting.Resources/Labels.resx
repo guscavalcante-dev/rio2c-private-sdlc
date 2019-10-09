@@ -1545,4 +1545,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Mercado</value>
     <comment>Mercado</comment>
   </data>
+  <data name="SeeDescription" xml:space="preserve">
+    <value>Ver descrição</value>
+    <comment>Ver descrição</comment>
+  </data>
 </root>

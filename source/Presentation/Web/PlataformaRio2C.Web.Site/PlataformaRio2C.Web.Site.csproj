@@ -395,6 +395,7 @@
     <Content Include="Assets\js\companies\companies.activity.widget.js" />
     <Content Include="Assets\js\companies\companies.address.widget.js" />
     <Content Include="Assets\js\companies\companies.maininformation.widget.js" />
+    <Content Include="Assets\js\executives\executives.company.widget.js" />
     <Content Include="Assets\js\executives\executives.maininformation.widget.js" />
     <Content Include="Assets\js\myrio2c.common.js" />
     <Content Include="Assets\js\myrio2c.companynumber.js" />
@@ -7117,6 +7118,7 @@
     <Content Include="Views\Companies\Widgets\ExecutiveWidget.cshtml" />
     <Content Include="Views\Executives\Details.cshtml" />
     <Content Include="Views\Executives\Widgets\MainInformationWidget.cshtml" />
+    <Content Include="Views\Executives\Widgets\CompanyWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
