@@ -4,9 +4,9 @@
 // Created          : 10-08-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-08-2019
+// Last Modified On : 10-09-2019
 // ***********************************************************************
-// <copyright file="AttemdeeOrganizationSiteMainInformationDto.cs" company="Softo">
+// <copyright file="AttemdeeOrganizationSiteMainInformationWidgetDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -18,8 +18,8 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
-    /// <summary>AttemdeeOrganizationSiteMainInformationDto</summary>
-    public class AttemdeeOrganizationSiteMainInformationDto
+    /// <summary>AttemdeeOrganizationSiteMainInformationWidgetDto</summary>
+    public class AttemdeeOrganizationSiteMainInformationWidgetDto
     {
         public AttendeeOrganization AttendeeOrganization { get; set; }
         public Organization Organization { get; set; }
@@ -28,8 +28,8 @@ namespace PlataformaRio2C.Domain.Dtos
 
         public IEnumerable<OrganizationDescriptionBaseDto> DescriptionsDtos { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="AttemdeeOrganizationSiteMainInformationDto"/> class.</summary>
-        public AttemdeeOrganizationSiteMainInformationDto()
+        /// <summary>Initializes a new instance of the <see cref="AttemdeeOrganizationSiteMainInformationWidgetDto"/> class.</summary>
+        public AttemdeeOrganizationSiteMainInformationWidgetDto()
         {
         }
 
@@ -38,7 +38,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if this instance has image; otherwise, <c>false</c>.</returns>
         public bool HasImage()
         {
-            return this.Organization.ImageUploadDate.HasValue;
+            return this.Organization?.ImageUploadDate != null;
         }
 
         /// <summary>Gets the trade name first character.</summary>

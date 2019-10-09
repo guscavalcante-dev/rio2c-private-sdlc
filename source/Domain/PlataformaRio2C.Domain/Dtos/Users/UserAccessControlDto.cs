@@ -53,11 +53,11 @@ namespace PlataformaRio2C.Domain.Dtos
             return this.User?.Name?.GetFirstWord();
         }
 
-        /// <summary>Gets the name first character.</summary>
+        /// <summary>Gets the name abbreviation code.</summary>
         /// <returns></returns>
-        public string GetNameFirstCharacter()
+        public string GetNameAbbreviationCode()
         {
-            return this.User?.Name?.GetFirstChar();
+            return this.User?.Name?.GetTwoLetterCode();
         }
 
         /// <summary>Determines whether this instance has image.</summary>

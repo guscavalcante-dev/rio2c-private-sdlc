@@ -4,7 +4,7 @@
 // Created          : 08-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-08-2019
+// Last Modified On : 10-09-2019
 // ***********************************************************************
 // <copyright file="AttendeeOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -193,18 +193,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         #region Site Widgets
 
-        /// <summary>Finds the site main information base dto by organization uid and by edition identifier asynchronous.</summary>
+        /// <summary>Finds the site main information widget dto by organization uid and by edition identifier asynchronous.</summary>
         /// <param name="organizationUid">The organization uid.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<AttemdeeOrganizationSiteMainInformationDto> FindSiteMainInformationBaseDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
+        public async Task<AttemdeeOrganizationSiteMainInformationWidgetDto> FindSiteMainInformationWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
         {
             var query = this.GetBaseQuery()
                                 .FindByOrganizationUid(organizationUid)
                                 .FindByEditionId(editionId, false);
 
             return await query
-                            .Select(ao => new AttemdeeOrganizationSiteMainInformationDto
+                            .Select(ao => new AttemdeeOrganizationSiteMainInformationWidgetDto
                             {
                                 AttendeeOrganization = ao,
                                 Organization = ao.Organization,
@@ -227,11 +227,49 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+        /// <summary>Finds the site executive widget dto by organization uid and by edition identifier asynchronous.</summary>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttendeeOrganizationSiteExecutiveWidgetDto> FindSiteExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByOrganizationUid(organizationUid)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(ao => new AttendeeOrganizationSiteExecutiveWidgetDto
+                            {
+                                AttendeeOrganization = ao,
+                                AttendeeCollaboratorsDtos = ao.AttendeeOrganizationCollaborators
+                                                                    .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeCollaborator.IsDeleted && !aoc.AttendeeCollaborator.Collaborator.IsDeleted)
+                                                                    .Select(aoc => new AttendeeCollaboratorDto
+                                                                    {
+                                                                        AttendeeCollaborator = aoc.AttendeeCollaborator,
+                                                                        Collaborator = aoc.AttendeeCollaborator.Collaborator,
+                                                                        JobTitlesDtos = aoc.AttendeeCollaborator.Collaborator.JobTitles.Where(jb => !jb.IsDeleted).Select(jb => new CollaboratorJobTitleBaseDto
+                                                                        {
+                                                                            Id = jb.Id,
+                                                                            Uid = jb.Uid,
+                                                                            Value = jb.Value,
+                                                                            LanguageDto = new LanguageBaseDto
+                                                                            {
+                                                                                Id = jb.Language.Id,
+                                                                                Uid = jb.Language.Uid,
+                                                                                Name = jb.Language.Name,
+                                                                                Code = jb.Language.Code
+                                                                            }
+                                                                        })
+                                                                    })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
         /// <summary>Finds the site address widget dto by organization uid asynchronous.</summary>
         /// <param name="organizationUid">The organization uid.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<AttendeeOrganizationSiteAddressWidgetDto> FindSiteAddressWidgetDtoByOrganizationUidAsync(Guid organizationUid, int editionId)
+        public async Task<AttendeeOrganizationSiteAddressWidgetDto> FindSiteAddressWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
         {
             var query = this.GetBaseQuery()
                                 .FindByOrganizationUid(organizationUid)
@@ -253,7 +291,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="organizationUid">The organization uid.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<AttendeeOrganizationSiteActivityWidgetDto> FindSiteActivityWidgetDtoByOrganizationUidAsync(Guid organizationUid, int editionId)
+        public async Task<AttendeeOrganizationSiteActivityWidgetDto> FindSiteActivityWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
         {
             var query = this.GetBaseQuery()
                                 .FindByOrganizationUid(organizationUid)
@@ -281,7 +319,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="organizationUid">The organization uid.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<AttendeeOrganizationSiteTargetAudienceWidgetDto> FindSiteTargetAudienceWidgetDtoByOrganizationUidAsync(Guid organizationUid, int editionId)
+        public async Task<AttendeeOrganizationSiteTargetAudienceWidgetDto> FindSiteTargetAudienceWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
         {
             var query = this.GetBaseQuery()
                                 .FindByOrganizationUid(organizationUid)
@@ -307,7 +345,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="organizationUid">The organization uid.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<AttendeeOrganizationSiteInterestWidgetDto> FindSiteInterestWidgetDtoByOrganizationUidAsync(Guid organizationUid, int editionId)
+        public async Task<AttendeeOrganizationSiteInterestWidgetDto> FindSiteInterestWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
         {
             var query = this.GetBaseQuery()
                                 .FindByOrganizationUid(organizationUid)
