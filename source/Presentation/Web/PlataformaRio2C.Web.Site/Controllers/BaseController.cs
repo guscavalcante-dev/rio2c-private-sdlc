@@ -59,6 +59,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <returns>Returns an IAsyncController instance.</returns>
         protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, object state)
         {
+            
             // Set environment
             this.SetEnvironment();
 
@@ -109,7 +110,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
         private bool ValidateCulture()
         {
             // Attempt to read the culture cookie from Request
-           // var storagedCulture = this.CommandBus.Send(new FindUserLanguage()).Result;
+            var userInfo = this.CommandBus.Send(new FindUserAccessControlDto(User.Identity.GetUserId<int>(), this.EditionDto?.Id ?? 0, null)).Result;
+
+            var storagedCulture = userInfo?.Language.Code;
             var routeCulture = RouteData.Values["culture"] as string;
             var cookieCulture = Request.Cookies["MyRio2CCulture"]?.Value;
             var cultureName = 

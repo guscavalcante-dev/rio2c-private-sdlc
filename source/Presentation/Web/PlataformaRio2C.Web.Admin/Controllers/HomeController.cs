@@ -22,6 +22,7 @@ using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using Constants = PlataformaRio2C.Domain.Constants;
+using PlataformaRio2C.Application.CQRS.Commands.User;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
@@ -72,13 +73,20 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="returnUrl">The return URL.</param>
         /// <returns></returns>
         [AllowAnonymous]
-        public ActionResult SetCulture(string culture, string oldCulture, string returnUrl = null)
+        public async Task<ActionResult> SetCulture(string culture, string oldCulture, string returnUrl = null)
         {
             // Validate input
             culture = CultureHelper.GetImplementedCulture(culture);
             RouteData.Values["culture"] = culture;  // set culture
 
             #region Create/Update cookie culture
+
+            if (this.User.Identity.IsAuthenticated)
+            {
+                var result = await this.CommandBus.Send(new UpdateUserInterfaceLanguage(
+                    this.AdminAccessControlDto.User.Uid,
+                    culture));
+            }
 
             var cookie = Request.Cookies["MyRio2CAdminCulture"];
             if (cookie != null)

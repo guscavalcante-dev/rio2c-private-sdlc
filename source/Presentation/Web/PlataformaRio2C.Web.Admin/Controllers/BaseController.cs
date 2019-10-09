@@ -56,6 +56,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <returns>Returns an IAsyncController instance.</returns>
         protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, object state)
         {
+            
+
             var changedCultureRouteValue = this.ValidateCulture();
             if (changedCultureRouteValue)
             {
@@ -70,6 +72,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             this.SetUserInfo();
             this.SetArea();
+
 
             return base.BeginExecuteCore(callback, state);
         }
@@ -88,9 +91,13 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         private bool ValidateCulture()
         {
             // Attempt to read the culture cookie from Request
+            var userInfo =this.CommandBus.Send(new FindAdminAccessControlDto(User.Identity.GetUserId<int>(), this.EditionDto?.Id ?? 0, null)).Result;
+
+            var storagedCulture = userInfo?.Language.Code;
             var routeCulture = RouteData.Values["culture"] as string;
             var cookieCulture = Request.Cookies["MyRio2CAdminCulture"]?.Value;
-            var cultureName = routeCulture ??
+            var cultureName = //storagedCulture ??
+                              routeCulture ??
                               cookieCulture ??
                               (Request.UserLanguages != null && Request.UserLanguages.Length > 0 ? Request.UserLanguages[0] : null);
 

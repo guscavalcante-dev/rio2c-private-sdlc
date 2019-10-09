@@ -24,7 +24,7 @@ using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Web.Site.Filters;
-using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Application.CQRS.Commands.User;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -107,8 +107,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             if (this.User.Identity.IsAuthenticated)
             {
-                var result = await this.CommandBus.Send(new UpdateCollaboratorInterfaceLanguage(
-                    this.UserAccessControlDto.Collaborator.Uid,
+                var result = await this.CommandBus.Send(new UpdateUserInterfaceLanguage(
+                    this.UserAccessControlDto.User.Uid,
                     culture));
             }
 

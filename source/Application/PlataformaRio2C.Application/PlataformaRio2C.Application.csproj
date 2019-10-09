@@ -202,6 +202,7 @@
     <Compile Include="CQRS\CommandsHandlers\SalesPlatformWebhookRequests\BaseSalesPlatformWebhookRequestCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\SalesPlatformWebhookRequests\CreateSalesPlatformWebhookRequestCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\SalesPlatformWebhookRequests\ProcessPendingPlatformWebhookRequestsAsyncCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\User\UpdateUserInterfaceLanguageCommandHandler.cs" />
     <Compile Include="CQRS\Commands\Attendees\BaseCommands\AttendeeOrganizationBaseCommand.cs" />
     <Compile Include="CQRS\Commands\BaseCommand.cs" />
     <Compile Include="CQRS\Commands\Collaborators\BaseCommands\CollaboratorMiniBioBaseCommand.cs" />
@@ -240,6 +241,7 @@
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\ProcessPendingPlatformWebhookRequestsAsync.cs" />
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\CreateSalesPlatformWebhookRequest.cs" />
     <Compile Include="CQRS\BaseUserRequest.cs" />
+    <Compile Include="CQRS\Commands\User\UpdateUserInterfaceLanguage.cs" />
     <Compile Include="CQRS\QueriesHandlers\Users\FindAdminAccessControlDtoQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Users\FindUserAccessControlDtoQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\AttendeeOrganizations\FindAllAttendeeOrganizationsBaseDtosByEditionUidAsyncQueryHandler.cs" />
