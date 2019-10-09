@@ -193,6 +193,32 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         #region Site Widgets
 
+        /// <summary>Finds the site detailst dto by organization uid and by edition identifier asynchronous.</summary>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttemdeeOrganizationSiteDetailsDto> FindSiteDetailstDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByOrganizationUid(organizationUid)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(ao => new AttemdeeOrganizationSiteDetailsDto
+                            {
+                                AttendeeOrganization = ao,
+                                Organization = ao.Organization,
+                                AttendeeOrganizationTypesDtos = ao.AttendeeOrganizationTypes
+                                                                        .Where(aot => !aot.IsDeleted && !aot.OrganizationType.IsDeleted)
+                                                                        .Select(aot => new AttendeeOrganizationTypeDto
+                                                                        {
+                                                                            AttendeeOrganizationType = aot,
+                                                                            OrganizationType = aot.OrganizationType
+                                                                        })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
         /// <summary>Finds the site main information widget dto by organization uid and by edition identifier asynchronous.</summary>
         /// <param name="organizationUid">The organization uid.</param>
         /// <param name="editionId">The edition identifier.</param>

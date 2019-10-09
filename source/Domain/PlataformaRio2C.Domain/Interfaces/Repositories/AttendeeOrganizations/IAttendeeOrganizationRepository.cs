@@ -27,6 +27,7 @@ namespace PlataformaRio2C.Domain.Interfaces
 
         #region Site Widgets
 
+        Task<AttemdeeOrganizationSiteDetailsDto> FindSiteDetailstDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId);
         Task<AttemdeeOrganizationSiteMainInformationWidgetDto> FindSiteMainInformationWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId);
         Task<AttendeeOrganizationSiteExecutiveWidgetDto> FindSiteExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId);
         Task<AttendeeOrganizationSiteAddressWidgetDto> FindSiteAddressWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId);

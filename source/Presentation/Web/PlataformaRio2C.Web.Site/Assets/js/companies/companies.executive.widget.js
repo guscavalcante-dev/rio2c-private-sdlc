@@ -24,6 +24,10 @@ var CompaniesExecutiveWidget = function () {
     };
 
     var show = function () {
+        if (widgetElement.length <= 0) {
+            return;
+        }
+
         var jsonParameters = new Object();
         jsonParameters.organizationUid = $('#AggregateId').val();
 

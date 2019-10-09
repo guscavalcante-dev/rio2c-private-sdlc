@@ -4,7 +4,7 @@
 // Created          : 10-08-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-08-2019
+// Last Modified On : 10-09-2019
 // ***********************************************************************
 // <copyright file="companies.interest.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,6 +23,10 @@ var CompaniesInterestWidget = function () {
     };
 
     var show = function () {
+        if (widgetElement.length <= 0) {
+            return;
+        }
+
         var jsonParameters = new Object();
         jsonParameters.organizationUid = $('#AggregateId').val();
 

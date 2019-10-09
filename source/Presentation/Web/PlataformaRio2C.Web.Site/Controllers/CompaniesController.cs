@@ -68,7 +68,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> Details(Guid? id)
         {
-            var attendeeOrganizationDto = await this.attendeeOrganizationRepo.FindSiteMainInformationWidgetDtoByOrganizationUidAndByEditionIdAsync(id ?? Guid.Empty, this.EditionDto.Id);
+            var attendeeOrganizationDto = await this.attendeeOrganizationRepo.FindSiteDetailstDtoByOrganizationUidAndByEditionIdAsync(id ?? Guid.Empty, this.EditionDto.Id);
             if (attendeeOrganizationDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
@@ -86,7 +86,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             ViewBag.TicketsDtos = await this.attendeeCollaboratorTicketRepo.FindAllDtoByEditionIdAndByCollaboratorId(this.EditionDto.Id, this.UserAccessControlDto.Collaborator?.Id ?? 0);
 
-            return View(attendeeOrganizationDto.Organization.Uid);
+            return View(attendeeOrganizationDto);
         }
 
         #region Main Information Widget

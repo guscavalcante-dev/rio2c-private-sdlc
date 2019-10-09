@@ -1,9 +1,11 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
-@model Guid
+@using Constants = PlataformaRio2C.Domain.Constants;
+@model AttemdeeOrganizationSiteDetailsDto
 @{
     ViewBag.Title = string.Format(Labels.Welcome, (ViewBag.EditionDto as EditionDto)?.UrlCode);
+    var isAudiovisualCompany = Model.HasAnyType(new[] { Constants.OrganizationType.AudiovisualBuyer, Constants.OrganizationType.AudiovisualSeller });
 }
-@Html.Hidden("AggregateId", Model)
+@Html.Hidden("AggregateId", Model.Organization.Uid)
 <div class="row">
     <!--begin:Middle column-->
     <div class="col-md-8">
@@ -28,25 +30,28 @@
             </div>
         </div>
         <!--end:Address Widget-->
-        <div class="row">
-            <!--begin:Activity Widget-->
-            <div class="col-6">
-                <div id="CompanyActivityWidget" class="kt-portlet kt-portlet--height-fluid" style="min-height: 325px;"></div>
+        @if (isAudiovisualCompany)
+        {
+            <div class="row">
+                <!--begin:Activity Widget-->
+                <div class="col-6">
+                    <div id="CompanyActivityWidget" class="kt-portlet kt-portlet--height-fluid" style="min-height: 325px;"></div>
+                </div>
+                <!--end:Activity Widget-->
+                <!--begin:Target Audience Widget-->
+                <div class="col-6">
+                    <div id="CompanyTargetAudienceWidget" class="kt-portlet kt-portlet--height-fluid" style="min-height: 325px;"></div>
+                </div>
+                <!--end:Target Audience Widget-->
             </div>
-            <!--end:Activity Widget-->
-            <!--begin:Target Audience Widget-->
-            <div class="col-6">
-                <div id="CompanyTargetAudienceWidget" class="kt-portlet kt-portlet--height-fluid" style="min-height: 325px;"></div>
+            <!--begin:Interest Widget-->
+            <div class="row">
+                <div class="col-12">
+                    <div id="CompanyInterestWidget" class="kt-portlet" style="min-height: 325px;"></div>
+                </div>
             </div>
-            <!--end:Target Audience Widget-->
-        </div>
-        <!--begin:Interest Widget-->
-        <div class="row">
-            <div class="col-12">
-                <div id="CompanyInterestWidget" class="kt-portlet" style="min-height: 325px;"></div>
-            </div>
-        </div>
-        <!--end:Interest Widget-->
+            <!--end:Interest Widget-->
+        }
     </div>
     <!--end:Middle column-->
     <!--begin:Right column-->
