@@ -24,6 +24,7 @@ using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Web.Site.Filters;
+using PlataformaRio2C.Application.CQRS.Commands;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -39,7 +40,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="identityController">The identity controller.</param>
         /// <param name="attendeeCollaboratorTicketRepository">The attendee collaborator ticket repository.</param>
         public HomeController(
-            IMediator commandBus, 
+            IMediator commandBus,
             IdentityAutenticationService identityController,
             IAttendeeCollaboratorTicketRepository attendeeCollaboratorTicketRepository)
             : base(commandBus, identityController)
@@ -95,13 +96,20 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="returnUrl">The return URL.</param>
         /// <returns></returns>
         [AllowAnonymous]
-        public ActionResult SetCulture(string culture, string oldCulture, string returnUrl = null)
+        public async Task<ActionResult> SetCulture(string culture, string oldCulture, string returnUrl = null)
         {
             // Validate input
             culture = CultureHelper.GetImplementedCulture(culture);
             RouteData.Values["culture"] = culture;  // set culture
 
             #region Create/Update cookie culture
+
+            if (this.User.Identity.IsAuthenticated)
+            {
+                var result = await this.CommandBus.Send(new UpdateCollaboratorInterfaceLanguage(
+                    this.UserAccessControlDto.Collaborator.Uid,
+                    culture));
+            }
 
             var cookie = Request.Cookies["MyRio2CCulture"];
             if (cookie != null)

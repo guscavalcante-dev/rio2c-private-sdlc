@@ -266,6 +266,12 @@ namespace PlataformaRio2C.Domain.Entities
             return this.FirstName + (!string.IsNullOrEmpty(this.LastNames) ? " " + this.LastNames : String.Empty);
         }
 
+
+        public void UpdateInterfaceLanguage(Language language)
+        {
+            this.User?.UpdateInterfaceLanguage(language);
+        }
+
         #region Users
 
         /// <summary>Updates the user.</summary>

@@ -246,6 +246,13 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
+        public void UpdateInterfaceLanguage(Language language)
+        {
+            this.UserInterfaceLanguageId = language?.Id;
+            this.UserInterfaceLanguage = language;
+            this.UpdateDate = DateTime.Now;
+        }
+
         #endregion
     }
 }

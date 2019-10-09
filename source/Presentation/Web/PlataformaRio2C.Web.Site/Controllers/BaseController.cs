@@ -108,9 +108,12 @@ namespace PlataformaRio2C.Web.Site.Controllers
         private bool ValidateCulture()
         {
             // Attempt to read the culture cookie from Request
+           // var storagedCulture = this.CommandBus.Send(new FindUserLanguage()).Result;
             var routeCulture = RouteData.Values["culture"] as string;
             var cookieCulture = Request.Cookies["MyRio2CCulture"]?.Value;
-            var cultureName = routeCulture ??
+            var cultureName = 
+                              //storagedCulture??
+                              routeCulture ??
                               cookieCulture ??
                               (Request.UserLanguages != null && Request.UserLanguages.Length > 0 ? Request.UserLanguages[0] : null);
 
