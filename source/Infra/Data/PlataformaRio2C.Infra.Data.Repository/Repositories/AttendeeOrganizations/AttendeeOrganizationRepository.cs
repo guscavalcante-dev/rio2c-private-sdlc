@@ -199,7 +199,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<AttemdeeOrganizationSiteDetailsDto> FindSiteDetailstDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
         {
-            var query = this.GetBaseQuery()
+            var query = this.GetBaseQuery(true)
                                 .FindByOrganizationUid(organizationUid)
                                 .FindByEditionId(editionId, false);
 
@@ -225,7 +225,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<AttemdeeOrganizationSiteMainInformationWidgetDto> FindSiteMainInformationWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
         {
-            var query = this.GetBaseQuery()
+            var query = this.GetBaseQuery(true)
                                 .FindByOrganizationUid(organizationUid)
                                 .FindByEditionId(editionId, false);
 
@@ -259,7 +259,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<AttendeeOrganizationSiteExecutiveWidgetDto> FindSiteExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
         {
-            var query = this.GetBaseQuery()
+            var query = this.GetBaseQuery(true)
                                 .FindByOrganizationUid(organizationUid)
                                 .FindByEditionId(editionId, false);
 
@@ -297,7 +297,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<AttendeeOrganizationSiteAddressWidgetDto> FindSiteAddressWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
         {
-            var query = this.GetBaseQuery()
+            var query = this.GetBaseQuery(true)
                                 .FindByOrganizationUid(organizationUid)
                                 .FindByEditionId(editionId, false);
 
@@ -319,7 +319,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<AttendeeOrganizationSiteActivityWidgetDto> FindSiteActivityWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
         {
-            var query = this.GetBaseQuery()
+            var query = this.GetBaseQuery(true)
                                 .FindByOrganizationUid(organizationUid)
                                 .FindByEditionId(editionId, false);
 
@@ -347,7 +347,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<AttendeeOrganizationSiteTargetAudienceWidgetDto> FindSiteTargetAudienceWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
         {
-            var query = this.GetBaseQuery()
+            var query = this.GetBaseQuery(true)
                                 .FindByOrganizationUid(organizationUid)
                                 .FindByEditionId(editionId, false);
 
@@ -373,7 +373,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<AttendeeOrganizationSiteInterestWidgetDto> FindSiteInterestWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
         {
-            var query = this.GetBaseQuery()
+            var query = this.GetBaseQuery(true)
                                 .FindByOrganizationUid(organizationUid)
                                 .FindByEditionId(editionId, false);
 
