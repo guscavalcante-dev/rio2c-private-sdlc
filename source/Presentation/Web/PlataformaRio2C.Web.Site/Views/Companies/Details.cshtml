@@ -1,0 +1,69 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model Guid
+@{
+    ViewBag.Title = string.Format(Labels.Welcome, (ViewBag.EditionDto as EditionDto)?.UrlCode);
+}
+@Html.Hidden("AggregateId", Model)
+<div class="row">
+    <!--begin:Middle column-->
+    <div class="col-md-8">
+        <!--begin:Main Information Widget-->
+        <div class="row">
+            <div class="col-12">
+                <div id="CompanyMainInformationWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+        </div>
+        <!--end:Main Information Widget-->
+        <!--begin:Address Widget-->
+        <div class="row">
+            <div class="col-12">
+                <div id="CompanyAddressWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+        </div>
+        <!--end:Address Widget-->
+        <div class="row">
+            <!--begin:Activity Widget-->
+            <div class="col-6">
+                <div id="CompanyActivityWidget" class="kt-portlet kt-portlet--height-fluid" style="min-height: 325px;"></div>
+            </div>
+            <!--end:Activity Widget-->
+            <!--begin:Target Audience Widget-->
+            <div class="col-6">
+                <div id="CompanyTargetAudienceWidget" class="kt-portlet kt-portlet--height-fluid" style="min-height: 325px;"></div>
+            </div>
+            <!--end:Target Audience Widget-->
+        </div>
+    </div>
+    <!--end:Middle column-->
+    <!--begin:Right column-->
+    <div class="col-md-4">
+        <!--begin:Projects-->
+        @Html.Partial("Widgets/ProjectsWidget")
+        <!--end:Projects-->
+        <!--begin:Badges-->
+        @Html.Partial("Widgets/BadgesWidget")
+        <!--end:Badges-->
+    </div>
+    <!--end:Right column-->
+</div>
+@section Styles {
+    @*@Styles.Render("~/bundles/css/select2.css")*@
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/jqueryval.js")
+    @Scripts.Render("~/bundles/js/select2.js")
+    @Scripts.Render("~/bundles/js/ckEditor.js")
+    @Scripts.Render("~/bundles/js/inputmask.js")
+    @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/companies.widget.js")
+    <script>
+        // Page translations ----------------------------------------------------------------------
+
+        jQuery(document).ready(function () {
+            CompaniesMainInformationWidget.init();
+            CompaniesAddressWidget.init();
+            CompaniesActivityWidget.init();
+            CompaniesTargetAudienceWidget.init();
+        });
+    </script>
+}
