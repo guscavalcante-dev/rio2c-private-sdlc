@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-26-2019
+// Last Modified On : 10-09-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,6 +17,8 @@ using PlataformaRio2C.Infra.Data.Context;
 using System;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
+using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -38,6 +40,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds the by edition identifier.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeCollaborator> FindByEditionId(this IQueryable<AttendeeCollaborator> query, int editionId, bool showAllEditions)
+        {
+            query = query.Where(ac => (showAllEditions || ac.EditionId == editionId)
+                                      && !ac.IsDeleted
+                                      && !ac.Edition.IsDeleted
+                                      && !ac.Collaborator.IsDeleted);
+            return query;
+        }
+
         /// <summary>Finds the by edition uid.</summary>
         /// <param name="query">The query.</param>
         /// <param name="editionUid">The edition uid.</param>
@@ -45,6 +61,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static IQueryable<AttendeeCollaborator> FindByEditionUid(this IQueryable<AttendeeCollaborator> query, Guid editionUid)
         {
             query = query.Where(ac => ac.Edition.Uid == editionUid);
+
+            return query;
+        }
+
+        /// <summary>Finds the by collaborator uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeCollaborator> FindByCollaboratorUid(this IQueryable<AttendeeCollaborator> query, Guid collaboratorUid)
+        {
+            query = query.Where(ac => ac.Collaborator.Uid == collaboratorUid);
 
             return query;
         }
@@ -95,5 +122,73 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         ? consult.AsNoTracking()
                         : consult;
         }
+
+        #region Site Widgets
+
+        /// <summary>Finds the site detailst dto by collaborator uid and by edition identifier asynchronous.</summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttendeeCollaboratorSiteDetailsDto> FindSiteDetailstDtoByCollaboratorUidAndByEditionIdAsync(Guid collaboratorUid, int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByCollaboratorUid(collaboratorUid)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(ac => new AttendeeCollaboratorSiteDetailsDto
+                            {
+                                AttendeeCollaborator = ac,
+                                Collaborator = ac.Collaborator
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>Finds the site main information widget dto by collaborator uid and by edition identifier asynchronous.</summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttendeeCollaboratorSiteMainInformationWidgetDto> FindSiteMainInformationWidgetDtoByCollaboratorUidAndByEditionIdAsync(Guid collaboratorUid, int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByCollaboratorUid(collaboratorUid)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(ac => new AttendeeCollaboratorSiteMainInformationWidgetDto
+                            {
+                                AttendeeCollaborator = ac,
+                                Collaborator = ac.Collaborator,
+                                JobTitlesDtos = ac.Collaborator.JobTitles.Where(d => !d.IsDeleted).Select(d => new CollaboratorJobTitleBaseDto
+                                {
+                                    Id = d.Id,
+                                    Uid = d.Uid,
+                                    Value = d.Value,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = d.Language.Id,
+                                        Uid = d.Language.Uid,
+                                        Name = d.Language.Name,
+                                        Code = d.Language.Code
+                                    }
+                                }),
+                                MiniBioDtos = ac.Collaborator.MiniBios.Where(d => !d.IsDeleted).Select(d => new CollaboratorMiniBioBaseDto
+                                {
+                                    Id = d.Id,
+                                    Uid = d.Uid,
+                                    Value = d.Value,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = d.Language.Id,
+                                        Uid = d.Language.Uid,
+                                        Name = d.Language.Name,
+                                        Code = d.Language.Code
+                                    }
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        #endregion
     }
 }

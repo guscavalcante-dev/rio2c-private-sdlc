@@ -326,6 +326,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CitiesController.cs" />
     <Compile Include="Controllers\CollaboratorController.cs" />
+    <Compile Include="Controllers\ExecutivesController.cs" />
     <Compile Include="Controllers\ConferenceController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\CompaniesController.cs" />
@@ -394,6 +395,7 @@
     <Content Include="Assets\js\companies\companies.activity.widget.js" />
     <Content Include="Assets\js\companies\companies.address.widget.js" />
     <Content Include="Assets\js\companies\companies.maininformation.widget.js" />
+    <Content Include="Assets\js\executives\executives.maininformation.widget.js" />
     <Content Include="Assets\js\myrio2c.common.js" />
     <Content Include="Assets\js\myrio2c.companynumber.js" />
     <Content Include="Assets\js\myrio2c.inputmask.js" />
@@ -7113,6 +7115,8 @@
     <Content Include="Views\Companies\Widgets\TargetAudienceWidget.cshtml" />
     <Content Include="Views\Companies\Widgets\InterestWidget.cshtml" />
     <Content Include="Views\Companies\Widgets\ExecutiveWidget.cshtml" />
+    <Content Include="Views\Executives\Details.cshtml" />
+    <Content Include="Views\Executives\Widgets\MainInformationWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Rafael Dantas Ruiz
-// Created          : 10-09-2019
+// Created          : 10-08-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 10-09-2019
 // ***********************************************************************
-// <copyright file="AttendeeCollaboratorDto.cs" company="Softo">
+// <copyright file="AttendeeCollaboratorSiteMainInformationWidgetDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -17,15 +17,17 @@ using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
-    /// <summary>AttendeeCollaboratorDto</summary>
-    public class AttendeeCollaboratorDto
+    /// <summary>AttendeeCollaboratorSiteMainInformationWidgetDto</summary>
+    public class AttendeeCollaboratorSiteMainInformationWidgetDto
     {
         public AttendeeCollaborator AttendeeCollaborator { get; set; }
         public Collaborator Collaborator { get; set; }
-        public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="AttendeeCollaboratorDto"/> class.</summary>
-        public AttendeeCollaboratorDto()
+        public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }
+        public IEnumerable<CollaboratorMiniBioBaseDto> MiniBioDtos { get; set; }
+
+        /// <summary>Initializes a new instance of the <see cref="AttendeeCollaboratorSiteMainInformationWidgetDto"/> class.</summary>
+        public AttendeeCollaboratorSiteMainInformationWidgetDto()
         {
         }
 
@@ -35,6 +37,14 @@ namespace PlataformaRio2C.Domain.Dtos
         public CollaboratorJobTitleBaseDto GetJobTitleDtoByLanguageCode(string culture)
         {
             return this.JobTitlesDtos?.FirstOrDefault(dd => dd.LanguageDto.Code?.ToLowerInvariant() == culture?.ToLowerInvariant());
+        }
+
+        /// <summary>Gets the mini bio dto by language code.</summary>
+        /// <param name="culture">The culture.</param>
+        /// <returns></returns>
+        public CollaboratorMiniBioBaseDto GetMiniBioDtoByLanguageCode(string culture)
+        {
+            return this.MiniBioDtos?.FirstOrDefault(dd => dd.LanguageDto.Code?.ToLowerInvariant() == culture?.ToLowerInvariant());
         }
     }
 }

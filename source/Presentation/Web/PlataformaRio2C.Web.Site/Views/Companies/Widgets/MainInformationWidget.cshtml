@@ -9,7 +9,7 @@
 <div class="kt-portlet__body">
     <div class="kt-widget kt-widget--user-profile-3">
         <div class="kt-widget__top">
-            @if (Model.HasImage())
+            @if (Model.Organization?.HasImage() == true)
             {
                 <div class="kt-widget__media kt-hidden-">
                     <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, Model.Organization.Uid, Model.Organization.ImageUploadDate, true)" alt="image">
@@ -17,14 +17,14 @@
             }
             else
             {
-                <div class="kt-widget__pic kt-widget__pic--danger kt-font-danger kt-font-boldest kt-font-light">
-                    @(Model.GetTradeNameFirstCharacter())
+                <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest">
+                    @(Model.Organization?.GetTradeNameAbbreviation() ?? "-")
                 </div>
             }
             <div class="kt-widget__content">
                 <div class="kt-widget__head">
                     <span class="kt-widget__username">
-                        @Model.Organization.TradeName
+                        @(Model.Organization?.TradeName ?? "-")
                         @if (Model.AttendeeOrganization.OnboardingFinishDate.HasValue)
                         {
                             <i class="flaticon2-correct"></i>
@@ -40,8 +40,8 @@
                     }
                 </div>
                 <div class="kt-widget__subhead pt-0">
-                    @Model.Organization.CompanyName
-                    @if (isCollaborator && !string.IsNullOrEmpty(Model.Organization.Document))
+                    @(Model.Organization?.CompanyName ?? "-")
+                    @if (isCollaborator && !string.IsNullOrEmpty(Model.Organization?.Document))
                     {
                         @:- @Model.Organization.Document
                     }

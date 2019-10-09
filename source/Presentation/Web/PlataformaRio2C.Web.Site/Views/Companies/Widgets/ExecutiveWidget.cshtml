@@ -31,28 +31,28 @@
             {
                 <div class="col-sm-6 col-md-12 col-xl-6">
                     <!--Begin::Portlet-->
-                    <div class="kt-portlet">@*kt-portlet--height-fluid*@
+                    <div class="kt-portlet kt-portlet--height-fluid">
                         @*<div class="kt-portlet__head kt-portlet__head--noborder"></div>*@
                         <div class="kt-portlet__body mt-40">
                             <!--begin::Widget -->
                             <div class="kt-widget kt-widget--user-profile-2">
                                 <div class="kt-widget__head">
                                     <div class="kt-widget__media">
-                                        @if (attendeeCollaboratorDto.HasImage())
+                                        @if (attendeeCollaboratorDto.Collaborator.HasImage())
                                         {
                                             <img class="kt-widget__img" src="@ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, attendeeCollaboratorDto.Collaborator.Uid, attendeeCollaboratorDto.Collaborator.ImageUploadDate, true)" alt="image">
                                         }
                                         else
                                         {
                                             <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest">
-                                                @(attendeeCollaboratorDto.Collaborator.GetFullName().GetTwoLetterCode())
+                                                @(attendeeCollaboratorDto.Collaborator.GetNameAbbreviation())
                                             </div>
                                         }
                                     </div>
                                     <div class="kt-widget__info">
-                                        <a href="#" class="kt-widget__username">@attendeeCollaboratorDto.Collaborator.GetFullName()</a>
+                                        <a href="@Url.Action("Details", "Executives", new { id = attendeeCollaboratorDto.Collaborator.Uid })" class="kt-widget__username">@attendeeCollaboratorDto.Collaborator.GetFullName()</a>
                                         <span class="kt-widget__desc">@(attendeeCollaboratorDto.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value ?? "-")</span>
-                                        <span class="kt-widget__desc"><a href="#" onclick="return false;" data-toggle="kt-tooltip" title="" data-placement="right" data-original-title="@Labels.ComingSoon...">
+                                        <span class="kt-widget__desc"><a href="@Url.Action("Details", "Executives", new { id = attendeeCollaboratorDto.Collaborator.Uid })">
                                             <small><i class="flaticon-profile"></i> @Labels.SeeMiniBio</small>
                                         </a></span>
                                     </div>

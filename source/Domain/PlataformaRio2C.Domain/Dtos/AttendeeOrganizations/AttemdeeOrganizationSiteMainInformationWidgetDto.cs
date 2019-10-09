@@ -33,21 +33,6 @@ namespace PlataformaRio2C.Domain.Dtos
         {
         }
 
-        /// <summary>Determines whether this instance has image.</summary>
-        /// <returns>
-        ///   <c>true</c> if this instance has image; otherwise, <c>false</c>.</returns>
-        public bool HasImage()
-        {
-            return this.Organization?.ImageUploadDate != null;
-        }
-
-        /// <summary>Gets the trade name first character.</summary>
-        /// <returns></returns>
-        public string GetTradeNameFirstCharacter()
-        {
-            return this.Organization?.TradeName?.GetTwoLetterCode();
-        }
-
         /// <summary>Gets the description dto by language code.</summary>
         /// <param name="culture">The culture.</param>
         /// <returns></returns>

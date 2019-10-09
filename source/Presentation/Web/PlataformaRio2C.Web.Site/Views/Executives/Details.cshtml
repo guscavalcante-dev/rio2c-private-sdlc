@@ -1,18 +1,18 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @using Constants = PlataformaRio2C.Domain.Constants;
-@model AttemdeeOrganizationSiteDetailsDto
+@model AttendeeCollaboratorSiteDetailsDto
 @{
-    ViewBag.Title = $"{Labels.Company}  {Model.Organization.TradeName}";
-    var isAudiovisualCompany = Model.HasAnyType(new[] { Constants.OrganizationType.AudiovisualBuyer, Constants.OrganizationType.AudiovisualSeller });
+    ViewBag.Title = $"{Labels.Executive}  {Model.Collaborator.GetFullName()}";
+    //var isAudiovisualCompany = Model.HasAnyType(new[] { Constants.OrganizationType.AudiovisualBuyer, Constants.OrganizationType.AudiovisualSeller });
 }
-@Html.Hidden("AggregateId", Model.Organization.Uid)
+@Html.Hidden("AggregateId", Model.Collaborator.Uid)
 <div class="row">
     <!--begin:Middle column-->
     <div class="col-md-8">
         <!--begin:Main Information Widget-->
         <div class="row">
             <div class="col-12">
-                <div id="CompanyMainInformationWidget" class="kt-portlet" style="min-height: 325px;"></div>
+                <div id="ExecutiveMainInformationWidget" class="kt-portlet" style="min-height: 325px;"></div>
             </div>
         </div>
         <!--end:Main Information Widget-->
@@ -30,28 +30,6 @@
             </div>
         </div>
         <!--end:Address Widget-->
-        @if (isAudiovisualCompany)
-        {
-            <div class="row">
-                <!--begin:Activity Widget-->
-                <div class="col-6">
-                    <div id="CompanyActivityWidget" class="kt-portlet kt-portlet--height-fluid" style="min-height: 325px;"></div>
-                </div>
-                <!--end:Activity Widget-->
-                <!--begin:Target Audience Widget-->
-                <div class="col-6">
-                    <div id="CompanyTargetAudienceWidget" class="kt-portlet kt-portlet--height-fluid" style="min-height: 325px;"></div>
-                </div>
-                <!--end:Target Audience Widget-->
-            </div>
-            <!--begin:Interest Widget-->
-            <div class="row">
-                <div class="col-12">
-                    <div id="CompanyInterestWidget" class="kt-portlet" style="min-height: 325px;"></div>
-                </div>
-            </div>
-            <!--end:Interest Widget-->
-        }
     </div>
     <!--end:Middle column-->
     <!--begin:Right column-->
@@ -74,17 +52,12 @@
     @Scripts.Render("~/bundles/js/ckEditor.js")
     @Scripts.Render("~/bundles/js/inputmask.js")
     @Scripts.Render("~/bundles/js/bootbox.js")
-    @Scripts.Render("~/bundles/js/companies.widget.js")
+    @Scripts.Render("~/bundles/js/executives.widget.js")
     <script>
         // Page translations ----------------------------------------------------------------------
 
         jQuery(document).ready(function () {
-            CompaniesMainInformationWidget.init();
-            CompaniesExecutiveWidget.init();
-            CompaniesAddressWidget.init();
-            CompaniesActivityWidget.init();
-            CompaniesTargetAudienceWidget.init();
-            CompaniesInterestWidget.init();
+            ExecutivesMainInformationWidget.init();
         });
     </script>
 }

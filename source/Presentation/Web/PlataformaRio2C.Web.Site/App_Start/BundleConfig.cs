@@ -259,6 +259,13 @@ namespace PlataformaRio2C.Web.Site
 
             #endregion
 
+            #region Companies
+
+            bundles.Add(new ScriptBundle("~/bundles/js/executives.widget.js").Include(
+                "~/Assets/js/executives/executives.maininformation.widget.js"));
+
+            #endregion
+
             #region Addresses
 
             bundles.Add(new ScriptBundle("~/bundles/js/addresses.form.js").Include(

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-28-2019
+// Last Modified On : 10-09-2019
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -264,6 +265,21 @@ namespace PlataformaRio2C.Domain.Entities
         public string GetFullName()
         {
             return this.FirstName + (!string.IsNullOrEmpty(this.LastNames) ? " " + this.LastNames : String.Empty);
+        }
+
+        /// <summary>Gets the name abbreviation.</summary>
+        /// <returns></returns>
+        public string GetNameAbbreviation()
+        {
+            return this.GetFullName().GetTwoLetterCode();
+        }
+
+        /// <summary>Determines whether this instance has image.</summary>
+        /// <returns>
+        ///   <c>true</c> if this instance has image; otherwise, <c>false</c>.</returns>
+        public bool HasImage()
+        {
+            return this.ImageUploadDate.HasValue;
         }
 
         #region Users
