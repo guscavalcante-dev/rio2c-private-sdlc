@@ -3,7 +3,7 @@
 @model AttendeeOrganizationSiteActivityWidgetDto
 @{
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
-    var isCollaborator = userAccessControlDto?.EditionAttendeeOrganizations?.Any(eao => eao.Uid == Model.AttendeeOrganization.Uid) == true;
+    var isCollaborator = userAccessControlDto?.HasEditionAttendeeOrganization(Model.AttendeeOrganization.Uid) == true;
     var activities = ViewBag.Activities as List<Activity>;
 }
 <div class="kt-portlet__head">

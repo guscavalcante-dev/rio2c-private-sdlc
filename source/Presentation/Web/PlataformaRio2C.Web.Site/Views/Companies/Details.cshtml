@@ -4,6 +4,9 @@
 @{
     ViewBag.Title = $"{Labels.Company}  {Model.Organization.TradeName}";
 
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var isCollaborator = userAccessControlDto?.HasEditionAttendeeOrganization(Model.AttendeeOrganization.Uid) == true;
+
     var isAudiovisualCompany = Model.HasAnyType(new[] { Constants.OrganizationType.AudiovisualBuyer, Constants.OrganizationType.AudiovisualSeller });
 }
 @Html.Hidden("AggregateId", Model.Organization.Uid)
@@ -17,13 +20,16 @@
             </div>
         </div>
         <!--end:Main Information Widget-->
-        <!--begin:Address Widget-->
-        <div class="row">
-            <div class="col-12">
-                <div id="CompanyAddressWidget" class="kt-portlet" style="min-height: 325px;"></div>
+        @if (isCollaborator)
+        {
+            <!--begin:Address Widget-->
+            <div class="row">
+                <div class="col-12">
+                    <div id="CompanyAddressWidget" class="kt-portlet" style="min-height: 325px;"></div>
+                </div>
             </div>
-        </div>
-        <!--end:Address Widget-->
+            <!--end:Address Widget-->
+        }
         @if (isAudiovisualCompany)
         {
             <div class="row">

@@ -4,7 +4,7 @@
 @model AttemdeeOrganizationSiteMainInformationWidgetDto
 @{
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
-    var isCollaborator = userAccessControlDto?.EditionAttendeeOrganizations?.Any(eao => eao.Uid == Model.AttendeeOrganization.Uid) == true;
+    var isCollaborator = userAccessControlDto?.HasEditionAttendeeOrganization(Model.AttendeeOrganization.Uid) == true;
 }
 <div class="kt-portlet__body">
     <div class="kt-widget kt-widget--user-profile-3">

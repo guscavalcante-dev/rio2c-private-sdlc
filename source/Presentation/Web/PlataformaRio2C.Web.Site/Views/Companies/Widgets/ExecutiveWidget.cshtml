@@ -4,7 +4,7 @@
 @model AttendeeOrganizationSiteExecutiveWidgetDto
 @{
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
-    var isCollaborator = userAccessControlDto?.EditionAttendeeOrganizations?.Any(eao => eao.Uid == Model.AttendeeOrganization.Uid) == true;
+    var isCollaborator = userAccessControlDto?.HasEditionAttendeeOrganization(Model.AttendeeOrganization.Uid) == true;
 }
 <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
@@ -51,7 +51,13 @@
                                     </div>
                                     <div class="kt-widget__info">
                                         <a href="@Url.Action("Details", "Executives", new { id = attendeeCollaboratorDto.Collaborator.Uid })" class="kt-widget__username">@attendeeCollaboratorDto.Collaborator.GetFullName()</a>
-                                        <span class="kt-widget__desc">@(attendeeCollaboratorDto.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value ?? "-")</span>
+                                        @{
+                                            var jobTitle = attendeeCollaboratorDto.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value;
+                                        }
+                                        @if (!string.IsNullOrEmpty(jobTitle))
+                                        {
+                                            <span class="kt-widget__desc">@jobTitle</span>
+                                        }
                                         <span class="kt-widget__desc"><a href="@Url.Action("Details", "Executives", new { id = attendeeCollaboratorDto.Collaborator.Uid })">
                                             <small><i class="flaticon-profile"></i> @Labels.SeeMiniBio</small>
                                         </a></span>

@@ -4,13 +4,14 @@
 // Created          : 09-04-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-02-2019
+// Last Modified On : 10-09-2019
 // ***********************************************************************
 // <copyright file="UserAccessControlDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Domain.Entities;
@@ -147,6 +148,15 @@ namespace PlataformaRio2C.Domain.Dtos
             }
 
             return this.EditionCollaboratorTypes?.Any(ect => collaboratorTypes.Contains(ect.Name)) == true;
+        }
+
+        /// <summary>Determines whether [has edition attendee organization] [the specified attendee organization uid].</summary>
+        /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
+        /// <returns>
+        ///   <c>true</c> if [has edition attendee organization] [the specified attendee organization uid]; otherwise, <c>false</c>.</returns>
+        public bool HasEditionAttendeeOrganization(Guid attendeeOrganizationUid)
+        {
+            return this.IsAdmin() || this.EditionAttendeeOrganizations?.Any(eao => eao.Uid == attendeeOrganizationUid) == true;
         }
 
         #endregion

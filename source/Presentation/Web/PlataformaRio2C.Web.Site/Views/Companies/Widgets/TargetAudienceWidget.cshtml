@@ -3,7 +3,7 @@
 @model AttendeeOrganizationSiteTargetAudienceWidgetDto
 @{
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
-    var isCollaborator = userAccessControlDto?.EditionAttendeeOrganizations?.Any(eao => eao.Uid == Model.AttendeeOrganization.Uid) == true;
+    var isCollaborator = userAccessControlDto?.HasEditionAttendeeOrganization(Model.AttendeeOrganization.Uid) == true;
     var targetAudiences = ViewBag.TargetAudiences as List<TargetAudience>;
 }
 <div class="kt-portlet__head">
