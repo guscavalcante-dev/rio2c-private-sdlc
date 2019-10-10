@@ -1545,4 +1545,8 @@
     <value>found</value>
     <comment>encontrados</comment>
   </data>
+  <data name="Informations" xml:space="preserve">
+    <value>Informations</value>
+    <comment>Informações</comment>
+  </data>
 </root>

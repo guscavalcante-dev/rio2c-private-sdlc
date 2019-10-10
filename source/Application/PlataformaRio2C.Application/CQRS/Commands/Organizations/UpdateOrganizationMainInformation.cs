@@ -1,0 +1,128 @@
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Application
+// Author           : Rafael Dantas Ruiz
+// Created          : 10-10-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 10-10-2019
+// ***********************************************************************
+// <copyright file="UpdateOrganizationMainInformation.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Domain.Statics;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
+
+namespace PlataformaRio2C.Application.CQRS.Commands
+{
+    /// <summary>UpdateOrganizationMainInformation</summary>
+    public class UpdateOrganizationMainInformation : BaseCommand
+    {
+        public Guid OrganizationUid { get; set; }
+
+        [Display(Name = "CompanyName", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string CompanyName { get; set; }
+
+        [Display(Name = "TradeName", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [StringLength(100, MinimumLength = 2, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string TradeName { get; set; }
+
+        public bool IsCompanyNumberRequired { get; set; }
+
+        [Display(Name = "CompanyDocument", ResourceType = typeof(Labels))]
+        [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        [ValidCompanyNumber]
+        public string Document { get; set; }
+
+        public List<OrganizationDescriptionBaseCommand> Descriptions { get; set; }
+        public CropperImageBaseCommand CropperImage { get; set; }
+
+        [Display(Name = "Website", ResourceType = typeof(Labels))]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string Website { get; set; }
+
+        [Display(Name = "SocialMedia", ResourceType = typeof(Labels))]
+        [StringLength(256, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string SocialMedia { get; set; }
+
+        public Country Country { get; private set; }
+
+        //public UserBaseDto UpdaterBaseDto { get; set; }
+        //public DateTime UpdateDate { get; set; }
+
+        /// <summary>Initializes a new instance of the <see cref="UpdateOrganizationMainInformation"/> class.</summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="languagesDtos">The languages dtos.</param>
+        /// <param name="isDescriptionRequired">if set to <c>true</c> [is description required].</param>
+        /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
+        public UpdateOrganizationMainInformation(
+            AttemdeeOrganizationSiteMainInformationWidgetDto entity,
+            List<LanguageDto> languagesDtos,
+            bool isDescriptionRequired,
+            bool isImageRequired)
+        {
+            this.OrganizationUid = entity.Organization.Uid;
+            this.CompanyName = entity.Organization.CompanyName;
+            this.TradeName = entity.Organization.TradeName;
+            this.IsCompanyNumberRequired = entity.Country?.IsCompanyNumberRequired == true;
+            this.Document = entity.Organization.Document;
+            this.Website = entity.Organization.Website;
+            this.SocialMedia = entity.Organization.SocialMedia;
+            this.UpdateDescriptions(entity, languagesDtos, isDescriptionRequired);
+            this.UpdateCropperImage(entity, isImageRequired);
+            this.UpdateModelsAndLists(entity.Country);
+            //this.UpdaterBaseDto = entity.UpdaterDto;
+            //this.UpdateDate = entity.UpdateDate;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="UpdateOrganizationMainInformation"/> class.</summary>
+        public UpdateOrganizationMainInformation()
+        {
+        }
+
+        /// <summary>Updates the models and lists.</summary>
+        /// <param name="country">The country.</param>
+        public void UpdateModelsAndLists(Country country)
+        {
+            this.Country = Country;
+        }
+
+        #region Private Methods
+
+        /// <summary>Updates the cropper image.</summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
+        private void UpdateCropperImage(AttemdeeOrganizationSiteMainInformationWidgetDto entity, bool isImageRequired)
+        {
+            this.CropperImage = new CropperImageBaseCommand(entity.Organization.ImageUploadDate, entity.Organization.Uid, FileRepositoryPathType.OrganizationImage, isImageRequired);
+        }
+
+        /// <summary>Updates the descriptions.</summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="languagesDtos">The languages dtos.</param>
+        /// <param name="isDescriptionRequired">if set to <c>true</c> [is description required].</param>
+        private void UpdateDescriptions(AttemdeeOrganizationSiteMainInformationWidgetDto entity, List<LanguageDto> languagesDtos, bool isDescriptionRequired)
+        {
+            this.Descriptions = new List<OrganizationDescriptionBaseCommand>();
+            foreach (var languageDto in languagesDtos)
+            {
+                var description = entity?.DescriptionsDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
+                this.Descriptions.Add(description != null ? new OrganizationDescriptionBaseCommand(description, isDescriptionRequired) :
+                                                            new OrganizationDescriptionBaseCommand(languageDto, isDescriptionRequired));
+            }
+        }
+
+        #endregion
+    }
+}

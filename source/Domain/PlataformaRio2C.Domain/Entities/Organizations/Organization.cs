@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-09-2019
+// Last Modified On : 10-10-2019
 // ***********************************************************************
 // <copyright file="Organization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -226,6 +226,41 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
             this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
             this.SynchronizeOrganizationInterests(interests, userId);
+        }
+
+        /// <summary>Updates the main information.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="companyName">Name of the company.</param>
+        /// <param name="tradeName">Name of the trade.</param>
+        /// <param name="document">The document.</param>
+        /// <param name="website">The website.</param>
+        /// <param name="socialMedia">The social media.</param>
+        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
+        /// <param name="descriptions">The descriptions.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateMainInformation(
+            Edition edition,
+            string companyName,
+            string tradeName,
+            string document,
+            string website,
+            string socialMedia,
+            bool isImageUploaded,
+            bool isImageDeleted,
+            List<OrganizationDescription> descriptions,
+            int userId)
+        {
+            this.CompanyName = companyName?.Trim();
+            this.TradeName = tradeName?.Trim();
+            this.Document = document?.Trim();
+            this.Website = website?.Trim();
+            this.SocialMedia = socialMedia?.Trim();
+            this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateUserId = this.UpdateUserId = userId;
+            this.SynchronizeDescriptions(descriptions, userId);
         }
 
         /// <summary>Deletes the specified edition.</summary>
