@@ -98,7 +98,7 @@ namespace PlataformaRio2C.Domain.Dtos
         {
             return this.EditionAttendeeOrganizations?.Any(eao => eao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted
                                                                                                           && !aot.OrganizationType.IsDeleted
-                                                                                                          && aot.OrganizationType.Name == "Player")) == true;
+                                                                                                          && aot.OrganizationType.Name == Domain.Constants.OrganizationType.AudiovisualBuyer)) == true;
         }
 
         #endregion

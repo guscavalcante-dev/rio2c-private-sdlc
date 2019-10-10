@@ -57,7 +57,10 @@
                 </div>
             </div>
             <div class="kt-section__content kt-section__content--solid text-center">
-                <a href="@Url.Action("Details", "Executives", new { id = userAccessControlDto.Collaborator.Uid })" class="btn btn-primary btn-sm">@Labels.ViewProfile</a>
+                @if (userAccessControlDto?.Collaborator != null)
+                {
+                    <a href="@Url.Action("Details", "Executives", new {id = userAccessControlDto.Collaborator.Uid})" class="btn btn-primary btn-sm">@Labels.ViewProfile</a>
+                }
                 @*<button type="button" class="btn btn-secondary btn-sm ml-2 mt-1" @(ViewBag.Environment != "dev" ? "disabled" : string.Empty)>@Labels.EditProfile</button>*@
             </div>
         </div>
