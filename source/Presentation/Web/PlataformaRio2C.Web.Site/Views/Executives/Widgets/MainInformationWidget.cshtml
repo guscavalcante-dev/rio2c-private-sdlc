@@ -9,19 +9,21 @@
 <div class="kt-portlet__body">
     <div class="kt-widget kt-widget--user-profile-3">
         <div class="kt-widget__top">
-            @if (Model.Collaborator?.HasImage() == true)
-            {
-                <div class="kt-widget__media kt-hidden-">
-                    <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, Model.Collaborator.Uid, Model.Collaborator.ImageUploadDate, true)" alt="image">
-                </div>
-            }
-            else
-            {
-                <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest">
-                    @(Model.Collaborator?.GetNameAbbreviation() ?? "-")
-                </div>
-            }
-            <div class="kt-widget__content">
+            <div style="float: right;">
+                @if (Model.Collaborator?.HasImage() == true)
+                {
+                    <div class="kt-widget__media">
+                        <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, Model.Collaborator.Uid, Model.Collaborator.ImageUploadDate, true)" alt="image">
+                    </div>
+                }
+                else
+                {
+                    <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest">
+                        @(Model.Collaborator?.GetNameAbbreviation() ?? "-")
+                    </div>
+                }
+            </div> 
+            <div class="kt-widget__content" style="overflow: hidden;">
                 <div class="kt-widget__head">
                     <span class="kt-widget__username">
                         @(Model.Collaborator?.GetFullName() ?? "-")
@@ -51,13 +53,13 @@
                         <a onclick="return false;"><i class="flaticon-placeholder"></i>@location</a>
                     }
                 </div>*@
-                <div class="kt-widget__info">
+                <div class="kt-widget__info" style="display: block;">
                     @{
                         var miniBioDto = Model.GetMiniBioDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
                     }
                     @if (miniBioDto != null)
                     {
-                        <div class="kt-widget__desc">
+                        <div class="kt-widget__desc" style="word-wrap: break-word;">
                             @Html.Raw(miniBioDto.Value)
                         </div>
                     }

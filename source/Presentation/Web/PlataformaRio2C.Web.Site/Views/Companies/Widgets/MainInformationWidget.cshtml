@@ -9,19 +9,21 @@
 <div class="kt-portlet__body">
     <div class="kt-widget kt-widget--user-profile-3">
         <div class="kt-widget__top">
-            @if (Model.Organization?.HasImage() == true)
-            {
-                <div class="kt-widget__media kt-hidden-">
-                    <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, Model.Organization.Uid, Model.Organization.ImageUploadDate, true)" alt="image">
-                </div>
-            }
-            else
-            {
-                <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest">
-                    @(Model.Organization?.GetTradeNameAbbreviation() ?? "-")
-                </div>
-            }
-            <div class="kt-widget__content">
+            <div style="float: right;">
+                @if (Model.Organization?.HasImage() == true)
+                {
+                    <div class="kt-widget__media kt-hidden-">
+                        <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, Model.Organization.Uid, Model.Organization.ImageUploadDate, true)" alt="image">
+                    </div>
+                }
+                else
+                {
+                    <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest">
+                        @(Model.Organization?.GetTradeNameAbbreviation() ?? "-")
+                    </div>
+                }
+            </div>
+            <div class="kt-widget__content" style="overflow: hidden;">
                 <div class="kt-widget__head">
                     <span class="kt-widget__username">
                         @(Model.Organization?.TradeName ?? "-")
@@ -55,13 +57,13 @@
                         <a onclick="return false;"><i class="flaticon-placeholder"></i>@location</a>
                     }
                 </div>
-                <div class="kt-widget__info">
+                <div class="kt-widget__info" style="display: block;">
                     @{
                         var descriptionDto = Model.GetDescriptionDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
                     }
                     @if (descriptionDto != null)
                     {
-                        <div class="kt-widget__desc">
+                        <div class="kt-widget__desc" style="word-wrap: break-word;">
                             @Html.Raw(descriptionDto.Value)
                         </div>
                     }
