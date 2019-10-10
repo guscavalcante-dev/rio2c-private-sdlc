@@ -1,4 +1,10 @@
 ﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateOrganizationMainInformation
+@if (Model.Country != null)
+{
+    <select name="CountryUid" id="CountryUid" class="d-none">
+        <option value="@(Model.Country.Uid)" data-country-code="@(Model.Country.Code)" data-companynumber-required="@(Model.Country.IsCompanyNumberRequired)" data-companynumber-mask="@(Model.Country.CompanyNumberMask)" data-zipcode-mask="@(Model.Country.ZipCodeMask)" data-phonenumber-mask="@(Model.Country.PhoneNumberMask)" data-mobile-mask="@(Model.Country.MobileMask)" selected>@(Model.Country.Name)</option>
+    </select>
+}
 <div class="row">
     <div class="form-group col-lg-4 text-center">
         @Html.EditorFor(m => m.CropperImage)
@@ -20,6 +26,7 @@
         </div>
         <div class="row">
             <div class="form-group col-sm-12 col-xl-6">
+                @Html.HiddenFor(m => m.IsCompanyNumberRequired)
                 @Html.LabelFor(m => m.Document, new { @class = "control-label" })
                 @Html.TextBoxFor(m => m.Document, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.Document, "", new { @class = "text-danger" })

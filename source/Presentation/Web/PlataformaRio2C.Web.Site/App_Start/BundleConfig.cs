@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-09-2019
+// Last Modified On : 10-10-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -255,7 +255,8 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/js/companies/companies.activity.widget.js",
                 "~/Assets/js/companies/companies.targetaudience.widget.js",
                 "~/Assets/js/companies/companies.interest.widget.js",
-                "~/Assets/js/companies/companies.executive.widget.js"));
+                "~/Assets/js/companies/companies.executive.widget.js",
+                "~/Assets/js/myrio2c.companynumber.js"));
 
             #endregion
 

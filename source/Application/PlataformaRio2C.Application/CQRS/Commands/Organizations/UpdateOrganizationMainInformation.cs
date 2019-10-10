@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Statics;
@@ -41,8 +42,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public bool IsCompanyNumberRequired { get; set; }
 
         [Display(Name = "CompanyDocument", ResourceType = typeof(Labels))]
-        [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        [RequiredIf("IsCompanyNumberRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [ValidCompanyNumber]
+        [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Document { get; set; }
 
         public List<OrganizationDescriptionBaseCommand> Descriptions { get; set; }
@@ -95,7 +97,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="country">The country.</param>
         public void UpdateModelsAndLists(Country country)
         {
-            this.Country = Country;
+            this.Country = country;
         }
 
         #region Private Methods
