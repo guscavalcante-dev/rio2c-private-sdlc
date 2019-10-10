@@ -17,13 +17,6 @@
             </div>
         </div>
         <!--end:Main Information Widget-->
-        <!--begin:Executive Widget-->
-        <div class="row">
-            <div class="col-12">
-                <div id="CompanyExecutiveWidget" class="kt-portlet" style="min-height: 325px;"></div>
-            </div>
-        </div>
-        <!--end:Executive Widget-->
         <!--begin:Address Widget-->
         <div class="row">
             <div class="col-12">
@@ -53,6 +46,13 @@
             </div>
             <!--end:Interest Widget-->
         }
+        <!--begin:Executive Widget-->
+        <div class="row">
+            <div class="col-12">
+                <div id="CompanyExecutiveWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+        </div>
+        <!--end:Executive Widget-->
     </div>
     <!--end:Middle column-->
     <!--begin:Right column-->
@@ -81,11 +81,11 @@
 
         jQuery(document).ready(function () {
             CompaniesMainInformationWidget.init();
-            CompaniesExecutiveWidget.init();
             CompaniesAddressWidget.init();
             CompaniesActivityWidget.init();
             CompaniesTargetAudienceWidget.init();
             CompaniesInterestWidget.init();
+            CompaniesExecutiveWidget.init();
         });
     </script>
 }

@@ -251,11 +251,11 @@ namespace PlataformaRio2C.Web.Site
 
             bundles.Add(new ScriptBundle("~/bundles/js/companies.widget.js").Include(
                 "~/Assets/js/companies/companies.maininformation.widget.js",
-                "~/Assets/js/companies/companies.executive.widget.js",
                 "~/Assets/js/companies/companies.address.widget.js",
                 "~/Assets/js/companies/companies.activity.widget.js",
                 "~/Assets/js/companies/companies.targetaudience.widget.js",
-                "~/Assets/js/companies/companies.interest.widget.js"));
+                "~/Assets/js/companies/companies.interest.widget.js",
+                "~/Assets/js/companies/companies.executive.widget.js"));
 
             #endregion
 
