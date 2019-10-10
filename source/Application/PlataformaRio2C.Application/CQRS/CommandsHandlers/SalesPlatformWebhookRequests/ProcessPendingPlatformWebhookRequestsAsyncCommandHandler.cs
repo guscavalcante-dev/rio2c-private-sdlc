@@ -4,7 +4,7 @@
 // Created          : 08-31-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-26-2019
+// Last Modified On : 10-10-2019
 // ***********************************************************************
 // <copyright file="ProcessPendingPlatformWebhookRequestsAsyncCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -143,8 +143,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                             var errorMessage = $"Edition not found or not active " +
                                                $"(SalesPlatformAttendeeId: {salesPlatformAttendeeDto.AttendeeId}; " +
                                                $"SalesPlatformEventId: {salesPlatformAttendeeDto.EventId}).";
-                            currentValidationResult.Add(new ValidationError(errorMessage));
-                            this.AppValidationResult.Add(this.ValidationResult);
+                            currentValidationResult.Add(new ValidationError("000000003", errorMessage));
                             continue;
                         }
 
@@ -156,8 +155,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                                $"(SalesPlatformAttendeeId: {salesPlatformAttendeeDto.AttendeeId}; " +
                                                $"TicketClassId: {salesPlatformAttendeeDto.TicketClassId}; " +
                                                $"TicketClassName: {salesPlatformAttendeeDto.TicketClassName}).";
-                            processingRequestDto.SalesPlatformWebhookRequest.Postpone("000000004", errorMessage);
-                            currentValidationResult.Add(new ValidationError(errorMessage));
+                            currentValidationResult.Add(new ValidationError("000000004", errorMessage));
                             continue;
                         }
 
@@ -304,7 +302,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         {
                             var errorMessage = $"Attendee status not configured (Uid: {processingRequestDto.Uid}; SalesPlatformAttendeeStatus: {salesPlatformAttendeeDto.SalesPlatformAttendeeStatus})";
                             this.ValidationResult.Add(new ValidationError(errorMessage));
-                            processingRequestDto.SalesPlatformWebhookRequest.Abort("000000007", errorMessage);
+                            processingRequestDto.SalesPlatformWebhookRequest.Abort("000000006", errorMessage);
                             this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
                             continue;
                         }

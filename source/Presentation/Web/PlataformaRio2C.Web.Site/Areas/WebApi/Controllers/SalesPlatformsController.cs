@@ -4,7 +4,7 @@
 // Created          : 07-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-27-2019
+// Last Modified On : 10-10-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -120,6 +120,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             }
             catch (DomainException ex)
             {
+                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
                 return await Json(new { status = "success", message = ex.GetInnerMessage(), errors = result?.Errors?.Select(e => new { e.Code, e.Message }) });
             }
             catch (Exception ex)
