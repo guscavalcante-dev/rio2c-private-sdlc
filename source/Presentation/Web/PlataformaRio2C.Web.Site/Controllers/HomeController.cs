@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-08-2019
+// Last Modified On : 10-10-2019
 // ***********************************************************************
 // <copyright file="HomeController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -32,19 +32,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
     [AuthorizeCollaboratorType(Order = 2)]
     public class HomeController : BaseController
     {
-        private readonly IAttendeeCollaboratorTicketRepository attendeeCollaboratorTicketRepo;
-
         /// <summary>Initializes a new instance of the <see cref="HomeController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        /// <param name="attendeeCollaboratorTicketRepository">The attendee collaborator ticket repository.</param>
         public HomeController(
             IMediator commandBus, 
-            IdentityAutenticationService identityController,
-            IAttendeeCollaboratorTicketRepository attendeeCollaboratorTicketRepository)
+            IdentityAutenticationService identityController)
             : base(commandBus, identityController)
         {
-            this.attendeeCollaboratorTicketRepo = attendeeCollaboratorTicketRepository;
         }
 
         /// <summary>Indexes this instance.</summary>
@@ -59,8 +54,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
             });
 
             #endregion
-
-            ViewBag.TicketsDtos = await this.attendeeCollaboratorTicketRepo.FindAllDtoByEditionIdAndByCollaboratorId(this.EditionDto.Id, this.UserAccessControlDto.Collaborator?.Id ?? 0);
 
             return View("Index");
 

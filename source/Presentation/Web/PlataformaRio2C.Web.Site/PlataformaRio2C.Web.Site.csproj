@@ -7120,6 +7120,7 @@
     <Content Include="Views\Executives\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Views\Executives\Widgets\CompanyWidget.cshtml" />
     <Content Include="Views\Shared\Widgets\DownloadsWidget.cshtml" />
+    <Content Include="Views\Themes\Metronic\_InternalLeftSidebar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

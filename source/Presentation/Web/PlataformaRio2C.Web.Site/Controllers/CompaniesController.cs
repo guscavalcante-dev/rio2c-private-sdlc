@@ -4,7 +4,7 @@
 // Created          : 10-08-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-09-2019
+// Last Modified On : 10-10-2019
 // ***********************************************************************
 // <copyright file="CompaniesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,7 +35,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
         private readonly IActivityRepository activityRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
         private readonly IInterestRepository interestRepo;
-        private readonly IAttendeeCollaboratorTicketRepository attendeeCollaboratorTicketRepo;
 
         /// <summary>Initializes a new instance of the <see cref="CompaniesController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -44,22 +43,19 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="activityRepository">The activity repository.</param>
         /// <param name="targetAudienceRepository">The target audience repository.</param>
         /// <param name="interestRepository">The interest repository.</param>
-        /// <param name="attendeeCollaboratorTicketRepository">The attendee collaborator ticket repository.</param>
         public CompaniesController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IActivityRepository activityRepository,
             ITargetAudienceRepository targetAudienceRepository,
-            IInterestRepository interestRepository,
-            IAttendeeCollaboratorTicketRepository attendeeCollaboratorTicketRepository)
+            IInterestRepository interestRepository)
             : base(commandBus, identityController)
         {
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.activityRepo = activityRepository;
             this.targetAudienceRepo = targetAudienceRepository;
             this.interestRepo = interestRepository;
-            this.attendeeCollaboratorTicketRepo = attendeeCollaboratorTicketRepository;
         }
 
         /// <summary>Detailses the specified identifier.</summary>
@@ -83,8 +79,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
             });
 
             #endregion
-
-            ViewBag.TicketsDtos = await this.attendeeCollaboratorTicketRepo.FindAllDtoByEditionIdAndByCollaboratorId(this.EditionDto.Id, this.UserAccessControlDto.Collaborator?.Id ?? 0);
 
             return View(attendeeOrganizationDto);
         }

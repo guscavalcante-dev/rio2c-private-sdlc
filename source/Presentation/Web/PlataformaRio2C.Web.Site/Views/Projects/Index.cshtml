@@ -29,7 +29,7 @@
         <div class="row equal">
             @if (isSeller)
             {
-                <div class="@(isBuyer ?  "col-md-6" : "col-md-12")">
+                <div class="@(isBuyer ?  "col-xl-6" : "col-xl-12")">
                     <div class="kt-portlet kt-iconbox kt-iconbox--wave" style="height:100%">
                         <div class="kt-portlet__body" style="height:100%">
                             <div class="kt-iconbox__body">
@@ -46,10 +46,12 @@
                                     <h3 class="kt-iconbox__title">
                                         <a class="kt-link" href="#">@Labels.SentProjects (@Labels.Producer)</a>
                                     </h3>
-                                    <div class="kt-iconbox__content">
-                                        @Labels.ComingSoon
-                                    </div>
                                 </div>
+                            </div>
+                            <div class="kt-iconbox__content mt-3">
+                                <ul class="pl-0 mb-0">
+                                    @Labels.ComingSoon
+                                </ul>
                             </div>
                         </div>
                         <div class="kt-portlet__foot pl-0 pr-0">
@@ -69,7 +71,7 @@
             }
             @if (isBuyer)
             {
-                <div class="@(isSeller ?  "col-md-6" : "col-md-12")">
+                <div class="@(isSeller ?  "col-xl-6" : "col-xl-12")">
                     <div class="kt-portlet kt-iconbox kt-iconbox--wave" style="height:100%">
                         <div class="kt-portlet__body" style="height:100%">
                             <div class="kt-iconbox__body">
@@ -86,12 +88,12 @@
                                     <h3 class="kt-iconbox__title">
                                         <a class="kt-link" href="#">@Labels.ProjectsEvaluation (@Labels.Player)</a>
                                     </h3>
-                                    <div class="kt-iconbox__content">
-                                        <ul class="pl-0">
-                                            <small>@Html.Raw(Texts.PlayerProjectsDates)</small>
-                                        </ul>
-                                    </div>
                                 </div>
+                            </div>
+                            <div class="kt-iconbox__content mt-3">
+                                <ul class="pl-0 mb-0">
+                                    @Html.Raw(Texts.PlayerProjectsDates)
+                                </ul>
                             </div>
                         </div>
                         <div class="kt-portlet__foot pl-0 pr-0">

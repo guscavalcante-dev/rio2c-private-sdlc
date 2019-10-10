@@ -3,10 +3,12 @@
     ViewBag.Title = string.Format(Labels.Welcome, (ViewBag.EditionDto as EditionDto)?.UrlCode);
 }
 <div class="row">
-    <!--begin:Middle column-->
-    <div class="col-md-8">
-        <!--begin:Welcome -->
+    <div class="col-md-12">
+        <!--begin:We Connected-->
+        @Html.Partial("Widgets/WeConnectedWidget")
+        <!--end:We Connected-->
         @*
+        <!--begin:Welcome -->
         <div class="kt-portlet">
             <div class="kt-portlet__head">
                 <div class="kt-portlet__head-label">
@@ -22,24 +24,7 @@
                 </div>
             </div>
         </div>
-        *@
         <!--end:Welcome -->
-        <!--begin:We Connected-->
-        @Html.Partial("Widgets/WeConnectedWidget")
-        <!--end:We Connected-->
+        *@
     </div>
-    <!--end:Middle column-->
-    <!--begin:Right column-->
-    <div class="col-md-4">
-        <!--begin:Projects-->
-        @Html.Partial("Widgets/ProjectsWidget")
-        <!--end:Projects-->
-        <!--begin:Badges-->
-        @Html.Partial("Widgets/BadgesWidget")
-        <!--end:Badges-->
-        <!--begin:Badges-->
-        @Html.Partial("Widgets/DownloadsWidget")
-        <!--end:Badges-->
-    </div>
-    <!--end:Right column-->
 </div>

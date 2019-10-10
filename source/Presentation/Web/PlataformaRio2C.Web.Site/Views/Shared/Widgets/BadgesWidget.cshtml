@@ -1,6 +1,6 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @{
-    var ticketsDtos = ViewBag.TicketsDtos as List<AttendeeCollaboratorTicketDto>;
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
 }
 <div class="kt-portlet">
     <div class="kt-portlet__head">
@@ -11,10 +11,10 @@
         </div>
     </div>
     <div class="kt-portlet__body">
-        @if (ticketsDtos?.Any() == true)
+        @if (userAccessControlDto?.EditionAttendeeCollaboratorTickets?.Any() == true)
         {
             <div class="kt-notification">
-                @foreach (var ticketDto in ticketsDtos)
+                @foreach (var ticketDto in userAccessControlDto.EditionAttendeeCollaboratorTickets)
                 {
                     <a class="kt-notification__item" href="#" onclick="return false;" data-toggle="kt-tooltip" title="" data-placement="right" data-original-title="@Labels.ComingSoon...">
                         <div class="kt-notification__item-icon">

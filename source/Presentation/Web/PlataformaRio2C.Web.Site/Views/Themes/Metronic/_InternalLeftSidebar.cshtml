@@ -10,22 +10,9 @@
         @{ Html.RenderPartial("~/Views/Themes/Metronic/SideMenu.cshtml"); }
     </div>
     <!--end:Left panel-->
-    <!--begin:Middle panel-->
-    <div class="col-md-6 col-lg-6">
-        @RenderBody()
-    </div>
-    <!--begin:Middle panel-->
     <!--begin:Right panel-->
-    <div class="col-md-3 col-lg-3">
-        <!--begin:Projects-->
-        @Html.Partial("Widgets/ProjectsWidget")
-        <!--end:Projects-->
-        <!--begin:Badges-->
-        @Html.Partial("Widgets/BadgesWidget")
-        <!--end:Badges-->
-        <!--begin:Badges-->
-        @Html.Partial("Widgets/DownloadsWidget")
-        <!--end:Badges-->
+    <div class="col-md-9 col-lg-9">
+        @RenderBody()
     </div>
     <!--begin:Right panel-->
 </div>

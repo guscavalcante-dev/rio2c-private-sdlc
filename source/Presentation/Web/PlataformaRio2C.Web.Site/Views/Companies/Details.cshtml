@@ -11,8 +11,7 @@
 }
 @Html.Hidden("AggregateId", Model.Organization.Uid)
 <div class="row">
-    <!--begin:Middle column-->
-    <div class="col-md-8">
+    <div class="col-md-12">
         <!--begin:Main Information Widget-->
         <div class="row">
             <div class="col-12">
@@ -60,17 +59,6 @@
         </div>
         <!--end:Executive Widget-->
     </div>
-    <!--end:Middle column-->
-    <!--begin:Right column-->
-    <div class="col-md-4">
-        <!--begin:Projects-->
-        @Html.Partial("Widgets/ProjectsWidget")
-        <!--end:Projects-->
-        <!--begin:Badges-->
-        @Html.Partial("Widgets/BadgesWidget")
-        <!--end:Badges-->
-    </div>
-    <!--end:Right column-->
 </div>
 @section Styles {
     @*@Styles.Render("~/bundles/css/select2.css")*@

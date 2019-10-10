@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-28-2019
+// Last Modified On : 10-10-2019
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -165,7 +165,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     Name = d.Language.Name,
                                     Code = d.Language.Code
                                 }
-                            })
+                            }),
+                            EditionAttendeeCollaboratorTickets = u.Collaborator.AttendeeCollaborators
+                                                                    .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                                    .SelectMany(ac => ac.AttendeeCollaboratorTickets
+                                                                                        .Where(act => !act.IsDeleted && !act.AttendeeSalesPlatformTicketType.IsDeleted)
+                                                                                        .Select(act => new AttendeeCollaboratorTicketDto
+                                                                                        {
+                                                                                            AttendeeCollaboratorTicket = act,
+                                                                                            AttendeeSalesPlatformTicketType = act.AttendeeSalesPlatformTicketType
+                                                                                        }))
                         })
                         .FirstOrDefault();
         }
