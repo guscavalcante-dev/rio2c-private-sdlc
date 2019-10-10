@@ -7123,6 +7123,8 @@
     <Content Include="Views\Themes\Metronic\_InternalLeftSidebar.cshtml" />
     <Content Include="Views\Companies\Modals\UpdateMainInformationModal.cshtml" />
     <Content Include="Views\Companies\Modals\UpdateMainInformationForm.cshtml" />
+    <Content Include="Views\Companies\Modals\UpdateAddressModal.cshtml" />
+    <Content Include="Views\Companies\Modals\UpdateAddressForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

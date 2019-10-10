@@ -4,7 +4,7 @@
 // Created          : 10-08-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-08-2019
+// Last Modified On : 10-10-2019
 // ***********************************************************************
 // <copyright file="AttendeeOrganizationSiteAddressWidgetDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,6 +20,7 @@ namespace PlataformaRio2C.Domain.Dtos
     public class AttendeeOrganizationSiteAddressWidgetDto
     {
         public AttendeeOrganization AttendeeOrganization { get; set; }
+        public Organization Organization { get; set; }
         public Address Address { get; set; }
         public Country Country { get; set; }
         public State State { get; set; }
@@ -36,6 +37,22 @@ namespace PlataformaRio2C.Domain.Dtos
         public string GetCountryName(string culture)
         {
             return this.Country?.Name?.GetSeparatorTranslation(culture, '|');
+        }
+
+        /// <summary>Gets the address base dto.</summary>
+        /// <returns></returns>
+        public AddressBaseDto GetAddressBaseDto()
+        {
+            return new AddressBaseDto
+            {
+                Id = this.Address?.Id,
+                Uid = this.Address?.Uid,
+                CountryUid = this.Country?.Uid,
+                StateUid = this.State?.Uid,
+                CityUid = this.City?.Uid,
+                Address1 = this.Address?.Address1,
+                AddressZipCode = this.Address?.ZipCode
+            };
         }
     }
 }

@@ -4,7 +4,7 @@
 // Created          : 08-24-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-23-2019
+// Last Modified On : 10-10-2019
 // ***********************************************************************
 // <copyright file="AddressBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,7 +24,6 @@ namespace PlataformaRio2C.Domain.Dtos
         public Guid? StateUid { get; set; }
         public Guid? CityUid { get; set; }
         public string Address1 { get; set; }
-        public string Address2 { get; set; }
         public string AddressZipCode { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="AddressBaseDto"/> class.</summary>

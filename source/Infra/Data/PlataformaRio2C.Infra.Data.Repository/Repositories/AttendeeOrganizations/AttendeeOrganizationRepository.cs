@@ -4,7 +4,7 @@
 // Created          : 08-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-09-2019
+// Last Modified On : 10-10-2019
 // ***********************************************************************
 // <copyright file="AttendeeOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -305,6 +305,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Select(ao => new AttendeeOrganizationSiteAddressWidgetDto
                             {
                                 AttendeeOrganization = ao,
+                                Organization = ao.Organization,
                                 Address = ao.Organization.Address,
                                 Country = ao.Organization.Address.Country,
                                 State = ao.Organization.Address.State,
