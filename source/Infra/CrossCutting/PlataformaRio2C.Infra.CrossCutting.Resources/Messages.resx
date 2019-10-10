@@ -657,14 +657,6 @@
     <value>Confirme para enviar os e-mails de convite</value>
     <comment>Confirme para enviar os e-mails de convite</comment>
   </data>
-  <data name="PlayerProjectsDates" xml:space="preserve">
-    <value>&lt;li&gt;Projetos disponíveis para avaliação a partir de: 05/01/2020&lt;/li&gt;
-&lt;li&gt;Período de avaliação: 05/01 a 21/02/2020&lt;/li&gt;
-&lt;li&gt;Agenda das Rodadas de Negócios disponível online a partir de: 23/03/2020&lt;/li&gt;</value>
-    <comment>&lt;li&gt;Projetos disponíveis para avaliação a partir de: 05/01/2020&lt;/li&gt;
-&lt;li&gt;Período de avaliação: 05/01 a 21/02/2020&lt;/li&gt;
-&lt;li&gt;Agenda das Rodadas de Negócios disponível online a partir de: 23/03/2020&lt;/li&gt;</comment>
-  </data>
   <data name="NoBadgesAvaiable" xml:space="preserve">
     <value>Nenhum ingresso disponível.</value>
     <comment>Nenhum ingresso disponível.</comment>

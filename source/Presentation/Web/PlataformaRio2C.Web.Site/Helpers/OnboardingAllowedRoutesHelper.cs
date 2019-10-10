@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-11-2019
+// Last Modified On : 10-09-2019
 // ***********************************************************************
 // <copyright file="OnboardingAllowedRoutesHelper.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,7 +27,7 @@ namespace PlataformaRio2C.Web.Site.Helpers
         public static List<OnboardingAllowedRoute> Routes = new List<OnboardingAllowedRoute>
         {
             new OnboardingAllowedRoute("Account", "Login"),
-            new OnboardingAllowedRoute("Account", "Logoff"),
+            new OnboardingAllowedRoute("Account", "LogOff"),
             new OnboardingAllowedRoute("Account", "Onboarding"),
             new OnboardingAllowedRoute("Error", "Index"),
             new OnboardingAllowedRoute("Error", "Forbidden"),

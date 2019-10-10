@@ -338,6 +338,17 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;li&gt;Projetos disponíveis para avaliação a partir de: 06/01/2020&lt;/li&gt;
+        ///&lt;li&gt;Período de avaliação: 06/01 a 21/02/2020&lt;/li&gt;
+        ///&lt;li&gt;Agenda das Rodadas de Negócios disponível online a partir de: 23/03/2020&lt;/li&gt;.
+        /// </summary>
+        public static string PlayerProjectsDates {
+            get {
+                return ResourceManager.GetString("PlayerProjectsDates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Player(s) salvo(s) com sucesso.
         /// </summary>
         public static string PlayersSavedSuccess {
