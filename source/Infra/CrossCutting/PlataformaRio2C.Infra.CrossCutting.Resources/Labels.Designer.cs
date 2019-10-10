@@ -1267,11 +1267,29 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to encontradas.
+        /// </summary>
+        public static string FoundFP {
+            get {
+                return ResourceManager.GetString("FoundFP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to encontrado.
         /// </summary>
         public static string FoundM {
             get {
                 return ResourceManager.GetString("FoundM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to encontrados.
+        /// </summary>
+        public static string FoundMP {
+            get {
+                return ResourceManager.GetString("FoundMP", resourceCulture);
             }
         }
         

@@ -1549,4 +1549,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Ver descrição</value>
     <comment>Ver descrição</comment>
   </data>
+  <data name="FoundFP" xml:space="preserve">
+    <value>encontradas</value>
+    <comment>encontradas</comment>
+  </data>
+  <data name="FoundMP" xml:space="preserve">
+    <value>encontrados</value>
+    <comment>encontrados</comment>
+  </data>
 </root>
