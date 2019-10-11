@@ -21,5 +21,6 @@ namespace PlataformaRio2C.Domain.Interfaces
     {
         AdminAccessControlDto FindAdminAccessControlDtoByUserIdAndByEditionId(int userId, int editionId);
         UserAccessControlDto FindUserAccessControlDtoByUserIdAndByEditionId(int userId, int editionId);
+        UserLanguageDto FindUserLanguageByUserId(int userId);
     }    
 }

@@ -27,6 +27,10 @@ using System.Web;
 using System.Web.Mvc;
 using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using PlataformaRio2C.Application.CQRS.Queries;
+using PlataformaRio2C.Application.Common;
+using PlataformaRio2C.Domain.Constants;
+using System.Text.RegularExpressions;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -127,52 +131,76 @@ namespace PlataformaRio2C.Web.Site.Controllers
                         return View(model);
                     }
 
-                    if (!string.IsNullOrEmpty(returnUrl?.Replace("/", string.Empty)))
+                    var userLanguage = await this.CommandBus.Send(new FindUserLanguageDto(user.Id));
+                    if (userLanguage != null)
                     {
-                        return Redirect(returnUrl);
+                        var cookie = new ApplicationCookieControl().SetCookie(userLanguage.Language.Code, Response.Cookies[Role.MyRio2CCookie], Role.MyRio2CCookie);
+                        Response.Cookies.Add(cookie);
                     }
 
-                    //transforma a senha digitada em md5
-                    //byte[] encodedPassword = new UTF8Encoding().GetBytes(model.Password);
-                    //byte[] bytePassword = ((HashAlgorithm)CryptoConfig.CreateFromName("MD5")).ComputeHash(encodedPassword);
-                    //var md5Password = CreateMD5(model.Password);
+                    var listLanguages = await this.CommandBus.Send(new FindAllLanguagesDtosAsync(null));
 
-                    ////busca o email no JSON da ticket4you
-                    //Ticket4youController userByTicket = new Ticket4youController();
+                    if (!string.IsNullOrEmpty(returnUrl?.Replace("/", string.Empty)))
+                    {
+                        foreach (var item in listLanguages)
+                            returnUrl = Regex.Replace(returnUrl, item.Code, userLanguage?.Language.Code, RegexOptions.IgnoreCase);
+                        return Redirect(returnUrl);
+                    }
+                    else
+                    {
+                        return Redirect(string.Format("{0}{1}{2}", returnUrl, "/", userLanguage?.Language.Code));
+                    }
 
-                    //if (userByTicket.SearchOne(model.Email) == null)
-                    //{
-                    //    ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
-                    //    //ModelState.AddModelError("", Messages.LoginByTicket4YouIncorrect);
-                    //    return View(model);
 
-                    //}
-                    //else if (userByTicket.UserTicket.senha != md5Password)
-                    //{
-                    //    ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
-                    //    //ModelState.AddModelError("", Messages.LoginByTicket4YouIncorrect);
-                    //    return View(model);
-                    //}
-                    ////else if (userByTicket.UserTicket.status_pedido != "Aprovado")
-                    ////{
-                    ////    //CRIAR TEXTO DE PAGAMANTO NÃO APROVADO
-                    ////    ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
-                    ////    //ModelState.AddModelError("", Messages.LoginByTicket4YouIncorrect);
-                    ////    return View(model);
-                    ////}
-                    //else
-                    //{
+                //returnUrl = Regex.Replace(returnUrl, oldCulture, culture, RegexOptions.IgnoreCase);
 
-                    //if (!await _identityController.IsInRoleAsync(user.Id, Domain.Statics.Role.User.Name) &&
-                    //    !await _identityController.IsInRoleAsync(user.Id, Domain.Statics.Role.Admin.Name))
-                    //{
-                    //    this.StatusMessage(Messages.AccessDenied, StatusMessageType.Danger);
-                    //    return RedirectToAction("LogOff");
-                    //}
+                //if (Url.IsLocalUrl(returnUrl))
+                //{
+                //    return Redirect(returnUrl);
+                //}
 
-                    //returnUrl = returnUrl ?? "/";
-                    //return RedirectToLocal(returnUrl);
-                    return RedirectToAction("Index", "Quiz");
+
+                //transforma a senha digitada em md5
+                //byte[] encodedPassword = new UTF8Encoding().GetBytes(model.Password);
+                //byte[] bytePassword = ((HashAlgorithm)CryptoConfig.CreateFromName("MD5")).ComputeHash(encodedPassword);
+                //var md5Password = CreateMD5(model.Password);
+
+                ////busca o email no JSON da ticket4you
+                //Ticket4youController userByTicket = new Ticket4youController();
+
+                //if (userByTicket.SearchOne(model.Email) == null)
+                //{
+                //    ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
+                //    //ModelState.AddModelError("", Messages.LoginByTicket4YouIncorrect);
+                //    return View(model);
+
+                //}
+                //else if (userByTicket.UserTicket.senha != md5Password)
+                //{
+                //    ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
+                //    //ModelState.AddModelError("", Messages.LoginByTicket4YouIncorrect);
+                //    return View(model);
+                //}
+                ////else if (userByTicket.UserTicket.status_pedido != "Aprovado")
+                ////{
+                ////    //CRIAR TEXTO DE PAGAMANTO NÃO APROVADO
+                ////    ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
+                ////    //ModelState.AddModelError("", Messages.LoginByTicket4YouIncorrect);
+                ////    return View(model);
+                ////}
+                //else
+                //{
+
+                //if (!await _identityController.IsInRoleAsync(user.Id, Domain.Statics.Role.User.Name) &&
+                //    !await _identityController.IsInRoleAsync(user.Id, Domain.Statics.Role.Admin.Name))
+                //{
+                //    this.StatusMessage(Messages.AccessDenied, StatusMessageType.Danger);
+                //    return RedirectToAction("LogOff");
+                //}
+
+                //returnUrl = returnUrl ?? "/";
+                //return RedirectToLocal(returnUrl);
+                // return RedirectToAction("Index", "Quiz");
 
                 case IdentitySignInStatus.LockedOut:
                     return View("Lockout");

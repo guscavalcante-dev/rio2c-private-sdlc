@@ -178,5 +178,23 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         })
                         .FirstOrDefault();
         }
+
+        /// <summary>Finds the admin access control dto by user identifier and by edition identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public UserLanguageDto FindUserLanguageByUserId(int userId)
+        {
+            var query = this.GetBaseQuery()
+                                 .FindById(userId);
+
+            return query
+                        .Select(u => new UserLanguageDto
+                        {
+                            User = u,
+                            Language = u.UserInterfaceLanguage
+                        })
+                        .FirstOrDefault();
+        }
     }
 }

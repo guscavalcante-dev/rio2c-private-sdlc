@@ -168,6 +168,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\ApplicationCookieControl.cs" />
     <Compile Include="Common\AppService.cs" />
     <Compile Include="Common\AppValidationError.cs" />
     <Compile Include="Common\AppValidationResult.cs" />
@@ -206,6 +207,7 @@
     <Compile Include="CQRS\CommandsHandlers\SalesPlatformWebhookRequests\BaseSalesPlatformWebhookRequestCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\SalesPlatformWebhookRequests\CreateSalesPlatformWebhookRequestCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\SalesPlatformWebhookRequests\ProcessPendingPlatformWebhookRequestsAsyncCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\User\UpdateUserInterfaceLanguageCommandHandler.cs" />
     <Compile Include="CQRS\Commands\Attendees\BaseCommands\AttendeeOrganizationBaseCommand.cs" />
     <Compile Include="CQRS\Commands\BaseCommand.cs" />
     <Compile Include="CQRS\Commands\Collaborators\BaseCommands\CollaboratorMiniBioBaseCommand.cs" />
@@ -248,7 +250,9 @@
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\ProcessPendingPlatformWebhookRequestsAsync.cs" />
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\CreateSalesPlatformWebhookRequest.cs" />
     <Compile Include="CQRS\BaseUserRequest.cs" />
+    <Compile Include="CQRS\Commands\User\UpdateUserInterfaceLanguage.cs" />
     <Compile Include="CQRS\QueriesHandlers\Users\FindAdminAccessControlDtoQueryHandler.cs" />
+    <Compile Include="CQRS\QueriesHandlers\Users\FindUserLanguageDtoQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Users\FindUserAccessControlDtoQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\AttendeeOrganizations\FindAllAttendeeOrganizationsBaseDtosByEditionUidAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Cities\FindAllCitiesBaseDtosByStateUidAsyncQueryHandler.cs" />
@@ -270,6 +274,7 @@
     <Compile Include="CQRS\QueriesHandlers\SalesPlatformWebhookRequests\FindAllSalesPlatformWebhooRequestsDtoByPendingQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\SalesPlatforms\FindSalesPlatformDtoByNameQueryHandler.cs" />
     <Compile Include="CQRS\Queries\Users\FindAdminAccessControlDto.cs" />
+    <Compile Include="CQRS\Queries\Users\FindUserLanguageDto.cs" />
     <Compile Include="CQRS\Queries\Users\FindUserAccessControlDto.cs" />
     <Compile Include="CQRS\Queries\AttendeeOrganizations\FindAllAttendeeOrganizationsBaseDtosByEditionUidAsync.cs" />
     <Compile Include="CQRS\Queries\BaseQuery.cs" />

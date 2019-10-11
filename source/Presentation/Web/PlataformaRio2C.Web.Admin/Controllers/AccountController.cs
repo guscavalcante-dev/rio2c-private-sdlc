@@ -27,6 +27,10 @@ using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using Constants = PlataformaRio2C.Domain.Constants;
+using PlataformaRio2C.Application.CQRS.Queries;
+using PlataformaRio2C.Application.Common;
+using PlataformaRio2C.Domain.Constants;
+using System.Text.RegularExpressions;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
@@ -59,7 +63,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            return RedirectToAction("Login", "Account"); 
+            return RedirectToAction("Login", "Account");
         }
 
         #region Login
@@ -114,41 +118,56 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                         return View(model);
                     }
 
-                    if (!string.IsNullOrEmpty(returnUrl?.Replace("/", string.Empty)))
+                    var userLanguage = await this.CommandBus.Send(new FindUserLanguageDto(user.Id));
+                    if (userLanguage != null)
                     {
-                        return Redirect(returnUrl);
+                        var cookie = new ApplicationCookieControl().SetCookie(userLanguage.Language.Code, Response.Cookies[Role.MyRio2CAdminCookie], Role.MyRio2CAdminCookie);
+                        Response.Cookies.Add(cookie);
                     }
 
-                    //var identity = (ClaimsIdentity)User.Identity;
+                    var listLanguages = await this.CommandBus.Send(new FindAllLanguagesDtosAsync(null));
 
-                    //IEnumerable<Claim> claims = identity.Claims;
+                    if (!string.IsNullOrEmpty(returnUrl?.Replace("/", string.Empty)))
+                    {
+                        foreach (var item in listLanguages)
+                            returnUrl = Regex.Replace(returnUrl, item.Code, userLanguage?.Language.Code, RegexOptions.IgnoreCase);
+                        return Redirect(returnUrl);
+                    }
+                    else
+                    {
+                        return Redirect(string.Format("{0}{1}{2}", returnUrl, "/", userLanguage?.Language.Code));
+                    }
 
-                    //if (await _apiSymplaAppService.ConfirmUserAllowedFinancialReport(user.Email))
-                    //{
-                    //    await _identityController.AddClaim(user.Id, new System.Security.Claims.Claim("FinancialReport", "true"));
-                    //}
-                    //else
-                    //{
-                    //    await _identityController.RemoveClaim(user.Id, "FinancialReport");
-                    //}
+                //var identity = (ClaimsIdentity)User.Identity;
 
-                    //if (user.Claims.Count != 0)
-                    //{
-                    //    foreach (var item in user.Claims)
-                    //    {
-                    //        if (item.ClaimType.ToString() == "ProjectPitching")
-                    //        {
-                    //            return RedirectToAction("ProjectPitching", "Project");
-                    //        }
+                //IEnumerable<Claim> claims = identity.Claims;
 
-                    //        if (item.ClaimType.ToString() == "Logistics")
-                    //        {
-                    //            return RedirectToAction("Index", "Logistics");
-                    //        }
-                    //    }
-                    //}
+                //if (await _apiSymplaAppService.ConfirmUserAllowedFinancialReport(user.Email))
+                //{
+                //    await _identityController.AddClaim(user.Id, new System.Security.Claims.Claim("FinancialReport", "true"));
+                //}
+                //else
+                //{
+                //    await _identityController.RemoveClaim(user.Id, "FinancialReport");
+                //}
 
-                    return RedirectToAction("Index", "Home");
+                //if (user.Claims.Count != 0)
+                //{
+                //    foreach (var item in user.Claims)
+                //    {
+                //        if (item.ClaimType.ToString() == "ProjectPitching")
+                //        {
+                //            return RedirectToAction("ProjectPitching", "Project");
+                //        }
+
+                //        if (item.ClaimType.ToString() == "Logistics")
+                //        {
+                //            return RedirectToAction("Index", "Logistics");
+                //        }
+                //    }
+                //}
+
+                // return RedirectToAction("Index", "Home");
 
                 case IdentitySignInStatus.LockedOut:
                     return View("Lockout");
