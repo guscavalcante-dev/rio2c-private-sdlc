@@ -12,22 +12,19 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
-using System;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using System.Collections.Generic;
-using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Web.Site.Filters;
 using PlataformaRio2C.Application.CQRS.Commands.User;
 using System.Text.RegularExpressions;
 using PlataformaRio2C.Application.Common;
-using PlataformaRio2C.Domain.Constants;
+using PlataformaRio2C.Domain.Constants.Authorizations;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -108,7 +105,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     culture));
             }
 
-            var cookie = new ApplicationCookieControl().SetCookie(culture, Response.Cookies[Role.MyRio2CCookie], Role.MyRio2CCookie);
+            var cookie = new ApplicationCookieControl().SetCookie(culture, Response.Cookies[CookieName.MyRio2CCookie], CookieName.MyRio2CCookie);
             Response.Cookies.Add(cookie);
 
             #endregion

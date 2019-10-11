@@ -14,7 +14,6 @@
 using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
 using System;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -24,7 +23,7 @@ using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using PlataformaRio2C.Domain.Constants;
+using PlataformaRio2C.Domain.Constants.Authorizations;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
@@ -94,7 +93,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             // Attempt to read the culture cookie from Request
            
             var routeCulture = RouteData.Values["culture"] as string;
-            var cookieCulture = Request.Cookies[Role.MyRio2CAdminCookie]?.Value;
+            var cookieCulture = Request.Cookies[CookieName.MyRio2CAdminCookie]?.Value;
             var cultureName = 
                               routeCulture ??
                               cookieCulture ??

@@ -29,8 +29,8 @@ using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Application.Common;
-using PlataformaRio2C.Domain.Constants;
 using System.Text.RegularExpressions;
+using PlataformaRio2C.Domain.Constants.Authorizations;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -134,23 +134,28 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     var userLanguage = await this.CommandBus.Send(new FindUserLanguageDto(user.Id));
                     if (userLanguage != null)
                     {
-                        var cookie = new ApplicationCookieControl().SetCookie(userLanguage.Language.Code, Response.Cookies[Role.MyRio2CCookie], Role.MyRio2CCookie);
+                        var cookie = new ApplicationCookieControl().SetCookie(userLanguage.Language.Code, Response.Cookies[CookieName.MyRio2CCookie], CookieName.MyRio2CCookie);
                         Response.Cookies.Add(cookie);
                     }
 
-                    var listLanguages = await this.CommandBus.Send(new FindAllLanguagesDtosAsync(null));
-
                     if (!string.IsNullOrEmpty(returnUrl?.Replace("/", string.Empty)))
                     {
-                        foreach (var item in listLanguages)
-                            returnUrl = Regex.Replace(returnUrl, item.Code, userLanguage?.Language.Code, RegexOptions.IgnoreCase);
+                        if (userLanguage != null)
+                        {
+                            var listLanguages = await this.CommandBus.Send(new FindAllLanguagesDtosAsync(null));
+
+                            foreach (var item in listLanguages)
+                            {
+                                returnUrl = Regex.Replace(returnUrl, item.Code, userLanguage.Language.Code, RegexOptions.IgnoreCase);
+                            }
+                        }
                         return Redirect(returnUrl);
                     }
                     else
                     {
                         return RedirectToAction("Index", "Quiz");
                     }
-                    
+
 
                 //transforma a senha digitada em md5
                 //byte[] encodedPassword = new UTF8Encoding().GetBytes(model.Password);

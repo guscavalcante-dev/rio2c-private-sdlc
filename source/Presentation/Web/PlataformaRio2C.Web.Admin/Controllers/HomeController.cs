@@ -15,7 +15,6 @@ using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
@@ -25,7 +24,7 @@ using Constants = PlataformaRio2C.Domain.Constants;
 using PlataformaRio2C.Application.CQRS.Commands.User;
 using System.Text.RegularExpressions;
 using PlataformaRio2C.Application.Common;
-using PlataformaRio2C.Domain.Constants;
+using PlataformaRio2C.Domain.Constants.Authorizations;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
@@ -91,7 +90,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     culture));
             }
 
-            var cookie = new ApplicationCookieControl().SetCookie(culture, Response.Cookies[Role.MyRio2CAdminCookie], Role.MyRio2CAdminCookie);
+            var cookie = new ApplicationCookieControl().SetCookie(culture, Response.Cookies[CookieName.MyRio2CAdminCookie], CookieName.MyRio2CAdminCookie);
             Response.Cookies.Add(cookie);
 
             #endregion

@@ -21,7 +21,6 @@ namespace PlataformaRio2C.Domain.Dtos
     /// <summary>UserAccessControlDto</summary>
     public class UserLanguageDto
     {
-        public User User { get; set; }
         public Language Language { get; set; }
         
         /// <summary>Initializes a new instance of the <see cref="UserAccessControlDto"/> class.</summary>

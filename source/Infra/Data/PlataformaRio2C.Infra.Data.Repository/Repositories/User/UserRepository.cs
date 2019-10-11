@@ -188,10 +188,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                  .FindById(userId);
 
-            return query
+            return query.Where(u => u.UserInterfaceLanguageId != null)
                         .Select(u => new UserLanguageDto
                         {
-                            User = u,
                             Language = u.UserInterfaceLanguage
                         })
                         .FirstOrDefault();

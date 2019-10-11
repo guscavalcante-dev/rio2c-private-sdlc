@@ -29,8 +29,8 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 using Constants = PlataformaRio2C.Domain.Constants;
 using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Application.Common;
-using PlataformaRio2C.Domain.Constants;
 using System.Text.RegularExpressions;
+using PlataformaRio2C.Domain.Constants.Authorizations;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
@@ -121,16 +121,22 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     var userLanguage = await this.CommandBus.Send(new FindUserLanguageDto(user.Id));
                     if (userLanguage != null)
                     {
-                        var cookie = new ApplicationCookieControl().SetCookie(userLanguage.Language.Code, Response.Cookies[Role.MyRio2CAdminCookie], Role.MyRio2CAdminCookie);
+                        var cookie = new ApplicationCookieControl().SetCookie(userLanguage.Language.Code, Response.Cookies[CookieName.MyRio2CAdminCookie], CookieName.MyRio2CAdminCookie);
                         Response.Cookies.Add(cookie);
                     }
 
-                    var listLanguages = await this.CommandBus.Send(new FindAllLanguagesDtosAsync(null));
 
                     if (!string.IsNullOrEmpty(returnUrl?.Replace("/", string.Empty)))
                     {
-                        foreach (var item in listLanguages)
-                            returnUrl = Regex.Replace(returnUrl, item.Code, userLanguage?.Language.Code, RegexOptions.IgnoreCase);
+                        if (userLanguage != null)
+                        {
+                            var listLanguages = await this.CommandBus.Send(new FindAllLanguagesDtosAsync(null));
+
+                            foreach (var item in listLanguages)
+                            {
+                                returnUrl = Regex.Replace(returnUrl, item.Code, userLanguage.Language.Code, RegexOptions.IgnoreCase);
+                            }
+                        }
                         return Redirect(returnUrl);
                     }
                     else
