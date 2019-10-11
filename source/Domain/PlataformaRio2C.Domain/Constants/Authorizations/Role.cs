@@ -19,6 +19,9 @@ namespace PlataformaRio2C.Domain.Constants
         public const string Admin = "Admin | Full";
         public const string AdminPartial = "Admin | Partial";
         public const string User = "User";
+        public const string MyRio2CCookie = "MyRio2CCulture";
+        public const string MyRio2CAdminCookie = "MyRio2CAdminCulture";
+        
 
         // Role groups
         public const string AnyAdmin = Role.Admin + "," + Role.AdminPartial;

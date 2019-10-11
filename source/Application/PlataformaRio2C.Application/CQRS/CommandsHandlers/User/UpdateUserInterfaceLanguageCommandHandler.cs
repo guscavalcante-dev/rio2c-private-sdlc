@@ -1,4 +1,18 @@
-﻿using MediatR;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Application
+// Author           : William Almado
+// Created          : 10-09-2019
+//
+// Last Modified By : William Almado
+// Last Modified On : 10-09-2019
+// ***********************************************************************
+// <copyright file="UpdateUserInterfaceLanguageCommandHandler.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+
+using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands.User;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;

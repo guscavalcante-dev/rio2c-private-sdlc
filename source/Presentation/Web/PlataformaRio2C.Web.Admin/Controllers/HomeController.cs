@@ -23,6 +23,9 @@ using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using Constants = PlataformaRio2C.Domain.Constants;
 using PlataformaRio2C.Application.CQRS.Commands.User;
+using System.Text.RegularExpressions;
+using PlataformaRio2C.Application.Common;
+using PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
@@ -81,25 +84,14 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             #region Create/Update cookie culture
 
-            if (this.User.Identity.IsAuthenticated)
+            if (this.AdminAccessControlDto != null)
             {
                 var result = await this.CommandBus.Send(new UpdateUserInterfaceLanguage(
                     this.AdminAccessControlDto.User.Uid,
                     culture));
             }
 
-            var cookie = Request.Cookies["MyRio2CAdminCulture"];
-            if (cookie != null)
-            {
-                cookie.Value = culture;   // update cookie value
-            }
-            else
-            {
-                cookie = new HttpCookie("MyRio2CAdminCulture");
-                cookie.Value = culture;
-                cookie.Expires = DateTime.Now.AddYears(1);
-            }
-
+            var cookie = new ApplicationCookieControl().SetCookie(culture, Response.Cookies[Role.MyRio2CAdminCookie], Role.MyRio2CAdminCookie);
             Response.Cookies.Add(cookie);
 
             #endregion
@@ -109,9 +101,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 returnUrl = Request.UrlReferrer.PathAndQuery;
             }
 
-            returnUrl = returnUrl?
-                            .Replace(oldCulture.ToLowerInvariant(), culture?.ToLowerInvariant())
-                            .Replace(oldCulture, culture?.ToLowerInvariant());
+            returnUrl = Regex.Replace(returnUrl, oldCulture, culture, RegexOptions.IgnoreCase);
+
 
             if (Url.IsLocalUrl(returnUrl))
             {

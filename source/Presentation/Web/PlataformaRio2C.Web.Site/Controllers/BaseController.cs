@@ -26,6 +26,7 @@ using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Web.Site.Helpers;
+using PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -110,13 +111,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
         private bool ValidateCulture()
         {
             // Attempt to read the culture cookie from Request
-            var userInfo = this.CommandBus.Send(new FindUserAccessControlDto(User.Identity.GetUserId<int>(), this.EditionDto?.Id ?? 0, null)).Result;
-
-            var storagedCulture = userInfo?.Language.Code;
+            
             var routeCulture = RouteData.Values["culture"] as string;
-            var cookieCulture = Request.Cookies["MyRio2CCulture"]?.Value;
-            var cultureName = 
-                              //storagedCulture??
+            var cookieCulture = Request.Cookies[Role.MyRio2CCookie]?.Value;
+            var cultureName =
                               routeCulture ??
                               cookieCulture ??
                               (Request.UserLanguages != null && Request.UserLanguages.Length > 0 ? Request.UserLanguages[0] : null);
@@ -157,7 +155,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
             Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
 
-            ViewBag.UserInterfaceLanguage = this.UserInterfaceLanguage = Regex.Replace(cultureName, "en-us", "en", RegexOptions.IgnoreCase);
+            ViewBag.UserInterfaceLanguage = this.UserInterfaceLanguage = cultureName;
 
             return false;
         }
