@@ -81,11 +81,12 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             }
             catch (DomainException ex)
             {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 return await BadRequest(ex.GetInnerMessage());
             }
             catch (Exception ex)
             {
-                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 return await BadRequest(ex.GetInnerMessage());
             }
 
@@ -120,12 +121,12 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             }
             catch (DomainException ex)
             {
-                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 return await Json(new { status = "success", message = ex.GetInnerMessage(), errors = result?.Errors?.Select(e => new { e.Code, e.Message }) });
             }
             catch (Exception ex)
             {
-                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 return await Json(new { status = "error", message = "Sales platform webhook requests failed." });
             }
 
