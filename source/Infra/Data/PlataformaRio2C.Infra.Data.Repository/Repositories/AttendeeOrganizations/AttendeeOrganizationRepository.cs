@@ -357,6 +357,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Select(ao => new AttendeeOrganizationSiteTargetAudienceWidgetDto
                             {
                                 AttendeeOrganization = ao,
+                                Organization = ao.Organization,
                                 OrganizationTargetAudiencesDtos = ao.Organization.OrganizationTargetAudiences.Where(ota => !ota.IsDeleted).Select(ota => new OrganizationTargetAudienceDto
                                 {
                                     OrganizationTargetAudienceId = ota.Id,

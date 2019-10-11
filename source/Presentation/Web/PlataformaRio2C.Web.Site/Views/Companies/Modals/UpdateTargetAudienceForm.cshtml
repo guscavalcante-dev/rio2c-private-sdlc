@@ -1,0 +1,23 @@
+﻿@using System.Globalization
+@model PlataformaRio2C.Application.CQRS.Commands.UpdateOrganizationTargetAudiences
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.ValidationMessage("TargetAudiencesUids", new { @class = "text-danger" })
+        <div class="kt-section__content mt-3">
+            <div class="kt-checkbox-list">
+                @foreach (var targetAudience in Model.TargetAudiences)
+                {
+                    <label class="kt-checkbox">
+                        <input type="checkbox"
+                               name="TargetAudiencesUids"
+                               value="@targetAudience.Uid"
+                               class="require-one"
+                               data-id="targetaudience-group"
+                               @if (Model.TargetAudiencesUids?.Contains(targetAudience.Uid) == true) { <text> checked </text> } /> @targetAudience.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')
+                        <span></span>
+                    </label>
+                }
+            </div>
+        </div>
+    </div>
+</div>

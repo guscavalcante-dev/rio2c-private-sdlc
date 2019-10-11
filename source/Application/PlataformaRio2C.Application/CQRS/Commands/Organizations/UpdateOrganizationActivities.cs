@@ -29,8 +29,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Display(Name = "Activities", ResourceType = typeof(Labels))]
         public List<OrganizationActivityBaseCommand> OrganizationActivities { get; set; }
 
-        public List<CountryBaseDto> CountriesBaseDtos { get; private set; }
-
         //public UserBaseDto UpdaterBaseDto { get; set; }
         //public DateTime UpdateDate { get; set; }
 

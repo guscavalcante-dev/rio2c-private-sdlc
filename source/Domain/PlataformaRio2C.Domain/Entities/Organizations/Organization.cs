@@ -731,6 +731,18 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Organization Target Audiences
 
+        /// <summary>Updates the target audiences.</summary>
+        /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateTargetAudiences(
+            List<TargetAudience> targetAudiences,
+            int userId)
+        {
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
+        }
+
         /// <summary>Synchronizes the organization target audiences.</summary>
         /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="userId">The user identifier.</param>

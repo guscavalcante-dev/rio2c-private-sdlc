@@ -4,7 +4,7 @@
 // Created          : 10-08-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-09-2019
+// Last Modified On : 10-10-2019
 // ***********************************************************************
 // <copyright file="AttendeeOrganizationSiteTargetAudienceWidgetDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,6 +22,7 @@ namespace PlataformaRio2C.Domain.Dtos
     public class AttendeeOrganizationSiteTargetAudienceWidgetDto
     {
         public AttendeeOrganization AttendeeOrganization { get; set; }
+        public Organization Organization { get; set; }
         public IEnumerable<OrganizationTargetAudienceDto> OrganizationTargetAudiencesDtos { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeOrganizationSiteTargetAudienceWidgetDto"/> class.</summary>
