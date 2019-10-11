@@ -217,8 +217,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.PhoneNumber = phoneNumber?.Trim();
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
             this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
-            this.CreateUserId = this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
             this.SynchronizeDescriptions(descriptions, userId);
             this.SynchronizeRestrictionSpecifics(restrictionSpecifics, userId);
             this.SynchronizeAttendeeOrganizations(edition, organizationType, isApiDisplayEnabled, isAddingToCurrentEdition, userId);
@@ -257,9 +257,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.Website = website?.Trim();
             this.SocialMedia = socialMedia?.Trim();
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
-            this.CreateUserId = this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
             this.SynchronizeDescriptions(descriptions, userId);
         }
 
@@ -309,7 +308,6 @@ namespace PlataformaRio2C.Domain.Entities
         {
             return this.ImageUploadDate.HasValue;
         }
-
 
         #region Onboarding
 
@@ -663,6 +661,18 @@ namespace PlataformaRio2C.Domain.Entities
         #endregion
 
         #region Organization Activities
+
+        /// <summary>Updates the activities.</summary>
+        /// <param name="organizationActivities">The organization activities.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateActivities(
+            List<OrganizationActivity> organizationActivities,
+            int userId)
+        {
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            this.SynchronizeOrganizationActivities(organizationActivities, userId);
+        }
 
         /// <summary>Synchronizes the organization activities.</summary>
         /// <param name="organizationActivities">The organization activities.</param>

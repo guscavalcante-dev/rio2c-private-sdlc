@@ -328,6 +328,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Select(ao => new AttendeeOrganizationSiteActivityWidgetDto
                             {
                                 AttendeeOrganization = ao,
+                                Organization = ao.Organization,
                                 OrganizationActivitiesDtos = ao.Organization.OrganizationActivities.Where(oa => !oa.IsDeleted).Select(oa => new OrganizationActivityDto
                                 {
                                     OrganizationActivityId = oa.Id,

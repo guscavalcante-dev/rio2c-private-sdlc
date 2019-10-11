@@ -7125,6 +7125,8 @@
     <Content Include="Views\Companies\Modals\UpdateMainInformationForm.cshtml" />
     <Content Include="Views\Companies\Modals\UpdateAddressModal.cshtml" />
     <Content Include="Views\Companies\Modals\UpdateAddressForm.cshtml" />
+    <Content Include="Views\Companies\Modals\UpdateActivityModal.cshtml" />
+    <Content Include="Views\Companies\Modals\UpdateActivityForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

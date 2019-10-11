@@ -19,7 +19,6 @@ var CompaniesAddressWidget = function () {
 
     var updateModalId = '#UpdateAddressModal';
     var updateFormId = '#UpdateAddressForm';
-    //var countryUid = '#CountryUid';
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {

@@ -256,7 +256,8 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/js/companies/companies.targetaudience.widget.js",
                 "~/Assets/js/companies/companies.interest.widget.js",
                 "~/Assets/js/companies/companies.executive.widget.js",
-                "~/Assets/js/myrio2c.companynumber.js"));
+                "~/Assets/js/myrio2c.companynumber.js",
+                "~/Assets/js/myrio2c.activity.js"));
 
             #endregion
 

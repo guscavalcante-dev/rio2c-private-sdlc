@@ -4,7 +4,7 @@
 // Created          : 10-08-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-09-2019
+// Last Modified On : 10-10-2019
 // ***********************************************************************
 // <copyright file="companies.activity.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,6 +16,9 @@ var CompaniesActivityWidget = function () {
 
     var widgetElementId = '#CompanyActivityWidget';
     var widgetElement = $(widgetElementId);
+
+    var updateModalId = '#UpdateActivityModal';
+    var updateFormId = '#UpdateActivityForm';
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
@@ -51,10 +54,70 @@ var CompaniesActivityWidget = function () {
         });
     };
 
+    // Update -------------------------------------------------------------------------------------
+    var enableAjaxForm = function () {
+        MyRio2cCommon.enableAjaxForm({
+            idOrClass: updateFormId,
+            onSuccess: function (data) {
+                $(updateModalId).modal('hide');
+
+                if (typeof (CompaniesActivityWidget) !== 'undefined') {
+                    CompaniesActivityWidget.init();
+                }
+            },
+            onError: function (data) {
+                if (MyRio2cCommon.hasProperty(data, 'pages')) {
+                    enableUpdatePlugins();
+                }
+            }
+        });
+    };
+
+    var enableUpdatePlugins = function () {
+        enableAjaxForm();
+        MyRio2cCommon.enableAtLeastOnCheckboxByNameValidation(updateFormId);
+
+        // Enable activity additional info textbox
+        if (typeof (MyRio2cCommonActivity) !== 'undefined') {
+            MyRio2cCommonActivity.init();
+        }
+
+        MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true });
+    };
+
+    var showUpdateModal = function () {
+        MyRio2cCommon.block({ isModal: true });
+
+        var jsonParameters = new Object();
+        jsonParameters.organizationUid = $('#AggregateId').val();
+
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Companies/ShowUpdateActivityModal'), jsonParameters, function (data) {
+            MyRio2cCommon.handleAjaxReturn({
+                data: data,
+                // Success
+                onSuccess: function () {
+                    enableUpdatePlugins();
+                    $(updateModalId).modal();
+                },
+                // Error
+                onError: function () {
+                }
+            });
+        })
+        .fail(function () {
+        })
+        .always(function () {
+            MyRio2cCommon.unblock();
+        });
+    };
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
+        },
+        showUpdateModal: function () {
+            showUpdateModal();
         }
     };
 }();
