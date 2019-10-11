@@ -4,7 +4,7 @@
 // Created          : 08-31-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-10-2019
+// Last Modified On : 10-11-2019
 // ***********************************************************************
 // <copyright file="ProcessPendingPlatformWebhookRequestsAsyncCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -272,9 +272,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                             else
                             {
                                 var errorMessage = $"No logic found for webhook request (Uid: {processingRequestDto.Uid}).";
-                                this.ValidationResult.Add(new ValidationError(errorMessage));
-                                processingRequestDto.SalesPlatformWebhookRequest.Abort("000000005", errorMessage);
-                                this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
+                                currentValidationResult.Add(new ValidationError("000000005", errorMessage));
                                 continue;
                             }
 
@@ -282,7 +280,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         }
                         // The person is not attending or unpaid the event
                         else if (salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.NotAttending
-                                 || salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.Unpaid)
+                                 || salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.Unpaid
+                                 || salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.Deleted)
                         {
                             // Delete ticket from collaboratorAttendeeId
                             var response1 = await this.CommandBus.Send(new DeleteCollaboratorTicket(
@@ -301,9 +300,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         else
                         {
                             var errorMessage = $"Attendee status not configured (Uid: {processingRequestDto.Uid}; SalesPlatformAttendeeStatus: {salesPlatformAttendeeDto.SalesPlatformAttendeeStatus})";
-                            this.ValidationResult.Add(new ValidationError(errorMessage));
-                            processingRequestDto.SalesPlatformWebhookRequest.Abort("000000006", errorMessage);
-                            this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
+                            currentValidationResult.Add(new ValidationError("000000006", errorMessage));
                             continue;
                         }
                     }
@@ -313,7 +310,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         //TODO: Implement attendee checked in
                         var errorMessage = $"Attended checked in not implemented (Uid: {processingRequestDto.Uid}).";
                         this.ValidationResult.Add(new ValidationError(errorMessage));
-                        processingRequestDto.SalesPlatformWebhookRequest.Abort("000000008", errorMessage);
+                        processingRequestDto.SalesPlatformWebhookRequest.Abort("000000007", errorMessage);
                         this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
                         continue;
                     }
@@ -322,7 +319,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     {
                         var errorMessage = $"Attended checked out not implemented (Uid: {processingRequestDto.Uid}).";
                         this.ValidationResult.Add(new ValidationError(errorMessage));
-                        processingRequestDto.SalesPlatformWebhookRequest.Abort("000000009", errorMessage);
+                        processingRequestDto.SalesPlatformWebhookRequest.Abort("000000008", errorMessage);
                         this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
                         continue;
                     }
@@ -331,7 +328,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     {
                         var errorMessage = $"Sales platform action not configured (Uid: {processingRequestDto.Uid}).";
                         this.ValidationResult.Add(new ValidationError(errorMessage));
-                        processingRequestDto.SalesPlatformWebhookRequest.Abort("000000010", errorMessage);
+                        processingRequestDto.SalesPlatformWebhookRequest.Abort("000000009", errorMessage);
                         this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
                         continue;
                     }
