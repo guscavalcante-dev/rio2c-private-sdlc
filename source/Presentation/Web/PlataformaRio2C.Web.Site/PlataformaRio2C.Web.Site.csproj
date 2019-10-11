@@ -7129,6 +7129,8 @@
     <Content Include="Views\Companies\Modals\UpdateActivityForm.cshtml" />
     <Content Include="Views\Companies\Modals\UpdateTargetAudienceModal.cshtml" />
     <Content Include="Views\Companies\Modals\UpdateTargetAudienceForm.cshtml" />
+    <Content Include="Views\Companies\Modals\UpdateInterestModal.cshtml" />
+    <Content Include="Views\Companies\Modals\UpdateInterestForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

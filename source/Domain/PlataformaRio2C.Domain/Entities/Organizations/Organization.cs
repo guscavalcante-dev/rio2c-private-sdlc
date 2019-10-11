@@ -799,6 +799,21 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Organization Interests
 
+        /// <summary>Updates the interests.</summary>
+        /// <param name="restrictionSpecifics">The restriction specifics.</param>
+        /// <param name="interests">The interests.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateInterests(
+            List<OrganizationRestrictionSpecific> restrictionSpecifics,
+            List<Interest> interests,
+            int userId)
+        {
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            this.SynchronizeRestrictionSpecifics(restrictionSpecifics, userId);
+            this.SynchronizeOrganizationInterests(interests, userId);
+        }
+
         /// <summary>Synchronizes the organization interests.</summary>
         /// <param name="interests">The interests.</param>
         /// <param name="userId">The user identifier.</param>

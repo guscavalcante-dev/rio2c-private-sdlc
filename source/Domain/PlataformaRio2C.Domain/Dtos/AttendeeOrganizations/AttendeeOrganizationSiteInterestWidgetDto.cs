@@ -4,7 +4,7 @@
 // Created          : 10-08-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-08-2019
+// Last Modified On : 10-10-2019
 // ***********************************************************************
 // <copyright file="AttendeeOrganizationSiteInterestWidgetDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,6 +22,7 @@ namespace PlataformaRio2C.Domain.Dtos
     public class AttendeeOrganizationSiteInterestWidgetDto
     {
         public AttendeeOrganization AttendeeOrganization { get; set; }
+        public Organization Organization { get; set; }
         public IEnumerable<OrganizationRestrictionSpecificBaseDto> RestrictionSpecificDtos { get; set; }
         public IEnumerable<OrganizationInterestDto> OrganizationInterestDtos { get; set; }
 

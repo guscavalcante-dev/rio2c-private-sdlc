@@ -1,0 +1,36 @@
+﻿@using System.Globalization
+@model PlataformaRio2C.Application.CQRS.Commands.UpdateOrganizationInterests
+<div class="kt-section pt-4">
+    <h3 class="kt-section__title mb-0">@Messages.PlayerRestrictionSpecifics</h3>
+    @Html.ValidationMessage("RestrictionSpecifics", new { @class = "text-danger" })
+    <div class="kt-section__content mt-3">
+        @Html.EditorFor(m => m.RestrictionSpecifics)
+    </div>
+</div>
+<div class="kt-section mt-50">
+    <div class="kt-section__content mt-3">
+        <div class="kt-checkbox-list">
+            @foreach (var interests in Model.GroupedInterests)
+            {
+                <h3 class="kt-heading kt-heading--md mt-50">@interests.Key.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')</h3>
+                @Html.ValidationMessage(interests.Key.Uid.ToString(), new { @class = "text-danger" })
+                <div class="kt-section__content mt-3">
+                    <div class="kt-checkbox-list require-one-group" data-id="@interests.Key.Uid">
+                        @foreach (var interest in interests?.OrderBy(ig => ig.DisplayOrder))
+                        {
+                            <label class="kt-checkbox">
+                                <input type="checkbox"
+                                       name="InterestsUids"
+                                       value="@interest.Uid"
+                                       class="require-one-item"
+                                       data-id="@interests.Key.Uid"
+                                       @if (Model.InterestsUids?.Contains(interest.Uid) == true) { <text> checked </text> } /> @interest.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')
+                                <span></span>
+                            </label>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
