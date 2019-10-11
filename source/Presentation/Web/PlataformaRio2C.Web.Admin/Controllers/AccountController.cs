@@ -135,7 +135,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     }
                     else
                     {
-                        return Redirect(string.Format("{0}{1}{2}", returnUrl, "/", userLanguage?.Language.Code));
+                        return RedirectToAction("Index", "Home");
                     }
 
                 //var identity = (ClaimsIdentity)User.Identity;

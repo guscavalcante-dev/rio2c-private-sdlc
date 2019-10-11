@@ -148,17 +148,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     }
                     else
                     {
-                        return Redirect(string.Format("{0}{1}{2}", returnUrl, "/", userLanguage?.Language.Code));
+                        return RedirectToAction("Index", "Quiz");
                     }
-
-
-                //returnUrl = Regex.Replace(returnUrl, oldCulture, culture, RegexOptions.IgnoreCase);
-
-                //if (Url.IsLocalUrl(returnUrl))
-                //{
-                //    return Redirect(returnUrl);
-                //}
-
+                    
 
                 //transforma a senha digitada em md5
                 //byte[] encodedPassword = new UTF8Encoding().GetBytes(model.Password);
