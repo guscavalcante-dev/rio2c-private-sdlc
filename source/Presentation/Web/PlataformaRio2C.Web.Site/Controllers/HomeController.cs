@@ -24,6 +24,10 @@ using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Web.Site.Filters;
+using PlataformaRio2C.Application.CQRS.Commands.User;
+using System.Text.RegularExpressions;
+using PlataformaRio2C.Application.Common;
+using PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -89,7 +93,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="returnUrl">The return URL.</param>
         /// <returns></returns>
         [AllowAnonymous]
-        public ActionResult SetCulture(string culture, string oldCulture, string returnUrl = null)
+        public async Task<ActionResult> SetCulture(string culture, string oldCulture, string returnUrl = null)
         {
             // Validate input
             culture = CultureHelper.GetImplementedCulture(culture);
@@ -97,18 +101,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             #region Create/Update cookie culture
 
-            var cookie = Request.Cookies["MyRio2CCulture"];
-            if (cookie != null)
+            if (this.UserAccessControlDto != null)
             {
-                cookie.Value = culture;   // update cookie value
-            }
-            else
-            {
-                cookie = new HttpCookie("MyRio2CCulture");
-                cookie.Value = culture;
-                cookie.Expires = DateTime.Now.AddYears(1);
+                var result = await this.CommandBus.Send(new UpdateUserInterfaceLanguage(
+                    this.UserAccessControlDto.User.Uid,
+                    culture));
             }
 
+            var cookie = new ApplicationCookieControl().SetCookie(culture, Response.Cookies[Role.MyRio2CCookie], Role.MyRio2CCookie);
             Response.Cookies.Add(cookie);
 
             #endregion
@@ -118,9 +118,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 returnUrl = Request.UrlReferrer.PathAndQuery;
             }
 
-            returnUrl = returnUrl?
-                            .Replace(oldCulture.ToLowerInvariant(), culture?.ToLowerInvariant())
-                            .Replace(oldCulture, culture?.ToLowerInvariant());
+            returnUrl = Regex.Replace(returnUrl, oldCulture, culture, RegexOptions.IgnoreCase);
 
             if (Url.IsLocalUrl(returnUrl))
             {

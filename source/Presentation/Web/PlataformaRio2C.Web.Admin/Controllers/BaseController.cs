@@ -24,6 +24,7 @@ using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
@@ -56,6 +57,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <returns>Returns an IAsyncController instance.</returns>
         protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, object state)
         {
+            
+
             var changedCultureRouteValue = this.ValidateCulture();
             if (changedCultureRouteValue)
             {
@@ -70,6 +73,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             this.SetUserInfo();
             this.SetArea();
+
 
             return base.BeginExecuteCore(callback, state);
         }
@@ -88,9 +92,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         private bool ValidateCulture()
         {
             // Attempt to read the culture cookie from Request
+           
             var routeCulture = RouteData.Values["culture"] as string;
-            var cookieCulture = Request.Cookies["MyRio2CAdminCulture"]?.Value;
-            var cultureName = routeCulture ??
+            var cookieCulture = Request.Cookies[Role.MyRio2CAdminCookie]?.Value;
+            var cultureName = 
+                              routeCulture ??
                               cookieCulture ??
                               (Request.UserLanguages != null && Request.UserLanguages.Length > 0 ? Request.UserLanguages[0] : null);
 
@@ -130,7 +136,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
             Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
 
-            ViewBag.UserInterfaceLanguage = this.UserInterfaceLanguage = Regex.Replace(cultureName, "en-us", "en", RegexOptions.IgnoreCase);
+            ViewBag.UserInterfaceLanguage = this.UserInterfaceLanguage = cultureName;
 
             return false;
         }
