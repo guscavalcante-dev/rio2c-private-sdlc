@@ -4,13 +4,14 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-28-2019
+// Last Modified On : 10-11-2019
 // ***********************************************************************
 // <copyright file="AccountController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using System.Linq;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
@@ -26,11 +27,10 @@ using System.Web.Mvc;
 using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
-using Constants = PlataformaRio2C.Domain.Constants;
 using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Application.Common;
 using System.Text.RegularExpressions;
-using PlataformaRio2C.Domain.Constants.Authorizations;
+using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
@@ -121,59 +121,66 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     var userLanguage = await this.CommandBus.Send(new FindUserLanguageDto(user.Id));
                     if (userLanguage != null)
                     {
-                        var cookie = new ApplicationCookieControl().SetCookie(userLanguage.Language.Code, Response.Cookies[CookieName.MyRio2CAdminCookie], CookieName.MyRio2CAdminCookie);
+                        var cookie = ApplicationCookieControl.SetCookie(userLanguage.Language.Code, Response.Cookies[Constants.CookieName.MyRio2CAdminCookie], Constants.CookieName.MyRio2CAdminCookie);
                         Response.Cookies.Add(cookie);
                     }
-
 
                     if (!string.IsNullOrEmpty(returnUrl?.Replace("/", string.Empty)))
                     {
                         if (userLanguage != null)
                         {
                             var listLanguages = await this.CommandBus.Send(new FindAllLanguagesDtosAsync(null));
-
                             foreach (var item in listLanguages)
                             {
                                 returnUrl = Regex.Replace(returnUrl, item.Code, userLanguage.Language.Code, RegexOptions.IgnoreCase);
                             }
+
+                            if (returnUrl.IndexOf(userLanguage.Language.Code, StringComparison.OrdinalIgnoreCase) < 0)
+                            {
+                                returnUrl = "/" + userLanguage.Language.Code + returnUrl;
+                            }
                         }
+
                         return Redirect(returnUrl);
                     }
-                    else
+
+                    if (userLanguage != null)
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Home", new { culture = userLanguage?.Language?.Code });
                     }
 
-                //var identity = (ClaimsIdentity)User.Identity;
+                    return RedirectToAction("Index", "Home");
 
-                //IEnumerable<Claim> claims = identity.Claims;
+                    //var identity = (ClaimsIdentity)User.Identity;
 
-                //if (await _apiSymplaAppService.ConfirmUserAllowedFinancialReport(user.Email))
-                //{
-                //    await _identityController.AddClaim(user.Id, new System.Security.Claims.Claim("FinancialReport", "true"));
-                //}
-                //else
-                //{
-                //    await _identityController.RemoveClaim(user.Id, "FinancialReport");
-                //}
+                    //IEnumerable<Claim> claims = identity.Claims;
 
-                //if (user.Claims.Count != 0)
-                //{
-                //    foreach (var item in user.Claims)
-                //    {
-                //        if (item.ClaimType.ToString() == "ProjectPitching")
-                //        {
-                //            return RedirectToAction("ProjectPitching", "Project");
-                //        }
+                    //if (await _apiSymplaAppService.ConfirmUserAllowedFinancialReport(user.Email))
+                    //{
+                    //    await _identityController.AddClaim(user.Id, new System.Security.Claims.Claim("FinancialReport", "true"));
+                    //}
+                    //else
+                    //{
+                    //    await _identityController.RemoveClaim(user.Id, "FinancialReport");
+                    //}
 
-                //        if (item.ClaimType.ToString() == "Logistics")
-                //        {
-                //            return RedirectToAction("Index", "Logistics");
-                //        }
-                //    }
-                //}
+                    //if (user.Claims.Count != 0)
+                    //{
+                    //    foreach (var item in user.Claims)
+                    //    {
+                    //        if (item.ClaimType.ToString() == "ProjectPitching")
+                    //        {
+                    //            return RedirectToAction("ProjectPitching", "Project");
+                    //        }
 
-                // return RedirectToAction("Index", "Home");
+                    //        if (item.ClaimType.ToString() == "Logistics")
+                    //        {
+                    //            return RedirectToAction("Index", "Logistics");
+                    //        }
+                    //    }
+                    //}
+
+                    // return RedirectToAction("Index", "Home");
 
                 case IdentitySignInStatus.LockedOut:
                     return View("Lockout");

@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-08-2019
+// Last Modified On : 10-11-2019
 // ***********************************************************************
 // <copyright file="BaseController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,7 +25,7 @@ using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Web.Site.Helpers;
-using PlataformaRio2C.Domain.Constants.Authorizations;
+using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -112,10 +112,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
             // Attempt to read the culture cookie from Request
             
             var routeCulture = RouteData.Values["culture"] as string;
-            var cookieCulture = Request.Cookies[CookieName.MyRio2CCookie]?.Value;
-            var cultureName =
+            var cookieCulture = Request.Cookies[Constants.CookieName.MyRio2CCookie]?.Value;
+            var cultureName = routeCulture ??
                               cookieCulture ??
-                              routeCulture ??
                               (Request.UserLanguages != null && Request.UserLanguages.Length > 0 ? Request.UserLanguages[0] : null);
 
             // Validate culture name

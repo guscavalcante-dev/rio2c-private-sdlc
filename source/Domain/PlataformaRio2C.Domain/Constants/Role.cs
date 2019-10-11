@@ -4,7 +4,7 @@
 // Created          : 08-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-27-2019
+// Last Modified On : 10-11-2019
 // ***********************************************************************
 // <copyright file="Role.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

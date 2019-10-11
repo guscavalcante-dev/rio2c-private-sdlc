@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-27-2019
+// Last Modified On : 10-11-2019
 // ***********************************************************************
 // <copyright file="HomeController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,11 +20,10 @@ using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
-using Constants = PlataformaRio2C.Domain.Constants;
 using PlataformaRio2C.Application.CQRS.Commands.User;
 using System.Text.RegularExpressions;
 using PlataformaRio2C.Application.Common;
-using PlataformaRio2C.Domain.Constants.Authorizations;
+using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
@@ -90,7 +89,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     culture));
             }
 
-            var cookie = new ApplicationCookieControl().SetCookie(culture, Response.Cookies[CookieName.MyRio2CAdminCookie], CookieName.MyRio2CAdminCookie);
+            var cookie = ApplicationCookieControl.SetCookie(culture, Response.Cookies[Constants.CookieName.MyRio2CAdminCookie], Constants.CookieName.MyRio2CAdminCookie);
             Response.Cookies.Add(cookie);
 
             #endregion
@@ -100,8 +99,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 returnUrl = Request.UrlReferrer.PathAndQuery;
             }
 
-            returnUrl = Regex.Replace(returnUrl, oldCulture, culture, RegexOptions.IgnoreCase);
-
+            if (!string.IsNullOrEmpty(returnUrl))
+            {
+                returnUrl = Regex.Replace(returnUrl, oldCulture, culture, RegexOptions.IgnoreCase);
+            }
 
             if (Url.IsLocalUrl(returnUrl))
             {
