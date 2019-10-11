@@ -4,7 +4,7 @@
 // Created          : 07-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-10-2019
+// Last Modified On : 10-11-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
