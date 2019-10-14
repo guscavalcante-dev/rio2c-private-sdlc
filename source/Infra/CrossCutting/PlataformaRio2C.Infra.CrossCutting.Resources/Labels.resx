@@ -1561,4 +1561,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Informações</value>
     <comment>Informações</comment>
   </data>
+  <data name="PlayersRegulationPdf" xml:space="preserve">
+    <value>Regulamento Player {0}.pdf</value>
+    <comment>Regulamento Player {0}.pdf</comment>
+  </data>
+  <data name="ProducersRegulationPdf" xml:space="preserve">
+    <value>Regulamento Participante {0}.pdf</value>
+    <comment>Regulamento Participante {0}.pdf</comment>
+  </data>
 </root>

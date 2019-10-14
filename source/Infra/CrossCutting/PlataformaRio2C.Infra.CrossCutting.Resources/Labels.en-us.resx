@@ -1549,4 +1549,12 @@
     <value>Informations</value>
     <comment>Informações</comment>
   </data>
+  <data name="PlayersRegulationPdf" xml:space="preserve">
+    <value>Players Regulation {0}.pdf</value>
+    <comment>Regulamento Player {0}.pdf</comment>
+  </data>
+  <data name="ProducersRegulationPdf" xml:space="preserve">
+    <value>Participants Regulation {0}.pdf</value>
+    <comment>Regulamento Participante {0}.pdf</comment>
+  </data>
 </root>
