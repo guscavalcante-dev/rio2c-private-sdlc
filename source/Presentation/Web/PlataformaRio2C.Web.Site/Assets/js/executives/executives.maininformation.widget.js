@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Rafael Dantas Ruiz
-// Created          : 10-09-2019
+// Author           : William Almado
+// Created          : 10-11-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-09-2019
+// Last Modified By : William Almado
+// Last Modified On : 10-11-2019
 // ***********************************************************************
 // <copyright file="executives.maininformation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,10 +12,15 @@
 // <summary></summary>
 // ***********************************************************************
 
+
 var ExecutivesMainInformationWidget = function () {
 
     var widgetElementId = '#ExecutiveMainInformationWidget';
     var widgetElement = $(widgetElementId);
+
+    var updateModalId = '#UpdateMainInformationModal';
+    var updateFormId = '#UpdateMainInformationForm';
+    var countryUid = '#CountryUid';
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
@@ -38,23 +43,84 @@ var ExecutivesMainInformationWidget = function () {
                     enableShowPlugins();
                 },
                 // Error
-                onError: function() {
+                onError: function () {
                 }
             });
         })
-        .fail(function () {
-            //showAlert();
-            //MyRio2cCommon.unblock(widgetElementId);
-        })
-        .always(function() {
-            MyRio2cCommon.unblock({ idOrClass: widgetElementId });
+            .fail(function () {
+                //showAlert();
+                //MyRio2cCommon.unblock(widgetElementId);
+            })
+            .always(function () {
+                MyRio2cCommon.unblock({ idOrClass: widgetElementId });
+            });
+    };
+
+    // Update -------------------------------------------------------------------------------------
+    var enableAjaxForm = function () {
+        MyRio2cCommon.enableAjaxForm({
+            idOrClass: updateFormId,
+            onSuccess: function (data) {
+                $(updateModalId).modal('hide');
+
+                if (typeof (ExecutivesMainInformationWidget) !== 'undefined') {
+                    ExecutivesMainInformationWidget.init();
+                }
+            },
+            onError: function (data) {
+                if (MyRio2cCommon.hasProperty(data, 'pages')) {
+                    enableUpdatePlugins();
+                }
+            }
         });
+    };
+
+    var enableUpdatePlugins = function () {
+        MyRio2cCropper.init({ formIdOrClass: updateFormId });
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2' });
+        //AddressesForm.init();
+
+        AttendeeOrganizationsForm.init(updateFormId);
+        MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c', maxCharCount: 710 });
+        MyRio2cCompanyDocument.enableCompanyNumberMask(countryUid, '#Document');
+        enableAjaxForm();
+        MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true });
+    };
+
+    var showUpdateModal = function () {
+        MyRio2cCommon.block({ isModal: true });
+
+        var jsonParameters = new Object();
+        jsonParameters.collaboratorUid = $('#AggregateId').val();
+        jsonParameters.isAddingToCurrentEdition = false;
+
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Executives/ShowUpdateMainInformationModal'), jsonParameters, function (data) {
+            MyRio2cCommon.handleAjaxReturn({
+                data: data,
+                // Success
+                onSuccess: function () {
+                    enableUpdatePlugins();
+                    $(updateModalId).modal();
+                },
+                // Error
+                onError: function () {
+                }
+            });
+        })
+            .fail(function () {
+            })
+            .always(function () {
+                MyRio2cCommon.unblock();
+            });
     };
 
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
+        },
+        showUpdateModal: function () {
+            showUpdateModal();
         }
     };
 }();

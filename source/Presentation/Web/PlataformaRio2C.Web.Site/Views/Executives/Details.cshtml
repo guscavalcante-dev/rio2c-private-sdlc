@@ -26,16 +26,27 @@
         <!--end:Company Widget-->
     </div>
 </div>
+
 @section Styles {
-    @*@Styles.Render("~/bundles/css/select2.css")*@
+    @Styles.Render("~/bundles/css/cropper.css")
+    @Styles.Render("~/bundles/css/select2.css")
 }
+
 @section Scripts {
     @Scripts.Render("~/bundles/js/jqueryval.js")
+    @Scripts.Render("~/bundles/js/jqueryform.js")
+    @Scripts.Render("~/bundles/js/cropper.js")
     @Scripts.Render("~/bundles/js/select2.js")
+    @Scripts.Render("~/bundles/js/dynamic.list.js")
     @Scripts.Render("~/bundles/js/ckEditor.js")
     @Scripts.Render("~/bundles/js/inputmask.js")
     @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/addresses.form.js")
     @Scripts.Render("~/bundles/js/executives.widget.js")
+    @Scripts.Render("~/bundles/js/attendeeorganizations.form.js")
+
+   
+
     <script>
         // Page translations ----------------------------------------------------------------------
 

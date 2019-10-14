@@ -224,6 +224,14 @@ namespace PlataformaRio2C.Web.Site
 
             #endregion
 
+
+            #region Dynamic List
+
+            bundles.Add(new ScriptBundle("~/bundles/js/dynamic.list.js").Include(
+                "~/Assets/js/dynamic.list.js"));
+
+            #endregion
+
             #endregion
 
             #region Pages Bundles
@@ -261,11 +269,13 @@ namespace PlataformaRio2C.Web.Site
 
             #endregion
 
-            #region Companies
+            #region Executives
 
             bundles.Add(new ScriptBundle("~/bundles/js/executives.widget.js").Include(
+                "~/Assets/js/executives/executives.company.widget.js",
                 "~/Assets/js/executives/executives.maininformation.widget.js",
-                "~/Assets/js/executives/executives.company.widget.js"));
+                "~/Assets/js/myrio2c.companynumber.js",
+                "~/Assets/js/myrio2c.activity.js"));
 
             #endregion
 
@@ -273,6 +283,13 @@ namespace PlataformaRio2C.Web.Site
 
             bundles.Add(new ScriptBundle("~/bundles/js/addresses.form.js").Include(
                 "~/Assets/js/addresses/addresses.form.js"));
+
+            #endregion
+
+            #region Attendee Organizations
+
+            bundles.Add(new ScriptBundle("~/bundles/js/attendeeorganizations.form.js").Include(
+                "~/Assets/js/attendeeorganizations/attendeeorganizations.form.js"));
 
             #endregion
 
