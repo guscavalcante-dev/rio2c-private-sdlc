@@ -7089,7 +7089,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_LayoutBasic.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\SiteMailerService\ProducerWelcome.cshtml" />
+    <Content Include="Views\SiteMailerService\TicketBuyerWelcome.cshtml" />
     <Content Include="Views\SiteMailerService\_SiteEmailLayout.cshtml" />
     <Content Include="Views\Onboarding\AccessData.cshtml" />
     <Content Include="Views\Onboarding\Shared\_OnboardingMenu.cshtml" />
