@@ -367,9 +367,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;li&gt;Submissão de projetos para as Rodadas de Negócios e Pitching de Audiovisual: 25 de novembro a 23 de dezembro de 2019&lt;/li&gt;
-        ///&lt;li&gt;Período de avaliação: 6 de janeiro a 21 de fevereiro de 2020&lt;/li&gt;
-        ///&lt;li&gt;Agenda online disponível em: 23 de março de 2020&lt;/li&gt;.
+        ///   Looks up a localized string similar to &lt;li&gt;Submissão de projetos para as Rodadas de Negócios e Pitching de Audiovisual: 25/11 a 23/12/2019&lt;/li&gt;
+        ///&lt;li&gt;Período de avaliação: 06/01 a 21/02/2020&lt;/li&gt;
+        ///&lt;li&gt;Agenda online disponível em: 23/03/2020&lt;/li&gt;.
         /// </summary>
         public static string ProducerProjectsDates {
             get {
