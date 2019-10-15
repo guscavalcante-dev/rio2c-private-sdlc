@@ -685,9 +685,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 null,
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                true,
-                true,
-                true);
+                false,
+                false,
+                false);
 
             return View(cmd);
         }
@@ -706,9 +706,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     organizationUid.HasValue ? await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(organizationUid, this.EditionDto.Id, this.UserInterfaceLanguage)) : null,
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                    true,
-                    true,
-                    true);
+                    false,
+                    false,
+                    false);
             }
             catch (DomainException ex)
             {

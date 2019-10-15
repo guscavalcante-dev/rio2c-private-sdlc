@@ -664,4 +664,8 @@
     <value>Complete your company information</value>
     <comment>Complete os dados da sua empresa</comment>
   </data>
+  <data name="IfYouWantToSkipStepAndRegisterLater" xml:space="preserve">
+    <value>If you want to skip this step and register your company later</value>
+    <comment>Se você deseja pular esse passo e registrar sua empresa depois</comment>
+  </data>
 </root>

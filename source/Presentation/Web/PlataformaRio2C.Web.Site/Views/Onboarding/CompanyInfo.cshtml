@@ -1,5 +1,4 @@
-﻿@using PlataformaRio2C.Domain.Dtos
-@model PlataformaRio2C.Application.CQRS.Commands.OnboardTicketBuyerOrganizationData
+﻿@model PlataformaRio2C.Application.CQRS.Commands.OnboardTicketBuyerOrganizationData
 @{
     Layout = "~/Views/Themes/Metronic/_Internal.cshtml";
     ViewBag.Title = Labels.Welcome;
@@ -21,6 +20,11 @@
                         <div class="kt-heading kt-heading--md">@Labels.Company</div>
                         <div class="kt-form__section kt-form__section--first">
                             <div class="kt-wizard-v2__form">
+                                <div class="row">
+                                    <div class="col">
+                                        @Messages.IfYouWantToSkipStepAndRegisterLater, <a href="@Url.Action("SkipCompanyInfo", "Onboarding", new { Area = "" })">@Labels.ClickHere.ToLowerInvariant()</a>.
+                                    </div>
+                                </div>
                                 <div id="form-container">
                                     @Html.Partial("Shared/_CompanyInfoForm", Model)
                                 </div>
@@ -30,9 +34,9 @@
                     <!--end: Form Wizard Step 1-->
                     <!--begin: Form Actions -->
                     <div class="kt-form__actions">
-                        <a href="@Url.Action("SkipCompanyInfo", "Onboarding", new { Area = "" })" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+                        @*<a href="@Url.Action("SkipCompanyInfo", "Onboarding", new { Area = "" })" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
                             @Labels.Skip
-                        </a>
+                        </a>*@
                         <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="OnboardWizard.submit('#CompanyInfoForm');">
                             @Labels.Save
                         </button>

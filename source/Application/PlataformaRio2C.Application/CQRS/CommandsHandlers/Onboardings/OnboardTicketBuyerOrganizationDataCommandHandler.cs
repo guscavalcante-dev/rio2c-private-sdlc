@@ -148,8 +148,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             {
                 #region Initial validations
 
-                var existingOrganizationByName = this.OrganizationRepo.Get(o => o.CompanyName == cmd.CompanyName
-                                                                                && !o.IsDeleted);
+                var existingOrganizationByName = this.OrganizationRepo.Get(o => o.TradeName == cmd.TradeName && !o.IsDeleted);
                 if (existingOrganizationByName != null)
                 {
                     this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.APlayer, Labels.TheName, cmd.CompanyName), new string[] { "CompanyName" }));
@@ -166,7 +165,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 organization = new Organization(
                     await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
                     attendeeCollaborator,
-                    cmd.CompanyName,
                     cmd.CompanyName,
                     cmd.TradeName,
                     cmd.Document,

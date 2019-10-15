@@ -144,7 +144,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Initializes a new instance of the <see cref="Organization"/> class for ticket buyer onboarding.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
-        /// <param name="name">The name.</param>
         /// <param name="companyName">Name of the company.</param>
         /// <param name="tradeName">Name of the trade.</param>
         /// <param name="document">The document.</param>
@@ -164,7 +163,6 @@ namespace PlataformaRio2C.Domain.Entities
         public Organization(
             Edition edition,
             AttendeeCollaborator attendeeCollaborator,
-            string name,
             string companyName,
             string tradeName,
             string document,
@@ -182,9 +180,9 @@ namespace PlataformaRio2C.Domain.Entities
             List<OrganizationDescription> descriptions,
             int userId)
         {
-            this.Name = name?.Trim();
-            this.CompanyName = companyName?.Trim();
+            this.Name = tradeName?.Trim();
             this.TradeName = tradeName?.Trim();
+            this.CompanyName = companyName?.Trim();
             this.Document = document?.Trim();
             this.Website = website?.Trim();
             this.SocialMedia = socialMedia?.Trim();

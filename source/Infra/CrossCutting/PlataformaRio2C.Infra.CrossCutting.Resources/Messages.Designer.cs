@@ -546,6 +546,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Se você deseja pular esse passo e registrar sua empresa depois.
+        /// </summary>
+        public static string IfYouWantToSkipStepAndRegisterLater {
+            get {
+                return ResourceManager.GetString("IfYouWantToSkipStepAndRegisterLater", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Imagem obrigatória.
         /// </summary>
         public static string ImageIsRequired {
