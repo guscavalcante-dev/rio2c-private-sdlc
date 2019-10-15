@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-14-2019
+// Last Modified On : 10-15-2019
 // ***********************************************************************
 // <copyright file="Organization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -425,8 +425,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.SocialMedia = socialMedia?.Trim();
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
             this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
-            this.CreateUserId = this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
             this.SynchronizeDescriptions(descriptions, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
             this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
@@ -505,8 +505,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.SocialMedia = socialMedia?.Trim();
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
             this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
-            this.CreateUserId = this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
             this.SynchronizeDescriptions(descriptions, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
             this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
