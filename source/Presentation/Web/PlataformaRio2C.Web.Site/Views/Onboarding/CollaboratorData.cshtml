@@ -69,18 +69,9 @@
                     <!--end: Form Wizard Step 1-->
                     <!--begin: Form Actions -->
                     <div class="kt-form__actions">
-                        @if (userAccessControlDto?.IsAttendeeCollaboratorOnboardingFinished() == false || userAccessControlDto?.IsAttendeeOrganizationsOnboardingFinished() == false)
-                        {
-                            <button class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="OnboardWizard.submit('#CollaboratorDataForm');">
-                                @Labels.NextStep
-                            </button>
-                        }
-                        else
-                        {
-                            <button class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto">
-                                @Labels.Save
-                            </button>
-                        }
+                        <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="OnboardWizard.submit('#CollaboratorDataForm');">
+                            @Labels.NextStep
+                        </button>
                     </div>
                     <!--end: Form Actions -->
                 }

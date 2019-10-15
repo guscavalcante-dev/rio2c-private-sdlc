@@ -1,12 +1,8 @@
-﻿@using System.Globalization
-@using PlataformaRio2C.Domain.Dtos
-@using PlataformaRio2C.Domain.Entities
+﻿@using PlataformaRio2C.Domain.Dtos
 @model PlataformaRio2C.Application.CQRS.Commands.OnboardTicketBuyerOrganizationData
 @{
     Layout = "~/Views/Themes/Metronic/_Internal.cshtml";
     ViewBag.Title = Labels.Welcome;
-
-    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
 }
 <div class="kt-portlet">
     <div class="kt-portlet__body kt-portlet__body--fit">
@@ -34,10 +30,7 @@
                     <!--end: Form Wizard Step 1-->
                     <!--begin: Form Actions -->
                     <div class="kt-form__actions">
-                        @*<button class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
-                            @Labels.Later
-                        </button>*@
-                        <button class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" @*onclick="OnboardWizard.submit('#CompanyInfoForm');"*@>
+                        <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="OnboardWizard.submit('#CompanyInfoForm');">
                             @Labels.Save
                         </button>
                     </div>
