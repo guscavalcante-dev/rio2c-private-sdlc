@@ -117,6 +117,24 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds the by not organiations types names.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="organizationTypeNames">The organization type names.</param>
+        /// <returns></returns>
+        internal static IQueryable<Organization> FindByNotOrganiationsTypesNames(this IQueryable<Organization> query, List<string> organizationTypeNames)
+        {
+
+            if (organizationTypeNames?.Any() == true)
+            {
+                query = query.Where(o => o.AttendeeOrganizations.Any() != true
+                                         || !o.AttendeeOrganizations.Any(ao => !ao.IsDeleted
+                                                                               && ao.AttendeeOrganizationTypes.Any(aot => organizationTypeNames.Contains(aot.OrganizationType.Name)
+                                                                                                                          && !aot.IsDeleted)));
+            }
+
+            return query;
+        }
+
         /// <summary>Finds the by edition identifier.</summary>
         /// <param name="query">The query.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
@@ -501,10 +519,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<IPagedList<OrganizationApiListDto>> FindAllOrganizationsApiPaged(int editionId, string companyName, string tradeName, string document, int page, int pageSize)
         {
             var query = this.GetBaseQuery()
-                                .FindByOrganizationTypeUidAndByEditionId(Guid.Empty, true, true, editionId)
+                                //.FindByOrganizationTypeUidAndByEditionId(Guid.Empty, true, true, editionId)
                                 .FindByCompanyName(companyName)
                                 .FindByTradeName(tradeName)
-                                .FindByEqualDocument(document);
+                                .FindByEqualDocument(document)
+                                .FindByNotOrganiationsTypesNames(new List<string> { Domain.Constants.OrganizationType.AudiovisualBuyer }); ;
 
             return await query
                             .Select(o => new OrganizationApiListDto

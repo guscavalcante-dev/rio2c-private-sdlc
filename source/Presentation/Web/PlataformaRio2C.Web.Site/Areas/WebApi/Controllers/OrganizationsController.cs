@@ -52,22 +52,22 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("organizations")]
         public async Task<IHttpActionResult> Organizations([FromUri]OrganizationsApiRequest request)
         {
-            var editions = this.editionRepo.FindAllByIsActive(false);
-            if (editions?.Any() == false)
-            {
-                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." }});
-            }
+            //var editions = this.editionRepo.FindAllByIsActive(false);
+            //if (editions?.Any() == false)
+            //{
+            //    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." }});
+            //}
 
-            // Get edition from request otherwise get current
-            var edition = request?.Edition.HasValue == true ? editions?.FirstOrDefault(e => e.UrlCode == request.Edition) : 
-                                                              editions?.FirstOrDefault(e => e.IsCurrent);
-            if (edition == null)
-            {
-                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "No editions found." }});
-            }
+            //// Get edition from request otherwise get current
+            //var edition = request?.Edition.HasValue == true ? editions?.FirstOrDefault(e => e.UrlCode == request.Edition) : 
+            //                                                  editions?.FirstOrDefault(e => e.IsCurrent);
+            //if (edition == null)
+            //{
+            //    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "No editions found." }});
+            //}
 
             var organizationsApiDtos = await this.organizationRepo.FindAllOrganizationsApiPaged(
-                edition.Id,
+                0, //edition.Id, // NOT BEING USED
                 request?.CompanyName,
                 request?.TradeName,
                 request?.GetCompanyNumber(),
