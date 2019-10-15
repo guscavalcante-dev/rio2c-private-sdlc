@@ -660,4 +660,8 @@
     <value>Content type that is looking for in the Market (restrictions or specifics)</value>
     <comment>Tipo de conteúdo que está buscando no Mercado (restrições e especificações)</comment>
   </data>
+  <data name="CompleteCompanyrInfo" xml:space="preserve">
+    <value>Complete your company information</value>
+    <comment>Complete os dados da sua empresa</comment>
+  </data>
 </root>

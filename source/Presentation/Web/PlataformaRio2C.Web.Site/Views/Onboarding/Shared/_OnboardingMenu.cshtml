@@ -1,11 +1,15 @@
-﻿@using PlataformaRio2C.Domain.Entities
+﻿@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Entities
+@using Constants = PlataformaRio2C.Domain.Constants;
 @model int
 @{
     var counter = 1;
-    //var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var playerAttendeeOrganizations = ViewBag.PlayerAttendeeOrganizations as List<AttendeeOrganization>;
     var producerAttendeeOrganizations = ViewBag.ProducerAttendeeOrganizations as List<AttendeeOrganization>;
-    var isPlayer = ViewBag.IsPlayer as bool?;
+    var isPlayer = ViewBag.IsPlayer as bool? == true;
+    var isIndustry = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true;
+    var isTicketBuyer = userAccessControlDto?.HasAnyCollaboratorType(Constants.CollaboratorType.TicketBuyers) == true;
 }
 <div class="kt-wizard-v2__nav">
     <div class="kt-wizard-v2__nav-items">
@@ -25,7 +29,7 @@
         @{
             counter++;
         }
-        @if (isPlayer == true)
+        @if (isPlayer)
         {
             <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
                 <div class="kt-wizard-v2__nav-body">
@@ -48,7 +52,7 @@
                 </div>
             </div>
         </span>
-        @if (isPlayer == true)
+        @if (isPlayer)
         {
             foreach (var playerAttendeeOrganization in playerAttendeeOrganizations)
             {
@@ -75,6 +79,20 @@
                     </div>
                 </span>
             }
+        }
+        else if (isTicketBuyer)
+        {
+            counter++;
+            <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
+                <div class="kt-wizard-v2__nav-body">
+                    <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
+                    <div class="kt-wizard-v2__nav-label">
+                        <div class="kt-wizard-v2__nav-label-title">@Labels.Company</div>
+                        <div class="kt-wizard-v2__nav-label-desc">@Messages.CompleteCompanyrInfo</div>
+                    </div>
+                </div>
+            </span>
+
         }
     </div>
 </div>

@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-10-2019
+// Last Modified On : 10-14-2019
 // ***********************************************************************
 // <copyright file="Organization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -134,11 +134,73 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeDescriptions(descriptions, userId);
             this.SynchronizeRestrictionSpecifics(restrictionSpecifics, userId);
-            this.SynchronizeAttendeeOrganizations(edition, organizationType, isApiDisplayEnabled, true, userId);
+            this.SynchronizeAttendeeOrganizations(edition, organizationType, null, isApiDisplayEnabled, true, false, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
             this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
             this.SynchronizeOrganizationInterests(interests, userId);
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="Organization"/> class for ticket buyer onboarding.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="attendeeCollaborator">The attendee collaborator.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="companyName">Name of the company.</param>
+        /// <param name="tradeName">Name of the trade.</param>
+        /// <param name="document">The document.</param>
+        /// <param name="website">The website.</param>
+        /// <param name="socialMedia">The social media.</param>
+        /// <param name="country">The country.</param>
+        /// <param name="stateUid">The state uid.</param>
+        /// <param name="stateName">Name of the state.</param>
+        /// <param name="cityUid">The city uid.</param>
+        /// <param name="cityName">Name of the city.</param>
+        /// <param name="address1">The address1.</param>
+        /// <param name="addressZipCode">The address zip code.</param>
+        /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
+        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="descriptions">The descriptions.</param>
+        /// <param name="organizationActivities">The organization activities.</param>
+        /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="userId">The user identifier.</param>
+        public Organization(
+            Edition edition,
+            AttendeeCollaborator attendeeCollaborator,
+            string name,
+            string companyName,
+            string tradeName,
+            string document,
+            string website,
+            string socialMedia,
+            Country country,
+            Guid? stateUid,
+            string stateName,
+            Guid? cityUid,
+            string cityName,
+            string address1,
+            string addressZipCode,
+            bool addressIsManual,
+            bool isImageUploaded,
+            List<OrganizationDescription> descriptions,
+            List<OrganizationActivity> organizationActivities,
+            List<TargetAudience> targetAudiences,
+            int userId)
+        {
+            this.Name = name?.Trim();
+            this.CompanyName = companyName?.Trim();
+            this.TradeName = tradeName?.Trim();
+            this.Document = document?.Trim();
+            this.Website = website?.Trim();
+            this.SocialMedia = socialMedia?.Trim();
+            this.UpdateImageUploadDate(isImageUploaded, false);
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateUserId = this.UpdateUserId = userId;
+            this.SynchronizeDescriptions(descriptions, userId);
+            this.SynchronizeAttendeeOrganizations(edition, null, attendeeCollaborator, false, true, true, userId);
+            this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
+            this.SynchronizeOrganizationActivities(organizationActivities, userId);
+            this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
         }
 
         /// <summary>Initializes a new instance of the <see cref="Organization"/> class.</summary>
@@ -221,7 +283,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
             this.SynchronizeDescriptions(descriptions, userId);
             this.SynchronizeRestrictionSpecifics(restrictionSpecifics, userId);
-            this.SynchronizeAttendeeOrganizations(edition, organizationType, isApiDisplayEnabled, isAddingToCurrentEdition, userId);
+            this.SynchronizeAttendeeOrganizations(edition, organizationType, null, isApiDisplayEnabled, isAddingToCurrentEdition, false, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
             this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
@@ -311,7 +373,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Onboarding
 
-        /// <summary>Called when [data].</summary>
+        /// <summary>Called when [player data].</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="organizationType">Type of the organization.</param>
         /// <param name="companyName">Name of the company.</param>
@@ -333,7 +395,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="organizationActivities">The organization activities.</param>
         /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="userId">The user identifier.</param>
-        public void OnboardData(
+        public void OnboardPlayerData(
             Edition edition,
             OrganizationType organizationType,
             string companyName,
@@ -368,7 +430,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeDescriptions(descriptions, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
             this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
-            this.SynchronizeAttendeeOrganizations(edition, organizationType, null, true, userId);
+            this.SynchronizeAttendeeOrganizations(edition, organizationType, null, null, true, false, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.OnboardAttendeeOrganizationData(edition, userId);
         }
@@ -389,6 +451,68 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeRestrictionSpecifics(restrictionSpecifics, userId);
             this.SynchronizeOrganizationInterests(interests, userId);
             this.OnboardAttendeeOrganizationInterests(edition, userId);
+        }
+
+        /// <summary>Called when [ticket buyer company data] for ticket buyer onboarding.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="attendeeCollaborator">The attendee collaborator.</param>
+        /// <param name="companyName">Name of the company.</param>
+        /// <param name="tradeName">Name of the trade.</param>
+        /// <param name="document">The document.</param>
+        /// <param name="webSite">The web site.</param>
+        /// <param name="socialMedia">The social media.</param>
+        /// <param name="country">The country.</param>
+        /// <param name="stateUid">The state uid.</param>
+        /// <param name="stateName">Name of the state.</param>
+        /// <param name="cityUid">The city uid.</param>
+        /// <param name="cityName">Name of the city.</param>
+        /// <param name="address1">The address1.</param>
+        /// <param name="addressZipCode">The address zip code.</param>
+        /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
+        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
+        /// <param name="descriptions">The descriptions.</param>
+        /// <param name="organizationActivities">The organization activities.</param>
+        /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardTicketBuyerCompanyData(
+            Edition edition,
+            AttendeeCollaborator attendeeCollaborator,
+            string companyName,
+            string tradeName,
+            string document,
+            string webSite,
+            string socialMedia,
+            Country country,
+            Guid? stateUid,
+            string stateName,
+            Guid? cityUid,
+            string cityName,
+            string address1,
+            string addressZipCode,
+            bool addressIsManual,
+            bool isImageUploaded,
+            bool isImageDeleted,
+            List<OrganizationDescription> descriptions,
+            List<OrganizationActivity> organizationActivities,
+            List<TargetAudience> targetAudiences,
+            int userId)
+        {
+            this.CompanyName = companyName?.Trim();
+            this.TradeName = tradeName?.Trim();
+            this.Document = document?.Trim();
+            this.Website = webSite?.Trim();
+            this.SocialMedia = socialMedia?.Trim();
+            this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateUserId = this.UpdateUserId = userId;
+            this.SynchronizeDescriptions(descriptions, userId);
+            this.SynchronizeOrganizationActivities(organizationActivities, userId);
+            this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
+            this.SynchronizeAttendeeOrganizations(edition, null, attendeeCollaborator, null, true, true, userId);
+            this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
+            this.OnboardAttendeeOrganizationData(edition, userId);
         }
 
         #endregion
@@ -565,15 +689,6 @@ namespace PlataformaRio2C.Domain.Entities
         {
             var attendeeOrganization = this.GetAttendeeOrganizationByEditionId(edition.Id);
             attendeeOrganization?.OnboardOrganizationData(userId);
-            //else
-            //{
-            //    if (this.AttendeeCollaborators == null)
-            //    {
-            //        this.AttendeeCollaborators = new List<AttendeeCollaborator>();
-            //    }
-
-            //    this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, null, this, false, userId));
-            //}
         }
 
         /// <summary>Called when [attendee organization interests].</summary>
@@ -583,25 +698,25 @@ namespace PlataformaRio2C.Domain.Entities
         {
             var attendeeOrganization = this.GetAttendeeOrganizationByEditionId(edition.Id);
             attendeeOrganization?.OnboardInterests(userId);
-            //else
-            //{
-            //    if (this.AttendeeCollaborators == null)
-            //    {
-            //        this.AttendeeCollaborators = new List<AttendeeCollaborator>();
-            //    }
-
-            //    this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, null, this, false, userId));
-            //}
         }
 
 
         /// <summary>Synchronizes the attendee organizations.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="organizationType">Type of the organization.</param>
-        /// <param name="isApiDisplayEnabled">if set to <c>true</c> [is API display enabled].</param>
+        /// <param name="attendeeCollaborator">The attendee collaborator.</param>
+        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
         /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
+        /// <param name="isTicketBuyerOnboarding">if set to <c>true</c> [is ticket buyer onboarding].</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeAttendeeOrganizations(Edition edition, OrganizationType organizationType, bool? isApiDisplayEnabled, bool isAddingToCurrentEdition, int userId)
+        private void SynchronizeAttendeeOrganizations(
+            Edition edition, 
+            OrganizationType organizationType, 
+            AttendeeCollaborator attendeeCollaborator, 
+            bool? isApiDisplayEnabled, 
+            bool isAddingToCurrentEdition, 
+            bool isTicketBuyerOnboarding, 
+            int userId)
         {
             //// Synchronize only when is adding to current edition
             //if (!isAddingToCurrentEdition)
@@ -622,11 +737,14 @@ namespace PlataformaRio2C.Domain.Entities
             var attendeeOrganization = this.AttendeeOrganizations.FirstOrDefault(ao => ao.EditionId == edition.Id);
             if (attendeeOrganization != null)
             {
-                attendeeOrganization.Restore(organizationType, isApiDisplayEnabled, userId);
+                attendeeOrganization.Restore(organizationType, isApiDisplayEnabled, isTicketBuyerOnboarding, userId);
+                attendeeCollaborator?.SynchronizeAttendeeOrganizationCollaborators(new List<AttendeeOrganization> { attendeeOrganization }, false, userId);
             }
             else
             {
-                this.AttendeeOrganizations.Add(new AttendeeOrganization(edition, this, organizationType, isApiDisplayEnabled, userId));
+                var newAttendeeOrganization = new AttendeeOrganization(edition, this, organizationType, isApiDisplayEnabled, isTicketBuyerOnboarding, userId);
+                this.AttendeeOrganizations.Add(newAttendeeOrganization);
+                attendeeCollaborator?.SynchronizeAttendeeOrganizationCollaborators(new List<AttendeeOrganization> { newAttendeeOrganization }, false, userId);
             }
         }
 
@@ -962,6 +1080,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Validates the descriptions.</summary>
         public void ValidateDescriptions()
         {
+            if (this.Descriptions?.Any() != true)
+            {
+                return;
+            }
+
             foreach (var description in this.Descriptions?.Where(d => !d.IsValid())?.ToList())
             {
                 this.ValidationResult.Add(description.ValidationResult);
@@ -971,6 +1094,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Validates the restriction specifics.</summary>
         public void ValidateRestrictionSpecifics()
         {
+            if (this.RestrictionSpecifics?.Any() != true)
+            {
+                return;
+            }
+
             foreach (var restrictionSpecific in this.RestrictionSpecifics?.Where(d => !d.IsValid())?.ToList())
             {
                 this.ValidationResult.Add(restrictionSpecific.ValidationResult);

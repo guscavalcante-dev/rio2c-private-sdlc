@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-30-2019
+// Last Modified On : 10-14-2019
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -45,6 +45,48 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds the name of the by company.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="companyName">Name of the company.</param>
+        /// <returns></returns>
+        internal static IQueryable<Organization> FindByCompanyName(this IQueryable<Organization> query, string companyName)
+        {
+            if (!string.IsNullOrEmpty(companyName))
+            {
+                query = query.Where(o => o.CompanyName.Contains(companyName));
+            }
+
+            return query;
+        }
+
+        /// <summary>Finds the name of the by trade.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="tradeName">Name of the trade.</param>
+        /// <returns></returns>
+        internal static IQueryable<Organization> FindByTradeName(this IQueryable<Organization> query, string tradeName)
+        {
+            if (!string.IsNullOrEmpty(tradeName))
+            {
+                query = query.Where(o => o.TradeName.Contains(tradeName));
+            }
+
+            return query;
+        }
+
+        /// <summary>Finds the by document.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="document">The document.</param>
+        /// <returns></returns>
+        internal static IQueryable<Organization> FindByDocument(this IQueryable<Organization> query, string document)
+        {
+            if (!string.IsNullOrEmpty(document))
+            {
+                query = query.Where(o => o.Document.Contains(document));
+            }
+
+            return query;
+        }
+
         /// <summary>Finds the by organization type uid and by edition identifier.</summary>
         /// <param name="query">The query.</param>
         /// <param name="organizationTypeUid">The organization type uid.</param>
@@ -58,14 +100,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             {
                 query = query.Where(o => o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
                                                                            && !ao.IsDeleted
-                                                                           && ao.AttendeeOrganizationTypes.Any(aot => (showAllOrganizations || aot.OrganizationType.Uid == organizationTypeUid)
-                                                                                                                      && !aot.IsDeleted)));
+                                                                           && (showAllOrganizations || ao.AttendeeOrganizationTypes.Any(aot => aot.OrganizationType.Uid == organizationTypeUid
+                                                                                                                                               && !aot.IsDeleted))));
             }
             else
             {
-                query = query.Where(o => o.AttendeeOrganizations.Any(ao => ao.AttendeeOrganizationTypes.Any(aot => (showAllOrganizations || aot.OrganizationType.Uid == organizationTypeUid)
-                                                                                                                   && !aot.IsDeleted)
-                                                                           && !ao.IsDeleted));
+                query = query.Where(o => o.AttendeeOrganizations.Any(ao => !ao.IsDeleted
+                                                                           && (showAllOrganizations || ao.AttendeeOrganizationTypes.Any(aot => aot.OrganizationType.Uid == organizationTypeUid
+                                                                                                                                               && !aot.IsDeleted))));
             }
 
             return query;
@@ -436,6 +478,37 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 Uid = o.Uid,
                                 CompanyName = o.CompanyName,
                                 TradeName = o.TradeName,
+                                ImageUploadDate = o.ImageUploadDate,
+                                CreateDate = o.CreateDate,
+                                UpdateDate = o.UpdateDate,
+                            })
+                            .OrderBy(o => o.TradeName)
+                            .ToListPagedAsync(page, pageSize);
+        }
+
+        /// <summary>Finds all organizations API paged.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="companyName">Name of the company.</param>
+        /// <param name="tradeName">Name of the trade.</param>
+        /// <param name="document">The document.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<OrganizationApiListDto>> FindAllOrganizationsApiPaged(int editionId, string companyName, string tradeName, string document, int page, int pageSize)
+        {
+            var query = this.GetBaseQuery()
+                .FindByOrganizationTypeUidAndByEditionId(Guid.Empty, true, true, editionId)
+                                .FindByCompanyName(companyName)
+                                .FindByTradeName(tradeName)
+                                .FindByDocument(document);
+
+            return await query
+                            .Select(o => new OrganizationApiListDto
+                            {
+                                Uid = o.Uid,
+                                CompanyName = o.CompanyName,
+                                TradeName = o.TradeName,
+                                Document = o.Document,
                                 ImageUploadDate = o.ImageUploadDate,
                                 CreateDate = o.CreateDate,
                                 UpdateDate = o.UpdateDate,

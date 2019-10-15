@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-30-2019
+// Last Modified On : 10-14-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -284,7 +284,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="shouldDeleteOrganizations">if set to <c>true</c> [should delete organizations].</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeAttendeeOrganizationCollaborators(List<AttendeeOrganization> attendeeOrganizations, bool shouldDeleteOrganizations, int userId)
+        public void SynchronizeAttendeeOrganizationCollaborators(List<AttendeeOrganization> attendeeOrganizations, bool shouldDeleteOrganizations, int userId)
         {
             if (this.AttendeeOrganizationCollaborators == null)
             {

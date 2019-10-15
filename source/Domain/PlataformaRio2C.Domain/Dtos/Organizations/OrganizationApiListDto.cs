@@ -4,7 +4,7 @@
 // Created          : 09-30-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-30-2019
+// Last Modified On : 10-14-2019
 // ***********************************************************************
 // <copyright file="OrganizationApiListDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -22,6 +21,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public Guid Uid { get; set; }
         public string CompanyName { get; set; }
         public string TradeName { get; set; }
+        public string Document { get; set; }
         public DateTime? ImageUploadDate { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }

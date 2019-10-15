@@ -305,6 +305,7 @@
     <Compile Include="Areas\WebApi\Controllers\BaseApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\ConferenceController.cs" />
     <Compile Include="Areas\WebApi\Controllers\MessageController.cs" />
+    <Compile Include="Areas\WebApi\Controllers\OrganizationsController.cs" />
     <Compile Include="Areas\WebApi\Controllers\PlayersController.cs" />
     <Compile Include="Areas\WebApi\Controllers\SalesPlatformsController.cs" />
     <Compile Include="Areas\WebApi\Controllers\ScheduleController.cs" />
@@ -317,6 +318,10 @@
     <Compile Include="Areas\WebApi\Models\ListBaseModel.cs" />
     <Compile Include="Areas\WebApi\Models\ApiBaseResponse.cs" />
     <Compile Include="Areas\WebApi\Models\Error.cs" />
+    <Compile Include="Areas\WebApi\Models\Organizations\Requests\OrganiationsApiRequest.cs" />
+    <Compile Include="Areas\WebApi\Models\Organizations\Requests\OrganizationApiRequest.cs" />
+    <Compile Include="Areas\WebApi\Models\Organizations\Responses\OrganizationsApiResponse.cs" />
+    <Compile Include="Areas\WebApi\Models\Organizations\Responses\OrganizationApiResponse.cs" />
     <Compile Include="Areas\WebApi\Models\Players\Requests\PlayerApiRequest.cs" />
     <Compile Include="Areas\WebApi\Models\Players\Requests\PlayersApiRequest.cs" />
     <Compile Include="Areas\WebApi\Models\Players\Responses\PlayerApiResponse.cs" />
@@ -376,6 +381,11 @@
     <Content Include="Assets\components\hideshowpassword\hideShowPassword.min.js" />
     <Content Include="Assets\components\hideshowpassword\images\wink.png" />
     <Content Include="Assets\components\hideshowpassword\images\wink.svg" />
+    <Content Include="Assets\components\jquery.autocomplete\content\styles.css" />
+    <Content Include="Assets\components\jquery.autocomplete\dist\jquery.autocomplete.js" />
+    <Content Include="Assets\components\jquery.autocomplete\dist\jquery.autocomplete.min.js" />
+    <Content Include="Assets\components\jquery.autocomplete\dist\license.txt" />
+    <Content Include="Assets\components\jquery.autocomplete\license.txt" />
     <Content Include="Assets\components\jquery.form\jquery.form.js" />
     <Content Include="Assets\css\myrio2c.common.responsive.css" />
     <Content Include="Assets\css\myrio2c.common.css" />
@@ -405,7 +415,8 @@
     <Content Include="Assets\js\myrio2c.cropper.js" />
     <Content Include="Assets\js\myrio2c.activity.js" />
     <Content Include="Assets\js\onboarding\onboarding.interests.js" />
-    <Content Include="Assets\js\onboarding\onboarding.organizationdata.js" />
+    <Content Include="Assets\js\onboarding\onboarding.companyinfo.js" />
+    <Content Include="Assets\js\onboarding\onboarding.playerinfo.js" />
     <Content Include="Assets\js\onboarding\onboarding.collaboratordata.js" />
     <Content Include="Assets\js\onboarding\onboarding.wizard.js" />
     <Content Include="Assets\js\onboarding\wizard-2.js" />
@@ -6361,6 +6372,7 @@
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Assets\components\hideshowpassword\.gitignore" />
     <Content Include="Assets\components\hideshowpassword\README.md" />
+    <Content Include="Assets\components\jquery.autocomplete\readme.md" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />
@@ -7131,6 +7143,7 @@
     <Content Include="Views\Companies\Modals\UpdateTargetAudienceForm.cshtml" />
     <Content Include="Views\Companies\Modals\UpdateInterestModal.cshtml" />
     <Content Include="Views\Companies\Modals\UpdateInterestForm.cshtml" />
+    <Content Include="Views\Onboarding\CompanyInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

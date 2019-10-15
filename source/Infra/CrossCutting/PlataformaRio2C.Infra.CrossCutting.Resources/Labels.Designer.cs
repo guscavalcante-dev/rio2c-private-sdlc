@@ -1582,6 +1582,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Depois.
+        /// </summary>
+        public static string Later {
+            get {
+                return ResourceManager.GetString("Later", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Detalhes da Palestra.
         /// </summary>
         public static string LectureDetails {

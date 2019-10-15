@@ -1557,4 +1557,8 @@
     <value>Participants Regulation {0}.pdf</value>
     <comment>Regulamento Participante {0}.pdf</comment>
   </data>
+  <data name="Later" xml:space="preserve">
+    <value>Later</value>
+    <comment>Depois</comment>
+  </data>
 </root>

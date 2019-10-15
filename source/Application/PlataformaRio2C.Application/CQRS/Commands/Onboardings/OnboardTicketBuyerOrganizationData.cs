@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Rafael Dantas Ruiz
-// Created          : 08-19-2019
+// Created          : 10-14-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-23-2019
+// Last Modified On : 10-14-2019
 // ***********************************************************************
-// <copyright file="OnboardOrganizationData.cs" company="Softo">
+// <copyright file="OnboardTicketBuyerOrganizationData.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -24,10 +24,10 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>OnboardOrganizationData</summary>
-    public class OnboardOrganizationData : BaseCommand
+    /// <summary>OnboardTicketBuyerOrganizationData</summary>
+    public class OnboardTicketBuyerOrganizationData : BaseCommand
     {
-        public Guid OrganizationUid { get; set; }
+        public Guid? OrganizationUid { get; set; }
 
         [Display(Name = "CompanyName", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -77,10 +77,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<TargetAudience> TargetAudiences { get; private set; }
         public List<CountryBaseDto> CountriesBaseDtos { get; private set; }
 
-        public UserBaseDto UpdaterBaseDto { get; set; }
-        public DateTime UpdateDate { get; set; }
+        public Guid CollaboratorUid { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="OnboardOrganizationData"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="OnboardTicketBuyerOrganizationData"/> class.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="holdingBaseDtos">The holding base dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
@@ -90,7 +89,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isDescriptionRequired">if set to <c>true</c> [is description required].</param>
         /// <param name="isAddressRequired">if set to <c>true</c> [is address required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
-        public OnboardOrganizationData(
+        public OnboardTicketBuyerOrganizationData(
             OrganizationDto entity, 
             List<HoldingBaseDto> holdingBaseDtos, 
             List<LanguageDto> languagesDtos, 
@@ -101,7 +100,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isAddressRequired, 
             bool isImageRequired)
         {
-            this.OrganizationUid = entity.Uid;
+            this.OrganizationUid = entity?.Uid;
             this.CompanyName = entity?.CompanyName;
             this.TradeName = entity?.TradeName;
             this.CountryUid = entity?.AddressBaseDto?.CountryUid;
@@ -115,12 +114,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateActivities(entity, activities);
             this.UpdateCropperImage(entity, isImageRequired);
             this.UpdateDropdownProperties(holdingBaseDtos, countriesBaseDtos, targetAudiences);
-            this.UpdaterBaseDto = entity.UpdaterDto;
-            this.UpdateDate = entity.UpdateDate;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="OnboardOrganizationData"/> class.</summary>
-        public OnboardOrganizationData()
+        /// <summary>Initializes a new instance of the <see cref="OnboardTicketBuyerOrganizationData"/> class.</summary>
+        public OnboardTicketBuyerOrganizationData()
         {
         }
 
@@ -187,22 +184,22 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         }
 
         /// <summary>Updates the pre send properties.</summary>
-        /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <param name="userId">The user identifier.</param>
         /// <param name="userUid">The user uid.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="editionUid">The edition uid.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public void UpdatePreSendProperties(
-            OrganizationType organizationType,
+            Guid collaboratorUid,
             int userId,
             Guid userUid,
             int? editionId,
             Guid? editionUid,
             string userInterfaceLanguage)
         {
-            this.OrganizationType = organizationType;
-            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
+            this.CollaboratorUid = collaboratorUid;
+            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, userInterfaceLanguage);
         }
     }
 }

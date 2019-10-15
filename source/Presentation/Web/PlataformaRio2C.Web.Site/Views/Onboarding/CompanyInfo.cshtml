@@ -1,34 +1,28 @@
 ﻿@using System.Globalization
 @using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2C.Domain.Entities
-@model PlataformaRio2C.Application.CQRS.Commands.OnboardPlayerOrganizationData
+@model PlataformaRio2C.Application.CQRS.Commands.OnboardTicketBuyerOrganizationData
 @{
     Layout = "~/Views/Themes/Metronic/_Internal.cshtml";
     ViewBag.Title = Labels.Welcome;
 
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
-    var playerAttendeeOrganizations = ViewBag.PlayerAttendeeOrganizations as List<AttendeeOrganization>;
-    var isPlayer = ViewBag.IsPlayer as bool?;
-    var player = playerAttendeeOrganizations?.FirstOrDefault(pao => pao.Organization.Uid == Model.OrganizationUid)?.Organization;
-    var initialPlayerIndex = 3 + (isPlayer == true ? 1 : 0);
-    var playerIndex = playerAttendeeOrganizations?.FindIndex(pao => pao.Organization.Uid == Model.OrganizationUid) ?? 0;
-    var additionIndex = playerIndex == 0 ? 0 : 1;
 }
 <div class="kt-portlet">
     <div class="kt-portlet__body kt-portlet__body--fit">
         <div class="kt-grid  kt-wizard-v2 kt-wizard-v2--white" id="kt_wizard_v2" data-ktwizard-state="first">
             <div class="kt-grid__item kt-wizard-v2__aside">
                 <!--begin: Form Wizard Nav -->
-                @Html.Partial("Shared/_OnboardingMenu", playerIndex + initialPlayerIndex + additionIndex)
+                @Html.Partial("Shared/_OnboardingMenu", 3)
                 <!--end: Form Wizard Nav -->
             </div>
             <div class="kt-grid__item kt-grid__item--fluid kt-wizard-v2__wrapper">
-                @using (Html.BeginForm("PlayerInfo", "Onboarding", FormMethod.Post, new { enctype = "multipart/form-data", id = "OrganizationDataForm", @class = "kt-form", novalidate = "novalidate" }))
+                @using (Html.BeginForm("CompanyInfo", "Onboarding", FormMethod.Post, new { enctype = "multipart/form-data", id = "CompanyInfoForm", @class = "kt-form", novalidate = "novalidate" }))
                 {
                     @Html.HiddenFor(m => m.OrganizationUid)
                     <!--begin: Form Wizard Step 1-->
                     <div class="kt-wizard-v2__content" data-ktwizard-type="step-content" data-ktwizard-state="current">
-                        <div class="kt-heading kt-heading--md">@string.Format(Messages.PlayerInfoFor, player?.Name ?? string.Empty)</div>
+                        <div class="kt-heading kt-heading--md">@Labels.Company</div>
                         <div class="kt-form__section kt-form__section--first">
                             <div class="kt-wizard-v2__form">
                                 <div id="form-container">
@@ -146,18 +140,12 @@
                     <!--end: Form Wizard Step 1-->
                     <!--begin: Form Actions -->
                     <div class="kt-form__actions">
-                        @if (userAccessControlDto?.IsAttendeeCollaboratorOnboardingFinished() == false || userAccessControlDto?.IsAttendeeOrganizationsOnboardingFinished() == false)
-                        {
-                            <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="OnboardWizard.submit('#OrganizationDataForm');">
-                                @Labels.NextStep
-                            </button>
-                        }
-                        else
-                        {
-                            <button class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto">
-                                @Labels.Save
-                            </button>
-                        }
+                        @*<button class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+                            @Labels.Later
+                        </button>*@
+                        <button class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" @*onclick="OnboardWizard.submit('#CompanyInfoForm');"*@>
+                            @Labels.Save
+                        </button>
                     </div>
                     <!--end: Form Actions -->
                 }
@@ -169,6 +157,7 @@
 @section Styles {
     @Styles.Render("~/bundles/css/cropper.css")
     @Styles.Render("~/bundles/css/select2.css")
+    @Styles.Render("~/bundles/css/jquery.autocomplete.css")
     @Styles.Render("~/bundles/css/onboardingIndex")
 }
 @section Scripts {
@@ -177,12 +166,13 @@
     @Scripts.Render("~/bundles/js/select2.js")
     @Scripts.Render("~/bundles/js/ckEditor.js")
     @Scripts.Render("~/bundles/js/inputmask.js")
+    @Scripts.Render("~/bundles/js/jquery.autocomplete.js")
     @Scripts.Render("~/bundles/js/addresses.form.js")
-    @Scripts.Render("~/bundles/js/onboarding.playerinfo.js")
+    @Scripts.Render("~/bundles/js/onboarding.companyinfo.js")
     @Scripts.Render("~/bundles/js/onboarding.wizard.js")
     <script>
         jQuery(document).ready(function () {
-            OnboardingPlayerInfo.init();
+            OnboardingCompanyInfo.init();
         });
     </script>
 }
