@@ -43,7 +43,7 @@
                                     <ul class="mt-2 mb-0 pl-4">
                                         @foreach (var organization in organizations?.OrderBy(o => o.Name))
                                         {
-                                            <li><a href="@Url.Action("Details", "Companies", new { id = organization.Uid })">@organization.Name</a></li>
+                                            <li><a href="@Url.Action("Details", "Companies", new { id = organization.Uid })"><small>@organization.TradeName</small></a></li>
                                         }
                                     </ul>
                                 }
