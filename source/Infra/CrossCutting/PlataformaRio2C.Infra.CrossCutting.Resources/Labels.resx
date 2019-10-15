@@ -1498,8 +1498,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Opções</comment>
   </data>
   <data name="AudiovisualProjects" xml:space="preserve">
-    <value>Projetos Audiovisuais</value>
-    <comment>Projetos Audiovisuais</comment>
+    <value>Projetos de Audiovisual</value>
+    <comment>Projetos de Audiovisual</comment>
   </data>
   <data name="EvaluateProjects" xml:space="preserve">
     <value>Avaliar projetos</value>
