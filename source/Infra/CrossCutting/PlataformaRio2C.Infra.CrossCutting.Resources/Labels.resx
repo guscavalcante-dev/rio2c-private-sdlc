@@ -1573,4 +1573,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Depois</value>
     <comment>Depois</comment>
   </data>
+  <data name="Skip" xml:space="preserve">
+    <value>Pular</value>
+    <comment>Pular</comment>
+  </data>
 </root>

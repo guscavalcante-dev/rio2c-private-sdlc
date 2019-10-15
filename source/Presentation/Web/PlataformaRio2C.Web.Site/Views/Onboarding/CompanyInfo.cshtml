@@ -30,6 +30,9 @@
                     <!--end: Form Wizard Step 1-->
                     <!--begin: Form Actions -->
                     <div class="kt-form__actions">
+                        <a href="@Url.Action("SkipCompanyInfo", "Onboarding", new { Area = "" })" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+                            @Labels.Skip
+                        </a>
                         <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="OnboardWizard.submit('#CompanyInfoForm');">
                             @Labels.Save
                         </button>

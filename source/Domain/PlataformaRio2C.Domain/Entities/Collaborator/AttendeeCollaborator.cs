@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-14-2019
+// Last Modified On : 10-15-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,6 +28,7 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTime? OnboardingFinishDate { get; private set; }
         public DateTime? OnboardingUserDate { get; private set; }
         public DateTime? OnboardingCollaboratorDate { get; private set; }
+        public DateTime? OnboardingOrganizationDataSkippedDate { get; private set; }
         public DateTime? PlayerTermsAcceptanceDate { get; private set; }
         public DateTime? ProducerTermsAcceptanceDate { get; private set; }
         public bool IsApiDisplayEnabled { get; private set; }
@@ -225,6 +226,16 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
             this.ProducerTermsAcceptanceDate = DateTime.Now;
+        }
+
+        /// <summary>Skips the onboard ticket buyer company data.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void SkipOnboardTicketBuyerCompanyData(int userId)
+        {
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            this.OnboardingOrganizationDataSkippedDate = DateTime.Now;
         }
 
         #endregion

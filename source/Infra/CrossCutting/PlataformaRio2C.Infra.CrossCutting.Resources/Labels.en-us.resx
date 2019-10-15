@@ -1561,4 +1561,8 @@
     <value>Later</value>
     <comment>Depois</comment>
   </data>
+  <data name="Skip" xml:space="preserve">
+    <value>Skip</value>
+    <comment>Pular</comment>
+  </data>
 </root>

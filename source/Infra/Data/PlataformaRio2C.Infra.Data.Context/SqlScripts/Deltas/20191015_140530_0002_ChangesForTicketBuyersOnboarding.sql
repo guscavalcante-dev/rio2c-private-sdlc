@@ -3,5 +3,6 @@
 
 --possible values are: "no", "yes, not done" and "yes, done"
 
-UPDATE "dbo"."Languages"  SET Code = 'en-us'  WHERE Code = 'en'
-GO
+ALTER TABLE "dbo"."AttendeeCollaborators"
+ADD OnboardingOrganizationDataSkippedDate  datetime  NULL
+go

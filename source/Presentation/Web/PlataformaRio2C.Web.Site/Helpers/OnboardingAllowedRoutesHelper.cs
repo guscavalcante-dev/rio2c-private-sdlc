@@ -43,6 +43,7 @@ namespace PlataformaRio2C.Web.Site.Helpers
             new OnboardingAllowedRoute("Onboarding", "PlayerInterests"),
             new OnboardingAllowedRoute("Onboarding", "CompanyInfo"),
             new OnboardingAllowedRoute("Onboarding", "ShowCompanyInfoFilledForm"),
+            new OnboardingAllowedRoute("Onboarding", "SkipCompanyInfo"),
         };
 
         /// <summary>
