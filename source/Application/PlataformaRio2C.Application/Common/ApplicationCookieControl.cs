@@ -1,19 +1,30 @@
-﻿using PlataformaRio2C.Domain.Constants;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Application
+// Author           : Wilian Almado
+// Created          : 10-11-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 10-11-2019
+// ***********************************************************************
+// <copyright file="ApplicationCookieControl.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
-using System.Web.Mvc;
 
 namespace PlataformaRio2C.Application.Common
 {
-    public class ApplicationCookieControl
+    /// <summary>ApplicationCookieControl</summary>
+    public static class ApplicationCookieControl
     {
-        public ApplicationCookieControl(){}
-
-        public HttpCookie SetCookie(string culture, HttpCookie cookie, string cookieName)
+        /// <summary>Sets the cookie.</summary>
+        /// <param name="culture">The culture.</param>
+        /// <param name="cookie">The cookie.</param>
+        /// <param name="cookieName">Name of the cookie.</param>
+        /// <returns></returns>
+        public static HttpCookie SetCookie(string culture, HttpCookie cookie, string cookieName)
         {
             if (cookie != null)
             {

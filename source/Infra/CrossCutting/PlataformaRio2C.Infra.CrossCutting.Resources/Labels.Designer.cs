@@ -2293,6 +2293,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Regulamento Player {0}.pdf.
+        /// </summary>
+        public static string PlayersRegulationPdf {
+            get {
+                return ResourceManager.GetString("PlayersRegulationPdf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Players selecionados para avaliação.
         /// </summary>
         public static string PlayersSelectedToEvaluation {
@@ -2446,6 +2455,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ProducerSingle {
             get {
                 return ResourceManager.GetString("ProducerSingle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Regulamento Participante {0}.pdf.
+        /// </summary>
+        public static string ProducersRegulationPdf {
+            get {
+                return ResourceManager.GetString("ProducersRegulationPdf", resourceCulture);
             }
         }
         

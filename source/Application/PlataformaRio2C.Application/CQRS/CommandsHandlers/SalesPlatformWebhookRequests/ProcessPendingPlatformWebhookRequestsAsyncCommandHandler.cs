@@ -4,7 +4,7 @@
 // Created          : 08-31-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-11-2019
+// Last Modified On : 10-14-2019
 // ***********************************************************************
 // <copyright file="ProcessPendingPlatformWebhookRequestsAsyncCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -71,7 +71,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var pendingRequestsDtos = await this.CommandBus.Send(new FindAllSalesPlatformWebhooRequestsDtoByPending(), cancellationToken);
             if (pendingRequestsDtos?.Any() != true)
             {
-                this.ValidationResult.Add(new ValidationError("No pending webhook requests to process."));
+                return this.AppValidationResult;
             }
 
             // Check to stop processing

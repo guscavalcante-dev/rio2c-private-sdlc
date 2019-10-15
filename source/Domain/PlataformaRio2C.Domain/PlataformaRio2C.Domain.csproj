@@ -72,10 +72,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants\Authorizations\CookieName.cs" />
-    <Compile Include="Constants\Authorizations\OrganizationType.cs" />
-    <Compile Include="Constants\Authorizations\CollaboratorType.cs" />
-    <Compile Include="Constants\Authorizations\Role.cs" />
+    <Compile Include="Constants\CookieName.cs" />
+    <Compile Include="Constants\OrganizationType.cs" />
+    <Compile Include="Constants\CollaboratorType.cs" />
+    <Compile Include="Constants\Role.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorSiteDetailsDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorSiteCompanyWidgetDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorSiteMainInformationWidgetDto.cs" />

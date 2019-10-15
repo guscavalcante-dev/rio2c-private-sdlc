@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-28-2019
+// Last Modified On : 10-11-2019
 // ***********************************************************************
 // <copyright file="AccountController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,7 +30,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Application.Common;
 using System.Text.RegularExpressions;
-using PlataformaRio2C.Domain.Constants.Authorizations;
+using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -134,7 +134,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     var userLanguage = await this.CommandBus.Send(new FindUserLanguageDto(user.Id));
                     if (userLanguage != null)
                     {
-                        var cookie = new ApplicationCookieControl().SetCookie(userLanguage.Language.Code, Response.Cookies[CookieName.MyRio2CCookie], CookieName.MyRio2CCookie);
+                        var cookie = ApplicationCookieControl.SetCookie(userLanguage.Language.Code, Response.Cookies[Constants.CookieName.MyRio2CCookie], Constants.CookieName.MyRio2CCookie);
                         Response.Cookies.Add(cookie);
                     }
 
@@ -143,61 +143,68 @@ namespace PlataformaRio2C.Web.Site.Controllers
                         if (userLanguage != null)
                         {
                             var listLanguages = await this.CommandBus.Send(new FindAllLanguagesDtosAsync(null));
-
                             foreach (var item in listLanguages)
                             {
                                 returnUrl = Regex.Replace(returnUrl, item.Code, userLanguage.Language.Code, RegexOptions.IgnoreCase);
                             }
+
+                            if (returnUrl.IndexOf(userLanguage.Language.Code, StringComparison.OrdinalIgnoreCase) < 0)
+                            {
+                                returnUrl = "/" + userLanguage.Language.Code + returnUrl;
+                            }
                         }
+
                         return Redirect(returnUrl);
                     }
-                    else
+
+                    if (userLanguage != null)
                     {
-                        return RedirectToAction("Index", "Quiz");
+                        return RedirectToAction("Index", "Quiz", new { culture = userLanguage?.Language?.Code });
                     }
 
+                    return RedirectToAction("Index", "Quiz");
 
-                //transforma a senha digitada em md5
-                //byte[] encodedPassword = new UTF8Encoding().GetBytes(model.Password);
-                //byte[] bytePassword = ((HashAlgorithm)CryptoConfig.CreateFromName("MD5")).ComputeHash(encodedPassword);
-                //var md5Password = CreateMD5(model.Password);
+                    //transforma a senha digitada em md5
+                    //byte[] encodedPassword = new UTF8Encoding().GetBytes(model.Password);
+                    //byte[] bytePassword = ((HashAlgorithm)CryptoConfig.CreateFromName("MD5")).ComputeHash(encodedPassword);
+                    //var md5Password = CreateMD5(model.Password);
 
-                ////busca o email no JSON da ticket4you
-                //Ticket4youController userByTicket = new Ticket4youController();
+                    ////busca o email no JSON da ticket4you
+                    //Ticket4youController userByTicket = new Ticket4youController();
 
-                //if (userByTicket.SearchOne(model.Email) == null)
-                //{
-                //    ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
-                //    //ModelState.AddModelError("", Messages.LoginByTicket4YouIncorrect);
-                //    return View(model);
+                    //if (userByTicket.SearchOne(model.Email) == null)
+                    //{
+                    //    ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
+                    //    //ModelState.AddModelError("", Messages.LoginByTicket4YouIncorrect);
+                    //    return View(model);
 
-                //}
-                //else if (userByTicket.UserTicket.senha != md5Password)
-                //{
-                //    ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
-                //    //ModelState.AddModelError("", Messages.LoginByTicket4YouIncorrect);
-                //    return View(model);
-                //}
-                ////else if (userByTicket.UserTicket.status_pedido != "Aprovado")
-                ////{
-                ////    //CRIAR TEXTO DE PAGAMANTO NÃO APROVADO
-                ////    ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
-                ////    //ModelState.AddModelError("", Messages.LoginByTicket4YouIncorrect);
-                ////    return View(model);
-                ////}
-                //else
-                //{
+                    //}
+                    //else if (userByTicket.UserTicket.senha != md5Password)
+                    //{
+                    //    ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
+                    //    //ModelState.AddModelError("", Messages.LoginByTicket4YouIncorrect);
+                    //    return View(model);
+                    //}
+                    ////else if (userByTicket.UserTicket.status_pedido != "Aprovado")
+                    ////{
+                    ////    //CRIAR TEXTO DE PAGAMANTO NÃO APROVADO
+                    ////    ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
+                    ////    //ModelState.AddModelError("", Messages.LoginByTicket4YouIncorrect);
+                    ////    return View(model);
+                    ////}
+                    //else
+                    //{
 
-                //if (!await _identityController.IsInRoleAsync(user.Id, Domain.Statics.Role.User.Name) &&
-                //    !await _identityController.IsInRoleAsync(user.Id, Domain.Statics.Role.Admin.Name))
-                //{
-                //    this.StatusMessage(Messages.AccessDenied, StatusMessageType.Danger);
-                //    return RedirectToAction("LogOff");
-                //}
+                    //if (!await _identityController.IsInRoleAsync(user.Id, Domain.Statics.Role.User.Name) &&
+                    //    !await _identityController.IsInRoleAsync(user.Id, Domain.Statics.Role.Admin.Name))
+                    //{
+                    //    this.StatusMessage(Messages.AccessDenied, StatusMessageType.Danger);
+                    //    return RedirectToAction("LogOff");
+                    //}
 
-                //returnUrl = returnUrl ?? "/";
-                //return RedirectToLocal(returnUrl);
-                // return RedirectToAction("Index", "Quiz");
+                    //returnUrl = returnUrl ?? "/";
+                    //return RedirectToLocal(returnUrl);
+                    // return RedirectToAction("Index", "Quiz");
 
                 case IdentitySignInStatus.LockedOut:
                     return View("Lockout");

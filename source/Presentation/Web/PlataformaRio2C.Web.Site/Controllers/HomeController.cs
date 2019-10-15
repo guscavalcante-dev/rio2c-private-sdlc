@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-10-2019
+// Last Modified On : 10-11-2019
 // ***********************************************************************
 // <copyright file="HomeController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,7 +24,7 @@ using PlataformaRio2C.Web.Site.Filters;
 using PlataformaRio2C.Application.CQRS.Commands.User;
 using System.Text.RegularExpressions;
 using PlataformaRio2C.Application.Common;
-using PlataformaRio2C.Domain.Constants.Authorizations;
+using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -105,7 +105,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     culture));
             }
 
-            var cookie = new ApplicationCookieControl().SetCookie(culture, Response.Cookies[CookieName.MyRio2CCookie], CookieName.MyRio2CCookie);
+            var cookie = ApplicationCookieControl.SetCookie(culture, Response.Cookies[Constants.CookieName.MyRio2CCookie], Constants.CookieName.MyRio2CCookie);
             Response.Cookies.Add(cookie);
 
             #endregion
@@ -115,7 +115,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 returnUrl = Request.UrlReferrer.PathAndQuery;
             }
 
-            returnUrl = Regex.Replace(returnUrl, oldCulture, culture, RegexOptions.IgnoreCase);
+            if (!string.IsNullOrEmpty(returnUrl))
+            {
+                returnUrl = Regex.Replace(returnUrl, oldCulture, culture, RegexOptions.IgnoreCase);
+            }
 
             if (Url.IsLocalUrl(returnUrl))
             {
