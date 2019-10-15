@@ -683,11 +683,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             var cmd = new OnboardTicketBuyerOrganizationData(
                 null,
-                await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                await this.activityRepo.FindAllAsync(),
-                await this.targetAudienceRepo.FindAllAsync(),
                 true,
                 true,
                 true);
@@ -707,11 +704,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
             {
                 cmd = new OnboardTicketBuyerOrganizationData(
                     organizationUid.HasValue ? await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(organizationUid, this.EditionDto.Id, this.UserInterfaceLanguage)) : null,
-                    await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                    await this.activityRepo.FindAllAsync(),
-                    await this.targetAudienceRepo.FindAllAsync(),
                     true,
                     true,
                     true);
@@ -787,9 +781,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 this.StatusMessageToastr(ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
 
                 cmd.UpdateDropdownProperties(
-                    await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                    await this.targetAudienceRepo.FindAllAsync());
+                    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)));
 
                 return View(cmd);
             }
@@ -799,9 +791,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
 
                 cmd.UpdateDropdownProperties(
-                    await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                    await this.targetAudienceRepo.FindAllAsync());
+                    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)));
 
                 return View(cmd);
             }

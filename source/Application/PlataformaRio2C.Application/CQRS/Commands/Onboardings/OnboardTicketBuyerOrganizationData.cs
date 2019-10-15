@@ -4,7 +4,7 @@
 // Created          : 10-14-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-14-2019
+// Last Modified On : 10-15-2019
 // ***********************************************************************
 // <copyright file="OnboardTicketBuyerOrganizationData.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -61,41 +61,25 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public AddressBaseCommand Address { get; set; }
 
-        [Display(Name = "Activities", ResourceType = typeof(Labels))]
-        public List<OrganizationActivityBaseCommand> OrganizationActivities { get; set; }
-
-        [Display(Name = "TargetAudiences", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneOption")]
-        public List<Guid> TargetAudiencesUids { get; set; }
-
         public List<OrganizationDescriptionBaseCommand> Descriptions { get; set; }
         public CropperImageBaseCommand CropperImage { get; set; }
 
-        public List<HoldingBaseDto> HoldingBaseDtos { get; private set; }
         public OrganizationType OrganizationType { get; private set; }
-        //public List<Activity> Activities { get; private set; }
-        public List<TargetAudience> TargetAudiences { get; private set; }
         public List<CountryBaseDto> CountriesBaseDtos { get; private set; }
 
         public Guid CollaboratorUid { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="OnboardTicketBuyerOrganizationData"/> class.</summary>
         /// <param name="entity">The entity.</param>
-        /// <param name="holdingBaseDtos">The holding base dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
-        /// <param name="activities">The activities.</param>
-        /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="isDescriptionRequired">if set to <c>true</c> [is description required].</param>
         /// <param name="isAddressRequired">if set to <c>true</c> [is address required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         public OnboardTicketBuyerOrganizationData(
             OrganizationDto entity, 
-            List<HoldingBaseDto> holdingBaseDtos, 
             List<LanguageDto> languagesDtos, 
             List<CountryBaseDto> countriesBaseDtos,
-            List<Activity> activities,
-            List<TargetAudience> targetAudiences,
             bool isDescriptionRequired, 
             bool isAddressRequired, 
             bool isImageRequired)
@@ -108,12 +92,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Document = entity?.Document;
             this.Website = entity?.Website;
             this.SocialMedia = entity?.SocialMedia;
-            this.TargetAudiencesUids = entity?.OrganizationTargetAudiencesDtos?.Select(otad => otad.TargetAudienceUid)?.ToList();
             this.UpdateAddress(entity, isAddressRequired);
             this.UpdateDescriptions(entity, languagesDtos, isDescriptionRequired);
-            this.UpdateActivities(entity, activities);
             this.UpdateCropperImage(entity, isImageRequired);
-            this.UpdateDropdownProperties(holdingBaseDtos, countriesBaseDtos, targetAudiences);
+            this.UpdateDropdownProperties(countriesBaseDtos);
         }
 
         /// <summary>Initializes a new instance of the <see cref="OnboardTicketBuyerOrganizationData"/> class.</summary>
@@ -144,20 +126,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             }
         }
 
-        /// <summary>Updates the activities.</summary>
-        /// <param name="entity">The entity.</param>
-        /// <param name="activities">The activities.</param>
-        private void UpdateActivities(OrganizationDto entity, List<Activity> activities)
-        {
-            this.OrganizationActivities = new List<OrganizationActivityBaseCommand>();
-            foreach (var activity in activities)
-            {
-                var organizationActivity = entity?.OrganizationActivitiesDtos?.FirstOrDefault(oad => oad.ActivityUid == activity.Uid);
-                this.OrganizationActivities.Add(organizationActivity != null ? new OrganizationActivityBaseCommand(organizationActivity) :
-                                                                               new OrganizationActivityBaseCommand(activity));
-            }
-        }
-
         /// <summary>Updates the cropper image.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
@@ -167,16 +135,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         }
 
         /// <summary>Updates the dropdown properties.</summary>
-        /// <param name="holdingBaseDtos">The holding base dtos.</param>
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
-        /// <param name="targetAudiences">The target audiences.</param>
-        public void UpdateDropdownProperties(
-            List<HoldingBaseDto> holdingBaseDtos, 
-            List<CountryBaseDto> countriesBaseDtos,
-            List<TargetAudience> targetAudiences)
+        public void UpdateDropdownProperties(List<CountryBaseDto> countriesBaseDtos)
         {
-            this.HoldingBaseDtos = holdingBaseDtos;
-            this.TargetAudiences = targetAudiences;
             this.CountriesBaseDtos = countriesBaseDtos?
                                             .OrderBy(c => c.Ordering)?
                                             .ThenBy(c => c.DisplayName)?

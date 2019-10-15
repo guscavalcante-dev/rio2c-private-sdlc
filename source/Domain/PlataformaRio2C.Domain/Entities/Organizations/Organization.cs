@@ -160,8 +160,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="descriptions">The descriptions.</param>
-        /// <param name="organizationActivities">The organization activities.</param>
-        /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="userId">The user identifier.</param>
         public Organization(
             Edition edition,
@@ -182,8 +180,6 @@ namespace PlataformaRio2C.Domain.Entities
             bool addressIsManual,
             bool isImageUploaded,
             List<OrganizationDescription> descriptions,
-            List<OrganizationActivity> organizationActivities,
-            List<TargetAudience> targetAudiences,
             int userId)
         {
             this.Name = name?.Trim();
@@ -199,8 +195,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeDescriptions(descriptions, userId);
             this.SynchronizeAttendeeOrganizations(edition, null, attendeeCollaborator, false, true, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
-            this.SynchronizeOrganizationActivities(organizationActivities, userId);
-            this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
         }
 
         /// <summary>Initializes a new instance of the <see cref="Organization"/> class.</summary>
@@ -472,8 +466,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
         /// <param name="descriptions">The descriptions.</param>
-        /// <param name="organizationActivities">The organization activities.</param>
-        /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="userId">The user identifier.</param>
         public void OnboardTicketBuyerCompanyData(
             Edition edition,
@@ -494,8 +486,6 @@ namespace PlataformaRio2C.Domain.Entities
             bool isImageUploaded,
             bool isImageDeleted,
             List<OrganizationDescription> descriptions,
-            List<OrganizationActivity> organizationActivities,
-            List<TargetAudience> targetAudiences,
             int userId)
         {
             this.CompanyName = companyName?.Trim();
@@ -508,8 +498,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
             this.SynchronizeDescriptions(descriptions, userId);
-            this.SynchronizeOrganizationActivities(organizationActivities, userId);
-            this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
             this.SynchronizeAttendeeOrganizations(edition, null, attendeeCollaborator, null, true, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.OnboardAttendeeOrganizationData(edition, userId);

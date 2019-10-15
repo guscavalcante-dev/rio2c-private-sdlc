@@ -4,7 +4,7 @@
 // Created          : 10-14-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-14-2019
+// Last Modified On : 10-15-2019
 // ***********************************************************************
 // <copyright file="OnboardTicketBuyerOrganizationDataCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,10 +34,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IEditionRepository editionRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
         private readonly ILanguageRepository languageRepo;
-        private readonly IActivityRepository activityRepo;
-        private readonly ITargetAudienceRepository targetAudienceRepo;
         private readonly ICountryRepository countryRepo;
 
+        /// <summary>Initializes a new instance of the <see cref="OnboardTicketBuyerOrganizationDataCommandHandler"/> class.</summary>
+        /// <param name="eventBus">The event bus.</param>
+        /// <param name="uow">The uow.</param>
+        /// <param name="organizationRepository">The organization repository.</param>
+        /// <param name="editionRepository">The edition repository.</param>
+        /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
+        /// <param name="languageRepository">The language repository.</param>
+        /// <param name="countryRepository">The country repository.</param>
         public OnboardTicketBuyerOrganizationDataCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
@@ -45,16 +51,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IEditionRepository editionRepository,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
             ILanguageRepository languageRepository,
-            IActivityRepository activityRepository,
-            ITargetAudienceRepository targetAudienceRepository,
             ICountryRepository countryRepository)
             : base(eventBus, uow, organizationRepository)
         {
             this.editionRepo = editionRepository;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
             this.languageRepo = languageRepository;
-            this.activityRepo = activityRepository;
-            this.targetAudienceRepo = targetAudienceRepository;
             this.countryRepo = countryRepository;
         }
 
@@ -69,7 +71,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             Organization organization = null;
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
-            var activities = await this.activityRepo.FindAllAsync();
 
             var attendeeCollaborator = await this.attendeeCollaboratorRepo.GetAsync(ac => ac.Collaborator.Uid == cmd.CollaboratorUid);
             if (attendeeCollaborator == null)
@@ -114,8 +115,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.CropperImage?.ImageFile != null,
                     cmd.CropperImage?.IsImageDeleted == true,
                     cmd.Descriptions?.Select(d => new OrganizationDescription(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
-                    cmd.OrganizationActivities?.Where(oa => oa.IsChecked)?.Select(oa => new OrganizationActivity(activities?.FirstOrDefault(a => a.Uid == oa.ActivityUid), oa.AdditionalInfo, cmd.UserId))?.ToList(),
-                    cmd.TargetAudiencesUids?.Any() == true ? await this.targetAudienceRepo.FindAllByUidsAsync(cmd.TargetAudiencesUids) : new List<TargetAudience>(),
                     cmd.UserId);
                 if (!organization.IsValid())
                 {
@@ -183,8 +182,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     true, //TODO: get AddressIsManual from form
                     cmd.CropperImage?.ImageFile != null,
                     cmd.Descriptions?.Select(d => new OrganizationDescription(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
-                    cmd.OrganizationActivities?.Where(oa => oa.IsChecked)?.Select(oa => new OrganizationActivity(activities?.FirstOrDefault(a => a.Uid == oa.ActivityUid), oa.AdditionalInfo, cmd.UserId))?.ToList(),
-                    cmd.TargetAudiencesUids?.Any() == true ? await this.targetAudienceRepo.FindAllByUidsAsync(cmd.TargetAudiencesUids) : new List<TargetAudience>(),
                     cmd.UserId);
                 if (!organization.IsValid())
                 {
