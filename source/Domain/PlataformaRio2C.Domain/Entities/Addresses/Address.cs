@@ -4,7 +4,7 @@
 // Created          : 08-22-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 10-15-2019
 // ***********************************************************************
 // <copyright file="Address.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -71,6 +71,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
+            this.UpdateCountry(country, userId);
+            this.UpdateState(country, stateUid, stateName, isManual, userId);
             this.UpdateCity(country, stateUid, stateName, cityUid, cityName, isManual, userId);
         }
 

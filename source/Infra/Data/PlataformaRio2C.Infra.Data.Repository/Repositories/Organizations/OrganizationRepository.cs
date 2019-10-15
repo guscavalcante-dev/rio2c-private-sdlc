@@ -96,7 +96,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<Organization> FindByOrganizationTypeUidAndByEditionId(this IQueryable<Organization> query, Guid organizationTypeUid, bool showAllEditions, bool showAllOrganizations, int? editionId)
         {
-            if (!showAllEditions && editionId.HasValue)
+            if (showAllEditions && showAllOrganizations)
+            {
+                query = query.Where(o => !o.IsDeleted);
+            }
+            else if (!showAllEditions && editionId.HasValue)
             {
                 query = query.Where(o => o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
                                                                            && !ao.IsDeleted
@@ -302,7 +306,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 UpdateDate = o.UpdateDate,
                                 UpdateUserId = o.UpdateUserId,
                                 //Creator = h.Creator,
-                                HoldingBaseDto = new HoldingBaseDto
+                                HoldingBaseDto = o.Holding == null ? null : new HoldingBaseDto
                                 {
                                     Id = o.Holding.Id,
                                     Uid = o.Holding.Uid,
@@ -497,7 +501,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<IPagedList<OrganizationApiListDto>> FindAllOrganizationsApiPaged(int editionId, string companyName, string tradeName, string document, int page, int pageSize)
         {
             var query = this.GetBaseQuery()
-                .FindByOrganizationTypeUidAndByEditionId(Guid.Empty, true, true, editionId)
+                                .FindByOrganizationTypeUidAndByEditionId(Guid.Empty, true, true, editionId)
                                 .FindByCompanyName(companyName)
                                 .FindByTradeName(tradeName)
                                 .FindByEqualDocument(document);

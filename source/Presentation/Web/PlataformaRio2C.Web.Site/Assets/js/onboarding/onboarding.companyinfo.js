@@ -110,6 +110,7 @@ var OnboardingCompanyInfo = function () {
             paramName: 'companyName',
             minChars: 3,
             deferRequestBy: 500,
+            //noCache: true,
             transformResult: function (data) {
                 var json = jQuery.parseJSON(data);
 
@@ -154,6 +155,7 @@ var OnboardingCompanyInfo = function () {
             paramName: 'tradeName',
             minChars: 3,
             deferRequestBy: 500,
+            //noCache: true,
             transformResult: function (data) {
                 var json = jQuery.parseJSON(data);
 
@@ -199,6 +201,7 @@ var OnboardingCompanyInfo = function () {
             minChars: 3,
             preventBadQueries: false,
             deferRequestBy: 500,
+            //noCache: true,
             transformResult: function (data) {
                 var json = jQuery.parseJSON(data);
 
