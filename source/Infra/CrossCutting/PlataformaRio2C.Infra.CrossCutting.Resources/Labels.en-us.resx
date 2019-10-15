@@ -1550,12 +1550,12 @@
     <comment>Informações</comment>
   </data>
   <data name="PlayersRegulationPdf" xml:space="preserve">
-    <value>Players Regulation {0}.pdf</value>
-    <comment>Regulamento Player {0}.pdf</comment>
+    <value>PLAYER_One-to-One Meetings’ Regulation - Rio2C 2020.pdf</value>
+    <comment>PLAYER_Regulamento Rodadas de Negócio - Rio2C 2020.pdf</comment>
   </data>
   <data name="ProducersRegulationPdf" xml:space="preserve">
-    <value>Participants Regulation {0}.pdf</value>
-    <comment>Regulamento Participante {0}.pdf</comment>
+    <value>One-to-One Meetings’ Regulation - Rio2C 2020.pdf</value>
+    <comment>Regulamento Rodadas de Negócio - Rio2C 2020.pdf</comment>
   </data>
   <data name="Later" xml:space="preserve">
     <value>Later</value>
@@ -1564,5 +1564,9 @@
   <data name="Skip" xml:space="preserve">
     <value>Skip</value>
     <comment>Pular</comment>
+  </data>
+  <data name="AudiovisualProjectsFormTemplate" xml:space="preserve">
+    <value>Audiovisual Projects' Form Template.pdf</value>
+    <comment>Ficha de inscrição Projetos de Audiovisual - MODELO.pdf</comment>
   </data>
 </root>
