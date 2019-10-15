@@ -7144,6 +7144,7 @@
     <Content Include="Views\Companies\Modals\UpdateInterestModal.cshtml" />
     <Content Include="Views\Companies\Modals\UpdateInterestForm.cshtml" />
     <Content Include="Views\Onboarding\CompanyInfo.cshtml" />
+    <Content Include="Views\Onboarding\Shared\_CompanyInfoForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

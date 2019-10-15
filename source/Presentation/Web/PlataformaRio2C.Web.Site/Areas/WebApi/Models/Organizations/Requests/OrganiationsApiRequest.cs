@@ -4,13 +4,14 @@
 // Created          : 10-14-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-14-2019
+// Last Modified On : 10-15-2019
 // ***********************************************************************
 // <copyright file="OrganiationsApiRequest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System.Net;
 using Newtonsoft.Json;
 
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Models
@@ -21,10 +22,17 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Models
         [JsonProperty("companyName")]
         public string CompanyName { get; set; }
 
-        [JsonProperty("cradeName")]
+        [JsonProperty("tradeName")]
         public string TradeName { get; set; }
 
         [JsonProperty("companyNumber")]
         public string CompanyNumber { get; set; }
+
+        /// <summary>Gets the company number.</summary>
+        /// <returns></returns>
+        public string GetCompanyNumber()
+        {
+            return WebUtility.UrlDecode(this.CompanyNumber);
+        }
     }
 }

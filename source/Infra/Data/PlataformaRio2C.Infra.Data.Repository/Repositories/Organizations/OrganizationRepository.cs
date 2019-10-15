@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-14-2019
+// Last Modified On : 10-15-2019
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -73,15 +73,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
-        /// <summary>Finds the by document.</summary>
+        /// <summary>Finds the by equal document.</summary>
         /// <param name="query">The query.</param>
         /// <param name="document">The document.</param>
         /// <returns></returns>
-        internal static IQueryable<Organization> FindByDocument(this IQueryable<Organization> query, string document)
+        internal static IQueryable<Organization> FindByEqualDocument(this IQueryable<Organization> query, string document)
         {
             if (!string.IsNullOrEmpty(document))
             {
-                query = query.Where(o => o.Document.Contains(document));
+                query = query.Where(o => o.Document.Replace(".", "").Replace("-", "").Replace("/", "") == document.Replace(".", "").Replace("-", "").Replace("/", ""));
             }
 
             return query;
@@ -500,7 +500,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 .FindByOrganizationTypeUidAndByEditionId(Guid.Empty, true, true, editionId)
                                 .FindByCompanyName(companyName)
                                 .FindByTradeName(tradeName)
-                                .FindByDocument(document);
+                                .FindByEqualDocument(document);
 
             return await query
                             .Select(o => new OrganizationApiListDto

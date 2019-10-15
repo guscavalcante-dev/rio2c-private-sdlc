@@ -4,7 +4,7 @@
 // Created          : 08-29-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-14-2019
+// Last Modified On : 10-15-2019
 // ***********************************************************************
 // <copyright file="OnboardingController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -695,10 +695,47 @@ namespace PlataformaRio2C.Web.Site.Controllers
             return View(cmd);
         }
 
+        /// <summary>Shows the company information filled form.</summary>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowCompanyInfoFilledForm(Guid? organizationUid)
+        {
+            OnboardTicketBuyerOrganizationData cmd;
+
+            try
+            {
+                cmd = new OnboardTicketBuyerOrganizationData(
+                    organizationUid.HasValue ? await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(organizationUid, this.EditionDto.Id, this.UserInterfaceLanguage)) : null,
+                    await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
+                    await this.activityRepo.FindAllAsync(),
+                    await this.targetAudienceRepo.FindAllAsync(),
+                    true,
+                    true,
+                    true);
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
+
+            ModelState.Clear();
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Shared/_CompanyInfoForm", cmd), divIdOrClass = "#form-container" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
         /// <summary>Companies the information.</summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
-        /// <exception cref="DomainException"></exception>
         [HttpPost]
         public async Task<ActionResult> CompanyInfo(OnboardTicketBuyerOrganizationData cmd)
         {
