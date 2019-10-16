@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-09-2019
+// Last Modified By : William Almado
+// Last Modified On : 10-16-2019
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -124,7 +125,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="barcodeUpdateDate">The barcode update date.</param>
         /// <param name="userId">The user identifier.</param>
         public Collaborator(
-            Guid collaboratorUid, 
+            Guid collaboratorUid,
             Edition edition,
             List<AttendeeOrganization> newAttendeeOrganizations,
             AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
@@ -132,10 +133,10 @@ namespace PlataformaRio2C.Domain.Entities
             Role role,
             string salesPlatformAttendeeId,
             DateTime salesPlatformUpdateDate,
-            string firstName, 
-            string lastMame, 
-            string email, 
-            string cellPhone, 
+            string firstName,
+            string lastMame,
+            string email,
+            string cellPhone,
             string jobTitle,
             string barcode,
             bool isBarcodePrinted,
@@ -155,12 +156,12 @@ namespace PlataformaRio2C.Domain.Entities
                 edition,
                 collaboratorType,
                 newAttendeeOrganizations,
-                attendeeSalesPlatformTicketType, 
+                attendeeSalesPlatformTicketType,
                 salesPlatformAttendeeId,
                 salesPlatformUpdateDate,
-                firstName, 
-                lastMame, 
-                cellPhone, 
+                firstName,
+                lastMame,
+                cellPhone,
                 jobTitle,
                 barcode,
                 isBarcodePrinted,
@@ -642,9 +643,9 @@ namespace PlataformaRio2C.Domain.Entities
             AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
             string salesPlatformAttendeeId,
             DateTime salesPlatformUpdateDate,
-            string firstName, 
-            string lastName, 
-            string cellPhone, 
+            string firstName,
+            string lastName,
+            string cellPhone,
             string jobTitle,
             string barcode,
             bool isBarcodePrinted,
@@ -668,12 +669,12 @@ namespace PlataformaRio2C.Domain.Entities
                 attendeeCollaborator.UpdateAttendeeCollaboratorTicket(
                     collaboratorType,
                     newAttendeeOrganizations,
-                    attendeeSalesPlatformTicketType, 
+                    attendeeSalesPlatformTicketType,
                     salesPlatformAttendeeId,
                     salesPlatformUpdateDate,
-                    firstName, 
-                    lastName, 
-                    cellPhone, 
+                    firstName,
+                    lastName,
+                    cellPhone,
                     jobTitle,
                     barcode,
                     isBarcodePrinted,
@@ -687,13 +688,13 @@ namespace PlataformaRio2C.Domain.Entities
                     edition,
                     collaboratorType,
                     newAttendeeOrganizations,
-                    this, 
-                    attendeeSalesPlatformTicketType, 
+                    this,
+                    attendeeSalesPlatformTicketType,
                     salesPlatformAttendeeId,
                     salesPlatformUpdateDate,
-                    firstName, 
-                    lastName, 
-                    cellPhone, 
+                    firstName,
+                    lastName,
+                    cellPhone,
                     jobTitle,
                     barcode,
                     isBarcodePrinted,
@@ -761,7 +762,7 @@ namespace PlataformaRio2C.Domain.Entities
             CollaboratorType collaboratorType,
             Role role,
             string salesPlatformAttendeeId,
-            DateTime salesPlatformUpdateDate, 
+            DateTime salesPlatformUpdateDate,
             string firstName,
             string lastMame,
             string email,
@@ -785,12 +786,12 @@ namespace PlataformaRio2C.Domain.Entities
                 edition,
                 collaboratorType,
                 newAttendeeOrganizations,
-                attendeeSalesPlatformTicketType, 
+                attendeeSalesPlatformTicketType,
                 salesPlatformAttendeeId,
                 salesPlatformUpdateDate,
-                firstName, 
-                lastMame, 
-                cellPhone, 
+                firstName,
+                lastMame,
+                cellPhone,
                 jobTitle,
                 barcode,
                 isBarcodePrinted,
@@ -824,6 +825,34 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
             //this.DeleteRole(this.User.Email, role);
+        }
+
+        #endregion
+
+        #region Executive Player
+
+
+        public void UpdateCollaboratorMainInformation(CollaboratorDto collaborator, List<CollaboratorJobTitle> jobTitles,
+
+            List<CollaboratorMiniBio> miniBios, Edition edition, bool isImageUploaded)
+        {
+            this.FirstName = collaborator.FirstName?.Trim();
+            this.LastNames = collaborator.LastNames?.Trim();
+            this.Badge = collaborator.Badge?.Trim();
+            this.PhoneNumber = collaborator.PhoneNumber?.Trim();
+            this.CellPhone = collaborator.CellPhone?.Trim();
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = collaborator.Id;
+            var sharePublicEmail = !string.IsNullOrEmpty(collaborator.PublicEmail) ? (bool?)true : null;
+            this.PublicEmail = sharePublicEmail == true ? collaborator.PublicEmail?.Trim() : null;
+            this.UpdateImageUploadDate(isImageUploaded, false);
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = collaborator.Id;
+            this.SynchronizeJobTitles(jobTitles, collaborator.Id);
+            this.SynchronizeMiniBios(miniBios, collaborator.Id);
+            this.OnboardAttendeeCollaboratorData(edition, collaborator.Id);
         }
 
         #endregion

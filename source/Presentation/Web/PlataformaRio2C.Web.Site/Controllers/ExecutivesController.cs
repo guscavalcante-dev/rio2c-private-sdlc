@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 10-09-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-10-2019
+// Last Modified By : William Almado
+// Last Modified On : 10-16-2019
 // ***********************************************************************
 // <copyright file="ExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -36,6 +36,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
     public class ExecutivesController : BaseController
     {
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
+        private readonly ICollaboratorRepository collaboratorRepo;
+
 
         /// <summary>Initializes a new instance of the <see cref="ExecutivesController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -44,10 +46,12 @@ namespace PlataformaRio2C.Web.Site.Controllers
         public ExecutivesController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
-            IAttendeeCollaboratorRepository attendeeCollaboratorRepository)
+            IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
+            ICollaboratorRepository collaboratorRepo)
             : base(commandBus, identityController)
         {
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
+            this.collaboratorRepo = collaboratorRepo;
         }
 
         /// <summary>Detailses the specified identifier.</summary>
@@ -83,6 +87,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowMainInformationWidget(Guid? collaboratorUid)
         {
+            //var collaboratorDto = await this.collaboratorRepo.FindDtoByUidAndByEditionIdAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
             var mainInformationWidgetDto = await this.attendeeCollaboratorRepo.FindSiteMainInformationWidgetDtoByCollaboratorUidAndByEditionIdAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
             if (mainInformationWidgetDto == null)
             {
@@ -103,26 +108,29 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
 
         #region Update
-
         /// <summary>Shows the update main information modal.</summary>
-        /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="collaboratorUid">The organization uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? collaboratorUid, bool? isAddingToCurrentEdition)
+        public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? collaboratorUid)
         {
-            UpdateCollaborator cmd;
+            UpdateCollaboratorMainInformation cmd;
 
             try
             {
-                cmd = new UpdateCollaborator(
-                    await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllAttendeeOrganizationsBaseDtosByEditionUidAsync(this.EditionDto.Id, false, this.UserInterfaceLanguage)),
+                var collaboratorDto = await this.collaboratorRepo.FindDtoByUidAndByEditionIdAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
+                //var mainInformationWidgetDto = await this.attendeeCollaboratorRepo.FindSiteMainInformationWidgetDtoByCollaboratorUidAndByEditionIdAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
+                if (collaboratorDto == null)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundM.ToLowerInvariant()));
+                }
+
+                cmd = new UpdateCollaboratorMainInformation(
+                    collaboratorDto,
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                    isAddingToCurrentEdition,
-                    false,
-                    false,
-                    false);
+                    true,
+                    true,
+                    true);
             }
             catch (DomainException ex)
             {
@@ -140,11 +148,48 @@ namespace PlataformaRio2C.Web.Site.Controllers
         }
 
 
+
+        /// <summary>Shows the update main information modal.</summary>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <returns></returns>
+        //[HttpGet]
+        //public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? collaboratorUid, bool? isAddingToCurrentEdition)
+        //{
+        //    UpdateCollaborator cmd;
+
+        //    try
+        //    {
+        //        cmd = new UpdateCollaborator(
+        //            await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
+        //            await this.CommandBus.Send(new FindAllAttendeeOrganizationsBaseDtosByEditionUidAsync(this.EditionDto.Id, false, this.UserInterfaceLanguage)),
+        //            await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
+        //            await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
+        //            isAddingToCurrentEdition,
+        //            false,
+        //            false,
+        //            false);
+        //    }
+        //    catch (DomainException ex)
+        //    {
+        //        return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        pages = new List<dynamic>
+        //        {
+        //            new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+        //        }
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
+
+
         /// <summary>Updates the specified command.</summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> UpdateMainInformation(UpdateCollaborator cmd)
+        public async Task<ActionResult> UpdateMainInformation(UpdateCollaboratorMainInformation cmd)
         {
             var result = new AppValidationResult();
 
@@ -156,7 +201,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    Domain.Constants.CollaboratorType.ExecutiveAudiovisual,
+                    this.UserAccessControlDto.Collaborator.Uid,
                     this.UserAccessControlDto.User.Id,
                     this.UserAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -176,10 +221,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
-                cmd.UpdateDropdownProperties(
-                    await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(cmd.CollaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllAttendeeOrganizationsBaseDtosByEditionUidAsync(this.EditionDto.Id, false, this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)));
+                //cmd.UpdateDropdownProperties(
+                //    await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(cmd.CollaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
+                //    await this.CommandBus.Send(new FindAllAttendeeOrganizationsBaseDtosByEditionUidAsync(this.EditionDto.Id, false, this.UserInterfaceLanguage)),
+                //    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)));
 
                 return Json(new
                 {
@@ -187,7 +232,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     message = ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/_Form", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationForm", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }

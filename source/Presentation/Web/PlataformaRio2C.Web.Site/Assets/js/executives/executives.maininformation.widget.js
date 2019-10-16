@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 
-
 var ExecutivesMainInformationWidget = function () {
 
     var widgetElementId = '#ExecutiveMainInformationWidget';
@@ -77,10 +76,8 @@ var ExecutivesMainInformationWidget = function () {
 
     var enableUpdatePlugins = function () {
         MyRio2cCropper.init({ formIdOrClass: updateFormId });
-        MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2' });
+        //MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2' });
         //AddressesForm.init();
-
-        AttendeeOrganizationsForm.init(updateFormId);
         MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c', maxCharCount: 710 });
         MyRio2cCompanyDocument.enableCompanyNumberMask(countryUid, '#Document');
         enableAjaxForm();
@@ -92,7 +89,7 @@ var ExecutivesMainInformationWidget = function () {
 
         var jsonParameters = new Object();
         jsonParameters.collaboratorUid = $('#AggregateId').val();
-        jsonParameters.isAddingToCurrentEdition = false;
+        jsonParameters.isAddingToCurrentEdition = true;
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Executives/ShowUpdateMainInformationModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({

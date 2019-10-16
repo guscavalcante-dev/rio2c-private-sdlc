@@ -94,6 +94,7 @@
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationBaseDto.cs" />
     <Compile Include="Dtos\Cities\CityBaseDto.cs" />
     <Compile Include="Dtos\Collaborators\CollaboratorBaseDto.cs" />
+    <Compile Include="Dtos\Collaborators\CollaboratorSiteMainInformationWidgetDto.cs" />
     <Compile Include="Dtos\Collaborators\CollaboratorDto.cs" />
     <Compile Include="Dtos\Collaborators\CollaboratorMiniBioBaseDto.cs" />
     <Compile Include="Dtos\Collaborators\CollaboratorJobTitleBaseDto.cs" />

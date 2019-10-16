@@ -182,6 +182,7 @@
     <Compile Include="CQRS\CommandsHandlers\Collaborators\CreateCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\DeleteCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Site\SendProducerWelcomeEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\BaseHoldingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\DeleteHoldingCommandHandler.cs" />
@@ -211,6 +212,7 @@
     <Compile Include="CQRS\Commands\Attendees\BaseCommands\AttendeeOrganizationBaseCommand.cs" />
     <Compile Include="CQRS\Commands\BaseCommand.cs" />
     <Compile Include="CQRS\Commands\Collaborators\BaseCommands\CollaboratorMiniBioBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Collaborators\UpdateCollaboratorMainInformation.cs" />
     <Compile Include="CQRS\Commands\Emails\Site\SendProducerWelcomeEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Onboardings\OnboardCollaborator.cs" />
     <Compile Include="CQRS\Commands\Organizations\BaseCommands\OrganizationActivityBaseCommand.cs" />

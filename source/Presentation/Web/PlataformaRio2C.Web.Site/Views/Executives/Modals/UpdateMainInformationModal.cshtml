@@ -1,4 +1,4 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateCollaborator
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateCollaboratorMainInformation
 <div class="modal fade" id="UpdateMainInformationModal" role="dialog" aria-labelledby="UpdateMainInformationModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -12,6 +12,7 @@
                 @using (Html.BeginForm("UpdateMainInformation", "Executives", new { Area = "" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UpdateMainInformationForm" }))
                 {
                     @Html.HiddenFor(m => m.CollaboratorUid)
+
                     <div id="form-container">
                         @Html.Partial("Modals/UpdateMainInformationForm", Model)
                     </div>
@@ -24,3 +25,4 @@
         </div>
     </div>
 </div>
+
