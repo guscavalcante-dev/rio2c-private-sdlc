@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-15-2019
+// Last Modified On : 10-16-2019
 // ***********************************************************************
 // <copyright file="Organization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -685,7 +685,6 @@ namespace PlataformaRio2C.Domain.Entities
             var attendeeOrganization = this.GetAttendeeOrganizationByEditionId(edition.Id);
             attendeeOrganization?.OnboardInterests(userId);
         }
-
 
         /// <summary>Synchronizes the attendee organizations.</summary>
         /// <param name="edition">The edition.</param>

@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-11-2019
+// Last Modified On : 10-16-2019
 // ***********************************************************************
 // <copyright file="HomeController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,7 +17,6 @@ using System.Web.Mvc;
 using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
-using System.Collections.Generic;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Web.Site.Filters;
@@ -50,9 +49,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         {
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Dashboard, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Dashboard, Url.Action("Index", "Home"))
-            });
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Dashboard, null);
 
             #endregion
 

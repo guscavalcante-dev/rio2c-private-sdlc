@@ -4,7 +4,7 @@
 // Created          : 08-29-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-15-2019
+// Last Modified On : 10-16-2019
 // ***********************************************************************
 // <copyright file="OnboardingController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -91,20 +91,20 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
 
             // Redirect to organization data if not finished and there is no pending interests to do before
-            if (this.UserAccessControlDto?.IsOrganizatiosnOnboardingFinished() != true
-                && this.UserAccessControlDto?.HasOrganizationInterestsOnboardingPending() != true)
+            if (this.UserAccessControlDto?.IsPlayerOrganizatiosnOnboardingFinished() != true
+                && this.UserAccessControlDto?.IsPlayerOrganizationInterestsOnboardingPending() != true)
             {
                 return RedirectToAction("PlayerInfo", "Onboarding");
             }
 
             // Redirect to organization interests if not finished
-            if (this.UserAccessControlDto?.HasOrganizationInterestsOnboardingPending() == true)
+            if (this.UserAccessControlDto?.IsPlayerOrganizationInterestsOnboardingPending() == true)
             {
                 return RedirectToAction("PlayerInterests", "Onboarding");
             }
 
             // Redirect to ticket buyer organization if not finished
-            if (this.UserAccessControlDto?.HasTicketBuyerOrganizationOnboardingPending() == true)
+            if (this.UserAccessControlDto?.IsTicketBuyerOrganizationOnboardingPending() == true)
             {
                 return RedirectToAction("CompanyInfo", "Onboarding");
             }
@@ -426,7 +426,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> PlayerInfo()
         {
-            if (this.UserAccessControlDto?.IsOrganizatiosnOnboardingFinished() == true)
+            if (this.UserAccessControlDto?.IsPlayerOrganizatiosnOnboardingFinished() == true)
             {
                 return RedirectToAction("Index", "Onboarding");
             }
@@ -469,7 +469,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpPost]
         public async Task<ActionResult> PlayerInfo(OnboardPlayerOrganizationData cmd)
         {
-            if (this.UserAccessControlDto?.IsOrganizatiosnOnboardingFinished() == true)
+            if (this.UserAccessControlDto?.IsPlayerOrganizatiosnOnboardingFinished() == true)
             {
                 return RedirectToAction("Index", "Onboarding");
             }
@@ -550,7 +550,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> PlayerInterests()
         {
-            if (this.UserAccessControlDto?.HasOrganizationInterestsOnboardingPending() != true)
+            if (this.UserAccessControlDto?.IsPlayerOrganizationInterestsOnboardingPending() != true)
             {
                 return RedirectToAction("Index", "Onboarding");
             }
@@ -589,7 +589,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpPost]
         public async Task<ActionResult> PlayerInterests(OnboardPlayerInterests cmd)
         {
-            if (this.UserAccessControlDto?.HasOrganizationInterestsOnboardingPending() != true)
+            if (this.UserAccessControlDto?.IsPlayerOrganizationInterestsOnboardingPending() != true)
             {
                 return RedirectToAction("Index", "Onboarding");
             }
@@ -666,7 +666,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> CompanyInfo()
         {
-            if (this.UserAccessControlDto?.HasTicketBuyerOrganizationOnboardingPending() != true)
+            if (this.UserAccessControlDto?.IsTicketBuyerOrganizationOnboardingPending() != true)
             {
                 return RedirectToAction("Index", "Onboarding");
             }
@@ -681,8 +681,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             this.SetViewBags();
 
+            var currentOrganization = this.UserAccessControlDto?.EditionAttendeeOrganizations?.FirstOrDefault(eao => !eao.OnboardingOrganizationDate.HasValue)?.Organization;
+
             var cmd = new OnboardTicketBuyerOrganizationData(
-                null,
+                currentOrganization == null ? null : await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(currentOrganization.Uid, this.EditionDto.Id, this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                 false,
@@ -733,7 +735,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpPost]
         public async Task<ActionResult> CompanyInfo(OnboardTicketBuyerOrganizationData cmd)
         {
-            if (this.UserAccessControlDto?.HasTicketBuyerOrganizationOnboardingPending() != true)
+            if (this.UserAccessControlDto?.IsTicketBuyerOrganizationOnboardingPending() != true)
             {
                 return RedirectToAction("Index", "Onboarding");
             }
@@ -806,7 +808,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> SkipCompanyInfo()
         {
-            if (this.UserAccessControlDto?.HasTicketBuyerOrganizationOnboardingPending() != true)
+            if (this.UserAccessControlDto?.IsTicketBuyerOrganizationOnboardingPending() != true)
             {
                 return RedirectToAction("Index", "Onboarding");
             }

@@ -2,20 +2,23 @@
 @{
     var breadcrumb = ViewBag.Breadcrumb as BreadcrumbHelper;
 }
-@if (breadcrumb?.Items?.Any() == true)
+@if (breadcrumb != null)
 {
     <div class="kt-subheader   kt-grid__item" id="kt_subheader">
         <div class="kt-container ">
             <div class="kt-subheader__main">
                 <h3 class="kt-subheader__title">@breadcrumb.Title</h3>
                 <div class="kt-subheader__breadcrumbs">
-                    <a href="@Url.Action("Index", "Home")" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
-                    @foreach (var item in breadcrumb.Items)
+                    <a href="@Url.Action("Index", "Home")" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i> <span class="kt-subheader__breadcrumbs-link pr-0">@Labels.Dashboard</span></a>
+                    @if (breadcrumb?.Items?.Any() == true)
                     {
-                        <span class="kt-subheader__breadcrumbs-separator"></span>
-                        <a href="@item.Url" class="kt-subheader__breadcrumbs-link">
-                            @item.Name
-                        </a>
+                        foreach (var item in breadcrumb.Items)
+                        {
+                            <span class="kt-subheader__breadcrumbs-separator"></span>
+                            <a href="@item.Url" class="kt-subheader__breadcrumbs-link">
+                                @item.Name
+                            </a>
+                        }
                     }
                 </div>
             </div>
@@ -24,8 +27,8 @@
                 <div class="kt-subheader__toolbar">
                     <div class="kt-subheader__wrapper">
                         @*<a href="#" class="btn kt-subheader__btn-secondary">
-                                @breadcrumb.MenuName
-                            </a>*@
+                            @breadcrumb.MenuName
+                        </a>*@
                         <div class="dropdown dropdown-inline" data-toggle="kt-tooltip" title="@breadcrumb.MenuName" data-placement="top">
                             <a href="#" class="btn @(breadcrumb.MenuColorClass) kt-subheader__btn-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 @breadcrumb.MenuName
@@ -47,5 +50,5 @@
                 </div>
             }
         </div>
-    </div>
+    </div>   
 }

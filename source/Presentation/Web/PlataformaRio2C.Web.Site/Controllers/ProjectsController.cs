@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-02-2019
+// Last Modified On : 10-16-2019
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -61,8 +61,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             #region Breadcrumb
 
-                ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Projects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Dashboard, Url.Action("Index", "Home", new { Area = "" }))
+                ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.AudiovisualProjects, Url.Action("Index", "Projects", new { Area = "" }))
             });
 
             #endregion

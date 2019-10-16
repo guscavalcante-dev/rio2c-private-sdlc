@@ -4,7 +4,7 @@
 // Created          : 10-14-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-15-2019
+// Last Modified On : 10-16-2019
 // ***********************************************************************
 // <copyright file="OrganizationsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,6 +17,7 @@ using System.Web.Http;
 using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
+using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Web.Site.Areas.WebApi.Models;
 
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
@@ -25,6 +26,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
     /// Class for sales platforms endpoints
     /// </summary>
     [System.Web.Http.RoutePrefix("api/v1.0")]
+    [AjaxAuthorize(Order = 1)]
     public class OrganizationsController : BaseApiController
     {
         private readonly IOrganizationRepository organizationRepo;
