@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-11-2019
+// Last Modified On : 10-16-2019
 // ***********************************************************************
 // <copyright file="HomeController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,7 +13,6 @@
 // ***********************************************************************
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using MediatR;
@@ -45,9 +44,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         {
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper("Dashboard", new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper("Dashboard", Url.Action("Index", "Home", new { Area = "" }))
-            });
+            ViewBag.Breadcrumb = new BreadcrumbHelper("Dashboard", null);
 
             #endregion
 

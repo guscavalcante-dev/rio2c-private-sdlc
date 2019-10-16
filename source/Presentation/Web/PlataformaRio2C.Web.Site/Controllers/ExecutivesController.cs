@@ -4,7 +4,7 @@
 // Created          : 10-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-10-2019
+// Last Modified On : 10-16-2019
 // ***********************************************************************
 // <copyright file="ExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -62,7 +62,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Company, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Dashboard, Url.Action("Index", "Home")),
                 new BreadcrumbItemHelper(attendeeCollaboratorDto.Collaborator.GetFullName(), Url.Action("Details", "Executives", new { id }))
             });
 
