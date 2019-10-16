@@ -4,7 +4,7 @@
 // Created          : 08-31-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-01-2019
+// Last Modified On : 10-16-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorTicket.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,9 +27,9 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int LastNamesMinLength = 1;
         public static readonly int LastNamesMaxLength = 200;
         public static readonly int CellPhoneMinLength = 1;
-        public static readonly int CellPhoneMaxLength = 30;
+        public static readonly int CellPhoneMaxLength = 50;
         public static readonly int JobTitleMinLength = 1;
-        public static readonly int JobTitleMaxLength = 30;
+        public static readonly int JobTitleMaxLength = 200;
         public static readonly int BarcodeMinLength = 1;
         public static readonly int BarcodeMaxLength = 40;
 
