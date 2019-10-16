@@ -665,4 +665,12 @@
     <value>Tipo de conteúdo que está buscando no Mercado (restrições e especificações)</value>
     <comment>Tipo de conteúdo que está buscando no Mercado (restrições e especificações)</comment>
   </data>
+  <data name="CompleteCompanyrInfo" xml:space="preserve">
+    <value>Complete os dados da sua empresa</value>
+    <comment>Complete os dados da sua empresa</comment>
+  </data>
+  <data name="IfYouWantToSkipStepAndRegisterLater" xml:space="preserve">
+    <value>Se você deseja pular esse passo e registrar sua empresa depois</value>
+    <comment>Se você deseja pular esse passo e registrar sua empresa depois</comment>
+  </data>
 </root>

@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-30-2019
+// Last Modified On : 10-14-2019
 // ***********************************************************************
 // <copyright file="IOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,6 +30,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         #region Api
 
         Task<IPagedList<OrganizationApiListDto>> FindAllPublicApiPaged(int editionId, string keywords, Guid organizationTypeUid, int page, int pageSize);
+        Task<IPagedList<OrganizationApiListDto>> FindAllOrganizationsApiPaged(int editionId, string companyName, string tradeName, string companyNumber, int page, int pageSize);
         Task<OrganizationDto> FindApiDtoByUidAsync(Guid organizationUid, int editionId, Guid organizationTypeUid);
         #endregion
 

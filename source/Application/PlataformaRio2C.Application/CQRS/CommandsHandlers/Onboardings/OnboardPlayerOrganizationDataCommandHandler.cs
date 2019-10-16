@@ -4,9 +4,9 @@
 // Created          : 09-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-18-2019
+// Last Modified On : 10-14-2019
 // ***********************************************************************
-// <copyright file="OnboardOrganizationDataCommandHandler.cs" company="Softo">
+// <copyright file="OnboardPlayerOrganizationDataCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -26,8 +26,8 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>OnboardOrganizationDataCommandHandler</summary>
-    public class OnboardOrganizationDataCommandHandler : BaseOrganizationCommandHandler, IRequestHandler<OnboardOrganizationData, AppValidationResult>
+    /// <summary>OnboardPlayerOrganizationDataCommandHandler</summary>
+    public class OnboardPlayerOrganizationDataCommandHandler : BaseOrganizationCommandHandler, IRequestHandler<OnboardPlayerOrganizationData, AppValidationResult>
     {
         private readonly IEditionRepository editionRepo;
         private readonly IOrganizationTypeRepository organizationTypeRepo;
@@ -36,7 +36,17 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly ITargetAudienceRepository targetAudienceRepo;
         private readonly ICountryRepository countryRepo;
 
-        public OnboardOrganizationDataCommandHandler(
+        /// <summary>Initializes a new instance of the <see cref="OnboardPlayerOrganizationDataCommandHandler"/> class.</summary>
+        /// <param name="eventBus">The event bus.</param>
+        /// <param name="uow">The uow.</param>
+        /// <param name="organizationRepository">The organization repository.</param>
+        /// <param name="editionRepository">The edition repository.</param>
+        /// <param name="organizationTypeRepository">The organization type repository.</param>
+        /// <param name="languageRepository">The language repository.</param>
+        /// <param name="activityRepository">The activity repository.</param>
+        /// <param name="targetAudienceRepository">The target audience repository.</param>
+        /// <param name="countryRepository">The country repository.</param>
+        public OnboardPlayerOrganizationDataCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IOrganizationRepository organizationRepository,
@@ -56,11 +66,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.countryRepo = countryRepository;
         }
 
-        /// <summary>Handles the specified onboard organization data.</summary>
-        /// <param name="cmd"></param>
+        /// <summary>Handles the specified onboard player organization data.</summary>
+        /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(OnboardOrganizationData cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(OnboardPlayerOrganizationData cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
@@ -82,7 +92,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
             var activities = await this.activityRepo.FindAllAsync();
 
-            organization.OnboardData(
+            organization.OnboardPlayerData(
                 await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
                 await this.organizationTypeRepo.GetAsync(cmd.OrganizationType?.Uid ?? Guid.Empty),
                 cmd.CompanyName,

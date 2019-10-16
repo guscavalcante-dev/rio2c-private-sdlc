@@ -75,6 +75,7 @@ CREATE TABLE [dbo].[AttendeeCollaborators](
 	[OnboardingFinishDate] [datetime] NULL,
 	[OnboardingUserDate] [datetime] NULL,
 	[OnboardingCollaboratorDate] [datetime] NULL,
+	[OnboardingOrganizationDataSkippedDate]  [datetime]  NULL,
 	[PlayerTermsAcceptanceDate] [datetime] NULL,
 	[ProducerTermsAcceptanceDate] [datetime] NULL,
 	[IsApiDisplayEnabled] [bit] NOT NULL,

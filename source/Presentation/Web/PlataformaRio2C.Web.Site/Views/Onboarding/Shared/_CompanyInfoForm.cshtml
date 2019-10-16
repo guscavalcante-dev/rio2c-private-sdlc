@@ -1,0 +1,70 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.OnboardTicketBuyerOrganizationData
+<div class="row mt-30">
+    <div class="form-group col-lg-5 col-xl-3">
+        @Html.EditorFor(m => m.CropperImage)
+    </div>
+    <div class="form-group col-lg-7 col-xl-9 pl-lg-5">
+        <div class="row">
+            <div class="form-group col-md-12">
+                @Html.LabelFor(m => m.TradeName, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.TradeName, new { @class = "form-control", autocomplete = "off" })
+                @Html.ValidationMessageFor(m => m.TradeName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12">
+                @Html.LabelFor(m => m.CompanyName, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control", autocomplete = "off" })
+                @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-12 col-xl-6" data-id="Country">
+                @Html.LabelFor(m => m.CountryUid, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                @Html.HiddenFor(m => m.IsCompanyNumberRequired)
+                <select name="@Html.NameFor(m => m.CountryUid)" id="@Html.IdFor(m => m.CountryUid)" @Html.GetUnobtrusiveValidationAttributesFor(m => m.CountryUid) class="form-control">
+                    <option value="" data-country-code="" data-companynumber-required="" data-companynumber-mask="" data-zipcode-mask="" data-phonenumber-mask="" data-mobile-mask="">@(Labels.Select)...</option>
+                    @foreach (var countryBaseDto in Model.CountriesBaseDtos)
+                    {
+                        <option value="@countryBaseDto.Uid" @(countryBaseDto.Uid == Model.CountryUid ? "selected" : "") data-country-code="@countryBaseDto.Code" data-companynumber-required="@countryBaseDto.IsCompanyNumberRequired" data-companynumber-mask="@countryBaseDto.CompanyNumberMask" data-zipcode-mask="@countryBaseDto.ZipCodeMask" data-phonenumber-mask="@countryBaseDto.PhoneNumberMask" data-mobile-mask="@countryBaseDto.MobileMask">
+                            @countryBaseDto.DisplayName
+                        </option>
+                    }
+                </select>
+                @Html.ValidationMessageFor(m => m.CountryUid, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-sm-12 col-xl-6">
+                @Html.LabelFor(m => m.Document, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                @Html.TextBoxFor(m => m.Document, new { @class = "form-control", autocomplete = "off" })
+                @Html.ValidationMessageFor(m => m.Document, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-12">
+        @Html.LabelFor(m => m.Website, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+        @Html.TextBoxFor(m => m.Website, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Website, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-12">
+        @Html.LabelFor(m => m.SocialMedia, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+        @Html.TextBoxFor(m => m.SocialMedia, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.SocialMedia, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="kt-section mt-30">
+    <h3 class="kt-heading kt-heading--md">@Labels.Address <span class="form-optional-input text-muted">@Labels.Optional</span></h3>
+    <div class="kt-section__content mt-3">
+        @Html.EditorFor(m => m.Address)
+    </div>
+</div>
+<div class="kt-section mt-30">
+    <h3 class="kt-heading kt-heading--md">@Labels.CompanyResume <span class="form-optional-input text-muted">@Labels.Optional</span></h3> 
+    @Html.ValidationMessage("Descriptions", new { @class = "text-danger" })
+    <div class="kt-section__content mt-3">
+        @Html.EditorFor(m => m.Descriptions)
+    </div>
+</div>

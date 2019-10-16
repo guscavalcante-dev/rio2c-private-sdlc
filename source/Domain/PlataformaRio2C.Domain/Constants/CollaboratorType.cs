@@ -4,7 +4,7 @@
 // Created          : 09-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-11-2019
+// Last Modified On : 10-14-2019
 // ***********************************************************************
 // <copyright file="CollaboratorType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,5 +28,10 @@ namespace PlataformaRio2C.Domain.Constants
         public const string Creator = "Creator";
         public const string Summit = "Summit";
         public const string Festvalia = "Festvalia";
+
+        public static readonly string[] TicketBuyers = 
+        {
+            Speaker, Industry, Creator, Summit, Festvalia
+        };
     }
 }

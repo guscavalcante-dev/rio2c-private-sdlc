@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-10-2019
+// Last Modified On : 10-14-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -224,6 +224,15 @@ namespace PlataformaRio2C.Web.Site
 
             #endregion
 
+            #region Autocomplete
+
+            bundles.Add(new StyleBundle("~/bundles/css/jquery.autocomplete.css")
+                .Include("~/Assets/components/jquery.autocomplete/content/styles.css"/*, new CssRewriteUrlTransform()*/));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/jquery.autocomplete.js").Include(
+                "~/Assets/components/jquery.autocomplete/dist/jquery.autocomplete.js"));
+            
+            #endregion
 
             #region Dynamic List
 
@@ -233,6 +242,7 @@ namespace PlataformaRio2C.Web.Site
             #endregion
 
             #endregion
+
 
             #region Pages Bundles
 
@@ -245,13 +255,18 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/js/onboarding/onboarding.collaboratordata.js",
                 "~/Assets/js/myrio2c.publicemail.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/onboarding.organizationdata.js").Include(
-                "~/Assets/js/onboarding/onboarding.organizationdata.js",
+            bundles.Add(new ScriptBundle("~/bundles/js/onboarding.playerinfo.js").Include(
+                "~/Assets/js/onboarding/onboarding.playerinfo.js",
                 "~/Assets/js/myrio2c.companynumber.js",
                 "~/Assets/js/myrio2c.activity.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/onboarding.interests.js").Include(
                 "~/Assets/js/onboarding/onboarding.interests.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/onboarding.companyinfo.js").Include(
+                "~/Assets/js/onboarding/onboarding.companyinfo.js",
+                "~/Assets/js/myrio2c.companynumber.js",
+                "~/Assets/js/myrio2c.activity.js"));
 
             #endregion
 

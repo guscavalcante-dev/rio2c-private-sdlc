@@ -322,11 +322,20 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Projetos Audiovisuais.
+        ///   Looks up a localized string similar to Projetos de Audiovisual.
         /// </summary>
         public static string AudiovisualProjects {
             get {
                 return ResourceManager.GetString("AudiovisualProjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ficha de inscrição Projetos de Audiovisual - MODELO.pdf.
+        /// </summary>
+        public static string AudiovisualProjectsFormTemplate {
+            get {
+                return ResourceManager.GetString("AudiovisualProjectsFormTemplate", resourceCulture);
             }
         }
         
@@ -1582,6 +1591,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Depois.
+        /// </summary>
+        public static string Later {
+            get {
+                return ResourceManager.GetString("Later", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Detalhes da Palestra.
         /// </summary>
         public static string LectureDetails {
@@ -2293,7 +2311,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Regulamento Player {0}.pdf.
+        ///   Looks up a localized string similar to PLAYER_Regulamento Rodadas de Negócio - Rio2C 2020.pdf.
         /// </summary>
         public static string PlayersRegulationPdf {
             get {
@@ -2459,7 +2477,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Regulamento Participante {0}.pdf.
+        ///   Looks up a localized string similar to Regulamento Rodadas de Negócio - Rio2C 2020.pdf.
         /// </summary>
         public static string ProducersRegulationPdf {
             get {
@@ -3054,6 +3072,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string SignIn {
             get {
                 return ResourceManager.GetString("SignIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pular.
+        /// </summary>
+        public static string Skip {
+            get {
+                return ResourceManager.GetString("Skip", resourceCulture);
             }
         }
         

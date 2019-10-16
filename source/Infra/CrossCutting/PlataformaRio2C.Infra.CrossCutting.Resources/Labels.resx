@@ -1498,8 +1498,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Opções</comment>
   </data>
   <data name="AudiovisualProjects" xml:space="preserve">
-    <value>Projetos Audiovisuais</value>
-    <comment>Projetos Audiovisuais</comment>
+    <value>Projetos de Audiovisual</value>
+    <comment>Projetos de Audiovisual</comment>
   </data>
   <data name="EvaluateProjects" xml:space="preserve">
     <value>Avaliar projetos</value>
@@ -1562,11 +1562,23 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Informações</comment>
   </data>
   <data name="PlayersRegulationPdf" xml:space="preserve">
-    <value>Regulamento Player {0}.pdf</value>
-    <comment>Regulamento Player {0}.pdf</comment>
+    <value>PLAYER_Regulamento Rodadas de Negócio - Rio2C 2020.pdf</value>
+    <comment>PLAYER_Regulamento Rodadas de Negócio - Rio2C 2020.pdf</comment>
   </data>
   <data name="ProducersRegulationPdf" xml:space="preserve">
-    <value>Regulamento Participante {0}.pdf</value>
-    <comment>Regulamento Participante {0}.pdf</comment>
+    <value>Regulamento Rodadas de Negócio - Rio2C 2020.pdf</value>
+    <comment>Regulamento Rodadas de Negócio - Rio2C 2020.pdf</comment>
+  </data>
+  <data name="Later" xml:space="preserve">
+    <value>Depois</value>
+    <comment>Depois</comment>
+  </data>
+  <data name="Skip" xml:space="preserve">
+    <value>Pular</value>
+    <comment>Pular</comment>
+  </data>
+  <data name="AudiovisualProjectsFormTemplate" xml:space="preserve">
+    <value>Ficha de inscrição Projetos de Audiovisual - MODELO.pdf</value>
+    <comment>Ficha de inscrição Projetos de Audiovisual - MODELO.pdf</comment>
   </data>
 </root>

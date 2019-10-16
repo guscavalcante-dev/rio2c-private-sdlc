@@ -1,7 +1,7 @@
 ﻿@using System.Globalization
 @using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2C.Domain.Entities
-@model PlataformaRio2C.Application.CQRS.Commands.OnboardOrganizationData
+@model PlataformaRio2C.Application.CQRS.Commands.OnboardPlayerOrganizationData
 @{
     Layout = "~/Views/Themes/Metronic/_Internal.cshtml";
     ViewBag.Title = Labels.Welcome;
@@ -178,11 +178,11 @@
     @Scripts.Render("~/bundles/js/ckEditor.js")
     @Scripts.Render("~/bundles/js/inputmask.js")
     @Scripts.Render("~/bundles/js/addresses.form.js")
-    @Scripts.Render("~/bundles/js/onboarding.organizationdata.js")
+    @Scripts.Render("~/bundles/js/onboarding.playerinfo.js")
     @Scripts.Render("~/bundles/js/onboarding.wizard.js")
     <script>
         jQuery(document).ready(function () {
-            OnboardingOrganizationData.init();
+            OnboardingPlayerInfo.init();
         });
     </script>
 }

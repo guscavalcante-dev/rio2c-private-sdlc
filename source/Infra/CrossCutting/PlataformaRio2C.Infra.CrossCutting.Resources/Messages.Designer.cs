@@ -196,6 +196,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Complete os dados da sua empresa.
+        /// </summary>
+        public static string CompleteCompanyrInfo {
+            get {
+                return ResourceManager.GetString("CompleteCompanyrInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Complete os dados do player {0}.
         /// </summary>
         public static string CompletePlayerInfo {
@@ -533,6 +542,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string HoldingMustHaveName {
             get {
                 return ResourceManager.GetString("HoldingMustHaveName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Se você deseja pular esse passo e registrar sua empresa depois.
+        /// </summary>
+        public static string IfYouWantToSkipStepAndRegisterLater {
+            get {
+                return ResourceManager.GetString("IfYouWantToSkipStepAndRegisterLater", resourceCulture);
             }
         }
         

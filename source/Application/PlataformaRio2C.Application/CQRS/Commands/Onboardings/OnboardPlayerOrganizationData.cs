@@ -4,9 +4,9 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-23-2019
+// Last Modified On : 10-14-2019
 // ***********************************************************************
-// <copyright file="OnboardOrganizationData.cs" company="Softo">
+// <copyright file="OnboardPlayerOrganizationData.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -24,8 +24,8 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>OnboardOrganizationData</summary>
-    public class OnboardOrganizationData : BaseCommand
+    /// <summary>OnboardPlayerOrganizationData</summary>
+    public class OnboardPlayerOrganizationData : BaseCommand
     {
         public Guid OrganizationUid { get; set; }
 
@@ -80,7 +80,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public UserBaseDto UpdaterBaseDto { get; set; }
         public DateTime UpdateDate { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="OnboardOrganizationData"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="OnboardPlayerOrganizationData"/> class.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="holdingBaseDtos">The holding base dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
@@ -90,7 +90,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isDescriptionRequired">if set to <c>true</c> [is description required].</param>
         /// <param name="isAddressRequired">if set to <c>true</c> [is address required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
-        public OnboardOrganizationData(
+        public OnboardPlayerOrganizationData(
             OrganizationDto entity, 
             List<HoldingBaseDto> holdingBaseDtos, 
             List<LanguageDto> languagesDtos, 
@@ -119,8 +119,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateDate = entity.UpdateDate;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="OnboardOrganizationData"/> class.</summary>
-        public OnboardOrganizationData()
+        /// <summary>Initializes a new instance of the <see cref="OnboardPlayerOrganizationData"/> class.</summary>
+        public OnboardPlayerOrganizationData()
         {
         }
 
