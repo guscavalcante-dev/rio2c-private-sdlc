@@ -290,6 +290,7 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/js/executives/executives.company.widget.js",
                 "~/Assets/js/executives/executives.maininformation.widget.js",
                 "~/Assets/js/myrio2c.companynumber.js",
+                "~/Assets/js/myrio2c.publicemail.js",
                 "~/Assets/js/myrio2c.activity.js"));
 
             #endregion

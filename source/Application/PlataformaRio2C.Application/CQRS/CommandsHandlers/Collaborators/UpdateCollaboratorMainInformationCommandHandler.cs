@@ -86,7 +86,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 CellPhone = cmd.CellPhone,
                 PhoneNumber = cmd.PhoneNumber,
                 PublicEmail = cmd.PublicEmail,
-                Email = cmd.Email,
                 Id = cmd.UserId
             };
 

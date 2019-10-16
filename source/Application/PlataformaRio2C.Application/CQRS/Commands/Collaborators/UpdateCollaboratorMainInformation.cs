@@ -50,14 +50,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string CellPhone { get; set; }
-
-        [Display(Name = "Email", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [EmailAddress(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "EmailISInvalid")]
-        [StringLength(256, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
-
+        
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAnOption")]
         public bool? SharePublicEmail { get; set; }
 
@@ -87,7 +80,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Badge = collaborator.Badge;
             this.PhoneNumber = collaborator.PhoneNumber;
             this.CellPhone = collaborator.CellPhone;
-            this.Email = collaborator.Email;
             this.PublicEmail = collaborator?.PublicEmail;
             this.SharePublicEmail = collaborator?.PublicEmail != null;
             this.UpdateJobTitles(collaborator, languagesDtos, isJobTitleRequired);
