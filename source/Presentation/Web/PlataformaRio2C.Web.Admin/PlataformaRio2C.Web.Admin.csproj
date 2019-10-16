@@ -6153,6 +6153,7 @@
     <Content Include="Scripts\ckeditor\skins\moono\editor_iequirks.css" />
     <Content Include="Scripts\ckeditor\skins\moono\icons.png" />
     <Content Include="Scripts\ckeditor\skins\moono\icons_hidpi.png" />
+    <Content Include="Scripts\ckeditor\skins\moono\images\close.png" />
     <Content Include="Scripts\ckeditor\skins\moono\skin.js" />
     <Content Include="Scripts\ckeditor\styles.js" />
     <Content Include="Content\css\style.less" />

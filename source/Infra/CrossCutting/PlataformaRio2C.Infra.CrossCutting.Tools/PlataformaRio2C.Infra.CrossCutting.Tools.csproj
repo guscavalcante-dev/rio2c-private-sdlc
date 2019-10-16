@@ -123,6 +123,7 @@
     <Compile Include="Attributes\NameFromResourceAttribute.cs" />
     <Compile Include="Attributes\PercentageRegistrationAttribute.cs" />
     <Compile Include="Attributes\PermissionGroupAttribute.cs" />
+    <Compile Include="Attributes\CkEditorMaxCharsAttribute.cs" />
     <Compile Include="Attributes\ValidCompanyNumberAttribute.cs" />
     <Compile Include="Attributes\RequiredImageOptionalAttribute.cs" />
     <Compile Include="Attributes\RequiredIfOneWithValueAndOtherEmptyAttribute.cs" />

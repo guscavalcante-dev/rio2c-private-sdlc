@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-09-2019
+// Last Modified On : 10-16-2019
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -255,6 +255,40 @@ var MyRio2cCommon = function () {
             options.rules["validcompanynumber"] = value;
             if (options.message) {
                 options.messages["validcompanynumber"] = options.message;
+            }
+        });
+
+        // Validate ckeditor max characters
+        jQuery.validator.addMethod("ckeditormaxchars", function (value, element, params) {
+            if (typeof (CKEDITOR) === 'undefined') {
+                return true;
+            }
+
+            var ckeditorInstance = CKEDITOR.instances[element.id];
+            if (typeof (ckeditorInstance) === 'undefined') {
+                return true;
+            }
+
+            var maxChars = params["maxchars"];
+            if (MyRio2cCommon.isNullOrEmpty(maxChars)) {
+                return true;
+            }
+
+            if (ckeditorInstance.wordCount.charCount <= maxChars) {
+                return true;
+            }
+
+            return false;
+        });
+
+        $.validator.unobtrusive.adapters.add("ckeditormaxchars", ["maxchars"], function (options) {
+            var value = {
+                maxchars: options.params.maxchars
+            };
+
+            options.rules["ckeditormaxchars"] = value;
+            if (options.message) {
+                options.messages["ckeditormaxchars"] = options.message;
             }
         });
     };
@@ -723,6 +757,9 @@ var MyRio2cCommon = function () {
                     // Maximum allowed Char Count, -1 is default for unlimited
                     maxCharCount: options.maxCharCount,
 
+                    // Disable hardlimit to allow user to write more than the limit
+                    hardLimit: false,
+
                     // Add filter to add or remove element before counting (see CKEDITOR.htmlParser.filter), Default value : null (no filter)
                     filter: new CKEDITOR.htmlParser.filter({
                         elements: {
@@ -733,6 +770,8 @@ var MyRio2cCommon = function () {
                             }
                         }
                     }),
+
+                    // Show error when the max length limit is reached
                     charCountGreaterThanMaxLengthEvent: function (currentLength, maxLength) {
                         $('[data-valmsg-for="' + elementName + '"]').html('<span for="' + name + '" generated="true" class="">' + labels.propertyBetweenLengths.replace('{0} ', '').replace('{2}', 1).replace('{1}', maxLength) + '</span>');
                         $('[data-valmsg-for="' + elementName + '"]').removeClass('field-validation-valid');

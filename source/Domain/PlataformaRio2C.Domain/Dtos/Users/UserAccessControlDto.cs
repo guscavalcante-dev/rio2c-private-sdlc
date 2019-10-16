@@ -4,7 +4,7 @@
 // Created          : 09-04-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-15-2019
+// Last Modified On : 10-16-2019
 // ***********************************************************************
 // <copyright file="UserAccessControlDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -169,7 +169,8 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is onboarding pending]; otherwise, <c>false</c>.</returns>
         public bool IsOnboardingPending()
         {
-            return !this.IsAdmin() && (!this.IsAttendeeCollaboratorOnboardingFinished() || !this.IsAttendeeOrganizationsOnboardingFinished() || this.HasTicketBuyerOrganizationOnboardingPending());
+            return !this.IsAdmin() 
+                   && (!this.IsAttendeeCollaboratorOnboardingFinished() || !this.IsPlayerAttendeeOrganizationsOnboardingFinished() || this.IsTicketBuyerOrganizationOnboardingPending());
         }
 
         #region Collaborator
@@ -211,56 +212,58 @@ namespace PlataformaRio2C.Domain.Dtos
 
         #region Organizations
 
-        /// <summary>Determines whether [is attendee organizations onboarding finished].</summary>
+        /// <summary>Determines whether [is player attendee organizations onboarding finished].</summary>
         /// <returns>
-        ///   <c>true</c> if [is attendee organizations onboarding finished]; otherwise, <c>false</c>.</returns>
-        public bool IsAttendeeOrganizationsOnboardingFinished()
+        ///   <c>true</c> if [is player attendee organizations onboarding finished]; otherwise, <c>false</c>.</returns>
+        public bool IsPlayerAttendeeOrganizationsOnboardingFinished()
         {
-            return this.IsOrganizatiosnOnboardingFinished() 
-                   && this.IsOrganizationsInterestsOnboardingFinished();
+            return this.IsPlayerOrganizatiosnOnboardingFinished() 
+                   && this.IsPlayerOrganizationsInterestsOnboardingFinished();
         }
 
-        /// <summary>Determines whether [is organizatiosn onboarding finished].</summary>
+        /// <summary>Determines whether [is player organizatiosn onboarding finished].</summary>
         /// <returns>
-        ///   <c>true</c> if [is organizatiosn onboarding finished]; otherwise, <c>false</c>.</returns>
-        public bool IsOrganizatiosnOnboardingFinished()
+        ///   <c>true</c> if [is player organizatiosn onboarding finished]; otherwise, <c>false</c>.</returns>
+        public bool IsPlayerOrganizatiosnOnboardingFinished()
         {
-            return this.EditionAttendeeOrganizations?.Any() == false                                                             // No organization related
-                   || (this.EditionAttendeeOrganizations?.Any() == true                                                          // or has at least one organization linked
-                       && this.EditionAttendeeOrganizations?.All(eao => eao.OnboardingOrganizationDate.HasValue) == true);       // and all organizations interests onboarding are finished
+            return !this.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual)                                              // Not Player //TODO: Change to check attendee organization type (must be dto)
+                    || (this.EditionAttendeeOrganizations?.Any() == false                                                                  // No organization related
+                        || (this.EditionAttendeeOrganizations?.Any() == true                                                               // or has at least one organization linked
+                            && this.EditionAttendeeOrganizations?.All(eao => eao.OnboardingOrganizationDate.HasValue) == true));           // and all organizations interests onboarding are finished
         }
 
-        /// <summary>Determines whether [has organization interests onboarding pending].</summary>
+        /// <summary>Determines whether [is player organization interests onboarding pending].</summary>
         /// <returns>
-        ///   <c>true</c> if [has organization interests onboarding pending]; otherwise, <c>false</c>.</returns>
-        public bool HasOrganizationInterestsOnboardingPending()
+        ///   <c>true</c> if [is player organization interests onboarding pending]; otherwise, <c>false</c>.</returns>
+        public bool IsPlayerOrganizationInterestsOnboardingPending()
         {
-            return this.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual)
-                   && this.EditionAttendeeOrganizations?.Any() == true                                                           // Has at least one organization linked
-                   && this.EditionAttendeeOrganizations?.Any(eao => eao.OnboardingOrganizationDate.HasValue                      // and at least one organization onboarded
-                                                                    && !eao.OnboardingInterestsDate.HasValue) == true;           // and this  organization interests area not onboarded
+            return this.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual)                                               // Is Player //TODO: Change to check attendee organization type (must be dto)
+                   && this.EditionAttendeeOrganizations?.Any() == true                                                                     // Has at least one organization linked
+                   && this.EditionAttendeeOrganizations?.Any(eao => eao.OnboardingOrganizationDate.HasValue                                // and at least one organization onboarded
+                                                                    && !eao.OnboardingInterestsDate.HasValue) == true;                     // and this organization interests area not onboarded
         }
 
-        /// <summary>Determines whether [is organizations interests onboarding finished].</summary>
+        /// <summary>Determines whether [is player organizations interests onboarding finished].</summary>
         /// <returns>
-        ///   <c>true</c> if [is organizations interests onboarding finished]; otherwise, <c>false</c>.</returns>
-        public bool IsOrganizationsInterestsOnboardingFinished()
+        ///   <c>true</c> if [is player organizations interests onboarding finished]; otherwise, <c>false</c>.</returns>
+        public bool IsPlayerOrganizationsInterestsOnboardingFinished()
         {
-            return !this.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual)
-                   || (this.EditionAttendeeOrganizations?.Any() == false                                                         // No organization related
-                       || (this.EditionAttendeeOrganizations?.Any() == true                                                      // or has at least one organization linked
-                           && this.EditionAttendeeOrganizations?.All(eao => eao.OnboardingInterestsDate.HasValue) == true));     // and all organizations interests onboarding are finished
+            return !this.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual)                                              // Not Player //TODO: Change to check attendee organization type (must be dto)
+                   || (this.EditionAttendeeOrganizations?.Any() == false                                                                   // No organization related
+                       || (this.EditionAttendeeOrganizations?.Any() == true                                                                // or has at least one organization linked
+                           && this.EditionAttendeeOrganizations?.All(eao => eao.OnboardingInterestsDate.HasValue) == true));               // and all organizations interests onboarding are finished
         }
 
-        /// <summary>Determines whether [has ticket buyer organization onboarding pending].</summary>
+        /// <summary>Determines whether [is ticket buyer organization onboarding pending].</summary>
         /// <returns>
-        ///   <c>true</c> if [has ticket buyer organization onboarding pending]; otherwise, <c>false</c>.</returns>
-        public bool HasTicketBuyerOrganizationOnboardingPending()
+        ///   <c>true</c> if [is ticket buyer organization onboarding pending]; otherwise, <c>false</c>.</returns>
+        public bool IsTicketBuyerOrganizationOnboardingPending()
         {
-            return !this.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual)                                    // Not player
-                   && this.HasAnyCollaboratorType(Constants.CollaboratorType.TicketBuyers)                                       // Is ticket buyer
-                   && (this.EditionAttendeeOrganizations?.Any() == false                                                         // No organization related
-                       && !this.EditionAttendeeCollaborator.OnboardingOrganizationDataSkippedDate.HasValue);                         // Not skipped the onboarding of company data
+            return !this.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual)                                              // Not player //TODO: Change to check attendee organization type (must be dto)
+                   && this.HasAnyCollaboratorType(Constants.CollaboratorType.TicketBuyers)                                                 // Is ticket buyer
+                   && (!this.EditionAttendeeCollaborator.OnboardingOrganizationDataSkippedDate.HasValue                                    // Not skipped the onboarding of company data
+                       && (this.EditionAttendeeOrganizations?.Any() == false                                                               // No organization related
+                           || this.EditionAttendeeOrganizations?.All(eao => eao.OnboardingFinishDate.HasValue) == false));                 // or has organizations without onboarding     
         }           
 
         #endregion
