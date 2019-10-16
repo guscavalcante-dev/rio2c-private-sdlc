@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-26-2019
+// Last Modified On : 10-16-2019
 // ***********************************************************************
 // <copyright file="CollaboratorBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,7 +17,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
@@ -132,12 +131,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
         private void UpdateOrganizationTemplate(List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos)
         {
-            if (this.TemplateAttendeeOrganizationBaseCommands == null)
+            this.TemplateAttendeeOrganizationBaseCommands = new List<AttendeeOrganizationBaseCommand>
             {
-                this.TemplateAttendeeOrganizationBaseCommands = new List<AttendeeOrganizationBaseCommand>();
-            }
-
-            this.TemplateAttendeeOrganizationBaseCommands.Add(new AttendeeOrganizationBaseCommand(null, attendeeOrganizationsBaseDtos));
+                new AttendeeOrganizationBaseCommand(null, attendeeOrganizationsBaseDtos)
+            };
         }
 
         /// <summary>Updates the job titles.</summary>
