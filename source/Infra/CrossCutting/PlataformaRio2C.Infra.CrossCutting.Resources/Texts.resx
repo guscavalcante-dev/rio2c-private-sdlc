@@ -479,4 +479,12 @@ maira@rio2c.com&lt;br/&gt;
 &lt;li&gt;Período de avaliação: 06/01 a 21/02/2020&lt;/li&gt;
 &lt;li&gt;Agenda online disponível em: 23/03/2020&lt;/li&gt;</comment>
   </data>
+  <data name="ForgotPasswordEmail1" xml:space="preserve">
+    <value>Você nos contou que esqueceu sua senha. Se você realmente o fez, clique abaixo para escolher uma nova:</value>
+    <comment>Você nos contou que esqueceu sua senha. Se você realmente o fez, clique abaixo para escolher uma nova:</comment>
+  </data>
+  <data name="ForgotPasswordEmail2" xml:space="preserve">
+    <value>Se você não deseja redefinir sua senha, então você pode simplesmente ignorar esse e-mail, pois sua senha não será alterada.</value>
+    <comment>Se você não deseja redefinir sua senha, então você pode simplesmente ignorar esse e-mail, pois sua senha não será alterada.</comment>
+  </data>
 </root>

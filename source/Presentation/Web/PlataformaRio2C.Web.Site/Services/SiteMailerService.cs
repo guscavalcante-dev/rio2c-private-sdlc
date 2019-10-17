@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-14-2019
+// Last Modified On : 10-17-2019
 // ***********************************************************************
 // <copyright file="SiteMailerService.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,6 +19,7 @@ using System.Web.Mvc;
 using Mvc.Mailer;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.Services;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Web.Site.Services
 {
@@ -39,6 +40,35 @@ namespace PlataformaRio2C.Web.Site.Services
             this.MasterName = "_SiteEmailLayout";
         }
 
+        /// <summary>Forgots the password email.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <param name="sentEmailUid">The sent email uid.</param>
+        /// <returns></returns>
+        public MvcMailMessage ForgotPasswordEmail(SendForgotPasswordEmailAsync cmd, Guid sentEmailUid)
+        {
+            this.SetCulture(cmd.UserInterfaceLanguage);
+
+            this.ViewData = new ViewDataDictionary(cmd);
+
+            return Populate(x =>
+            {
+                x.Subject = this.GetSubject(Texts.ForgotPassword);
+                x.ViewName = "ForgotPassword";
+                x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
+                x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
+                ViewBag.SentEmailUid = sentEmailUid;
+
+                if (!string.IsNullOrEmpty(this.GetBccEmailRecipient()))
+                {
+                    x.Bcc.Add(this.GetBccEmailRecipient());
+                }
+            });
+        }
+
+        /// <summary>Sends the producer welcome email.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <param name="sentEmailUid">The sent email uid.</param>
+        /// <returns></returns>
         public MvcMailMessage SendProducerWelcomeEmail(SendProducerWelcomeEmailAsync cmd, Guid sentEmailUid)
         {
             this.SetCulture(cmd.UserInterfaceLanguage);

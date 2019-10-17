@@ -374,4 +374,12 @@ CNPJ: 26.079.220/0001-46. Any unauthorized use of the names or their variations 
 &lt;li&gt;Período de avaliação: 06/01 a 21/02/2020&lt;/li&gt;
 &lt;li&gt;Agenda online disponível em: 23/03/2020&lt;/li&gt;</comment>
   </data>
+  <data name="ForgotPasswordEmail1" xml:space="preserve">
+    <value>You told us you forgot your password. If you really did, click below to choose a new one:</value>
+    <comment>Você nos contou que esqueceu sua senha. Se você realmente o fez, clique abaixo para escolher uma nova:</comment>
+  </data>
+  <data name="ForgotPasswordEmail2" xml:space="preserve">
+    <value>If you didn't mean to reset your password, then you can just ignore this email; your password will not change.</value>
+    <comment>Se você não deseja redefinir sua senha, então você pode simplesmente ignorar esse e-mail, pois sua senha não será alterada.</comment>
+  </data>
 </root>

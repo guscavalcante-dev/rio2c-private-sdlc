@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-11-2019
+// Last Modified On : 10-17-2019
 // ***********************************************************************
 // <copyright file="AccountController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,6 +30,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Application.Common;
 using System.Text.RegularExpressions;
+using PlataformaRio2C.Application.CQRS.Commands;
 using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Site.Controllers
@@ -222,6 +223,173 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #endregion
 
+        #region Log Off
+
+        /// <summary>Logs the off.</summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult LogOff()
+        {
+            this.authenticationManager.SignOut();
+            return RedirectToAction("Index", "Account");
+        }
+
+        #endregion
+
+        #region Forgot Password
+
+        /// <summary>Forgots the password.</summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        /// <summary>Forgots the password.</summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await _identityController.FindByEmailAsync(model.Email);
+            if (user == null || !user.Active || user.IsDeleted)
+            {
+                ModelState.AddModelError("Email", Messages.UserNotFound);
+                return View(model);
+            }
+
+            var passwordResetToken = await _identityController.GeneratePasswordResetTokenAsync(user.Id);
+
+            try
+            {
+                var result = await this.CommandBus.Send(new SendForgotPasswordEmailAsync(
+                    passwordResetToken,
+                    user.Id,
+                    user.Uid,
+                    null,
+                    null,
+                    user.Email,
+                    this.EditionDto.Id,
+                    this.EditionDto.Name,
+                    this.EditionDto.UrlCode,
+                    this.UserInterfaceLanguage));
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                ModelState.AddModelError("Email", ex.GetInnerMessage());
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
+                ModelState.AddModelError("Email", Messages.WeFoundAndError);
+                return View(model);
+            }
+
+            return View("ForgotPasswordConfirmation");
+        }
+
+        /// <summary>Resets the password.</summary>
+        /// <param name="token">The token.</param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public ActionResult ResetPassword(string token)
+        {
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("NotFound", "Error");
+            }
+
+            return View(new ResetPasswordViewModel { Token = token });
+        }
+
+        /// <summary>Resets the password.</summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await _identityController.FindByEmailAsync(model.Email);
+            if (user == null || !user.Active || user.IsDeleted)
+            {
+                ModelState.AddModelError("Email", Messages.UserNotFound);
+                return View(model);
+            }
+
+            var result = await _identityController.ResetPasswordAsync(user.Id, model.Token, model.Password);
+            if (result.Succeeded)
+            {
+                if (User.Identity.IsAuthenticated)
+                {
+                    this.Message(MessageType.SUCCESS, Messages.YourPasswordHasBeenChangedSuccessfully);
+                    return RedirectToAction("Index", "Account");
+                }
+
+                return RedirectToAction("ResetPasswordConfirmation", "Account");
+            }
+
+            AddErrors(result);
+
+            return View(model);
+        }
+
+        /// <summary>Resets the password confirmation.</summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public ActionResult ResetPasswordConfirmation()
+        {
+            return View();
+        }
+
+        ///// <summary>Resets the password authenticated.</summary>
+        ///// <returns></returns>
+        //[Authorize]
+        //public async Task<ActionResult> ResetPasswordAuthenticated()
+        //{
+        //    if (User.Identity.IsAuthenticated)
+        //    {
+        //        var user = await _identityController.FindByNameAsync(User.Identity.Name);
+        //        if (user == null)
+        //        {
+        //            this.authenticationManager.SignOut();
+        //            return View("UserNotFound");
+        //        }
+        //        else if (!user.Active)
+        //        {
+        //            this.authenticationManager.SignOut();
+        //            return View("DisabledUser");
+        //        }
+        //        else
+        //        {
+        //            var code = await _identityController.GeneratePasswordResetTokenAsync(user.Id);
+        //            return View(new ResetPasswordViewModel { Code = code, Email = user.Email });
+        //        }
+        //    }
+
+        //    return RedirectToAction("Index", "Account");
+        //}
+
+        #endregion
+
         #region Onboarding
 
         [AllowAnonymous]
@@ -371,147 +539,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
             var result = await _identityController.ConfirmEmailAsync(userId, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
-
-        #region Forgot Password
-
-        /// <summary>Forgots the password.</summary>
-        /// <returns></returns>
-        [AllowAnonymous]
-        public ActionResult ForgotPassword()
-        {
-            return View();
-        }
-
-        /// <summary>Forgots the password.</summary>
-        /// <param name="model">The model.</param>
-        /// <returns></returns>
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = await _identityController.FindByEmailAsync(model.Email);
-                if (user == null || !user.Active)
-                {
-                    return ReturnUserNotFound<ForgotPasswordViewModel>(model);
-                }
-
-                var code = await _identityController.GeneratePasswordResetTokenAsync(user.Id);
-                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-
-                //var bodyMessage = string.Format(Texts.EmailBodyForgotPassword, callbackUrl);
-
-                //var messageEmail = CompileHtmlDefaultTemplateMessage().Replace("@{Message}", bodyMessage);
-
-                //var path = VirtualPathUtility.ToAbsolute("/");
-                //var url = new Uri(Request.Url, path).AbsoluteUri;
-
-                //messageEmail = messageEmail.Replace("@{UrlSite}", url);
-
-                //await _identityController.SendEmailAsync(user.Id, Texts.EmailSubjectForgotPassword, messageEmail);
-                return View("ForgotPasswordConfirmation");
-            }
-
-            return View(model);
-        }
-
-        /// <summary>Resets the password authenticated.</summary>
-        /// <returns></returns>
-        [Authorize]
-        public async Task<ActionResult> ResetPasswordAuthenticated()
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                var user = await _identityController.FindByNameAsync(User.Identity.Name);
-                if (user == null)
-                {
-                    this.authenticationManager.SignOut();
-                    return View("UserNotFound");
-                }
-                else if (!user.Active)
-                {
-                    this.authenticationManager.SignOut();
-                    return View("DisabledUser");
-                }
-                else
-                {
-                    var code = await _identityController.GeneratePasswordResetTokenAsync(user.Id);
-                    return View(new ResetPasswordViewModel { Code = code, Email = user.Email });
-                }
-            }
-
-            return RedirectToAction("Index", "Account");
-        }
-
-        /// <summary>Resets the password.</summary>
-        /// <param name="code">The code.</param>
-        /// <returns></returns>
-        [AllowAnonymous]
-        public ActionResult ResetPassword(string code)
-        {
-            return code == null ? View("Error") : View(new ResetPasswordViewModel { Code = code });
-        }
-
-        /// <summary>Resets the password.</summary>
-        /// <param name="model">The model.</param>
-        /// <returns></returns>
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var user = await _identityController.FindByEmailAsync(model.Email);
-            if (user == null || !user.Active)
-            {
-                return ReturnUserNotFound<ResetPasswordViewModel>(model);
-            }
-
-            var result = await _identityController.ResetPasswordAsync(user.Id, model.Code, model.Password);
-            if (result.Succeeded)
-            {
-                if (User.Identity.IsAuthenticated)
-                {
-                    this.Message(MessageType.SUCCESS, Messages.YourPasswordHasBeenChangedSuccessfully);
-                    return RedirectToAction("Index", "Account");
-                }
-
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
-            }
-
-            AddErrors(result);
-
-            return View(model);
-        }
-
-        /// <summary>Resets the password confirmation.</summary>
-        /// <returns></returns>
-        [AllowAnonymous]
-        public ActionResult ResetPasswordConfirmation()
-        {
-            return View();
-        }
-
-        #endregion
-
-        #region Log Off
-
-        /// <summary>Logs the off.</summary>
-        /// <returns></returns>
-        [HttpPost]
-        public ActionResult LogOff()
-        {
-            this.authenticationManager.SignOut();
-            return RedirectToAction("Index", "Account");
-        }
-
-        #endregion
 
         #region Auxiliary Private Methods
 

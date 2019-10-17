@@ -1581,4 +1581,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Ficha de inscrição Projetos de Audiovisual - MODELO.pdf</value>
     <comment>Ficha de inscrição Projetos de Audiovisual - MODELO.pdf</comment>
   </data>
+  <data name="ChooseNewPassword" xml:space="preserve">
+    <value>Escolha uma nova senha</value>
+    <comment>Escolha uma nova senha</comment>
+  </data>
+  <data name="ResetYourPassword" xml:space="preserve">
+    <value>Redefina sua senha</value>
+    <comment>Redefina sua senha</comment>
+  </data>
 </root>

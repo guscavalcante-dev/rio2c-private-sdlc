@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-27-2019
+// Last Modified On : 10-17-2019
 // ***********************************************************************
 // <copyright file="SendPlayerWelcomeEmailAsyncCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -31,6 +31,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     {
         private readonly ICollaboratorRepository collaboratorRepo;
 
+        /// <summary>Initializes a new instance of the <see cref="SendPlayerWelcomeEmailAsyncCommandHandler"/> class.</summary>
+        /// <param name="commandBus">The command bus.</param>
+        /// <param name="uow">The uow.</param>
+        /// <param name="mailerService">The mailer service.</param>
+        /// <param name="sentEmailRepository">The sent email repository.</param>
+        /// <param name="collaboratorRepository">The collaborator repository.</param>
         public SendPlayerWelcomeEmailAsyncCommandHandler(
             IMediator commandBus,
             IUnitOfWork uow,

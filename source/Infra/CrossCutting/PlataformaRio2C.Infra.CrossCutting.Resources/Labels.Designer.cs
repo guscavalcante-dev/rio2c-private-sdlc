@@ -466,6 +466,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Escolha uma nova senha.
+        /// </summary>
+        public static string ChooseNewPassword {
+            get {
+                return ResourceManager.GetString("ChooseNewPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cidade.
         /// </summary>
         public static string City {
@@ -2712,6 +2721,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Reset {
             get {
                 return ResourceManager.GetString("Reset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Redefina sua senha.
+        /// </summary>
+        public static string ResetYourPassword {
+            get {
+                return ResourceManager.GetString("ResetYourPassword", resourceCulture);
             }
         }
         

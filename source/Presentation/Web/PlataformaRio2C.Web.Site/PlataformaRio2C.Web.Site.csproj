@@ -7150,6 +7150,7 @@
     <Content Include="Views\Executives\Modals\UpdateMainInformationForm.cshtml" />
     <Content Include="Views\Onboarding\CompanyInfo.cshtml" />
     <Content Include="Views\Onboarding\Shared\_CompanyInfoForm.cshtml" />
+    <Content Include="Views\SiteMailerService\ForgotPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

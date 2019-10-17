@@ -257,6 +257,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Você nos contou que esqueceu sua senha. Se você realmente o fez, clique abaixo para escolher uma nova:.
+        /// </summary>
+        public static string ForgotPasswordEmail1 {
+            get {
+                return ResourceManager.GetString("ForgotPasswordEmail1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Se você não deseja redefinir sua senha, então você pode simplesmente ignorar esse e-mail, pois sua senha não será alterada..
+        /// </summary>
+        public static string ForgotPasswordEmail2 {
+            get {
+                return ResourceManager.GetString("ForgotPasswordEmail2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Para sua conveniência, os projetos podem ser salvos e modificados antes do envio final. Caso o projeto não seja enviado até o dia 17 DE JANEIRO será automaticamente excluído. Uma vez finalizados e enviados para os players, os projetos NÃO PODEM SER ALTERADOS..
         /// </summary>
         public static string ForYourConvenience {

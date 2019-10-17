@@ -1569,4 +1569,12 @@
     <value>Audiovisual Projects' Form Template.pdf</value>
     <comment>Ficha de inscrição Projetos de Audiovisual - MODELO.pdf</comment>
   </data>
+  <data name="ChooseNewPassword" xml:space="preserve">
+    <value>Choose a new password</value>
+    <comment>Escolha uma nova senha</comment>
+  </data>
+  <data name="ResetYourPassword" xml:space="preserve">
+    <value>Reset your password</value>
+    <comment>Redefina sua senha</comment>
+  </data>
 </root>
