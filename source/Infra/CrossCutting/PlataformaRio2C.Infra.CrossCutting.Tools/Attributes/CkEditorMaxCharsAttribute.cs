@@ -4,7 +4,7 @@
 // Created          : 10-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-16-2019
+// Last Modified On : 10-17-2019
 // ***********************************************************************
 // <copyright file="CkEditorMaxCharsAttribute.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 
 namespace PlataformaRio2C.Infra.CrossCutting.Tools.Attributes
 {
@@ -38,6 +39,14 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Attributes
         /// <returns>An instance of the <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/> class.</returns>
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
+            var valueProperty = validationContext.ObjectType.GetProperty("Value");
+            var htmlText = (string)valueProperty?.GetValue(validationContext.ObjectInstance, null);
+
+            if (HtmlutilityHelper.CountChars(htmlText) > this.length)
+            {
+                return new ValidationResult(this.ErrorMessage ?? string.Format(Messages.PropertyBetweenLengths, string.Empty, this.length, 1));
+            }
+
             return ValidationResult.Success;
         }
 

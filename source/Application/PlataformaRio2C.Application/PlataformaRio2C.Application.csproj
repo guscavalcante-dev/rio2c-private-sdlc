@@ -62,8 +62,8 @@
     <Reference Include="FoolproofValidation, Version=0.9.5851.39121, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Foolproof.0.9.4518\lib\net45\FoolproofValidation.dll</HintPath>
     </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.11.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\HtmlAgilityPack.1.11.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    <Reference Include="HtmlAgilityPack, Version=1.11.16.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\HtmlAgilityPack.1.11.16\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="LazyCache, Version=2.0.1.113, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\LazyCache.2.0.1\lib\netstandard2.0\LazyCache.dll</HintPath>
