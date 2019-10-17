@@ -4,7 +4,7 @@
 @using PlataformaRio2C.Domain.Statics
 @{
     var adminAccessControlDto = ViewBag.AdminAccessControlDto as AdminAccessControlDto;
-    var userImageUrl = adminAccessControlDto?.HasImage() == true ? ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, adminAccessControlDto.Collaborator.Uid, adminAccessControlDto.Collaborator.ImageUploadDate, true) : 
+    var userImageUrl = adminAccessControlDto?.HasImage() == true ? ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, adminAccessControlDto.Collaborator.Uid, adminAccessControlDto.Collaborator.ImageUploadDate, true) :
                                                                    string.Empty;
 }
 <div id="kt_header" class="kt-header  kt-header--fixed " data-ktheader-minimize="on">
@@ -756,57 +756,68 @@
                             @(adminAccessControlDto?.GetFullName(CultureInfo.CurrentCulture.ToString()))
                         </div>
                         @*
-                        <div class="kt-user-card__badge">
-                            <span class="btn btn-success btn-sm btn-bold btn-font-md">23 messages</span>
-                        </div>
+                            <div class="kt-user-card__badge">
+                                <span class="btn btn-success btn-sm btn-bold btn-font-md">23 messages</span>
+                            </div>
                         *@
                     </div>
                     <!--end: Head -->
                     <!--begin: Navigation -->
                     <div class="kt-notification">
-                        @*
-                            <a href="#" class="kt-notification__item">
-                                <div class="kt-notification__item-icon">
-                                    <i class="flaticon2-calendar-3 kt-font-success"></i>
+                        <a href="#" class="kt-notification__item" onclick="AccountsPassword.showUpdateModal(); return false;">
+                            <div class="kt-notification__item-icon">
+                                <i class="flaticon-lock kt-font-success"></i>
+                            </div>
+                            <div class="kt-notification__item-details">
+                                <div class="kt-notification__item-title kt-font-bold">
+                                    @Labels.ChangePassword
                                 </div>
-                                <div class="kt-notification__item-details">
-                                    <div class="kt-notification__item-title kt-font-bold">
-                                        My Profile
-                                    </div>
-                                    <div class="kt-notification__item-time">
-                                        Account settings and more
-                                    </div>
+                                <div class="kt-notification__item-time">
+                                    @Messages.ClickHereToChangePassword
                                 </div>
-                            </a>
-                            <a href="#" class="kt-notification__item">
-                                <div class="kt-notification__item-icon">
-                                    <i class="flaticon2-mail kt-font-warning"></i>
+                            </div>
+                        </a>
+                        @*<a href="#" class="kt-notification__item">
+                            <div class="kt-notification__item-icon">
+                                <i class="flaticon2-calendar-3 kt-font-success"></i>
+                            </div>
+                            <div class="kt-notification__item-details">
+                                <div class="kt-notification__item-title kt-font-bold">
+                                    My Profile
                                 </div>
-                                <div class="kt-notification__item-details">
-                                    <div class="kt-notification__item-title kt-font-bold">
-                                        My Messages
-                                    </div>
-                                    <div class="kt-notification__item-time">
-                                        Inbox and tasks
-                                    </div>
+                                <div class="kt-notification__item-time">
+                                    Account settings and more
                                 </div>
-                            </a>
-                            <a href="#" class="kt-notification__item">
-                                <div class="kt-notification__item-icon">
-                                    <i class="flaticon2-rocket-1 kt-font-danger"></i>
+                            </div>
+                        </a>
+                        <a href="#" class="kt-notification__item">
+                            <div class="kt-notification__item-icon">
+                                <i class="flaticon2-mail kt-font-warning"></i>
+                            </div>
+                            <div class="kt-notification__item-details">
+                                <div class="kt-notification__item-title kt-font-bold">
+                                    My Messages
                                 </div>
-                                <div class="kt-notification__item-details">
-                                    <div class="kt-notification__item-title kt-font-bold">
-                                        My Activities
-                                    </div>
-                                    <div class="kt-notification__item-time">
-                                        Logs and notifications
-                                    </div>
+                                <div class="kt-notification__item-time">
+                                    Inbox and tasks
                                 </div>
-                            </a>
-                        *@
+                            </div>
+                        </a>
+                        <a href="#" class="kt-notification__item">
+                            <div class="kt-notification__item-icon">
+                                <i class="flaticon2-rocket-1 kt-font-danger"></i>
+                            </div>
+                            <div class="kt-notification__item-details">
+                                <div class="kt-notification__item-title kt-font-bold">
+                                    My Activities
+                                </div>
+                                <div class="kt-notification__item-time">
+                                    Logs and notifications
+                                </div>
+                            </div>
+                        </a>*@
                         <div class="kt-notification__custom kt-space-between">
-                            @using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm" }))
+                            @using (Html.BeginForm("LogOff", "Account", new {area = ""}, FormMethod.Post, new {id = "logoutForm"}))
                             {
                                 @Html.AntiForgeryToken()
                             }

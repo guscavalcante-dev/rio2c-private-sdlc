@@ -668,4 +668,12 @@
     <value>If you want to skip this step and register your company later</value>
     <comment>Se você deseja pular esse passo e registrar sua empresa depois</comment>
   </data>
+  <data name="ClickHereToChangePassword" xml:space="preserve">
+    <value>Click here to change your password</value>
+    <comment>Clique aqui para alterar sua senha</comment>
+  </data>
+  <data name="ErrorUpdatingPassword" xml:space="preserve">
+    <value>The password could not be update.</value>
+    <comment>A senha não pode ser alterada.</comment>
+  </data>
 </root>

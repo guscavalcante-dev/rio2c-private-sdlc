@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-21-2019
+// Last Modified On : 10-17-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -117,12 +117,17 @@ namespace PlataformaRio2C.Web.Admin
 
             #region MyRio2C Bundles
 
-            bundles.Add(new StyleBundle("~/bundles/css/layoutGlobalCustomizedStyles.css").Include(
-                "~/Assets/css/myrio2c.common.css",
-                "~/Assets/css/myrio2c.common.responsive.css"));
+            bundles.Add(new StyleBundle("~/bundles/css/layoutGlobalCustomizedStyles.css")
+                .Include("~/Assets/css/myrio2c.common.css")
+                .Include("~/Assets/css/myrio2c.common.responsive.css")
+                .Include("~/Assets/components/hideshowpassword/css/example.wink.css", new CssRewriteUrlTransform()));
 
             bundles.Add(new ScriptBundle("~/bundles/js/layoutGlobalCustomized.js").Include(
-                "~/Assets/js/myrio2c.common.js"));
+                "~/Assets/js/myrio2c.common.js",
+                "~/Assets/components/jquery.form/jquery.form.js",
+                "~/Assets/components/hideshowpassword/hideShowPassword.js",
+                "~/Assets/js/myrio2c.showhidepassword.js",
+                "~/Assets/js/accounts/accounts.password.js"));
 
             #endregion
 
@@ -136,13 +141,6 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Scripts/jquery.validate.unobtrusive.min.js",
                 "~/Client Scripts/mvcfoolproof.unobtrusive.js"
                 ));
-
-            #endregion
-
-            #region JQuery Form
-
-            bundles.Add(new ScriptBundle("~/bundles/js/jqueryform.js").Include(
-                "~/Assets/components/jquery.form/jquery.form.js"));
 
             #endregion
 
@@ -179,17 +177,6 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/cropper.js").Include(
                 "~/Assets/components/cropper/dist/cropper.js",
                 "~/Assets/js/myrio2c.cropper.js"));
-
-            #endregion
-
-            #region Hide Show Password
-
-            bundles.Add(new StyleBundle("~/bundles/css/hideshowpassword.css")
-                .Include("~/Assets/components/hideshowpassword/css/example.wink.css", new CssRewriteUrlTransform()));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/hideshowpassword.js").Include(
-                "~/Assets/components/hideshowpassword/hideShowPassword.js",
-                "~/Assets/js/myrio2c.showhidepassword.js"));
 
             #endregion
 

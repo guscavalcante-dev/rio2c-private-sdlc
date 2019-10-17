@@ -12,7 +12,6 @@
     @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-signin kt-form", role = "form", novalidade = "novalidate" }))
     {
         @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true, Messages.SomethingIsWrong, new { @class = "text-danger" })
         <div class="form-group">
             @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Email), autocomplete = "off" })
             @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
@@ -21,6 +20,7 @@
             @Html.PasswordFor(m => m.Password, new { @class = "form-control showhidepassword", placeholder = Html.DisplayNameFor(m => m.Password) })
             @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
         </div>
+        @Html.ValidationSummary(true, null, new { @class = "text-danger list-unstyled" })
         <!--begin::Action-->
         <div class="kt-login__actions">
             <a href="@Url.Action("ForgotPassword", "Account", new { Area = "" })" class="kt-link kt-login__link-forgot">
@@ -60,13 +60,12 @@
 <!--end::Signin-->
 @section Styles {
     @Styles.Render("~/bundles/css/loginCustomStyles.css")
-    @Styles.Render("~/bundles/css/hideshowpassword.css")
 }
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/js/loginCustomScripts.js")
-    @Scripts.Render("~/bundles/js/hideshowpassword.js")
     <script type="text/javascript">
-        MyRio2cShowHidePassword.init();
+        jQuery(document).ready(function () {
+            MyRio2cShowHidePassword.init();
+        });
     </script>
 }

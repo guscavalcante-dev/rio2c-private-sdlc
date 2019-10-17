@@ -94,13 +94,12 @@
 </div>
 @section Styles {
     @Styles.Render("~/bundles/css/onboardingIndex")
-    @Styles.Render("~/bundles/css/hideshowpassword.css")
 }
 @section Scripts {
-    @Scripts.Render("~/bundles/js/jqueryval.js")
     @Scripts.Render("~/bundles/js/onboarding.wizard.js")
-    @Scripts.Render("~/bundles/js/hideshowpassword.js")
     <script type="text/javascript">
-        MyRio2cShowHidePassword.init();
+        jQuery(document).ready(function () {
+            MyRio2cShowHidePassword.init();
+        });
     </script>
 }

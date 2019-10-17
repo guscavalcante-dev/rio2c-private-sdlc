@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using HtmlAgilityPack;
 using Microsoft.AspNet.Identity;
@@ -31,6 +32,7 @@ using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Application.Common;
 using System.Text.RegularExpressions;
 using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Site.Controllers
@@ -387,6 +389,86 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         //    return RedirectToAction("Index", "Account");
         //}
+
+        #endregion
+
+        #region Change Password
+
+        /// <summary>Shows the update password modal.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowUpdatePasswordModal()
+        {
+            ChangePasswordViewModel cmd;
+
+            try
+            {
+                cmd = new ChangePasswordViewModel();
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/UpdatePasswordModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Updates the password.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        /// <exception cref="DomainException"></exception>
+        [HttpPost]
+        public async Task<ActionResult> UpdatePassword(ChangePasswordViewModel cmd)
+        {
+            IdentityResult result = null;
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                result = await _identityController.ChangePasswordAsync(this.UserAccessControlDto.User.Id, cmd.OldPassword, cmd.NewPassword);
+                if (!result.Succeeded)
+                {
+                    throw new DomainException(Messages.ErrorUpdatingPassword);
+                }
+            }
+            catch (DomainException ex)
+            {
+                if (result?.Errors?.Any() == true)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error);
+                    }
+                }
+
+                return Json(new
+                {
+                    status = "error",
+                    message = ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/UpdatePasswordForm", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Password, Labels.UpdatedF) });
+        }
 
         #endregion
 

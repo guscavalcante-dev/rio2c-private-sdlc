@@ -133,6 +133,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clique aqui para alterar sua senha.
+        /// </summary>
+        public static string ClickHereToChangePassword {
+            get {
+                return ResourceManager.GetString("ClickHereToChangePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cadastro de produtor encerrado!.
         /// </summary>
         public static string ClosedProducerRegistration {
@@ -470,6 +479,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ErrorUnexpectedPageText {
             get {
                 return ResourceManager.GetString("ErrorUnexpectedPageText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A senha não pode ser alterada..
+        /// </summary>
+        public static string ErrorUpdatingPassword {
+            get {
+                return ResourceManager.GetString("ErrorUpdatingPassword", resourceCulture);
             }
         }
         

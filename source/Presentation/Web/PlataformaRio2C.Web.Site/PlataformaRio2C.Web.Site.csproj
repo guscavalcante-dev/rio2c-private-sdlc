@@ -398,6 +398,7 @@
     <Content Include="Assets\img\logo-rio2c-footer.png" />
     <Content Include="Assets\img\logo_rio2c_color.png" />
     <Content Include="Assets\img\logo_rio2c_white.png" />
+    <Content Include="Assets\js\accounts\accounts.password.js" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
     <Content Include="Assets\js\attendeeorganizations\attendeeorganizations.form.js" />
     <Content Include="Assets\js\companies\companies.executive.widget.js" />
@@ -7151,6 +7152,8 @@
     <Content Include="Views\Onboarding\CompanyInfo.cshtml" />
     <Content Include="Views\Onboarding\Shared\_CompanyInfoForm.cshtml" />
     <Content Include="Views\SiteMailerService\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\Modals\UpdatePasswordForm.cshtml" />
+    <Content Include="Views\Account\Modals\UpdatePasswordModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
