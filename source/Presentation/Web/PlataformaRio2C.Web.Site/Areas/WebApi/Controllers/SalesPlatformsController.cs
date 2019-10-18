@@ -4,7 +4,7 @@
 // Created          : 07-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-14-2019
+// Last Modified On : 10-18-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -110,7 +110,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             {
                 if (key?.ToLowerInvariant() != ConfigurationManager.AppSettings["ProcessWebhookRequestsApiKey"]?.ToLowerInvariant())
                 {
-                    throw new DomainException("Invalid key to execute process webhook requests.");
+                    throw new Exception("Invalid key to execute process webhook requests.");
                 }
 
                 result = await this.commandBus.Send(new ProcessPendingPlatformWebhookRequestsAsync());

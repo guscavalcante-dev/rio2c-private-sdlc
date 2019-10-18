@@ -324,7 +324,11 @@
     <Compile Include="Areas\WebApi\Models\Organizations\Responses\OrganizationApiResponse.cs" />
     <Compile Include="Areas\WebApi\Models\Players\Requests\PlayerApiRequest.cs" />
     <Compile Include="Areas\WebApi\Models\Players\Requests\PlayersApiRequest.cs" />
+    <Compile Include="Areas\WebApi\Models\Players\Responses\ActivityApiResponse.cs" />
+    <Compile Include="Areas\WebApi\Models\Players\Responses\TargetAudienceApiResponse.cs" />
+    <Compile Include="Areas\WebApi\Models\Players\Responses\InterestGroupApiResponse.cs" />
     <Compile Include="Areas\WebApi\Models\Players\Responses\PlayerApiResponse.cs" />
+    <Compile Include="Areas\WebApi\Models\Players\Responses\PlayersFiltersApiResponse.cs" />
     <Compile Include="Areas\WebApi\Models\Players\Responses\PlayersApiResponse.cs" />
     <Compile Include="Areas\WebApi\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />

@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-17-2019
+// Last Modified On : 10-18-2019
 // ***********************************************************************
 // <copyright file="AccountController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -32,6 +32,7 @@ using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Application.Common;
 using System.Text.RegularExpressions;
 using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using Constants = PlataformaRio2C.Domain.Constants;
@@ -133,10 +134,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     {
                         if (userLanguage != null)
                         {
-                            var listLanguages = await this.CommandBus.Send(new FindAllLanguagesDtosAsync(null));
-                            foreach (var item in listLanguages)
+                            if (CultureHelper.Cultures?.Any() == true)
                             {
-                                returnUrl = Regex.Replace(returnUrl, item.Code, userLanguage.Language.Code, RegexOptions.IgnoreCase);
+                                foreach (var configuredCulture in CultureHelper.Cultures)
+                                {
+                                    returnUrl = Regex.Replace(returnUrl, configuredCulture, userLanguage.Language.Code, RegexOptions.IgnoreCase);
+                                }
                             }
 
                             if (returnUrl.IndexOf(userLanguage.Language.Code, StringComparison.OrdinalIgnoreCase) < 0)

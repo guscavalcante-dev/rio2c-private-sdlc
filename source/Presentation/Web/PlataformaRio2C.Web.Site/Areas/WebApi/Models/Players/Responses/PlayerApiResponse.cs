@@ -4,7 +4,7 @@
 // Created          : 09-30-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-30-2019
+// Last Modified On : 10-18-2019
 // ***********************************************************************
 // <copyright file="PlayerApiResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -51,30 +51,6 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Models
         [JsonProperty("value")]
         public string Value { get; set; }
     }
-
-    #region Interests
-
-    /// <summary>InterestGroupApiResponse</summary>
-    public class InterestGroupApiResponse
-    {
-        [JsonProperty("uid")]
-        public Guid Uid { get; set; }
-
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        [JsonProperty("interests")]
-        public List<InterestApiResponse> InterestsApiResponses { get; set; }
-    }
-
-    /// <summary>InterestApiResponse</summary>
-    public class InterestApiResponse
-    {
-        [JsonProperty("name")]
-        public string Name { get; set; }
-    }
-
-    #endregion
 
     #region Collaborators
 

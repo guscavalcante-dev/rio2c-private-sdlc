@@ -4,7 +4,7 @@
 // Created          : 09-25-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-30-2019
+// Last Modified On : 10-18-2019
 // ***********************************************************************
 // <copyright file="PlayersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,6 +19,7 @@ using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Web.Site.Areas.WebApi.Models;
 
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
@@ -31,21 +32,28 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
     {
         private readonly IOrganizationRepository organizationRepo;
         private readonly IEditionRepository editionRepo;
+        private readonly IActivityRepository activityRepo;
+        private readonly ITargetAudienceRepository targetAudienceRepo;
+        private readonly IInterestRepository interestRepo;
         private readonly IFileRepository fileRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="PlayersController"/> class.</summary>
-        /// <param name="organizationRepository">The organization repository.</param>
-        /// <param name="editionRepository">The edition repository.</param>
-        /// <param name="fileRepository">The file repository.</param>
         public PlayersController(
             IOrganizationRepository organizationRepository,
             IEditionRepository editionRepository,
+            IActivityRepository activityRepository,
+            ITargetAudienceRepository targetAudienceRepository,
+            IInterestRepository interestRepositoryy,
             IFileRepository fileRepository)
         {
             this.organizationRepo = organizationRepository;
             this.editionRepo = editionRepository;
+            this.activityRepo = activityRepository;
+            this.targetAudienceRepo = targetAudienceRepository;
+            this.interestRepo = interestRepositoryy;
             this.fileRepo = fileRepository;
         }
+
+        #region List
 
         /// <summary>Playerses the specified request.</summary>
         /// <param name="request">The request.</param>
@@ -94,6 +102,55 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 })?.ToList()
             });
         }
+
+        /// <summary>Filterses this instance.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("players/filters")]
+        public async Task<IHttpActionResult> Filters()
+        {
+            try
+            {
+                var activities = await this.activityRepo.FindAllAsync();
+                var targetAudiences = await this.targetAudienceRepo.FindAllAsync();
+                var intrests = await this.interestRepo.FindAllGroupedByInterestGroupsAsync();
+
+                return await Json(new PlayersFiltersApiResponse
+                {
+                    Status = ApiStatus.Success,
+                    Error = null,
+                    ActivityApiResponses = activities?.OrderBy(ta => ta.DisplayOrder)?.Select(ta => new ActivityApiResponse
+                    {
+                        Uid = ta.Uid,
+                        Name = ta.Name
+                    })?.ToList(),
+                    TargetAudienceApiResponses = targetAudiences?.OrderBy(ta => ta.DisplayOrder)?.Select(ta => new TargetAudienceApiResponse
+                    {
+                        Uid = ta.Uid,
+                        Name = ta.Name
+                    })?.ToList(),
+                    InterestGroupApiResponses = intrests?.OrderBy(i => i.Key.DisplayOrder)?.Select(intrest => new InterestGroupApiResponse
+                    {
+                        Uid = intrest.Key.Uid,
+                        Name = intrest.Key.Name,
+                        InterestsApiResponses = intrest?.OrderBy(i => i.DisplayOrder)?.Select(i => new InterestApiResponse
+                        {
+                            Uid = i.Uid,
+                            Name = i.Name
+                        })?.ToList()
+                    })?.ToList()
+                });
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "Players filters api failed." } });
+            }
+        }
+
+        #endregion
+
+        #region Details
 
         /// <summary>Players the specified request.</summary>
         /// <param name="request">The request.</param>
@@ -146,6 +203,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     Name = ig.Key.InterestGroupName,
                     InterestsApiResponses = ig.Select(i => new InterestApiResponse
                     {
+                        Uid = i.InterestUid,
                         Name = i.InterestName
                     })?.ToList()
                 })?.ToList(),
@@ -167,5 +225,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 })?.ToList()
             });
         }
+
+        #endregion
     }
 }
