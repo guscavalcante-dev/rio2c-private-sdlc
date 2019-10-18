@@ -4,7 +4,7 @@
 // Created          : 10-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-17-2019
+// Last Modified On : 10-18-2019
 // ***********************************************************************
 // <copyright file="ExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -40,13 +40,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <summary>Initializes a new instance of the <see cref="ExecutivesController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        /// <param name="attendeeCollaboratorRepositor">The attendee collaborator repositor.</param>
+        /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
         public ExecutivesController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
-            IAttendeeCollaboratorRepository attendeeCollaboratorRepositor)
+            IAttendeeCollaboratorRepository attendeeCollaboratorRepository)
             : base(commandBus, identityController)
         {
+            this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
         }
 
         /// <summary>Detailses the specified identifier.</summary>
