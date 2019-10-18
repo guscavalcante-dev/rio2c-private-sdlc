@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-15-2019
+// Last Modified On : 10-18-2019
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -184,6 +184,46 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 outerWhere = outerWhere.Or(innerOrganizationTradeNameWhere);
                 outerWhere = outerWhere.Or(innerHoldingNameWhere);
                 outerWhere = outerWhere.Or(innerDocumentWhere);
+                query = query.Where(outerWhere);
+                //query = query.AsExpandable().Where(predicate);
+            }
+
+            return query;
+        }
+
+        /// <summary>Finds the by filters uids.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="activitiesUids">The activities uids.</param>
+        /// <param name="targetAudiencesUids">The target audiences uids.</param>
+        /// <param name="interestsUids">The interests uids.</param>
+        /// <returns></returns>
+        internal static IQueryable<Organization> FindByFiltersUids(this IQueryable<Organization> query, List<Guid> activitiesUids, List<Guid> targetAudiencesUids, List<Guid> interestsUids)
+        {
+            if (activitiesUids?.Any() == true || targetAudiencesUids?.Any() == true || interestsUids?.Any() == true)
+            {
+                var outerWhere = PredicateBuilder.New<Organization>(false);
+                var innerActivitiesUidsWhere = PredicateBuilder.New<Organization>(true);
+                var innerTargetAudiencesUidsWhere = PredicateBuilder.New<Organization>(true);
+                var innerInterestsUidsWhere = PredicateBuilder.New<Organization>(true);
+
+                if (activitiesUids?.Any() == true)
+                {
+                    innerActivitiesUidsWhere = innerActivitiesUidsWhere.Or(a => a.OrganizationActivities.Where(oa => !oa.IsDeleted).Any(oa => activitiesUids.Contains(oa.Activity.Uid)));
+                }
+
+                if (targetAudiencesUids?.Any() == true)
+                {
+                    innerTargetAudiencesUidsWhere = innerTargetAudiencesUidsWhere.Or(ta => ta.OrganizationTargetAudiences.Where(ota => !ota.IsDeleted).Any(oa => targetAudiencesUids.Contains(oa.TargetAudience.Uid)));
+                }
+
+                if (interestsUids?.Any() == true)
+                {
+                    innerInterestsUidsWhere = innerInterestsUidsWhere.Or(i => i.OrganizationInterests.Where(oi => !oi.IsDeleted).Any(oa => interestsUids.Contains(oa.Interest.Uid)));
+                }
+
+                outerWhere = outerWhere.And(innerActivitiesUidsWhere);
+                outerWhere = outerWhere.And(innerTargetAudiencesUidsWhere);
+                outerWhere = outerWhere.And(innerInterestsUidsWhere);
                 query = query.Where(outerWhere);
                 //query = query.AsExpandable().Where(predicate);
             }
@@ -484,15 +524,27 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="keywords">The keywords.</param>
         /// <param name="organizationTypeUid">The organization type uid.</param>
+        /// <param name="activitiesUids">The activities uids.</param>
+        /// <param name="targetAudiencesUids">The target audiences uids.</param>
+        /// <param name="interestsUids">The interests uids.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<OrganizationApiListDto>> FindAllPublicApiPaged(int editionId, string keywords, Guid organizationTypeUid, int page, int pageSize)
+        public async Task<IPagedList<OrganizationApiListDto>> FindAllPublicApiPaged(
+            int editionId, 
+            string keywords, 
+            Guid organizationTypeUid, 
+            List<Guid> activitiesUids,
+            List<Guid> targetAudiencesUids,
+            List<Guid> interestsUids,
+            int page, 
+            int pageSize)
         {
             var query = this.GetBaseQuery()
                                 .FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, false, false, editionId)
-                                .FindByKeywords(keywords)
-                                .IsApiDisplayEnabled(editionId);
+                                .IsApiDisplayEnabled(editionId)
+                                .FindByFiltersUids(activitiesUids, targetAudiencesUids, interestsUids)
+                                .FindByKeywords(keywords);
 
             return await query
                             .Select(o => new OrganizationApiListDto
@@ -592,7 +644,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 //    TargetAudienceUid = oa.TargetAudience.Uid,
                                 //    TargetAudienceName = oa.TargetAudience.Name
                                 //}),
-                                OrganizationInterestsDtos = o.OrganizationInterests.Where(ota => !ota.IsDeleted).Select(oi => new OrganizationInterestDto
+                                OrganizationInterestsDtos = o.OrganizationInterests.Where(ota => !ota.IsDeleted)
+                                                                .OrderBy(oi => oi.Interest.InterestGroup.DisplayOrder)
+                                                                .ThenBy(oi => oi.Interest.DisplayOrder)
+                                                                .Select(oi => new OrganizationInterestDto
                                 {
                                     OrganizationInterestId = oi.Id,
                                     OrganizationInterestUid = oi.Uid,

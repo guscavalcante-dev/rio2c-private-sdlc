@@ -19,7 +19,6 @@ using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Web.Site.Areas.WebApi.Models;
 
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
@@ -37,6 +36,13 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         private readonly IInterestRepository interestRepo;
         private readonly IFileRepository fileRepo;
 
+        /// <summary>Initializes a new instance of the <see cref="PlayersController"/> class.</summary>
+        /// <param name="organizationRepository">The organization repository.</param>
+        /// <param name="editionRepository">The edition repository.</param>
+        /// <param name="activityRepository">The activity repository.</param>
+        /// <param name="targetAudienceRepository">The target audience repository.</param>
+        /// <param name="interestRepositoryy">The interest repositoryy.</param>
+        /// <param name="fileRepository">The file repository.</param>
         public PlayersController(
             IOrganizationRepository organizationRepository,
             IEditionRepository editionRepository,
@@ -79,7 +85,10 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             var organizationsApiDtos = await this.organizationRepo.FindAllPublicApiPaged(
                 edition.Id,
                 request?.Keywords,
-                OrganizationType.Player.Uid, 
+                OrganizationType.Player.Uid,
+                request?.ActivitiesUids,
+                request?.TargetAudiencesUids,
+                request?.InterestsUids,
                 request?.Page ?? 1, 
                 request?.PageSize ?? 10);
 

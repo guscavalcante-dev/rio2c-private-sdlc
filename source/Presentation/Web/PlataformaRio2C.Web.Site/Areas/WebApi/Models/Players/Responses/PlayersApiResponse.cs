@@ -4,7 +4,7 @@
 // Created          : 09-25-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-30-2019
+// Last Modified On : 10-18-2019
 // ***********************************************************************
 // <copyright file="PlayersApiResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,6 +20,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Models
     /// <summary>PlayersApiResponse</summary>
     public class PlayersApiResponse : ListBaseModel
     {
+        [JsonProperty("players")]
         public List<PlayersApiListItem> Players { get; set; }
     }
 
