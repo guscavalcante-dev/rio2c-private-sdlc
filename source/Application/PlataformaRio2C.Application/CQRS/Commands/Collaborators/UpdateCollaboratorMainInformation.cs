@@ -3,8 +3,8 @@
 // Author           : William Almado
 // Created          : 10-15-2019
 //
-// Last Modified By : William Almado
-// Last Modified On : 10-15-2019
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 10-17-2019
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorMainInformation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -68,23 +68,23 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public Guid CollaboratorUid { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorMainInformation"/> class.</summary>
-        /// <param name="collaborator">The collaborator.</param>
+        /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
         /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
-        public UpdateCollaboratorMainInformation(CollaboratorDto collaborator, List<LanguageDto> languagesDtos, bool isJobTitleRequired, bool isMiniBioRequired, bool isImageRequired)
+        public UpdateCollaboratorMainInformation(AttendeeCollaboratorSiteMainInformationWidgetDto entity, List<LanguageDto> languagesDtos, bool isJobTitleRequired, bool isMiniBioRequired, bool isImageRequired)
         {
-            this.FirstName = collaborator.FirstName;
-            this.LastNames = collaborator.LastNames;
-            this.Badge = collaborator.Badge;
-            this.PhoneNumber = collaborator.PhoneNumber;
-            this.CellPhone = collaborator.CellPhone;
-            this.PublicEmail = collaborator?.PublicEmail;
-            this.SharePublicEmail = collaborator?.PublicEmail != null;
-            this.UpdateJobTitles(collaborator, languagesDtos, isJobTitleRequired);
-            this.UpdateMiniBios(collaborator, languagesDtos, isMiniBioRequired);
-            this.UpdateCropperImage(collaborator, isImageRequired);
+            this.FirstName = entity?.Collaborator?.FirstName;
+            this.LastNames = entity?.Collaborator?.LastNames;
+            this.Badge = entity?.Collaborator?.Badge;
+            this.PhoneNumber = entity?.Collaborator?.PhoneNumber;
+            this.CellPhone = entity?.Collaborator?.CellPhone;
+            this.PublicEmail = entity?.Collaborator?.PublicEmail;
+            this.SharePublicEmail = !string.IsNullOrEmpty(entity?.Collaborator?.PublicEmail);
+            this.UpdateJobTitles(entity, languagesDtos, isJobTitleRequired);
+            this.UpdateMiniBios(entity, languagesDtos, isMiniBioRequired);
+            this.UpdateCropperImage(entity, isImageRequired);
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorMainInformation"/> class.</summary>
@@ -96,7 +96,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
-        private void UpdateJobTitles(CollaboratorDto entity, List<LanguageDto> languagesDtos, bool isJobTitleRequired)
+        private void UpdateJobTitles(AttendeeCollaboratorSiteMainInformationWidgetDto entity, List<LanguageDto> languagesDtos, bool isJobTitleRequired)
         {
             this.JobTitles = new List<CollaboratorJobTitleBaseCommand>();
             foreach (var languageDto in languagesDtos)
@@ -111,12 +111,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
-        private void UpdateMiniBios(CollaboratorDto entity, List<LanguageDto> languagesDtos, bool isMiniBioRequired)
+        private void UpdateMiniBios(AttendeeCollaboratorSiteMainInformationWidgetDto entity, List<LanguageDto> languagesDtos, bool isMiniBioRequired)
         {
             this.MiniBios = new List<CollaboratorMiniBioBaseCommand>();
             foreach (var languageDto in languagesDtos)
             {
-                var miniBio = entity?.MiniBiosDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
+                var miniBio = entity?.MiniBioDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
                 this.MiniBios.Add(miniBio != null ? new CollaboratorMiniBioBaseCommand(miniBio, isMiniBioRequired) :
                                                     new CollaboratorMiniBioBaseCommand(languageDto, isMiniBioRequired));
             }
@@ -125,9 +125,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Updates the cropper image.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
-        private void UpdateCropperImage(CollaboratorDto entity, bool isImageRequired)
+        private void UpdateCropperImage(AttendeeCollaboratorSiteMainInformationWidgetDto entity, bool isImageRequired)
         {
-            this.CropperImage = new CropperImageBaseCommand(entity?.ImageUploadDate, entity?.Uid, FileRepositoryPathType.UserImage, isImageRequired);
+            this.CropperImage = new CropperImageBaseCommand(entity?.Collaborator?.ImageUploadDate, entity?.Collaborator?.Uid, FileRepositoryPathType.UserImage, isImageRequired);
         }
 
         /// <summary>Updates the pre send properties.</summary>

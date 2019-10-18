@@ -3,8 +3,8 @@
 // Author           : William Almado
 // Created          : 10-11-2019
 //
-// Last Modified By : William Almado
-// Last Modified On : 10-11-2019
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 10-17-2019
 // ***********************************************************************
 // <copyright file="executives.maininformation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,7 +19,6 @@ var ExecutivesMainInformationWidget = function () {
 
     var updateModalId = '#UpdateMainInformationModal';
     var updateFormId = '#UpdateMainInformationForm';
-    var countryUid = '#CountryUid';
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
@@ -46,13 +45,11 @@ var ExecutivesMainInformationWidget = function () {
                 }
             });
         })
-            .fail(function () {
-                //showAlert();
-                //MyRio2cCommon.unblock(widgetElementId);
-            })
-            .always(function () {
-                MyRio2cCommon.unblock({ idOrClass: widgetElementId });
-            });
+        .fail(function () {
+        })
+        .always(function () {
+            MyRio2cCommon.unblock({ idOrClass: widgetElementId });
+        });
     };
 
     // Update -------------------------------------------------------------------------------------
@@ -105,11 +102,11 @@ var ExecutivesMainInformationWidget = function () {
                 }
             });
         })
-            .fail(function () {
-            })
-            .always(function () {
-                MyRio2cCommon.unblock();
-            });
+        .fail(function () {
+        })
+        .always(function () {
+            MyRio2cCommon.unblock();
+        });
     };
 
     return {
