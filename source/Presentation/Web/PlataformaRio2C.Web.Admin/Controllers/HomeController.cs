@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-16-2019
+// Last Modified On : 10-18-2019
 // ***********************************************************************
 // <copyright file="HomeController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,6 +13,7 @@
 // ***********************************************************************
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using MediatR;
@@ -67,11 +68,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         /// <summary>Sets the culture.</summary>
         /// <param name="culture">The culture.</param>
-        /// <param name="oldCulture">The old culture.</param>
         /// <param name="returnUrl">The return URL.</param>
         /// <returns></returns>
         [AllowAnonymous]
-        public async Task<ActionResult> SetCulture(string culture, string oldCulture, string returnUrl = null)
+        public async Task<ActionResult> SetCulture(string culture, string returnUrl = null)
         {
             // Validate input
             culture = CultureHelper.GetImplementedCulture(culture);
@@ -86,7 +86,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     culture));
             }
 
-            var cookie = ApplicationCookieControl.SetCookie(culture, Response.Cookies[Constants.CookieName.MyRio2CAdminCookie], Constants.CookieName.MyRio2CAdminCookie);
+            var cookie = ApplicationCookieControl.SetCookie(culture, Response.Cookies[Constants.CookieName.MyRio2CCookie], Constants.CookieName.MyRio2CCookie);
             Response.Cookies.Add(cookie);
 
             #endregion
@@ -96,9 +96,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 returnUrl = Request.UrlReferrer.PathAndQuery;
             }
 
-            if (!string.IsNullOrEmpty(returnUrl))
+            if (!string.IsNullOrEmpty(returnUrl) && CultureHelper.Cultures?.Any() == true)
             {
-                returnUrl = Regex.Replace(returnUrl, oldCulture, culture, RegexOptions.IgnoreCase);
+                foreach (var configuredCulture in CultureHelper.Cultures)
+                {
+                    returnUrl = Regex.Replace(returnUrl, configuredCulture, culture, RegexOptions.IgnoreCase);
+                }
             }
 
             if (Url.IsLocalUrl(returnUrl))
