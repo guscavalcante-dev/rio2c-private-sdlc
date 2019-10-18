@@ -91,7 +91,6 @@
     @Scripts.Render("~/bundles/js/layoutGlobalOptionalVendors.js")
     <!--end:: Global Optional Vendors -->
     <!--begin::Global Theme Bundle(used by all pages) -->
-    @Scripts.Render("~/bundles/js/jqueryval.js")
     @Scripts.Render("~/bundles/js/layoutGlobalThemeBundle.js")
     @Scripts.Render("~/bundles/js/layoutGlobalCustomized.js")
     <!--end::Global Theme Bundle -->
@@ -130,6 +129,7 @@
         CKEDITOR_BASEPATH = "@Url.Content("~/Scripts/ckeditor/")";
     </script>
     @RenderSection("Scripts", false)
+    @Scripts.Render("~/bundles/js/jqueryval.js")
     <!--end::Page Scripts -->
     <!--begin: Global Modal Container-->
     <div id="GlobalModalContainer"></div>

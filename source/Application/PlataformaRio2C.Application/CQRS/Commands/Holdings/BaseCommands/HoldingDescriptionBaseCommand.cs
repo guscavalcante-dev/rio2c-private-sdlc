@@ -4,7 +4,7 @@
 // Created          : 08-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-18-2019
+// Last Modified On : 10-17-2019
 // ***********************************************************************
 // <copyright file="HoldingDescriptionBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,6 +15,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -22,7 +23,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     public class HoldingDescriptionBaseCommand
     {
         [AllowHtml]
+        [Display(Name = "Description", ResourceType = typeof(Labels))]
         [StringLength(8000, MinimumLength = 2, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        [CkEditorMaxChars(710)]
         public string Value { get; set; }
         public string LanguageCode { get; set; }
         public string LanguageName { get; set; }
