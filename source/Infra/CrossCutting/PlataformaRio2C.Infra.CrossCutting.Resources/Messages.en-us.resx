@@ -261,10 +261,8 @@
     <value>Required Job Title in Portuguese.</value>
   </data>
   <data name="LockOutPage" xml:space="preserve">
-    <value>&lt;hgroup&gt;
-    &lt;h1 class='text-danger'&gt;Locked out.&lt;/h1&gt;
-    &lt;h2 class='text-danger'&gt;This account has been locked out, please try again later.&lt;/h2&gt;
-&lt;/hgroup&gt;</value>
+    <value>This account has been locked out, please try again later.</value>
+    <comment>Esta conta foi bloqueada, tente novamente mais tarde.</comment>
   </data>
   <data name="LoginByTicket4YouIncorrect" xml:space="preserve">
     <value>This email does not exists, please use the same email at Ticket4You</value>
@@ -675,5 +673,9 @@
   <data name="ErrorUpdatingPassword" xml:space="preserve">
     <value>The password could not be update.</value>
     <comment>A senha não pode ser alterada.</comment>
+  </data>
+  <data name="AccountLockedOut" xml:space="preserve">
+    <value>Account locked out</value>
+    <comment>Conta bloqueada</comment>
   </data>
 </root>

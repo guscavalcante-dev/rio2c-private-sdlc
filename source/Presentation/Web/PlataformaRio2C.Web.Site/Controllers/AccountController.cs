@@ -271,10 +271,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return View(model);
             }
 
-            var passwordResetToken = await _identityController.GeneratePasswordResetTokenAsync(user.Id);
-
             try
             {
+                var passwordResetToken = await _identityController.GeneratePasswordResetTokenAsync(user.Id);
+
                 var result = await this.CommandBus.Send(new SendForgotPasswordEmailAsync(
                     passwordResetToken,
                     user.Id,
@@ -293,13 +293,13 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
             catch (DomainException ex)
             {
-                ModelState.AddModelError("Email", ex.GetInnerMessage());
+                ModelState.AddModelError("", ex.GetInnerMessage());
                 return View(model);
             }
             catch (Exception ex)
             {
                 Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
-                ModelState.AddModelError("Email", Messages.WeFoundAndError);
+                ModelState.AddModelError("", Messages.WeFoundAndError);
                 return View(model);
             }
 

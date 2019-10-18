@@ -79,6 +79,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Conta bloqueada.
+        /// </summary>
+        public static string AccountLockedOut {
+            get {
+                return ResourceManager.GetString("AccountLockedOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Endereço obrigatório..
         /// </summary>
         public static string AddressIsRequired {
@@ -699,10 +708,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;hgroup&gt;
-        ///    &lt;h1 class=&apos;text-danger&apos;&gt;Bloqueado&lt;/h1&gt;
-        ///    &lt;h2 class=&apos;text-danger&apos;&gt;Esta conta foi bloqueada, tente novamente mais tarde.&lt;/h2&gt;
-        ///&lt;/hgroup&gt;.
+        ///   Looks up a localized string similar to Esta conta foi bloqueada, tente novamente mais tarde..
         /// </summary>
         public static string LockOutPage {
             get {

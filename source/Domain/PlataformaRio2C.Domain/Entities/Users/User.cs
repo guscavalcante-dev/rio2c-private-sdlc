@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-27-2019
+// Last Modified On : 10-18-2019
 // ***********************************************************************
 // <copyright file="User.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -68,7 +68,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SecurityStamp = Guid.NewGuid().ToString().ToLowerInvariant();
             this.PhoneNumberConfirmed = false;
             this.TwoFactorEnabled = false;
-            this.LockoutEnabled = false;
+            this.LockoutEnabled = true;
             this.AccessFailedCount = 0;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.SynchronizeRoles(roles);

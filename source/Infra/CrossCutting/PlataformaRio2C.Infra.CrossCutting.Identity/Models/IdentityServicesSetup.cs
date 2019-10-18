@@ -1,14 +1,36 @@
-﻿using System.Net;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Infra.CrossCutting.Identity
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 10-18-2019
+// ***********************************************************************
+// <copyright file="IdentityProviderSetup.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System.Net;
 using System.Net.Mail;
+using Microsoft.Owin.Security.DataProtection;
 
 namespace PlataformaRio2C.Infra.CrossCutting.Identity.Models
 {
+    /// <summary>IdentityProviderSetup</summary>
+    public static class IdentityProviderSetup
+    {
+        public static IDataProtectionProvider DataProtectionProvider { get; set; }
+    }
+
+    /// <summary>IdentityServicesSetup</summary>
     public class IdentityServicesSetup
     {
         public IdentityEmailSetup EmailSetup { get; set; }
         public IdentitySmsSetup SmsSetup { get; set; }
     }
 
+    /// <summary>IdentityEmailSetup</summary>
     public class IdentityEmailSetup
     {
         public bool UsesCredentials { get; set; }
@@ -26,6 +48,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Identity.Models
         public string TwoFactorProviderMessageFormat { get; set; }
     }
 
+    /// <summary>IdentitySmsSetup</summary>
     public class IdentitySmsSetup
     {
         /// <summary>

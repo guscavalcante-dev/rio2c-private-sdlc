@@ -1,10 +1,29 @@
 ﻿@model System.Web.Mvc.HandleErrorInfo
-
 @{
-    ViewBag.Title = "Locked Out";
+    Layout = "~/Views/Themes/Metronic/_InternalOutside.cshtml";
+    ViewBag.Title = Messages.AccountLockedOut;
 }
-
-<hgroup>
-    <h1 class="text-danger">Locked out.</h1>
-    <h2 class="text-danger">This account has been locked out, please try again later.</h2>
-</hgroup>
+<!--begin::ForgotPassword-->
+<div class="kt-login__form">
+    <div class="kt-login__title">
+        <h3>@ViewBag.Title</h3>
+    </div>
+    <div class="row mt-20">
+        <div class="col-12 text-center">
+            @Html.Raw(Messages.LockOutPage)
+        </div>
+    </div>
+    <!--begin::Action-->
+    <div class="kt-login__actions text-center d-block">
+        <a href="@Url.Action("Login", "Account", new { Area = "" })" class="kt-link kt-login__link-forgot">
+            @(Labels.GoBackToSignIn)
+        </a>
+    </div>
+    <!--end::Action-->
+</div>
+<!--end::ForgotPassword-->
+@section Styles {
+    @Styles.Render("~/bundles/css/loginCustomStyles.css")
+}
+@section Scripts {
+}

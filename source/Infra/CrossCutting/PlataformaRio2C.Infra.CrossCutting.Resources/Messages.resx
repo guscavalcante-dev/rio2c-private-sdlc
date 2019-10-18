@@ -261,10 +261,8 @@
     <value>Cargo em portugûes obrigatório.</value>
   </data>
   <data name="LockOutPage" xml:space="preserve">
-    <value>&lt;hgroup&gt;
-    &lt;h1 class='text-danger'&gt;Bloqueado&lt;/h1&gt;
-    &lt;h2 class='text-danger'&gt;Esta conta foi bloqueada, tente novamente mais tarde.&lt;/h2&gt;
-&lt;/hgroup&gt;</value>
+    <value>Esta conta foi bloqueada, tente novamente mais tarde.</value>
+    <comment>Esta conta foi bloqueada, tente novamente mais tarde.</comment>
   </data>
   <data name="LoginByTicket4YouIncorrect" xml:space="preserve">
     <value>Esse email não existe, por favor use o mesmo email ao cadastrar na Ticket4You</value>
@@ -680,5 +678,9 @@
   <data name="ErrorUpdatingPassword" xml:space="preserve">
     <value>A senha não pode ser alterada.</value>
     <comment>A senha não pode ser alterada.</comment>
+  </data>
+  <data name="AccountLockedOut" xml:space="preserve">
+    <value>Conta bloqueada</value>
+    <comment>Conta bloqueada</comment>
   </data>
 </root>

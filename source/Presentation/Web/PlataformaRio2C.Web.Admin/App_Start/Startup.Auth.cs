@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-06-2019
+// Last Modified On : 10-18-2019
 // ***********************************************************************
 // <copyright file="Startup.Auth.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,6 +20,7 @@ using PlataformaRio2C.Infra.CrossCutting.Identity.Configuration;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Models;
 using System;
 using System.Web.Mvc;
+using Microsoft.Owin.Security.DataProtection;
 
 namespace PlataformaRio2C.Web.Admin
 {
@@ -29,6 +30,8 @@ namespace PlataformaRio2C.Web.Admin
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
+            IdentityProviderSetup.DataProtectionProvider = app.GetDataProtectionProvider();
+
             // Configure the db context, user manager and signin manager to use a single instance per request
             app.CreatePerOwinContext(() => DependencyResolver.Current.GetService<ApplicationUserManager<ApplicationUser>>());           
 
