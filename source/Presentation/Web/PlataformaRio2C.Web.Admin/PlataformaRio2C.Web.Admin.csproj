@@ -5688,6 +5688,7 @@
     <Content Include="emailtemplate.html" />
     <Content Include="favicon.png" />
     <Content Include="HealthCheck.html" />
+    <Content Include="robots.txt" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
