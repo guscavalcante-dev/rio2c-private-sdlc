@@ -22,7 +22,7 @@
                 <!--end: Form Wizard Nav -->
             </div>
             <div class="kt-grid__item kt-grid__item--fluid kt-wizard-v2__wrapper">
-                @using (Html.BeginForm("PlayerInterests", "Onboarding", FormMethod.Post, new { enctype = "multipart/form-data", id = "PlayerInterestssDataForm", @class = "kt-form", novalidate = "novalidate" }))
+                @using (Html.BeginForm("PlayerInterests", "Onboarding", FormMethod.Post, new { enctype = "multipart/form-data", id = "PlayerInterestssDataForm", @class = "kt-form" }))
                 {
                     @Html.HiddenFor(m => m.OrganizationUid)
                     <!--begin: Form Wizard Step 1-->

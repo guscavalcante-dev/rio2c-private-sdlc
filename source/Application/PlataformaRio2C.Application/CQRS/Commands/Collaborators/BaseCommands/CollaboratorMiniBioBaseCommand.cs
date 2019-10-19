@@ -26,7 +26,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         //[AllowHtml]
         [Display(Name = "MiniBio", ResourceType = typeof(Labels))]
         [RequiredIf("IsRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [StringLength(710, MinimumLength = 2, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        [StringLength(710, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         //[CkEditorMaxChars(710)]
         public string Value { get; set; }
         public string LanguageCode { get; set; }
