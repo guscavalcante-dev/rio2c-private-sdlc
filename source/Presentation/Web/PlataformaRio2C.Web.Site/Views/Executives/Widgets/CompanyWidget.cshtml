@@ -12,16 +12,14 @@
             @Labels.Companies
         </h3>
     </div>
-    @*@if (isCurrentUser)
+    @if (isCurrentUser)
     {
-        <div class="kt-portlet__head-toolbar">
-            <div class="kt-portlet__head-actions">
-                <a class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="return false;" data-toggle="kt-tooltip" title="" data-placement="right" data-original-title="@Labels.ComingSoon...">
-                    <i class="flaticon2-edit"></i>
-                </a>
-            </div>
+        <div class="kt-widget__action">
+            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="ExecutivesCompanyWidget.showCreateModal();">
+                <i class="flaticon2-edit"></i>
+            </button>
         </div>
-    }*@
+    }
 </div>
 <div class="kt-portlet__body">
     @if (Model.AttendeeOrganizationsDtos?.Any() == true)
