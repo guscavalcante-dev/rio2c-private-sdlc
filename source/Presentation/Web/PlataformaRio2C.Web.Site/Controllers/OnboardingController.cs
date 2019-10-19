@@ -4,7 +4,7 @@
 // Created          : 08-29-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-16-2019
+// Last Modified On : 10-18-2019
 // ***********************************************************************
 // <copyright file="OnboardingController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -207,7 +207,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
             catch (Exception ex)
             {
-                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
 
                 return View(cmd);
@@ -304,7 +304,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
             catch (Exception ex)
             {
-                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
 
                 return View(cmd);
@@ -406,7 +406,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
             catch (Exception ex)
             {
-                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
 
                 return View(cmd);
@@ -525,7 +525,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
             catch (Exception ex)
             {
-                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
 
                 cmd.UpdateDropdownProperties(
@@ -643,7 +643,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
             catch (Exception ex)
             {
-                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
 
                 cmd.UpdateDropdownProperties(
@@ -789,7 +789,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
             catch (Exception ex)
             {
-                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
 
                 cmd.UpdateDropdownProperties(
@@ -843,7 +843,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
             catch (Exception ex)
             {
-                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
 
                 return RedirectToAction("CompanyInfo", "Onboarding");

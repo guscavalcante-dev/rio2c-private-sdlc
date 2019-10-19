@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-16-2019
+// Last Modified On : 10-18-2019
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -74,21 +74,21 @@ var MyRio2cCommon = function () {
         };
     };
 
-    var fixCkEditorValidation = function () {
-        if (typeof (CKEDITOR) === "undefined") {
-            return;
-        }
+    //var fixCkEditorValidation = function () {
+    //    if (typeof (CKEDITOR) === "undefined") {
+    //        return;
+    //    }
 
-        CKEDITOR.on('instanceReady', function () {
-            $.each(CKEDITOR.instances, function (instance) {
-                CKEDITOR.instances[instance].on("change", function (e) {
-                    for (instance in CKEDITOR.instances) {
-                        CKEDITOR.instances[instance].updateElement();
-                    }
-                });
-            });
-        });
-    };
+    //    CKEDITOR.on('instanceReady', function () {
+    //        $.each(CKEDITOR.instances, function (instance) {
+    //            CKEDITOR.instances[instance].on("change", function (e) {
+    //                for (instance in CKEDITOR.instances) {
+    //                    CKEDITOR.instances[instance].updateElement();
+    //                }
+    //            });
+    //        });
+    //    });
+    //};
 
     var initScroll = function () {
         $('.rio2c-scroll').not('.rio2c-scroll-enabled').each(function () {
@@ -258,39 +258,39 @@ var MyRio2cCommon = function () {
             }
         });
 
-        // Validate ckeditor max characters
-        jQuery.validator.addMethod("ckeditormaxchars", function (value, element, params) {
-            if (typeof (CKEDITOR) === 'undefined') {
-                return true;
-            }
+        //// Validate ckeditor max characters
+        //jQuery.validator.addMethod("ckeditormaxchars", function (value, element, params) {
+        //    if (typeof (CKEDITOR) === 'undefined') {
+        //        return true;
+        //    }
 
-            var ckeditorInstance = CKEDITOR.instances[element.id];
-            if (typeof (ckeditorInstance) === 'undefined') {
-                return true;
-            }
+        //    var ckeditorInstance = CKEDITOR.instances[element.id];
+        //    if (typeof (ckeditorInstance) === 'undefined') {
+        //        return true;
+        //    }
 
-            var maxChars = params["maxchars"];
-            if (MyRio2cCommon.isNullOrEmpty(maxChars)) {
-                return true;
-            }
+        //    var maxChars = params["maxchars"];
+        //    if (MyRio2cCommon.isNullOrEmpty(maxChars)) {
+        //        return true;
+        //    }
 
-            if (ckeditorInstance.wordCount.charCount <= maxChars) {
-                return true;
-            }
+        //    if (ckeditorInstance.wordCount.charCount <= maxChars) {
+        //        return true;
+        //    }
 
-            return false;
-        });
+        //    return false;
+        //});
 
-        $.validator.unobtrusive.adapters.add("ckeditormaxchars", ["maxchars"], function (options) {
-            var value = {
-                maxchars: options.params.maxchars
-            };
+        //$.validator.unobtrusive.adapters.add("ckeditormaxchars", ["maxchars"], function (options) {
+        //    var value = {
+        //        maxchars: options.params.maxchars
+        //    };
 
-            options.rules["ckeditormaxchars"] = value;
-            if (options.message) {
-                options.messages["ckeditormaxchars"] = options.message;
-            }
-        });
+        //    options.rules["ckeditormaxchars"] = value;
+        //    if (options.message) {
+        //        options.messages["ckeditormaxchars"] = options.message;
+        //    }
+        //});
     };
 
     var enableAtLeastOnCheckboxByNameValidation = function (formIdOrClass) {
@@ -712,94 +712,94 @@ var MyRio2cCommon = function () {
         //showAlert();
     };
 
-    // CKEDITOR -----------------------------------------------------------------------------------
-    var enableCkEditor = function (options) {
+    //// CKEDITOR -----------------------------------------------------------------------------------
+    //var enableCkEditor = function (options) {
 
-        if (!hasProperty(options, 'idOrClass')) {
-            return;
-        }
+    //    if (!hasProperty(options, 'idOrClass')) {
+    //        return;
+    //    }
 
-        if (isNullOrEmpty(window.CKEDITOR)) {
-            return;
-        }
+    //    if (isNullOrEmpty(window.CKEDITOR)) {
+    //        return;
+    //    }
 
-        if (!hasProperty(options, 'maxCharCount')) {
-            options.maxCharCount = 8000;
-        }
+    //    if (!hasProperty(options, 'maxCharCount')) {
+    //        options.maxCharCount = 8000;
+    //    }
 
-        $(options.idOrClass).each(function () {
-            var elementName = $(this).attr('name');
+    //    $(options.idOrClass).each(function () {
+    //        var elementName = $(this).attr('name');
 
-            CKEDITOR.replace($(this)[0], {
-                customConfig: '/Content/js/ckeditor_config.js',
-                language: globalVariables.userInterfaceLanguage,
-                wordcount: {
-                    countBytesAsChars: false,
-                    countLineBreaks: false,
-                    // Whether or not you want to show the Paragraphs Count
-                    showParagraphs: false,
+    //        CKEDITOR.replace($(this)[0], {
+    //            customConfig: '/Content/js/ckeditor_config.js',
+    //            language: globalVariables.userInterfaceLanguage,
+    //            wordcount: {
+    //                countBytesAsChars: false,
+    //                countLineBreaks: false,
+    //                // Whether or not you want to show the Paragraphs Count
+    //                showParagraphs: false,
 
-                    // Whether or not you want to show the Word Count
-                    showWordCount: false,
+    //                // Whether or not you want to show the Word Count
+    //                showWordCount: false,
 
-                    // Whether or not you want to show the Char Count
-                    showCharCount: true,
+    //                // Whether or not you want to show the Char Count
+    //                showCharCount: true,
 
-                    // Whether or not you want to count Spaces as Chars
-                    countSpacesAsChars: true,
+    //                // Whether or not you want to count Spaces as Chars
+    //                countSpacesAsChars: true,
 
-                    // Whether or not to include Html chars in the Char Count
-                    countHTML: false,
+    //                // Whether or not to include Html chars in the Char Count
+    //                countHTML: false,
 
-                    // Maximum allowed Word Count, -1 is default for unlimited
-                    maxWordCount: -1,
+    //                // Maximum allowed Word Count, -1 is default for unlimited
+    //                maxWordCount: -1,
 
-                    // Maximum allowed Char Count, -1 is default for unlimited
-                    maxCharCount: options.maxCharCount,
+    //                // Maximum allowed Char Count, -1 is default for unlimited
+    //                maxCharCount: options.maxCharCount,
 
-                    // Disable hardlimit to allow user to write more than the limit
-                    hardLimit: false,
+    //                // Disable hardlimit to allow user to write more than the limit
+    //                hardLimit: false,
 
-                    // Add filter to add or remove element before counting (see CKEDITOR.htmlParser.filter), Default value : null (no filter)
-                    filter: new CKEDITOR.htmlParser.filter({
-                        elements: {
-                            div: function (element) {
-                                if (element.attributes.class == 'mediaembed') {
-                                    return false;
-                                }
-                            }
-                        }
-                    }),
+    //                // Add filter to add or remove element before counting (see CKEDITOR.htmlParser.filter), Default value : null (no filter)
+    //                filter: new CKEDITOR.htmlParser.filter({
+    //                    elements: {
+    //                        div: function (element) {
+    //                            if (element.attributes.class == 'mediaembed') {
+    //                                return false;
+    //                            }
+    //                        }
+    //                    }
+    //                }),
 
-                    // Show error when the max length limit is reached
-                    charCountGreaterThanMaxLengthEvent: function (currentLength, maxLength) {
-                        $('[data-valmsg-for="' + elementName + '"]').html('<span for="' + name + '" generated="true" class="">' + labels.propertyBetweenLengths.replace('{0} ', '').replace('{2}', 1).replace('{1}', maxLength) + '</span>');
-                        $('[data-valmsg-for="' + elementName + '"]').removeClass('field-validation-valid');
-                        $('[data-valmsg-for="' + elementName + '"]').addClass('field-validation-error');
-                    },
-                    charCountLessThanMaxLengthEvent: function (currentLength, maxLength) {
-                        if (currentLength > 0 && $('[data-valmsg-for="' + elementName + '"]').hasClass('field-validation-error')) {
-                            $('[data-valmsg-for="' + elementName + '"]').html('');
-                            $('[data-valmsg-for="' + elementName + '"]').addClass('field-validation-valid');
-                            $('[data-valmsg-for="' + elementName + '"]').removeClass('field-validation-error');
-                        }
-                    }
-                }
-            });
-        });
-    };
+    //                // Show error when the max length limit is reached
+    //                charCountGreaterThanMaxLengthEvent: function (currentLength, maxLength) {
+    //                    $('[data-valmsg-for="' + elementName + '"]').html('<span for="' + name + '" generated="true" class="">' + labels.propertyBetweenLengths.replace('{0} ', '').replace('{2}', 1).replace('{1}', maxLength) + '</span>');
+    //                    $('[data-valmsg-for="' + elementName + '"]').removeClass('field-validation-valid');
+    //                    $('[data-valmsg-for="' + elementName + '"]').addClass('field-validation-error');
+    //                },
+    //                charCountLessThanMaxLengthEvent: function (currentLength, maxLength) {
+    //                    if (currentLength > 0 && $('[data-valmsg-for="' + elementName + '"]').hasClass('field-validation-error')) {
+    //                        $('[data-valmsg-for="' + elementName + '"]').html('');
+    //                        $('[data-valmsg-for="' + elementName + '"]').addClass('field-validation-valid');
+    //                        $('[data-valmsg-for="' + elementName + '"]').removeClass('field-validation-error');
+    //                    }
+    //                }
+    //            }
+    //        });
+    //    });
+    //};
 
-    var updateCkEditorElements = function () {
-        if (isNullOrEmpty(window.CKEDITOR)) {
-            return;
-        }
+    //var updateCkEditorElements = function () {
+    //    if (isNullOrEmpty(window.CKEDITOR)) {
+    //        return;
+    //    }
 
-        for (var instance in CKEDITOR.instances) {
-            if (CKEDITOR.instances.hasOwnProperty(instance)) {
-                CKEDITOR.instances[instance].updateElement();
-            }
-        }
-    };
+    //    for (var instance in CKEDITOR.instances) {
+    //        if (CKEDITOR.instances.hasOwnProperty(instance)) {
+    //            CKEDITOR.instances[instance].updateElement();
+    //        }
+    //    }
+    //};
 
     // Ajax Form ----------------------------------------------------------------------------------
     var enableAjaxForm = function (options) {
@@ -812,7 +812,7 @@ var MyRio2cCommon = function () {
 
         uploadFormElement.ajaxForm({
             beforeSerialize: function (form, options) {
-                MyRio2cCommon.updateCkEditorElements();
+                //MyRio2cCommon.updateCkEditorElements();
             },
             beforeSubmit: function () {
                 return uploadFormElement.valid(); // TRUE when form is valid, FALSE will cancel submit
@@ -941,7 +941,7 @@ var MyRio2cCommon = function () {
                 enableAjaxForbiddenCatch();
                 fixSelect2Modal();
                 enablePrototypes();
-                fixCkEditorValidation();
+                //fixCkEditorValidation();
                 initScroll();
                 extendGlobalValidations();
             });
@@ -952,7 +952,7 @@ var MyRio2cCommon = function () {
         getGlobalVariable: function (key) {
             return getGlobalVariable(key);
         },
-        initScroll: function() {
+        initScroll: function () {
             initScroll();
         },
         enableAtLeastOnCheckboxByNameValidation: function (formIdOrClass) {
@@ -1003,12 +1003,12 @@ var MyRio2cCommon = function () {
         handleAjaxReturn: function (options) {
             return handleAjaxReturn(options);
         },
-        enableCkEditor: function (options) {
-            enableCkEditor(options);
-        },
-        updateCkEditorElements: function () {
-            updateCkEditorElements();
-        },
+        //enableCkEditor: function (options) {
+        //    enableCkEditor(options);
+        //},
+        //updateCkEditorElements: function () {
+        //    updateCkEditorElements();
+        //},
         enableAjaxForm: function (options) {
             enableAjaxForm(options);
         },

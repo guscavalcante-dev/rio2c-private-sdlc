@@ -166,13 +166,13 @@ namespace PlataformaRio2C.Web.Site
 
             #endregion
 
-            #region CKEditor
+            //#region CKEditor
 
-            bundles.Add(new ScriptBundle("~/bundles/js/ckEditor.js").Include(
-                "~/Scripts/ckeditor/ckeditor.js",
-                "~/Content/js/ckeditor_config.js"));
+            //bundles.Add(new ScriptBundle("~/bundles/js/ckEditor.js").Include(
+            //    "~/Scripts/ckeditor/ckeditor.js",
+            //    "~/Content/js/ckeditor_config.js"));
 
-            #endregion
+            //#endregion
 
             #region Cropperjs
 

@@ -4,7 +4,7 @@
 // Created          : 08-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-17-2019
+// Last Modified On : 10-18-2019
 // ***********************************************************************
 // <copyright file="HoldingDescriptionBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,10 +22,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>HoldingDescriptionBaseCommand</summary>
     public class HoldingDescriptionBaseCommand
     {
-        [AllowHtml]
+        //[AllowHtml]
         [Display(Name = "Description", ResourceType = typeof(Labels))]
-        [StringLength(8000, MinimumLength = 2, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        [CkEditorMaxChars(710)]
+        [StringLength(710, MinimumLength = 2, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        //[CkEditorMaxChars(710)]
         public string Value { get; set; }
         public string LanguageCode { get; set; }
         public string LanguageName { get; set; }

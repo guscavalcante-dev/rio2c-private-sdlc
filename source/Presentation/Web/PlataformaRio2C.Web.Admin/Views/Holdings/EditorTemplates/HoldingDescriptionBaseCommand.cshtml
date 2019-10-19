@@ -3,7 +3,7 @@
     <div class="col-lg-12">
         <div class="form-group">
             @Html.LabelFor(m => m.Value, $"{Labels.Description} ({Model.LanguageCode.GetSplittedWord('-', 0).ToUpper()})", new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
-            @Html.TextAreaFor(m => m.Value, new { @class = "form-control ckeditor-rio2c" })
+            @Html.TextAreaFor(m => m.Value, new { @class = "form-control ckeditor-rio2c", rows = 8 })
             @Html.HiddenFor(m => m.LanguageCode)
             @Html.HiddenFor(m => m.LanguageName)
             @Html.ValidationMessageFor(m => m.Value, null, new { @class = "text-danger" })
