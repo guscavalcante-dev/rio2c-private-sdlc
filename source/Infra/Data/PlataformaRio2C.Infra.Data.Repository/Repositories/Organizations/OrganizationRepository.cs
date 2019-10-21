@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-18-2019
+// Last Modified On : 10-21-2019
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -667,6 +667,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                         Uid = aoc.AttendeeCollaborator.Collaborator.Uid,
                                                                                         FirstName = aoc.AttendeeCollaborator.Collaborator.FirstName,
                                                                                         LastNames = aoc.AttendeeCollaborator.Collaborator.LastNames,
+                                                                                        Badge = aoc.AttendeeCollaborator.Collaborator.Badge,
                                                                                         ImageUploadDate = aoc.AttendeeCollaborator.Collaborator.ImageUploadDate,
                                                                                         JobTitlesDtos = aoc.AttendeeCollaborator.Collaborator.JobTitles.Select(jt => new CollaboratorJobTitleBaseDto
                                                                                         {
