@@ -4,7 +4,7 @@
 // Created          : 09-25-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-18-2019
+// Last Modified On : 10-21-2019
 // ***********************************************************************
 // <copyright file="PlayersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -219,6 +219,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 CollaboratorsApiResponses = organizationApiDto.CollaboratorsDtos?.Select(cd => new CollaboratorApiResponse
                 {
                     Uid = cd.Uid,
+                    BadgeName = cd.Badge,
                     Name = cd.FullName,
                     Picture = cd.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, cd.Uid, cd.ImageUploadDate, true) : null,
                     JobTitlesApiResponses = cd.JobTitlesDtos?.Select(jtd => new LanguageValueApiResponse
