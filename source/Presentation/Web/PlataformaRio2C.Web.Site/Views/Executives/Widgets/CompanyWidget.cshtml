@@ -5,6 +5,9 @@
 @{
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var isCurrentUser = userAccessControlDto?.Collaborator?.Uid == Model.Collaborator?.Uid;
+    var hasCompany = userAccessControlDto?.EditionAttendeeOrganizations.Any();
+    var isExecutive = userAccessControlDto?.EditionCollaboratorTypes.Select(eutt => eutt.Id).Any(_ => new List<int> { 200, 201, 202 }.Contains(_));
+
 }
 <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
@@ -12,7 +15,7 @@
             @Labels.Companies
         </h3>
     </div>
-    @if (isCurrentUser)
+    @if (isCurrentUser && hasCompany.Equals(false) && isExecutive.Equals(false))
     {
         <div class="kt-widget__action">
             <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="ExecutivesCompanyWidget.showCreateModal();">
@@ -50,20 +53,22 @@
                                     <div class="kt-widget__info">
                                         <a href="@Url.Action("Details", "Companies", new { id = attendeeOrganizationDto.Organization.Uid })" class="kt-widget__username">@attendeeOrganizationDto.Organization.TradeName</a>
                                         @*<span class="kt-widget__desc">@(attendeeOrganizationDto.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value ?? "-")</span>*@
-                                        <span class="kt-widget__desc"><a href="@Url.Action("Details", "Companies", new { id = attendeeOrganizationDto.Organization.Uid })">
-                                            <small><i class="flaticon-profile"></i> @Labels.SeeDescription</small>
-                                        </a></span>
+                                        <span class="kt-widget__desc">
+                                            <a href="@Url.Action("Details", "Companies", new { id = attendeeOrganizationDto.Organization.Uid })">
+                                                <small><i class="flaticon-profile"></i> @Labels.SeeDescription</small>
+                                            </a>
+                                        </span>
                                     </div>
                                 </div>
                                 @*<div class="kt-widget__footer">
-                                    <button type="button" class="btn btn-label-warning btn-lg btn-upper">write message</button>
-                                </div>*@
-                            </div>         
+                                        <button type="button" class="btn btn-label-warning btn-lg btn-upper">write message</button>
+                                    </div>*@
+                            </div>
                             <!--end::Widget -->
                         </div>
                     </div>
-                    <!--End::Portlet--> 
-                </div>            
+                    <!--End::Portlet-->
+                </div>
             }
         </div>
     }

@@ -19,6 +19,8 @@ var ExecutivesCompanyWidget = function () {
 
     var createModalId = '#CreateCompanyInfoModal';
     var createFormId = '#CreateCompanyInfoForm';
+    var countryUid = '#CountryUid';
+
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
@@ -46,8 +48,6 @@ var ExecutivesCompanyWidget = function () {
             });
         })
             .fail(function () {
-                //showAlert();
-                //MyRio2cCommon.unblock(widgetElementId);
             })
             .always(function () {
                 MyRio2cCommon.unblock({ idOrClass: widgetElementId });
@@ -73,11 +73,12 @@ var ExecutivesCompanyWidget = function () {
     };
 
     var enableUpdatePlugins = function () {
-        MyRio2cCommon.enableSelect2({ inputIdOrClass: createFormId + ' .enable-select2' });
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: createFormId + ' .select2-selection__rendered' });
         AddressesForm.init();
 
-        MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c', maxCharCount: 710 });
         MyRio2cCropper.init({ formIdOrClass: createFormId });
+        MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c', maxCharCount: 710 });
+        MyRio2cCompanyDocument.enableCompanyNumberMask(countryUid, '#Document');
         enableAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: createFormId, enableHiddenInputsValidation: true });
     };
