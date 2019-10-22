@@ -15,6 +15,7 @@ using System;
 using System.Configuration;
 using System.Net;
 using System.Net.Http;
+using System.Net.Security;
 using Newtonsoft.Json;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -91,6 +92,7 @@ namespace PlataformaRio2C.Web.Site.Services
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
                                                        SecurityProtocolType.Tls11 |
                                                        SecurityProtocolType.Tls12;
+                ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback (delegate { return true; });
 
                 var response = httpMethod == HttpMethod.Get ? client.DownloadString(apiUrl) :
                                                               client.UploadString(apiUrl, httpMethod.ToString(), jsonString);

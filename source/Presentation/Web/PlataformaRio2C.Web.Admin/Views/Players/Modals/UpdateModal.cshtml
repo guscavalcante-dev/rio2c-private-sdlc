@@ -10,7 +10,7 @@
                     }
                     else
                     {
-                        @(Labels.NewM + " " + Labels.Player + " " + string.Format(Labels.InEditionYear, ViewBag.EditionUrlCode))
+                        @(Labels.NewM + " " + Labels.Player + " " + string.Format(Labels.InEditionYear, ViewBag.EditionDto?.UrlCode))
                     }
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
