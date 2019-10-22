@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-21-2019
+// Last Modified On : 10-22-2019
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -482,7 +482,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 Id = o.Id,
                                 Uid = o.Uid,
                                 Name = o.Name,
-                                HoldingBaseDto = new HoldingBaseDto
+                                HoldingBaseDto = o.Holding == null ? null : new HoldingBaseDto
                                 {
                                     Id = o.Holding.Id,
                                     Uid = o.Holding.Uid,
