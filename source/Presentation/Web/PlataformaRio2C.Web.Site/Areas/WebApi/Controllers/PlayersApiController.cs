@@ -4,9 +4,9 @@
 // Created          : 09-25-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-21-2019
+// Last Modified On : 10-22-2019
 // ***********************************************************************
-// <copyright file="PlayersController.cs" company="Softo">
+// <copyright file="PlayersApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -14,6 +14,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Domain.Entities;
@@ -24,10 +25,10 @@ using PlataformaRio2C.Web.Site.Areas.WebApi.Models;
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 {
     /// <summary>
-    /// Class for sales platforms endpoints
+    /// Class for players endpoints
     /// </summary>
     [System.Web.Http.RoutePrefix("api/v1.0")]
-    public class PlayersController : BaseApiController
+    public class PlayersApiController : BaseApiController
     {
         private readonly IOrganizationRepository organizationRepo;
         private readonly IEditionRepository editionRepo;
@@ -36,14 +37,14 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         private readonly IInterestRepository interestRepo;
         private readonly IFileRepository fileRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="PlayersController"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="PlayersApiController"/> class.</summary>
         /// <param name="organizationRepository">The organization repository.</param>
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="activityRepository">The activity repository.</param>
         /// <param name="targetAudienceRepository">The target audience repository.</param>
         /// <param name="interestRepositoryy">The interest repositoryy.</param>
         /// <param name="fileRepository">The file repository.</param>
-        public PlayersController(
+        public PlayersApiController(
             IOrganizationRepository organizationRepository,
             IEditionRepository editionRepository,
             IActivityRepository activityRepository,
@@ -204,7 +205,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 DescriptionsApiResponses = organizationApiDto.DescriptionsDtos?.Select(dd => new LanguageValueApiResponse
                 {
                     Culture = dd.LanguageDto.Code,
-                    Value = dd.Value
+                    Value = HttpUtility.HtmlDecode(dd.Value)
                 })?.ToList(),
                 InterestGroupApiResponses = interestsGroups?.Select(ig => new InterestGroupApiResponse
                 {
@@ -225,12 +226,12 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     JobTitlesApiResponses = cd.JobTitlesDtos?.Select(jtd => new LanguageValueApiResponse
                     {
                         Culture = jtd.LanguageDto.Code,
-                        Value = jtd.Value
+                        Value = HttpUtility.HtmlDecode(jtd.Value)
                     })?.ToList(),
                     MiniBiosApiResponses = cd.MiniBiosDtos?.Select(jtd => new LanguageValueApiResponse
                     {
                         Culture = jtd.LanguageDto.Code,
-                        Value = jtd.Value
+                        Value = HttpUtility.HtmlDecode(jtd.Value)
                     })?.ToList()
                 })?.ToList()
             });
