@@ -342,6 +342,7 @@
     <Compile Include="Controllers\StatesController.cs" />
     <Compile Include="Filters\AuthorizeCollaboratorTypeAttribute.cs" />
     <Compile Include="Helpers\OnboardingAllowedRoutesHelper.cs" />
+    <Compile Include="Services\TalentPlatformService.cs" />
     <Compile Include="Services\SiteMailerService.cs" />
     <Compile Include="Controllers\OnboardingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
