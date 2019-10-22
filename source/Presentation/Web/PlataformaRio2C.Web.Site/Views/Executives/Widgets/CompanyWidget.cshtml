@@ -1,13 +1,15 @@
 ﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
 @using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2C.Domain.Statics
+@using PlataformaRio2C.Domain.Constants;
+
 @model AttendeeCollaboratorSiteCompanyWidgetDto
 @{
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var isCurrentUser = userAccessControlDto?.Collaborator?.Uid == Model.Collaborator?.Uid;
-    var hasCompany = userAccessControlDto?.EditionAttendeeOrganizations.Any();
-    var isExecutive = userAccessControlDto?.EditionCollaboratorTypes.Select(eutt => eutt.Id).Any(_ => new List<int> { 200, 201, 202 }.Contains(_));
-
+    var hasCompany = userAccessControlDto?.EditionAttendeeOrganizations?.Any() == true;
+    var isExecutive = userAccessControlDto?.HasAnyCollaboratorType((new[] { CollaboratorType.ExecutiveAudiovisual, CollaboratorType.ExecutiveInnovation, CollaboratorType.ExecutiveMusic })) == true;
+    
 }
 <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
@@ -15,7 +17,7 @@
             @Labels.Companies
         </h3>
     </div>
-    @if (isCurrentUser && hasCompany.Equals(false) && isExecutive.Equals(false))
+    @if (isCurrentUser && !hasCompany && !isExecutive)
     {
         <div class="kt-widget__action">
             <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="ExecutivesCompanyWidget.showCreateModal();">

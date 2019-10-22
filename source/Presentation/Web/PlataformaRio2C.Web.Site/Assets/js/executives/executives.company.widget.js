@@ -73,14 +73,19 @@ var ExecutivesCompanyWidget = function () {
     };
 
     var enableUpdatePlugins = function () {
+        MyRio2cCropper.init({ formIdOrClass: createFormId });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: createFormId + ' .select2-selection__rendered' });
         AddressesForm.init();
-
-        MyRio2cCropper.init({ formIdOrClass: createFormId });
         MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c', maxCharCount: 710 });
         MyRio2cCompanyDocument.enableCompanyNumberMask(countryUid, '#Document');
+
         enableAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: createFormId, enableHiddenInputsValidation: true });
+
+        // Enable activity additional info textbox
+        if (typeof (MyRio2cCommonActivity) !== 'undefined') {
+            MyRio2cCommonActivity.init();
+        }
     };
 
     var showCreateModal = function () {
