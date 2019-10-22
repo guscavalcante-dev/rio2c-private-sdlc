@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-18-2019
+// Last Modified On : 10-21-2019
 // ***********************************************************************
 // <copyright file="collaborators.create.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,10 +19,7 @@ var CollaboratorsCreate = function () {
 
     // Enable form validation ---------------------------------------------------------------------
     var enableFormValidation = function () {
-        MyRio2cCommon.enableFormValidation({
-            formIdOrClass: formId,
-            enableHiddenInputsValidation: true
-        });
+        MyRio2cCommon.enableFormValidation({ formIdOrClass: formId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
 
     // Enable plugins -----------------------------------------------------------------------------

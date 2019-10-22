@@ -744,6 +744,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Contagem de caracteres: %charsTyped%/%charsTotal%.
+        /// </summary>
+        public static string MaxlengthCounterMessage {
+            get {
+                return ResourceManager.GetString("MaxlengthCounterMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A mensagem é longa demais. Tente encurtá-la ou enviá-la em múltiplas partes..
         /// </summary>
         public static string MessageIsTooLong {

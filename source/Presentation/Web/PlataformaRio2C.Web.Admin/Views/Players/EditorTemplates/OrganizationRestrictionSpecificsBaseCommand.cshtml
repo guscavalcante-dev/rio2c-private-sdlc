@@ -2,7 +2,7 @@
 <div class="row">
     <div class="form-group col-lg-12">
         @Html.LabelFor(m => m.Value, $"{Labels.RestrictionsSpecifics} ({Model.LanguageCode.GetSplittedWord('-', 0).ToUpper()})", new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
-        @Html.TextAreaFor(m => m.Value, new { @class = "form-control ckeditor-rio2c-restrictions", rows = 8 })
+        @Html.TextAreaFor(m => m.Value, new { @class = "form-control ckeditor-rio2c-restrictions maxlength-allowovermax", rows = 8 })
         @Html.HiddenFor(m => m.LanguageCode)
         @Html.HiddenFor(m => m.LanguageName)
         @Html.HiddenFor(m => m.IsRequired)

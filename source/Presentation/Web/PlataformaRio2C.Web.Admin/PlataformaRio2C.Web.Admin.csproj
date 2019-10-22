@@ -363,6 +363,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\components\bootstrap-maxlength\src\bootstrap-maxlength.js" />
     <Content Include="Assets\components\hideshowpassword\css\example.minimal.css" />
     <Content Include="Assets\components\hideshowpassword\css\example.wink.css" />
     <Content Include="Assets\components\hideshowpassword\hideShowPassword.js" />
@@ -6944,6 +6945,10 @@
     <Content Include="Assets\themes\metronic\vendors\general\wnumb\README.md" />
     <Content Include="Assets\components\hideshowpassword\.gitignore" />
     <Content Include="Assets\components\hideshowpassword\README.md" />
+    <Content Include="Assets\components\bootstrap-maxlength\.gitignore" />
+    <Content Include="Assets\components\bootstrap-maxlength\Changelog.md" />
+    <Content Include="Assets\components\bootstrap-maxlength\LICENSE" />
+    <Content Include="Assets\components\bootstrap-maxlength\README.md" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

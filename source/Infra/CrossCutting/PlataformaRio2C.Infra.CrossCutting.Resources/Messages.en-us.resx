@@ -678,4 +678,8 @@
     <value>Account locked out</value>
     <comment>Conta bloqueada</comment>
   </data>
+  <data name="MaxlengthCounterMessage" xml:space="preserve">
+    <value>Characters counter: %charsTyped%/%charsTotal%</value>
+    <comment>Contagem de caracteres: %charsTyped%/%charsTotal%</comment>
+  </data>
 </root>

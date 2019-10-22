@@ -4,7 +4,7 @@
 // Created          : 08-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-28-2019
+// Last Modified On : 10-21-2019
 // ***********************************************************************
 // <copyright file="attendeeorganizations.form.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -37,10 +37,7 @@ var AttendeeOrganizationsForm = function () {
         enableFormPlugins();
 
         if (!MyRio2cCommon.isNullOrEmpty(formId)) {
-            MyRio2cCommon.enableFormValidation({
-                formIdOrClass: formId,
-                enableHiddenInputsValidation: true
-            });
+            MyRio2cCommon.enableFormValidation({ formIdOrClass: formId, enableHiddenInputsValidation: true, enableMaxlength: true });
         }
     };
 

@@ -370,6 +370,7 @@
   <ItemGroup>
     <Content Include="Areas\Producer\Views\Collaborator\ProfileDetails.cshtml" />
     <Content Include="Areas\Producer\Views\Collaborator\ProfileEdit.cshtml" />
+    <Content Include="Assets\components\bootstrap-maxlength\src\bootstrap-maxlength.js" />
     <Content Include="Assets\components\cropper\demo\css\main.css" />
     <Content Include="Assets\components\cropper\demo\index.html" />
     <Content Include="Assets\components\cropper\demo\js\main.js" />
@@ -6380,6 +6381,10 @@
     <Content Include="Assets\components\hideshowpassword\.gitignore" />
     <Content Include="Assets\components\hideshowpassword\README.md" />
     <Content Include="Assets\components\jquery.autocomplete\readme.md" />
+    <Content Include="Assets\components\bootstrap-maxlength\.gitignore" />
+    <Content Include="Assets\components\bootstrap-maxlength\Changelog.md" />
+    <Content Include="Assets\components\bootstrap-maxlength\LICENSE" />
+    <Content Include="Assets\components\bootstrap-maxlength\README.md" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />

@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-18-2019
+// Last Modified On : 10-21-2019
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -432,6 +432,11 @@ var MyRio2cCommon = function () {
             enableHiddenInputsValidation = options.enableHiddenInputsValidation;
         }
 
+        var enableMaxlength = false;
+        if (hasProperty(options, 'enableMaxlength') && options.enableMaxlength) {
+            enableMaxlength = options.enableMaxlength;
+        }
+
         $(options.formIdOrClass).removeData('validator');
         $(options.formIdOrClass).removeData('unobtrusiveValidation');
         $.validator.unobtrusive.parse(options.formIdOrClass);
@@ -441,6 +446,10 @@ var MyRio2cCommon = function () {
             if (undefined != validator) {
                 validator.settings.ignore = "";
             }
+        }
+
+        if (enableMaxlength === true) {
+            enableInputMaxlength();
         }
     };
 
@@ -456,6 +465,32 @@ var MyRio2cCommon = function () {
         $(options.inputIdOrClass).select2({
             language: globalVariables.userInterfaceLanguageUppercade,
             width: '100%'
+        });
+    };
+
+    // Enable input maxlength ---------------------------------------------------------------------
+    var enableInputMaxlength = function () {
+        $('input[data-val-length-max],textarea[data-val-length-max]').not('.maxlength-enabled').each(function () {
+
+            var maxlength = $(this).data('val-length-max');
+            var allowOverMax = $(this).hasClass('maxlength-allowovermax');
+            if (MyRio2cCommon.isNullOrEmpty(allowOverMax)) {
+                allowOverMax = false;
+            }
+
+            if (!MyRio2cCommon.isNullOrEmpty(maxlength)) {
+                $(this).maxlength({
+                    customMaxAttribute: maxlength + '',
+                    alwaysShow: true,
+                    validate: !allowOverMax,
+                    appendToParent: true,
+                    message: labels.maxlengthCounterMessage,
+                    warningClass: "kt-badge kt-badge--success kt-badge--rounded kt-badge--inline",
+                    limitReachedClass: "kt-badge kt-badge--danger kt-badge--rounded kt-badge--inline",
+                });
+
+                $(this).addClass('maxlength-enabled');
+            }
         });
     };
 
@@ -944,6 +979,7 @@ var MyRio2cCommon = function () {
                 //fixCkEditorValidation();
                 initScroll();
                 extendGlobalValidations();
+                enableInputMaxlength();
             });
         },
         getGlobalVariables: function () {

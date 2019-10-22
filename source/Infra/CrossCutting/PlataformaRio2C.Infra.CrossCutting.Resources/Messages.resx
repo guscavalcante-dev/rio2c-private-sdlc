@@ -683,4 +683,8 @@
     <value>Conta bloqueada</value>
     <comment>Conta bloqueada</comment>
   </data>
+  <data name="MaxlengthCounterMessage" xml:space="preserve">
+    <value>Contagem de caracteres: %charsTyped%/%charsTotal%</value>
+    <comment>Contagem de caracteres: %charsTyped%/%charsTotal%</comment>
+  </data>
 </root>

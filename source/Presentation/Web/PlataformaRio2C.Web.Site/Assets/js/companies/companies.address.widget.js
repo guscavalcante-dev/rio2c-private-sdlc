@@ -4,7 +4,7 @@
 // Created          : 10-08-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-10-2019
+// Last Modified On : 10-21-2019
 // ***********************************************************************
 // <copyright file="companies.address.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -77,7 +77,7 @@ var CompaniesAddressWidget = function () {
         MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2' });
         AddressesForm.init();
         enableAjaxForm();
-        MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true });
+        MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
 
     var showUpdateModal = function () {
