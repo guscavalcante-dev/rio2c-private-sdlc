@@ -42,16 +42,22 @@
                         </div>
                     }
                     @*{
-            <div class="kt-widget__action">
-                <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="return false;" data-toggle="kt-tooltip" title="" data-placement="right" data-original-title="@Labels.ComingSoon...">
-                    <i class="flaticon2-edit"></i>
-                </button>
-            </div>
-        }*@
+                        <div class="kt-widget__action">
+                            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="return false;" data-toggle="kt-tooltip" title="" data-placement="right" data-original-title="@Labels.ComingSoon...">
+                                <i class="flaticon2-edit"></i>
+                            </button>
+                        </div>
+                    }*@
                 </div>
-                <div class="kt-widget__subhead pt-0">
-                    @Model.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage).Value
-                </div>
+                @{
+                    var jobTitleDto = @Model.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
+                }
+                @if (jobTitleDto != null)
+                {
+                    <div class="kt-widget__subhead pt-0">
+                        @jobTitleDto.Value
+                    </div>
+                }
                 @*<div class="kt-widget__subhead">
                     @{
                         var location = Model.GetLocation(ViewBag.UserInterfaceLanguage);
