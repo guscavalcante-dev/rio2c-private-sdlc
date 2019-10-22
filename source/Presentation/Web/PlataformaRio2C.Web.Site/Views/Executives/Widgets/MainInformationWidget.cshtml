@@ -5,7 +5,6 @@
 @{
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var isCurrentUser = userAccessControlDto?.Collaborator?.Uid == Model.Collaborator?.Uid;
-    var collaboratorUid = userAccessControlDto?.Collaborator?.Uid;
 }
 <div class="kt-portlet__body">
     <div class="kt-widget kt-widget--user-profile-3">
@@ -41,13 +40,6 @@
                             </button>
                         </div>
                     }
-                    @*{
-                        <div class="kt-widget__action">
-                            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="return false;" data-toggle="kt-tooltip" title="" data-placement="right" data-original-title="@Labels.ComingSoon...">
-                                <i class="flaticon2-edit"></i>
-                            </button>
-                        </div>
-                    }*@
                 </div>
                 @{
                     var jobTitleDto = @Model.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
@@ -58,15 +50,6 @@
                         @jobTitleDto.Value
                     </div>
                 }
-                @*<div class="kt-widget__subhead">
-                    @{
-                        var location = Model.GetLocation(ViewBag.UserInterfaceLanguage);
-                    }
-                    @if (!string.IsNullOrEmpty(location))
-                    {
-                        <a onclick="return false;"><i class="flaticon-placeholder"></i>@location</a>
-                    }
-                </div>*@
                 <div class="kt-widget__info" style="display: block;">
                     @{
                         var miniBioDto = Model.GetMiniBioDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
