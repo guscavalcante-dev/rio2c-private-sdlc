@@ -1,4 +1,7 @@
 ﻿@model PlataformaRio2C.Application.CQRS.Commands.CollaboratorMiniBioBaseCommand
+@{
+    Model.Value = HttpUtility.HtmlDecode(Model.Value);
+}
 <div class="row">
     <div class="form-group col-lg-12">
         @Html.LabelFor(m => m.Value, $"{Labels.MiniBio} ({Model.LanguageCode.GetSplittedWord('-', 0).ToUpper()})", new { @class = "control-label" })

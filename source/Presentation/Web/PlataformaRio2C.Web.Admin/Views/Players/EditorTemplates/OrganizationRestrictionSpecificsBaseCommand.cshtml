@@ -1,4 +1,7 @@
 ﻿@model PlataformaRio2C.Application.CQRS.Commands.OrganizationRestrictionSpecificsBaseCommand
+@{
+    Model.Value = HttpUtility.HtmlDecode(Model.Value);
+}
 <div class="row">
     <div class="form-group col-lg-12">
         @Html.LabelFor(m => m.Value, $"{Labels.RestrictionsSpecifics} ({Model.LanguageCode.GetSplittedWord('-', 0).ToUpper()})", new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
