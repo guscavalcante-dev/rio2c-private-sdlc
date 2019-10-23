@@ -4,7 +4,7 @@
 // Created          : 10-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-17-2019
+// Last Modified On : 10-21-2019
 // ***********************************************************************
 // <copyright file="executives.maininformation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -76,10 +76,10 @@ var ExecutivesMainInformationWidget = function () {
             MyRio2cPublicEmail.init();
         }
 
-        MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-minibio', maxCharCount: 710 });
+        //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-minibio', maxCharCount: 710 });
         MyRio2cCropper.init({ formIdOrClass: updateFormId });
         enableAjaxForm();
-        MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true });
+        MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
 
     var showUpdateModal = function () {

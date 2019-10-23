@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-14-2019
+// Last Modified On : 10-18-2019
 // ***********************************************************************
 // <copyright file="OnboardPlayerOrganizationData.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -36,7 +36,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = "TradeName", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [StringLength(100, MinimumLength = 2, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string TradeName { get; set; }
 
         [Display(Name = "Country", ResourceType = typeof(Labels))]

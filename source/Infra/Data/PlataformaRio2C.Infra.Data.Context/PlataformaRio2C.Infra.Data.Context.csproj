@@ -371,6 +371,7 @@
     <Content Include="SqlScripts\03_TicketSettings.sql" />
     <Content Include="SqlScripts\04_InitialData.sql" />
     <Content Include="SqlScripts\Deltas\20190930_114613_0001_ChangesForPlayersApi.sql" />
+    <Content Include="SqlScripts\Deltas\20191021_225115_0003_RemoveHtmlTagsFromData.sql" />
     <Content Include="SqlScripts\Deltas\20191015_140530_0002_ChangesForTicketBuyersOnboarding.sql" />
     <Content Include="SqlScripts\Deltas\20191009_094500_0001_ChangesForLanguage.sql" />
     <None Include="App.config" />

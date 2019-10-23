@@ -4,7 +4,7 @@
 // Created          : 08-31-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-14-2019
+// Last Modified On : 10-22-2019
 // ***********************************************************************
 // <copyright file="ProcessPendingPlatformWebhookRequestsAsyncCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -163,7 +163,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         var collaboratorByEmail = await this.collaboratorRepo.GetAsync(c => c.User.Email == salesPlatformAttendeeDto.Email);
 
                         // The person is attending to the event
-                        if (salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.Attending)
+                        if (salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.Attending
+                            || salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.Transferred)
                         {
                             // Collaborator not found by attendee id and email
                             if (collaboratorByAttendeeId == null && collaboratorByEmail == null)
@@ -233,7 +234,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                     currentValidationResult.Add(new ValidationError(error.Message));
                                 }
                             }
-                            // Collaborator attendee exists and collaborator email exists but area differente emails
+                            // Collaborator attendee exists and collaborator email exists but are differente emails
                             else if (collaboratorByAttendeeId != null && collaboratorByEmail != null && collaboratorByAttendeeId.Uid != collaboratorByEmail.Uid)
                             {
                                 // Delete ticket from collaboratorAttendeeId

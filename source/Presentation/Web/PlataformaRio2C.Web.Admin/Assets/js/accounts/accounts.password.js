@@ -4,7 +4,7 @@
 // Created          : 10-17-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-17-2019
+// Last Modified On : 10-21-2019
 // ***********************************************************************
 // <copyright file="accounts.password.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -38,7 +38,7 @@ var AccountsPassword = function () {
         }
 
         enableAjaxForm();
-        MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true });
+        MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
 
     var showUpdateModal = function () {

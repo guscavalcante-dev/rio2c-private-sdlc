@@ -4,7 +4,7 @@
 // Created          : 10-14-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-15-2019
+// Last Modified On : 10-21-2019
 // ***********************************************************************
 // <copyright file="onboarding.companyinfo.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,10 +23,7 @@ var OnboardingCompanyInfo = function () {
 
     // Enable form validation ---------------------------------------------------------------------
     var enableFormValidation = function () {
-        MyRio2cCommon.enableFormValidation({
-            formIdOrClass: formId,
-            enableHiddenInputsValidation: true
-        });
+        MyRio2cCommon.enableFormValidation({ formIdOrClass: formId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
 
     // Show form ----------------------------------------------------------------------------------
@@ -238,7 +235,7 @@ var OnboardingCompanyInfo = function () {
         MyRio2cCropper.init({ formIdOrClass: formId });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });
         AddressesForm.init();
-        MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c', maxCharCount: 710 });
+        //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c', maxCharCount: 710 });
         MyRio2cCommon.enableAtLeastOnCheckboxByNameValidation(formId);
         enableCompanyNameAutocomplete();
         enableTradeNameAutocomplete();

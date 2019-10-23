@@ -4,7 +4,7 @@
 // Created          : 09-01-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-11-2019
+// Last Modified On : 10-22-2019
 // ***********************************************************************
 // <copyright file="SalesPlatformAttendeeStatus.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,8 +17,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
     public class SalesPlatformAttendeeStatus
     {
         public const string Attending  = "attending";
-        public const string NotAttending = "not_attending";
-        public const string Unpaid = "upaind";
+        public const string NotAttending = "Not Attending";
+        public const string Unpaid = "unpaid";
         public const string Deleted = "Deleted";
+        public const string Transferred = "Transferred";
     }
 }

@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-17-2019
+// Last Modified On : 10-21-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -127,12 +127,8 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/components/jquery.form/jquery.form.js",
                 "~/Assets/components/hideshowpassword/hideShowPassword.js",
                 "~/Assets/js/myrio2c.showhidepassword.js",
-                "~/Assets/js/accounts/accounts.password.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/onboardingIndex").Include(
-                "~/Assets/js/pages/onboarding/wizard-2.js",
-                "~/Assets/themes/metronic/vendors/general/jquery-validation/dist/jquery.validate.js",
-                "~/Assets/themes/metronic/vendors/general/sweetalert2/dist/sweetalert2.all.js"));
+                "~/Assets/js/accounts/accounts.password.js",
+                "~/Assets/components/bootstrap-maxlength/src/bootstrap-maxlength.js"));
 
             #endregion
 
@@ -166,13 +162,13 @@ namespace PlataformaRio2C.Web.Site
 
             #endregion
 
-            #region CKEditor
+            //#region CKEditor
 
-            bundles.Add(new ScriptBundle("~/bundles/js/ckEditor.js").Include(
-                "~/Scripts/ckeditor/ckeditor.js",
-                "~/Content/js/ckeditor_config.js"));
+            //bundles.Add(new ScriptBundle("~/bundles/js/ckEditor.js").Include(
+            //    "~/Scripts/ckeditor/ckeditor.js",
+            //    "~/Content/js/ckeditor_config.js"));
 
-            #endregion
+            //#endregion
 
             #region Cropperjs
 
@@ -233,6 +229,12 @@ namespace PlataformaRio2C.Web.Site
             #region Pages Bundles
 
             #region Onboarding Wizard
+
+            //TODO: Remove this
+            bundles.Add(new ScriptBundle("~/bundles/js/onboardingIndex").Include(
+                "~/Assets/js/pages/onboarding/wizard-2.js",
+                "~/Assets/themes/metronic/vendors/general/jquery-validation/dist/jquery.validate.js",
+                "~/Assets/themes/metronic/vendors/general/sweetalert2/dist/sweetalert2.all.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/onboarding.wizard.js").Include(
                 "~/Assets/js/onboarding/onboarding.wizard.js"));

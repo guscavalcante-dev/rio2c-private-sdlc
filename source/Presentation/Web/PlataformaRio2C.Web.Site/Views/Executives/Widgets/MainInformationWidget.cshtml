@@ -5,7 +5,6 @@
 @{
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var isCurrentUser = userAccessControlDto?.Collaborator?.Uid == Model.Collaborator?.Uid;
-    var collaboratorUid = userAccessControlDto?.Collaborator?.Uid;
 }
 <div class="kt-portlet__body">
     <div class="kt-widget kt-widget--user-profile-3">
@@ -42,9 +41,15 @@
                         </div>
                     }
                 </div>
-                <div class="kt-widget__subhead pt-0">
-                    @Model.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage).Value
-                </div>
+                @{
+                    var jobTitleDto = @Model.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
+                }
+                @if (jobTitleDto != null)
+                {
+                    <div class="kt-widget__subhead pt-0">
+                        @jobTitleDto.Value
+                    </div>
+                }
                 <div class="kt-widget__info" style="display: block;">
                     @{
                         var miniBioDto = Model.GetMiniBioDtoByLanguageCode(ViewBag.UserInterfaceLanguage);

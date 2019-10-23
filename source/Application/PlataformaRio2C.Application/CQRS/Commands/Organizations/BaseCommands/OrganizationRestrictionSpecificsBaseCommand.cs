@@ -4,7 +4,7 @@
 // Created          : 09-13-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-16-2019
+// Last Modified On : 10-18-2019
 // ***********************************************************************
 // <copyright file="OrganizationRestrictionSpecificsBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,11 +23,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>OrganizationRestrictionSpecificsBaseCommand</summary>
     public class OrganizationRestrictionSpecificsBaseCommand
     {
-        [AllowHtml]
+        //[AllowHtml]
         [Display(Name = "RestrictionsSpecifics", ResourceType = typeof(Labels))]
         [RequiredIf("IsRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [StringLength(8000, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        [CkEditorMaxChars(270)]
+        [StringLength(270, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        //[CkEditorMaxChars(270)]
         public string Value { get; set; }
         public string LanguageCode { get; set; }
         public string LanguageName { get; set; }

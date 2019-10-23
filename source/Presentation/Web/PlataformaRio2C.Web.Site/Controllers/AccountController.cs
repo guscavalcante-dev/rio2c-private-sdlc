@@ -298,7 +298,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
             catch (Exception ex)
             {
-                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 ModelState.AddModelError("", Messages.WeFoundAndError);
                 return View(model);
             }
@@ -549,7 +549,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
             catch (Exception ex)
             {
-                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 //return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 

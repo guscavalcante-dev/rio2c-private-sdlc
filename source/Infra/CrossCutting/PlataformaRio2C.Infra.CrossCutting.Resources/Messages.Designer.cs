@@ -340,6 +340,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Não foi possível logar na plataforma de talentos..
+        /// </summary>
+        public static string CouldNotSignInTalentsPlatform {
+            get {
+                return ResourceManager.GetString("CouldNotSignInTalentsPlatform", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to País inválido.
         /// </summary>
         public static string CountryIsInvalid {
@@ -740,6 +749,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string MandatoryToSubmitYourProject {
             get {
                 return ResourceManager.GetString("MandatoryToSubmitYourProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contagem de caracteres: %charsTyped%/%charsTotal%.
+        /// </summary>
+        public static string MaxlengthCounterMessage {
+            get {
+                return ResourceManager.GetString("MaxlengthCounterMessage", resourceCulture);
             }
         }
         
@@ -1244,6 +1262,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ReasonMinLength {
             get {
                 return ResourceManager.GetString("ReasonMinLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Redirecionamento para a plataforma de talentos não está ativa..
+        /// </summary>
+        public static string RedirectTalentsPlatformNotActive {
+            get {
+                return ResourceManager.GetString("RedirectTalentsPlatformNotActive", resourceCulture);
             }
         }
         

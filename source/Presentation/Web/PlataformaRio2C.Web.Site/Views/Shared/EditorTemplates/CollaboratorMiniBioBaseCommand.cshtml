@@ -1,8 +1,11 @@
 ﻿@model PlataformaRio2C.Application.CQRS.Commands.CollaboratorMiniBioBaseCommand
+@{
+    Model.Value = HttpUtility.HtmlDecode(Model.Value);
+}
 <div class="row">
     <div class="form-group col-lg-12">
         @Html.LabelFor(m => m.Value, $"{Labels.MiniBio} ({Model.LanguageCode.GetSplittedWord('-', 0).ToUpper()})", new { @class = "control-label" })
-        @Html.TextAreaFor(m => m.Value, new { @class = "form-control ckeditor-rio2c-minibio" })
+        @Html.TextAreaFor(m => m.Value, new { @class = "form-control ckeditor-rio2c-minibio maxlength-allowovermax", rows = 8 })
         @Html.HiddenFor(m => m.LanguageCode)
         @Html.HiddenFor(m => m.LanguageName)
         @Html.HiddenFor(m => m.IsRequired)

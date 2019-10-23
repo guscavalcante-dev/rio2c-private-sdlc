@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-16-2019
+// Last Modified On : 10-18-2019
 // ***********************************************************************
 // <copyright file="CollaboratorMiniBioBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,11 +23,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>CollaboratorMiniBioBaseCommand</summary>
     public class CollaboratorMiniBioBaseCommand
     {
-        [AllowHtml]
+        //[AllowHtml]
         [Display(Name = "MiniBio", ResourceType = typeof(Labels))]
         [RequiredIf("IsRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [StringLength(8000, MinimumLength = 2, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        [CkEditorMaxChars(710)]
+        [StringLength(710, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        //[CkEditorMaxChars(710)]
         public string Value { get; set; }
         public string LanguageCode { get; set; }
         public string LanguageName { get; set; }

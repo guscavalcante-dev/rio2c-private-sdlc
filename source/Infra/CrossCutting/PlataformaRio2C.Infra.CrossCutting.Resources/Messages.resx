@@ -683,4 +683,16 @@
     <value>Conta bloqueada</value>
     <comment>Conta bloqueada</comment>
   </data>
+  <data name="MaxlengthCounterMessage" xml:space="preserve">
+    <value>Contagem de caracteres: %charsTyped%/%charsTotal%</value>
+    <comment>Contagem de caracteres: %charsTyped%/%charsTotal%</comment>
+  </data>
+  <data name="CouldNotSignInTalentsPlatform" xml:space="preserve">
+    <value>Não foi possível logar na plataforma de talentos.</value>
+    <comment>Não foi possível logar na plataforma de talentos.</comment>
+  </data>
+  <data name="RedirectTalentsPlatformNotActive" xml:space="preserve">
+    <value>Redirecionamento para a plataforma de talentos não está ativa.</value>
+    <comment>Redirecionamento para a plataforma de talentos não está ativa.</comment>
+  </data>
 </root>

@@ -4,13 +4,14 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-18-2019
+// Last Modified On : 10-22-2019
 // ***********************************************************************
 // <copyright file="HomeController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using System.Linq;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using System.Threading.Tasks;
@@ -24,6 +25,9 @@ using PlataformaRio2C.Web.Site.Filters;
 using PlataformaRio2C.Application.CQRS.Commands.User;
 using System.Text.RegularExpressions;
 using PlataformaRio2C.Application.Common;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Web.Site.Services;
 using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Site.Controllers
@@ -42,6 +46,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
             : base(commandBus, identityController)
         {
         }
+
+        #region Dashboard
 
         /// <summary>Indexes this instance.</summary>
         /// <returns></returns>
@@ -81,6 +87,46 @@ namespace PlataformaRio2C.Web.Site.Controllers
             //    return RedirectToAction("LogOff", "Account");
             //}
         }
+
+        #endregion
+
+        #region Talents
+
+        /// <summary>Talentses this instance.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> Talents()
+        {
+            TalentAccessDto talentAccessDto;
+
+            try
+            {
+                var talentPlatformService = new TalentPlatformService();
+                talentAccessDto = talentPlatformService.Login(this.UserAccessControlDto, this.UserInterfaceLanguage);
+                if (string.IsNullOrEmpty(talentAccessDto?.Url))
+                {
+                    this.StatusMessageToastr(Messages.CouldNotSignInTalentsPlatform, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                    return RedirectToAction("Index", "Home", new { Area = "" });
+                }
+            }
+            catch (DomainException ex)
+            {
+                this.StatusMessageToastr(ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Home", new { Area = "" });
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Home", new { Area = "" });
+            }
+
+            return Redirect(talentAccessDto.Url);
+        }
+
+        #endregion
+
+        #region Culture
 
         /// <summary>Sets the culture.</summary>
         /// <param name="culture">The culture.</param>
@@ -127,5 +173,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        #endregion
     }
 }

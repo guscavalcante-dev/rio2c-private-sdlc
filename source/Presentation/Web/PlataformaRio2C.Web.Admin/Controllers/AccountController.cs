@@ -282,7 +282,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             }
             catch (Exception ex)
             {
-                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 ModelState.AddModelError("", Messages.WeFoundAndError);
                 return View(model);
             }

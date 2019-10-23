@@ -1,11 +1,7 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
-@using Constants = PlataformaRio2C.Domain.Constants;
 @model AttendeeCollaboratorSiteDetailsDto
 @{
     ViewBag.Title = $"{Labels.Executive}  {Model.Collaborator.GetFullName()}";
-
-    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
-    var isCurrentUser = userAccessControlDto?.Collaborator?.Uid == Model.Collaborator?.Uid;
 }
 @Html.Hidden("AggregateId", Model.Collaborator.Uid)
 <div class="row">
@@ -26,7 +22,6 @@
         <!--end:Company Widget-->
     </div>
 </div>
-
 @section Styles {
     @Styles.Render("~/bundles/css/cropper.css")
     @Styles.Render("~/bundles/css/select2.css")
@@ -34,14 +29,11 @@
 @section Scripts {
     @Scripts.Render("~/bundles/js/cropper.js")
     @Scripts.Render("~/bundles/js/select2.js")
-    @Scripts.Render("~/bundles/js/ckEditor.js")
+    @*@Scripts.Render("~/bundles/js/ckEditor.js")*@
     @Scripts.Render("~/bundles/js/inputmask.js")
     @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/addresses.form.js")
     @Scripts.Render("~/bundles/js/executives.widget.js")
-
-
-
     <script>
         // Page translations ----------------------------------------------------------------------
 

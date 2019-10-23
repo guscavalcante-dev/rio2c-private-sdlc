@@ -678,4 +678,16 @@
     <value>Account locked out</value>
     <comment>Conta bloqueada</comment>
   </data>
+  <data name="MaxlengthCounterMessage" xml:space="preserve">
+    <value>Characters counter: %charsTyped%/%charsTotal%</value>
+    <comment>Contagem de caracteres: %charsTyped%/%charsTotal%</comment>
+  </data>
+  <data name="CouldNotSignInTalentsPlatform" xml:space="preserve">
+    <value>Could not sign in talents platform.</value>
+    <comment>Não foi possível logar na plataforma de talentos.</comment>
+  </data>
+  <data name="RedirectTalentsPlatformNotActive" xml:space="preserve">
+    <value>Redirect to talents platform is not active.</value>
+    <comment>Redirecionamento para a plataforma de talentos não está ativa.</comment>
+  </data>
 </root>

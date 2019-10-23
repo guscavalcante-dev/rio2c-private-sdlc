@@ -4,7 +4,7 @@
 // Created          : 09-13-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-16-2019
+// Last Modified On : 10-21-2019
 // ***********************************************************************
 // <copyright file="onboarding.interests.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,15 +19,12 @@ var OnboardingInterests = function () {
 
     // Enable form validation ---------------------------------------------------------------------
     //var enableFormValidation = function () {
-    //    MyRio2cCommon.enableFormValidation({
-    //        formIdOrClass: formId,
-    //        enableHiddenInputsValidation: true
-    //    });
+    //    MyRio2cCommon.enableFormValidation({ formIdOrClass: formId, enableHiddenInputsValidation: true, enableMaxlength: true });
     //};
 
     // Enable plugins -----------------------------------------------------------------------------
     var enablePlugins = function () {
-        MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-restrictions', maxCharCount: 270 });
+        //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-restrictions', maxCharCount: 270 });
         MyRio2cCommon.enableAtLeastOnCheckboxByNameValidation(formId);
     };
 

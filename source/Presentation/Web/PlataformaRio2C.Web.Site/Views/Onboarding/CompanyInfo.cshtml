@@ -12,7 +12,7 @@
                 <!--end: Form Wizard Nav -->
             </div>
             <div class="kt-grid__item kt-grid__item--fluid kt-wizard-v2__wrapper">
-                @using (Html.BeginForm("CompanyInfo", "Onboarding", FormMethod.Post, new { enctype = "multipart/form-data", id = "CompanyInfoForm", @class = "kt-form", novalidate = "novalidate" }))
+                @using (Html.BeginForm("CompanyInfo", "Onboarding", FormMethod.Post, new { enctype = "multipart/form-data", id = "CompanyInfoForm", @class = "kt-form" }))
                 {
                     @Html.HiddenFor(m => m.OrganizationUid)
                     <!--begin: Form Wizard Step 1-->
@@ -57,7 +57,7 @@
 @section Scripts {
     @Scripts.Render("~/bundles/js/cropper.js")
     @Scripts.Render("~/bundles/js/select2.js")
-    @Scripts.Render("~/bundles/js/ckEditor.js")
+    @*@Scripts.Render("~/bundles/js/ckEditor.js")*@
     @Scripts.Render("~/bundles/js/inputmask.js")
     @Scripts.Render("~/bundles/js/jquery.autocomplete.js")
     @Scripts.Render("~/bundles/js/addresses.form.js")
