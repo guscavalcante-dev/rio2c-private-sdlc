@@ -7,6 +7,26 @@
     padding-left: 0;
 }
 
+.mt-10 {
+    margin-top: 10px !important;
+}
+
+.mt-20 {
+    margin-top: 20px !important;
+}
+
+.mt-30 {
+    margin-top: 30px !important;
+}
+
+.mt-40 {
+    margin-top: 40px !important;
+}
+
+.mt-50 {
+    margin-top: 50px !important;
+}
+
 .kt-avatar .kt-avatar__holder.wh-200 {
     width: 200px;
     height: 200px;

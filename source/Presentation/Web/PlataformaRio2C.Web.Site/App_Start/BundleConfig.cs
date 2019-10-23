@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-21-2019
+// Last Modified On : 10-23-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -230,11 +230,9 @@ namespace PlataformaRio2C.Web.Site
 
             #region Onboarding Wizard
 
-            //TODO: Remove this
-            bundles.Add(new ScriptBundle("~/bundles/js/onboardingIndex").Include(
-                "~/Assets/js/pages/onboarding/wizard-2.js",
-                "~/Assets/themes/metronic/vendors/general/jquery-validation/dist/jquery.validate.js",
-                "~/Assets/themes/metronic/vendors/general/sweetalert2/dist/sweetalert2.all.js"));
+            bundles.Add(new StyleBundle("~/bundles/css/onboardingIndex").Include(
+                "~/Assets/css/pages/onboarding/wizard-2.css",
+                "~/Assets/css/pages/onboarding/onboarding.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/onboarding.wizard.js").Include(
                 "~/Assets/js/onboarding/onboarding.wizard.js"));
@@ -253,6 +251,7 @@ namespace PlataformaRio2C.Web.Site
 
             bundles.Add(new ScriptBundle("~/bundles/js/onboarding.companyinfo.js").Include(
                 "~/Assets/js/onboarding/onboarding.companyinfo.js",
+                "~/Assets/js/companies/companyinfo.autocomplete.js",
                 "~/Assets/js/myrio2c.companynumber.js",
                 "~/Assets/js/myrio2c.activity.js"));
 
@@ -277,6 +276,7 @@ namespace PlataformaRio2C.Web.Site
             bundles.Add(new ScriptBundle("~/bundles/js/executives.widget.js").Include(
                 "~/Assets/js/executives/executives.company.widget.js",
                 "~/Assets/js/executives/executives.maininformation.widget.js",
+                "~/Assets/js/companies/companyinfo.autocomplete.js",
                 "~/Assets/js/myrio2c.companynumber.js",
                 "~/Assets/js/myrio2c.publicemail.js",
                 "~/Assets/js/myrio2c.activity.js"));
@@ -416,9 +416,6 @@ namespace PlataformaRio2C.Web.Site
             bundles.Add(new StyleBundle("~/bundles/css/projectSubmitCustomStyles").Include(
                 "~/Assets/themes/metronic/css/demo4/pages/wizard/wizard-3.css"));
 
-            bundles.Add(new StyleBundle("~/bundles/css/onboardingIndex").Include(
-                "~/Assets/css/pages/onboarding/wizard-2.css",
-                "~/Assets/css/pages/onboarding/onboarding.css"));
             #endregion
 
             // Required to generate bundles on release running in visual studio

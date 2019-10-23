@@ -352,7 +352,7 @@ CNPJ: 26.079.220/0001-46. Any unauthorized use of the names or their variations 
   </data>
   <data name="ForbiddenErrorMessage" xml:space="preserve">
     <value>Oops! Request forbidden. Sorry, you have insufficient rights to access this page or perform this request.</value>
-    <comment>Oops! Requisição proibida. Desculpe, você não sem privilégios suficientes para acessar essa página ou executar essa requisição.</comment>
+    <comment>Oops! Requisição proibida. Desculpe, você não tem privilégios suficientes para acessar essa página ou executar essa requisição.</comment>
   </data>
   <data name="NotFoundErrorMessage" xml:space="preserve">
     <value>Oops! You're lost. We can not find the page you're looking for.</value>

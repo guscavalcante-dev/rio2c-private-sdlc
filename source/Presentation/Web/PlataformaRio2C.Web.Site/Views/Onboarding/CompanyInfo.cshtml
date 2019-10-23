@@ -1,4 +1,4 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.OnboardTicketBuyerOrganizationData
+﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateTicketBuyerOrganizationData
 @{
     Layout = "~/Views/Themes/Metronic/_Internal.cshtml";
     ViewBag.Title = Labels.Welcome;
@@ -26,7 +26,7 @@
                                     </div>
                                 </div>
                                 <div id="form-container">
-                                    @Html.Partial("Shared/_CompanyInfoForm", Model)
+                                    @Html.Partial("/Views/Companies/Shared/_TicketBuyerCompanyInfoForm.cshtml", Model)
                                 </div>
                             </div>
                         </div>

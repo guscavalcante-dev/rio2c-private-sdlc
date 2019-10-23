@@ -1,26 +1,29 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateTicketBuyerOrganization
-
-<div class="row">
-    <div class="form-group col-lg-4 text-center">
+﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateTicketBuyerOrganizationData
+<div class="row mt-30">
+    <div class="form-group col-lg-5 col-xl-3">
         @Html.EditorFor(m => m.CropperImage)
     </div>
-    <div class="col-lg-8">
+    <div class="form-group col-lg-7 col-xl-9 pl-lg-5">
         <div class="row">
-            <div class="form-group col-md-12 col-xl-12">
+            <div class="form-group col-md-12">
                 @Html.LabelFor(m => m.TradeName, new { @class = "control-label" })
-                @Html.TextBoxFor(m => m.TradeName, new { @class = "form-control", autocomplete = "off" })
+                <div class="spinner-container">
+                    @Html.TextBoxFor(m => m.TradeName, new { @class = "form-control ", autocomplete = "off" })
+                </div>
                 @Html.ValidationMessageFor(m => m.TradeName, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="row">
-            <div class="form-group col-md-12 col-xl-12">
+            <div class="form-group col-md-12">
                 @Html.LabelFor(m => m.CompanyName, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
-                @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control", autocomplete = "off" })
+                <div class="spinner-container">
+                    @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control", autocomplete = "off" })
+                </div>
                 @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="row">
-            <div class="form-group col-md-12 col-xl-12" data-id="Country">
+            <div class="form-group col-sm-12 col-xl-6" data-id="Country">
                 @Html.LabelFor(m => m.CountryUid, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
                 @Html.HiddenFor(m => m.IsCompanyNumberRequired)
                 <select name="@Html.NameFor(m => m.CountryUid)" id="@Html.IdFor(m => m.CountryUid)" @Html.GetUnobtrusiveValidationAttributesFor(m => m.CountryUid) class="form-control">
@@ -34,9 +37,11 @@
                 </select>
                 @Html.ValidationMessageFor(m => m.CountryUid, "", new { @class = "text-danger" })
             </div>
-            <div class="form-group col-md-12 col-xl-12">
+            <div class="form-group col-sm-12 col-xl-6">
                 @Html.LabelFor(m => m.Document, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
-                @Html.TextBoxFor(m => m.Document, new { @class = "form-control", autocomplete = "off" })
+                <div class="spinner-container">
+                    @Html.TextBoxFor(m => m.Document, new { @class = "form-control", autocomplete = "off" })
+                </div>
                 @Html.ValidationMessageFor(m => m.Document, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -63,7 +68,7 @@
     </div>
 </div>
 <div class="kt-section mt-30">
-    <h3 class="kt-heading kt-heading--md">@Labels.CompanyResume <span class="form-optional-input text-muted">@Labels.Optional</span></h3>
+    <h3 class="kt-heading kt-heading--md">@Labels.CompanyResume <span class="form-optional-input text-muted">@Labels.Optional</span></h3> 
     @Html.ValidationMessage("Descriptions", new { @class = "text-danger" })
     <div class="kt-section__content mt-3">
         @Html.EditorFor(m => m.Descriptions)

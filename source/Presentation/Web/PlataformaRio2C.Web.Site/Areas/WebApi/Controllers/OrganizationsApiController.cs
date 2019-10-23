@@ -4,9 +4,9 @@
 // Created          : 10-14-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-16-2019
+// Last Modified On : 10-23-2019
 // ***********************************************************************
-// <copyright file="OrganizationsController.cs" company="Softo">
+// <copyright file="OrganizationsApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -23,21 +23,21 @@ using PlataformaRio2C.Web.Site.Areas.WebApi.Models;
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 {
     /// <summary>
-    /// Class for sales platforms endpoints
+    /// OrganizationsApiController
     /// </summary>
     [System.Web.Http.RoutePrefix("api/v1.0")]
     [AjaxAuthorize(Order = 1)]
-    public class OrganizationsController : BaseApiController
+    public class OrganizationsApiController : BaseApiController
     {
         private readonly IOrganizationRepository organizationRepo;
         private readonly IEditionRepository editionRepo;
         private readonly IFileRepository fileRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="OrganizationsController"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="OrganizationsApiController"/> class.</summary>
         /// <param name="organizationRepository">The organization repository.</param>
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="fileRepository">The file repository.</param>
-        public OrganizationsController(
+        public OrganizationsApiController(
             IOrganizationRepository organizationRepository,
             IEditionRepository editionRepository,
             IFileRepository fileRepository)

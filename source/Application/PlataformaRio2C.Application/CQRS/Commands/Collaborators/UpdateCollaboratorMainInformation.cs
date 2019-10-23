@@ -4,7 +4,7 @@
 // Created          : 10-15-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-17-2019
+// Last Modified On : 10-23-2019
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorMainInformation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,7 +25,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>UpdateCollaboratorMainInformation</summary>
     public class UpdateCollaboratorMainInformation : BaseCommand
     {
-
         [Display(Name = "FirstName", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]

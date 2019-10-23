@@ -4,7 +4,7 @@
 // Created          : 10-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-18-2019
+// Last Modified On : 10-23-2019
 // ***********************************************************************
 // <copyright file="ExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,6 +28,7 @@ using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Application;
 using System.Linq;
+using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -115,6 +116,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 if (mainInformationWidgetDto == null)
                 {
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundM.ToLowerInvariant()));
+                }
+
+                if (this.UserAccessControlDto?.Collaborator.Uid != collaboratorUid)
+                {
+                    throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
 
                 cmd = new UpdateCollaboratorMainInformation(
@@ -224,18 +230,22 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #region Create
 
-        /// <summary>Shows the company information filled form.</summary>
-        /// <param name="organizationUid">The organization uid.</param>
+        /// <summary>Shows the create company information modal.</summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowCreateCompanyInfoModal(Guid? organizationUid)
+        public async Task<ActionResult> ShowCreateCompanyInfoModal()
         {
-            CreateTicketBuyerOrganization cmd;
+            CreateTicketBuyerOrganizationData cmd;
 
             try
             {
-                cmd = new CreateTicketBuyerOrganization(
-                    organizationUid.HasValue ? await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(organizationUid, this.EditionDto.Id, this.UserInterfaceLanguage)) : null,
+                if (this.UserAccessControlDto?.EditionAttendeeOrganizations?.Any() == true  || this.UserAccessControlDto?.HasAnyCollaboratorType(Constants.CollaboratorType.Executives) == true)
+                {
+                    throw new DomainException(Texts.ForbiddenErrorMessage);
+                }
+
+                cmd = new CreateTicketBuyerOrganizationData(
+                    null,
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                     false,
@@ -259,12 +269,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-
-        /// <summary>Companies the information.</summary>
+        /// <summary>Creates the company information.</summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> CreateCompanyInformation(CreateTicketBuyerOrganization cmd)
+        public async Task<ActionResult> CreateCompanyInformation(CreateTicketBuyerOrganizationData cmd)
         {
             var result = new AppValidationResult();
 
@@ -273,6 +282,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 if (!ModelState.IsValid)
                 {
                     throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                if (this.UserAccessControlDto?.EditionAttendeeOrganizations?.Any() == true || this.UserAccessControlDto?.HasAnyCollaboratorType(Constants.CollaboratorType.Executives) == true)
+                {
+                    throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
 
                 cmd.UpdatePreSendProperties(
@@ -302,7 +316,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     message = ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/CreateCompanyInfoForm", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("/Views/Companies/Shared/_TicketBuyerCompanyInfoForm.cshtml", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -314,6 +328,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Executive, Labels.CreatedM) });
         } 
+
         #endregion
 
         #endregion

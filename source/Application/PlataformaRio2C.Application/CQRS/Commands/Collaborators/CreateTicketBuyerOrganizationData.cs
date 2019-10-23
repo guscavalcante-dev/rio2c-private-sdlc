@@ -4,9 +4,9 @@
 // Created          : 10-14-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-18-2019
+// Last Modified On : 10-23-2019
 // ***********************************************************************
-// <copyright file="OnboardTicketBuyerOrganizationData.cs" company="Softo">
+// <copyright file="CreateTicketBuyerOrganizationData.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -23,8 +23,8 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>OnboardTicketBuyerOrganizationData</summary>
-    public class OnboardTicketBuyerOrganizationData : BaseCommand
+    /// <summary>CreateTicketBuyerOrganizationData</summary>
+    public class CreateTicketBuyerOrganizationData : BaseCommand
     {
         public Guid? OrganizationUid { get; set; }
 
@@ -65,14 +65,14 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public Guid CollaboratorUid { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="OnboardTicketBuyerOrganizationData"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="CreateTicketBuyerOrganizationData"/> class.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
         /// <param name="isDescriptionRequired">if set to <c>true</c> [is description required].</param>
         /// <param name="isAddressRequired">if set to <c>true</c> [is address required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
-        public OnboardTicketBuyerOrganizationData(
+        public CreateTicketBuyerOrganizationData(
             OrganizationDto entity, 
             List<LanguageDto> languagesDtos, 
             List<CountryBaseDto> countriesBaseDtos,
@@ -94,8 +94,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateDropdownProperties(countriesBaseDtos);
         }
 
-        /// <summary>Initializes a new instance of the <see cref="OnboardTicketBuyerOrganizationData"/> class.</summary>
-        public OnboardTicketBuyerOrganizationData()
+        /// <summary>Initializes a new instance of the <see cref="CreateTicketBuyerOrganizationData"/> class.</summary>
+        public CreateTicketBuyerOrganizationData()
         {
         }
 

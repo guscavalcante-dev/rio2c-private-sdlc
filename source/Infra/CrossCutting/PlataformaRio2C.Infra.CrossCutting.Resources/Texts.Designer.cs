@@ -239,7 +239,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Oops! Requisição proibida. Desculpe, você não sem privilégios suficientes para acessar essa página ou executar essa requisição..
+        ///   Looks up a localized string similar to Oops! Requisição proibida. Desculpe, você não tem privilégios suficientes para acessar essa página ou executar essa requisição..
         /// </summary>
         public static string ForbiddenErrorMessage {
             get {

@@ -1,4 +1,4 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateTicketBuyerOrganization
+﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateTicketBuyerOrganizationData
 <div class="modal fade" id="CreateCompanyInfoModal" role="dialog" aria-labelledby="CreateCompanyInfoModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -11,10 +11,10 @@
             <div class="modal-body">
                 @using (Html.BeginForm("CreateCompanyInformation", "Executives", new { Area = "" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "CreateCompanyInfoForm" }))
                 {
-                      @Html.HiddenFor(m => m.OrganizationUid)
+                    @Html.HiddenFor(m => m.OrganizationUid)
 
                     <div id="form-container">
-                        @Html.Partial("Modals/CreateCompanyInfoForm", Model)
+                        @Html.Partial("/Views/Companies/Shared/_TicketBuyerCompanyInfoForm.cshtml", Model)
                     </div>
                 }
             </div>

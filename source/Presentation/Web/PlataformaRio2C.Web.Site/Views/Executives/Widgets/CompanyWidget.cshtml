@@ -1,15 +1,13 @@
 ﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
 @using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2C.Domain.Statics
-@using PlataformaRio2C.Domain.Constants;
-
+@using Constants = PlataformaRio2C.Domain.Constants;
 @model AttendeeCollaboratorSiteCompanyWidgetDto
 @{
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var isCurrentUser = userAccessControlDto?.Collaborator?.Uid == Model.Collaborator?.Uid;
     var hasCompany = userAccessControlDto?.EditionAttendeeOrganizations?.Any() == true;
-    var isExecutive = userAccessControlDto?.HasAnyCollaboratorType((new[] { CollaboratorType.ExecutiveAudiovisual, CollaboratorType.ExecutiveInnovation, CollaboratorType.ExecutiveMusic })) == true;
-    
+    var isExecutive = userAccessControlDto?.HasAnyCollaboratorType(Constants.CollaboratorType.Executives) == true;
 }
 <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">

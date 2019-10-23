@@ -4,7 +4,7 @@
 // Created          : 08-29-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-18-2019
+// Last Modified On : 10-23-2019
 // ***********************************************************************
 // <copyright file="OnboardingController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -683,7 +683,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             var currentOrganization = this.UserAccessControlDto?.EditionAttendeeOrganizations?.FirstOrDefault(eao => !eao.OnboardingOrganizationDate.HasValue)?.Organization;
 
-            var cmd = new OnboardTicketBuyerOrganizationData(
+            var cmd = new CreateTicketBuyerOrganizationData(
                 currentOrganization == null ? null : await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(currentOrganization.Uid, this.EditionDto.Id, this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
@@ -694,46 +694,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
             return View(cmd);
         }
 
-        /// <summary>Shows the company information filled form.</summary>
-        /// <param name="organizationUid">The organization uid.</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ShowCompanyInfoFilledForm(Guid? organizationUid)
-        {
-            OnboardTicketBuyerOrganizationData cmd;
-
-            try
-            {
-                cmd = new OnboardTicketBuyerOrganizationData(
-                    organizationUid.HasValue ? await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(organizationUid, this.EditionDto.Id, this.UserInterfaceLanguage)) : null,
-                    await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                    false,
-                    false,
-                    false);
-            }
-            catch (DomainException ex)
-            {
-                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-            }
-
-            ModelState.Clear();
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Shared/_CompanyInfoForm", cmd), divIdOrClass = "#form-container" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
         /// <summary>Companies the information.</summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> CompanyInfo(OnboardTicketBuyerOrganizationData cmd)
+        public async Task<ActionResult> CompanyInfo(CreateTicketBuyerOrganizationData cmd)
         {
             if (this.UserAccessControlDto?.IsTicketBuyerOrganizationOnboardingPending() != true)
             {

@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
-// Author           : William Almado    
-// Created          : 10-21-2019
+// Author           : Rafael Dantas Ruiz
+// Created          : 10-14-2019
 //
-// Last Modified By : William Almado
-// Last Modified On : 10-21-2019
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 10-23-2019
 // ***********************************************************************
 // <copyright file="CreateTicketBuyerOrganizationDataCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,14 +28,14 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
     /// <summary>CreateTicketBuyerOrganizationDataCommandHandler</summary>
-    public class CreateTicketBuyerOrganizationDataCommandHandler : BaseOrganizationCommandHandler, IRequestHandler<CreateTicketBuyerOrganization, AppValidationResult>
+    public class CreateTicketBuyerOrganizationDataCommandHandler : BaseOrganizationCommandHandler, IRequestHandler<CreateTicketBuyerOrganizationData, AppValidationResult>
     {
         private readonly IEditionRepository editionRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
         private readonly ILanguageRepository languageRepo;
         private readonly ICountryRepository countryRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="OnboardTicketBuyerOrganizationDataCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="CreateTicketBuyerOrganizationDataCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="organizationRepository">The organization repository.</param>
@@ -60,11 +59,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.countryRepo = countryRepository;
         }
 
-        /// <summary>Handles the specified onboard ticket buyer organization data.</summary>
+        /// <summary>Handles the specified create ticket buyer organization data.</summary>
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(CreateTicketBuyerOrganization cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(CreateTicketBuyerOrganizationData cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 

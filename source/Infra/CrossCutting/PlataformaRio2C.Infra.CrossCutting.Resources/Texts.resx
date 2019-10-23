@@ -456,8 +456,8 @@ maira@rio2c.com&lt;br/&gt;
     <comment>Oops! Alguma coisa deu errado. Estamos corrigindo o problema!</comment>
   </data>
   <data name="ForbiddenErrorMessage" xml:space="preserve">
-    <value>Oops! Requisição proibida. Desculpe, você não sem privilégios suficientes para acessar essa página ou executar essa requisição.</value>
-    <comment>Oops! Requisição proibida. Desculpe, você não sem privilégios suficientes para acessar essa página ou executar essa requisição.</comment>
+    <value>Oops! Requisição proibida. Desculpe, você não tem privilégios suficientes para acessar essa página ou executar essa requisição.</value>
+    <comment>Oops! Requisição proibida. Desculpe, você não tem privilégios suficientes para acessar essa página ou executar essa requisição.</comment>
   </data>
   <data name="NotFoundErrorMessage" xml:space="preserve">
     <value>Oops! Você está perdido. Não conseguimos encontrar a página que você estava procurando.</value>
