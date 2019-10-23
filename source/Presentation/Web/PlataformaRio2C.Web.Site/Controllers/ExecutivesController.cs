@@ -230,11 +230,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowCreateCompanyInfoModal(Guid? organizationUid)
         {
-            OnboardTicketBuyerOrganizationData cmd;
+            CreateTicketBuyerOrganization cmd;
 
             try
             {
-                cmd = new OnboardTicketBuyerOrganizationData(
+                cmd = new CreateTicketBuyerOrganization(
                     organizationUid.HasValue ? await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(organizationUid, this.EditionDto.Id, this.UserInterfaceLanguage)) : null,
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
@@ -264,7 +264,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> CreateCompanyInformation(OnboardTicketBuyerOrganizationData cmd)
+        public async Task<ActionResult> CreateCompanyInformation(CreateTicketBuyerOrganization cmd)
         {
             var result = new AppValidationResult();
 
@@ -302,7 +302,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     message = ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/CreateCompanyInfoModal", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("Modals/CreateCompanyInfoForm", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }

@@ -190,6 +190,7 @@
     <Compile Include="CQRS\CommandsHandlers\Holdings\UpdateHoldingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\CreateHoldingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardCollaboratorCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Collaborators\CreateTicketBuyerOrganizationDataCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\SkipOnboardTicketBuyerOrganizationDataCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardTicketBuyerOrganizationDataCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardPlayerTermsAcceptanceCommandHandler.cs" />
@@ -215,6 +216,7 @@
     <Compile Include="CQRS\Commands\Attendees\BaseCommands\AttendeeOrganizationBaseCommand.cs" />
     <Compile Include="CQRS\Commands\BaseCommand.cs" />
     <Compile Include="CQRS\Commands\Collaborators\BaseCommands\CollaboratorMiniBioBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Collaborators\CreateTicketBuyerOrganization.cs" />
     <Compile Include="CQRS\Commands\Collaborators\UpdateCollaboratorMainInformation.cs" />
     <Compile Include="CQRS\Commands\Emails\Common\SendForgotPasswordEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Site\SendProducerWelcomeEmailAsync.cs" />
