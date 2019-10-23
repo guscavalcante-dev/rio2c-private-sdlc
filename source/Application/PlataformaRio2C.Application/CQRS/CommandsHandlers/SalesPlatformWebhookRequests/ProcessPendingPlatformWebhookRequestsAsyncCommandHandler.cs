@@ -163,8 +163,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         var collaboratorByEmail = await this.collaboratorRepo.GetAsync(c => c.User.Email == salesPlatformAttendeeDto.Email);
 
                         // The person is attending to the event
-                        if (salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.Attending
-                            || salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.Transferred)
+                        if (salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.Attending)
                         {
                             // Collaborator not found by attendee id and email
                             if (collaboratorByAttendeeId == null && collaboratorByEmail == null)
@@ -282,7 +281,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         // The person is not attending or unpaid the event
                         else if (salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.NotAttending
                                  || salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.Unpaid
-                                 || salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.Deleted)
+                                 || salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.Deleted
+                                 || salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.Transferred)
                         {
                             // Delete ticket from collaboratorAttendeeId
                             var response1 = await this.CommandBus.Send(new DeleteCollaboratorTicket(
