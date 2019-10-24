@@ -3,6 +3,8 @@
 @using PlataformaRio2C.Domain.Statics
 @using Constants = PlataformaRio2C.Domain.Constants;
 @{
+    /**/
+
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var organizations = userAccessControlDto?.GetOrganizations();
     var menuOpenCssClass = "active";
@@ -33,7 +35,7 @@
                     </div>
                     <div class="col-8 col-sm-8 col-md-12 col-lg-7">
                         <div class="kt-widget__info">
-                            <a href="#" class="kt-widget__username">
+                            <a href="@Url.Action("Details", "Executives", new { id = userAccessControlDto.Collaborator.Uid })" class="kt-widget__username">
                                 @(userAccessControlDto?.GetFullName(ViewBag.UserInterfaceLanguage))
                             </a>
                             <span class="kt-widget__desc">
@@ -59,7 +61,7 @@
             <div class="kt-section__content kt-section__content--solid text-center">
                 @if (userAccessControlDto?.Collaborator != null)
                 {
-                    <a href="@Url.Action("Details", "Executives", new {id = userAccessControlDto.Collaborator.Uid})" class="btn btn-primary btn-sm">@Labels.ViewProfile</a>
+                    <a href="@Url.Action("Details", "Executives", new { id = userAccessControlDto.Collaborator.Uid })" class="btn btn-primary btn-sm">@Labels.ViewProfile</a>
                 }
                 @*<button type="button" class="btn btn-secondary btn-sm ml-2 mt-1" @(ViewBag.Environment != "dev" ? "disabled" : string.Empty)>@Labels.EditProfile</button>*@
             </div>
@@ -70,46 +72,48 @@
 </div>
 <!--End:Mini  Personal Profile-->
 <!--Begin:Mini Company Profile-->
-@*<div class="kt-portlet">
-    <div class="kt-portlet__head kt-portlet__head--noborder">
-        <div class="kt-portlet__head-label">
-            <h3 class="kt-portlet__head-title"></h3>
+@*
+    <div class="kt-portlet">
+        <div class="kt-portlet__head kt-portlet__head--noborder">
+            <div class="kt-portlet__head-label">
+                <h3 class="kt-portlet__head-title"></h3>
+            </div>
         </div>
-    </div>
-    <div class="kt-portlet__body">
-        <!--begin::Widget -->
-        <div class="kt-widget kt-widget--user-profile-2">
-            <div class="kt-widget__head">
-                <div class="kt-widget__media">
-                    <img class="kt-widget__img kt-hidden-" src="~/Assets/themes/metronic/media/client-logos/logo1.png" alt="image">
-                    <div class="kt-widget__pic kt-widget__pic--danger kt-font-danger kt-font-boldest kt-font-light kt-hidden">
-                        MP
+        <div class="kt-portlet__body">
+            <!--begin::Widget -->
+            <div class="kt-widget kt-widget--user-profile-2">
+                <div class="kt-widget__head">
+                    <div class="kt-widget__media">
+                        <img class="kt-widget__img kt-hidden-" src="~/Assets/themes/metronic/media/client-logos/logo1.png" alt="image">
+                        <div class="kt-widget__pic kt-widget__pic--danger kt-font-danger kt-font-boldest kt-font-light kt-hidden">
+                            MP
+                        </div>
+                    </div>
+                    <div class="kt-widget__info">
+                        <a href="#" class="kt-widget__username">
+                            Giros
+                        </a>
+                        <span class="kt-widget__desc">
+                            <a href="http://www.giros.com.br" target="_blank">www.giros.com.br</a>
+                        </span>
                     </div>
                 </div>
-                <div class="kt-widget__info">
-                    <a href="#" class="kt-widget__username">
-                        Giros
-                    </a>
-                    <span class="kt-widget__desc">
-                        <a href="http://www.giros.com.br" target="_blank">www.giros.com.br</a>
-                    </span>
-                </div>
-            </div>
-            <div class="kt-widget__body">
-                <div class="kt-widget__section">
-                
-                </div>
-                
-            </div>
-            <div class="kt-section__content kt-section__content--solid">
-                <button type="button" class="btn btn-primary btn-sm">View profile</button>
-                <button type="button" class="btn btn-secondary btn-sm">Edit profile</button>
-            </div>
-        </div>
+                <div class="kt-widget__body">
+                    <div class="kt-widget__section">
 
-        <!--end::Widget -->
+                    </div>
+
+                </div>
+                <div class="kt-section__content kt-section__content--solid">
+                    <button type="button" class="btn btn-primary btn-sm">View profile</button>
+                    <button type="button" class="btn btn-secondary btn-sm">Edit profile</button>
+                </div>
+            </div>
+
+            <!--end::Widget -->
+        </div>
     </div>
-</div>*@
+*@
 <!--End:Mini  Company Profile-->
 <!--Begin:Shortcuts-->
 <div class="kt-portlet d-none d-md-block">
@@ -139,9 +143,9 @@
                     </li>
                     @if (userAccessControlDto?.HasAnyCollaboratorType(new[]
                     {
-                        Constants.CollaboratorType.ExecutiveAudiovisual,
-                        Constants.CollaboratorType.Industry
-                    }) == true)
+                                        Constants.CollaboratorType.ExecutiveAudiovisual,
+                                        Constants.CollaboratorType.Industry
+                                    }) == true)
                     {
                         <li class="kt-nav__item @this.IsOpen(menuOpenCssClass, null, "Projects", null)">
                             <a class="kt-nav__link" href="@Url.Action("Index", "Projects", new { Area = "" })">
@@ -159,20 +163,20 @@
                         </li>
                     }
                     @*
-                    <li class="kt-nav__item">
-                        <a class="kt-nav__link" href="#" onclick="return false;" data-toggle="kt-tooltip" title="" data-placement="right" data-original-title="@Labels.ComingSoon...">
-                            <span class="kt-nav__link-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
-                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                        <rect id="bound" x="0" y="0" width="24" height="24" />
-                                        <path d="M12.9975507,17.929461 C12.9991745,17.9527631 13,17.9762852 13,18 L13,21 C13,21.5522847 12.5522847,22 12,22 C11.4477153,22 11,21.5522847 11,21 L11,18 C11,17.9762852 11.0008255,17.9527631 11.0024493,17.929461 C7.60896116,17.4452857 5,14.5273206 5,11 L7,11 C7,13.7614237 9.23857625,16 12,16 C14.7614237,16 17,13.7614237 17,11 L19,11 C19,14.5273206 16.3910388,17.4452857 12.9975507,17.929461 Z" id="Combined-Shape" fill="#000000" fill-rule="nonzero" />
-                                        <rect id="Rectangle" fill="#000000" opacity="0.3" transform="translate(12.000000, 8.000000) rotate(-360.000000) translate(-12.000000, -8.000000) " x="9" y="2" width="6" height="12" rx="3" />
-                                    </g>
-                                </svg>
-                            </span>
-                            <span class="kt-nav__link-text">Pitchings</span>
-                        </a>
-                    </li>
+                        <li class="kt-nav__item">
+                            <a class="kt-nav__link" href="#" onclick="return false;" data-toggle="kt-tooltip" title="" data-placement="right" data-original-title="@Labels.ComingSoon...">
+                                <span class="kt-nav__link-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <rect id="bound" x="0" y="0" width="24" height="24" />
+                                            <path d="M12.9975507,17.929461 C12.9991745,17.9527631 13,17.9762852 13,18 L13,21 C13,21.5522847 12.5522847,22 12,22 C11.4477153,22 11,21.5522847 11,21 L11,18 C11,17.9762852 11.0008255,17.9527631 11.0024493,17.929461 C7.60896116,17.4452857 5,14.5273206 5,11 L7,11 C7,13.7614237 9.23857625,16 12,16 C14.7614237,16 17,13.7614237 17,11 L19,11 C19,14.5273206 16.3910388,17.4452857 12.9975507,17.929461 Z" id="Combined-Shape" fill="#000000" fill-rule="nonzero" />
+                                            <rect id="Rectangle" fill="#000000" opacity="0.3" transform="translate(12.000000, 8.000000) rotate(-360.000000) translate(-12.000000, -8.000000) " x="9" y="2" width="6" height="12" rx="3" />
+                                        </g>
+                                    </svg>
+                                </span>
+                                <span class="kt-nav__link-text">Pitchings</span>
+                            </a>
+                        </li>
                     *@
                     <li class="kt-nav__item">
                         <a class="kt-nav__link" href="#" onclick="return false;" data-toggle="kt-tooltip" title="" data-placement="right" data-original-title="@Labels.ComingSoon...">

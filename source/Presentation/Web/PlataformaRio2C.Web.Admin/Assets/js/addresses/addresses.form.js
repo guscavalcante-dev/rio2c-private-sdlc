@@ -4,7 +4,7 @@
 // Created          : 08-23-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-21-2019
+// Last Modified On : 10-24-2019
 // ***********************************************************************
 // <copyright file="addresses.form.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -96,8 +96,12 @@ var AddressesForm = function () {
         return false;
     };
 
-    var toggleState = function () {
-        if (!MyRio2cCommon.isNullOrEmpty(countryUidElement.val())) {
+    var toggleState = function (forceDisable) {
+        if (MyRio2cCommon.isNullOrEmpty(forceDisable)) {
+            forceDisable = false;
+        }
+
+        if (!forceDisable && !MyRio2cCommon.isNullOrEmpty(countryUidElement.val())) {
             $('[data-id="' + stateDataId + '"] .btn-edit').removeClass('disabled');
             stateUidElement.prop("disabled", false);
         }
@@ -107,7 +111,7 @@ var AddressesForm = function () {
             stateNameElement.val('');
         }
 
-        if (!MyRio2cCommon.isNullOrEmpty(stateNameElement.val())) {
+        if (!forceDisable && !MyRio2cCommon.isNullOrEmpty(stateNameElement.val())) {
             enableNewState();
         }
         else {
@@ -138,12 +142,11 @@ var AddressesForm = function () {
             }
         }
 
-        toggleState();
-
         var countryUid = countryUidElement.val();
 
         if (MyRio2cCommon.isNullOrEmpty(countryUid)) {
             emptyStateSelect2();
+            toggleState();
         }
         else {
             var jsonParameters = new Object();
@@ -194,6 +197,8 @@ var AddressesForm = function () {
                             stateUidElement.val(initialStateUidValue).trigger('change');
                             initialStateUidElement.val('');
                         }
+
+                        toggleState();
                     },
                     // Error
                     onError: function () {
@@ -237,8 +242,12 @@ var AddressesForm = function () {
         return false;
     };
 
-    var toggleCity = function () {
-        if (!MyRio2cCommon.isNullOrEmpty(initialStateUidElement.val()) || !MyRio2cCommon.isNullOrEmpty(stateUidElement.val()) || !MyRio2cCommon.isNullOrEmpty(stateNameElement.val())) {
+    var toggleCity = function (forceDisable) {
+        if (MyRio2cCommon.isNullOrEmpty(forceDisable)) {
+            forceDisable = false;
+        }
+
+        if (!forceDisable && (/*!MyRio2cCommon.isNullOrEmpty(initialStateUidElement.val()) ||*/ !MyRio2cCommon.isNullOrEmpty(stateUidElement.val()) || !MyRio2cCommon.isNullOrEmpty(stateNameElement.val()))) {
             $('[data-id="' + cityDataId + '"] .btn-edit').removeClass('disabled');
             cityUidElement.prop("disabled", false);
         }
@@ -248,7 +257,7 @@ var AddressesForm = function () {
             cityNameElement.val('');
         }
 
-        if (!MyRio2cCommon.isNullOrEmpty(cityNameElement.val())) {
+        if (!forceDisable && !MyRio2cCommon.isNullOrEmpty(cityNameElement.val())) {
             enableNewCity();
         }
         else {
@@ -279,12 +288,11 @@ var AddressesForm = function () {
             }
         }
 
-        toggleCity();
-
         var stateUid = stateUidElement.val();
 
         if (MyRio2cCommon.isNullOrEmpty(stateUid)) {
             emptyCitySelect2();
+            toggleCity();
         }
         else {
             var jsonParameters = new Object();
@@ -334,6 +342,8 @@ var AddressesForm = function () {
                             cityUidElement.val(initialCityUidValue).trigger('change');
                             initialCityUidElement.val('');
                         }
+
+                        toggleCity();
                     },
                     // Error
                     onError: function () {
@@ -374,6 +384,8 @@ var AddressesForm = function () {
     // Enable change events -----------------------------------------------------------------------
     var enableCountryChangeEvent = function () {
         countryUidElement.not('.change-event-enabled').on('change', function () {
+            toggleState(true);
+            toggleCity(true);
             enableStateSelect2(true);
             enableZipCodeMask();
 
@@ -387,6 +399,7 @@ var AddressesForm = function () {
 
     var enableStateChangeEvent = function () {
         stateUidElement.not('.change-event-enabled').on('change', function () {
+            toggleCity(true);
             enableCitySelect2(true);
         });
         stateUidElement.addClass('change-event-enabled');

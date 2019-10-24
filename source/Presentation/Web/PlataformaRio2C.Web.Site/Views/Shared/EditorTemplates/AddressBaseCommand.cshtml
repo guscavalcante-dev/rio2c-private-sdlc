@@ -13,8 +13,8 @@
         @Html.LabelFor(m => m.StateUid, new { @class = "control-label" })
         <div class="view">
             @Html.Hidden("InitialStateUid", Model.StateUid)
-            @Html.DropDownList("StateUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new {@class = "form-control"})
-            <span class="form-text text-muted text-right"><a href="" onclick="return AddressesForm.enableNewState();" class="btn-link btn-edit">@(Labels.NewM.ToLowerInvariant()) @(Labels.State.ToLowerInvariant())</a></span>
+            @Html.DropDownList("StateUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control", disabled = "disabled" })
+            <span class="form-text text-muted text-right"><a href="" onclick="return AddressesForm.enableNewState();" class="btn-link btn-edit disabled">@(Labels.NewM.ToLowerInvariant()) @(Labels.State.ToLowerInvariant())</a></span>
         </div>
         <div class="edit d-none">
             @Html.TextBoxFor(m => m.StateName, new { @class = "form-control" })
@@ -26,8 +26,8 @@
         @Html.LabelFor(m => m.CityUid, new { @class = "control-label" })
         <div class="view">
             @Html.Hidden("InitialCityUid", Model.CityUid)
-            @Html.DropDownList("CityUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control" })
-            <span class="form-text text-muted text-right"><a href="" onclick="return AddressesForm.enableNewCity();" class="btn-link btn-edit">@(Labels.NewF.ToLowerInvariant()) @(Labels.City.ToLowerInvariant())</a></span>
+            @Html.DropDownList("CityUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control", disabled = "disabled" })
+            <span class="form-text text-muted text-right"><a href="" onclick="return AddressesForm.enableNewCity();" class="btn-link btn-edit disabled">@(Labels.NewF.ToLowerInvariant()) @(Labels.City.ToLowerInvariant())</a></span>
         </div>
         <div class="edit d-none">
             @Html.TextBoxFor(m => m.CityName, new { @class = "form-control" })
