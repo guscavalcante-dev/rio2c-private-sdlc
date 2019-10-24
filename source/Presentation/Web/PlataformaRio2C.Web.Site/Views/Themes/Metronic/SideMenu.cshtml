@@ -3,8 +3,6 @@
 @using PlataformaRio2C.Domain.Statics
 @using Constants = PlataformaRio2C.Domain.Constants;
 @{
-    /**/
-
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var organizations = userAccessControlDto?.GetOrganizations();
     var menuOpenCssClass = "active";
@@ -35,7 +33,7 @@
                     </div>
                     <div class="col-8 col-sm-8 col-md-12 col-lg-7">
                         <div class="kt-widget__info">
-                            <a href="@Url.Action("Details", "Executives", new { id = userAccessControlDto.Collaborator.Uid })" class="kt-widget__username">
+                            <a href="@Url.Action("Details", "Executives", new { id = userAccessControlDto?.Collaborator?.Uid })" class="kt-widget__username">
                                 @(userAccessControlDto?.GetFullName(ViewBag.UserInterfaceLanguage))
                             </a>
                             <span class="kt-widget__desc">
