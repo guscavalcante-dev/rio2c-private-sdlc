@@ -96,8 +96,12 @@ var AddressesForm = function () {
         return false;
     };
 
-    var toggleState = function () {
-        if (!MyRio2cCommon.isNullOrEmpty(countryUidElement.val())) {
+    var toggleState = function (forceDisable) {
+        if (MyRio2cCommon.isNullOrEmpty(forceDisable)) {
+            forceDisable = false;
+        }
+
+        if (!forceDisable && !MyRio2cCommon.isNullOrEmpty(countryUidElement.val())) {
             $('[data-id="' + stateDataId + '"] .btn-edit').removeClass('disabled');
             stateUidElement.prop("disabled", false);
         }
@@ -107,7 +111,7 @@ var AddressesForm = function () {
             stateNameElement.val('');
         }
 
-        if (!MyRio2cCommon.isNullOrEmpty(stateNameElement.val())) {
+        if (!forceDisable && !MyRio2cCommon.isNullOrEmpty(stateNameElement.val())) {
             enableNewState();
         }
         else {
@@ -238,8 +242,12 @@ var AddressesForm = function () {
         return false;
     };
 
-    var toggleCity = function () {
-        if (!MyRio2cCommon.isNullOrEmpty(initialStateUidElement.val()) || !MyRio2cCommon.isNullOrEmpty(stateUidElement.val()) || !MyRio2cCommon.isNullOrEmpty(stateNameElement.val())) {
+    var toggleCity = function (forceDisable) {
+        if (MyRio2cCommon.isNullOrEmpty(forceDisable)) {
+            forceDisable = false;
+        }
+
+        if (!forceDisable && (/*!MyRio2cCommon.isNullOrEmpty(initialStateUidElement.val()) ||*/ !MyRio2cCommon.isNullOrEmpty(stateUidElement.val()) || !MyRio2cCommon.isNullOrEmpty(stateNameElement.val()))) {
             $('[data-id="' + cityDataId + '"] .btn-edit').removeClass('disabled');
             cityUidElement.prop("disabled", false);
         }
@@ -249,7 +257,7 @@ var AddressesForm = function () {
             cityNameElement.val('');
         }
 
-        if (!MyRio2cCommon.isNullOrEmpty(cityNameElement.val())) {
+        if (!forceDisable && !MyRio2cCommon.isNullOrEmpty(cityNameElement.val())) {
             enableNewCity();
         }
         else {
@@ -376,6 +384,8 @@ var AddressesForm = function () {
     // Enable change events -----------------------------------------------------------------------
     var enableCountryChangeEvent = function () {
         countryUidElement.not('.change-event-enabled').on('change', function () {
+            toggleState(true);
+            toggleCity(true);
             enableStateSelect2(true);
             enableZipCodeMask();
 
@@ -389,6 +399,7 @@ var AddressesForm = function () {
 
     var enableStateChangeEvent = function () {
         stateUidElement.not('.change-event-enabled').on('change', function () {
+            toggleCity(true);
             enableCitySelect2(true);
         });
         stateUidElement.addClass('change-event-enabled');
