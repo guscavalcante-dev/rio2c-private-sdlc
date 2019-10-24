@@ -4,7 +4,7 @@
 // Created          : 09-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-21-2019
+// Last Modified On : 10-24-2019
 // ***********************************************************************
 // <copyright file="addresses.form.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -138,12 +138,11 @@ var AddressesForm = function () {
             }
         }
 
-        toggleState();
-
         var countryUid = countryUidElement.val();
 
         if (MyRio2cCommon.isNullOrEmpty(countryUid)) {
             emptyStateSelect2();
+            toggleState();
         }
         else {
             var jsonParameters = new Object();
@@ -194,6 +193,8 @@ var AddressesForm = function () {
                             stateUidElement.val(initialStateUidValue).trigger('change');
                             initialStateUidElement.val('');
                         }
+
+                        toggleState();
                     },
                     // Error
                     onError: function () {
@@ -279,12 +280,11 @@ var AddressesForm = function () {
             }
         }
 
-        toggleCity();
-
         var stateUid = stateUidElement.val();
 
         if (MyRio2cCommon.isNullOrEmpty(stateUid)) {
             emptyCitySelect2();
+            toggleCity();
         }
         else {
             var jsonParameters = new Object();
@@ -334,6 +334,8 @@ var AddressesForm = function () {
                             cityUidElement.val(initialCityUidValue).trigger('change');
                             initialCityUidElement.val('');
                         }
+
+                        toggleCity();
                     },
                     // Error
                     onError: function () {
