@@ -4,7 +4,7 @@
 // Created          : 08-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-10-2019
+// Last Modified On : 10-24-2019
 // ***********************************************************************
 // <copyright file="EditionDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -32,6 +32,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTime ProjectSubmitEndDate { get; private set; }
         public DateTime ProjectEvaluationStartDate { get; private set; }
         public DateTime ProjectEvaluationEndDate { get; private set; }
+        public DateTime OneToOneMeetingsScheduleDate { get; private set; }
         public DateTime NegotiationStartDate { get; private set; }
         public DateTime NegotiationEndDate { get; private set; }
         public DateTime CreateDate { get; private set; }
@@ -71,6 +72,7 @@ namespace PlataformaRio2C.Domain.Dtos
             this.ProjectSubmitEndDate = entity.ProjectSubmitEndDate;
             this.ProjectEvaluationStartDate = entity.ProjectEvaluationStartDate;
             this.ProjectEvaluationEndDate = entity.ProjectEvaluationEndDate;
+            this.OneToOneMeetingsScheduleDate = entity.OneToOneMeetingsScheduleDate;
             this.NegotiationStartDate = entity.NegotiationStartDate;
             this.NegotiationEndDate = entity.NegotiationEndDate;
             this.CreateDate = entity.CreateDate;

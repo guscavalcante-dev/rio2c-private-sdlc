@@ -361,18 +361,18 @@ CNPJ: 26.079.220/0001-46. Any unauthorized use of the names or their variations 
   <data name="PlayerProjectsDates" xml:space="preserve">
     <value>&lt;li&gt;Projects available for evaluation starting from: {0}&lt;/li&gt;
 &lt;li&gt;Evaluation period: {0} to {1}&lt;/li&gt;
-&lt;li&gt;One-to-One Meetings’ agenda available online from: 03/23/2020&lt;/li&gt;</value>
+&lt;li&gt;One-to-One Meetings’ agenda available online from: {2}&lt;/li&gt;</value>
     <comment>&lt;li&gt;Projetos disponíveis para avaliação a partir de: {0}&lt;/li&gt;
 &lt;li&gt;Período de avaliação: {0} a {1}&lt;/li&gt;
-&lt;li&gt;Agenda das Rodadas de Negócios disponível online a partir de: 23/03/2020&lt;/li&gt;</comment>
+&lt;li&gt;Agenda das Rodadas de Negócios disponível online a partir de: {2}&lt;/li&gt;</comment>
   </data>
   <data name="ProducerProjectsDates" xml:space="preserve">
     <value>&lt;li&gt;Submissão de projetos para as Rodadas de Negócios e Pitching de Audiovisual: {0} a {1}&lt;/li&gt;
 &lt;li&gt;Período de avaliação: {2} a {3}&lt;/li&gt;
-&lt;li&gt;Agenda online disponível em: 23/03/2020&lt;/li&gt;</value>
+&lt;li&gt;Agenda online disponível em: {4}&lt;/li&gt;</value>
     <comment>&lt;li&gt;Submissão de projetos para as Rodadas de Negócios e Pitching de Audiovisual: {0} a {1}&lt;/li&gt;
 &lt;li&gt;Período de avaliação: {2} a {3}&lt;/li&gt;
-&lt;li&gt;Agenda online disponível em: 23/03/2020&lt;/li&gt;</comment>
+&lt;li&gt;Agenda online disponível em: {4}&lt;/li&gt;</comment>
   </data>
   <data name="ForgotPasswordEmail1" xml:space="preserve">
     <value>You told us you forgot your password. If you really did, click below to choose a new one:</value>

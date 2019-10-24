@@ -56,7 +56,8 @@
                                         editionDto?.ProjectSubmitStartDate.ToShortDateString(), 
                                         editionDto?.ProjectSubmitEndDate.ToShortDateString(),
                                         editionDto?.ProjectEvaluationStartDate.ToShortDateString(),
-                                        editionDto?.ProjectEvaluationEndDate.ToShortDateString()))
+                                        editionDto?.ProjectEvaluationEndDate.ToShortDateString(),
+                                        editionDto?.OneToOneMeetingsScheduleDate.ToShortDateString()))
                                 </ul>
                             </div>
                         </div>
@@ -103,7 +104,8 @@
                                     @Html.Raw(string.Format(
                                         Texts.PlayerProjectsDates,
                                         editionDto?.ProjectEvaluationStartDate.ToShortDateString(),
-                                        editionDto?.ProjectEvaluationEndDate.ToShortDateString()))
+                                        editionDto?.ProjectEvaluationEndDate.ToShortDateString(),
+                                        editionDto?.OneToOneMeetingsScheduleDate.ToShortDateString()))
                                 </ul>
                             </div>
                         </div>

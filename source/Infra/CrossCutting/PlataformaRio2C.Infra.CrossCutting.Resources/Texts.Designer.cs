@@ -358,7 +358,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         /// <summary>
         ///   Looks up a localized string similar to &lt;li&gt;Projetos disponíveis para avaliação a partir de: {0}&lt;/li&gt;
         ///&lt;li&gt;Período de avaliação: {0} a {1}&lt;/li&gt;
-        ///&lt;li&gt;Agenda das Rodadas de Negócios disponível online a partir de: 23/03/2020&lt;/li&gt;.
+        ///&lt;li&gt;Agenda das Rodadas de Negócios disponível online a partir de: {2}&lt;/li&gt;.
         /// </summary>
         public static string PlayerProjectsDates {
             get {
@@ -387,7 +387,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         /// <summary>
         ///   Looks up a localized string similar to &lt;li&gt;Submissão de projetos para as Rodadas de Negócios e Pitching de Audiovisual: {0} a {1}&lt;/li&gt;
         ///&lt;li&gt;Período de avaliação: {2} a {3}&lt;/li&gt;
-        ///&lt;li&gt;Agenda online disponível em: 23/03/2020&lt;/li&gt;.
+        ///&lt;li&gt;Agenda online disponível em: {4}&lt;/li&gt;.
         /// </summary>
         public static string ProducerProjectsDates {
             get {

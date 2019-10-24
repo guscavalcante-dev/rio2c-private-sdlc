@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-31-2019
+// Last Modified On : 10-24-2019
 // ***********************************************************************
 // <copyright file="Edition.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,6 +34,7 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTime ProjectSubmitEndDate { get; private set; }
         public DateTime ProjectEvaluationStartDate { get; private set; }
         public DateTime ProjectEvaluationEndDate { get; private set; }
+        public DateTime OneToOneMeetingsScheduleDate { get; private set; }
         public DateTime NegotiationStartDate { get; private set; }
         public DateTime NegotiationEndDate { get; private set; }
 
