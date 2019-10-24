@@ -90,5 +90,61 @@ namespace PlataformaRio2C.Domain.Dtos
             //    this.Updater = new UserAppViewModel(entity.Updater);
             //}
         }
+
+        #region Project Submit
+
+        /// <summary>Determines whether [is project submit opened].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is project submit opened]; otherwise, <c>false</c>.</returns>
+        public bool IsProjectSubmitOpened()
+        {
+            return DateTime.Now >= this.ProjectSubmitStartDate && DateTime.Now <= this.ProjectSubmitEndDate;
+        }
+
+        /// <summary>Determines whether [is project submit started].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is project submit started]; otherwise, <c>false</c>.</returns>
+        public bool IsProjectSubmitStarted()
+        {
+            return DateTime.Now >= this.ProjectSubmitStartDate;
+        }
+
+        /// <summary>Determines whether [is project submit ended].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is project submit ended]; otherwise, <c>false</c>.</returns>
+        public bool IsProjectSubmitEnded()
+        {
+            return DateTime.Now > this.ProjectSubmitEndDate;
+        }
+
+        #endregion
+
+        #region Project Evaluation
+
+        /// <summary>Determines whether [is project evaluation opened].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is project evaluation opened]; otherwise, <c>false</c>.</returns>
+        public bool IsProjectEvaluationOpened()
+        {
+            return DateTime.Now >= this.ProjectSubmitStartDate && DateTime.Now <= this.ProjectEvaluationEndDate;
+        }
+
+        /// <summary>Determines whether [is project evaluation started].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is project evaluation started]; otherwise, <c>false</c>.</returns>
+        public bool IsProjectEvaluationStarted()
+        {
+            return DateTime.Now >= this.ProjectSubmitStartDate;
+        }
+
+        /// <summary>Determines whether [is project evaluation ended].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is project evaluation ended]; otherwise, <c>false</c>.</returns>
+        public bool IsProjectEvaluationEnded()
+        {
+            return DateTime.Now > this.ProjectEvaluationEndDate;
+        }
+
+        #endregion
     }
 }

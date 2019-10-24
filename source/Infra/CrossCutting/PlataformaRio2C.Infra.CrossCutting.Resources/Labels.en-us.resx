@@ -1577,4 +1577,8 @@
     <value>Reset your password</value>
     <comment>Redefina sua senha</comment>
   </data>
+  <data name="ReceivedProjects" xml:space="preserve">
+    <value>Received Projects</value>
+    <comment>Projetos Recebidos</comment>
+  </data>
 </root>

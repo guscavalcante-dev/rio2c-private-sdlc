@@ -2594,6 +2594,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Projetos Recebidos.
+        /// </summary>
+        public static string ReceivedProjects {
+            get {
+                return ResourceManager.GetString("ReceivedProjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gravadora.
         /// </summary>
         public static string Recorder {

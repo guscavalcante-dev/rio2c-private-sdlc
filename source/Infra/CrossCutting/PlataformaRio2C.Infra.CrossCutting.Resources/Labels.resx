@@ -1589,4 +1589,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Redefina sua senha</value>
     <comment>Redefina sua senha</comment>
   </data>
+  <data name="ReceivedProjects" xml:space="preserve">
+    <value>Projetos Recebidos</value>
+    <comment>Projetos Recebidos</comment>
+  </data>
 </root>

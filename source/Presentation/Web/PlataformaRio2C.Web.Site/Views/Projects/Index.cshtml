@@ -64,8 +64,20 @@
                         <div class="kt-portlet__foot pl-0 pr-0">
                             <div class="row align-items-center">
                                 <div class="col-lg-12 kt-align-right pl-0 pr-0">
-                                    <a href="#" onclick="return false;" class="btn btn-brand mt-1" data-toggle="kt-tooltip" title="" data-placement="bottom" data-original-title="@Labels.ComingSoon...">@Labels.SendProject</a>
-                                    <a href="#" onclick="return false;" class="btn btn-secondary mt-1" data-toggle="kt-tooltip" title="" data-placement="bottom" data-original-title="@Labels.ComingSoon...">@Labels.SentProjects</a>
+                                    @if (editionDto?.IsProjectSubmitOpened() == true)
+                                    {
+                                        <a href="#" onclick="return false;" class="btn btn-brand mt-1">@Labels.SendProject</a>
+                                        <a href="#" onclick="return false;" class="btn btn-secondary mt-1">@Labels.SentProjects</a>
+                                    }
+                                    else if (editionDto?.IsProjectSubmitStarted() == true)
+                                    {
+                                        <a href="#" onclick="return false;" class="btn btn-brand mt-1">@Labels.SentProjects</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="#" onclick="return false;" class="btn btn-brand mt-1" data-toggle="kt-tooltip" title="" data-placement="bottom" data-original-title="@Labels.ComingSoon...">@Labels.SendProject</a>
+                                        <a href="#" onclick="return false;" class="btn btn-secondary mt-1" data-toggle="kt-tooltip" title="" data-placement="bottom" data-original-title="@Labels.ComingSoon...">@Labels.SentProjects</a>
+                                    }
                                     @*
                                     <a href="@Url.Action("Submit", "Projects", new {Area = ""})" class="btn btn-brand">@Labels.SendProject</a>
                                     <a href="@Url.Action("Submited", "Projects", new {Area = ""})" class="btn btn-secondary">@Labels.SentProjects</a>
@@ -112,7 +124,18 @@
                         <div class="kt-portlet__foot pl-0 pr-0">
                             <div class="row align-items-center">
                                 <div class="col-lg-12 kt-align-right pl-0 pr-0">
-                                    <a href="#" onclick="return false;" class="btn btn-brand" data-toggle="kt-tooltip" title="" data-placement="bottom" data-original-title="@Labels.ComingSoon...">@Labels.EvaluateProjects</a>
+                                    @if (editionDto?.IsProjectEvaluationOpened() == true)
+                                    {
+                                        <a href="#" onclick="return false;" class="btn btn-brand">@Labels.EvaluateProjects</a>
+                                    }
+                                    else if (editionDto?.IsProjectEvaluationStarted() == true)
+                                    {
+                                        <a href="#" onclick="return false;" class="btn btn-brand">@Labels.ReceivedProjects</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="#" onclick="return false;" class="btn btn-brand" data-toggle="kt-tooltip" title="" data-placement="bottom" data-original-title="@Labels.ComingSoon...">@Labels.EvaluateProjects</a>
+                                    }
                                     @*<a href="@Url.Action("Review", "Projects", new {Area = ""})" class="btn btn-brand">@Labels.EvaluateProjects</a>*@
                                 </div>
                             </div>
