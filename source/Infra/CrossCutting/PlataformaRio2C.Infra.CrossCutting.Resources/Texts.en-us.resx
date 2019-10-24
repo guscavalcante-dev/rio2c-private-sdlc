@@ -359,19 +359,19 @@ CNPJ: 26.079.220/0001-46. Any unauthorized use of the names or their variations 
     <comment>Oops! Você está perdido. Não conseguimos encontrar a página que você estava procurando.</comment>
   </data>
   <data name="PlayerProjectsDates" xml:space="preserve">
-    <value>&lt;li&gt;Projects available for evaluation starting from: 01/06/2020&lt;/li&gt;
-&lt;li&gt;Evaluation period: 01/06 to 02/21/2020&lt;/li&gt;
+    <value>&lt;li&gt;Projects available for evaluation starting from: {0}&lt;/li&gt;
+&lt;li&gt;Evaluation period: {0} to {1}&lt;/li&gt;
 &lt;li&gt;One-to-One Meetings’ agenda available online from: 03/23/2020&lt;/li&gt;</value>
-    <comment>&lt;li&gt;Projetos disponíveis para avaliação a partir de: 06/01/2020&lt;/li&gt;
-&lt;li&gt;Período de avaliação: 06/01 a 21/02/2020&lt;/li&gt;
+    <comment>&lt;li&gt;Projetos disponíveis para avaliação a partir de: {0}&lt;/li&gt;
+&lt;li&gt;Período de avaliação: {0} a {1}&lt;/li&gt;
 &lt;li&gt;Agenda das Rodadas de Negócios disponível online a partir de: 23/03/2020&lt;/li&gt;</comment>
   </data>
   <data name="ProducerProjectsDates" xml:space="preserve">
-    <value>&lt;li&gt;Project submission for the the One-to-One Meetings and Audiovisual Pitching: 11/25 to 12/23/2019&lt;/li&gt;
-&lt;li&gt;Evaluation period: 01/06 to 02/21/2020&lt;/li&gt;
-&lt;li&gt;Online agenda available on: 03/23/2020&lt;/li&gt;</value>
-    <comment>&lt;li&gt;Submissão de projetos para as Rodadas de Negócios e Pitching de Audiovisual: 25/11 a 23/12/2019&lt;/li&gt;
-&lt;li&gt;Período de avaliação: 06/01 a 21/02/2020&lt;/li&gt;
+    <value>&lt;li&gt;Submissão de projetos para as Rodadas de Negócios e Pitching de Audiovisual: {0} a {1}&lt;/li&gt;
+&lt;li&gt;Período de avaliação: {2} a {3}&lt;/li&gt;
+&lt;li&gt;Agenda online disponível em: 23/03/2020&lt;/li&gt;</value>
+    <comment>&lt;li&gt;Submissão de projetos para as Rodadas de Negócios e Pitching de Audiovisual: {0} a {1}&lt;/li&gt;
+&lt;li&gt;Período de avaliação: {2} a {3}&lt;/li&gt;
 &lt;li&gt;Agenda online disponível em: 23/03/2020&lt;/li&gt;</comment>
   </data>
   <data name="ForgotPasswordEmail1" xml:space="preserve">

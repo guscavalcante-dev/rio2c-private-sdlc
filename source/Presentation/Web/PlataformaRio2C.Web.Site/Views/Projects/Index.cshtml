@@ -5,6 +5,7 @@
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var isSeller = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true;
     var isBuyer = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual) == true;
+    var editionDto = ViewBag.EditionDto as EditionDto;
 }
 <div class="row">
     <!--begin:Right column-->
@@ -50,7 +51,12 @@
                             </div>
                             <div class="kt-iconbox__content mt-3">
                                 <ul class="pl-0 mb-0">
-                                    @Html.Raw(Texts.ProducerProjectsDates)
+                                    @Html.Raw(string.Format(
+                                        Texts.ProducerProjectsDates,
+                                        editionDto?.ProjectSubmitStartDate.ToShortDateString(), 
+                                        editionDto?.ProjectSubmitEndDate.ToShortDateString(),
+                                        editionDto?.ProjectEvaluationStartDate.ToShortDateString(),
+                                        editionDto?.ProjectEvaluationEndDate.ToShortDateString()))
                                 </ul>
                             </div>
                         </div>
@@ -86,13 +92,18 @@
                                 </div>
                                 <div class="kt-iconbox__desc">
                                     <h3 class="kt-iconbox__title">
-                                        <a class="kt-link" href="#">@Labels.ProjectsEvaluation (@Labels.Player)</a>
+                                        <a class="kt-link" href="#">
+                                            @Labels.ProjectsEvaluation (@Labels.Player)
+                                        </a>
                                     </h3>
                                 </div>
                             </div>
                             <div class="kt-iconbox__content mt-3">
                                 <ul class="pl-0 mb-0">
-                                    @Html.Raw(Texts.PlayerProjectsDates)
+                                    @Html.Raw(string.Format(
+                                        Texts.PlayerProjectsDates,
+                                        editionDto?.ProjectEvaluationStartDate.ToShortDateString(),
+                                        editionDto?.ProjectEvaluationEndDate.ToShortDateString()))
                                 </ul>
                             </div>
                         </div>
