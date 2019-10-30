@@ -1,4 +1,4 @@
-﻿--must run on deploy | test: yes, not done
+﻿--must run on deploy | test: yes, done
 --must run on deploy | prod: yes, not done
 
 --possible values are: "no", "yes, not done" and "yes, done"
@@ -19,8 +19,4 @@ go
 
 ALTER TABLE "dbo"."AttendeeOrganizations"
 ADD ProjectSubmissionOrganizationDate  datetime  NULL
-go
-
-ALTER TABLE "dbo"."AttendeeCollaborators"
-ADD ProducerCollaboratorDate  datetime  NULL
 go
