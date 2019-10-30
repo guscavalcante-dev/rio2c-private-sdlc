@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-29-2019
+// Last Modified On : 10-30-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,7 +30,6 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTime? OnboardingCollaboratorDate { get; private set; }
         public DateTime? OnboardingOrganizationDataSkippedDate { get; private set; }
         public DateTime? PlayerTermsAcceptanceDate { get; private set; }
-        public DateTime? ProducerCollaboratorDate { get; private set; }
         public DateTime? ProducerTermsAcceptanceDate { get; private set; }
         public bool IsApiDisplayEnabled { get; private set; }
 
