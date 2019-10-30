@@ -1,17 +1,18 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Rafael Dantas Ruiz
-// Created          : 10-14-2019
+// Created          : 10-29-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 10-29-2019
 // ***********************************************************************
-// <copyright file="CreateTicketBuyerOrganizationDataCommandHandler.cs" company="Softo">
+// <copyright file="OnboardProducerOrganizationDataCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,51 +28,64 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>CreateTicketBuyerOrganizationDataCommandHandler</summary>
-    public class CreateTicketBuyerOrganizationDataCommandHandler : BaseOrganizationCommandHandler, IRequestHandler<CreateTicketBuyerOrganizationData, AppValidationResult>
+    /// <summary>OnboardProducerOrganizationDataCommandHandler</summary>
+    public class OnboardProducerOrganizationDataCommandHandler : BaseOrganizationCommandHandler, IRequestHandler<OnboardProducerOrganizationData, AppValidationResult>
     {
         private readonly IEditionRepository editionRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
+        private readonly IOrganizationTypeRepository organizationTypeRepo;
         private readonly ILanguageRepository languageRepo;
+        private readonly IActivityRepository activityRepo;
+        private readonly ITargetAudienceRepository targetAudienceRepo;
         private readonly ICountryRepository countryRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="CreateTicketBuyerOrganizationDataCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="OnboardProducerOrganizationDataCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="organizationRepository">The organization repository.</param>
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
+        /// <param name="organizationTypeRepository">The organization type repository.</param>
         /// <param name="languageRepository">The language repository.</param>
+        /// <param name="activityRepository">The activity repository.</param>
+        /// <param name="targetAudienceRepository">The target audience repository.</param>
         /// <param name="countryRepository">The country repository.</param>
-        public CreateTicketBuyerOrganizationDataCommandHandler(
+        public OnboardProducerOrganizationDataCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IOrganizationRepository organizationRepository,
             IEditionRepository editionRepository,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
+            IOrganizationTypeRepository organizationTypeRepository,
             ILanguageRepository languageRepository,
+            IActivityRepository activityRepository,
+            ITargetAudienceRepository targetAudienceRepository,
             ICountryRepository countryRepository)
             : base(eventBus, uow, organizationRepository)
         {
             this.editionRepo = editionRepository;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
+            this.organizationTypeRepo = organizationTypeRepository;
             this.languageRepo = languageRepository;
+            this.activityRepo = activityRepository;
+            this.targetAudienceRepo = targetAudienceRepository;
             this.countryRepo = countryRepository;
         }
 
-        /// <summary>Handles the specified create ticket buyer organization data.</summary>
+        /// <summary>Handles the specified onboard producer organization data.</summary>
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(CreateTicketBuyerOrganizationData cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(OnboardProducerOrganizationData cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
             Organization organization = null;
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
+            var activities = await this.activityRepo.FindAllAsync();
 
-            var attendeeCollaborator = await this.attendeeCollaboratorRepo.GetAsync(ac => ac.Collaborator.Uid == cmd.CollaboratorUid);
+            var attendeeCollaborator = await this.attendeeCollaboratorRepo.GetAsync(ac => ac.Collaborator.User.Uid == cmd.UserUid);
             if (attendeeCollaborator == null)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundM), new string[] { "CompanyName" }));
@@ -91,11 +105,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
                 #endregion
 
-                // Before update values
-                var beforeImageUploadDate = organization.ImageUploadDate;
-
-                organization.OnboardTicketBuyerCompanyData(
+                organization.OnboardProducerData(
                     await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
+                    await this.organizationTypeRepo.GetAsync(cmd.OrganizationType?.Uid ?? Guid.Empty),
                     attendeeCollaborator,
                     cmd.CompanyName,
                     cmd.TradeName,
@@ -113,6 +125,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.CropperImage?.ImageFile != null,
                     cmd.CropperImage?.IsImageDeleted == true,
                     cmd.Descriptions?.Select(d => new OrganizationDescription(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
+                    cmd.OrganizationActivities?.Where(oa => oa.IsChecked)?.Select(oa => new OrganizationActivity(activities?.FirstOrDefault(a => a.Uid == oa.ActivityUid), oa.AdditionalInfo, cmd.UserId))?.ToList(),
+                    cmd.TargetAudiencesUids?.Any() == true ? await this.targetAudienceRepo.FindAllByUidsAsync(cmd.TargetAudiencesUids) : new List<TargetAudience>(),
                     cmd.UserId);
                 if (!organization.IsValid())
                 {
@@ -123,24 +137,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 this.OrganizationRepo.Update(organization);
                 this.Uow.SaveChanges();
                 this.AppValidationResult.Data = organization;
-
-                // Update images
-                if (cmd.CropperImage?.ImageFile != null)
-                {
-                    ImageHelper.UploadOriginalAndCroppedImages(
-                        organization.Uid,
-                        cmd.CropperImage.ImageFile,
-                        cmd.CropperImage.DataX,
-                        cmd.CropperImage.DataY,
-                        cmd.CropperImage.DataWidth,
-                        cmd.CropperImage.DataHeight,
-                        FileRepositoryPathType.OrganizationImage);
-                }
-                // Delete images
-                else if (cmd.CropperImage?.IsImageDeleted == true && beforeImageUploadDate.HasValue)
-                {
-                    ImageHelper.DeleteOriginalAndCroppedImages(organization.Uid, FileRepositoryPathType.OrganizationImage);
-                }
             }
             else
             {
@@ -162,6 +158,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
                 organization = new Organization(
                     await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
+                    await this.organizationTypeRepo.GetAsync(cmd.OrganizationType?.Uid ?? Guid.Empty),
                     attendeeCollaborator,
                     cmd.CompanyName,
                     cmd.TradeName,
@@ -178,6 +175,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     true, //TODO: get AddressIsManual from form
                     cmd.CropperImage?.ImageFile != null,
                     cmd.Descriptions?.Select(d => new OrganizationDescription(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
+                    cmd.OrganizationActivities?.Where(oa => oa.IsChecked)?.Select(oa => new OrganizationActivity(activities?.FirstOrDefault(a => a.Uid == oa.ActivityUid), oa.AdditionalInfo, cmd.UserId))?.ToList(),
+                    cmd.TargetAudiencesUids?.Any() == true ? await this.targetAudienceRepo.FindAllByUidsAsync(cmd.TargetAudiencesUids) : new List<TargetAudience>(),
                     cmd.UserId);
                 if (!organization.IsValid())
                 {
@@ -188,18 +187,18 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 this.OrganizationRepo.Create(organization);
                 this.Uow.SaveChanges();
                 this.AppValidationResult.Data = organization;
+            }
 
-                if (cmd.CropperImage?.ImageFile != null)
-                {
-                    ImageHelper.UploadOriginalAndCroppedImages(
-                        organization.Uid,
-                        cmd.CropperImage.ImageFile,
-                        cmd.CropperImage.DataX,
-                        cmd.CropperImage.DataY,
-                        cmd.CropperImage.DataWidth,
-                        cmd.CropperImage.DataHeight,
-                        FileRepositoryPathType.OrganizationImage);
-                }
+            if (cmd.CropperImage?.ImageFile != null)
+            {
+                ImageHelper.UploadOriginalAndCroppedImages(
+                    organization.Uid,
+                    cmd.CropperImage.ImageFile,
+                    cmd.CropperImage.DataX,
+                    cmd.CropperImage.DataY,
+                    cmd.CropperImage.DataWidth,
+                    cmd.CropperImage.DataHeight,
+                    FileRepositoryPathType.OrganizationImage);
             }
 
             return this.AppValidationResult;

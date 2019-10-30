@@ -66,12 +66,12 @@
                                 <div class="col-lg-12 kt-align-right pl-0 pr-0">
                                     @if (editionDto?.IsProjectSubmitOpened() == true)
                                     {
-                                        <a href="#" onclick="return false;" class="btn btn-brand mt-1">@Labels.SendProject</a>
-                                        <a href="#" onclick="return false;" class="btn btn-secondary mt-1">@Labels.SentProjects</a>
+                                        <a href="@Url.Action("Submit", "Projects", new { Area = "" })" class="btn btn-brand mt-1">@Labels.SendProject</a>
+                                        <a href="#" class="btn btn-secondary mt-1">@Labels.SentProjects</a>
                                     }
                                     else if (editionDto?.IsProjectSubmitStarted() == true)
                                     {
-                                        <a href="#" onclick="return false;" class="btn btn-brand mt-1">@Labels.SentProjects</a>
+                                        <a href="#" class="btn btn-brand mt-1">@Labels.SentProjects</a>
                                     }
                                     else
                                     {
@@ -126,11 +126,11 @@
                                 <div class="col-lg-12 kt-align-right pl-0 pr-0">
                                     @if (editionDto?.IsProjectEvaluationOpened() == true)
                                     {
-                                        <a href="#" onclick="return false;" class="btn btn-brand">@Labels.EvaluateProjects</a>
+                                        <a href="#" class="btn btn-brand">@Labels.EvaluateProjects</a>
                                     }
                                     else if (editionDto?.IsProjectEvaluationStarted() == true)
                                     {
-                                        <a href="#" onclick="return false;" class="btn btn-brand">@Labels.ReceivedProjects</a>
+                                        <a href="#" class="btn btn-brand">@Labels.ReceivedProjects</a>
                                     }
                                     else
                                     {

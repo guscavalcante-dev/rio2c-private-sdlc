@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : William Almado
-// Last Modified On : 10-16-2019
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 10-29-2019
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -529,6 +529,15 @@ namespace PlataformaRio2C.Domain.Entities
             attendeeCollaborator?.OnboardPlayerTermsAcceptance(userId);
         }
 
+        /// <summary>Called when [attendee collaborator producer terms acceptance].</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardAttendeeCollaboratorProducerTermsAcceptance(Edition edition, int userId)
+        {
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+            attendeeCollaborator?.OnboardProducerTermsAcceptance(userId);
+        }
+
         /// <summary>Called when [attendee collaborator access data].</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="userId">The user identifier.</param>
@@ -933,6 +942,19 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
             this.OnboardAttendeeCollaboratorData(edition, userId);
+        }
+
+        /// <summary>Called when [producer terms acceptance].</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardProducerTermsAcceptance(
+            Edition edition,
+            int userId)
+        {
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            this.OnboardAttendeeCollaboratorProducerTermsAcceptance(edition, userId);
         }
 
         #endregion

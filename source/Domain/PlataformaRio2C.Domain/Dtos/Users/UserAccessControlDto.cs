@@ -4,7 +4,7 @@
 // Created          : 09-04-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-16-2019
+// Last Modified On : 10-29-2019
 // ***********************************************************************
 // <copyright file="UserAccessControlDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -264,9 +264,32 @@ namespace PlataformaRio2C.Domain.Dtos
                    && (!this.EditionAttendeeCollaborator.OnboardingOrganizationDataSkippedDate.HasValue                                    // Not skipped the onboarding of company data
                        && (this.EditionAttendeeOrganizations?.Any() == false                                                               // No organization related
                            || this.EditionAttendeeOrganizations?.All(eao => eao.OnboardingFinishDate.HasValue) == false));                 // or has organizations without onboarding     
-        }           
+        }
 
         #endregion
+
+        #endregion
+
+        #region Projects required information
+
+        /// <summary>Determines whether [is project submission organization information pending].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is project submission organization information pending]; otherwise, <c>false</c>.</returns>
+        public bool IsProjectSubmissionOrganizationInformationPending()
+        {
+            return this.HasCollaboratorType(Constants.CollaboratorType.Industry)
+                   && (this.EditionAttendeeOrganizations?.Any() == false
+                       || this.EditionAttendeeOrganizations?.Any(eao => eao.ProjectSubmissionOrganizationDate.HasValue) == false);
+        }
+
+        /// <summary>Determines whether [is project submission terms acceptance pending].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is project submission terms acceptance pending]; otherwise, <c>false</c>.</returns>
+        public bool IsProjectSubmissionTermsAcceptancePending()
+        {
+            return this.HasCollaboratorType(Constants.CollaboratorType.Industry)
+                   && this.EditionAttendeeCollaborator?.ProducerTermsAcceptanceDate.HasValue == false;
+        }
 
         #endregion
     }

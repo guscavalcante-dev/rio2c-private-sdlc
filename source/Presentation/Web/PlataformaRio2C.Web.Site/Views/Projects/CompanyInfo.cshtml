@@ -1,0 +1,61 @@
+﻿@using System.Globalization
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Entities
+@model PlataformaRio2C.Application.CQRS.Commands.OnboardProducerOrganizationData
+@{
+    Layout = "~/Views/Themes/Metronic/_InternalLeftSidebar.cshtml";
+    ViewBag.Title = Labels.Welcome;
+
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var playerAttendeeOrganizations = ViewBag.PlayerAttendeeOrganizations as List<AttendeeOrganization>;
+    var player = playerAttendeeOrganizations?.FirstOrDefault(pao => pao.Organization.Uid == Model.OrganizationUid)?.Organization;
+}
+<div class="kt-portlet">
+    <div class="kt-portlet__body kt-portlet__body--fit">
+        <div class="kt-grid  kt-wizard-v2 kt-wizard-v2--white" id="kt_wizard_v2" data-ktwizard-state="first">
+            <div class="kt-grid__item kt-wizard-v2__aside">
+                <!--begin: Form Wizard Nav -->
+                @Html.Partial("Shared/_ProjectsOnboardingMenu", 1)
+                <!--end: Form Wizard Nav -->
+            </div>
+            <div class="kt-grid__item kt-grid__item--fluid kt-wizard-v2__wrapper">
+                @using (Html.BeginForm("CompanyInfo", "Projects", FormMethod.Post, new { enctype = "multipart/form-data", id = "OrganizationDataForm", @class = "kt-form" }))
+                {
+                    @Html.HiddenFor(m => m.OrganizationUid)
+                    <div id="form-container">
+                        @Html.Partial("/Views/Companies/Shared/_ProducerInfoForm.cshtml", Model)
+                    </div>
+                    <!--begin: Form Actions -->
+                    <div class="kt-form__actions">
+                        <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="OnboardWizard.submit('#OrganizationDataForm');">
+                            @Labels.NextStep
+                        </button>
+                    </div>
+                    <!--end: Form Actions -->
+                }
+                <!--end: Form Wizard Form-->
+            </div>
+        </div>
+    </div>
+</div>
+@section Styles {
+    @Styles.Render("~/bundles/css/cropper.css")
+    @Styles.Render("~/bundles/css/select2.css")
+    @Styles.Render("~/bundles/css/onboardingIndex")
+    @Styles.Render("~/bundles/css/jquery.autocomplete.css")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/cropper.js")
+    @Scripts.Render("~/bundles/js/select2.js")
+    @*@Scripts.Render("~/bundles/js/ckEditor.js")*@
+    @Scripts.Render("~/bundles/js/inputmask.js")
+    @Scripts.Render("~/bundles/js/jquery.autocomplete.js")
+    @Scripts.Render("~/bundles/js/addresses.form.js")
+    @Scripts.Render("~/bundles/js/onboarding.producerinfo.js")
+    @Scripts.Render("~/bundles/js/onboarding.wizard.js")
+    <script>
+        jQuery(document).ready(function () {
+            OnboardingProducerInfo.init();
+        });
+    </script>
+}

@@ -4,7 +4,7 @@
 // Created          : 09-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-14-2019
+// Last Modified On : 10-29-2019
 // ***********************************************************************
 // <copyright file="OnboardPlayerOrganizationDataCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -74,7 +74,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.Uow.BeginTransaction();
 
-            var organization = await this.GetOrganizationByUid(cmd.OrganizationUid);
+            var organization = await this.GetOrganizationByUid(cmd.OrganizationUid ?? Guid.Empty);
 
             #region Initial validations
 

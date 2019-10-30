@@ -924,6 +924,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dados da produtora.
+        /// </summary>
+        public static string ProducerInfo {
+            get {
+                return ResourceManager.GetString("ProducerInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A produtora pode ter no máximo {0} projetos salvos..
         /// </summary>
         public static string ProducerMaxProjects {
@@ -1145,6 +1154,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ProjectNotFound {
             get {
                 return ResourceManager.GetString("ProjectNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Regulamento do Projeto.
+        /// </summary>
+        public static string ProjectRules {
+            get {
+                return ResourceManager.GetString("ProjectRules", resourceCulture);
             }
         }
         
@@ -1437,7 +1455,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Para prosseguir você deve aceitar os regulamentos de player.
+        ///   Looks up a localized string similar to Para prosseguir você deve aceitar o regulamento.
         /// </summary>
         public static string ToProceedYouMustAcceptTheTerm {
             get {

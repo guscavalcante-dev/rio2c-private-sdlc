@@ -472,8 +472,8 @@
     <value>This project has already been submitted for the evaluation of players</value>
   </data>
   <data name="ToProceedYouMustAcceptTheTerm" xml:space="preserve">
-    <value>To proceed you must accept the plyer rules</value>
-    <comment>Para prosseguir você deve aceitar os regulamentos de player</comment>
+    <value>To proceed you must accept the rules</value>
+    <comment>Para prosseguir você deve aceitar o regulamento</comment>
   </data>
   <data name="TradeNameIsRequired" xml:space="preserve">
     <value>Trade name required.</value>
@@ -689,5 +689,13 @@
   <data name="RedirectTalentsPlatformNotActive" xml:space="preserve">
     <value>Redirect to talents platform is not active.</value>
     <comment>Redirecionamento para a plataforma de talentos não está ativa.</comment>
+  </data>
+  <data name="ProducerInfo" xml:space="preserve">
+    <value>Producer information</value>
+    <comment>Dados da produtora</comment>
+  </data>
+  <data name="ProjectRules" xml:space="preserve">
+    <value>Project Rules</value>
+    <comment>Regulamento do Projeto</comment>
   </data>
 </root>

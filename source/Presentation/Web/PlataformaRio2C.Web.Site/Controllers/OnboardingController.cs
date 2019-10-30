@@ -4,7 +4,7 @@
 // Created          : 08-29-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-23-2019
+// Last Modified On : 10-29-2019
 // ***********************************************************************
 // <copyright file="OnboardingController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -451,7 +451,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             var cmd = new OnboardPlayerOrganizationData(
                 await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(currentOrganization.Uid, this.EditionDto.Id, this.UserInterfaceLanguage)),
-                await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                 await this.activityRepo.FindAllAsync(),
@@ -517,7 +516,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 this.StatusMessageToastr(ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
 
                 cmd.UpdateDropdownProperties(
-                    await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                     await this.targetAudienceRepo.FindAllAsync());
 
@@ -529,7 +527,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
 
                 cmd.UpdateDropdownProperties(
-                    await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                     await this.targetAudienceRepo.FindAllAsync());
 

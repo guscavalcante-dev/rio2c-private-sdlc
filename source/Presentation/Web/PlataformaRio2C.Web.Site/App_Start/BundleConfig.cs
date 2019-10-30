@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-23-2019
+// Last Modified On : 10-29-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -255,6 +255,11 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/js/myrio2c.companynumber.js",
                 "~/Assets/js/myrio2c.activity.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js/onboarding.producerinfo.js").Include(
+                "~/Assets/js/onboarding/onboarding.producerinfo.js",
+                "~/Assets/js/companies/companyinfo.autocomplete.js",
+                "~/Assets/js/myrio2c.companynumber.js",
+                "~/Assets/js/myrio2c.activity.js"));
             #endregion
 
             #region Companies

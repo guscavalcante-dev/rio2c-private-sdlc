@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-24-2019
+// Last Modified On : 10-29-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -237,6 +237,16 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
             this.OnboardingOrganizationDataSkippedDate = DateTime.Now;
+        }
+
+        /// <summary>Called when [producer terms acceptance].</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardProducerTermsAcceptance(int userId)
+        {
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            this.ProducerTermsAcceptanceDate = DateTime.Now;
         }
 
         #endregion

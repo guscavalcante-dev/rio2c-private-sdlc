@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Rafael Dantas Ruiz
-// Created          : 08-19-2019
+// Created          : 10-29-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 10-29-2019
 // ***********************************************************************
-// <copyright file="OnboardPlayerOrganizationData.cs" company="Softo">
+// <copyright file="OnboardProducerOrganizationData.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -17,10 +17,10 @@ using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>OnboardPlayerOrganizationData</summary>
-    public class OnboardPlayerOrganizationData : OrganizationSiteBaseCommand
+    /// <summary>OnboardProducerOrganizationData</summary>
+    public class OnboardProducerOrganizationData : OrganizationSiteBaseCommand
     {
-        /// <summary>Initializes a new instance of the <see cref="OnboardPlayerOrganizationData"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="OnboardProducerOrganizationData"/> class.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
@@ -29,7 +29,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isDescriptionRequired">if set to <c>true</c> [is description required].</param>
         /// <param name="isAddressRequired">if set to <c>true</c> [is address required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
-        public OnboardPlayerOrganizationData(
+        public OnboardProducerOrganizationData(
             OrganizationDto entity, 
             List<LanguageDto> languagesDtos, 
             List<CountryBaseDto> countriesBaseDtos,
@@ -42,8 +42,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="OnboardPlayerOrganizationData"/> class.</summary>
-        public OnboardPlayerOrganizationData()
+        /// <summary>Initializes a new instance of the <see cref="OnboardProducerOrganizationData"/> class.</summary>
+        public OnboardProducerOrganizationData()
         {
         }
     }

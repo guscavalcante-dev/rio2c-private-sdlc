@@ -4,7 +4,7 @@
 // Created          : 10-08-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-23-2019
+// Last Modified On : 10-29-2019
 // ***********************************************************************
 // <copyright file="CompaniesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -791,6 +791,47 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 pages = new List<dynamic>
                 {
                     new { page = this.RenderRazorViewToString("/Views/Companies/Shared/_TicketBuyerCompanyInfoForm.cshtml", cmd), divIdOrClass = "#form-container" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Ticket Buyers Autocomplete
+
+        /// <summary>Shows the producer filled form.</summary>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowProducerFilledForm(Guid? organizationUid)
+        {
+            OnboardProducerOrganizationData cmd;
+
+            try
+            {
+                cmd = new OnboardProducerOrganizationData(
+                    organizationUid.HasValue ? await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(organizationUid, this.EditionDto.Id, this.UserInterfaceLanguage)) : null,
+                    await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
+                    await this.activityRepo.FindAllAsync(),
+                    await this.targetAudienceRepo.FindAllAsync(),
+                    true,
+                    true,
+                    true);
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
+
+            ModelState.Clear();
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("/Views/Companies/Shared/_ProducerInfoForm.cshtml", cmd), divIdOrClass = "#form-container" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
