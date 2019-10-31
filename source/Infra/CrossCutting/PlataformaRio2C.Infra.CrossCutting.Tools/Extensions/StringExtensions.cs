@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-08-2019
+// Last Modified On : 10-31-2019
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
 using System.Text;
@@ -207,6 +208,31 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             }
 
             return splitName[position];
+        }
+
+        /// <summary>Converts to listguid.</summary>
+        /// <param name="s">The s.</param>
+        /// <param name="separator">The separator.</param>
+        /// <returns></returns>
+        public static List<Guid> ToListGuid(this string s, char separator)
+        {
+            var list = new List<Guid>();
+
+            var splitted = s?.Split(separator);
+            if (splitted == null || splitted.Length <= 0)
+            {
+                return list;
+            }
+
+            foreach (var split in splitted)
+            {
+                if (Guid.TryParse(split, out Guid guid))
+                {
+                    list.Add(guid);
+                }
+            }
+
+            return list;
         }
     }
 }
