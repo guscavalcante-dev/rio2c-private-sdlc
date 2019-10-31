@@ -1,14 +1,7 @@
-﻿@using System.Globalization
-@using PlataformaRio2C.Domain.Dtos
-@using PlataformaRio2C.Domain.Entities
-@model PlataformaRio2C.Application.CQRS.Commands.OnboardProducerOrganizationData
+﻿@model PlataformaRio2C.Application.CQRS.Commands.OnboardProducerOrganizationData
 @{
     Layout = "~/Views/Themes/Metronic/_InternalLeftSidebar.cshtml";
-    ViewBag.Title = Labels.Welcome;
-
-    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
-    var playerAttendeeOrganizations = ViewBag.PlayerAttendeeOrganizations as List<AttendeeOrganization>;
-    var player = playerAttendeeOrganizations?.FirstOrDefault(pao => pao.Organization.Uid == Model.OrganizationUid)?.Organization;
+    ViewBag.Title = Labels.ProjectSubscription;
 }
 <div class="kt-portlet">
     <div class="kt-portlet__body kt-portlet__body--fit">
@@ -41,7 +34,7 @@
 @section Styles {
     @Styles.Render("~/bundles/css/cropper.css")
     @Styles.Render("~/bundles/css/select2.css")
-    @Styles.Render("~/bundles/css/onboardingIndex")
+    @Styles.Render("~/bundles/css/onboarding.projects.css")
     @Styles.Render("~/bundles/css/jquery.autocomplete.css")
 }
 @section Scripts {

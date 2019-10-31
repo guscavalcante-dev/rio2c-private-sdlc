@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-29-2019
+// Last Modified On : 10-31-2019
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -91,7 +91,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <summary>Submits this instance.</summary>
         /// <returns></returns>
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.Industry)]
-        public ActionResult Submit()
+        public async Task<ActionResult> Submit()
         {
             #region Breadcrumb
 
@@ -111,7 +111,18 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return RedirectToAction("TermsAcceptance", "Projects");
             }
 
-            return View();
+            //TODO: Remove this command - just to open the screen
+            var cmd = new OnboardProducerOrganizationData(
+                null,
+                await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
+                await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
+                await this.activityRepo.FindAllAsync(),
+                await this.targetAudienceRepo.FindAllAsync(),
+                true,
+                true,
+                true);
+
+            return View(cmd);
         }
 
         #region Producer Info

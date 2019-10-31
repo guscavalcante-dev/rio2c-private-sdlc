@@ -241,6 +241,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Complete as informações do projeto.
+        /// </summary>
+        public static string CompleteProjectInfo {
+            get {
+                return ResourceManager.GetString("CompleteProjectInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Complete seus dados.
         /// </summary>
         public static string CompleteYourData {
@@ -1158,15 +1167,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Regulamento do Projeto.
-        /// </summary>
-        public static string ProjectRules {
-            get {
-                return ResourceManager.GetString("ProjectRules", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Projeto criado com sucesso!.
         /// </summary>
         public static string ProjectSuccessfullyCreated {
@@ -1379,6 +1379,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string StateIsRequired {
             get {
                 return ResourceManager.GetString("StateIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Passos para inscrição de projeto.
+        /// </summary>
+        public static string StepsToProjectSubscription {
+            get {
+                return ResourceManager.GetString("StepsToProjectSubscription", resourceCulture);
             }
         }
         

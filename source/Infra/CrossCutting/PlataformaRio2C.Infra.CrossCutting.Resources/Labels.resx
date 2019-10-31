@@ -1593,4 +1593,20 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Projetos Recebidos</value>
     <comment>Projetos Recebidos</comment>
   </data>
+  <data name="CompanyInfo" xml:space="preserve">
+    <value>Informações da Empresa</value>
+    <comment>Informações da Empresa</comment>
+  </data>
+  <data name="ParticipantsTerms" xml:space="preserve">
+    <value>Regulamento de Participantes</value>
+    <comment>Regulamento de Participantes</comment>
+  </data>
+  <data name="ProjectInfo" xml:space="preserve">
+    <value>Informações do Projeto</value>
+    <comment>Informações do Projeto</comment>
+  </data>
+  <data name="ProjectSubscription" xml:space="preserve">
+    <value>Inscrição de Projeto</value>
+    <comment>Inscrição de Projeto</comment>
+  </data>
 </root>

@@ -1581,4 +1581,20 @@
     <value>Received Projects</value>
     <comment>Projetos Recebidos</comment>
   </data>
+  <data name="CompanyInfo" xml:space="preserve">
+    <value>Company Information</value>
+    <comment>Informações da Empresa</comment>
+  </data>
+  <data name="ParticipantsTerms" xml:space="preserve">
+    <value>Participants’ Regulation</value>
+    <comment>Regulamento de Participantes</comment>
+  </data>
+  <data name="ProjectInfo" xml:space="preserve">
+    <value>Project Information</value>
+    <comment>Informações do Projeto</comment>
+  </data>
+  <data name="ProjectSubscription" xml:space="preserve">
+    <value>Project Subscription</value>
+    <comment>Inscrição de Projeto</comment>
+  </data>
 </root>

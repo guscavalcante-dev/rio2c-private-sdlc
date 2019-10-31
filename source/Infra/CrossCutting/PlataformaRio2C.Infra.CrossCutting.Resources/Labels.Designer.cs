@@ -583,6 +583,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Informações da Empresa.
+        /// </summary>
+        public static string CompanyInfo {
+            get {
+                return ResourceManager.GetString("CompanyInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Razão social.
         /// </summary>
         public static string CompanyName {
@@ -2158,6 +2167,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Regulamento de Participantes.
+        /// </summary>
+        public static string ParticipantsTerms {
+            get {
+                return ResourceManager.GetString("ParticipantsTerms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Senha.
         /// </summary>
         public static string Password {
@@ -2540,6 +2558,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Informações do Projeto.
+        /// </summary>
+        public static string ProjectInfo {
+            get {
+                return ResourceManager.GetString("ProjectInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Projeto não submetido a Players.
         /// </summary>
         public static string ProjectNotSubmittedToPlayers {
@@ -2581,6 +2608,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ProjectStatus {
             get {
                 return ResourceManager.GetString("ProjectStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inscrição de Projeto.
+        /// </summary>
+        public static string ProjectSubscription {
+            get {
+                return ResourceManager.GetString("ProjectSubscription", resourceCulture);
             }
         }
         

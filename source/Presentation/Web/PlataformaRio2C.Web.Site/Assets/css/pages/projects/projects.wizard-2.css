@@ -1,103 +1,72 @@
 .kt-wizard-v2 {
     display: flex;
+    flex-direction: column
 }
-
-@media (max-width: 768px) {
-    .kt-wizard-v2 {
-        flex-direction: column;
-    }
-}
-
-.kt-wizard-v2 .kt-wizard-v2__aside {
-    flex: 0 0 400px;
-    display: flex;
-    width: 400px;
-    border-right: 1px solid #eeeef4;
-    padding: 4.5rem 2.5rem 4.5rem 1.5rem;
-}
-
-    .kt-wizard-v2 .kt-wizard-v2__aside .kt-wizard-v2__nav {
-        width: 100%;
-    }
-
-        .kt-wizard-v2 .kt-wizard-v2__aside .kt-wizard-v2__nav .kt-wizard-v2__nav-items {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-            .kt-wizard-v2 .kt-wizard-v2__aside .kt-wizard-v2__nav .kt-wizard-v2__nav-items .kt-wizard-v2__nav-item {
-                padding: 0.75rem 1.5rem;
-                position: relative;
-                border-radius: 0.5rem;
-                margin-top: 5px;
-                background-color: #f4f6f9;
-            }
-
-                .kt-wizard-v2 .kt-wizard-v2__aside .kt-wizard-v2__nav .kt-wizard-v2__nav-items .kt-wizard-v2__nav-item .kt-wizard-v2__nav-body {
-                    display: flex;
-                }
-
-                    .kt-wizard-v2 .kt-wizard-v2__aside .kt-wizard-v2__nav .kt-wizard-v2__nav-items .kt-wizard-v2__nav-item .kt-wizard-v2__nav-body .kt-wizard-v2__nav-icon {
-                        font-size: 2.5rem;
-                        margin-right: 1.1rem;
-                        color: #959cb6;
-                    }
-
-                    .kt-wizard-v2 .kt-wizard-v2__aside .kt-wizard-v2__nav .kt-wizard-v2__nav-items .kt-wizard-v2__nav-item .kt-wizard-v2__nav-body .kt-wizard-v2__nav-label {
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: center;
-                    }
-
-                        .kt-wizard-v2 .kt-wizard-v2__aside .kt-wizard-v2__nav .kt-wizard-v2__nav-items .kt-wizard-v2__nav-item .kt-wizard-v2__nav-body .kt-wizard-v2__nav-label .kt-wizard-v2__nav-label-title {
-                            color: #50566a;
-                            font-weight: 500;
-                            font-size: 1.1rem;
-                        }
-
-                        .kt-wizard-v2 .kt-wizard-v2__aside .kt-wizard-v2__nav .kt-wizard-v2__nav-items .kt-wizard-v2__nav-item .kt-wizard-v2__nav-body .kt-wizard-v2__nav-label .kt-wizard-v2__nav-label-desc {
-                            color: #959cb6;
-                        }
-
-                .kt-wizard-v2 .kt-wizard-v2__aside .kt-wizard-v2__nav .kt-wizard-v2__nav-items .kt-wizard-v2__nav-item[data-ktwizard-state="current"] {
-                    background-color: #f7e3e3;
-                }
-
-                    .kt-wizard-v2 .kt-wizard-v2__aside .kt-wizard-v2__nav .kt-wizard-v2__nav-items .kt-wizard-v2__nav-item[data-ktwizard-state="current"] .kt-wizard-v2__nav-icon {
-                        /* color: #591df1;
-                    */
-                    }
-
-                    .kt-wizard-v2 .kt-wizard-v2__aside .kt-wizard-v2__nav .kt-wizard-v2__nav-items .kt-wizard-v2__nav-item[data-ktwizard-state="current"]:after {
-                        left: 100%;
-                        top: 50%;
-                        -webkit-transform: translateY(-50%);
-                        transform: translateY(-50%);
-                        content: " ";
-                        height: 0;
-                        width: 0;
-                        border: solid transparent;
-                        position: absolute;
-                        border-left-color: #f7e3e3;
-                        border-width: 1rem;
-                    }
-
-                .kt-wizard-v2 .kt-wizard-v2__aside .kt-wizard-v2__nav .kt-wizard-v2__nav-items .kt-wizard-v2__nav-item[data-ktwizard-state="done"] {
-                    background-color: #eaf9cc;
-                }
-
-@media (max-width: 768px) {
     .kt-wizard-v2 .kt-wizard-v2__aside {
-        padding: 1rem;
+        padding: 4.5rem 2.5rem 4.5rem 1.5rem;
         flex: 0 0 100%;
         width: 100%;
+        display: flex;
+        border-bottom: 1px solid #eeeef4;
     }
-
-        .kt-wizard-v2 .kt-wizard-v2__aside .kt-wizard-v2__nav .kt-wizard-v2__nav-items .kt-wizard-v2__nav-item[data-ktwizard-state="current"]:after {
-            content: none;
+        .kt-wizard-v2 .kt-wizard-v2__aside .kt-wizard-v2__nav {
+            width: 100%;
         }
-}
+            .kt-wizard-v2 .kt-wizard-v2__aside .kt-wizard-v2__nav .kt-wizard-v2__nav-items {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+                .kt-wizard-v2 .kt-wizard-v2__aside .kt-wizard-v2__nav .kt-wizard-v2__nav-items .kt-wizard-v2__nav-item {
+                    padding: 0.75rem 1.5rem;
+                    position: relative;
+                    border-radius: 0.5rem;
+                    margin-top: 5px;
+                    background-color: #f4f6f9;
+                }
+                    .kt-wizard-v2 .kt-wizard-v2__aside .kt-wizard-v2__nav .kt-wizard-v2__nav-items .kt-wizard-v2__nav-item .kt-wizard-v2__nav-body {
+                        display: flex;
+                    }
+                        .kt-wizard-v2 .kt-wizard-v2__aside .kt-wizard-v2__nav .kt-wizard-v2__nav-items .kt-wizard-v2__nav-item .kt-wizard-v2__nav-body .kt-wizard-v2__nav-icon {
+                            font-size: 2.5rem;
+                            margin-right: 1.1rem;
+                            color: #959cb6;
+                        }
+                        .kt-wizard-v2 .kt-wizard-v2__aside .kt-wizard-v2__nav .kt-wizard-v2__nav-items .kt-wizard-v2__nav-item .kt-wizard-v2__nav-body .kt-wizard-v2__nav-label {
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                        }
+                            .kt-wizard-v2 .kt-wizard-v2__aside .kt-wizard-v2__nav .kt-wizard-v2__nav-items .kt-wizard-v2__nav-item .kt-wizard-v2__nav-body .kt-wizard-v2__nav-label .kt-wizard-v2__nav-label-title {
+                                color: #50566a;
+                                font-weight: 500;
+                                font-size: 1.1rem;
+                            }
+                            .kt-wizard-v2 .kt-wizard-v2__aside .kt-wizard-v2__nav .kt-wizard-v2__nav-items .kt-wizard-v2__nav-item .kt-wizard-v2__nav-body .kt-wizard-v2__nav-label .kt-wizard-v2__nav-label-desc {
+                                color: #959cb6;
+                            }
+                    .kt-wizard-v2 .kt-wizard-v2__aside .kt-wizard-v2__nav .kt-wizard-v2__nav-items .kt-wizard-v2__nav-item[data-ktwizard-state="current"] {
+                        background-color: #f7e3e3;
+                    }
+                        .kt-wizard-v2 .kt-wizard-v2__aside .kt-wizard-v2__nav .kt-wizard-v2__nav-items .kt-wizard-v2__nav-item[data-ktwizard-state="current"] .kt-wizard-v2__nav-icon {
+                            /* color: #591df1; */
+                        }
+                        .kt-wizard-v2 .kt-wizard-v2__aside .kt-wizard-v2__nav .kt-wizard-v2__nav-items .kt-wizard-v2__nav-item[data-ktwizard-state="current"]:after {
+                            /*left: 100%;
+                            top: 50%;
+                            -webkit-transform: translateY(-50%);
+                            transform: translateY(-50%);
+                            content: " ";
+                            height: 0;
+                            width: 0;
+                            border: solid transparent;
+                            position: absolute;
+                            border-left-color: #f7e3e3;
+                            border-width: 1rem;*/
+                        }
+                    .kt-wizard-v2 .kt-wizard-v2__aside .kt-wizard-v2__nav .kt-wizard-v2__nav-items .kt-wizard-v2__nav-item[data-ktwizard-state="done"] {
+                        background-color: #eaf9cc;
+                    }
 
 .kt-wizard-v2 .kt-wizard-v2__wrapper {
     background-color: #f4f6f9;
@@ -105,8 +74,8 @@
 }
 
     .kt-wizard-v2 .kt-wizard-v2__wrapper .kt-form {
-        width: 80%;
-        padding: 4rem 6rem 6rem;
+        width: 100%;
+        padding: 2rem 4rem 6rem !important;
     }
 
 @media (max-width: 1399px) {

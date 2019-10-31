@@ -694,8 +694,12 @@
     <value>Producer information</value>
     <comment>Dados da produtora</comment>
   </data>
-  <data name="ProjectRules" xml:space="preserve">
-    <value>Project Rules</value>
-    <comment>Regulamento do Projeto</comment>
+  <data name="CompleteProjectInfo" xml:space="preserve">
+    <value>Complete the project information</value>
+    <comment>Complete as informações do projeto</comment>
+  </data>
+  <data name="StepsToProjectSubscription" xml:space="preserve">
+    <value>Steps to project subscription</value>
+    <comment>Passos para inscrição de projeto</comment>
   </data>
 </root>

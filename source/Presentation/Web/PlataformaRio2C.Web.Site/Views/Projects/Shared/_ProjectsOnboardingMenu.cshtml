@@ -5,13 +5,13 @@
 <div class="kt-wizard-v2__nav">
     <div class="kt-wizard-v2__nav-items">
         <div class="row mb-3">
-            <div class="col-md-12 text-center"><h3>@Labels.Steps</h3></div>
+            <div class="col-md-12 text-center"><h3>@Messages.StepsToProjectSubscription</h3></div>
         </div>
         <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
             <div class="kt-wizard-v2__nav-body">
                 <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
                 <div class="kt-wizard-v2__nav-label">
-                    <div class="kt-wizard-v2__nav-label-title">@Labels.Company</div>
+                    <div class="kt-wizard-v2__nav-label-title">@Labels.CompanyInfo</div>
                     <div class="kt-wizard-v2__nav-label-desc">@Messages.CompleteCompanyrInfo</div>
                 </div>
             </div>
@@ -23,8 +23,20 @@
             <div class="kt-wizard-v2__nav-body">
                 <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
                 <div class="kt-wizard-v2__nav-label">
-                    <div class="kt-wizard-v2__nav-label-title">@Messages.ProjectRules</div>
+                    <div class="kt-wizard-v2__nav-label-title">@Labels.ParticipantsTerms</div>
                     <div class="kt-wizard-v2__nav-label-desc">@Messages.ToProceedYouMustAcceptTheTerm</div>
+                </div>
+            </div>
+        </span>
+        @{
+            counter++;
+        }
+        <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
+            <div class="kt-wizard-v2__nav-body">
+                <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
+                <div class="kt-wizard-v2__nav-label">
+                    <div class="kt-wizard-v2__nav-label-title">@Labels.ProjectInfo</div>
+                    <div class="kt-wizard-v2__nav-label-desc">@Messages.CompleteProjectInfo</div>
                 </div>
             </div>
         </span>

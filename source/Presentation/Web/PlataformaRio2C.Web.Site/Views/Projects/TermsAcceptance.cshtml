@@ -1,9 +1,7 @@
-﻿@using PlataformaRio2C.Domain.Dtos
-@model PlataformaRio2C.Application.CQRS.Commands.OnboardProducerTermsAcceptance
+﻿@model PlataformaRio2C.Application.CQRS.Commands.OnboardProducerTermsAcceptance
 @{
     Layout = "~/Views/Themes/Metronic/_InternalLeftSidebar.cshtml";
-    ViewBag.Title = Labels.Welcome;
-    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    ViewBag.Title = Labels.ProjectSubscription;
 }
 <div class="kt-portlet">
     <div class="kt-portlet__body kt-portlet__body--fit">
@@ -18,7 +16,7 @@
                 {
                     <!--begin: Form Wizard Step 1-->
                     <div class="kt-wizard-v2__content" data-ktwizard-type="step-content" data-ktwizard-state="current">
-                        <div class="kt-heading kt-heading--md">@Messages.PlayerTerms</div>
+                        <div class="kt-heading kt-heading--md">@Labels.ParticipantsTerms</div>
                         <div class="kt-form__section kt-form__section--first">
                             <div class="kt-wizard-v2__form">
                                 <div class="row">
@@ -59,7 +57,7 @@
     </div>
 </div>
 @section Styles {
-    @Styles.Render("~/bundles/css/onboardingIndex")
+    @Styles.Render("~/bundles/css/onboarding.projects.css")
 }
 @section Scripts {
     @Scripts.Render("~/bundles/js/onboarding.wizard.js")
