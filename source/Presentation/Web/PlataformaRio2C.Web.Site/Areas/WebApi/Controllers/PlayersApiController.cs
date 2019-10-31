@@ -4,7 +4,7 @@
 // Created          : 09-25-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-22-2019
+// Last Modified On : 10-31-2019
 // ***********************************************************************
 // <copyright file="PlayersApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,6 +20,7 @@ using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Web.Site.Areas.WebApi.Models;
 
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
@@ -87,9 +88,9 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 edition.Id,
                 request?.Keywords,
                 OrganizationType.Player.Uid,
-                request?.ActivitiesUids,
-                request?.TargetAudiencesUids,
-                request?.InterestsUids,
+                request?.ActivitiesUids?.ToListGuid(','),
+                request?.TargetAudiencesUids?.ToListGuid(','),
+                request?.InterestsUids?.ToListGuid(','),
                 request?.Page ?? 1, 
                 request?.PageSize ?? 10);
 
