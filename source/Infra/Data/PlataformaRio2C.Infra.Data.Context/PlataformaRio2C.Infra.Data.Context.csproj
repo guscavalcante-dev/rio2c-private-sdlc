@@ -117,8 +117,8 @@
     <Compile Include="Mapping\Project\ProjectInterestMap.cs" />
     <Compile Include="Mapping\Project\ProjectPlayerEvaluationMap.cs" />
     <Compile Include="Mapping\Project\ProjectPlayerMap.cs" />
-    <Compile Include="Mapping\Project\ProjectLinkImageMap.cs" />
-    <Compile Include="Mapping\Project\ProjectLinkTeaserMap.cs" />
+    <Compile Include="Mapping\Project\ProjectImageLinkMap.cs" />
+    <Compile Include="Mapping\Project\ProjectTeaserLinkMap.cs" />
     <Compile Include="Mapping\Project\ProjectLogLineMap.cs" />
     <Compile Include="Mapping\Project\ProjectStatusMap.cs" />
     <Compile Include="Mapping\Project\ProjectTitleMap.cs" />
@@ -371,6 +371,7 @@
     <Content Include="SqlScripts\03_TicketSettings.sql" />
     <Content Include="SqlScripts\04_InitialData.sql" />
     <Content Include="SqlScripts\Deltas\20190930_114613_0001_ChangesForPlayersApi.sql" />
+    <Content Include="SqlScripts\Deltas\20191101_171030_0005_ChangesForProjectsSubscription.sql" />
     <Content Include="SqlScripts\Deltas\20191024_193010_0004_ChangesForProjectsSubscription.sql" />
     <Content Include="SqlScripts\Deltas\20191021_225115_0003_RemoveHtmlTagsFromData.sql" />
     <Content Include="SqlScripts\Deltas\20191015_140530_0002_ChangesForTicketBuyersOnboarding.sql" />

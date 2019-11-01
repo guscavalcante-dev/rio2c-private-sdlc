@@ -179,8 +179,8 @@
     <Compile Include="Entities\Player\PlayerTargetAudience.cs" />
     <Compile Include="Entities\Producer\ProducerEvent.cs" />
     <Compile Include="Entities\Project\Project.cs" />
-    <Compile Include="Entities\Project\ProjectLinkTeaser.cs" />
-    <Compile Include="Entities\Project\ProjectLinkImage.cs" />
+    <Compile Include="Entities\Project\ProjectTeaserLink.cs" />
+    <Compile Include="Entities\Project\ProjectImageLink.cs" />
     <Compile Include="Entities\Project\ProjectLogLine.cs" />
     <Compile Include="Entities\Project\ProjectPlayerEvaluation.cs" />
     <Compile Include="Entities\Project\ProjectProductionPlan.cs" />

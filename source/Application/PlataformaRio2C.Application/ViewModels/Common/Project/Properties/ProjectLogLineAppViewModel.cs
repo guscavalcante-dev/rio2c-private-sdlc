@@ -45,9 +45,10 @@ namespace PlataformaRio2C.Application.ViewModels
 
         public ProjectLogLine MapReverse()
         {
-            var entity = new ProjectLogLine(Value, LanguageCode);
+            return null;
+            //var entity = new ProjectLogLine(Value, LanguageCode);
 
-            return entity;
+            //return entity;
         }
 
         public void SetLanguage(LanguageAppViewModel language)

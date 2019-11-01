@@ -376,8 +376,8 @@ namespace PlataformaRio2C.Application.Services
         {
             List<int> result = new List<int>();
 
-            var slotsExpectionByProjectPlayer = reservationForNegotiation.Where(e => e.PlayerId == submission.PlayerId || e.ProjectId == submission.ProjectId || (e.Project != null && e.Project.ProducerId == submission.Project.ProducerId)).Select(e => e.RoundNumber).Distinct().ToList();
-            result.AddRange(slotsExpectionByProjectPlayer);
+            //var slotsExpectionByProjectPlayer = reservationForNegotiation.Where(e => e.PlayerId == submission.PlayerId || e.ProjectId == submission.ProjectId || (e.Project != null && e.Project.ProducerId == submission.Project.ProducerId)).Select(e => e.RoundNumber).Distinct().ToList();
+            //result.AddRange(slotsExpectionByProjectPlayer);
 
             result.AddRange(GetSlotsExpectionByLogistc(reservationForNegotiation, submission));
             result.AddRange(GetSlotsExpectionByConference(reservationForNegotiation, submission));
@@ -397,30 +397,30 @@ namespace PlataformaRio2C.Application.Services
         {
             List<int> result = new List<int>();
 
-            if (submission.Project != null && submission.Project.Producer != null)
-            {
-                //logistic
-                //var logisticsProducers = _logistics.Where(e => (e.Collaborator.ProducersEvents.Any() && e.Collaborator.ProducersEvents.Select(p => p.ProducerId).Any(p => p == submission.Project.ProducerId)));
-                //if (logisticsProducers != null && logisticsProducers.Any())
-                //{
-                //    List<Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>> dateTimesLogistics = new List<Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>>();
+            //if (submission.Project != null && submission.Project.Producer != null)
+            //{
+            //    //logistic
+            //    //var logisticsProducers = _logistics.Where(e => (e.Collaborator.ProducersEvents.Any() && e.Collaborator.ProducersEvents.Select(p => p.ProducerId).Any(p => p == submission.Project.ProducerId)));
+            //    //if (logisticsProducers != null && logisticsProducers.Any())
+            //    //{
+            //    //    List<Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>> dateTimesLogistics = new List<Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>>();
 
-                //    foreach (var logistic in logisticsProducers)
-                //    {
-                //        dateTimesLogistics.Add(new Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>(logistic.ArrivalDate, logistic.ArrivalTime.Value.Add(TimeSpan.FromHours(4)), logistic.DepartureDate, logistic.DepartureTime.Value.Add(TimeSpan.FromHours(-4))));
-                //    }
+            //    //    foreach (var logistic in logisticsProducers)
+            //    //    {
+            //    //        dateTimesLogistics.Add(new Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>(logistic.ArrivalDate, logistic.ArrivalTime.Value.Add(TimeSpan.FromHours(4)), logistic.DepartureDate, logistic.DepartureTime.Value.Add(TimeSpan.FromHours(-4))));
+            //    //    }
 
-                //    var slotsExpectionByLogistic = reservationForNegotiation
-                //                                  .Where(reserva => dateTimesLogistics
-                //                                                  .Any(logistica =>
-                //                                                  (reserva.Date < logistica.Item1) || (reserva.Date == logistica.Item1 && reserva.StarTime < logistica.Item2)
-                //                                                  || (reserva.Date > logistica.Item3) || (reserva.Date == logistica.Item3 && reserva.EndTime > logistica.Item4)
-                //                                                  )
-                //                                         ).Select(e => e.RoundNumber).Distinct().ToList();
+            //    //    var slotsExpectionByLogistic = reservationForNegotiation
+            //    //                                  .Where(reserva => dateTimesLogistics
+            //    //                                                  .Any(logistica =>
+            //    //                                                  (reserva.Date < logistica.Item1) || (reserva.Date == logistica.Item1 && reserva.StarTime < logistica.Item2)
+            //    //                                                  || (reserva.Date > logistica.Item3) || (reserva.Date == logistica.Item3 && reserva.EndTime > logistica.Item4)
+            //    //                                                  )
+            //    //                                         ).Select(e => e.RoundNumber).Distinct().ToList();
 
-                //    result.AddRange(slotsExpectionByLogistic);
-                //}
-            }
+            //    //    result.AddRange(slotsExpectionByLogistic);
+            //    //}
+            //}
 
             return result;
         }

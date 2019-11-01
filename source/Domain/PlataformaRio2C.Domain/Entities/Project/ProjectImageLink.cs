@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 11-01-2019
 // ***********************************************************************
-// <copyright file="ProjectAdditionalInformation.cs" company="Softo">
+// <copyright file="ProjectImageLink.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -15,21 +15,19 @@ using PlataformaRio2C.Domain.Validation;
 
 namespace PlataformaRio2C.Domain.Entities
 {
-    /// <summary>ProjectAdditionalInformation</summary>
-    public class ProjectAdditionalInformation : Entity
+    /// <summary>ProjectImageLink</summary>
+    public class ProjectImageLink : Entity
     {
         public static readonly int ValueMinLength = 1;
-        public static readonly int ValueMaxLength = 1500;
+        public static readonly int ValueMaxLength = 3000;
+
         public int ProjectId { get; private set; }
-        public int LanguageId { get; private set; }
         public string Value { get; private set; }
 
         public virtual Project Project { get; private set; }
-        public virtual Language Language { get; private set; }
-        //public virtual string LanguageCode { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="ProjectAdditionalInformation"/> class.</summary>
-        protected ProjectAdditionalInformation()
+        /// <summary>Initializes a new instance of the <see cref="ProjectImageLink"/> class.</summary>
+        protected ProjectImageLink()
         {
         }
 
@@ -75,29 +73,17 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Old methods
 
-        //public ProjectAdditionalInformation(string value, Language language, Project project)
+        //public ProjectImageLink(string value, Project project)
         //{
         //    Value = value;
-
-        //    SetLanguage(language);
         //    SetProject(project);
         //}
 
 
-        //public ProjectAdditionalInformation(string value, string languageCode)
+        //public ProjectImageLink(string value)
         //{
         //    Value = value;
-        //    LanguageCode = languageCode;
-        //}
-
-        //public void SetLanguage(Language language)
-        //{
-        //    Language = language;
-        //    if (Language != null)
-        //    {
-        //        LanguageId = language.Id;
-        //    }
-        //}
+        //}        
 
         //public void SetProject(Project project)
         //{

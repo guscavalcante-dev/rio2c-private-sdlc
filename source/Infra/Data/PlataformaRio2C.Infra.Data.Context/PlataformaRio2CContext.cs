@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-26-2019
+// Last Modified On : 11-01-2019
 // ***********************************************************************
 // <copyright file="PlataformaRio2CContext.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -66,7 +66,16 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new AttendeeCollaboratorTicketMap());
 
             // Projects
+            modelBuilder.Configurations.Add(new ProjectMap());
             modelBuilder.Configurations.Add(new ProjectTypeMap());
+            modelBuilder.Configurations.Add(new ProjectAdditionalInformationMap());
+            modelBuilder.Configurations.Add(new ProjectInterestMap());
+            modelBuilder.Configurations.Add(new ProjectImageLinkMap());
+            modelBuilder.Configurations.Add(new ProjectTeaserLinkMap());
+            modelBuilder.Configurations.Add(new ProjectLogLineMap());
+            modelBuilder.Configurations.Add(new ProjectProductionPlanMap());
+            modelBuilder.Configurations.Add(new ProjectSummaryMap());
+            modelBuilder.Configurations.Add(new ProjectTitleMap());
 
             // Addresses
             modelBuilder.Configurations.Add(new CountryMap());
@@ -105,18 +114,9 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new ProducerDescriptionMap());
             modelBuilder.Configurations.Add(new ProducerEventMap());
             modelBuilder.Configurations.Add(new CollaboratorProducerMap());
-            modelBuilder.Configurations.Add(new ProjectMap());
-            modelBuilder.Configurations.Add(new ProjectAdditionalInformationMap());
-            modelBuilder.Configurations.Add(new ProjectInterestMap());
-            modelBuilder.Configurations.Add(new ProjectLinkImageMap());
-            modelBuilder.Configurations.Add(new ProjectLinkTeaserMap());
-            modelBuilder.Configurations.Add(new ProjectLogLineMap());
-            modelBuilder.Configurations.Add(new ProjectProductionPlanMap());
-            modelBuilder.Configurations.Add(new ProjectSummaryMap());
-            modelBuilder.Configurations.Add(new ProjectTitleMap());
-            modelBuilder.Configurations.Add(new ProjectPlayerMap());
-            modelBuilder.Configurations.Add(new ProjectStatusMap());
-            modelBuilder.Configurations.Add(new ProjectPlayerEvaluationMap());
+            //modelBuilder.Configurations.Add(new ProjectPlayerMap());
+            //modelBuilder.Configurations.Add(new ProjectStatusMap());
+            //modelBuilder.Configurations.Add(new ProjectPlayerEvaluationMap());
             modelBuilder.Configurations.Add(new LogisticsMap());
            
             modelBuilder.Configurations.Add(new MessageMap());

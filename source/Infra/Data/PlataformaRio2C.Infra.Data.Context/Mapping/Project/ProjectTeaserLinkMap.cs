@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 11-01-2019
 // ***********************************************************************
-// <copyright file="ProjectInterestMap.cs" company="Softo">
+// <copyright file="ProjectTeaserLinkMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -16,29 +16,21 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace PlataformaRio2C.Infra.Data.Context.Mapping
 {
-    /// <summary>ProjectInterestMap</summary>
-    public class ProjectInterestMap : EntityTypeConfiguration<ProjectInterest>
+    /// <summary>ProjectTeaserLinkMap</summary>
+    public class ProjectTeaserLinkMap : EntityTypeConfiguration<ProjectTeaserLink>
     {
-        /// <summary>Initializes a new instance of the <see cref="ProjectInterestMap"/> class.</summary>
-        public ProjectInterestMap()
+        /// <summary>Initializes a new instance of the <see cref="ProjectTeaserLinkMap"/> class.</summary>
+        public ProjectTeaserLinkMap()
         {
-            this.ToTable("ProjectInterests");
+            this.ToTable("ProjectTeaserLinks");
 
-            //this.Ignore(p => p.Uid);
-            //this.Ignore(p => p.Id);
-            //this.Ignore(p => p.ProjectUid);
-            //this.Ignore(p => p.InterestUid);
-
-            //this.HasKey(p => new { p.ProjectId, p.InterestId });
+            Property(u => u.Value)
+                .HasMaxLength(ProjectTeaserLink.ValueMaxLength);
 
             //Relationships
             this.HasRequired(t => t.Project)
-                .WithMany(p => p.Interests)
+                .WithMany(e => e.TeaserLinks)
                 .HasForeignKey(t => t.ProjectId);
-
-            this.HasRequired(t => t.Interest)
-                .WithMany()
-                .HasForeignKey(d => d.InterestId);
         }
     }
 }

@@ -32,9 +32,9 @@ namespace PlataformaRio2C.Application.ViewModels
             : base(entity)
         {
             Player = entity.Player != null ? entity.Player.Name : null;
-            Project = entity.Project != null ? entity.Project.GetName() : null;
-            Producer = entity.Project != null && entity.Project.Producer != null ? entity.Project.Producer.Name: null;
-            SocialName = entity.Project != null && entity.Project.Producer != null ? entity.Project.Producer.TradeName : null;
+            //Project = entity.Project != null ? entity.Project.GetName() : null;
+            //Producer = entity.Project != null && entity.Project.Producer != null ? entity.Project.Producer.Name: null;
+            //SocialName = entity.Project != null && entity.Project.Producer != null ? entity.Project.Producer.TradeName : null;
 
             Date = entity.Date.Value.ToString("dd/MM/yyyy");
             Slot = entity.RoundNumber;

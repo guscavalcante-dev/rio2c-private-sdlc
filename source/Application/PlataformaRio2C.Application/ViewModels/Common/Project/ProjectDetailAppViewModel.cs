@@ -79,19 +79,19 @@ namespace PlataformaRio2C.Application.ViewModels
                     TargetAudience = GetInterestsName(entity.Interests, "Target audience");
                 }
 
-                if (entity.PlayersRelated != null && entity.PlayersRelated.Any())
-                {
-                    RelatedPlayers = entity.PlayersRelated.Select(e => e.Player.Uid.ToString());
-                    ProjectSubmitted = entity.PlayersRelated.Any(e => e.Sent);
+                //if (entity.PlayersRelated != null && entity.PlayersRelated.Any())
+                //{
+                //    RelatedPlayers = entity.PlayersRelated.Select(e => e.Player.Uid.ToString());
+                //    ProjectSubmitted = entity.PlayersRelated.Any(e => e.Sent);
 
-                    RelatedPlayersStatus = PlayerProjectStatusAppViewModel.MapList(entity.PlayersRelated);
-                }
+                //    RelatedPlayersStatus = PlayerProjectStatusAppViewModel.MapList(entity.PlayersRelated);
+                //}
 
-                if (entity.Producer != null)
-                {
-                    ProducerName = entity.Producer.Name;
-                    ProducerUid = entity.Producer.Uid;
-                }
+                //if (entity.Producer != null)
+                //{
+                //    ProducerName = entity.Producer.Name;
+                //    ProducerUid = entity.Producer.Uid;
+                //}
             }
         }
 

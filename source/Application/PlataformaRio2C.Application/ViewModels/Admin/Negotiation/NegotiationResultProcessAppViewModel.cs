@@ -63,8 +63,8 @@ namespace PlataformaRio2C.Application.ViewModels
         public ProjectPlayerAppViewModel(ProjectPlayer entity)
         {
             PlayerName = entity.Player.Name;
-            ProducerName = entity.Project.Producer.Name;
-            ProjectName = entity.Project.GetName();
+            //ProducerName = entity.Project.Producer.Name;
+            //ProjectName = entity.Project.GetName();
 
         }
 

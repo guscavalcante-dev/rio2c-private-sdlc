@@ -47,9 +47,10 @@ namespace PlataformaRio2C.Application.ViewModels
 
         public ProjectAdditionalInformation MapReverse()
         {
-            var entity = new ProjectAdditionalInformation(Value, LanguageCode);
+            return null;
+            //var entity = new ProjectAdditionalInformation(Value, LanguageCode);
 
-            return entity;
+            //return entity;
         }
 
         public void SetLanguage(LanguageAppViewModel language)

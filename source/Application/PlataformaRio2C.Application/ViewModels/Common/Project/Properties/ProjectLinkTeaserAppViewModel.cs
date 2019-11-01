@@ -18,7 +18,7 @@ using System.Web.Mvc;
 namespace PlataformaRio2C.Application.ViewModels
 {
     /// <summary>ProjectLinkTeaserAppViewModel</summary>
-    public class ProjectLinkTeaserAppViewModel : EntityViewModel<ProjectLinkTeaserAppViewModel, ProjectLinkTeaser>, IEntityViewModel<ProjectLinkTeaser>
+    public class ProjectLinkTeaserAppViewModel : EntityViewModel<ProjectLinkTeaserAppViewModel, ProjectTeaserLink>, IEntityViewModel<ProjectTeaserLink>
     {
         [AllowHtml]
         public string Value { get; set; }       
@@ -29,18 +29,19 @@ namespace PlataformaRio2C.Application.ViewModels
 
         }
 
-        public ProjectLinkTeaserAppViewModel(Domain.Entities.ProjectLinkTeaser entity)
+        public ProjectLinkTeaserAppViewModel(Domain.Entities.ProjectTeaserLink entity)
         {
             CreationDate = entity.CreateDate;
             Uid = entity.Uid;
             Value = entity.Value;
         }
 
-        public ProjectLinkTeaser MapReverse()
+        public ProjectTeaserLink MapReverse()
         {
-            var entity = new ProjectLinkTeaser(Value);
+            return null;
+            //var entity = new ProjectTeaserLink(Value);
 
-            return entity;
+            //return entity;
         }
 
         public void SetProject(ProjectBasicAppViewModel project)
@@ -48,7 +49,7 @@ namespace PlataformaRio2C.Application.ViewModels
             Project = project;
         }
 
-        public ProjectLinkTeaser MapReverse(ProjectLinkTeaser entity)
+        public ProjectTeaserLink MapReverse(ProjectTeaserLink entity)
         {
             return entity;
         }

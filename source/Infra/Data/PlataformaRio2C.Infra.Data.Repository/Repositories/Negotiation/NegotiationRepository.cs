@@ -24,7 +24,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Include(i => i.Player)
                                 .Include(i => i.Project)
                                 .Include(i => i.Project.Titles.Select(e => e.Language))
-                                .Include(i => i.Project.Producer)
+                                //.Include(i => i.Project.Producer)
                                 .Include(i => i.Room)
                                 .Include(i => i.Room.Names)
                                 .Include(i => i.Room.Names.Select(e => e.Language));
@@ -39,7 +39,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return this.dbSet
                                .Include(i => i.Player)
                                .Include(i => i.Project)
-                               .Include(i => i.Project.Producer)
+                               //.Include(i => i.Project.Producer)
                                .Include(i => i.Room)
                                .Include(i => i.Room.Names)
                                .Include(i => i.Room.Names.Select(e => e.Language))
@@ -63,14 +63,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         public IEnumerable<Producer> GetAllProducers()
         {
-            return this.dbSet
-                               .Include(i => i.Project)
-                               .Include(i => i.Project.Producer)
-                               .AsNoTracking()
-                               .ToList()
-                               .Select(e => e.Project.Producer)
-                               .GroupBy(e => e.Id)
-                               .Select(e => e.First());
+            return null;
+            //return this.dbSet
+            //                   .Include(i => i.Project)
+            //                   .Include(i => i.Project.Producer)
+            //                   .AsNoTracking()
+            //                   .ToList()
+            //                   .Select(e => e.Project.Producer)
+            //                   .GroupBy(e => e.Id)
+            //                   .Select(e => e.First());
         }
 
         public void Truncate()
@@ -99,7 +100,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                .Include(i => i.Project)
                                .Include(i => i.Project.Titles)
                                .Include(i => i.Project.Titles.Select(e => e.Language))
-                               .Include(i => i.Project.Producer)
+                               //.Include(i => i.Project.Producer)
                                .Include(i => i.Room)
                                .Include(i => i.Room.Names)
                                .Include(i => i.Room.Names.Select(e => e.Language))

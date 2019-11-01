@@ -36,10 +36,10 @@ namespace PlataformaRio2C.Application.ViewModels.Admin
                 }
             }
 
-            if (entity.PlayersRelated != null && entity.PlayersRelated.Any())
-            {
-                Players = ProjectDetailItemPlayerAppViewModel.MapList(entity.PlayersRelated).ToList();
-            }
+            //if (entity.PlayersRelated != null && entity.PlayersRelated.Any())
+            //{
+            //    Players = ProjectDetailItemPlayerAppViewModel.MapList(entity.PlayersRelated).ToList();
+            //}
         }
     }
 

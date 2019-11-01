@@ -19,16 +19,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             return this.dbSet
                         .Include(i => i.Project)
-                        .Include(i => i.Project.Producer)
+                        //.Include(i => i.Project.Producer)
                         .Include(i => i.Project.Titles)
                         .Include(i => i.Project.Titles.Select(s => s.Language))
                         .Include(i => i.Project.Interests)
                         .Include(i => i.Project.Interests.Select(e => e.Interest))
                         .Include(i => i.Project.Interests.Select(e => e.Interest.InterestGroup))
-                        .Include(i => i.Project.PlayersRelated)
-                        .Include(i => i.Project.PlayersRelated.Select(e => e.Player))
-                        .Include(i => i.Project.PlayersRelated.Select(e => e.Evaluation))
-                        .Include(i => i.Project.PlayersRelated.Select(e => e.Evaluation.Status))
+                        //.Include(i => i.Project.PlayersRelated)
+                        //.Include(i => i.Project.PlayersRelated.Select(e => e.Player))
+                        //.Include(i => i.Project.PlayersRelated.Select(e => e.Evaluation))
+                        //.Include(i => i.Project.PlayersRelated.Select(e => e.Evaluation.Status))
                         .Where(filter);
         }
 
@@ -48,9 +48,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                        .Include(i => i.Project)
                        .Include(i => i.Project.Titles)
                        .Include(i => i.Project.Titles.Select(e => e.Language))
-                       .Include(i => i.Project.Producer)
-                       .Include(i => i.Project.Producer.EventsCollaborators)
-                       .Include(i => i.Project.Producer.EventsCollaborators.Select(e => e.Collaborator))
+                       //.Include(i => i.Project.Producer)
+                       //.Include(i => i.Project.Producer.EventsCollaborators)
+                       //.Include(i => i.Project.Producer.EventsCollaborators.Select(e => e.Collaborator))
                        .Include(i => i.Player)
                        //.Include(i => i.Player.Collaborators)
                        .Include(i => i.Evaluation)

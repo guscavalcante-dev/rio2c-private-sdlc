@@ -44,12 +44,12 @@ namespace PlataformaRio2C.Application.ViewModels
 
             Duration = (entity.EndTime - entity.StarTime).TotalMinutes;
 
-            Title = entity.Project.GetName();
+            //Title = entity.Project.GetName();
             Room = entity.Room.GetName();
             Table = entity.TableNumber;
 
             Player = new PlayerOptionAppViewModel(entity.Player);
-            Producer = new ProducerOptionAppViewModel(entity.Project.Producer);
+            //Producer = new ProducerOptionAppViewModel(entity.Project.Producer);
         }
 
         public ScheduleEventAppViewModel(Conference entity)

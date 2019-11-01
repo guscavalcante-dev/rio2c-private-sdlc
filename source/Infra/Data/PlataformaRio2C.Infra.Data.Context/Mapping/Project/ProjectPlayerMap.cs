@@ -48,9 +48,9 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.HasOptional(t => t.Evaluation)
                 .WithRequired(t => t.ProjectPlayer);
 
-            this.HasRequired(t => t.Project)
-                .WithMany(e => e.PlayersRelated)
-                .HasForeignKey(d => d.ProjectId);
+            //this.HasRequired(t => t.Project)
+            //    .WithMany(e => e.PlayersRelated)
+            //    .HasForeignKey(d => d.ProjectId);
 
             this.HasRequired(t => t.Player)
                .WithMany()

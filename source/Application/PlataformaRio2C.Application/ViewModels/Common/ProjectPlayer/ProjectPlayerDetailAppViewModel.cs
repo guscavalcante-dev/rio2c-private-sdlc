@@ -21,10 +21,10 @@ namespace PlataformaRio2C.Application.ViewModels
         public ProjectPlayerDetailAppViewModel(ProjectPlayer entity)
             :base(entity.Project)
         {
-            if (entity.Project.PlayersRelated != null && entity.Project.PlayersRelated.Any())
-            {
-                Players = PlayerProjectStatusAppViewModel.MapList(entity.Project.PlayersRelated).ToList();
-            }
+            //if (entity.Project.PlayersRelated != null && entity.Project.PlayersRelated.Any())
+            //{
+            //    Players = PlayerProjectStatusAppViewModel.MapList(entity.Project.PlayersRelated).ToList();
+            //}
         }
     }
 }

@@ -35,10 +35,10 @@ namespace PlataformaRio2C.Application.ViewModels
 
             Uid = entity.Project.Uid;
 
-            if (entity.Project.PlayersRelated != null && entity.Project.PlayersRelated.Any())
-            {
-                Players = PlayerProjectStatusAppViewModel.MapList(entity.Project.PlayersRelated).ToList();
-            }
+            //if (entity.Project.PlayersRelated != null && entity.Project.PlayersRelated.Any())
+            //{
+            //    Players = PlayerProjectStatusAppViewModel.MapList(entity.Project.PlayersRelated).ToList();
+            //}
 
 
             if (entity.Project.Titles.Any())
@@ -72,11 +72,11 @@ namespace PlataformaRio2C.Application.ViewModels
                 }
             }
 
-            if (entity.Project.Producer != null)
-            {
-                ProducerName = entity.Project.Producer.Name;
-                ProducerUid = entity.Project.Producer.Uid;
-            }
+            //if (entity.Project.Producer != null)
+            //{
+            //    ProducerName = entity.Project.Producer.Name;
+            //    ProducerUid = entity.Project.Producer.Uid;
+            //}
         }
     }
     

@@ -52,11 +52,11 @@ namespace PlataformaRio2C.Domain.Services
                 return _validationResult;
             }
 
-            if (entity.Producer.Projects.Any(e => e.Titles.Any(t => !string.IsNullOrWhiteSpace(t.Value) && entity.Titles.Where(et => !string.IsNullOrWhiteSpace(et.Value)).Select(et => et.Value.Trim().ToLower()).Contains(t.Value.Trim().ToLower()))))
-            {
-                _validationResult.Add(new ValidationError(Messages.ThereIsalreadyProjectRegisteredWithThisTitle, new string[] { "ProjectSubmitted" }));
-                return _validationResult;
-            }
+            //if (entity.Producer.Projects.Any(e => e.Titles.Any(t => !string.IsNullOrWhiteSpace(t.Value) && entity.Titles.Where(et => !string.IsNullOrWhiteSpace(et.Value)).Select(et => et.Value.Trim().ToLower()).Contains(t.Value.Trim().ToLower()))))
+            //{
+            //    _validationResult.Add(new ValidationError(Messages.ThereIsalreadyProjectRegisteredWithThisTitle, new string[] { "ProjectSubmitted" }));
+            //    return _validationResult;
+            //}
 
             return base.Create(entity);
         }
@@ -65,11 +65,11 @@ namespace PlataformaRio2C.Domain.Services
         {
            
 
-            if (entity.Producer.Projects.Any(e => e.Titles.Any(t => !string.IsNullOrWhiteSpace(t.Value) && entity.Titles.Where(et => !string.IsNullOrWhiteSpace(et.Value)).Select(et => et.Value.Trim().ToLower()).Contains(t.Value.Trim().ToLower())) && e.Id != entity.Id))
-            {
-                _validationResult.Add(new ValidationError(Messages.ThereIsalreadyProjectRegisteredWithThisTitle, new string[] { "ProjectSubmitted" }));
-                return _validationResult;
-            }
+            //if (entity.Producer.Projects.Any(e => e.Titles.Any(t => !string.IsNullOrWhiteSpace(t.Value) && entity.Titles.Where(et => !string.IsNullOrWhiteSpace(et.Value)).Select(et => et.Value.Trim().ToLower()).Contains(t.Value.Trim().ToLower())) && e.Id != entity.Id))
+            //{
+            //    _validationResult.Add(new ValidationError(Messages.ThereIsalreadyProjectRegisteredWithThisTitle, new string[] { "ProjectSubmitted" }));
+            //    return _validationResult;
+            //}
 
             if (MaxCountProjectInValid(entity, "Update"))
             {
@@ -81,18 +81,18 @@ namespace PlataformaRio2C.Domain.Services
 
         public override ValidationResult Update(Project entity)
         {
-            if (entity.PlayersRelated.Any(e => e.Sent))
-            {
-                _validationResult.Add(new ValidationError(Messages.CanNotEditASubmittedProjectForPlayerEvaluation, new string[] { "ProjectSubmitted" }));
+            //if (entity.PlayersRelated.Any(e => e.Sent))
+            //{
+            //    _validationResult.Add(new ValidationError(Messages.CanNotEditASubmittedProjectForPlayerEvaluation, new string[] { "ProjectSubmitted" }));
 
-                return _validationResult;
-            }
+            //    return _validationResult;
+            //}
 
-            if (entity.Producer.Projects.Any(e => e.Titles.Any(t => !string.IsNullOrWhiteSpace(t.Value) && entity.Titles.Where(et => !string.IsNullOrWhiteSpace(et.Value)).Select(et => et.Value.Trim().ToLower()).Contains(t.Value.Trim().ToLower())) && e.Id != entity.Id))
-            {
-                _validationResult.Add(new ValidationError(Messages.ThereIsalreadyProjectRegisteredWithThisTitle, new string[] { "ProjectSubmitted" }));
-                return _validationResult;
-            }
+            //if (entity.Producer.Projects.Any(e => e.Titles.Any(t => !string.IsNullOrWhiteSpace(t.Value) && entity.Titles.Where(et => !string.IsNullOrWhiteSpace(et.Value)).Select(et => et.Value.Trim().ToLower()).Contains(t.Value.Trim().ToLower())) && e.Id != entity.Id))
+            //{
+            //    _validationResult.Add(new ValidationError(Messages.ThereIsalreadyProjectRegisteredWithThisTitle, new string[] { "ProjectSubmitted" }));
+            //    return _validationResult;
+            //}
 
             if (MaxCountProjectInValid(entity, "Update"))
             {
@@ -114,10 +114,10 @@ namespace PlataformaRio2C.Domain.Services
                 var entityProjectPlayer = new ProjectPlayer(entity, entityPlayer);
                 entityProjectPlayer.SetSavedUser(entityUser);
 
-                if (entity.PlayersRelated != null)
-                {
-                    entity.PlayersRelated.Add(entityProjectPlayer);
-                }
+                //if (entity.PlayersRelated != null)
+                //{
+                //    entity.PlayersRelated.Add(entityProjectPlayer);
+                //}
             }
 
             return _validationResult;
@@ -129,83 +129,83 @@ namespace PlataformaRio2C.Domain.Services
             var entityUser = _userRepository.Get(e => e.Id == userId);
             CheckPreValidationBySelectionPlayer(entityPlayer, entityUser);
 
-            if (_validationResult.IsValid)
-            {
-                var entityProjectPlayer = entity.PlayersRelated.FirstOrDefault(e => e.PlayerId == entityPlayer.Id);
-                _projectPlayerRepository.Delete(entityProjectPlayer);
+            //if (_validationResult.IsValid)
+            //{
+            //    var entityProjectPlayer = entity.PlayersRelated.FirstOrDefault(e => e.PlayerId == entityPlayer.Id);
+            //    _projectPlayerRepository.Delete(entityProjectPlayer);
 
-                if (entityProjectPlayer != null)
-                {
-                    entity.PlayersRelated.Remove(entityProjectPlayer);
-                }
-            }
+            //    if (entityProjectPlayer != null)
+            //    {
+            //        entity.PlayersRelated.Remove(entityProjectPlayer);
+            //    }
+            //}
 
             return _validationResult;
         }
 
         public ValidationResult SendToPlayers(Project entity, Guid[] uidsPlayers, int userId)
         {
-            if (entity.PlayersRelated.Any(e => e.Sent))
-            {
-                _validationResult.Add(Messages.ThisProjectHasAlreadyBeenSubmittedForTheEvaluationOfPlayers);
-                return _validationResult;
-            }
+            //if (entity.PlayersRelated.Any(e => e.Sent))
+            //{
+            //    _validationResult.Add(Messages.ThisProjectHasAlreadyBeenSubmittedForTheEvaluationOfPlayers);
+            //    return _validationResult;
+            //}
 
-            var r = _repository as IProjectRepository;
-            var numberMaxPlayerPerProject = r.GetMaxNumberPlayerPerProject();
-            if (uidsPlayers != null && uidsPlayers.Count() > numberMaxPlayerPerProject)
-            {
-                _validationResult.Add(string.Format(Messages.YouCanSendUpToXPlayers, numberMaxPlayerPerProject));
-            }
+            //var r = _repository as IProjectRepository;
+            //var numberMaxPlayerPerProject = r.GetMaxNumberPlayerPerProject();
+            //if (uidsPlayers != null && uidsPlayers.Count() > numberMaxPlayerPerProject)
+            //{
+            //    _validationResult.Add(string.Format(Messages.YouCanSendUpToXPlayers, numberMaxPlayerPerProject));
+            //}
 
-            var entityUser = _userRepository.Get(e => e.Id == userId);
-            if (entityUser == null)
-            {
-                _validationResult.Add(Messages.UserNotFound);
-            }
+            //var entityUser = _userRepository.Get(e => e.Id == userId);
+            //if (entityUser == null)
+            //{
+            //    _validationResult.Add(Messages.UserNotFound);
+            //}
 
-            var playersSavedNotSubmit = entity.PlayersRelated.Select(e => e.Player.Uid).Except(uidsPlayers);
-            var playersSubmitNotSaved = uidsPlayers.Except(entity.PlayersRelated.Select(e => e.Player.Uid));
-            if (playersSavedNotSubmit != null && playersSavedNotSubmit.Any())
-            {
-                foreach (var itemUid in playersSavedNotSubmit)
-                {
-                    var entityProjectPlayer = entity.PlayersRelated.FirstOrDefault(e => e.Player.Uid == itemUid);
+            //var playersSavedNotSubmit = entity.PlayersRelated.Select(e => e.Player.Uid).Except(uidsPlayers);
+            //var playersSubmitNotSaved = uidsPlayers.Except(entity.PlayersRelated.Select(e => e.Player.Uid));
+            //if (playersSavedNotSubmit != null && playersSavedNotSubmit.Any())
+            //{
+            //    foreach (var itemUid in playersSavedNotSubmit)
+            //    {
+            //        var entityProjectPlayer = entity.PlayersRelated.FirstOrDefault(e => e.Player.Uid == itemUid);
 
-                    _projectPlayerRepository.Delete(entityProjectPlayer);
+            //        _projectPlayerRepository.Delete(entityProjectPlayer);
 
-                    if (entityProjectPlayer != null)
-                    {
-                        entity.PlayersRelated.Remove(entityProjectPlayer);
-                    }
-                }
-            }
+            //        if (entityProjectPlayer != null)
+            //        {
+            //            entity.PlayersRelated.Remove(entityProjectPlayer);
+            //        }
+            //    }
+            //}
 
-            if (playersSubmitNotSaved != null && playersSubmitNotSaved.Any())
-            {
-                foreach (var itemUid in playersSubmitNotSaved)
-                {
+            //if (playersSubmitNotSaved != null && playersSubmitNotSaved.Any())
+            //{
+            //    foreach (var itemUid in playersSubmitNotSaved)
+            //    {
 
-                    var entityPlayer = _playerRepository.Get(e => e.Uid == itemUid);
-                    if (entityPlayer == null)
-                    {
-                        _validationResult.Add(Messages.PlayerNotFound);
-                    }
+            //        var entityPlayer = _playerRepository.Get(e => e.Uid == itemUid);
+            //        if (entityPlayer == null)
+            //        {
+            //            _validationResult.Add(Messages.PlayerNotFound);
+            //        }
 
-                    var entityProjectPlayer = new ProjectPlayer(entity, entityPlayer);
-                    entityProjectPlayer.SetSavedUser(entityUser);
+            //        var entityProjectPlayer = new ProjectPlayer(entity, entityPlayer);
+            //        entityProjectPlayer.SetSavedUser(entityUser);
 
-                    if (entity.PlayersRelated != null)
-                    {
-                        entity.PlayersRelated.Add(entityProjectPlayer);
-                    }
-                }
-            }
+            //        if (entity.PlayersRelated != null)
+            //        {
+            //            entity.PlayersRelated.Add(entityProjectPlayer);
+            //        }
+            //    }
+            //}
 
-            foreach (var playerRelated in entity.PlayersRelated)
-            {
-                playerRelated.SetSendingUser(entityUser);
-            }
+            //foreach (var playerRelated in entity.PlayersRelated)
+            //{
+            //    playerRelated.SetSendingUser(entityUser);
+            //}
 
             return _validationResult;
         }
@@ -230,37 +230,37 @@ namespace PlataformaRio2C.Domain.Services
             {
                 _validationResult.Add(Messages.EvaluationPeriodClosed);
             }
-            else
-            {
-                var status = _projectStatusRepository.Get(e => e.Code == "Accepted");
-                var user = _userRepository.Get(userId);
-                var playerRelated = entity.PlayersRelated.FirstOrDefault(e => e.Player.Uid == uidPlayer);
+            //else
+            //{
+            //    var status = _projectStatusRepository.Get(e => e.Code == "Accepted");
+            //    var user = _userRepository.Get(userId);
+            //    var playerRelated = entity.PlayersRelated.FirstOrDefault(e => e.Player.Uid == uidPlayer);
 
-                if (user != null && playerRelated != null && status != null)
-                {
-                    var existEvaluation = _projectPlayerEvaluationRepository.Get(e => e.ProjectPlayerId == playerRelated.Id);
-                    ProjectPlayerEvaluation projectPlayerEvaluation = null;
+            //    if (user != null && playerRelated != null && status != null)
+            //    {
+            //        var existEvaluation = _projectPlayerEvaluationRepository.Get(e => e.ProjectPlayerId == playerRelated.Id);
+            //        ProjectPlayerEvaluation projectPlayerEvaluation = null;
 
-                    if (existEvaluation == null)
-                    {
-                        projectPlayerEvaluation = new ProjectPlayerEvaluation(playerRelated, status, user);
+            //        if (existEvaluation == null)
+            //        {
+            //            projectPlayerEvaluation = new ProjectPlayerEvaluation(playerRelated, status, user);
 
-                        _projectPlayerEvaluationRepository.Create(projectPlayerEvaluation);
-                    }
-                    else
-                    {
+            //            _projectPlayerEvaluationRepository.Create(projectPlayerEvaluation);
+            //        }
+            //        else
+            //        {
 
-                        projectPlayerEvaluation = existEvaluation;
-                        projectPlayerEvaluation.SetProjectStatus(status);
-                        _projectPlayerEvaluationRepository.Update(projectPlayerEvaluation);
+            //            projectPlayerEvaluation = existEvaluation;
+            //            projectPlayerEvaluation.SetProjectStatus(status);
+            //            _projectPlayerEvaluationRepository.Update(projectPlayerEvaluation);
 
-                    }
+            //        }
 
 
 
-                    playerRelated.SetEvaluation(projectPlayerEvaluation);
-                }
-            }
+            //        playerRelated.SetEvaluation(projectPlayerEvaluation);
+            //    }
+            //}
 
             return _validationResult;
         }
@@ -273,40 +273,40 @@ namespace PlataformaRio2C.Domain.Services
             {
                 _validationResult.Add(Messages.EvaluationPeriodClosed);
             }
-            else
-            {
-                var status = _projectStatusRepository.Get(e => e.Code == "Rejected");
-                var user = _userRepository.Get(userId);
-                var playerRelated = entity.PlayersRelated.FirstOrDefault(e => e.Player.Uid == uidPlayer);
+            //else
+            //{
+            //    var status = _projectStatusRepository.Get(e => e.Code == "Rejected");
+            //    var user = _userRepository.Get(userId);
+            //    var playerRelated = entity.PlayersRelated.FirstOrDefault(e => e.Player.Uid == uidPlayer);
 
-                if (user != null && playerRelated != null && status != null)
-                {
-                    var existEvaluation = _projectPlayerEvaluationRepository.Get(e => e.ProjectPlayerId == playerRelated.Id);
-                    ProjectPlayerEvaluation projectPlayerEvaluation;
+            //    if (user != null && playerRelated != null && status != null)
+            //    {
+            //        var existEvaluation = _projectPlayerEvaluationRepository.Get(e => e.ProjectPlayerId == playerRelated.Id);
+            //        ProjectPlayerEvaluation projectPlayerEvaluation;
 
-                    if (existEvaluation == null)
-                    {
-                        projectPlayerEvaluation = new ProjectPlayerEvaluation(playerRelated, status, user);
-                        projectPlayerEvaluation.SetReason(reason);
+            //        if (existEvaluation == null)
+            //        {
+            //            projectPlayerEvaluation = new ProjectPlayerEvaluation(playerRelated, status, user);
+            //            projectPlayerEvaluation.SetReason(reason);
 
-                        _projectPlayerEvaluationRepository.Create(projectPlayerEvaluation);
-                    }
-                    else
-                    {
-                        projectPlayerEvaluation = existEvaluation;
-                        projectPlayerEvaluation.SetProjectStatus(status);
-                        projectPlayerEvaluation.SetReason(reason);
+            //            _projectPlayerEvaluationRepository.Create(projectPlayerEvaluation);
+            //        }
+            //        else
+            //        {
+            //            projectPlayerEvaluation = existEvaluation;
+            //            projectPlayerEvaluation.SetProjectStatus(status);
+            //            projectPlayerEvaluation.SetReason(reason);
 
-                        _projectPlayerEvaluationRepository.Update(projectPlayerEvaluation);
-                    }
+            //            _projectPlayerEvaluationRepository.Update(projectPlayerEvaluation);
+            //        }
 
-                    var ValidationEntity = projectPlayerEvaluation as IEntity;
-                    if (ValidationEntity != null && !ValidationEntity.IsValid())
-                        ValidationResult.Add(ValidationEntity.ValidationResult);
+            //        var ValidationEntity = projectPlayerEvaluation as IEntity;
+            //        if (ValidationEntity != null && !ValidationEntity.IsValid())
+            //            ValidationResult.Add(ValidationEntity.ValidationResult);
 
-                    playerRelated.SetEvaluation(projectPlayerEvaluation);
-                }
-            }
+            //        playerRelated.SetEvaluation(projectPlayerEvaluation);
+            //    }
+            //}
 
             return _validationResult;
         }
@@ -365,22 +365,22 @@ namespace PlataformaRio2C.Domain.Services
         {
             var r = _repository as IProjectRepository;
             var numberMaxProject = r.GetMaxNumberProjectPerProducer();
-            if (entity.Producer != null && entity.Producer.Projects != null)
-            {
-                int countProjects = entity.Producer.Projects.Count;
+            //if (entity.Producer != null && entity.Producer.Projects != null)
+            //{
+            //    int countProjects = entity.Producer.Projects.Count;
 
-                if (operation == "Create" && countProjects >= numberMaxProject)
-                {
-                    _validationResult.Add(new ValidationError(string.Format(Messages.ProducerMaxProjects, numberMaxProject), new string[] { "ProducerMaxProject" }));
-                    return true;
-                }
+            //    if (operation == "Create" && countProjects >= numberMaxProject)
+            //    {
+            //        _validationResult.Add(new ValidationError(string.Format(Messages.ProducerMaxProjects, numberMaxProject), new string[] { "ProducerMaxProject" }));
+            //        return true;
+            //    }
 
-                if (operation == "Update" && countProjects > numberMaxProject)
-                {
-                    _validationResult.Add(new ValidationError(string.Format(Messages.ProducerMaxProjects, numberMaxProject), new string[] { "ProducerMaxProject" }));
-                    return true;
-                }
-            }
+            //    if (operation == "Update" && countProjects > numberMaxProject)
+            //    {
+            //        _validationResult.Add(new ValidationError(string.Format(Messages.ProducerMaxProjects, numberMaxProject), new string[] { "ProducerMaxProject" }));
+            //        return true;
+            //    }
+            //}
 
             return false;
         }
@@ -403,10 +403,10 @@ namespace PlataformaRio2C.Domain.Services
             var r = _repository as IProjectRepository;
             var numberMaxPlayerPerProject = r.GetMaxNumberPlayerPerProject();
 
-            if (entity.PlayersRelated.Count == numberMaxPlayerPerProject)
-            {
-                _validationResult.Add(string.Format(Messages.YouCanSelectUpToXPlayers, numberMaxPlayerPerProject));
-            }
+            //if (entity.PlayersRelated.Count == numberMaxPlayerPerProject)
+            //{
+            //    _validationResult.Add(string.Format(Messages.YouCanSelectUpToXPlayers, numberMaxPlayerPerProject));
+            //}
         }
 
         public bool PreRegistrationProducerDisabled()
@@ -428,7 +428,9 @@ namespace PlataformaRio2C.Domain.Services
         {
             var r = _repository as IProjectRepository;
 
-            return r.GetAllOption(filter).OrderBy(e => e.Producer.Name).Take(10).ToList();            
+            return null;
+
+            //return r.GetAllOption(filter).OrderBy(e => e.Producer.Name).Take(10).ToList();            
         }
 
         public int CountUnsent()

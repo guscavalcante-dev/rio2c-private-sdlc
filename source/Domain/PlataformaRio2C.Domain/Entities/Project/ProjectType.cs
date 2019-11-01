@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-04-2019
+// Last Modified On : 11-01-2019
 // ***********************************************************************
 // <copyright file="ProjectType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,7 +20,7 @@ namespace PlataformaRio2C.Domain.Entities
     /// <summary>ProjectType</summary>
     public class ProjectType : Entity
     {
-        public static readonly int NameMinLength = 2;
+        public static readonly int NameMinLength = 1;
         public static readonly int NameMaxLength = 50;
 
         public string Name { get; private set; }

@@ -42,11 +42,11 @@ namespace PlataformaRio2C.Application.ViewModels
         [Display(Name = "ProductionPlans", ResourceType = typeof(Labels))]
         public virtual IEnumerable<ProjectProductionPlanAppViewModel> ProductionPlans { get; set; }
 
-        [Display(Name = "LinksImage", ResourceType = typeof(Labels))]
-        public virtual IEnumerable<ProjectLinkImageAppViewModel> LinksImage { get; set; }
+        //[Display(Name = "LinksImage", ResourceType = typeof(Labels))]
+        //public virtual IEnumerable<ProjectLinkImageAppViewModel> LinksImage { get; set; }
 
-        [Display(Name = "LinksTeaser", ResourceType = typeof(Labels))]
-        public virtual IEnumerable<ProjectLinkTeaserAppViewModel> LinksTeaser { get; set; }
+        //[Display(Name = "LinksTeaser", ResourceType = typeof(Labels))]
+        //public virtual IEnumerable<ProjectLinkTeaserAppViewModel> LinksTeaser { get; set; }
 
         [Display(Name = "AdditionalInformations", ResourceType = typeof(Labels))]
         public virtual IEnumerable<ProjectAdditionalInformationAppViewModel> AdditionalInformations { get; set; }
@@ -95,15 +95,15 @@ namespace PlataformaRio2C.Application.ViewModels
                 ProductionPlans = ProjectProductionPlanAppViewModel.MapList(entity.ProductionPlans);
             }
 
-            if (entity.LinksImage != null && entity.LinksImage.Any())
-            {
-                LinksImage = ProjectLinkImageAppViewModel.MapList(entity.LinksImage);
-            }
+            //if (entity.LinksImage != null && entity.LinksImage.Any())
+            //{
+            //    LinksImage = ProjectLinkImageAppViewModel.MapList(entity.LinksImage);
+            //}
 
-            if (entity.LinksTeaser != null && entity.LinksTeaser.Any())
-            {
-                LinksTeaser = ProjectLinkTeaserAppViewModel.MapList(entity.LinksTeaser);
-            }
+            //if (entity.LinksTeaser != null && entity.LinksTeaser.Any())
+            //{
+            //    LinksTeaser = ProjectLinkTeaserAppViewModel.MapList(entity.LinksTeaser);
+            //}
 
             if (entity.AdditionalInformations != null && entity.AdditionalInformations.Any())
             {
@@ -117,28 +117,29 @@ namespace PlataformaRio2C.Application.ViewModels
 
         public Project MapReverse()
         {
-            var entity = new Project(null);
+            return null;
+            //var entity = new Project(null);
 
-            entity.SetNumberOfEpisodes(NumberOfEpisodes);
-            entity.SetEachEpisodePlayingTime(EachEpisodePlayingTime);
-            entity.SetValuePerEpisode(ValuePerEpisode);
-            entity.SetTotalValueOfProject(TotalValueOfProject);
-            entity.SetValueAlreadyRaised(ValueAlreadyRaised);
-            entity.SetValueStillNeeded(ValueStillNeeded);
-            entity.SetPitching(Pitching);
+            //entity.SetNumberOfEpisodes(NumberOfEpisodes);
+            //entity.SetEachEpisodePlayingTime(EachEpisodePlayingTime);
+            //entity.SetValuePerEpisode(ValuePerEpisode);
+            //entity.SetTotalValueOfProject(TotalValueOfProject);
+            //entity.SetValueAlreadyRaised(ValueAlreadyRaised);
+            //entity.SetValueStillNeeded(ValueStillNeeded);
+            //entity.SetPitching(Pitching);
 
-            return entity;
+            //return entity;
         }
 
         public Project MapReverse(Project entity)
         {
-            entity.SetNumberOfEpisodes(NumberOfEpisodes);
-            entity.SetEachEpisodePlayingTime(EachEpisodePlayingTime);
-            entity.SetValuePerEpisode(ValuePerEpisode);
-            entity.SetTotalValueOfProject(TotalValueOfProject);
-            entity.SetValueAlreadyRaised(ValueAlreadyRaised);
-            entity.SetValueStillNeeded(ValueStillNeeded);
-            entity.SetPitching(Pitching);
+            //entity.SetNumberOfEpisodes(NumberOfEpisodes);
+            //entity.SetEachEpisodePlayingTime(EachEpisodePlayingTime);
+            //entity.SetValuePerEpisode(ValuePerEpisode);
+            //entity.SetTotalValueOfProject(TotalValueOfProject);
+            //entity.SetValueAlreadyRaised(ValueAlreadyRaised);
+            //entity.SetValueStillNeeded(ValueStillNeeded);
+            //entity.SetPitching(Pitching);
 
             return entity;
         }

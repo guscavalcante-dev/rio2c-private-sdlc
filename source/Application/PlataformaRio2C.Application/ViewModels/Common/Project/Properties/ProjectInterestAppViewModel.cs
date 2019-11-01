@@ -57,22 +57,25 @@ namespace PlataformaRio2C.Application.ViewModels
 
         public static IEnumerable<ProjectInterestAppViewModel> MapList(IEnumerable<Interest> interests, Project project, Edition _event)
         {
-            foreach (var interest in interests)
-            {
-                yield return new ProjectInterestAppViewModel(new ProjectInterest(project, interest));
-            }
+            return null;
+            //foreach (var interest in interests)
+            //{
+            //    yield return new ProjectInterestAppViewModel(new ProjectInterest(project, interest));
+            //}
         }
 
         public ProjectInterest MapReverse()
         {
-            var entity = new ProjectInterest(Project.MapReverse(), Interest.MapReverse());
-            return entity;
+            return null;
+            //var entity = new ProjectInterest(Project.MapReverse(), Interest.MapReverse());
+            //return entity;
         }
 
         public ProjectInterest MapReverse(Project p, Interest i, Edition v)
         {
-            var entity = new ProjectInterest(p, i);
-            return entity;
+            return null;
+            //var entity = new ProjectInterest(p, i);
+            //return entity;
         }
 
         public ProjectInterest MapReverse(ProjectInterest entity)

@@ -73,19 +73,19 @@ namespace PlataformaRio2C.Application.ViewModels
                     }
                 }
 
-                if (entity.Producer != null)
-                {
-                    ProducerName = entity.Producer.Name;
-                }
+                //if (entity.Producer != null)
+                //{
+                //    ProducerName = entity.Producer.Name;
+                //}
 
-                if (entity.PlayersRelated != null && entity.PlayersRelated.Any())
-                {
-                    ProjectSubmitted = entity.PlayersRelated.Any(e => e.Sent);
+                //if (entity.PlayersRelated != null && entity.PlayersRelated.Any())
+                //{
+                //    ProjectSubmitted = entity.PlayersRelated.Any(e => e.Sent);
 
-                    RelatedPlayers = PlayerProjectStatusAppViewModel.MapList(entity.PlayersRelated);
+                //    RelatedPlayers = PlayerProjectStatusAppViewModel.MapList(entity.PlayersRelated);
 
-                    NumberOfEvaluations = entity.PlayersRelated.Count(e => e.Evaluation != null);
-                }
+                //    NumberOfEvaluations = entity.PlayersRelated.Count(e => e.Evaluation != null);
+                //}
 
                 if (entity.Pitching != null)
                 {
@@ -157,19 +157,19 @@ namespace PlataformaRio2C.Application.ViewModels
                 }
 
 
-                if (entity.Producer != null)
-                {
-                    ProducerName = entity.Producer.Name;
-                }
+                //if (entity.Producer != null)
+                //{
+                //    ProducerName = entity.Producer.Name;
+                //}
 
-                if (entity.PlayersRelated != null && entity.PlayersRelated.Any())
-                {
-                    ProjectSubmitted = entity.PlayersRelated.Any(e => e.Sent);
+                //if (entity.PlayersRelated != null && entity.PlayersRelated.Any())
+                //{
+                //    ProjectSubmitted = entity.PlayersRelated.Any(e => e.Sent);
 
-                    RelatedPlayers = PlayerProjectStatusAppViewModel.MapList(entity.PlayersRelated);
+                //    RelatedPlayers = PlayerProjectStatusAppViewModel.MapList(entity.PlayersRelated);
 
-                    NumberOfEvaluations = entity.PlayersRelated.Count(e => e.Evaluation != null);
-                }
+                //    NumberOfEvaluations = entity.PlayersRelated.Count(e => e.Evaluation != null);
+                //}
 
                 if (entity.Pitching != null)
                 {
@@ -284,64 +284,64 @@ namespace PlataformaRio2C.Application.ViewModels
                 }
 
 
-                if (entity.Producer != null)
-                {
-                    ProducerName = entity.Producer.Name;
-                }
+                //if (entity.Producer != null)
+                //{
+                //    ProducerName = entity.Producer.Name;
+                //}
 
-                if (entity.PlayersRelated != null && entity.PlayersRelated.Any())
-                {
-                    ProjectSubmitted = entity.PlayersRelated.Any(e => e.Sent);
+                //if (entity.PlayersRelated != null && entity.PlayersRelated.Any())
+                //{
+                //    ProjectSubmitted = entity.PlayersRelated.Any(e => e.Sent);
 
-                    RelatedPlayers = PlayerProjectStatusAppViewModel.MapList(entity.PlayersRelated);
+                //    RelatedPlayers = PlayerProjectStatusAppViewModel.MapList(entity.PlayersRelated);
 
-                    DateSending = Convert.ToDateTime(entity.PlayersRelated.Select(x => x.DateSending).FirstOrDefault());
+                //    DateSending = Convert.ToDateTime(entity.PlayersRelated.Select(x => x.DateSending).FirstOrDefault());
 
-                    NumberOfEvaluations = entity.PlayersRelated.Count(e => e.Evaluation != null);
+                //    NumberOfEvaluations = entity.PlayersRelated.Count(e => e.Evaluation != null);
 
-                    PlayerStatus = "";
-                    foreach (var item in entity.PlayersRelated)
-                    {
-                        PlayerStatus += item.Player.Name + " | ";
-                        if (item.Evaluation != null)
-                        {
-                            PlayerStatus += item.Evaluation.Status.Name;
-                        }
-                        else
-                        {
-                            PlayerStatus += "Não avaliado";
-                        }
-                        PlayerStatus += " / ";
+                //    PlayerStatus = "";
+                //    foreach (var item in entity.PlayersRelated)
+                //    {
+                //        PlayerStatus += item.Player.Name + " | ";
+                //        if (item.Evaluation != null)
+                //        {
+                //            PlayerStatus += item.Evaluation.Status.Name;
+                //        }
+                //        else
+                //        {
+                //            PlayerStatus += "Não avaliado";
+                //        }
+                //        PlayerStatus += " / ";
 
-                    }
-                }
+                //    }
+                //}
 
-                if (entity.Interests != null && entity.Interests.Any())
-                {
-                    Interest = ProjectInterestAppViewModel.MapList(entity.Interests);
-                }
+                //if (entity.Interests != null && entity.Interests.Any())
+                //{
+                //    Interest = ProjectInterestAppViewModel.MapList(entity.Interests);
+                //}
 
-                if (entity.Pitching != null)
-                {
-                    Pitching = entity.Pitching.Value;
-                }
+                //if (entity.Pitching != null)
+                //{
+                //    Pitching = entity.Pitching.Value;
+                //}
 
-                if (entity.Producer.EventsCollaborators != null && entity.Producer.EventsCollaborators.Any())
-                {
-                    Email = string.Join(", ", entity.Producer.EventsCollaborators.Select(x => x.Collaborator).Select(x => x.User).Select(x => x.Email));
-                    Name = string.Join(", ", entity.Producer.EventsCollaborators.Select(x => x.Collaborator).Select(x => x.User).Select(x => x.Name));
-                }
-                if (entity.Summaries != null && entity.Summaries.Any())
-                {
+                //if (entity.Producer.EventsCollaborators != null && entity.Producer.EventsCollaborators.Any())
+                //{
+                //    Email = string.Join(", ", entity.Producer.EventsCollaborators.Select(x => x.Collaborator).Select(x => x.User).Select(x => x.Email));
+                //    Name = string.Join(", ", entity.Producer.EventsCollaborators.Select(x => x.Collaborator).Select(x => x.User).Select(x => x.Name));
+                //}
+                //if (entity.Summaries != null && entity.Summaries.Any())
+                //{
 
-                    SinopseEn = entity.Summaries.Where(x => x.LanguageId == 1).Select(x => x.Value).FirstOrDefault();
-                    SinopsePt = entity.Summaries.Where(x => x.LanguageId == 2).Select(x => x.Value).FirstOrDefault();
-                }
-                if (NumberOfEvaluations != 0)
-                {
-                    Status = entity.PlayersRelated.Where(x => x.EvaluationId != null).Select(x => x.Evaluation).FirstOrDefault().Status.Name;
-                    ResponsavelAprovacao = entity.PlayersRelated.Where(x => x.EvaluationId != null).Select(x => x.Player).FirstOrDefault().Name;
-                }
+                //    SinopseEn = entity.Summaries.Where(x => x.LanguageId == 1).Select(x => x.Value).FirstOrDefault();
+                //    SinopsePt = entity.Summaries.Where(x => x.LanguageId == 2).Select(x => x.Value).FirstOrDefault();
+                //}
+                //if (NumberOfEvaluations != 0)
+                //{
+                //    Status = entity.PlayersRelated.Where(x => x.EvaluationId != null).Select(x => x.Evaluation).FirstOrDefault().Status.Name;
+                //    ResponsavelAprovacao = entity.PlayersRelated.Where(x => x.EvaluationId != null).Select(x => x.Player).FirstOrDefault().Name;
+                //}
             }
         }
 
@@ -411,32 +411,32 @@ namespace PlataformaRio2C.Application.ViewModels
                 }
 
 
-                if (entity.Producer != null)
-                {
-                    ProducerId = entity.Producer.Id;
-                    ProducerCnpj = entity.Producer.CNPJ;
-                    ProducerName = entity.Producer.Name;
-                    ProducerTradeName = entity.Producer.TradeName;
-                }
+                //if (entity.Producer != null)
+                //{
+                //    ProducerId = entity.Producer.Id;
+                //    ProducerCnpj = entity.Producer.CNPJ;
+                //    ProducerName = entity.Producer.Name;
+                //    ProducerTradeName = entity.Producer.TradeName;
+                //}
 
-                if (entity.PlayersRelated != null && entity.PlayersRelated.Any())
-                {
+                //if (entity.PlayersRelated != null && entity.PlayersRelated.Any())
+                //{
 
-                    RelatedPlayers = PlayerProjectStatusAppViewModel.MapList(entity.PlayersRelated);
+                //    RelatedPlayers = PlayerProjectStatusAppViewModel.MapList(entity.PlayersRelated);
 
-                    Sent = entity.PlayersRelated.Any(e => e.Sent);
+                //    Sent = entity.PlayersRelated.Any(e => e.Sent);
 
-                    DateSending = Convert.ToDateTime(entity.PlayersRelated.Select(x => x.DateSending).FirstOrDefault());
+                //    DateSending = Convert.ToDateTime(entity.PlayersRelated.Select(x => x.DateSending).FirstOrDefault());
 
-                    DateSaved = Convert.ToDateTime(entity.PlayersRelated.Select(x => x.DateSaved).FirstOrDefault());
+                //    DateSaved = Convert.ToDateTime(entity.PlayersRelated.Select(x => x.DateSaved).FirstOrDefault());
 
-                }
+                //}
 
-                if (entity.Producer.EventsCollaborators != null && entity.Producer.EventsCollaborators.Any())
-                {
-                    Email = string.Join(", ", entity.Producer.EventsCollaborators.Select(x => x.Collaborator).Select(x => x.User).Select(x => x.Email));
-                    Name = string.Join(", ", entity.Producer.EventsCollaborators.Select(x => x.Collaborator).Select(x => x.User).Select(x => x.Name));
-                }
+                //if (entity.Producer.EventsCollaborators != null && entity.Producer.EventsCollaborators.Any())
+                //{
+                //    Email = string.Join(", ", entity.Producer.EventsCollaborators.Select(x => x.Collaborator).Select(x => x.User).Select(x => x.Email));
+                //    Name = string.Join(", ", entity.Producer.EventsCollaborators.Select(x => x.Collaborator).Select(x => x.User).Select(x => x.Name));
+                //}
             }
         }
 

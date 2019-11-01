@@ -2,7 +2,7 @@
 
 namespace PlataformaRio2C.Domain.Interfaces
 {
-    public interface IProjectLinkImageRepository : IRepository<ProjectLinkImage>
+    public interface IProjectLinkImageRepository : IRepository<ProjectImageLink>
     {
     }    
 }

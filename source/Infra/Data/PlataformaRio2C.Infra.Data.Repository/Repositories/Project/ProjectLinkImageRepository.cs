@@ -4,7 +4,7 @@ using PlataformaRio2C.Infra.Data.Context;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
-    public class ProjectLinkImageRepository : Repository<PlataformaRio2CContext, ProjectLinkImage>, IProjectLinkImageRepository
+    public class ProjectLinkImageRepository : Repository<PlataformaRio2CContext, ProjectImageLink>, IProjectLinkImageRepository
     {
         public ProjectLinkImageRepository(PlataformaRio2CContext context)
             : base(context)

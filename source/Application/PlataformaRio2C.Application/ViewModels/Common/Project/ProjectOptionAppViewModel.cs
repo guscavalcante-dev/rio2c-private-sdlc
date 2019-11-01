@@ -18,13 +18,13 @@ namespace PlataformaRio2C.Application.ViewModels
         public ProjectOptionAppViewModel(Project entity)
         {
             Uid = entity.Uid;
-            Title = entity.GetName();
+            //Title = entity.GetName();
 
-            if (entity.Producer != null && !string.IsNullOrWhiteSpace(entity.Producer.Name))
-            {
-                ProducerName = entity.Producer.Name;
-                Title = string.Format("{0} - {1}", ProducerName, Title);
-            }
+            //if (entity.Producer != null && !string.IsNullOrWhiteSpace(entity.Producer.Name))
+            //{
+            //    ProducerName = entity.Producer.Name;
+            //    Title = string.Format("{0} - {1}", ProducerName, Title);
+            //}
         }
 
 

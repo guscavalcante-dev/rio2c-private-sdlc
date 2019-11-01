@@ -100,7 +100,7 @@ namespace PlataformaRio2C.Application.Services
 
             var entityProject = viewModel.MapReverse();
             MapEntity(ref entityProject, viewModel);
-            entityProject.SetProducer(entityProducer);
+            //entityProject.SetProducer(entityProducer);
 
             ValidationResult.Add(service.Create(entityProject));
 
@@ -335,8 +335,8 @@ namespace PlataformaRio2C.Application.Services
             MapEntitySummaries(ref entity, project.Summaries);
             MapEntityProductionPlans(ref entity, project.ProductionPlans);
             MapEntityInterests(ref entity, project.InterestsSelected);
-            MapEntityLinksImage(ref entity, project.LinksImage);
-            MapEntityLinksTeaser(ref entity, project.LinksTeaser);
+            //MapEntityLinksImage(ref entity, project.LinksImage);
+            //MapEntityLinksTeaser(ref entity, project.LinksTeaser);
             MapEntityAdditionalInformations(ref entity, project.AdditionalInformations);
         }
         public AppValidationResult SendToPlayers(Guid uidProject, Guid[] uidsPlayers, int userId)
@@ -508,156 +508,156 @@ namespace PlataformaRio2C.Application.Services
                 {
                     var entityTitle = titleViewModel.MapReverse();
                     var language = _languageRepository.Get(e => e.Code == titleViewModel.LanguageCode);
-                    entityTitle.SetLanguage(language);
+                    //entityTitle.SetLanguage(language);
                     entitiesTitles.Add(entityTitle);
                 }
-                entity.SetTitles(entitiesTitles);
+                //entity.SetTitles(entitiesTitles);
             }
         }
 
         private void MapEntityLogLines(ref Project entity, IEnumerable<ProjectLogLineAppViewModel> listViewModel)
         {
-            if (entity.LogLines != null && entity.LogLines.Any())
-            {
-                _projectLogLineRepository.DeleteAll(entity.LogLines);
-            }
+            //if (entity.LogLines != null && entity.LogLines.Any())
+            //{
+            //    _projectLogLineRepository.DeleteAll(entity.LogLines);
+            //}
 
-            if (listViewModel != null && listViewModel.Any())
-            {
-                var entitiesList = new List<ProjectLogLine>();
-                foreach (var itemViewModel in listViewModel)
-                {
-                    var entityItem = itemViewModel.MapReverse();
-                    var language = _languageRepository.Get(e => e.Code == itemViewModel.LanguageCode);
-                    entityItem.SetLanguage(language);
-                    entitiesList.Add(entityItem);
-                }
-                entity.SetLogLines(entitiesList);
-            }
+            //if (listViewModel != null && listViewModel.Any())
+            //{
+            //    var entitiesList = new List<ProjectLogLine>();
+            //    foreach (var itemViewModel in listViewModel)
+            //    {
+            //        var entityItem = itemViewModel.MapReverse();
+            //        var language = _languageRepository.Get(e => e.Code == itemViewModel.LanguageCode);
+            //        entityItem.SetLanguage(language);
+            //        entitiesList.Add(entityItem);
+            //    }
+            //    entity.SetLogLines(entitiesList);
+            //}
         }
 
         private void MapEntitySummaries(ref Project entity, IEnumerable<ProjectSummaryAppViewModel> listViewModel)
         {
-            if (entity.Summaries != null && entity.Summaries.Any())
-            {
-                _projectSummaryRepository.DeleteAll(entity.Summaries);
-            }
+            //if (entity.Summaries != null && entity.Summaries.Any())
+            //{
+            //    _projectSummaryRepository.DeleteAll(entity.Summaries);
+            //}
 
-            if (listViewModel != null && listViewModel.Any())
-            {
-                var entitiesList = new List<ProjectSummary>();
-                foreach (var itemViewModel in listViewModel)
-                {
-                    var entityItem = itemViewModel.MapReverse();
-                    var language = _languageRepository.Get(e => e.Code == itemViewModel.LanguageCode);
-                    entityItem.SetLanguage(language);
-                    entitiesList.Add(entityItem);
-                }
-                entity.SetSummaries(entitiesList);
-            }
+            //if (listViewModel != null && listViewModel.Any())
+            //{
+            //    var entitiesList = new List<ProjectSummary>();
+            //    foreach (var itemViewModel in listViewModel)
+            //    {
+            //        var entityItem = itemViewModel.MapReverse();
+            //        var language = _languageRepository.Get(e => e.Code == itemViewModel.LanguageCode);
+            //        entityItem.SetLanguage(language);
+            //        entitiesList.Add(entityItem);
+            //    }
+            //    entity.SetSummaries(entitiesList);
+            //}
         }
 
         private void MapEntityProductionPlans(ref Project entity, IEnumerable<ProjectProductionPlanAppViewModel> listViewModel)
         {
-            if (entity.ProductionPlans != null && entity.ProductionPlans.Any())
-            {
-                _projectProductionPlanRepository.DeleteAll(entity.ProductionPlans);
-            }
+            //if (entity.ProductionPlans != null && entity.ProductionPlans.Any())
+            //{
+            //    _projectProductionPlanRepository.DeleteAll(entity.ProductionPlans);
+            //}
 
-            if (listViewModel != null && listViewModel.Any())
-            {
-                var entitiesList = new List<ProjectProductionPlan>();
-                foreach (var itemViewModel in listViewModel)
-                {
-                    var entityItem = itemViewModel.MapReverse();
-                    var language = _languageRepository.Get(e => e.Code == itemViewModel.LanguageCode);
-                    entityItem.SetLanguage(language);
-                    entitiesList.Add(entityItem);
-                }
-                entity.SetProductionPlans(entitiesList);
-            }
+            //if (listViewModel != null && listViewModel.Any())
+            //{
+            //    var entitiesList = new List<ProjectProductionPlan>();
+            //    foreach (var itemViewModel in listViewModel)
+            //    {
+            //        var entityItem = itemViewModel.MapReverse();
+            //        var language = _languageRepository.Get(e => e.Code == itemViewModel.LanguageCode);
+            //        entityItem.SetLanguage(language);
+            //        entitiesList.Add(entityItem);
+            //    }
+            //    entity.SetProductionPlans(entitiesList);
+            //}
         }
 
         private void MapEntityInterests(ref Project entity, int[] listIdsSelected)
         {
-            if (listIdsSelected != null && listIdsSelected.Any())
-            {
-                if (entity.Interests != null && entity.Interests.Any())
-                {
-                    _projectInterestRepository.DeleteAll(entity.Interests);
-                }
+            //if (listIdsSelected != null && listIdsSelected.Any())
+            //{
+            //    if (entity.Interests != null && entity.Interests.Any())
+            //    {
+            //        _projectInterestRepository.DeleteAll(entity.Interests);
+            //    }
 
-                var entitiesList = new List<ProjectInterest>();
-                var _interests = _interestRepository.GetAll();
+            //    var entitiesList = new List<ProjectInterest>();
+            //    var _interests = _interestRepository.GetAll();
 
-                foreach (var IdSelected in listIdsSelected)
-                {
+            //    foreach (var IdSelected in listIdsSelected)
+            //    {
 
-                    var entitySelected = new ProjectInterest(entity, _interests.FirstOrDefault(e => e.Id == IdSelected));
-                    entitiesList.Add(entitySelected);
-                }
+            //        var entitySelected = new ProjectInterest(entity, _interests.FirstOrDefault(e => e.Id == IdSelected));
+            //        entitiesList.Add(entitySelected);
+            //    }
 
-                entity.SetInterests(entitiesList);
-            }
+            //    entity.SetInterests(entitiesList);
+            //}
         }
 
         private void MapEntityLinksImage(ref Project entity, IEnumerable<ProjectLinkImageAppViewModel> listViewModel)
         {
-            if (entity.LinksImage != null && entity.LinksImage.Any())
-            {
-                _projectLinkImageRepository.DeleteAll(entity.LinksImage);
-            }
+            //if (entity.LinksImage != null && entity.LinksImage.Any())
+            //{
+            //    _projectLinkImageRepository.DeleteAll(entity.LinksImage);
+            //}
 
-            if (listViewModel != null && listViewModel.Any())
-            {
-                var entitiesList = new List<ProjectLinkImage>();
-                foreach (var itemViewModel in listViewModel.Where(e => !string.IsNullOrWhiteSpace(e.Value)))
-                {
-                    var entityItem = itemViewModel.MapReverse();
-                    entitiesList.Add(entityItem);
-                }
-                entity.SetLinksImage(entitiesList);
-            }
+            //if (listViewModel != null && listViewModel.Any())
+            //{
+            //    var entitiesList = new List<ProjectLinkImage>();
+            //    foreach (var itemViewModel in listViewModel.Where(e => !string.IsNullOrWhiteSpace(e.Value)))
+            //    {
+            //        var entityItem = itemViewModel.MapReverse();
+            //        entitiesList.Add(entityItem);
+            //    }
+            //    entity.SetLinksImage(entitiesList);
+            //}
         }
 
         private void MapEntityLinksTeaser(ref Project entity, IEnumerable<ProjectLinkTeaserAppViewModel> listViewModel)
         {
-            if (entity.LinksTeaser != null && entity.LinksTeaser.Any())
-            {
-                _projectLinkTeaserRepository.DeleteAll(entity.LinksTeaser);
-            }
+            //if (entity.LinksTeaser != null && entity.LinksTeaser.Any())
+            //{
+            //    _projectLinkTeaserRepository.DeleteAll(entity.LinksTeaser);
+            //}
 
-            if (listViewModel != null && listViewModel.Any())
-            {
-                var entitiesList = new List<ProjectLinkTeaser>();
-                foreach (var itemViewModel in listViewModel.Where(e => !string.IsNullOrWhiteSpace(e.Value)))
-                {
-                    var entityItem = itemViewModel.MapReverse();
-                    entitiesList.Add(entityItem);
-                }
-                entity.SetLinksTeaser(entitiesList);
-            }
+            //if (listViewModel != null && listViewModel.Any())
+            //{
+            //    var entitiesList = new List<ProjectLinkTeaser>();
+            //    foreach (var itemViewModel in listViewModel.Where(e => !string.IsNullOrWhiteSpace(e.Value)))
+            //    {
+            //        var entityItem = itemViewModel.MapReverse();
+            //        entitiesList.Add(entityItem);
+            //    }
+            //    entity.SetLinksTeaser(entitiesList);
+            //}
         }
 
         private void MapEntityAdditionalInformations(ref Project entity, IEnumerable<ProjectAdditionalInformationAppViewModel> listViewModel)
         {
-            if (entity.AdditionalInformations != null && entity.AdditionalInformations.Any())
-            {
-                _projectAdditionalInformationRepository.DeleteAll(entity.AdditionalInformations);
-            }
+            //if (entity.AdditionalInformations != null && entity.AdditionalInformations.Any())
+            //{
+            //    _projectAdditionalInformationRepository.DeleteAll(entity.AdditionalInformations);
+            //}
 
-            if (listViewModel != null && listViewModel.Any())
-            {
-                var entitiesList = new List<ProjectAdditionalInformation>();
-                foreach (var itemViewModel in listViewModel)
-                {
-                    var entityItem = itemViewModel.MapReverse();
-                    var language = _languageRepository.Get(e => e.Code == itemViewModel.LanguageCode);
-                    entityItem.SetLanguage(language);
-                    entitiesList.Add(entityItem);
-                }
-                entity.SetAdditionalInformations(entitiesList);
-            }
+            //if (listViewModel != null && listViewModel.Any())
+            //{
+            //    var entitiesList = new List<ProjectAdditionalInformation>();
+            //    foreach (var itemViewModel in listViewModel)
+            //    {
+            //        var entityItem = itemViewModel.MapReverse();
+            //        var language = _languageRepository.Get(e => e.Code == itemViewModel.LanguageCode);
+            //        entityItem.SetLanguage(language);
+            //        entitiesList.Add(entityItem);
+            //    }
+            //    entity.SetAdditionalInformations(entitiesList);
+            //}
         }
 
         private void LoadViewModelOptions(ProjectEditAppViewModel viewModel, Project entity)
@@ -702,7 +702,7 @@ namespace PlataformaRio2C.Application.Services
                 {
                     var predicateGenres = PredicateBuilder.New<ProjectPlayer>(false);
 
-                    predicateGenres = predicateGenres.Or(p => p.Project.Interests.Any(e => filter.Genres.Contains(e.Interest.Name)));
+                    //predicateGenres = predicateGenres.Or(p => p.Project.Interests.Any(e => filter.Genres.Contains(e.Interest.Name)));
 
                     predicate = PredicateBuilder.And<ProjectPlayer>(predicate, predicateGenres);
                 }
@@ -734,10 +734,10 @@ namespace PlataformaRio2C.Application.Services
             var s = service as IProjectService;
             var entity = s.GetWithPlayerSelection(uid);
 
-            if (entity != null && entity.PlayersRelated.Any())
-            {
-                vm = new ViewModels.Admin.ProjectDetailAppViewModel(entity);
-            }
+            //if (entity != null && entity.PlayersRelated.Any())
+            //{
+            //    vm = new ViewModels.Admin.ProjectDetailAppViewModel(entity);
+            //}
 
             return vm;
         }
@@ -819,7 +819,7 @@ namespace PlataformaRio2C.Application.Services
             {
                 var predicateTerm = PredicateBuilder.New<Project>(false);
 
-                predicateTerm = predicateTerm.Or(p => p.Titles.Any(t => t.Value.Contains(filter.Term)) || p.Producer.Name.Contains(filter.Term));
+                //predicateTerm = predicateTerm.Or(p => p.Titles.Any(t => t.Value.Contains(filter.Term)) || p.Producer.Name.Contains(filter.Term));
                 //predicateTerm = predicateTerm.Or(p => p.Producer.Name.Contains(filter.Term));
 
                 predicate = PredicateBuilder.And<Project>(predicate, predicateTerm);
