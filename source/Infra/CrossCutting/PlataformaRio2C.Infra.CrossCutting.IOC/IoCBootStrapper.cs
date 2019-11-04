@@ -80,7 +80,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
             //container.Register<IMessageRepository, MessageRepository>(Lifestyle.Scoped);
 
             container.Register<IProjectService, ProjectService>(Lifestyle.Scoped);
-            container.Register<IProjectAppService, ProjectAppService>(Lifestyle.Scoped);
+            //container.Register<IProjectAppService, ProjectAppService>(Lifestyle.Scoped);
             //container.Register<IProjectRepository, ProjectRepository>(Lifestyle.Scoped);
 
             container.Register<IErrorMessageService, ErrorMessageService>(Lifestyle.Scoped);

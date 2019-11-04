@@ -49,9 +49,9 @@ namespace PlataformaRio2C.Domain.Interfaces
         IProjectLinkImageRepository ProjectLinkImageRepository { get; }
         IProjectLinkTeaserRepository ProjectLinkTeaserRepository { get; }
         IProjectAdditionalInformationRepository ProjectAdditionalInformationRepository { get; }
-        IProjectPlayerRepository ProjectPlayerRepository { get; }
+        //IProjectPlayerRepository ProjectPlayerRepository { get; }
         IProjectStatusRepository ProjectStatusRepository { get; }
-        IProjectPlayerEvaluationRepository ProjectPlayerEvaluationRepository { get; }
+        //IProjectPlayerEvaluationRepository ProjectPlayerEvaluationRepository { get; }
         ILogisticsRepository LogisticsRepository { get; }
         IConferenceRepository ConferenceRepository { get; }
         IConferenceLecturerRepository ConferenceLecturerRepository { get; }

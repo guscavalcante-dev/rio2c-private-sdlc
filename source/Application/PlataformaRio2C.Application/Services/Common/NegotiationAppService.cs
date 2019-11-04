@@ -22,7 +22,7 @@ namespace PlataformaRio2C.Application.Services
     public class NegotiationAppService : AppService<Infra.Data.Context.PlataformaRio2CContext, Negotiation, NegotiationAppViewModel, NegotiationAppViewModel, NegotiationAppViewModel, NegotiationAppViewModel>, INegotiationAppService
     {
         private readonly INegotiationConfigRepository _negotiationConfigRepository;
-        private readonly IProjectPlayerRepository _projectPlayerRepository;
+        //private readonly IProjectPlayerRepository _projectPlayerRepository;
         private readonly IConferenceRepository _conferenceRepository;
         private readonly IPlayerRepository _playerRepository;
         private readonly IProducerRepository _producerRepository;
@@ -36,18 +36,18 @@ namespace PlataformaRio2C.Application.Services
         private readonly ILogisticsRepository _logisticsRepository;
         private IList<Negotiation> _negociations = new List<Negotiation>();
         private IList<NegotiationConfig> _datesConfigs;
-        private IList<ProjectPlayer> _projectSubmissions = new List<ProjectPlayer>();
+        //private IList<ProjectPlayer> _projectSubmissions = new List<ProjectPlayer>();
         private IList<Logistics> _logistics;
         private IList<Conference> _conferences;
 
-        private IList<ProjectPlayer> _projectSubmissionsError = new List<ProjectPlayer>();
+        //private IList<ProjectPlayer> _projectSubmissionsError = new List<ProjectPlayer>();
 
         #region ctor
         public NegotiationAppService(INegotiationService service, IUnitOfWork unitOfWork, IRepositoryFactory repositoryFactory, IProjectService projectService, IEmailAppService emailAppService, ISystemParameterRepository systemParameterRepository)
            : base(unitOfWork, service)
         {
             _negotiationConfigRepository = repositoryFactory.NegotiationConfigRepository;
-            _projectPlayerRepository = repositoryFactory.ProjectPlayerRepository;
+            //_projectPlayerRepository = repositoryFactory.ProjectPlayerRepository;
             _conferenceRepository = repositoryFactory.ConferenceRepository;
             _logisticsRepository = repositoryFactory.LogisticsRepository;
             _playerRepository = repositoryFactory.PlayerRepository;
@@ -75,7 +75,7 @@ namespace PlataformaRio2C.Application.Services
                 Commit();
             }
 
-            ValidationResult.Data = new NegotiationResultProcessAppViewModel(_negociations, _projectSubmissionsError);
+            //ValidationResult.Data = new NegotiationResultProcessAppViewModel(_negociations, _projectSubmissionsError);
 
             return ValidationResult;
         }
@@ -83,35 +83,35 @@ namespace PlataformaRio2C.Application.Services
         public NegotiationResultProcessAppViewModel ResultProcessScheduleOneToOneMeetings(int userId)
         {
             var _negociations = service.GetAll().ToList();
-            if (_negociations != null && _negociations.Any())
-            {
-                _projectSubmissionsError = GetProjectSubmissionsError(_negociations).ToList();
-                return new NegotiationResultProcessAppViewModel(_negociations, _projectSubmissionsError);
-            }
+            //if (_negociations != null && _negociations.Any())
+            //{
+            //    _projectSubmissionsError = GetProjectSubmissionsError(_negociations).ToList();
+            //    return new NegotiationResultProcessAppViewModel(_negociations, _projectSubmissionsError);
+            //}
 
             return null;
         }
 
-        private IEnumerable<ProjectPlayer> GetProjectSubmissionsError(IEnumerable<Negotiation> negotiations)
-        {
-            var result = new List<ProjectPlayer>();
+        //private IEnumerable<ProjectPlayer> GetProjectSubmissionsError(IEnumerable<Negotiation> negotiations)
+        //{
+        //    var result = new List<ProjectPlayer>();
 
-            _projectSubmissions = _projectPlayerRepository.GetAllForProccessSchedule().ToList();
+        //    _projectSubmissions = _projectPlayerRepository.GetAllForProccessSchedule().ToList();
 
-            if (_projectSubmissions != null && _projectSubmissions.Any())
-            {
-                foreach (var projectSub in _projectSubmissions)
-                {
-                    if (!negotiations.Any(n => n.PlayerId == projectSub.PlayerId && n.ProjectId == projectSub.ProjectId))
-                    {
-                        result.Add(projectSub);
-                    }
-                }
-            }
+        //    if (_projectSubmissions != null && _projectSubmissions.Any())
+        //    {
+        //        foreach (var projectSub in _projectSubmissions)
+        //        {
+        //            if (!negotiations.Any(n => n.PlayerId == projectSub.PlayerId && n.ProjectId == projectSub.ProjectId))
+        //            {
+        //                result.Add(projectSub);
+        //            }
+        //        }
+        //    }
 
 
-            return result;
-        }
+        //    return result;
+        //}
 
         public GroupDateNegotiationAppViewModel GetNegotiations(int userId)
         {
@@ -128,13 +128,13 @@ namespace PlataformaRio2C.Application.Services
         {
             GenerateScheduleOneToOneMeetings(userId);
 
-            var viewModelResult = new NegotiationResultProcessAppViewModel(_negociations, _projectSubmissionsError);
+            //var viewModelResult = new NegotiationResultProcessAppViewModel(_negociations, _projectSubmissionsError);
 
             dynamic result = new ExpandoObject();
-            result.NumberScheduledNegotiations = viewModelResult.NumberScheduledNegotiations;
-            result.NumberUnscheduledNegotiations = viewModelResult.NumberUnscheduledNegotiations;
-            result.DateProcess = viewModelResult.DateProcess;
-            result.UnscheduledNegotiations = viewModelResult.UnscheduledNegotiations;
+            //result.NumberScheduledNegotiations = viewModelResult.NumberScheduledNegotiations;
+            //result.NumberUnscheduledNegotiations = viewModelResult.NumberUnscheduledNegotiations;
+            //result.DateProcess = viewModelResult.DateProcess;
+            //result.UnscheduledNegotiations = viewModelResult.UnscheduledNegotiations;
             result.Dates = new GroupDateNegotiationAppViewModel(NegotiationAppViewModel.MapList(_negociations));
 
             ValidationResult.Data = result;
@@ -164,20 +164,20 @@ namespace PlataformaRio2C.Application.Services
             {
                 reservationForNegotiation = ProcessConfiguration(_datesConfigs);
 
-                _projectSubmissions = _projectPlayerRepository.GetAllForProccessSchedule().ToList();
+                //_projectSubmissions = _projectPlayerRepository.GetAllForProccessSchedule().ToList();
 
-                if (_projectSubmissions != null && _projectSubmissions.Any())
-                {
-                    _logistics = _logisticsRepository.GetAll().ToList();
-                    _conferences = _conferenceRepository.GetAllBySchedule().ToList();
+                //if (_projectSubmissions != null && _projectSubmissions.Any())
+                //{
+                //    _logistics = _logisticsRepository.GetAll().ToList();
+                //    _conferences = _conferenceRepository.GetAllBySchedule().ToList();
 
-                    ProcessProjectSubmissions(reservationForNegotiation, _projectSubmissions);
-                }
+                //    ProcessProjectSubmissions(reservationForNegotiation, _projectSubmissions);
+                //}
             }
 
-            var t = reservationForNegotiation.Where(e => e.Evaluation != null).ToList();
+            //var t = reservationForNegotiation.Where(e => e.Evaluation != null).ToList();
 
-            _negociations = reservationForNegotiation.Where(e => e.Evaluation != null).ToList();
+            //_negociations = reservationForNegotiation.Where(e => e.Evaluation != null).ToList();
 
             return ValidationResult;
         }
@@ -261,274 +261,274 @@ namespace PlataformaRio2C.Application.Services
             //var tt = negociations.LastOrDefault();
             return negociations;
         }
-        private void ProcessProjectSubmissions(IEnumerable<Negotiation> reservationForNegotiation, IEnumerable<ProjectPlayer> projectSubmissions)
-        {
-            projectSubmissions = ProcessProjectSubmissionsByAvailability(reservationForNegotiation, projectSubmissions);
-            var submissionGroupPlayer = projectSubmissions.GroupBy(e => e.PlayerId);
-            var reservationsGroupSlot = reservationForNegotiation.GroupBy(e => e.RoundNumber);
+        //private void ProcessProjectSubmissions(IEnumerable<Negotiation> reservationForNegotiation, IEnumerable<ProjectPlayer> projectSubmissions)
+        //{
+        //    projectSubmissions = ProcessProjectSubmissionsByAvailability(reservationForNegotiation, projectSubmissions);
+        //    var submissionGroupPlayer = projectSubmissions.GroupBy(e => e.PlayerId);
+        //    var reservationsGroupSlot = reservationForNegotiation.GroupBy(e => e.RoundNumber);
 
 
-            foreach (var submissionPlayerItem in submissionGroupPlayer)
-            {
-                int currentSlot = 1;
-
-
-
-                foreach (var itemSub in submissionPlayerItem.ToList())
-                {
-                    var slotsExpection = GetSlotsExpection(reservationForNegotiation, itemSub);
-                    //var negociation = reservationForNegotiation.FirstOrDefault(e => e.Evaluation == null && e.ProjectId != itemSub.ProjectId && e.PlayerId != itemSub.PlayerId && !slotsExpection.Contains(e.RoundNumber));
-                    var possiblesNegociation = reservationForNegotiation.Where(e => e.Evaluation == null && e.ProjectId != itemSub.ProjectId && e.PlayerId != itemSub.PlayerId && !slotsExpection.Contains(e.RoundNumber));
-
-                    if (possiblesNegociation != null && possiblesNegociation.Any())
-                    {
-                        var dateTeste = possiblesNegociation.Select(e => e.Date).FirstOrDefault();
-
-                        var negotiationsInDate = reservationForNegotiation.FirstOrDefault(e => e.Date == dateTeste && e.PlayerId == itemSub.PlayerId);
-                        if (negotiationsInDate != null)
-                        {
-                            var negotiation = possiblesNegociation.FirstOrDefault(e => e.TableNumber == negotiationsInDate.TableNumber && e.RoomId == negotiationsInDate.RoomId);
-
-                            if (negotiation != null)
-                            {
-                                negotiation.SetPlayer(itemSub.Player);
-                                negotiation.SetProject(itemSub.Project);
-                                negotiation.SetSourceEvaluation(itemSub.Evaluation);
-                            }
-                            else
-                            {
-                                _projectSubmissionsError.Add(itemSub);
-                            }
-                        }
-                        else
-                        {
-                            var negotiation = possiblesNegociation.FirstOrDefault();
-
-                            if (negotiation != null)
-                            {
-                                negotiation.SetPlayer(itemSub.Player);
-                                negotiation.SetProject(itemSub.Project);
-                                negotiation.SetSourceEvaluation(itemSub.Evaluation);
-                            }
-                            else
-                            {
-                                _projectSubmissionsError.Add(itemSub);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        _projectSubmissionsError.Add(itemSub);
-                    }
+        //    foreach (var submissionPlayerItem in submissionGroupPlayer)
+        //    {
+        //        int currentSlot = 1;
 
 
 
+        //        foreach (var itemSub in submissionPlayerItem.ToList())
+        //        {
+        //            var slotsExpection = GetSlotsExpection(reservationForNegotiation, itemSub);
+        //            //var negociation = reservationForNegotiation.FirstOrDefault(e => e.Evaluation == null && e.ProjectId != itemSub.ProjectId && e.PlayerId != itemSub.PlayerId && !slotsExpection.Contains(e.RoundNumber));
+        //            var possiblesNegociation = reservationForNegotiation.Where(e => e.Evaluation == null && e.ProjectId != itemSub.ProjectId && e.PlayerId != itemSub.PlayerId && !slotsExpection.Contains(e.RoundNumber));
+
+        //            if (possiblesNegociation != null && possiblesNegociation.Any())
+        //            {
+        //                var dateTeste = possiblesNegociation.Select(e => e.Date).FirstOrDefault();
+
+        //                var negotiationsInDate = reservationForNegotiation.FirstOrDefault(e => e.Date == dateTeste && e.PlayerId == itemSub.PlayerId);
+        //                if (negotiationsInDate != null)
+        //                {
+        //                    var negotiation = possiblesNegociation.FirstOrDefault(e => e.TableNumber == negotiationsInDate.TableNumber && e.RoomId == negotiationsInDate.RoomId);
+
+        //                    if (negotiation != null)
+        //                    {
+        //                        negotiation.SetPlayer(itemSub.Player);
+        //                        negotiation.SetProject(itemSub.Project);
+        //                        negotiation.SetSourceEvaluation(itemSub.Evaluation);
+        //                    }
+        //                    else
+        //                    {
+        //                        _projectSubmissionsError.Add(itemSub);
+        //                    }
+        //                }
+        //                else
+        //                {
+        //                    var negotiation = possiblesNegociation.FirstOrDefault();
+
+        //                    if (negotiation != null)
+        //                    {
+        //                        negotiation.SetPlayer(itemSub.Player);
+        //                        negotiation.SetProject(itemSub.Project);
+        //                        negotiation.SetSourceEvaluation(itemSub.Evaluation);
+        //                    }
+        //                    else
+        //                    {
+        //                        _projectSubmissionsError.Add(itemSub);
+        //                    }
+        //                }
+        //            }
+        //            else
+        //            {
+        //                _projectSubmissionsError.Add(itemSub);
+        //            }
 
 
-                    //if (negociation != null)
-                    //{
-                    //    negociation.SetPlayer(itemSub.Player);
-                    //    negociation.SetProject(itemSub.Project);
-                    //    negociation.SetSourceEvaluation(itemSub.Evaluation);
-                    //}
-                    //else
-                    //{
-                    //    _projectSubmissionsError.Add(itemSub);
-                    //}
-                    currentSlot++;
-                }
-            }
-        }
-
-        private int GetTableIndicatedThePlayer(int i, IEnumerable<Negotiation> reservationForNegotiation, ProjectPlayer itemSub, int slot)
-        {
-            int result = i;
-
-            var negotiationSchedule = reservationForNegotiation.FirstOrDefault(e => e.RoundNumber == (slot - 1));
-            if (negotiationSchedule != null)
-            {
-                return negotiationSchedule.TableNumber;
-            }
-
-            return result;
-        }
 
 
-        private IList<ProjectPlayer> ProcessProjectSubmissionsByAvailability(IEnumerable<Negotiation> reservationForNegotiation, IEnumerable<ProjectPlayer> projectSubmissions)
-        {
-            IList<Tuple<ProjectPlayer, int>> listsubmissionAndSlotEx = new List<Tuple<ProjectPlayer, int>>();
 
-            if (projectSubmissions != null && projectSubmissions.Any())
-            {
-                foreach (var itemSub in projectSubmissions)
-                {
-                    var slotsExpection = GetSlotsExpection(reservationForNegotiation, itemSub);
-                    listsubmissionAndSlotEx.Add(new Tuple<ProjectPlayer, int>(itemSub, slotsExpection.Count()));
-                }
+        //            //if (negociation != null)
+        //            //{
+        //            //    negociation.SetPlayer(itemSub.Player);
+        //            //    negociation.SetProject(itemSub.Project);
+        //            //    negociation.SetSourceEvaluation(itemSub.Evaluation);
+        //            //}
+        //            //else
+        //            //{
+        //            //    _projectSubmissionsError.Add(itemSub);
+        //            //}
+        //            currentSlot++;
+        //        }
+        //    }
+        //}
 
-                return listsubmissionAndSlotEx.GroupBy(e => e.Item1.PlayerId).OrderByDescending(e => e.Count()).ThenByDescending(e => e.First().Item2).SelectMany(e => e.ToList()).Select(e => e.Item1).ToList();
-            }
+        //private int GetTableIndicatedThePlayer(int i, IEnumerable<Negotiation> reservationForNegotiation, ProjectPlayer itemSub, int slot)
+        //{
+        //    int result = i;
 
-            return new List<ProjectPlayer>();
-        }
+        //    var negotiationSchedule = reservationForNegotiation.FirstOrDefault(e => e.RoundNumber == (slot - 1));
+        //    if (negotiationSchedule != null)
+        //    {
+        //        return negotiationSchedule.TableNumber;
+        //    }
 
-        private IEnumerable<int> GetSlotsExpection(IEnumerable<Negotiation> reservationForNegotiation, ProjectPlayer submission)
-        {
-            List<int> result = new List<int>();
+        //    return result;
+        //}
 
-            //var slotsExpectionByProjectPlayer = reservationForNegotiation.Where(e => e.PlayerId == submission.PlayerId || e.ProjectId == submission.ProjectId || (e.Project != null && e.Project.ProducerId == submission.Project.ProducerId)).Select(e => e.RoundNumber).Distinct().ToList();
-            //result.AddRange(slotsExpectionByProjectPlayer);
 
-            result.AddRange(GetSlotsExpectionByLogistc(reservationForNegotiation, submission));
-            result.AddRange(GetSlotsExpectionByConference(reservationForNegotiation, submission));
+        //private IList<ProjectPlayer> ProcessProjectSubmissionsByAvailability(IEnumerable<Negotiation> reservationForNegotiation, IEnumerable<ProjectPlayer> projectSubmissions)
+        //{
+        //    IList<Tuple<ProjectPlayer, int>> listsubmissionAndSlotEx = new List<Tuple<ProjectPlayer, int>>();
 
-            return result;
-        }
-        private IEnumerable<int> GetSlotsExpectionByLogistc(IEnumerable<Negotiation> reservationForNegotiation, ProjectPlayer submission)
-        {
-            List<int> result = new List<int>();
+        //    if (projectSubmissions != null && projectSubmissions.Any())
+        //    {
+        //        foreach (var itemSub in projectSubmissions)
+        //        {
+        //            var slotsExpection = GetSlotsExpection(reservationForNegotiation, itemSub);
+        //            listsubmissionAndSlotEx.Add(new Tuple<ProjectPlayer, int>(itemSub, slotsExpection.Count()));
+        //        }
 
-            result.AddRange(GetSlotsExpectionByLogistcPlayer(reservationForNegotiation, submission));
-            result.AddRange(GetSlotsExpectionByLogistcProducer(reservationForNegotiation, submission));
+        //        return listsubmissionAndSlotEx.GroupBy(e => e.Item1.PlayerId).OrderByDescending(e => e.Count()).ThenByDescending(e => e.First().Item2).SelectMany(e => e.ToList()).Select(e => e.Item1).ToList();
+        //    }
 
-            return result;
-        }
-        private IEnumerable<int> GetSlotsExpectionByLogistcProducer(IEnumerable<Negotiation> reservationForNegotiation, ProjectPlayer submission)
-        {
-            List<int> result = new List<int>();
+        //    return new List<ProjectPlayer>();
+        //}
 
-            //if (submission.Project != null && submission.Project.Producer != null)
-            //{
-            //    //logistic
-            //    //var logisticsProducers = _logistics.Where(e => (e.Collaborator.ProducersEvents.Any() && e.Collaborator.ProducersEvents.Select(p => p.ProducerId).Any(p => p == submission.Project.ProducerId)));
-            //    //if (logisticsProducers != null && logisticsProducers.Any())
-            //    //{
-            //    //    List<Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>> dateTimesLogistics = new List<Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>>();
+        //private IEnumerable<int> GetSlotsExpection(IEnumerable<Negotiation> reservationForNegotiation, ProjectPlayer submission)
+        //{
+        //    List<int> result = new List<int>();
 
-            //    //    foreach (var logistic in logisticsProducers)
-            //    //    {
-            //    //        dateTimesLogistics.Add(new Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>(logistic.ArrivalDate, logistic.ArrivalTime.Value.Add(TimeSpan.FromHours(4)), logistic.DepartureDate, logistic.DepartureTime.Value.Add(TimeSpan.FromHours(-4))));
-            //    //    }
+        //    //var slotsExpectionByProjectPlayer = reservationForNegotiation.Where(e => e.PlayerId == submission.PlayerId || e.ProjectId == submission.ProjectId || (e.Project != null && e.Project.ProducerId == submission.Project.ProducerId)).Select(e => e.RoundNumber).Distinct().ToList();
+        //    //result.AddRange(slotsExpectionByProjectPlayer);
 
-            //    //    var slotsExpectionByLogistic = reservationForNegotiation
-            //    //                                  .Where(reserva => dateTimesLogistics
-            //    //                                                  .Any(logistica =>
-            //    //                                                  (reserva.Date < logistica.Item1) || (reserva.Date == logistica.Item1 && reserva.StarTime < logistica.Item2)
-            //    //                                                  || (reserva.Date > logistica.Item3) || (reserva.Date == logistica.Item3 && reserva.EndTime > logistica.Item4)
-            //    //                                                  )
-            //    //                                         ).Select(e => e.RoundNumber).Distinct().ToList();
+        //    result.AddRange(GetSlotsExpectionByLogistc(reservationForNegotiation, submission));
+        //    result.AddRange(GetSlotsExpectionByConference(reservationForNegotiation, submission));
 
-            //    //    result.AddRange(slotsExpectionByLogistic);
-            //    //}
-            //}
+        //    return result;
+        //}
+        //private IEnumerable<int> GetSlotsExpectionByLogistc(IEnumerable<Negotiation> reservationForNegotiation, ProjectPlayer submission)
+        //{
+        //    List<int> result = new List<int>();
 
-            return result;
-        }
-        private IEnumerable<int> GetSlotsExpectionByLogistcPlayer(IEnumerable<Negotiation> reservationForNegotiation, ProjectPlayer submission)
-        {
-            List<int> result = new List<int>();
+        //    result.AddRange(GetSlotsExpectionByLogistcPlayer(reservationForNegotiation, submission));
+        //    result.AddRange(GetSlotsExpectionByLogistcProducer(reservationForNegotiation, submission));
 
-            //logistic
-            //var logisticsPlayers = _logistics.Where(e => (e.Collaborator.Players.Any(p => p.Id == submission.PlayerId)));
-            //if (logisticsPlayers != null && logisticsPlayers.Any())
-            //{
-            //    List<Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>> dateTimesLogistics = new List<Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>>();
+        //    return result;
+        //}
+        //private IEnumerable<int> GetSlotsExpectionByLogistcProducer(IEnumerable<Negotiation> reservationForNegotiation, ProjectPlayer submission)
+        //{
+        //    List<int> result = new List<int>();
 
-            //    foreach (var logistic in logisticsPlayers)
-            //    {
-            //        dateTimesLogistics.Add(new Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>(logistic.ArrivalDate, logistic.ArrivalTime.Value.Add(TimeSpan.FromHours(4)), logistic.DepartureDate, logistic.DepartureTime.Value.Add(TimeSpan.FromHours(-4))));
-            //    }
+        //    //if (submission.Project != null && submission.Project.Producer != null)
+        //    //{
+        //    //    //logistic
+        //    //    //var logisticsProducers = _logistics.Where(e => (e.Collaborator.ProducersEvents.Any() && e.Collaborator.ProducersEvents.Select(p => p.ProducerId).Any(p => p == submission.Project.ProducerId)));
+        //    //    //if (logisticsProducers != null && logisticsProducers.Any())
+        //    //    //{
+        //    //    //    List<Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>> dateTimesLogistics = new List<Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>>();
+
+        //    //    //    foreach (var logistic in logisticsProducers)
+        //    //    //    {
+        //    //    //        dateTimesLogistics.Add(new Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>(logistic.ArrivalDate, logistic.ArrivalTime.Value.Add(TimeSpan.FromHours(4)), logistic.DepartureDate, logistic.DepartureTime.Value.Add(TimeSpan.FromHours(-4))));
+        //    //    //    }
+
+        //    //    //    var slotsExpectionByLogistic = reservationForNegotiation
+        //    //    //                                  .Where(reserva => dateTimesLogistics
+        //    //    //                                                  .Any(logistica =>
+        //    //    //                                                  (reserva.Date < logistica.Item1) || (reserva.Date == logistica.Item1 && reserva.StarTime < logistica.Item2)
+        //    //    //                                                  || (reserva.Date > logistica.Item3) || (reserva.Date == logistica.Item3 && reserva.EndTime > logistica.Item4)
+        //    //    //                                                  )
+        //    //    //                                         ).Select(e => e.RoundNumber).Distinct().ToList();
+
+        //    //    //    result.AddRange(slotsExpectionByLogistic);
+        //    //    //}
+        //    //}
+
+        //    return result;
+        //}
+        //private IEnumerable<int> GetSlotsExpectionByLogistcPlayer(IEnumerable<Negotiation> reservationForNegotiation, ProjectPlayer submission)
+        //{
+        //    List<int> result = new List<int>();
+
+        //    //logistic
+        //    //var logisticsPlayers = _logistics.Where(e => (e.Collaborator.Players.Any(p => p.Id == submission.PlayerId)));
+        //    //if (logisticsPlayers != null && logisticsPlayers.Any())
+        //    //{
+        //    //    List<Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>> dateTimesLogistics = new List<Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>>();
+
+        //    //    foreach (var logistic in logisticsPlayers)
+        //    //    {
+        //    //        dateTimesLogistics.Add(new Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>(logistic.ArrivalDate, logistic.ArrivalTime.Value.Add(TimeSpan.FromHours(4)), logistic.DepartureDate, logistic.DepartureTime.Value.Add(TimeSpan.FromHours(-4))));
+        //    //    }
 
              
 
-            //    var slotsExpectionByLogistic = reservationForNegotiation
-            //                                       .Where(reserva => dateTimesLogistics
-            //                                                       .Any(logistica =>
-            //                                                       (reserva.Date < logistica.Item1) || (reserva.Date == logistica.Item1 && reserva.StarTime < logistica.Item2)
-            //                                                       || (reserva.Date > logistica.Item3) || (reserva.Date == logistica.Item3 && reserva.EndTime > logistica.Item4)
-            //                                                       )
-            //                                              ).Select(e => e.RoundNumber).Distinct().ToList();
+        //    //    var slotsExpectionByLogistic = reservationForNegotiation
+        //    //                                       .Where(reserva => dateTimesLogistics
+        //    //                                                       .Any(logistica =>
+        //    //                                                       (reserva.Date < logistica.Item1) || (reserva.Date == logistica.Item1 && reserva.StarTime < logistica.Item2)
+        //    //                                                       || (reserva.Date > logistica.Item3) || (reserva.Date == logistica.Item3 && reserva.EndTime > logistica.Item4)
+        //    //                                                       )
+        //    //                                              ).Select(e => e.RoundNumber).Distinct().ToList();
 
-            //    result.AddRange(slotsExpectionByLogistic);
-            //}
+        //    //    result.AddRange(slotsExpectionByLogistic);
+        //    //}
 
-            return result;
-        }
-        private IEnumerable<int> GetSlotsExpectionByConference(IEnumerable<Negotiation> reservationForNegotiation, ProjectPlayer submission)
-        {
-            List<int> result = new List<int>();
+        //    return result;
+        //}
+        //private IEnumerable<int> GetSlotsExpectionByConference(IEnumerable<Negotiation> reservationForNegotiation, ProjectPlayer submission)
+        //{
+        //    List<int> result = new List<int>();
 
-            result.AddRange(GetSlotsExpectionByConferencePlayer(reservationForNegotiation, submission));
-            result.AddRange(GetSlotsExpectionByConferenceProducer(reservationForNegotiation, submission));
+        //    result.AddRange(GetSlotsExpectionByConferencePlayer(reservationForNegotiation, submission));
+        //    result.AddRange(GetSlotsExpectionByConferenceProducer(reservationForNegotiation, submission));
 
-            return result;
-        }
+        //    return result;
+        //}
 
-        private IEnumerable<int> GetSlotsExpectionByConferencePlayer(IEnumerable<Negotiation> reservationForNegotiation, ProjectPlayer submission)
-        {
-            List<int> result = new List<int>();
+        //private IEnumerable<int> GetSlotsExpectionByConferencePlayer(IEnumerable<Negotiation> reservationForNegotiation, ProjectPlayer submission)
+        //{
+        //    List<int> result = new List<int>();
 
-            //var conferencePlayers = _conferences.Where(e => (e.Lecturers.Where(l => l.Collaborator != null).SelectMany(l => l.Collaborator.Players).Any(p => p.Id == submission.PlayerId)));
-            //if (conferencePlayers != null && conferencePlayers.Any())
-            //{
-            //    List<Tuple<DateTime?, TimeSpan, TimeSpan>> dateTimes = new List<Tuple<DateTime?, TimeSpan, TimeSpan>>();
+        //    //var conferencePlayers = _conferences.Where(e => (e.Lecturers.Where(l => l.Collaborator != null).SelectMany(l => l.Collaborator.Players).Any(p => p.Id == submission.PlayerId)));
+        //    //if (conferencePlayers != null && conferencePlayers.Any())
+        //    //{
+        //    //    List<Tuple<DateTime?, TimeSpan, TimeSpan>> dateTimes = new List<Tuple<DateTime?, TimeSpan, TimeSpan>>();
 
-            //    foreach (var conference in conferencePlayers)
-            //    {
-            //        dateTimes.Add(new Tuple<DateTime?, TimeSpan, TimeSpan>(conference.Date, conference.StartTime.Value.Add(TimeSpan.FromMinutes(-30)), conference.EndTime.Value.Add(TimeSpan.FromMinutes(30))));
-            //    }
+        //    //    foreach (var conference in conferencePlayers)
+        //    //    {
+        //    //        dateTimes.Add(new Tuple<DateTime?, TimeSpan, TimeSpan>(conference.Date, conference.StartTime.Value.Add(TimeSpan.FromMinutes(-30)), conference.EndTime.Value.Add(TimeSpan.FromMinutes(30))));
+        //    //    }
 
-            //    var slotsExpectionByConference = reservationForNegotiation
-            //                                           .Where(r => dateTimes
-            //                                                           .Any(c => (
-            //                                                                        c.Item1 == r.Date &&
-            //                                                                        (
-            //                                                                            (r.StarTime > c.Item2 && r.StarTime < c.Item3) ||
-            //                                                                            (r.EndTime < c.Item3 && r.EndTime > c.Item2)
-            //                                                                         )
+        //    //    var slotsExpectionByConference = reservationForNegotiation
+        //    //                                           .Where(r => dateTimes
+        //    //                                                           .Any(c => (
+        //    //                                                                        c.Item1 == r.Date &&
+        //    //                                                                        (
+        //    //                                                                            (r.StarTime > c.Item2 && r.StarTime < c.Item3) ||
+        //    //                                                                            (r.EndTime < c.Item3 && r.EndTime > c.Item2)
+        //    //                                                                         )
 
-            //                                                                      )
-            //                                                                )
-            //                                                  ).Select(e => e.RoundNumber).Distinct().ToList();
+        //    //                                                                      )
+        //    //                                                                )
+        //    //                                                  ).Select(e => e.RoundNumber).Distinct().ToList();
 
-            //    result.AddRange(slotsExpectionByConference);
-            //}
+        //    //    result.AddRange(slotsExpectionByConference);
+        //    //}
 
-            return result;
-        }
+        //    return result;
+        //}
 
-        private IEnumerable<int> GetSlotsExpectionByConferenceProducer(IEnumerable<Negotiation> reservationForNegotiation, ProjectPlayer submission)
-        {
-            List<int> result = new List<int>();
+        //private IEnumerable<int> GetSlotsExpectionByConferenceProducer(IEnumerable<Negotiation> reservationForNegotiation, ProjectPlayer submission)
+        //{
+        //    List<int> result = new List<int>();
 
-            //var conferenceProducer = _conferences.Where(e => (e.Lecturers.Where(l => l.Collaborator != null).SelectMany(l => l.Collaborator.ProducersEvents.Select(p => p.Producer)).Any(p => p.Id == submission.Project.ProducerId)));
-            //if (conferenceProducer != null && conferenceProducer.Any())
-            //{
-            //    List<Tuple<DateTime?, TimeSpan, TimeSpan>> dateTimes = new List<Tuple<DateTime?, TimeSpan, TimeSpan>>();
+        //    //var conferenceProducer = _conferences.Where(e => (e.Lecturers.Where(l => l.Collaborator != null).SelectMany(l => l.Collaborator.ProducersEvents.Select(p => p.Producer)).Any(p => p.Id == submission.Project.ProducerId)));
+        //    //if (conferenceProducer != null && conferenceProducer.Any())
+        //    //{
+        //    //    List<Tuple<DateTime?, TimeSpan, TimeSpan>> dateTimes = new List<Tuple<DateTime?, TimeSpan, TimeSpan>>();
 
-            //    foreach (var conference in conferenceProducer)
-            //    {
-            //        dateTimes.Add(new Tuple<DateTime?, TimeSpan, TimeSpan>(conference.Date, conference.StartTime.Value.Add(TimeSpan.FromMinutes(-30)), conference.EndTime.Value.Add(TimeSpan.FromMinutes(30))));
-            //    }
+        //    //    foreach (var conference in conferenceProducer)
+        //    //    {
+        //    //        dateTimes.Add(new Tuple<DateTime?, TimeSpan, TimeSpan>(conference.Date, conference.StartTime.Value.Add(TimeSpan.FromMinutes(-30)), conference.EndTime.Value.Add(TimeSpan.FromMinutes(30))));
+        //    //    }
 
-            //    var slotsExpectionByConference = reservationForNegotiation
-            //                                           .Where(r => dateTimes
-            //                                                           .Any(c => (
-            //                                                                        c.Item1 == r.Date &&
-            //                                                                        (
-            //                                                                            (r.StarTime > c.Item2 && r.StarTime < c.Item3) ||
-            //                                                                            (r.EndTime < c.Item3 && r.EndTime > c.Item2)
-            //                                                                         )
+        //    //    var slotsExpectionByConference = reservationForNegotiation
+        //    //                                           .Where(r => dateTimes
+        //    //                                                           .Any(c => (
+        //    //                                                                        c.Item1 == r.Date &&
+        //    //                                                                        (
+        //    //                                                                            (r.StarTime > c.Item2 && r.StarTime < c.Item3) ||
+        //    //                                                                            (r.EndTime < c.Item3 && r.EndTime > c.Item2)
+        //    //                                                                         )
 
-            //                                                                      )
-            //                                                                )
-            //                                                  ).Select(e => e.RoundNumber).Distinct().ToList();
+        //    //                                                                      )
+        //    //                                                                )
+        //    //                                                  ).Select(e => e.RoundNumber).Distinct().ToList();
 
-            //    result.AddRange(slotsExpectionByConference);
-            //}
+        //    //    result.AddRange(slotsExpectionByConference);
+        //    //}
 
-            return result;
-        }
+        //    return result;
+        //}
         private Negotiation CreateNegotiation(NegotiationConfig dateConfig, NegotiationRoomConfig roomConfig, int numberSlot, int iTable, TimeSpan currentTime, NegotiationTypeCodes type)
         {
             var negociation = new Negotiation(dateConfig.Date);

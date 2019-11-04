@@ -182,7 +182,7 @@
     <Compile Include="Entities\Project\ProjectTeaserLink.cs" />
     <Compile Include="Entities\Project\ProjectImageLink.cs" />
     <Compile Include="Entities\Project\ProjectLogLine.cs" />
-    <Compile Include="Entities\Project\ProjectPlayerEvaluation.cs" />
+    <Compile Include="Entities\Project\ProjectBuyerEvaluation.cs" />
     <Compile Include="Entities\Project\ProjectProductionPlan.cs" />
     <Compile Include="Entities\Project\ProjectAdditionalInformation.cs" />
     <Compile Include="Entities\Project\ProjectStatus.cs" />

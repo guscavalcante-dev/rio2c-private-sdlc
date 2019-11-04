@@ -11,8 +11,8 @@ namespace PlataformaRio2C.Application.ViewModels.Admin
 {
     public class ProjectDetailAppViewModel : EntityViewModel<ProjectDetailAppViewModel, Project>
     {
-        public static readonly int ReasonMaxLength = ProjectPlayerEvaluation.ReasonMaxLength;
-        public IEnumerable<ProjectDetailItemPlayerAppViewModel> Players { get; set; }
+        //public static readonly int ReasonMaxLength = ProjectPlayerEvaluation.ReasonMaxLength;
+        //public IEnumerable<ProjectDetailItemPlayerAppViewModel> Players { get; set; }
 
         public string Title { get; set; }
 
@@ -43,60 +43,60 @@ namespace PlataformaRio2C.Application.ViewModels.Admin
         }
     }
 
-    public class ProjectDetailItemPlayerAppViewModel : EntityViewModel<ProjectDetailItemPlayerAppViewModel, ProjectPlayer>
-    {
-        public int Id { get; set; }
-        public bool Sent { get; set; }
-        public string PlayerName { get; set; }
-        public string SavedUser { get; set; }
-        public string SendingUser { get; set; }
-        public DateTime? DateSaved { get; set; }
-        public DateTime? DateSending { get; set; }
-        public PlayerProjectStatusAppViewModel Evaluation { get; set; }
+    //public class ProjectDetailItemPlayerAppViewModel : EntityViewModel<ProjectDetailItemPlayerAppViewModel, ProjectPlayer>
+    //{
+    //    public int Id { get; set; }
+    //    public bool Sent { get; set; }
+    //    public string PlayerName { get; set; }
+    //    public string SavedUser { get; set; }
+    //    public string SendingUser { get; set; }
+    //    public DateTime? DateSaved { get; set; }
+    //    public DateTime? DateSending { get; set; }
+    //    public PlayerProjectStatusAppViewModel Evaluation { get; set; }
 
-        public string Status { get; set; }        
-        public string Reason { get; set; }
+    //    public string Status { get; set; }        
+    //    public string Reason { get; set; }
 
-        public ProjectDetailItemPlayerAppViewModel()
-            : base()
-        {
+    //    public ProjectDetailItemPlayerAppViewModel()
+    //        : base()
+    //    {
 
-        }
+    //    }
 
-        public ProjectDetailItemPlayerAppViewModel(ProjectPlayer entity)
-            : base(entity)
-        {
-            Id = entity.Id;
-            Sent = entity.Sent;
-            PlayerName = entity.Player.Name;
+    //    public ProjectDetailItemPlayerAppViewModel(ProjectPlayer entity)
+    //        : base(entity)
+    //    {
+    //        Id = entity.Id;
+    //        Sent = entity.Sent;
+    //        PlayerName = entity.Player.Name;
 
-            if (entity.SavedUser!= null)
-            {
-                SavedUser = entity.SavedUser.Name;
-            }
+    //        if (entity.SavedUser!= null)
+    //        {
+    //            SavedUser = entity.SavedUser.Name;
+    //        }
 
-            if (entity.SendingUser != null)
-            {
-                SendingUser = entity.SendingUser.Name;
-            }
+    //        if (entity.SendingUser != null)
+    //        {
+    //            SendingUser = entity.SendingUser.Name;
+    //        }
             
-            DateSaved = entity.DateSaved;
-            DateSending = entity.DateSending;
+    //        DateSaved = entity.DateSaved;
+    //        DateSending = entity.DateSending;
 
-            if (entity.Evaluation != null)
-            {
-                if (entity.EvaluationId > 0 && entity.Evaluation != null && entity.Evaluation.StatusId > 0 && entity.Evaluation.Status != null)
-                {
+    //        if (entity.Evaluation != null)
+    //        {
+    //            if (entity.EvaluationId > 0 && entity.Evaluation != null && entity.Evaluation.StatusId > 0 && entity.Evaluation.Status != null)
+    //            {
                   
-                    Status = Labels.ResourceManager.GetString(entity.Evaluation.Status.Code);
-                    Reason = entity.Evaluation.Reason;
-                }
-                else
-                {
+    //                Status = Labels.ResourceManager.GetString(entity.Evaluation.Status.Code);
+    //                Reason = entity.Evaluation.Reason;
+    //            }
+    //            else
+    //            {
                  
-                    Status = Labels.ResourceManager.GetString(StatusProjectCodes.OnEvaluation.ToString());
-                }
-            }
-        }
-    }
+    //                Status = Labels.ResourceManager.GetString(StatusProjectCodes.OnEvaluation.ToString());
+    //            }
+    //        }
+    //    }
+    //}
 }

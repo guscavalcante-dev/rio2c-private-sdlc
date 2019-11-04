@@ -17,7 +17,7 @@ namespace PlataformaRio2C.Application.Services
         private readonly IProjectService _projectService;
         private readonly ICollaboratorPlayerService _collaboratorPlayerService;
         private readonly ICollaboratorProducerService _collaboratorProducerService;
-        private readonly IProjectPlayerRepository _projectPlayerRepository;
+        //private readonly IProjectPlayerRepository _projectPlayerRepository;
 
         public DashboardAppService(IRepositoryFactory repositoryFactory, IProjectService projectService, ICollaboratorPlayerService collaboratorPlayerService, ICollaboratorProducerService collaboratorProducerService)
         {
@@ -27,7 +27,7 @@ namespace PlataformaRio2C.Application.Services
             _projectService = projectService;
             _collaboratorPlayerService = collaboratorPlayerService;
             _collaboratorProducerService = collaboratorProducerService;
-            _projectPlayerRepository = repositoryFactory.ProjectPlayerRepository;
+            //_projectPlayerRepository = repositoryFactory.ProjectPlayerRepository;
         }
         public int GetTotalHolding()
         {
@@ -53,9 +53,9 @@ namespace PlataformaRio2C.Application.Services
         {
             var result = new List<DataItemChartAppViewModel>();
 
-            result.Add(new DataItemChartAppViewModel("Em avaliação", "evaluation", _projectPlayerRepository.CountOnEvaluation()));
-            result.Add(new DataItemChartAppViewModel("Aceito", "accepted", _projectPlayerRepository.CountAccepted()));
-            result.Add(new DataItemChartAppViewModel("Recusado", "refused", _projectPlayerRepository.CountRejected()));
+            //result.Add(new DataItemChartAppViewModel("Em avaliação", "evaluation", _projectPlayerRepository.CountOnEvaluation()));
+            //result.Add(new DataItemChartAppViewModel("Aceito", "accepted", _projectPlayerRepository.CountAccepted()));
+            //result.Add(new DataItemChartAppViewModel("Recusado", "refused", _projectPlayerRepository.CountRejected()));
 
             return result;
         }

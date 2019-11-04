@@ -26,21 +26,21 @@ namespace PlataformaRio2C.Domain.Services
     public class ProjectService : Service<Project>, IProjectService
     {
         private readonly IPlayerRepository _playerRepository;
-        private readonly IProjectPlayerRepository _projectPlayerRepository;
+        //private readonly IProjectPlayerRepository _projectPlayerRepository;
         private readonly IUserRepository _userRepository;
         private readonly ICollaboratorRepository _collaboratorRepository;
         private readonly IProjectStatusRepository _projectStatusRepository;
         private readonly IProducerRepository _producerRepository;
-        private readonly IProjectPlayerEvaluationRepository _projectPlayerEvaluationRepository;
+        //private readonly IProjectPlayerEvaluationRepository _projectPlayerEvaluationRepository;
 
         public ProjectService(IProjectRepository repository, IRepositoryFactory repositoryFactory)
             : base(repository)
         {
             _playerRepository = repositoryFactory.PlayerRepository;
             _userRepository = repositoryFactory.UserRepository;
-            _projectPlayerRepository = repositoryFactory.ProjectPlayerRepository;
+            //_projectPlayerRepository = repositoryFactory.ProjectPlayerRepository;
             _projectStatusRepository = repositoryFactory.ProjectStatusRepository;
-            _projectPlayerEvaluationRepository = repositoryFactory.ProjectPlayerEvaluationRepository;
+            //_projectPlayerEvaluationRepository = repositoryFactory.ProjectPlayerEvaluationRepository;
             _collaboratorRepository = repositoryFactory.CollaboratorRepository;
             _producerRepository = repositoryFactory.ProducerRepository;
         }
@@ -111,8 +111,8 @@ namespace PlataformaRio2C.Domain.Services
 
             if (_validationResult.IsValid)
             {
-                var entityProjectPlayer = new ProjectPlayer(entity, entityPlayer);
-                entityProjectPlayer.SetSavedUser(entityUser);
+                //var entityProjectPlayer = new ProjectPlayer(entity, entityPlayer);
+                //entityProjectPlayer.SetSavedUser(entityUser);
 
                 //if (entity.PlayersRelated != null)
                 //{

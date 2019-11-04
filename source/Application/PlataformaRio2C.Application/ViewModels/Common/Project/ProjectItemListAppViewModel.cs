@@ -199,26 +199,26 @@ namespace PlataformaRio2C.Application.ViewModels
 
         }
 
-        public ProjectItemListPlayerAppViewModel(ProjectPlayer entity)
-        {
-            Uid = entity.Player.Uid;
-            Name = entity.Player.Name;
-            HasImage = entity.Player.ImageId > 0;
+        //public ProjectItemListPlayerAppViewModel(ProjectPlayer entity)
+        //{
+        //    Uid = entity.Player.Uid;
+        //    Name = entity.Player.Name;
+        //    HasImage = entity.Player.ImageId > 0;
 
-            if (entity.EvaluationId > 0)
-            {
+        //    if (entity.EvaluationId > 0)
+        //    {
 
-            }
-        }
+        //    }
+        //}
 
-        public static IEnumerable<ProjectItemListPlayerAppViewModel> MapList(IEnumerable<ProjectPlayer> entities)
-        {
-            foreach (var entity in entities)
-            {
+        //public static IEnumerable<ProjectItemListPlayerAppViewModel> MapList(IEnumerable<ProjectPlayer> entities)
+        //{
+        //    foreach (var entity in entities)
+        //    {
 
-                yield return new ProjectItemListPlayerAppViewModel(entity);
-            }
-        }
+        //        yield return new ProjectItemListPlayerAppViewModel(entity);
+        //    }
+        //}
     }
 
 

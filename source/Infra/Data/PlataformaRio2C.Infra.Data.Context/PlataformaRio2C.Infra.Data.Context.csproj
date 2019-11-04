@@ -115,7 +115,7 @@
     <Compile Include="Mapping\Project\ProjectTypeMap.cs" />
     <Compile Include="Mapping\Project\ProjectAdditionalInformationMap.cs" />
     <Compile Include="Mapping\Project\ProjectInterestMap.cs" />
-    <Compile Include="Mapping\Project\ProjectPlayerEvaluationMap.cs" />
+    <Compile Include="Mapping\Project\ProjectBuyerEvaluationMap.cs" />
     <Compile Include="Mapping\Project\ProjectPlayerMap.cs" />
     <Compile Include="Mapping\Project\ProjectImageLinkMap.cs" />
     <Compile Include="Mapping\Project\ProjectTeaserLinkMap.cs" />

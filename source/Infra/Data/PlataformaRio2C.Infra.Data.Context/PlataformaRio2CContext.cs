@@ -76,6 +76,7 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new ProjectProductionPlanMap());
             modelBuilder.Configurations.Add(new ProjectSummaryMap());
             modelBuilder.Configurations.Add(new ProjectTitleMap());
+            modelBuilder.Configurations.Add(new ProjectBuyerEvaluationMap());
 
             // Addresses
             modelBuilder.Configurations.Add(new CountryMap());

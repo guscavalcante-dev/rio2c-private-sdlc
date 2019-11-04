@@ -9,7 +9,7 @@ namespace PlataformaRio2C.Application.ViewModels
 {
     public class ProjectPlayerDetailAppViewModel: ProjectDetailAppViewModel
     {
-        public static readonly int ReasonMaxLength = ProjectPlayerEvaluation.ReasonMaxLength;
+        //public static readonly int ReasonMaxLength = ProjectPlayerEvaluation.ReasonMaxLength;
         public IEnumerable<PlayerProjectStatusAppViewModel> Players { get; set; }
 
         public ProjectPlayerDetailAppViewModel()
@@ -18,13 +18,13 @@ namespace PlataformaRio2C.Application.ViewModels
 
         }
 
-        public ProjectPlayerDetailAppViewModel(ProjectPlayer entity)
-            :base(entity.Project)
-        {
-            //if (entity.Project.PlayersRelated != null && entity.Project.PlayersRelated.Any())
-            //{
-            //    Players = PlayerProjectStatusAppViewModel.MapList(entity.Project.PlayersRelated).ToList();
-            //}
-        }
+        //public ProjectPlayerDetailAppViewModel(ProjectPlayer entity)
+        //    :base(entity.Project)
+        //{
+        //    //if (entity.Project.PlayersRelated != null && entity.Project.PlayersRelated.Any())
+        //    //{
+        //    //    Players = PlayerProjectStatusAppViewModel.MapList(entity.Project.PlayersRelated).ToList();
+        //    //}
+        //}
     }
 }

@@ -14,7 +14,7 @@ namespace PlataformaRio2C.Application.Interfaces.Services
         IEnumerable<ProjectExcelItemListAppViewModel> GetAllExcel();
         void MapEntity(ref Project entity, ProjectEditAppViewModel project);
         IEnumerable<ProjectItemListAppViewModel> GetAllByUserProducerId(int id);
-        IEnumerable<ProjectPlayerItemListAppViewModel> GetAllByUserPlayerId(ProjectPlayerFilterAppDto filter, int id);
+        //IEnumerable<ProjectPlayerItemListAppViewModel> GetAllByUserPlayerId(ProjectPlayerFilterAppDto filter, int id);
         ViewModels.Admin.ProjectDetailAppViewModel GetPlayerSelectionByUidProject(Guid uid);
         AppValidationResult Create(ProjectEditAppViewModel viewModel, int userId);
         AppValidationResult Update(ProjectEditAppViewModel viewModel, int userId);

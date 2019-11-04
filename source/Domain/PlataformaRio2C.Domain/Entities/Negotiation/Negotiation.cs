@@ -27,7 +27,7 @@ namespace PlataformaRio2C.Domain.Entities
         public int RoomId { get; private set; }
         public virtual Room Room { get; private set; }
         public int? EvaluationId { get; private set; }
-        public virtual ProjectPlayerEvaluation Evaluation { get; private set; }
+        //public virtual ProjectPlayerEvaluation Evaluation { get; private set; }
         public DateTime? Date { get; private set; }
         public TimeSpan StarTime { get; private set; }
         public TimeSpan EndTime { get; private set; }
@@ -67,16 +67,16 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        public void SetSourceEvaluation(ProjectPlayerEvaluation entity)
-        {
-            CreateDate = DateTime.Now;
-            Uid = Guid.NewGuid();
-            Evaluation = entity;
-            if (entity != null)
-            {
-                EvaluationId = entity.Id;
-            }
-        }
+        //public void SetSourceEvaluation(ProjectPlayerEvaluation entity)
+        //{
+        //    CreateDate = DateTime.Now;
+        //    Uid = Guid.NewGuid();
+        //    Evaluation = entity;
+        //    if (entity != null)
+        //    {
+        //        EvaluationId = entity.Id;
+        //    }
+        //}
 
         public void SetRoom(Room entity)
         {

@@ -31,22 +31,22 @@ namespace PlataformaRio2C.Application.ViewModels
 
         }
 
-        public NegotiationResultProcessAppViewModel(IEnumerable<Negotiation> negotiations, IEnumerable<ProjectPlayer> submissionsError)
-        {
-            var lastNegotiation = negotiations.LastOrDefault(e => e.RoundNumber > 0 && e.Project != null);
-            if (lastNegotiation != null)
-            {
-                DateProcess = lastNegotiation.CreateDate.ToString("dd/MM/yyyy HH:mm:ss");
-            }
-            else
-            {
-                DateProcess = DateTime.Now.ToString("dd/MM/yyyy");
-            }
+        //public NegotiationResultProcessAppViewModel(IEnumerable<Negotiation> negotiations, IEnumerable<ProjectPlayer> submissionsError)
+        //{
+        //    var lastNegotiation = negotiations.LastOrDefault(e => e.RoundNumber > 0 && e.Project != null);
+        //    if (lastNegotiation != null)
+        //    {
+        //        DateProcess = lastNegotiation.CreateDate.ToString("dd/MM/yyyy HH:mm:ss");
+        //    }
+        //    else
+        //    {
+        //        DateProcess = DateTime.Now.ToString("dd/MM/yyyy");
+        //    }
             
-            NumberScheduledNegotiations = negotiations.Count(e => e.RoundNumber > 0 && e.Project != null);
-            NumberUnscheduledNegotiations = submissionsError.Count();
-            UnscheduledNegotiations = ProjectPlayerAppViewModel.MapList(submissionsError);
-        }
+        //    NumberScheduledNegotiations = negotiations.Count(e => e.RoundNumber > 0 && e.Project != null);
+        //    NumberUnscheduledNegotiations = submissionsError.Count();
+        //    UnscheduledNegotiations = ProjectPlayerAppViewModel.MapList(submissionsError);
+        //}
     }
 
     public class ProjectPlayerAppViewModel
@@ -60,20 +60,20 @@ namespace PlataformaRio2C.Application.ViewModels
 
         }
 
-        public ProjectPlayerAppViewModel(ProjectPlayer entity)
-        {
-            PlayerName = entity.Player.Name;
-            //ProducerName = entity.Project.Producer.Name;
-            //ProjectName = entity.Project.GetName();
+        //public ProjectPlayerAppViewModel(ProjectPlayer entity)
+        //{
+        //    PlayerName = entity.Player.Name;
+        //    //ProducerName = entity.Project.Producer.Name;
+        //    //ProjectName = entity.Project.GetName();
 
-        }
+        //}
 
-        public static IEnumerable<ProjectPlayerAppViewModel> MapList(IEnumerable<ProjectPlayer> entities)
-        {
-            foreach (var item in entities)
-            {
-                yield return new ProjectPlayerAppViewModel(item);
-            }
-        }
+        //public static IEnumerable<ProjectPlayerAppViewModel> MapList(IEnumerable<ProjectPlayer> entities)
+        //{
+        //    foreach (var item in entities)
+        //    {
+        //        yield return new ProjectPlayerAppViewModel(item);
+        //    }
+        //}
     }
 }

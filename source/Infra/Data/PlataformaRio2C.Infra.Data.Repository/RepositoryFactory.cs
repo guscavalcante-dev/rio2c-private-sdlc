@@ -319,14 +319,14 @@ namespace PlataformaRio2C.Infra.Data.Repository
             }
         }
 
-        private IProjectPlayerRepository _projectPlayerRepository;
-        public IProjectPlayerRepository ProjectPlayerRepository
-        {
-            get
-            {
-                return this._projectPlayerRepository ?? (this._projectPlayerRepository = new ProjectPlayerRepository(_context));
-            }
-        }
+        //private IProjectPlayerRepository _projectPlayerRepository;
+        //public IProjectPlayerRepository ProjectPlayerRepository
+        //{
+        //    get
+        //    {
+        //        return this._projectPlayerRepository ?? (this._projectPlayerRepository = new ProjectPlayerRepository(_context));
+        //    }
+        //}
 
         private IProjectStatusRepository _projectStatusRepository;
         public IProjectStatusRepository ProjectStatusRepository
@@ -337,14 +337,14 @@ namespace PlataformaRio2C.Infra.Data.Repository
             }
         }
 
-        private IProjectPlayerEvaluationRepository _projectPlayerEvaluationRepository;
-        public IProjectPlayerEvaluationRepository ProjectPlayerEvaluationRepository
-        {
-            get
-            {
-                return this._projectPlayerEvaluationRepository ?? (this._projectPlayerEvaluationRepository = new ProjectPlayerEvaluationRepository(_context));
-            }
-        }
+        //private IProjectPlayerEvaluationRepository _projectPlayerEvaluationRepository;
+        //public IProjectPlayerEvaluationRepository ProjectPlayerEvaluationRepository
+        //{
+        //    get
+        //    {
+        //        return this._projectPlayerEvaluationRepository ?? (this._projectPlayerEvaluationRepository = new ProjectPlayerEvaluationRepository(_context));
+        //    }
+        //}
 
 
         private ILogisticsRepository _logisticsRepository;
