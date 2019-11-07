@@ -1,0 +1,55 @@
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Application
+// Author           : Rafael Dantas Ruiz
+// Created          : 11-07-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 11-07-2019
+// ***********************************************************************
+// <copyright file="BaseProjectCommandHandler.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
+using System.Threading.Tasks;
+using MediatR;
+using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.Data.Context.Interfaces;
+
+namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
+{
+    /// <summary>BaseProjectCommandHandler</summary>
+    public class BaseProjectCommandHandler : BaseCommandHandler
+    {
+        protected readonly IProjectRepository ProjectRepo;
+
+        /// <summary>Initializes a new instance of the <see cref="BaseProjectCommandHandler"/> class.</summary>
+        /// <param name="eventBus">The event bus.</param>
+        /// <param name="uow">The uow.</param>
+        /// <param name="projectRepository">The project repository.</param>
+        public BaseProjectCommandHandler(IMediator eventBus, IUnitOfWork uow, IProjectRepository projectRepository)
+            : base(eventBus, uow)
+        {
+            this.ProjectRepo = projectRepository;
+        }
+
+        /// <summary>Gets the project by uid.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        public async Task<Project> GetProjectByUid(Guid projectUid)
+        {
+            var project = await this.ProjectRepo.GetAsync(projectUid);
+            if (project == null || project.IsDeleted)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM)));
+                return null;
+            }
+
+            return project;
+        }
+    }
+}

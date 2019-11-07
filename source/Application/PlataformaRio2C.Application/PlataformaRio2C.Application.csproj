@@ -210,6 +210,8 @@
     <Compile Include="CQRS\CommandsHandlers\Organizations\UpdateOrganizationMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\UpdateOrganizationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\CreateOrganizationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Projects\BaseProjectCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Projects\CreateProjectCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\SalesPlatformWebhookRequests\BaseSalesPlatformWebhookRequestCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\SalesPlatformWebhookRequests\CreateSalesPlatformWebhookRequestCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\SalesPlatformWebhookRequests\ProcessPendingPlatformWebhookRequestsAsyncCommandHandler.cs" />
@@ -260,6 +262,13 @@
     <Compile Include="CQRS\Commands\Holdings\UpdateHolding.cs" />
     <Compile Include="CQRS\Commands\Holdings\CreateHolding.cs" />
     <Compile Include="CQRS\Commands\Holdings\BaseCommands\HoldingDescriptionBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Projects\BaseCommands\ProjectLogLineBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Projects\BaseCommands\ProjectAdditionalInformationBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Projects\BaseCommands\ProjectProductPlanBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Projects\BaseCommands\ProjectSummaryBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Projects\BaseCommands\ProjectTitleBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Projects\BaseCommands\ProjectBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Projects\CreateProject.cs" />
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\ProcessPendingPlatformWebhookRequestsAsync.cs" />
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\CreateSalesPlatformWebhookRequest.cs" />
     <Compile Include="CQRS\BaseUserRequest.cs" />

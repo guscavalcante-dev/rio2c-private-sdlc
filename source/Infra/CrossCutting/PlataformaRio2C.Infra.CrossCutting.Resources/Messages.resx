@@ -707,4 +707,20 @@
     <value>Passos para inscrição de projeto</value>
     <comment>Passos para inscrição de projeto</comment>
   </data>
+  <data name="AudivisualPichingQuestion" xml:space="preserve">
+    <value>Deseja participar do processo de seleção para apresentar esse projeto nas sessões de PITCHING AUDIOVISUAL da Rio2C-RioContentMarket {0}?</value>
+    <comment>Deseja participar do processo de seleção para apresentar esse projeto nas sessões de PITCHING AUDIOVISUAL da Rio2C-RioContentMarket {0}?</comment>
+  </data>
+  <data name="FundingPlan" xml:space="preserve">
+    <value>Plano de financiamento (apenas projetos em desenvolvimento/produção)</value>
+    <comment>Plano de financiamento (apenas projetos em desenvolvimento/produção)</comment>
+  </data>
+  <data name="LinksForDownloadNotAccepted" xml:space="preserve">
+    <value>Não serão aceitos links para download, apenas para sites de compartilhamento de imagem ou vídeo, como Youtube e Vimeo.</value>
+    <comment>Não serão aceitos links para download, apenas para sites de compartilhamento de imagem ou vídeo, como Youtube e Vimeo.</comment>
+  </data>
+  <data name="ProjectBudget" xml:space="preserve">
+    <value>Orçamento do projeto (apenas para projetos em desenvolvimento/produção)</value>
+    <comment>Orçamento do projeto (apenas para projetos em desenvolvimento/produção)</comment>
+  </data>
 </root>

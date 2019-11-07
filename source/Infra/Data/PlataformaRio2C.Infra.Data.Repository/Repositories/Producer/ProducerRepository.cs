@@ -26,8 +26,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Include(i => i.Descriptions.Select( e=> e.Language))
                                 .Include(i => i.ProducerActivitys)
                                 .Include(i => i.ProducerTargetAudience)
-                                .Include(i => i.EventsCollaborators)
-                                .Include(i => i.Projects);
+                                .Include(i => i.EventsCollaborators);
+                                //.Include(i => i.Projects);
 
             return @readonly
               ? consult.AsNoTracking()
@@ -53,7 +53,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Include(i => i.ProducerActivitys)
                                 .Include(i => i.ProducerTargetAudience)
                                 .Include(i => i.EventsCollaborators)
-                                .Include(i => i.Projects)
+                                //.Include(i => i.Projects)
                 .FirstOrDefault(x => x.Id == (int)id);
 
         }

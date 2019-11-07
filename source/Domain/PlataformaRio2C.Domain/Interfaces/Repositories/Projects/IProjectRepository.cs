@@ -1,4 +1,17 @@
-﻿using PlataformaRio2C.Domain.Entities;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Domain
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 11-07-2019
+// ***********************************************************************
+// <copyright file="IProjectRepository.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,8 +19,11 @@ using System.Linq.Expressions;
 
 namespace PlataformaRio2C.Domain.Interfaces
 {
+    /// <summary>IProjectRepository</summary>
     public interface IProjectRepository : IRepository<Project>
     {
+        #region Old methods
+
         IEnumerable<Project> GetAllByAdmin();
         IEnumerable<Project> GetAllExcel();
         IEnumerable<Project> GetDataExcel();
@@ -24,5 +40,7 @@ namespace PlataformaRio2C.Domain.Interfaces
 
         int CountUnsent();
         int CountSent();
+
+        #endregion
     }
 }

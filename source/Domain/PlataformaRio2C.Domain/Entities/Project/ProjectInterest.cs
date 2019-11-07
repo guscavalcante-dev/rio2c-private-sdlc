@@ -4,13 +4,14 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-01-2019
+// Last Modified On : 11-07-2019
 // ***********************************************************************
 // <copyright file="ProjectInterest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using PlataformaRio2C.Domain.Validation;
 
 namespace PlataformaRio2C.Domain.Entities
@@ -27,8 +28,42 @@ namespace PlataformaRio2C.Domain.Entities
         //public virtual Guid InterestUid { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="ProjectInterest"/> class.</summary>
+        /// <param name="project">The project.</param>
+        /// <param name="interest">The interest.</param>
+        /// <param name="userId">The user identifier.</param>
+        public ProjectInterest(Project project, Interest interest, int userId)
+        {
+            this.ProjectId = project?.Id ?? 0;
+            this.Project = project;
+            this.InterestId = interest?.Id ?? 0;
+            this.Interest = interest;
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="ProjectInterest"/> class.</summary>
         protected ProjectInterest()
         {
+        }
+
+        /// <summary>Updates the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Update(int userId)
+        {
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Deletes the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(int userId)
+        {
+            this.IsDeleted = true;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
         }
 
         #region Validations

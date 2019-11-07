@@ -1597,4 +1597,16 @@
     <value>Project Subscription</value>
     <comment>Inscrição de Projeto</comment>
   </data>
+  <data name="ForSeries" xml:space="preserve">
+    <value>For series</value>
+    <comment>Se obra seriada</comment>
+  </data>
+  <data name="ProjectAdditionalInformations" xml:space="preserve">
+    <value>Additional information about the project</value>
+    <comment>Informações adicionais sobre o projeto</comment>
+  </data>
+  <data name="Summary" xml:space="preserve">
+    <value>Summary</value>
+    <comment>Sinopse</comment>
+  </data>
 </root>

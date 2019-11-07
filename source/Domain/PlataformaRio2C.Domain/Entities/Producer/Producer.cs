@@ -39,7 +39,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         public virtual ICollection<CollaboratorProducer> EventsCollaborators { get; private set; }
 
-        public virtual ICollection<Project> Projects { get; private set; }
+        //public virtual ICollection<Project> Projects { get; private set; }
 
 
         protected Producer()

@@ -4,14 +4,16 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-01-2019
+// Last Modified On : 11-07-2019
 // ***********************************************************************
 // <copyright file="ProjectSummary.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -30,8 +32,41 @@ namespace PlataformaRio2C.Domain.Entities
         //public virtual string LanguageCode { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="ProjectSummary"/> class.</summary>
+        /// <param name="value">The value.</param>
+        /// <param name="language">The language.</param>
+        /// <param name="userId">The user identifier.</param>
+        public ProjectSummary(string value, Language language, int userId)
+        {
+            this.Value = value?.Trim();
+            this.Language = language;
+            this.LanguageId = language?.Id ?? 0;
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="ProjectSummary"/> class.</summary>
         protected ProjectSummary()
         {
+        }
+
+        /// <summary>Updates the specified summary.</summary>
+        /// <param name="summary">The summary.</param>
+        public void Update(ProjectSummary summary)
+        {
+            this.Value = summary.Value?.Trim();
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = summary.UpdateUserId;
+        }
+
+        /// <summary>Deletes the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(int userId)
+        {
+            this.IsDeleted = true;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
         }
 
         #region Validations
@@ -43,34 +78,34 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.ValidationResult = new ValidationResult();
 
-            //this.ValidateName();
-            //this.ValidateDescriptions();
+            this.ValidateValue();
+            this.ValidateLanguage();
 
             return this.ValidationResult.IsValid;
         }
 
-        ///// <summary>Validates the name.</summary>
-        //public void ValidateName()
-        //{
-        //    if (string.IsNullOrEmpty(this.Name?.Trim()))
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Name), new string[] { "Name" }));
-        //    }
+        /// <summary>Validates the value.</summary>
+        public void ValidateValue()
+        {
+            //if (string.IsNullOrEmpty(this.Value?.Trim()))
+            //{
+            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Descriptions), new string[] { "Descriptions" }));
+            //}
 
-        //    if (this.Name?.Trim().Length < NameMinLength || this.Name?.Trim().Length > NameMaxLength)
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, NameMaxLength, NameMinLength), new string[] { "Name" }));
-        //    }
-        //}
+            if (this.Value?.Trim().Length < ValueMinLength || this.Value?.Trim().Length > ValueMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Summary, ValueMaxLength, ValueMinLength), new string[] { "Summaries" }));
+            }
+        }
 
-        ///// <summary>Validates the descriptions.</summary>
-        //public void ValidateDescriptions()
-        //{
-        //    foreach (var description in this.Descriptions?.Where(d => !d.IsValid())?.ToList())
-        //    {
-        //        this.ValidationResult.Add(description.ValidationResult);
-        //    }
-        //}
+        /// <summary>Validates the language.</summary>
+        public void ValidateLanguage()
+        {
+            if (this.Language == null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Language), new string[] { "Summaries" }));
+            }
+        }
 
         #endregion
 

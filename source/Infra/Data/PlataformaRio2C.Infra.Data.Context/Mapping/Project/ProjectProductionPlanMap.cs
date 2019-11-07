@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-01-2019
+// Last Modified On : 11-07-2019
 // ***********************************************************************
 // <copyright file="ProjectProductionPlanMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,13 +22,13 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         /// <summary>Initializes a new instance of the <see cref="ProjectProductionPlanMap"/> class.</summary>
         public ProjectProductionPlanMap()
         {
-            this.ToTable("ProjectProductionPlans");
+            this.ToTable("ProjectProductPlans"); //TODO: Rename to ProjectProductionPlans
 
             //this.Ignore(p => p.LanguageCode);
 
             Property(u => u.Value)
-                .HasColumnType("nvarchar(max)")
-                .HasMaxLength(int.MaxValue);
+                //.HasColumnType("nvarchar(max)")
+                .HasMaxLength(ProjectProductionPlan.ValueMaxLength);
 
             //Relationships
             this.HasRequired(t => t.Project)

@@ -1609,4 +1609,16 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Inscrição de Projeto</value>
     <comment>Inscrição de Projeto</comment>
   </data>
+  <data name="ForSeries" xml:space="preserve">
+    <value>Se obra seriada</value>
+    <comment>Se obra seriada</comment>
+  </data>
+  <data name="ProjectAdditionalInformations" xml:space="preserve">
+    <value>Informações adicionais sobre o projeto</value>
+    <comment>Informações adicionais sobre o projeto</comment>
+  </data>
+  <data name="Summary" xml:space="preserve">
+    <value>Sinopse</value>
+    <comment>Sinopse</comment>
+  </data>
 </root>

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-21-2019
+// Last Modified On : 11-07-2019
 // ***********************************************************************
 // <copyright file="IRepositoryFactory.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -41,14 +41,14 @@ namespace PlataformaRio2C.Domain.Interfaces
         IProducerActivityRepository ProducerActivityRepository { get; }
         IProducerTargetAudienceRepository ProducerTargetAudienceRepository { get; }
         
-        IProjectTitleRepository ProjectTitleRepository { get; }
-        IProjectLogLineRepository ProjectLogLineRepository { get; }
-        IProjectSummaryRepository ProjectSummaryRepository { get; }
-        IProjectProductionPlanRepository ProjectProductionPlanRepository { get; }
-        IProjectInterestRepository ProjectInterestRepository { get; }
-        IProjectLinkImageRepository ProjectLinkImageRepository { get; }
-        IProjectLinkTeaserRepository ProjectLinkTeaserRepository { get; }
-        IProjectAdditionalInformationRepository ProjectAdditionalInformationRepository { get; }
+        //IProjectTitleRepository ProjectTitleRepository { get; }
+        //IProjectLogLineRepository ProjectLogLineRepository { get; }
+        //IProjectSummaryRepository ProjectSummaryRepository { get; }
+        //IProjectProductionPlanRepository ProjectProductionPlanRepository { get; }
+        //IProjectInterestRepository ProjectInterestRepository { get; }
+        //IProjectLinkImageRepository ProjectLinkImageRepository { get; }
+        //IProjectLinkTeaserRepository ProjectLinkTeaserRepository { get; }
+        //IProjectAdditionalInformationRepository ProjectAdditionalInformationRepository { get; }
         //IProjectPlayerRepository ProjectPlayerRepository { get; }
         IProjectStatusRepository ProjectStatusRepository { get; }
         //IProjectPlayerEvaluationRepository ProjectPlayerEvaluationRepository { get; }

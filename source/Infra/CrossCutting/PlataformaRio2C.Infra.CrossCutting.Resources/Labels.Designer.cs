@@ -1285,6 +1285,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Se obra seriada.
+        /// </summary>
+        public static string ForSeries {
+            get {
+                return ResourceManager.GetString("ForSeries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to encontrada.
         /// </summary>
         public static string FoundF {
@@ -2549,6 +2558,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Informações adicionais sobre o projeto.
+        /// </summary>
+        public static string ProjectAdditionalInformations {
+            get {
+                return ResourceManager.GetString("ProjectAdditionalInformations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Detalhes do Projeto.
         /// </summary>
         public static string ProjectDetails {
@@ -3315,6 +3333,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Summaries {
             get {
                 return ResourceManager.GetString("Summaries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sinopse.
+        /// </summary>
+        public static string Summary {
+            get {
+                return ResourceManager.GetString("Summary", resourceCulture);
             }
         }
         

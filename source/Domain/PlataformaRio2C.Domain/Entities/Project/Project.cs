@@ -4,15 +4,17 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-01-2019
+// Last Modified On : 11-07-2019
 // ***********************************************************************
 // <copyright file="Project.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using PlataformaRio2C.Domain.Validation;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -24,19 +26,19 @@ namespace PlataformaRio2C.Domain.Entities
         public int ProjectTypeId { get; private set; }
         public int SellerAttendeeOrganizationId { get; private set; }
         public int NumberOfEpisodes { get; private set; }
-        public string EachEpisodePlayingTime { get; private set; } //TODO: Fix field name on database
+        public string EachEpisodePlayingTime { get; private set; }
         public string ValuePerEpisode { get; private set; }
         public string TotalValueOfProject { get; private set; }
         public string ValueAlreadyRaised { get; private set; }
         public string ValueStillNeeded { get; private set; }
-        public bool? Pitching { get; private set; }
+        public bool Pitching { get; private set; }
 
         public virtual ProjectType ProjectType { get; private set; }
         public virtual AttendeeOrganization SellerAttendeeOrganization { get; private set; }
 
         public virtual ICollection<ProjectTitle> Titles { get; private set; }
-        public virtual ICollection<ProjectSummary> Summaries { get; private set; }
         public virtual ICollection<ProjectLogLine> LogLines { get; private set; }
+        public virtual ICollection<ProjectSummary> Summaries { get; private set; }
         public virtual ICollection<ProjectProductionPlan> ProductionPlans { get; private set; }
         public virtual ICollection<ProjectAdditionalInformation> AdditionalInformations { get; private set; }
         public virtual ICollection<ProjectImageLink> ImageLinks { get; private set; }
@@ -44,10 +46,385 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<ProjectInterest> Interests { get; private set; }
         //public virtual ICollection<ProjectPlayer> PlayersRelated { get; private set; }
 
+        public Project(
+            ProjectType projectType,
+            AttendeeOrganization sellerAttendeeOrganization,
+            int numberOfEpisodes,
+            string eachEpisodePlayingTime,
+            string valuePerEpisode,
+            string totalValueOfProject,
+            string valueAlreadyRaised,
+            string valueStillNeeded,
+            bool isPitching,
+            List<ProjectTitle> titles,
+            List<ProjectLogLine> logLines,
+            List<ProjectSummary> summaries,
+            List<ProjectProductionPlan> productionPlans,
+            List<ProjectAdditionalInformation> additionalInformations,
+            List<Interest> interests,
+            int userId)
+        {
+            this.ProjectTypeId = projectType?.Id ?? 0;
+            this.ProjectType = projectType;
+            this.SellerAttendeeOrganizationId = sellerAttendeeOrganization?.Id ?? 0;
+            this.SellerAttendeeOrganization = sellerAttendeeOrganization;
+            this.NumberOfEpisodes = numberOfEpisodes;
+            this.EachEpisodePlayingTime = eachEpisodePlayingTime;
+            this.ValuePerEpisode = valuePerEpisode;
+            this.TotalValueOfProject = totalValueOfProject;
+            this.ValueAlreadyRaised = valueAlreadyRaised;
+            this.ValueStillNeeded = valueStillNeeded;
+            this.Pitching = isPitching;
+
+            this.SynchronizeTitles(titles, userId);
+            this.SynchronizeLogLines(logLines, userId);
+            this.SynchronizeSummaries(summaries, userId);
+            this.SynchronizeProductionPlans(productionPlans, userId);
+            this.SynchronizeAdditionalInformations(additionalInformations, userId);
+            this.SynchronizeInterests(interests, userId);
+
+            this.IsDeleted = false;
+            this.CreateUserId = this.UpdateUserId = userId;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+        }
+
         /// <summary>Initializes a new instance of the <see cref="Project"/> class.</summary>
         protected Project()
         {
         }
+
+        #region Titles
+
+        /// <summary>Synchronizes the titles.</summary>
+        /// <param name="titles">The titles.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeTitles(List<ProjectTitle> titles, int userId)
+        {
+            if (this.Titles == null)
+            {
+                this.Titles = new List<ProjectTitle>();
+            }
+
+            this.DeleteTitles(titles, userId);
+
+            if (titles?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var title in titles)
+            {
+                var titleDb = this.Titles.FirstOrDefault(d => d.Language.Code == title.Language.Code);
+                if (titleDb != null)
+                {
+                    titleDb.Update(title);
+                }
+                else
+                {
+                    this.CreateTitle(title);
+                }
+            }
+        }
+
+        /// <summary>Deletes the titles.</summary>
+        /// <param name="newTitles">The new titles.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteTitles(List<ProjectTitle> newTitles, int userId)
+        {
+            var titlesToDelete = this.Titles.Where(db => newTitles?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false && !db.IsDeleted).ToList();
+            foreach (var titleToDelete in titlesToDelete)
+            {
+                titleToDelete.Delete(userId);
+            }
+        }
+
+        /// <summary>Creates the title.</summary>
+        /// <param name="title">The title.</param>
+        private void CreateTitle(ProjectTitle title)
+        {
+            this.Titles.Add(title);
+        }
+
+        #endregion
+
+        #region LogLines
+
+        /// <summary>Synchronizes the log lines.</summary>
+        /// <param name="logLines">The log lines.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeLogLines(List<ProjectLogLine> logLines, int userId)
+        {
+            if (this.LogLines == null)
+            {
+                this.LogLines = new List<ProjectLogLine>();
+            }
+
+            this.DeleteLogLines(logLines, userId);
+
+            if (logLines?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var logLine in logLines)
+            {
+                var logLineDb = this.LogLines.FirstOrDefault(d => d.Language.Code == logLine.Language.Code);
+                if (logLineDb != null)
+                {
+                    logLineDb.Update(logLine);
+                }
+                else
+                {
+                    this.CreateLogLines(logLine);
+                }
+            }
+        }
+
+        /// <summary>Deletes the log lines.</summary>
+        /// <param name="newLogLines">The new log lines.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteLogLines(List<ProjectLogLine> newLogLines, int userId)
+        {
+            var logLinesToDelete = this.LogLines.Where(db => newLogLines?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false && !db.IsDeleted).ToList();
+            foreach (var logLineToDelete in logLinesToDelete)
+            {
+                logLineToDelete.Delete(userId);
+            }
+        }
+
+        /// <summary>Creates the log lines.</summary>
+        /// <param name="logLine">The log line.</param>
+        private void CreateLogLines(ProjectLogLine logLine)
+        {
+            this.LogLines.Add(logLine);
+        }
+
+        #endregion
+
+        #region Summaries
+
+        /// <summary>Synchronizes the summaries.</summary>
+        /// <param name="summaries">The summaries.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeSummaries(List<ProjectSummary> summaries, int userId)
+        {
+            if (this.Summaries == null)
+            {
+                this.Summaries = new List<ProjectSummary>();
+            }
+
+            this.DeleteSummaries(summaries, userId);
+
+            if (summaries?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var summary in summaries)
+            {
+                var summaryDb = this.Summaries.FirstOrDefault(d => d.Language.Code == summary.Language.Code);
+                if (summaryDb != null)
+                {
+                    summaryDb.Update(summary);
+                }
+                else
+                {
+                    this.CreateSummary(summary);
+                }
+            }
+        }
+
+        /// <summary>Deletes the summaries.</summary>
+        /// <param name="newSummaries">The new summaries.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteSummaries(List<ProjectSummary> newSummaries, int userId)
+        {
+            var summariesToDelete = this.Summaries.Where(db => newSummaries?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false && !db.IsDeleted).ToList();
+            foreach (var summaryToDelete in summariesToDelete)
+            {
+                summaryToDelete.Delete(userId);
+            }
+        }
+
+        /// <summary>Creates the summary.</summary>
+        /// <param name="sumary">The sumary.</param>
+        private void CreateSummary(ProjectSummary sumary)
+        {
+            this.Summaries.Add(sumary);
+        }
+
+        #endregion
+
+        #region Production Plans
+
+        /// <summary>Synchronizes the production plans.</summary>
+        /// <param name="productionPlans">The production plans.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeProductionPlans(List<ProjectProductionPlan> productionPlans, int userId)
+        {
+            if (this.ProductionPlans == null)
+            {
+                this.ProductionPlans = new List<ProjectProductionPlan>();
+            }
+
+            this.DeleteProductionPlans(productionPlans, userId);
+
+            if (productionPlans?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var productionPlan in productionPlans)
+            {
+                var productionPlanDb = this.ProductionPlans.FirstOrDefault(d => d.Language.Code == productionPlan.Language.Code);
+                if (productionPlanDb != null)
+                {
+                    productionPlanDb.Update(productionPlan);
+                }
+                else
+                {
+                    this.CreateProductionPlan(productionPlan);
+                }
+            }
+        }
+
+        /// <summary>Deletes the production plans.</summary>
+        /// <param name="newProductionPlans">The new production plans.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteProductionPlans(List<ProjectProductionPlan> newProductionPlans, int userId)
+        {
+            var productionPlansToDelete = this.ProductionPlans.Where(db => newProductionPlans?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false && !db.IsDeleted).ToList();
+            foreach (var productionPlanToDelete in productionPlansToDelete)
+            {
+                productionPlanToDelete.Delete(userId);
+            }
+        }
+
+        /// <summary>Creates the production plan.</summary>
+        /// <param name="productionPlan">The production plan.</param>
+        private void CreateProductionPlan(ProjectProductionPlan productionPlan)
+        {
+            this.ProductionPlans.Add(productionPlan);
+        }
+
+        #endregion
+
+        #region Additional Informations
+
+        /// <summary>Synchronizes the additional informations.</summary>
+        /// <param name="additionalInformations">The additional informations.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeAdditionalInformations(List<ProjectAdditionalInformation> additionalInformations, int userId)
+        {
+            if (this.AdditionalInformations == null)
+            {
+                this.AdditionalInformations = new List<ProjectAdditionalInformation>();
+            }
+
+            this.DeleteAdditionalInformations(additionalInformations, userId);
+
+            if (additionalInformations?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var additionalInformation in additionalInformations)
+            {
+                var additionalInformationDb = this.AdditionalInformations.FirstOrDefault(d => d.Language.Code == additionalInformation.Language.Code);
+                if (additionalInformationDb != null)
+                {
+                    additionalInformationDb.Update(additionalInformation);
+                }
+                else
+                {
+                    this.CreateAdditionalInformation(additionalInformation);
+                }
+            }
+        }
+
+        /// <summary>Deletes the additional informations.</summary>
+        /// <param name="newAdditionalInformations">The new additional informations.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteAdditionalInformations(List<ProjectAdditionalInformation> newAdditionalInformations, int userId)
+        {
+            var additionalInformationsToDelete = this.AdditionalInformations.Where(db => newAdditionalInformations?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false && !db.IsDeleted).ToList();
+            foreach (var additionalInformationToDelete in additionalInformationsToDelete)
+            {
+                additionalInformationToDelete.Delete(userId);
+            }
+        }
+
+        /// <summary>Creates the additional information.</summary>
+        /// <param name="additionalInformation">The additional information.</param>
+        private void CreateAdditionalInformation(ProjectAdditionalInformation additionalInformation)
+        {
+            this.AdditionalInformations.Add(additionalInformation);
+        }
+
+        #endregion
+
+        #region Interests
+
+        //public void UpdateInterests(List<Interest> interests, int userId)
+        //{
+        //    this.UpdateDate = DateTime.Now;
+        //    this.UpdateUserId = userId;
+        //    this.SynchronizeInterests(interests, userId);
+        //}
+
+        /// <summary>Synchronizes the interests.</summary>
+        /// <param name="interests">The interests.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeInterests(List<Interest> interests, int userId)
+        {
+            if (this.Interests == null)
+            {
+                this.Interests = new List<ProjectInterest>();
+            }
+
+            this.DeleteInterests(interests, userId);
+
+            if (interests?.Any() != true)
+            {
+                return;
+            }
+
+            // Create or update interests
+            foreach (var interest in interests)
+            {
+                var interestDb = this.Interests.FirstOrDefault(a => a.Interest.Uid == interest.Uid);
+                if (interestDb != null)
+                {
+                    interestDb.Update(userId);
+                }
+                else
+                {
+                    this.CreateInterest(interest, userId);
+                }
+            }
+        }
+
+        /// <summary>Deletes the interests.</summary>
+        /// <param name="newInterests">The new interests.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteInterests(List<Interest> newInterests, int userId)
+        {
+            var interestsToDelete = this.Interests.Where(db => newInterests?.Select(a => a.Uid)?.Contains(db.Interest.Uid) == false && !db.IsDeleted).ToList();
+            foreach (var interestToDelete in interestsToDelete)
+            {
+                interestToDelete.Delete(userId);
+            }
+        }
+
+        /// <summary>Creates the interest.</summary>
+        /// <param name="intestest">The intestest.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void CreateInterest(Interest intestest, int userId)
+        {
+            this.Interests.Add(new ProjectInterest(this, intestest, userId));
+        }
+
+        #endregion
 
         #region Validations
 
@@ -59,7 +436,11 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidationResult = new ValidationResult();
 
             //this.ValidateName();
-            //this.ValidateDescriptions();
+            this.ValidateTitles();
+            this.ValidateLogLines();
+            this.ValidateSummaries();
+            this.ValidateProductionPlans();
+            this.ValidateAdditionalInformations();
 
             return this.ValidationResult.IsValid;
         }
@@ -86,6 +467,76 @@ namespace PlataformaRio2C.Domain.Entities
         //        this.ValidationResult.Add(description.ValidationResult);
         //    }
         //}
+
+        /// <summary>Validates the titles.</summary>
+        public void ValidateTitles()
+        {
+            if (this.Titles?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var title in this.Titles?.Where(t => !t.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(title.ValidationResult);
+            }
+        }
+
+        /// <summary>Validates the log lines.</summary>
+        public void ValidateLogLines()
+        {
+            if (this.LogLines?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var logLine in this.LogLines?.Where(t => !t.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(logLine.ValidationResult);
+            }
+        }
+
+        /// <summary>Validates the summaries.</summary>
+        public void ValidateSummaries()
+        {
+            if (this.Summaries?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var summary in this.Summaries?.Where(t => !t.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(summary.ValidationResult);
+            }
+        }
+
+        /// <summary>Validates the production plans.</summary>
+        public void ValidateProductionPlans()
+        {
+            if (this.ProductionPlans?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var productionPlan in this.ProductionPlans?.Where(t => !t.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(productionPlan.ValidationResult);
+            }
+        }
+
+        /// <summary>Validates the additional informations.</summary>
+        public void ValidateAdditionalInformations()
+        {
+            if (this.AdditionalInformations?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var additionalInformation in this.AdditionalInformations?.Where(t => !t.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(additionalInformation.ValidationResult);
+            }
+        }
 
         #endregion
 

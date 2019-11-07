@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-31-2019
+// Last Modified On : 11-07-2019
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -38,21 +38,25 @@ namespace PlataformaRio2C.Web.Site.Controllers
     [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.ExecutiveAudiovisual + "," + Constants.CollaboratorType.Industry )]
     public class ProjectsController : BaseController
     {
+        private readonly IInterestRepository interestRepo;
         private readonly IActivityRepository activityRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
 
         /// <summary>Initializes a new instance of the <see cref="ProjectsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
+        /// <param name="interestRepository">The interest repository.</param>
         /// <param name="activityRepository">The activity repository.</param>
         /// <param name="targetAudienceRepository">The target audience repository.</param>
         public ProjectsController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
+            IInterestRepository interestRepository,
             IActivityRepository activityRepository,
             ITargetAudienceRepository targetAudienceRepository)
             : base(commandBus, identityController)
         {
+            this.interestRepo = interestRepository;
             this.activityRepo = activityRepository;
             this.targetAudienceRepo = targetAudienceRepository;
         }
@@ -88,6 +92,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #region Industry
 
+        #region Submit
+
         /// <summary>Submits this instance.</summary>
         /// <returns></returns>
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.Industry)]
@@ -96,7 +102,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper("Submit your projects", new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper("Projects", Url.Action("Index", "Project", new { Area = "Player" }))
+                new BreadcrumbItemHelper("Projects", Url.Action("Index", "Projects", new { Area = "" }))
             });
 
             #endregion
@@ -111,19 +117,95 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return RedirectToAction("TermsAcceptance", "Projects");
             }
 
-            //TODO: Remove this command - just to open the screen
-            var cmd = new OnboardProducerOrganizationData(
-                null,
+            var cmd = new CreateProject(
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
-                await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                 await this.activityRepo.FindAllAsync(),
                 await this.targetAudienceRepo.FindAllAsync(),
-                true,
-                true,
+                await this.interestRepo.FindAllGroupedByInterestGroupsAsync(),
                 true);
 
             return View(cmd);
         }
+
+        /// <summary>Submits the specified create project.</summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> Submit(CreateProject cmd)
+        {
+            if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
+                || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() == true)
+            {
+                return RedirectToAction("Submit", "Projects");
+            }
+
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper("Submit your projects", new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper("Projects", Url.Action("Index", "Projects", new { Area = "" }))
+            });
+
+            #endregion
+
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.UserAccessControlDto.EditionAttendeeOrganizations?.FirstOrDefault()?.Uid, //TODO: Change this
+                    ProjectType.Audiovisual.Uid,
+                    this.UserAccessControlDto.User.Id,
+                    this.UserAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                this.StatusMessageToastr(ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+
+                cmd.UpdateDropdownProperties(
+                    await this.activityRepo.FindAllAsync(),
+                    await this.targetAudienceRepo.FindAllAsync(),
+                    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
+
+                return View(cmd);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+
+                cmd.UpdateDropdownProperties(
+                    await this.activityRepo.FindAllAsync(),
+                    await this.targetAudienceRepo.FindAllAsync(),
+                    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
+
+                return View(cmd);
+            }
+
+            this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.CreatedM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
+
+            return RedirectToAction("Index", "Projects");
+        }
+
+        #endregion
 
         #region Producer Info
 
@@ -347,7 +429,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper("Submited Projects", new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper("Projects", Url.Action("Index", "Project", new { Area = "Player" }))
+                new BreadcrumbItemHelper("Projects", Url.Action("Index", "Projects", new { Area = "Player" }))
             });
 
             #endregion
@@ -367,7 +449,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper("Projects for review", new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper("Projects", Url.Action("Index", "Project", new { Area = "Player" }))
+                new BreadcrumbItemHelper("Projects", Url.Action("Index", "Projects", new { Area = "Player" }))
             });
 
             #endregion

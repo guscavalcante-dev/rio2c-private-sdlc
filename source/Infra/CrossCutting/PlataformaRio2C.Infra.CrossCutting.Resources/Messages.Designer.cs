@@ -106,6 +106,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deseja participar do processo de seleção para apresentar esse projeto nas sessões de PITCHING AUDIOVISUAL da Rio2C-RioContentMarket {0}?.
+        /// </summary>
+        public static string AudivisualPichingQuestion {
+            get {
+                return ResourceManager.GetString("AudivisualPichingQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nome do crachá obrigatório..
         /// </summary>
         public static string BadgeIsRequired {
@@ -582,6 +591,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Plano de financiamento (apenas projetos em desenvolvimento/produção).
+        /// </summary>
+        public static string FundingPlan {
+            get {
+                return ResourceManager.GetString("FundingPlan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O holding deve ter um nome..
         /// </summary>
         public static string HoldingMustHaveName {
@@ -722,6 +740,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string JobTitlePtBrIsRequired {
             get {
                 return ResourceManager.GetString("JobTitlePtBrIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Não serão aceitos links para download, apenas para sites de compartilhamento de imagem ou vídeo, como Youtube e Vimeo..
+        /// </summary>
+        public static string LinksForDownloadNotAccepted {
+            get {
+                return ResourceManager.GetString("LinksForDownloadNotAccepted", resourceCulture);
             }
         }
         
@@ -983,6 +1010,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ProfileUpdatedSuccessfully {
             get {
                 return ResourceManager.GetString("ProfileUpdatedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Orçamento do projeto (apenas para projetos em desenvolvimento/produção).
+        /// </summary>
+        public static string ProjectBudget {
+            get {
+                return ResourceManager.GetString("ProjectBudget", resourceCulture);
             }
         }
         

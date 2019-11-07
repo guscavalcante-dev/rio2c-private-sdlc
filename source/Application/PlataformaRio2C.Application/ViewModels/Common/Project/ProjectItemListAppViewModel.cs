@@ -87,10 +87,10 @@ namespace PlataformaRio2C.Application.ViewModels
                 //    NumberOfEvaluations = entity.PlayersRelated.Count(e => e.Evaluation != null);
                 //}
 
-                if (entity.Pitching != null)
-                {
-                    Pitching = entity.Pitching.Value;
-                }
+                //if (entity.Pitching != null)
+                //{
+                //    Pitching = entity.Pitching.Value;
+                //}
             }
         }
 
@@ -171,10 +171,10 @@ namespace PlataformaRio2C.Application.ViewModels
                 //    NumberOfEvaluations = entity.PlayersRelated.Count(e => e.Evaluation != null);
                 //}
 
-                if (entity.Pitching != null)
-                {
-                    Pitching = entity.Pitching.Value;
-                }
+                //if (entity.Pitching != null)
+                //{
+                //    Pitching = entity.Pitching.Value;
+                //}
             }
         }
 

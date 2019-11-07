@@ -4,7 +4,7 @@
 // Created          : 07-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-21-2019
+// Last Modified On : 11-07-2019
 // ***********************************************************************
 // <copyright file="RepositoryFactory.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -247,77 +247,77 @@ namespace PlataformaRio2C.Infra.Data.Repository
             }
         }
 
-        private IProjectTitleRepository _projectTitleRepository;
-        public IProjectTitleRepository ProjectTitleRepository
-        {
-            get
-            {
-                return this._projectTitleRepository ?? (this._projectTitleRepository = new ProjectTitleRepository(_context));
-            }
-        }
+        //private IProjectTitleRepository _projectTitleRepository;
+        //public IProjectTitleRepository ProjectTitleRepository
+        //{
+        //    get
+        //    {
+        //        return this._projectTitleRepository ?? (this._projectTitleRepository = new ProjectTitleRepository(_context));
+        //    }
+        //}
 
-        private IProjectLogLineRepository _projectLogLineRepository;
-        public IProjectLogLineRepository ProjectLogLineRepository
-        {
-            get
-            {
-                return this._projectLogLineRepository ?? (this._projectLogLineRepository = new ProjectLogLineRepository(_context));
-            }
-        }
+        //private IProjectLogLineRepository _projectLogLineRepository;
+        //public IProjectLogLineRepository ProjectLogLineRepository
+        //{
+        //    get
+        //    {
+        //        return this._projectLogLineRepository ?? (this._projectLogLineRepository = new ProjectLogLineRepository(_context));
+        //    }
+        //}
 
-        private IProjectSummaryRepository _projectSummaryRepository;
-        public IProjectSummaryRepository ProjectSummaryRepository
-        {
-            get
-            {
-                return this._projectSummaryRepository ?? (this._projectSummaryRepository = new ProjectSummaryRepository(_context));
-            }
-        }
+        //private IProjectSummaryRepository _projectSummaryRepository;
+        //public IProjectSummaryRepository ProjectSummaryRepository
+        //{
+        //    get
+        //    {
+        //        return this._projectSummaryRepository ?? (this._projectSummaryRepository = new ProjectSummaryRepository(_context));
+        //    }
+        //}
 
-        private IProjectProductionPlanRepository _projectProductionPlanRepository;
-        public IProjectProductionPlanRepository ProjectProductionPlanRepository
-        {
-            get
-            {
-                return this._projectProductionPlanRepository ?? (this._projectProductionPlanRepository = new ProjectProductionPlanRepository(_context));
-            }
-        }
+        //private IProjectProductionPlanRepository _projectProductionPlanRepository;
+        //public IProjectProductionPlanRepository ProjectProductionPlanRepository
+        //{
+        //    get
+        //    {
+        //        return this._projectProductionPlanRepository ?? (this._projectProductionPlanRepository = new ProjectProductionPlanRepository(_context));
+        //    }
+        //}
 
-        private IProjectInterestRepository _projectInterestRepository;
-        public IProjectInterestRepository ProjectInterestRepository
-        {
-            get
-            {
-                return this._projectInterestRepository ?? (this._projectInterestRepository = new ProjectInterestRepository(_context));
-            }
-        }
+        //private IProjectInterestRepository _projectInterestRepository;
+        //public IProjectInterestRepository ProjectInterestRepository
+        //{
+        //    get
+        //    {
+        //        return this._projectInterestRepository ?? (this._projectInterestRepository = new ProjectInterestRepository(_context));
+        //    }
+        //}
 
-        private IProjectLinkImageRepository _projectLinkImageRepository;
-        public IProjectLinkImageRepository ProjectLinkImageRepository
-        {
-            get
-            {
-                return this._projectLinkImageRepository ?? (this._projectLinkImageRepository = new ProjectLinkImageRepository(_context));
-            }
-        }
+        //private IProjectLinkImageRepository _projectLinkImageRepository;
+        //public IProjectLinkImageRepository ProjectLinkImageRepository
+        //{
+        //    get
+        //    {
+        //        return this._projectLinkImageRepository ?? (this._projectLinkImageRepository = new ProjectLinkImageRepository(_context));
+        //    }
+        //}
 
-        private IProjectLinkTeaserRepository _projectLinkTeaserRepository;
-        public IProjectLinkTeaserRepository ProjectLinkTeaserRepository
-        {
-            get
-            {
-                return this._projectLinkTeaserRepository ?? (this._projectLinkTeaserRepository = new ProjectLinkTeaserRepository(_context));
-            }
-        }
+        //private IProjectLinkTeaserRepository _projectLinkTeaserRepository;
+        //public IProjectLinkTeaserRepository ProjectLinkTeaserRepository
+        //{
+        //    get
+        //    {
+        //        return this._projectLinkTeaserRepository ?? (this._projectLinkTeaserRepository = new ProjectLinkTeaserRepository(_context));
+        //    }
+        //}
 
-        private IProjectAdditionalInformationRepository _projectAdditionalInformationRepository;
-        public IProjectAdditionalInformationRepository ProjectAdditionalInformationRepository
-        {
-            get
-            {
-                return this._projectAdditionalInformationRepository ?? (this._projectAdditionalInformationRepository = new ProjectAdditionalInformationRepository(_context));
-            }
-        }
+        //private IProjectAdditionalInformationRepository _projectAdditionalInformationRepository;
+        //public IProjectAdditionalInformationRepository ProjectAdditionalInformationRepository
+        //{
+        //    get
+        //    {
+        //        return this._projectAdditionalInformationRepository ?? (this._projectAdditionalInformationRepository = new ProjectAdditionalInformationRepository(_context));
+        //    }
+        //}
 
         //private IProjectPlayerRepository _projectPlayerRepository;
         //public IProjectPlayerRepository ProjectPlayerRepository

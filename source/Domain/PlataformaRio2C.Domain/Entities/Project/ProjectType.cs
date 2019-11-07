@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-01-2019
+// Last Modified On : 11-07-2019
 // ***********************************************************************
 // <copyright file="ProjectType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,8 +25,6 @@ namespace PlataformaRio2C.Domain.Entities
 
         public string Name { get; private set; }
         
-        public virtual User Updater { get; private set; }
-
         public virtual ICollection<OrganizationType> OrganizationTypes { get; private set; }
 
         //public virtual Address Address { get; private set; }
@@ -88,7 +86,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Statics
 
-        public static ProjectType AudioVisual = new ProjectType(new Guid("3CE14508-8F6F-4D9D-B5F2-C7B53BA031E0"), Labels.AudioVisual);
+        public static ProjectType Audiovisual = new ProjectType(new Guid("3CE14508-8F6F-4D9D-B5F2-C7B53BA031E0"), Labels.AudioVisual);
         public static ProjectType Inovation = new ProjectType(new Guid("736A7169-EF69-4AFB-BD43-D7C3BDA8BD74"), Labels.Innovation);
         public static ProjectType Music = new ProjectType(new Guid("EA460BF8-B7B5-4BAD-AC3F-242F3B6BFA0E"), Labels.Music);
 

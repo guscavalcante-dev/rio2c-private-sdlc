@@ -1,18 +1,34 @@
-﻿using PlataformaRio2C.Domain.Entities;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Domain
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 11-07-2019
+// ***********************************************************************
+// <copyright file="ProjectRepository.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.SystemParameter;
 using System;
-using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
+    /// <summary>ProjectRepository</summary>
     public class ProjectRepository : Repository<Context.PlataformaRio2CContext, Project>, IProjectRepository
     {
         private readonly ISystemParameterRepository _systemParameterRepository;
 
+        /// <summary>Initializes a new instance of the <see cref="ProjectRepository"/> class.</summary>
+        /// <param name="context">The context.</param>
+        /// <param name="systemParameterRepository">The system parameter repository.</param>
         public ProjectRepository(Context.PlataformaRio2CContext context, ISystemParameterRepository systemParameterRepository)
             : base(context)
         {
