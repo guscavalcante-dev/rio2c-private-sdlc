@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-07-2019
+// Last Modified On : 11-08-2019
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -275,7 +275,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    OrganizationType.Producer,
                     this.UserAccessControlDto.User.Id,
                     this.UserAccessControlDto.User.Uid,
                     this.EditionDto.Id,

@@ -103,3 +103,17 @@ go
 
 DROP TABLE "ProjectProductPlans"
 go
+
+ALTER TABLE "OrganizationTypes"
+	ADD "IsSeller" bit NULL
+go
+
+UPDATE "OrganizationTypes" SET IsSeller = 1 WHERE Uid IN ('7ce5a34f-e31f-4c26-bed9-cdd6a0206185', 'f2efdbaa-27bd-42bd-bf29-a8daed6093ff', 'd077ba5c-2982-4b69-95d4-d9aa1bf8e7f4')
+go
+
+UPDATE "OrganizationTypes" SET IsSeller = 0 WHERE Uid IN ('936b3262-8b8f-472c-94ad-3a2b925dd0ae', '7eb327a9-95e8-4514-8e66-39510fc9ed03', '243aafb2-b610-49b4-b9bc-33cdf631c367')
+go
+
+ALTER TABLE "OrganizationTypes"
+	ALTER COLUMN "IsSeller" bit NOT NULL
+go

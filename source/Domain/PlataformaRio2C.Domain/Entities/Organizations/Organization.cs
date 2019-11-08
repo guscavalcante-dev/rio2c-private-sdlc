@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-29-2019
+// Last Modified On : 11-08-2019
 // ***********************************************************************
 // <copyright file="Organization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -198,7 +198,6 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Initializes a new instance of the <see cref="Organization"/> class for producer onboarding.</summary>
         /// <param name="edition">The edition.</param>
-        /// <param name="organizationType">Type of the organization.</param>
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
         /// <param name="companyName">Name of the company.</param>
         /// <param name="tradeName">Name of the trade.</param>
@@ -220,7 +219,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public Organization(
             Edition edition,
-            OrganizationType organizationType,
             AttendeeCollaborator attendeeCollaborator,
             string companyName,
             string tradeName,
@@ -254,7 +252,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeDescriptions(descriptions, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
             this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
-            this.SynchronizeAttendeeOrganizations(edition, organizationType, attendeeCollaborator, false, true, userId);
+            this.SynchronizeAttendeeOrganizations(edition, null, attendeeCollaborator, false, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.OnboardProducerAttendeeOrganizationData(edition, userId);
         }
@@ -567,7 +565,6 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Called when [producer data].</summary>
         /// <param name="edition">The edition.</param>
-        /// <param name="organizationType">Type of the organization.</param>
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
         /// <param name="companyName">Name of the company.</param>
         /// <param name="tradeName">Name of the trade.</param>
@@ -590,7 +587,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void OnboardProducerData(
             Edition edition,
-            OrganizationType organizationType,
             AttendeeCollaborator attendeeCollaborator,
             string companyName,
             string tradeName,
@@ -624,7 +620,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeDescriptions(descriptions, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
             this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
-            this.SynchronizeAttendeeOrganizations(edition, organizationType, attendeeCollaborator, null, true, userId);
+            this.SynchronizeAttendeeOrganizations(edition, null, attendeeCollaborator, null, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.OnboardProducerAttendeeOrganizationData(edition, userId);
         }

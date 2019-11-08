@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-01-2019
+// Last Modified On : 11-08-2019
 // ***********************************************************************
 // <copyright file="AttendeeOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -106,7 +106,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Synchronizes the attendee organization types.</summary>
         /// <param name="organizationType">Type of the organization.</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeAttendeeOrganizationTypes(OrganizationType organizationType, int userId)
+        public void SynchronizeAttendeeOrganizationTypes(OrganizationType organizationType, int userId)
         {
             if (this.AttendeeOrganizationTypes == null)
             {

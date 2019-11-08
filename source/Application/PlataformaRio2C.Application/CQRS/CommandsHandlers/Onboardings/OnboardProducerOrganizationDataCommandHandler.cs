@@ -4,7 +4,7 @@
 // Created          : 10-29-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-29-2019
+// Last Modified On : 11-08-2019
 // ***********************************************************************
 // <copyright file="OnboardProducerOrganizationDataCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,7 +33,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     {
         private readonly IEditionRepository editionRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
-        private readonly IOrganizationTypeRepository organizationTypeRepo;
         private readonly ILanguageRepository languageRepo;
         private readonly IActivityRepository activityRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
@@ -45,7 +44,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="organizationRepository">The organization repository.</param>
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
-        /// <param name="organizationTypeRepository">The organization type repository.</param>
         /// <param name="languageRepository">The language repository.</param>
         /// <param name="activityRepository">The activity repository.</param>
         /// <param name="targetAudienceRepository">The target audience repository.</param>
@@ -56,7 +54,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IOrganizationRepository organizationRepository,
             IEditionRepository editionRepository,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
-            IOrganizationTypeRepository organizationTypeRepository,
             ILanguageRepository languageRepository,
             IActivityRepository activityRepository,
             ITargetAudienceRepository targetAudienceRepository,
@@ -65,7 +62,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.editionRepo = editionRepository;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
-            this.organizationTypeRepo = organizationTypeRepository;
             this.languageRepo = languageRepository;
             this.activityRepo = activityRepository;
             this.targetAudienceRepo = targetAudienceRepository;
@@ -107,7 +103,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
                 organization.OnboardProducerData(
                     await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
-                    await this.organizationTypeRepo.GetAsync(cmd.OrganizationType?.Uid ?? Guid.Empty),
                     attendeeCollaborator,
                     cmd.CompanyName,
                     cmd.TradeName,
@@ -158,7 +153,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
                 organization = new Organization(
                     await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
-                    await this.organizationTypeRepo.GetAsync(cmd.OrganizationType?.Uid ?? Guid.Empty),
                     attendeeCollaborator,
                     cmd.CompanyName,
                     cmd.TradeName,

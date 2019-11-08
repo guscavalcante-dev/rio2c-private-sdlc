@@ -4,13 +4,14 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-29-2019
+// Last Modified On : 11-08-2019
 // ***********************************************************************
 // <copyright file="OnboardPlayerOrganizationData.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using System.Collections.Generic;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
@@ -20,6 +21,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>OnboardPlayerOrganizationData</summary>
     public class OnboardPlayerOrganizationData : OrganizationSiteBaseCommand
     {
+        public OrganizationType OrganizationType { get; private set; }
+
         /// <summary>Initializes a new instance of the <see cref="OnboardPlayerOrganizationData"/> class.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
@@ -45,6 +48,25 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Initializes a new instance of the <see cref="OnboardPlayerOrganizationData"/> class.</summary>
         public OnboardPlayerOrganizationData()
         {
+        }
+
+        /// <summary>Updates the pre send properties.</summary>
+        /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="userUid">The user uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="editionUid">The edition uid.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        public void UpdatePreSendProperties(
+            OrganizationType organizationType,
+            int userId,
+            Guid userUid,
+            int? editionId,
+            Guid? editionUid,
+            string userInterfaceLanguage)
+        {
+            this.OrganizationType = organizationType;
+            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
         }
     }
 }

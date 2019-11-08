@@ -1267,6 +1267,7 @@ CREATE TABLE [dbo].[OrganizationTypes](
 	[Uid] [uniqueidentifier] NULL,
 	[Name] [varchar](50) NOT NULL,
 	[RelatedProjectTypeId] [int] NOT NULL,
+	[IsSeller] [bit] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,

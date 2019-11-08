@@ -87,8 +87,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.ProjectTypeId = projectType?.Id ?? 0;
             this.ProjectType = projectType;
-            this.SellerAttendeeOrganizationId = sellerAttendeeOrganization?.Id ?? 0;
-            this.SellerAttendeeOrganization = sellerAttendeeOrganization;
+            this.SetSellerAttendeeOrganization(projectType, sellerAttendeeOrganization, userId);
             this.NumberOfEpisodes = numberOfEpisodes;
             this.EachEpisodePlayingTime = eachEpisodePlayingTime;
             this.ValuePerEpisode = valuePerEpisode;
@@ -115,6 +114,23 @@ namespace PlataformaRio2C.Domain.Entities
         protected Project()
         {
         }
+
+        #region Seller Attendee Organization
+
+        /// <summary>Sets the seller attendee organization.</summary>
+        /// <param name="projectType">Type of the project.</param>
+        /// <param name="sellerAttendeeOrganization">The seller attendee organization.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void SetSellerAttendeeOrganization(ProjectType projectType, AttendeeOrganization sellerAttendeeOrganization, int userId)
+        {
+            this.SellerAttendeeOrganizationId = sellerAttendeeOrganization?.Id ?? 0;
+            this.SellerAttendeeOrganization = sellerAttendeeOrganization;
+
+            var organizationType = projectType?.OrganizationTypes?.FirstOrDefault(ot => ot.IsSeller);
+            this.SellerAttendeeOrganization?.SynchronizeAttendeeOrganizationTypes(organizationType, userId);
+        }
+
+        #endregion
 
         #region Titles
 
