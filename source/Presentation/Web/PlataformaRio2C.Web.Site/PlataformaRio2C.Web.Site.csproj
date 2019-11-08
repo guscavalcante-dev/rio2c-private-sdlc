@@ -7088,7 +7088,7 @@
     <Content Include="Views\Projects\EditorTemplates\ProjectTitleBaseCommand.cshtml" />
     <Content Include="Views\Projects\EditorTemplates\ProjectLogLineBaseCommand.cshtml" />
     <Content Include="Views\Projects\EditorTemplates\ProjectSummaryBaseCommand.cshtml" />
-    <Content Include="Views\Projects\EditorTemplates\ProjectProductPlanBaseCommand.cshtml" />
+    <Content Include="Views\Projects\EditorTemplates\ProjectProductionPlanBaseCommand.cshtml" />
     <Content Include="Views\Projects\EditorTemplates\ProjectAdditionalInformationBaseCommand.cshtml" />
     <None Include="Views\Projects\Submit.cshtml.old" />
     <Content Include="Web.config">

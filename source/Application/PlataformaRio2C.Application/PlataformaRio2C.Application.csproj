@@ -264,7 +264,7 @@
     <Compile Include="CQRS\Commands\Holdings\BaseCommands\HoldingDescriptionBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Projects\BaseCommands\ProjectLogLineBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Projects\BaseCommands\ProjectAdditionalInformationBaseCommand.cs" />
-    <Compile Include="CQRS\Commands\Projects\BaseCommands\ProjectProductPlanBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Projects\BaseCommands\ProjectProductionPlanBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Projects\BaseCommands\ProjectSummaryBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Projects\BaseCommands\ProjectTitleBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Projects\BaseCommands\ProjectBaseCommand.cs" />

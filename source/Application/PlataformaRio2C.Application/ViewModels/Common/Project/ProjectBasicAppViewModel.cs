@@ -67,13 +67,13 @@ namespace PlataformaRio2C.Application.ViewModels
         public ProjectBasicAppViewModel(Project entity)
             : base(entity)
         {
-            NumberOfEpisodes = entity.NumberOfEpisodes;
+            //NumberOfEpisodes = entity.NumberOfEpisodes;
             EachEpisodePlayingTime = entity.EachEpisodePlayingTime;
-            ValuePerEpisode = entity.ValuePerEpisode;
-            TotalValueOfProject = entity.TotalValueOfProject;
-            ValueAlreadyRaised = entity.ValueAlreadyRaised;
-            ValueStillNeeded = entity.ValueStillNeeded;
-            Pitching = entity.Pitching;
+            //ValuePerEpisode = entity.ValuePerEpisode;
+            //TotalValueOfProject = entity.TotalValueOfProject;
+            //ValueAlreadyRaised = entity.ValueAlreadyRaised;
+            //ValueStillNeeded = entity.ValueStillNeeded;
+            //Pitching = entity.Pitching;
 
             if (entity.Titles != null && entity.Titles.Any())
             {

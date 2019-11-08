@@ -75,7 +75,7 @@ CREATE TABLE [dbo].[AttendeeCollaborators](
 	[OnboardingFinishDate] [datetime] NULL,
 	[OnboardingUserDate] [datetime] NULL,
 	[OnboardingCollaboratorDate] [datetime] NULL,
-	[OnboardingOrganizationDataSkippedDate]  [datetime]  NULL,
+	[OnboardingOrganizationDataSkippedDate] [datetime] NULL,
 	[PlayerTermsAcceptanceDate] [datetime] NULL,
 	[ProducerTermsAcceptanceDate] [datetime] NULL,
 	[IsApiDisplayEnabled] [bit] NOT NULL,
@@ -743,8 +743,8 @@ CREATE TABLE [dbo].[Editions](
 	[ProjectSubmitStartDate] [datetime] NOT NULL,
 	[ProjectSubmitEndDate] [datetime] NOT NULL,
 	[ProjectEvaluationStartDate] [datetime] NOT NULL,
-	[OneToOneMeetingsScheduleDate] [datetime] NOT NULL,
 	[ProjectEvaluationEndDate] [datetime] NOT NULL,
+	[OneToOneMeetingsScheduleDate] [datetime] NOT NULL,
 	[NegotiationStartDate] [datetime] NOT NULL,
 	[NegotiationEndDate] [datetime] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
@@ -1475,31 +1475,31 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[ProjectProductPlans](
+CREATE TABLE [dbo].[ProjectProductionPlans](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
 	[ProjectId] [int] NOT NULL,
 	[LanguageId] [int] NOT NULL,
-	[Value] [nvarchar](max) NULL,
+	[Value] [nvarchar](3000) NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,
 	[UpdateDate] [datetime] NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
- CONSTRAINT [PK_ProjectProductPlans] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_ProjectProductionPlans] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
- CONSTRAINT [IDX_UQ_ProjectProductPlans_ProjectId_LanguageId] UNIQUE NONCLUSTERED 
+ CONSTRAINT [IDX_UQ_ProjectProductionPlans_ProjectId_LanguageId] UNIQUE NONCLUSTERED 
 (
 	[ProjectId] ASC,
 	[LanguageId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
- CONSTRAINT [IDX_UQ_ProjectProductPlans_Uid] UNIQUE NONCLUSTERED 
+ CONSTRAINT [IDX_UQ_ProjectProductionPlans_Uid] UNIQUE NONCLUSTERED 
 (
 	[Uid] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 
 GO
 SET ANSI_NULLS ON
@@ -1513,13 +1513,13 @@ CREATE TABLE [dbo].[Projects](
 	[Uid] [uniqueidentifier] NOT NULL,
 	[ProjectTypeId] [int] NOT NULL,
 	[SellerAttendeeOrganizationId] [int] NULL,
-	[NumberOfEpisodes] [int] NOT NULL,
-	[EasyEpisodePlayingTime] [varchar](50) NULL,
-	[ValuePerEpisode] [varchar](50) NULL,
-	[TotalValueOfProject] [varchar](50) NULL,
-	[ValueAlreadyRaised] [varchar](50) NULL,
-	[ValueStillNeeded] [varchar](50) NULL,
-	[Pitching] [bit] NOT NULL,
+	[NumberOfEpisodes] [int] NULL,
+	[EachEpisodePlayingTime] [varchar](50) NULL,
+	[ValuePerEpisode] [int] NULL,
+	[TotalValueOfProject] [int] NULL,
+	[ValueAlreadyRaised] [int] NULL,
+	[ValueStillNeeded] [int] NULL,
+	[IsPitching] [bit] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,
@@ -2981,25 +2981,25 @@ REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[ProjectLogLines] CHECK CONSTRAINT [FK_Users_ProjectLogLines_UpdateUserId]
 GO
-ALTER TABLE [dbo].[ProjectProductPlans]  WITH CHECK ADD  CONSTRAINT [FK_Languages_ProjectProductPlans_LanguageId] FOREIGN KEY([LanguageId])
+ALTER TABLE [dbo].[ProjectProductionPlans]  WITH CHECK ADD  CONSTRAINT [FK_Languages_ProjectProductionPlans_LanguageId] FOREIGN KEY([LanguageId])
 REFERENCES [dbo].[Languages] ([Id])
 GO
-ALTER TABLE [dbo].[ProjectProductPlans] CHECK CONSTRAINT [FK_Languages_ProjectProductPlans_LanguageId]
+ALTER TABLE [dbo].[ProjectProductionPlans] CHECK CONSTRAINT [FK_Languages_ProjectProductionPlans_LanguageId]
 GO
-ALTER TABLE [dbo].[ProjectProductPlans]  WITH CHECK ADD  CONSTRAINT [FK_Projects_ProjectProductPlans_ProjectId] FOREIGN KEY([ProjectId])
+ALTER TABLE [dbo].[ProjectProductionPlans]  WITH CHECK ADD  CONSTRAINT [FK_Projects_ProjectProductionPlans_ProjectId] FOREIGN KEY([ProjectId])
 REFERENCES [dbo].[Projects] ([Id])
 GO
-ALTER TABLE [dbo].[ProjectProductPlans] CHECK CONSTRAINT [FK_Projects_ProjectProductPlans_ProjectId]
+ALTER TABLE [dbo].[ProjectProductionPlans] CHECK CONSTRAINT [FK_Projects_ProjectProductionPlans_ProjectId]
 GO
-ALTER TABLE [dbo].[ProjectProductPlans]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectProductPlans_CreateUserId] FOREIGN KEY([CreateUserId])
+ALTER TABLE [dbo].[ProjectProductionPlans]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectProductionPlans_CreateUserId] FOREIGN KEY([CreateUserId])
 REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[ProjectProductPlans] CHECK CONSTRAINT [FK_Users_ProjectProductPlans_CreateUserId]
+ALTER TABLE [dbo].[ProjectProductionPlans] CHECK CONSTRAINT [FK_Users_ProjectProductionPlans_CreateUserId]
 GO
-ALTER TABLE [dbo].[ProjectProductPlans]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectProductPlans_UpdateUserId] FOREIGN KEY([UpdateUserId])
+ALTER TABLE [dbo].[ProjectProductionPlans]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectProductionPlans_UpdateUserId] FOREIGN KEY([UpdateUserId])
 REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[ProjectProductPlans] CHECK CONSTRAINT [FK_Users_ProjectProductPlans_UpdateUserId]
+ALTER TABLE [dbo].[ProjectProductionPlans] CHECK CONSTRAINT [FK_Users_ProjectProductionPlans_UpdateUserId]
 GO
 ALTER TABLE [dbo].[Projects]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeOrganizations_Projects_SellerAttendeeOrganizationId] FOREIGN KEY([SellerAttendeeOrganizationId])
 REFERENCES [dbo].[AttendeeOrganizations] ([Id])

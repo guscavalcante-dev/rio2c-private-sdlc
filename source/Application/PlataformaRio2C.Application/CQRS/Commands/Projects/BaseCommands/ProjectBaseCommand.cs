@@ -4,7 +4,7 @@
 // Created          : 11-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-07-2019
+// Last Modified On : 11-08-2019
 // ***********************************************************************
 // <copyright file="ProjectBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -31,11 +32,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<ProjectSummaryBaseCommand> Summaries { get; set; }
 
         [Display(Name = "NumberOfEpisodes", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public int? NumberOfEpisodes { get; set; }
 
         [Display(Name = "EachEpisodePlayingTime", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [RequiredIfNotEmpty("NumberOfEpisodes", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string EachEpisodePlayingTime { get; set; }
 
@@ -43,27 +43,23 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public List<Guid> TargetAudiencesUids { get; set; }
 
-        public List<ProjectProductPlanBaseCommand> ProductPlans { get; set; }
+        public List<ProjectProductionPlanBaseCommand> ProductPlans { get; set; }
 
         [Display(Name = "ValuePerEpisode", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        public string ValuePerEpisode { get; set; }
+        [RequiredIfNotEmpty("NumberOfEpisodes", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public int? ValuePerEpisode { get; set; }
 
         [Display(Name = "TotalValueOfProject", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        public string TotalValueOfProject { get; set; }
+        public int? TotalValueOfProject { get; set; }
 
         [Display(Name = "ValueAlreadyRaised", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        public string ValueAlreadyRaised { get; set; }
+        public int? ValueAlreadyRaised { get; set; }
 
         [Display(Name = "ValueStillNeeded", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        public string ValueStillNeeded { get; set; }
+        public int? ValueStillNeeded { get; set; }
 
         [Display(Name = "ImageLinks", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -115,7 +111,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.ValueStillNeeded = entity?.Project?.ValueStillNeeded;
             this.ImageLinks = entity?.Project?.ImageLinks?.FirstOrDefault()?.Value;
             this.TeaserLinks = entity?.Project?.TeaserLinks?.FirstOrDefault()?.Value;
-            this.IsPitching= entity?.Project?.Pitching;
+            this.IsPitching= entity?.Project?.IsPitching;
 
             this.UpdateTitles(entity, languagesDtos, isDataRequired);
             this.UpdateLogLines(entity, languagesDtos, isDataRequired);
@@ -182,12 +178,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isDataRequired">if set to <c>true</c> [is data required].</param>
         private void UpdateProductionPlans(ProjectDto entity, List<LanguageDto> languagesDtos, bool isDataRequired)
         {
-            this.ProductPlans = new List<ProjectProductPlanBaseCommand>();
+            this.ProductPlans = new List<ProjectProductionPlanBaseCommand>();
             foreach (var languageDto in languagesDtos)
             {
                 var productionPlan = entity?.ProjectProductionPlanDtos?.FirstOrDefault(ptd => ptd.Language.Code == languageDto.Code);
-                this.ProductPlans.Add(productionPlan != null ? new ProjectProductPlanBaseCommand(productionPlan, isDataRequired) :
-                                                               new ProjectProductPlanBaseCommand(languageDto, isDataRequired));
+                this.ProductPlans.Add(productionPlan != null ? new ProjectProductionPlanBaseCommand(productionPlan, isDataRequired) :
+                                                               new ProjectProductionPlanBaseCommand(languageDto, isDataRequired));
             }
         }
 

@@ -25,13 +25,13 @@ namespace PlataformaRio2C.Domain.Entities
 
         public int ProjectTypeId { get; private set; }
         public int SellerAttendeeOrganizationId { get; private set; }
-        public int NumberOfEpisodes { get; private set; }
+        public int? NumberOfEpisodes { get; private set; }
         public string EachEpisodePlayingTime { get; private set; }
-        public string ValuePerEpisode { get; private set; }
-        public string TotalValueOfProject { get; private set; }
-        public string ValueAlreadyRaised { get; private set; }
-        public string ValueStillNeeded { get; private set; }
-        public bool Pitching { get; private set; }
+        public int? ValuePerEpisode { get; private set; }
+        public int? TotalValueOfProject { get; private set; }
+        public int? ValueAlreadyRaised { get; private set; }
+        public int? ValueStillNeeded { get; private set; }
+        public bool IsPitching { get; private set; }
 
         public virtual ProjectType ProjectType { get; private set; }
         public virtual AttendeeOrganization SellerAttendeeOrganization { get; private set; }
@@ -46,15 +46,34 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<ProjectInterest> Interests { get; private set; }
         //public virtual ICollection<ProjectPlayer> PlayersRelated { get; private set; }
 
+        /// <summary>Initializes a new instance of the <see cref="Project"/> class.</summary>
+        /// <param name="projectType">Type of the project.</param>
+        /// <param name="sellerAttendeeOrganization">The seller attendee organization.</param>
+        /// <param name="numberOfEpisodes">The number of episodes.</param>
+        /// <param name="eachEpisodePlayingTime">The each episode playing time.</param>
+        /// <param name="valuePerEpisode">The value per episode.</param>
+        /// <param name="totalValueOfProject">The total value of project.</param>
+        /// <param name="valueAlreadyRaised">The value already raised.</param>
+        /// <param name="valueStillNeeded">The value still needed.</param>
+        /// <param name="isPitching">if set to <c>true</c> [is pitching].</param>
+        /// <param name="titles">The titles.</param>
+        /// <param name="logLines">The log lines.</param>
+        /// <param name="summaries">The summaries.</param>
+        /// <param name="productionPlans">The production plans.</param>
+        /// <param name="additionalInformations">The additional informations.</param>
+        /// <param name="interests">The interests.</param>
+        /// <param name="imageLink">The image link.</param>
+        /// <param name="teaserLink">The teaser link.</param>
+        /// <param name="userId">The user identifier.</param>
         public Project(
             ProjectType projectType,
             AttendeeOrganization sellerAttendeeOrganization,
-            int numberOfEpisodes,
+            int? numberOfEpisodes,
             string eachEpisodePlayingTime,
-            string valuePerEpisode,
-            string totalValueOfProject,
-            string valueAlreadyRaised,
-            string valueStillNeeded,
+            int? valuePerEpisode,
+            int? totalValueOfProject,
+            int? valueAlreadyRaised,
+            int? valueStillNeeded,
             bool isPitching,
             List<ProjectTitle> titles,
             List<ProjectLogLine> logLines,
@@ -76,7 +95,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.TotalValueOfProject = totalValueOfProject;
             this.ValueAlreadyRaised = valueAlreadyRaised;
             this.ValueStillNeeded = valueStillNeeded;
-            this.Pitching = isPitching;
+            this.IsPitching = isPitching;
 
             this.SynchronizeTitles(titles, userId);
             this.SynchronizeLogLines(logLines, userId);
