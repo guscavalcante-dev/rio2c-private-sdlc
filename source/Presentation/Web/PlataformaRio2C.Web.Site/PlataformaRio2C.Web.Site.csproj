@@ -429,8 +429,6 @@
     <Content Include="Assets\js\onboarding\onboarding.producerinfo.js" />
     <Content Include="Assets\js\onboarding\onboarding.playerinfo.js" />
     <Content Include="Assets\js\onboarding\onboarding.collaboratordata.js" />
-    <Content Include="Assets\js\onboarding\onboarding.wizard.js" />
-    <Content Include="Assets\js\onboarding\wizard-2.js" />
     <Content Include="Assets\js\pages\schedule\components\calendar\basic.js" />
     <Content Include="Assets\js\companies\companyinfo.autocomplete.js" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.css" />

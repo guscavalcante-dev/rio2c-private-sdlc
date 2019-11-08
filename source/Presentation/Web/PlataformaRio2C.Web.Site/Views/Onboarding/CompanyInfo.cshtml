@@ -37,7 +37,7 @@
                         @*<a href="@Url.Action("SkipCompanyInfo", "Onboarding", new { Area = "" })" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
                             @Labels.Skip
                         </a>*@
-                        <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="OnboardWizard.submit('#CompanyInfoForm');">
+                        <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="MyRio2cCommon.submitForm('#CompanyInfoForm');">
                             @Labels.Save
                         </button>
                     </div>
@@ -62,7 +62,6 @@
     @Scripts.Render("~/bundles/js/jquery.autocomplete.js")
     @Scripts.Render("~/bundles/js/addresses.form.js")
     @Scripts.Render("~/bundles/js/onboarding.companyinfo.js")
-    @Scripts.Render("~/bundles/js/onboarding.wizard.js")
     <script>
         jQuery(document).ready(function () {
             OnboardingCompanyInfo.init();

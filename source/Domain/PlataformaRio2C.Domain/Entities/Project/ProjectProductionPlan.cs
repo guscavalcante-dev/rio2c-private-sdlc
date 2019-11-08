@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-07-2019
+// Last Modified On : 11-08-2019
 // ***********************************************************************
 // <copyright file="ProjectProductionPlan.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -56,6 +56,8 @@ namespace PlataformaRio2C.Domain.Entities
         public void Update(ProjectProductionPlan productionPlan)
         {
             this.Value = productionPlan.Value?.Trim();
+
+            this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = productionPlan.UpdateUserId;
         }

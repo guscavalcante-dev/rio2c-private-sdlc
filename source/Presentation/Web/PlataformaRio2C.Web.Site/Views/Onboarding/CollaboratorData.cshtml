@@ -69,7 +69,7 @@
                     <!--end: Form Wizard Step 1-->
                     <!--begin: Form Actions -->
                     <div class="kt-form__actions">
-                        <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="OnboardWizard.submit('#CollaboratorDataForm');">
+                        <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="MyRio2cCommon.submitForm('#CollaboratorDataForm');">
                             @Labels.NextStep
                         </button>
                     </div>
@@ -91,7 +91,6 @@
     @*@Scripts.Render("~/bundles/js/ckEditor.js")*@
     @Scripts.Render("~/bundles/js/addresses.form.js")
     @Scripts.Render("~/bundles/js/onboarding.collaboratordata.js")
-    @Scripts.Render("~/bundles/js/onboarding.wizard.js")
     <script>
         jQuery(document).ready(function () {
             OnboardingCollaboratorData.init();

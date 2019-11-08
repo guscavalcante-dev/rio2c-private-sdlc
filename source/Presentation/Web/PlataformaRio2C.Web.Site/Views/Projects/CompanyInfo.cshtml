@@ -20,7 +20,7 @@
                     </div>
                     <!--begin: Form Actions -->
                     <div class="kt-form__actions">
-                        <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="OnboardWizard.submit('#OrganizationDataForm');">
+                        <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="MyRio2cCommon.submitForm('#OrganizationDataForm');">
                             @Labels.NextStep
                         </button>
                     </div>
@@ -45,7 +45,6 @@
     @Scripts.Render("~/bundles/js/jquery.autocomplete.js")
     @Scripts.Render("~/bundles/js/addresses.form.js")
     @Scripts.Render("~/bundles/js/onboarding.producerinfo.js")
-    @Scripts.Render("~/bundles/js/onboarding.wizard.js")
     <script>
         jQuery(document).ready(function () {
             OnboardingProducerInfo.init();

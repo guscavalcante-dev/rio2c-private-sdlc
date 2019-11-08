@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-07-2019
+// Last Modified On : 11-08-2019
 // ***********************************************************************
 // <copyright file="Project.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -62,6 +62,8 @@ namespace PlataformaRio2C.Domain.Entities
             List<ProjectProductionPlan> productionPlans,
             List<ProjectAdditionalInformation> additionalInformations,
             List<Interest> interests,
+            string imageLink,
+            string teaserLink,
             int userId)
         {
             this.ProjectTypeId = projectType?.Id ?? 0;
@@ -82,6 +84,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeProductionPlans(productionPlans, userId);
             this.SynchronizeAdditionalInformations(additionalInformations, userId);
             this.SynchronizeInterests(interests, userId);
+            this.SynchronizeImageLinks(imageLink, userId);
+            this.SynchronizeTeaserLinks(teaserLink, userId);
 
             this.IsDeleted = false;
             this.CreateUserId = this.UpdateUserId = userId;
@@ -426,6 +430,70 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
+        #region Image Links
+
+        /// <summary>Synchronizes the image links.</summary>
+        /// <param name="imageLink">The image link.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeImageLinks(string imageLink, int userId)
+        {
+            if (this.ImageLinks == null)
+            {
+                this.ImageLinks = new List<ProjectImageLink>();
+            }
+
+            var imageLinkDb = this.ImageLinks?.FirstOrDefault();
+            if (!string.IsNullOrEmpty(imageLink))
+            {
+                if (imageLinkDb != null)
+                {
+                    imageLinkDb.Update(imageLink, userId);
+                }
+                else
+                {
+                    this.ImageLinks.Add(new ProjectImageLink(imageLink, userId));
+                }
+            }
+            else
+            {
+                imageLinkDb?.Delete(userId);
+            }
+        }
+
+        #endregion
+
+        #region Teaser Links
+
+        /// <summary>Synchronizes the teaser links.</summary>
+        /// <param name="teaserLink">The teaser link.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeTeaserLinks(string teaserLink, int userId)
+        {
+            if (this.TeaserLinks == null)
+            {
+                this.TeaserLinks = new List<ProjectTeaserLink>();
+            }
+
+            var teaserLinkDb = this.TeaserLinks?.FirstOrDefault();
+            if (!string.IsNullOrEmpty(teaserLink))
+            {
+                if (teaserLinkDb != null)
+                {
+                    teaserLinkDb.Update(teaserLink, userId);
+                }
+                else
+                {
+                    this.TeaserLinks.Add(new ProjectTeaserLink(teaserLink, userId));
+                }
+            }
+            else
+            {
+                teaserLinkDb?.Delete(userId);
+            }
+        }
+
+        #endregion
+
         #region Validations
 
         /// <summary>Returns true if ... is valid.</summary>
@@ -441,6 +509,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateSummaries();
             this.ValidateProductionPlans();
             this.ValidateAdditionalInformations();
+            this.ValidateImageLinks();
+            this.ValidateTeaserLinks();
 
             return this.ValidationResult.IsValid;
         }
@@ -535,6 +605,34 @@ namespace PlataformaRio2C.Domain.Entities
             foreach (var additionalInformation in this.AdditionalInformations?.Where(t => !t.IsValid())?.ToList())
             {
                 this.ValidationResult.Add(additionalInformation.ValidationResult);
+            }
+        }
+
+        /// <summary>Validates the image links.</summary>
+        public void ValidateImageLinks()
+        {
+            if (this.ImageLinks?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var imageLink in this.ImageLinks?.Where(t => !t.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(imageLink.ValidationResult);
+            }
+        }
+
+        /// <summary>Validates the teaser links.</summary>
+        public void ValidateTeaserLinks()
+        {
+            if (this.TeaserLinks?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var teaserLink in this.TeaserLinks?.Where(t => !t.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(teaserLink.ValidationResult);
             }
         }
 

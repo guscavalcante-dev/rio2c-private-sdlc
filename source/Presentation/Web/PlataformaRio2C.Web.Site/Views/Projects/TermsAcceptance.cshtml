@@ -45,7 +45,7 @@
                     <!--end: Form Wizard Step 1-->
                     <!--begin: Form Actions -->
                     <div class="kt-form__actions">
-                        <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="OnboardWizard.submit('#PlayerTermsAcceptanceForm');">
+                        <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="MyRio2cCommon.submitForm('#PlayerTermsAcceptanceForm');">
                             @Labels.Save
                         </button>
                     </div>
@@ -60,5 +60,4 @@
     @Styles.Render("~/bundles/css/onboarding.projects.css")
 }
 @section Scripts {
-    @Scripts.Render("~/bundles/js/onboarding.wizard.js")
 }

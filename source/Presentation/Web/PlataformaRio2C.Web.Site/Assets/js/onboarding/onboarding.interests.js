@@ -4,7 +4,7 @@
 // Created          : 09-13-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-21-2019
+// Last Modified On : 11-08-2019
 // ***********************************************************************
 // <copyright file="onboarding.interests.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -66,7 +66,7 @@ var OnboardingInterests = function () {
     // Form submit --------------------------------------------------------------------------------
     var submit = function () {
         if (validateInterests()) {
-            OnboardWizard.submit(formId);
+            MyRio2cCommon.submitForm(formId);
         }
     };
 

@@ -81,7 +81,7 @@
                     <!--end: Form Wizard Step 1-->
                     <!--begin: Form Actions -->
                     <div class="kt-form__actions">
-                        <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="OnboardWizard.submit('#AccessDataForm');">
+                        <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="MyRio2cCommon.submitForm('#AccessDataForm');">
                             @Labels.NextStep
                         </button>
                     </div>
@@ -96,7 +96,6 @@
     @Styles.Render("~/bundles/css/onboardingIndex")
 }
 @section Scripts {
-    @Scripts.Render("~/bundles/js/onboarding.wizard.js")
     <script type="text/javascript">
         jQuery(document).ready(function () {
             MyRio2cShowHidePassword.init();

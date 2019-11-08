@@ -4,14 +4,16 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-07-2019
+// Last Modified On : 11-08-2019
 // ***********************************************************************
 // <copyright file="ProjectTeaserLink.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -27,8 +29,41 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual Project Project { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="ProjectTeaserLink"/> class.</summary>
+        /// <param name="value">The value.</param>
+        /// <param name="userId">The user identifier.</param>
+        public ProjectTeaserLink(string value, int userId)
+        {
+            this.Value = value?.Trim();
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="ProjectTeaserLink"/> class.</summary>
         protected ProjectTeaserLink()
         {
+        }
+
+        /// <summary>Updates the specified value.</summary>
+        /// <param name="value">The value.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Update(string value, int userId)
+        {
+            this.Value = value?.Trim();
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Deletes the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(int userId)
+        {
+            this.IsDeleted = true;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
         }
 
         #region Validations
@@ -40,34 +75,24 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.ValidationResult = new ValidationResult();
 
-            //this.ValidateName();
-            //this.ValidateDescriptions();
+            this.ValidateValue();
 
             return this.ValidationResult.IsValid;
         }
 
-        ///// <summary>Validates the name.</summary>
-        //public void ValidateName()
-        //{
-        //    if (string.IsNullOrEmpty(this.Name?.Trim()))
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Name), new string[] { "Name" }));
-        //    }
+        /// <summary>Validates the value.</summary>
+        public void ValidateValue()
+        {
+            //if (string.IsNullOrEmpty(this.Value?.Trim()))
+            //{
+            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Descriptions), new string[] { "Descriptions" }));
+            //}
 
-        //    if (this.Name?.Trim().Length < NameMinLength || this.Name?.Trim().Length > NameMaxLength)
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, NameMaxLength, NameMinLength), new string[] { "Name" }));
-        //    }
-        //}
-
-        ///// <summary>Validates the descriptions.</summary>
-        //public void ValidateDescriptions()
-        //{
-        //    foreach (var description in this.Descriptions?.Where(d => !d.IsValid())?.ToList())
-        //    {
-        //        this.ValidationResult.Add(description.ValidationResult);
-        //    }
-        //}
+            if (this.Value?.Trim().Length < ValueMinLength || this.Value?.Trim().Length > ValueMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.TeaserLinks, ValueMaxLength, ValueMinLength), new string[] { "TeaserLinks" }));
+            }
+        }
 
         #endregion
 
