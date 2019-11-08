@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-21-2019
+// Last Modified On : 11-08-2019
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -466,6 +466,22 @@ var MyRio2cCommon = function () {
             language: globalVariables.userInterfaceLanguageUppercade,
             width: '100%'
         });
+    };
+
+    var submitForm = function (formIdOrClass) {
+        if (MyRio2cCommon.isNullOrEmpty(formIdOrClass)) {
+            return;
+        }
+
+        var validator = $(formIdOrClass).validate();
+
+        if ($(formIdOrClass).valid()) {
+            MyRio2cCommon.block();
+            $(formIdOrClass).submit();
+        }
+        else {
+            validator.focusInvalid();
+        }
     };
 
     // Enable input maxlength ---------------------------------------------------------------------
@@ -1005,6 +1021,9 @@ var MyRio2cCommon = function () {
         },
         enableSelect2: function (options) {
             enableSelect2(options);
+        },
+        submitForm: function (formIdOrClass) {
+            submitForm(formIdOrClass);
         },
         hide: function (element) {
             hide(element);
