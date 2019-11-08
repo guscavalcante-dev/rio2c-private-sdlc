@@ -21,7 +21,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>ProjectProductionPlanBaseCommand</summary>
     public class ProjectProductionPlanBaseCommand
     {
-        [Display(Name = "ProductionPlans", ResourceType = typeof(Labels))]
+        [Display(Name = "ProductionPlan", ResourceType = typeof(Labels))]
         [RequiredIf("IsRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(3000, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Value { get; set; }

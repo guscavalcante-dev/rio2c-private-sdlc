@@ -446,7 +446,8 @@
     <value>New Link</value>
   </data>
   <data name="EachEpisodePlayingTime" xml:space="preserve">
-    <value>Each episode playing time</value>
+    <value>Each episode's playing time</value>
+    <comment>Minutagem de cada episódio</comment>
   </data>
   <data name="LogLines" xml:space="preserve">
     <value>Logline</value>
@@ -456,6 +457,7 @@
   </data>
   <data name="NumberOfEpisodes" xml:space="preserve">
     <value>Number of episodes</value>
+    <comment>Número de episódios</comment>
   </data>
   <data name="ProductionPlans" xml:space="preserve">
     <value>Production Plans</value>
@@ -1608,5 +1610,21 @@
   <data name="Summary" xml:space="preserve">
     <value>Summary</value>
     <comment>Sinopse</comment>
+  </data>
+  <data name="AgeGroup" xml:space="preserve">
+    <value>Age Group</value>
+    <comment>Faixa Etária</comment>
+  </data>
+  <data name="LinksForPromoTeaser" xml:space="preserve">
+    <value>Link for Promo/Teaser</value>
+    <comment>Link para Promo/Teaser</comment>
+  </data>
+  <data name="LinksToImageOrConceptualLayout" xml:space="preserve">
+    <value>Links to image or conceptual layout</value>
+    <comment>Link para imagens ou layout conceituais</comment>
+  </data>
+  <data name="ProductionPlan" xml:space="preserve">
+    <value>Production Plan</value>
+    <comment>Plano de Produção</comment>
   </data>
 </root>

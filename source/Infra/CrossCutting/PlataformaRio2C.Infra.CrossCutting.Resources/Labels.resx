@@ -446,7 +446,8 @@
     <value>Novo Link</value>
   </data>
   <data name="EachEpisodePlayingTime" xml:space="preserve">
-    <value>Tempo de cada episódio</value>
+    <value>Minutagem de cada episódio</value>
+    <comment>Minutagem de cada episódio</comment>
   </data>
   <data name="LogLines" xml:space="preserve">
     <value>Logline</value>
@@ -456,6 +457,7 @@
   </data>
   <data name="NumberOfEpisodes" xml:space="preserve">
     <value>Número de episódios</value>
+    <comment>Número de episódios</comment>
   </data>
   <data name="ProductionPlans" xml:space="preserve">
     <value>Planos de Produção</value>
@@ -1620,5 +1622,21 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Summary" xml:space="preserve">
     <value>Sinopse</value>
     <comment>Sinopse</comment>
+  </data>
+  <data name="AgeGroup" xml:space="preserve">
+    <value>Faixa Etária</value>
+    <comment>Faixa Etária</comment>
+  </data>
+  <data name="LinksForPromoTeaser" xml:space="preserve">
+    <value>Link para Promo/Teaser</value>
+    <comment>Link para Promo/Teaser</comment>
+  </data>
+  <data name="LinksToImageOrConceptualLayout" xml:space="preserve">
+    <value>Link para imagens ou layout conceituais</value>
+    <comment>Link para imagens ou layout conceituais</comment>
+  </data>
+  <data name="ProductionPlan" xml:space="preserve">
+    <value>Plano de Produção</value>
+    <comment>Plano de Produção</comment>
   </data>
 </root>

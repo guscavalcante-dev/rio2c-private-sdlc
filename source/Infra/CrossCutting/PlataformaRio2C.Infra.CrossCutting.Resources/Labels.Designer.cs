@@ -241,6 +241,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Faixa Etária.
+        /// </summary>
+        public static string AgeGroup {
+            get {
+                return ResourceManager.GetString("AgeGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to uma holding.
         /// </summary>
         public static string AHolding {
@@ -979,7 +988,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tempo de cada episódio.
+        ///   Looks up a localized string similar to Minutagem de cada episódio.
         /// </summary>
         public static string EachEpisodePlayingTime {
             get {
@@ -1650,6 +1659,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string LecturerMemberOneOrMany {
             get {
                 return ResourceManager.GetString("LecturerMemberOneOrMany", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Link para Promo/Teaser.
+        /// </summary>
+        public static string LinksForPromoTeaser {
+            get {
+                return ResourceManager.GetString("LinksForPromoTeaser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Link para imagens ou layout conceituais.
+        /// </summary>
+        public static string LinksToImageOrConceptualLayout {
+            get {
+                return ResourceManager.GetString("LinksToImageOrConceptualLayout", resourceCulture);
             }
         }
         
@@ -2527,6 +2554,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ProducersSpaceSlash {
             get {
                 return ResourceManager.GetString("ProducersSpaceSlash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plano de Produção.
+        /// </summary>
+        public static string ProductionPlan {
+            get {
+                return ResourceManager.GetString("ProductionPlan", resourceCulture);
             }
         }
         

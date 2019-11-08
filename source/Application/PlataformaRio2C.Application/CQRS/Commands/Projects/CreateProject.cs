@@ -4,7 +4,7 @@
 // Created          : 11-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-07-2019
+// Last Modified On : 11-08-2019
 // ***********************************************************************
 // <copyright file="CreateProject.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,12 +27,16 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="groupedInterests">The grouped interests.</param>
         /// <param name="isDataRequired">if set to <c>true</c> [is data required].</param>
+        /// <param name="isProductionPlanRequired">if set to <c>true</c> [is production plan required].</param>
+        /// <param name="isAdditionalInformationRequired">if set to <c>true</c> [is additional information required].</param>
         public CreateProject(
             List<LanguageDto> languagesDtos, 
             List<Activity> activities,
             List<TargetAudience> targetAudiences,
             List<IGrouping<InterestGroup, Interest>> groupedInterests,
-            bool isDataRequired)
+            bool isDataRequired,
+            bool isProductionPlanRequired,
+            bool isAdditionalInformationRequired)
         {
             this.UpdateBaseProperties(
                 null,
@@ -40,7 +44,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 activities, 
                 targetAudiences, 
                 groupedInterests,
-                isDataRequired);
+                isDataRequired,
+                isProductionPlanRequired,
+                isAdditionalInformationRequired);
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateProject"/> class.</summary>

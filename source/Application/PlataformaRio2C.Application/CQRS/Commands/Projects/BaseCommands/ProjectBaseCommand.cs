@@ -46,27 +46,27 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<ProjectProductionPlanBaseCommand> ProductPlans { get; set; }
 
         [Display(Name = "ValuePerEpisode", ResourceType = typeof(Labels))]
-        [RequiredIfNotEmpty("NumberOfEpisodes", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        //[RequiredIfNotEmpty("NumberOfEpisodes", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public int? ValuePerEpisode { get; set; }
 
         [Display(Name = "TotalValueOfProject", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        //[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public int? TotalValueOfProject { get; set; }
 
         [Display(Name = "ValueAlreadyRaised", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        //[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public int? ValueAlreadyRaised { get; set; }
 
         [Display(Name = "ValueStillNeeded", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        //[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public int? ValueStillNeeded { get; set; }
 
-        [Display(Name = "ImageLinks", ResourceType = typeof(Labels))]
+        [Display(Name = "LinksToImageOrConceptualLayout", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(3000, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string ImageLinks { get; set; }
 
-        [Display(Name = "TeaserLinks", ResourceType = typeof(Labels))]
+        [Display(Name = "LinksForPromoTeaser", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(3000, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string TeaserLinks { get; set; }
@@ -95,13 +95,17 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="groupedInterests">The grouped interests.</param>
         /// <param name="isDataRequired">if set to <c>true</c> [is data required].</param>
+        /// <param name="isProductionPlanRequired">if set to <c>true</c> [is production plan required].</param>
+        /// <param name="isAdditionalInformationRequired">if set to <c>true</c> [is additional information required].</param>
         public void UpdateBaseProperties(
             ProjectDto entity, 
             List<LanguageDto> languagesDtos, 
             List<Activity> activities,
             List<TargetAudience> targetAudiences,
             List<IGrouping<InterestGroup, Interest>> groupedInterests,
-            bool isDataRequired)
+            bool isDataRequired,
+            bool isProductionPlanRequired,
+            bool isAdditionalInformationRequired)
         {
             this.NumberOfEpisodes = entity?.Project?.NumberOfEpisodes;
             this.EachEpisodePlayingTime = entity?.Project?.EachEpisodePlayingTime;
@@ -116,8 +120,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateTitles(entity, languagesDtos, isDataRequired);
             this.UpdateLogLines(entity, languagesDtos, isDataRequired);
             this.UpdateSummaries(entity, languagesDtos, isDataRequired);
-            this.UpdateProductionPlans(entity, languagesDtos, isDataRequired);
-            this.UpdateAdditionalInformations(entity, languagesDtos, isDataRequired);
+            this.UpdateProductionPlans(entity, languagesDtos, isProductionPlanRequired);
+            this.UpdateAdditionalInformations(entity, languagesDtos, isAdditionalInformationRequired);
             this.InterestsUids = entity?.ProjectInterestDtos?.Select(pid => pid.Interest.Uid)?.ToList();
             this.TargetAudiencesUids = entity?.ProjectTargetAudienceDtos?.Select(pta => pta.TargetAudience.Uid)?.ToList();
 

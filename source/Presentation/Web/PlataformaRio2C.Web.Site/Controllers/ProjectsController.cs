@@ -122,7 +122,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 await this.activityRepo.FindAllAsync(),
                 await this.targetAudienceRepo.FindAllAsync(),
                 await this.interestRepo.FindAllGroupedByInterestGroupsAsync(),
-                true);
+                true,
+                false,
+                false);
 
             return View(cmd);
         }

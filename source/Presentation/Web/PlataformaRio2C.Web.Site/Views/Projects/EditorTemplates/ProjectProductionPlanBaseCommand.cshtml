@@ -1,7 +1,11 @@
 ﻿@model PlataformaRio2C.Application.CQRS.Commands.ProjectProductionPlanBaseCommand
 <div class="row">
     <div class="form-group col-lg-12">
-        @Html.LabelFor(m => m.Value, $"{Labels.ProductionPlans} ({Model.LanguageCode.GetSplittedWord('-', 0).ToUpper()})", new { @class = "control-label" })
+        @Html.LabelFor(m => m.Value, $"{Labels.ProductionPlan} ({Model.LanguageCode.GetSplittedWord('-', 0).ToUpper()})", new { @class = "control-label" }) 
+        @if (!Model.IsRequired)
+        {
+            <span class="form-optional-input text-muted">@Labels.Optional</span>
+        }
         @Html.TextAreaFor(m => m.Value, new { @class = "form-control", rows = 8 })
         @Html.HiddenFor(m => m.LanguageCode)
         @Html.HiddenFor(m => m.LanguageName)

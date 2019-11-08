@@ -405,6 +405,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Para sua conveniência, os projetos podem ser salvos e modificados antes do envio final. Caso o projeto não seja enviado até o dia &lt;span class=&quot;kt-font-danger font-weight-bold&quot;&gt;{0}&lt;/span&gt; será automaticamente excluído. Uma vez finalizados e enviados para os players, os projetos &lt;span class=&quot;font-weight-bold&quot;&gt;NÃO PODEM SER ALTERADOS&lt;/span&gt;..
+        /// </summary>
+        public static string ProjectImportantText {
+            get {
+                return ResourceManager.GetString("ProjectImportantText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A avaliação de projetos para as Rodadas de Negócios poderá ser realizada a partir de 2 de janeiro até 23 de fevereiro de 2018..
         /// </summary>
         public static string ProjectSoon {
