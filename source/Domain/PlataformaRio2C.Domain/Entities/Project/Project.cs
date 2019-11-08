@@ -44,6 +44,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<ProjectImageLink> ImageLinks { get; private set; }
         public virtual ICollection<ProjectTeaserLink> TeaserLinks { get; private set; }
         public virtual ICollection<ProjectInterest> Interests { get; private set; }
+        public virtual ICollection<ProjectTargetAudience> TargetAudiences { get; private set; }
         //public virtual ICollection<ProjectPlayer> PlayersRelated { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="Project"/> class.</summary>
@@ -62,6 +63,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="productionPlans">The production plans.</param>
         /// <param name="additionalInformations">The additional informations.</param>
         /// <param name="interests">The interests.</param>
+        /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="imageLink">The image link.</param>
         /// <param name="teaserLink">The teaser link.</param>
         /// <param name="userId">The user identifier.</param>
@@ -81,6 +83,7 @@ namespace PlataformaRio2C.Domain.Entities
             List<ProjectProductionPlan> productionPlans,
             List<ProjectAdditionalInformation> additionalInformations,
             List<Interest> interests,
+            List<TargetAudience> targetAudiences,
             string imageLink,
             string teaserLink,
             int userId)
@@ -102,6 +105,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeProductionPlans(productionPlans, userId);
             this.SynchronizeAdditionalInformations(additionalInformations, userId);
             this.SynchronizeInterests(interests, userId);
+            this.SynchronizeTargetAudiences(targetAudiences, userId);
             this.SynchronizeImageLinks(imageLink, userId);
             this.SynchronizeTeaserLinks(teaserLink, userId);
 
@@ -461,6 +465,72 @@ namespace PlataformaRio2C.Domain.Entities
         private void CreateInterest(Interest intestest, int userId)
         {
             this.Interests.Add(new ProjectInterest(this, intestest, userId));
+        }
+
+        #endregion
+
+        #region Target Audiences
+
+        /// <summary>Updates the target audiences.</summary>
+        /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateTargetAudiences(List<TargetAudience> targetAudiences, int userId)
+        {
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            this.SynchronizeTargetAudiences(targetAudiences, userId);
+        }
+
+        /// <summary>Synchronizes the target audiences.</summary>
+        /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeTargetAudiences(List<TargetAudience> targetAudiences, int userId)
+        {
+            if (this.TargetAudiences == null)
+            {
+                this.TargetAudiences = new List<ProjectTargetAudience>();
+            }
+
+            this.DeleteTargetAudiences(targetAudiences, userId);
+
+            if (targetAudiences?.Any() != true)
+            {
+                return;
+            }
+
+            // Create or update target audiences
+            foreach (var targetAudience in targetAudiences)
+            {
+                var targetAudienceDb = this.TargetAudiences.FirstOrDefault(a => a.TargetAudience.Uid == targetAudience.Uid);
+                if (targetAudienceDb != null)
+                {
+                    targetAudienceDb.Update(userId);
+                }
+                else
+                {
+                    this.CreateTargetAudience(targetAudience, userId);
+                }
+            }
+        }
+
+        /// <summary>Deletes the target audiences.</summary>
+        /// <param name="newTargetAudiences">The new target audiences.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteTargetAudiences(List<TargetAudience> newTargetAudiences, int userId)
+        {
+            var targetAudiencesToDelete = this.TargetAudiences.Where(db => newTargetAudiences?.Select(a => a.Uid)?.Contains(db.TargetAudience.Uid) == false && !db.IsDeleted).ToList();
+            foreach (var targetAudienceToDelete in targetAudiencesToDelete)
+            {
+                targetAudienceToDelete.Delete(userId);
+            }
+        }
+
+        /// <summary>Creates the target audience.</summary>
+        /// <param name="targetAudience">The target audience.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void CreateTargetAudience(TargetAudience targetAudience, int userId)
+        {
+            this.TargetAudiences.Add(new ProjectTargetAudience(this, targetAudience, userId));
         }
 
         #endregion

@@ -1574,6 +1574,36 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+CREATE TABLE [dbo].[ProjectTargetAudiences](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[ProjectId] [int] NOT NULL,
+	[TargetAudienceId] [int] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_ProjectTargetAudiences] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ProjectTargetAudiences_ProjectId_TargetAudienceId] UNIQUE NONCLUSTERED 
+(
+	[ProjectId] ASC,
+	[TargetAudienceId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ProjectTargetAudiences_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[ProjectTeaserLinks](
@@ -3041,6 +3071,26 @@ ALTER TABLE [dbo].[ProjectSummaries]  WITH CHECK ADD  CONSTRAINT [FK_Users_Proje
 REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[ProjectSummaries] CHECK CONSTRAINT [FK_Users_ProjectSummaries_UpdateUserId]
+GO
+ALTER TABLE [dbo].[ProjectTargetAudiences]  WITH CHECK ADD  CONSTRAINT [FK_Projects_ProjectTargetAudiences_ProjectId] FOREIGN KEY([ProjectId])
+REFERENCES [dbo].[Projects] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectTargetAudiences] CHECK CONSTRAINT [FK_Projects_ProjectTargetAudiences_ProjectId]
+GO
+ALTER TABLE [dbo].[ProjectTargetAudiences]  WITH CHECK ADD  CONSTRAINT [FK_TargetAudiences_ProjectTargetAudiences_TargetAudienceId] FOREIGN KEY([TargetAudienceId])
+REFERENCES [dbo].[TargetAudiences] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectTargetAudiences] CHECK CONSTRAINT [FK_TargetAudiences_ProjectTargetAudiences_TargetAudienceId]
+GO
+ALTER TABLE [dbo].[ProjectTargetAudiences]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectTargetAudiences_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectTargetAudiences] CHECK CONSTRAINT [FK_Users_ProjectTargetAudiences_CreateUserId]
+GO
+ALTER TABLE [dbo].[ProjectTargetAudiences]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectTargetAudiences_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectTargetAudiences] CHECK CONSTRAINT [FK_Users_ProjectTargetAudiences_UpdateUserId]
 GO
 ALTER TABLE [dbo].[ProjectTeaserLinks]  WITH CHECK ADD  CONSTRAINT [FK_Projects_ProjectTeaserLinks_ProjectId] FOREIGN KEY([ProjectId])
 REFERENCES [dbo].[Projects] ([Id])

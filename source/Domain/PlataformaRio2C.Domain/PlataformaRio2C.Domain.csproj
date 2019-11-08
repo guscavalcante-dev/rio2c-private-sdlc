@@ -107,6 +107,7 @@
     <Compile Include="Dtos\Organizations\OrganizationInterestDto.cs" />
     <Compile Include="Dtos\Organizations\OrganizationTargetAudienceDto.cs" />
     <Compile Include="Dtos\Organizations\OrganizationActivityDto.cs" />
+    <Compile Include="Dtos\Projects\ProjectTargetAudienceDto.cs" />
     <Compile Include="Dtos\Projects\ProjectInterestDto.cs" />
     <Compile Include="Dtos\Projects\ProjectLogLineDto.cs" />
     <Compile Include="Dtos\Projects\ProjectSummaryDto.cs" />
@@ -173,6 +174,7 @@
     <Compile Include="Entities\Organizations\OrganizationType.cs" />
     <Compile Include="Entities\Organizations\Organization.cs" />
     <Compile Include="Entities\PlayerProducer\PlayerProducer.cs" />
+    <Compile Include="Entities\Project\ProjectTargetAudience.cs" />
     <Compile Include="Entities\Project\ProjectType.cs" />
     <Compile Include="Entities\Project\ProjectPlayer.cs" />
     <Compile Include="Entities\Project\ProjectInterest.cs" />

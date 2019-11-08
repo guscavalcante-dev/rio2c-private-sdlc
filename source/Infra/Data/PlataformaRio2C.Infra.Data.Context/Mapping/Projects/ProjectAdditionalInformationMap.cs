@@ -4,9 +4,9 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-01-2019
+// Last Modified On : 11-08-2019
 // ***********************************************************************
-// <copyright file="ProjectSummaryMap.cs" company="Softo">
+// <copyright file="ProjectAdditionalInformationMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -16,13 +16,13 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace PlataformaRio2C.Infra.Data.Context.Mapping
 {
-    /// <summary>ProjectSummaryMap</summary>
-    public class ProjectSummaryMap : EntityTypeConfiguration<ProjectSummary>
+    /// <summary>ProjectAdditionalInformationMap</summary>
+    public class ProjectAdditionalInformationMap : EntityTypeConfiguration<ProjectAdditionalInformation>
     {
-        /// <summary>Initializes a new instance of the <see cref="ProjectSummaryMap"/> class.</summary>
-        public ProjectSummaryMap()
+        /// <summary>Initializes a new instance of the <see cref="ProjectAdditionalInformationMap"/> class.</summary>
+        public ProjectAdditionalInformationMap()
         {
-            this.ToTable("ProjectSummaries");
+            this.ToTable("ProjectAdditionalInformations");
 
             //this.Ignore(p => p.LanguageCode);
 
@@ -32,7 +32,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
 
             //Relationships
             this.HasRequired(t => t.Project)
-                .WithMany(e => e.Summaries)
+                .WithMany(e => e.AdditionalInformations)
                 .HasForeignKey(t => t.ProjectId);
         }
     }

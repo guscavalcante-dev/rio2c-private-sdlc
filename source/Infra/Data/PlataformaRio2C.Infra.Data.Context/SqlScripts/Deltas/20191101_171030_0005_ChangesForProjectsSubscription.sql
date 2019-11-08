@@ -117,3 +117,45 @@ go
 ALTER TABLE "OrganizationTypes"
 	ALTER COLUMN "IsSeller" bit NOT NULL
 go
+
+CREATE TABLE "ProjectTargetAudiences"
+( 
+	"Id"                 int IDENTITY ( 1,1 ) ,
+	"Uid"                uniqueidentifier  NOT NULL ,
+	"ProjectId"          int  NOT NULL ,
+	"TargetAudienceId"   int  NOT NULL ,
+	"IsDeleted"          bit  NOT NULL ,
+	"CreateDate"         datetime  NOT NULL ,
+	"CreateUserId"       int  NOT NULL ,
+	"UpdateDate"         datetime  NOT NULL ,
+	"UpdateUserId"       int  NOT NULL 
+)
+go
+
+ALTER TABLE "ProjectTargetAudiences"
+ADD CONSTRAINT "PK_ProjectTargetAudiences" PRIMARY KEY  CLUSTERED ("Id" ASC)
+go
+
+ALTER TABLE "ProjectTargetAudiences"
+ADD CONSTRAINT "IDX_UQ_ProjectTargetAudiences_Uid" UNIQUE ("Uid"  ASC)
+go
+
+ALTER TABLE "ProjectTargetAudiences"
+ADD CONSTRAINT "IDX_UQ_ProjectTargetAudiences_ProjectId_TargetAudienceId" UNIQUE ("ProjectId"  ASC,"TargetAudienceId"  ASC)
+go
+
+ALTER TABLE "ProjectTargetAudiences"
+	ADD CONSTRAINT "FK_Projects_ProjectTargetAudiences_ProjectId" FOREIGN KEY ("ProjectId") REFERENCES "dbo"."Projects"("Id")
+go
+
+ALTER TABLE "ProjectTargetAudiences"
+	ADD CONSTRAINT "FK_TargetAudiences_ProjectTargetAudiences_TargetAudienceId" FOREIGN KEY ("TargetAudienceId") REFERENCES "dbo"."TargetAudiences"("Id")
+go
+
+ALTER TABLE "ProjectTargetAudiences"
+	ADD CONSTRAINT "FK_Users_ProjectTargetAudiences_CreateUserId" FOREIGN KEY ("CreateUserId") REFERENCES "dbo"."Users"("Id")
+go
+
+ALTER TABLE "ProjectTargetAudiences"
+	ADD CONSTRAINT "FK_Users_ProjectTargetAudiences_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
+go

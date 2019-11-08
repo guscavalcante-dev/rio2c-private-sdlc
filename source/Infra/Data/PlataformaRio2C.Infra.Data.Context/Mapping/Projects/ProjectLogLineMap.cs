@@ -4,9 +4,9 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-01-2019
+// Last Modified On : 11-08-2019
 // ***********************************************************************
-// <copyright file="ProjectTitleMap.cs" company="Softo">
+// <copyright file="ProjectLogLineMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -16,22 +16,22 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace PlataformaRio2C.Infra.Data.Context.Mapping
 {
-    /// <summary>ProjectTitleMap</summary>
-    public class ProjectTitleMap : EntityTypeConfiguration<ProjectTitle>
+    /// <summary>ProjectLogLineMap</summary>
+    public class ProjectLogLineMap : EntityTypeConfiguration<ProjectLogLine>
     {
-        /// <summary>Initializes a new instance of the <see cref="ProjectTitleMap"/> class.</summary>
-        public ProjectTitleMap()
+        /// <summary>Initializes a new instance of the <see cref="ProjectLogLineMap"/> class.</summary>
+        public ProjectLogLineMap()
         {
-            this.ToTable("ProjectTitles");
+            this.ToTable("ProjectLogLines");
 
             //this.Ignore(p => p.LanguageCode);
 
             Property(u => u.Value)
-               .HasMaxLength(ProjectTitle.ValueMaxLength);            
+                .HasMaxLength(8000);
 
             //Relationships
             this.HasRequired(t => t.Project)
-                .WithMany(e => e.Titles)
+                .WithMany(e => e.LogLines)
                 .HasForeignKey(t => t.ProjectId);
         }
     }

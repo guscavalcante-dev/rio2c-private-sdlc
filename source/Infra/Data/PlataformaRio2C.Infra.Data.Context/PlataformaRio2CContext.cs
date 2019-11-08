@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-01-2019
+// Last Modified On : 11-08-2019
 // ***********************************************************************
 // <copyright file="PlataformaRio2CContext.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -77,6 +77,7 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new ProjectSummaryMap());
             modelBuilder.Configurations.Add(new ProjectTitleMap());
             modelBuilder.Configurations.Add(new ProjectBuyerEvaluationMap());
+            modelBuilder.Configurations.Add(new ProjectTargetAudienceMap());
 
             // Addresses
             modelBuilder.Configurations.Add(new CountryMap());

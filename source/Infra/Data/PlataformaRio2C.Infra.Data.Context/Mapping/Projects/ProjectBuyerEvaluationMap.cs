@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-04-2019
+// Last Modified On : 11-08-2019
 // ***********************************************************************
 // <copyright file="ProjectBuyerEvaluationMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
