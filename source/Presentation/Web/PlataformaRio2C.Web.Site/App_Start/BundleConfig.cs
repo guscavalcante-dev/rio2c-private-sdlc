@@ -256,11 +256,19 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/css/pages/projects/projects.wizard-2.css",
                 "~/Assets/css/pages/onboarding/onboarding.css"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/onboarding.producerinfo.js").Include(
-                "~/Assets/js/onboarding/onboarding.producerinfo.js",
+            #endregion
+
+            #region Projects Wizard
+
+            bundles.Add(new ScriptBundle("~/bundles/js/projects.producerinfo.js").Include(
+                "~/Assets/js/projects/projects.producerinfo.js",
                 "~/Assets/js/companies/companyinfo.autocomplete.js",
                 "~/Assets/js/myrio2c.companynumber.js",
                 "~/Assets/js/myrio2c.activity.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/projects.projectinfo.js").Include(
+                "~/Assets/js/projects/projects.projectinfo.js"));
+
             #endregion
 
             #region Companies

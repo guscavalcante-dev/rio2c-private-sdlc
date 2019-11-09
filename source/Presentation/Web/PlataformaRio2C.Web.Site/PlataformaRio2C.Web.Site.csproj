@@ -426,11 +426,12 @@
     <Content Include="Assets\js\myrio2c.activity.js" />
     <Content Include="Assets\js\onboarding\onboarding.interests.js" />
     <Content Include="Assets\js\onboarding\onboarding.companyinfo.js" />
-    <Content Include="Assets\js\onboarding\onboarding.producerinfo.js" />
+    <Content Include="Assets\js\projects\projects.producerinfo.js" />
     <Content Include="Assets\js\onboarding\onboarding.playerinfo.js" />
     <Content Include="Assets\js\onboarding\onboarding.collaboratordata.js" />
     <Content Include="Assets\js\pages\schedule\components\calendar\basic.js" />
     <Content Include="Assets\js\companies\companyinfo.autocomplete.js" />
+    <Content Include="Assets\js\projects\projects.projectinfo.js" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.css" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.min.css" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.rtl.css" />

@@ -341,6 +341,40 @@ var MyRio2cCommon = function () {
             }, labels.selectAtLeastOneOption);
     };
 
+    var validateRequireOneGroup = function () {
+        var isValid = true;
+
+        $(".require-one-group").each(function (index, element) {
+
+            var dataId = $(element).data("id");
+            if (MyRio2cCommon.isNullOrEmpty(dataId)) {
+                return;
+            }
+
+            if ($('[data-id="' + dataId + '"].require-one-item:checked').length > 0 === false) {
+                $('[data-valmsg-for="' + dataId + '"]').html('<span for="' + dataId + '" generated="true" class="">' + labels.selectAtLeastOneOption + '</span>');
+                $('[data-valmsg-for="' + dataId + '"]').removeClass('field-validation-valid');
+                $('[data-valmsg-for="' + dataId + '"]').addClass('field-validation-error');
+
+                isValid = false;
+            }
+            else {
+                $('[data-valmsg-for="' + dataId + '"]').html('');
+                $('[data-valmsg-for="' + dataId + '"]').addClass('field-validation-valid');
+                $('[data-valmsg-for="' + dataId + '"]').removeClass('field-validation-error');
+            }
+        });
+
+        // Enable checkbox change on first submit
+        $(".require-one-item").not('.change-event-enabled').on('change', function () {
+            validateRequireOneGroup();
+        });
+
+        $(".require-one-item").addClass('change-event-enabled');
+
+        return isValid;
+    };
+
     // General ------------------------------------------------------------------------------------
     var hasProperty = function (obj, key) {
         return key.split(".").every(function (x) {
@@ -1009,6 +1043,9 @@ var MyRio2cCommon = function () {
         },
         enableAtLeastOnCheckboxByNameValidation: function (formIdOrClass) {
             enableAtLeastOnCheckboxByNameValidation(formIdOrClass);
+        },
+        validateRequireOneGroup: function () {
+            return validateRequireOneGroup();
         },
         hasProperty: function (obj, key) {
             return hasProperty(obj, key);

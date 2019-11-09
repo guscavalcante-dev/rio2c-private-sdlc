@@ -1,21 +1,21 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Site
 // Author           : Rafael Dantas Ruiz
-// Created          : 09-13-2019
+// Created          : 10-29-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 11-08-2019
 // ***********************************************************************
-// <copyright file="onboarding.interests.js" company="Softo">
+// <copyright file="projects.producerinfo.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var OnboardingInterests = function () {
+var ProjectsProducerInfo = function () {
 
     //var modalId = '#UpdatePlayerExecutiveModal';
-    var formId = '#PlayerInterestssDataForm';
+    var formId = '#OrganizationDataForm';
 
     // Enable form validation ---------------------------------------------------------------------
     //var enableFormValidation = function () {
@@ -24,33 +24,32 @@ var OnboardingInterests = function () {
 
     // Enable plugins -----------------------------------------------------------------------------
     var enablePlugins = function () {
-        //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-restrictions', maxCharCount: 270 });
+        if (typeof (MyRio2cCropper) !== 'undefined') {
+            MyRio2cCropper.init({ formIdOrClass: formId });
+        }
+
+        if (typeof (AddressesForm) !== 'undefined') {
+            AddressesForm.init();
+        }
+
+        if (typeof (CompanyInfoAutocomplete) !== 'undefined') {
+            CompanyInfoAutocomplete.init('/Companies/ShowProducerFilledForm', enablePlugins);
+        }
+
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });
         MyRio2cCommon.enableAtLeastOnCheckboxByNameValidation(formId);
-    };
 
-    // Form submit --------------------------------------------------------------------------------
-    var submit = function () {
-        var validator = $(formId).validate();
-        var formValidation = $(formId).valid();
-        var interestsValidation = MyRio2cCommon.validateRequireOneGroup();
+        // Enable activity additional info textbox
+        if (typeof (MyRio2cCommonActivity) !== 'undefined') {
+            MyRio2cCommonActivity.init();
+        }
 
-        if (formValidation && interestsValidation) {
-            MyRio2cCommon.submitForm(formId);
-        }
-        else {
-            validator.focusInvalid();
-        }
+        MyRio2cCommon.enableFormValidation({ formIdOrClass: formId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
 
     return {
-        init: function () {
+        init: function() {
             enablePlugins();
-        },
-        validateInterests: function () {
-            return validateInterests();
-        },
-        submit: function () {
-            submit();
         }
     };
 }();
