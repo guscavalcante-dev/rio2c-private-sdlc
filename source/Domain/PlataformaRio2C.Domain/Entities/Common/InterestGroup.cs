@@ -4,13 +4,14 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 11-10-2019
 // ***********************************************************************
 // <copyright file="InterestGroup.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using PlataformaRio2C.Domain.Enums;
 
 namespace PlataformaRio2C.Domain.Entities
@@ -30,6 +31,21 @@ namespace PlataformaRio2C.Domain.Entities
         protected InterestGroup()
         {
         }
+
+        /// <summary>Initializes a new instance of the <see cref="InterestGroup"/> class.</summary>
+        /// <param name="uid">The uid.</param>
+        private InterestGroup(Guid uid)
+        {
+            this.Uid = uid;
+        }
+
+        #region Statics
+
+        public static InterestGroup Genre = new InterestGroup(new Guid("7B4A7C4A-EF10-483C-8854-87EBEB883583"));
+
+        #endregion
+
+        #region Old methods
 
         public InterestGroup(string name, InterestGroupTypeCodes value)
         {
@@ -51,5 +67,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             return true;
         }
+
+        #endregion
     }
 }

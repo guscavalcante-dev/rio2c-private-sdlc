@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-07-2019
+// Last Modified On : 11-10-2019
 // ***********************************************************************
 // <copyright file="ProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,9 +18,127 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Threading.Tasks;
+using PlataformaRio2C.Domain.Dtos;
+using X.PagedList;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
+    #region Project IQueryable Extensions
+
+    /// <summary>
+    /// ProjectIQueryableExtensions
+    /// </summary>
+    internal static class ProjectIQueryableExtensions
+    {
+        /// <summary>Finds the by uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> FindByUid(this IQueryable<Project> query, Guid projectUid)
+        {
+            query = query.Where(p => p.Uid == projectUid);
+
+            return query;
+        }
+
+        /// <summary>Finds the by seller attendee organization uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="sellerAttendeeOrganizationUid">The seller attendee organization uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> FindBySellerAttendeeOrganizationUid(this IQueryable<Project> query, Guid sellerAttendeeOrganizationUid)
+        {
+            query = query.Where(p => p.SellerAttendeeOrganization.Uid == sellerAttendeeOrganizationUid);
+
+            return query;
+        }
+
+        /// <summary>Finds the by seller attendee organizations uids.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="sellerAttendeeOrganizationsUids">The seller attendee organizations uids.</param>
+        /// <param name="showAll">if set to <c>true</c> [show all].</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> FindBySellerAttendeeOrganizationsUids(this IQueryable<Project> query, List<Guid> sellerAttendeeOrganizationsUids, bool showAll)
+        {
+            if (sellerAttendeeOrganizationsUids?.Any() == true)
+            {
+                query = query.Where(p => sellerAttendeeOrganizationsUids.Contains(p.SellerAttendeeOrganization.Uid));
+            }
+            else if (!showAll)
+            {
+                query = query.Where(p => 1 == 2);
+            }
+
+            return query;
+        }
+
+        /// <summary>Finds the by keywords.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> FindByKeywords(this IQueryable<Project> query, string keywords)
+        {
+            //if (!string.IsNullOrEmpty(keywords))
+            //{
+            //    var predicate = PredicateBuilder.New<Holding>(true);
+
+            //    foreach (var keyword in keywords.Split(' '))
+            //    {
+            //        if (!string.IsNullOrEmpty(keyword))
+            //        {
+            //            predicate = predicate.And(h => h.Name.Contains(keyword));
+            //        }
+            //    }
+
+            //    query = query.AsExpandable().Where(predicate);
+            //}
+
+            return query;
+        }
+
+        /// <summary>Determines whether [is not deleted].</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> IsNotDeleted(this IQueryable<Project> query)
+        {
+            query = query.Where(p => !p.IsDeleted);
+
+            return query;
+        }
+    }
+
+    #endregion
+
+    #region ProjectDto IQueryable Extensions
+
+    /// <summary>
+    /// ProjectDtoIQueryableExtensions
+    /// </summary>
+    internal static class ProjectDtoIQueryableExtensions
+    {
+        /// <summary>
+        /// To the list paged.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        internal static async Task<IPagedList<ProjectDto>> ToListPagedAsync(this IQueryable<ProjectDto> query, int page, int pageSize)
+        {
+            page++;
+
+            // Page the list
+            var pagedList = await query.ToPagedListAsync(page, pageSize);
+            if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
+                pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
+
+            return pagedList;
+        }
+    }
+
+    #endregion
+
     /// <summary>ProjectRepository</summary>
     public class ProjectRepository : Repository<Context.PlataformaRio2CContext, Project>, IProjectRepository
     {
@@ -33,6 +151,79 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             : base(context)
         {
             _systemParameterRepository = systemParameterRepository;
+        }
+
+        /// <summary>Gets the base query.</summary>
+        /// <param name="readonly">if set to <c>true</c> [readonly].</param>
+        /// <returns></returns>
+        private IQueryable<Project> GetBaseQuery(bool @readonly = false)
+        {
+            var consult = this.dbSet
+                                .IsNotDeleted();
+
+            return @readonly
+                        ? consult.AsNoTracking()
+                        : consult;
+        }
+
+        /// <summary>Finds all dtos by seller attendee organizations uids and by page asynchronous.</summary>
+        /// <param name="sellerAttendeeOrganizationsUids">The seller attendee organizations uids.</param>
+        /// <param name="showAll">if set to <c>true</c> [show all].</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<ProjectDto>> FindAllDtosBySellerAttendeeOrganizationsUidsAndByPageAsync(List<Guid> sellerAttendeeOrganizationsUids, bool showAll, int page, int pageSize)
+        {
+            var query = this.GetBaseQuery()
+                                .FindBySellerAttendeeOrganizationsUids(sellerAttendeeOrganizationsUids, showAll)
+                                .Select(p => new ProjectDto
+                                {
+                                    Project = p,
+                                    ProjectType = p.ProjectType,
+                                    SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                    {
+                                        AttendeeOrganization = p.SellerAttendeeOrganization,
+                                        Organization = p.SellerAttendeeOrganization.Organization
+                                    },
+                                    ProjectTitleDtos = p.Titles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                    {
+                                        ProjectTitle = t,
+                                        Language = t.Language
+                                    }),
+                                    ProjectLogLineDtos = p.LogLines.Where(ll => !ll.IsDeleted).Select(ll => new ProjectLogLineDto
+                                    {
+                                        ProjectLogLine = ll,
+                                        Language = ll.Language
+                                    }),
+                                    ProjectSummaryDtos = p.Summaries.Where(s => !s.IsDeleted).Select(s => new ProjectSummaryDto
+                                    {
+                                        ProjectSummary = s,
+                                        Language = s.Language
+                                    }),
+                                    ProjectProductionPlanDtos = p.ProductionPlans.Where(pp => !pp.IsDeleted).Select(pp => new ProjectProductionPlanDto
+                                    {
+                                        ProjectProductionPlan = pp,
+                                        Language = pp.Language
+                                    }),
+                                    ProjectAdditionalInformationDtos = p.AdditionalInformations.Where(aa => !aa.IsDeleted).Select(aa => new ProjectAdditionalInformationDto
+                                    {
+                                        ProjectAdditionalInformation = aa,
+                                        Language = aa.Language
+                                    }),
+                                    ProjectInterestDtos = p.Interests.Where(i => !i.IsDeleted).Select(i => new ProjectInterestDto
+                                    {
+                                        Interest = i.Interest,
+                                        InterestGroup = i.Interest.InterestGroup
+                                    }),
+                                    ProjectTargetAudienceDtos = p.TargetAudiences.Where(ta => !ta.IsDeleted).Select(ta => new ProjectTargetAudienceDto
+                                    {
+                                        TargetAudience = ta.TargetAudience
+                                    })
+                                });
+
+            return await query
+                            .OrderBy(pd => pd.Project.CreateDate)
+                            .ToListPagedAsync(page, pageSize);
         }
 
         #region Old methods

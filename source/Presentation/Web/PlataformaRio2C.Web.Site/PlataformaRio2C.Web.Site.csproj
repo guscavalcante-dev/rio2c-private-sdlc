@@ -7083,7 +7083,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Themes\Metronic\SideMenu.cshtml" />
-    <Content Include="Views\Projects\Submited.cshtml" />
+    <Content Include="Views\Projects\Submitted.cshtml" />
     <Content Include="Views\Projects\Review.cshtml" />
     <Content Include="Views\Projects\Shared\_ProjectInfoForm.cshtml" />
     <Content Include="Views\Projects\EditorTemplates\ProjectTitleBaseCommand.cshtml" />
@@ -7091,6 +7091,7 @@
     <Content Include="Views\Projects\EditorTemplates\ProjectSummaryBaseCommand.cshtml" />
     <Content Include="Views\Projects\EditorTemplates\ProjectProductionPlanBaseCommand.cshtml" />
     <Content Include="Views\Projects\EditorTemplates\ProjectAdditionalInformationBaseCommand.cshtml" />
+    <None Include="Views\Projects\Index.cshtml.old" />
     <None Include="Views\Projects\Submit.cshtml.old" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

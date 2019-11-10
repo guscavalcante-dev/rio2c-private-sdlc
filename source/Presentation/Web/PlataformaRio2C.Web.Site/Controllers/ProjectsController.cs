@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-08-2019
+// Last Modified On : 11-10-2019
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -38,6 +38,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
     [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.ExecutiveAudiovisual + "," + Constants.CollaboratorType.Industry )]
     public class ProjectsController : BaseController
     {
+        private readonly IProjectRepository projectRepo;
         private readonly IInterestRepository interestRepo;
         private readonly IActivityRepository activityRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
@@ -45,17 +46,20 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <summary>Initializes a new instance of the <see cref="ProjectsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
+        /// <param name="projectRepository">The project repository.</param>
         /// <param name="interestRepository">The interest repository.</param>
         /// <param name="activityRepository">The activity repository.</param>
         /// <param name="targetAudienceRepository">The target audience repository.</param>
         public ProjectsController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
+            IProjectRepository projectRepository,
             IInterestRepository interestRepository,
             IActivityRepository activityRepository,
             ITargetAudienceRepository targetAudienceRepository)
             : base(commandBus, identityController)
         {
+            this.projectRepo = projectRepository;
             this.interestRepo = interestRepository;
             this.activityRepo = activityRepository;
             this.targetAudienceRepo = targetAudienceRepository;
@@ -66,6 +70,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "" }))
+            });
+
+            #endregion
+
             //TODO: Enable this projects redirection when projects is implemented
             //// If the user is not player and industry, redirect to the correct page
             //if (this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual) == true
@@ -79,18 +91,41 @@ namespace PlataformaRio2C.Web.Site.Controllers
             //    return RedirectToAction("Submited", "Projects", new { Area = "" });
             //}
 
-            #region Breadcrumb
-
-                ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.AudiovisualProjects, Url.Action("Index", "Projects", new { Area = "" }))
-            });
-
-            #endregion
-
             return View();
         }
 
         #region Industry
+
+        #region Submitted List
+
+        /// <summary>Submitteds this instance.</summary>
+        /// <returns></returns>
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.Industry)]
+        public async Task<ActionResult> Submitted()
+        {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "" }))
+            });
+
+            #endregion
+
+            if (this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) != true)
+            {
+                return RedirectToAction("Index", "Projects", new { Area = "" });
+            }
+
+            var projects = await this.projectRepo.FindAllDtosBySellerAttendeeOrganizationsUidsAndByPageAsync(
+                this.UserAccessControlDto?.EditionAttendeeOrganizations?.Select(eao => eao.Uid)?.ToList(),
+                false,
+                1,
+                100);
+
+            return View(projects);
+        }
+
+        #endregion
 
         #region Submit
 
@@ -107,6 +142,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
             });
 
             #endregion
+
+            if (this.EditionDto?.IsProjectSubmitOpened() != true)
+            {
+                return RedirectToAction("CompanyInfo", "Projects");
+            }
 
             if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true)
             {
@@ -136,12 +176,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpPost]
         public async Task<ActionResult> Submit(CreateProject cmd)
         {
-            if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
-                || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() == true)
-            {
-                return RedirectToAction("Submit", "Projects");
-            }
-
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ProjectInfo, new List<BreadcrumbItemHelper> {
@@ -150,6 +184,17 @@ namespace PlataformaRio2C.Web.Site.Controllers
             });
 
             #endregion
+
+            if (this.EditionDto?.IsProjectSubmitOpened() != true)
+            {
+                return RedirectToAction("CompanyInfo", "Projects");
+            }
+
+            if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
+                || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() == true)
+            {
+                return RedirectToAction("Submit", "Projects");
+            }
 
             var result = new AppValidationResult();
 
@@ -218,11 +263,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> CompanyInfo()
         {
-            if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() != true)
-            {
-                return RedirectToAction("Submit", "Projects");
-            }
-
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CompanyInfo, new List<BreadcrumbItemHelper> {
@@ -231,6 +271,16 @@ namespace PlataformaRio2C.Web.Site.Controllers
             });
 
             #endregion
+
+            if (this.EditionDto?.IsProjectSubmitOpened() != true)
+            {
+                return RedirectToAction("CompanyInfo", "Projects");
+            }
+
+            if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() != true)
+            {
+                return RedirectToAction("Submit", "Projects");
+            }
 
             //this.SetViewBags();
 
@@ -255,11 +305,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpPost]
         public async Task<ActionResult> CompanyInfo(OnboardProducerOrganizationData cmd)
         {
-            if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() != true)
-            {
-                return RedirectToAction("Submit", "Projects");
-            }
-
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CompanyInfo, new List<BreadcrumbItemHelper> {
@@ -269,7 +314,15 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             #endregion
 
-            //this.SetViewBags();
+            if (this.EditionDto?.IsProjectSubmitOpened() != true)
+            {
+                return RedirectToAction("CompanyInfo", "Projects");
+            }
+
+            if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() != true)
+            {
+                return RedirectToAction("Submit", "Projects");
+            }
 
             var result = new AppValidationResult();
 
@@ -334,12 +387,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> TermsAcceptance()
         {
-            if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
-                || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() != true)
-            {
-                return RedirectToAction("Submit", "Projects");
-            }
-
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ParticipantsTerms, new List<BreadcrumbItemHelper> {
@@ -349,7 +396,16 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             #endregion
 
-            //this.SetViewBags();
+            if (this.EditionDto?.IsProjectSubmitOpened() != true)
+            {
+                return RedirectToAction("CompanyInfo", "Projects");
+            }
+
+            if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
+                || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() != true)
+            {
+                return RedirectToAction("Submit", "Projects");
+            }
 
             var cmd = new OnboardProducerTermsAcceptance();
 
@@ -362,12 +418,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpPost]
         public async Task<ActionResult> TermsAcceptance(OnboardProducerTermsAcceptance cmd)
         {
-            if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
-                || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() != true)
-            {
-                return RedirectToAction("Submit", "Projects");
-            }
-
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ParticipantsTerms, new List<BreadcrumbItemHelper> {
@@ -377,7 +427,16 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             #endregion
 
-            //this.SetViewBags();
+            if (this.EditionDto?.IsProjectSubmitOpened() != true)
+            {
+                return RedirectToAction("CompanyInfo", "Projects");
+            }
+
+            if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
+                || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() != true)
+            {
+                return RedirectToAction("Submit", "Projects");
+            }
 
             var result = new AppValidationResult();
 
@@ -427,22 +486,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
         }
 
         #endregion
-
-        /// <summary>Submiteds this instance.</summary>
-        /// <returns></returns>
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.Industry)]
-        public ActionResult Submited()
-        {
-            #region Breadcrumb
-
-            ViewBag.Breadcrumb = new BreadcrumbHelper("Submited Projects", new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper("Projects", Url.Action("Index", "Projects", new { Area = "Player" }))
-            });
-
-            #endregion
-
-            return View();
-        }
 
         #endregion
 

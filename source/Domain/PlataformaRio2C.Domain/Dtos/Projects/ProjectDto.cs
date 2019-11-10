@@ -4,14 +4,16 @@
 // Created          : 11-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-08-2019
+// Last Modified On : 11-10-2019
 // ***********************************************************************
 // <copyright file="ProjectDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Domain.Dtos
@@ -21,6 +23,7 @@ namespace PlataformaRio2C.Domain.Dtos
     {
         public Project Project { get; set; }
         public ProjectType ProjectType { get; set; }
+        public AttendeeOrganizationDto SellerAttendeeOrganizationDto { get; set; }
         public IEnumerable<ProjectTitleDto> ProjectTitleDtos { get; set; }
         public IEnumerable<ProjectLogLineDto> ProjectLogLineDtos { get; set; }
         public IEnumerable<ProjectSummaryDto> ProjectSummaryDtos { get; set; }
@@ -28,10 +31,59 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<ProjectAdditionalInformationDto> ProjectAdditionalInformationDtos { get; set; }
         public IEnumerable<ProjectInterestDto> ProjectInterestDtos { get; set; }
         public IEnumerable<ProjectTargetAudienceDto> ProjectTargetAudienceDtos { get; set; }
+        public IEnumerable<ProjectBuyerEvaluationDto> ProjectBuyerEvaluationDtos { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="ProjectDto"/> class.</summary>
         public ProjectDto()
         {
+        }
+
+        /// <summary>Gets the title dto by language code.</summary>
+        /// <param name="culture">The culture.</param>
+        /// <returns></returns>
+        public ProjectTitleDto GetTitleDtoByLanguageCode(string culture)
+        {
+            return this.ProjectTitleDtos?.FirstOrDefault(ptd => ptd.Language.Code?.ToLowerInvariant() == culture?.ToLowerInvariant());
+        }
+
+        /// <summary>Gets the log line dto by language code.</summary>
+        /// <param name="culture">The culture.</param>
+        /// <returns></returns>
+        public ProjectLogLineDto GetLogLineDtoByLanguageCode(string culture)
+        {
+            return this.ProjectLogLineDtos?.FirstOrDefault(ptd => ptd.Language.Code?.ToLowerInvariant() == culture?.ToLowerInvariant());
+        }
+
+        /// <summary>Gets the summary dto by language code.</summary>
+        /// <param name="culture">The culture.</param>
+        /// <returns></returns>
+        public ProjectSummaryDto GetSummaryDtoByLanguageCode(string culture)
+        {
+            return this.ProjectSummaryDtos?.FirstOrDefault(ptd => ptd.Language.Code?.ToLowerInvariant() == culture?.ToLowerInvariant());
+        }
+
+        /// <summary>Gets the production plan dto by language code.</summary>
+        /// <param name="culture">The culture.</param>
+        /// <returns></returns>
+        public ProjectProductionPlanDto GetProductionPlanDtoByLanguageCode(string culture)
+        {
+            return this.ProjectProductionPlanDtos?.FirstOrDefault(ptd => ptd.Language.Code?.ToLowerInvariant() == culture?.ToLowerInvariant());
+        }
+
+        /// <summary>Gets the additional information dtos dto by language code.</summary>
+        /// <param name="culture">The culture.</param>
+        /// <returns></returns>
+        public ProjectAdditionalInformationDto GetAdditionalInformationDtosDtoByLanguageCode(string culture)
+        {
+            return this.ProjectAdditionalInformationDtos?.FirstOrDefault(ptd => ptd.Language.Code?.ToLowerInvariant() == culture?.ToLowerInvariant());
+        }
+
+        /// <summary>Gets all interests by interest group uid.</summary>
+        /// <param name="interestGroupUid">The interest group uid.</param>
+        /// <returns></returns>
+        public List<ProjectInterestDto> GetAllInterestsByInterestGroupUid(Guid interestGroupUid)
+        {
+            return this.ProjectInterestDtos?.Where(pid => pid.InterestGroup.Uid == interestGroupUid)?.ToList();
         }
     }
 }
