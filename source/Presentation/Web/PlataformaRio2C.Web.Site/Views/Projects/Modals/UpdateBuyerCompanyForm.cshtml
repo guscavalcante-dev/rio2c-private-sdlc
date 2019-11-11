@@ -1,0 +1,40 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model PlataformaRio2C.Application.CQRS.Commands.UpdateProjectBuyerCompanies
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+}
+<div class="row">
+    <div class="col-md-5" style="border-right: 0.07rem dashed #ebedf2;">
+        <div class="row">
+            <div class="col-12">
+                <h5>@Labels.PlayersToEvaluation</h5>
+            </div>
+        </div>
+        <div class="row">
+            <div id="ProjectBuyerCompanySelectedWidget" style="min-height: 400px; width: 100%"></div>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <ul class="nav nav-tabs nav-fill" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#kt_tabs_1_1">@Labels.PlayersSuggested</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#kt_tabs_1_2">@Labels.AllPlayers</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="kt_tabs_1_1" role="tabpanel">
+                <div class="row">
+                    <div class="col-12 text-center mb-2"><small>@Labels.SeekProjectsOfThisGenre</small></div>
+                </div>
+                <div class="row">
+                    <div id="ProjectMatchBuyerCompanyWidget" style="min-height: 400px; width: 100%"></div>
+                </div>
+            </div>
+            <div class="tab-pane" id="kt_tabs_1_2" role="tabpanel">
+                <div id="ProjectAllBuyerCompanyWidget" style="min-height: 400px; width: 100%"></div>
+            </div>
+        </div>
+    </div>
+</div>

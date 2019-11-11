@@ -42,6 +42,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         private readonly IInterestRepository interestRepo;
         private readonly IActivityRepository activityRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
+        private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
 
         /// <summary>Initializes a new instance of the <see cref="ProjectsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -50,19 +51,22 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="interestRepository">The interest repository.</param>
         /// <param name="activityRepository">The activity repository.</param>
         /// <param name="targetAudienceRepository">The target audience repository.</param>
+        /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         public ProjectsController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             IProjectRepository projectRepository,
             IInterestRepository interestRepository,
             IActivityRepository activityRepository,
-            ITargetAudienceRepository targetAudienceRepository)
+            ITargetAudienceRepository targetAudienceRepository,
+            IAttendeeOrganizationRepository attendeeOrganizationRepository)
             : base(commandBus, identityController)
         {
             this.projectRepo = projectRepository;
             this.interestRepo = interestRepository;
             this.activityRepo = activityRepository;
             this.targetAudienceRepo = targetAudienceRepository;
+            this.attendeeOrganizationRepo = attendeeOrganizationRepository;
         }
 
         /// <summary>Indexes this instance.</summary>
@@ -161,6 +165,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
             if (mainInformationWidgetDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(mainInformationWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+            {
+                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
 
             return Json(new
@@ -287,10 +296,15 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowInterestWidget(Guid? projectUid)
         {
-            var interestWidgetDto = await this.projectRepo.FindSiteInterestDtoByProjectUidAsync(projectUid ?? Guid.Empty);
+            var interestWidgetDto = await this.projectRepo.FindSiteInterestWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
             if (interestWidgetDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+            {
+                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
 
             ViewBag.GroupedInterests = await this.interestRepo.FindAllGroupedByInterestGroupsAsync();
@@ -318,7 +332,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             try
             {
-                var interestWidgetDto = await this.projectRepo.FindSiteInterestDtoByProjectUidAsync(projectUid ?? Guid.Empty);
+                var interestWidgetDto = await this.projectRepo.FindSiteInterestWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
                 if (interestWidgetDto == null)
                 {
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
@@ -406,6 +420,221 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.UpdatedM) });
         }
+
+        #endregion
+
+        #endregion
+
+        #region Buyer Companies Widget
+
+        /// <summary>Shows the buyer company widget.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowBuyerCompanyWidget(Guid? projectUid)
+        {
+            var buyerCompanyWidgetDto = await this.projectRepo.FindSiteBuyerCompanyWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
+            if (buyerCompanyWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(buyerCompanyWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+            {
+                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/BuyerCompanyWidget", buyerCompanyWidgetDto), divIdOrClass = "#ProjectBuyercompanyWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #region Update
+
+        /// <summary>Shows the update buyer company modal.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowUpdateBuyerCompanyModal(Guid? projectUid)
+        {
+            UpdateProjectBuyerCompanies cmd;
+
+            try
+            {
+                var buyerCompanyWidgetDto = await this.projectRepo.FindSiteBuyerCompanyWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
+                if (buyerCompanyWidgetDto == null)
+                {
+                    return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+                }
+
+                if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(buyerCompanyWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+                {
+                    throw new DomainException(Texts.ForbiddenErrorMessage);
+                }
+
+                cmd = new UpdateProjectBuyerCompanies(buyerCompanyWidgetDto);
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/UpdateBuyerCompanyModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Shows the buyer company selected widget.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowBuyerCompanySelectedWidget(Guid? projectUid)
+        {
+            var buyerCompanyWidgetDto = await this.projectRepo.FindSiteBuyerCompanyWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
+            if (buyerCompanyWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(buyerCompanyWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+            {
+                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/BuyerCompanySelectedWidget", buyerCompanyWidgetDto), divIdOrClass = "#ProjectBuyerCompanySelectedWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Shows the project match buyer company widget.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowProjectMatchBuyerCompanyWidget(Guid? projectUid)
+        {
+            var interestWidgetDto = await this.projectRepo.FindSiteInterestWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
+            if (interestWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+            {
+                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+            }
+
+            var attendeeOrganizationDtos = await this.attendeeOrganizationRepo.FindAllDtoByMatchingProjectBuyerAsync(this.EditionDto.Id, interestWidgetDto, 1, 10);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/ProjectMatchBuyerCompanyWidget", attendeeOrganizationDtos), divIdOrClass = "#ProjectMatchBuyerCompanyWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Shows the project all buyer company widget.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowProjectAllBuyerCompanyWidget(Guid? projectUid)
+        {
+            var interestWidgetDto = await this.projectRepo.FindSiteInterestWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
+            if (interestWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+            {
+                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+            }
+
+            var attendeeOrganizationDtos = await this.attendeeOrganizationRepo.FindAllDtoByMatchingProjectBuyerAsync(this.EditionDto.Id, interestWidgetDto, 1, 10);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/ProjectAllBuyerCompanyWidget", attendeeOrganizationDtos), divIdOrClass = "#ProjectAllBuyerCompanyWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        ///// <summary>Updates the main information.</summary>
+        ///// <param name="cmd">The command.</param>
+        ///// <returns></returns>
+        //[HttpPost]
+        //public async Task<ActionResult> UpdateMainInformation(UpdateProjectMainInformation cmd)
+        //{
+        //    var result = new AppValidationResult();
+
+        //    try
+        //    {
+        //        if (!ModelState.IsValid)
+        //        {
+        //            throw new DomainException(Messages.CorrectFormValues);
+        //        }
+
+        //        cmd.UpdatePreSendProperties(
+        //            this.UserAccessControlDto.User.Id,
+        //            this.UserAccessControlDto.User.Uid,
+        //            this.EditionDto.Id,
+        //            this.EditionDto.Uid,
+        //            this.UserInterfaceLanguage);
+        //        result = await this.CommandBus.Send(cmd);
+        //        if (!result.IsValid)
+        //        {
+        //            throw new DomainException(Messages.CorrectFormValues);
+        //        }
+        //    }
+        //    catch (DomainException ex)
+        //    {
+        //        foreach (var error in result.Errors)
+        //        {
+        //            var target = error.Target ?? "";
+        //            ModelState.AddModelError(target, error.Message);
+        //        }
+
+        //        //cmd.UpdateModelsAndLists(
+        //        //    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
+
+        //        return Json(new
+        //        {
+        //            status = "error",
+        //            message = ex.GetInnerMessage(),
+        //            pages = new List<dynamic>
+        //            {
+        //                new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationForm", cmd), divIdOrClass = "#form-container" },
+        //            }
+        //        }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.UpdatedM) });
+        //}
 
         #endregion
 

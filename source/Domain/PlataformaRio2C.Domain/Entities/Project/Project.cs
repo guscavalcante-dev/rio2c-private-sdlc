@@ -45,7 +45,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<ProjectTeaserLink> TeaserLinks { get; private set; }
         public virtual ICollection<ProjectInterest> Interests { get; private set; }
         public virtual ICollection<ProjectTargetAudience> TargetAudiences { get; private set; }
-        //public virtual ICollection<ProjectPlayer> PlayersRelated { get; private set; }
+        public virtual ICollection<ProjectBuyerEvaluation> BuyerEvaluations { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="Project"/> class.</summary>
         /// <param name="projectType">Type of the project.</param>

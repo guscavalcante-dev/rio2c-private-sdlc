@@ -205,6 +205,9 @@
     </Reference>
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Text.Encodings.Web, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\System.Text.Encodings.Web.4.5.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Microsoft.AspNet.Cors.5.2.7\lib\net45\System.Web.Cors.dll</HintPath>
     </Reference>
@@ -272,11 +275,14 @@
       <HintPath>..\..\..\..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="X.PagedList, Version=7.6.0.0, Culture=neutral, PublicKeyToken=00b6c4f97602e5e8, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\X.PagedList.7.6.0\lib\net461\X.PagedList.dll</HintPath>
+    <Reference Include="X.PagedList, Version=7.9.0.0, Culture=neutral, PublicKeyToken=00b6c4f97602e5e8, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\X.PagedList.7.9.0\lib\net461\X.PagedList.dll</HintPath>
     </Reference>
-    <Reference Include="X.PagedList.Mvc, Version=7.6.0.0, Culture=neutral, PublicKeyToken=c6e0b5b21f916f4f, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\X.PagedList.Mvc.7.6.0\lib\net461\X.PagedList.Mvc.dll</HintPath>
+    <Reference Include="X.PagedList.Mvc, Version=7.9.1.0, Culture=neutral, PublicKeyToken=c6e0b5b21f916f4f, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\X.PagedList.Mvc.7.9.1\lib\net461\X.PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="X.PagedList.Web.Common, Version=7.9.1.0, Culture=neutral, PublicKeyToken=00b6c4f97602e5e8, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\X.PagedList.Web.Common.7.9.1\lib\net461\X.PagedList.Web.Common.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -427,6 +433,7 @@
     <Content Include="Assets\js\onboarding\onboarding.interests.js" />
     <Content Include="Assets\js\onboarding\onboarding.companyinfo.js" />
     <Content Include="Assets\js\projects\projects.interest.widget.js" />
+    <Content Include="Assets\js\projects\projects.buyercompany.widget.js" />
     <Content Include="Assets\js\projects\projects.maininformation.widget.js" />
     <Content Include="Assets\js\projects\projects.producerinfo.js" />
     <Content Include="Assets\js\onboarding\onboarding.playerinfo.js" />
@@ -7099,6 +7106,8 @@
     <Content Include="Views\Projects\Modals\UpdateMainInformationForm.cshtml" />
     <Content Include="Views\Projects\Modals\UpdateInterestForm.cshtml" />
     <Content Include="Views\Projects\Modals\UpdateInterestModal.cshtml" />
+    <Content Include="Views\Projects\Modals\UpdateBuyerCompanyModal.cshtml" />
+    <Content Include="Views\Projects\Modals\UpdateBuyerCompanyForm.cshtml" />
     <None Include="Views\Projects\Submit.cshtml.old" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -7190,6 +7199,10 @@
     <Content Include="Views\Projects\Submit.cshtml" />
     <Content Include="Views\Projects\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Views\Projects\Widgets\InterestWidget.cshtml" />
+    <Content Include="Views\Projects\Widgets\BuyerCompanyWidget.cshtml" />
+    <Content Include="Views\Projects\Widgets\BuyerCompanySelectedWidget.cshtml" />
+    <Content Include="Views\Projects\Widgets\ProjectMatchBuyerCompanyWidget.cshtml" />
+    <Content Include="Views\Projects\Widgets\ProjectAllBuyerCompanyWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

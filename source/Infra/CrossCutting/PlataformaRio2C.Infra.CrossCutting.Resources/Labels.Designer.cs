@@ -2401,7 +2401,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Projeto enviado aos players:.
+        ///   Looks up a localized string similar to Projeto enviado aos players.
         /// </summary>
         public static string PlayersToEvaluation {
             get {

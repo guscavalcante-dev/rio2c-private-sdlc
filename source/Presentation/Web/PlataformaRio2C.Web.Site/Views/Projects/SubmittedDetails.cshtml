@@ -26,6 +26,13 @@
             </div>
         </div>
         <!--end:Main Information Widget-->
+        <!--begin:Company Widget-->
+        <div class="row">
+            <div class="col-12">
+                <div id="ProjectBuyercompanyWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+        </div>
+        <!--end:Company Widget-->
         @*@if (isAudiovisualCompany)
         {
             <div class="row">
@@ -68,6 +75,7 @@
         jQuery(document).ready(function () {
             ProjectsMainInformationWidget.init();
             ProjectsInterestWidget.init();
+            ProjectsBuyerCompanyWidget.init();
         });
     </script>
 }

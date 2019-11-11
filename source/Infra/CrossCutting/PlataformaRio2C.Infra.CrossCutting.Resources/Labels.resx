@@ -520,7 +520,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Não há players selecionados</value>
   </data>
   <data name="PlayersToEvaluation" xml:space="preserve">
-    <value>Projeto enviado aos players:</value>
+    <value>Projeto enviado aos players</value>
+    <comment>Projeto enviado aos players</comment>
   </data>
   <data name="RegisteredProjects" xml:space="preserve">
     <value>Projetos Cadastrados</value>

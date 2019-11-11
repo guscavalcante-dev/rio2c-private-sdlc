@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-04-2019
+// Last Modified On : 11-11-2019
 // ***********************************************************************
 // <copyright file="ProjectBuyerEvaluation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -31,10 +31,12 @@ namespace PlataformaRio2C.Domain.Entities
         public int? BuyerEvaluationUserId { get; private set; }
         public DateTime? EvaluationDate { get; private set; }
 
+        public virtual Project Project { get; private set; }
         public virtual AttendeeOrganization BuyerAttendeeOrganization { get; private set; }
         //public virtual ProjectEvaluationStatus EvaluationStatus { get; private set; }
         public virtual User SellerUser { get; private set; }
         public virtual User BuyerEvaluationUser { get; private set; }
+        public virtual ProjectEvaluationStatus ProjectEvaluationStatus { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="ProjectBuyerEvaluation"/> class.</summary>
         protected ProjectBuyerEvaluation()

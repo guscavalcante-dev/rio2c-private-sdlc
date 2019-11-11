@@ -1,0 +1,41 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model ProjectDto
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+}
+@if (Model.ProjectBuyerEvaluationDtos?.Any() == true)
+{
+    <div class="col-12">
+        <!--Begin::Portlet-->
+        <div class="kt-portlet kt-portlet--height-fluid">
+            <div class="kt-portlet__body mt-40 mb-3">
+                <!--begin::Widget -->
+                <div class="kt-widget kt-widget--user-profile-2" style="flex-direction: row;">
+                    <div class="kt-widget__head">
+                        <div class="kt-widget__media">
+                            <img class="kt-widget__img" src="https://dev.assets.my.rio2c.com/img/organizations/32b107fa-7269-48c6-9405-852a5c5f460b_thumbnail.png?v=20191029213753" alt="image">
+                        </div>
+                        <div class="kt-widget__info">
+                            <a href="/pt-br/2020/Companies/Details/32b107fa-7269-48c6-9405-852a5c5f460b" class="kt-widget__username">Softo</a>
+
+                            <span class="kt-widget__desc">
+                                <a href="/pt-br/2020/Companies/Details/32b107fa-7269-48c6-9405-852a5c5f460b">
+                                    <small><i class="flaticon-profile"></i> Ver descrição</small>
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+                <!--end::Widget -->
+            </div>
+        </div>
+        <!--End::Portlet-->
+    </div>
+}
+else
+{
+    <div class="col-12 mt-30 text-center">
+        <span>@Labels.ProjectNotSubmittedToPlayers.</span>
+    </div>
+}

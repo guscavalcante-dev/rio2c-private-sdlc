@@ -516,7 +516,8 @@
     <value>There are no players selected</value>
   </data>
   <data name="PlayersToEvaluation" xml:space="preserve">
-    <value>Project sent to players: </value>
+    <value>Project sent to players</value>
+    <comment>Projeto enviado aos players</comment>
   </data>
   <data name="RegisteredProjects" xml:space="preserve">
     <value>Registered Projects</value>

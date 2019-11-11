@@ -1,0 +1,58 @@
+﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Statics
+@model X.PagedList.IPagedList<AttendeeOrganizationDto>
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+}
+@if (Model.TotalItemCount > 0)
+{
+    foreach (var attendeeOrganizationDto in Model)
+    {
+        <div class="col-12">
+            <!--Begin::Portlet-->
+            <div class="kt-portlet kt-portlet--height-fluid">
+                @*<div class="kt-portlet__head kt-portlet__head--noborder"></div>*@
+                <div class="kt-portlet__body mt-40">
+                    <!--begin::Widget -->
+                    <div class="kt-widget kt-widget--user-profile-2" style="flex-direction: row;">
+                        <div class="kt-widget__head">
+                            <div class="kt-widget__media">
+                                @if (attendeeOrganizationDto.Organization.HasImage())
+                                {
+                                    <img class="kt-widget__img" src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, attendeeOrganizationDto.Organization.Uid, attendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="image">
+                                }
+                                else
+                                {
+                                    <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest">
+                                        @(attendeeOrganizationDto.Organization.GetTradeNameAbbreviation())
+                                    </div>
+                                }
+                            </div>
+                            <div class="kt-widget__info">
+                                <a href="@Url.Action("Details", "Companies", new { id = attendeeOrganizationDto.Organization.Uid })" class="kt-widget__username">@attendeeOrganizationDto.Organization.TradeName</a>
+                                @*<span class="kt-widget__desc">@(attendeeOrganizationDto.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value ?? "-")</span>*@
+                                <span class="kt-widget__desc">
+                                    <a href="@Url.Action("Details", "Companies", new { id = attendeeOrganizationDto.Organization.Uid })">
+                                        <small><i class="flaticon-profile"></i> @Labels.SeeDescription</small>
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                        @*<div class="kt-widget__footer">
+                                        <button type="button" class="btn btn-label-warning btn-lg btn-upper">write message</button>
+                                    </div>*@
+                    </div>
+                    <!--end::Widget -->
+                </div>
+            </div>
+            <!--End::Portlet-->
+        </div>
+    }
+}
+else
+{
+    <div class="col-12 mt-30 text-center">
+        <span>@string.Format(Messages.EntityNotAction, Labels.Player, Labels.FoundM).</span>
+    </div>
+}

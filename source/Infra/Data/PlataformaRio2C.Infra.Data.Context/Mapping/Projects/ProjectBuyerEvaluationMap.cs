@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-08-2019
+// Last Modified On : 11-11-2019
 // ***********************************************************************
 // <copyright file="ProjectBuyerEvaluationMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,9 +27,13 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             Property(u => u.Reason)
                 .HasMaxLength(ProjectBuyerEvaluation.ReasonMaxLength);
 
-            //Relationships          
+            //Relationships
+            this.HasRequired(t => t.Project)
+                .WithMany(e => e.BuyerEvaluations)
+                .HasForeignKey(d => d.ProjectId);
+
             this.HasRequired(t => t.BuyerAttendeeOrganization)
-                .WithMany()
+                .WithMany(e => e.ProjectBuyerEvaluations)
                 .HasForeignKey(d => d.BuyerAttendeeOrganizationId);
 
             this.HasRequired(t => t.SellerUser)
@@ -40,10 +44,9 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                 .WithMany()
                 .HasForeignKey(d => d.BuyerEvaluationUserId);
 
-            //TODO: Missing status
-            //this.HasRequired(t => t.ProjectEvaluationStatus)
-            //    .WithMany()
-            //    .HasForeignKey(d => d.ProjectEvaluationStatusId);
+            this.HasRequired(t => t.ProjectEvaluationStatus)
+                .WithMany()
+                .HasForeignKey(d => d.ProjectEvaluationStatusId);
         }
     }
 }

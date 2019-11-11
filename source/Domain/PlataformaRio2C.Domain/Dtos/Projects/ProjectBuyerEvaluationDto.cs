@@ -4,7 +4,7 @@
 // Created          : 11-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-10-2019
+// Last Modified On : 11-11-2019
 // ***********************************************************************
 // <copyright file="ProjecProjectBuyerEvaluationDtotInterestDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,7 +20,7 @@ namespace PlataformaRio2C.Domain.Dtos
     {
         public ProjectBuyerEvaluation ProjectBuyerEvaluation { get; set; }
         public AttendeeOrganizationDto BuyerAttendeeOrganizationDto { get; set; }
-        //public ProjectEvaluationStatus ProjectEvaluationStatus { get; set; }
+        public ProjectEvaluationStatus ProjectEvaluationStatus { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="ProjectBuyerEvaluationDto"/> class.</summary>
         public ProjectBuyerEvaluationDto()

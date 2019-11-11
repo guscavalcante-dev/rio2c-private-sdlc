@@ -4,7 +4,7 @@
 // Created          : 08-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-09-2019
+// Last Modified On : 11-11-2019
 // ***********************************************************************
 // <copyright file="IAttendeeOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
+using X.PagedList;
 
 namespace PlataformaRio2C.Domain.Interfaces
 {
@@ -34,6 +35,13 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<AttendeeOrganizationSiteActivityWidgetDto> FindSiteActivityWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId);
         Task<AttendeeOrganizationSiteTargetAudienceWidgetDto> FindSiteTargetAudienceWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId);
         Task<AttendeeOrganizationSiteInterestWidgetDto> FindSiteInterestWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId);
+
+        #endregion
+
+        #region Site Projects Widgets
+
+        Task<List<AttendeeOrganizationDto>> FindAllDtoByBuyerProjectUid(Guid projectUid);
+        Task<IPagedList<AttendeeOrganizationDto>> FindAllDtoByMatchingProjectBuyerAsync(int editionId, ProjectDto projectDto, int page, int pageSize);
 
         #endregion
     }

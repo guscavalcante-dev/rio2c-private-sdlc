@@ -4,7 +4,7 @@
 // Created          : 08-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-10-2019
+// Last Modified On : 11-11-2019
 // ***********************************************************************
 // <copyright file="AttendeeOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -67,6 +67,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds the by organization type uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="organizationTypeUid">The organization type uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeOrganization> FindByOrganizationTypeUid(this IQueryable<AttendeeOrganization> query, int editionId, Guid organizationTypeUid)
+        {
+            query = query.Where(ao => ao.EditionId == editionId
+                                      && ao.AttendeeOrganizationTypes.Any(aot => aot.OrganizationType.Uid == organizationTypeUid
+                                                                                  && !aot.IsDeleted
+                                                                                  && !aot.OrganizationType.IsDeleted));
+
+            return query;
+        }
+
         /// <summary>Finds the by edition identifier.</summary>
         /// <param name="query">The query.</param>
         /// <param name="editionId">The edition identifier.</param>
@@ -81,6 +96,30 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds the by buyer project uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeOrganization> FindByBuyerProjectUid(this IQueryable<AttendeeOrganization> query, Guid projectUid)
+        {
+            query = query.Where(ao => ao.ProjectBuyerEvaluations.Any(pbe => pbe.Project.Uid == projectUid
+                                                                            && !ao.IsDeleted 
+                                                                            && !pbe.IsDeleted
+                                                                            && !pbe.Project.IsDeleted));
+
+            return query;
+        }
+
+        //internal static IQueryable<AttendeeOrganization> FindByBuyerMatchingProjectUid(this IQueryable<AttendeeOrganization> query, Guid projectUid)
+        //{
+        //    query = query.Where(ao => ao.ProjectBuyerEvaluations.Any(pbe => pbe.Project.Uid == projectUid
+        //                                                                    && !ao.IsDeleted
+        //                                                                    && !pbe.IsDeleted
+        //                                                                    && !pbe.Project.IsDeleted));
+
+        //    return query;
+        //}
+
         /// <summary>Determines whether [is not deleted].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
@@ -94,12 +133,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
     #endregion
 
-    #region Attendee OrganizationBaseDto IQueryable Extensions
+    #region AttendeeOrganizationDto IQueryable Extensions
 
     /// <summary>
-    /// AttendeeOrganizationBaseDtoIQueryableExtensions
+    /// AttendeeOrganizationDtoIQueryableExtensions
     /// </summary>
-    internal static class AttendeeOrganizationBaseDtoIQueryableExtensions
+    internal static class AttendeeOrganizationDtoIQueryableExtensions
     {
         /// <summary>
         /// To the list paged.
@@ -108,7 +147,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        internal static async Task<IPagedList<AttendeeOrganizationBaseDto>> ToListPagedAsync(this IQueryable<AttendeeOrganizationBaseDto> query, int page, int pageSize)
+        internal static async Task<IPagedList<AttendeeOrganizationDto>> ToListPagedAsync(this IQueryable<AttendeeOrganizationDto> query, int page, int pageSize)
         {
             page++;
 
@@ -190,6 +229,51 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return await query.ToListAsync();
         }
+
+        #region Site Project Widgets
+
+        /// <summary>Finds all dto by buyer project uid.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        public async Task<List<AttendeeOrganizationDto>> FindAllDtoByBuyerProjectUid(Guid projectUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByBuyerProjectUid(projectUid);
+
+            return await query
+                            .Select(ao => new AttendeeOrganizationDto
+                            {
+                                AttendeeOrganization = ao,
+                                Organization = ao.Organization
+                            })
+                            .OrderBy(ao => ao.Organization.TradeName)
+                            .ToListAsync();
+        }
+
+        /// <summary>Finds all dto by matching project buyer asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="projectDto">The project dto.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<AttendeeOrganizationDto>> FindAllDtoByMatchingProjectBuyerAsync(int editionId, ProjectDto projectDto, int page, int pageSize)
+        {
+            var buyerOrganizationType = projectDto.ProjectType.OrganizationTypes.FirstOrDefault(ot => !ot.IsDeleted && !ot.IsSeller);
+
+            var query = this.GetBaseQuery()
+                                .FindByOrganizationTypeUid(editionId, buyerOrganizationType?.Uid ?? Guid.Empty);
+
+            return await query
+                            .Select(ao => new AttendeeOrganizationDto
+                            {
+                                AttendeeOrganization = ao,
+                                Organization = ao.Organization
+                            })
+                            .OrderBy(ao => ao.Organization.TradeName)
+                            .ToListPagedAsync(page, pageSize);
+        }
+
+        #endregion
 
         #region Site Widgets
 

@@ -296,7 +296,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>Finds the site interest dto by project uid asynchronous.</summary>
         /// <param name="projectUid">The project uid.</param>
         /// <returns></returns>
-        public async Task<ProjectDto> FindSiteInterestDtoByProjectUidAsync(Guid projectUid)
+        public async Task<ProjectDto> FindSiteInterestWidgetDtoByProjectUidAsync(Guid projectUid)
         {
             var query = this.GetBaseQuery(true)
                                 .FindByUid(projectUid);
@@ -319,6 +319,38 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 ProjectTargetAudienceDtos = p.TargetAudiences.Where(ta => !ta.IsDeleted).Select(ta => new ProjectTargetAudienceDto
                                 {
                                     TargetAudience = ta.TargetAudience
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>Finds the site buyer company dto by project uid asynchronous.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        public async Task<ProjectDto> FindSiteBuyerCompanyWidgetDtoByProjectUidAsync(Guid projectUid)
+        {
+            var query = this.GetBaseQuery(true)
+                                 .FindByUid(projectUid);
+
+            return await query
+                            .Select(p => new ProjectDto
+                            {
+                                Project = p,
+                                ProjectType = p.ProjectType,
+                                SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                {
+                                    AttendeeOrganization = p.SellerAttendeeOrganization,
+                                    Organization = p.SellerAttendeeOrganization.Organization
+                                },
+                                ProjectBuyerEvaluationDtos = p.BuyerEvaluations.Where(be => !be.IsDeleted).Select(be => new ProjectBuyerEvaluationDto
+                                {
+                                    ProjectBuyerEvaluation = be,
+                                    BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                    {
+                                        AttendeeOrganization = be.BuyerAttendeeOrganization,
+                                        Organization = be.BuyerAttendeeOrganization.Organization
+                                    },
+                                    ProjectEvaluationStatus = be.ProjectEvaluationStatus
                                 })
                             })
                             .FirstOrDefaultAsync();

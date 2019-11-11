@@ -271,7 +271,8 @@ namespace PlataformaRio2C.Web.Site
 
             bundles.Add(new ScriptBundle("~/bundles/js/projects.widget.js").Include(
                 "~/Assets/js/projects/projects.maininformation.widget.js",
-                "~/Assets/js/projects/projects.interest.widget.js"));
+                "~/Assets/js/projects/projects.interest.widget.js",
+                "~/Assets/js/projects/projects.buyercompany.widget.js"));
 
             #endregion
 

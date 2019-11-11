@@ -135,8 +135,8 @@
     <Reference Include="System.Xml.ReaderWriter, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\System.Xml.ReaderWriter.4.3.0\lib\net46\System.Xml.ReaderWriter.dll</HintPath>
     </Reference>
-    <Reference Include="X.PagedList, Version=7.6.0.0, Culture=neutral, PublicKeyToken=00b6c4f97602e5e8, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\X.PagedList.7.6.0\lib\net461\X.PagedList.dll</HintPath>
+    <Reference Include="X.PagedList, Version=7.9.0.0, Culture=neutral, PublicKeyToken=00b6c4f97602e5e8, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\X.PagedList.7.9.0\lib\net461\X.PagedList.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-08-2019
+// Last Modified On : 11-11-2019
 // ***********************************************************************
 // <copyright file="ProjectMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,7 +26,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
 
             //Relationships
             this.HasRequired(t => t.SellerAttendeeOrganization)
-                .WithMany(e => e.Projects)
+                .WithMany(e => e.SellerProjects)
                 .HasForeignKey(d => d.SellerAttendeeOrganizationId);
 
             this.HasMany(c => c.Titles)

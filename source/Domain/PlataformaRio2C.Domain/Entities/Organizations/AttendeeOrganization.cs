@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-08-2019
+// Last Modified On : 11-11-2019
 // ***********************************************************************
 // <copyright file="AttendeeOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,7 +34,8 @@ namespace PlataformaRio2C.Domain.Entities
 
         public virtual ICollection<AttendeeOrganizationType> AttendeeOrganizationTypes { get; private set; }
         public virtual ICollection<AttendeeOrganizationCollaborator> AttendeeOrganizationCollaborators { get; private set; }
-        public virtual ICollection<Project> Projects { get; private set; }
+        public virtual ICollection<Project> SellerProjects { get; private set; }
+        public virtual ICollection<ProjectBuyerEvaluation> ProjectBuyerEvaluations { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeOrganization"/> class.</summary>
         /// <param name="edition">The edition.</param>

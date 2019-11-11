@@ -67,8 +67,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="X.PagedList, Version=7.6.0.0, Culture=neutral, PublicKeyToken=00b6c4f97602e5e8, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\X.PagedList.7.6.0\lib\net461\X.PagedList.dll</HintPath>
+    <Reference Include="X.PagedList, Version=7.9.0.0, Culture=neutral, PublicKeyToken=00b6c4f97602e5e8, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\X.PagedList.7.9.0\lib\net461\X.PagedList.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -175,6 +175,7 @@
     <Compile Include="Entities\Organizations\OrganizationType.cs" />
     <Compile Include="Entities\Organizations\Organization.cs" />
     <Compile Include="Entities\PlayerProducer\PlayerProducer.cs" />
+    <Compile Include="Entities\Project\ProjectEvaluationStatus.cs" />
     <Compile Include="Entities\Project\ProjectTargetAudience.cs" />
     <Compile Include="Entities\Project\ProjectType.cs" />
     <Compile Include="Entities\Project\ProjectPlayer.cs" />

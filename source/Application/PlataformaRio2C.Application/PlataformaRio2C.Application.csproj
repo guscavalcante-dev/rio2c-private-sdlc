@@ -163,8 +163,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="X.PagedList, Version=7.6.0.0, Culture=neutral, PublicKeyToken=00b6c4f97602e5e8, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\X.PagedList.7.6.0\lib\net461\X.PagedList.dll</HintPath>
+    <Reference Include="X.PagedList, Version=7.9.0.0, Culture=neutral, PublicKeyToken=00b6c4f97602e5e8, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\X.PagedList.7.9.0\lib\net461\X.PagedList.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -272,6 +272,7 @@
     <Compile Include="CQRS\Commands\Projects\BaseCommands\ProjectBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Projects\CreateProject.cs" />
     <Compile Include="CQRS\Commands\Projects\UpdateProjectInterests.cs" />
+    <Compile Include="CQRS\Commands\Projects\UpdateProjectBuyerCompanies.cs" />
     <Compile Include="CQRS\Commands\Projects\UpdateProjectMainInformation.cs" />
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\ProcessPendingPlatformWebhookRequestsAsync.cs" />
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\CreateSalesPlatformWebhookRequest.cs" />
