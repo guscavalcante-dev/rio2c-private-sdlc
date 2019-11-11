@@ -29,7 +29,8 @@ namespace PlataformaRio2C.Domain.Interfaces
 
         #region Site Widgets
 
-        Task<ProjectDto> FindSiteDetailstDtoByProjectUidAsync(Guid projectUid);
+        Task<ProjectDto> FindSiteDetailsDtoByProjectUidAsync(Guid projectUid);
+        Task<ProjectDto> FindSiteMainInformationWidgetProjectDtoByProjectUidAsync(Guid projectUid);
 
         #endregion
 

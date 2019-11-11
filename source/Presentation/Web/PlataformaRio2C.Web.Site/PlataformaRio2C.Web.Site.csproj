@@ -7094,6 +7094,8 @@
     <Content Include="Views\Projects\EditorTemplates\ProjectAdditionalInformationBaseCommand.cshtml" />
     <Content Include="Views\Projects\SubmittedDetails.cshtml" />
     <None Include="Views\Projects\Index.cshtml.old" />
+    <Content Include="Views\Projects\Modals\UpdateMainInformationModal.cshtml" />
+    <Content Include="Views\Projects\Modals\UpdateMainInformationForm.cshtml" />
     <None Include="Views\Projects\Submit.cshtml.old" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -7183,6 +7185,7 @@
     <Content Include="Views\Projects\Shared\_ProducerTermsAcceptanceText.cshtml" />
     <Content Include="Views\Companies\Shared\_ProducerInfoForm.cshtml" />
     <Content Include="Views\Projects\Submit.cshtml" />
+    <Content Include="Views\Projects\Widgets\MainInformationWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

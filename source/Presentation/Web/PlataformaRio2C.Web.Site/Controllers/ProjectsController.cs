@@ -130,7 +130,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.Industry)]
         public async Task<ActionResult> SubmittedDetails(Guid? id)
         {
-            var projectDto = await this.projectRepo.FindSiteDetailstDtoByProjectUidAsync(id ?? Guid.Empty);
+            var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(id ?? Guid.Empty);
             if (projectDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
@@ -148,6 +148,136 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             return View(projectDto);
         }
+
+        #region Main Information Widget
+
+        /// <summary>Shows the main information widget.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowMainInformationWidget(Guid? projectUid)
+        {
+            var mainInformationWidgetDto = await this.projectRepo.FindSiteMainInformationWidgetProjectDtoByProjectUidAsync(projectUid ?? Guid.Empty);
+            if (mainInformationWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#ProjectMainInformationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #region Update
+
+        /// <summary>Shows the update main information modal.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? projectUid)
+        {
+            UpdateProjectMainInformation cmd;
+
+            try
+            {
+                var mainInformationWidgetDto = await this.projectRepo.FindSiteMainInformationWidgetProjectDtoByProjectUidAsync(projectUid ?? Guid.Empty);
+                if (mainInformationWidgetDto == null)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
+                }
+
+                if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(mainInformationWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+                {
+                    throw new DomainException(Texts.ForbiddenErrorMessage);
+                }
+
+                cmd = new UpdateProjectMainInformation(
+                    mainInformationWidgetDto,
+                    await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
+                    true,
+                    true,
+                    true);
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Updates the main information.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> UpdateMainInformation(UpdateProjectMainInformation cmd)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.UserAccessControlDto.User.Id,
+                    this.UserAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                //cmd.UpdateModelsAndLists(
+                //    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
+
+                return Json(new
+                {
+                    status = "error",
+                    message = ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationForm", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.UpdatedM) });
+        }
+
+        #endregion
+
+        #endregion
 
         #endregion
 

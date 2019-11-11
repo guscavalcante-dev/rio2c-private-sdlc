@@ -5,7 +5,7 @@
     ViewBag.Title = $"{Labels.Project}  {Model.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value}";
 
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
-    //var isCollaborator = userAccessControlDto?.HasEditionAttendeeOrganization(Model.AttendeeOrganization.Uid) == true;
+    //var isCollaborator = userAccessControlDto?.HasEditionAttendeeOrganization(Model.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) == true;
 
     //var isAudiovisualCompany = Model.HasAnyType(new[] { Constants.OrganizationType.AudiovisualBuyer, Constants.OrganizationType.AudiovisualSeller });
 }
@@ -66,7 +66,7 @@
         // Page translations ----------------------------------------------------------------------
 
         jQuery(document).ready(function () {
-            //ProjectsMainInformationWidget.init();
+            ProjectsMainInformationWidget.init();
         });
     </script>
 }

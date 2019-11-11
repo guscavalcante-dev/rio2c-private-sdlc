@@ -38,6 +38,16 @@ namespace PlataformaRio2C.Domain.Dtos
         {
         }
 
+        /// <summary>Gets all interests by interest group uid.</summary>
+        /// <param name="interestGroupUid">The interest group uid.</param>
+        /// <returns></returns>
+        public List<ProjectInterestDto> GetAllInterestsByInterestGroupUid(Guid interestGroupUid)
+        {
+            return this.ProjectInterestDtos?.Where(pid => pid.InterestGroup.Uid == interestGroupUid)?.ToList();
+        }
+
+        #region Translations
+
         /// <summary>Gets the title dto by language code.</summary>
         /// <param name="culture">The culture.</param>
         /// <returns></returns>
@@ -70,20 +80,14 @@ namespace PlataformaRio2C.Domain.Dtos
             return this.ProjectProductionPlanDtos?.FirstOrDefault(ptd => ptd.Language.Code?.ToLowerInvariant() == culture?.ToLowerInvariant());
         }
 
-        /// <summary>Gets the additional information dtos dto by language code.</summary>
+        /// <summary>Gets the additional information dto by language code.</summary>
         /// <param name="culture">The culture.</param>
         /// <returns></returns>
-        public ProjectAdditionalInformationDto GetAdditionalInformationDtosDtoByLanguageCode(string culture)
+        public ProjectAdditionalInformationDto GetAdditionalInformationDtoByLanguageCode(string culture)
         {
             return this.ProjectAdditionalInformationDtos?.FirstOrDefault(ptd => ptd.Language.Code?.ToLowerInvariant() == culture?.ToLowerInvariant());
         }
 
-        /// <summary>Gets all interests by interest group uid.</summary>
-        /// <param name="interestGroupUid">The interest group uid.</param>
-        /// <returns></returns>
-        public List<ProjectInterestDto> GetAllInterestsByInterestGroupUid(Guid interestGroupUid)
-        {
-            return this.ProjectInterestDtos?.Where(pid => pid.InterestGroup.Uid == interestGroupUid)?.ToList();
-        }
+        #endregion
     }
 }

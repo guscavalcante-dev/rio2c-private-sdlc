@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-08-2019
+// Last Modified On : 11-10-2019
 // ***********************************************************************
 // <copyright file="Project.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -117,6 +117,54 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Initializes a new instance of the <see cref="Project"/> class.</summary>
         protected Project()
         {
+        }
+
+        /// <summary>Updates the main information.</summary>
+        /// <param name="numberOfEpisodes">The number of episodes.</param>
+        /// <param name="eachEpisodePlayingTime">The each episode playing time.</param>
+        /// <param name="valuePerEpisode">The value per episode.</param>
+        /// <param name="totalValueOfProject">The total value of project.</param>
+        /// <param name="valueAlreadyRaised">The value already raised.</param>
+        /// <param name="valueStillNeeded">The value still needed.</param>
+        /// <param name="isPitching">if set to <c>true</c> [is pitching].</param>
+        /// <param name="titles">The titles.</param>
+        /// <param name="logLines">The log lines.</param>
+        /// <param name="summaries">The summaries.</param>
+        /// <param name="productionPlans">The production plans.</param>
+        /// <param name="additionalInformations">The additional informations.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateMainInformation(
+            int? numberOfEpisodes,
+            string eachEpisodePlayingTime,
+            int? valuePerEpisode,
+            int? totalValueOfProject,
+            int? valueAlreadyRaised,
+            int? valueStillNeeded,
+            bool isPitching,
+            List<ProjectTitle> titles,
+            List<ProjectLogLine> logLines,
+            List<ProjectSummary> summaries,
+            List<ProjectProductionPlan> productionPlans,
+            List<ProjectAdditionalInformation> additionalInformations,
+            int userId)
+        {
+            this.NumberOfEpisodes = numberOfEpisodes;
+            this.EachEpisodePlayingTime = eachEpisodePlayingTime;
+            this.ValuePerEpisode = valuePerEpisode;
+            this.TotalValueOfProject = totalValueOfProject;
+            this.ValueAlreadyRaised = valueAlreadyRaised;
+            this.ValueStillNeeded = valueStillNeeded;
+            this.IsPitching = isPitching;
+
+            this.SynchronizeTitles(titles, userId);
+            this.SynchronizeLogLines(logLines, userId);
+            this.SynchronizeSummaries(summaries, userId);
+            this.SynchronizeProductionPlans(productionPlans, userId);
+            this.SynchronizeAdditionalInformations(additionalInformations, userId);
+
+            this.IsDeleted = false;
+            this.CreateUserId = this.UpdateUserId = userId;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
         }
 
         #region Seller Attendee Organization

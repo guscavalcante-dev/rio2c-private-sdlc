@@ -228,10 +228,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         #region Site Widgets
 
-        /// <summary>Finds the site detailst dto by project uid asynchronous.</summary>
+        /// <summary>Finds the site details dto by project uid asynchronous.</summary>
         /// <param name="projectUid">The project uid.</param>
         /// <returns></returns>
-        public async Task<ProjectDto> FindSiteDetailstDtoByProjectUidAsync(Guid projectUid)
+        public async Task<ProjectDto> FindSiteDetailsDtoByProjectUidAsync(Guid projectUid)
         {
             var query = this.GetBaseQuery(true)
                                 .FindByUid(projectUid);
@@ -244,6 +244,53 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 {
                                     ProjectTitle = t,
                                     Language = t.Language
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>Finds the site main information widget project dto by project uid asynchronous.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        public async Task<ProjectDto> FindSiteMainInformationWidgetProjectDtoByProjectUidAsync(Guid projectUid)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByUid(projectUid);
+
+            return await query
+                            .Select(p => new ProjectDto
+                            {
+                                Project = p,
+                                ProjectType = p.ProjectType,
+                                SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                {
+                                    AttendeeOrganization = p.SellerAttendeeOrganization,
+                                    Organization = p.SellerAttendeeOrganization.Organization
+                                },
+                                ProjectTitleDtos = p.Titles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                {
+                                    ProjectTitle = t,
+                                    Language = t.Language
+                                }),
+                                ProjectLogLineDtos = p.LogLines.Where(ll => !ll.IsDeleted).Select(ll => new ProjectLogLineDto
+                                {
+                                    ProjectLogLine = ll,
+                                    Language = ll.Language
+                                }),
+                                ProjectSummaryDtos = p.Summaries.Where(s => !s.IsDeleted).Select(s => new ProjectSummaryDto
+                                {
+                                    ProjectSummary = s,
+                                    Language = s.Language
+                                }),
+                                ProjectProductionPlanDtos = p.ProductionPlans.Where(pp => !pp.IsDeleted).Select(pp => new ProjectProductionPlanDto
+                                {
+                                    ProjectProductionPlan = pp,
+                                    Language = pp.Language
+                                }),
+                                ProjectAdditionalInformationDtos = p.AdditionalInformations.Where(aa => !aa.IsDeleted).Select(aa => new ProjectAdditionalInformationDto
+                                {
+                                    ProjectAdditionalInformation = aa,
+                                    Language = aa.Language
                                 })
                             })
                             .FirstOrDefaultAsync();

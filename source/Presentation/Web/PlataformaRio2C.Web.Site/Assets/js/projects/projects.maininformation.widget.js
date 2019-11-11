@@ -31,9 +31,9 @@ var ProjectsMainInformationWidget = function () {
         }
 
         var jsonParameters = new Object();
-        jsonParameters.organizationUid = $('#AggregateId').val();
+        jsonParameters.projectUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Companies/ShowMainInformationWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/ShowMainInformationWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -61,8 +61,8 @@ var ProjectsMainInformationWidget = function () {
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                if (typeof (CompaniesMainInformationWidget) !== 'undefined') {
-                    CompaniesMainInformationWidget.init();
+                if (typeof (ProjectsMainInformationWidget) !== 'undefined') {
+                    ProjectsMainInformationWidget.init();
                 }
             },
             onError: function (data) {
@@ -74,11 +74,7 @@ var ProjectsMainInformationWidget = function () {
     };
 
     var enableUpdatePlugins = function () {
-        MyRio2cCropper.init({ formIdOrClass: updateFormId });
         //MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2' });
-        //AddressesForm.init();
-        //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c', maxCharCount: 710 });
-        //MyRio2cCompanyDocument.enableCompanyNumberMask(countryUid, '#Document');
         enableAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
@@ -87,9 +83,9 @@ var ProjectsMainInformationWidget = function () {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
-        jsonParameters.organizationUid = $('#AggregateId').val();
+        jsonParameters.projectUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Companies/ShowUpdateMainInformationModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/ShowUpdateMainInformationModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
             data: data,
             // Success
