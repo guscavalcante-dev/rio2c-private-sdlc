@@ -4,7 +4,7 @@
 // Created          : 11-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-08-2019
+// Last Modified On : 11-11-2019
 // ***********************************************************************
 // <copyright file="ProjectBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -128,6 +128,44 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateDropdownProperties(activities, targetAudiences, groupedInterests);
         }
 
+        /// <summary>Updates the dropdown properties.</summary>
+        /// <param name="activities">The activities.</param>
+        /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="groupedInterests">The grouped interests.</param>
+        public void UpdateDropdownProperties(
+            List<Activity> activities,
+            List<TargetAudience> targetAudiences,
+            List<IGrouping<InterestGroup, Interest>> groupedInterests)
+        {
+            this.Activities = activities;
+            this.TargetAudiences = targetAudiences;
+            this.GroupedInterests = groupedInterests;
+        }
+
+        /// <summary>Updates the pre send properties.</summary>
+        /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
+        /// <param name="projectTypeUid">The project type uid.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="userUid">The user uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="editionUid">The edition uid.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        public void UpdatePreSendProperties(
+            Guid? attendeeOrganizationUid,
+            Guid projectTypeUid,
+            int userId,
+            Guid userUid,
+            int? editionId,
+            Guid? editionUid,
+            string userInterfaceLanguage)
+        {
+            this.AttendeeOrganizationUid = attendeeOrganizationUid;
+            this.ProjectTypeUid = projectTypeUid;
+            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
+        }
+
+        #region Private methods
+
         /// <summary>Updates the titles.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
@@ -203,40 +241,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             }
         }
 
-        /// <summary>Updates the dropdown properties.</summary>
-        /// <param name="activities">The activities.</param>
-        /// <param name="targetAudiences">The target audiences.</param>
-        /// <param name="groupedInterests">The grouped interests.</param>
-        public void UpdateDropdownProperties(
-            List<Activity> activities,
-            List<TargetAudience> targetAudiences,
-            List<IGrouping<InterestGroup, Interest>> groupedInterests)
-        {
-            this.Activities = activities;
-            this.TargetAudiences = targetAudiences;
-            this.GroupedInterests = groupedInterests;
-        }
-
-        /// <summary>Updates the pre send properties.</summary>
-        /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
-        /// <param name="projectTypeUid">The project type uid.</param>
-        /// <param name="userId">The user identifier.</param>
-        /// <param name="userUid">The user uid.</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <param name="editionUid">The edition uid.</param>
-        /// <param name="userInterfaceLanguage">The user interface language.</param>
-        public void UpdatePreSendProperties(
-            Guid? attendeeOrganizationUid,
-            Guid projectTypeUid,
-            int userId,
-            Guid userUid,
-            int? editionId,
-            Guid? editionUid,
-            string userInterfaceLanguage)
-        {
-            this.AttendeeOrganizationUid = attendeeOrganizationUid;
-            this.ProjectTypeUid = projectTypeUid;
-            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
-        }
+        #endregion
     }
 }

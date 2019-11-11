@@ -315,6 +315,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 {
                                     Interest = i.Interest,
                                     InterestGroup = i.Interest.InterestGroup
+                                }),
+                                ProjectTargetAudienceDtos = p.TargetAudiences.Where(ta => !ta.IsDeleted).Select(ta => new ProjectTargetAudienceDto
+                                {
+                                    TargetAudience = ta.TargetAudience
                                 })
                             })
                             .FirstOrDefaultAsync();

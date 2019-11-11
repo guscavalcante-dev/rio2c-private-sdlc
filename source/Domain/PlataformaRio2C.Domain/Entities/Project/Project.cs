@@ -163,22 +163,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeAdditionalInformations(additionalInformations, userId);
 
             this.IsDeleted = false;
-            this.CreateUserId = this.UpdateUserId = userId;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
-        }
-
-        /// <summary>Updates the interests.</summary>
-        /// <param name="interests">The interests.</param>
-        /// <param name="userId">The user identifier.</param>
-        public void UpdateInterests(
-            List<Interest> interests,
-            int userId)
-        {
-            this.SynchronizeInterests(interests, userId);
-
-            this.IsDeleted = false;
-            this.CreateUserId = this.UpdateUserId = userId;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.Now;
         }
 
         #region Seller Attendee Organization
@@ -470,12 +456,19 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Interests
 
-        //public void UpdateInterests(List<Interest> interests, int userId)
-        //{
-        //    this.UpdateDate = DateTime.Now;
-        //    this.UpdateUserId = userId;
-        //    this.SynchronizeInterests(interests, userId);
-        //}
+        /// <summary>Updates the interests.</summary>
+        /// <param name="interests">The interests.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateInterests(
+            List<Interest> interests,
+            int userId)
+        {
+            this.SynchronizeInterests(interests, userId);
+
+            this.IsDeleted = false;
+            this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.Now;
+        }
 
         /// <summary>Synchronizes the interests.</summary>
         /// <param name="interests">The interests.</param>
@@ -538,9 +531,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void UpdateTargetAudiences(List<TargetAudience> targetAudiences, int userId)
         {
-            this.UpdateDate = DateTime.Now;
-            this.UpdateUserId = userId;
             this.SynchronizeTargetAudiences(targetAudiences, userId);
+
+            this.IsDeleted = false;
+            this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.Now;
         }
 
         /// <summary>Synchronizes the target audiences.</summary>

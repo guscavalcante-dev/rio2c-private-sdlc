@@ -294,6 +294,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
 
             ViewBag.GroupedInterests = await this.interestRepo.FindAllGroupedByInterestGroupsAsync();
+            ViewBag.TargetAudiences = await this.targetAudienceRepo.FindAllAsync();
 
             return Json(new
             {
@@ -330,7 +331,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
                 cmd = new UpdateProjectInterests(
                     interestWidgetDto,
-                    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
+                    await this.interestRepo.FindAllGroupedByInterestGroupsAsync(),
+                    await this.targetAudienceRepo.FindAllAsync());
             }
             catch (DomainException ex)
             {
@@ -383,7 +385,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 }
 
                 cmd.UpdateDropdownProperties(
-                    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
+                    await this.interestRepo.FindAllGroupedByInterestGroupsAsync(),
+                    await this.targetAudienceRepo.FindAllAsync());
 
                 return Json(new
                 {

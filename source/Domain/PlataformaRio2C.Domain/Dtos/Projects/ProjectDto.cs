@@ -58,6 +58,18 @@ namespace PlataformaRio2C.Domain.Dtos
 
         #endregion
 
+        #region Target Audiences
+
+        /// <summary>Gets the target audience dto by target audience uid.</summary>
+        /// <param name="targetAudienceUid">The target audience uid.</param>
+        /// <returns></returns>
+        public ProjectTargetAudienceDto GetTargetAudienceDtoByTargetAudienceUid(Guid targetAudienceUid)
+        {
+            return this.ProjectTargetAudienceDtos?.FirstOrDefault(ptad => ptad.TargetAudience.Uid == targetAudienceUid);
+        }
+
+        #endregion
+
         #region Translations
 
         /// <summary>Gets the title dto by language code.</summary>

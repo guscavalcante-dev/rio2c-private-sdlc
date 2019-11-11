@@ -5,6 +5,7 @@
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var isCollaborator = userAccessControlDto?.HasEditionAttendeeOrganization(Model.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) == true;
     var groupedInterests = ViewBag.GroupedInterests as List<IGrouping<InterestGroup, Interest>>;
+    var targetAudiences = ViewBag.TargetAudiences as List<TargetAudience>;
 }
 <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
@@ -26,33 +27,54 @@
 <div class="kt-portlet__body">
     <div class="kt-widget">
         <div class="kt-widget__bottom">
-            @if (groupedInterests?.Any() == true)
+            @if (groupedInterests?.Any() == true || targetAudiences?.Any() == true)
             {
-                var isFirstGroup = true;
-                <div class="row">
-                    @foreach (var interests in groupedInterests)
-                    {
+                if (groupedInterests?.Any() == true)
+                {
+                    var isFirstGroup = true;
+                    <div class="row">
+                        @foreach (var interests in groupedInterests)
+                        {
+                            <div class="col-md-12">
+                                <div class="kt-widget4">
+                                    <h3 class="kt-heading kt-heading--sm mb-0 @(isFirstGroup ? "mt-0" : string.Empty)">@interests.Key.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</h3>
+                                    @foreach (var interest in interests?.OrderBy(ig => ig.DisplayOrder))
+                                    {
+                                        var organizationInterestDto = Model.GetInterestDtoByInterestUid(interest.Uid);
+                                        if (organizationInterestDto != null)
+                                        {
+                                            <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
+                                        }
+                                    }
+                                </div>
+                            </div>
+
+                            isFirstGroup = false;
+                        }
+                    </div>
+                }
+                if (targetAudiences?.Any() == true)
+                {
+                    <div class="row">
                         <div class="col-md-12">
                             <div class="kt-widget4">
-                                <h3 class="kt-heading kt-heading--sm mb-0 @(isFirstGroup ? "mt-0" : string.Empty)">@interests.Key.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</h3>
-                                @foreach (var interest in interests?.OrderBy(ig => ig.DisplayOrder))
+                                <h3 class="kt-heading kt-heading--sm mb-0">@Labels.TargetAudience</h3>
+                                @foreach (var targetAudience in targetAudiences.OrderBy(a => a.DisplayOrder))
                                 {
-                                    var organizationInterestDto = Model.GetInterestDtoByInterestUid(interest.Uid);
-                                    if (organizationInterestDto != null)
+                                    var targetAudienceDto = Model.GetTargetAudienceDtoByTargetAudienceUid(targetAudience.Uid);
+                                    if (targetAudienceDto != null)
                                     {
-                                        <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
+                                        <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@targetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
                                     }
                                 }
                             </div>
                         </div>
-
-                        isFirstGroup = false;
-                    }
-                </div>
+                    </div>
+                }
             }
             else
             {
-                <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.Interests, Labels.FoundF)</span>
+                <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.Interests, Labels.FoundM)</span>
             }
         </div>
     </div>

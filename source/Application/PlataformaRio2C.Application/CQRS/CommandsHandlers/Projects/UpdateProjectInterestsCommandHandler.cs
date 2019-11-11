@@ -31,6 +31,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IProjectTypeRepository projectTypeRepo;
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IInterestRepository interestRepo;
+        private readonly ITargetAudienceRepository targetAudienceRepo;
 
         /// <summary>Initializes a new instance of the <see cref="UpdateProjectInterestsCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
@@ -39,18 +40,21 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="projectTypeRepository">The project type repository.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="interestRepository">The interest repository.</param>
+        /// <param name="targetAudienceRepository">The target audience repository.</param>
         public UpdateProjectInterestsCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IProjectRepository projectRepository,
             IProjectTypeRepository projectTypeRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
-            IInterestRepository interestRepository)
+            IInterestRepository interestRepository,
+            ITargetAudienceRepository targetAudienceRepository)
             : base(eventBus, uow, projectRepository)
         {
             this.projectTypeRepo = projectTypeRepository;
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.interestRepo = interestRepository;
+            this.targetAudienceRepo = targetAudienceRepository;
         }
 
         /// <summary>Handles the specified update project interests.</summary>
@@ -87,6 +91,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 //await this.projectTypeRepo.GetAsync(pt => pt.Uid == cmd.ProjectTypeUid),
                 //cmd.AttendeeOrganizationUid.HasValue ? await this.attendeeOrganizationRepo.GetAsync(ao => ao.Uid == cmd.AttendeeOrganizationUid) : null,
                 cmd.InterestsUids?.Any() == true ? await this.interestRepo.FindAllByUidsAsync(cmd.InterestsUids) : new List<Interest>(),
+                cmd.UserId);
+
+            project.UpdateTargetAudiences(
+                //await this.projectTypeRepo.GetAsync(pt => pt.Uid == cmd.ProjectTypeUid),
+                //cmd.AttendeeOrganizationUid.HasValue ? await this.attendeeOrganizationRepo.GetAsync(ao => ao.Uid == cmd.AttendeeOrganizationUid) : null,
+                cmd.TargetAudiencesUids?.Any() == true ? await this.targetAudienceRepo.FindAllByUidsAsync(cmd.TargetAudiencesUids) : new List<TargetAudience>(),
                 cmd.UserId);
             if (!project.IsValid())
             {
