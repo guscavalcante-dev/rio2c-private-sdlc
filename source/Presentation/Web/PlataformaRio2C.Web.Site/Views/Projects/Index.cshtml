@@ -67,11 +67,11 @@
                                     @if (editionDto?.IsProjectSubmitOpened() == true)
                                     {
                                         <a href="@Url.Action("Submit", "Projects", new { Area = "" })" class="btn btn-brand mt-1">@Labels.SendProject</a>
-                                        <a href="@Url.Action("Submitted", "Projects", new { Area = "" })" class="btn btn-secondary mt-1">@Labels.SentProjects</a>
+                                        <a href="@Url.Action("SubmittedList", "Projects", new { Area = "" })" class="btn btn-secondary mt-1">@Labels.SentProjects</a>
                                     }
                                     else if (editionDto?.IsProjectSubmitStarted() == true)
                                     {
-                                        <a href="@Url.Action("Submitted", "Projects", new { Area = "" })" class="btn btn-brand mt-1">@Labels.SentProjects</a>
+                                        <a href="@Url.Action("SubmittedList", "Projects", new { Area = "" })" class="btn btn-brand mt-1">@Labels.SentProjects</a>
                                     }
                                     else
                                     {

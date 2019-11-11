@@ -98,8 +98,32 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #region Submitted List
 
-        /// <summary>Submitteds this instance.</summary>
+        /// <summary>Submitteds the list.</summary>
         /// <returns></returns>
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.Industry)]
+        public async Task<ActionResult> SubmittedList()
+        {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "" }))
+            });
+
+            #endregion
+
+            var projects = await this.projectRepo.FindAllDtosBySellerAttendeeOrganizationsUidsAndByPageAsync(
+                this.UserAccessControlDto?.EditionAttendeeOrganizations?.Select(eao => eao.Uid)?.ToList(),
+                false,
+                1,
+                100);
+
+            return View(projects);
+        }
+
+        #endregion
+
+        #region Project submitted
+
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.Industry)]
         public async Task<ActionResult> Submitted()
         {
@@ -110,11 +134,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
             });
 
             #endregion
-
-            if (this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) != true)
-            {
-                return RedirectToAction("Index", "Projects", new { Area = "" });
-            }
 
             var projects = await this.projectRepo.FindAllDtosBySellerAttendeeOrganizationsUidsAndByPageAsync(
                 this.UserAccessControlDto?.EditionAttendeeOrganizations?.Select(eao => eao.Uid)?.ToList(),

@@ -7083,7 +7083,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Themes\Metronic\SideMenu.cshtml" />
-    <Content Include="Views\Projects\Submitted.cshtml" />
+    <Content Include="Views\Projects\SubmittedList.cshtml" />
     <Content Include="Views\Projects\Review.cshtml" />
     <Content Include="Views\Projects\Shared\_ProjectInfoForm.cshtml" />
     <Content Include="Views\Projects\EditorTemplates\ProjectTitleBaseCommand.cshtml" />
