@@ -1,17 +1,18 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Rafael Dantas Ruiz
-// Created          : 11-10-2019
+// Created          : 11-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 11-11-2019
 // ***********************************************************************
-// <copyright file="UpdateProjectMainInformationCommandHandler.cs" company="Softo">
+// <copyright file="UpdateProjectInterestsCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,42 +20,44 @@ using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>UpdateProjectMainInformationCommandHandler</summary>
-    public class UpdateProjectMainInformationCommandHandler : BaseProjectCommandHandler, IRequestHandler<UpdateProjectMainInformation, AppValidationResult>
+    /// <summary>UpdateProjectInterestsCommandHandler</summary>
+    public class UpdateProjectInterestsCommandHandler : BaseProjectCommandHandler, IRequestHandler<UpdateProjectInterests, AppValidationResult>
     {
         private readonly IProjectTypeRepository projectTypeRepo;
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
-        private readonly ILanguageRepository languageRepo;
-        private readonly ITargetAudienceRepository targetAudienceRepo;
         private readonly IInterestRepository interestRepo;
 
-        public UpdateProjectMainInformationCommandHandler(
+        /// <summary>Initializes a new instance of the <see cref="UpdateProjectInterestsCommandHandler"/> class.</summary>
+        /// <param name="eventBus">The event bus.</param>
+        /// <param name="uow">The uow.</param>
+        /// <param name="projectRepository">The project repository.</param>
+        /// <param name="projectTypeRepository">The project type repository.</param>
+        /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
+        /// <param name="interestRepository">The interest repository.</param>
+        public UpdateProjectInterestsCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IProjectRepository projectRepository,
             IProjectTypeRepository projectTypeRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
-            ILanguageRepository languageRepository,
-            ITargetAudienceRepository targetAudienceRepository,
             IInterestRepository interestRepository)
             : base(eventBus, uow, projectRepository)
         {
             this.projectTypeRepo = projectTypeRepository;
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
-            this.languageRepo = languageRepository;
-            this.targetAudienceRepo = targetAudienceRepository;
             this.interestRepo = interestRepository;
         }
 
-        /// <summary>Handles the specified update project main information.</summary>
+        /// <summary>Handles the specified update project interests.</summary>
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(UpdateProjectMainInformation cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(UpdateProjectInterests cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
@@ -80,23 +83,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            var languageDtos = await this.languageRepo.FindAllDtosAsync();
-
-            project.UpdateMainInformation(
+            project.UpdateInterests(
                 //await this.projectTypeRepo.GetAsync(pt => pt.Uid == cmd.ProjectTypeUid),
                 //cmd.AttendeeOrganizationUid.HasValue ? await this.attendeeOrganizationRepo.GetAsync(ao => ao.Uid == cmd.AttendeeOrganizationUid) : null,
-                cmd.NumberOfEpisodes,
-                cmd.EachEpisodePlayingTime,
-                cmd.ValuePerEpisode,
-                cmd.TotalValueOfProject,
-                cmd.ValueAlreadyRaised,
-                cmd.ValueStillNeeded,
-                cmd.IsPitching ?? false,
-                cmd.Titles?.Select(d => new ProjectTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
-                cmd.LogLines?.Select(d => new ProjectLogLine(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
-                cmd.Summaries?.Select(d => new ProjectSummary(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
-                cmd.ProductPlans?.Select(d => new ProjectProductionPlan(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
-                cmd.AdditionalInformations?.Select(d => new ProjectAdditionalInformation(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
+                cmd.InterestsUids?.Any() == true ? await this.interestRepo.FindAllByUidsAsync(cmd.InterestsUids) : new List<Interest>(),
                 cmd.UserId);
             if (!project.IsValid())
             {

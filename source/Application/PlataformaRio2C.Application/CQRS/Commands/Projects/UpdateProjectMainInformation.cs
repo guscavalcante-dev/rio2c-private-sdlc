@@ -4,7 +4,7 @@
 // Created          : 11-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-10-2019
+// Last Modified On : 11-11-2019
 // ***********************************************************************
 // <copyright file="UpdateProjectMainInformation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -99,6 +99,25 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
         }
             
+        /// <summary>Updates the pre send properties.</summary>
+        /// <param name="projectTypeUid">The project type uid.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="userUid">The user uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="editionUid">The edition uid.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        public void UpdatePreSendProperties(
+            Guid projectTypeUid,
+            int userId,
+            Guid userUid,
+            int? editionId,
+            Guid? editionUid,
+            string userInterfaceLanguage)
+        {
+            this.ProjectTypeUid = projectTypeUid;
+            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
+        }
+
         #region Private Methods
 
         /// <summary>Updates the titles.</summary>
@@ -174,25 +193,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 this.AdditionalInformations.Add(additionalInformation != null ? new ProjectAdditionalInformationBaseCommand(additionalInformation, isDataRequired) :
                     new ProjectAdditionalInformationBaseCommand(languageDto, isDataRequired));
             }
-        }
-
-        /// <summary>Updates the pre send properties.</summary>
-        /// <param name="projectTypeUid">The project type uid.</param>
-        /// <param name="userId">The user identifier.</param>
-        /// <param name="userUid">The user uid.</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <param name="editionUid">The edition uid.</param>
-        /// <param name="userInterfaceLanguage">The user interface language.</param>
-        public void UpdatePreSendProperties(
-            Guid projectTypeUid,
-            int userId,
-            Guid userUid,
-            int? editionId,
-            Guid? editionUid,
-            string userInterfaceLanguage)
-        {
-            this.ProjectTypeUid = projectTypeUid;
-            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
         }
 
         #endregion

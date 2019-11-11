@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-10-2019
+// Last Modified On : 11-11-2019
 // ***********************************************************************
 // <copyright file="IProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,7 +30,8 @@ namespace PlataformaRio2C.Domain.Interfaces
         #region Site Widgets
 
         Task<ProjectDto> FindSiteDetailsDtoByProjectUidAsync(Guid projectUid);
-        Task<ProjectDto> FindSiteMainInformationWidgetProjectDtoByProjectUidAsync(Guid projectUid);
+        Task<ProjectDto> FindSiteMainInformationWidgetDtoByProjectUidAsync(Guid projectUid);
+        Task<ProjectDto> FindSiteInterestDtoByProjectUidAsync(Guid projectUid);
 
         #endregion
 

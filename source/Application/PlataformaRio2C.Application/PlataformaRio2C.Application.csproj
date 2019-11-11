@@ -211,6 +211,7 @@
     <Compile Include="CQRS\CommandsHandlers\Organizations\UpdateOrganizationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\CreateOrganizationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Projects\BaseProjectCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Projects\UpdateProjectInterestsCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Projects\UpdateProjectMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Projects\CreateProjectCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\SalesPlatformWebhookRequests\BaseSalesPlatformWebhookRequestCommandHandler.cs" />
@@ -270,6 +271,7 @@
     <Compile Include="CQRS\Commands\Projects\BaseCommands\ProjectTitleBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Projects\BaseCommands\ProjectBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Projects\CreateProject.cs" />
+    <Compile Include="CQRS\Commands\Projects\UpdateProjectInterests.cs" />
     <Compile Include="CQRS\Commands\Projects\UpdateProjectMainInformation.cs" />
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\ProcessPendingPlatformWebhookRequestsAsync.cs" />
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\CreateSalesPlatformWebhookRequest.cs" />

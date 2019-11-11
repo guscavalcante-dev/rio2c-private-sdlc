@@ -18,6 +18,13 @@
                 <div id="ProjectMainInformationWidget" class="kt-portlet" style="min-height: 325px;"></div>
             </div>
         </div>
+        <!--end:Interest Widget-->
+        <!--begin:Interest Widget-->
+        <div class="row">
+            <div class="col-12">
+                <div id="ProjectInterestWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+        </div>
         <!--end:Main Information Widget-->
         @*@if (isAudiovisualCompany)
         {
@@ -41,13 +48,6 @@
             </div>
             <!--end:Interest Widget-->
         }*@
-        <!--begin:Executive Widget-->
-        <div class="row">
-            <div class="col-12">
-                <div id="CompanyExecutiveWidget" class="kt-portlet" style="min-height: 325px;"></div>
-            </div>
-        </div>
-        <!--end:Executive Widget-->
     </div>
 </div>
 @section Styles {
@@ -67,6 +67,7 @@
 
         jQuery(document).ready(function () {
             ProjectsMainInformationWidget.init();
+            ProjectsInterestWidget.init();
         });
     </script>
 }

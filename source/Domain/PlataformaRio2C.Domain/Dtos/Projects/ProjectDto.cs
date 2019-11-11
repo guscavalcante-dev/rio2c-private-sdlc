@@ -4,7 +4,7 @@
 // Created          : 11-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-10-2019
+// Last Modified On : 11-11-2019
 // ***********************************************************************
 // <copyright file="ProjectDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -38,6 +38,8 @@ namespace PlataformaRio2C.Domain.Dtos
         {
         }
 
+        #region Interests
+
         /// <summary>Gets all interests by interest group uid.</summary>
         /// <param name="interestGroupUid">The interest group uid.</param>
         /// <returns></returns>
@@ -45,6 +47,16 @@ namespace PlataformaRio2C.Domain.Dtos
         {
             return this.ProjectInterestDtos?.Where(pid => pid.InterestGroup.Uid == interestGroupUid)?.ToList();
         }
+
+        /// <summary>Gets the interest dto by interest uid.</summary>
+        /// <param name="interestUid">The interest uid.</param>
+        /// <returns></returns>
+        public ProjectInterestDto GetInterestDtoByInterestUid(Guid interestUid)
+        {
+            return this.ProjectInterestDtos?.FirstOrDefault(pid => pid.Interest.Uid == interestUid);
+        }
+
+        #endregion
 
         #region Translations
 

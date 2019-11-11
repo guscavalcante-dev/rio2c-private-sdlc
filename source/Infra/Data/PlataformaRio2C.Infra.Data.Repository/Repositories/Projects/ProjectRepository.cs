@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-10-2019
+// Last Modified On : 11-11-2019
 // ***********************************************************************
 // <copyright file="ProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -249,10 +249,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
-        /// <summary>Finds the site main information widget project dto by project uid asynchronous.</summary>
-        /// <param name="projectUid">The project uid.</param>
-        /// <returns></returns>
-        public async Task<ProjectDto> FindSiteMainInformationWidgetProjectDtoByProjectUidAsync(Guid projectUid)
+        public async Task<ProjectDto> FindSiteMainInformationWidgetDtoByProjectUidAsync(Guid projectUid)
         {
             var query = this.GetBaseQuery(true)
                                 .FindByUid(projectUid);
@@ -291,6 +288,33 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 {
                                     ProjectAdditionalInformation = aa,
                                     Language = aa.Language
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>Finds the site interest dto by project uid asynchronous.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        public async Task<ProjectDto> FindSiteInterestDtoByProjectUidAsync(Guid projectUid)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByUid(projectUid);
+
+            return await query
+                            .Select(p => new ProjectDto
+                            {
+                                Project = p,
+                                ProjectType = p.ProjectType,
+                                SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                {
+                                    AttendeeOrganization = p.SellerAttendeeOrganization,
+                                    Organization = p.SellerAttendeeOrganization.Organization
+                                },
+                                ProjectInterestDtos = p.Interests.Where(i => !i.IsDeleted).Select(i => new ProjectInterestDto
+                                {
+                                    Interest = i.Interest,
+                                    InterestGroup = i.Interest.InterestGroup
                                 })
                             })
                             .FirstOrDefaultAsync();

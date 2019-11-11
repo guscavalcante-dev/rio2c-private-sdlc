@@ -426,6 +426,7 @@
     <Content Include="Assets\js\myrio2c.activity.js" />
     <Content Include="Assets\js\onboarding\onboarding.interests.js" />
     <Content Include="Assets\js\onboarding\onboarding.companyinfo.js" />
+    <Content Include="Assets\js\projects\projects.interest.widget.js" />
     <Content Include="Assets\js\projects\projects.maininformation.widget.js" />
     <Content Include="Assets\js\projects\projects.producerinfo.js" />
     <Content Include="Assets\js\onboarding\onboarding.playerinfo.js" />
@@ -7096,6 +7097,8 @@
     <None Include="Views\Projects\Index.cshtml.old" />
     <Content Include="Views\Projects\Modals\UpdateMainInformationModal.cshtml" />
     <Content Include="Views\Projects\Modals\UpdateMainInformationForm.cshtml" />
+    <Content Include="Views\Projects\Modals\UpdateInterestForm.cshtml" />
+    <Content Include="Views\Projects\Modals\UpdateInterestModal.cshtml" />
     <None Include="Views\Projects\Submit.cshtml.old" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -7186,6 +7189,7 @@
     <Content Include="Views\Companies\Shared\_ProducerInfoForm.cshtml" />
     <Content Include="Views\Projects\Submit.cshtml" />
     <Content Include="Views\Projects\Widgets\MainInformationWidget.cshtml" />
+    <Content Include="Views\Projects\Widgets\InterestWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

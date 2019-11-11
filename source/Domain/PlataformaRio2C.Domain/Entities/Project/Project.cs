@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-10-2019
+// Last Modified On : 11-11-2019
 // ***********************************************************************
 // <copyright file="Project.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -161,6 +161,20 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeSummaries(summaries, userId);
             this.SynchronizeProductionPlans(productionPlans, userId);
             this.SynchronizeAdditionalInformations(additionalInformations, userId);
+
+            this.IsDeleted = false;
+            this.CreateUserId = this.UpdateUserId = userId;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+        }
+
+        /// <summary>Updates the interests.</summary>
+        /// <param name="interests">The interests.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateInterests(
+            List<Interest> interests,
+            int userId)
+        {
+            this.SynchronizeInterests(interests, userId);
 
             this.IsDeleted = false;
             this.CreateUserId = this.UpdateUserId = userId;
