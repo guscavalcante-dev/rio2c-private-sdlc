@@ -226,6 +226,31 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .ToListPagedAsync(page, pageSize);
         }
 
+        #region Site Widgets
+
+        /// <summary>Finds the site detailst dto by project uid asynchronous.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        public async Task<ProjectDto> FindSiteDetailstDtoByProjectUidAsync(Guid projectUid)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByUid(projectUid);
+
+            return await query
+                            .Select(p => new ProjectDto
+                            {
+                                Project = p,
+                                ProjectTitleDtos = p.Titles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                {
+                                    ProjectTitle = t,
+                                    Language = t.Language
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        #endregion
+
         #region Old methods
 
         public IEnumerable<Project> GetAllByAdmin()

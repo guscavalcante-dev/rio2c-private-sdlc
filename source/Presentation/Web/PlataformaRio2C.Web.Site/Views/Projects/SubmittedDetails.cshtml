@@ -1,0 +1,72 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@using Constants = PlataformaRio2C.Domain.Constants;
+@model ProjectDto
+@{
+    ViewBag.Title = $"{Labels.Project}  {Model.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value}";
+
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    //var isCollaborator = userAccessControlDto?.HasEditionAttendeeOrganization(Model.AttendeeOrganization.Uid) == true;
+
+    //var isAudiovisualCompany = Model.HasAnyType(new[] { Constants.OrganizationType.AudiovisualBuyer, Constants.OrganizationType.AudiovisualSeller });
+}
+@Html.Hidden("AggregateId", Model.Project.Uid)
+<div class="row">
+    <div class="col-md-12">
+        <!--begin:Main Information Widget-->
+        <div class="row">
+            <div class="col-12">
+                <div id="ProjectMainInformationWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+        </div>
+        <!--end:Main Information Widget-->
+        @*@if (isAudiovisualCompany)
+        {
+            <div class="row">
+                <!--begin:Activity Widget-->
+                <div class="col-6">
+                    <div id="CompanyActivityWidget" class="kt-portlet kt-portlet--height-fluid" style="min-height: 325px;"></div>
+                </div>
+                <!--end:Activity Widget-->
+                <!--begin:Target Audience Widget-->
+                <div class="col-6">
+                    <div id="CompanyTargetAudienceWidget" class="kt-portlet kt-portlet--height-fluid" style="min-height: 325px;"></div>
+                </div>
+                <!--end:Target Audience Widget-->
+            </div>
+            <!--begin:Interest Widget-->
+            <div class="row">
+                <div class="col-12">
+                    <div id="CompanyInterestWidget" class="kt-portlet" style="min-height: 325px;"></div>
+                </div>
+            </div>
+            <!--end:Interest Widget-->
+        }*@
+        <!--begin:Executive Widget-->
+        <div class="row">
+            <div class="col-12">
+                <div id="CompanyExecutiveWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+        </div>
+        <!--end:Executive Widget-->
+    </div>
+</div>
+@section Styles {
+    @*@Styles.Render("~/bundles/css/cropper.css")*@
+    @Styles.Render("~/bundles/css/select2.css")
+}
+@section Scripts {
+    @*@Scripts.Render("~/bundles/js/cropper.js")*@
+    @Scripts.Render("~/bundles/js/select2.js")
+    @*@Scripts.Render("~/bundles/js/ckEditor.js")*@
+    @*@Scripts.Render("~/bundles/js/inputmask.js")*@
+    @Scripts.Render("~/bundles/js/bootbox.js")
+    @*@Scripts.Render("~/bundles/js/addresses.form.js")*@
+    @Scripts.Render("~/bundles/js/projects.widget.js")
+    <script>
+        // Page translations ----------------------------------------------------------------------
+
+        jQuery(document).ready(function () {
+            //ProjectsMainInformationWidget.init();
+        });
+    </script>
+}

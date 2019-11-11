@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-08-2019
+// Last Modified On : 11-10-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -258,7 +258,7 @@ namespace PlataformaRio2C.Web.Site
 
             #endregion
 
-            #region Projects Wizard
+            #region Projects
 
             bundles.Add(new ScriptBundle("~/bundles/js/projects.producerinfo.js").Include(
                 "~/Assets/js/projects/projects.producerinfo.js",
@@ -268,6 +268,9 @@ namespace PlataformaRio2C.Web.Site
 
             bundles.Add(new ScriptBundle("~/bundles/js/projects.projectinfo.js").Include(
                 "~/Assets/js/projects/projects.projectinfo.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/projects.widget.js").Include(
+                "~/Assets/js/companies/projects.maininformation.widget.js"));
 
             #endregion
 

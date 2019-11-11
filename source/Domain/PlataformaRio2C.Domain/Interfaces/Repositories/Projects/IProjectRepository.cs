@@ -27,6 +27,12 @@ namespace PlataformaRio2C.Domain.Interfaces
     {
         Task<IPagedList<ProjectDto>> FindAllDtosBySellerAttendeeOrganizationsUidsAndByPageAsync(List<Guid> sellerAttendeeOrganizationsUids, bool showAll, int page, int pageSize);
 
+        #region Site Widgets
+
+        Task<ProjectDto> FindSiteDetailstDtoByProjectUidAsync(Guid projectUid);
+
+        #endregion
+
         #region Old methods
 
         IEnumerable<Project> GetAllByAdmin();

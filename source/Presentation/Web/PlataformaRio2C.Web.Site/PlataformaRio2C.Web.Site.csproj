@@ -426,6 +426,7 @@
     <Content Include="Assets\js\myrio2c.activity.js" />
     <Content Include="Assets\js\onboarding\onboarding.interests.js" />
     <Content Include="Assets\js\onboarding\onboarding.companyinfo.js" />
+    <Content Include="Assets\js\projects\projects.maininformation.widget.js" />
     <Content Include="Assets\js\projects\projects.producerinfo.js" />
     <Content Include="Assets\js\onboarding\onboarding.playerinfo.js" />
     <Content Include="Assets\js\onboarding\onboarding.collaboratordata.js" />
@@ -7091,6 +7092,7 @@
     <Content Include="Views\Projects\EditorTemplates\ProjectSummaryBaseCommand.cshtml" />
     <Content Include="Views\Projects\EditorTemplates\ProjectProductionPlanBaseCommand.cshtml" />
     <Content Include="Views\Projects\EditorTemplates\ProjectAdditionalInformationBaseCommand.cshtml" />
+    <Content Include="Views\Projects\SubmittedDetails.cshtml" />
     <None Include="Views\Projects\Index.cshtml.old" />
     <None Include="Views\Projects\Submit.cshtml.old" />
     <Content Include="Web.config">

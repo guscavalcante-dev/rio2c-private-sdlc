@@ -124,24 +124,29 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #region Project submitted
 
+        /// <summary>Submitteds the details.</summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.Industry)]
-        public async Task<ActionResult> Submitted()
+        public async Task<ActionResult> SubmittedDetails(Guid? id)
         {
+            var projectDto = await this.projectRepo.FindSiteDetailstDtoByProjectUidAsync(id ?? Guid.Empty);
+            if (projectDto == null)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("SubmittedList", "Projects", new { Area = "" });
+            }
+
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "" }))
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "" })),
+                new BreadcrumbItemHelper(projectDto.GetTitleDtoByLanguageCode(this.UserInterfaceLanguage)?.ProjectTitle?.Value ?? Labels.Project, Url.Action("SubmittedDetails", "Projects", new { id }))
             });
 
             #endregion
 
-            var projects = await this.projectRepo.FindAllDtosBySellerAttendeeOrganizationsUidsAndByPageAsync(
-                this.UserAccessControlDto?.EditionAttendeeOrganizations?.Select(eao => eao.Uid)?.ToList(),
-                false,
-                1,
-                100);
-
-            return View(projects);
+            return View(projectDto);
         }
 
         #endregion
