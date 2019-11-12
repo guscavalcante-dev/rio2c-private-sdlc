@@ -3589,6 +3589,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deselecionar.
+        /// </summary>
+        public static string Unselect {
+            get {
+                return ResourceManager.GetString("Unselect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Editar.
         /// </summary>
         public static string Update {

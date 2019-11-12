@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-11-2019
+// Last Modified On : 11-12-2019
 // ***********************************************************************
 // <copyright file="Project.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -180,6 +180,60 @@ namespace PlataformaRio2C.Domain.Entities
 
             var organizationType = projectType?.OrganizationTypes?.FirstOrDefault(ot => ot.IsSeller);
             this.SellerAttendeeOrganization?.SynchronizeAttendeeOrganizationTypes(organizationType, userId);
+        }
+
+        #endregion
+
+        #region Buyer Evaluations
+
+        /// <summary>Creates the buyer evaluation.</summary>
+        /// <param name="buyerAttendeeOrganization">The buyer attendee organization.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void CreateBuyerEvaluation(
+            AttendeeOrganization buyerAttendeeOrganization,
+            int userId)
+        {
+            if (this.BuyerEvaluations == null)
+            {
+                this.BuyerEvaluations = new List<ProjectBuyerEvaluation>();
+            }
+
+            var buyerEvaluation = this.GetBuyerEvaluationByAttendeeOrganizationUid(buyerAttendeeOrganization?.Uid ?? Guid.Empty);
+            if (buyerEvaluation == null)
+            {
+                this.BuyerEvaluations.Add(new ProjectBuyerEvaluation(this, buyerAttendeeOrganization, userId));
+            }
+            else
+            {
+                buyerEvaluation.Update(userId);
+            }
+
+            this.IsDeleted = false;
+            this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.Now;
+        }
+
+        /// <summary>Deletes the buyer evaluation.</summary>
+        /// <param name="buyerAttendeeOrganization">The buyer attendee organization.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void DeleteBuyerEvaluation(
+            AttendeeOrganization buyerAttendeeOrganization,
+            int userId)
+        {
+            var buyerEvaluation = this.GetBuyerEvaluationByAttendeeOrganizationUid(buyerAttendeeOrganization?.Uid ?? Guid.Empty);
+            buyerEvaluation?.Delete(userId);
+
+            this.IsDeleted = false;
+            this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.Now;
+        }
+
+        /// <summary>Gets the buyer evaluation by attendee organization uid.</summary>
+        /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
+        /// <returns></returns>
+        private ProjectBuyerEvaluation GetBuyerEvaluationByAttendeeOrganizationUid(Guid attendeeOrganizationUid)
+        {
+            return this.BuyerEvaluations?.FirstOrDefault(be => be.BuyerAttendeeOrganization.Uid == attendeeOrganizationUid);
         }
 
         #endregion
@@ -673,6 +727,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateAdditionalInformations();
             this.ValidateImageLinks();
             this.ValidateTeaserLinks();
+            this.ValidateBuyerEvaluations();
 
             return this.ValidationResult.IsValid;
         }
@@ -795,6 +850,20 @@ namespace PlataformaRio2C.Domain.Entities
             foreach (var teaserLink in this.TeaserLinks?.Where(t => !t.IsValid())?.ToList())
             {
                 this.ValidationResult.Add(teaserLink.ValidationResult);
+            }
+        }
+
+        /// <summary>Validates the buyer evaluations.</summary>
+        public void ValidateBuyerEvaluations()
+        {
+            if (this.BuyerEvaluations?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var buyerEvaluation in this.BuyerEvaluations?.Where(t => !t.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(buyerEvaluation.ValidationResult);
             }
         }
 

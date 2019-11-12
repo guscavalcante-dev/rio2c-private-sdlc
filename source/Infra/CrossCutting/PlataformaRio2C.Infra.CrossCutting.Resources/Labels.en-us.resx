@@ -1632,4 +1632,8 @@
     <value>Select</value>
     <comment>Selecionar</comment>
   </data>
+  <data name="Unselect" xml:space="preserve">
+    <value>Unselect</value>
+    <comment>Deselecionar</comment>
+  </data>
 </root>

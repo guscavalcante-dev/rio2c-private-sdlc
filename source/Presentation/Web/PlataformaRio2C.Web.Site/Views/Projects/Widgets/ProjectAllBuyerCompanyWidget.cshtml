@@ -44,7 +44,8 @@
                                                 </a>
                                             </span>
                                             <span class="kt-widget__desc">
-                                                <button type="button" class="btn btn-label-info btn-sm btn-upper">@Labels.ToSelect</button>
+                                                <button type="button" class="btn btn-label-info btn-sm btn-upper" onclick="ProjectsBuyerCompanyWidget.selectCompany('@attendeeOrganizationDto.AttendeeOrganization.Uid')">@Labels.ToSelect</button>
+                                                <button type="button" class="btn btn-label-info btn-sm btn-upper d-none" onclick="ProjectsBuyerCompanyWidget.unselectCompany('@attendeeOrganizationDto.AttendeeOrganization.Uid')">@Labels.Unselect</button>
                                             </span>
                                         </div>
                                     </div>

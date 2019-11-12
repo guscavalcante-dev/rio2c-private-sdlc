@@ -23,6 +23,7 @@ var ProjectsBuyerCompanyWidget = function () {
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         KTApp.initTooltips();
+        MyRio2cCommon.initScroll();
     };
 
     var show = function () {
@@ -120,6 +121,77 @@ var ProjectsBuyerCompanyWidget = function () {
         });
     };
 
+    // Select/Unselect company --------------------------------------------------------------------
+    var selectCompany = function (attendeeOrganizationUid) {
+        MyRio2cCommon.block({ isModal: true });
+
+        var jsonParameters = new Object();
+        jsonParameters.projectUid = $('#AggregateId').val();
+        jsonParameters.attendeeOrganizationUid = attendeeOrganizationUid;
+
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/CreateBuyerEvaluation'), jsonParameters, function (data) {
+            MyRio2cCommon.handleAjaxReturn({
+                data: data,
+                // Success
+                onSuccess: function () {
+                    enableUpdatePlugins();
+                    $(updateModalId).modal();
+
+                    if (typeof (ProjectsBuyerCompanyWidget) !== 'undefined') {
+                        ProjectsBuyerCompanyWidget.init();
+                    }
+
+                    if (typeof (ProjectsBuyerCompanySelectedWidget) !== 'undefined') {
+                        ProjectsBuyerCompanySelectedWidget.init();
+                    }
+                },
+                // Error
+                onError: function () {
+                }
+            });
+        })
+        .fail(function () {
+        })
+        .always(function () {
+            MyRio2cCommon.unblock();
+        });
+    };
+
+    var unselectCompany = function (attendeeOrganizationUid) {
+        MyRio2cCommon.block({ isModal: true });
+
+        var jsonParameters = new Object();
+        jsonParameters.projectUid = $('#AggregateId').val();
+        jsonParameters.attendeeOrganizationUid = attendeeOrganizationUid;
+
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/DeleteBuyerEvaluation'), jsonParameters, function (data) {
+            MyRio2cCommon.handleAjaxReturn({
+                data: data,
+                // Success
+                onSuccess: function () {
+                    enableUpdatePlugins();
+                    $(updateModalId).modal();
+
+                    if (typeof (ProjectsBuyerCompanyWidget) !== 'undefined') {
+                        ProjectsBuyerCompanyWidget.init();
+                    }
+
+                    if (typeof (ProjectsBuyerCompanySelectedWidget) !== 'undefined') {
+                        ProjectsBuyerCompanySelectedWidget.init();
+                    }
+                },
+                // Error
+                onError: function () {
+                }
+            });
+        })
+        .fail(function () {
+        })
+        .always(function () {
+            MyRio2cCommon.unblock();
+        });
+    };
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
@@ -127,6 +199,12 @@ var ProjectsBuyerCompanyWidget = function () {
         },
         showUpdateModal: function () {
             showUpdateModal();
+        },
+        selectCompany: function (attendeeOrganizationUid) {
+            selectCompany(attendeeOrganizationUid);
+        },
+        unselectCompany: function (attendeeOrganizationUid) {
+            unselectCompany(attendeeOrganizationUid);
         }
     };
 }();

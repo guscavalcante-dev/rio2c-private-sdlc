@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-11-2019
+// Last Modified On : 11-12-2019
 // ***********************************************************************
 // <copyright file="ProjectBuyerEvaluation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System;
 using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -22,8 +23,8 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int ReasonMinLength = 1;
         public static readonly int ReasonMaxLength = 1500;
 
-        public int BuyerAttendeeOrganizationId { get; private set; }
         public int ProjectId { get; private set; }
+        public int BuyerAttendeeOrganizationId { get; private set; }
         public int? ProjectEvaluationStatusId { get; private set; }
         public string Reason { get; private set; }
         public bool IsSent { get; private set; }
@@ -39,8 +40,52 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ProjectEvaluationStatus ProjectEvaluationStatus { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="ProjectBuyerEvaluation"/> class.</summary>
+        /// <param name="project">The project.</param>
+        /// <param name="buyerAttendeeOrganization">The buyer attendee organization.</param>
+        /// <param name="userId">The user identifier.</param>
+        public ProjectBuyerEvaluation(Project project, AttendeeOrganization buyerAttendeeOrganization, int userId)
+        {
+            this.ProjectId = project?.Id ?? 0;
+            this.Project = project;
+            this.BuyerAttendeeOrganizationId = buyerAttendeeOrganization?.Id ?? 0;
+            this.BuyerAttendeeOrganization = buyerAttendeeOrganization;
+            this.ProjectEvaluationStatusId = 1; //TODO: Change the project evaluation status id hardcoded
+            this.Reason = null;
+            this.IsSent = false;
+            this.SellerUserId = userId;
+            this.BuyerEvaluationUserId = null;
+            this.EvaluationDate = null;
+
+            this.IsDeleted = false;
+            this.CreateUserId = this.UpdateUserId = userId;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="ProjectBuyerEvaluation"/> class.</summary>
         protected ProjectBuyerEvaluation()
         {
+        }
+
+        /// <summary>Updates the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Update(int userId)
+        {
+            this.SellerUserId = userId;
+
+            this.IsDeleted = false;
+            this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.Now;
+        }
+
+        /// <summary>Deletes the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(int userId)
+        {
+            this.SellerUserId = userId;
+
+            this.IsDeleted = true;
+            this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.Now;
         }
 
         #region Validations
@@ -52,13 +97,30 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.ValidationResult = new ValidationResult();
 
-            //this.ValidateName();
-            //this.ValidateDescriptions();
+            this.ValidateProject();
+            this.ValidateBuyerAttendeeOrganization();
 
             return this.ValidationResult.IsValid;
         }
 
-        ///// <summary>Validates the name.</summary>
+        /// <summary>Validates the project.</summary>
+        public void ValidateProject()
+        {
+            if (this.Project == null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM)));
+            }
+        }
+
+        /// <summary>Validates the buyer attendee organization.</summary>
+        public void ValidateBuyerAttendeeOrganization()
+        {
+            if (this.BuyerAttendeeOrganization == null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundF)));
+            }
+        }
+
         //public void ValidateName()
         //{
         //    if (string.IsNullOrEmpty(this.Name?.Trim()))
@@ -69,15 +131,6 @@ namespace PlataformaRio2C.Domain.Entities
         //    if (this.Name?.Trim().Length < NameMinLength || this.Name?.Trim().Length > NameMaxLength)
         //    {
         //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, NameMaxLength, NameMinLength), new string[] { "Name" }));
-        //    }
-        //}
-
-        ///// <summary>Validates the descriptions.</summary>
-        //public void ValidateDescriptions()
-        //{
-        //    foreach (var description in this.Descriptions?.Where(d => !d.IsValid())?.ToList())
-        //    {
-        //        this.ValidationResult.Add(description.ValidationResult);
         //    }
         //}
 

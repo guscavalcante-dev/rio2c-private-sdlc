@@ -1644,4 +1644,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Selecionar</value>
     <comment>Selecionar</comment>
   </data>
+  <data name="Unselect" xml:space="preserve">
+    <value>Deselecionar</value>
+    <comment>Deselecionar</comment>
+  </data>
 </root>
