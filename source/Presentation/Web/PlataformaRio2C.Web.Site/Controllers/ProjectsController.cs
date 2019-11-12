@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-11-2019
+// Last Modified On : 11-12-2019
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -523,9 +523,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         /// <summary>Shows the project match buyer company widget.</summary>
         /// <param name="projectUid">The project uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowProjectMatchBuyerCompanyWidget(Guid? projectUid)
+        public async Task<ActionResult> ShowProjectMatchBuyerCompanyWidget(Guid? projectUid, int page = 1, int pageSize = 10)
         {
             var interestWidgetDto = await this.projectRepo.FindSiteInterestWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
             if (interestWidgetDto == null)
@@ -538,7 +540,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
 
-            var attendeeOrganizationDtos = await this.attendeeOrganizationRepo.FindAllDtoByMatchingProjectBuyerAsync(this.EditionDto.Id, interestWidgetDto, 1, 10);
+            var attendeeOrganizationDtos = await this.attendeeOrganizationRepo.FindAllDtoByMatchingProjectBuyerAsync(this.EditionDto.Id, interestWidgetDto, page, pageSize);
+
+            ViewBag.ShowProjectMatchBuyerCompanySearch = $"&projectUid={projectUid}&pageSize={pageSize}";
 
             return Json(new
             {
@@ -552,9 +556,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         /// <summary>Shows the project all buyer company widget.</summary>
         /// <param name="projectUid">The project uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowProjectAllBuyerCompanyWidget(Guid? projectUid)
+        public async Task<ActionResult> ShowProjectAllBuyerCompanyWidget(Guid? projectUid, int page = 1, int pageSize = 10)
         {
             var interestWidgetDto = await this.projectRepo.FindSiteInterestWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
             if (interestWidgetDto == null)
@@ -567,7 +573,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
 
-            var attendeeOrganizationDtos = await this.attendeeOrganizationRepo.FindAllDtoByMatchingProjectBuyerAsync(this.EditionDto.Id, interestWidgetDto, 1, 10);
+            var attendeeOrganizationDtos = await this.attendeeOrganizationRepo.FindAllDtoByProjectBuyerAsync(this.EditionDto.Id, interestWidgetDto, page, pageSize);
+
+            ViewBag.ShowProjectAllBuyerCompanySearch = $"&projectUid={projectUid}&pageSize={pageSize}";
 
             return Json(new
             {

@@ -723,4 +723,8 @@
     <value>Orçamento do projeto (apenas para projetos em desenvolvimento/produção)</value>
     <comment>Orçamento do projeto (apenas para projetos em desenvolvimento/produção)</comment>
   </data>
+  <data name="PaginationMessage" xml:space="preserve">
+    <value>Exibindo {0} a {1} de {2}</value>
+    <comment>Exibindo {0} a {1} de {2}</comment>
+  </data>
 </root>

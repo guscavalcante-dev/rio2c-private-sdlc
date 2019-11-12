@@ -4,7 +4,7 @@
 // Created          : 08-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-11-2019
+// Last Modified On : 11-12-2019
 // ***********************************************************************
 // <copyright file="AttendeeOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -56,6 +56,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds the not by uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeOrganization> FindNotByUid(this IQueryable<AttendeeOrganization> query, Guid attendeeOrganizationUid)
+        {
+            query = query.Where(ao => ao.Uid != attendeeOrganizationUid);
+
+            return query;
+        }
+
         /// <summary>Finds the by organization uid.</summary>
         /// <param name="query">The query.</param>
         /// <param name="organizationUid">The organization uid.</param>
@@ -63,6 +74,26 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static IQueryable<AttendeeOrganization> FindByOrganizationUid(this IQueryable<AttendeeOrganization> query, Guid organizationUid)
         {
             query = query.Where(ao => ao.Organization.Uid == organizationUid);
+
+            return query;
+        }
+
+        /// <summary>Finds the by interest uids.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="interestUids">The interest uids.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeOrganization> FindByInterestUids(this IQueryable<AttendeeOrganization> query, List<Guid> interestUids)
+        {
+            if (interestUids?.Any() == true)
+            {
+                query = query.Where(ao => ao.Organization.OrganizationInterests.Any(oi => !oi.IsDeleted
+                                                                                          && !oi.Interest.IsDeleted
+                                                                                          && interestUids.Contains(oi.Interest.Uid)));
+            }
+            else
+            {
+                query = query.Where(ao => 1 == 2);
+            }
 
             return query;
         }
@@ -149,8 +180,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static async Task<IPagedList<AttendeeOrganizationDto>> ToListPagedAsync(this IQueryable<AttendeeOrganizationDto> query, int page, int pageSize)
         {
-            page++;
-
             // Page the list
             var pagedList = await query.ToPagedListAsync(page, pageSize);
             if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
@@ -259,9 +288,37 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<IPagedList<AttendeeOrganizationDto>> FindAllDtoByMatchingProjectBuyerAsync(int editionId, ProjectDto projectDto, int page, int pageSize)
         {
             var buyerOrganizationType = projectDto.ProjectType.OrganizationTypes.FirstOrDefault(ot => !ot.IsDeleted && !ot.IsSeller);
+            var genreInterests = projectDto.ProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.Genre.Uid)?.Select(pid => pid.Interest.Uid)?.ToList();
 
             var query = this.GetBaseQuery()
-                                .FindByOrganizationTypeUid(editionId, buyerOrganizationType?.Uid ?? Guid.Empty);
+                                .FindByOrganizationTypeUid(editionId, buyerOrganizationType?.Uid ?? Guid.Empty)
+                                .FindNotByUid(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid)
+                                .FindByInterestUids(genreInterests);
+
+
+            return await query
+                            .Select(ao => new AttendeeOrganizationDto
+                            {
+                                AttendeeOrganization = ao,
+                                Organization = ao.Organization
+                            })
+                            .OrderBy(ao => ao.Organization.TradeName)
+                            .ToListPagedAsync(page, pageSize);
+        }
+
+        /// <summary>Finds all dto by project buyer asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="projectDto">The project dto.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<AttendeeOrganizationDto>> FindAllDtoByProjectBuyerAsync(int editionId, ProjectDto projectDto, int page, int pageSize)
+        {
+            var buyerOrganizationType = projectDto.ProjectType?.OrganizationTypes?.FirstOrDefault(ot => !ot.IsDeleted && !ot.IsSeller);
+
+            var query = this.GetBaseQuery()
+                                .FindByOrganizationTypeUid(editionId, buyerOrganizationType?.Uid ?? Guid.Empty)
+                                .FindNotByUid(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid);
 
             return await query
                             .Select(ao => new AttendeeOrganizationDto

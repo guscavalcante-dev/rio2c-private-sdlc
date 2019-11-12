@@ -1628,4 +1628,8 @@
     <value>Production Plan</value>
     <comment>Plano de Produção</comment>
   </data>
+  <data name="ToSelect" xml:space="preserve">
+    <value>Select</value>
+    <comment>Selecionar</comment>
+  </data>
 </root>

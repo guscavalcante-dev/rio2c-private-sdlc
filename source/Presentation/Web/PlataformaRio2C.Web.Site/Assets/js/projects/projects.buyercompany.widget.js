@@ -4,7 +4,7 @@
 // Created          : 11-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-11-2019
+// Last Modified On : 11-12-2019
 // ***********************************************************************
 // <copyright file="projects.buyercompany.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -144,6 +144,7 @@ var ProjectsBuyerCompanySelectedWidget = function () {
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         KTApp.initTooltips();
+        MyRio2cCommon.initScroll();
     };
 
     var show = function () {
@@ -197,6 +198,7 @@ var ProjectsMatchBuyerCompanyWidget = function () {
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         KTApp.initTooltips();
+        MyRio2cCommon.initScroll();
     };
 
     var show = function () {
@@ -228,11 +230,37 @@ var ProjectsMatchBuyerCompanyWidget = function () {
             });
     };
 
+    // Pagination ---------------------------------------------------------------------------------
+    var changePage = function () {
+        MyRio2cCommon.block({ idOrClass: widgetElementId });
+    };
+
+    var handlePaginationReturn = function (data) {
+        MyRio2cCommon.handleAjaxReturn({
+            data: data,
+            // Success
+            onSuccess: function () {
+                enableShowPlugins();
+                MyRio2cCommon.unblock({ idOrClass: widgetElementId });
+            },
+            // Error
+            onError: function () {
+                MyRio2cCommon.unblock({ idOrClass: widgetElementId });
+            }
+        });
+    };
+
     return {
         init: function () {
             initElements();
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
+        },
+        changePage: function () {
+            changePage();
+        },
+        handlePaginationReturn: function(data) {
+            handlePaginationReturn(data);
         }
     };
 }();
@@ -250,6 +278,7 @@ var ProjectsAllBuyerCompanyWidget = function () {
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         KTApp.initTooltips();
+        MyRio2cCommon.initScroll();
     };
 
     var show = function () {
@@ -261,24 +290,44 @@ var ProjectsAllBuyerCompanyWidget = function () {
         jsonParameters.projectUid = $('#AggregateId').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/ShowProjectAllBuyerCompanyWidget'), jsonParameters, function (data) {
-                MyRio2cCommon.handleAjaxReturn({
-                    data: data,
-                    // Success
-                    onSuccess: function () {
-                        enableShowPlugins();
-                    },
-                    // Error
-                    onError: function () {
-                    }
-                });
-            })
-            .fail(function () {
-                //showAlert();
-                //MyRio2cCommon.unblock(widgetElementId);
-            })
-            .always(function () {
-                MyRio2cCommon.unblock({ idOrClass: widgetElementId });
+            MyRio2cCommon.handleAjaxReturn({
+                data: data,
+                // Success
+                onSuccess: function () {
+                    enableShowPlugins();
+                },
+                // Error
+                onError: function () {
+                }
             });
+        })
+        .fail(function () {
+            //showAlert();
+            //MyRio2cCommon.unblock(widgetElementId);
+        })
+        .always(function () {
+            MyRio2cCommon.unblock({ idOrClass: widgetElementId });
+        });
+    };
+
+    // Pagination ---------------------------------------------------------------------------------
+    var changePage = function () {
+        MyRio2cCommon.block({ idOrClass: widgetElementId });
+    };
+
+    var handlePaginationReturn = function (data) {
+        MyRio2cCommon.handleAjaxReturn({
+            data: data,
+            // Success
+            onSuccess: function () {
+                enableShowPlugins();
+                MyRio2cCommon.unblock({ idOrClass: widgetElementId });
+            },
+            // Error
+            onError: function () {
+                MyRio2cCommon.unblock({ idOrClass: widgetElementId });
+            }
+        });
     };
 
     return {
@@ -286,6 +335,12 @@ var ProjectsAllBuyerCompanyWidget = function () {
             initElements();
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
+        },
+        changePage: function () {
+            changePage();
+        },
+        handlePaginationReturn: function (data) {
+            handlePaginationReturn(data);
         }
     };
 }();

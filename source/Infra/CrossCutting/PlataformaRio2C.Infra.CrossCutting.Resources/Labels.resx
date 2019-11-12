@@ -1640,4 +1640,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Plano de Produção</value>
     <comment>Plano de Produção</comment>
   </data>
+  <data name="ToSelect" xml:space="preserve">
+    <value>Selecionar</value>
+    <comment>Selecionar</comment>
+  </data>
 </root>

@@ -870,6 +870,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exibindo {0} a {1} de {2}.
+        /// </summary>
+        public static string PaginationMessage {
+            get {
+                return ResourceManager.GetString("PaginationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Senha de confirmação incorreta..
         /// </summary>
         public static string PasswordConfirmationDoesNotMatch {

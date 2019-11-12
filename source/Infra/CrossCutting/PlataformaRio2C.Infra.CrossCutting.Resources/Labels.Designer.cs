@@ -3535,6 +3535,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Selecionar.
+        /// </summary>
+        public static string ToSelect {
+            get {
+                return ResourceManager.GetString("ToSelect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Valor total do projeto (USD).
         /// </summary>
         public static string TotalValueOfProject {
