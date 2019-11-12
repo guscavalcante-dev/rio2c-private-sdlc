@@ -25,20 +25,24 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     public class CreateProjectBuyerEvaluationCommandHandler : BaseProjectCommandHandler, IRequestHandler<CreateProjectBuyerEvaluation, AppValidationResult>
     {
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
+        private readonly IProjectEvaluationStatusRepository projectEvaluationStatusRepo;
 
         /// <summary>Initializes a new instance of the <see cref="CreateProjectBuyerEvaluationCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="projectRepository">The project repository.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
+        /// <param name="projectEvaluationStatusRepository">The project evaluation status repository.</param>
         public CreateProjectBuyerEvaluationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IProjectRepository projectRepository,
-            IAttendeeOrganizationRepository attendeeOrganizationRepository)
+            IAttendeeOrganizationRepository attendeeOrganizationRepository,
+            IProjectEvaluationStatusRepository projectEvaluationStatusRepository)
             : base(eventBus, uow, projectRepository)
         {
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
+            this.projectEvaluationStatusRepo = projectEvaluationStatusRepository;
         }
 
         /// <summary>Handles the specified create project buyer evaluation.</summary>
@@ -73,6 +77,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             project.CreateBuyerEvaluation(
                 cmd.AttendeeOrganizationUid.HasValue ? await this.attendeeOrganizationRepo.GetAsync(ao => ao.Uid == cmd.AttendeeOrganizationUid) : null,
+                await this.projectEvaluationStatusRepo.GetAsync(pes => !pes.IsDeleted && !pes.IsEvaluated),
                 cmd.UserId);
             if (!project.IsValid())
             {

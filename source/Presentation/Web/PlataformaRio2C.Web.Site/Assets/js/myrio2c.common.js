@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-08-2019
+// Last Modified On : 11-12-2019
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -94,7 +94,7 @@ var MyRio2cCommon = function () {
         $('.rio2c-scroll').not('.rio2c-scroll-enabled').each(function () {
             var el = $(this);
             KTUtil.scrollInit(this, {
-                mobileNativeScroll: true,
+                //mobileNativeScroll: true,
                 handleWindowResize: true,
                 windowScroll: false,
                 rememberPosition: (el.data('remember-position') === 'true' ? true : false),

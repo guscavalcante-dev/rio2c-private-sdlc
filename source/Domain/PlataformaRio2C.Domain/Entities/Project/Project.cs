@@ -188,9 +188,11 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Creates the buyer evaluation.</summary>
         /// <param name="buyerAttendeeOrganization">The buyer attendee organization.</param>
+        /// <param name="projectEvaluationStatus">The project evaluation status.</param>
         /// <param name="userId">The user identifier.</param>
         public void CreateBuyerEvaluation(
             AttendeeOrganization buyerAttendeeOrganization,
+            ProjectEvaluationStatus projectEvaluationStatus,
             int userId)
         {
             if (this.BuyerEvaluations == null)
@@ -201,11 +203,11 @@ namespace PlataformaRio2C.Domain.Entities
             var buyerEvaluation = this.GetBuyerEvaluationByAttendeeOrganizationUid(buyerAttendeeOrganization?.Uid ?? Guid.Empty);
             if (buyerEvaluation == null)
             {
-                this.BuyerEvaluations.Add(new ProjectBuyerEvaluation(this, buyerAttendeeOrganization, userId));
+                this.BuyerEvaluations.Add(new ProjectBuyerEvaluation(this, buyerAttendeeOrganization, projectEvaluationStatus, userId));
             }
-            else
+            else if (buyerEvaluation.IsDeleted)
             {
-                buyerEvaluation.Update(userId);
+                buyerEvaluation.Restore(projectEvaluationStatus, userId);
             }
 
             this.IsDeleted = false;
@@ -1040,3 +1042,4 @@ namespace PlataformaRio2C.Domain.Entities
         #endregion
     }
 }
+

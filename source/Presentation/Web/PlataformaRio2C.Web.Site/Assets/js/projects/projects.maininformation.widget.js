@@ -4,7 +4,7 @@
 // Created          : 11-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-10-2019
+// Last Modified On : 11-12-2019
 // ***********************************************************************
 // <copyright file="projects.maininformation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,6 +23,7 @@ var ProjectsMainInformationWidget = function () {
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         KTApp.initTooltips();
+        MyRio2cCommon.initScroll();
     };
 
     var show = function () {

@@ -79,7 +79,7 @@
                 <div class="kt-widget__item w-100">
                     <div class="kt-widget__details">
                         <span class="kt-widget__title">@Labels.Summary</span>
-                        <span class="kt-widget__value"><span>@(Html.Raw(summaryDto.ProjectSummary?.Value?.Replace("\n", "<br/>") ?? "-"))</span></span>
+                        <span class="kt-widget__value rio2c-scroll" style="height: 250px;"><span>@(Html.Raw(summaryDto.ProjectSummary?.Value?.Replace("\n", "<br/>") ?? "-"))</span></span>
                     </div>
                 </div>
             }
@@ -103,7 +103,7 @@
                 <div class="kt-widget__item w-100">
                     <div class="kt-widget__details">
                         <span class="kt-widget__title">@Labels.ProductionPlan</span>
-                        <span class="kt-widget__value"><span>@(Html.Raw(productionPlanDto.ProjectProductionPlan?.Value?.Replace("\n", "<br/>") ?? "-"))</span></span>
+                        <span class="kt-widget__value rio2c-scroll" style="height: 250px;"><span>@(Html.Raw(productionPlanDto.ProjectProductionPlan?.Value?.Replace("\n", "<br/>") ?? "-"))</span></span>
                     </div>
                 </div>
             }
@@ -139,7 +139,7 @@
                 <div class="kt-widget__item w-100">
                     <div class="kt-widget__details">
                         <span class="kt-widget__title">@Labels.AdditionalInformation</span>
-                        <span class="kt-widget__value"><span>@(Html.Raw(additionalInformationDto.ProjectAdditionalInformation?.Value?.Replace("\n", "<br/>") ?? "-"))</span></span>
+                        <span class="kt-widget__value rio2c-scroll" style="height: 250px;"><span>@(Html.Raw(additionalInformationDto.ProjectAdditionalInformation?.Value?.Replace("\n", "<br/>") ?? "-"))</span></span>
                     </div>
                 </div>
             }

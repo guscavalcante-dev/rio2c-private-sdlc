@@ -169,6 +169,7 @@
     <Compile Include="Repositories\NegotiationConfig\NegotiationRoomConfigRepository.cs" />
     <Compile Include="Repositories\NegotiationConfig\NegotiationConfigRepository.cs" />
     <Compile Include="Repositories\Negotiation\NegotiationRepository.cs" />
+    <Compile Include="Repositories\Projects\ProjectEvaluationStatusRepository.cs" />
     <Compile Include="Repositories\Projects\ProjectTypeRepository.cs" />
     <Compile Include="Repositories\Projects\ProjectLogLineRepository.cs" />
     <Compile Include="Repositories\Projects\ProjectStatusRepository.cs" />

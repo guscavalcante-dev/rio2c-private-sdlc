@@ -42,14 +42,16 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Initializes a new instance of the <see cref="ProjectBuyerEvaluation"/> class.</summary>
         /// <param name="project">The project.</param>
         /// <param name="buyerAttendeeOrganization">The buyer attendee organization.</param>
+        /// <param name="projectEvaluationStatus">The project evaluation status.</param>
         /// <param name="userId">The user identifier.</param>
-        public ProjectBuyerEvaluation(Project project, AttendeeOrganization buyerAttendeeOrganization, int userId)
+        public ProjectBuyerEvaluation(Project project, AttendeeOrganization buyerAttendeeOrganization, ProjectEvaluationStatus projectEvaluationStatus, int userId)
         {
             this.ProjectId = project?.Id ?? 0;
             this.Project = project;
             this.BuyerAttendeeOrganizationId = buyerAttendeeOrganization?.Id ?? 0;
             this.BuyerAttendeeOrganization = buyerAttendeeOrganization;
-            this.ProjectEvaluationStatusId = 1; //TODO: Change the project evaluation status id hardcoded
+            this.ProjectEvaluationStatusId = projectEvaluationStatus?.Id ?? 0;
+            this.ProjectEvaluationStatus = projectEvaluationStatus;
             this.Reason = null;
             this.IsSent = false;
             this.SellerUserId = userId;
@@ -66,11 +68,18 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Updates the specified user identifier.</summary>
+        /// <summary>Restores the specified project evaluation status.</summary>
+        /// <param name="projectEvaluationStatus">The project evaluation status.</param>
         /// <param name="userId">The user identifier.</param>
-        public void Update(int userId)
+        public void Restore(ProjectEvaluationStatus projectEvaluationStatus, int userId)
         {
+            this.ProjectEvaluationStatusId = projectEvaluationStatus?.Id ?? 0;
+            this.ProjectEvaluationStatus = projectEvaluationStatus;
+            this.Reason = null;
+            this.IsSent = false;
             this.SellerUserId = userId;
+            this.BuyerEvaluationUserId = null;
+            this.EvaluationDate = null;
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
@@ -118,6 +127,15 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.BuyerAttendeeOrganization == null)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundF)));
+            }
+        }
+
+        /// <summary>Validates the project evaluation status.</summary>
+        public void ValidateProjectEvaluationStatus()
+        {
+            if (this.ProjectEvaluationStatus == null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Status, Labels.FoundM)));
             }
         }
 
