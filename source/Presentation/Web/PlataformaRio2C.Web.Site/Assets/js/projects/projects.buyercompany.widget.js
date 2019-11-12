@@ -20,6 +20,8 @@ var ProjectsBuyerCompanyWidget = function () {
     var updateModalId = '#UpdateBuyerCompanyModal';
     var updateFormId = '#UpdateBuyerCompanyForm';
 
+    var projectBuyerEvaluationLimit = 5;
+
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         KTApp.initTooltips();
@@ -76,7 +78,6 @@ var ProjectsBuyerCompanyWidget = function () {
 
     var enableUpdatePlugins = function () {
         //MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2' });
-
         enableAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
@@ -122,6 +123,26 @@ var ProjectsBuyerCompanyWidget = function () {
     };
 
     // Select/Unselect company --------------------------------------------------------------------
+    var toggleSelectButtons = function () {
+        var selectedBuyerEvaluations = $('.selected-buyer-evaluation');
+        if (selectedBuyerEvaluations.length >= projectBuyerEvaluationLimit) {
+            $('.select-buyer-evaluation-button').each(function() {
+                MyRio2cCommon.hide($(this));
+            });
+        }
+        else {
+            $('.select-buyer-evaluation-button').each(function () {
+                MyRio2cCommon.show($(this));
+            });
+
+            selectedBuyerEvaluations.each(function () {
+                $('.select-buyer-evaluation-button[data-attendeeorganizationuid="' + $(this).data('attendeeorganizationuid') + '"]').each(function () {
+                    MyRio2cCommon.hide($(this));
+                });
+            });
+        }
+    };
+
     var selectCompany = function (attendeeOrganizationUid) {
         MyRio2cCommon.block({ isModal: true });
 
@@ -200,6 +221,9 @@ var ProjectsBuyerCompanyWidget = function () {
         showUpdateModal: function () {
             showUpdateModal();
         },
+        toggleSelectButtons: function () {
+            toggleSelectButtons();
+        },
         selectCompany: function (attendeeOrganizationUid) {
             selectCompany(attendeeOrganizationUid);
         },
@@ -223,6 +247,10 @@ var ProjectsBuyerCompanySelectedWidget = function () {
     var enableShowPlugins = function () {
         KTApp.initTooltips();
         MyRio2cCommon.initScroll();
+
+        if (typeof (ProjectsBuyerCompanyWidget) !== 'undefined') {
+            ProjectsBuyerCompanyWidget.toggleSelectButtons();
+        }
     };
 
     var show = function () {
@@ -239,6 +267,7 @@ var ProjectsBuyerCompanySelectedWidget = function () {
                 // Success
                 onSuccess: function () {
                     enableShowPlugins();
+                    MyRio2cCommon.initScroll();
                 },
                 // Error
                 onError: function () {
@@ -277,6 +306,10 @@ var ProjectsMatchBuyerCompanyWidget = function () {
     var enableShowPlugins = function () {
         KTApp.initTooltips();
         MyRio2cCommon.initScroll();
+
+        if (typeof (ProjectsBuyerCompanyWidget) !== 'undefined') {
+            ProjectsBuyerCompanyWidget.toggleSelectButtons();
+        }
     };
 
     var show = function () {
@@ -357,6 +390,10 @@ var ProjectsAllBuyerCompanyWidget = function () {
     var enableShowPlugins = function () {
         KTApp.initTooltips();
         MyRio2cCommon.initScroll();
+
+        if (typeof (ProjectsBuyerCompanyWidget) !== 'undefined') {
+            ProjectsBuyerCompanyWidget.toggleSelectButtons();
+        }
     };
 
     var show = function () {

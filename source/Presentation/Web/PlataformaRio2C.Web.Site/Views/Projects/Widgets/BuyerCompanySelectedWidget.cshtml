@@ -5,51 +5,63 @@
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
 }
+<div class="row">
+    <div class="col-12 text-center mb-2"><small>@string.Format(Messages.YouSelectedNumberOfTotalEntitiy, Model.ProjectBuyerEvaluationDtos?.Count() ?? 0, 5, Labels.Players)</small></div>
+</div>
 @if (Model.ProjectBuyerEvaluationDtos?.Any() == true)
 {
-    foreach (var projectBuyerEvaluationDto in Model.ProjectBuyerEvaluationDtos)
-    {
+    <div class="row rio2c-scroll" style="height: 570px;">
         <div class="col-12">
-            <!--Begin::Portlet-->
-            <div class="kt-portlet">
-                @*<div class="kt-portlet__head kt-portlet__head--noborder"></div>*@
-                <div class="kt-portlet__body mt-40">
-                    <!--begin::Widget -->
-                    <div class="kt-widget kt-widget--user-profile-2" style="flex-direction: row;">
-                        <div class="kt-widget__head">
-                            <div class="kt-widget__media">
-                                @if (projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.HasImage())
-                                {
-                                    <img class="kt-widget__img" src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid, projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="image">
-                                }
-                                else
-                                {
-                                    <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest">
-                                        @(projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.GetTradeNameAbbreviation())
+            <div class="row">
+                @foreach (var projectBuyerEvaluationDto in Model.ProjectBuyerEvaluationDtos)
+                {
+                    <div class="col-12 selected-buyer-evaluation" data-attendeeorganizationuid="@projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid">
+                        <!--Begin::Portlet-->
+                        <div class="kt-portlet">
+                            @*<div class="kt-portlet__head kt-portlet__head--noborder"></div>*@
+                            <div class="kt-portlet__body mt-40">
+                                <!--begin::Widget -->
+                                <div class="kt-widget kt-widget--user-profile-2" style="flex-direction: row;">
+                                    <div class="kt-widget__head">
+                                        <div class="kt-widget__media">
+                                            @if (projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.HasImage())
+                                            {
+                                                <img class="kt-widget__img" src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid, projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="image">
+                                            }
+                                            else
+                                            {
+                                                <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest">
+                                                    @(projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.GetTradeNameAbbreviation())
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="kt-widget__info">
+                                            <a href="@Url.Action("Details", "Companies", new {id = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid})" class="kt-widget__username" target="_blank">
+                                                @projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.TradeName
+                                            </a>
+                                            <span class="kt-widget__desc">
+                                                <a href="@Url.Action("Details", "Companies", new {id = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid})" target="_blank">
+                                                    <small><i class="flaticon-profile"></i> @Labels.SeeDescription</small>
+                                                </a>
+                                            </span>
+                                            @if (editionDto?.IsProjectSubmitOpened() == true)
+                                            {
+                                                <span class="kt-widget__desc">
+                                                    <button type="button" class="btn btn-label-danger btn-sm btn-upper" onclick="ProjectsBuyerCompanyWidget.unselectCompany('@projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid')">@Labels.Unselect</button>
+                                                </span>
+                                            }
+                                        </div>
                                     </div>
-                                }
-                            </div>
-                            <div class="kt-widget__info">
-                                <a href="@Url.Action("Details", "Companies", new {id = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid})" class="kt-widget__username" target="_blank">
-                                    @projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.TradeName
-                                </a>
-                                <span class="kt-widget__desc">
-                                    <a href="@Url.Action("Details", "Companies", new {id = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid})" target="_blank">
-                                        <small><i class="flaticon-profile"></i> @Labels.SeeDescription</small>
-                                    </a>
-                                </span>
-                                <span class="kt-widget__desc">
-                                    <button type="button" class="btn btn-label-danger btn-sm btn-upper" onclick="ProjectsBuyerCompanyWidget.unselectCompany('@projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid')">@Labels.Unselect</button>
-                                </span>
+                                </div>
+                                <!--end::Widget -->
                             </div>
                         </div>
+                        <!--End::Portlet-->
                     </div>
-                    <!--end::Widget -->
-                </div>
+                }
             </div>
-            <!--End::Portlet-->
         </div>
-    }
+    </div>
 }
 else
 {

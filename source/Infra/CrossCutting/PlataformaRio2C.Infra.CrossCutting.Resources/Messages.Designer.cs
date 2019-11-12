@@ -798,6 +798,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O projeto não pode ser avaliado por mais de {0} {1}..
+        /// </summary>
+        public static string MaxProjectBuyers {
+            get {
+                return ResourceManager.GetString("MaxProjectBuyers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A mensagem é longa demais. Tente encurtá-la ou enviá-la em múltiplas partes..
         /// </summary>
         public static string MessageIsTooLong {
@@ -1658,6 +1667,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string YourPasswordHasBeenChangedSuccessfully {
             get {
                 return ResourceManager.GetString("YourPasswordHasBeenChangedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Você selecionou {0} de {1} {2}..
+        /// </summary>
+        public static string YouSelectedNumberOfTotalEntitiy {
+            get {
+                return ResourceManager.GetString("YouSelectedNumberOfTotalEntitiy", resourceCulture);
             }
         }
         

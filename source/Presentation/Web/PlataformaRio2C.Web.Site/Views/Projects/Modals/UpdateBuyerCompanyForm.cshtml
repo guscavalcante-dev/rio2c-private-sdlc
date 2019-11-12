@@ -1,17 +1,13 @@
-﻿@using PlataformaRio2C.Domain.Dtos
-@model PlataformaRio2C.Application.CQRS.Commands.UpdateProjectBuyerCompanies
-@{
-    var editionDto = ViewBag.EditionDto as EditionDto;
-}
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateProjectBuyerCompanies
 <div class="row">
     <div class="col-md-6" style="border-right: 0.07rem dashed #ebedf2;">
         <div class="row">
             <div class="col-12">
-                <h5>@Labels.PlayersToEvaluation</h5>
+                <h5>@Labels.PlayersSelectedToEvaluation</h5>
             </div>
         </div>
         <div class="row">
-            <div id="ProjectBuyerCompanySelectedWidget" class="rio2c-scroll w-100" style="height: 600px"></div>
+            <div class="col-12" id="ProjectBuyerCompanySelectedWidget" style="min-height: 600px"></div>
         </div>
     </div>
     <div class="col-md-6">

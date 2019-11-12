@@ -719,8 +719,16 @@ Youtube and Vimeo.</value>
     <value>Project budget (only for projects under development/production)</value>
     <comment>Orçamento do projeto (apenas para projetos em desenvolvimento/produção)</comment>
   </data>
+  <data name="MaxProjectBuyers" xml:space="preserve">
+    <value>The project cannot be evaluator by more than {0} {1}.</value>
+    <comment>O projeto não pode ser avaliado por mais de {0} {1}.</comment>
+  </data>
   <data name="PaginationMessage" xml:space="preserve">
     <value>Showing {0} to {1} of {2}</value>
     <comment>Exibindo {0} a {1} de {2}</comment>
+  </data>
+  <data name="YouSelectedNumberOfTotalEntitiy" xml:space="preserve">
+    <value>You selected {0} of {1} {2}.</value>
+    <comment>Você selecionou {0} de {1} {2}.</comment>
   </data>
 </root>

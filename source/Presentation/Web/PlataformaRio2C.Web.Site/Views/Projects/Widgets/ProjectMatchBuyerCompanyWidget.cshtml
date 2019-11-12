@@ -43,10 +43,12 @@
                                                     <small><i class="flaticon-profile"></i> @Labels.SeeDescription</small>
                                                 </a>
                                             </span>
-                                            <span class="kt-widget__desc">
-                                                <button type="button" class="btn btn-label-info btn-sm btn-upper" onclick="ProjectsBuyerCompanyWidget.selectCompany('@attendeeOrganizationDto.AttendeeOrganization.Uid')">@Labels.ToSelect</button>
-                                                <button type="button" class="btn btn-label-info btn-sm btn-upper d-none" onclick="ProjectsBuyerCompanyWidget.unselectCompany('@attendeeOrganizationDto.AttendeeOrganization.Uid')">@Labels.Unselect</button>
-                                            </span>
+                                            @if (editionDto?.IsProjectSubmitOpened() == true)
+                                            {
+                                                <span class="kt-widget__desc">
+                                                    <button type="button" class="btn btn-label-info btn-sm btn-upper select-buyer-evaluation-button" onclick="ProjectsBuyerCompanyWidget.selectCompany('@attendeeOrganizationDto.AttendeeOrganization.Uid')" data-attendeeorganizationuid="@attendeeOrganizationDto.AttendeeOrganization.Uid">@Labels.ToSelect</button>
+                                                </span>
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -58,7 +60,6 @@
                 }
             </div>
         </div>
-
     </div>
     <div class="row mt-10">
         <div class="col-12">

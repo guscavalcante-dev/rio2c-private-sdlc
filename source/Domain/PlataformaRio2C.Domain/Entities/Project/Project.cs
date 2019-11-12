@@ -15,6 +15,7 @@ using System;
 using PlataformaRio2C.Domain.Validation;
 using System.Collections.Generic;
 using System.Linq;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -861,6 +862,11 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.BuyerEvaluations?.Any() != true)
             {
                 return;
+            }
+
+            if (this.BuyerEvaluations?.Where(be => !be.IsDeleted)?.Count() > SendPlayerCountMax)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.MaxProjectBuyers, SendPlayerCountMax, Labels.Players)));
             }
 
             foreach (var buyerEvaluation in this.BuyerEvaluations?.Where(t => !t.IsValid())?.ToList())
