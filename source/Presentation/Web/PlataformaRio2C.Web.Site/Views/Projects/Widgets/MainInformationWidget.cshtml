@@ -3,8 +3,11 @@
 @using PlataformaRio2C.Domain.Statics
 @model ProjectDto
 @{
+    var editionDto = ViewBag.EditionDto as EditionDto;
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var isCollaborator = userAccessControlDto?.HasEditionAttendeeOrganization(Model.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) == true;
+    var isProjectSubmissionOpen = editionDto?.IsProjectSubmitOpened() == true;
+    var isProjectFinished = Model.Project.IsFinished();
 }
 <div class="kt-portlet__body">
     <div class="kt-widget kt-widget--user-profile-3">
@@ -28,11 +31,11 @@
                     <span class="kt-widget__username">
                         @(Model.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value ?? "-")
                         @*@if (Model.SellerAttendeeOrganizationDto?.AttendeeOrganization.OnboardingFinishDate.HasValue) //Show if approved by any player
-                {
-                    <i class="flaticon2-correct"></i>
-                }*@
+                        {
+                            <i class="flaticon2-correct"></i>
+                        }*@
                     </span>
-                    @if (isCollaborator && !Model.Project.IsFinished())
+                    @if (isCollaborator && isProjectSubmissionOpen && !isProjectFinished)
                     {
                         <div class="kt-widget__action">
                             <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="ProjectsMainInformationWidget.showUpdateModal();">
@@ -60,10 +63,10 @@
                     }
                 </div>
                 <div class="kt-widget__subhead text-right">
-                    @if (isCollaborator && !Model.Project.IsFinished())
+                    @if (isCollaborator && isProjectSubmissionOpen && !isProjectFinished)
                     {
                         <span class="kt-widget__desc">
-                            <button type="button" class="btn btn-label-info btn-sm btn-upper select-buyer-evaluation-button" onclick="ProjectsMainInformationWidget.showFinishModal();">@Labels.Finish @Labels.Project</button>
+                            <button type="button" class="btn btn-label-info btn-sm btn-upper" onclick="ProjectsMainInformationWidget.showFinishModal();">@Labels.Finish @Labels.Project</button>
                         </span>
                     }
                 </div>
@@ -142,12 +145,15 @@
                     </div>
                 </div>
             }
-            <div class="kt-widget__item w-50">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">Pitching</span>
-                    <span class="kt-widget__value"><span>@(Model.Project?.IsPitching == true ? Labels.Yes : Labels.No)</span></span>
+            @if (isCollaborator)
+            {
+                <div class="kt-widget__item w-50">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">Pitching</span>
+                        <span class="kt-widget__value"><span>@(Model.Project?.IsPitching == true ? Labels.Yes : Labels.No)</span></span>
+                    </div>
                 </div>
-            </div>
+            }
         </div>
     </div>
 </div>

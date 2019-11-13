@@ -2,10 +2,13 @@
 @using PlataformaRio2C.Domain.Entities
 @model ProjectDto
 @{
+    var editionDto = ViewBag.EditionDto as EditionDto;
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
-    var isCollaborator = userAccessControlDto?.HasEditionAttendeeOrganization(Model.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) == true;
     var groupedInterests = ViewBag.GroupedInterests as List<IGrouping<InterestGroup, Interest>>;
     var targetAudiences = ViewBag.TargetAudiences as List<TargetAudience>;
+    var isCollaborator = userAccessControlDto?.HasEditionAttendeeOrganization(Model.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) == true;
+    var isProjectSubmissionOpen = editionDto?.IsProjectSubmitOpened() == true;
+    var isProjectFinished = Model.Project.IsFinished();
 }
 <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
@@ -13,7 +16,7 @@
             @Labels.Interests @Labels.And @Labels.TargetAudience
         </h3>
     </div>
-    @if (isCollaborator && !Model.Project.IsFinished())
+    @if (isCollaborator && isProjectSubmissionOpen && !isProjectFinished)
     {
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-actions">

@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-12-2019
+// Last Modified On : 11-13-2019
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -205,7 +205,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
 
-                if (mainInformationWidgetDto.Project.IsFinished())
+                if (this.EditionDto?.IsProjectSubmitOpened() != true || mainInformationWidgetDto.Project.IsFinished())
                 {
                     throw new DomainException(Messages.ProjectIsFinishedCannotBeUpdated);
                 }
@@ -401,7 +401,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
 
-                if (interestWidgetDto.Project.IsFinished())
+                if (this.EditionDto?.IsProjectSubmitOpened() != true || interestWidgetDto.Project.IsFinished())
                 {
                     throw new DomainException(Messages.ProjectIsFinishedCannotBeUpdated);
                 }
@@ -540,7 +540,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
 
-                if (buyerCompanyWidgetDto.Project.IsFinished())
+                if (this.EditionDto?.IsProjectSubmitOpened() != true || buyerCompanyWidgetDto.Project.IsFinished())
                 {
                     throw new DomainException(Messages.ProjectIsFinishedCannotBeUpdated);
                 }
