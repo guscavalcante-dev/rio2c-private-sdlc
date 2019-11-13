@@ -236,39 +236,47 @@
                                                                     @foreach (var projectBuyerEvaluationDto in projectDto.ProjectBuyerEvaluationDtos)
                                                                     {
                                                                         <!-- begin: Player -->
-                                                                        <div class="col-6 col-sm-4 col-md-3 col-xl-2 text-center">
-                                                                            <div class="kt-widget__media">
-                                                                                @if (projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.ImageUploadDate.HasValue)
-                                                                                {
-                                                                                    <img class="kt-widget__img" src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid, projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="" style="max-width: 45px; max-height: 45px; border: 0.07rem solid #ebedf2;">
-                                                                                }
-                                                                                else
-                                                                                {
-                                                                                    <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest">
-                                                                                        @projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Name.GetTwoLetterCode()
+                                                                        <div class="kt-widget kt-widget--user-profile-4 col-6 col-sm-3 col-md-4 col-xl-3">
+                                                                            <div class="kt-widget__head d-block p-0">
+                                                                                <div class="kt-widget__media">
+                                                                                    @if (projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.ImageUploadDate.HasValue)
+                                                                                    {
+                                                                                        <img class="kt-widget__img" src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid, projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="" style="max-width: 45px; max-height: 45px; border: 0.07rem solid #ebedf2;">
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest kt-font-light">
+                                                                                            @projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Name.GetTwoLetterCode()
+                                                                                        </div>
+                                                                                    }
+                                                                                </div>
+                                                                                <div class="kt-widget__content pt-0 d-flex flex-column">
+                                                                                    <div class="kt-widget__section mx-auto">
+                                                                                        <a href="@Url.Action("Details", "Companies", new {id = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid})" class="kt-widget__username" target="_blank">
+                                                                                            <small>@projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Name</small>
+                                                                                        </a>
+                                                                                        @if (isProjectSubmissionEnded)
+                                                                                        {
+                                                                                            var color = "warning";
+                                                                                            var icon = "fa-diagnoses";
+                                                                                            if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == "Accepted")
+                                                                                            {
+                                                                                                color = "success";
+                                                                                                icon = "fa-thumbs-up";
+                                                                                            }
+                                                                                            else if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == "Rejected")
+                                                                                            {
+                                                                                                color = "danger";
+                                                                                                icon = "fa-thumbs-down";
+                                                                                            }
+                                                                                            <div class="kt-widget__button">
+                                                                                                <span class="btn btn-label-@(color) btn-sm">
+                                                                                                    <i class="fa @(icon) mr-1"></i> @(projectBuyerEvaluationDto.ProjectEvaluationStatus.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                                                                                                </span>
+                                                                                            </div>
+                                                                                        }
                                                                                     </div>
-                                                                                }
-                                                                            </div>
-                                                                            <div>
-                                                                                @projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Name<br />
-                                                                                @if (isProjectSubmissionEnded)
-                                                                                {
-                                                                                    var color = "warning";
-                                                                                    var icon = "fa-diagnoses";
-                                                                                    if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == "Accepted")
-                                                                                    {
-                                                                                        color = "success";
-                                                                                        icon = "fa-thumbs-up";
-                                                                                    }
-                                                                                    else if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == "Rejected")
-                                                                                    {
-                                                                                        color = "danger";
-                                                                                        icon = "fa-thumbs-down";
-                                                                                    }
-                                                                                    <span class="kt-badge kt-badge--inline kt-badge--@(color) m-0 mt-1">
-                                                                                        <i class="fa @(icon) mr-1"></i> @(projectBuyerEvaluationDto.ProjectEvaluationStatus.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
-                                                                                    </span>
-                                                                                }
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                         <!-- end: Player -->
@@ -285,49 +293,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-
-                                    @*<div class="kt-widget5__item">
-                                            <div class="kt-widget5__content">
-                                                <div class="kt-widget5__pic">
-                                                    <img class="kt-widget7__img" src="~/assets/themes/metronic/media/products/product27.jpg" alt="">
-                                                </div>
-                                                <div class="kt-widget5__section">
-                                                    <a href="#" class="kt-widget5__title">
-                                                        @(projectDto.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value)
-                                                    </a>
-                                                    <p class="kt-widget5__desc">
-                                                        @(projectDto.GetLogLineDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectLogLine?.Value)
-                                                    </p>
-                                                    <div class="kt-widget5__info">
-                                                        <span>@Labels.Producer:</span>
-                                                        <span class="kt-font-info">@projectDto.SellerAttendeeOrganizationDto.Organization.Name</span> <br />
-                                                        <span>@Labels.Genre:</span>
-                                                        <span class="kt-font-info">
-                                                            @{
-                                                                var projectInterestsDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.Genre.Uid);
-                                                                if (projectInterestsDtos?.Any() == true)
-                                                                {
-                                                                    foreach (var projectInterestDto in projectInterestsDtos)
-                                                                    {
-                                                                        <span class="kt-badge kt-badge--inline kt-badge--info">@(projectInterestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
-
-                                                                    }
-                                                                }
-                                                            }
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="kt-widget5__content">
-                                                <div class="kt-widget5__stats">
-
-                                                </div>
-                                                <div class="kt-widget5__stats">
-
-                                                </div>
-                                            </div>
-                                        </div>*@
                                 }
                             }
                         </div>
