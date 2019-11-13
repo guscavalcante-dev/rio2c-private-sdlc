@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-11-2019
+// Last Modified On : 11-13-2019
 // ***********************************************************************
 // <copyright file="ProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -218,6 +218,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     ProjectTargetAudienceDtos = p.TargetAudiences.Where(ta => !ta.IsDeleted).Select(ta => new ProjectTargetAudienceDto
                                     {
                                         TargetAudience = ta.TargetAudience
+                                    }),
+                                    ProjectBuyerEvaluationDtos = p.BuyerEvaluations.Where(be => !be.IsDeleted).Select(be => new ProjectBuyerEvaluationDto
+                                    {
+                                        ProjectBuyerEvaluation = be,
+                                        BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                        {
+                                            AttendeeOrganization = be.BuyerAttendeeOrganization,
+                                            Organization = be.BuyerAttendeeOrganization.Organization,
+                                        },
+                                        ProjectEvaluationStatus = be.ProjectEvaluationStatus
                                     })
                                 });
 

@@ -167,3 +167,11 @@ go
 ALTER TABLE "ProjectBuyerEvaluations"
 	ADD [BuyerEmailSendDate] [datetime] NULL
 go
+
+
+UPDATE "ProjectEvaluationStatuses" SET Name = 'Avaliação | Evaluation' WHERE Uid = '44368049-923d-41c6-9eab-a9ceca05c296'
+go
+UPDATE "ProjectEvaluationStatuses" SET Name = 'Aceito | Accepted' WHERE Uid = '3dfa9e93-cab8-4a5e-83d1-bf945dd7c137'
+go
+UPDATE "ProjectEvaluationStatuses" SET Name = 'Rejeitado | Rejected' WHERE Uid = 'ca9c8f5d-c368-4a50-b85c-49c7cfd48625'
+go

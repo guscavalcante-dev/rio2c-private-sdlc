@@ -8,6 +8,7 @@
     ViewBag.Title = Labels.Projects;
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var editionDto = ViewBag.EditionDto as EditionDto;
+    var isProjectSubmissionEnded = editionDto?.IsProjectEvaluationEnded() == true;
 }
 <div class="row">
     <div class="col-md-12">
@@ -231,10 +232,10 @@
                                                         <span class="kt-widget__subtitle">@Labels.PlayersToEvaluation:</span>
                                                         <div class="row">
                                                             <div class="col-12">
-                                                                @foreach (var projectBuyerEvaluationDto in projectDto.ProjectBuyerEvaluationDtos)
-                                                                {
-                                                                    <!-- begin: Player -->
-                                                                    <div class="row">
+                                                                <div class="row">
+                                                                    @foreach (var projectBuyerEvaluationDto in projectDto.ProjectBuyerEvaluationDtos)
+                                                                    {
+                                                                        <!-- begin: Player -->
                                                                         <div class="col-6 col-sm-4 col-md-3 col-xl-2 text-center">
                                                                             <div class="kt-widget__media">
                                                                                 @if (projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.ImageUploadDate.HasValue)
@@ -250,12 +251,29 @@
                                                                             </div>
                                                                             <div>
                                                                                 @projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Name<br />
-                                                                                <span class="kt-badge kt-badge--inline kt-badge--warning m-0 mt-1">Evaluation</span>
+                                                                                @if (isProjectSubmissionEnded)
+                                                                                {
+                                                                                    var color = "warning";
+                                                                                    var icon = "fa-diagnoses";
+                                                                                    if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == "Accepted")
+                                                                                    {
+                                                                                        color = "success";
+                                                                                        icon = "fa-thumbs-up";
+                                                                                    }
+                                                                                    else if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == "Rejected")
+                                                                                    {
+                                                                                        color = "danger";
+                                                                                        icon = "fa-thumbs-down";
+                                                                                    }
+                                                                                    <span class="kt-badge kt-badge--inline kt-badge--@(color) m-0 mt-1">
+                                                                                        <i class="fa @(icon) mr-1"></i> @(projectBuyerEvaluationDto.ProjectEvaluationStatus.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                                                                                    </span>
+                                                                                }
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                    <!-- end: Player -->
-                                                                }
+                                                                        <!-- end: Player -->
+                                                                    }
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     }
