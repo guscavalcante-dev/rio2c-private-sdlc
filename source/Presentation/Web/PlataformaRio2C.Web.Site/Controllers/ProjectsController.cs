@@ -126,7 +126,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #endregion
 
-        #region Project submitted
+        #region Submitted details
 
         /// <summary>Submitteds the details.</summary>
         /// <param name="id">The identifier.</param>
@@ -544,8 +544,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 {
                     throw new DomainException(Messages.ProjectIsFinishedCannotBeUpdated);
                 }
-
-                cmd = new UpdateProjectBuyerCompanies(buyerCompanyWidgetDto);
             }
             catch (DomainException ex)
             {
@@ -557,7 +555,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Modals/UpdateBuyerCompanyModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                    new { page = this.RenderRazorViewToString("Modals/UpdateBuyerCompanyModal", null), divIdOrClass = "#GlobalModalContainer" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
