@@ -231,6 +231,10 @@ namespace PlataformaRio2C.Domain.Entities
             {
                 buyerEvaluation.Restore(projectEvaluationStatus, userId);
             }
+
+            this.IsDeleted = false;
+            this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.Now;
         }
 
         /// <summary>Deletes the buyer evaluation.</summary>
@@ -242,6 +246,10 @@ namespace PlataformaRio2C.Domain.Entities
         {
             var buyerEvaluation = this.GetBuyerEvaluationByAttendeeOrganizationUid(buyerAttendeeOrganization?.Uid ?? Guid.Empty);
             buyerEvaluation?.Delete(userId);
+
+            this.IsDeleted = false;
+            this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.Now;
         }
 
         /// <summary>Gets the buyer evaluation by attendee organization uid.</summary>
