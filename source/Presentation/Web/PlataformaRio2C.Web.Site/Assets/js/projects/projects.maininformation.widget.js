@@ -106,6 +106,65 @@ var ProjectsMainInformationWidget = function () {
         });
     };
 
+    // Finish -------------------------------------------------------------------------------------
+    var finish = function () {
+        MyRio2cCommon.block({ isModal: true });
+
+        var jsonParameters = new Object();
+        jsonParameters.projectUid = $('#AggregateId').val();
+
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/Finish'), jsonParameters, function (data) {
+            MyRio2cCommon.handleAjaxReturn({
+                data: data,
+                // Success
+                onSuccess: function () {
+                    if (typeof (ProjectsMainInformationWidget) !== 'undefined') {
+                        ProjectsMainInformationWidget.init();
+                    }
+
+                    if (typeof (ProjectsInterestWidget) !== 'undefined') {
+                        ProjectsInterestWidget.init();
+                    }
+
+                    if (typeof (ProjectsBuyerCompanyWidget) !== 'undefined') {
+                        ProjectsBuyerCompanyWidget.init();
+                    }
+                },
+                // Error
+                onError: function () {
+                }
+            });
+        })
+        .fail(function () {
+        })
+        .always(function () {
+            MyRio2cCommon.unblock();
+        });
+    };
+
+    var showFinishModal = function () {
+        bootbox.dialog({
+            title: translations.finishModalTitle,
+            message: translations.finishModalMessage,
+            closeButton: false,
+            buttons: {
+                cancel: {
+                    label: labels.cancel,
+                    className: "btn btn-secondary mr-auto",
+                    callback: function () {
+                    }
+                },
+                confirm: {
+                    label: translations.confirm,
+                    className: "btn btn-info",
+                    callback: function () {
+                        finish();
+                    }
+                }
+            }
+        });
+    };
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
@@ -113,6 +172,9 @@ var ProjectsMainInformationWidget = function () {
         },
         showUpdateModal: function () {
             showUpdateModal();
+        },
+        showFinishModal: function () {
+            showFinishModal();
         }
     };
 }();

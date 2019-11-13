@@ -731,4 +731,8 @@ Youtube and Vimeo.</value>
     <value>You selected {0} of {1} {2}.</value>
     <comment>Você selecionou {0} de {1} {2}.</comment>
   </data>
+  <data name="ProjectIsFinishedCannotBeUpdated" xml:space="preserve">
+    <value>O projeto está concluído e não pode ser alterado.</value>
+    <comment>O projeto está concluído e não pode ser alterado.</comment>
+  </data>
 </root>

@@ -58,19 +58,21 @@
     </div>
 </div>
 @section Styles {
-    @*@Styles.Render("~/bundles/css/cropper.css")*@
     @Styles.Render("~/bundles/css/select2.css")
 }
 @section Scripts {
-    @*@Scripts.Render("~/bundles/js/cropper.js")*@
     @Scripts.Render("~/bundles/js/select2.js")
-    @*@Scripts.Render("~/bundles/js/ckEditor.js")*@
     @*@Scripts.Render("~/bundles/js/inputmask.js")*@
     @Scripts.Render("~/bundles/js/bootbox.js")
-    @*@Scripts.Render("~/bundles/js/addresses.form.js")*@
     @Scripts.Render("~/bundles/js/projects.widget.js")
+    @Scripts.Render("~/bundles/js/bootbox.js")
     <script>
         // Page translations ----------------------------------------------------------------------
+        var translations = {
+            finishModalTitle: '@Labels.Finish @Labels.Project',
+            finishModalMessage: '@Texts.FinishProjectConfirmationText',
+            confirm: '@Labels.ToConfirm'
+        };
 
         jQuery(document).ready(function () {
             ProjectsMainInformationWidget.init();

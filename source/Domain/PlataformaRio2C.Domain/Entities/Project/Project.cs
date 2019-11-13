@@ -33,6 +33,7 @@ namespace PlataformaRio2C.Domain.Entities
         public int? ValueAlreadyRaised { get; private set; }
         public int? ValueStillNeeded { get; private set; }
         public bool IsPitching { get; private set; }
+        public DateTime? FinishDate { get; private set; }
 
         public virtual ProjectType ProjectType { get; private set; }
         public virtual AttendeeOrganization SellerAttendeeOrganization { get; private set; }
@@ -99,6 +100,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValueAlreadyRaised = valueAlreadyRaised;
             this.ValueStillNeeded = valueStillNeeded;
             this.IsPitching = isPitching;
+            this.FinishDate = null;
 
             this.SynchronizeTitles(titles, userId);
             this.SynchronizeLogLines(logLines, userId);
@@ -166,6 +168,25 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.UpdateUserId = userId;
             this.UpdateDate = DateTime.Now;
+        }
+
+        /// <summary>Finishes the project.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void FinishProject(int userId)
+        {
+            this.FinishDate = DateTime.Now;
+
+            this.IsDeleted = false;
+            this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.Now;
+        }
+
+        /// <summary>Determines whether this instance is finished.</summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is finished; otherwise, <c>false</c>.</returns>
+        public bool IsFinished()
+        {
+            return this.FinishDate.HasValue;
         }
 
         #region Seller Attendee Organization
@@ -723,6 +744,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidationResult = new ValidationResult();
 
             //this.ValidateName();
+            this.ValidateIsFinished();
             this.ValidateTitles();
             this.ValidateLogLines();
             this.ValidateSummaries();
@@ -733,6 +755,35 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateBuyerEvaluations();
 
             return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>Determines whether [is finish valid].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is finish valid]; otherwise, <c>false</c>.</returns>
+        public bool IsFinishValid()
+        {
+            this.ValidationResult = new ValidationResult();
+
+            this.ValidateTitles();
+            this.ValidateLogLines();
+            this.ValidateSummaries();
+            this.ValidateProductionPlans();
+            this.ValidateAdditionalInformations();
+            this.ValidateImageLinks();
+            this.ValidateTeaserLinks();
+            this.ValidateBuyerEvaluations();
+            this.ValidateRequiredBuyerEvaluations();
+
+            return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>Validates the is finished.</summary>
+        public void ValidateIsFinished()
+        {
+            if (this.IsFinished())
+            {
+                this.ValidationResult.Add(new ValidationError(Messages.ProjectIsFinishedCannotBeUpdated));
+            }
         }
 
         ///// <summary>Validates the name.</summary>
@@ -872,6 +923,15 @@ namespace PlataformaRio2C.Domain.Entities
             foreach (var buyerEvaluation in this.BuyerEvaluations?.Where(t => !t.IsValid())?.ToList())
             {
                 this.ValidationResult.Add(buyerEvaluation.ValidationResult);
+            }
+        }
+
+        /// <summary>Validates the required buyer evaluations.</summary>
+        public void ValidateRequiredBuyerEvaluations()
+        {
+            if (this.BuyerEvaluations?.Any() != true)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.MaxProjectBuyers, SendPlayerCountMax, Labels.Players)));
             }
         }
 

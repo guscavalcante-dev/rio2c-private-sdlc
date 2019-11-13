@@ -1258,6 +1258,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Concluir.
+        /// </summary>
+        public static string Finish {
+            get {
+                return ResourceManager.GetString("Finish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data de conclusão.
         /// </summary>
         public static string FinishDate {
@@ -3531,6 +3540,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string To {
             get {
                 return ResourceManager.GetString("To", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmar.
+        /// </summary>
+        public static string ToConfirm {
+            get {
+                return ResourceManager.GetString("ToConfirm", resourceCulture);
             }
         }
         

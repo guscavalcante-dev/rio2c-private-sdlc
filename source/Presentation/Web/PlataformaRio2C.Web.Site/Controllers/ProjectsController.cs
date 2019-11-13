@@ -205,6 +205,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
 
+                if (mainInformationWidgetDto.Project.IsFinished())
+                {
+                    throw new DomainException(Messages.ProjectIsFinishedCannotBeUpdated);
+                }
+
                 cmd = new UpdateProjectMainInformation(
                     mainInformationWidgetDto,
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
@@ -286,6 +291,59 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #endregion
 
+        #region Finish
+
+        /// <summary>Finishes the project.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> Finish(FinishProject cmd)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.UserAccessControlDto.User.Id,
+                    this.UserAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                //foreach (var error in result.Errors)
+                //{
+                //    var target = error.Target ?? "";
+                //    ModelState.AddModelError(target, error.Message);
+                //}
+
+                //cmd.UpdateModelsAndLists(
+                //    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
+
+                return Json(new { status = "error", message = result.Errors.FirstOrDefault()?.Message }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.UpdatedM) });
+        }
+
+        #endregion
+
         #endregion
 
         #region Interest Widget
@@ -341,6 +399,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
                 {
                     throw new DomainException(Texts.ForbiddenErrorMessage);
+                }
+
+                if (interestWidgetDto.Project.IsFinished())
+                {
+                    throw new DomainException(Messages.ProjectIsFinishedCannotBeUpdated);
                 }
 
                 cmd = new UpdateProjectInterests(
@@ -475,6 +538,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(buyerCompanyWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
                 {
                     throw new DomainException(Texts.ForbiddenErrorMessage);
+                }
+
+                if (buyerCompanyWidgetDto.Project.IsFinished())
+                {
+                    throw new DomainException(Messages.ProjectIsFinishedCannotBeUpdated);
                 }
 
                 cmd = new UpdateProjectBuyerCompanies(buyerCompanyWidgetDto);

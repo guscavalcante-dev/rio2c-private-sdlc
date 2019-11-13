@@ -13,7 +13,7 @@
             @Labels.Interests @Labels.And @Labels.TargetAudience
         </h3>
     </div>
-    @if (isCollaborator)
+    @if (isCollaborator && !Model.Project.IsFinished())
     {
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-actions">

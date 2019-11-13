@@ -491,4 +491,8 @@ maira@rio2c.com&lt;br/&gt;
     <value>Para sua conveniência, os projetos podem ser salvos e modificados antes do envio final. Caso o projeto não seja enviado até o dia &lt;span class="kt-font-danger font-weight-bold"&gt;{0}&lt;/span&gt; será automaticamente excluído. Uma vez finalizados e enviados para os players, os projetos &lt;span class="font-weight-bold"&gt;NÃO PODEM SER ALTERADOS&lt;/span&gt;.</value>
     <comment>Para sua conveniência, os projetos podem ser salvos e modificados antes do envio final. Caso o projeto não seja enviado até o dia &lt;span class="kt-font-danger font-weight-bold"&gt;{0}&lt;/span&gt; será automaticamente excluído. Uma vez finalizados e enviados para os players, os projetos &lt;span class="font-weight-bold"&gt;NÃO PODEM SER ALTERADOS&lt;/span&gt;.</comment>
   </data>
+  <data name="FinishProjectConfirmationText" xml:space="preserve">
+    <value>O projeto será concluído, enviado para avaliação dos Players e não poderá ser mais alterado. Você confirma?</value>
+    <comment>O projeto será concluído, enviado para avaliação dos Players e não poderá ser mais alterado. Você confirma?</comment>
+  </data>
 </root>

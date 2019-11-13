@@ -159,3 +159,11 @@ go
 ALTER TABLE "ProjectTargetAudiences"
 	ADD CONSTRAINT "FK_Users_ProjectTargetAudiences_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
 go
+
+ALTER TABLE "Projects"
+	ADD [FinishDate] [datetime] NULL
+go
+
+ALTER TABLE "ProjectBuyerEvaluations"
+	ADD [BuyerEmailSendDate] [datetime] NULL
+go

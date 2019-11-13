@@ -1636,4 +1636,12 @@
     <value>Unselect</value>
     <comment>Deselecionar</comment>
   </data>
+  <data name="Finish" xml:space="preserve">
+    <value>Finish</value>
+    <comment>Concluir</comment>
+  </data>
+  <data name="ToConfirm" xml:space="preserve">
+    <value>Confirm</value>
+    <comment>Confirmar</comment>
+  </data>
 </root>

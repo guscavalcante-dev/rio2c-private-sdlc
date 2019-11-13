@@ -386,4 +386,8 @@ CNPJ: 26.079.220/0001-46. Any unauthorized use of the names or their variations 
     <value>For your convenience, projects can be saved and modified before their final submission. If the project is not sent by &lt;span class="kt-font-danger font-weight-bold"&gt;{0}&lt;/span&gt; it shall be automatically excluded. Once completed and sent to the players, project submissions &lt;span class="font-weight-bold"&gt;MAY NOT BE CHANGED&lt;/span&gt;.</value>
     <comment>Para sua conveniência, os projetos podem ser salvos e modificados antes do envio final. Caso o projeto não seja enviado até o dia &lt;span class="kt-font-danger font-weight-bold"&gt;{0}&lt;/span&gt; será automaticamente excluído. Uma vez finalizados e enviados para os players, os projetos &lt;span class="font-weight-bold"&gt;NÃO PODEM SER ALTERADOS&lt;/span&gt;.</comment>
   </data>
+  <data name="FinishProjectConfirmationText" xml:space="preserve">
+    <value>The project will be finished, sent to Players for evaluation and cannot be updated anymore. Do you confirm?</value>
+    <comment>O projeto será concluído, enviado para avaliação dos Players e não poderá ser mais alterado. Você confirma?</comment>
+  </data>
 </root>

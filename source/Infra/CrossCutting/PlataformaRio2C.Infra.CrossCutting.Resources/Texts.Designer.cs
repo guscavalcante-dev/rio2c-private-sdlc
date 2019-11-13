@@ -230,6 +230,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O projeto será concluído, enviado para avaliação dos Players e não poderá ser mais alterado. Você confirma?.
+        /// </summary>
+        public static string FinishProjectConfirmationText {
+            get {
+                return ResourceManager.GetString("FinishProjectConfirmationText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rio2C®, Rio Creative Conference®, RioContentMarket®, PitchingShow®, BrainSpace®, Festivalia®, são marcas registradas. Todos os direitos de uso pertencem a Rio Creative Conferences Ltda., CNPJ: 26.079.220/0001-46. Qualquer uso sem autorização dos nomes ou suas variações é uma violação da lei internacional de registro de marcas..
         /// </summary>
         public static string FooterText {

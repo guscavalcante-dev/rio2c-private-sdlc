@@ -1648,4 +1648,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Deselecionar</value>
     <comment>Deselecionar</comment>
   </data>
+  <data name="Finish" xml:space="preserve">
+    <value>Concluir</value>
+    <comment>Concluir</comment>
+  </data>
+  <data name="ToConfirm" xml:space="preserve">
+    <value>Confirmar</value>
+    <comment>Confirmar</comment>
+  </data>
 </root>

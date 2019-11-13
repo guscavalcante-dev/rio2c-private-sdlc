@@ -1041,6 +1041,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O projeto está concluído e não pode ser alterado..
+        /// </summary>
+        public static string ProjectIsFinishedCannotBeUpdated {
+            get {
+                return ResourceManager.GetString("ProjectIsFinishedCannotBeUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;LogLine&apos; em inglês é obrigatório..
         /// </summary>
         public static string ProjectLogLineEnIsRequired {

@@ -28,11 +28,11 @@
                     <span class="kt-widget__username">
                         @(Model.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value ?? "-")
                         @*@if (Model.SellerAttendeeOrganizationDto?.AttendeeOrganization.OnboardingFinishDate.HasValue) //Show if approved by any player
-                            {
-                                <i class="flaticon2-correct"></i>
-                            }*@
+                {
+                    <i class="flaticon2-correct"></i>
+                }*@
                     </span>
-                    @if (isCollaborator)
+                    @if (isCollaborator && !Model.Project.IsFinished())
                     {
                         <div class="kt-widget__action">
                             <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="ProjectsMainInformationWidget.showUpdateModal();">
@@ -48,15 +48,6 @@
                         @:- @(Model.SellerAttendeeOrganizationDto?.Organization.Document)
                     }
                 </div>
-                @*<div class="kt-widget__subhead">
-                        @{
-                            var location = Model.GetLocation(ViewBag.UserInterfaceLanguage);
-                        }
-                        @if (!string.IsNullOrEmpty(location))
-                        {
-                            <a onclick="return false;"><i class="flaticon-placeholder"></i>@location</a>
-                        }
-                    </div>*@
                 <div class="kt-widget__info" style="display: block;">
                     @{
                         var logLineDto = Model.GetLogLineDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
@@ -66,6 +57,14 @@
                         <div class="kt-widget__desc" style="word-wrap: break-word;">
                             @(Html.Raw(logLineDto.ProjectLogLine?.Value?.Replace("\n", "<br/>") ?? "-"))
                         </div>
+                    }
+                </div>
+                <div class="kt-widget__subhead text-right">
+                    @if (isCollaborator && !Model.Project.IsFinished())
+                    {
+                        <span class="kt-widget__desc">
+                            <button type="button" class="btn btn-label-info btn-sm btn-upper select-buyer-evaluation-button" onclick="ProjectsMainInformationWidget.showFinishModal();">@Labels.Finish @Labels.Project</button>
+                        </span>
                     }
                 </div>
             </div>
