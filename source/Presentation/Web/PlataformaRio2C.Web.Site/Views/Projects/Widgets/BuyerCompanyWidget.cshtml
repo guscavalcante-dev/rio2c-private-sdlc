@@ -30,7 +30,7 @@
 <div class="kt-portlet__body">
     @if (Model.ProjectBuyerEvaluationDtos?.Any() == true)
     {
-        <div class="row rio2c-scroll" style="height: 200px;">
+        <div class="row rio2c-scroll" style="min-height: 20px; max-height: 500px;">
             @foreach (var projectBuyerEvaluationDto in Model.ProjectBuyerEvaluationDtos)
             {
                 <div class="col-sm-6 col-md-12 col-xl-6">

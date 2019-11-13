@@ -110,7 +110,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "" }))
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
             });
 
             #endregion
@@ -144,7 +144,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "" })),
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
                 new BreadcrumbItemHelper(projectDto.GetTitleDtoByLanguageCode(this.UserInterfaceLanguage)?.ProjectTitle?.Value ?? Labels.Project, Url.Action("SubmittedDetails", "Projects", new { id }))
             });
 
@@ -767,7 +767,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ProjectInfo, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "" })),
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
                 new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "Projects", new { Area = "" }))
             });
 
@@ -809,7 +809,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ProjectInfo, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "" })),
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
                 new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "Projects", new { Area = "" }))
             });
 
@@ -896,7 +896,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CompanyInfo, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "" })),
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
                 new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "Projects", new { Area = "" }))
             });
 
@@ -938,7 +938,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CompanyInfo, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "" })),
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
                 new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "Projects", new { Area = "" }))
             });
 
@@ -1020,7 +1020,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ParticipantsTerms, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "" })),
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
                 new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "Projects", new { Area = "" }))
             });
 
@@ -1051,7 +1051,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ParticipantsTerms, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "" })),
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
                 new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "Projects", new { Area = "" }))
             });
 
