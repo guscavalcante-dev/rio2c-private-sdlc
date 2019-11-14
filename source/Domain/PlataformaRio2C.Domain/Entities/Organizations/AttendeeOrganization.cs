@@ -301,10 +301,10 @@ namespace PlataformaRio2C.Domain.Entities
                     userId));
             }
             // If exists seller attendee organization with projects available
-            else if (this.SellerAttendeeOrganizations.Any(sao => sao.ProjectsCount < sao.AttendeeCollaboratorTicket.AttendeeSalesPlatformTicketType.ProjectMaxCount))
+            else if (this.SellerAttendeeOrganizations.Any(sao => sao.HasProjectsAvailable()))
             {
                 var sellerAttendeeOrganization = this.SellerAttendeeOrganizations
-                                                            .Where(sao => sao.ProjectsCount < sao.AttendeeCollaboratorTicket.AttendeeSalesPlatformTicketType.ProjectMaxCount)
+                                                            .Where(sao => sao.HasProjectsAvailable())
                                                             .OrderByDescending(sao => sao.ProjectsCount)
                                                             .First();
                 sellerAttendeeOrganization.CreateProject(

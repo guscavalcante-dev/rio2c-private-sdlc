@@ -903,9 +903,16 @@ namespace PlataformaRio2C.Domain.Entities
                 return;
             }
 
-            if (this.BuyerEvaluations?.Where(be => !be.IsDeleted)?.Count() > SendPlayerCountMax)
+            var projectBuyerEvaluationGroupMaxCount = this.SellerAttendeeOrganization.AttendeeCollaboratorTicket.AttendeeSalesPlatformTicketType.ProjectBuyerEvaluationGroupMaxCount;
+            if (this.ProjectBuyerEvaluationGroupsCount > projectBuyerEvaluationGroupMaxCount)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.MaxProjectBuyers, SendPlayerCountMax, Labels.Players)));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.MaxProjectBuyers, projectBuyerEvaluationGroupMaxCount, Labels.Players), new string[] { "ToastrError" }));
+            }
+
+            var projectBuyerEvaluationMaxCount = this.SellerAttendeeOrganization.AttendeeCollaboratorTicket.AttendeeSalesPlatformTicketType.ProjectBuyerEvaluationMaxCount;
+            if (this.ProjectBuyerEvaluationsCount > projectBuyerEvaluationMaxCount)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.MaxProjectBuyers, projectBuyerEvaluationMaxCount, Labels.Players), new string[] { "ToastrError" }));
             }
 
             foreach (var buyerEvaluation in this.BuyerEvaluations?.Where(t => !t.IsValid())?.ToList())
@@ -919,7 +926,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             if (this.BuyerEvaluations?.Any() != true)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.MaxProjectBuyers, SendPlayerCountMax, Labels.Players)));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheProjectMustHaveOnePlayer, Labels.Player), new string[] { "ToastrError" }));
             }
         }
 

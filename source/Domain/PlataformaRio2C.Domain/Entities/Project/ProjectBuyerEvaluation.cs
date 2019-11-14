@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-12-2019
+// Last Modified On : 11-14-2019
 // ***********************************************************************
 // <copyright file="ProjectBuyerEvaluation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -118,7 +118,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             if (this.Project == null)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM)));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM), new string[] { "ToastrError" }));
             }
         }
 
@@ -127,7 +127,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             if (this.BuyerAttendeeOrganization == null)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundF)));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundF), new string[] { "ToastrError" }));
             }
         }
 
@@ -136,7 +136,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             if (this.ProjectEvaluationStatus == null)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Status, Labels.FoundM)));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Status, Labels.FoundM), new string[] { "ToastrError" }));
             }
         }
 

@@ -743,6 +743,10 @@ Youtube and Vimeo.</value>
     <value>Is not possible to create the project because a same ticket is being used in more than one company.</value>
     <comment>Não é possível criar o projeto pois um mesmo ingresso está sendo utilizado em mais de uma empresa.</comment>
   </data>
+  <data name="TheProjectMustHaveOnePlayer" xml:space="preserve">
+    <value>The project must have at least 1 {0} to be finished.</value>
+    <comment>O projeto deve ter no mínimo 1 {0} para ser concluído.</comment>
+  </data>
   <data name="YouReachedProjectsLimit" xml:space="preserve">
     <value>Your reached the projects limit for your quantity of tickets.</value>
     <comment>Você atingiu o limite de projetos para a sua quantidade de ingressos.</comment>

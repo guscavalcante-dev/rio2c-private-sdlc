@@ -1527,6 +1527,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O projeto deve ter no mínimo 1 {0} para ser concluído..
+        /// </summary>
+        public static string TheProjectMustHaveOnePlayer {
+            get {
+                return ResourceManager.GetString("TheProjectMustHaveOnePlayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Já existe um projeto cadastrado com este título!.
         /// </summary>
         public static string ThereIsalreadyProjectRegisteredWithThisTitle {

@@ -747,6 +747,10 @@
     <value>Não é possível criar o projeto pois um mesmo ingresso está sendo utilizado em mais de uma empresa.</value>
     <comment>Não é possível criar o projeto pois um mesmo ingresso está sendo utilizado em mais de uma empresa.</comment>
   </data>
+  <data name="TheProjectMustHaveOnePlayer" xml:space="preserve">
+    <value>O projeto deve ter no mínimo 1 {0} para ser concluído.</value>
+    <comment>O projeto deve ter no mínimo 1 {0} para ser concluído.</comment>
+  </data>
   <data name="YouReachedProjectsLimit" xml:space="preserve">
     <value>Você atingiu o limite de projetos para a sua quantidade de ingressos.</value>
     <comment>Você atingiu o limite de projetos para a sua quantidade de ingressos.</comment>

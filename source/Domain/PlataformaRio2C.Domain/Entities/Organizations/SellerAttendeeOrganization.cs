@@ -190,6 +190,14 @@ namespace PlataformaRio2C.Domain.Entities
             return this.Projects?.Count ?? 0;
         }
 
+        /// <summary>Determines whether [has projects available].</summary>
+        /// <returns>
+        ///   <c>true</c> if [has projects available]; otherwise, <c>false</c>.</returns>
+        public bool HasProjectsAvailable()
+        {
+            return this.ProjectsCount < this.AttendeeCollaboratorTicket.AttendeeSalesPlatformTicketType.ProjectMaxCount;
+        }
+
         /// <summary>Gets the last created project.</summary>
         /// <returns></returns>
         public Project GetLastCreatedProject()
