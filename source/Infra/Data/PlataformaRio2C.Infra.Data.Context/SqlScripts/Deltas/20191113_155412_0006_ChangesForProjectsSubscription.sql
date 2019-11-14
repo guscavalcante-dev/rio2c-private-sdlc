@@ -1,4 +1,4 @@
-﻿--must run on deploy | test: yes, not done
+﻿--must run on deploy | test: yes, done
 --must run on deploy | prod: yes, not done
 
 --possible values are: "no", "yes, not done" and "yes, done"
@@ -678,15 +678,15 @@ ALTER TABLE [dbo].[Negotiations] CHECK CONSTRAINT [FK_ProjectBuyerEvaluations_Ne
 GO
 
 ALTER TABLE [dbo].[AttendeeSalesPlatformTicketTypes]
-ADD	[ProjectMaxCount] [int] NOT NULL
+ADD	[ProjectMaxCount] [int] NULL
 go
 
 ALTER TABLE [dbo].[AttendeeSalesPlatformTicketTypes]
-ADD	[ProjectBuyerEvaluationGroupMaxCount] [int] NOT NULL
+ADD	[ProjectBuyerEvaluationGroupMaxCount] [int] NULL
 go
 
 ALTER TABLE [dbo].[AttendeeSalesPlatformTicketTypes]
-ADD	[ProjectBuyerEvaluationMaxCount] [int] NOT NULL
+ADD	[ProjectBuyerEvaluationMaxCount] [int] NULL
 go
 
 UPDATE [dbo].[AttendeeSalesPlatformTicketTypes] SET [ProjectMaxCount] = 0, [ProjectBuyerEvaluationGroupMaxCount] = 0, [ProjectBuyerEvaluationMaxCount] = 0
