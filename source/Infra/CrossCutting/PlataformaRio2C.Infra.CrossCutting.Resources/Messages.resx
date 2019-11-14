@@ -731,10 +731,6 @@
     <value>Exibindo {0} a {1} de {2}</value>
     <comment>Exibindo {0} a {1} de {2}</comment>
   </data>
-  <data name="YouSelectedNumberOfTotalEntitiy" xml:space="preserve">
-    <value>Você selecionou {0} de {1} {2}.</value>
-    <comment>Você selecionou {0} de {1} {2}.</comment>
-  </data>
   <data name="ProjectIsFinishedCannotBeUpdated" xml:space="preserve">
     <value>O projeto está concluído e não pode ser alterado.</value>
     <comment>O projeto está concluído e não pode ser alterado.</comment>
@@ -754,5 +750,13 @@
   <data name="YouReachedProjectsLimit" xml:space="preserve">
     <value>Você atingiu o limite de projetos para a sua quantidade de ingressos.</value>
     <comment>Você atingiu o limite de projetos para a sua quantidade de ingressos.</comment>
+  </data>
+  <data name="BuyerEvaluationsAvailableForProject" xml:space="preserve">
+    <value>{0} {1} {2} para esse projeto.</value>
+    <comment>{0} {1} {2} para esse projeto.</comment>
+  </data>
+  <data name="BuyerEvaluationsSelected" xml:space="preserve">
+    <value>{0} {1} {2} de um total de {3}.</value>
+    <comment>{0} {1} {2} de um total de {3}.</comment>
   </data>
 </root>

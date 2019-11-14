@@ -727,10 +727,6 @@ Youtube and Vimeo.</value>
     <value>Showing {0} to {1} of {2}</value>
     <comment>Exibindo {0} a {1} de {2}</comment>
   </data>
-  <data name="YouSelectedNumberOfTotalEntitiy" xml:space="preserve">
-    <value>You selected {0} of {1} {2}.</value>
-    <comment>Você selecionou {0} de {1} {2}.</comment>
-  </data>
   <data name="ProjectIsFinishedCannotBeUpdated" xml:space="preserve">
     <value>O projeto está concluído e não pode ser alterado.</value>
     <comment>O projeto está concluído e não pode ser alterado.</comment>
@@ -750,5 +746,13 @@ Youtube and Vimeo.</value>
   <data name="YouReachedProjectsLimit" xml:space="preserve">
     <value>Your reached the projects limit for your quantity of tickets.</value>
     <comment>Você atingiu o limite de projetos para a sua quantidade de ingressos.</comment>
+  </data>
+  <data name="BuyerEvaluationsAvailableForProject" xml:space="preserve">
+    <value>{0} {1} {2} for this project.</value>
+    <comment>{0} {1} {2} para esse projeto.</comment>
+  </data>
+  <data name="BuyerEvaluationsSelected" xml:space="preserve">
+    <value>{0} {1} {2} for a total of {3}.</value>
+    <comment>{0} {1} {2} de um total de {3}.</comment>
   </data>
 </root>

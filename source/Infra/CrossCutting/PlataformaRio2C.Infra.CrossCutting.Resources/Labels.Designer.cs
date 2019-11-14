@@ -349,6 +349,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disponíveis.
+        /// </summary>
+        public static string AvailableP {
+            get {
+                return ResourceManager.GetString("AvailableP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disponível.
+        /// </summary>
+        public static string AvailableS {
+            get {
+                return ResourceManager.GetString("AvailableS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Voltar.
         /// </summary>
         public static string Back {
@@ -3045,6 +3063,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string SelectAnExecutiveInChat {
             get {
                 return ResourceManager.GetString("SelectAnExecutiveInChat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selecionados.
+        /// </summary>
+        public static string SelectedP {
+            get {
+                return ResourceManager.GetString("SelectedP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selecionado.
+        /// </summary>
+        public static string SelectedS {
+            get {
+                return ResourceManager.GetString("SelectedS", resourceCulture);
             }
         }
         

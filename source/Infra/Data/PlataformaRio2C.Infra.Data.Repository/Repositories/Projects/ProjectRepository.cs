@@ -218,7 +218,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                             AttendeeOrganization = p.SellerAttendeeOrganization.AttendeeOrganization,
                                             Organization = p.SellerAttendeeOrganization.AttendeeOrganization.Organization
                                         },
-                                        AttendeeCollaboratorTicket = p.SellerAttendeeOrganization.AttendeeCollaboratorTicket
+                                        //AttendeeCollaboratorTicket = p.SellerAttendeeOrganization.AttendeeCollaboratorTicket,
+                                        AttendeeSalesPlatformTicketType = p.SellerAttendeeOrganization.AttendeeCollaboratorTicket.AttendeeSalesPlatformTicketType
                                     },
                                     ProjectTitleDtos = p.Titles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
                                     {
@@ -312,7 +313,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         AttendeeOrganization = p.SellerAttendeeOrganization.AttendeeOrganization,
                                         Organization = p.SellerAttendeeOrganization.AttendeeOrganization.Organization
                                     },
-                                    AttendeeCollaboratorTicket = p.SellerAttendeeOrganization.AttendeeCollaboratorTicket
+                                    //AttendeeCollaboratorTicket = p.SellerAttendeeOrganization.AttendeeCollaboratorTicket,
+                                    AttendeeSalesPlatformTicketType = p.SellerAttendeeOrganization.AttendeeCollaboratorTicket.AttendeeSalesPlatformTicketType
                                 },
                                 ProjectTitleDtos = p.Titles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
                                 {
@@ -364,7 +366,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         AttendeeOrganization = p.SellerAttendeeOrganization.AttendeeOrganization,
                                         Organization = p.SellerAttendeeOrganization.AttendeeOrganization.Organization
                                     },
-                                    AttendeeCollaboratorTicket = p.SellerAttendeeOrganization.AttendeeCollaboratorTicket
+                                    //AttendeeCollaboratorTicket = p.SellerAttendeeOrganization.AttendeeCollaboratorTicket,
+                                    AttendeeSalesPlatformTicketType = p.SellerAttendeeOrganization.AttendeeCollaboratorTicket.AttendeeSalesPlatformTicketType
                                 },
                                 ProjectInterestDtos = p.Interests.Where(i => !i.IsDeleted).Select(i => new ProjectInterestDto
                                 {
@@ -400,7 +403,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         AttendeeOrganization = p.SellerAttendeeOrganization.AttendeeOrganization,
                                         Organization = p.SellerAttendeeOrganization.AttendeeOrganization.Organization
                                     },
-                                    AttendeeCollaboratorTicket = p.SellerAttendeeOrganization.AttendeeCollaboratorTicket
+                                    //AttendeeCollaboratorTicket = p.SellerAttendeeOrganization.AttendeeCollaboratorTicket,
+                                    AttendeeSalesPlatformTicketType = p.SellerAttendeeOrganization.AttendeeCollaboratorTicket.AttendeeSalesPlatformTicketType
                                 },
                                 ProjectBuyerEvaluationDtos = p.BuyerEvaluations.Where(be => !be.IsDeleted).Select(be => new ProjectBuyerEvaluationDto
                                 {

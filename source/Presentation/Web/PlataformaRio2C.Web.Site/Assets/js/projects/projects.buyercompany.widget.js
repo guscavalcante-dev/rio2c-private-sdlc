@@ -4,7 +4,7 @@
 // Created          : 11-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-12-2019
+// Last Modified On : 11-14-2019
 // ***********************************************************************
 // <copyright file="projects.buyercompany.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,8 +19,6 @@ var ProjectsBuyerCompanyWidget = function () {
 
     var updateModalId = '#UpdateBuyerCompanyModal';
     var updateFormId = '#UpdateBuyerCompanyForm';
-
-    var projectBuyerEvaluationLimit = 5;
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
@@ -125,7 +123,7 @@ var ProjectsBuyerCompanyWidget = function () {
     // Select/Unselect company --------------------------------------------------------------------
     var toggleSelectButtons = function () {
         var selectedBuyerEvaluations = $('.selected-buyer-evaluation');
-        if (selectedBuyerEvaluations.length >= projectBuyerEvaluationLimit) {
+        if ($('#ProjectsBuyerEvaluationsAvailable').val() <= 0) {
             $('.select-buyer-evaluation-button').each(function() {
                 MyRio2cCommon.hide($(this));
             });

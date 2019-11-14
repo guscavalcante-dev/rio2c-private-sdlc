@@ -1644,4 +1644,20 @@
     <value>Confirm</value>
     <comment>Confirmar</comment>
   </data>
+  <data name="AvailableP" xml:space="preserve">
+    <value>Available</value>
+    <comment>Disponíveis</comment>
+  </data>
+  <data name="AvailableS" xml:space="preserve">
+    <value>Available</value>
+    <comment>Disponível</comment>
+  </data>
+  <data name="SelectedP" xml:space="preserve">
+    <value>Selected</value>
+    <comment>Selecionados</comment>
+  </data>
+  <data name="SelectedS" xml:space="preserve">
+    <value>Selected</value>
+    <comment>Selecionado</comment>
+  </data>
 </root>

@@ -124,6 +124,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} {1} {2} para esse projeto..
+        /// </summary>
+        public static string BuyerEvaluationsAvailableForProject {
+            get {
+                return ResourceManager.GetString("BuyerEvaluationsAvailableForProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} {1} {2} de um total de {3}..
+        /// </summary>
+        public static string BuyerEvaluationsSelected {
+            get {
+                return ResourceManager.GetString("BuyerEvaluationsSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Não é possível editar um projeto submetido para avaliação de player.
         /// </summary>
         public static string CanNotEditASubmittedProjectForPlayerEvaluation {
@@ -1712,15 +1730,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string YourPasswordHasBeenChangedSuccessfully {
             get {
                 return ResourceManager.GetString("YourPasswordHasBeenChangedSuccessfully", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Você selecionou {0} de {1} {2}..
-        /// </summary>
-        public static string YouSelectedNumberOfTotalEntitiy {
-            get {
-                return ResourceManager.GetString("YouSelectedNumberOfTotalEntitiy", resourceCulture);
             }
         }
         

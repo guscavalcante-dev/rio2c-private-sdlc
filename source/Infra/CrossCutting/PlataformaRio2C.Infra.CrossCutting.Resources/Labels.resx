@@ -1656,4 +1656,20 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Confirmar</value>
     <comment>Confirmar</comment>
   </data>
+  <data name="AvailableP" xml:space="preserve">
+    <value>Disponíveis</value>
+    <comment>Disponíveis</comment>
+  </data>
+  <data name="AvailableS" xml:space="preserve">
+    <value>Disponível</value>
+    <comment>Disponível</comment>
+  </data>
+  <data name="SelectedP" xml:space="preserve">
+    <value>Selecionados</value>
+    <comment>Selecionados</comment>
+  </data>
+  <data name="SelectedS" xml:space="preserve">
+    <value>Selecionado</value>
+    <comment>Selecionado</comment>
+  </data>
 </root>

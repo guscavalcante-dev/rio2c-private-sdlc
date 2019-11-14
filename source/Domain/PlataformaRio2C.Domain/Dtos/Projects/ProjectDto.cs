@@ -70,6 +70,31 @@ namespace PlataformaRio2C.Domain.Dtos
 
         #endregion
 
+        #region Project Buyer Evaluations
+
+        /// <summary>Gets the project buyer evaluation maximum.</summary>
+        /// <returns></returns>
+        public int GetProjectBuyerEvaluationMax()
+        {
+            return (this.Project?.ProjectBuyerEvaluationGroupsCount ?? 0) * this.SellerAttendeeOrganizationDto.GetProjectsBuyerEvaluationsMax();
+        }
+
+        /// <summary>Gets the projects buyer evaluations used.</summary>
+        /// <returns></returns>
+        public int GetProjectsBuyerEvaluationsUsed()
+        {
+            return this.Project?.ProjectBuyerEvaluationsCount ?? 0;
+        }
+
+        /// <summary>Gets the projects buyer evaluations available.</summary>
+        /// <returns></returns>
+        public int GetProjectsBuyerEvaluationsAvailable()
+        {
+            return (this.GetProjectBuyerEvaluationMax() - this.GetProjectsBuyerEvaluationsUsed()) + this.SellerAttendeeOrganizationDto.GetProjectsBuyerEvaluationsAvailable();
+        }
+
+        #endregion
+
         #region Translations
 
         /// <summary>Gets the title dto by language code.</summary>
