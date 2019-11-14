@@ -726,6 +726,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Não é possível criar o projeto pois essa empresa já atingiu o limite..
+        /// </summary>
+        public static string IsNotPossibleCreateProjectLimit {
+            get {
+                return ResourceManager.GetString("IsNotPossibleCreateProjectLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Não é possível criar o projeto pois um mesmo ingresso está sendo utilizado em mais de uma empresa..
+        /// </summary>
+        public static string IsNotPossibleCreateProjectSameTicket {
+            get {
+                return ResourceManager.GetString("IsNotPossibleCreateProjectSameTicket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cargo em inglês obrigatório..
         /// </summary>
         public static string JobTitleEnIsRequired {
@@ -1667,6 +1685,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string YouDontHaveAdminProfile {
             get {
                 return ResourceManager.GetString("YouDontHaveAdminProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Você atingiu o limite de projetos para a sua quantidade de ingressos..
+        /// </summary>
+        public static string YouReachedProjectsLimit {
+            get {
+                return ResourceManager.GetString("YouReachedProjectsLimit", resourceCulture);
             }
         }
         

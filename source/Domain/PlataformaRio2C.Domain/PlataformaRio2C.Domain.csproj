@@ -82,6 +82,7 @@
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorDto.cs" />
     <Compile Include="Dtos\AttendeeOrganiaztionTypes\AttendeeOrganizationTypeDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttemdeeOrganizationSiteDetailsDto.cs" />
+    <Compile Include="Dtos\AttendeeOrganizations\SellerAttendeeOrganizationDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationSiteExecutiveWidgetDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationSiteInterestWidgetDto.cs" />
@@ -164,6 +165,7 @@
     <Compile Include="Entities\NegotiationConfig\NegotiationRoomConfig.cs" />
     <Compile Include="Entities\NegotiationConfig\NegotiationConfig.cs" />
     <Compile Include="Entities\Negotiation\Negotiation.cs" />
+    <Compile Include="Entities\Organizations\SellerAttendeeOrganization.cs" />
     <Compile Include="Entities\Organizations\AttendeeOrganizationCollaborator.cs" />
     <Compile Include="Entities\Organizations\AttendeeOrganizationType.cs" />
     <Compile Include="Entities\Organizations\AttendeeOrganization.cs" />

@@ -316,6 +316,9 @@ CREATE TABLE [dbo].[AttendeeSalesPlatformTicketTypes](
 	[TicketClassId] [varchar](30) NOT NULL,
 	[TicketClassName] [varchar](200) NOT NULL,
 	[CollaboratorTypeId] [int] NOT NULL,
+	[ProjectMaxCount] [int] NOT NULL,
+	[ProjectBuyerEvaluationGroupMaxCount] [int] NOT NULL,
+	[ProjectBuyerEvaluationMaxCount] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,
@@ -1326,8 +1329,8 @@ GO
 CREATE TABLE [dbo].[ProjectBuyerEvaluations](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
-	[BuyerAttendeeOrganizationId] [int] NOT NULL,
 	[ProjectId] [int] NOT NULL,
+	[BuyerAttendeeOrganizationId] [int] NOT NULL,
 	[ProjectEvaluationStatusId] [int] NULL,
 	[Reason] [varchar](1500) NULL,
 	[IsSent] [bit] NOT NULL,
@@ -1343,6 +1346,11 @@ CREATE TABLE [dbo].[ProjectBuyerEvaluations](
  CONSTRAINT [PK_ProjectBuyerEvaluations] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ProjectBuyerEvaluations_ProjectId_BuyerAttendeeOrganizationId] UNIQUE NONCLUSTERED 
+(
+	[ProjectId] ASC,
+	[BuyerAttendeeOrganizationId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
  CONSTRAINT [IDX_UQ_ProjectBuyerEvaluations_Uid] UNIQUE NONCLUSTERED 
 (
@@ -1513,8 +1521,8 @@ GO
 CREATE TABLE [dbo].[Projects](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
+	[SellerAttendeeOrganizationId] [int] NOT NULL,
 	[ProjectTypeId] [int] NOT NULL,
-	[SellerAttendeeOrganizationId] [int] NULL,
 	[NumberOfEpisodes] [int] NULL,
 	[EachEpisodePlayingTime] [varchar](50) NULL,
 	[ValuePerEpisode] [int] NULL,
@@ -1523,6 +1531,8 @@ CREATE TABLE [dbo].[Projects](
 	[ValueStillNeeded] [int] NULL,
 	[IsPitching] [bit] NOT NULL,
 	[FinishDate] [datetime] NULL,
+	[ProjectBuyerEvaluationGroupsCount] [int] NOT NULL,
+	[ProjectBuyerEvaluationsCount] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,
@@ -1959,6 +1969,32 @@ CREATE TABLE [dbo].[SalesPlatformWebhookRequests](
 
 GO
 SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SellerAttendeeOrganizations](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[AttendeeOrganizationId] [int] NOT NULL,
+	[AttendeeCollaboratorTicketId] [int] NOT NULL,
+	[ProjectsCount] [int] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_SellerAttendeeOrganizations] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_SellerAttendeeOrganizations_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
 GO
 SET ANSI_NULLS ON
 GO
@@ -3034,15 +3070,15 @@ REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[ProjectProductionPlans] CHECK CONSTRAINT [FK_Users_ProjectProductionPlans_UpdateUserId]
 GO
-ALTER TABLE [dbo].[Projects]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeOrganizations_Projects_SellerAttendeeOrganizationId] FOREIGN KEY([SellerAttendeeOrganizationId])
-REFERENCES [dbo].[AttendeeOrganizations] ([Id])
-GO
-ALTER TABLE [dbo].[Projects] CHECK CONSTRAINT [FK_AttendeeOrganizations_Projects_SellerAttendeeOrganizationId]
-GO
 ALTER TABLE [dbo].[Projects]  WITH CHECK ADD  CONSTRAINT [FK_ProjectTypes_Projects_ProjectTypeId] FOREIGN KEY([ProjectTypeId])
 REFERENCES [dbo].[ProjectTypes] ([Id])
 GO
 ALTER TABLE [dbo].[Projects] CHECK CONSTRAINT [FK_ProjectTypes_Projects_ProjectTypeId]
+GO
+ALTER TABLE [dbo].[Projects]  WITH CHECK ADD  CONSTRAINT [FK_SellerAttendeeOrganizations_Projects_SellerAttendeeOrganizationId] FOREIGN KEY([SellerAttendeeOrganizationId])
+REFERENCES [dbo].[SellerAttendeeOrganizations] ([Id])
+GO
+ALTER TABLE [dbo].[Projects] CHECK CONSTRAINT [FK_SellerAttendeeOrganizations_Projects_SellerAttendeeOrganizationId]
 GO
 ALTER TABLE [dbo].[Projects]  WITH CHECK ADD  CONSTRAINT [FK_Users_Projects_CreateUserId] FOREIGN KEY([CreateUserId])
 REFERENCES [dbo].[Users] ([Id])
@@ -3253,6 +3289,26 @@ ALTER TABLE [dbo].[SalesPlatformWebhookRequests]  WITH CHECK ADD  CONSTRAINT [FK
 REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[SalesPlatformWebhookRequests] CHECK CONSTRAINT [FK_Users_SalesPlatformWebhookRequests_ManualProcessingUserId]
+GO
+ALTER TABLE [dbo].[SellerAttendeeOrganizations]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeCollaboratorTickets_SellerAttendeeOrganizations_AttendeeCollaboratorTicketId] FOREIGN KEY([AttendeeCollaboratorTicketId])
+REFERENCES [dbo].[AttendeeCollaboratorTickets] ([Id])
+GO
+ALTER TABLE [dbo].[SellerAttendeeOrganizations] CHECK CONSTRAINT [FK_AttendeeCollaboratorTickets_SellerAttendeeOrganizations_AttendeeCollaboratorTicketId]
+GO
+ALTER TABLE [dbo].[SellerAttendeeOrganizations]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeOrganizations_SellerAttendeeOrganizations_AttendeeOrganizationId] FOREIGN KEY([AttendeeOrganizationId])
+REFERENCES [dbo].[AttendeeOrganizations] ([Id])
+GO
+ALTER TABLE [dbo].[SellerAttendeeOrganizations] CHECK CONSTRAINT [FK_AttendeeOrganizations_SellerAttendeeOrganizations_AttendeeOrganizationId]
+GO
+ALTER TABLE [dbo].[SellerAttendeeOrganizations]  WITH CHECK ADD  CONSTRAINT [FK_Users_SellerAttendeeOrganizations_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[SellerAttendeeOrganizations] CHECK CONSTRAINT [FK_Users_SellerAttendeeOrganizations_CreateUserId]
+GO
+ALTER TABLE [dbo].[SellerAttendeeOrganizations]  WITH CHECK ADD  CONSTRAINT [FK_Users_SellerAttendeeOrganizations_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[SellerAttendeeOrganizations] CHECK CONSTRAINT [FK_Users_SellerAttendeeOrganizations_UpdateUserId]
 GO
 ALTER TABLE [dbo].[SentEmails]  WITH CHECK ADD  CONSTRAINT [FK_Editions_SentEmails_EditionId] FOREIGN KEY([EditionId])
 REFERENCES [dbo].[Editions] ([Id])

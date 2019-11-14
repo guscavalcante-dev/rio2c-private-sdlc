@@ -4,7 +4,7 @@
 // Created          : 11-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-12-2019
+// Last Modified On : 11-14-2019
 // ***********************************************************************
 // <copyright file="CreateProjectBuyerEvaluationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,7 +24,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>CreateProjectBuyerEvaluationCommandHandler</summary>
     public class CreateProjectBuyerEvaluationCommandHandler : BaseProjectCommandHandler, IRequestHandler<CreateProjectBuyerEvaluation, AppValidationResult>
     {
-        private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IProjectEvaluationStatusRepository projectEvaluationStatusRepo;
 
         /// <summary>Initializes a new instance of the <see cref="CreateProjectBuyerEvaluationCommandHandler"/> class.</summary>
@@ -36,12 +35,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         public CreateProjectBuyerEvaluationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            IProjectRepository projectRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
+            IProjectRepository projectRepository,
             IProjectEvaluationStatusRepository projectEvaluationStatusRepository)
-            : base(eventBus, uow, projectRepository)
+            : base(eventBus, uow, attendeeOrganizationRepository, projectRepository)
         {
-            this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.projectEvaluationStatusRepo = projectEvaluationStatusRepository;
         }
 
@@ -76,7 +74,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #endregion
 
             project.CreateBuyerEvaluation(
-                cmd.AttendeeOrganizationUid.HasValue ? await this.attendeeOrganizationRepo.GetAsync(ao => ao.Uid == cmd.AttendeeOrganizationUid) : null,
+                cmd.AttendeeOrganizationUid.HasValue ? await this.AttendeeOrganizationRepo.GetAsync(ao => ao.Uid == cmd.AttendeeOrganizationUid) : null,
                 await this.projectEvaluationStatusRepo.GetAsync(pes => !pes.IsDeleted && !pes.IsEvaluated),
                 cmd.UserId);
             if (!project.IsValid())

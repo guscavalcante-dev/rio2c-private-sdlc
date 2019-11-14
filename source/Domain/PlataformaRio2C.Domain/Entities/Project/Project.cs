@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-13-2019
+// Last Modified On : 11-14-2019
 // ***********************************************************************
 // <copyright file="Project.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,9 +34,11 @@ namespace PlataformaRio2C.Domain.Entities
         public int? ValueStillNeeded { get; private set; }
         public bool IsPitching { get; private set; }
         public DateTime? FinishDate { get; private set; }
+        public int ProjectBuyerEvaluationGroupsCount { get; private set; }
+        public int ProjectBuyerEvaluationsCount { get; private set; }
 
         public virtual ProjectType ProjectType { get; private set; }
-        public virtual AttendeeOrganization SellerAttendeeOrganization { get; private set; }
+        public virtual SellerAttendeeOrganization SellerAttendeeOrganization { get; private set; }
 
         public virtual ICollection<ProjectTitle> Titles { get; private set; }
         public virtual ICollection<ProjectLogLine> LogLines { get; private set; }
@@ -71,7 +73,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public Project(
             ProjectType projectType,
-            AttendeeOrganization sellerAttendeeOrganization,
+            SellerAttendeeOrganization sellerAttendeeOrganization,
             int? numberOfEpisodes,
             string eachEpisodePlayingTime,
             int? valuePerEpisode,
@@ -92,7 +94,8 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.ProjectTypeId = projectType?.Id ?? 0;
             this.ProjectType = projectType;
-            this.SetSellerAttendeeOrganization(projectType, sellerAttendeeOrganization, userId);
+            this.SellerAttendeeOrganizationId = sellerAttendeeOrganization?.Id ?? 0;
+            this.SellerAttendeeOrganization = sellerAttendeeOrganization;
             this.NumberOfEpisodes = numberOfEpisodes;
             this.EachEpisodePlayingTime = eachEpisodePlayingTime;
             this.ValuePerEpisode = valuePerEpisode;
@@ -101,6 +104,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValueStillNeeded = valueStillNeeded;
             this.IsPitching = isPitching;
             this.FinishDate = null;
+            this.ProjectBuyerEvaluationGroupsCount = 0;
+            this.ProjectBuyerEvaluationsCount = 0;
 
             this.SynchronizeTitles(titles, userId);
             this.SynchronizeLogLines(logLines, userId);
@@ -188,23 +193,6 @@ namespace PlataformaRio2C.Domain.Entities
         {
             return this.FinishDate.HasValue;
         }
-
-        #region Seller Attendee Organization
-
-        /// <summary>Sets the seller attendee organization.</summary>
-        /// <param name="projectType">Type of the project.</param>
-        /// <param name="sellerAttendeeOrganization">The seller attendee organization.</param>
-        /// <param name="userId">The user identifier.</param>
-        public void SetSellerAttendeeOrganization(ProjectType projectType, AttendeeOrganization sellerAttendeeOrganization, int userId)
-        {
-            this.SellerAttendeeOrganizationId = sellerAttendeeOrganization?.Id ?? 0;
-            this.SellerAttendeeOrganization = sellerAttendeeOrganization;
-
-            var organizationType = projectType?.OrganizationTypes?.FirstOrDefault(ot => ot.IsSeller);
-            this.SellerAttendeeOrganization?.SynchronizeAttendeeOrganizationTypes(organizationType, userId);
-        }
-
-        #endregion
 
         #region Buyer Evaluations
 

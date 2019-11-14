@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-11-2019
+// Last Modified On : 11-14-2019
 // ***********************************************************************
 // <copyright file="PlataformaRio2CContext.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -51,6 +51,7 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new AttendeeOrganizationMap());
             modelBuilder.Configurations.Add(new AttendeeOrganizationTypeMap());
             modelBuilder.Configurations.Add(new AttendeeOrganizationCollaboratorMap());
+            modelBuilder.Configurations.Add(new SellerAttendeeOrganizationMap());
             modelBuilder.Configurations.Add(new OrganizationTypeMap());
             modelBuilder.Configurations.Add(new OrganizationActivityMap());
             modelBuilder.Configurations.Add(new OrganizationTargetAudienceMap());

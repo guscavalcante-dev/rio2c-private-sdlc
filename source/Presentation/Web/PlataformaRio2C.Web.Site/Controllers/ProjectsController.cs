@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-13-2019
+// Last Modified On : 11-14-2019
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -115,7 +115,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             #endregion
 
-            var projects = await this.projectRepo.FindAllDtosBySellerAttendeeOrganizationsUidsAndByPageAsync(
+            var projects = await this.projectRepo.FindAllDtosByAttendeeOrganizationsUidsAndByPageAsync(
                 this.UserAccessControlDto?.EditionAttendeeOrganizations?.Select(eao => eao.Uid)?.ToList(),
                 false,
                 1,
@@ -167,7 +167,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(mainInformationWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(mainInformationWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
@@ -200,7 +200,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
                 }
 
-                if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(mainInformationWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+                if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(mainInformationWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
                 {
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
@@ -266,6 +266,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     var target = error.Target ?? "";
                     ModelState.AddModelError(target, error.Message);
                 }
+                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
 
                 //cmd.UpdateModelsAndLists(
                 //    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
@@ -273,7 +274,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = toastrError?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
                         new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationForm", cmd), divIdOrClass = "#form-container" },
@@ -322,16 +323,17 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
             catch (DomainException ex)
             {
-                //foreach (var error in result.Errors)
-                //{
-                //    var target = error.Target ?? "";
-                //    ModelState.AddModelError(target, error.Message);
-                //}
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
 
                 //cmd.UpdateModelsAndLists(
                 //    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
 
-                return Json(new { status = "error", message = result.Errors.FirstOrDefault()?.Message }, JsonRequestBehavior.AllowGet);
+                return Json(new { status = "error", message = toastrError?.Message ?? ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -360,7 +362,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
@@ -396,7 +398,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
                 }
 
-                if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+                if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
                 {
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
@@ -460,6 +462,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     var target = error.Target ?? "";
                     ModelState.AddModelError(target, error.Message);
                 }
+                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
 
                 cmd.UpdateDropdownProperties(
                     await this.interestRepo.FindAllGroupedByInterestGroupsAsync(),
@@ -468,7 +471,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = toastrError?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
                         new { page = this.RenderRazorViewToString("Modals/UpdateInterestForm", cmd), divIdOrClass = "#form-container" },
@@ -502,7 +505,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(buyerCompanyWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(buyerCompanyWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
@@ -535,7 +538,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
                 }
 
-                if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(buyerCompanyWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+                if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(buyerCompanyWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
                 {
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
@@ -572,7 +575,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(buyerCompanyWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(buyerCompanyWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
@@ -601,7 +604,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
@@ -634,7 +637,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
@@ -682,16 +685,17 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
             catch (DomainException ex)
             {
-                //foreach (var error in result.Errors)
-                //{
-                //    var target = error.Target ?? "";
-                //    ModelState.AddModelError(target, error.Message);
-                //}
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
 
                 //cmd.UpdateModelsAndLists(
                 //    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
 
-                return Json(new { status = "error", message = result.Errors.FirstOrDefault()?.Message }, JsonRequestBehavior.AllowGet);
+                return Json(new { status = "error", message = toastrError?.Message ?? ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -731,16 +735,17 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
             catch (DomainException ex)
             {
-                //foreach (var error in result.Errors)
-                //{
-                //    var target = error.Target ?? "";
-                //    ModelState.AddModelError(target, error.Message);
-                //}
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
 
                 //cmd.UpdateModelsAndLists(
                 //    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
 
-                return Json(new { status = "error", message = result.Errors.FirstOrDefault()?.Message }, JsonRequestBehavior.AllowGet);
+                return Json(new { status = "error", message = toastrError?.Message ?? ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -838,6 +843,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 cmd.UpdatePreSendProperties(
                     this.UserAccessControlDto.EditionAttendeeOrganizations?.FirstOrDefault()?.Uid, //TODO: Change this
                     ProjectType.Audiovisual.Uid,
+                    this.UserAccessControlDto?.EditionAttendeeCollaboratorTickets?.Select(eact => eact.AttendeeCollaboratorTicket.Uid)?.ToList(),
                     this.UserAccessControlDto.User.Id,
                     this.UserAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -856,8 +862,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     var target = error.Target ?? "";
                     ModelState.AddModelError(target, error.Message);
                 }
+                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
 
-                this.StatusMessageToastr(ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                this.StatusMessageToastr(toastrError?.Message ?? ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
 
                 cmd.UpdateDropdownProperties(
                     await this.activityRepo.FindAllAsync(),
@@ -880,6 +887,19 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
 
             this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.CreatedM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
+
+            try
+            {
+                var project = result.Data as Project;
+                if (project != null)
+                {
+                    return RedirectToAction("SubmittedDetails", "Projects", new { id = project.Uid });
+                }
+            }
+            catch
+            {
+                // ignored
+            }
 
             return RedirectToAction("Index", "Projects");
         }
@@ -982,8 +1002,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     var target = error.Target ?? "";
                     ModelState.AddModelError(target, error.Message);
                 }
+                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
 
-                this.StatusMessageToastr(ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                this.StatusMessageToastr(toastrError?.Message ?? ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
 
                 cmd.UpdateDropdownProperties(
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
@@ -1097,8 +1118,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     var target = error.Target ?? "";
                     ModelState.AddModelError(target, error.Message);
                 }
+                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
 
-                this.StatusMessageToastr(ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                this.StatusMessageToastr(toastrError?.Message ?? ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
 
                 return View(cmd);
             }

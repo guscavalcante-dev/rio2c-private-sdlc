@@ -4,7 +4,7 @@
 // Created          : 11-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-11-2019
+// Last Modified On : 11-14-2019
 // ***********************************************************************
 // <copyright file="UpdateProjectMainInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,28 +26,23 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>UpdateProjectMainInformationCommandHandler</summary>
     public class UpdateProjectMainInformationCommandHandler : BaseProjectCommandHandler, IRequestHandler<UpdateProjectMainInformation, AppValidationResult>
     {
-        private readonly IProjectTypeRepository projectTypeRepo;
-        private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly ILanguageRepository languageRepo;
-        private readonly ITargetAudienceRepository targetAudienceRepo;
-        private readonly IInterestRepository interestRepo;
 
+        /// <summary>Initializes a new instance of the <see cref="UpdateProjectMainInformationCommandHandler"/> class.</summary>
+        /// <param name="eventBus">The event bus.</param>
+        /// <param name="uow">The uow.</param>
+        /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
+        /// <param name="projectRepository">The project repository.</param>
+        /// <param name="languageRepository">The language repository.</param>
         public UpdateProjectMainInformationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            IProjectRepository projectRepository,
-            IProjectTypeRepository projectTypeRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
-            ILanguageRepository languageRepository,
-            ITargetAudienceRepository targetAudienceRepository,
-            IInterestRepository interestRepository)
-            : base(eventBus, uow, projectRepository)
+            IProjectRepository projectRepository,
+            ILanguageRepository languageRepository)
+            : base(eventBus, uow, attendeeOrganizationRepository, projectRepository)
         {
-            this.projectTypeRepo = projectTypeRepository;
-            this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.languageRepo = languageRepository;
-            this.targetAudienceRepo = targetAudienceRepository;
-            this.interestRepo = interestRepository;
         }
 
         /// <summary>Handles the specified update project main information.</summary>

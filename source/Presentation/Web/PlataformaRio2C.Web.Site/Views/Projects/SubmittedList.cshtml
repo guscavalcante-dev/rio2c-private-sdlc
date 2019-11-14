@@ -179,7 +179,7 @@
                                             <div class="kt-widget__label">
                                                 <div class="kt-widget__media">
                                                     <span class="kt-media kt-media--lg">
-                                                        <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, projectDto.SellerAttendeeOrganizationDto.Organization.Uid, projectDto.SellerAttendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="" style="max-width: 65px; max-height: 65px;">
+                                                        <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, projectDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.Organization.Uid, projectDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="" style="max-width: 65px; max-height: 65px;">
                                                     </span>
                                                 </div>
                                                 <div class="kt-widget__info kt-margin-t-5">
@@ -187,7 +187,7 @@
                                                         @(projectDto.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value)
                                                     </a>
                                                     <span class="kt-widget__desc">
-                                                        @Labels.Producer: @projectDto.SellerAttendeeOrganizationDto.Organization.Name
+                                                        @Labels.Producer: @projectDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.Organization.Name
                                                     </span>
                                                     <span class="kt-widget__desc">
                                                         @Labels.Genre:

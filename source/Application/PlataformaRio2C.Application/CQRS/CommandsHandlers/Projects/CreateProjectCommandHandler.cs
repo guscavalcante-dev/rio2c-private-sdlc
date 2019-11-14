@@ -4,13 +4,14 @@
 // Created          : 11-07-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-10-2019
+// Last Modified On : 11-14-2019
 // ***********************************************************************
 // <copyright file="CreateProjectCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -26,8 +27,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>CreateProjectCommandHandler</summary>
     public class CreateProjectCommandHandler : BaseProjectCommandHandler, IRequestHandler<CreateProject, AppValidationResult>
     {
+        private readonly IAttendeeCollaboratorTicketRepository attendeeCollaboratorTicketRepo;
         private readonly IProjectTypeRepository projectTypeRepo;
-        private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly ILanguageRepository languageRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
         private readonly IInterestRepository interestRepo;
@@ -35,25 +36,27 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <summary>Initializes a new instance of the <see cref="CreateProjectCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
-        /// <param name="projectRepository">The project repository.</param>
-        /// <param name="projectTypeRepository">The project type repository.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
+        /// <param name="projectRepository">The project repository.</param>
+        /// <param name="attendeeCollaboratorTicketRepository">The attendee collaborator ticket repository.</param>
+        /// <param name="projectTypeRepository">The project type repository.</param>
         /// <param name="languageRepository">The language repository.</param>
         /// <param name="targetAudienceRepository">The target audience repository.</param>
         /// <param name="interestRepository">The interest repository.</param>
         public CreateProjectCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            IProjectRepository projectRepository,
-            IProjectTypeRepository projectTypeRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
+            IProjectRepository projectRepository,
+            IAttendeeCollaboratorTicketRepository attendeeCollaboratorTicketRepository,
+            IProjectTypeRepository projectTypeRepository,
             ILanguageRepository languageRepository,
             ITargetAudienceRepository targetAudienceRepository,
             IInterestRepository interestRepository)
-            : base(eventBus, uow, projectRepository)
+            : base(eventBus, uow, attendeeOrganizationRepository, projectRepository)
         {
+            this.attendeeCollaboratorTicketRepo = attendeeCollaboratorTicketRepository;
             this.projectTypeRepo = projectTypeRepository;
-            this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.languageRepo = languageRepository;
             this.targetAudienceRepo = targetAudienceRepository;
             this.interestRepo = interestRepository;
@@ -67,29 +70,23 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.Uow.BeginTransaction();
 
-            //#region Initial validations
+            var attendeeOrganization = await this.GetAttendeeOrganizationByUid(cmd.AttendeeOrganizationUid ?? Guid.Empty);
 
-            //var existingOrganizationByName = this.OrganizationRepo.Get(o => o.Name == cmd.Name
-            //                                                                && o.Holding.Uid == cmd.HoldingUid
-            //                                                                && !o.IsDeleted);
-            //if (existingOrganizationByName != null)
-            //{
-            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.APlayer, Labels.TheName, cmd.Name), new string[] { "Name" }));
-            //}
+            #region Initial validations
 
-            //if (!this.ValidationResult.IsValid)
-            //{
-            //    this.AppValidationResult.Add(this.ValidationResult);
-            //    return this.AppValidationResult;
-            //}
+            if (!this.ValidationResult.IsValid)
+            {
+                this.AppValidationResult.Add(this.ValidationResult);
+                return this.AppValidationResult;
+            }
 
-            //#endregion
+            #endregion
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
 
-            var project = new Project(
-                await this.projectTypeRepo.GetAsync(pt => pt.Uid == cmd.ProjectTypeUid),
-                cmd.AttendeeOrganizationUid.HasValue ? await this.attendeeOrganizationRepo.GetAsync(ao => ao.Uid == cmd.AttendeeOrganizationUid) : null,
+            attendeeOrganization.CreateProject(
+                await this.projectTypeRepo.GetAsync(pt => pt.Uid == cmd.ProjectTypeUid && !pt.IsDeleted),
+                cmd.AttendeeCollaboratorTicketsUids?.Any() == true ? this.attendeeCollaboratorTicketRepo.GetAll(act => cmd.AttendeeCollaboratorTicketsUids.Contains(act.Uid) && !act.IsDeleted).ToList() : null,
                 cmd.NumberOfEpisodes,
                 cmd.EachEpisodePlayingTime,
                 cmd.ValuePerEpisode,
@@ -107,15 +104,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.ImageLinks,
                 cmd.TeaserLinks,
                 cmd.UserId);
-            if (!project.IsValid())
+            if (!attendeeOrganization.IsCreateProjectValid())
             {
-                this.AppValidationResult.Add(project.ValidationResult);
+                this.AppValidationResult.Add(attendeeOrganization.ValidationResult);
                 return this.AppValidationResult;
             }
 
-            this.ProjectRepo.Create(project);
+            this.AttendeeOrganizationRepo.Update(attendeeOrganization);
             this.Uow.SaveChanges();
-            this.AppValidationResult.Data = project;
+            this.AppValidationResult.Data = attendeeOrganization.GetLastCreatedProject();
 
             return this.AppValidationResult;
 

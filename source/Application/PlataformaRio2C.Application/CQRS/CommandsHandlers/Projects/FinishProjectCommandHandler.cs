@@ -4,7 +4,7 @@
 // Created          : 11-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-12-2019
+// Last Modified On : 11-14-2019
 // ***********************************************************************
 // <copyright file="FinishProjectCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,19 +24,18 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>FinishProjectCommandHandler</summary>
     public class FinishProjectCommandHandler : BaseProjectCommandHandler, IRequestHandler<FinishProject, AppValidationResult>
     {
-        private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
-        private readonly IProjectEvaluationStatusRepository projectEvaluationStatusRepo;
-
+        /// <summary>Initializes a new instance of the <see cref="FinishProjectCommandHandler"/> class.</summary>
+        /// <param name="eventBus">The event bus.</param>
+        /// <param name="uow">The uow.</param>
+        /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
+        /// <param name="projectRepository">The project repository.</param>
         public FinishProjectCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            IProjectRepository projectRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
-            IProjectEvaluationStatusRepository projectEvaluationStatusRepository)
-            : base(eventBus, uow, projectRepository)
+            IProjectRepository projectRepository)
+            : base(eventBus, uow, attendeeOrganizationRepository, projectRepository)
         {
-            this.attendeeOrganizationRepo = attendeeOrganizationRepository;
-            this.projectEvaluationStatusRepo = projectEvaluationStatusRepository;
         }
 
         /// <summary>Handles the specified finish project.</summary>

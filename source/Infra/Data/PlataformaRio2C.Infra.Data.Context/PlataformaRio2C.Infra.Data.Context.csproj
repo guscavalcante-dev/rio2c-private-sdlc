@@ -103,6 +103,7 @@
     <Compile Include="Mapping\NegotiationConfig\NegotiationConfigMap.cs" />
     <Compile Include="Mapping\Negotiation\NegotiationMap.cs" />
     <Compile Include="Mapping\Organizations\AttendeeOrganizationCollaboratorMap.cs" />
+    <Compile Include="Mapping\Organizations\SellerAttendeeOrganizationMap.cs" />
     <Compile Include="Mapping\Organizations\AttendeeOrganizationTypeMap.cs" />
     <Compile Include="Mapping\Organizations\AttendeeOrganizationMap.cs" />
     <Compile Include="Mapping\Organizations\OrganizationRestrictionSpecificMap.cs" />
@@ -373,6 +374,7 @@
     <Content Include="SqlScripts\03_TicketSettings.sql" />
     <Content Include="SqlScripts\04_InitialData.sql" />
     <Content Include="SqlScripts\Deltas\20190930_114613_0001_ChangesForPlayersApi.sql" />
+    <Content Include="SqlScripts\Deltas\20191113_155412_0006_ChangesForProjectsSubscription.sql" />
     <Content Include="SqlScripts\Deltas\20191101_171030_0005_ChangesForProjectsSubscription.sql" />
     <Content Include="SqlScripts\Deltas\20191024_193010_0004_ChangesForProjectsSubscription.sql" />
     <Content Include="SqlScripts\Deltas\20191021_225115_0003_RemoveHtmlTagsFromData.sql" />

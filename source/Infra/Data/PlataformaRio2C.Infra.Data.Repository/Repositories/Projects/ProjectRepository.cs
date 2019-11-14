@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-13-2019
+// Last Modified On : 11-14-2019
 // ***********************************************************************
 // <copyright file="ProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -39,6 +39,36 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static IQueryable<Project> FindByUid(this IQueryable<Project> query, Guid projectUid)
         {
             query = query.Where(p => p.Uid == projectUid);
+
+            return query;
+        }
+
+        /// <summary>Finds the by attendee organization uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> FindByAttendeeOrganizationUid(this IQueryable<Project> query, Guid attendeeOrganizationUid)
+        {
+            query = query.Where(p => p.SellerAttendeeOrganization.AttendeeOrganization.Uid == attendeeOrganizationUid);
+
+            return query;
+        }
+
+        /// <summary>Finds the by attendee organizations uids.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="attendeeOrganizationsUids">The attendee organizations uids.</param>
+        /// <param name="showAll">if set to <c>true</c> [show all].</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> FindByAttendeeOrganizationsUids(this IQueryable<Project> query, List<Guid> attendeeOrganizationsUids, bool showAll)
+        {
+            if (attendeeOrganizationsUids?.Any() == true)
+            {
+                query = query.Where(p => attendeeOrganizationsUids.Contains(p.SellerAttendeeOrganization.AttendeeOrganization.Uid));
+            }
+            else if (!showAll)
+            {
+                query = query.Where(p => 1 == 2);
+            }
 
             return query;
         }
@@ -166,24 +196,29 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
-        /// <summary>Finds all dtos by seller attendee organizations uids and by page asynchronous.</summary>
-        /// <param name="sellerAttendeeOrganizationsUids">The seller attendee organizations uids.</param>
+        /// <summary>Finds all dtos by attendee organizations uids and by page asynchronous.</summary>
+        /// <param name="attendeeOrganizationsUids">The attendee organizations uids.</param>
         /// <param name="showAll">if set to <c>true</c> [show all].</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<ProjectDto>> FindAllDtosBySellerAttendeeOrganizationsUidsAndByPageAsync(List<Guid> sellerAttendeeOrganizationsUids, bool showAll, int page, int pageSize)
+        public async Task<IPagedList<ProjectDto>> FindAllDtosByAttendeeOrganizationsUidsAndByPageAsync(List<Guid> attendeeOrganizationsUids, bool showAll, int page, int pageSize)
         {
             var query = this.GetBaseQuery()
-                                .FindBySellerAttendeeOrganizationsUids(sellerAttendeeOrganizationsUids, showAll)
+                                .FindByAttendeeOrganizationsUids(attendeeOrganizationsUids, showAll)
                                 .Select(p => new ProjectDto
                                 {
                                     Project = p,
                                     ProjectType = p.ProjectType,
-                                    SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                    SellerAttendeeOrganizationDto = new SellerAttendeeOrganizationDto
                                     {
-                                        AttendeeOrganization = p.SellerAttendeeOrganization,
-                                        Organization = p.SellerAttendeeOrganization.Organization
+                                        SellerAttendeeOrganization = p.SellerAttendeeOrganization,
+                                        AttendeeOrganizationDto = new AttendeeOrganizationDto
+                                        {
+                                            AttendeeOrganization = p.SellerAttendeeOrganization.AttendeeOrganization,
+                                            Organization = p.SellerAttendeeOrganization.AttendeeOrganization.Organization
+                                        },
+                                        AttendeeCollaboratorTicket = p.SellerAttendeeOrganization.AttendeeCollaboratorTicket
                                     },
                                     ProjectTitleDtos = p.Titles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
                                     {
@@ -269,10 +304,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             {
                                 Project = p,
                                 ProjectType = p.ProjectType,
-                                SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                SellerAttendeeOrganizationDto = new SellerAttendeeOrganizationDto
                                 {
-                                    AttendeeOrganization = p.SellerAttendeeOrganization,
-                                    Organization = p.SellerAttendeeOrganization.Organization
+                                    SellerAttendeeOrganization = p.SellerAttendeeOrganization,
+                                    AttendeeOrganizationDto = new AttendeeOrganizationDto
+                                    {
+                                        AttendeeOrganization = p.SellerAttendeeOrganization.AttendeeOrganization,
+                                        Organization = p.SellerAttendeeOrganization.AttendeeOrganization.Organization
+                                    },
+                                    AttendeeCollaboratorTicket = p.SellerAttendeeOrganization.AttendeeCollaboratorTicket
                                 },
                                 ProjectTitleDtos = p.Titles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
                                 {
@@ -316,10 +356,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             {
                                 Project = p,
                                 ProjectType = p.ProjectType,
-                                SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                SellerAttendeeOrganizationDto = new SellerAttendeeOrganizationDto
                                 {
-                                    AttendeeOrganization = p.SellerAttendeeOrganization,
-                                    Organization = p.SellerAttendeeOrganization.Organization
+                                    SellerAttendeeOrganization = p.SellerAttendeeOrganization,
+                                    AttendeeOrganizationDto = new AttendeeOrganizationDto
+                                    {
+                                        AttendeeOrganization = p.SellerAttendeeOrganization.AttendeeOrganization,
+                                        Organization = p.SellerAttendeeOrganization.AttendeeOrganization.Organization
+                                    },
+                                    AttendeeCollaboratorTicket = p.SellerAttendeeOrganization.AttendeeCollaboratorTicket
                                 },
                                 ProjectInterestDtos = p.Interests.Where(i => !i.IsDeleted).Select(i => new ProjectInterestDto
                                 {
@@ -347,10 +392,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             {
                                 Project = p,
                                 ProjectType = p.ProjectType,
-                                SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                SellerAttendeeOrganizationDto = new SellerAttendeeOrganizationDto
                                 {
-                                    AttendeeOrganization = p.SellerAttendeeOrganization,
-                                    Organization = p.SellerAttendeeOrganization.Organization
+                                    SellerAttendeeOrganization = p.SellerAttendeeOrganization,
+                                    AttendeeOrganizationDto = new AttendeeOrganizationDto
+                                    {
+                                        AttendeeOrganization = p.SellerAttendeeOrganization.AttendeeOrganization,
+                                        Organization = p.SellerAttendeeOrganization.AttendeeOrganization.Organization
+                                    },
+                                    AttendeeCollaboratorTicket = p.SellerAttendeeOrganization.AttendeeCollaboratorTicket
                                 },
                                 ProjectBuyerEvaluationDtos = p.BuyerEvaluations.Where(be => !be.IsDeleted).Select(be => new ProjectBuyerEvaluationDto
                                 {

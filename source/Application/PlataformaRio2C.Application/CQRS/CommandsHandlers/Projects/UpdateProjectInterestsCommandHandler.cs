@@ -4,7 +4,7 @@
 // Created          : 11-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-11-2019
+// Last Modified On : 11-14-2019
 // ***********************************************************************
 // <copyright file="UpdateProjectInterestsCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,7 +20,6 @@ using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -28,31 +27,25 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>UpdateProjectInterestsCommandHandler</summary>
     public class UpdateProjectInterestsCommandHandler : BaseProjectCommandHandler, IRequestHandler<UpdateProjectInterests, AppValidationResult>
     {
-        private readonly IProjectTypeRepository projectTypeRepo;
-        private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IInterestRepository interestRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
 
         /// <summary>Initializes a new instance of the <see cref="UpdateProjectInterestsCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
-        /// <param name="projectRepository">The project repository.</param>
-        /// <param name="projectTypeRepository">The project type repository.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
+        /// <param name="projectRepository">The project repository.</param>
         /// <param name="interestRepository">The interest repository.</param>
         /// <param name="targetAudienceRepository">The target audience repository.</param>
         public UpdateProjectInterestsCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            IProjectRepository projectRepository,
-            IProjectTypeRepository projectTypeRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
+            IProjectRepository projectRepository,
             IInterestRepository interestRepository,
             ITargetAudienceRepository targetAudienceRepository)
-            : base(eventBus, uow, projectRepository)
+            : base(eventBus, uow, attendeeOrganizationRepository, projectRepository)
         {
-            this.projectTypeRepo = projectTypeRepository;
-            this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.interestRepo = interestRepository;
             this.targetAudienceRepo = targetAudienceRepository;
         }

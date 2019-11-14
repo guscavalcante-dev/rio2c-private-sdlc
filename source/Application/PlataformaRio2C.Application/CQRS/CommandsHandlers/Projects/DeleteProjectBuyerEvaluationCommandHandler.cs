@@ -4,7 +4,7 @@
 // Created          : 11-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-12-2019
+// Last Modified On : 11-14-2019
 // ***********************************************************************
 // <copyright file="DeleteProjectBuyerEvaluationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,21 +24,18 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>DeleteProjectBuyerEvaluationCommandHandler</summary>
     public class DeleteProjectBuyerEvaluationCommandHandler : BaseProjectCommandHandler, IRequestHandler<DeleteProjectBuyerEvaluation, AppValidationResult>
     {
-        private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
-
         /// <summary>Initializes a new instance of the <see cref="DeleteProjectBuyerEvaluationCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
-        /// <param name="projectRepository">The project repository.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
+        /// <param name="projectRepository">The project repository.</param>
         public DeleteProjectBuyerEvaluationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            IProjectRepository projectRepository,
-            IAttendeeOrganizationRepository attendeeOrganizationRepository)
-            : base(eventBus, uow, projectRepository)
+            IAttendeeOrganizationRepository attendeeOrganizationRepository,
+            IProjectRepository projectRepository)
+            : base(eventBus, uow, attendeeOrganizationRepository, projectRepository)
         {
-            this.attendeeOrganizationRepo = attendeeOrganizationRepository;
         }
 
         /// <summary>Handles the specified delete project buyer evaluation.</summary>
@@ -72,7 +69,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #endregion
 
             project.DeleteBuyerEvaluation(
-                cmd.AttendeeOrganizationUid.HasValue ? await this.attendeeOrganizationRepo.GetAsync(ao => ao.Uid == cmd.AttendeeOrganizationUid) : null,
+                cmd.AttendeeOrganizationUid.HasValue ? await this.AttendeeOrganizationRepo.GetAsync(ao => ao.Uid == cmd.AttendeeOrganizationUid) : null,
                 cmd.UserId);
             if (!project.IsValid())
             {
