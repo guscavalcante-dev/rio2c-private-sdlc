@@ -288,11 +288,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<IPagedList<AttendeeOrganizationDto>> FindAllDtoByMatchingProjectBuyerAsync(int editionId, ProjectDto projectDto, int page, int pageSize)
         {
             var buyerOrganizationType = projectDto.ProjectType.OrganizationTypes.FirstOrDefault(ot => !ot.IsDeleted && !ot.IsSeller);
+            var lookingForInterests = projectDto.ProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.LookingFor.Uid)?.Select(pid => pid.Interest.Uid)?.ToList();
+            var projectStatusInterests = projectDto.ProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.ProjectStatus.Uid)?.Select(pid => pid.Interest.Uid)?.ToList();
+            var platformsInterests = projectDto.ProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.Platforms.Uid)?.Select(pid => pid.Interest.Uid)?.ToList();
             var genreInterests = projectDto.ProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.Genre.Uid)?.Select(pid => pid.Interest.Uid)?.ToList();
 
             var query = this.GetBaseQuery()
                                 .FindByOrganizationTypeUid(editionId, buyerOrganizationType?.Uid ?? Guid.Empty)
                                 .FindNotByUid(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid)
+                                .FindByInterestUids(lookingForInterests)
+                                .FindByInterestUids(projectStatusInterests)
+                                .FindByInterestUids(platformsInterests)
                                 .FindByInterestUids(genreInterests);
 
 

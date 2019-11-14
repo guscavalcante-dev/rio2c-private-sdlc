@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-10-2019
+// Last Modified On : 11-14-2019
 // ***********************************************************************
 // <copyright file="InterestGroup.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -41,6 +41,9 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Statics
 
+        public static InterestGroup LookingFor = new InterestGroup(new Guid("D45503A8-40D9-4CD8-8DB3-D76F2F24FAE7"));
+        public static InterestGroup ProjectStatus = new InterestGroup(new Guid("379A311F-3BEC-4A9F-8E6E-539B1FD8AB87"));
+        public static InterestGroup Platforms = new InterestGroup(new Guid("6590E0F1-B8DA-45D0-BE2C-E4B7CCF3751B"));
         public static InterestGroup Genre = new InterestGroup(new Guid("7B4A7C4A-EF10-483C-8854-87EBEB883583"));
 
         #endregion

@@ -528,8 +528,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUpdateBuyerCompanyModal(Guid? projectUid)
         {
-            UpdateProjectBuyerCompanies cmd;
-
             try
             {
                 var buyerCompanyWidgetDto = await this.projectRepo.FindSiteBuyerCompanyWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
@@ -1159,23 +1157,5 @@ namespace PlataformaRio2C.Web.Site.Controllers
         }
 
         #endregion
-
-        //public ActionResult Detail(Guid uid)
-        //{
-        //    if (uid != Guid.Empty)
-        //    {
-        //        int userId = User.Identity.GetUserId<int>();
-        //        var result = _projectAppService.GetForEvaluationPlayer(userId, uid);
-
-        //        if (result != null)
-        //        {
-        //            return View(result);
-        //        }
-        //    }
-
-        //    this.StatusMessage("Projeto não encotrado!", Infra.CrossCutting.Tools.Enums.StatusMessageType.Danger);
-
-        //    return RedirectToAction("Index");
-        //}
     }
 }

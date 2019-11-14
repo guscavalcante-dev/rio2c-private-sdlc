@@ -295,6 +295,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+        /// <summary>Finds the site main information widget dto by project uid asynchronous.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
         public async Task<ProjectDto> FindSiteMainInformationWidgetDtoByProjectUidAsync(Guid projectUid)
         {
             var query = this.GetBaseQuery(true)
