@@ -25,6 +25,7 @@ namespace PlataformaRio2C.Domain.Entities
         public int AttendeeOrganizationId { get; private set; }
         public int AttendeeCollaboratorTicketId { get; private set; }
         public int ProjectsCount { get; private set; }
+        public int ProjectsBuyerEvaluationGroupsCount { get; private set; }
 
         public virtual AttendeeOrganization AttendeeOrganization { get; private set; }
         public virtual AttendeeCollaboratorTicket AttendeeCollaboratorTicket { get; private set; }
@@ -175,27 +176,7 @@ namespace PlataformaRio2C.Domain.Entities
                 userId));
 
             this.UpdateProjectsCount();
-        }
-
-        /// <summary>Updates the projects count.</summary>
-        public void UpdateProjectsCount()
-        {
-            this.ProjectsCount = this.CountProjects();
-        }
-
-        /// <summary>Counts the projects.</summary>
-        /// <returns></returns>
-        public int CountProjects()
-        {
-            return this.Projects?.Count ?? 0;
-        }
-
-        /// <summary>Determines whether [has projects available].</summary>
-        /// <returns>
-        ///   <c>true</c> if [has projects available]; otherwise, <c>false</c>.</returns>
-        public bool HasProjectsAvailable()
-        {
-            return this.ProjectsCount < this.AttendeeCollaboratorTicket.AttendeeSalesPlatformTicketType.ProjectMaxCount;
+            this.UpdateProjectsBuyerEvaluationGroupsCount();
         }
 
         /// <summary>Gets the last created project.</summary>
@@ -204,6 +185,81 @@ namespace PlataformaRio2C.Domain.Entities
         {
             return this.Projects?.OrderByDescending(p => p.CreateDate).FirstOrDefault();
         }
+
+        #region Projects Counter
+
+        /// <summary>Updates the projects count.</summary>
+        public void UpdateProjectsCount()
+        {
+            this.ProjectsCount = this.RecountProjects();
+        }
+
+        /// <summary>Counts the projects.</summary>
+        /// <returns></returns>
+        public int RecountProjects()
+        {
+            return this.Projects?.Count(p => !p.IsDeleted) ?? 0;
+        }
+
+        /// <summary>Determines whether [has projects available].</summary>
+        /// <returns>
+        ///   <c>true</c> if [has projects available]; otherwise, <c>false</c>.</returns>
+        public bool HasProjectsAvailable()
+        {
+            return this.ProjectsCount < this.GetTicketTypeProjectMaxCount();
+        }
+
+        #endregion
+
+        #region Projects Buyer Evaluation Groups Counter
+
+        /// <summary>Updates the projects buyer evaluation groups count.</summary>
+        public void UpdateProjectsBuyerEvaluationGroupsCount()
+        {
+            this.ProjectsBuyerEvaluationGroupsCount = this.RecountProjectsBuyerEvaluationGroups();
+        }
+
+        /// <summary>Recounts the projects buyer evaluation groups.</summary>
+        /// <returns></returns>
+        public int RecountProjectsBuyerEvaluationGroups()
+        {
+            return this.Projects?.Where(p => !p.IsDeleted)?.Sum(p => p.ProjectBuyerEvaluationGroupsCount) ?? 0;
+        }
+
+        /// <summary>Determines whether [has projects buyer evaluations available].</summary>
+        /// <returns>
+        ///   <c>true</c> if [has projects buyer evaluations available]; otherwise, <c>false</c>.</returns>
+        public bool HasProjectsBuyerEvaluationsAvailable()
+        {
+            return this.ProjectsBuyerEvaluationGroupsCount < this.GetTicketTypeBuyerEvaluationGroupMaxCount();
+        }
+
+        #endregion
+
+        #region Ticket Type Counters
+
+        /// <summary>Gets the ticket type project maximum count.</summary>
+        /// <returns></returns>
+        public int GetTicketTypeProjectMaxCount()
+        {
+            return this.AttendeeCollaboratorTicket?.AttendeeSalesPlatformTicketType?.ProjectMaxCount ?? 0;
+        }
+
+        /// <summary>Gets the ticket type buyer evaluation maximum count.</summary>
+        /// <returns></returns>
+        public int GetTicketTypeBuyerEvaluationMaxCount()
+        {
+            return this.AttendeeCollaboratorTicket?.AttendeeSalesPlatformTicketType?.ProjectBuyerEvaluationMaxCount ?? 0;
+        }
+
+        /// <summary>Gets the ticket type buyer evaluation group maximum count.</summary>
+        /// <returns></returns>
+        public int GetTicketTypeBuyerEvaluationGroupMaxCount()
+        {
+            return this.AttendeeCollaboratorTicket?.AttendeeSalesPlatformTicketType?.ProjectBuyerEvaluationGroupMaxCount ?? 0;
+        }
+
+        #endregion
 
         #endregion
 
@@ -241,8 +297,12 @@ namespace PlataformaRio2C.Domain.Entities
             }
             else
             {
-                var projectsMaxCount = this.AttendeeCollaboratorTicket.AttendeeSalesPlatformTicketType.ProjectMaxCount;
-                if (this.CountProjects() > projectsMaxCount)
+                if (this.ProjectsCount > this.GetTicketTypeProjectMaxCount())
+                {
+                    this.ValidationResult.Add(new ValidationError(Messages.IsNotPossibleCreateProjectLimit, new string[] { "ToastrError" }));
+                }
+
+                if (this.ProjectsBuyerEvaluationGroupsCount > this.GetTicketTypeBuyerEvaluationGroupMaxCount())
                 {
                     this.ValidationResult.Add(new ValidationError(Messages.IsNotPossibleCreateProjectLimit, new string[] { "ToastrError" }));
                 }

@@ -816,11 +816,11 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O projeto não pode ser avaliado por mais de {0} {1}..
+        ///   Looks up a localized string similar to Você não pode selecionar um novo {0} para avaliar o projeto pois todos os grupos de {1} {2} já foram utilizados..
         /// </summary>
-        public static string MaxProjectBuyers {
+        public static string MaxProjectBuyersGroupsReached {
             get {
-                return ResourceManager.GetString("MaxProjectBuyers", resourceCulture);
+                return ResourceManager.GetString("MaxProjectBuyersGroupsReached", resourceCulture);
             }
         }
         

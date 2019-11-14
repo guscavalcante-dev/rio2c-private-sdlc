@@ -719,9 +719,9 @@ Youtube and Vimeo.</value>
     <value>Project budget (only for projects under development/production)</value>
     <comment>Orçamento do projeto (apenas para projetos em desenvolvimento/produção)</comment>
   </data>
-  <data name="MaxProjectBuyers" xml:space="preserve">
-    <value>The project cannot be evaluator by more than {0} {1}.</value>
-    <comment>O projeto não pode ser avaliado por mais de {0} {1}.</comment>
+  <data name="MaxProjectBuyersGroupsReached" xml:space="preserve">
+    <value>You cannot select a new {0} to evaluate the project because all {1} groups of {2} are already being used.</value>
+    <comment>Você não pode selecionar um novo {0} para avaliar o projeto pois todos os grupos de {1} {2} já foram utilizados.</comment>
   </data>
   <data name="PaginationMessage" xml:space="preserve">
     <value>Showing {0} to {1} of {2}</value>

@@ -9,7 +9,7 @@ namespace PlataformaRio2C.Application.ViewModels
     {
         #region props
 
-        public static readonly int SendPlayerCountMax = Project.SendPlayerCountMax;
+        //public static readonly int SendPlayerCountMax = Project.SendPlayerCountMax;
 
         public virtual string Title { get; set; }
         public string ProducerName { get; set; }

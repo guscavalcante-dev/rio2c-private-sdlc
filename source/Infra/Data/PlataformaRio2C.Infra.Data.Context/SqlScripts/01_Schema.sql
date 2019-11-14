@@ -1980,6 +1980,7 @@ CREATE TABLE [dbo].[SellerAttendeeOrganizations](
 	[AttendeeOrganizationId] [int] NOT NULL,
 	[AttendeeCollaboratorTicketId] [int] NOT NULL,
 	[ProjectsCount] [int] NOT NULL,
+	[ProjectsBuyerEvaluationGroupsCount] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,

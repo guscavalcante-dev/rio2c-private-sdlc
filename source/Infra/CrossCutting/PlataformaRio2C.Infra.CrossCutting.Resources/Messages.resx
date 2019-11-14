@@ -723,9 +723,9 @@
     <value>Orçamento do projeto (apenas para projetos em desenvolvimento/produção)</value>
     <comment>Orçamento do projeto (apenas para projetos em desenvolvimento/produção)</comment>
   </data>
-  <data name="MaxProjectBuyers" xml:space="preserve">
-    <value>O projeto não pode ser avaliado por mais de {0} {1}.</value>
-    <comment>O projeto não pode ser avaliado por mais de {0} {1}.</comment>
+  <data name="MaxProjectBuyersGroupsReached" xml:space="preserve">
+    <value>Você não pode selecionar um novo {0} para avaliar o projeto pois todos os grupos de {1} {2} já foram utilizados.</value>
+    <comment>Você não pode selecionar um novo {0} para avaliar o projeto pois todos os grupos de {1} {2} já foram utilizados.</comment>
   </data>
   <data name="PaginationMessage" xml:space="preserve">
     <value>Exibindo {0} a {1} de {2}</value>

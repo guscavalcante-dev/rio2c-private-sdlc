@@ -22,8 +22,6 @@ namespace PlataformaRio2C.Domain.Entities
     /// <summary>Project</summary>
     public class Project : Entity
     {
-        public static readonly int SendPlayerCountMax = 5;
-
         public int ProjectTypeId { get; private set; }
         public int SellerAttendeeOrganizationId { get; private set; }
         public int? NumberOfEpisodes { get; private set; }
@@ -220,6 +218,8 @@ namespace PlataformaRio2C.Domain.Entities
                 buyerEvaluation.Restore(projectEvaluationStatus, userId);
             }
 
+            this.UpdateBuyerEvaluationCounts();
+
             this.IsDeleted = false;
             this.UpdateUserId = userId;
             this.UpdateDate = DateTime.Now;
@@ -235,9 +235,39 @@ namespace PlataformaRio2C.Domain.Entities
             var buyerEvaluation = this.GetBuyerEvaluationByAttendeeOrganizationUid(buyerAttendeeOrganization?.Uid ?? Guid.Empty);
             buyerEvaluation?.Delete(userId);
 
+            this.UpdateBuyerEvaluationCounts();
+
             this.IsDeleted = false;
             this.UpdateUserId = userId;
             this.UpdateDate = DateTime.Now;
+        }
+
+        /// <summary>Updates the buyer evaluation counts.</summary>
+        public void UpdateBuyerEvaluationCounts()
+        {
+            this.ProjectBuyerEvaluationsCount = this.RecountBuyerEvaluations();
+            this.ProjectBuyerEvaluationGroupsCount = this.RecountBuyerEvaluationGroups();
+            this.SellerAttendeeOrganization.UpdateProjectsBuyerEvaluationGroupsCount();
+        }
+
+        /// <summary>Recounts the buyer evaluations.</summary>
+        /// <returns></returns>
+        public int RecountBuyerEvaluations()
+        {
+            return this.BuyerEvaluations?.Count(be => !be.IsDeleted) ?? 0;
+        }
+
+        /// <summary>Recounts the buyer evaluation groups.</summary>
+        /// <returns></returns>
+        public int RecountBuyerEvaluationGroups()
+        {
+            var ticketTypeBuyerEvaluationMaxCount = this.SellerAttendeeOrganization.GetTicketTypeBuyerEvaluationMaxCount();
+            if (ticketTypeBuyerEvaluationMaxCount == 0)
+            {
+                return 0;
+            }
+
+            return (int)Math.Ceiling((decimal)this.ProjectBuyerEvaluationsCount / (decimal)ticketTypeBuyerEvaluationMaxCount);
         }
 
         /// <summary>Gets the buyer evaluation by attendee organization uid.</summary>
@@ -903,16 +933,9 @@ namespace PlataformaRio2C.Domain.Entities
                 return;
             }
 
-            var projectBuyerEvaluationGroupMaxCount = this.SellerAttendeeOrganization.AttendeeCollaboratorTicket.AttendeeSalesPlatformTicketType.ProjectBuyerEvaluationGroupMaxCount;
-            if (this.ProjectBuyerEvaluationGroupsCount > projectBuyerEvaluationGroupMaxCount)
+            if (this.SellerAttendeeOrganization.ProjectsBuyerEvaluationGroupsCount > this.SellerAttendeeOrganization.GetTicketTypeBuyerEvaluationGroupMaxCount())
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.MaxProjectBuyers, projectBuyerEvaluationGroupMaxCount, Labels.Players), new string[] { "ToastrError" }));
-            }
-
-            var projectBuyerEvaluationMaxCount = this.SellerAttendeeOrganization.AttendeeCollaboratorTicket.AttendeeSalesPlatformTicketType.ProjectBuyerEvaluationMaxCount;
-            if (this.ProjectBuyerEvaluationsCount > projectBuyerEvaluationMaxCount)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.MaxProjectBuyers, projectBuyerEvaluationMaxCount, Labels.Players), new string[] { "ToastrError" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.MaxProjectBuyersGroupsReached, Labels.Player, this.SellerAttendeeOrganization.GetTicketTypeBuyerEvaluationMaxCount(), Labels.Players), new string[] { "ToastrError" }));
             }
 
             foreach (var buyerEvaluation in this.BuyerEvaluations?.Where(t => !t.IsValid())?.ToList())
