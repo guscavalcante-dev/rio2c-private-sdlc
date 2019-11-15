@@ -2,6 +2,42 @@
 @{
     var counter = 1;
 }
+
+<div class="kt-wizard-v3__nav">
+    <div class="kt-wizard-v3__nav-items kt-wizard-v3__nav-items--clickable">
+        <div class="kt-wizard-v3__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
+            <div class="kt-wizard-v3__nav-body">
+                <div class="kt-wizard-v3__nav-label">
+                    <span>@counter</span> @Labels.CompanyInfo
+                </div>
+                <div class="kt-wizard-v3__nav-bar"></div>
+            </div>
+        </div>
+        @{
+            counter++;
+        }
+        <div class="kt-wizard-v3__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
+            <div class="kt-wizard-v3__nav-body">
+                <div class="kt-wizard-v3__nav-label">
+                    <span>@counter</span> @Labels.ParticipantsTerms
+                </div>
+                <div class="kt-wizard-v3__nav-bar"></div>
+            </div>
+        </div>
+        @{
+            counter++;
+        }
+        <div class="kt-wizard-v3__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
+            <div class="kt-wizard-v3__nav-body">
+                <div class="kt-wizard-v3__nav-label">
+                    <span>@counter</span> @Labels.ProjectInfo
+                </div>
+                <div class="kt-wizard-v3__nav-bar"></div>
+            </div>
+        </div>
+    </div>
+</div>
+@*
 <div class="kt-wizard-v2__nav">
     <div class="kt-wizard-v2__nav-items">
         <div class="row mb-3">
@@ -42,3 +78,4 @@
         </span>
     </div>
 </div>
+*@

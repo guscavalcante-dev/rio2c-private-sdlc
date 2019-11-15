@@ -5,14 +5,18 @@
 }
 <div class="kt-portlet">
     <div class="kt-portlet__body kt-portlet__body--fit">
-        <div class="kt-grid  kt-wizard-v2 kt-wizard-v2--white" id="kt_wizard_v2" data-ktwizard-state="first">
-            <div class="kt-grid__item kt-wizard-v2__aside">
+        <div class="row mb-3" style="padding-top:30px">
+            <div class="col-md-12 text-center"><h3>@Messages.StepsToProjectSubscription</h3></div>
+        </div>
+        <div class="kt-grid kt-wizard-v3 kt-wizard-v3--white" id="kt_wizard_v3" data-ktwizard-state="between">
+            <div class="kt-grid__item">
                 <!--begin: Form Wizard Nav -->
                 @Html.Partial("Shared/_ProjectsOnboardingMenu", 1)
                 <!--end: Form Wizard Nav -->
             </div>
-            <div class="kt-grid__item kt-grid__item--fluid kt-wizard-v2__wrapper">
-                @using (Html.BeginForm("CompanyInfo", "Projects", FormMethod.Post, new { enctype = "multipart/form-data", id = "OrganizationDataForm", @class = "kt-form" }))
+            <div class="kt-grid__item kt-grid__item--fluid kt-wizard-v3__wrapper">
+                <!--begin: Form Wizard Form-->
+                @using (Html.BeginForm("CompanyInfo", "Projects", FormMethod.Post, new { enctype = "multipart/form-data", id = "OrganizationDataForm", style = "padding-left:30px; padding-right:30px", @class = "kt-form" }))
                 {
                     @Html.HiddenFor(m => m.OrganizationUid)
                     <div id="form-container">
@@ -31,6 +35,7 @@
         </div>
     </div>
 </div>
+
 @section Styles {
     @Styles.Render("~/bundles/css/cropper.css")
     @Styles.Render("~/bundles/css/select2.css")

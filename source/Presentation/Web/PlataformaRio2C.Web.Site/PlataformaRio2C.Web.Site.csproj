@@ -404,6 +404,7 @@
     <Content Include="Assets\css\pages\onboarding\onboarding.css" />
     <Content Include="Assets\css\pages\onboarding\wizard-2.css" />
     <Content Include="Assets\css\pages\projects\projects.wizard-2.css" />
+    <Content Include="Assets\css\pages\projects\projects.wizard-3.css" />
     <Content Include="Assets\img\bg-2.jpg" />
     <Content Include="Assets\img\bg-3.jpg" />
     <Content Include="Assets\img\favicon.png" />
