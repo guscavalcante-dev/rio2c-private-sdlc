@@ -401,7 +401,6 @@
     <Content Include="Assets\components\jquery.form\jquery.form.js" />
     <Content Include="Assets\css\myrio2c.common.responsive.css" />
     <Content Include="Assets\css\myrio2c.common.css" />
-    <Content Include="Assets\css\pages\onboarding\onboarding.css" />
     <Content Include="Assets\css\pages\onboarding\wizard-2.css" />
     <Content Include="Assets\css\pages\projects\projects.wizard-2.css" />
     <Content Include="Assets\css\pages\projects\projects.wizard-3.css" />

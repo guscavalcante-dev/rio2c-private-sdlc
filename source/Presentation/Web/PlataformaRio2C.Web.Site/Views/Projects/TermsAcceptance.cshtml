@@ -8,7 +8,7 @@
         <div class="row mb-3" style="padding-top:30px">
             <div class="col-md-12 text-center"><h3>@Messages.StepsToProjectSubscription</h3></div>
         </div>
-        <div class="kt-grid kt-wizard-v3 kt-wizard-v3--white" id="kt_wizard_v3" data-ktwizard-state="between">
+        <div class="kt-grid kt-wizard-v3 kt-wizard-v3--white" data-ktwizard-state="between">
             <div class="kt-grid__item">
                 <!--begin: Form Wizard Nav -->
                 @Html.Partial("Shared/_ProjectsOnboardingMenu", 2)
@@ -16,9 +16,9 @@
             </div>
             <div class="kt-grid__item kt-grid__item--fluid kt-wizard-v3__wrapper">
                 <!--begin: Form Wizard Form-->
-                @using (Html.BeginForm("TermsAcceptance", "Projects", FormMethod.Post, new { id = "PlayerTermsAcceptanceForm", style = "padding-left:30px; padding-right:30px", @class = "kt-form" }))
+                @using (Html.BeginForm("TermsAcceptance", "Projects", FormMethod.Post, new { id = "PlayerTermsAcceptanceForm", @class = "kt-form" }))
                 {
-                    <!--begin: Form Wizard Step 1-->
+                    <!--begin: Form Wizard Step 2-->
                     <div class="kt-wizard-v3__content" data-ktwizard-type="step-content" data-ktwizard-state="current">
                         <div class="kt-heading kt-heading--md">@Labels.ParticipantsTerms</div>
                         <div class="kt-form__section kt-form__section--first">
@@ -46,7 +46,7 @@
                             </div>
                         </div>
                     </div>
-                    <!--end: Form Wizard Step 1-->
+                    <!--end: Form Wizard Step 2-->
                     <!--begin: Form Actions -->
                     <div class="kt-form__actions">
                         <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="MyRio2cCommon.submitForm('#PlayerTermsAcceptanceForm');">
@@ -55,14 +55,9 @@
                     </div>
                     <!--end: Form Actions -->
                 }
-
-                
                 <!--end: Form Wizard Form-->
             </div>
         </div>
-
-
-
     </div>
 </div>
 @section Styles {

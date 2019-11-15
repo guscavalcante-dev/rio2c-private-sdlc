@@ -185,5 +185,30 @@ a.r2c-login__footer-link, a.r2c-footer-link {
     Onboarding Wizard
 */
 .kt-wizard-v2 .kt-wizard-v2__wrapper .kt-form {
+    width: 100% !important;
     padding: 4rem 4rem 6rem !important;
+}
+
+
+/*
+    Projects Wizard
+*/
+.kt-wizard-v3 .kt-wizard-v3__wrapper {
+    padding: 0 !important;
+}
+
+.kt-wizard-v3 .kt-wizard-v3__wrapper .kt-form {
+    width: 93% !important;
+}
+
+.kt-wizard-v3 .kt-wizard-v3__nav-item[data-ktwizard-state="done"] .kt-wizard-v3__nav-body {
+    color: #699313 !important;
+}
+
+.kt-wizard-v3 .kt-wizard-v3__nav-item[data-ktwizard-state="done"] .kt-wizard-v3__nav-bar {
+    background-color: #699313 !important;
+}
+
+.kt-wizard-v3 .kt-wizard-v3__nav .kt-wizard-v3__nav-items .kt-wizard-v3__nav-item.myrio2c-projects-onboarding {
+    flex: 0 0 25% !important;
 }

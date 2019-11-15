@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-12-2019
+// Last Modified On : 11-15-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -231,8 +231,7 @@ namespace PlataformaRio2C.Web.Site
             #region Onboarding Wizard
 
             bundles.Add(new StyleBundle("~/bundles/css/onboardingIndex").Include(
-                "~/Assets/css/pages/onboarding/wizard-2.css",
-                "~/Assets/css/pages/onboarding/onboarding.css"));
+                "~/Assets/css/pages/onboarding/wizard-2.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/onboarding.collaboratordata.js").Include(
                 "~/Assets/js/onboarding/onboarding.collaboratordata.js",
@@ -253,8 +252,7 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/js/myrio2c.activity.js"));
 
             bundles.Add(new StyleBundle("~/bundles/css/onboarding.projects.css").Include(
-                "~/Assets/css/pages/projects/projects.wizard-3.css",
-                "~/Assets/css/pages/onboarding/onboarding.css"));
+                "~/Assets/css/pages/projects/projects.wizard-3.css"));
 
             #endregion
 

@@ -1660,4 +1660,12 @@
     <value>Selected</value>
     <comment>Selecionado</comment>
   </data>
+  <data name="Rules" xml:space="preserve">
+    <value>Rules</value>
+    <comment>Regulamento</comment>
+  </data>
+  <data name="SendProjectsToPlayer" xml:space="preserve">
+    <value>Send to Players</value>
+    <comment>Enviar para Players</comment>
+  </data>
 </root>

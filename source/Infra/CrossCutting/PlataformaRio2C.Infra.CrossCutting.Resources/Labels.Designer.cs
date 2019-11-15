@@ -2941,6 +2941,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Regulamento.
+        /// </summary>
+        public static string Rules {
+            get {
+                return ResourceManager.GetString("Rules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Salvar.
         /// </summary>
         public static string Save {
@@ -3162,6 +3171,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string SendProject {
             get {
                 return ResourceManager.GetString("SendProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enviar para Players.
+        /// </summary>
+        public static string SendProjectsToPlayer {
+            get {
+                return ResourceManager.GetString("SendProjectsToPlayer", resourceCulture);
             }
         }
         

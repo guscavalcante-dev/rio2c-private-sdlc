@@ -2,80 +2,52 @@
 @{
     var counter = 1;
 }
-
-<div class="kt-wizard-v3__nav">
-    <div class="kt-wizard-v3__nav-items kt-wizard-v3__nav-items--clickable">
-        <div class="kt-wizard-v3__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
-            <div class="kt-wizard-v3__nav-body">
-                <div class="kt-wizard-v3__nav-label">
-                    <span>@counter</span> @Labels.CompanyInfo
+<div class="kt-grid__item">
+    <!--begin: Form Wizard Nav -->
+    <div class="kt-wizard-v3__nav">
+        <div class="kt-wizard-v3__nav-items kt-wizard-v3__nav-items--clickable">
+            <div class="kt-wizard-v3__nav-item myrio2c-projects-onboarding" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
+                <div class="kt-wizard-v3__nav-body">
+                    <div class="kt-wizard-v3__nav-label">
+                        <span>@counter</span> @Labels.Company
+                    </div>
+                    <div class="kt-wizard-v3__nav-bar"></div>
                 </div>
-                <div class="kt-wizard-v3__nav-bar"></div>
             </div>
-        </div>
-        @{
-            counter++;
-        }
-        <div class="kt-wizard-v3__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
-            <div class="kt-wizard-v3__nav-body">
-                <div class="kt-wizard-v3__nav-label">
-                    <span>@counter</span> @Labels.ParticipantsTerms
+            @{
+                counter++;
+            }
+            <div class="kt-wizard-v3__nav-item myrio2c-projects-onboarding" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
+                <div class="kt-wizard-v3__nav-body">
+                    <div class="kt-wizard-v3__nav-label">
+                        <span>@counter</span> @Labels.Rules
+                    </div>
+                    <div class="kt-wizard-v3__nav-bar"></div>
                 </div>
-                <div class="kt-wizard-v3__nav-bar"></div>
             </div>
-        </div>
-        @{
-            counter++;
-        }
-        <div class="kt-wizard-v3__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
-            <div class="kt-wizard-v3__nav-body">
-                <div class="kt-wizard-v3__nav-label">
-                    <span>@counter</span> @Labels.ProjectInfo
+            @{
+                counter++;
+            }
+            <div class="kt-wizard-v3__nav-item myrio2c-projects-onboarding" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
+                <div class="kt-wizard-v3__nav-body">
+                    <div class="kt-wizard-v3__nav-label">
+                        <span>@counter</span> @Labels.Project
+                    </div>
+                    <div class="kt-wizard-v3__nav-bar"></div>
                 </div>
-                <div class="kt-wizard-v3__nav-bar"></div>
+            </div>
+            @{
+                counter++;
+            }
+            <div class="kt-wizard-v3__nav-item myrio2c-projects-onboarding" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
+                <div class="kt-wizard-v3__nav-body">
+                    <div class="kt-wizard-v3__nav-label">
+                        <span>@counter</span> @Labels.SendProjectsToPlayer
+                    </div>
+                    <div class="kt-wizard-v3__nav-bar"></div>
+                </div>
             </div>
         </div>
     </div>
+    <!--end: Form Wizard Nav -->
 </div>
-@*
-<div class="kt-wizard-v2__nav">
-    <div class="kt-wizard-v2__nav-items">
-        <div class="row mb-3">
-            <div class="col-md-12 text-center"><h3>@Messages.StepsToProjectSubscription</h3></div>
-        </div>
-        <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
-            <div class="kt-wizard-v2__nav-body">
-                <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
-                <div class="kt-wizard-v2__nav-label">
-                    <div class="kt-wizard-v2__nav-label-title">@Labels.CompanyInfo</div>
-                    <div class="kt-wizard-v2__nav-label-desc">@Messages.CompleteCompanyrInfo</div>
-                </div>
-            </div>
-        </span>
-        @{
-            counter++;
-        }
-        <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
-            <div class="kt-wizard-v2__nav-body">
-                <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
-                <div class="kt-wizard-v2__nav-label">
-                    <div class="kt-wizard-v2__nav-label-title">@Labels.ParticipantsTerms</div>
-                    <div class="kt-wizard-v2__nav-label-desc">@Messages.ToProceedYouMustAcceptTheTerm</div>
-                </div>
-            </div>
-        </span>
-        @{
-            counter++;
-        }
-        <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
-            <div class="kt-wizard-v2__nav-body">
-                <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
-                <div class="kt-wizard-v2__nav-label">
-                    <div class="kt-wizard-v2__nav-label-title">@Labels.ProjectInfo</div>
-                    <div class="kt-wizard-v2__nav-label-desc">@Messages.CompleteProjectInfo</div>
-                </div>
-            </div>
-        </span>
-    </div>
-</div>
-*@

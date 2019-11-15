@@ -1672,4 +1672,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Selecionado</value>
     <comment>Selecionado</comment>
   </data>
+  <data name="Rules" xml:space="preserve">
+    <value>Regulamento</value>
+    <comment>Regulamento</comment>
+  </data>
+  <data name="SendProjectsToPlayer" xml:space="preserve">
+    <value>Enviar para Players</value>
+    <comment>Enviar para Players</comment>
+  </data>
 </root>
