@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-14-2019
+// Last Modified On : 11-15-2019
 // ***********************************************************************
 // <copyright file="IProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,7 +27,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     {
         #region Site Widgets
 
-        Task<IPagedList<ProjectDto>> FindAllDtosByAttendeeOrganizationsUidsAndByPageAsync(List<Guid> attendeeOrganizationsUids, bool showAll, int page, int pageSize);
+        Task<List<ProjectDto>> FindAllDtosByAttendeeOrganizationsUidsAsync(List<Guid> attendeeOrganizationsUids, bool showAll);
         Task<ProjectDto> FindSiteDetailsDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteMainInformationWidgetDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteInterestWidgetDtoByProjectUidAsync(Guid projectUid);

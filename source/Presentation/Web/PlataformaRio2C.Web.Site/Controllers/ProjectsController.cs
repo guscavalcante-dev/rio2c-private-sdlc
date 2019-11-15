@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-14-2019
+// Last Modified On : 11-15-2019
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
@@ -52,6 +53,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="activityRepository">The activity repository.</param>
         /// <param name="targetAudienceRepository">The target audience repository.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
+        /// <param name="languageRepo">The language repo.</param>
         public ProjectsController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
@@ -59,7 +61,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
             IInterestRepository interestRepository,
             IActivityRepository activityRepository,
             ITargetAudienceRepository targetAudienceRepository,
-            IAttendeeOrganizationRepository attendeeOrganizationRepository)
+            IAttendeeOrganizationRepository attendeeOrganizationRepository,
+            ILanguageRepository languageRepo)
             : base(commandBus, identityController)
         {
             this.projectRepo = projectRepository;
@@ -115,11 +118,29 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             #endregion
 
-            var projects = await this.projectRepo.FindAllDtosByAttendeeOrganizationsUidsAndByPageAsync(
+            var projects = await this.projectRepo.FindAllDtosByAttendeeOrganizationsUidsAsync(
                 this.UserAccessControlDto?.EditionAttendeeOrganizations?.Select(eao => eao.Uid)?.ToList(),
-                false,
-                1,
-                100);
+                false);
+
+            if (projects.Count < 3)
+            {
+                var initialProject = projects.Count + 1;
+
+                for (int i = initialProject; i < 4; i++)
+                {
+                    projects.Add(new ProjectDto
+                    {
+                        ProjectTitleDtos = new List<ProjectTitleDto>
+                        {
+                            new ProjectTitleDto
+                            {
+                                ProjectTitle = new ProjectTitle(Labels.Project + " " + i, new Language("", ViewBag.UserInterfaceLanguage), 0),
+                                Language = new Language("", ViewBag.UserInterfaceLanguage)
+                            }
+                        }
+                    });
+                }
+            }
 
             return View(projects);
         }

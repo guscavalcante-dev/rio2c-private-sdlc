@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-14-2019
+// Last Modified On : 11-15-2019
 // ***********************************************************************
 // <copyright file="ProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -196,13 +196,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
-        /// <summary>Finds all dtos by attendee organizations uids and by page asynchronous.</summary>
+        /// <summary>Finds all dtos by attendee organizations uids asynchronous.</summary>
         /// <param name="attendeeOrganizationsUids">The attendee organizations uids.</param>
         /// <param name="showAll">if set to <c>true</c> [show all].</param>
-        /// <param name="page">The page.</param>
-        /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<ProjectDto>> FindAllDtosByAttendeeOrganizationsUidsAndByPageAsync(List<Guid> attendeeOrganizationsUids, bool showAll, int page, int pageSize)
+        public async Task<List<ProjectDto>> FindAllDtosByAttendeeOrganizationsUidsAsync(List<Guid> attendeeOrganizationsUids, bool showAll)
         {
             var query = this.GetBaseQuery()
                                 .FindByAttendeeOrganizationsUids(attendeeOrganizationsUids, showAll)
@@ -269,7 +267,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return await query
                             .OrderBy(pd => pd.Project.CreateDate)
-                            .ToListPagedAsync(page, pageSize);
+                            .ToListAsync();
         }
 
         #region Site Widgets

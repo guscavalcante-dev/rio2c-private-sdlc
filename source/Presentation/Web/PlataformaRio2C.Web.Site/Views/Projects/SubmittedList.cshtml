@@ -3,7 +3,7 @@
 @using PlataformaRio2C.Domain.Entities
 @using PlataformaRio2C.Domain.Statics
 @using Constants = PlataformaRio2C.Domain.Constants;
-@model X.PagedList.IPagedList<ProjectDto>
+@model List<ProjectDto>
 @{
     ViewBag.Title = Labels.Projects;
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
@@ -177,35 +177,38 @@
                                     <div class="kt-widget kt-widget--project-1" style="border-bottom: 0.07rem dashed #ebedf2;">
                                         <div class="kt-widget__head">
                                             <div class="kt-widget__label">
-                                                <div class="kt-widget__media">
+                                                @*<div class="kt-widget__media">
                                                     <span class="kt-media kt-media--lg">
                                                         <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, projectDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.Organization.Uid, projectDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="" style="max-width: 65px; max-height: 65px;">
                                                     </span>
-                                                </div>
+                                                </div>*@
                                                 <div class="kt-widget__info kt-margin-t-5">
-                                                    <a href="@Url.Action("SubmittedDetails", "Projects", new { id = projectDto.Project.Uid, Area = "" })" class="kt-widget__title">
+                                                    <a @(projectDto.Project != null ? $"href=/{Url.Action("SubmittedDetails", "Projects", new { id = projectDto.Project.Uid, Area = "" })}" : string.Empty) class="kt-widget__title">
                                                         @(projectDto.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value)
                                                     </a>
-                                                    <span class="kt-widget__desc">
+                                                    @*<span class="kt-widget__desc">
                                                         @Labels.Producer: @projectDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.Organization.Name
-                                                    </span>
-                                                    <span class="kt-widget__desc">
-                                                        @Labels.Genre:
-                                                        @{
-                                                            var projectInterestsDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.Genre.Uid);
-                                                            if (projectInterestsDtos?.Any() == true)
-                                                            {
-                                                                foreach (var projectInterestDto in projectInterestsDtos)
+                                                    </span>*@
+                                                    @if (projectDto?.ProjectInterestDtos?.Any() == true)
+                                                    {
+                                                        <span class="kt-widget__desc">
+                                                            @Labels.Genre:
+                                                            @{
+                                                                var projectInterestsDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.Genre.Uid);
+                                                                if (projectInterestsDtos?.Any() == true)
                                                                 {
-                                                                    <span class="kt-badge kt-badge--inline kt-badge--info">@(projectInterestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
+                                                                    foreach (var projectInterestDto in projectInterestsDtos)
+                                                                    {
+                                                                        <span class="kt-badge kt-badge--inline kt-badge--info">@(projectInterestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
 
+                                                                    }
                                                                 }
                                                             }
-                                                        }
-                                                    </span>
+                                                        </span>
+                                                    }
                                                 </div>
                                             </div>
-                                            <div class="kt-portlet__head-toolbar">
+                                            @*<div class="kt-portlet__head-toolbar">
                                                 <a href="#" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown">
                                                     <i class="flaticon-more-1"></i>
                                                 </a>
@@ -213,13 +216,13 @@
                                                     <ul class="kt-nav">
                                                         <li class="kt-nav__item">
                                                             <a href="@Url.Action("SubmittedDetails", "Projects", new { id = projectDto.Project.Uid, Area = "" })" class="kt-nav__link">
-                                                                @*<i class="kt-nav__link-icon flaticon2-line-chart"></i>*@
+                                                                <i class="kt-nav__link-icon flaticon2-line-chart"></i>
                                                                 <span class="kt-nav__link-text">@Labels.Details</span>
                                                             </a>
                                                         </li>
                                                     </ul>
                                                 </div>
-                                            </div>
+                                            </div>*@
                                         </div>
                                         <div class="kt-widget__body pb-0">
                                             <span class="kt-widget__text mt-0">
