@@ -130,6 +130,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 {
                     projects.Add(new ProjectDto
                     {
+                        IsFakeProject = true,
                         ProjectTitleDtos = new List<ProjectTitleDto>
                         {
                             new ProjectTitleDto

@@ -1660,6 +1660,10 @@
     <value>Selected</value>
     <comment>Selecionado</comment>
   </data>
+  <data name="DuplicateEntity" xml:space="preserve">
+    <value>Duplicate {0}</value>
+    <comment>Duplicar {0}</comment>
+  </data>
   <data name="Rules" xml:space="preserve">
     <value>Rules</value>
     <comment>Regulamento</comment>
@@ -1667,5 +1671,13 @@
   <data name="SendProjectsToPlayer" xml:space="preserve">
     <value>Send to Players</value>
     <comment>Enviar para Players</comment>
+  </data>
+  <data name="SubscribeEntity" xml:space="preserve">
+    <value>Subscribe {0}</value>
+    <comment>Inscrever {0}</comment>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>View</value>
+    <comment>Visualizar</comment>
   </data>
 </root>

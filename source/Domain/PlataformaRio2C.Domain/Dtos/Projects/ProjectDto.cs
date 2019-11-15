@@ -4,7 +4,7 @@
 // Created          : 11-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-14-2019
+// Last Modified On : 11-15-2019
 // ***********************************************************************
 // <copyright file="ProjectDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,6 +21,7 @@ namespace PlataformaRio2C.Domain.Dtos
     /// <summary>ProjectDto</summary>
     public class ProjectDto
     {
+        public bool IsFakeProject { get; set; }
         public Project Project { get; set; }
         public ProjectType ProjectType { get; set; }
         public SellerAttendeeOrganizationDto SellerAttendeeOrganizationDto { get; set; }

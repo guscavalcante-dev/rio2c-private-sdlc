@@ -1672,6 +1672,10 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Selecionado</value>
     <comment>Selecionado</comment>
   </data>
+  <data name="DuplicateEntity" xml:space="preserve">
+    <value>Duplicar {0}</value>
+    <comment>Duplicar {0}</comment>
+  </data>
   <data name="Rules" xml:space="preserve">
     <value>Regulamento</value>
     <comment>Regulamento</comment>
@@ -1679,5 +1683,13 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="SendProjectsToPlayer" xml:space="preserve">
     <value>Enviar para Players</value>
     <comment>Enviar para Players</comment>
+  </data>
+  <data name="SubscribeEntity" xml:space="preserve">
+    <value>Inscrever {0}</value>
+    <comment>Inscrever {0}</comment>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>Visualizar</value>
+    <comment>Visualizar</comment>
   </data>
 </root>

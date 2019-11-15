@@ -1006,6 +1006,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Duplicar {0}.
+        /// </summary>
+        public static string DuplicateEntity {
+            get {
+                return ResourceManager.GetString("DuplicateEntity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Minutagem de cada episódio.
         /// </summary>
         public static string EachEpisodePlayingTime {
@@ -3409,6 +3418,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inscrever {0}.
+        /// </summary>
+        public static string SubscribeEntity {
+            get {
+                return ResourceManager.GetString("SubscribeEntity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inscrição.
         /// </summary>
         public static string Subscription {
@@ -3747,6 +3765,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ValueStillNeeded {
             get {
                 return ResourceManager.GetString("ValueStillNeeded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visualizar.
+        /// </summary>
+        public static string View {
+            get {
+                return ResourceManager.GetString("View", resourceCulture);
             }
         }
         

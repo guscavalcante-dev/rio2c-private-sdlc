@@ -9,6 +9,7 @@
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var editionDto = ViewBag.EditionDto as EditionDto;
     var isProjectSubmissionEnded = editionDto?.IsProjectEvaluationEnded() == true;
+    var hasProjectSpace = Model.Any(m => m.IsFakeProject);
 }
 <div class="row">
     <div class="col-md-12">
@@ -77,120 +78,43 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="kt-portlet kt-portlet--height-fluid">
-                    <div class="kt-portlet__head">
-                        <div class="kt-portlet__head-label">
-                            <h3 class="kt-portlet__head-title">
-                                @Labels.Projects
-                            </h3>
-                        </div>
-                        @*<div class="kt-portlet__head-toolbar">
-                            <span>
-                                <a href="#" class="btn btn-label-brand btn-bold btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    @Labels.Genre
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right" x-placement="top-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(220px, -236px, 0px);">
-                                    <ul class="kt-nav">
-                                        <li class="kt-nav__item">
-                                            <a href="#" class="kt-nav__link">
-                                                <i class="kt-nav__link-icon flaticon2-graph-1"></i>
-                                                <span class="kt-nav__link-text">Todos</span>
-                                            </a>
-                                        </li>
-                                        <li class="kt-nav__item">
-                                            <a href="#" class="kt-nav__link">
-                                                <i class="kt-nav__link-icon flaticon2-calendar-4"></i>
-                                                <span class="kt-nav__link-text">Animação</span>
-                                            </a>
-                                        </li>
-                                        <li class="kt-nav__item">
-                                            <a href="#" class="kt-nav__link">
-                                                <i class="kt-nav__link-icon flaticon2-layers-1"></i>
-                                                <span class="kt-nav__link-text">Documentário</span>
-                                            </a>
-                                        </li>
-                                        <li class="kt-nav__item">
-                                            <a href="#" class="kt-nav__link">
-                                                <i class="kt-nav__link-icon flaticon2-calendar-4"></i>
-                                                <span class="kt-nav__link-text">Notifications</span>
-                                            </a>
-                                        </li>
-                                        <li class="kt-nav__item">
-                                            <a href="#" class="kt-nav__link">
-                                                <i class="kt-nav__link-icon flaticon2-file-1"></i>
-                                                <span class="kt-nav__link-text">Ficção</span>
-                                            </a>
-                                        </li>
-                                        <li class="kt-nav__item">
-                                            <a href="#" class="kt-nav__link">
-                                                <i class="kt-nav__link-icon flaticon2-file-1"></i>
-                                                <span class="kt-nav__link-text">Kids</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </span>
-                            &nbsp;&nbsp;
-                            <span>
-                                <a href="#" class="btn btn-label-brand btn-bold btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    @Labels.Status
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right" x-placement="top-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(220px, -236px, 0px);">
-                                    <ul class="kt-nav">
-                                        <li class="kt-nav__item">
-                                            <a href="#" class="kt-nav__link">
-                                                <i class="kt-nav__link-icon flaticon2-graph-1"></i>
-                                                <span class="kt-nav__link-text">Todos</span>
-                                            </a>
-                                        </li>
-                                        <li class="kt-nav__item">
-                                            <a href="#" class="kt-nav__link">
-                                                <i class="kt-nav__link-icon flaticon2-calendar-4"></i>
-                                                <span class="kt-nav__link-text">Em avaliação</span>
-                                            </a>
-                                        </li>
-                                        <li class="kt-nav__item">
-                                            <a href="#" class="kt-nav__link">
-                                                <i class="kt-nav__link-icon flaticon2-layers-1"></i>
-                                                <span class="kt-nav__link-text">Aceito</span>
-                                            </a>
-                                        </li>
-                                        <li class="kt-nav__item">
-                                            <a href="#" class="kt-nav__link">
-                                                <i class="kt-nav__link-icon flaticon2-calendar-4"></i>
-                                                <span class="kt-nav__link-text">Recusado</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </span>
-                        </div>*@
-                    </div>
-                    <div class="kt-portlet__body">
-                        <div class="kt-widget5">
-                            @if (Model?.Any() == true)
-                            {
-                                foreach (var projectDto in Model)
-                                {
+        @if (Model?.Any() == true)
+        {
+            foreach (var projectDto in Model)
+            {
+                var projectTitle = projectDto.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value;
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="kt-portlet kt-portlet--height-fluid">
+                            <div class="kt-portlet__body">
+                                <div class="kt-widget5">
                                     <div class="kt-widget kt-widget--project-1" style="border-bottom: 0.07rem dashed #ebedf2;">
-                                        <div class="kt-widget__head">
+                                        <div class="kt-widget__head pt-0">
                                             <div class="kt-widget__label">
                                                 @*<div class="kt-widget__media">
-                                                    <span class="kt-media kt-media--lg">
-                                                        <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, projectDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.Organization.Uid, projectDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="" style="max-width: 65px; max-height: 65px;">
-                                                    </span>
-                                                </div>*@
-                                                <div class="kt-widget__info kt-margin-t-5">
-                                                    <a @(projectDto.Project != null ? $"href=/{Url.Action("SubmittedDetails", "Projects", new { id = projectDto.Project.Uid, Area = "" })}" : string.Empty) class="kt-widget__title">
-                                                        @(projectDto.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value)
-                                                    </a>
-                                                    @*<span class="kt-widget__desc">
-                                                        @Labels.Producer: @projectDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.Organization.Name
-                                                    </span>*@
-                                                    @if (projectDto?.ProjectInterestDtos?.Any() == true)
+                                                        <span class="kt-media kt-media--lg">
+                                                            <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, projectDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.Organization.Uid, projectDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="" style="max-width: 65px; max-height: 65px;">
+                                                        </span>
+                                                    </div>*@
+                                                <div class="kt-widget__info mt-0 pl-0">
+                                                    @if (!projectDto.IsFakeProject)
                                                     {
+                                                        <a href="@Url.Action("SubmittedDetails", "Projects", new {id = projectDto.Project.Uid, Area = ""})" class="kt-widget__title">
+                                                            @projectTitle
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="kt-widget__title">
+                                                            @projectTitle
+                                                        </span>
+                                                    }
+                                                    @if (!projectDto.IsFakeProject)
+                                                    {
+                                                        <span class="kt-widget__desc">
+                                                            @Labels.Producer: @projectDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.Organization.Name
+                                                        </span>
                                                         <span class="kt-widget__desc">
                                                             @Labels.Genre:
                                                             @{
@@ -209,99 +133,131 @@
                                                 </div>
                                             </div>
                                             @*<div class="kt-portlet__head-toolbar">
-                                                <a href="#" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown">
-                                                    <i class="flaticon-more-1"></i>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right">
-                                                    <ul class="kt-nav">
-                                                        <li class="kt-nav__item">
-                                                            <a href="@Url.Action("SubmittedDetails", "Projects", new { id = projectDto.Project.Uid, Area = "" })" class="kt-nav__link">
-                                                                <i class="kt-nav__link-icon flaticon2-line-chart"></i>
-                                                                <span class="kt-nav__link-text">@Labels.Details</span>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>*@
+                                                    <a href="#" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown">
+                                                        <i class="flaticon-more-1"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right">
+                                                        <ul class="kt-nav">
+                                                            <li class="kt-nav__item">
+                                                                <a href="@Url.Action("SubmittedDetails", "Projects", new { id = projectDto.Project.Uid, Area = "" })" class="kt-nav__link">
+                                                                    <i class="kt-nav__link-icon flaticon2-line-chart"></i>
+                                                                    <span class="kt-nav__link-text">@Labels.Details</span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>*@
                                         </div>
                                         <div class="kt-widget__body pb-0">
-                                            <span class="kt-widget__text mt-0">
-                                                @(Html.Raw(projectDto.GetSummaryDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectSummary?.Value))
-                                            </span>
-                                            <div class="kt-widget__content">
-                                                <div class="kt-widget__details" style="width: 100%;">
-                                                    @if (projectDto.ProjectBuyerEvaluationDtos?.Any() == true)
-                                                    {
-                                                        <span class="kt-widget__subtitle">@Labels.PlayersToEvaluation:</span>
-                                                        <div class="row">
-                                                            <div class="col-12">
-                                                                <div class="row">
-                                                                    @foreach (var projectBuyerEvaluationDto in projectDto.ProjectBuyerEvaluationDtos)
-                                                                    {
-                                                                        <!-- begin: Player -->
-                                                                        <div class="kt-widget kt-widget--user-profile-4 col-6 col-sm-3 col-md-4 col-xl-3">
-                                                                            <div class="kt-widget__head d-block p-0">
-                                                                                <div class="kt-widget__media">
-                                                                                    @if (projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.ImageUploadDate.HasValue)
-                                                                                    {
-                                                                                        <img class="kt-widget__img" src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid, projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="" style="max-width: 45px; max-height: 45px; border: 0.07rem solid #ebedf2;">
-                                                                                    }
-                                                                                    else
-                                                                                    {
-                                                                                        <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest kt-font-light">
-                                                                                            @projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Name.GetTwoLetterCode()
-                                                                                        </div>
-                                                                                    }
-                                                                                </div>
-                                                                                <div class="kt-widget__content pt-0 d-flex flex-column">
-                                                                                    <div class="kt-widget__section mx-auto">
-                                                                                        <a href="@Url.Action("Details", "Companies", new {id = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid})" class="kt-widget__username" target="_blank">
-                                                                                            <small>@projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Name</small>
-                                                                                        </a>
-                                                                                        @if (isProjectSubmissionEnded)
+                                            @if (!projectDto.IsFakeProject)
+                                            {
+                                                <span class="kt-widget__text mt-0">
+                                                    @(Html.Raw(projectDto.GetSummaryDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectSummary?.Value))
+                                                </span>
+                                                <div class="kt-widget__content">
+                                                    <div class="kt-widget__details" style="width: 100%;">
+                                                        @if (projectDto.ProjectBuyerEvaluationDtos?.Any() == true)
+                                                        {
+                                                            <span class="kt-widget__subtitle">@Labels.PlayersToEvaluation:</span>
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <div class="row">
+                                                                        @foreach (var projectBuyerEvaluationDto in projectDto.ProjectBuyerEvaluationDtos)
+                                                                        {
+                                                                            <!-- begin: Player -->
+                                                                            <div class="kt-widget kt-widget--user-profile-4 col-6 col-sm-3 col-md-4 col-xl-3">
+                                                                                <div class="kt-widget__head d-block p-0">
+                                                                                    <div class="kt-widget__media">
+                                                                                        @if (projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.ImageUploadDate.HasValue)
                                                                                         {
-                                                                                            var color = "warning";
-                                                                                            var icon = "fa-diagnoses";
-                                                                                            if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == "Accepted")
-                                                                                            {
-                                                                                                color = "success";
-                                                                                                icon = "fa-thumbs-up";
-                                                                                            }
-                                                                                            else if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == "Rejected")
-                                                                                            {
-                                                                                                color = "danger";
-                                                                                                icon = "fa-thumbs-down";
-                                                                                            }
-                                                                                            <div class="kt-widget__button">
-                                                                                                <span class="btn btn-label-@(color) btn-sm">
-                                                                                                    <i class="fa @(icon) mr-1"></i> @(projectBuyerEvaluationDto.ProjectEvaluationStatus.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
-                                                                                                </span>
+                                                                                            <img class="kt-widget__img" src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid, projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="" style="max-width: 45px; max-height: 45px; border: 0.07rem solid #ebedf2;">
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest kt-font-light">
+                                                                                                @projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Name.GetTwoLetterCode()
                                                                                             </div>
                                                                                         }
                                                                                     </div>
+                                                                                    <div class="kt-widget__content pt-0 d-flex flex-column">
+                                                                                        <div class="kt-widget__section mx-auto">
+                                                                                            <a href="@Url.Action("Details", "Companies", new {id = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid})" class="kt-widget__username" target="_blank">
+                                                                                                <small>@projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Name</small>
+                                                                                            </a>
+                                                                                            @if (isProjectSubmissionEnded)
+                                                                                            {
+                                                                                                var color = "warning";
+                                                                                                var icon = "fa-diagnoses";
+                                                                                                if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == "Accepted")
+                                                                                                {
+                                                                                                    color = "success";
+                                                                                                    icon = "fa-thumbs-up";
+                                                                                                }
+                                                                                                else if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == "Rejected")
+                                                                                                {
+                                                                                                    color = "danger";
+                                                                                                    icon = "fa-thumbs-down";
+                                                                                                }
+                                                                                                <div class="kt-widget__button">
+                                                                                                    <span class="btn btn-label-@(color) btn-sm">
+                                                                                                        <i class="fa @(icon) mr-1"></i> @(projectBuyerEvaluationDto.ProjectEvaluationStatus.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                                                                                                    </span>
+                                                                                                </div>
+                                                                                            }
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
-                                                                        <!-- end: Player -->
-                                                                    }
+                                                                            <!-- end: Player -->
+                                                                        }
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    }
-                                                    else
-                                                    {
-                                                        <span class="kt-widget__subtitle">@Labels.ProjectNotSubmittedToPlayers.</span>
-                                                    }
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="kt-widget__subtitle">@Labels.ProjectNotSubmittedToPlayers.</span>
+                                                        }
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            }
                                         </div>
                                     </div>
-                                }
-                            }
+                                </div>
+                                <div class="row mt-20">
+                                    @if (projectDto.IsFakeProject)
+                                    {
+                                        <div class="col-4 text-center">
+                                            <a href="@Url.Action("Submit", "Projects", new {Area = ""})" class="btn btn-brand">@string.Format(Labels.SubscribeEntity, projectTitle)</a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        var isFinished = projectDto.Project.IsFinished();
+
+                                        if (hasProjectSpace)
+                                        {
+                                            <div class="col-4 text-center">
+                                                <a class="btn btn-brand" href="#" onclick="return false;" data-toggle="kt-tooltip" title="" data-placement="top" data-original-title="@Labels.ComingSoon...">@string.Format(Labels.DuplicateEntity, Labels.Project)</a>
+                                            </div>
+                                        }
+                                        <div class="col-4 text-center">
+                                            <a href="@Url.Action("SubmittedDetails", "Projects", new {id = projectDto.Project.Uid, Area = ""})" class="btn btn-brand">
+                                                @(!isFinished ? Labels.Edit : Labels.View)
+                                            </a>
+                                        </div>
+                                        <div class="col-4 text-center">
+                                            <a href="@Url.Action("SubmittedDetails", "Projects", new {id = projectDto.Project.Uid, Area = ""})" class="btn btn-brand" @(isFinished ? "disabled" : string.Empty)>
+                                                @Labels.SendProjectsToPlayer
+                                            </a>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            }
+        }
     </div>
 </div>
