@@ -247,9 +247,18 @@
                                             </a>
                                         </div>
                                         <div class="col-4 text-center">
-                                            <a href="@Url.Action("SubmittedDetails", "Projects", new {id = projectDto.Project.Uid, Area = ""})" class="btn btn-brand" @(isFinished ? "disabled" : string.Empty)>
-                                                @Labels.SendProjectsToPlayer
-                                            </a>
+                                            @if (!isFinished)
+                                            {
+                                                <a href="@Url.Action("SubmittedDetails", "Projects", new {id = projectDto.Project.Uid, Area = ""})" class="btn btn-brand">
+                                                    @Labels.SendProjectsToPlayer
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a class="btn btn-secondary disabled">
+                                                    @Labels.SendProjectsToPlayer
+                                                </a>
+                                            }
                                         </div>
                                     }
                                 </div>
