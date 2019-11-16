@@ -116,7 +116,7 @@
                                                                         @foreach (var projectBuyerEvaluationDto in projectDto.ProjectBuyerEvaluationDtos)
                                                                         {
                                                                             <!-- begin: Player -->
-                                                                            <div class="kt-widget kt-widget--user-profile-4 col-6 col-sm-3 col-md-4 col-xl-3">
+                                                                            <div class="kt-widget kt-widget--user-profile-4 col-sm-4 col-md-4 col-xl-2">
                                                                                 <div class="kt-widget__head d-block p-0">
                                                                                     <div class="kt-widget__media">
                                                                                         @if (projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.ImageUploadDate.HasValue)
@@ -125,7 +125,7 @@
                                                                                         }
                                                                                         else
                                                                                         {
-                                                                                            <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest kt-font-light">
+                                                                                            <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest kt-font-light" style="max-width: 45px; max-height: 45px;">
                                                                                                 @projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Name.GetTwoLetterCode()
                                                                                             </div>
                                                                                         }
