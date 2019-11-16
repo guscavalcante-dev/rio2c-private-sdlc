@@ -7095,7 +7095,7 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Themes\Metronic\SideMenu.cshtml" />
+    <Content Include="Views\Home\Shared\_DashboardMenu.cshtml" />
     <Content Include="Views\Projects\SubmittedList.cshtml" />
     <Content Include="Views\Projects\Review.cshtml" />
     <Content Include="Views\Projects\Shared\_ProjectInfoForm.cshtml" />
@@ -7176,7 +7176,6 @@
     <Content Include="Views\Executives\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Views\Executives\Widgets\CompanyWidget.cshtml" />
     <Content Include="Views\Shared\Widgets\DownloadsWidget.cshtml" />
-    <Content Include="Views\Themes\Metronic\_InternalLeftSidebar.cshtml" />
     <Content Include="Views\Companies\Modals\UpdateMainInformationModal.cshtml" />
     <Content Include="Views\Companies\Modals\UpdateMainInformationForm.cshtml" />
     <Content Include="Views\Companies\Modals\UpdateAddressModal.cshtml" />

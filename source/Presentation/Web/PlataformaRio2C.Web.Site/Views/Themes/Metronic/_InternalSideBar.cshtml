@@ -5,16 +5,11 @@
     @RenderSection("Head", required: false)
 }
 <div class="row">
-    @*<!--begin:Left panel-->
-    <div class="col-md-3 col-lg-3">
-        @{ Html.RenderPartial("~/Views/Themes/Metronic/SideMenu.cshtml"); }
-    </div>
-    <!--end:Left panel-->*@
-    <!--begin:Middle panel-->
+    <!--begin:Left panel-->
     <div class="col-md-9 col-lg-9">
         @RenderBody()
     </div>
-    <!--begin:Middle panel-->
+    <!--begin:Left panel-->
     <!--begin:Right panel-->
     <div class="col-md-3 col-lg-3">
         <!--begin:Projects-->
