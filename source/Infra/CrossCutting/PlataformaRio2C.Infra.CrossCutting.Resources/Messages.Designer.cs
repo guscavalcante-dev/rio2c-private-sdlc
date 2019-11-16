@@ -834,6 +834,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O projeto já atingiu o limite de {0} {1} para avaliação..
+        /// </summary>
+        public static string MaxProjectBuyersEvaluationsReached {
+            get {
+                return ResourceManager.GetString("MaxProjectBuyersEvaluationsReached", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Você não pode selecionar um novo {0} para avaliar o projeto pois todos os grupos de {1} {2} já foram utilizados..
         /// </summary>
         public static string MaxProjectBuyersGroupsReached {

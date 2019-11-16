@@ -951,9 +951,14 @@ namespace PlataformaRio2C.Domain.Entities
                 return;
             }
 
-            if (this.SellerAttendeeOrganization.ProjectsBuyerEvaluationGroupsCount > this.SellerAttendeeOrganization.GetTicketTypeBuyerEvaluationGroupMaxCount())
+            //if (this.SellerAttendeeOrganization.ProjectsBuyerEvaluationGroupsCount > this.SellerAttendeeOrganization.GetTicketTypeBuyerEvaluationGroupMaxCount())
+            //{
+            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.MaxProjectBuyersGroupsReached, Labels.Player, this.SellerAttendeeOrganization.GetTicketTypeBuyerEvaluationMaxCount(), Labels.Players), new string[] { "ToastrError" }));
+            //}
+
+            if (this.ProjectBuyerEvaluationsCount > this.SellerAttendeeOrganization.GetTicketTypeBuyerEvaluationMaxCount())
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.MaxProjectBuyersGroupsReached, Labels.Player, this.SellerAttendeeOrganization.GetTicketTypeBuyerEvaluationMaxCount(), Labels.Players), new string[] { "ToastrError" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.MaxProjectBuyersEvaluationsReached, this.SellerAttendeeOrganization.GetTicketTypeBuyerEvaluationMaxCount(), Labels.Players), new string[] { "ToastrError" }));
             }
 
             foreach (var buyerEvaluation in this.BuyerEvaluations?.Where(t => !t.IsValid())?.ToList())

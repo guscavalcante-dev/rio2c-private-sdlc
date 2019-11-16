@@ -759,4 +759,8 @@
     <value>{0} {1} {2} de um total de {3}.</value>
     <comment>{0} {1} {2} de um total de {3}.</comment>
   </data>
+  <data name="MaxProjectBuyersEvaluationsReached" xml:space="preserve">
+    <value>O projeto já atingiu o limite de {0} {1} para avaliação.</value>
+    <comment>O projeto já atingiu o limite de {0} {1} para avaliação.</comment>
+  </data>
 </root>

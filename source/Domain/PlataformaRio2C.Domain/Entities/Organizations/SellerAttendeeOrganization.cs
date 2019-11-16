@@ -226,12 +226,20 @@ namespace PlataformaRio2C.Domain.Entities
             return this.Projects?.Where(p => !p.IsDeleted)?.Sum(p => p.ProjectBuyerEvaluationGroupsCount) ?? 0;
         }
 
+        /// <summary>Recounts the projects buyer evaluations.</summary>
+        /// <returns></returns>
+        public int RecountProjectsBuyerEvaluations()
+        {
+            return this.Projects?.Where(p => !p.IsDeleted)?.Sum(p => p.ProjectBuyerEvaluationsCount) ?? 0;
+        }
+
         /// <summary>Determines whether [has projects buyer evaluations available].</summary>
         /// <returns>
         ///   <c>true</c> if [has projects buyer evaluations available]; otherwise, <c>false</c>.</returns>
         public bool HasProjectsBuyerEvaluationsAvailable()
         {
-            return this.ProjectsBuyerEvaluationGroupsCount < this.GetTicketTypeBuyerEvaluationGroupMaxCount();
+            return this.RecountProjectsBuyerEvaluations() < this.GetTicketTypeBuyerEvaluationMaxCount();  //TODO: User new count column instead of recount
+            //return this.ProjectsBuyerEvaluationGroupsCount < this.GetTicketTypeBuyerEvaluationGroupMaxCount();
         }
 
         #endregion
@@ -252,12 +260,12 @@ namespace PlataformaRio2C.Domain.Entities
             return this.AttendeeCollaboratorTicket?.AttendeeSalesPlatformTicketType?.ProjectBuyerEvaluationMaxCount ?? 0;
         }
 
-        /// <summary>Gets the ticket type buyer evaluation group maximum count.</summary>
-        /// <returns></returns>
-        public int GetTicketTypeBuyerEvaluationGroupMaxCount()
-        {
-            return this.AttendeeCollaboratorTicket?.AttendeeSalesPlatformTicketType?.ProjectBuyerEvaluationGroupMaxCount ?? 0;
-        }
+        ///// <summary>Gets the ticket type buyer evaluation group maximum count.</summary>
+        ///// <returns></returns>
+        //public int GetTicketTypeBuyerEvaluationGroupMaxCount()
+        //{
+        //    return this.AttendeeCollaboratorTicket?.AttendeeSalesPlatformTicketType?.ProjectBuyerEvaluationGroupMaxCount ?? 0;
+        //}
 
         #endregion
 
@@ -302,10 +310,15 @@ namespace PlataformaRio2C.Domain.Entities
                     this.ValidationResult.Add(new ValidationError(Messages.IsNotPossibleCreateProjectLimit, new string[] { "ToastrError" }));
                 }
 
-                if (this.ProjectsBuyerEvaluationGroupsCount > this.GetTicketTypeBuyerEvaluationGroupMaxCount())
+                if (this.RecountProjectsBuyerEvaluations() > this.GetTicketTypeBuyerEvaluationMaxCount()) //TODO: User new count column instead of recount
                 {
-                    this.ValidationResult.Add(new ValidationError(Messages.IsNotPossibleCreateProjectLimit, new string[] { "ToastrError" }));
+                    this.ValidationResult.Add(new ValidationError(string.Format(Messages.MaxProjectBuyersEvaluationsReached, this.GetTicketTypeBuyerEvaluationMaxCount(), Labels.Players), new string[] { "ToastrError" }));
                 }
+
+                //if (this.ProjectsBuyerEvaluationGroupsCount > this.GetTicketTypeBuyerEvaluationGroupMaxCount())
+                //{
+                //    this.ValidationResult.Add(new ValidationError(Messages.IsNotPossibleCreateProjectLimit, new string[] { "ToastrError" }));
+                //}
             }
         }
 
