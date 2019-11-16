@@ -1697,4 +1697,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Visualizar</value>
     <comment>Visualizar</comment>
   </data>
+  <data name="Saved" xml:space="preserve">
+    <value>Salvo</value>
+    <comment>Salvo</comment>
+  </data>
 </root>

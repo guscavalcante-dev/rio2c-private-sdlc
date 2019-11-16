@@ -67,7 +67,7 @@
                                                     <small><i class="flaticon-profile"></i> @Labels.SeeDescription</small>
                                                 </a>
                                             </span>
-                                            @if (editionDto?.IsProjectSubmitOpened() == true)
+                                            @if (editionDto?.IsProjectSubmitOpen() == true)
                                             {
                                                 <span class="kt-widget__desc">
                                                     <button type="button" class="btn btn-label-danger btn-sm btn-upper" onclick="ProjectsBuyerCompanyWidget.unselectCompany('@projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid')">@Labels.Unselect</button>

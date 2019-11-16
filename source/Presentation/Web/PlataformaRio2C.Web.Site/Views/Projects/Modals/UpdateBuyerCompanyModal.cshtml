@@ -1,9 +1,10 @@
-﻿<div class="modal fade" id="UpdateBuyerCompanyModal" role="dialog" aria-labelledby="UpdateBuyerCompanyModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+﻿@model PlataformaRio2C.Domain.Dtos.ProjectDto
+<div class="modal fade" id="UpdateBuyerCompanyModal" role="dialog" aria-labelledby="UpdateBuyerCompanyModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">
-                    @(Labels.Select + " " + Labels.Players)
+                    @Labels.SendProjectsToPlayer
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -14,6 +15,12 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">@Labels.Close</button>
+                @if (!Model.Project.IsFinished())
+                {
+                    <span class="kt-widget__desc">
+                        <button type="button" class="btn btn-brand" onclick="ProjectsBuyerCompanyWidget.showFinishModal();">@Labels.SendToPlayers</button>
+                    </span>
+                }
             </div>
         </div>
     </div>

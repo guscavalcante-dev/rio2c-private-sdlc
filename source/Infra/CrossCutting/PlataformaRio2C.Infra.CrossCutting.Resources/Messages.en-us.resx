@@ -759,4 +759,8 @@ Youtube and Vimeo.</value>
     <value>The project already reached the limit of {0} {0} for evaluation.</value>
     <comment>O projeto já atingiu o limite de {0} {1} para avaliação.</comment>
   </data>
+  <data name="ProjectSubmissionNotOpen" xml:space="preserve">
+    <value>Subscription period is not open.</value>
+    <comment>O período de inscrição não está aberto.</comment>
+  </data>
 </root>

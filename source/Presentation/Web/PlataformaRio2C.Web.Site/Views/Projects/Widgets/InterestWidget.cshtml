@@ -7,7 +7,7 @@
     var groupedInterests = ViewBag.GroupedInterests as List<IGrouping<InterestGroup, Interest>>;
     var targetAudiences = ViewBag.TargetAudiences as List<TargetAudience>;
     var isCollaborator = userAccessControlDto?.HasEditionAttendeeOrganization(Model.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid) == true;
-    var isProjectSubmissionOpen = editionDto?.IsProjectSubmitOpened() == true;
+    var isProjectSubmissionOpen = editionDto?.IsProjectSubmitOpen() == true;
     var isProjectFinished = Model.Project.IsFinished();
 }
 <div class="kt-portlet__head">

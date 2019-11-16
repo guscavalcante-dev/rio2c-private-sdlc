@@ -7105,6 +7105,7 @@
     <Content Include="Views\Projects\EditorTemplates\ProjectProductionPlanBaseCommand.cshtml" />
     <Content Include="Views\Projects\EditorTemplates\ProjectAdditionalInformationBaseCommand.cshtml" />
     <Content Include="Views\Projects\SubmittedDetails.cshtml" />
+    <Content Include="Views\Projects\SendToPlayers.cshtml" />
     <None Include="Views\Projects\Index.cshtml.old" />
     <Content Include="Views\Projects\Modals\UpdateMainInformationModal.cshtml" />
     <Content Include="Views\Projects\Modals\UpdateMainInformationForm.cshtml" />

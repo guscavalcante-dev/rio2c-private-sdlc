@@ -70,8 +70,10 @@
         // Page translations ----------------------------------------------------------------------
         var translations = {
             finishModalTitle: '@Labels.Finish @Labels.Project',
-            finishModalMessage: '@Texts.FinishProjectConfirmationText',
-            confirm: '@Labels.ToConfirm'
+            finishModalMessage: '@Html.Raw(Texts.FinishProjectConfirmationText)',
+            finishPendingModalMessage: '@Html.Raw(string.Format(Texts.FinishProjectPendingConfirmationText, "{0}", "{1}", Labels.Players))',
+            player: '@Labels.Player',
+            players: '@Labels.Players'
         };
 
         jQuery(document).ready(function () {

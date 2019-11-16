@@ -1275,6 +1275,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O período de inscrição não está aberto..
+        /// </summary>
+        public static string ProjectSubmissionNotOpen {
+            get {
+                return ResourceManager.GetString("ProjectSubmissionNotOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Projeto criado com sucesso!.
         /// </summary>
         public static string ProjectSuccessfullyCreated {

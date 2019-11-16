@@ -72,6 +72,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
         }
 
+        #region Schedule
+
         /// <summary>Indexes this instance.</summary>
         /// <returns></returns>
         [HttpGet]
@@ -101,6 +103,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
             return View();
         }
 
+        #endregion
+
         #region Industry
 
         #region Submitted List
@@ -127,6 +131,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 this.UserAccessControlDto?.GetFirstAttendeeOrganizationCreated()?.Uid ?? Guid.Empty,
                 false);
 
+            // Create fake projects in the list
             var projectMaxCount = this.UserAccessControlDto?.EditionAttendeeCollaboratorTickets?.FirstOrDefault()?.GetProjectMaxCount() ?? 0;
             if (projects.Count < projectMaxCount)
             {
@@ -154,7 +159,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #endregion
 
-        #region Submitted details
+        #region Submitted Details
 
         /// <summary>Submitteds the details.</summary>
         /// <param name="id">The identifier.</param>
@@ -238,7 +243,12 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
 
-                if (this.EditionDto?.IsProjectSubmitOpened() != true || mainInformationWidgetDto.Project.IsFinished())
+                if (this.EditionDto?.IsProjectSubmitOpen() != true)
+                {
+                    throw new DomainException(Messages.ProjectSubmissionNotOpen);
+                }
+
+                if (mainInformationWidgetDto.Project.IsFinished())
                 {
                     throw new DomainException(Messages.ProjectIsFinishedCannotBeUpdated);
                 }
@@ -325,60 +335,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #endregion
 
-        #region Finish
-
-        /// <summary>Finishes the project.</summary>
-        /// <param name="cmd">The command.</param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> Finish(FinishProject cmd)
-        {
-            var result = new AppValidationResult();
-
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-
-                cmd.UpdatePreSendProperties(
-                    this.UserAccessControlDto.User.Id,
-                    this.UserAccessControlDto.User.Uid,
-                    this.EditionDto.Id,
-                    this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
-                result = await this.CommandBus.Send(cmd);
-                if (!result.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-            }
-            catch (DomainException ex)
-            {
-                foreach (var error in result.Errors)
-                {
-                    var target = error.Target ?? "";
-                    ModelState.AddModelError(target, error.Message);
-                }
-                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
-
-                //cmd.UpdateModelsAndLists(
-                //    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
-
-                return Json(new { status = "error", message = toastrError?.Message ?? ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.UpdatedM) });
-        }
-
-        #endregion
-
         #endregion
 
         #region Interest Widget
@@ -436,7 +392,12 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
 
-                if (this.EditionDto?.IsProjectSubmitOpened() != true || interestWidgetDto.Project.IsFinished())
+                if (this.EditionDto?.IsProjectSubmitOpen() != true)
+                {
+                    throw new DomainException(Messages.ProjectSubmissionNotOpen);
+                }
+
+                if (interestWidgetDto.Project.IsFinished())
                 {
                     throw new DomainException(Messages.ProjectIsFinishedCannotBeUpdated);
                 }
@@ -561,9 +522,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUpdateBuyerCompanyModal(Guid? projectUid)
         {
+            ProjectDto buyerCompanyWidgetDto = null;
+
             try
             {
-                var buyerCompanyWidgetDto = await this.projectRepo.FindSiteBuyerCompanyWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
+                buyerCompanyWidgetDto = await this.projectRepo.FindSiteBuyerCompanyWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
                 if (buyerCompanyWidgetDto == null)
                 {
                     return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
@@ -574,7 +537,12 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
 
-                if (this.EditionDto?.IsProjectSubmitOpened() != true || buyerCompanyWidgetDto.Project.IsFinished())
+                if (this.EditionDto?.IsProjectSubmitOpen() != true)
+                {
+                    throw new DomainException(Messages.ProjectSubmissionNotOpen);
+                }
+
+                if (buyerCompanyWidgetDto.Project.IsFinished())
                 {
                     throw new DomainException(Messages.ProjectIsFinishedCannotBeUpdated);
                 }
@@ -589,10 +557,547 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Modals/UpdateBuyerCompanyModal", null), divIdOrClass = "#GlobalModalContainer" },
+                    new { page = this.RenderRazorViewToString("Modals/UpdateBuyerCompanyModal", buyerCompanyWidgetDto), divIdOrClass = "#GlobalModalContainer" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
+
+        #endregion
+
+        #endregion
+
+        #endregion
+
+        #region Submit
+
+        /// <summary>Submits this instance.</summary>
+        /// <returns></returns>
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.Industry)]
+        public async Task<ActionResult> Submit()
+        {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ProjectInfo, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
+                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "Projects", new { Area = "" }))
+            });
+
+            #endregion
+
+            if (this.EditionDto?.IsProjectSubmitOpen() != true)
+            {
+                this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Projects");
+            }
+
+            if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true)
+            {
+                return RedirectToAction("CompanyInfo", "Projects");
+            }
+
+            if (this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() == true)
+            {
+                return RedirectToAction("TermsAcceptance", "Projects");
+            }
+
+            // Check if player submitted the max number of projects
+            var firstAttendeeOrganizationCreated = this.UserAccessControlDto.GetFirstAttendeeOrganizationCreated();
+            if (firstAttendeeOrganizationCreated != null)
+            {
+                var projectsCount = this.projectRepo.Count(p => p.SellerAttendeeOrganization.AttendeeOrganization.Uid == firstAttendeeOrganizationCreated.Uid 
+                                                                && !p.IsDeleted);
+                var projectMaxCount = this.UserAccessControlDto?.EditionAttendeeCollaboratorTickets?.FirstOrDefault()?.GetProjectMaxCount() ?? 0;
+                if (projectsCount >= projectMaxCount)
+                {
+                    this.StatusMessageToastr(Messages.YouReachedProjectsLimit, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                    return RedirectToAction("SubmittedList", "Projects");
+                }
+            }
+
+            var cmd = new CreateProject(
+                await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
+                await this.activityRepo.FindAllAsync(),
+                await this.targetAudienceRepo.FindAllAsync(),
+                await this.interestRepo.FindAllGroupedByInterestGroupsAsync(),
+                true,
+                false,
+                false);
+
+            return View(cmd);
+        }
+
+        /// <summary>Submits the specified create project.</summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> Submit(CreateProject cmd)
+        {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ProjectInfo, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
+                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "Projects", new { Area = "" }))
+            });
+
+            #endregion
+
+            if (this.EditionDto?.IsProjectSubmitOpen() != true)
+            {
+                this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Projects");
+            }
+
+            if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
+                || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() == true)
+            {
+                return RedirectToAction("Submit", "Projects");
+            }
+
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.UserAccessControlDto.GetFirstAttendeeOrganizationCreated()?.Uid, //TODO: Change this
+                    ProjectType.Audiovisual.Uid,
+                    this.UserAccessControlDto?.EditionAttendeeCollaboratorTickets?.Select(eact => eact.AttendeeCollaboratorTicket.Uid)?.ToList(),
+                    this.UserAccessControlDto.User.Id,
+                    this.UserAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
+
+                this.StatusMessageToastr(toastrError?.Message ?? ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+
+                cmd.UpdateDropdownProperties(
+                    await this.activityRepo.FindAllAsync(),
+                    await this.targetAudienceRepo.FindAllAsync(),
+                    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
+
+                return View(cmd);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+
+                cmd.UpdateDropdownProperties(
+                    await this.activityRepo.FindAllAsync(),
+                    await this.targetAudienceRepo.FindAllAsync(),
+                    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
+
+                return View(cmd);
+            }
+
+            this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.CreatedM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
+
+            try
+            {
+                var project = result.Data as Project;
+                if (project != null)
+                {
+                    return RedirectToAction("SendToPlayers", "Projects", new { id = project.Uid });
+                }
+            }
+            catch
+            {
+                // ignored
+            }
+
+            return RedirectToAction("Index", "Projects");
+        }
+
+        #endregion
+
+        #region Producer Info
+
+        /// <summary>Companies the information.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> CompanyInfo()
+        {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CompanyInfo, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
+                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "Projects", new { Area = "" }))
+            });
+
+            #endregion
+
+            if (this.EditionDto?.IsProjectSubmitOpen() != true)
+            {
+                this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Projects");
+            }
+
+            if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() != true)
+            {
+                return RedirectToAction("Submit", "Projects");
+            }
+
+            //this.SetViewBags();
+
+            var currentOrganization = this.UserAccessControlDto?.EditionAttendeeOrganizations?.FirstOrDefault(eao => !eao.ProjectSubmissionOrganizationDate.HasValue)?.Organization;
+
+            var cmd = new OnboardProducerOrganizationData(
+                currentOrganization != null ? await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(currentOrganization.Uid, this.EditionDto.Id, this.UserInterfaceLanguage)) : null,
+                await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
+                await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
+                await this.activityRepo.FindAllAsync(),
+                await this.targetAudienceRepo.FindAllAsync(),
+                true,
+                true,
+                true);
+
+            return View(cmd);
+        }
+
+        /// <summary>Companies the information.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> CompanyInfo(OnboardProducerOrganizationData cmd)
+        {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CompanyInfo, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
+                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "Projects", new { Area = "" }))
+            });
+
+            #endregion
+
+            if (this.EditionDto?.IsProjectSubmitOpen() != true)
+            {
+                this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Projects");
+            }
+
+            if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() != true)
+            {
+                return RedirectToAction("Submit", "Projects");
+            }
+
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.UserAccessControlDto.User.Id,
+                    this.UserAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
+
+                this.StatusMessageToastr(toastrError?.Message ?? ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+
+                cmd.UpdateDropdownProperties(
+                    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
+                    await this.targetAudienceRepo.FindAllAsync());
+
+                return View(cmd);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+
+                cmd.UpdateDropdownProperties(
+                    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
+                    await this.targetAudienceRepo.FindAllAsync());
+
+                return View(cmd);
+            }
+
+            this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Labels.Company, Labels.UpdatedF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
+
+            return RedirectToAction("Submit", "Projects");
+        }
+
+        #endregion
+
+        #region Producer Terms Acceptance
+
+        /// <summary>Termses the acceptance.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> TermsAcceptance()
+        {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ParticipantsTerms, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
+                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "Projects", new { Area = "" }))
+            });
+
+            #endregion
+
+            if (this.EditionDto?.IsProjectSubmitOpen() != true)
+            {
+                this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Projects");
+            }
+
+            if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
+                || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() != true)
+            {
+                return RedirectToAction("Submit", "Projects");
+            }
+
+            var cmd = new OnboardProducerTermsAcceptance();
+
+            return View(cmd);
+        }
+
+        /// <summary>Termses the acceptance.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> TermsAcceptance(OnboardProducerTermsAcceptance cmd)
+        {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ParticipantsTerms, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
+                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "Projects", new { Area = "" }))
+            });
+
+            #endregion
+
+            if (this.EditionDto?.IsProjectSubmitOpen() != true)
+            {
+                this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Projects");
+            }
+
+            if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
+                || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() != true)
+            {
+                return RedirectToAction("Submit", "Projects");
+            }
+
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.UserAccessControlDto.Collaborator.Uid,
+                    this.UserAccessControlDto.User.Id,
+                    this.UserAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
+
+                this.StatusMessageToastr(toastrError?.Message ?? ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+
+                return View(cmd);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+
+                return View(cmd);
+            }
+
+            this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Labels.ParticipantsTerms, Labels.Accepted.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
+
+            return RedirectToAction("Submit", "Projects");
+        }
+
+        #endregion
+
+        #region Send to Players
+
+        /// <summary>Sends to players.</summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> SendToPlayers(Guid? id)
+        {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ParticipantsTerms, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
+                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "Projects", new { Area = "" }))
+            });
+
+            #endregion
+
+            if (this.EditionDto?.IsProjectSubmitOpen() != true)
+            {
+                this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Projects");
+            }
+
+            if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
+                || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() == true)
+            {
+                return RedirectToAction("Submit", "Projects");
+            }
+
+            var buyerCompanyWidgetDto = await this.projectRepo.FindSiteBuyerCompanyWidgetDtoByProjectUidAsync(id ?? Guid.Empty);
+            if (buyerCompanyWidgetDto == null)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("SubmittedList", "Projects");
+            }
+
+            if (buyerCompanyWidgetDto.Project.IsFinished())
+            {
+                this.StatusMessageToastr(Messages.ProjectIsFinishedCannotBeUpdated, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("SubmittedList", "Projects");
+            }
+
+            return View(buyerCompanyWidgetDto);
+        }
+
+        /// <summary>Saves the specified identifier.</summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> Save(Guid? id)
+        {
+            if (!id.HasValue)
+            {
+                return RedirectToAction("SubmittedList", "Projects");
+            }
+
+            this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.Saved.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
+            return RedirectToAction("SubmittedDetails", "Projects", new { id });
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> SendToPlayers(OnboardProducerTermsAcceptance cmd)
+        {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ParticipantsTerms, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
+                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "Projects", new { Area = "" }))
+            });
+
+            #endregion
+
+            if (this.EditionDto?.IsProjectSubmitOpen() != true)
+            {
+                this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Projects");
+            }
+
+            if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
+                || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() != true)
+            {
+                return RedirectToAction("Submit", "Projects");
+            }
+
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.UserAccessControlDto.Collaborator.Uid,
+                    this.UserAccessControlDto.User.Id,
+                    this.UserAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
+
+                this.StatusMessageToastr(toastrError?.Message ?? ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+
+                return View(cmd);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+
+                return View(cmd);
+            }
+
+            this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Labels.ParticipantsTerms, Labels.Accepted.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
+
+            return RedirectToAction("Submit", "Projects");
+        }
+
+        #region Shared (project creation and details)
 
         /// <summary>Shows the buyer company selected widget.</summary>
         /// <param name="projectUid">The project uid.</param>
@@ -791,234 +1296,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #endregion
 
-        #endregion
+        #region Finish
 
-        #region Submit
-
-        /// <summary>Submits this instance.</summary>
-        /// <returns></returns>
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.Industry)]
-        public async Task<ActionResult> Submit()
-        {
-            #region Breadcrumb
-
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ProjectInfo, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
-                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "Projects", new { Area = "" }))
-            });
-
-            #endregion
-
-            if (this.EditionDto?.IsProjectSubmitOpened() != true)
-            {
-                return RedirectToAction("Index", "Projects");
-            }
-
-            if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true)
-            {
-                return RedirectToAction("CompanyInfo", "Projects");
-            }
-
-            if (this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() == true)
-            {
-                return RedirectToAction("TermsAcceptance", "Projects");
-            }
-
-            // Check if player submitted the max number of projects
-            var firstAttendeeOrganizationCreated = this.UserAccessControlDto.GetFirstAttendeeOrganizationCreated();
-            if (firstAttendeeOrganizationCreated != null)
-            {
-                var projectsCount = this.projectRepo.Count(p => p.SellerAttendeeOrganization.AttendeeOrganization.Uid == firstAttendeeOrganizationCreated.Uid 
-                                                                && !p.IsDeleted);
-                var projectMaxCount = this.UserAccessControlDto?.EditionAttendeeCollaboratorTickets?.FirstOrDefault()?.GetProjectMaxCount() ?? 0;
-                if (projectsCount >= projectMaxCount)
-                {
-                    this.StatusMessageToastr(Messages.YouReachedProjectsLimit, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                    return RedirectToAction("SubmittedList", "Projects");
-                }
-            }
-
-            var cmd = new CreateProject(
-                await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
-                await this.activityRepo.FindAllAsync(),
-                await this.targetAudienceRepo.FindAllAsync(),
-                await this.interestRepo.FindAllGroupedByInterestGroupsAsync(),
-                true,
-                false,
-                false);
-
-            return View(cmd);
-        }
-
-        /// <summary>Submits the specified create project.</summary>
-        /// <param name="cmd"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> Submit(CreateProject cmd)
-        {
-            #region Breadcrumb
-
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ProjectInfo, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
-                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "Projects", new { Area = "" }))
-            });
-
-            #endregion
-
-            if (this.EditionDto?.IsProjectSubmitOpened() != true)
-            {
-                return RedirectToAction("Index", "Projects");
-            }
-
-            if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
-                || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() == true)
-            {
-                return RedirectToAction("Submit", "Projects");
-            }
-
-            var result = new AppValidationResult();
-
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-
-                cmd.UpdatePreSendProperties(
-                    this.UserAccessControlDto.GetFirstAttendeeOrganizationCreated()?.Uid, //TODO: Change this
-                    ProjectType.Audiovisual.Uid,
-                    this.UserAccessControlDto?.EditionAttendeeCollaboratorTickets?.Select(eact => eact.AttendeeCollaboratorTicket.Uid)?.ToList(),
-                    this.UserAccessControlDto.User.Id,
-                    this.UserAccessControlDto.User.Uid,
-                    this.EditionDto.Id,
-                    this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
-                result = await this.CommandBus.Send(cmd);
-                if (!result.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-            }
-            catch (DomainException ex)
-            {
-                foreach (var error in result.Errors)
-                {
-                    var target = error.Target ?? "";
-                    ModelState.AddModelError(target, error.Message);
-                }
-                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
-
-                this.StatusMessageToastr(toastrError?.Message ?? ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-
-                cmd.UpdateDropdownProperties(
-                    await this.activityRepo.FindAllAsync(),
-                    await this.targetAudienceRepo.FindAllAsync(),
-                    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
-
-                return View(cmd);
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-
-                cmd.UpdateDropdownProperties(
-                    await this.activityRepo.FindAllAsync(),
-                    await this.targetAudienceRepo.FindAllAsync(),
-                    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
-
-                return View(cmd);
-            }
-
-            this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.CreatedM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
-
-            try
-            {
-                var project = result.Data as Project;
-                if (project != null)
-                {
-                    return RedirectToAction("SubmittedDetails", "Projects", new { id = project.Uid });
-                }
-            }
-            catch
-            {
-                // ignored
-            }
-
-            return RedirectToAction("Index", "Projects");
-        }
-
-        #endregion
-
-        #region Producer Info
-
-        /// <summary>Companies the information.</summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> CompanyInfo()
-        {
-            #region Breadcrumb
-
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CompanyInfo, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
-                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "Projects", new { Area = "" }))
-            });
-
-            #endregion
-
-            if (this.EditionDto?.IsProjectSubmitOpened() != true)
-            {
-                return RedirectToAction("Index", "Projects");
-            }
-
-            if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() != true)
-            {
-                return RedirectToAction("Submit", "Projects");
-            }
-
-            //this.SetViewBags();
-
-            var currentOrganization = this.UserAccessControlDto?.EditionAttendeeOrganizations?.FirstOrDefault(eao => !eao.ProjectSubmissionOrganizationDate.HasValue)?.Organization;
-
-            var cmd = new OnboardProducerOrganizationData(
-                currentOrganization != null ? await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(currentOrganization.Uid, this.EditionDto.Id, this.UserInterfaceLanguage)) : null,
-                await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
-                await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                await this.activityRepo.FindAllAsync(),
-                await this.targetAudienceRepo.FindAllAsync(),
-                true,
-                true,
-                true);
-
-            return View(cmd);
-        }
-
-        /// <summary>Companies the information.</summary>
+        /// <summary>Finishes the project.</summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> CompanyInfo(OnboardProducerOrganizationData cmd)
+        public async Task<ActionResult> Finish(FinishProject cmd)
         {
-            #region Breadcrumb
-
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CompanyInfo, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
-                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "Projects", new { Area = "" }))
-            });
-
-            #endregion
-
-            if (this.EditionDto?.IsProjectSubmitOpened() != true)
-            {
-                return RedirectToAction("Index", "Projects");
-            }
-
-            if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() != true)
-            {
-                return RedirectToAction("Submit", "Projects");
-            }
-
             var result = new AppValidationResult();
 
             try
@@ -1049,137 +1334,18 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 }
                 var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
 
-                this.StatusMessageToastr(toastrError?.Message ?? ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                //cmd.UpdateModelsAndLists(
+                //    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
 
-                cmd.UpdateDropdownProperties(
-                    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                    await this.targetAudienceRepo.FindAllAsync());
-
-                return View(cmd);
+                return Json(new { status = "error", message = toastrError?.Message ?? ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-
-                cmd.UpdateDropdownProperties(
-                    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                    await this.targetAudienceRepo.FindAllAsync());
-
-                return View(cmd);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Labels.Company, Labels.UpdatedF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
-
-            return RedirectToAction("Submit", "Projects");
-        }
-
-        #endregion
-
-        #region Producer Terms Acceptance
-
-        /// <summary>Termses the acceptance.</summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> TermsAcceptance()
-        {
-            #region Breadcrumb
-
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ParticipantsTerms, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
-                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "Projects", new { Area = "" }))
-            });
-
-            #endregion
-
-            if (this.EditionDto?.IsProjectSubmitOpened() != true)
-            {
-                return RedirectToAction("Index", "Projects");
-            }
-
-            if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
-                || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() != true)
-            {
-                return RedirectToAction("Submit", "Projects");
-            }
-
-            var cmd = new OnboardProducerTermsAcceptance();
-
-            return View(cmd);
-        }
-
-        /// <summary>Termses the acceptance.</summary>
-        /// <param name="cmd">The command.</param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> TermsAcceptance(OnboardProducerTermsAcceptance cmd)
-        {
-            #region Breadcrumb
-
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ParticipantsTerms, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
-                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "Projects", new { Area = "" }))
-            });
-
-            #endregion
-
-            if (this.EditionDto?.IsProjectSubmitOpened() != true)
-            {
-                return RedirectToAction("Index", "Projects");
-            }
-
-            if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
-                || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() != true)
-            {
-                return RedirectToAction("Submit", "Projects");
-            }
-
-            var result = new AppValidationResult();
-
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-
-                cmd.UpdatePreSendProperties(
-                    this.UserAccessControlDto.Collaborator.Uid,
-                    this.UserAccessControlDto.User.Id,
-                    this.UserAccessControlDto.User.Uid,
-                    this.EditionDto.Id,
-                    this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
-                result = await this.CommandBus.Send(cmd);
-                if (!result.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-            }
-            catch (DomainException ex)
-            {
-                foreach (var error in result.Errors)
-                {
-                    var target = error.Target ?? "";
-                    ModelState.AddModelError(target, error.Message);
-                }
-                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
-
-                this.StatusMessageToastr(toastrError?.Message ?? ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-
-                return View(cmd);
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-
-                return View(cmd);
-            }
-
-            this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Labels.ParticipantsTerms, Labels.Accepted.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
-
-            return RedirectToAction("Submit", "Projects");
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.UpdatedM) });
         }
 
         #endregion

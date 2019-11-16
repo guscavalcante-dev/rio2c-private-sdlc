@@ -4,7 +4,7 @@
 // Created          : 08-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-24-2019
+// Last Modified On : 11-16-2019
 // ***********************************************************************
 // <copyright file="EditionDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -93,10 +93,10 @@ namespace PlataformaRio2C.Domain.Dtos
 
         #region Project Submit
 
-        /// <summary>Determines whether [is project submit opened].</summary>
+        /// <summary>Determines whether [is project submit open].</summary>
         /// <returns>
-        ///   <c>true</c> if [is project submit opened]; otherwise, <c>false</c>.</returns>
-        public bool IsProjectSubmitOpened()
+        ///   <c>true</c> if [is project submit open]; otherwise, <c>false</c>.</returns>
+        public bool IsProjectSubmitOpen()
         {
             return DateTime.Now >= this.ProjectSubmitStartDate && DateTime.Now <= this.ProjectSubmitEndDate;
         }

@@ -387,7 +387,11 @@ CNPJ: 26.079.220/0001-46. Any unauthorized use of the names or their variations 
     <comment>Para sua conveniência, os projetos podem ser salvos e modificados antes do envio final. Caso o projeto não seja enviado até o dia &lt;span class="kt-font-danger font-weight-bold"&gt;{0}&lt;/span&gt; será automaticamente excluído. Uma vez finalizados e enviados para os players, os projetos &lt;span class="font-weight-bold"&gt;NÃO PODEM SER ALTERADOS&lt;/span&gt;.</comment>
   </data>
   <data name="FinishProjectConfirmationText" xml:space="preserve">
-    <value>The project will be finished, sent to Players for evaluation and cannot be updated anymore. Do you confirm?</value>
-    <comment>O projeto será concluído, enviado para avaliação dos Players e não poderá ser mais alterado. Você confirma?</comment>
+    <value>The project will be finished, sent to Players for evaluation and cannot be updated anymore.&lt;br /&gt;&lt;br /&gt;Do you confirm?</value>
+    <comment>O projeto será concluído, enviado para avaliação dos Players e não poderá ser mais alterado.&lt;br /&gt;&lt;br /&gt;Você confirma?</comment>
+  </data>
+  <data name="FinishProjectPendingConfirmationText" xml:space="preserve">
+    <value>You can still submit this project to &lt;span class="font-weight-bold"&gt;{0} {1}&lt;/span&gt;.&lt;br /&gt;&lt;br /&gt;If you send this project now, you\'ll no longer be able to change it or send to other {2}.&lt;br /&gt;&lt;br /&gt;Are you sure you want to save it and submit it anyway?</value>
+    <comment>Você ainda pode submeter esse projeto para &lt;span class="font-weight-bold"&gt;{0} {1}&lt;/span&gt;.&lt;br /&gt;&lt;br /&gt;Se você enviar agora, não poderá mais alterar o projeto ou enviar para outros {2}.&lt;br /&gt;&lt;br /&gt;Tem certeza de que deseja finalizar e enviar?</comment>
   </data>
 </root>

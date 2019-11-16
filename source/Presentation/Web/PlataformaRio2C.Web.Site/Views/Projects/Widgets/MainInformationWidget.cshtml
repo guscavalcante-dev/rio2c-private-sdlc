@@ -6,7 +6,7 @@
     var editionDto = ViewBag.EditionDto as EditionDto;
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var isCollaborator = userAccessControlDto?.HasEditionAttendeeOrganization(Model.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid) == true;
-    var isProjectSubmissionOpen = editionDto?.IsProjectSubmitOpened() == true;
+    var isProjectSubmissionOpen = editionDto?.IsProjectSubmitOpen() == true;
     var isProjectFinished = Model.Project.IsFinished();
 }
 <div class="kt-portlet__body">
@@ -60,14 +60,6 @@
                         <div class="kt-widget__desc" style="word-wrap: break-word;">
                             @(Html.Raw(logLineDto.ProjectLogLine?.Value?.Replace("\n", "<br/>") ?? "-"))
                         </div>
-                    }
-                </div>
-                <div class="kt-widget__subhead text-right">
-                    @if (isCollaborator && isProjectSubmissionOpen && !isProjectFinished)
-                    {
-                        <span class="kt-widget__desc">
-                            <button type="button" class="btn btn-label-info btn-sm btn-upper" onclick="ProjectsMainInformationWidget.showFinishModal();">@Labels.Finish @Labels.Project</button>
-                        </span>
                     }
                 </div>
             </div>

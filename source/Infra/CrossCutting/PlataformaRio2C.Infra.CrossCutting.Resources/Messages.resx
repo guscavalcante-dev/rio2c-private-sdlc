@@ -763,4 +763,8 @@
     <value>O projeto já atingiu o limite de {0} {1} para avaliação.</value>
     <comment>O projeto já atingiu o limite de {0} {1} para avaliação.</comment>
   </data>
+  <data name="ProjectSubmissionNotOpen" xml:space="preserve">
+    <value>O período de inscrição não está aberto.</value>
+    <comment>O período de inscrição não está aberto.</comment>
+  </data>
 </root>

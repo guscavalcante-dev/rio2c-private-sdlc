@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-15-2019
+// Last Modified On : 11-16-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -266,6 +266,9 @@ namespace PlataformaRio2C.Web.Site
 
             bundles.Add(new ScriptBundle("~/bundles/js/projects.projectinfo.js").Include(
                 "~/Assets/js/projects/projects.projectinfo.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/projects.buyercompany.widget.js").Include(
+                "~/Assets/js/projects/projects.buyercompany.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/projects.widget.js").Include(
                 "~/Assets/js/projects/projects.maininformation.widget.js",

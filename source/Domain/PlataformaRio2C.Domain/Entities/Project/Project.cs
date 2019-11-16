@@ -970,7 +970,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Validates the required buyer evaluations.</summary>
         public void ValidateRequiredBuyerEvaluations()
         {
-            if (this.BuyerEvaluations?.Any() != true)
+            if (this.ProjectBuyerEvaluationsCount == 0)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheProjectMustHaveOnePlayer, Labels.Player), new string[] { "ToastrError" }));
             }

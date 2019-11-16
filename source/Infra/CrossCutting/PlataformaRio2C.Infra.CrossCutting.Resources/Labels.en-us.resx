@@ -1685,4 +1685,8 @@
     <value>View</value>
     <comment>Visualizar</comment>
   </data>
+  <data name="Saved" xml:space="preserve">
+    <value>Saved</value>
+    <comment>Salvo</comment>
+  </data>
 </root>

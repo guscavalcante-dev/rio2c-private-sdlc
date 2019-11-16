@@ -230,11 +230,20 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O projeto será concluído, enviado para avaliação dos Players e não poderá ser mais alterado. Você confirma?.
+        ///   Looks up a localized string similar to O projeto será concluído, enviado para avaliação dos Players e não poderá ser mais alterado.&lt;br /&gt;&lt;br /&gt;Você confirma?.
         /// </summary>
         public static string FinishProjectConfirmationText {
             get {
                 return ResourceManager.GetString("FinishProjectConfirmationText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Você ainda pode submeter esse projeto para &lt;span class=&quot;font-weight-bold&quot;&gt;{0} {1}&lt;/span&gt;.&lt;br /&gt;&lt;br /&gt;Se você enviar agora, não poderá mais alterar o projeto ou enviar para outros {2}.&lt;br /&gt;&lt;br /&gt;Tem certeza de que deseja finalizar e enviar?.
+        /// </summary>
+        public static string FinishProjectPendingConfirmationText {
+            get {
+                return ResourceManager.GetString("FinishProjectPendingConfirmationText", resourceCulture);
             }
         }
         

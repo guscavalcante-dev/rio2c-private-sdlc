@@ -158,6 +158,11 @@ a.r2c-login__footer-link, a.r2c-footer-link {
     overflow: hidden !important;
 }
 
+.modal-bg-red .modal-content, .modal-bg-red .modal-content .modal-title {
+    color: #fff !important;
+    background-color: #fc0758 !important;
+}
+
 
 /*
     Form
