@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-31-2019
+// Last Modified On : 11-16-2019
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
 {
@@ -233,6 +234,61 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             }
 
             return list;
+        }
+
+        /// <summary>Determines whether this instance is image.</summary>
+        /// <param name="s">The s.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified s is image; otherwise, <c>false</c>.</returns>
+        public static bool IsImage(this string s)
+        {
+            return !string.IsNullOrEmpty(s)
+                   && (s.ToLowerInvariant().EndsWith(".jpg")
+                       || s.ToLowerInvariant().EndsWith(".jpeg")
+                       || s.ToLowerInvariant().EndsWith(".png")
+                       || s.ToLowerInvariant().EndsWith(".gif"));
+        }
+
+        /// <summary>Determines whether [is vimeo video].</summary>
+        /// <param name="s">The s.</param>
+        /// <returns>
+        ///   <c>true</c> if [is vimeo video] [the specified s]; otherwise, <c>false</c>.</returns>
+        public static bool IsVimeoVideo(this string s)
+        {
+            return !string.IsNullOrEmpty(s)
+                   && s.ToLowerInvariant().Contains("vimeo.com");
+        }
+
+        /// <summary>Determines whether [is youtube video].</summary>
+        /// <param name="s">The s.</param>
+        /// <returns>
+        ///   <c>true</c> if [is youtube video] [the specified s]; otherwise, <c>false</c>.</returns>
+        public static bool IsYoutubeVideo(this string s)
+        {
+            return !string.IsNullOrEmpty(s)
+                   && s.ToLowerInvariant().Contains("youtube.com");
+        }
+
+        /// <summary>Converts the video to embed.</summary>
+        /// <param name="s">The s.</param>
+        /// <returns></returns>
+        public static string ConvertVideoToEmbed(this string s)
+        {
+            if (IsYoutubeVideo(s))
+            {
+                const string pattern = @"(http[s]?://)?(www\.)?(youtube.com/watch\?[^?]*v=|youtu.be/)(?<vid>[\w\-]+[^\s?]+)";
+                const string replacement = "<iframe title='YouTube video player' width='480' height='390' src='http://www.youtube.com/embed/${vid}' frameborder='0' allowfullscreen='1'></iframe>";
+
+                var rgx = new Regex(pattern);
+                return rgx.Replace(s, replacement);
+            }
+
+            if (IsVimeoVideo(s))
+            {
+                return s;
+            }
+
+            return s;
         }
     }
 }

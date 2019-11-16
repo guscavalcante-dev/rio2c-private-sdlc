@@ -434,6 +434,7 @@
     <Content Include="Assets\js\onboarding\onboarding.companyinfo.js" />
     <Content Include="Assets\js\projects\projects.interest.widget.js" />
     <Content Include="Assets\js\projects\projects.buyercompany.widget.js" />
+    <Content Include="Assets\js\projects\projects.links.widget.js" />
     <Content Include="Assets\js\projects\projects.maininformation.widget.js" />
     <Content Include="Assets\js\projects\projects.producerinfo.js" />
     <Content Include="Assets\js\onboarding\onboarding.playerinfo.js" />
@@ -7207,6 +7208,7 @@
     <Content Include="Views\Projects\Widgets\BuyerCompanySelectedWidget.cshtml" />
     <Content Include="Views\Projects\Widgets\ProjectMatchBuyerCompanyWidget.cshtml" />
     <Content Include="Views\Projects\Widgets\ProjectAllBuyerCompanyWidget.cshtml" />
+    <Content Include="Views\Projects\Widgets\LinksWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

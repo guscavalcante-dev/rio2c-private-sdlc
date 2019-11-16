@@ -32,6 +32,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<ProjectAdditionalInformationDto> ProjectAdditionalInformationDtos { get; set; }
         public IEnumerable<ProjectInterestDto> ProjectInterestDtos { get; set; }
         public IEnumerable<ProjectTargetAudienceDto> ProjectTargetAudienceDtos { get; set; }
+        public IEnumerable<ProjectImageLinkDto> ProjectImageLinkDtos { get; set; }
+        public IEnumerable<ProjectTeaserLinkDto> ProjectTeaserLinkDtos { get; set; }
         public IEnumerable<ProjectBuyerEvaluationDto> ProjectBuyerEvaluationDtos { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="ProjectDto"/> class.</summary>

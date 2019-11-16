@@ -109,6 +109,8 @@
     <Compile Include="Dtos\Organizations\OrganizationTargetAudienceDto.cs" />
     <Compile Include="Dtos\Organizations\OrganizationActivityDto.cs" />
     <Compile Include="Dtos\Projects\ProjectBuyerEvaluationDto.cs" />
+    <Compile Include="Dtos\Projects\ProjectTeaserLinkDto.cs" />
+    <Compile Include="Dtos\Projects\ProjectImageLinkDto.cs" />
     <Compile Include="Dtos\Projects\ProjectTargetAudienceDto.cs" />
     <Compile Include="Dtos\Projects\ProjectInterestDto.cs" />
     <Compile Include="Dtos\Projects\ProjectLogLineDto.cs" />
