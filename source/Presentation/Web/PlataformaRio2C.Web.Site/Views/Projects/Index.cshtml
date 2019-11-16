@@ -64,24 +64,27 @@
                         <div class="kt-portlet__foot pl-0 pr-0">
                             <div class="row align-items-center">
                                 <div class="col-lg-12 kt-align-right pl-0 pr-0">
-                                    @if (editionDto?.IsProjectSubmitOpened() == true)
+                                    @if (editionDto?.IsProjectSubmitStarted() != true || editionDto.IsProjectSubmitEnded() != true)
                                     {
-                                        <a href="@Url.Action("Submit", "Projects", new { Area = "" })" class="btn btn-brand mt-1">@Labels.SendProject</a>
-                                        <a href="@Url.Action("SubmittedList", "Projects", new { Area = "" })" class="btn btn-secondary mt-1">@Labels.SentProjects</a>
+                                        var subscriptionUrl = Url.Action("SubmittedList", "Projects", new { Area = "" });
+                                        var editionUrl = Url.Action("SubmittedList", "Projects", new { Area = "" });
+                                        if (editionDto?.IsProjectSubmitStarted() != true)
+                                        {
+                                            subscriptionUrl = Url.Action("Index", "Projects", new { Area = "" });
+                                            editionUrl = Url.Action("Index", "Projects", new { Area = "" });                            
+                                        }
+
+                                        <a href="@subscriptionUrl" class="btn btn-brand mt-1">@Labels.Subscription</a>
+                                        <a href="@editionUrl" class="btn btn-secondary mt-1">@Labels.Edition</a>
                                     }
-                                    else if (editionDto?.IsProjectSubmitStarted() == true)
-                                    {
-                                        <a href="@Url.Action("SubmittedList", "Projects", new { Area = "" })" class="btn btn-brand mt-1">@Labels.SentProjects</a>
+                                    @{
+                                        var resultUrl = Url.Action("SubmittedList", "Projects", new { Area = "" });
+                                        if (editionDto?.IsProjectSubmitEnded() != true)
+                                        {
+                                            resultUrl = Url.Action("Index", "Projects", new { Area = "" });
+                                        }
                                     }
-                                    else
-                                    {
-                                        <a href="#" onclick="return false;" class="btn btn-brand mt-1" data-toggle="kt-tooltip" title="" data-placement="bottom" data-original-title="@Labels.ComingSoon...">@Labels.SendProject</a>
-                                        <a href="#" onclick="return false;" class="btn btn-secondary mt-1" data-toggle="kt-tooltip" title="" data-placement="bottom" data-original-title="@Labels.ComingSoon...">@Labels.SentProjects</a>
-                                    }
-                                    @*
-                                    <a href="@Url.Action("Submit", "Projects", new {Area = ""})" class="btn btn-brand">@Labels.SendProject</a>
-                                    <a href="@Url.Action("Submited", "Projects", new {Area = ""})" class="btn btn-secondary">@Labels.SentProjects</a>
-                                    *@
+                                    <a href="@resultUrl" class="btn btn-secondary mt-1">@Labels.Result</a>
                                 </div>
                             </div>
                         </div>
