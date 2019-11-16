@@ -4,7 +4,7 @@
 // Created          : 11-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-15-2019
+// Last Modified On : 11-16-2019
 // ***********************************************************************
 // <copyright file="ProjectDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -77,7 +77,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <returns></returns>
         public int GetProjectBuyerEvaluationMax()
         {
-            return (this.Project?.ProjectBuyerEvaluationGroupsCount ?? 0) * this.SellerAttendeeOrganizationDto.GetProjectsBuyerEvaluationsMax();
+            return /*(this.Project?.ProjectBuyerEvaluationGroupsCount ?? 0) * */this.SellerAttendeeOrganizationDto.GetProjectsBuyerEvaluationsMax();
         }
 
         /// <summary>Gets the projects buyer evaluations used.</summary>
@@ -91,7 +91,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <returns></returns>
         public int GetProjectsBuyerEvaluationsAvailable()
         {
-            return (this.GetProjectBuyerEvaluationMax() - this.GetProjectsBuyerEvaluationsUsed()) + this.SellerAttendeeOrganizationDto.GetProjectsBuyerEvaluationsAvailable();
+            return this.GetProjectBuyerEvaluationMax() - this.GetProjectsBuyerEvaluationsUsed()/* + this.SellerAttendeeOrganizationDto.GetProjectsBuyerEvaluationsAvailable()*/;
         }
 
         #endregion

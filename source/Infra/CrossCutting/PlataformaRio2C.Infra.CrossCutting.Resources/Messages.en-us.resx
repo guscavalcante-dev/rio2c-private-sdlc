@@ -744,8 +744,8 @@ Youtube and Vimeo.</value>
     <comment>O projeto deve ter no mínimo 1 {0} para ser concluído.</comment>
   </data>
   <data name="YouReachedProjectsLimit" xml:space="preserve">
-    <value>Your reached the projects limit for your quantity of tickets.</value>
-    <comment>Você atingiu o limite de projetos para a sua quantidade de ingressos.</comment>
+    <value>Your reached the projects limit.</value>
+    <comment>Você atingiu o limite de projetos.</comment>
   </data>
   <data name="BuyerEvaluationsAvailableForProject" xml:space="preserve">
     <value>{0} {1} {2} for this project.</value>

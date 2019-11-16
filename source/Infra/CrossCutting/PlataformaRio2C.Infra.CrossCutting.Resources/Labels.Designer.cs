@@ -2666,7 +2666,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Projeto não submetido a Players.
+        ///   Looks up a localized string similar to Nenhum Player selecionado para avaliação.
         /// </summary>
         public static string ProjectNotSubmittedToPlayers {
             get {

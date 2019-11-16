@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-15-2019
+// Last Modified On : 11-16-2019
 // ***********************************************************************
 // <copyright file="ProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -196,14 +196,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
-        /// <summary>Finds all dtos by attendee organizations uids asynchronous.</summary>
-        /// <param name="attendeeOrganizationsUids">The attendee organizations uids.</param>
+        /// <summary>Finds all dtos by attendee organization uid asynchronous.</summary>
+        /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
         /// <param name="showAll">if set to <c>true</c> [show all].</param>
         /// <returns></returns>
-        public async Task<List<ProjectDto>> FindAllDtosByAttendeeOrganizationsUidsAsync(List<Guid> attendeeOrganizationsUids, bool showAll)
+        public async Task<List<ProjectDto>> FindAllDtosByAttendeeOrganizationUidAsync(Guid attendeeOrganizationUid, bool showAll)
         {
             var query = this.GetBaseQuery()
-                                .FindByAttendeeOrganizationsUids(attendeeOrganizationsUids, showAll)
+                                .FindByAttendeeOrganizationUid(attendeeOrganizationUid)
                                 .Select(p => new ProjectDto
                                 {
                                     Project = p,
@@ -229,30 +229,30 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         ProjectLogLine = ll,
                                         Language = ll.Language
                                     }),
-                                    ProjectSummaryDtos = p.Summaries.Where(s => !s.IsDeleted).Select(s => new ProjectSummaryDto
-                                    {
-                                        ProjectSummary = s,
-                                        Language = s.Language
-                                    }),
-                                    ProjectProductionPlanDtos = p.ProductionPlans.Where(pp => !pp.IsDeleted).Select(pp => new ProjectProductionPlanDto
-                                    {
-                                        ProjectProductionPlan = pp,
-                                        Language = pp.Language
-                                    }),
-                                    ProjectAdditionalInformationDtos = p.AdditionalInformations.Where(aa => !aa.IsDeleted).Select(aa => new ProjectAdditionalInformationDto
-                                    {
-                                        ProjectAdditionalInformation = aa,
-                                        Language = aa.Language
-                                    }),
+                                    //ProjectSummaryDtos = p.Summaries.Where(s => !s.IsDeleted).Select(s => new ProjectSummaryDto
+                                    //{
+                                    //    ProjectSummary = s,
+                                    //    Language = s.Language
+                                    //}),
+                                    //ProjectProductionPlanDtos = p.ProductionPlans.Where(pp => !pp.IsDeleted).Select(pp => new ProjectProductionPlanDto
+                                    //{
+                                    //    ProjectProductionPlan = pp,
+                                    //    Language = pp.Language
+                                    //}),
+                                    //ProjectAdditionalInformationDtos = p.AdditionalInformations.Where(aa => !aa.IsDeleted).Select(aa => new ProjectAdditionalInformationDto
+                                    //{
+                                    //    ProjectAdditionalInformation = aa,
+                                    //    Language = aa.Language
+                                    //}),
                                     ProjectInterestDtos = p.Interests.Where(i => !i.IsDeleted).Select(i => new ProjectInterestDto
                                     {
                                         Interest = i.Interest,
                                         InterestGroup = i.Interest.InterestGroup
                                     }),
-                                    ProjectTargetAudienceDtos = p.TargetAudiences.Where(ta => !ta.IsDeleted).Select(ta => new ProjectTargetAudienceDto
-                                    {
-                                        TargetAudience = ta.TargetAudience
-                                    }),
+                                    //ProjectTargetAudienceDtos = p.TargetAudiences.Where(ta => !ta.IsDeleted).Select(ta => new ProjectTargetAudienceDto
+                                    //{
+                                    //    TargetAudience = ta.TargetAudience
+                                    //}),
                                     ProjectBuyerEvaluationDtos = p.BuyerEvaluations.Where(be => !be.IsDeleted).Select(be => new ProjectBuyerEvaluationDto
                                     {
                                         ProjectBuyerEvaluation = be,

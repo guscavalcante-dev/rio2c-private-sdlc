@@ -614,7 +614,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Voltar</value>
   </data>
   <data name="ProjectNotSubmittedToPlayers" xml:space="preserve">
-    <value>Projeto não submetido a Players</value>
+    <value>Nenhum Player selecionado para avaliação</value>
+    <comment>Nenhum Player selecionado para avaliação</comment>
   </data>
   <data name="PlayersSuggested" xml:space="preserve">
     <value>Players sugeridos</value>

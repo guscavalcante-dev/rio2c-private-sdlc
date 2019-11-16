@@ -748,8 +748,8 @@
     <comment>O projeto deve ter no mínimo 1 {0} para ser concluído.</comment>
   </data>
   <data name="YouReachedProjectsLimit" xml:space="preserve">
-    <value>Você atingiu o limite de projetos para a sua quantidade de ingressos.</value>
-    <comment>Você atingiu o limite de projetos para a sua quantidade de ingressos.</comment>
+    <value>Você atingiu o limite de projetos.</value>
+    <comment>Você atingiu o limite de projetos.</comment>
   </data>
   <data name="BuyerEvaluationsAvailableForProject" xml:space="preserve">
     <value>{0} {1} {2} para esse projeto.</value>

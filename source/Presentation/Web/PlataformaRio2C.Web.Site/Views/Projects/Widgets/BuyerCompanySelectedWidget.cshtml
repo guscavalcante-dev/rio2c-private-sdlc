@@ -9,14 +9,14 @@
     <div class="col-12 text-center mb-2">
         <small class="font-weight-bold">
             @{
-                var pProjectsBuyerEvaluationsUsed = Model.GetProjectsBuyerEvaluationsUsed();
+                var projectsBuyerEvaluationsUsed = Model.GetProjectsBuyerEvaluationsUsed();
             }
             @string.Format(
                 Messages.BuyerEvaluationsSelected,
-                pProjectsBuyerEvaluationsUsed,
-                pProjectsBuyerEvaluationsUsed == 1 ? Labels.Player : Labels.Players,
-                (pProjectsBuyerEvaluationsUsed == 1 ? Labels.SelectedS : Labels.SelectedP).ToLowerInvariant(),
-                Model.SellerAttendeeOrganizationDto.GetProjectsBuyerEvaluationsTotal())
+                projectsBuyerEvaluationsUsed,
+                projectsBuyerEvaluationsUsed == 1 ? Labels.Player : Labels.Players,
+                (projectsBuyerEvaluationsUsed == 1 ? Labels.SelectedS : Labels.SelectedP).ToLowerInvariant(),
+                Model.GetProjectBuyerEvaluationMax())
         </small><br/>
         <small class="font-weight-bold">
             @{

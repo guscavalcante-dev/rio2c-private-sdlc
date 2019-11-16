@@ -1716,7 +1716,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Você atingiu o limite de projetos para a sua quantidade de ingressos..
+        ///   Looks up a localized string similar to Você atingiu o limite de projetos..
         /// </summary>
         public static string YouReachedProjectsLimit {
             get {

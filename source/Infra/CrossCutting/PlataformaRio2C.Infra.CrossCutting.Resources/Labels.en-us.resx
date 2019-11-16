@@ -610,7 +610,8 @@
     <value>Back</value>
   </data>
   <data name="ProjectNotSubmittedToPlayers" xml:space="preserve">
-    <value>Project not submitted to Players</value>
+    <value>No Player selected for evaluation</value>
+    <comment>Nenhum Player selecionado para avaliação</comment>
   </data>
   <data name="PlayersSuggested" xml:space="preserve">
     <value>Suggested players</value>

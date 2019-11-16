@@ -4,7 +4,7 @@
 // Created          : 09-04-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-29-2019
+// Last Modified On : 11-16-2019
 // ***********************************************************************
 // <copyright file="UserAccessControlDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,8 +29,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public Collaborator Collaborator { get; set; }
         public AttendeeCollaborator EditionAttendeeCollaborator { get; set; }
         public IEnumerable<CollaboratorType> EditionCollaboratorTypes { get; set; }
-        public IEnumerable<AttendeeOrganization> EditionAttendeeOrganizations { get; set; }
-        public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }
+        public IEnumerable<AttendeeOrganization> EditionAttendeeOrganizations { get; set; } //TODO: Remove EditionAttendeeOrganizations from UserAccessControlDto
+        public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }  //TODO: Remove EditionAttendeeOrganizations from UserAccessControlDto
         public IEnumerable<AttendeeCollaboratorTicketDto> EditionAttendeeCollaboratorTickets { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="UserAccessControlDto"/> class.</summary>
@@ -89,6 +89,13 @@ namespace PlataformaRio2C.Domain.Dtos
         public List<Organization> GetOrganizations()
         {
             return this.EditionAttendeeOrganizations?.Where(eao => !eao.IsDeleted && !eao.Organization.IsDeleted)?.Select(eao => eao.Organization)?.ToList();
+        }
+
+        /// <summary>Gets the first attendee organization created.</summary>
+        /// <returns></returns>
+        public AttendeeOrganization GetFirstAttendeeOrganizationCreated()
+        {
+            return this.EditionAttendeeOrganizations?.Where(eao => !eao.IsDeleted)?.OrderBy(eao => eao.Id).FirstOrDefault();
         }
 
         /// <summary>Determines whether [has player organization].</summary>

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-14-2019
+// Last Modified On : 11-16-2019
 // ***********************************************************************
 // <copyright file="Project.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -761,8 +761,26 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.ValidationResult = new ValidationResult();
 
-            //this.ValidateName();
             this.ValidateIsFinished();
+            this.ValidateTitles();
+            this.ValidateLogLines();
+            this.ValidateSummaries();
+            this.ValidateProductionPlans();
+            this.ValidateAdditionalInformations();
+            this.ValidateImageLinks();
+            this.ValidateTeaserLinks();
+            this.ValidateBuyerEvaluations();
+
+            return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>Determines whether [is create valid].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is create valid]; otherwise, <c>false</c>.</returns>
+        public bool IsCreateValid()
+        {
+            this.ValidationResult = new ValidationResult();
+
             this.ValidateTitles();
             this.ValidateLogLines();
             this.ValidateSummaries();
@@ -800,7 +818,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             if (this.IsFinished())
             {
-                this.ValidationResult.Add(new ValidationError(Messages.ProjectIsFinishedCannotBeUpdated));
+                this.ValidationResult.Add(new ValidationError(Messages.ProjectIsFinishedCannotBeUpdated, new string[] { "ToastrError" }));
             }
         }
 

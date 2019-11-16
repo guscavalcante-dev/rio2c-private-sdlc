@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-14-2019
+// Last Modified On : 11-16-2019
 // ***********************************************************************
 // <copyright file="AttendeeOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -273,7 +273,7 @@ namespace PlataformaRio2C.Domain.Entities
                 this.ValidationResult = new ValidationResult();
             }
 
-            var sellerAttendeeOrganizations = this.SellerAttendeeOrganizations.Where(sao => attendeeCollaboratorTickets?.Contains(sao.AttendeeCollaboratorTicket) == true).ToList();
+            //var sellerAttendeeOrganizations = this.SellerAttendeeOrganizations.Where(sao => attendeeCollaboratorTickets?.Contains(sao.AttendeeCollaboratorTicket) == true).ToList();
 
             // If there is no seller attendee organization
             if (this.SellerAttendeeOrganizations?.Any() != true)
@@ -360,32 +360,32 @@ namespace PlataformaRio2C.Domain.Entities
             //        break;
             //    }
             //}
-            // If there is an unused attendee collaborator tickets
-            else if (attendeeCollaboratorTickets?.Any(act => sellerAttendeeOrganizations.All(sao => sao.AttendeeCollaboratorTicketId != act.Id)) == true)
-            {
-                var attendeeCollaboratorTicket = attendeeCollaboratorTickets?.FirstOrDefault(act => sellerAttendeeOrganizations.All(sao => sao.AttendeeCollaboratorTicketId != act.Id));
-                this.SellerAttendeeOrganizations.Add(new SellerAttendeeOrganization(
-                    this,
-                    attendeeCollaboratorTicket,
-                    projectType,
-                    numberOfEpisodes,
-                    eachEpisodePlayingTime,
-                    valuePerEpisode,
-                    totalValueOfProject,
-                    valueAlreadyRaised,
-                    valueStillNeeded,
-                    isPitching,
-                    titles,
-                    logLines,
-                    summaries,
-                    productionPlans,
-                    additionalInformations,
-                    interests,
-                    targetAudiences,
-                    imageLink,
-                    teaserLink,
-                    userId));
-            }
+            //// If there is an unused attendee collaborator tickets
+            //else if (attendeeCollaboratorTickets?.Any(act => sellerAttendeeOrganizations.All(sao => sao.AttendeeCollaboratorTicketId != act.Id)) == true)
+            //{
+            //    var attendeeCollaboratorTicket = attendeeCollaboratorTickets?.FirstOrDefault(act => sellerAttendeeOrganizations.All(sao => sao.AttendeeCollaboratorTicketId != act.Id));
+            //    this.SellerAttendeeOrganizations.Add(new SellerAttendeeOrganization(
+            //        this,
+            //        attendeeCollaboratorTicket,
+            //        projectType,
+            //        numberOfEpisodes,
+            //        eachEpisodePlayingTime,
+            //        valuePerEpisode,
+            //        totalValueOfProject,
+            //        valueAlreadyRaised,
+            //        valueStillNeeded,
+            //        isPitching,
+            //        titles,
+            //        logLines,
+            //        summaries,
+            //        productionPlans,
+            //        additionalInformations,
+            //        interests,
+            //        targetAudiences,
+            //        imageLink,
+            //        teaserLink,
+            //        userId));
+            //}
             // If there is no avaiable projects and tickets
             else
             {

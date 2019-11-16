@@ -4,7 +4,7 @@
 // Created          : 11-13-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-14-2019
+// Last Modified On : 11-16-2019
 // ***********************************************************************
 // <copyright file="SellerAttendeeOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -284,7 +284,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             if (this.AttendeeOrganization == null)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Company)));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Company), new string[] { "ToastrError" }));
             }
         }
 
@@ -293,7 +293,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             if (this.AttendeeCollaboratorTicket == null)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Ticket)));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Ticket), new string[] { "ToastrError" }));
             }
             else
             {
@@ -317,7 +317,7 @@ namespace PlataformaRio2C.Domain.Entities
                 return;
             }
 
-            foreach (var project in this.Projects?.Where(d => !d.IsDeleted && !d.IsValid())?.ToList())
+            foreach (var project in this.Projects?.Where(d => !d.IsDeleted && !d.IsCreateValid())?.ToList())
             {
                 this.ValidationResult.Add(project.ValidationResult);
             }

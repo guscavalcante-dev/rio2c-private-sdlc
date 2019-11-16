@@ -103,7 +103,7 @@
                                             @if (!projectDto.IsFakeProject)
                                             {
                                                 <span class="kt-widget__text mt-0">
-                                                    @(Html.Raw(projectDto.GetSummaryDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectSummary?.Value))
+                                                    @(Html.Raw(projectDto.GetLogLineDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectLogLine?.Value))
                                                 </span>
                                                 <div class="kt-widget__content">
                                                     <div class="kt-widget__details" style="width: 100%;">
@@ -175,7 +175,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row mt-20">
+                                <div class="row mt-20 justify-content-end">
                                     @if (projectDto.IsFakeProject)
                                     {
                                         <div class="col-4 text-center">

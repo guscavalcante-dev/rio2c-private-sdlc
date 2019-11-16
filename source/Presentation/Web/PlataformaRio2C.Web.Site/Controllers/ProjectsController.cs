@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-15-2019
+// Last Modified On : 11-16-2019
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -123,15 +123,16 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return RedirectToAction("Index", "Projects", new { Area = "" });
             }
 
-            var projects = await this.projectRepo.FindAllDtosByAttendeeOrganizationsUidsAsync(
-                this.UserAccessControlDto?.EditionAttendeeOrganizations?.Select(eao => eao.Uid)?.ToList(),
+            var projects = await this.projectRepo.FindAllDtosByAttendeeOrganizationUidAsync(
+                this.UserAccessControlDto?.GetFirstAttendeeOrganizationCreated()?.Uid ?? Guid.Empty,
                 false);
 
-            if (projects.Count < 3)
+            var projectMaxCount = this.UserAccessControlDto?.EditionAttendeeCollaboratorTickets?.FirstOrDefault()?.GetProjectMaxCount() ?? 0;
+            if (projects.Count < projectMaxCount)
             {
                 var initialProject = projects.Count + 1;
 
-                for (int i = initialProject; i < 4; i++)
+                for (int i = initialProject; i < projectMaxCount + 1; i++)
                 {
                     projects.Add(new ProjectDto
                     {
@@ -823,6 +824,20 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return RedirectToAction("TermsAcceptance", "Projects");
             }
 
+            // Check if player submitted the max number of projects
+            var firstAttendeeOrganizationCreated = this.UserAccessControlDto.GetFirstAttendeeOrganizationCreated();
+            if (firstAttendeeOrganizationCreated != null)
+            {
+                var projectsCount = this.projectRepo.Count(p => p.SellerAttendeeOrganization.AttendeeOrganization.Uid == firstAttendeeOrganizationCreated.Uid 
+                                                                && !p.IsDeleted);
+                var projectMaxCount = this.UserAccessControlDto?.EditionAttendeeCollaboratorTickets?.FirstOrDefault()?.GetProjectMaxCount() ?? 0;
+                if (projectsCount >= projectMaxCount)
+                {
+                    this.StatusMessageToastr(Messages.YouReachedProjectsLimit, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                    return RedirectToAction("SubmittedList", "Projects");
+                }
+            }
+
             var cmd = new CreateProject(
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                 await this.activityRepo.FindAllAsync(),
@@ -871,7 +886,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    this.UserAccessControlDto.EditionAttendeeOrganizations?.FirstOrDefault()?.Uid, //TODO: Change this
+                    this.UserAccessControlDto.GetFirstAttendeeOrganizationCreated()?.Uid, //TODO: Change this
                     ProjectType.Audiovisual.Uid,
                     this.UserAccessControlDto?.EditionAttendeeCollaboratorTickets?.Select(eact => eact.AttendeeCollaboratorTicket.Uid)?.ToList(),
                     this.UserAccessControlDto.User.Id,
