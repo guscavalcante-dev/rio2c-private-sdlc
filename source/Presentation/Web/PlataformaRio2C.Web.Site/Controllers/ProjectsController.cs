@@ -161,6 +161,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.Industry)]
         public async Task<ActionResult> SubmittedDetails(Guid? id)
         {
+            if (this.EditionDto?.IsProjectSubmitStarted() != true)
+            {
+                return RedirectToAction("Index", "Projects", new { Area = "" });
+            }
+
             var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(id ?? Guid.Empty);
             if (projectDto == null)
             {
@@ -805,7 +810,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             if (this.EditionDto?.IsProjectSubmitOpened() != true)
             {
-                return RedirectToAction("CompanyInfo", "Projects");
+                return RedirectToAction("Index", "Projects");
             }
 
             if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true)
@@ -847,7 +852,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             if (this.EditionDto?.IsProjectSubmitOpened() != true)
             {
-                return RedirectToAction("CompanyInfo", "Projects");
+                return RedirectToAction("Index", "Projects");
             }
 
             if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
@@ -949,7 +954,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             if (this.EditionDto?.IsProjectSubmitOpened() != true)
             {
-                return RedirectToAction("CompanyInfo", "Projects");
+                return RedirectToAction("Index", "Projects");
             }
 
             if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() != true)
@@ -991,7 +996,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             if (this.EditionDto?.IsProjectSubmitOpened() != true)
             {
-                return RedirectToAction("CompanyInfo", "Projects");
+                return RedirectToAction("Index", "Projects");
             }
 
             if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() != true)
@@ -1074,7 +1079,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             if (this.EditionDto?.IsProjectSubmitOpened() != true)
             {
-                return RedirectToAction("CompanyInfo", "Projects");
+                return RedirectToAction("Index", "Projects");
             }
 
             if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
@@ -1105,7 +1110,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             if (this.EditionDto?.IsProjectSubmitOpened() != true)
             {
-                return RedirectToAction("CompanyInfo", "Projects");
+                return RedirectToAction("Index", "Projects");
             }
 
             if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
@@ -1180,6 +1185,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             });
 
             #endregion
+
             return View();
         }
 
