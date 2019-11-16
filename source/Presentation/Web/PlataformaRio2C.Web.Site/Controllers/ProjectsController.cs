@@ -118,6 +118,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             #endregion
 
+            if (this.EditionDto?.IsProjectSubmitStarted() != true)
+            {
+                return RedirectToAction("Index", "Projects", new { Area = "" });
+            }
+
             var projects = await this.projectRepo.FindAllDtosByAttendeeOrganizationsUidsAsync(
                 this.UserAccessControlDto?.EditionAttendeeOrganizations?.Select(eao => eao.Uid)?.ToList(),
                 false);

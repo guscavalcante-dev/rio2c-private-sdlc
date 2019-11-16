@@ -2,6 +2,7 @@
 @using Constants = PlataformaRio2C.Domain.Constants;
 @{
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var editionDto = ViewBag.EditionDto as EditionDto;
     var menuOpenCssClass = "kt-menu__item--open";
 }
 <ul class="kt-menu__nav">@*d-lg-none*@
@@ -25,7 +26,7 @@
         }) == true)
     {
         var projectsUrl = Url.Action("Index", "Projects", new {Area = ""});
-        if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true)
+        if (editionDto?.IsProjectSubmitStarted() == true && userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true)
         {
             projectsUrl = Url.Action("SubmittedList", "Projects", new {Area = ""});
         }

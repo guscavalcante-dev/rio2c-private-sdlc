@@ -4,6 +4,7 @@
 @using Constants = PlataformaRio2C.Domain.Constants;
 @{
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var editionDto = ViewBag.EditionDto as EditionDto;
     var organizations = userAccessControlDto?.GetOrganizations();
     var menuOpenCssClass = "active";
 }
@@ -129,8 +130,13 @@
                                                                 Constants.CollaboratorType.Industry
                                                             }) == true)
                     {
+                        var projectsUrl = Url.Action("Index", "Projects", new {Area = ""});
+                        if (editionDto?.IsProjectSubmitStarted() == true && userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true)
+                        {
+                            projectsUrl = Url.Action("SubmittedList", "Projects", new {Area = ""});
+                        }
                         <li class="kt-nav__item @this.IsOpen(menuOpenCssClass, null, "Projects", null)">
-                            <a class="kt-nav__link" href="@Url.Action("Index", "Projects", new { Area = "" })">
+                            <a class="kt-nav__link" href="@projectsUrl">
                                 <span class="kt-nav__link-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
                                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
