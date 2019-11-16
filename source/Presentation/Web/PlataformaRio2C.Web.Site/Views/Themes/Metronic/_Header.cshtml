@@ -17,7 +17,7 @@
         <!-- end:: Brand -->
         <!-- begin: Header Menu -->
         <button class="kt-header-menu-wrapper-close" id="kt_header_menu_mobile_close_btn"><i class="la la-close"></i></button>
-        <div class="kt-header-menu-wrapper kt-grid__item kt-grid__item--fluid" id="kt_header_menu_wrapper" style="margin-left:0px">
+        <div class="kt-header-menu-wrapper kt-grid__item kt-grid__item--fluid" id="kt_header_menu_wrapper">
             <div id="kt_header_menu" class="kt-header-menu kt-header-menu-mobile ">
                 @{ Html.RenderPartial("~/Views/Themes/Metronic/_HeaderMenu.cshtml"); }
             </div>
@@ -25,9 +25,8 @@
         <!-- end: Header Menu -->
         <!-- begin:: Header Topbar -->
         <div class="kt-header__topbar kt-grid__item">
-
-            <!--begin: Search -->
-            @*<div class="kt-header__topbar-item kt-header__topbar-item--search dropdown" id="kt_quick_search_toggle">
+        @*<!--begin: Search -->
+            <div class="kt-header__topbar-item kt-header__topbar-item--search dropdown" id="kt_quick_search_toggle">
                     <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">
                         <span class="kt-header__topbar-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
@@ -54,8 +53,8 @@
                             </div>
                         </div>
                     </div>
-                </div>*@
-            <!--end: Search -->
+                </div>
+            <!--end: Search -->*@
             <!--begin: Notifications -->
             @*<div class="kt-header__topbar-item dropdown">
                     <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">

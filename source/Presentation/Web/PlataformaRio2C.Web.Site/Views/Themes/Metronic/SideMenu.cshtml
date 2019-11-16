@@ -9,110 +9,94 @@
 }
 <!--Begin:Mini Personal Profile-->
 <div class="kt-portlet">
-    <div class="kt-portlet__head kt-portlet__head--noborder">
-        <div class="kt-portlet__head-label">
-            <h3 class="kt-portlet__head-title"></h3>
-        </div>
-    </div>
     <div class="kt-portlet__body">
         <!--begin::Widget -->
-        <div class="kt-widget kt-widget--user-profile-2">
+        <div class="kt-widget kt-widget--user-profile-4">
             <div class="kt-widget__head">
-                <div class="row">
-                    <div class="col-4 col-sm-4 col-md-12 col-lg-5">
-                        <div class="kt-widget__media">
-                            @if (userAccessControlDto?.HasImage() == true)
-                            {
-                                <img class="kt-widget__img" src="@ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, userAccessControlDto.Collaborator.Uid, userAccessControlDto.Collaborator.ImageUploadDate, true)" alt="">
+                <div class="kt-widget__media">
+                    @if (userAccessControlDto?.HasImage() == true)
+                    {
+                        <img class="kt-widget__img" src="@ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, userAccessControlDto.Collaborator.Uid, userAccessControlDto.Collaborator.ImageUploadDate, true)" alt="">
+                    }
+                    else
+                    {
+                        <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest kt-font-light">@(userAccessControlDto?.GetNameAbbreviationCode())</div>
+                    }
+                    <div class="kt-widget__pic kt-widget__pic--danger kt-font-danger kt-font-boldest kt-hidden">
+                        JB
+                    </div>
+                </div>
+                <div class="kt-widget__content">
+                    <div class="kt-widget__section">
+                        <a href="@Url.Action("Details", "Executives", new { id = userAccessControlDto?.Collaborator?.Uid })" class="kt-widget__username">
+                            @(userAccessControlDto?.GetFullName(ViewBag.UserInterfaceLanguage))
+                        </a>
+                        <div class="kt-widget__action mt-0">
+                            @(userAccessControlDto?.GetJobTitle(ViewBag.UserInterfaceLanguage))
+                            @{
+                                var organization = organizations?.FirstOrDefault();
                             }
-                            else
+                            @if (organization != null)
                             {
-                                <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest kt-font-light">@(userAccessControlDto?.GetNameAbbreviationCode())</div>
+                                @Labels.At <a href="@Url.Action("Details", "Companies", new { id = organization.Uid })">@(organization.TradeName ?? organization.CompanyName ?? organization.Name)</a>
+                            }
+                        </div>
+                        <div class="kt-widget__action mt-4">
+                            @if (userAccessControlDto?.Collaborator != null)
+                            {
+                                <a href="@Url.Action("Details", "Executives", new { id = userAccessControlDto.Collaborator.Uid })" class="btn btn-primary btn-sm">@Labels.ViewProfile</a>
                             }
                         </div>
                     </div>
-                    <div class="col-8 col-sm-8 col-md-12 col-lg-7">
-                        <div class="kt-widget__info">
-                            <a href="@Url.Action("Details", "Executives", new { id = userAccessControlDto?.Collaborator?.Uid })" class="kt-widget__username">
-                                @(userAccessControlDto?.GetFullName(ViewBag.UserInterfaceLanguage))
-                            </a>
-                            <span class="kt-widget__desc">
-                                @(userAccessControlDto?.GetJobTitle(ViewBag.UserInterfaceLanguage))
-                                @if (organizations?.Any() == true)
-                                {
-                                    <ul class="mt-2 mb-0 pl-4">
-                                        @foreach (var organization in organizations?.OrderBy(o => o.Name))
-                                        {
-                                            <li><a href="@Url.Action("Details", "Companies", new { id = organization.Uid })"><small>@(organization.TradeName ?? organization.CompanyName ?? organization.Name)</small></a></li>
-                                        }
-                                    </ul>
-                                }
-                            </span>
-                        </div>
-                    </div>
                 </div>
-            </div>
-            <div class="kt-widget__body">
-                <div class="kt-widget__section">
-                </div>
-            </div>
-            <div class="kt-section__content kt-section__content--solid text-center">
-                @if (userAccessControlDto?.Collaborator != null)
-                {
-                    <a href="@Url.Action("Details", "Executives", new { id = userAccessControlDto.Collaborator.Uid })" class="btn btn-primary btn-sm">@Labels.ViewProfile</a>
-                }
-                @*<button type="button" class="btn btn-secondary btn-sm ml-2 mt-1" @(ViewBag.Environment != "dev" ? "disabled" : string.Empty)>@Labels.EditProfile</button>*@
             </div>
         </div>
-
         <!--end::Widget -->
     </div>
 </div>
-<!--End:Mini  Personal Profile-->
-<!--Begin:Mini Company Profile-->
-@*
-    <div class="kt-portlet">
-        <div class="kt-portlet__head kt-portlet__head--noborder">
-            <div class="kt-portlet__head-label">
-                <h3 class="kt-portlet__head-title"></h3>
+<!--end:Mini Personal Profile-->
+@*<!--Begin:Mini Company Profile-->
+        <div class="kt-portlet">
+            <div class="kt-portlet__head kt-portlet__head--noborder">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title"></h3>
+                </div>
             </div>
-        </div>
-        <div class="kt-portlet__body">
-            <!--begin::Widget -->
-            <div class="kt-widget kt-widget--user-profile-2">
-                <div class="kt-widget__head">
-                    <div class="kt-widget__media">
-                        <img class="kt-widget__img kt-hidden-" src="~/Assets/themes/metronic/media/client-logos/logo1.png" alt="image">
-                        <div class="kt-widget__pic kt-widget__pic--danger kt-font-danger kt-font-boldest kt-font-light kt-hidden">
-                            MP
+            <div class="kt-portlet__body">
+                <!--begin::Widget -->
+                <div class="kt-widget kt-widget--user-profile-2">
+                    <div class="kt-widget__head">
+                        <div class="kt-widget__media">
+                            <img class="kt-widget__img kt-hidden-" src="~/Assets/themes/metronic/media/client-logos/logo1.png" alt="image">
+                            <div class="kt-widget__pic kt-widget__pic--danger kt-font-danger kt-font-boldest kt-font-light kt-hidden">
+                                MP
+                            </div>
+                        </div>
+                        <div class="kt-widget__info">
+                            <a href="#" class="kt-widget__username">
+                                Giros
+                            </a>
+                            <span class="kt-widget__desc">
+                                <a href="http://www.giros.com.br" target="_blank">www.giros.com.br</a>
+                            </span>
                         </div>
                     </div>
-                    <div class="kt-widget__info">
-                        <a href="#" class="kt-widget__username">
-                            Giros
-                        </a>
-                        <span class="kt-widget__desc">
-                            <a href="http://www.giros.com.br" target="_blank">www.giros.com.br</a>
-                        </span>
-                    </div>
-                </div>
-                <div class="kt-widget__body">
-                    <div class="kt-widget__section">
+                    <div class="kt-widget__body">
+                        <div class="kt-widget__section">
+
+                        </div>
 
                     </div>
+                    <div class="kt-section__content kt-section__content--solid">
+                        <button type="button" class="btn btn-primary btn-sm">View profile</button>
+                        <button type="button" class="btn btn-secondary btn-sm">Edit profile</button>
+                    </div>
+                </div>
 
-                </div>
-                <div class="kt-section__content kt-section__content--solid">
-                    <button type="button" class="btn btn-primary btn-sm">View profile</button>
-                    <button type="button" class="btn btn-secondary btn-sm">Edit profile</button>
-                </div>
+                <!--end::Widget -->
             </div>
-
-            <!--end::Widget -->
         </div>
-    </div>
-*@
-<!--End:Mini  Company Profile-->
+    <!--End:Mini  Company Profile-->*@
 <!--Begin:Shortcuts-->
 <div class="kt-portlet d-none d-md-block">
     <div class="kt-portlet__head">
@@ -141,9 +125,9 @@
                     </li>
                     @if (userAccessControlDto?.HasAnyCollaboratorType(new[]
                     {
-                                        Constants.CollaboratorType.ExecutiveAudiovisual,
-                                        Constants.CollaboratorType.Industry
-                                    }) == true)
+                                                                Constants.CollaboratorType.ExecutiveAudiovisual,
+                                                                Constants.CollaboratorType.Industry
+                                                            }) == true)
                     {
                         <li class="kt-nav__item @this.IsOpen(menuOpenCssClass, null, "Projects", null)">
                             <a class="kt-nav__link" href="@Url.Action("Index", "Projects", new { Area = "" })">

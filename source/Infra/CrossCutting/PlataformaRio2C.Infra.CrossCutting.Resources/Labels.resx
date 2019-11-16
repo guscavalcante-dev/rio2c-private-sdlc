@@ -1672,6 +1672,10 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Selecionado</value>
     <comment>Selecionado</comment>
   </data>
+  <data name="At" xml:space="preserve">
+    <value>em</value>
+    <comment>em</comment>
+  </data>
   <data name="DuplicateEntity" xml:space="preserve">
     <value>Duplicar {0}</value>
     <comment>Duplicar {0}</comment>

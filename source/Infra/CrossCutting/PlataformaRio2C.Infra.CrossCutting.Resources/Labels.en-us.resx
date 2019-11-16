@@ -1660,6 +1660,10 @@
     <value>Selected</value>
     <comment>Selecionado</comment>
   </data>
+  <data name="At" xml:space="preserve">
+    <value>at</value>
+    <comment>em</comment>
+  </data>
   <data name="DuplicateEntity" xml:space="preserve">
     <value>Duplicate {0}</value>
     <comment>Duplicar {0}</comment>

@@ -3,28 +3,33 @@
     ViewBag.Title = string.Format(Labels.Welcome, (ViewBag.EditionDto as EditionDto)?.UrlCode);
 }
 <div class="row">
-    <div class="col-md-12">
+    <!--begin:Left panel-->
+    <div class="col-md-4 col-lg-4">
+        @{ Html.RenderPartial("~/Views/Themes/Metronic/SideMenu.cshtml"); }
+    </div>
+    <!--end:Left panel-->
+    <div class="col-md-8 col-lg-8">
         <!--begin:We Connected-->
         @Html.Partial("Widgets/WeConnectedWidget")
         <!--end:We Connected-->
         @*
-        <!--begin:Welcome -->
-        <div class="kt-portlet">
-            <div class="kt-portlet__head">
-                <div class="kt-portlet__head-label">
-                    <h3 class="kt-portlet__head-title">
-                        @ViewBag.Title
-                    </h3>
+            <!--begin:Welcome -->
+            <div class="kt-portlet">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            @ViewBag.Title
+                        </h3>
+                    </div>
                 </div>
-            </div>
-            <div class="kt-portlet__body">
-                <div class="kt-widget3">
-                    @Html.Raw(Texts.WelcomeContent)
+                <div class="kt-portlet__body">
+                    <div class="kt-widget3">
+                        @Html.Raw(Texts.WelcomeContent)
 
+                    </div>
                 </div>
             </div>
-        </div>
-        <!--end:Welcome -->
+            <!--end:Welcome -->
         *@
     </div>
 </div>

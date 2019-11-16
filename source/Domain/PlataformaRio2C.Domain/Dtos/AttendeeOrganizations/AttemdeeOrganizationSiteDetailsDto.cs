@@ -4,7 +4,7 @@
 // Created          : 10-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-09-2019
+// Last Modified On : 11-15-2019
 // ***********************************************************************
 // <copyright file="AttemdeeOrganizationSiteDetailsDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,7 +35,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [has any type] [the specified organization types]; otherwise, <c>false</c>.</returns>
         public bool HasAnyType(string[] organizationTypes)
         {
-            return organizationTypes?.Any() == true && AttendeeOrganizationTypesDtos.Any(aotd => organizationTypes.Contains(aotd.OrganizationType.Name));
+            return organizationTypes?.Any() == true && this.AttendeeOrganizationTypesDtos.Any(aotd => organizationTypes.Contains(aotd.OrganizationType.Name));
         }
     }
 }
