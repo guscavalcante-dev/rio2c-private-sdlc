@@ -233,6 +233,10 @@ var ProjectsBuyerCompanyWidget = function () {
                                 ProjectsInterestWidget.init();
                             }
 
+                            if (typeof (ProjectsLinksWidget) !== 'undefined') {
+                                ProjectsLinksWidget.init();
+                            }
+
                             if (typeof (ProjectsBuyerCompanyWidget) !== 'undefined') {
                                 ProjectsBuyerCompanyWidget.init();
                             }

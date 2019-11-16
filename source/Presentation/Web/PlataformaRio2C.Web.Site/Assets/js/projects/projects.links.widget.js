@@ -62,8 +62,8 @@ var ProjectsLinksWidget = function () {
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                if (typeof (ProjectsMainInformationWidget) !== 'undefined') {
-                    ProjectsMainInformationWidget.init();
+                if (typeof (ProjectsLinksWidget) !== 'undefined') {
+                    ProjectsLinksWidget.init();
                 }
             },
             onError: function (data) {

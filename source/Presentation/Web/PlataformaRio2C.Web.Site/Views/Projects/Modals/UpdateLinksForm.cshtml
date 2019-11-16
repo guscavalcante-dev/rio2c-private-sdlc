@@ -1,0 +1,16 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateProjectLinks
+<div class="row">
+    <div class="form-group col-md-12">
+        @Html.LabelFor(m => m.ImageLinks, new { @class = "control-label" }) <span class="form-optional-input text-muted">opcional</span>
+        @Html.TextBoxFor(m => m.ImageLinks, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ImageLinks, "", new { @class = "text-danger" })
+    </div>
+
+</div>
+<div class="row">
+    <div class="form-group col-md-12">
+        @Html.LabelFor(m => m.TeaserLinks, new { @class = "control-label" }) <span class="form-optional-input text-muted">opcional</span>
+        @Html.TextBoxFor(m => m.TeaserLinks, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.TeaserLinks, "", new { @class = "text-danger" })
+    </div>
+</div>

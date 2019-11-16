@@ -173,6 +173,23 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.Now;
         }
 
+        /// <summary>Updates the links.</summary>
+        /// <param name="imageLink">The image link.</param>
+        /// <param name="teaserLink">The teaser link.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateLinks(
+            string imageLink,
+            string teaserLink,
+            int userId)
+        {
+            this.SynchronizeImageLinks(imageLink, userId);
+            this.SynchronizeTeaserLinks(teaserLink, userId);
+
+            this.IsDeleted = false;
+            this.CreateUserId = this.UpdateUserId = userId;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+        }
+
         /// <summary>Finishes the project.</summary>
         /// <param name="userId">The user identifier.</param>
         public void FinishProject(int userId)

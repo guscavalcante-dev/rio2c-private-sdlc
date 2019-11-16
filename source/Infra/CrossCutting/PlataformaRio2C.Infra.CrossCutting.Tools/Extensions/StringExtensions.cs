@@ -276,16 +276,30 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         {
             if (IsYoutubeVideo(s))
             {
-                const string pattern = @"(http[s]?://)?(www\.)?(youtube.com/watch\?[^?]*v=|youtu.be/)(?<vid>[\w\-]+[^\s?]+)";
-                const string replacement = "<iframe title='YouTube video player' width='480' height='390' src='http://www.youtube.com/embed/${vid}' frameborder='0' allowfullscreen='1'></iframe>";
+                var rgx = new Regex(@"youtu(?:\.be|be\.com)/(?:.*v(?:/|=)|(?:.*/)?)([a-zA-Z0-9-_]+)");
+                var match = rgx.Match(s);
 
-                var rgx = new Regex(pattern);
-                return rgx.Replace(s, replacement);
+                if (!match.Success)
+                {
+                    return s;
+                }
+
+                var id = match.Groups[1].Value;
+                return $"<iframe title='YouTube video player' width='480' height='270' src='http://www.youtube.com/embed/{id}' frameborder='0' allowfullscreen='1'></iframe>";
             }
 
             if (IsVimeoVideo(s))
             {
-                return s;
+                var rgx = new Regex(@"vimeo\.com/(?:.*#|.*/videos/)?([0-9]+)");
+                var match = rgx.Match(s);
+
+                if (!match.Success)
+                {
+                    return s;
+                }
+
+                var id = match.Groups[1].Value;
+                return $"<iframe src='https://player.vimeo.com/video/{id}' width='480' height='270' frameborder='0' allow='autoplay; fullscreen' allowfullscreen></iframe>";
             }
 
             return s;
