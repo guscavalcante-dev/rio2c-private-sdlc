@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-12-2019
+// Last Modified On : 11-16-2019
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -649,7 +649,13 @@ var MyRio2cCommon = function () {
         }
 
         if (data.status === "success") {
-            // Redirect
+            // Redirect without alert message
+            if (hasProperty(data, 'redirectOnly') && !isNullOrEmpty(data.redirectOnly)) {
+                window.location.replace(data.redirectOnly);
+                return null;
+            }
+
+            // Redirect but first show alert message
             if (hasProperty(data, 'redirect') && !isNullOrEmpty(data.redirect)) {
                 MyRio2cCommon.showAlert({
                     message: data.message + " " + redirectMessage,

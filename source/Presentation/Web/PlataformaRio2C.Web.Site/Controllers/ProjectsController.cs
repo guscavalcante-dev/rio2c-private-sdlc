@@ -1298,11 +1298,12 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #region Finish
 
-        /// <summary>Finishes the project.</summary>
+        /// <summary>Finishes the specified command.</summary>
         /// <param name="cmd">The command.</param>
+        /// <param name="originPage">The origin page.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Finish(FinishProject cmd)
+        public async Task<ActionResult> Finish(FinishProject cmd, string originPage)
         {
             var result = new AppValidationResult();
 
@@ -1345,7 +1346,15 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.UpdatedM) });
+            var successMessage = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.UpdatedM);
+
+            if (originPage == "SendToPlayers")
+            {
+                this.StatusMessageToastr(successMessage, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
+                return Json(new { status = "success", redirectOnly = Url.Action("SubmittedDetails", "Projects", new { id = cmd.ProjectUid }) });
+            }
+
+            return Json(new { status = "success", message = successMessage });
         }
 
         #endregion

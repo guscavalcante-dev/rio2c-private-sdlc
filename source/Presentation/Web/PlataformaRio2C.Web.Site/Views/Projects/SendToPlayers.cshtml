@@ -16,8 +16,6 @@
             <div class="kt-grid__item kt-grid__item--fluid kt-wizard-v3__wrapper">
                 <!--begin: Form Wizard Form-->
                 <div class="kt-form">
-                @*@using (Html.BeginForm("CompanyInfo", "Projects", FormMethod.Post, new { enctype = "multipart/form-data", id = "SendToPlayersForm", @class = "kt-form" }))
-                {*@
                     @Html.Hidden("AggregateId", Model.Project.Uid)
                     <div id="form-container">
                         <!--begin: Form Wizard Step 1-->
@@ -35,12 +33,11 @@
                         <a href="@Url.Action("Save", "Projects", new { id = Model.Project.Uid })" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto mr-3">
                             @Labels.Save
                         </a>
-                        <button type="button" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" onclick="MyRio2cCommon.submitForm('#SendToPlayersForm');">
+                        <button type="button" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" onclick="ProjectsBuyerCompanyWidget.showFinishModal('SendToPlayers');">
                             @Labels.Save @Labels.And @Labels.Send
                         </button>
                     </div>
                     <!--end: Form Actions -->
-                    @*}*@
                 </div>
                 <!--end: Form Wizard Form-->
             </div>
@@ -51,8 +48,18 @@
     @Styles.Render("~/bundles/css/onboarding.projects.css")
 }
 @section Scripts {
+    @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/projects.buyercompany.widget.js")
     <script>
+        // Page translations ----------------------------------------------------------------------
+        var translations = {
+            finishModalTitle: '@Labels.Finish @Labels.Project',
+            finishModalMessage: '@Html.Raw(Texts.FinishProjectConfirmationText)',
+            finishPendingModalMessage: '@Html.Raw(string.Format(Texts.FinishProjectPendingConfirmationText, "{0}", "{1}", Labels.Players))',
+            player: '@Labels.Player',
+            players: '@Labels.Players'
+        };
+
         jQuery(document).ready(function () {
             ProjectsBuyerCompanySelectedWidget.init();
             ProjectsMatchBuyerCompanyWidget.init();

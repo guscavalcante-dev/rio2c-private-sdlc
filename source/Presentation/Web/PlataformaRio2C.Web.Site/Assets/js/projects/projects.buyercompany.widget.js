@@ -212,32 +212,35 @@ var ProjectsBuyerCompanyWidget = function () {
     };
 
     // Finish -------------------------------------------------------------------------------------
-    var finish = function () {
+    var finish = function (originPage) {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
         jsonParameters.projectUid = $('#AggregateId').val();
+        jsonParameters.originPage = originPage;
 
         $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/Finish'), jsonParameters, function (data) {
                 MyRio2cCommon.handleAjaxReturn({
                     data: data,
                     // Success
                     onSuccess: function () {
-                        if (typeof (ProjectsMainInformationWidget) !== 'undefined') {
-                            ProjectsMainInformationWidget.init();
-                        }
+                        if (originPage === 'SubmittedDetails') {
+                            if (typeof (ProjectsMainInformationWidget) !== 'undefined') {
+                                ProjectsMainInformationWidget.init();
+                            }
 
-                        if (typeof (ProjectsInterestWidget) !== 'undefined') {
-                            ProjectsInterestWidget.init();
-                        }
+                            if (typeof (ProjectsInterestWidget) !== 'undefined') {
+                                ProjectsInterestWidget.init();
+                            }
 
-                        if (typeof (ProjectsBuyerCompanyWidget) !== 'undefined') {
-                            ProjectsBuyerCompanyWidget.init();
-                        }
+                            if (typeof (ProjectsBuyerCompanyWidget) !== 'undefined') {
+                                ProjectsBuyerCompanyWidget.init();
+                            }
 
-                        var modal = $(updateModalId);
-                        if (modal.length > 0) {
-                            modal.modal('hide');
+                            var modal = $(updateModalId);
+                            if (modal.length > 0) {
+                                modal.modal('hide');
+                            }
                         }
                     },
                     // Error
@@ -252,7 +255,7 @@ var ProjectsBuyerCompanyWidget = function () {
             });
     };
 
-    var showFinishModal = function () {
+    var showFinishModal = function (originPage) {
         var buyerEvaluationsAvailable = $('#ProjectsBuyerEvaluationsAvailable').val();
         if (buyerEvaluationsAvailable <= 0) {
             bootbox.dialog({
@@ -270,7 +273,7 @@ var ProjectsBuyerCompanyWidget = function () {
                         label: labels.confirm,
                         className: "btn btn-info",
                         callback: function () {
-                            finish();
+                            finish(originPage);
                         }
                     }
                 }
@@ -300,7 +303,7 @@ var ProjectsBuyerCompanyWidget = function () {
                         label: labels.confirm,
                         className: "btn btn-info",
                         callback: function () {
-                            finish();
+                            finish(originPage);
                         }
                     }
                 }
@@ -325,8 +328,8 @@ var ProjectsBuyerCompanyWidget = function () {
         unselectCompany: function (attendeeOrganizationUid) {
             unselectCompany(attendeeOrganizationUid);
         },
-        showFinishModal: function () {
-            showFinishModal();
+        showFinishModal: function (originPage) {
+            showFinishModal(originPage);
         }
     };
 }();
