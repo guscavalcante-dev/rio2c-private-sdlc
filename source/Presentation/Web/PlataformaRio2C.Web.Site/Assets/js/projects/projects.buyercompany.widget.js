@@ -315,6 +315,11 @@ var ProjectsBuyerCompanyWidget = function () {
         }
     };
 
+    var save = function (url) {
+        MyRio2cCommon.block();
+        window.location.replace(url);
+    };
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
@@ -334,6 +339,9 @@ var ProjectsBuyerCompanyWidget = function () {
         },
         showFinishModal: function (originPage) {
             showFinishModal(originPage);
+        },
+        save: function (url) {
+            save(url);
         }
     };
 }();
