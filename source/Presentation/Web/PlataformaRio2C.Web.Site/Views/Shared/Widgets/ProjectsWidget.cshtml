@@ -2,6 +2,7 @@
 @using Constants = PlataformaRio2C.Domain.Constants;
 @{
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var editionDto = ViewBag.EditionDto as EditionDto;
     var isSeller = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true;
     var isBuyer = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual) == true;
 }
@@ -19,39 +20,54 @@
             <div class="kt-notification">
                 @if (isSeller)
                 {
-                    <a href="@Url.Action("Submit", "Projects", new { Area = "" })" class="kt-notification__item">
-                        <div class="kt-notification__item-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
-                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <polygon id="Shape" points="0 0 24 0 24 24 0 24" />
-                                    <path d="M17,4 L6,4 C4.79111111,4 4,4.7 4,6 L4,18 C4,19.3 4.79111111,20 6,20 L18,20 C19.2,20 20,19.3 20,18 L20,7.20710678 C20,7.07449854 19.9473216,6.94732158 19.8535534,6.85355339 L17,4 Z M17,11 L7,11 L7,4 L17,4 L17,11 Z" id="Shape" fill="#000000" fill-rule="nonzero" />
-                                    <rect id="Rectangle-16" fill="#000000" opacity="0.3" x="12" y="4" width="3" height="5" rx="0.5" />
-                                </g>
-                            </svg>
-                        </div>
-                        <div class="kt-notification__item-details">
-                            <div class="kt-notification__item-title">
-                                @Labels.Subscription
+                    if (editionDto?.IsProjectSubmitStarted() != true || editionDto.IsProjectSubmitEnded() != true)
+                    {
+                        var subscriptionUrl = Url.Action("SubmittedList", "Projects", new { Area = "" });
+                        var editionUrl = Url.Action("SubmittedList", "Projects", new { Area = "" });
+                        if (editionDto?.IsProjectSubmitStarted() != true)
+                        {
+                            subscriptionUrl = Url.Action("Index", "Projects", new { Area = "" });
+                            editionUrl = Url.Action("Index", "Projects", new { Area = "" });                            
+                        }
+                        <a href="@subscriptionUrl" class="kt-notification__item">
+                            <div class="kt-notification__item-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <polygon id="Shape" points="0 0 24 0 24 24 0 24" />
+                                        <path d="M17,4 L6,4 C4.79111111,4 4,4.7 4,6 L4,18 C4,19.3 4.79111111,20 6,20 L18,20 C19.2,20 20,19.3 20,18 L20,7.20710678 C20,7.07449854 19.9473216,6.94732158 19.8535534,6.85355339 L17,4 Z M17,11 L7,11 L7,4 L17,4 L17,11 Z" id="Shape" fill="#000000" fill-rule="nonzero" />
+                                        <rect id="Rectangle-16" fill="#000000" opacity="0.3" x="12" y="4" width="3" height="5" rx="0.5" />
+                                    </g>
+                                </svg>
                             </div>
-                        </div>
-                    </a>
-                    <a href="@Url.Action("SubmittedList", "Projects", new { Area = "" })" class="kt-notification__item">
-                        <div class="kt-notification__item-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
-                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <rect id="bound" x="0" y="0" width="24" height="24" />
-                                    <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" id="Path-11" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) " />
-                                    <rect id="Rectangle" fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1" />
-                                </g>
-                            </svg>
-                        </div>
-                        <div class="kt-notification__item-details">
-                            <div class="kt-notification__item-title">
-                                @Labels.Edition
+                            <div class="kt-notification__item-details">
+                                <div class="kt-notification__item-title">
+                                    @Labels.Subscription
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                    <a href="@Url.Action("Index", "Projects", new { Area = "" })" class="kt-notification__item">
+                        </a>
+                        <a href="@editionUrl" class="kt-notification__item">
+                            <div class="kt-notification__item-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <rect id="bound" x="0" y="0" width="24" height="24" />
+                                        <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" id="Path-11" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) " />
+                                        <rect id="Rectangle" fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1" />
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="kt-notification__item-details">
+                                <div class="kt-notification__item-title">
+                                    @Labels.Edition
+                                </div>
+                            </div>
+                        </a>
+                    }
+                    var resultUrl = Url.Action("SubmittedList", "Projects", new { Area = "" });
+                    if (editionDto?.IsProjectSubmitEnded() != true)
+                    {
+                        resultUrl = Url.Action("Index", "Projects", new { Area = "" });
+                    }
+                    <a href="@resultUrl" class="kt-notification__item">
                         <div class="kt-notification__item-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon kt-svg-icon--brand">
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -64,6 +80,22 @@
                         <div class="kt-notification__item-details">
                             <div class="kt-notification__item-title">
                                 @Labels.Result
+                            </div>
+                        </div>
+                    </a>
+                    <a class="kt-notification__item"  href="#" onclick="return false;" data-toggle="kt-tooltip" title="" data-placement="bottom" data-original-title="@Labels.ComingSoon...">
+                        <div class="kt-notification__item-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <rect x="0" y="0" width="24" height="24"/>
+                                    <path d="M11.5,5 L18.5,5 C19.3284271,5 20,5.67157288 20,6.5 C20,7.32842712 19.3284271,8 18.5,8 L11.5,8 C10.6715729,8 10,7.32842712 10,6.5 C10,5.67157288 10.6715729,5 11.5,5 Z M5.5,17 L18.5,17 C19.3284271,17 20,17.6715729 20,18.5 C20,19.3284271 19.3284271,20 18.5,20 L5.5,20 C4.67157288,20 4,19.3284271 4,18.5 C4,17.6715729 4.67157288,17 5.5,17 Z M5.5,11 L18.5,11 C19.3284271,11 20,11.6715729 20,12.5 C20,13.3284271 19.3284271,14 18.5,14 L5.5,14 C4.67157288,14 4,13.3284271 4,12.5 C4,11.6715729 4.67157288,11 5.5,11 Z" fill="#000000" opacity="0.3"/>
+                                    <path d="M4.82866499,9.40751652 L7.70335558,6.90006821 C7.91145727,6.71855155 7.9330087,6.40270347 7.75149204,6.19460178 C7.73690043,6.17787308 7.72121098,6.16213467 7.70452782,6.14749103 L4.82983723,3.6242308 C4.62230202,3.44206673 4.30638833,3.4626341 4.12422426,3.67016931 C4.04415337,3.76139218 4,3.87862714 4,4.00000654 L4,9.03071508 C4,9.30685745 4.22385763,9.53071508 4.5,9.53071508 C4.62084305,9.53071508 4.73759731,9.48695028 4.82866499,9.40751652 Z" fill="#000000"/>
+                                </g>
+                            </svg>
+                        </div>
+                        <div class="kt-notification__item-details">
+                            <div class="kt-notification__item-title">
+                                @Labels.Players
                             </div>
                         </div>
                     </a>
