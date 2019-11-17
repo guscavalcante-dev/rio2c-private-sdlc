@@ -4,7 +4,7 @@
 // Created          : 08-29-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-29-2019
+// Last Modified On : 11-17-2019
 // ***********************************************************************
 // <copyright file="OnboardingController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -686,7 +686,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                 false,
                 false,
-                false);
+                true);
 
             return View(cmd);
         }
