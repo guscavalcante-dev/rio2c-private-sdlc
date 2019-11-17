@@ -1701,4 +1701,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Salvo</value>
     <comment>Salvo</comment>
   </data>
+  <data name="Match" xml:space="preserve">
+    <value>Correspondência</value>
+    <comment>Correspondência</comment>
+  </data>
+  <data name="Matches" xml:space="preserve">
+    <value>Correspondências</value>
+    <comment>Correspondências</comment>
+  </data>
 </root>

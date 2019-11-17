@@ -44,7 +44,10 @@
                                                 </a>
                                             </span>
                                             <span class="kt-widget__desc">
-                                                <small>@matchAttendeeOrganizationDto.GetTotalInterestGroupsMatchesCount() matches:</small>
+                                                @{
+                                                    var totalInterestGroupsMatchesCount = matchAttendeeOrganizationDto.GetTotalInterestGroupsMatchesCount();
+                                                }
+                                                <small>@totalInterestGroupsMatchesCount @((totalInterestGroupsMatchesCount != 1 ? Labels.Matches : Labels.Match).ToLowerInvariant()):</small><br/>
                                                 @foreach (var interestGroupsMatch in matchAttendeeOrganizationDto.InterestGroupsMatches.OrderBy(igm => igm.DisplayOrder))
                                                 {
                                                     <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@interestGroupsMatch.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>

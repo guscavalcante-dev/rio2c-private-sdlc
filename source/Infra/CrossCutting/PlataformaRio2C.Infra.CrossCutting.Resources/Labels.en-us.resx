@@ -1689,4 +1689,12 @@
     <value>Saved</value>
     <comment>Salvo</comment>
   </data>
+  <data name="Match" xml:space="preserve">
+    <value>Match</value>
+    <comment>Correspondência</comment>
+  </data>
+  <data name="Matches" xml:space="preserve">
+    <value>Matches</value>
+    <comment>Correspondências</comment>
+  </data>
 </root>
