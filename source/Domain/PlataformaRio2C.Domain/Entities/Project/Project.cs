@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-16-2019
+// Last Modified On : 11-17-2019
 // ***********************************************************************
 // <copyright file="Project.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -186,8 +186,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeTeaserLinks(teaserLink, userId);
 
             this.IsDeleted = false;
-            this.CreateUserId = this.UpdateUserId = userId;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.Now;
         }
 
         /// <summary>Finishes the project.</summary>
