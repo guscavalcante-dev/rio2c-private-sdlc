@@ -4,7 +4,7 @@
 // Created          : 11-08-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-08-2019
+// Last Modified On : 11-17-2019
 // ***********************************************************************
 // <copyright file="projects.projectinfo.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,6 +25,7 @@ var ProjectsProjectInfo = function () {
     // Enable plugins -----------------------------------------------------------------------------
     var enablePlugins = function () {
         //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-restrictions', maxCharCount: 270 });
+        MyRio2cInputMask.enableMask('#EachEpisodePlayingTime', '99:99:99');
         MyRio2cCommon.enableAtLeastOnCheckboxByNameValidation(formId);
     };
 

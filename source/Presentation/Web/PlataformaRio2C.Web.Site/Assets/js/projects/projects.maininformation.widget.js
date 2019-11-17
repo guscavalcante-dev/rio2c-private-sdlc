@@ -4,7 +4,7 @@
 // Created          : 11-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-16-2019
+// Last Modified On : 11-17-2019
 // ***********************************************************************
 // <copyright file="projects.maininformation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -76,6 +76,7 @@ var ProjectsMainInformationWidget = function () {
 
     var enableUpdatePlugins = function () {
         //MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2' });
+        MyRio2cInputMask.enableMask('#EachEpisodePlayingTime', '99:99:99');
         enableAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
