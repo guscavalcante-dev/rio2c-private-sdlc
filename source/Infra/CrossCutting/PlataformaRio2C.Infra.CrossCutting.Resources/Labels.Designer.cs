@@ -3670,6 +3670,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Minutagem.
+        /// </summary>
+        public static string TotalPlayingTime {
+            get {
+                return ResourceManager.GetString("TotalPlayingTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Valor total do projeto (USD).
         /// </summary>
         public static string TotalValueOfProject {
@@ -3927,6 +3936,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string WelcomeToEdition {
             get {
                 return ResourceManager.GetString("WelcomeToEdition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duração da obra.
+        /// </summary>
+        public static string WorkDuration {
+            get {
+                return ResourceManager.GetString("WorkDuration", resourceCulture);
             }
         }
         

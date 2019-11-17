@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-24-2019
+// Last Modified On : 11-17-2019
 // ***********************************************************************
 // <copyright file="Edition.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -37,6 +37,8 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTime OneToOneMeetingsScheduleDate { get; private set; }
         public DateTime NegotiationStartDate { get; private set; }
         public DateTime NegotiationEndDate { get; private set; }
+        public int AttendeeOrganizationMaxSellProjectsCount { get; private set; }
+        public int ProjectMaxBuyerEvaluationsCount { get; private set; }
 
         public virtual Quiz Quiz { get; private set; }
 

@@ -132,7 +132,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 false);
 
             // Create fake projects in the list
-            var projectMaxCount = this.UserAccessControlDto?.EditionAttendeeCollaboratorTickets?.FirstOrDefault()?.GetProjectMaxCount() ?? 0;
+            var projectMaxCount = this.EditionDto?.AttendeeOrganizationMaxSellProjectsCount ?? 0;
             if (projects.Count < projectMaxCount)
             {
                 var initialProject = projects.Count + 1;
@@ -179,7 +179,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return RedirectToAction("SubmittedList", "Projects", new { Area = "" });
             }
 
-            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
             {
                 this.StatusMessageToastr(Texts.ForbiddenErrorMessage, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
                 return RedirectToAction("SubmittedList", "Projects", new { Area = "" });
@@ -211,7 +211,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(mainInformationWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(mainInformationWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
@@ -244,7 +244,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
                 }
 
-                if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(mainInformationWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+                if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(mainInformationWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
                 {
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
@@ -357,7 +357,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
@@ -393,7 +393,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
                 }
 
-                if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+                if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
                 {
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
@@ -505,7 +505,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(linksWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(linksWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
@@ -538,7 +538,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
                 }
 
-                if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(linksWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+                if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(linksWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
                 {
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
@@ -646,7 +646,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(buyerCompanyWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(buyerCompanyWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
@@ -679,7 +679,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
                 }
 
-                if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(buyerCompanyWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+                if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(buyerCompanyWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
                 {
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
@@ -752,9 +752,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
             var firstAttendeeOrganizationCreated = this.UserAccessControlDto.GetFirstAttendeeOrganizationCreated();
             if (firstAttendeeOrganizationCreated != null)
             {
-                var projectsCount = this.projectRepo.Count(p => p.SellerAttendeeOrganization.AttendeeOrganization.Uid == firstAttendeeOrganizationCreated.Uid 
+                var projectsCount = this.projectRepo.Count(p => p.SellerAttendeeOrganization.Uid == firstAttendeeOrganizationCreated.Uid 
                                                                 && !p.IsDeleted);
-                var projectMaxCount = this.UserAccessControlDto?.EditionAttendeeCollaboratorTickets?.FirstOrDefault()?.GetProjectMaxCount() ?? 0;
+                var projectMaxCount = this.EditionDto?.AttendeeOrganizationMaxSellProjectsCount ?? 0;
                 if (projectsCount >= projectMaxCount)
                 {
                     this.StatusMessageToastr(Messages.YouReachedProjectsLimit, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
@@ -769,7 +769,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 projectDto = await this.projectRepo.FindSiteDuplicateDtoByProjectUidAsync(id.Value);
                 if (projectDto != null)
                 {
-                    if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+                    if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
                     {
                         this.StatusMessageToastr(Texts.ForbiddenErrorMessage, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
                         return RedirectToAction("SubmittedList", "Projects", new { Area = "" });
@@ -829,7 +829,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 cmd.UpdatePreSendProperties(
                     this.UserAccessControlDto.GetFirstAttendeeOrganizationCreated()?.Uid, //TODO: Change this
                     ProjectType.Audiovisual.Uid,
-                    this.UserAccessControlDto?.EditionAttendeeCollaboratorTickets?.Select(eact => eact.AttendeeCollaboratorTicket.Uid)?.ToList(),
                     this.UserAccessControlDto.User.Id,
                     this.UserAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -1203,7 +1202,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(buyerCompanyWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(buyerCompanyWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
@@ -1232,7 +1231,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
@@ -1265,7 +1264,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }

@@ -4,7 +4,7 @@
 // Created          : 10-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-09-2019
+// Last Modified On : 11-17-2019
 // ***********************************************************************
 // <copyright file="AttendeeOrganizationDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,10 +20,29 @@ namespace PlataformaRio2C.Domain.Dtos
     {
         public AttendeeOrganization AttendeeOrganization { get; set; }
         public Organization Organization { get; set; }
+        public Edition Edition { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeOrganizationDto"/> class.</summary>
         public AttendeeOrganizationDto()
         {
         }
+
+        #region Edition Limits
+
+        /// <summary>Gets the maximum sell projects count.</summary>
+        /// <returns></returns>
+        public int GetMaxSellProjectsCount()
+        {
+            return this.Edition?.AttendeeOrganizationMaxSellProjectsCount ?? 0;
+        }
+
+        /// <summary>Gets the project maximum buyer evaluations count.</summary>
+        /// <returns></returns>
+        public int GetProjectMaxBuyerEvaluationsCount()
+        {
+            return this.Edition?.ProjectMaxBuyerEvaluationsCount ?? 0;
+        }
+
+        #endregion
     }
 }

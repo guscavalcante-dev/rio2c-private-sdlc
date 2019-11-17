@@ -4,7 +4,7 @@
 // Created          : 11-07-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-14-2019
+// Last Modified On : 11-17-2019
 // ***********************************************************************
 // <copyright file="CreateProjectCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,7 +27,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>CreateProjectCommandHandler</summary>
     public class CreateProjectCommandHandler : BaseProjectCommandHandler, IRequestHandler<CreateProject, AppValidationResult>
     {
-        private readonly IAttendeeCollaboratorTicketRepository attendeeCollaboratorTicketRepo;
         private readonly IProjectTypeRepository projectTypeRepo;
         private readonly ILanguageRepository languageRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
@@ -38,7 +37,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="uow">The uow.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="projectRepository">The project repository.</param>
-        /// <param name="attendeeCollaboratorTicketRepository">The attendee collaborator ticket repository.</param>
         /// <param name="projectTypeRepository">The project type repository.</param>
         /// <param name="languageRepository">The language repository.</param>
         /// <param name="targetAudienceRepository">The target audience repository.</param>
@@ -48,14 +46,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IUnitOfWork uow,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IProjectRepository projectRepository,
-            IAttendeeCollaboratorTicketRepository attendeeCollaboratorTicketRepository,
             IProjectTypeRepository projectTypeRepository,
             ILanguageRepository languageRepository,
             ITargetAudienceRepository targetAudienceRepository,
             IInterestRepository interestRepository)
             : base(eventBus, uow, attendeeOrganizationRepository, projectRepository)
         {
-            this.attendeeCollaboratorTicketRepo = attendeeCollaboratorTicketRepository;
             this.projectTypeRepo = projectTypeRepository;
             this.languageRepo = languageRepository;
             this.targetAudienceRepo = targetAudienceRepository;
@@ -86,7 +82,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             attendeeOrganization.CreateProject(
                 await this.projectTypeRepo.GetAsync(pt => pt.Uid == cmd.ProjectTypeUid && !pt.IsDeleted),
-                cmd.AttendeeCollaboratorTicketsUids?.Any() == true ? this.attendeeCollaboratorTicketRepo.GetAll(act => cmd.AttendeeCollaboratorTicketsUids.Contains(act.Uid) && !act.IsDeleted).ToList() : null,
+                cmd.TotalPlayingTime,
                 cmd.NumberOfEpisodes,
                 cmd.EachEpisodePlayingTime,
                 cmd.ValuePerEpisode,

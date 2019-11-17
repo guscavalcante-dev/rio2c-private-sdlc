@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-16-2019
+// Last Modified On : 11-17-2019
 // ***********************************************************************
 // <copyright file="AttendeeOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,6 +29,7 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTime? OnboardingOrganizationDate { get; private set; }
         public DateTime? OnboardingInterestsDate { get; private set; }
         public DateTime? ProjectSubmissionOrganizationDate { get; private set; }
+        public int SellProjectsCount { get; set; }
         public bool IsApiDisplayEnabled { get; private set; }
 
         public virtual Edition Edition { get; private set; }
@@ -36,7 +37,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         public virtual ICollection<AttendeeOrganizationType> AttendeeOrganizationTypes { get; private set; }
         public virtual ICollection<AttendeeOrganizationCollaborator> AttendeeOrganizationCollaborators { get; private set; }
-        public virtual ICollection<SellerAttendeeOrganization> SellerAttendeeOrganizations { get; private set; }
+        public virtual ICollection<Project> SellProjects { get; private set; }
         public virtual ICollection<ProjectBuyerEvaluation> ProjectBuyerEvaluations { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeOrganization"/> class.</summary>
@@ -49,6 +50,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.Edition = edition;
             this.Organization = organization;
+            this.SellProjectsCount = 0;
             this.UpdateApiDisplay(isApiDisplayEnabled);
 
             this.IsDeleted = false;
@@ -224,7 +226,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Creates the project.</summary>
         /// <param name="projectType">Type of the project.</param>
-        /// <param name="attendeeCollaboratorTickets">The attendee collaborator tickets.</param>
+        /// <param name="totalPlayingTime">The total playing time.</param>
         /// <param name="numberOfEpisodes">The number of episodes.</param>
         /// <param name="eachEpisodePlayingTime">The each episode playing time.</param>
         /// <param name="valuePerEpisode">The value per episode.</param>
@@ -244,7 +246,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void CreateProject(
             ProjectType projectType,
-            List<AttendeeCollaboratorTicket> attendeeCollaboratorTickets,
+            string totalPlayingTime,
             int? numberOfEpisodes,
             string eachEpisodePlayingTime,
             int? valuePerEpisode,
@@ -263,136 +265,40 @@ namespace PlataformaRio2C.Domain.Entities
             string teaserLink,
             int userId)
         {
-            if (this.SellerAttendeeOrganizations == null)
+            if (this.SellProjects == null)
             {
-                this.SellerAttendeeOrganizations = new List<SellerAttendeeOrganization>();
+                this.SellProjects = new List<Project>();
             }
 
+            // Validate collaborator tickets
             if (this.ValidationResult == null)
             {
                 this.ValidationResult = new ValidationResult();
             }
 
-            //var sellerAttendeeOrganizations = this.SellerAttendeeOrganizations.Where(sao => attendeeCollaboratorTickets?.Contains(sao.AttendeeCollaboratorTicket) == true).ToList();
+            this.SellProjects.Add(new Project(
+                projectType,
+                this,
+                totalPlayingTime,
+                numberOfEpisodes,
+                eachEpisodePlayingTime,
+                valuePerEpisode,
+                totalValueOfProject,
+                valueAlreadyRaised,
+                valueStillNeeded,
+                isPitching,
+                titles,
+                logLines,
+                summaries,
+                productionPlans,
+                additionalInformations,
+                interests,
+                targetAudiences,
+                imageLink,
+                teaserLink,
+                userId));
 
-            // If there is no seller attendee organization
-            if (this.SellerAttendeeOrganizations?.Any() != true)
-            {
-                this.SellerAttendeeOrganizations.Add(new SellerAttendeeOrganization(
-                    this,
-                    attendeeCollaboratorTickets?.OrderBy(act => act.CreateDate)?.FirstOrDefault(),
-                    projectType,
-                    numberOfEpisodes,
-                    eachEpisodePlayingTime,
-                    valuePerEpisode,
-                    totalValueOfProject,
-                    valueAlreadyRaised,
-                    valueStillNeeded,
-                    isPitching,
-                    titles,
-                    logLines,
-                    summaries,
-                    productionPlans,
-                    additionalInformations,
-                    interests,
-                    targetAudiences,
-                    imageLink,
-                    teaserLink,
-                    userId));
-            }
-            // If exists seller attendee organization with projects available and buyer evaluations available
-            else if (this.SellerAttendeeOrganizations.Any(sao => sao.HasProjectsAvailable() && sao.HasProjectsBuyerEvaluationsAvailable()))
-            {
-                var sellerAttendeeOrganization = this.SellerAttendeeOrganizations
-                                                            .Where(sao => sao.HasProjectsAvailable() && sao.HasProjectsBuyerEvaluationsAvailable())
-                                                            .OrderByDescending(sao => sao.ProjectsCount)
-                                                            .First();
-                sellerAttendeeOrganization.CreateProject(
-                    projectType,
-                    numberOfEpisodes,
-                    eachEpisodePlayingTime,
-                    valuePerEpisode,
-                    totalValueOfProject,
-                    valueAlreadyRaised,
-                    valueStillNeeded,
-                    isPitching,
-                    titles,
-                    logLines,
-                    summaries,
-                    productionPlans,
-                    additionalInformations,
-                    interests,
-                    targetAudiences,
-                    imageLink,
-                    teaserLink,
-                    userId);
-            }
-            //// If the seller attendee organization has projects available
-            //else if (sellerAttendeeOrganizations.Any(sao => sao.CountProjects() < sao.AttendeeCollaboratorTicket.AttendeeSalesPlatformTicketType.ProjectMaxCount))
-            //{
-            //    foreach (var sellerAttendeeOrganization in sellerAttendeeOrganizations.OrderByDescending(sag => sag.CountProjects()))
-            //    {
-            //        if (sellerAttendeeOrganization.CountProjects() >= sellerAttendeeOrganization.AttendeeCollaboratorTicket.AttendeeSalesPlatformTicketType.ProjectMaxCount)
-            //        {
-            //            continue;
-            //        }
-
-            //        sellerAttendeeOrganization.CreateProject(
-            //            projectType,
-            //            numberOfEpisodes,
-            //            eachEpisodePlayingTime,
-            //            valuePerEpisode,
-            //            totalValueOfProject,
-            //            valueAlreadyRaised,
-            //            valueStillNeeded,
-            //            isPitching,
-            //            titles,
-            //            logLines,
-            //            summaries,
-            //            productionPlans,
-            //            additionalInformations,
-            //            interests,
-            //            targetAudiences,
-            //            imageLink,
-            //            teaserLink,
-            //            userId);
-
-            //        break;
-            //    }
-            //}
-            //// If there is an unused attendee collaborator tickets
-            //else if (attendeeCollaboratorTickets?.Any(act => sellerAttendeeOrganizations.All(sao => sao.AttendeeCollaboratorTicketId != act.Id)) == true)
-            //{
-            //    var attendeeCollaboratorTicket = attendeeCollaboratorTickets?.FirstOrDefault(act => sellerAttendeeOrganizations.All(sao => sao.AttendeeCollaboratorTicketId != act.Id));
-            //    this.SellerAttendeeOrganizations.Add(new SellerAttendeeOrganization(
-            //        this,
-            //        attendeeCollaboratorTicket,
-            //        projectType,
-            //        numberOfEpisodes,
-            //        eachEpisodePlayingTime,
-            //        valuePerEpisode,
-            //        totalValueOfProject,
-            //        valueAlreadyRaised,
-            //        valueStillNeeded,
-            //        isPitching,
-            //        titles,
-            //        logLines,
-            //        summaries,
-            //        productionPlans,
-            //        additionalInformations,
-            //        interests,
-            //        targetAudiences,
-            //        imageLink,
-            //        teaserLink,
-            //        userId));
-            //}
-            // If there is no avaiable projects and tickets
-            else
-            {
-                this.ValidationResult.Add(new ValidationError(Messages.YouReachedProjectsLimit, new string[] { "ToastrError" }));
-                return;
-            }
-
+            this.UpdateProjectsCount();
             this.SynchronizeAttendeeOrganizationTypes(projectType.OrganizationTypes?.FirstOrDefault(ot => ot.IsSeller), userId);
         }
 
@@ -400,8 +306,51 @@ namespace PlataformaRio2C.Domain.Entities
         /// <returns></returns>
         public Project GetLastCreatedProject()
         {
-            return this.SellerAttendeeOrganizations?.Select(sao => sao.GetLastCreatedProject())?.OrderByDescending(p => p.CreateDate)?.FirstOrDefault();
+            return this.SellProjects?.OrderByDescending(p => p.CreateDate).FirstOrDefault();
         }
+
+        #region Projects Counter
+
+        /// <summary>Updates the projects count.</summary>
+        public void UpdateProjectsCount()
+        {
+            this.SellProjectsCount = this.RecountProjects();
+        }
+
+        /// <summary>Counts the projects.</summary>
+        /// <returns></returns>
+        public int RecountProjects()
+        {
+            return this.SellProjects?.Count(p => !p.IsDeleted) ?? 0;
+        }
+
+        /// <summary>Determines whether [has projects available].</summary>
+        /// <returns>
+        ///   <c>true</c> if [has projects available]; otherwise, <c>false</c>.</returns>
+        public bool HasProjectsAvailable()
+        {
+            return this.SellProjectsCount < this.GetMaxSellProjectsCount();
+        }
+
+        #endregion
+
+        #region Edition Limits
+
+        /// <summary>Gets the maximum sell projects count.</summary>
+        /// <returns></returns>
+        public int GetMaxSellProjectsCount()
+        {
+            return this.Edition?.AttendeeOrganizationMaxSellProjectsCount ?? 0;
+        }
+
+        /// <summary>Gets the project maximum buyer evaluations count.</summary>
+        /// <returns></returns>
+        public int GetProjectMaxBuyerEvaluationsCount()
+        {
+            return this.Edition?.ProjectMaxBuyerEvaluationsCount ?? 0;
+        }
+
+        #endregion
 
         #endregion
 
@@ -425,27 +374,32 @@ namespace PlataformaRio2C.Domain.Entities
                 this.ValidationResult = new ValidationResult();
             }
 
-            this.ValidateSellerAttendeeOrganizations();
+            this.ValidateProjectsLimits();
+            this.ValidateProjects();
 
             return this.ValidationResult.IsValid;
         }
 
-        /// <summary>Validates the projects.</summary>
-        public void ValidateSellerAttendeeOrganizations()
+        /// <summary>Validates the projects limits.</summary>
+        public void ValidateProjectsLimits()
         {
-            if (this.SellerAttendeeOrganizations?.Any() != true)
+            if (this.SellProjectsCount > this.GetMaxSellProjectsCount())
+            {
+                this.ValidationResult.Add(new ValidationError(Messages.IsNotPossibleCreateProjectLimit, new string[] { "ToastrError" }));
+            }
+        }
+
+        /// <summary>Validates the projects.</summary>
+        public void ValidateProjects()
+        {
+            if (this.SellProjects?.Any() != true)
             {
                 return;
             }
 
-            if (this.SellerAttendeeOrganizations.GroupBy(d => d.AttendeeCollaboratorTicketId).Count() > 1)
+            foreach (var project in this.SellProjects?.Where(d => !d.IsDeleted && !d.IsCreateValid())?.ToList())
             {
-                this.ValidationResult.Add(new ValidationError(Messages.IsNotPossibleCreateProjectSameTicket, new string[] { "ToastrError" }));
-            }
-
-            foreach (var sellerAttendeeOrganization in this.SellerAttendeeOrganizations?.Where(d => !d.IsDeleted && !d.IsValid())?.ToList())
-            {
-                this.ValidationResult.Add(sellerAttendeeOrganization.ValidationResult);
+                this.ValidationResult.Add(project.ValidationResult);
             }
         }
 

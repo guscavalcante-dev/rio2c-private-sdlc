@@ -5,7 +5,7 @@
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
-    var isCollaborator = userAccessControlDto?.HasEditionAttendeeOrganization(Model.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid) == true;
+    var isCollaborator = userAccessControlDto?.HasEditionAttendeeOrganization(Model.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) == true;
     var isProjectSubmissionOpen = editionDto?.IsProjectSubmitOpen() == true;
     var isProjectFinished = Model.Project.IsFinished();
 }
@@ -13,16 +13,16 @@
     <div class="kt-widget kt-widget--user-profile-3">
         <div class="kt-widget__top">
             <div style="float: right;">
-                @if (Model.SellerAttendeeOrganizationDto?.AttendeeOrganizationDto?.Organization?.HasImage() == true)
+                @if (Model.SellerAttendeeOrganizationDto?.Organization?.HasImage() == true)
                 {
                     <div class="kt-widget__media">
-                        <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, Model.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.Organization.Uid, Model.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="image">
+                        <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, Model.SellerAttendeeOrganizationDto.Organization.Uid, Model.SellerAttendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="image">
                     </div>
                 }
                 else
                 {
                     <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest" style="width: 110px; height: 110px;">
-                        @(Model.SellerAttendeeOrganizationDto?.AttendeeOrganizationDto?.Organization?.GetTradeNameAbbreviation() ?? "-")
+                        @(Model.SellerAttendeeOrganizationDto?.Organization?.GetTradeNameAbbreviation() ?? "-")
                     </div>
                 }
             </div>
@@ -45,10 +45,10 @@
                     }
                 </div>
                 <div class="kt-widget__subhead pt-0">
-                    @Labels.Producer: @(Model.SellerAttendeeOrganizationDto?.AttendeeOrganizationDto?.Organization?.TradeName ?? "-")
-                    @if (isCollaborator && !string.IsNullOrEmpty(Model.SellerAttendeeOrganizationDto?.AttendeeOrganizationDto?.Organization?.Document))
+                    @Labels.Producer: @(Model.SellerAttendeeOrganizationDto?.Organization?.TradeName ?? "-")
+                    @if (isCollaborator && !string.IsNullOrEmpty(Model.SellerAttendeeOrganizationDto?.Organization?.Document))
                     {
-                        @:- @(Model.SellerAttendeeOrganizationDto?.AttendeeOrganizationDto?.Organization.Document)
+                        @:- @(Model.SellerAttendeeOrganizationDto?.Organization.Document)
                     }
                 </div>
                 <div class="kt-widget__info" style="display: block;">
@@ -77,6 +77,12 @@
                     </div>
                 </div>
             }
+            <div class="kt-widget__item w-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.TotalPlayingTime</span>
+                    <span class="kt-widget__value"><span>@(Model.Project?.TotalPlayingTime ?? "-")</span></span>
+                </div>
+            </div>
             <div class="kt-widget__item w-50">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.NumberOfEpisodes</span>

@@ -4,7 +4,7 @@
 // Created          : 10-03-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-16-2019
+// Last Modified On : 11-17-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorTicketDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,13 +24,6 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <summary>Initializes a new instance of the <see cref="AttendeeCollaboratorTicketDto"/> class.</summary>
         public AttendeeCollaboratorTicketDto()
         {
-        }
-
-        /// <summary>Gets the project maximum count.</summary>
-        /// <returns></returns>
-        public int GetProjectMaxCount()
-        {
-            return this.AttendeeSalesPlatformTicketType?.ProjectMaxCount ?? 0;
         }
     }
 }

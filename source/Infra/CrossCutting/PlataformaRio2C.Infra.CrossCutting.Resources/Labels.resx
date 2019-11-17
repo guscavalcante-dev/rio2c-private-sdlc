@@ -1709,4 +1709,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Correspondências</value>
     <comment>Correspondências</comment>
   </data>
+  <data name="TotalPlayingTime" xml:space="preserve">
+    <value>Minutagem</value>
+    <comment>Minutagem</comment>
+  </data>
+  <data name="WorkDuration" xml:space="preserve">
+    <value>Duração da obra</value>
+    <comment>Duração da obra</comment>
+  </data>
 </root>

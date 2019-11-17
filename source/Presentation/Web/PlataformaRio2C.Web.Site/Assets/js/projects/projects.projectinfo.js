@@ -25,6 +25,7 @@ var ProjectsProjectInfo = function () {
     // Enable plugins -----------------------------------------------------------------------------
     var enablePlugins = function () {
         //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-restrictions', maxCharCount: 270 });
+        MyRio2cInputMask.enableMask('#TotalPlayingTime', '99:99:99');
         MyRio2cInputMask.enableMask('#EachEpisodePlayingTime', '99:99:99');
         MyRio2cCommon.enableAtLeastOnCheckboxByNameValidation(formId);
     };

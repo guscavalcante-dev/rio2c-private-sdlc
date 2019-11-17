@@ -22,8 +22,14 @@ namespace PlataformaRio2C.Domain.Entities
     /// <summary>Project</summary>
     public class Project : Entity
     {
+        public static readonly int TotalPlayingTimeMinLength = 1;
+        public static readonly int TotalPlayingTimeMaxLength = 10;
+        public static readonly int EachEpisodePlayingTimeMinLength = 1;
+        public static readonly int EachEpisodePlayingTimeMaxLength = 10;
+
         public int ProjectTypeId { get; private set; }
         public int SellerAttendeeOrganizationId { get; private set; }
+        public string TotalPlayingTime { get; private set; }
         public int? NumberOfEpisodes { get; private set; }
         public string EachEpisodePlayingTime { get; private set; }
         public int? ValuePerEpisode { get; private set; }
@@ -32,11 +38,10 @@ namespace PlataformaRio2C.Domain.Entities
         public int? ValueStillNeeded { get; private set; }
         public bool IsPitching { get; private set; }
         public DateTime? FinishDate { get; private set; }
-        public int ProjectBuyerEvaluationGroupsCount { get; private set; }
         public int ProjectBuyerEvaluationsCount { get; private set; }
 
         public virtual ProjectType ProjectType { get; private set; }
-        public virtual SellerAttendeeOrganization SellerAttendeeOrganization { get; private set; }
+        public virtual AttendeeOrganization SellerAttendeeOrganization { get; private set; }
 
         public virtual ICollection<ProjectTitle> Titles { get; private set; }
         public virtual ICollection<ProjectLogLine> LogLines { get; private set; }
@@ -52,6 +57,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Initializes a new instance of the <see cref="Project"/> class.</summary>
         /// <param name="projectType">Type of the project.</param>
         /// <param name="sellerAttendeeOrganization">The seller attendee organization.</param>
+        /// <param name="totalPlayingTime">The total playing time.</param>
         /// <param name="numberOfEpisodes">The number of episodes.</param>
         /// <param name="eachEpisodePlayingTime">The each episode playing time.</param>
         /// <param name="valuePerEpisode">The value per episode.</param>
@@ -71,7 +77,8 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public Project(
             ProjectType projectType,
-            SellerAttendeeOrganization sellerAttendeeOrganization,
+            AttendeeOrganization sellerAttendeeOrganization,
+            string totalPlayingTime,
             int? numberOfEpisodes,
             string eachEpisodePlayingTime,
             int? valuePerEpisode,
@@ -94,6 +101,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.ProjectType = projectType;
             this.SellerAttendeeOrganizationId = sellerAttendeeOrganization?.Id ?? 0;
             this.SellerAttendeeOrganization = sellerAttendeeOrganization;
+            this.TotalPlayingTime = totalPlayingTime;
             this.NumberOfEpisodes = numberOfEpisodes;
             this.EachEpisodePlayingTime = eachEpisodePlayingTime;
             this.ValuePerEpisode = valuePerEpisode;
@@ -102,7 +110,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValueStillNeeded = valueStillNeeded;
             this.IsPitching = isPitching;
             this.FinishDate = null;
-            this.ProjectBuyerEvaluationGroupsCount = 0;
             this.ProjectBuyerEvaluationsCount = 0;
 
             this.SynchronizeTitles(titles, userId);
@@ -126,6 +133,7 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>Updates the main information.</summary>
+        /// <param name="totalPlayingTime">The total playing time.</param>
         /// <param name="numberOfEpisodes">The number of episodes.</param>
         /// <param name="eachEpisodePlayingTime">The each episode playing time.</param>
         /// <param name="valuePerEpisode">The value per episode.</param>
@@ -140,6 +148,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="additionalInformations">The additional informations.</param>
         /// <param name="userId">The user identifier.</param>
         public void UpdateMainInformation(
+            string totalPlayingTime,
             int? numberOfEpisodes,
             string eachEpisodePlayingTime,
             int? valuePerEpisode,
@@ -154,6 +163,7 @@ namespace PlataformaRio2C.Domain.Entities
             List<ProjectAdditionalInformation> additionalInformations,
             int userId)
         {
+            this.TotalPlayingTime = totalPlayingTime;
             this.NumberOfEpisodes = numberOfEpisodes;
             this.EachEpisodePlayingTime = eachEpisodePlayingTime;
             this.ValuePerEpisode = valuePerEpisode;
@@ -263,8 +273,6 @@ namespace PlataformaRio2C.Domain.Entities
         public void UpdateBuyerEvaluationCounts()
         {
             this.ProjectBuyerEvaluationsCount = this.RecountBuyerEvaluations();
-            this.ProjectBuyerEvaluationGroupsCount = this.RecountBuyerEvaluationGroups();
-            this.SellerAttendeeOrganization.UpdateProjectsBuyerEvaluationGroupsCount();
         }
 
         /// <summary>Recounts the buyer evaluations.</summary>
@@ -272,19 +280,6 @@ namespace PlataformaRio2C.Domain.Entities
         public int RecountBuyerEvaluations()
         {
             return this.BuyerEvaluations?.Count(be => !be.IsDeleted) ?? 0;
-        }
-
-        /// <summary>Recounts the buyer evaluation groups.</summary>
-        /// <returns></returns>
-        public int RecountBuyerEvaluationGroups()
-        {
-            var ticketTypeBuyerEvaluationMaxCount = this.SellerAttendeeOrganization.GetTicketTypeBuyerEvaluationMaxCount();
-            if (ticketTypeBuyerEvaluationMaxCount == 0)
-            {
-                return 0;
-            }
-
-            return (int)Math.Ceiling((decimal)this.ProjectBuyerEvaluationsCount / (decimal)ticketTypeBuyerEvaluationMaxCount);
         }
 
         /// <summary>Gets the buyer evaluation by attendee organization uid.</summary>
@@ -798,6 +793,8 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.ValidationResult = new ValidationResult();
 
+            this.ValidateTotalPlayingTime();
+            this.ValidateEachEpisodePlayingTime();
             this.ValidateTitles();
             this.ValidateLogLines();
             this.ValidateSummaries();
@@ -817,13 +814,6 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.ValidationResult = new ValidationResult();
 
-            this.ValidateTitles();
-            this.ValidateLogLines();
-            this.ValidateSummaries();
-            this.ValidateProductionPlans();
-            this.ValidateAdditionalInformations();
-            this.ValidateImageLinks();
-            this.ValidateTeaserLinks();
             this.ValidateBuyerEvaluations();
             this.ValidateRequiredBuyerEvaluations();
 
@@ -839,28 +829,28 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        ///// <summary>Validates the name.</summary>
-        //public void ValidateName()
-        //{
-        //    if (string.IsNullOrEmpty(this.Name?.Trim()))
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Name), new string[] { "Name" }));
-        //    }
+        /// <summary>Validates the total playing time.</summary>
+        public void ValidateTotalPlayingTime()
+        {
+            if (string.IsNullOrEmpty(this.TotalPlayingTime?.Trim()))
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.TotalPlayingTime), new string[] { "TotalPlayingTime" }));
+            }
 
-        //    if (this.Name?.Trim().Length < NameMinLength || this.Name?.Trim().Length > NameMaxLength)
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, NameMaxLength, NameMinLength), new string[] { "Name" }));
-        //    }
-        //}
+            if (this.TotalPlayingTime?.Trim().Length < TotalPlayingTimeMinLength || this.TotalPlayingTime?.Trim().Length > TotalPlayingTimeMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.TotalPlayingTime, TotalPlayingTimeMaxLength, TotalPlayingTimeMinLength), new string[] { "TotalPlayingTime" }));
+            }
+        }
 
-        ///// <summary>Validates the descriptions.</summary>
-        //public void ValidateDescriptions()
-        //{
-        //    foreach (var description in this.Descriptions?.Where(d => !d.IsValid())?.ToList())
-        //    {
-        //        this.ValidationResult.Add(description.ValidationResult);
-        //    }
-        //}
+        /// <summary>Validates the each episode playing time.</summary>
+        public void ValidateEachEpisodePlayingTime()
+        {
+            if (!string.IsNullOrEmpty(this.EachEpisodePlayingTime) && this.EachEpisodePlayingTime?.Trim().Length > EachEpisodePlayingTimeMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.EachEpisodePlayingTime, EachEpisodePlayingTimeMaxLength, 1), new string[] { "EachEpisodePlayingTime" }));
+            }
+        }
 
         /// <summary>Validates the titles.</summary>
         public void ValidateTitles()
@@ -968,14 +958,9 @@ namespace PlataformaRio2C.Domain.Entities
                 return;
             }
 
-            //if (this.SellerAttendeeOrganization.ProjectsBuyerEvaluationGroupsCount > this.SellerAttendeeOrganization.GetTicketTypeBuyerEvaluationGroupMaxCount())
-            //{
-            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.MaxProjectBuyersGroupsReached, Labels.Player, this.SellerAttendeeOrganization.GetTicketTypeBuyerEvaluationMaxCount(), Labels.Players), new string[] { "ToastrError" }));
-            //}
-
-            if (this.ProjectBuyerEvaluationsCount > this.SellerAttendeeOrganization.GetTicketTypeBuyerEvaluationMaxCount())
+            if (this.ProjectBuyerEvaluationsCount > this.SellerAttendeeOrganization.GetProjectMaxBuyerEvaluationsCount())
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.MaxProjectBuyersEvaluationsReached, this.SellerAttendeeOrganization.GetTicketTypeBuyerEvaluationMaxCount(), Labels.Players), new string[] { "ToastrError" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.MaxProjectBuyersEvaluationsReached, this.SellerAttendeeOrganization.GetProjectMaxBuyerEvaluationsCount(), Labels.Players), new string[] { "ToastrError" }));
             }
 
             foreach (var buyerEvaluation in this.BuyerEvaluations?.Where(t => !t.IsValid())?.ToList())

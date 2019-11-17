@@ -4,7 +4,7 @@
 // Created          : 11-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-14-2019
+// Last Modified On : 11-17-2019
 // ***********************************************************************
 // <copyright file="ProjectBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -31,6 +31,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public List<ProjectSummaryBaseCommand> Summaries { get; set; }
 
+        [Display(Name = "TotalPlayingTime", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public string TotalPlayingTime { get; set; }
+
         [Display(Name = "NumberOfEpisodes", ResourceType = typeof(Labels))]
         public int? NumberOfEpisodes { get; set; }
 
@@ -45,13 +49,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public List<ProjectProductionPlanBaseCommand> ProductPlans { get; set; }
 
-        [Display(Name = "ValuePerEpisode", ResourceType = typeof(Labels))]
-        //[RequiredIfNotEmpty("NumberOfEpisodes", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public int? ValuePerEpisode { get; set; }
-
         [Display(Name = "TotalValueOfProject", ResourceType = typeof(Labels))]
         //[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public int? TotalValueOfProject { get; set; }
+
+        [Display(Name = "ValuePerEpisode", ResourceType = typeof(Labels))]
+        //[RequiredIfNotEmpty("NumberOfEpisodes", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public int? ValuePerEpisode { get; set; }
 
         [Display(Name = "ValueAlreadyRaised", ResourceType = typeof(Labels))]
         //[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -82,7 +86,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public Guid? AttendeeOrganizationUid { get; private set; }
         public Guid ProjectTypeUid { get; private set; }
-        public List<Guid> AttendeeCollaboratorTicketsUids { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="OrganizationBaseCommand"/> class.</summary>
         public ProjectBaseCommand()
@@ -108,6 +111,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isProductionPlanRequired,
             bool isAdditionalInformationRequired)
         {
+            this.TotalPlayingTime = entity?.Project?.TotalPlayingTime;
             this.NumberOfEpisodes = entity?.Project?.NumberOfEpisodes;
             this.EachEpisodePlayingTime = entity?.Project?.EachEpisodePlayingTime;
             this.ValuePerEpisode = entity?.Project?.ValuePerEpisode;
@@ -146,7 +150,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Updates the pre send properties.</summary>
         /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
         /// <param name="projectTypeUid">The project type uid.</param>
-        /// <param name="attendeeCollaboratorTicketsUids">The attendee collaborator tickets uids.</param>
         /// <param name="userId">The user identifier.</param>
         /// <param name="userUid">The user uid.</param>
         /// <param name="editionId">The edition identifier.</param>
@@ -155,7 +158,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public void UpdatePreSendProperties(
             Guid? attendeeOrganizationUid,
             Guid projectTypeUid,
-            List<Guid> attendeeCollaboratorTicketsUids,
             int userId,
             Guid userUid,
             int? editionId,
@@ -164,7 +166,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
             this.AttendeeOrganizationUid = attendeeOrganizationUid;
             this.ProjectTypeUid = projectTypeUid;
-            this.AttendeeCollaboratorTicketsUids = attendeeCollaboratorTicketsUids;
             this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
         }
 

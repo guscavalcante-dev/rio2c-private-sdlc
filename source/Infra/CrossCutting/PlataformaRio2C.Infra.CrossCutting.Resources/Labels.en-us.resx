@@ -1697,4 +1697,12 @@
     <value>Matches</value>
     <comment>Correspondências</comment>
   </data>
+  <data name="TotalPlayingTime" xml:space="preserve">
+    <value>Length</value>
+    <comment>Minutagem</comment>
+  </data>
+  <data name="WorkDuration" xml:space="preserve">
+    <value>Length</value>
+    <comment>Duração da obra</comment>
+  </data>
 </root>

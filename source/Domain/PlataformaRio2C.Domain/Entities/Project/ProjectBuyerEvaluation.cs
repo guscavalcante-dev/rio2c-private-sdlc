@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-14-2019
+// Last Modified On : 11-17-2019
 // ***********************************************************************
 // <copyright file="ProjectBuyerEvaluation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,7 +25,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         public int ProjectId { get; private set; }
         public int BuyerAttendeeOrganizationId { get; private set; }
-        public int? ProjectEvaluationStatusId { get; private set; }
+        public int ProjectEvaluationStatusId { get; private set; }
         public string Reason { get; private set; }
         public bool IsSent { get; private set; }
         public int SellerUserId { get; private set; }

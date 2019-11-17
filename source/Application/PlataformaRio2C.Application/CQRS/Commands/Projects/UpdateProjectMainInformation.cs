@@ -4,7 +4,7 @@
 // Created          : 11-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-11-2019
+// Last Modified On : 11-17-2019
 // ***********************************************************************
 // <copyright file="UpdateProjectMainInformation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -31,6 +31,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<ProjectLogLineBaseCommand> LogLines { get; set; }
 
         public List<ProjectSummaryBaseCommand> Summaries { get; set; }
+
+        [Display(Name = "TotalPlayingTime", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public string TotalPlayingTime { get; set; }
 
         [Display(Name = "NumberOfEpisodes", ResourceType = typeof(Labels))]
         public int? NumberOfEpisodes { get; set; }
@@ -79,6 +83,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isAdditionalInformationRequired)
         {
             this.ProjectUid = entity?.Project?.Uid;
+            this.TotalPlayingTime = entity?.Project?.TotalPlayingTime;
             this.NumberOfEpisodes = entity?.Project?.NumberOfEpisodes;
             this.EachEpisodePlayingTime = entity?.Project?.EachEpisodePlayingTime;
             this.ValuePerEpisode = entity?.Project?.ValuePerEpisode;

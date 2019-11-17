@@ -4,7 +4,7 @@
 // Created          : 11-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-16-2019
+// Last Modified On : 11-17-2019
 // ***********************************************************************
 // <copyright file="ProjectDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,7 +24,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public bool IsFakeProject { get; set; }
         public Project Project { get; set; }
         public ProjectType ProjectType { get; set; }
-        public SellerAttendeeOrganizationDto SellerAttendeeOrganizationDto { get; set; }
+        public AttendeeOrganizationDto SellerAttendeeOrganizationDto { get; set; }
         public IEnumerable<ProjectTitleDto> ProjectTitleDtos { get; set; }
         public IEnumerable<ProjectLogLineDto> ProjectLogLineDtos { get; set; }
         public IEnumerable<ProjectSummaryDto> ProjectSummaryDtos { get; set; }
@@ -79,7 +79,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <returns></returns>
         public int GetProjectBuyerEvaluationMax()
         {
-            return /*(this.Project?.ProjectBuyerEvaluationGroupsCount ?? 0) * */this.SellerAttendeeOrganizationDto.GetProjectsBuyerEvaluationsMax();
+            return this.SellerAttendeeOrganizationDto.GetProjectMaxBuyerEvaluationsCount();
         }
 
         /// <summary>Gets the projects buyer evaluations used.</summary>
@@ -93,7 +93,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <returns></returns>
         public int GetProjectsBuyerEvaluationsAvailable()
         {
-            return this.GetProjectBuyerEvaluationMax() - this.GetProjectsBuyerEvaluationsUsed()/* + this.SellerAttendeeOrganizationDto.GetProjectsBuyerEvaluationsAvailable()*/;
+            return this.GetProjectBuyerEvaluationMax() - this.GetProjectsBuyerEvaluationsUsed();
         }
 
         #endregion

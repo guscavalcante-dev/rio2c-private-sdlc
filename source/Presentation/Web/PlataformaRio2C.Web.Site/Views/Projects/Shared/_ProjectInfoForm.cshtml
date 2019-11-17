@@ -41,10 +41,10 @@
                                                        class="require-one-item"
                                                        data-id="@interests.Key.Uid"
                                                        @if (Model.InterestsUids?.Contains(interest.Uid) == true) { <text> checked </text> } /> @interest.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')
-                                                <span></span>
-                                            </label>
-                                        </div>
-                                    }
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                        }
                                 </div>
                             </div>
                         }
@@ -65,10 +65,20 @@
                                        class="require-one"
                                        data-id="targetaudience-group"
                                        @if (Model.TargetAudiencesUids?.Contains(targetAudience.Uid) == true) { <text> checked </text> } /> @targetAudience.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')
-                                <span></span>
-                            </label>
-                        }
+                                    <span></span>
+                                </label>
+                            }
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h5>@Labels.WorkDuration</h5>
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.TotalPlayingTime, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.TotalPlayingTime, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.TotalPlayingTime, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="row">
@@ -76,12 +86,12 @@
                     <h5>@Labels.ForSeries</h5>
                 </div>
                 <div class="form-group col-md-6">
-                    @Html.LabelFor(m => m.NumberOfEpisodes, new { @class = "control-label" }) <span class="form-optional-input text-muted">opcional</span>
+                    @Html.LabelFor(m => m.NumberOfEpisodes, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
                     @Html.TextBoxFor(m => m.NumberOfEpisodes, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.NumberOfEpisodes, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
-                    @Html.LabelFor(m => m.EachEpisodePlayingTime, new { @class = "control-label" }) <span class="form-optional-input text-muted">opcional</span>
+                    @Html.LabelFor(m => m.EachEpisodePlayingTime, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
                     @Html.TextBoxFor(m => m.EachEpisodePlayingTime, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.EachEpisodePlayingTime, "", new { @class = "text-danger" })
                 </div>
@@ -96,12 +106,12 @@
                     <h5>@Html.Raw(Messages.ProjectBudget)</h5>
                 </div>
                 <div class="form-group col-md-6">
-                    @Html.LabelFor(m => m.TotalValueOfProject, new { @class = "control-label" }) <span class="form-optional-input text-muted">opcional</span>
+                    @Html.LabelFor(m => m.TotalValueOfProject, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
                     @Html.TextBoxFor(m => m.TotalValueOfProject, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.TotalValueOfProject, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
-                    @Html.LabelFor(m => m.ValuePerEpisode, new { @class = "control-label" }) <span class="form-optional-input text-muted">opcional</span>
+                    @Html.LabelFor(m => m.ValuePerEpisode, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
                     @Html.TextBoxFor(m => m.ValuePerEpisode, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.ValuePerEpisode, "", new { @class = "text-danger" })
                 </div>
@@ -111,12 +121,12 @@
                     <h5>@Html.Raw(Messages.FundingPlan)</h5>
                 </div>
                 <div class="form-group col-md-6">
-                    @Html.LabelFor(m => m.ValueAlreadyRaised, new { @class = "control-label" }) <span class="form-optional-input text-muted">opcional</span>
+                    @Html.LabelFor(m => m.ValueAlreadyRaised, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
                     @Html.TextBoxFor(m => m.ValueAlreadyRaised, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.ValueAlreadyRaised, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
-                    @Html.LabelFor(m => m.ValueStillNeeded, new { @class = "control-label" }) <span class="form-optional-input text-muted">opcional</span>
+                    @Html.LabelFor(m => m.ValueStillNeeded, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
                     @Html.TextBoxFor(m => m.ValueStillNeeded, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.ValueStillNeeded, "", new { @class = "text-danger" })
                 </div>
@@ -126,12 +136,12 @@
                     <h5>Links <small>(@Html.Raw(Messages.LinksForDownloadNotAccepted))</small></h5>
                 </div>
                 <div class="form-group col-md-6">
-                    @Html.LabelFor(m => m.ImageLinks, new { @class = "control-label" }) <span class="form-optional-input text-muted">opcional</span>
+                    @Html.LabelFor(m => m.ImageLinks, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
                     @Html.TextBoxFor(m => m.ImageLinks, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.ImageLinks, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
-                    @Html.LabelFor(m => m.TeaserLinks, new { @class = "control-label" }) <span class="form-optional-input text-muted">opcional</span>
+                    @Html.LabelFor(m => m.TeaserLinks, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
                     @Html.TextBoxFor(m => m.TeaserLinks, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.TeaserLinks, "", new { @class = "text-danger" })
                 </div>

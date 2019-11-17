@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-14-2019
+// Last Modified On : 11-17-2019
 // ***********************************************************************
 // <copyright file="ProjectMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,9 +24,16 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         {
             this.ToTable("Projects");
 
+            this.Property(t => t.TotalPlayingTime)
+                .HasMaxLength(Project.TotalPlayingTimeMaxLength)
+                .IsRequired();
+
+            this.Property(t => t.EachEpisodePlayingTime)
+                .HasMaxLength(Project.EachEpisodePlayingTimeMaxLength);
+
             //Relationships
             this.HasRequired(t => t.SellerAttendeeOrganization)
-                .WithMany(e => e.Projects)
+                .WithMany(e => e.SellProjects)
                 .HasForeignKey(d => d.SellerAttendeeOrganizationId);
 
             this.HasMany(c => c.Titles)

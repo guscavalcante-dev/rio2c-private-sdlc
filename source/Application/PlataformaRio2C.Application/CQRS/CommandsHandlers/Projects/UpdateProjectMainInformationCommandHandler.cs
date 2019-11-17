@@ -4,7 +4,7 @@
 // Created          : 11-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-14-2019
+// Last Modified On : 11-17-2019
 // ***********************************************************************
 // <copyright file="UpdateProjectMainInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -78,8 +78,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
 
             project.UpdateMainInformation(
-                //await this.projectTypeRepo.GetAsync(pt => pt.Uid == cmd.ProjectTypeUid),
-                //cmd.AttendeeOrganizationUid.HasValue ? await this.attendeeOrganizationRepo.GetAsync(ao => ao.Uid == cmd.AttendeeOrganizationUid) : null,
+                cmd.TotalPlayingTime,
                 cmd.NumberOfEpisodes,
                 cmd.EachEpisodePlayingTime,
                 cmd.ValuePerEpisode,

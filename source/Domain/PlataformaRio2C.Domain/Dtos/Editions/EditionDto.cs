@@ -4,7 +4,7 @@
 // Created          : 08-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-16-2019
+// Last Modified On : 11-17-2019
 // ***********************************************************************
 // <copyright file="EditionDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,6 +35,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTime OneToOneMeetingsScheduleDate { get; private set; }
         public DateTime NegotiationStartDate { get; private set; }
         public DateTime NegotiationEndDate { get; private set; }
+        public int AttendeeOrganizationMaxSellProjectsCount { get; private set; }
+        public int ProjectMaxBuyerEvaluationsCount { get; private set; }
         public DateTime CreateDate { get; private set; }
         public int CreateUserId { get; private set; }
         public int UpdateUserId { get; private set; }
@@ -75,6 +77,8 @@ namespace PlataformaRio2C.Domain.Dtos
             this.OneToOneMeetingsScheduleDate = entity.OneToOneMeetingsScheduleDate;
             this.NegotiationStartDate = entity.NegotiationStartDate;
             this.NegotiationEndDate = entity.NegotiationEndDate;
+            this.AttendeeOrganizationMaxSellProjectsCount = entity.AttendeeOrganizationMaxSellProjectsCount;
+            this.ProjectMaxBuyerEvaluationsCount = entity.ProjectMaxBuyerEvaluationsCount;
             this.CreateDate = entity.CreateDate;
             this.CreateUserId = entity.CreateUserId;
             this.UpdateDate = entity.UpdateDate;

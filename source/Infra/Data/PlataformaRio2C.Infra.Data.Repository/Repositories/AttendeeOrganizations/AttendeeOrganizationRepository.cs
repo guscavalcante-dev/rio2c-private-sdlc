@@ -327,7 +327,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             var query = this.GetBaseQuery()
                                 .FindByOrganizationTypeUid(editionId, buyerOrganizationType?.Uid ?? Guid.Empty)
-                                .FindNotByUid(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid)
+                                .FindNotByUid(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid)
                                 .FindByInterestUids(matchInterests);
 
             return await query
@@ -357,7 +357,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             var query = this.GetBaseQuery()
                                 .FindByOrganizationTypeUid(editionId, buyerOrganizationType?.Uid ?? Guid.Empty)
-                                .FindNotByUid(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid);
+                                .FindNotByUid(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid);
 
             return await query
                             .Select(ao => new AttendeeOrganizationDto

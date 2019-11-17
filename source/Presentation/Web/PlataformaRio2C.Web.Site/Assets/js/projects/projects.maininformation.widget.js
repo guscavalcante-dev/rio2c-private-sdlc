@@ -76,6 +76,7 @@ var ProjectsMainInformationWidget = function () {
 
     var enableUpdatePlugins = function () {
         //MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2' });
+        MyRio2cInputMask.enableMask('#TotalPlayingTime', '99:99:99');
         MyRio2cInputMask.enableMask('#EachEpisodePlayingTime', '99:99:99');
         enableAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });

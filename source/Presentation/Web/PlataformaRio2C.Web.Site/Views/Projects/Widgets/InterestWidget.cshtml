@@ -6,7 +6,7 @@
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var groupedInterests = ViewBag.GroupedInterests as List<IGrouping<InterestGroup, Interest>>;
     var targetAudiences = ViewBag.TargetAudiences as List<TargetAudience>;
-    var isCollaborator = userAccessControlDto?.HasEditionAttendeeOrganization(Model.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid) == true;
+    var isCollaborator = userAccessControlDto?.HasEditionAttendeeOrganization(Model.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) == true;
     var isProjectSubmissionOpen = editionDto?.IsProjectSubmitOpen() == true;
     var isProjectFinished = Model.Project.IsFinished();
 }
