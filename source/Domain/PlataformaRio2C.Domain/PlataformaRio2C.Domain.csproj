@@ -82,6 +82,7 @@
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorDto.cs" />
     <Compile Include="Dtos\AttendeeOrganiaztionTypes\AttendeeOrganizationTypeDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttemdeeOrganizationSiteDetailsDto.cs" />
+    <Compile Include="Dtos\AttendeeOrganizations\MatchAttendeeOrganizationDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\SellerAttendeeOrganizationDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationSiteExecutiveWidgetDto.cs" />

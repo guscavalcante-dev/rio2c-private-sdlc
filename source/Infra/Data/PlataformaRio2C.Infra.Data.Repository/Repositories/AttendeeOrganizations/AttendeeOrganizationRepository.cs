@@ -4,7 +4,7 @@
 // Created          : 08-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-14-2019
+// Last Modified On : 11-17-2019
 // ***********************************************************************
 // <copyright file="AttendeeOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -191,6 +191,33 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
     #endregion
 
+    #region MatchAttendeeOrganizationDto IQueryable Extensions
+
+    /// <summary>
+    /// MatchAttendeeOrganizationDtoIQueryableExtensions
+    /// </summary>
+    internal static class MatchAttendeeOrganizationDtoIQueryableExtensions
+    {
+        /// <summary>
+        /// To the list paged.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        internal static async Task<IPagedList<MatchAttendeeOrganizationDto>> ToListPagedAsync(this IQueryable<MatchAttendeeOrganizationDto> query, int page, int pageSize)
+        {
+            // Page the list
+            var pagedList = await query.ToPagedListAsync(page, pageSize);
+            if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
+                pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
+
+            return pagedList;
+        }
+    }
+
+    #endregion
+
     /// <summary>AttendeeOrganizationRepository</summary>
     public class AttendeeOrganizationRepository : Repository<PlataformaRio2CContext, AttendeeOrganization>, IAttendeeOrganizationRepository
     {
@@ -285,30 +312,36 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<AttendeeOrganizationDto>> FindAllDtoByMatchingProjectBuyerAsync(int editionId, ProjectDto projectDto, int page, int pageSize)
+        public async Task<IPagedList<MatchAttendeeOrganizationDto>> FindAllDtoByMatchingProjectBuyerAsync(int editionId, ProjectDto projectDto, int page, int pageSize)
         {
             var buyerOrganizationType = projectDto.ProjectType.OrganizationTypes.FirstOrDefault(ot => !ot.IsDeleted && !ot.IsSeller);
-            var lookingForInterests = projectDto.ProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.LookingFor.Uid)?.Select(pid => pid.Interest.Uid)?.ToList();
-            var projectStatusInterests = projectDto.ProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.ProjectStatus.Uid)?.Select(pid => pid.Interest.Uid)?.ToList();
-            var platformsInterests = projectDto.ProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.Platforms.Uid)?.Select(pid => pid.Interest.Uid)?.ToList();
-            var genreInterests = projectDto.ProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.Genre.Uid)?.Select(pid => pid.Interest.Uid)?.ToList();
+            var lookingForInterests = projectDto.ProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.LookingFor.Uid)?.Select(pid => pid.Interest.Uid)?.ToList() ?? new List<Guid>();
+            var projectStatusInterests = projectDto.ProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.ProjectStatus.Uid)?.Select(pid => pid.Interest.Uid)?.ToList() ?? new List<Guid>();
+            var platformsInterests = projectDto.ProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.Platforms.Uid)?.Select(pid => pid.Interest.Uid)?.ToList() ?? new List<Guid>();
+            var genreInterests = projectDto.ProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.Genre.Uid)?.Select(pid => pid.Interest.Uid)?.ToList() ?? new List<Guid>();
+            var matchInterests = lookingForInterests
+                                 .Union(projectStatusInterests)
+                                 .Union(platformsInterests)
+                                 .Union(genreInterests)?
+                                 .ToList();
 
             var query = this.GetBaseQuery()
                                 .FindByOrganizationTypeUid(editionId, buyerOrganizationType?.Uid ?? Guid.Empty)
                                 .FindNotByUid(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid)
-                                .FindByInterestUids(lookingForInterests)
-                                .FindByInterestUids(projectStatusInterests)
-                                .FindByInterestUids(platformsInterests)
-                                .FindByInterestUids(genreInterests);
-
+                                .FindByInterestUids(matchInterests);
 
             return await query
-                            .Select(ao => new AttendeeOrganizationDto
+                            .Select(ao => new MatchAttendeeOrganizationDto
                             {
                                 AttendeeOrganization = ao,
-                                Organization = ao.Organization
+                                Organization = ao.Organization,
+                                InterestGroupsMatches = ao.Organization.OrganizationInterests
+                                                                            .Where(oi => !oi.IsDeleted && !oi.Interest.IsDeleted && matchInterests.Contains(oi.Interest.Uid))
+                                                                            .Select(oi => oi.Interest.InterestGroup)
+                                                                            .Distinct()
                             })
-                            .OrderBy(ao => ao.Organization.TradeName)
+                            .OrderByDescending(ao => ao.InterestGroupsMatches.Count())
+                            .ThenBy(ao => ao.Organization.TradeName)
                             .ToListPagedAsync(page, pageSize);
         }
 

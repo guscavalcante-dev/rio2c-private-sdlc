@@ -3,7 +3,7 @@
 @using PlataformaRio2C.Domain.Statics
 @using X.PagedList.Mvc
 @using X.PagedList.Mvc.Common
-@model X.PagedList.IPagedList<AttendeeOrganizationDto>
+@model X.PagedList.IPagedList<MatchAttendeeOrganizationDto>
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
 }
@@ -12,7 +12,7 @@
     <div class="row rio2c-scroll" style="height: 460px;">
         <div class="col-12">
             <div class="row">
-                @foreach (var attendeeOrganizationDto in Model)
+                @foreach (var matchAttendeeOrganizationDto in Model)
                 {
                     <div class="col-12">
                         <!--Begin::Portlet-->
@@ -23,30 +23,37 @@
                                 <div class="kt-widget kt-widget--user-profile-2" style="flex-direction: row;">
                                     <div class="kt-widget__head">
                                         <div class="kt-widget__media">
-                                            @if (attendeeOrganizationDto.Organization.HasImage())
+                                            @if (matchAttendeeOrganizationDto.Organization.HasImage())
                                             {
-                                                <img class="kt-widget__img" src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, attendeeOrganizationDto.Organization.Uid, attendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="image">
+                                                <img class="kt-widget__img" src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, matchAttendeeOrganizationDto.Organization.Uid, matchAttendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="image">
                                             }
                                             else
                                             {
                                                 <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest">
-                                                    @(attendeeOrganizationDto.Organization.GetTradeNameAbbreviation())
+                                                    @(matchAttendeeOrganizationDto.Organization.GetTradeNameAbbreviation())
                                                 </div>
                                             }
                                         </div>
                                         <div class="kt-widget__info">
-                                            <a href="@Url.Action("Details", "Companies", new {id = attendeeOrganizationDto.Organization.Uid})" class="kt-widget__username" target="_blank">
-                                                @attendeeOrganizationDto.Organization.TradeName
+                                            <a href="@Url.Action("Details", "Companies", new {id = matchAttendeeOrganizationDto.Organization.Uid})" class="kt-widget__username" target="_blank">
+                                                @matchAttendeeOrganizationDto.Organization.TradeName
                                             </a>
                                             <span class="kt-widget__desc">
-                                                <a href="@Url.Action("Details", "Companies", new {id = attendeeOrganizationDto.Organization.Uid})" target="_blank">
+                                                <a href="@Url.Action("Details", "Companies", new {id = matchAttendeeOrganizationDto.Organization.Uid})" target="_blank">
                                                     <small><i class="flaticon-profile"></i> @Labels.SeeDescription</small>
                                                 </a>
+                                            </span>
+                                            <span class="kt-widget__desc">
+                                                <small>@matchAttendeeOrganizationDto.GetTotalInterestGroupsMatchesCount() matches:</small>
+                                                @foreach (var interestGroupsMatch in matchAttendeeOrganizationDto.InterestGroupsMatches.OrderBy(igm => igm.DisplayOrder))
+                                                {
+                                                    <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@interestGroupsMatch.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
+                                                }
                                             </span>
                                             @if (editionDto?.IsProjectSubmitOpen() == true)
                                             {
                                                 <span class="kt-widget__desc">
-                                                    <button type="button" class="btn btn-label-info btn-sm btn-upper select-buyer-evaluation-button" onclick="ProjectsBuyerCompanyWidget.selectCompany('@attendeeOrganizationDto.AttendeeOrganization.Uid')" data-attendeeorganizationuid="@attendeeOrganizationDto.AttendeeOrganization.Uid">@Labels.ToSelect</button>
+                                                    <button type="button" class="btn btn-label-info btn-sm btn-upper select-buyer-evaluation-button" onclick="ProjectsBuyerCompanyWidget.selectCompany('@matchAttendeeOrganizationDto.AttendeeOrganization.Uid')" data-attendeeorganizationuid="@matchAttendeeOrganizationDto.AttendeeOrganization.Uid">@Labels.ToSelect</button>
                                                 </span>
                                             }
                                         </div>

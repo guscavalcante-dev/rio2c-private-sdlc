@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-16-2019
+// Last Modified On : 11-17-2019
 // ***********************************************************************
 // <copyright file="IProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,7 +18,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using PlataformaRio2C.Domain.Dtos;
-using X.PagedList;
 
 namespace PlataformaRio2C.Domain.Interfaces
 {
