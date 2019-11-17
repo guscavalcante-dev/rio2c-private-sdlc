@@ -717,10 +717,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #region Submit
 
-        /// <summary>Submits this instance.</summary>
+        /// <summary>Submits the specified identifier.</summary>
+        /// <param name="id">The identifier.</param>
         /// <returns></returns>
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.Industry)]
-        public async Task<ActionResult> Submit()
+        public async Task<ActionResult> Submit(Guid? id)
         {
             #region Breadcrumb
 
@@ -761,7 +762,23 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 }
             }
 
+            // Duplicate project
+            ProjectDto projectDto = null;
+            if (id.HasValue)
+            {
+                projectDto = await this.projectRepo.FindSiteDuplicateDtoByProjectUidAsync(id.Value);
+                if (projectDto != null)
+                {
+                    if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+                    {
+                        this.StatusMessageToastr(Texts.ForbiddenErrorMessage, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                        return RedirectToAction("SubmittedList", "Projects", new { Area = "" });
+                    }
+                }
+            }
+
             var cmd = new CreateProject(
+                projectDto,
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                 await this.activityRepo.FindAllAsync(),
                 await this.targetAudienceRepo.FindAllAsync(),

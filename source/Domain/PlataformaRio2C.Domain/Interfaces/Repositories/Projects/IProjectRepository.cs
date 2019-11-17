@@ -32,6 +32,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<ProjectDto> FindSiteInterestWidgetDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteLinksWidgetDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteBuyerCompanyWidgetDtoByProjectUidAsync(Guid projectUid);
+        Task<ProjectDto> FindSiteDuplicateDtoByProjectUidAsync(Guid projectUid);
 
         #endregion
 

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-16-2019
+// Last Modified On : 11-17-2019
 // ***********************************************************************
 // <copyright file="ProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -444,6 +444,76 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         Organization = be.BuyerAttendeeOrganization.Organization
                                     },
                                     ProjectEvaluationStatus = be.ProjectEvaluationStatus
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>Finds the site duplicate dto by project uid asynchronous.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        public async Task<ProjectDto> FindSiteDuplicateDtoByProjectUidAsync(Guid projectUid)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByUid(projectUid);
+
+            return await query
+                            .Select(p => new ProjectDto
+                            {
+                                Project = p,
+                                ProjectType = p.ProjectType,
+                                SellerAttendeeOrganizationDto = new SellerAttendeeOrganizationDto
+                                {
+                                    SellerAttendeeOrganization = p.SellerAttendeeOrganization,
+                                    AttendeeOrganizationDto = new AttendeeOrganizationDto
+                                    {
+                                        AttendeeOrganization = p.SellerAttendeeOrganization.AttendeeOrganization,
+                                        Organization = p.SellerAttendeeOrganization.AttendeeOrganization.Organization
+                                    },
+                                    //AttendeeCollaboratorTicket = p.SellerAttendeeOrganization.AttendeeCollaboratorTicket,
+                                    AttendeeSalesPlatformTicketType = p.SellerAttendeeOrganization.AttendeeCollaboratorTicket.AttendeeSalesPlatformTicketType
+                                },
+                                ProjectTitleDtos = p.Titles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                {
+                                    ProjectTitle = t,
+                                    Language = t.Language
+                                }),
+                                ProjectLogLineDtos = p.LogLines.Where(ll => !ll.IsDeleted).Select(ll => new ProjectLogLineDto
+                                {
+                                    ProjectLogLine = ll,
+                                    Language = ll.Language
+                                }),
+                                ProjectSummaryDtos = p.Summaries.Where(s => !s.IsDeleted).Select(s => new ProjectSummaryDto
+                                {
+                                    ProjectSummary = s,
+                                    Language = s.Language
+                                }),
+                                ProjectProductionPlanDtos = p.ProductionPlans.Where(pp => !pp.IsDeleted).Select(pp => new ProjectProductionPlanDto
+                                {
+                                    ProjectProductionPlan = pp,
+                                    Language = pp.Language
+                                }),
+                                ProjectAdditionalInformationDtos = p.AdditionalInformations.Where(aa => !aa.IsDeleted).Select(aa => new ProjectAdditionalInformationDto
+                                {
+                                    ProjectAdditionalInformation = aa,
+                                    Language = aa.Language
+                                }),
+                                ProjectInterestDtos = p.Interests.Where(i => !i.IsDeleted).Select(i => new ProjectInterestDto
+                                {
+                                    Interest = i.Interest,
+                                    InterestGroup = i.Interest.InterestGroup
+                                }),
+                                ProjectTargetAudienceDtos = p.TargetAudiences.Where(ta => !ta.IsDeleted).Select(ta => new ProjectTargetAudienceDto
+                                {
+                                    TargetAudience = ta.TargetAudience
+                                }),
+                                ProjectImageLinkDtos = p.ImageLinks.Where(il => !il.IsDeleted).Select(il => new ProjectImageLinkDto
+                                {
+                                    ProjectImageLink = il
+                                }),
+                                ProjectTeaserLinkDtos = p.TeaserLinks.Where(tl => !tl.IsDeleted).Select(tl => new ProjectTeaserLinkDto
+                                {
+                                    ProjectTeaserLink = tl
                                 })
                             })
                             .FirstOrDefaultAsync();

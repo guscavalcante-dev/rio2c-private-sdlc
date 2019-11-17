@@ -189,7 +189,7 @@
                                         if (hasProjectSpace)
                                         {
                                             <div class="col-4 text-center">
-                                                <a class="btn btn-brand" href="#" onclick="return false;" data-toggle="kt-tooltip" title="" data-placement="top" data-original-title="@Labels.ComingSoon...">@string.Format(Labels.DuplicateEntity, Labels.Project)</a>
+                                                <a class="btn btn-brand" href="@Url.Action("Submit", "Projects", new { id = projectDto.Project.Uid, Area = "" })">@string.Format(Labels.DuplicateEntity, Labels.Project)</a>
                                             </div>
                                         }
                                         <div class="col-4 text-center">
