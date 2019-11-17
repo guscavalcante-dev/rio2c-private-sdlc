@@ -1626,8 +1626,8 @@
     <comment>Link para imagens ou layout conceituais</comment>
   </data>
   <data name="ProductionPlan" xml:space="preserve">
-    <value>Production Plan</value>
-    <comment>Plano de Produção</comment>
+    <value>Production Plan - Detail your working schedule and project structure</value>
+    <comment>Plano de Produção - Detalhar seu cronograma e estrutura do projeto</comment>
   </data>
   <data name="ToSelect" xml:space="preserve">
     <value>Select</value>

@@ -4,7 +4,7 @@
 // Created          : 11-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-07-2019
+// Last Modified On : 11-17-2019
 // ***********************************************************************
 // <copyright file="ProjectLogLineBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,7 +23,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         [Display(Name = "LogLines", ResourceType = typeof(Labels))]
         [RequiredIf("IsRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [StringLength(256, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        [StringLength(270, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Value { get; set; }
         public string LanguageCode { get; set; }
         public string LanguageName { get; set; }

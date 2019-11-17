@@ -263,8 +263,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     mainInformationWidgetDto,
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     true,
-                    true,
-                    true);
+                    false,
+                    false);
             }
             catch (DomainException ex)
             {

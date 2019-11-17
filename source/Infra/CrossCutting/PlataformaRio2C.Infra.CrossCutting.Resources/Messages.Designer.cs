@@ -609,7 +609,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Plano de financiamento (apenas projetos em desenvolvimento/produção).
+        ///   Looks up a localized string similar to Plano de financiamento &lt;small&gt;(apenas projetos em desenvolvimento/produção)&lt;/small&gt;.
         /// </summary>
         public static string FundingPlan {
             get {
@@ -780,7 +780,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Não serão aceitos links para download, apenas para sites de compartilhamento de imagem ou vídeo, como Youtube e Vimeo..
+        ///   Looks up a localized string similar to Não serão aceitos links para download, apenas para sites de compartilhamento de imagem ou vídeo, como YouTube e Vimeo..
         /// </summary>
         public static string LinksForDownloadNotAccepted {
             get {
@@ -1077,7 +1077,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Orçamento do projeto (apenas para projetos em desenvolvimento/produção).
+        ///   Looks up a localized string similar to Orçamento do projeto &lt;small&gt;(apenas para projetos em desenvolvimento/produção)&lt;/small&gt;.
         /// </summary>
         public static string ProjectBudget {
             get {

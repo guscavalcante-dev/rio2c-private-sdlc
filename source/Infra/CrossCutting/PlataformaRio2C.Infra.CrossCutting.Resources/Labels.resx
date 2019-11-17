@@ -1638,8 +1638,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Link para imagens ou layout conceituais</comment>
   </data>
   <data name="ProductionPlan" xml:space="preserve">
-    <value>Plano de Produção</value>
-    <comment>Plano de Produção</comment>
+    <value>Plano de Produção - Detalhar seu cronograma e estrutura do projeto</value>
+    <comment>Plano de Produção - Detalhar seu cronograma e estrutura do projeto</comment>
   </data>
   <data name="ToSelect" xml:space="preserve">
     <value>Selecionar</value>

@@ -712,16 +712,16 @@
     <comment>Deseja participar do processo de seleção para apresentar esse projeto nas sessões de PITCHING AUDIOVISUAL da Rio2C-RioContentMarket {0}?</comment>
   </data>
   <data name="FundingPlan" xml:space="preserve">
-    <value>Plano de financiamento (apenas projetos em desenvolvimento/produção)</value>
-    <comment>Plano de financiamento (apenas projetos em desenvolvimento/produção)</comment>
+    <value>Plano de financiamento &lt;small&gt;(apenas projetos em desenvolvimento/produção)&lt;/small&gt;</value>
+    <comment>Plano de financiamento &lt;small&gt;(apenas projetos em desenvolvimento/produção)&lt;/small&gt;</comment>
   </data>
   <data name="LinksForDownloadNotAccepted" xml:space="preserve">
-    <value>Não serão aceitos links para download, apenas para sites de compartilhamento de imagem ou vídeo, como Youtube e Vimeo.</value>
-    <comment>Não serão aceitos links para download, apenas para sites de compartilhamento de imagem ou vídeo, como Youtube e Vimeo.</comment>
+    <value>Não serão aceitos links para download, apenas para sites de compartilhamento de imagem ou vídeo, como YouTube e Vimeo.</value>
+    <comment>Não serão aceitos links para download, apenas para sites de compartilhamento de imagem ou vídeo, como YouTube e Vimeo.</comment>
   </data>
   <data name="ProjectBudget" xml:space="preserve">
-    <value>Orçamento do projeto (apenas para projetos em desenvolvimento/produção)</value>
-    <comment>Orçamento do projeto (apenas para projetos em desenvolvimento/produção)</comment>
+    <value>Orçamento do projeto &lt;small&gt;(apenas para projetos em desenvolvimento/produção)&lt;/small&gt;</value>
+    <comment>Orçamento do projeto &lt;small&gt;(apenas para projetos em desenvolvimento/produção)&lt;/small&gt;</comment>
   </data>
   <data name="MaxProjectBuyersGroupsReached" xml:space="preserve">
     <value>Você não pode selecionar um novo {0} para avaliar o projeto pois todos os grupos de {1} {2} já foram utilizados.</value>
