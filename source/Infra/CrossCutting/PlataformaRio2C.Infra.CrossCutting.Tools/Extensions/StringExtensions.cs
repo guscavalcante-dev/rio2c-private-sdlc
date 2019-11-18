@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-16-2019
+// Last Modified On : 11-18-2019
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -285,7 +285,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                 }
 
                 var id = match.Groups[1].Value;
-                return $"<iframe title='YouTube video player' width='480' height='270' src='http://www.youtube.com/embed/{id}' frameborder='0' allowfullscreen='1'></iframe>";
+                return $"<iframe title='YouTube video player' width='480' height='270' src='https://www.youtube.com/embed/{id}' frameborder='0' allowfullscreen='1'></iframe>";
             }
 
             if (IsVimeoVideo(s))
