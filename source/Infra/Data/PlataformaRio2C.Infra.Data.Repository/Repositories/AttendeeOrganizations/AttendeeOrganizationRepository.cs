@@ -4,7 +4,7 @@
 // Created          : 08-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-17-2019
+// Last Modified On : 11-18-2019
 // ***********************************************************************
 // <copyright file="AttendeeOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -151,6 +151,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         //    return query;
         //}
 
+        /// <summary>Determines whether [is onboarding finished].</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeOrganization> IsOnboardingFinished(this IQueryable<AttendeeOrganization> query)
+        {
+            query = query.Where(ao => ao.OnboardingFinishDate.HasValue);
+
+            return query;
+        }
         /// <summary>Determines whether [is not deleted].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
@@ -328,7 +337,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                 .FindByOrganizationTypeUid(editionId, buyerOrganizationType?.Uid ?? Guid.Empty)
                                 .FindNotByUid(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid)
-                                .FindByInterestUids(matchInterests);
+                                .FindByInterestUids(matchInterests)
+                                .IsOnboardingFinished();
 
             return await query
                             .Select(ao => new MatchAttendeeOrganizationDto
@@ -357,7 +367,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             var query = this.GetBaseQuery()
                                 .FindByOrganizationTypeUid(editionId, buyerOrganizationType?.Uid ?? Guid.Empty)
-                                .FindNotByUid(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid);
+                                .FindNotByUid(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid)
+                                .IsOnboardingFinished();
 
             return await query
                             .Select(ao => new AttendeeOrganizationDto
