@@ -5,6 +5,8 @@
     ViewBag.Title = Labels.Welcome;
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var isPlayer = ViewBag.IsPlayer as bool?;
+    var isExecutive = userAccessControlDto?.HasAnyCollaboratorType(PlataformaRio2C.Domain.Constants.CollaboratorType.Executives) == true;
+    var isIndustry = userAccessControlDto?.HasCollaboratorType(PlataformaRio2C.Domain.Constants.CollaboratorType.Industry) == true;
 }
 <div class="kt-portlet">
     <div class="kt-portlet__body kt-portlet__body--fit">
@@ -44,24 +46,27 @@
                                             @Html.EditorFor(m => m.MiniBios)
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-12">
-                                            @Html.LabelFor(m => m.PublicEmail, Messages.PublicEmail, new { @class = "control-label" })
-                                            <div class="kt-radio-inline">
-                                                <label class="kt-radio">
-                                                    @Html.RadioButtonFor(m => m.SharePublicEmail, true) @Labels.Yes
-                                                    <span></span>
-                                                </label>
-                                                <label class="kt-radio">
-                                                    @Html.RadioButtonFor(m => m.SharePublicEmail, false) @Labels.No
-                                                    <span></span>
-                                                </label>
+                                    @if (isExecutive || isIndustry)
+                                    {
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                @Html.LabelFor(m => m.PublicEmail, Messages.PublicEmail, new { @class = "control-label" })
+                                                <div class="kt-radio-inline">
+                                                    <label class="kt-radio">
+                                                        @Html.RadioButtonFor(m => m.SharePublicEmail, true) @Labels.Yes
+                                                        <span></span>
+                                                    </label>
+                                                    <label class="kt-radio">
+                                                        @Html.RadioButtonFor(m => m.SharePublicEmail, false) @Labels.No
+                                                        <span></span>
+                                                    </label>
+                                                </div>
+                                                @Html.ValidationMessageFor(m => m.SharePublicEmail, "", new { @class = "text-danger" })
+                                                @Html.TextBoxFor(m => m.PublicEmail, Model.SharePublicEmail == true ? (object)new { @class = "form-control" } : (object)new { @class = "form-control", disabled = "" })
+                                                @Html.ValidationMessageFor(m => m.PublicEmail, "", new { @class = "text-danger" })
                                             </div>
-                                            @Html.ValidationMessageFor(m => m.SharePublicEmail, "", new { @class = "text-danger" })
-                                            @Html.TextBoxFor(m => m.PublicEmail, Model.SharePublicEmail == true ? (object)new { @class = "form-control" } : (object)new { @class = "form-control", disabled = "" })
-                                            @Html.ValidationMessageFor(m => m.PublicEmail, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>        
+                                        </div>        
+                                    }
                                 </div>
                             </div>
                         </div>

@@ -6,7 +6,6 @@
     var counter = 1;
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var playerAttendeeOrganizations = ViewBag.PlayerAttendeeOrganizations as List<AttendeeOrganization>;
-    var producerAttendeeOrganizations = ViewBag.ProducerAttendeeOrganizations as List<AttendeeOrganization>;
     var isPlayer = ViewBag.IsPlayer as bool? == true;
     var isIndustry = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true;
     var isTicketBuyer = userAccessControlDto?.HasAnyCollaboratorType(Constants.CollaboratorType.TicketBuyers) == true;

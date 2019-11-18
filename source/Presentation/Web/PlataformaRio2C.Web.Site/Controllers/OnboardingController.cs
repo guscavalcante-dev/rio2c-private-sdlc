@@ -4,7 +4,7 @@
 // Created          : 08-29-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-17-2019
+// Last Modified On : 11-18-2019
 // ***********************************************************************
 // <copyright file="OnboardingController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -374,6 +374,18 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             try
             {
+                var isExecutive = this.UserAccessControlDto?.HasAnyCollaboratorType(PlataformaRio2C.Domain.Constants.CollaboratorType.Executives) == true;
+                var isIndustry = this.UserAccessControlDto?.HasCollaboratorType(PlataformaRio2C.Domain.Constants.CollaboratorType.Industry) == true;
+
+                // Field SharePublicEmail does not exist for this types of users
+                if (!isExecutive && !isIndustry)
+                {
+                    if (ModelState.ContainsKey("SharePublicEmail"))
+                    {
+                        ModelState["SharePublicEmail"].Errors.Clear();
+                    }
+                }
+
                 if (!ModelState.IsValid)
                 {
                     throw new DomainException(Messages.CorrectFormValues);
@@ -828,16 +840,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
                                                                                                   && eao.AttendeeOrganizationTypes?
                                                                                                             .Any(aot => !aot.IsDeleted 
                                                                                                                         && aot.OrganizationType.Name == Constants.OrganizationType.AudiovisualBuyer) == true)?.ToList();
-            var producerAttendeeOrganizations = this.UserAccessControlDto?.EditionAttendeeOrganizations?
-                                                                                    .Where(eao => !eao.IsDeleted
-                                                                                                  && eao.AttendeeOrganizationTypes?
-                                                                                                            .Any(aot => !aot.IsDeleted 
-                                                                                                                        && aot.OrganizationType.Name == Constants.OrganizationType.AudiovisualSeller) == true)?.ToList();
 
             ViewBag.PlayerAttendeeOrganizations = playerAttendeeOrganizations;
-            ViewBag.ProducerAttendeeOrganizations = producerAttendeeOrganizations;
             ViewBag.IsPlayer = playerAttendeeOrganizations?.Any() == true;
-            ViewBag.IsProducer = producerAttendeeOrganizations?.Any() == true;
         }
 
         #endregion
