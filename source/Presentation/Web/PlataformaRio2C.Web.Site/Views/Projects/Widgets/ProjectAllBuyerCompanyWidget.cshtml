@@ -86,7 +86,7 @@
         <div class="col-12">
             @Html.PagedListPager(
                 Model,
-                page => Url.Action("ShowProjectAllBuyerCompanyWidget", "Projects", new { search = ViewBag.Busca, page }) + ViewBag.ShowProjectAllBuyerCompanySearch,
+                page => Url.Action("ShowProjectAllBuyerCompanyWidget", "Projects", new { searchKeywords = ViewBag.SearchKeywords, page }) + ViewBag.ShowProjectAllBuyerCompanySearch,
                 PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
                     new PagedListRenderOptions
                     {

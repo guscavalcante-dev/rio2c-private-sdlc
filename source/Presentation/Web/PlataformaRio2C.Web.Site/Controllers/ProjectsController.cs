@@ -1238,11 +1238,12 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         /// <summary>Shows the project match buyer company widget.</summary>
         /// <param name="projectUid">The project uid.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowProjectMatchBuyerCompanyWidget(Guid? projectUid, int page = 1, int pageSize = 10)
+        public async Task<ActionResult> ShowProjectMatchBuyerCompanyWidget(Guid? projectUid, string searchKeywords, int page = 1, int pageSize = 10)
         {
             var interestWidgetDto = await this.projectRepo.FindSiteInterestWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
             if (interestWidgetDto == null)
@@ -1255,9 +1256,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
 
-            var matchAttendeeOrganizationDtos = await this.attendeeOrganizationRepo.FindAllDtoByMatchingProjectBuyerAsync(this.EditionDto.Id, interestWidgetDto, page, pageSize);
+            var matchAttendeeOrganizationDtos = await this.attendeeOrganizationRepo.FindAllDtoByMatchingProjectBuyerAsync(this.EditionDto.Id, interestWidgetDto, searchKeywords, page, pageSize);
 
             ViewBag.ShowProjectMatchBuyerCompanySearch = $"&projectUid={projectUid}&pageSize={pageSize}";
+            ViewBag.SearchKeywords = searchKeywords;
 
             return Json(new
             {
@@ -1271,11 +1273,12 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         /// <summary>Shows the project all buyer company widget.</summary>
         /// <param name="projectUid">The project uid.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowProjectAllBuyerCompanyWidget(Guid? projectUid, int page = 1, int pageSize = 10)
+        public async Task<ActionResult> ShowProjectAllBuyerCompanyWidget(Guid? projectUid, string searchKeywords, int page = 1, int pageSize = 10)
         {
             var interestWidgetDto = await this.projectRepo.FindSiteInterestWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
             if (interestWidgetDto == null)
@@ -1288,9 +1291,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
 
-            var attendeeOrganizationDtos = await this.attendeeOrganizationRepo.FindAllDtoByProjectBuyerAsync(this.EditionDto.Id, interestWidgetDto, page, pageSize);
+            var attendeeOrganizationDtos = await this.attendeeOrganizationRepo.FindAllDtoByProjectBuyerAsync(this.EditionDto.Id, interestWidgetDto, searchKeywords, page, pageSize);
 
             ViewBag.ShowProjectAllBuyerCompanySearch = $"&projectUid={projectUid}&pageSize={pageSize}";
+            ViewBag.SearchKeywords = searchKeywords;
 
             return Json(new
             {

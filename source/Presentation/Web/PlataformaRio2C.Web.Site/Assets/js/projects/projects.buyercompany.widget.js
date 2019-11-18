@@ -4,7 +4,7 @@
 // Created          : 11-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-16-2019
+// Last Modified On : 11-18-2019
 // ***********************************************************************
 // <copyright file="projects.buyercompany.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -55,29 +55,28 @@ var ProjectsBuyerCompanyWidget = function () {
         });
     };
 
+    // Search -------------------------------------------------------------------------------------
+    var search = function () {
+        if (typeof (ProjectsMatchBuyerCompanyWidget) !== 'undefined') {
+            ProjectsMatchBuyerCompanyWidget.init();
+        }
+
+        if (typeof (ProjectsMatchBuyerCompanyWidget) !== 'undefined') {
+            ProjectsAllBuyerCompanyWidget.init();
+        }
+    };
+
+    var enableSearchEvent = function () {
+        $('#SearchKeywords').not('.search-event-enabled').on('search', function () {
+            search();
+        });
+
+        $('#SearchKeywords').addClass('search-event-enabled');
+    };
+
     // Update -------------------------------------------------------------------------------------
-    //var enableAjaxForm = function () {
-    //    MyRio2cCommon.enableAjaxForm({
-    //        idOrClass: updateFormId,
-    //        onSuccess: function (data) {
-    //            $(updateModalId).modal('hide');
-
-    //            if (typeof (ProjectsBuyerCompanyWidget) !== 'undefined') {
-    //                ProjectsBuyerCompanyWidget.init();
-    //            }
-    //        },
-    //        onError: function (data) {
-    //            if (MyRio2cCommon.hasProperty(data, 'pages')) {
-    //                enableUpdatePlugins();
-    //            }
-    //        }
-    //    });
-    //};
-
     var enableUpdatePlugins = function () {
-        //MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2' });
-        //enableAjaxForm();
-        //MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
+        enableSearchEvent();
     };
 
     var showUpdateModal = function () {
@@ -328,6 +327,9 @@ var ProjectsBuyerCompanyWidget = function () {
         showUpdateModal: function () {
             showUpdateModal();
         },
+        search: function () {
+            search();
+        },
         toggleSelectButtons: function () {
             toggleSelectButtons();
         },
@@ -432,6 +434,7 @@ var ProjectsMatchBuyerCompanyWidget = function () {
 
         var jsonParameters = new Object();
         jsonParameters.projectUid = $('#AggregateId').val();
+        jsonParameters.searchKeywords = $('#SearchKeywords').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/ShowProjectMatchBuyerCompanyWidget'), jsonParameters, function (data) {
                 MyRio2cCommon.handleAjaxReturn({
@@ -516,6 +519,7 @@ var ProjectsAllBuyerCompanyWidget = function () {
 
         var jsonParameters = new Object();
         jsonParameters.projectUid = $('#AggregateId').val();
+        jsonParameters.searchKeywords = $('#SearchKeywords').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/ShowProjectAllBuyerCompanyWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({

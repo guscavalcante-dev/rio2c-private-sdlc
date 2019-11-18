@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using LinqKit;
 using PlataformaRio2C.Domain.Dtos;
 using X.PagedList;
 
@@ -74,6 +75,30 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static IQueryable<AttendeeOrganization> FindByOrganizationUid(this IQueryable<AttendeeOrganization> query, Guid organizationUid)
         {
             query = query.Where(ao => ao.Organization.Uid == organizationUid);
+
+            return query;
+        }
+
+        /// <summary>Finds the by keywords.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeOrganization> FindByKeywords(this IQueryable<AttendeeOrganization> query, string keywords)
+        {
+            if (!string.IsNullOrEmpty(keywords))
+            {
+                var predicate = PredicateBuilder.New<AttendeeOrganization>(true);
+
+                foreach (var keyword in keywords.Split(' '))
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        predicate = predicate.And(ao => ao.Organization.TradeName.Contains(keyword));
+                    }
+                }
+
+                query = query.AsExpandable().Where(predicate);
+            }
 
             return query;
         }
@@ -318,10 +343,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>Finds all dto by matching project buyer asynchronous.</summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="projectDto">The project dto.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<MatchAttendeeOrganizationDto>> FindAllDtoByMatchingProjectBuyerAsync(int editionId, ProjectDto projectDto, int page, int pageSize)
+        public async Task<IPagedList<MatchAttendeeOrganizationDto>> FindAllDtoByMatchingProjectBuyerAsync(int editionId, ProjectDto projectDto, string searchKeywords, int page, int pageSize)
         {
             var buyerOrganizationType = projectDto.ProjectType.OrganizationTypes.FirstOrDefault(ot => !ot.IsDeleted && !ot.IsSeller);
             var lookingForInterests = projectDto.ProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.LookingFor.Uid)?.Select(pid => pid.Interest.Uid)?.ToList() ?? new List<Guid>();
@@ -337,6 +363,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                 .FindByOrganizationTypeUid(editionId, buyerOrganizationType?.Uid ?? Guid.Empty)
                                 .FindNotByUid(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid)
+                                .FindByKeywords(searchKeywords)
                                 .FindByInterestUids(matchInterests)
                                 .IsOnboardingFinished();
 
@@ -358,16 +385,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>Finds all dto by project buyer asynchronous.</summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="projectDto">The project dto.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<AttendeeOrganizationDto>> FindAllDtoByProjectBuyerAsync(int editionId, ProjectDto projectDto, int page, int pageSize)
+        public async Task<IPagedList<AttendeeOrganizationDto>> FindAllDtoByProjectBuyerAsync(int editionId, ProjectDto projectDto, string searchKeywords, int page, int pageSize)
         {
             var buyerOrganizationType = projectDto.ProjectType?.OrganizationTypes?.FirstOrDefault(ot => !ot.IsDeleted && !ot.IsSeller);
 
             var query = this.GetBaseQuery()
                                 .FindByOrganizationTypeUid(editionId, buyerOrganizationType?.Uid ?? Guid.Empty)
                                 .FindNotByUid(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid)
+                                .FindByKeywords(searchKeywords)
                                 .IsOnboardingFinished();
 
             return await query
