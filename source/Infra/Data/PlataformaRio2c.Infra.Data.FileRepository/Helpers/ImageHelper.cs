@@ -4,7 +4,7 @@
 // Created          : 08-15-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-04-2019
+// Last Modified On : 11-17-2019
 // ***********************************************************************
 // <copyright file="ImageHelper.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -194,6 +194,8 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
             //Parsing stream to bitmap
             using (Bitmap sourceBitmap = new Bitmap(content))
             {
+                var sourceBitmapFixed = FixOrientation(sourceBitmap);
+
                 //Get new dimensions
                 Rectangle cropRect = new Rectangle(x, y, width, height);
 
@@ -207,7 +209,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
                         g.PixelOffsetMode = PixelOffsetMode.HighQuality;
                         g.CompositingQuality = CompositingQuality.HighQuality;
 
-                        g.DrawImage(sourceBitmap, new Rectangle(0, 0, newBitMap.Width, newBitMap.Height), cropRect, GraphicsUnit.Pixel);
+                        g.DrawImage(sourceBitmapFixed, new Rectangle(0, 0, newBitMap.Width, newBitMap.Height), cropRect, GraphicsUnit.Pixel);
 
                         return GetBitmapBytes(newBitMap);
                     }
@@ -237,6 +239,49 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
 
                 return result;
             }
+        }
+
+        /// <summary>Fixes the orientation.</summary>
+        /// <param name="img">The img.</param>
+        /// <returns></returns>
+        private static System.Drawing.Bitmap FixOrientation(System.Drawing.Bitmap img)
+        {
+            if (Array.IndexOf(img.PropertyIdList, 274) > -1)
+            {
+                var orientation = (int)img.GetPropertyItem(274).Value[0];
+                switch (orientation)
+                {
+                    case 1:
+                        // No rotation required.
+                        break;
+                    case 2:
+                        img.RotateFlip(RotateFlipType.RotateNoneFlipX);
+                        break;
+                    case 3:
+                        img.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                        break;
+                    case 4:
+                        img.RotateFlip(RotateFlipType.Rotate180FlipX);
+                        break;
+                    case 5:
+                        img.RotateFlip(RotateFlipType.Rotate90FlipX);
+                        break;
+                    case 6:
+                        img.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                        break;
+                    case 7:
+                        img.RotateFlip(RotateFlipType.Rotate270FlipX);
+                        break;
+                    case 8:
+                        img.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                        break;
+                }
+
+                // This EXIF data is now invalid and should be removed.
+                img.RemovePropertyItem(274);
+            }
+
+            return img;
         }
 
         #endregion
