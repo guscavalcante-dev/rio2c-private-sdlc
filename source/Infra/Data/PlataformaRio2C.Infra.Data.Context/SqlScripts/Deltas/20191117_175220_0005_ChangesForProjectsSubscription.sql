@@ -67,6 +67,10 @@ ALTER TABLE "dbo"."Projects"
 ADD ProjectBuyerEvaluationsCount  int  NOT NULL
 go
 
+ALTER TABLE "dbo"."Projects"
+ALTER COLUMN NumberOfEpisodes int NULL
+go
+
 ALTER TABLE "dbo"."OrganizationTypes"
 ADD IsSeller  bit  NULL
 go
@@ -98,7 +102,12 @@ ALTER COLUMN ProjectMaxBuyerEvaluationsCount  int  NOT NULL
 go
 
 ALTER TABLE "dbo"."AttendeeOrganizations"
-ADD SellProjectsCount  int  NOT NULL
+ADD SellProjectsCount  int  NULL
+go
+UPDATE "dbo"."AttendeeOrganizations" SET SellProjectsCount = 0
+go
+ALTER TABLE "dbo"."AttendeeOrganizations"
+ALTER COLUMN SellProjectsCount  int  NOT NULL
 go
 
 ALTER TABLE "dbo"."Projects" 
