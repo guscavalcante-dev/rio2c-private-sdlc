@@ -91,14 +91,15 @@
                     new PagedListRenderOptions
                     {
                         DisplayLinkToIndividualPages = true,
-                        MaximumPageNumbersToDisplay = 5,
+                        MaximumPageNumbersToDisplay = 3,
                         DisplayLinkToFirstPage = PagedListDisplayMode.Always,
                         DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
                         DisplayLinkToNextPage = PagedListDisplayMode.Always,
                         DisplayLinkToLastPage = PagedListDisplayMode.Always,
                         UlElementClasses = new string[] { "pagination list-inline mx-auto justify-content-center" },
                         LiElementClasses = new string[] { "page-item" },
-                        PageClasses = new string[] { "page-link" }
+                        PageClasses = new string[] { "page-link" },
+                        EllipsesElementClass = "page-link"
                     }
                     , new AjaxOptions { HttpMethod = "GET", OnBegin = "ProjectsMatchBuyerCompanyWidget.changePage", OnSuccess = "ProjectsMatchBuyerCompanyWidget.handlePaginationReturn" }))
         </div>
