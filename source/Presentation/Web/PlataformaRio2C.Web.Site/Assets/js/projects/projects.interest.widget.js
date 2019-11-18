@@ -4,7 +4,7 @@
 // Created          : 11-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-11-2019
+// Last Modified On : 11-18-2019
 // ***********************************************************************
 // <copyright file="projects.interest.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -74,7 +74,7 @@ var ProjectsInterestWidget = function () {
     };
 
     var enableUpdatePlugins = function () {
-        //MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2' });
+        MyRio2cCommon.enableAtLeastOnCheckboxByNameValidation(updateFormId);
         enableAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
@@ -105,6 +105,20 @@ var ProjectsInterestWidget = function () {
         });
     };
 
+    // Form submit --------------------------------------------------------------------------------
+    var submit = function () {
+        var validator = $(updateFormId).validate();
+        var formValidation = $(updateFormId).valid();
+        var interestsValidation = MyRio2cCommon.validateRequireOneGroup();
+
+        if (formValidation && interestsValidation) {
+            MyRio2cCommon.submitForm(updateFormId);
+        }
+        else {
+            validator.focusInvalid();
+        }
+    };
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
@@ -112,6 +126,9 @@ var ProjectsInterestWidget = function () {
         },
         showUpdateModal: function () {
             showUpdateModal();
+        },
+        submit: function () {
+            submit();
         }
     };
 }();
