@@ -1275,6 +1275,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Projeto salvo mas ainda NÃO enviado para Players. Para enviar o projeto para avaliação selecione os Players e clique em Salvar e Enviar..
+        /// </summary>
+        public static string ProjectSavedButNotSentToPlayers {
+            get {
+                return ResourceManager.GetString("ProjectSavedButNotSentToPlayers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O período de inscrição não está aberto..
         /// </summary>
         public static string ProjectSubmissionNotOpen {

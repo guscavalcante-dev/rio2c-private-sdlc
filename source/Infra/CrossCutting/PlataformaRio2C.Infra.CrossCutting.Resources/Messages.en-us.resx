@@ -762,4 +762,8 @@
     <value>Subscription period is not open.</value>
     <comment>O período de inscrição não está aberto.</comment>
   </data>
+  <data name="ProjectSavedButNotSentToPlayers" xml:space="preserve">
+    <value>Project saved but NOT submitted to Players. To submit your project select the Players and click the Save and Submit button.</value>
+    <comment>Projeto salvo mas ainda NÃO enviado para Players. Para enviar o projeto para avaliação selecione os Players e clique em Salvar e Enviar.</comment>
+  </data>
 </root>

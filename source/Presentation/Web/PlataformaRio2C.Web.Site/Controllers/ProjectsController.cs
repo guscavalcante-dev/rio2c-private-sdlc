@@ -1203,7 +1203,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return RedirectToAction("SubmittedList", "Projects");
             }
 
-            this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.Saved.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
+            this.StatusMessageToastr(Messages.ProjectSavedButNotSentToPlayers, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Warning);
             return RedirectToAction("SubmittedDetails", "Projects", new { id });
         }
 
