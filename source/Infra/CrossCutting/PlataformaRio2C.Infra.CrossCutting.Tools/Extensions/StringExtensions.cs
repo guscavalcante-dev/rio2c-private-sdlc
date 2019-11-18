@@ -285,7 +285,8 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                 }
 
                 var id = match.Groups[1].Value;
-                return $"<iframe title='YouTube video player' width='480' height='270' src='https://www.youtube.com/embed/{id}' frameborder='0' allowfullscreen='1'></iframe>";
+                return $"<iframe src='https://www.youtube.com/embed/{id}' class='embed-responsive-item' frameborder='0' allowfullscreen='1'></iframe>";
+                //title='YouTube video player' width='480' height='270'
             }
 
             if (IsVimeoVideo(s))
@@ -299,10 +300,22 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                 }
 
                 var id = match.Groups[1].Value;
-                return $"<iframe src='https://player.vimeo.com/video/{id}' width='480' height='270' frameborder='0' allow='autoplay; fullscreen' allowfullscreen></iframe>";
+                return $"<iframe src='https://player.vimeo.com/video/{id}' class='embed-responsive-item' frameborder='0' allow='autoplay; fullscreen' allowfullscreen></iframe>";
+                //width='480' height='270'
             }
 
             return s;
+
+            /*
+             Use html like this:
+                <div class="row mt-3 justify-content-center">
+                    <div class="col-sm-8 col-md-8 col-lg-6">
+                        <div class="embed-responsive embed-responsive-16by9 d-flex">
+                            @Html.Raw(teaserLinkDto.ProjectTeaserLink.Value.ConvertVideoToEmbed())
+                        </div>
+                    </div>                                        
+                </div>
+             */
         }
     }
 }

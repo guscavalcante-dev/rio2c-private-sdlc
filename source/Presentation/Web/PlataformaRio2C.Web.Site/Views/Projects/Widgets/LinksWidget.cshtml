@@ -79,10 +79,12 @@
                             {
                                 if (teaserLinkDto.ProjectTeaserLink.Value?.IsYoutubeVideo() == true || teaserLinkDto.ProjectTeaserLink.Value?.IsVimeoVideo() == true)
                                 {
-                                    <div class="row mt-3">
-                                        <div class="col-12 text-center">
-                                            @Html.Raw(teaserLinkDto.ProjectTeaserLink.Value.ConvertVideoToEmbed())
-                                        </div>
+                                    <div class="row mt-3 justify-content-center">
+                                        <div class="col-sm-8 col-md-8 col-lg-6">
+                                            <div class="embed-responsive embed-responsive-16by9 d-flex">
+                                                @Html.Raw(teaserLinkDto.ProjectTeaserLink.Value.ConvertVideoToEmbed())
+                                            </div>
+                                        </div>                                        
                                     </div>
                                     <div class="row mt-1">
                                         <div class="col-12 text-center">
