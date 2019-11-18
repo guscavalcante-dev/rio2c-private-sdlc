@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-17-2019
+// Last Modified On : 11-18-2019
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -745,7 +745,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             if (this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() == true)
             {
-                return RedirectToAction("TermsAcceptance", "Projects");
+                return RedirectToAction("TermsAcceptance", "Projects", new { id });
             }
 
             // Check if player submitted the max number of projects
@@ -1021,9 +1021,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
         #region Producer Terms Acceptance
 
         /// <summary>Termses the acceptance.</summary>
+        /// <param name="id">The identifier.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> TermsAcceptance()
+        public async Task<ActionResult> TermsAcceptance(Guid? id)
         {
             #region Breadcrumb
 
@@ -1046,7 +1047,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return RedirectToAction("Submit", "Projects");
             }
 
-            var cmd = new OnboardProducerTermsAcceptance();
+            var cmd = new OnboardProducerTermsAcceptance(id);
 
             return View(cmd);
         }
@@ -1123,6 +1124,24 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Labels.ParticipantsTerms, Labels.Accepted.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
 
+            // Check if player submitted the max number of projects
+            var firstAttendeeOrganizationCreated = this.UserAccessControlDto.GetFirstAttendeeOrganizationCreated();
+            if (firstAttendeeOrganizationCreated != null)
+            {
+                var projectsCount = this.projectRepo.Count(p => p.SellerAttendeeOrganization.Uid == firstAttendeeOrganizationCreated.Uid
+                                                                && !p.IsDeleted);
+                var projectMaxCount = this.EditionDto?.AttendeeOrganizationMaxSellProjectsCount ?? 0;
+                if (projectsCount >= projectMaxCount)
+                {
+                    if (cmd.ProjectUid.HasValue)
+                    {
+                        return RedirectToAction("SendToPlayers", "Projects", new { id = cmd.ProjectUid });
+                    }
+
+                    return RedirectToAction("SubmittedList", "Projects");
+                }
+            }
+
             return RedirectToAction("Submit", "Projects");
         }
 
@@ -1154,7 +1173,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
                 || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() == true)
             {
-                return RedirectToAction("Submit", "Projects");
+                return RedirectToAction("Submit", "Projects", new { id });
             }
 
             var buyerCompanyWidgetDto = await this.projectRepo.FindSiteBuyerCompanyWidgetDtoByProjectUidAsync(id ?? Guid.Empty);

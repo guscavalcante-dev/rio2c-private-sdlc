@@ -17,6 +17,7 @@
                 <!--begin: Form Wizard Form-->
                 @using (Html.BeginForm("TermsAcceptance", "Projects", FormMethod.Post, new { id = "PlayerTermsAcceptanceForm", @class = "kt-form" }))
                 {
+                    @Html.HiddenFor(m => m.ProjectUid)
                     <!--begin: Form Wizard Step 2-->
                     <div class="kt-wizard-v3__content" data-ktwizard-type="step-content" data-ktwizard-state="current">
                         <div class="kt-heading kt-heading--md">@Labels.ParticipantsTerms</div>

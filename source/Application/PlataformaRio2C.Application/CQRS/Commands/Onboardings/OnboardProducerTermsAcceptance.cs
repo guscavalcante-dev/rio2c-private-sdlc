@@ -4,7 +4,7 @@
 // Created          : 10-29-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-29-2019
+// Last Modified On : 11-18-2019
 // ***********************************************************************
 // <copyright file="OnboardProducerTermsAcceptance.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,12 +23,20 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Range(typeof(bool), "true", "true", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "ToProceedYouMustAcceptTheTerm")]
         public bool AcceptTerms { get; set; }
 
+        public Guid? ProjectUid { get; set; }
+
         public Guid CollaboratorUid { get; private set; }
+
+        /// <summary>Initializes a new instance of the <see cref="OnboardProducerTermsAcceptance"/> class.</summary>
+        public OnboardProducerTermsAcceptance(Guid? projectUid)
+        {
+            this.ProjectUid = projectUid;
+            this.AcceptTerms = false;
+        }
 
         /// <summary>Initializes a new instance of the <see cref="OnboardProducerTermsAcceptance"/> class.</summary>
         public OnboardProducerTermsAcceptance()
         {
-            this.AcceptTerms = false;
         }
 
         /// <summary>Updates the pre send properties.</summary>
