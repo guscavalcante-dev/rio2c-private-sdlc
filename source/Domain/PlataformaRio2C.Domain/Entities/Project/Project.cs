@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-17-2019
+// Last Modified On : 11-18-2019
 // ***********************************************************************
 // <copyright file="Project.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,16 +26,24 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int TotalPlayingTimeMaxLength = 10;
         public static readonly int EachEpisodePlayingTimeMinLength = 1;
         public static readonly int EachEpisodePlayingTimeMaxLength = 10;
+        public static readonly int ValuePerEpisodeMinLength = 1;
+        public static readonly int ValuePerEpisodeMaxLength = 50;
+        public static readonly int TotalValueOfProjectMinLength = 1;
+        public static readonly int TotalValueOfProjectMaxLength = 50;
+        public static readonly int ValueAlreadyRaisedMinLength = 1;
+        public static readonly int ValueAlreadyRaisedMaxLength = 50;
+        public static readonly int ValueStillNeededMinLength = 1;
+        public static readonly int ValueStillNeededMaxLength = 50;
 
         public int ProjectTypeId { get; private set; }
         public int SellerAttendeeOrganizationId { get; private set; }
         public string TotalPlayingTime { get; private set; }
         public int? NumberOfEpisodes { get; private set; }
         public string EachEpisodePlayingTime { get; private set; }
-        public int? ValuePerEpisode { get; private set; }
-        public int? TotalValueOfProject { get; private set; }
-        public int? ValueAlreadyRaised { get; private set; }
-        public int? ValueStillNeeded { get; private set; }
+        public string ValuePerEpisode { get; private set; }
+        public string TotalValueOfProject { get; private set; }
+        public string ValueAlreadyRaised { get; private set; }
+        public string ValueStillNeeded { get; private set; }
         public bool IsPitching { get; private set; }
         public DateTime? FinishDate { get; private set; }
         public int ProjectBuyerEvaluationsCount { get; private set; }
@@ -81,10 +89,10 @@ namespace PlataformaRio2C.Domain.Entities
             string totalPlayingTime,
             int? numberOfEpisodes,
             string eachEpisodePlayingTime,
-            int? valuePerEpisode,
-            int? totalValueOfProject,
-            int? valueAlreadyRaised,
-            int? valueStillNeeded,
+            string valuePerEpisode,
+            string totalValueOfProject,
+            string valueAlreadyRaised,
+            string valueStillNeeded,
             bool isPitching,
             List<ProjectTitle> titles,
             List<ProjectLogLine> logLines,
@@ -103,11 +111,11 @@ namespace PlataformaRio2C.Domain.Entities
             this.SellerAttendeeOrganization = sellerAttendeeOrganization;
             this.TotalPlayingTime = totalPlayingTime;
             this.NumberOfEpisodes = numberOfEpisodes;
-            this.EachEpisodePlayingTime = eachEpisodePlayingTime;
-            this.ValuePerEpisode = valuePerEpisode;
-            this.TotalValueOfProject = totalValueOfProject;
-            this.ValueAlreadyRaised = valueAlreadyRaised;
-            this.ValueStillNeeded = valueStillNeeded;
+            this.EachEpisodePlayingTime = eachEpisodePlayingTime?.Trim();
+            this.ValuePerEpisode = valuePerEpisode?.Trim();
+            this.TotalValueOfProject = totalValueOfProject?.Trim();
+            this.ValueAlreadyRaised = valueAlreadyRaised?.Trim();
+            this.ValueStillNeeded = valueStillNeeded?.Trim();
             this.IsPitching = isPitching;
             this.FinishDate = null;
             this.ProjectBuyerEvaluationsCount = 0;
@@ -151,10 +159,10 @@ namespace PlataformaRio2C.Domain.Entities
             string totalPlayingTime,
             int? numberOfEpisodes,
             string eachEpisodePlayingTime,
-            int? valuePerEpisode,
-            int? totalValueOfProject,
-            int? valueAlreadyRaised,
-            int? valueStillNeeded,
+            string valuePerEpisode,
+            string totalValueOfProject,
+            string valueAlreadyRaised,
+            string valueStillNeeded,
             bool isPitching,
             List<ProjectTitle> titles,
             List<ProjectLogLine> logLines,
@@ -165,11 +173,11 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.TotalPlayingTime = totalPlayingTime;
             this.NumberOfEpisodes = numberOfEpisodes;
-            this.EachEpisodePlayingTime = eachEpisodePlayingTime;
-            this.ValuePerEpisode = valuePerEpisode;
-            this.TotalValueOfProject = totalValueOfProject;
-            this.ValueAlreadyRaised = valueAlreadyRaised;
-            this.ValueStillNeeded = valueStillNeeded;
+            this.EachEpisodePlayingTime = eachEpisodePlayingTime?.Trim();
+            this.ValuePerEpisode = valuePerEpisode?.Trim();
+            this.TotalValueOfProject = totalValueOfProject?.Trim();
+            this.ValueAlreadyRaised = valueAlreadyRaised?.Trim();
+            this.ValueStillNeeded = valueStillNeeded?.Trim();
             this.IsPitching = isPitching;
 
             this.SynchronizeTitles(titles, userId);
@@ -774,6 +782,12 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidationResult = new ValidationResult();
 
             this.ValidateIsFinished();
+            this.ValidateTotalPlayingTime();
+            this.ValidateEachEpisodePlayingTime();
+            this.ValidateValuePerEpisode();
+            this.ValidateTotalValueOfProject();
+            this.ValidateValueAlreadyRaised();
+            this.ValidateValueStillNeeded();
             this.ValidateTitles();
             this.ValidateLogLines();
             this.ValidateSummaries();
@@ -795,6 +809,10 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.ValidateTotalPlayingTime();
             this.ValidateEachEpisodePlayingTime();
+            this.ValidateValuePerEpisode();
+            this.ValidateTotalValueOfProject();
+            this.ValidateValueAlreadyRaised();
+            this.ValidateValueStillNeeded();
             this.ValidateTitles();
             this.ValidateLogLines();
             this.ValidateSummaries();
@@ -848,7 +866,40 @@ namespace PlataformaRio2C.Domain.Entities
         {
             if (!string.IsNullOrEmpty(this.EachEpisodePlayingTime) && this.EachEpisodePlayingTime?.Trim().Length > EachEpisodePlayingTimeMaxLength)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.EachEpisodePlayingTime, EachEpisodePlayingTimeMaxLength, 1), new string[] { "EachEpisodePlayingTime" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.EachEpisodePlayingTime, EachEpisodePlayingTimeMaxLength, EachEpisodePlayingTimeMinLength), new string[] { "EachEpisodePlayingTime" }));
+            }
+        }
+
+        /// <summary>Validates the value per episode.</summary>
+        public void ValidateValuePerEpisode()
+        {
+            if (!string.IsNullOrEmpty(this.ValuePerEpisode) && this.ValuePerEpisode?.Trim().Length > ValuePerEpisodeMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.ValuePerEpisode, ValuePerEpisodeMaxLength, ValuePerEpisodeMinLength), new string[] { "ValuePerEpisode" }));
+            }
+        }
+        /// <summary>Validates the total value of project.</summary>
+        public void ValidateTotalValueOfProject()
+        {
+            if (!string.IsNullOrEmpty(this.TotalValueOfProject) && this.TotalValueOfProject?.Trim().Length > TotalValueOfProjectMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.TotalValueOfProject, TotalValueOfProjectMaxLength, TotalValueOfProjectMinLength), new string[] { "TotalValueOfProject" }));
+            }
+        }
+        /// <summary>Validates the value already raised.</summary>
+        public void ValidateValueAlreadyRaised()
+        {
+            if (!string.IsNullOrEmpty(this.ValueAlreadyRaised) && this.ValueAlreadyRaised?.Trim().Length > ValueAlreadyRaisedMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.ValueAlreadyRaised, ValueAlreadyRaisedMaxLength, ValueAlreadyRaisedMinLength), new string[] { "ValueAlreadyRaised" }));
+            }
+        }
+        /// <summary>Validates the value still needed.</summary>
+        public void ValidateValueStillNeeded()
+        {
+            if (!string.IsNullOrEmpty(this.ValueStillNeeded) && this.ValueStillNeeded?.Trim().Length > ValueStillNeededMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.ValueStillNeeded, ValueStillNeededMaxLength, ValueStillNeededMinLength), new string[] { "ValueStillNeeded" }));
             }
         }
 

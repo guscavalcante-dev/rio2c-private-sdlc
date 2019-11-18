@@ -4,7 +4,7 @@
 // Created          : 11-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-17-2019
+// Last Modified On : 11-18-2019
 // ***********************************************************************
 // <copyright file="ProjectBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -51,19 +51,23 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = "TotalValueOfProject", ResourceType = typeof(Labels))]
         //[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public int? TotalValueOfProject { get; set; }
+        [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string TotalValueOfProject { get; set; }
 
         [Display(Name = "ValuePerEpisode", ResourceType = typeof(Labels))]
         //[RequiredIfNotEmpty("NumberOfEpisodes", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public int? ValuePerEpisode { get; set; }
+        [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string ValuePerEpisode { get; set; }
 
         [Display(Name = "ValueAlreadyRaised", ResourceType = typeof(Labels))]
         //[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public int? ValueAlreadyRaised { get; set; }
+        [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string ValueAlreadyRaised { get; set; }
 
         [Display(Name = "ValueStillNeeded", ResourceType = typeof(Labels))]
         //[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public int? ValueStillNeeded { get; set; }
+        [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string ValueStillNeeded { get; set; }
 
         [Display(Name = "LinksToImageOrConceptualLayout", ResourceType = typeof(Labels))]
         //[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]

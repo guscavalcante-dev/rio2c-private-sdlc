@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-17-2019
+// Last Modified On : 11-18-2019
 // ***********************************************************************
 // <copyright file="AttendeeOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -249,10 +249,10 @@ namespace PlataformaRio2C.Domain.Entities
             string totalPlayingTime,
             int? numberOfEpisodes,
             string eachEpisodePlayingTime,
-            int? valuePerEpisode,
-            int? totalValueOfProject,
-            int? valueAlreadyRaised,
-            int? valueStillNeeded,
+            string valuePerEpisode,
+            string totalValueOfProject,
+            string valueAlreadyRaised,
+            string valueStillNeeded,
             bool isPitching,
             List<ProjectTitle> titles,
             List<ProjectLogLine> logLines,
