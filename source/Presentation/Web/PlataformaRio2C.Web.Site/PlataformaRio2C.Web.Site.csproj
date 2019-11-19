@@ -453,6 +453,7 @@
     <Content Include="Assets\js\myrio2c.showhidepassword.js" />
     <Content Include="Assets\js\myrio2c.cropper.js" />
     <Content Include="Assets\js\myrio2c.activity.js" />
+    <Content Include="Assets\js\networks\networks.contacts.js" />
     <Content Include="Assets\js\onboarding\onboarding.interests.js" />
     <Content Include="Assets\js\onboarding\onboarding.companyinfo.js" />
     <Content Include="Assets\js\projects\projects.interest.widget.js" />

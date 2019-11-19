@@ -26,20 +26,20 @@
                                 <h3 class="kt-portlet__head-title"></h3>
                             </div>
                             @*<div class="kt-portlet__head-toolbar">
-                                <a href="#" class="btn btn-icon" data-toggle="dropdown">
-                                    <i class="flaticon-more-1 kt-font-brand"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <ul class="kt-nav">
-                                        <li class="kt-nav__item">
-                                            <a href="#" class="kt-nav__link">
-                                                <i class="kt-nav__link-icon flaticon2-line-chart"></i>
-                                                <span class="kt-nav__link-text">@Labels.SeeMiniBio</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>*@
+                                    <a href="#" class="btn btn-icon" data-toggle="dropdown">
+                                        <i class="flaticon-more-1 kt-font-brand"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <ul class="kt-nav">
+                                            <li class="kt-nav__item">
+                                                <a href="#" class="kt-nav__link">
+                                                    <i class="kt-nav__link-icon flaticon2-line-chart"></i>
+                                                    <span class="kt-nav__link-text">@Labels.SeeMiniBio</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>*@
                         </div>
                         <div class="kt-portlet__body">
                             <!--begin::Widget -->
@@ -70,17 +70,17 @@
                                     </div>
                                     <div class="kt-widget__item">
                                         <div class="kt-widget__contact d-block">
-                                            <span class="kt-widget__label">@Labels.Email:</span><br/>
+                                            <span class="kt-widget__label">@Labels.Email:</span><br />
                                             <span class="kt-widget__data text-break">@(attendeeCollaboratorNetworkDto.Collaborator.PublicEmail ?? "-")</span>
                                         </div>
                                         <div class="kt-widget__contact d-block mt-2">
-                                            <span class="kt-widget__label">@Labels.CellPhone:</span><br/>
+                                            <span class="kt-widget__label">@Labels.CellPhone:</span><br />
                                             <span class="kt-widget__data text-break">@(attendeeCollaboratorNetworkDto.Collaborator.CellPhone ?? "-")</span>
                                         </div>
                                         @*<div class="kt-widget__contact">
-                                            <span class="kt-widget__label">Location:</span>
-                                            <span class="kt-widget__data">Barcelona</span>
-                                        </div>*@
+                                                <span class="kt-widget__label">Location:</span>
+                                                <span class="kt-widget__data">Barcelona</span>
+                                            </div>*@
                                     </div>
                                 </div>
 
@@ -169,3 +169,13 @@
     </div>
     <!--End::Pagination-->
 </div>
+@section Styles {
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/networks.contacts.js")
+    <script>
+        jQuery(document).ready(function () {
+            NetworksContacts.init();
+        });
+    </script>
+}

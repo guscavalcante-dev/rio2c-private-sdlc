@@ -318,6 +318,13 @@ namespace PlataformaRio2C.Web.Site
 
             #endregion
 
+            #region Networks
+
+            bundles.Add(new ScriptBundle("~/bundles/js/networks.contacts.js").Include(
+                "~/Assets/js/networks/networks.contacts.js"));
+
+            #endregion
+
             #endregion
 
             #region Scripts
