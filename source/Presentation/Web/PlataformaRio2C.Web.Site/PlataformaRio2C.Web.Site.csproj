@@ -367,6 +367,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\CompaniesController.cs" />
     <Compile Include="Controllers\DownloadsController.cs" />
+    <Compile Include="Controllers\NetworksController.cs" />
     <Compile Include="Controllers\StatesController.cs" />
     <Compile Include="Filters\AuthorizeCollaboratorTypeAttribute.cs" />
     <Compile Include="Helpers\OnboardingAllowedRoutesHelper.cs" />
@@ -7129,6 +7130,7 @@
     <Content Include="Views\Projects\EditorTemplates\ProjectAdditionalInformationBaseCommand.cshtml" />
     <Content Include="Views\Projects\SubmittedDetails.cshtml" />
     <Content Include="Views\Projects\SendToPlayers.cshtml" />
+    <Content Include="Views\Networks\Index.cshtml" />
     <None Include="Views\Projects\Index.cshtml.old" />
     <Content Include="Views\Projects\Modals\UpdateMainInformationModal.cshtml" />
     <Content Include="Views\Projects\Modals\UpdateMainInformationForm.cshtml" />
