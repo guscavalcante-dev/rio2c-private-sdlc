@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-09-2019
+// Last Modified On : 11-18-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,6 +15,7 @@ using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -83,6 +84,32 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static IQueryable<AttendeeCollaborator> FindByUserId(this IQueryable<AttendeeCollaborator> query, int userId)
         {
             query = query.Where(ac => ac.Collaborator.User.Id == userId);
+
+            return query;
+        }
+
+        /// <summary>Determines whether [is onboarding finished].</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeCollaborator> IsOnboardingFinished(this IQueryable<AttendeeCollaborator> query)
+        {
+            query = query.Where(ac => ac.OnboardingFinishDate.HasValue);
+
+            return query;
+        }
+
+        /// <summary>Determines whether [is contacts download excel].</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeCollaborator> IsContactsDownloadExcel(this IQueryable<AttendeeCollaborator> query)
+        {
+            query = query.Where(ac => ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted // Industry
+                                                                              && !act.CollaboratorType.IsDeleted
+                                                                              && act.CollaboratorType.Name == Domain.Constants.CollaboratorType.Industry)
+                                      || (ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted // Player without tickets
+                                                                                 && !act.CollaboratorType.IsDeleted
+                                                                                 && act.CollaboratorType.Name == Domain.Constants.CollaboratorType.ExecutiveAudiovisual)
+                                          && !ac.AttendeeCollaboratorTickets.Any(act => !act.IsDeleted && !act.AttendeeSalesPlatformTicketType.IsDeleted)));
 
             return query;
         }
@@ -214,6 +241,49 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             })
                             .FirstOrDefaultAsync();
         }
+        #endregion
+
+        #region Downloads
+
+        /// <summary>Finds all download dto by edition identifier asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<List<AttendeeCollaboratorDownloadDto>> FindAllDownloadDtoByEditionIdAsync(int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByEditionId(editionId, false)
+                                .IsOnboardingFinished()
+                                .IsContactsDownloadExcel();
+
+            return await query
+                            .Select(ac => new AttendeeCollaboratorDownloadDto
+                            {
+                                AttendeeCollaborator = ac,
+                                Collaborator = ac.Collaborator,
+                                JobTitlesDtos = ac.Collaborator.JobTitles.Where(d => !d.IsDeleted).Select(d => new CollaboratorJobTitleBaseDto
+                                {
+                                    Id = d.Id,
+                                    Uid = d.Uid,
+                                    Value = d.Value,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = d.Language.Id,
+                                        Uid = d.Language.Uid,
+                                        Name = d.Language.Name,
+                                        Code = d.Language.Code
+                                    }
+                                }),
+                                AttendeeOrganizationsDtos = ac.AttendeeOrganizationCollaborators
+                                    .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted && !aoc.AttendeeOrganization.Organization.IsDeleted)
+                                    .Select(aoc => new AttendeeOrganizationDto
+                                    {
+                                        AttendeeOrganization = aoc.AttendeeOrganization,
+                                        Organization = aoc.AttendeeOrganization.Organization
+                                    })
+                            })
+                            .ToListAsync();
+        }
+
         #endregion
     }
 }
