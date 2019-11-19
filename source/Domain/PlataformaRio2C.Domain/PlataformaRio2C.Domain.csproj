@@ -76,7 +76,7 @@
     <Compile Include="Constants\OrganizationType.cs" />
     <Compile Include="Constants\CollaboratorType.cs" />
     <Compile Include="Constants\Role.cs" />
-    <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorDownloadDto.cs" />
+    <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorNetworkDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorSiteDetailsDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorSiteCompanyWidgetDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorSiteMainInformationWidgetDto.cs" />

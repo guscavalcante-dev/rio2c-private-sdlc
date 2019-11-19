@@ -4,9 +4,9 @@
 // Created          : 11-18-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-18-2019
+// Last Modified On : 11-19-2019
 // ***********************************************************************
-// <copyright file="AttendeeCollaboratorDownloadDto.cs" company="Softo">
+// <copyright file="AttendeeCollaboratorNetworkDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -15,13 +15,13 @@ using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
-    /// <summary>AttendeeCollaboratorDownloadDto</summary>
-    public class AttendeeCollaboratorDownloadDto : AttendeeCollaboratorDto
+    /// <summary>AttendeeCollaboratorNetworkDto</summary>
+    public class AttendeeCollaboratorNetworkDto : AttendeeCollaboratorDto
     {
         public IEnumerable<AttendeeOrganizationDto> AttendeeOrganizationsDtos { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="AttendeeCollaboratorDownloadDto"/> class.</summary>
-        public AttendeeCollaboratorDownloadDto()
+        /// <summary>Initializes a new instance of the <see cref="AttendeeCollaboratorNetworkDto"/> class.</summary>
+        public AttendeeCollaboratorNetworkDto()
         {
         }
     }

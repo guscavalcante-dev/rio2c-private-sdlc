@@ -4,7 +4,7 @@
 // Created          : 11-18-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-18-2019
+// Last Modified On : 11-19-2019
 // ***********************************************************************
 // <copyright file="DownloadsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -54,7 +54,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> Contacts()
         {
-            var attendeeCollaboratorsDtos = await this.attendeeCollaboratorRepo.FindAllDownloadDtoByEditionIdAsync(this.EditionDto?.Id ?? 0);
+            var attendeeCollaboratorsDtos = await this.attendeeCollaboratorRepo.FindAllExcelNetworkDtoByEditionIdAsync(this.EditionDto?.Id ?? 0);
 
             var workbook = new XLWorkbook();
             var worksheet = workbook.Worksheets.Add(Labels.Contacts);

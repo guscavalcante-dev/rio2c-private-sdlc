@@ -181,3 +181,33 @@ a.r2c-login__footer-link, a.r2c-footer-link {
 .blockUI.blockMsg.blockPage.blockUIModal {
     z-index: 2011 !important;
 }
+
+
+/*
+    Pagination
+*/
+.kt-pagination .kt-pagination__links .kt-pagination__link--active span {
+    font-weight: 500;
+    color: #fff;
+    font-size: 1rem;
+    padding: 0 .2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    min-width: 30px;
+    min-height: 30px;
+    margin: 0;
+}
+.kt-pagination.kt-pagination--brand .kt-pagination__links .kt-pagination__link--first.disabled:hover,
+.kt-pagination.kt-pagination--brand .kt-pagination__links .kt-pagination__link--prev.disabled:hover,
+.kt-pagination.kt-pagination--brand .kt-pagination__links .kt-pagination__link--next.disabled:hover,
+.kt-pagination.kt-pagination--brand .kt-pagination__links .kt-pagination__link--last.disabled:hover {
+    background: rgba(54, 108, 243, 0.1);
+}
+.kt-pagination.kt-pagination--brand .kt-pagination__links .kt-pagination__link--first a,
+.kt-pagination.kt-pagination--brand .kt-pagination__links .kt-pagination__link--prev a,
+.kt-pagination.kt-pagination--brand .kt-pagination__links .kt-pagination__link--next a,
+.kt-pagination.kt-pagination--brand .kt-pagination__links .kt-pagination__link--last a {
+    color: #366cf3;
+  

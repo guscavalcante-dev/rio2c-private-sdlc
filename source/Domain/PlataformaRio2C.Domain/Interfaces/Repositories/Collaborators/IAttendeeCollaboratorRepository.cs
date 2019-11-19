@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-18-2019
+// Last Modified On : 11-19-2019
 // ***********************************************************************
 // <copyright file="IAttendeeCollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
+using X.PagedList;
 
 namespace PlataformaRio2C.Domain.Interfaces
 {
@@ -30,9 +31,10 @@ namespace PlataformaRio2C.Domain.Interfaces
 
         #endregion
 
-        #region Downloads
+        #region Networks
 
-        Task<List<AttendeeCollaboratorDownloadDto>> FindAllDownloadDtoByEditionIdAsync(int editionId);
+        Task<List<AttendeeCollaboratorNetworkDto>> FindAllExcelNetworkDtoByEditionIdAsync(int editionId);
+        Task<IPagedList<AttendeeCollaboratorNetworkDto>> FindAllNetworkDtoByEditionIdPagedAsync(int editionId, int page, int pageSize);
 
         #endregion
     }

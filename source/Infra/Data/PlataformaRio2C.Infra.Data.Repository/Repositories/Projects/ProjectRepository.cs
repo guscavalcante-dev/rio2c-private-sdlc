@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-17-2019
+// Last Modified On : 11-19-2019
 // ***********************************************************************
 // <copyright file="ProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -156,8 +156,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static async Task<IPagedList<ProjectDto>> ToListPagedAsync(this IQueryable<ProjectDto> query, int page, int pageSize)
         {
-            page++;
-
             // Page the list
             var pagedList = await query.ToPagedListAsync(page, pageSize);
             if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
