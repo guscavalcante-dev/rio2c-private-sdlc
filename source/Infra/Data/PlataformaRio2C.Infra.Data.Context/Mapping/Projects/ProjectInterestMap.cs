@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-08-2019
+// Last Modified On : 11-21-2019
 // ***********************************************************************
 // <copyright file="ProjectInterestMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,12 +24,8 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         {
             this.ToTable("ProjectInterests");
 
-            //this.Ignore(p => p.Uid);
-            //this.Ignore(p => p.Id);
-            //this.Ignore(p => p.ProjectUid);
-            //this.Ignore(p => p.InterestUid);
-
-            //this.HasKey(p => new { p.ProjectId, p.InterestId });
+            this.Property(t => t.AdditionalInfo)
+                .HasMaxLength(OrganizationActivity.AdditionalInfoMaxLength);
 
             //Relationships
             this.HasRequired(t => t.Project)

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-07-2019
+// Last Modified On : 11-21-2019
 // ***********************************************************************
 // <copyright file="ProjectInterest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,14 +13,19 @@
 // ***********************************************************************
 using System;
 using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
     /// <summary>ProjectInterest</summary>
     public class ProjectInterest : Entity
     {
+        public static readonly int AdditionalInfoMinLength = 1;
+        public static readonly int AdditionalInfoMaxLength = 200;
+
         public int ProjectId { get; private set; }
         public int InterestId { get; private set; }
+        public string AdditionalInfo { get; private set; }
 
         public virtual Project Project { get; private set; }
         public virtual Interest Interest { get; private set; }
@@ -75,34 +80,19 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.ValidationResult = new ValidationResult();
 
-            //this.ValidateName();
-            //this.ValidateDescriptions();
+            this.ValidateAdditionalInfo();
 
             return this.ValidationResult.IsValid;
         }
 
-        ///// <summary>Validates the name.</summary>
-        //public void ValidateName()
-        //{
-        //    if (string.IsNullOrEmpty(this.Name?.Trim()))
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Name), new string[] { "Name" }));
-        //    }
-
-        //    if (this.Name?.Trim().Length < NameMinLength || this.Name?.Trim().Length > NameMaxLength)
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, NameMaxLength, NameMinLength), new string[] { "Name" }));
-        //    }
-        //}
-
-        ///// <summary>Validates the descriptions.</summary>
-        //public void ValidateDescriptions()
-        //{
-        //    foreach (var description in this.Descriptions?.Where(d => !d.IsValid())?.ToList())
-        //    {
-        //        this.ValidationResult.Add(description.ValidationResult);
-        //    }
-        //}
+        /// <summary>Validates the additional information.</summary>
+        public void ValidateAdditionalInfo()
+        {
+            if (!string.IsNullOrEmpty(this.AdditionalInfo) && this.AdditionalInfo?.Trim().Length < AdditionalInfoMinLength && this.AdditionalInfo?.Trim().Length > AdditionalInfoMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "Additional Info"/*Labels.LastNames*/, AdditionalInfoMaxLength, AdditionalInfoMinLength), new string[] { "AdditionalInfo" }));
+            }
+        }
 
         #endregion
 
