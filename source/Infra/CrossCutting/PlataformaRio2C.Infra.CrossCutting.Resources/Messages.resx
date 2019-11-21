@@ -619,9 +619,9 @@
     <value>Regulamento de Players</value>
     <comment>Regulamento de Players</comment>
   </data>
-  <data name="PlayerRestrictionSpecifics" xml:space="preserve">
-    <value>Descreva o tipo de conteúdo que está buscando no Mercado (restrições e especificações).</value>
-    <comment>Descreva o tipo de conteúdo que está buscando no Mercado (restrições e especificações).</comment>
+  <data name="DescribeRestrictionSpecifics" xml:space="preserve">
+    <value>Descreve as restrições e/ou especificações sobre o conteúdo desejado.</value>
+    <comment>Descreve as restrições e/ou especificações sobre o conteúdo desejado.</comment>
   </data>
   <data name="PublicEmail" xml:space="preserve">
     <value>Gostaria de disponibilizar algum e-mail para contato entre os participantes da categoria Industry? Este e-mail fará parte somente de uma lista de contatos para download.</value>
@@ -660,8 +660,8 @@
     <comment>Nenhum ingresso disponível.</comment>
   </data>
   <data name="RestrictionSpecifics" xml:space="preserve">
-    <value>Tipo de conteúdo que está buscando no Mercado (restrições e especificações)</value>
-    <comment>Tipo de conteúdo que está buscando no Mercado (restrições e especificações)</comment>
+    <value>Restrições e/ou especificações sobre o conteúdo desejado</value>
+    <comment>Restrições e/ou especificações sobre o conteúdo desejado</comment>
   </data>
   <data name="CompleteCompanyrInfo" xml:space="preserve">
     <value>Complete os dados da sua empresa</value>
@@ -708,8 +708,8 @@
     <comment>Passos para inscrição de projeto</comment>
   </data>
   <data name="AudivisualPichingQuestion" xml:space="preserve">
-    <value>Deseja participar do processo de seleção para apresentar esse projeto nas sessões de PITCHING AUDIOVISUAL da Rio2C-RioContentMarket {0}?</value>
-    <comment>Deseja participar do processo de seleção para apresentar esse projeto nas sessões de PITCHING AUDIOVISUAL da Rio2C-RioContentMarket {0}?</comment>
+    <value>Deseja participar do processo de seleção para apresentar esse projeto nas sessões de PITCHING AUDIOVISUAL da Rio2C {0}?</value>
+    <comment>Deseja participar do processo de seleção para apresentar esse projeto nas sessões de PITCHING AUDIOVISUAL da Rio2C {0}?</comment>
   </data>
   <data name="FundingPlan" xml:space="preserve">
     <value>Plano de financiamento &lt;small&gt;(apenas projetos em desenvolvimento/produção)&lt;/small&gt;</value>

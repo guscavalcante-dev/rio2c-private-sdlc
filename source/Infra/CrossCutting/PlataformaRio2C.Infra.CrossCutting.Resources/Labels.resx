@@ -373,8 +373,8 @@
     <comment>Atividade</comment>
   </data>
   <data name="TargetAudience" xml:space="preserve">
-    <value>Público Alvo</value>
-    <comment>Público Alvo</comment>
+    <value>Público-Alvo</value>
+    <comment>Público-Alvo</comment>
   </data>
   <data name="RestrictionsSpecifics" xml:space="preserve">
     <value>Restrições e especificidades</value>
@@ -568,8 +568,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="NoPlayerSelected" xml:space="preserve">
     <value>Nenhum player selecionado</value>
   </data>
-  <data name="PlayersSelectedToEvaluation" xml:space="preserve">
+  <data name="PlayersSelectedForEvaluation" xml:space="preserve">
     <value>Players selecionados para avaliação</value>
+    <comment>Players selecionados para avaliação</comment>
   </data>
   <data name="Print" xml:space="preserve">
     <value>Imprimir</value>
@@ -1381,7 +1382,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Interesses do Player</value>
     <comment>Interesses do Player</comment>
   </data>
-  <data name="Calendar" xml:space="preserve">
+  <data name="Agenda" xml:space="preserve">
     <value>Agenda</value>
     <comment>Agenda</comment>
   </data>
@@ -1389,7 +1390,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Rede Rio2C</value>
     <comment>Rede Rio2C</comment>
   </data>
-  <data name="Schedule" xml:space="preserve">
+  <data name="Program" xml:space="preserve">
     <value>Programação</value>
     <comment>Programação</comment>
   </data>
@@ -1689,7 +1690,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Enviar para Players</value>
     <comment>Enviar para Players</comment>
   </data>
-  <data name="SubscribeEntity" xml:space="preserve">
+  <data name="SubmitEntity" xml:space="preserve">
     <value>Inscrever {0}</value>
     <comment>Inscrever {0}</comment>
   </data>
@@ -1724,5 +1725,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="SendMessage" xml:space="preserve">
     <value>Enviar Mensagem</value>
     <comment>Enviar Mensagem</comment>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Inscrever</value>
+    <comment>Inscrever</comment>
   </data>
 </root>

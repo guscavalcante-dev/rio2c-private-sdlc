@@ -109,7 +109,7 @@
                                                     <div class="kt-widget__details" style="width: 100%;">
                                                         @if (projectDto.ProjectBuyerEvaluationDtos?.Any() == true)
                                                         {
-                                                            <span class="kt-widget__subtitle">@Labels.PlayersSelectedToEvaluation:</span>
+                                                            <span class="kt-widget__subtitle">@Labels.PlayersSelectedForEvaluation:</span>
                                                             <div class="row">
                                                                 <div class="col-12">
                                                                     <div class="row">
@@ -179,7 +179,7 @@
                                     @if (projectDto.IsFakeProject)
                                     {
                                         <div class="col-4 text-center">
-                                            <a href="@Url.Action("Submit", "Projects", new { Area = "" })" class="btn btn-brand">@string.Format(Labels.SubscribeEntity, projectTitle)</a>
+                                            <a href="@Url.Action("Submit", "Projects", new { Area = "" })" class="btn btn-brand">@string.Format(Labels.SubmitEntity, projectTitle)</a>
                                         </div>
                                     }
                                     else
@@ -235,7 +235,7 @@
                             </div>
                             <div class="kt-iconbox__desc">
                                 <h3 class="kt-iconbox__title">
-                                    <a class="kt-link" href="#">@Labels.Schedule @Labels.AudiovisualProjects</a>
+                                    <a class="kt-link" href="#">@Labels.Program @Labels.AudiovisualProjects</a>
                                 </h3>
                             </div>
                         </div>

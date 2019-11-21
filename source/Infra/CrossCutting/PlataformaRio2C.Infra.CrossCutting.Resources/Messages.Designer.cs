@@ -106,7 +106,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Deseja participar do processo de seleção para apresentar esse projeto nas sessões de PITCHING AUDIOVISUAL da Rio2C-RioContentMarket {0}?.
+        ///   Looks up a localized string similar to Deseja participar do processo de seleção para apresentar esse projeto nas sessões de PITCHING AUDIOVISUAL da Rio2C {0}?.
         /// </summary>
         public static string AudivisualPichingQuestion {
             get {
@@ -408,6 +408,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string CurrentlyBrowsingAs {
             get {
                 return ResourceManager.GetString("CurrentlyBrowsingAs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Descreve as restrições e/ou especificações sobre o conteúdo desejado..
+        /// </summary>
+        public static string DescribeRestrictionSpecifics {
+            get {
+                return ResourceManager.GetString("DescribeRestrictionSpecifics", resourceCulture);
             }
         }
         
@@ -987,15 +996,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Descreva o tipo de conteúdo que está buscando no Mercado (restrições e especificações)..
-        /// </summary>
-        public static string PlayerRestrictionSpecifics {
-            get {
-                return ResourceManager.GetString("PlayerRestrictionSpecifics", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Regulamento de Players.
         /// </summary>
         public static string PlayerTerms {
@@ -1428,7 +1428,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tipo de conteúdo que está buscando no Mercado (restrições e especificações).
+        ///   Looks up a localized string similar to Restrições e/ou especificações sobre o conteúdo desejado.
         /// </summary>
         public static string RestrictionSpecifics {
             get {

@@ -250,6 +250,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Agenda.
+        /// </summary>
+        public static string Agenda {
+            get {
+                return ResourceManager.GetString("Agenda", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to uma holding.
         /// </summary>
         public static string AHolding {
@@ -435,15 +444,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string By {
             get {
                 return ResourceManager.GetString("By", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Agenda.
-        /// </summary>
-        public static string Calendar {
-            get {
-                return ResourceManager.GetString("Calendar", resourceCulture);
             }
         }
         
@@ -2457,9 +2457,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Players selecionados para avaliação.
         /// </summary>
-        public static string PlayersSelectedToEvaluation {
+        public static string PlayersSelectedForEvaluation {
             get {
-                return ResourceManager.GetString("PlayersSelectedToEvaluation", resourceCulture);
+                return ResourceManager.GetString("PlayersSelectedForEvaluation", resourceCulture);
             }
         }
         
@@ -2653,6 +2653,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Profile {
             get {
                 return ResourceManager.GetString("Profile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Programação.
+        /// </summary>
+        public static string Program {
+            get {
+                return ResourceManager.GetString("Program", resourceCulture);
             }
         }
         
@@ -3009,15 +3018,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Saved {
             get {
                 return ResourceManager.GetString("Saved", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Programação.
-        /// </summary>
-        public static string Schedule {
-            get {
-                return ResourceManager.GetString("Schedule", resourceCulture);
             }
         }
         
@@ -3472,11 +3472,20 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inscrever.
+        /// </summary>
+        public static string Submit {
+            get {
+                return ResourceManager.GetString("Submit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inscrever {0}.
         /// </summary>
-        public static string SubscribeEntity {
+        public static string SubmitEntity {
             get {
-                return ResourceManager.GetString("SubscribeEntity", resourceCulture);
+                return ResourceManager.GetString("SubmitEntity", resourceCulture);
             }
         }
         
@@ -3544,7 +3553,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Público Alvo.
+        ///   Looks up a localized string similar to Público-Alvo.
         /// </summary>
         public static string TargetAudience {
             get {

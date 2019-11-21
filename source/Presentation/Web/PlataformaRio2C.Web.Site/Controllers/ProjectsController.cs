@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-18-2019
+// Last Modified On : 11-21-2019
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1460,7 +1460,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            var successMessage = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.UpdatedM);
+            var successMessage = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.Sent.ToLowerInvariant());
 
             if (originPage == "SendToPlayers")
             {

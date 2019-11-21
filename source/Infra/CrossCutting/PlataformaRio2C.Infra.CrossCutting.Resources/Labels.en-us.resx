@@ -358,7 +358,7 @@
   </data>
   <data name="TargetAudience" xml:space="preserve">
     <value>Target Audience</value>
-    <comment>Público Alvo</comment>
+    <comment>Público-Alvo</comment>
   </data>
   <data name="NewPassword" xml:space="preserve">
     <value>New password</value>
@@ -561,8 +561,9 @@
   <data name="NoPlayerSelected" xml:space="preserve">
     <value>No player selected</value>
   </data>
-  <data name="PlayersSelectedToEvaluation" xml:space="preserve">
-    <value>Players selected to evaluation</value>
+  <data name="PlayersSelectedForEvaluation" xml:space="preserve">
+    <value>Players selected for evaluation</value>
+    <comment>Players selecionados para avaliação</comment>
   </data>
   <data name="Print" xml:space="preserve">
     <value>Print</value>
@@ -1373,16 +1374,16 @@
     <value>Player Interests</value>
     <comment>Interesses do Player</comment>
   </data>
-  <data name="Calendar" xml:space="preserve">
-    <value>Calendar</value>
+  <data name="Agenda" xml:space="preserve">
+    <value>Agenda</value>
     <comment>Agenda</comment>
   </data>
   <data name="NetworkRio2C" xml:space="preserve">
     <value>Rio2C Network</value>
     <comment>Rede Rio2C</comment>
   </data>
-  <data name="Schedule" xml:space="preserve">
-    <value>Schedule</value>
+  <data name="Program" xml:space="preserve">
+    <value>Program</value>
     <comment>Programação</comment>
   </data>
   <data name="Talents" xml:space="preserve">
@@ -1677,8 +1678,8 @@
     <value>Send to Players</value>
     <comment>Enviar para Players</comment>
   </data>
-  <data name="SubscribeEntity" xml:space="preserve">
-    <value>Subscribe {0}</value>
+  <data name="SubmitEntity" xml:space="preserve">
+    <value>Submit {0}</value>
     <comment>Inscrever {0}</comment>
   </data>
   <data name="View" xml:space="preserve">
@@ -1712,5 +1713,9 @@
   <data name="SendMessage" xml:space="preserve">
     <value>Send Message</value>
     <comment>Enviar Mensagem</comment>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
+    <comment>Inscrever</comment>
   </data>
 </root>

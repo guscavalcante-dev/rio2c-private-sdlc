@@ -892,7 +892,7 @@
 //                worksheetPlayers.Cells[row, column++].Value = string.Format("{0} {1}", Labels.Title, Labels.Portuguese);
 //                worksheetPlayers.Cells[row, column++].Value = string.Format("{0} {1}", Labels.Title, Labels.English);
 //                worksheetPlayers.Cells[row, column++].Value = string.Format("{0}", "Pitching");
-//                worksheetPlayers.Cells[row, column++].Value = Labels.PlayersSelectedToEvaluation;
+//                worksheetPlayers.Cells[row, column++].Value = Labels.PlayersSelectedForEvaluation;
 //                worksheetPlayers.Cells[row, column].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
 //                worksheetPlayers.Cells[row, column++].Value = string.Format("{0} {1}", Labels.Date, "do Cadastro");
 //                worksheetPlayers.Cells[row, column].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
@@ -1141,7 +1141,7 @@
 //            worksheetPlayers.Cells[row, column++].Value = string.Format("{0} {1}", Labels.Title, Labels.Portuguese);
 //            worksheetPlayers.Cells[row, column++].Value = string.Format("{0} {1}", Labels.Title, Labels.English);
 //            worksheetPlayers.Cells[row, column++].Value = string.Format("{0}", "Pitching");
-//            worksheetPlayers.Cells[row, column++].Value = Labels.PlayersSelectedToEvaluation;
+//            worksheetPlayers.Cells[row, column++].Value = Labels.PlayersSelectedForEvaluation;
 //            worksheetPlayers.Cells[row, column].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
 //            worksheetPlayers.Cells[row, column++].Value = string.Format("{0} {1}", Labels.Date, "do Cadastro");
 //            worksheetPlayers.Cells[row, column].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
