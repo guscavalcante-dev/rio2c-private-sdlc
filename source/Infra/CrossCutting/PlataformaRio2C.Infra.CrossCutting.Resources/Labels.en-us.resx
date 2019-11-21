@@ -358,7 +358,7 @@
   </data>
   <data name="TargetAudience" xml:space="preserve">
     <value>Target Audience</value>
-    <comment>Público Alvo</comment>
+    <comment>Público-Alvo</comment>
   </data>
   <data name="NewPassword" xml:space="preserve">
     <value>New password</value>
