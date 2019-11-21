@@ -1722,4 +1722,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Contatos</value>
     <comment>Contatos</comment>
   </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Inscrever</value>
+    <comment>Inscrever</comment>
+  </data>
 </root>

@@ -1710,4 +1710,8 @@
     <value>Contacts</value>
     <comment>Contatos</comment>
   </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
+    <comment>Inscrever</comment>
+  </data>
 </root>
