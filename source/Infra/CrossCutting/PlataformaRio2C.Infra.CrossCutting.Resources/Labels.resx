@@ -1390,7 +1390,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Rede Rio2C</value>
     <comment>Rede Rio2C</comment>
   </data>
-  <data name="Schedule" xml:space="preserve">
+  <data name="Program" xml:space="preserve">
     <value>Programação</value>
     <comment>Programação</comment>
   </data>

@@ -1382,8 +1382,8 @@
     <value>Rio2C Network</value>
     <comment>Rede Rio2C</comment>
   </data>
-  <data name="Schedule" xml:space="preserve">
-    <value>Schedule</value>
+  <data name="Program" xml:space="preserve">
+    <value>Program</value>
     <comment>Programação</comment>
   </data>
   <data name="Talents" xml:space="preserve">

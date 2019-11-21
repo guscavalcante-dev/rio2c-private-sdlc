@@ -2657,6 +2657,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Programação.
+        /// </summary>
+        public static string Program {
+            get {
+                return ResourceManager.GetString("Program", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Projeto.
         /// </summary>
         public static string Project {
@@ -3009,15 +3018,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Saved {
             get {
                 return ResourceManager.GetString("Saved", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Programação.
-        /// </summary>
-        public static string Schedule {
-            get {
-                return ResourceManager.GetString("Schedule", resourceCulture);
             }
         }
         
