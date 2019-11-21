@@ -1422,6 +1422,7 @@ CREATE TABLE [dbo].[ProjectInterests](
 	[Uid] [uniqueidentifier] NOT NULL,
 	[ProjectId] [int] NOT NULL,
 	[InterestId] [int] NOT NULL,
+	[AdditionalInfo] [varchar(200)] NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,

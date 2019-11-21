@@ -19,3 +19,7 @@ go
 ALTER TABLE "dbo"."OrganizationInterests"
 ADD AdditionalInfo  varchar(200)  NULL
 go
+
+ALTER TABLE "dbo"."ProjectInterests"
+ADD AdditionalInfo  varchar(200)  NULL
+go
