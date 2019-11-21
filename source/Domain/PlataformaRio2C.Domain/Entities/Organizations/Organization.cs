@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-08-2019
+// Last Modified On : 11-21-2019
 // ***********************************************************************
 // <copyright file="Organization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1129,6 +1129,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidatePhoneNumber();
             this.ValidateDescriptions();
             this.ValidateRestrictionSpecifics();
+            this.ValidateInterests();
+            this.ValidateActivities();
             this.ValidateAddress();
 
             return this.ValidationResult.IsValid;
@@ -1227,6 +1229,34 @@ namespace PlataformaRio2C.Domain.Entities
             foreach (var restrictionSpecific in this.RestrictionSpecifics?.Where(d => !d.IsValid())?.ToList())
             {
                 this.ValidationResult.Add(restrictionSpecific.ValidationResult);
+            }
+        }
+
+        /// <summary>Validates the interests.</summary>
+        public void ValidateInterests()
+        {
+            if (this.RestrictionSpecifics?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var interest in this.OrganizationInterests?.Where(d => !d.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(interest.ValidationResult);
+            }
+        }
+
+        /// <summary>Validates the activities.</summary>
+        public void ValidateActivities()
+        {
+            if (this.RestrictionSpecifics?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var activity in this.OrganizationActivities?.Where(d => !d.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(activity.ValidationResult);
             }
         }
 
