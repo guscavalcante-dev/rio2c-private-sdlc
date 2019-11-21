@@ -179,7 +179,7 @@
                                     @if (projectDto.IsFakeProject)
                                     {
                                         <div class="col-4 text-center">
-                                            <a href="@Url.Action("Submit", "Projects", new { Area = "" })" class="btn btn-brand">@string.Format(Labels.SubscribeEntity, projectTitle)</a>
+                                            <a href="@Url.Action("Submit", "Projects", new { Area = "" })" class="btn btn-brand">@string.Format(Labels.SubmitEntity, projectTitle)</a>
                                         </div>
                                     }
                                     else

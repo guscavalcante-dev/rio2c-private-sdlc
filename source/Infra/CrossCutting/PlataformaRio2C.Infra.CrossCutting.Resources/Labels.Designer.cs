@@ -3474,9 +3474,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Inscrever {0}.
         /// </summary>
-        public static string SubscribeEntity {
+        public static string SubmitEntity {
             get {
-                return ResourceManager.GetString("SubscribeEntity", resourceCulture);
+                return ResourceManager.GetString("SubmitEntity", resourceCulture);
             }
         }
         

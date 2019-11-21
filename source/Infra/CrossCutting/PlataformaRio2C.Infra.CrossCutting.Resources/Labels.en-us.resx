@@ -1678,8 +1678,8 @@
     <value>Send to Players</value>
     <comment>Enviar para Players</comment>
   </data>
-  <data name="SubscribeEntity" xml:space="preserve">
-    <value>Subscribe {0}</value>
+  <data name="SubmitEntity" xml:space="preserve">
+    <value>Submit {0}</value>
     <comment>Inscrever {0}</comment>
   </data>
   <data name="View" xml:space="preserve">

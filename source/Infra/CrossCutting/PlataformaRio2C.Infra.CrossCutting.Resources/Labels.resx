@@ -1690,7 +1690,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Enviar para Players</value>
     <comment>Enviar para Players</comment>
   </data>
-  <data name="SubscribeEntity" xml:space="preserve">
+  <data name="SubmitEntity" xml:space="preserve">
     <value>Inscrever {0}</value>
     <comment>Inscrever {0}</comment>
   </data>
