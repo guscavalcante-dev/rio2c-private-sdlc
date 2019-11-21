@@ -614,9 +614,9 @@
     <value>Players’ Regulation</value>
     <comment>Regulamento de Players</comment>
   </data>
-  <data name="PlayerRestrictionSpecifics" xml:space="preserve">
-    <value>Describe what you are looking for in the Market (restrictions or specifics).</value>
-    <comment>Descreva o tipo de conteúdo que está buscando no Mercado (restrições e especificações).</comment>
+  <data name="DescribeRestrictionSpecifics" xml:space="preserve">
+    <value>Describe the desired content restriction and/or specifics.</value>
+    <comment>Descreve as restrições e/ou especificações sobre o conteúdo desejado.</comment>
   </data>
   <data name="PublicEmail" xml:space="preserve">
     <value>Would you like to make available an e-mail for all Industry badge holders? This e-mail will only be part of a downloadable contact list.</value>
@@ -655,8 +655,8 @@
     <comment>Nenhum ingresso disponível.</comment>
   </data>
   <data name="RestrictionSpecifics" xml:space="preserve">
-    <value>Content type that is looking for in the Market (restrictions or specifics)</value>
-    <comment>Tipo de conteúdo que está buscando no Mercado (restrições e especificações)</comment>
+    <value>Desired content restriction and/or specifics</value>
+    <comment>Restrições e/ou especificações sobre o conteúdo desejado</comment>
   </data>
   <data name="CompleteCompanyrInfo" xml:space="preserve">
     <value>Complete your company information</value>
