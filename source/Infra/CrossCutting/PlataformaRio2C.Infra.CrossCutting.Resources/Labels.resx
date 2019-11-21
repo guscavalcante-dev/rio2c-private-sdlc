@@ -1382,7 +1382,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Interesses do Player</value>
     <comment>Interesses do Player</comment>
   </data>
-  <data name="Calendar" xml:space="preserve">
+  <data name="Agenda" xml:space="preserve">
     <value>Agenda</value>
     <comment>Agenda</comment>
   </data>

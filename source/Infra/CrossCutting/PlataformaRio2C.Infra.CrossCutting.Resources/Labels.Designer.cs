@@ -250,6 +250,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Agenda.
+        /// </summary>
+        public static string Agenda {
+            get {
+                return ResourceManager.GetString("Agenda", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to uma holding.
         /// </summary>
         public static string AHolding {
@@ -435,15 +444,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string By {
             get {
                 return ResourceManager.GetString("By", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Agenda.
-        /// </summary>
-        public static string Calendar {
-            get {
-                return ResourceManager.GetString("Calendar", resourceCulture);
             }
         }
         
