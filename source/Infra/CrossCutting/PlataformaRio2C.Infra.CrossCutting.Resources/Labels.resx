@@ -568,8 +568,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="NoPlayerSelected" xml:space="preserve">
     <value>Nenhum player selecionado</value>
   </data>
-  <data name="PlayersSelectedToEvaluation" xml:space="preserve">
+  <data name="PlayersSelectedForEvaluation" xml:space="preserve">
     <value>Players selecionados para avaliação</value>
+    <comment>Players selecionados para avaliação</comment>
   </data>
   <data name="Print" xml:space="preserve">
     <value>Imprimir</value>

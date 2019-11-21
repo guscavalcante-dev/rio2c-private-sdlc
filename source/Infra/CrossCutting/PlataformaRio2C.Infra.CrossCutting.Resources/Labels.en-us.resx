@@ -561,8 +561,9 @@
   <data name="NoPlayerSelected" xml:space="preserve">
     <value>No player selected</value>
   </data>
-  <data name="PlayersSelectedToEvaluation" xml:space="preserve">
-    <value>Players selected to evaluation</value>
+  <data name="PlayersSelectedForEvaluation" xml:space="preserve">
+    <value>Players selected for evaluation</value>
+    <comment>Players selecionados para avaliação</comment>
   </data>
   <data name="Print" xml:space="preserve">
     <value>Print</value>
