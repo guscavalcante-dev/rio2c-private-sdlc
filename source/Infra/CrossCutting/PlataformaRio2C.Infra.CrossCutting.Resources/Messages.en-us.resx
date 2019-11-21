@@ -703,8 +703,8 @@
     <comment>Passos para inscrição de projeto</comment>
   </data>
   <data name="AudivisualPichingQuestion" xml:space="preserve">
-    <value>Do you wish to take part in the selection proccess for the AUDIOVISUAL PITCHING sessions at Rio2C-RioContentMarket {0}?</value>
-    <comment>Deseja participar do processo de seleção para apresentar esse projeto nas sessões de PITCHING AUDIOVISUAL da Rio2C-RioContentMarket {0}?</comment>
+    <value>Do you wish to take part in the selection proccess for the AUDIOVISUAL PITCHING sessions at Rio2C {0}?</value>
+    <comment>Deseja participar do processo de seleção para apresentar esse projeto nas sessões de PITCHING AUDIOVISUAL da Rio2C {0}?</comment>
   </data>
   <data name="FundingPlan" xml:space="preserve">
     <value>Funding plan &lt;small&gt;(only for projects under development/production)&lt;/small&gt;</value>
