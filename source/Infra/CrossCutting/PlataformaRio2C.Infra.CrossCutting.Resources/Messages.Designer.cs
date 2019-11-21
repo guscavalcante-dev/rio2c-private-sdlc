@@ -915,6 +915,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nenhuma conversa encontrada..
+        /// </summary>
+        public static string NoConversationsFound {
+            get {
+                return ResourceManager.GetString("NoConversationsFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Número inválido..
         /// </summary>
         public static string NumberIsInvalid {

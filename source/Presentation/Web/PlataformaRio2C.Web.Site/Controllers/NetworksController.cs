@@ -31,14 +31,22 @@ namespace PlataformaRio2C.Web.Site.Controllers
     public class NetworksController : BaseController
     {
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
+        private readonly IMessageRepository messageRepo;
 
+        /// <summary>Initializes a new instance of the <see cref="NetworksController"/> class.</summary>
+        /// <param name="commandBus">The command bus.</param>
+        /// <param name="identityController">The identity controller.</param>
+        /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
+        /// <param name="messageRepository">The message repository.</param>
         public NetworksController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
-            IAttendeeCollaboratorRepository attendeeCollaboratorRepository)
+            IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
+            IMessageRepository messageRepository)
             : base(commandBus, identityController)
         {
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
+            this.messageRepo = messageRepository;
         }
 
         /// <summary>Indexes this instance.</summary>
@@ -62,6 +70,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
             return View(attendeeCollaboratos);
         }
 
+        /// <summary>Messageses this instance.</summary>
+        /// <returns></returns>
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.ExecutiveAudiovisual + "," + Constants.CollaboratorType.Industry)]
         public async Task<ActionResult> Messages()
         {
@@ -73,11 +83,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             #endregion
 
-            //var attendeeCollaboratos = await this.attendeeCollaboratorRepo.FindAllNetworkDtoByEditionIdPagedAsync(this.EditionDto.Id, page.Value, pageSize.Value);
+            var conversations = await this.messageRepo.FindAllConversationsDtosByEditionIdAndByUserId(this.EditionDto.Id, this.UserAccessControlDto.User.Id);
 
-            //ViewBag.PageSize = pageSize;
-
-            return View();
+            return View(conversations);
         }
     }
 }

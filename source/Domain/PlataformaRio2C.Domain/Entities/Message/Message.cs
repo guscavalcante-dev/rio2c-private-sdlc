@@ -1,20 +1,76 @@
-﻿using PlataformaRio2C.Domain.Entities.Validations;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Domain
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 11-21-2019
+// ***********************************************************************
+// <copyright file="Message.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
+    /// <summary>Message</summary>
     public class Message : Entity
     {
+        public static readonly int TextMinLength = 1;
         public static readonly int TextMaxLength = 1200;
 
-        public string Text { get; private set; }
-        public bool IsRead { get; private set; }
+        public int EditionId { get; private set; }
         public int SenderId { get; private set; }
-        public virtual User Sender { get; private set; }
         public int RecipientId { get; private set; }
+        public string Text { get; private set; }
+        public DateTime SendDate { get; private set; }
+        public DateTime? ReadDate { get; private set; }
+        public DateTime? NotificationEmailSendDate { get; private set; }
+
+        public virtual Edition Edition { get; private set; }
+        public virtual User Sender { get; private set; }
         public virtual User Recipient { get; private set; }
 
-        protected Message() { }
+        /// <summary>Initializes a new instance of the <see cref="Message"/> class.</summary>
+        protected Message()
+        {
+        }
+
+        #region Validations
+
+        /// <summary>Returns true if ... is valid.</summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
+        public override bool IsValid()
+        {
+            ValidationResult = new ValidationResult();
+
+            this.ValidateName();
+
+            return ValidationResult.IsValid;
+        }
+
+        /// <summary>Validates the name.</summary>
+        public void ValidateName()
+        {
+            if (string.IsNullOrEmpty(this.Text?.Trim()))
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Name), new string[] { "Text" }));
+            }
+
+            if (this.Text?.Trim().Length < TextMinLength || this.Text?.Trim().Length > TextMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, TextMaxLength, TextMinLength), new string[] { "Text" }));
+            }
+        }
+
+        #endregion
+
+        #region Old Methods
 
         public Message(string text)
         {
@@ -28,7 +84,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         public void SetIsRead(bool val)
         {
-            IsRead = val;
+            //IsRead = val;
         }
 
         public void SetSender(User sender)
@@ -47,15 +103,8 @@ namespace PlataformaRio2C.Domain.Entities
             {
                 RecipientId = recipient.Id;
             }
-        }       
-
-        public override bool IsValid()
-        {            
-            ValidationResult = new ValidationResult();
-
-            ValidationResult.Add(new MessageIsConsistent().Valid(this));
-
-            return ValidationResult.IsValid;
         }
+
+        #endregion
     }
 }

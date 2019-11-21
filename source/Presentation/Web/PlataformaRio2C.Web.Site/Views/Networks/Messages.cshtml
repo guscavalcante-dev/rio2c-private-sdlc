@@ -1,8 +1,5 @@
-﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
-@using PlataformaRio2C.Domain.Dtos
-@using PlataformaRio2C.Domain.Statics
-@using X.PagedList.Mvc
-@using X.PagedList.Mvc.Common
+﻿@using PlataformaRio2C.Domain.Dtos
+@model List<ConversationDto>
 @{
     ViewBag.Title = Labels.Messages;
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
@@ -40,25 +37,35 @@
                 <div class="kt-widget kt-widget--users kt-mt-20">
                     <div class="kt-scroll kt-scroll--pull">
                         <div class="kt-widget__items">
-                            <div class="kt-widget__item">
-                                <span class="kt-userpic kt-userpic--circle">
-                                    <img src="./assets/media/users/300_9.jpg" alt="image">
-                                </span>
-                                <div class="kt-widget__info">
-                                    <div class="kt-widget__section">
-                                        <a href="#" class="kt-widget__username">Matt Pears</a>
-                                        <span class="kt-badge kt-badge--success kt-badge--dot"></span>
-                                    </div>
-                                    <span class="kt-widget__desc">
-                                        Head of Development
+                            @if (Model?.Any() == true)
+                            {
+                                <div class="kt-widget__item">
+                                    <span class="kt-userpic kt-userpic--circle">
+                                        <img src="./assets/media/users/300_9.jpg" alt="image">
                                     </span>
+                                    <div class="kt-widget__info">
+                                        <div class="kt-widget__section">
+                                            <a href="#" class="kt-widget__username">Matt Pears</a>
+                                            <span class="kt-badge kt-badge--success kt-badge--dot"></span>
+                                        </div>
+                                        <span class="kt-widget__desc">
+                                            Head of Development
+                                        </span>
+                                    </div>
+                                    <div class="kt-widget__action">
+                                        <span class="kt-widget__date">36 Mines</span>
+                                        <span class="kt-badge kt-badge--success kt-font-bold">7</span>
+                                    </div>
                                 </div>
-                                <div class="kt-widget__action">
-                                    <span class="kt-widget__date">36 Mines</span>
-                                    <span class="kt-badge kt-badge--success kt-font-bold">7</span>
+                            }
+                            else
+                            {
+                                <div class="row">
+                                    <div class="col-12 text-center mt-50">@Messages.NoConversationsFound</div>
                                 </div>
-                            </div>
-                            <div class="kt-widget__item">
+                                
+                            }
+                            @*<div class="kt-widget__item">
                                 <span class="kt-userpic kt-userpic--circle">
                                     <img src="./assets/media/users/100_7.jpg" alt="image">
                                 </span>
@@ -92,7 +99,7 @@
                                 <div class="kt-widget__action">
                                     <span class="kt-widget__date">2 Days</span>
                                 </div>
-                            </div>
+                            </div>*@
                         </div>
                     </div>
                 </div>
@@ -360,7 +367,7 @@
                 <div class="kt-portlet__foot">
                     <div class="kt-chat__input">
                         <div class="kt-chat__editor">
-                            @Html.TextArea("Message", null, new { placeholder = Labels.TypeYourMessage + "...", rows = 3 })
+                            @Html.TextArea("Text", null, new { placeholder = Labels.TypeYourMessage + "...", rows = 3 })
                             @*<textarea style="height: 50px" placeholder="Type here..."></textarea>*@
                         </div>
                         <div class="kt-chat__toolbar">

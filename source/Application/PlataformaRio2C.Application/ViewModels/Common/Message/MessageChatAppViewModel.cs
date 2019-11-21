@@ -42,7 +42,7 @@ namespace PlataformaRio2C.Application.ViewModels
             :base(entity)
         {
             Text = entity.Text;
-            IsRead = entity.IsRead;
+            IsRead = entity.ReadDate.HasValue;
 
 
             if (entity.CreateDate != null)

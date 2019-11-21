@@ -771,4 +771,8 @@
     <value>Projeto salvo mas ainda NÃO enviado para Players. Para enviar o projeto para avaliação selecione os Players e clique em Salvar e Enviar.</value>
     <comment>Projeto salvo mas ainda NÃO enviado para Players. Para enviar o projeto para avaliação selecione os Players e clique em Salvar e Enviar.</comment>
   </data>
+  <data name="NoConversationsFound" xml:space="preserve">
+    <value>Nenhuma conversa encontrada.</value>
+    <comment>Nenhuma conversa encontrada.</comment>
+  </data>
 </root>

@@ -75,7 +75,7 @@ namespace PlataformaRio2C.Application.Services
 
                 foreach (var entity in entities)
                 {
-                    if (!entity.IsRead)
+                    if (!entity.ReadDate.HasValue)
                     {
                         entity.SetIsRead(true);
                         entitiesAlter.Add(entity);
