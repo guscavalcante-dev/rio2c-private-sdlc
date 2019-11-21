@@ -7132,6 +7132,7 @@
     <Content Include="Views\Projects\SubmittedDetails.cshtml" />
     <Content Include="Views\Projects\SendToPlayers.cshtml" />
     <Content Include="Views\Networks\Index.cshtml" />
+    <Content Include="Views\Networks\Messages.cshtml" />
     <None Include="Views\Projects\Index.cshtml.old" />
     <Content Include="Views\Projects\Modals\UpdateMainInformationModal.cshtml" />
     <Content Include="Views\Projects\Modals\UpdateMainInformationForm.cshtml" />

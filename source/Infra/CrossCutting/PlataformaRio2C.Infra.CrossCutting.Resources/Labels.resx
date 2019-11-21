@@ -1730,4 +1730,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Inscrever</value>
     <comment>Inscrever</comment>
   </data>
+  <data name="Messages" xml:space="preserve">
+    <value>Mensagens</value>
+    <comment>Mensagens</comment>
+  </data>
 </root>

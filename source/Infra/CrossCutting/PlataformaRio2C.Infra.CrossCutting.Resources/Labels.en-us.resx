@@ -1718,4 +1718,8 @@
     <value>Submit</value>
     <comment>Inscrever</comment>
   </data>
+  <data name="Messages" xml:space="preserve">
+    <value>Messages</value>
+    <comment>Mensagens</comment>
+  </data>
 </root>
