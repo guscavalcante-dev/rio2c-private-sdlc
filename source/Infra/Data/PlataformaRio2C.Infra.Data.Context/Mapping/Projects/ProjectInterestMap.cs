@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-21-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="ProjectInterestMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,7 +29,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
 
             //Relationships
             this.HasRequired(t => t.Project)
-                .WithMany(p => p.Interests)
+                .WithMany(p => p.ProjectInterests)
                 .HasForeignKey(t => t.ProjectId);
 
             this.HasRequired(t => t.Interest)

@@ -51,16 +51,16 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ProjectType ProjectType { get; private set; }
         public virtual AttendeeOrganization SellerAttendeeOrganization { get; private set; }
 
-        public virtual ICollection<ProjectTitle> Titles { get; private set; }
-        public virtual ICollection<ProjectLogLine> LogLines { get; private set; }
-        public virtual ICollection<ProjectSummary> Summaries { get; private set; }
-        public virtual ICollection<ProjectProductionPlan> ProductionPlans { get; private set; }
-        public virtual ICollection<ProjectAdditionalInformation> AdditionalInformations { get; private set; }
-        public virtual ICollection<ProjectImageLink> ImageLinks { get; private set; }
-        public virtual ICollection<ProjectTeaserLink> TeaserLinks { get; private set; }
-        public virtual ICollection<ProjectInterest> Interests { get; private set; }
-        public virtual ICollection<ProjectTargetAudience> TargetAudiences { get; private set; }
-        public virtual ICollection<ProjectBuyerEvaluation> BuyerEvaluations { get; private set; }
+        public virtual ICollection<ProjectTitle> ProjectTitles { get; private set; }
+        public virtual ICollection<ProjectLogLine> ProjectLogLines { get; private set; }
+        public virtual ICollection<ProjectSummary> ProjectSummaries { get; private set; }
+        public virtual ICollection<ProjectProductionPlan> ProjectProductionPlans { get; private set; }
+        public virtual ICollection<ProjectAdditionalInformation> ProjectAdditionalInformations { get; private set; }
+        public virtual ICollection<ProjectImageLink> ProjectImageLinks { get; private set; }
+        public virtual ICollection<ProjectTeaserLink> ProjectTeaserLinks { get; private set; }
+        public virtual ICollection<ProjectInterest> ProjectInterests { get; private set; }
+        public virtual ICollection<ProjectTargetAudience> ProjectTargetAudiences { get; private set; }
+        public virtual ICollection<ProjectBuyerEvaluation> ProjectBuyerEvaluations { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="Project"/> class.</summary>
         /// <param name="projectType">Type of the project.</param>
@@ -120,15 +120,15 @@ namespace PlataformaRio2C.Domain.Entities
             this.FinishDate = null;
             this.ProjectBuyerEvaluationsCount = 0;
 
-            this.SynchronizeTitles(projectTitles, userId);
-            this.SynchronizeLogLines(projectLogLines, userId);
-            this.SynchronizeSummaries(projectSummaries, userId);
-            this.SynchronizeProductionPlans(projectProductionPlans, userId);
-            this.SynchronizeAdditionalInformations(projectAdditionalInformations, userId);
-            this.SynchronizeInterests(projectInterests, userId);
-            this.SynchronizeTargetAudiences(targetAudiences, userId);
-            this.SynchronizeImageLinks(imageLink, userId);
-            this.SynchronizeTeaserLinks(teaserLink, userId);
+            this.SynchronizeProjectTitles(projectTitles, userId);
+            this.SynchronizeProjectLogLines(projectLogLines, userId);
+            this.SynchronizeProjectSummaries(projectSummaries, userId);
+            this.SynchronizeProjectProductionPlans(projectProductionPlans, userId);
+            this.SynchronizeProjectAdditionalInformations(projectAdditionalInformations, userId);
+            this.SynchronizeProjectInterests(projectInterests, userId);
+            this.SynchronizeProjectTargetAudiences(targetAudiences, userId);
+            this.SynchronizeProjectImageLinks(imageLink, userId);
+            this.SynchronizeProjectTeaserLinks(teaserLink, userId);
 
             this.IsDeleted = false;
             this.CreateUserId = this.UpdateUserId = userId;
@@ -180,11 +180,11 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValueStillNeeded = valueStillNeeded?.Trim();
             this.IsPitching = isPitching;
 
-            this.SynchronizeTitles(projectTitles, userId);
-            this.SynchronizeLogLines(projectLogLines, userId);
-            this.SynchronizeSummaries(projectSummaries, userId);
-            this.SynchronizeProductionPlans(projectProductionPlans, userId);
-            this.SynchronizeAdditionalInformations(projectAdditionalInformations, userId);
+            this.SynchronizeProjectTitles(projectTitles, userId);
+            this.SynchronizeProjectLogLines(projectLogLines, userId);
+            this.SynchronizeProjectSummaries(projectSummaries, userId);
+            this.SynchronizeProjectProductionPlans(projectProductionPlans, userId);
+            this.SynchronizeProjectAdditionalInformations(projectAdditionalInformations, userId);
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
@@ -200,8 +200,8 @@ namespace PlataformaRio2C.Domain.Entities
             string teaserLink,
             int userId)
         {
-            this.SynchronizeImageLinks(imageLink, userId);
-            this.SynchronizeTeaserLinks(teaserLink, userId);
+            this.SynchronizeProjectImageLinks(imageLink, userId);
+            this.SynchronizeProjectTeaserLinks(teaserLink, userId);
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
@@ -229,90 +229,90 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Buyer Evaluations
 
-        /// <summary>Creates the buyer evaluation.</summary>
+        /// <summary>Creates the project buyer evaluation.</summary>
         /// <param name="buyerAttendeeOrganization">The buyer attendee organization.</param>
         /// <param name="projectEvaluationStatus">The project evaluation status.</param>
         /// <param name="userId">The user identifier.</param>
-        public void CreateBuyerEvaluation(
+        public void CreateProjectBuyerEvaluation(
             AttendeeOrganization buyerAttendeeOrganization,
             ProjectEvaluationStatus projectEvaluationStatus,
             int userId)
         {
-            if (this.BuyerEvaluations == null)
+            if (this.ProjectBuyerEvaluations == null)
             {
-                this.BuyerEvaluations = new List<ProjectBuyerEvaluation>();
+                this.ProjectBuyerEvaluations = new List<ProjectBuyerEvaluation>();
             }
 
-            var buyerEvaluation = this.GetBuyerEvaluationByAttendeeOrganizationUid(buyerAttendeeOrganization?.Uid ?? Guid.Empty);
+            var buyerEvaluation = this.GetProjectBuyerEvaluationByAttendeeOrganizationUid(buyerAttendeeOrganization?.Uid ?? Guid.Empty);
             if (buyerEvaluation == null)
             {
-                this.BuyerEvaluations.Add(new ProjectBuyerEvaluation(this, buyerAttendeeOrganization, projectEvaluationStatus, userId));
+                this.ProjectBuyerEvaluations.Add(new ProjectBuyerEvaluation(this, buyerAttendeeOrganization, projectEvaluationStatus, userId));
             }
             else if (buyerEvaluation.IsDeleted)
             {
                 buyerEvaluation.Restore(projectEvaluationStatus, userId);
             }
 
-            this.UpdateBuyerEvaluationCounts();
+            this.UpdateProjectBuyerEvaluationCounts();
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
             this.UpdateDate = DateTime.Now;
         }
 
-        /// <summary>Deletes the buyer evaluation.</summary>
+        /// <summary>Deletes the project buyer evaluation.</summary>
         /// <param name="buyerAttendeeOrganization">The buyer attendee organization.</param>
         /// <param name="userId">The user identifier.</param>
-        public void DeleteBuyerEvaluation(
+        public void DeleteProjectBuyerEvaluation(
             AttendeeOrganization buyerAttendeeOrganization,
             int userId)
         {
-            var buyerEvaluation = this.GetBuyerEvaluationByAttendeeOrganizationUid(buyerAttendeeOrganization?.Uid ?? Guid.Empty);
+            var buyerEvaluation = this.GetProjectBuyerEvaluationByAttendeeOrganizationUid(buyerAttendeeOrganization?.Uid ?? Guid.Empty);
             buyerEvaluation?.Delete(userId);
 
-            this.UpdateBuyerEvaluationCounts();
+            this.UpdateProjectBuyerEvaluationCounts();
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
             this.UpdateDate = DateTime.Now;
         }
 
-        /// <summary>Updates the buyer evaluation counts.</summary>
-        public void UpdateBuyerEvaluationCounts()
+        /// <summary>Updates the project buyer evaluation counts.</summary>
+        public void UpdateProjectBuyerEvaluationCounts()
         {
-            this.ProjectBuyerEvaluationsCount = this.RecountBuyerEvaluations();
+            this.ProjectBuyerEvaluationsCount = this.RecountProjectBuyerEvaluations();
         }
 
-        /// <summary>Recounts the buyer evaluations.</summary>
+        /// <summary>Recounts the project buyer evaluations.</summary>
         /// <returns></returns>
-        public int RecountBuyerEvaluations()
+        public int RecountProjectBuyerEvaluations()
         {
-            return this.BuyerEvaluations?.Count(be => !be.IsDeleted) ?? 0;
+            return this.ProjectBuyerEvaluations?.Count(be => !be.IsDeleted) ?? 0;
         }
 
-        /// <summary>Gets the buyer evaluation by attendee organization uid.</summary>
+        /// <summary>Gets the project buyer evaluation by attendee organization uid.</summary>
         /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
         /// <returns></returns>
-        private ProjectBuyerEvaluation GetBuyerEvaluationByAttendeeOrganizationUid(Guid attendeeOrganizationUid)
+        private ProjectBuyerEvaluation GetProjectBuyerEvaluationByAttendeeOrganizationUid(Guid attendeeOrganizationUid)
         {
-            return this.BuyerEvaluations?.FirstOrDefault(be => be.BuyerAttendeeOrganization.Uid == attendeeOrganizationUid);
+            return this.ProjectBuyerEvaluations?.FirstOrDefault(be => be.BuyerAttendeeOrganization.Uid == attendeeOrganizationUid);
         }
 
         #endregion
 
         #region Titles
 
-        /// <summary>Synchronizes the titles.</summary>
+        /// <summary>Synchronizes the project titles.</summary>
         /// <param name="titles">The titles.</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeTitles(List<ProjectTitle> titles, int userId)
+        private void SynchronizeProjectTitles(List<ProjectTitle> titles, int userId)
         {
-            if (this.Titles == null)
+            if (this.ProjectTitles == null)
             {
-                this.Titles = new List<ProjectTitle>();
+                this.ProjectTitles = new List<ProjectTitle>();
             }
 
-            this.DeleteTitles(titles, userId);
+            this.DeleteProjectTitles(titles, userId);
 
             if (titles?.Any() != true)
             {
@@ -321,52 +321,50 @@ namespace PlataformaRio2C.Domain.Entities
 
             foreach (var title in titles)
             {
-                var titleDb = this.Titles.FirstOrDefault(d => d.Language.Code == title.Language.Code);
+                var titleDb = this.ProjectTitles.FirstOrDefault(d => d.Language.Code == title.Language.Code);
                 if (titleDb != null)
                 {
                     titleDb.Update(title);
                 }
                 else
                 {
-                    this.CreateTitle(title);
+                    this.CreateProjectTitle(title);
                 }
             }
         }
 
-        /// <summary>Deletes the titles.</summary>
+        /// <summary>Deletes the project titles.</summary>
         /// <param name="newTitles">The new titles.</param>
         /// <param name="userId">The user identifier.</param>
-        private void DeleteTitles(List<ProjectTitle> newTitles, int userId)
+        private void DeleteProjectTitles(List<ProjectTitle> newTitles, int userId)
         {
-            var titlesToDelete = this.Titles.Where(db => newTitles?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false && !db.IsDeleted).ToList();
+            var titlesToDelete = this.ProjectTitles.Where(db => newTitles?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false && !db.IsDeleted).ToList();
             foreach (var titleToDelete in titlesToDelete)
             {
                 titleToDelete.Delete(userId);
             }
         }
 
-        /// <summary>Creates the title.</summary>
-        /// <param name="title">The title.</param>
-        private void CreateTitle(ProjectTitle title)
+        private void CreateProjectTitle(ProjectTitle title)
         {
-            this.Titles.Add(title);
+            this.ProjectTitles.Add(title);
         }
 
         #endregion
 
         #region LogLines
 
-        /// <summary>Synchronizes the log lines.</summary>
+        /// <summary>Synchronizes the project log lines.</summary>
         /// <param name="logLines">The log lines.</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeLogLines(List<ProjectLogLine> logLines, int userId)
+        private void SynchronizeProjectLogLines(List<ProjectLogLine> logLines, int userId)
         {
-            if (this.LogLines == null)
+            if (this.ProjectLogLines == null)
             {
-                this.LogLines = new List<ProjectLogLine>();
+                this.ProjectLogLines = new List<ProjectLogLine>();
             }
 
-            this.DeleteLogLines(logLines, userId);
+            this.DeleteProjectLogLines(logLines, userId);
 
             if (logLines?.Any() != true)
             {
@@ -375,52 +373,47 @@ namespace PlataformaRio2C.Domain.Entities
 
             foreach (var logLine in logLines)
             {
-                var logLineDb = this.LogLines.FirstOrDefault(d => d.Language.Code == logLine.Language.Code);
+                var logLineDb = this.ProjectLogLines.FirstOrDefault(d => d.Language.Code == logLine.Language.Code);
                 if (logLineDb != null)
                 {
                     logLineDb.Update(logLine);
                 }
                 else
                 {
-                    this.CreateLogLines(logLine);
+                    this.CreateProjectLogLines(logLine);
                 }
             }
         }
 
-        /// <summary>Deletes the log lines.</summary>
-        /// <param name="newLogLines">The new log lines.</param>
-        /// <param name="userId">The user identifier.</param>
-        private void DeleteLogLines(List<ProjectLogLine> newLogLines, int userId)
+        private void DeleteProjectLogLines(List<ProjectLogLine> newLogLines, int userId)
         {
-            var logLinesToDelete = this.LogLines.Where(db => newLogLines?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false && !db.IsDeleted).ToList();
+            var logLinesToDelete = this.ProjectLogLines.Where(db => newLogLines?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false && !db.IsDeleted).ToList();
             foreach (var logLineToDelete in logLinesToDelete)
             {
                 logLineToDelete.Delete(userId);
             }
         }
 
-        /// <summary>Creates the log lines.</summary>
-        /// <param name="logLine">The log line.</param>
-        private void CreateLogLines(ProjectLogLine logLine)
+        private void CreateProjectLogLines(ProjectLogLine logLine)
         {
-            this.LogLines.Add(logLine);
+            this.ProjectLogLines.Add(logLine);
         }
 
         #endregion
 
         #region Summaries
 
-        /// <summary>Synchronizes the summaries.</summary>
+        /// <summary>Synchronizes the project summaries.</summary>
         /// <param name="summaries">The summaries.</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeSummaries(List<ProjectSummary> summaries, int userId)
+        private void SynchronizeProjectSummaries(List<ProjectSummary> summaries, int userId)
         {
-            if (this.Summaries == null)
+            if (this.ProjectSummaries == null)
             {
-                this.Summaries = new List<ProjectSummary>();
+                this.ProjectSummaries = new List<ProjectSummary>();
             }
 
-            this.DeleteSummaries(summaries, userId);
+            this.DeleteProjectSummaries(summaries, userId);
 
             if (summaries?.Any() != true)
             {
@@ -429,52 +422,52 @@ namespace PlataformaRio2C.Domain.Entities
 
             foreach (var summary in summaries)
             {
-                var summaryDb = this.Summaries.FirstOrDefault(d => d.Language.Code == summary.Language.Code);
+                var summaryDb = this.ProjectSummaries.FirstOrDefault(d => d.Language.Code == summary.Language.Code);
                 if (summaryDb != null)
                 {
                     summaryDb.Update(summary);
                 }
                 else
                 {
-                    this.CreateSummary(summary);
+                    this.CreateProjectSummary(summary);
                 }
             }
         }
 
-        /// <summary>Deletes the summaries.</summary>
+        /// <summary>Deletes the project summaries.</summary>
         /// <param name="newSummaries">The new summaries.</param>
         /// <param name="userId">The user identifier.</param>
-        private void DeleteSummaries(List<ProjectSummary> newSummaries, int userId)
+        private void DeleteProjectSummaries(List<ProjectSummary> newSummaries, int userId)
         {
-            var summariesToDelete = this.Summaries.Where(db => newSummaries?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false && !db.IsDeleted).ToList();
+            var summariesToDelete = this.ProjectSummaries.Where(db => newSummaries?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false && !db.IsDeleted).ToList();
             foreach (var summaryToDelete in summariesToDelete)
             {
                 summaryToDelete.Delete(userId);
             }
         }
 
-        /// <summary>Creates the summary.</summary>
+        /// <summary>Creates the project summary.</summary>
         /// <param name="sumary">The sumary.</param>
-        private void CreateSummary(ProjectSummary sumary)
+        private void CreateProjectSummary(ProjectSummary sumary)
         {
-            this.Summaries.Add(sumary);
+            this.ProjectSummaries.Add(sumary);
         }
 
         #endregion
 
         #region Production Plans
 
-        /// <summary>Synchronizes the production plans.</summary>
+        /// <summary>Synchronizes the project production plans.</summary>
         /// <param name="productionPlans">The production plans.</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeProductionPlans(List<ProjectProductionPlan> productionPlans, int userId)
+        private void SynchronizeProjectProductionPlans(List<ProjectProductionPlan> productionPlans, int userId)
         {
-            if (this.ProductionPlans == null)
+            if (this.ProjectProductionPlans == null)
             {
-                this.ProductionPlans = new List<ProjectProductionPlan>();
+                this.ProjectProductionPlans = new List<ProjectProductionPlan>();
             }
 
-            this.DeleteProductionPlans(productionPlans, userId);
+            this.DeleteProjectProductionPlans(productionPlans, userId);
 
             if (productionPlans?.Any() != true)
             {
@@ -483,52 +476,52 @@ namespace PlataformaRio2C.Domain.Entities
 
             foreach (var productionPlan in productionPlans)
             {
-                var productionPlanDb = this.ProductionPlans.FirstOrDefault(d => d.Language.Code == productionPlan.Language.Code);
+                var productionPlanDb = this.ProjectProductionPlans.FirstOrDefault(d => d.Language.Code == productionPlan.Language.Code);
                 if (productionPlanDb != null)
                 {
                     productionPlanDb.Update(productionPlan);
                 }
                 else
                 {
-                    this.CreateProductionPlan(productionPlan);
+                    this.CreateProjectProductionPlan(productionPlan);
                 }
             }
         }
 
-        /// <summary>Deletes the production plans.</summary>
+        /// <summary>Deletes the project production plans.</summary>
         /// <param name="newProductionPlans">The new production plans.</param>
         /// <param name="userId">The user identifier.</param>
-        private void DeleteProductionPlans(List<ProjectProductionPlan> newProductionPlans, int userId)
+        private void DeleteProjectProductionPlans(List<ProjectProductionPlan> newProductionPlans, int userId)
         {
-            var productionPlansToDelete = this.ProductionPlans.Where(db => newProductionPlans?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false && !db.IsDeleted).ToList();
+            var productionPlansToDelete = this.ProjectProductionPlans.Where(db => newProductionPlans?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false && !db.IsDeleted).ToList();
             foreach (var productionPlanToDelete in productionPlansToDelete)
             {
                 productionPlanToDelete.Delete(userId);
             }
         }
 
-        /// <summary>Creates the production plan.</summary>
+        /// <summary>Creates the project production plan.</summary>
         /// <param name="productionPlan">The production plan.</param>
-        private void CreateProductionPlan(ProjectProductionPlan productionPlan)
+        private void CreateProjectProductionPlan(ProjectProductionPlan productionPlan)
         {
-            this.ProductionPlans.Add(productionPlan);
+            this.ProjectProductionPlans.Add(productionPlan);
         }
 
         #endregion
 
         #region Additional Informations
 
-        /// <summary>Synchronizes the additional informations.</summary>
+        /// <summary>Synchronizes the project additional informations.</summary>
         /// <param name="additionalInformations">The additional informations.</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeAdditionalInformations(List<ProjectAdditionalInformation> additionalInformations, int userId)
+        private void SynchronizeProjectAdditionalInformations(List<ProjectAdditionalInformation> additionalInformations, int userId)
         {
-            if (this.AdditionalInformations == null)
+            if (this.ProjectAdditionalInformations == null)
             {
-                this.AdditionalInformations = new List<ProjectAdditionalInformation>();
+                this.ProjectAdditionalInformations = new List<ProjectAdditionalInformation>();
             }
 
-            this.DeleteAdditionalInformations(additionalInformations, userId);
+            this.DeleteProjectAdditionalInformations(additionalInformations, userId);
 
             if (additionalInformations?.Any() != true)
             {
@@ -537,66 +530,66 @@ namespace PlataformaRio2C.Domain.Entities
 
             foreach (var additionalInformation in additionalInformations)
             {
-                var additionalInformationDb = this.AdditionalInformations.FirstOrDefault(d => d.Language.Code == additionalInformation.Language.Code);
+                var additionalInformationDb = this.ProjectAdditionalInformations.FirstOrDefault(d => d.Language.Code == additionalInformation.Language.Code);
                 if (additionalInformationDb != null)
                 {
                     additionalInformationDb.Update(additionalInformation);
                 }
                 else
                 {
-                    this.CreateAdditionalInformation(additionalInformation);
+                    this.CreateProjectAdditionalInformation(additionalInformation);
                 }
             }
         }
 
-        /// <summary>Deletes the additional informations.</summary>
+        /// <summary>Deletes the project additional informations.</summary>
         /// <param name="newAdditionalInformations">The new additional informations.</param>
         /// <param name="userId">The user identifier.</param>
-        private void DeleteAdditionalInformations(List<ProjectAdditionalInformation> newAdditionalInformations, int userId)
+        private void DeleteProjectAdditionalInformations(List<ProjectAdditionalInformation> newAdditionalInformations, int userId)
         {
-            var additionalInformationsToDelete = this.AdditionalInformations.Where(db => newAdditionalInformations?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false && !db.IsDeleted).ToList();
+            var additionalInformationsToDelete = this.ProjectAdditionalInformations.Where(db => newAdditionalInformations?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false && !db.IsDeleted).ToList();
             foreach (var additionalInformationToDelete in additionalInformationsToDelete)
             {
                 additionalInformationToDelete.Delete(userId);
             }
         }
 
-        /// <summary>Creates the additional information.</summary>
+        /// <summary>Creates the project additional information.</summary>
         /// <param name="additionalInformation">The additional information.</param>
-        private void CreateAdditionalInformation(ProjectAdditionalInformation additionalInformation)
+        private void CreateProjectAdditionalInformation(ProjectAdditionalInformation additionalInformation)
         {
-            this.AdditionalInformations.Add(additionalInformation);
+            this.ProjectAdditionalInformations.Add(additionalInformation);
         }
 
         #endregion
 
         #region Interests
 
-        /// <summary>Updates the interests.</summary>
+        /// <summary>Updates the project interests.</summary>
         /// <param name="projectInterests">The project interests.</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateInterests(
+        public void UpdateProjectInterests(
             List<ProjectInterest> projectInterests,
             int userId)
         {
-            this.SynchronizeInterests(projectInterests, userId);
+            this.SynchronizeProjectInterests(projectInterests, userId);
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
             this.UpdateDate = DateTime.Now;
         }
 
-        /// <summary>Synchronizes the interests.</summary>
+        /// <summary>Synchronizes the project interests.</summary>
         /// <param name="projectInterests">The project interests.</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeInterests(List<ProjectInterest> projectInterests, int userId)
+        private void SynchronizeProjectInterests(List<ProjectInterest> projectInterests, int userId)
         {
-            if (this.Interests == null)
+            if (this.ProjectInterests == null)
             {
-                this.Interests = new List<ProjectInterest>();
+                this.ProjectInterests = new List<ProjectInterest>();
             }
 
-            this.DeleteInterests(projectInterests, userId);
+            this.DeleteProjectInterests(projectInterests, userId);
 
             if (projectInterests?.Any() != true)
             {
@@ -606,24 +599,24 @@ namespace PlataformaRio2C.Domain.Entities
             // Create or update interests
             foreach (var projectInterest in projectInterests)
             {
-                var interestDb = this.Interests.FirstOrDefault(a => a.Interest.Uid == projectInterest.Interest.Uid);
+                var interestDb = this.ProjectInterests.FirstOrDefault(a => a.Interest.Uid == projectInterest.Interest.Uid);
                 if (interestDb != null)
                 {
                     interestDb.Update(projectInterest, userId);
                 }
                 else
                 {
-                    this.Interests.Add(projectInterest);
+                    this.ProjectInterests.Add(projectInterest);
                 }
             }
         }
 
-        /// <summary>Deletes the interests.</summary>
+        /// <summary>Deletes the project interests.</summary>
         /// <param name="newProjectInterests">The new project interests.</param>
         /// <param name="userId">The user identifier.</param>
-        private void DeleteInterests(List<ProjectInterest> newProjectInterests, int userId)
+        private void DeleteProjectInterests(List<ProjectInterest> newProjectInterests, int userId)
         {
-            var projectInterestsToDelete = this.Interests.Where(db => newProjectInterests?.Select(a => a.Interest.Uid)?.Contains(db.Interest.Uid) == false && !db.IsDeleted).ToList();
+            var projectInterestsToDelete = this.ProjectInterests.Where(db => newProjectInterests?.Select(a => a.Interest.Uid)?.Contains(db.Interest.Uid) == false && !db.IsDeleted).ToList();
             foreach (var projectInterestToDelete in projectInterestsToDelete)
             {
                 projectInterestToDelete.Delete(userId);
@@ -634,29 +627,29 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Target Audiences
 
-        /// <summary>Updates the target audiences.</summary>
+        /// <summary>Updates the project target audiences.</summary>
         /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateTargetAudiences(List<TargetAudience> targetAudiences, int userId)
+        public void UpdateProjectTargetAudiences(List<TargetAudience> targetAudiences, int userId)
         {
-            this.SynchronizeTargetAudiences(targetAudiences, userId);
+            this.SynchronizeProjectTargetAudiences(targetAudiences, userId);
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
             this.UpdateDate = DateTime.Now;
         }
 
-        /// <summary>Synchronizes the target audiences.</summary>
+        /// <summary>Synchronizes the project target audiences.</summary>
         /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeTargetAudiences(List<TargetAudience> targetAudiences, int userId)
+        private void SynchronizeProjectTargetAudiences(List<TargetAudience> targetAudiences, int userId)
         {
-            if (this.TargetAudiences == null)
+            if (this.ProjectTargetAudiences == null)
             {
-                this.TargetAudiences = new List<ProjectTargetAudience>();
+                this.ProjectTargetAudiences = new List<ProjectTargetAudience>();
             }
 
-            this.DeleteTargetAudiences(targetAudiences, userId);
+            this.DeleteProjectTargetAudiences(targetAudiences, userId);
 
             if (targetAudiences?.Any() != true)
             {
@@ -666,53 +659,53 @@ namespace PlataformaRio2C.Domain.Entities
             // Create or update target audiences
             foreach (var targetAudience in targetAudiences)
             {
-                var targetAudienceDb = this.TargetAudiences.FirstOrDefault(a => a.TargetAudience.Uid == targetAudience.Uid);
+                var targetAudienceDb = this.ProjectTargetAudiences.FirstOrDefault(a => a.TargetAudience.Uid == targetAudience.Uid);
                 if (targetAudienceDb != null)
                 {
                     targetAudienceDb.Update(userId);
                 }
                 else
                 {
-                    this.CreateTargetAudience(targetAudience, userId);
+                    this.CreateProjectTargetAudience(targetAudience, userId);
                 }
             }
         }
 
-        /// <summary>Deletes the target audiences.</summary>
+        /// <summary>Deletes the project target audiences.</summary>
         /// <param name="newTargetAudiences">The new target audiences.</param>
         /// <param name="userId">The user identifier.</param>
-        private void DeleteTargetAudiences(List<TargetAudience> newTargetAudiences, int userId)
+        private void DeleteProjectTargetAudiences(List<TargetAudience> newTargetAudiences, int userId)
         {
-            var targetAudiencesToDelete = this.TargetAudiences.Where(db => newTargetAudiences?.Select(a => a.Uid)?.Contains(db.TargetAudience.Uid) == false && !db.IsDeleted).ToList();
+            var targetAudiencesToDelete = this.ProjectTargetAudiences.Where(db => newTargetAudiences?.Select(a => a.Uid)?.Contains(db.TargetAudience.Uid) == false && !db.IsDeleted).ToList();
             foreach (var targetAudienceToDelete in targetAudiencesToDelete)
             {
                 targetAudienceToDelete.Delete(userId);
             }
         }
 
-        /// <summary>Creates the target audience.</summary>
+        /// <summary>Creates the project target audience.</summary>
         /// <param name="targetAudience">The target audience.</param>
         /// <param name="userId">The user identifier.</param>
-        private void CreateTargetAudience(TargetAudience targetAudience, int userId)
+        private void CreateProjectTargetAudience(TargetAudience targetAudience, int userId)
         {
-            this.TargetAudiences.Add(new ProjectTargetAudience(this, targetAudience, userId));
+            this.ProjectTargetAudiences.Add(new ProjectTargetAudience(this, targetAudience, userId));
         }
 
         #endregion
 
         #region Image Links
 
-        /// <summary>Synchronizes the image links.</summary>
+        /// <summary>Synchronizes the project image links.</summary>
         /// <param name="imageLink">The image link.</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeImageLinks(string imageLink, int userId)
+        private void SynchronizeProjectImageLinks(string imageLink, int userId)
         {
-            if (this.ImageLinks == null)
+            if (this.ProjectImageLinks == null)
             {
-                this.ImageLinks = new List<ProjectImageLink>();
+                this.ProjectImageLinks = new List<ProjectImageLink>();
             }
 
-            var imageLinkDb = this.ImageLinks?.FirstOrDefault();
+            var imageLinkDb = this.ProjectImageLinks?.FirstOrDefault();
             if (!string.IsNullOrEmpty(imageLink))
             {
                 if (imageLinkDb != null)
@@ -721,7 +714,7 @@ namespace PlataformaRio2C.Domain.Entities
                 }
                 else
                 {
-                    this.ImageLinks.Add(new ProjectImageLink(imageLink, userId));
+                    this.ProjectImageLinks.Add(new ProjectImageLink(imageLink, userId));
                 }
             }
             else
@@ -734,17 +727,17 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Teaser Links
 
-        /// <summary>Synchronizes the teaser links.</summary>
+        /// <summary>Synchronizes the project teaser links.</summary>
         /// <param name="teaserLink">The teaser link.</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeTeaserLinks(string teaserLink, int userId)
+        private void SynchronizeProjectTeaserLinks(string teaserLink, int userId)
         {
-            if (this.TeaserLinks == null)
+            if (this.ProjectTeaserLinks == null)
             {
-                this.TeaserLinks = new List<ProjectTeaserLink>();
+                this.ProjectTeaserLinks = new List<ProjectTeaserLink>();
             }
 
-            var teaserLinkDb = this.TeaserLinks?.FirstOrDefault();
+            var teaserLinkDb = this.ProjectTeaserLinks?.FirstOrDefault();
             if (!string.IsNullOrEmpty(teaserLink))
             {
                 if (teaserLinkDb != null)
@@ -753,7 +746,7 @@ namespace PlataformaRio2C.Domain.Entities
                 }
                 else
                 {
-                    this.TeaserLinks.Add(new ProjectTeaserLink(teaserLink, userId));
+                    this.ProjectTeaserLinks.Add(new ProjectTeaserLink(teaserLink, userId));
                 }
             }
             else
@@ -780,14 +773,14 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateTotalValueOfProject();
             this.ValidateValueAlreadyRaised();
             this.ValidateValueStillNeeded();
-            this.ValidateTitles();
-            this.ValidateLogLines();
-            this.ValidateSummaries();
-            this.ValidateProductionPlans();
-            this.ValidateAdditionalInformations();
-            this.ValidateImageLinks();
-            this.ValidateTeaserLinks();
-            this.ValidateBuyerEvaluations();
+            this.ValidateProjectTitles();
+            this.ValidateProjectLogLines();
+            this.ValidateProjectSummaries();
+            this.ValidateProjectProductionPlans();
+            this.ValidateProjectAdditionalInformations();
+            this.ValidateProjectImageLinks();
+            this.ValidateProjectTeaserLinks();
+            this.ValidateProjectBuyerEvaluations();
 
             return this.ValidationResult.IsValid;
         }
@@ -805,15 +798,15 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateTotalValueOfProject();
             this.ValidateValueAlreadyRaised();
             this.ValidateValueStillNeeded();
-            this.ValidateTitles();
-            this.ValidateLogLines();
-            this.ValidateSummaries();
-            this.ValidateProductionPlans();
-            this.ValidateAdditionalInformations();
-            this.ValidateImageLinks();
-            this.ValidateTeaserLinks();
-            this.ValidateInterests();
-            this.ValidateBuyerEvaluations();
+            this.ValidateProjectTitles();
+            this.ValidateProjectLogLines();
+            this.ValidateProjectSummaries();
+            this.ValidateProjectProductionPlans();
+            this.ValidateProjectAdditionalInformations();
+            this.ValidateProjectImageLinks();
+            this.ValidateProjectTeaserLinks();
+            this.ValidateProjectInterests();
+            this.ValidateProjectBuyerEvaluations();
 
             return this.ValidationResult.IsValid;
         }
@@ -825,8 +818,8 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.ValidationResult = new ValidationResult();
 
-            this.ValidateBuyerEvaluations();
-            this.ValidateRequiredBuyerEvaluations();
+            this.ValidateProjectBuyerEvaluations();
+            this.ValidateRequiredProjectBuyerEvaluations();
 
             return this.ValidationResult.IsValid;
         }
@@ -896,122 +889,121 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        /// <summary>Validates the titles.</summary>
-        public void ValidateTitles()
+        /// <summary>Validates the project titles.</summary>
+        public void ValidateProjectTitles()
         {
-            if (this.Titles?.Any() != true)
+            if (this.ProjectTitles?.Any() != true)
             {
                 return;
             }
 
-            foreach (var title in this.Titles?.Where(t => !t.IsValid())?.ToList())
+            foreach (var projectTitle in this.ProjectTitles?.Where(t => !t.IsValid())?.ToList())
             {
-                this.ValidationResult.Add(title.ValidationResult);
+                this.ValidationResult.Add(projectTitle.ValidationResult);
             }
         }
 
-        /// <summary>Validates the log lines.</summary>
-        public void ValidateLogLines()
+        /// <summary>Validates the project log lines.</summary>
+        public void ValidateProjectLogLines()
         {
-            if (this.LogLines?.Any() != true)
+            if (this.ProjectLogLines?.Any() != true)
             {
                 return;
             }
 
-            foreach (var logLine in this.LogLines?.Where(t => !t.IsValid())?.ToList())
+            foreach (var projectLogLine in this.ProjectLogLines?.Where(t => !t.IsValid())?.ToList())
             {
-                this.ValidationResult.Add(logLine.ValidationResult);
+                this.ValidationResult.Add(projectLogLine.ValidationResult);
             }
         }
 
-        /// <summary>Validates the summaries.</summary>
-        public void ValidateSummaries()
+        /// <summary>Validates the project summaries.</summary>
+        public void ValidateProjectSummaries()
         {
-            if (this.Summaries?.Any() != true)
+            if (this.ProjectSummaries?.Any() != true)
             {
                 return;
             }
 
-            foreach (var summary in this.Summaries?.Where(t => !t.IsValid())?.ToList())
+            foreach (var projectSummary in this.ProjectSummaries?.Where(t => !t.IsValid())?.ToList())
             {
-                this.ValidationResult.Add(summary.ValidationResult);
+                this.ValidationResult.Add(projectSummary.ValidationResult);
             }
         }
 
-        /// <summary>Validates the production plans.</summary>
-        public void ValidateProductionPlans()
+        /// <summary>Validates the project production plans.</summary>
+        public void ValidateProjectProductionPlans()
         {
-            if (this.ProductionPlans?.Any() != true)
+            if (this.ProjectProductionPlans?.Any() != true)
             {
                 return;
             }
 
-            foreach (var productionPlan in this.ProductionPlans?.Where(t => !t.IsValid())?.ToList())
+            foreach (var projectProductionPlan in this.ProjectProductionPlans?.Where(t => !t.IsValid())?.ToList())
             {
-                this.ValidationResult.Add(productionPlan.ValidationResult);
+                this.ValidationResult.Add(projectProductionPlan.ValidationResult);
             }
         }
 
-        /// <summary>Validates the additional informations.</summary>
-        public void ValidateAdditionalInformations()
+        /// <summary>Validates the project additional informations.</summary>
+        public void ValidateProjectAdditionalInformations()
         {
-            if (this.AdditionalInformations?.Any() != true)
+            if (this.ProjectAdditionalInformations?.Any() != true)
             {
                 return;
             }
 
-            foreach (var additionalInformation in this.AdditionalInformations?.Where(t => !t.IsValid())?.ToList())
+            foreach (var projectAdditionalInformation in this.ProjectAdditionalInformations?.Where(t => !t.IsValid())?.ToList())
             {
-                this.ValidationResult.Add(additionalInformation.ValidationResult);
+                this.ValidationResult.Add(projectAdditionalInformation.ValidationResult);
             }
         }
 
-        /// <summary>Validates the image links.</summary>
-        public void ValidateImageLinks()
+        /// <summary>Validates the project image links.</summary>
+        public void ValidateProjectImageLinks()
         {
-            if (this.ImageLinks?.Any() != true)
+            if (this.ProjectImageLinks?.Any() != true)
             {
                 return;
             }
 
-            foreach (var imageLink in this.ImageLinks?.Where(t => !t.IsValid())?.ToList())
+            foreach (var projectImageLink in this.ProjectImageLinks?.Where(t => !t.IsValid())?.ToList())
             {
-                this.ValidationResult.Add(imageLink.ValidationResult);
+                this.ValidationResult.Add(projectImageLink.ValidationResult);
             }
         }
 
-        /// <summary>Validates the teaser links.</summary>
-        public void ValidateTeaserLinks()
+        /// <summary>Validates the project teaser links.</summary>
+        public void ValidateProjectTeaserLinks()
         {
-            if (this.TeaserLinks?.Any() != true)
+            if (this.ProjectTeaserLinks?.Any() != true)
             {
                 return;
             }
 
-            foreach (var teaserLink in this.TeaserLinks?.Where(t => !t.IsValid())?.ToList())
+            foreach (var projectTeaserLink in this.ProjectTeaserLinks?.Where(t => !t.IsValid())?.ToList())
             {
-                this.ValidationResult.Add(teaserLink.ValidationResult);
+                this.ValidationResult.Add(projectTeaserLink.ValidationResult);
             }
         }
 
-        /// <summary>Validates the interests.</summary>
-        public void ValidateInterests()
+        public void ValidateProjectInterests()
         {
-            if (this.ProductionPlans?.Any() != true)
+            if (this.ProjectProductionPlans?.Any() != true)
             {
                 return;
             }
 
-            foreach (var interest in this.Interests?.Where(t => !t.IsValid())?.ToList())
+            foreach (var projectInterest in this.ProjectInterests?.Where(t => !t.IsValid())?.ToList())
             {
-                this.ValidationResult.Add(interest.ValidationResult);
+                this.ValidationResult.Add(projectInterest.ValidationResult);
             }
         }
 
-        /// <summary>Validates the buyer evaluations.</summary>
-        public void ValidateBuyerEvaluations()
+        /// <summary>Validates the project buyer evaluations.</summary>
+        public void ValidateProjectBuyerEvaluations()
         {
-            if (this.BuyerEvaluations?.Any() != true)
+            if (this.ProjectBuyerEvaluations?.Any() != true)
             {
                 return;
             }
@@ -1021,14 +1013,14 @@ namespace PlataformaRio2C.Domain.Entities
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.MaxProjectBuyersEvaluationsReached, this.SellerAttendeeOrganization.GetProjectMaxBuyerEvaluationsCount(), Labels.Players), new string[] { "ToastrError" }));
             }
 
-            foreach (var buyerEvaluation in this.BuyerEvaluations?.Where(t => !t.IsValid())?.ToList())
+            foreach (var projectBuyerEvaluation in this.ProjectBuyerEvaluations?.Where(t => !t.IsValid())?.ToList())
             {
-                this.ValidationResult.Add(buyerEvaluation.ValidationResult);
+                this.ValidationResult.Add(projectBuyerEvaluation.ValidationResult);
             }
         }
 
-        /// <summary>Validates the required buyer evaluations.</summary>
-        public void ValidateRequiredBuyerEvaluations()
+        /// <summary>Validates the required project buyer evaluations.</summary>
+        public void ValidateRequiredProjectBuyerEvaluations()
         {
             if (this.ProjectBuyerEvaluationsCount == 0)
             {

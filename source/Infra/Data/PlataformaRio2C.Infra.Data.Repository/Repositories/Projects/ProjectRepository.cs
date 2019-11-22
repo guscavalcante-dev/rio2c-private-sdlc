@@ -214,23 +214,23 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         Organization = p.SellerAttendeeOrganization.Organization,
                                         Edition = p.SellerAttendeeOrganization.Edition
                                     },
-                                    ProjectTitleDtos = p.Titles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                    ProjectTitleDtos = p.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
                                     {
                                         ProjectTitle = t,
                                         Language = t.Language
                                     }),
-                                    ProjectLogLineDtos = p.LogLines.Where(ll => !ll.IsDeleted).Select(ll => new ProjectLogLineDto
+                                    ProjectLogLineDtos = p.ProjectLogLines.Where(ll => !ll.IsDeleted).Select(ll => new ProjectLogLineDto
                                     {
                                         ProjectLogLine = ll,
                                         Language = ll.Language
                                     }),
-                                    ProjectInterestDtos = p.Interests.Where(i => !i.IsDeleted).Select(i => new ProjectInterestDto
+                                    ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted).Select(i => new ProjectInterestDto
                                     {
                                         ProjectInterest = i,
                                         Interest = i.Interest,
                                         InterestGroup = i.Interest.InterestGroup
                                     }),
-                                    ProjectBuyerEvaluationDtos = p.BuyerEvaluations.Where(be => !be.IsDeleted).Select(be => new ProjectBuyerEvaluationDto
+                                    ProjectBuyerEvaluationDtos = p.ProjectBuyerEvaluations.Where(be => !be.IsDeleted).Select(be => new ProjectBuyerEvaluationDto
                                     {
                                         ProjectBuyerEvaluation = be,
                                         BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
@@ -268,7 +268,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     Organization = p.SellerAttendeeOrganization.Organization,
                                     Edition = p.SellerAttendeeOrganization.Edition
                                 },
-                                ProjectTitleDtos = p.Titles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                ProjectTitleDtos = p.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
                                 {
                                     ProjectTitle = t,
                                     Language = t.Language
@@ -296,27 +296,27 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     Organization = p.SellerAttendeeOrganization.Organization,
                                     Edition = p.SellerAttendeeOrganization.Edition
                                 },
-                                ProjectTitleDtos = p.Titles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                ProjectTitleDtos = p.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
                                 {
                                     ProjectTitle = t,
                                     Language = t.Language
                                 }),
-                                ProjectLogLineDtos = p.LogLines.Where(ll => !ll.IsDeleted).Select(ll => new ProjectLogLineDto
+                                ProjectLogLineDtos = p.ProjectLogLines.Where(ll => !ll.IsDeleted).Select(ll => new ProjectLogLineDto
                                 {
                                     ProjectLogLine = ll,
                                     Language = ll.Language
                                 }),
-                                ProjectSummaryDtos = p.Summaries.Where(s => !s.IsDeleted).Select(s => new ProjectSummaryDto
+                                ProjectSummaryDtos = p.ProjectSummaries.Where(s => !s.IsDeleted).Select(s => new ProjectSummaryDto
                                 {
                                     ProjectSummary = s,
                                     Language = s.Language
                                 }),
-                                ProjectProductionPlanDtos = p.ProductionPlans.Where(pp => !pp.IsDeleted).Select(pp => new ProjectProductionPlanDto
+                                ProjectProductionPlanDtos = p.ProjectProductionPlans.Where(pp => !pp.IsDeleted).Select(pp => new ProjectProductionPlanDto
                                 {
                                     ProjectProductionPlan = pp,
                                     Language = pp.Language
                                 }),
-                                ProjectAdditionalInformationDtos = p.AdditionalInformations.Where(aa => !aa.IsDeleted).Select(aa => new ProjectAdditionalInformationDto
+                                ProjectAdditionalInformationDtos = p.ProjectAdditionalInformations.Where(aa => !aa.IsDeleted).Select(aa => new ProjectAdditionalInformationDto
                                 {
                                     ProjectAdditionalInformation = aa,
                                     Language = aa.Language
@@ -344,13 +344,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     Organization = p.SellerAttendeeOrganization.Organization,
                                     Edition = p.SellerAttendeeOrganization.Edition
                                 },
-                                ProjectInterestDtos = p.Interests.Where(i => !i.IsDeleted).Select(i => new ProjectInterestDto
+                                ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted).Select(i => new ProjectInterestDto
                                 {
                                     ProjectInterest = i,
                                     Interest = i.Interest,
                                     InterestGroup = i.Interest.InterestGroup
                                 }),
-                                ProjectTargetAudienceDtos = p.TargetAudiences.Where(ta => !ta.IsDeleted).Select(ta => new ProjectTargetAudienceDto
+                                ProjectTargetAudienceDtos = p.ProjectTargetAudiences.Where(ta => !ta.IsDeleted).Select(ta => new ProjectTargetAudienceDto
                                 {
                                     TargetAudience = ta.TargetAudience
                                 })
@@ -377,11 +377,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     Organization = p.SellerAttendeeOrganization.Organization,
                                     Edition = p.SellerAttendeeOrganization.Edition
                                 },
-                                ProjectImageLinkDtos = p.ImageLinks.Where(il => !il.IsDeleted).Select(il => new ProjectImageLinkDto
+                                ProjectImageLinkDtos = p.ProjectImageLinks.Where(il => !il.IsDeleted).Select(il => new ProjectImageLinkDto
                                 {
                                     ProjectImageLink = il
                                 }),
-                                ProjectTeaserLinkDtos = p.TeaserLinks.Where(tl => !tl.IsDeleted).Select(tl => new ProjectTeaserLinkDto
+                                ProjectTeaserLinkDtos = p.ProjectTeaserLinks.Where(tl => !tl.IsDeleted).Select(tl => new ProjectTeaserLinkDto
                                 {
                                     ProjectTeaserLink = tl
                                 })
@@ -408,7 +408,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     Organization = p.SellerAttendeeOrganization.Organization,
                                     Edition = p.SellerAttendeeOrganization.Edition
                                 },
-                                ProjectBuyerEvaluationDtos = p.BuyerEvaluations.Where(be => !be.IsDeleted).Select(be => new ProjectBuyerEvaluationDto
+                                ProjectBuyerEvaluationDtos = p.ProjectBuyerEvaluations.Where(be => !be.IsDeleted).Select(be => new ProjectBuyerEvaluationDto
                                 {
                                     ProjectBuyerEvaluation = be,
                                     BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
@@ -442,46 +442,46 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     Organization = p.SellerAttendeeOrganization.Organization,
                                     Edition = p.SellerAttendeeOrganization.Edition
                                 },
-                                ProjectTitleDtos = p.Titles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                ProjectTitleDtos = p.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
                                 {
                                     ProjectTitle = t,
                                     Language = t.Language
                                 }),
-                                ProjectLogLineDtos = p.LogLines.Where(ll => !ll.IsDeleted).Select(ll => new ProjectLogLineDto
+                                ProjectLogLineDtos = p.ProjectLogLines.Where(ll => !ll.IsDeleted).Select(ll => new ProjectLogLineDto
                                 {
                                     ProjectLogLine = ll,
                                     Language = ll.Language
                                 }),
-                                ProjectSummaryDtos = p.Summaries.Where(s => !s.IsDeleted).Select(s => new ProjectSummaryDto
+                                ProjectSummaryDtos = p.ProjectSummaries.Where(s => !s.IsDeleted).Select(s => new ProjectSummaryDto
                                 {
                                     ProjectSummary = s,
                                     Language = s.Language
                                 }),
-                                ProjectProductionPlanDtos = p.ProductionPlans.Where(pp => !pp.IsDeleted).Select(pp => new ProjectProductionPlanDto
+                                ProjectProductionPlanDtos = p.ProjectProductionPlans.Where(pp => !pp.IsDeleted).Select(pp => new ProjectProductionPlanDto
                                 {
                                     ProjectProductionPlan = pp,
                                     Language = pp.Language
                                 }),
-                                ProjectAdditionalInformationDtos = p.AdditionalInformations.Where(aa => !aa.IsDeleted).Select(aa => new ProjectAdditionalInformationDto
+                                ProjectAdditionalInformationDtos = p.ProjectAdditionalInformations.Where(aa => !aa.IsDeleted).Select(aa => new ProjectAdditionalInformationDto
                                 {
                                     ProjectAdditionalInformation = aa,
                                     Language = aa.Language
                                 }),
-                                ProjectInterestDtos = p.Interests.Where(i => !i.IsDeleted).Select(i => new ProjectInterestDto
+                                ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted).Select(i => new ProjectInterestDto
                                 {
                                     ProjectInterest = i,
                                     Interest = i.Interest,
                                     InterestGroup = i.Interest.InterestGroup
                                 }),
-                                ProjectTargetAudienceDtos = p.TargetAudiences.Where(ta => !ta.IsDeleted).Select(ta => new ProjectTargetAudienceDto
+                                ProjectTargetAudienceDtos = p.ProjectTargetAudiences.Where(ta => !ta.IsDeleted).Select(ta => new ProjectTargetAudienceDto
                                 {
                                     TargetAudience = ta.TargetAudience
                                 }),
-                                ProjectImageLinkDtos = p.ImageLinks.Where(il => !il.IsDeleted).Select(il => new ProjectImageLinkDto
+                                ProjectImageLinkDtos = p.ProjectImageLinks.Where(il => !il.IsDeleted).Select(il => new ProjectImageLinkDto
                                 {
                                     ProjectImageLink = il
                                 }),
-                                ProjectTeaserLinkDtos = p.TeaserLinks.Where(tl => !tl.IsDeleted).Select(tl => new ProjectTeaserLinkDto
+                                ProjectTeaserLinkDtos = p.ProjectTeaserLinks.Where(tl => !tl.IsDeleted).Select(tl => new ProjectTeaserLinkDto
                                 {
                                     ProjectTeaserLink = tl
                                 })

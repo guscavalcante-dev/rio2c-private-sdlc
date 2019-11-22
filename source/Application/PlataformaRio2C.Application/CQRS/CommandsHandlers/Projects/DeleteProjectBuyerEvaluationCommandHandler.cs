@@ -4,7 +4,7 @@
 // Created          : 11-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-14-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="DeleteProjectBuyerEvaluationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -68,7 +68,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            project.DeleteBuyerEvaluation(
+            project.DeleteProjectBuyerEvaluation(
                 cmd.AttendeeOrganizationUid.HasValue ? await this.AttendeeOrganizationRepo.GetAsync(ao => ao.Uid == cmd.AttendeeOrganizationUid) : null,
                 cmd.UserId);
             if (!project.IsValid())

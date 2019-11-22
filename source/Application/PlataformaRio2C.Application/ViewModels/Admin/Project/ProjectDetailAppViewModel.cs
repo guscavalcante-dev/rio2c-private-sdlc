@@ -25,10 +25,10 @@ namespace PlataformaRio2C.Application.ViewModels.Admin
         public ProjectDetailAppViewModel(Project entity)
             : base(entity)
         {
-            if (entity.Titles.Any())
+            if (entity.ProjectTitles.Any())
             {
-                var titlePt = entity.Titles.FirstOrDefault(e => e.Language.Code == "PtBr");
-                var titleEn = entity.Titles.FirstOrDefault(e => e.Language.Code == "En");
+                var titlePt = entity.ProjectTitles.FirstOrDefault(e => e.Language.Code == "PtBr");
+                var titleEn = entity.ProjectTitles.FirstOrDefault(e => e.Language.Code == "En");
 
                 if (titlePt != null && titleEn != null)
                 {

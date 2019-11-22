@@ -94,11 +94,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 }
             }
 
-            project.UpdateInterests(
+            project.UpdateProjectInterests(
                 projectInterests,
                 cmd.UserId);
 
-            project.UpdateTargetAudiences(
+            project.UpdateProjectTargetAudiences(
                 cmd.TargetAudiencesUids?.Any() == true ? await this.targetAudienceRepo.FindAllByUidsAsync(cmd.TargetAudiencesUids) : new List<TargetAudience>(),
                 cmd.UserId);
             if (!project.IsValid())

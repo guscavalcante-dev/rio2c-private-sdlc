@@ -120,8 +120,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.TotalValueOfProject = entity?.Project?.TotalValueOfProject;
             this.ValueAlreadyRaised = entity?.Project?.ValueAlreadyRaised;
             this.ValueStillNeeded = entity?.Project?.ValueStillNeeded;
-            this.ImageLinks = entity?.Project?.ImageLinks?.FirstOrDefault()?.Value;
-            this.TeaserLinks = entity?.Project?.TeaserLinks?.FirstOrDefault()?.Value;
+            this.ImageLinks = entity?.Project?.ProjectImageLinks?.FirstOrDefault()?.Value;
+            this.TeaserLinks = entity?.Project?.ProjectTeaserLinks?.FirstOrDefault()?.Value;
             this.IsPitching = entity?.Project?.IsPitching;
 
             this.UpdateTitles(entity, languagesDtos, isDataRequired);
