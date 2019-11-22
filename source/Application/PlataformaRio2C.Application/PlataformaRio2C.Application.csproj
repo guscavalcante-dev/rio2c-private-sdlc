@@ -226,6 +226,7 @@
     <Compile Include="CQRS\Commands\BaseCommand.cs" />
     <Compile Include="CQRS\Commands\Collaborators\BaseCommands\CollaboratorMiniBioBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Collaborators\UpdateCollaboratorMainInformation.cs" />
+    <Compile Include="CQRS\Commands\Common\BaseCommands\InterestBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Emails\Common\SendForgotPasswordEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Site\SendProducerWelcomeEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Onboardings\OnboardCollaborator.cs" />

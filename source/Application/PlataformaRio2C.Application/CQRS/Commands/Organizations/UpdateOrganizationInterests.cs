@@ -4,7 +4,7 @@
 // Created          : 10-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-10-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="UpdateOrganizationInterests.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -45,7 +45,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             //this.UpdaterBaseDto = entity.UpdaterDto;
             //this.UpdateDate = entity.UpdateDate;
             this.UpdateRestrictionSpecifics(entity, languagesDtos, isRestrictionSpecificRequired);
-            this.InterestsUids = entity?.OrganizationInterestDtos?.Select(oid => oid.InterestUid)?.ToList();
+            this.InterestsUids = entity?.OrganizationInterestDtos?.Select(oid => oid.Interest.Uid)?.ToList();
             this.UpdateModelsAndLists(groupedInterests);
         }
 

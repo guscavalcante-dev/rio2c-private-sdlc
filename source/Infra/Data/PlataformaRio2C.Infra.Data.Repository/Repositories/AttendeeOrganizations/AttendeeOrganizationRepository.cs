@@ -4,7 +4,7 @@
 // Created          : 08-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-18-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="AttendeeOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -620,14 +620,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     }),
                                     OrganizationInterestDtos = ao.Organization.OrganizationInterests.Where(oi => !oi.IsDeleted).Select(oi => new OrganizationInterestDto
                                     {
-                                        OrganizationInterestId = oi.Id,
-                                        OrganizationInterestUid = oi.Uid,
-                                        InterestGroupId = oi.Interest.InterestGroup.Id,
-                                        InterestGroupUid = oi.Interest.InterestGroup.Uid,
-                                        InterestGroupName = oi.Interest.InterestGroup.Name,
-                                        InterestId = oi.Interest.Id,
-                                        InterestUid = oi.Interest.Uid,
-                                        InterestName = oi.Interest.Name
+                                        ProjectInterest = oi,
+                                        Interest = oi.Interest,
+                                        InterestGroup = oi.Interest.InterestGroup
                                     })
                                 })
                                 .FirstOrDefaultAsync();

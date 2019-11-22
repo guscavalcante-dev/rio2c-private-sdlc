@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-17-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="ProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -226,6 +226,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     }),
                                     ProjectInterestDtos = p.Interests.Where(i => !i.IsDeleted).Select(i => new ProjectInterestDto
                                     {
+                                        ProjectInterest = i,
                                         Interest = i.Interest,
                                         InterestGroup = i.Interest.InterestGroup
                                     }),
@@ -345,6 +346,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 },
                                 ProjectInterestDtos = p.Interests.Where(i => !i.IsDeleted).Select(i => new ProjectInterestDto
                                 {
+                                    ProjectInterest = i,
                                     Interest = i.Interest,
                                     InterestGroup = i.Interest.InterestGroup
                                 }),
@@ -467,6 +469,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 }),
                                 ProjectInterestDtos = p.Interests.Where(i => !i.IsDeleted).Select(i => new ProjectInterestDto
                                 {
+                                    ProjectInterest = i,
                                     Interest = i.Interest,
                                     InterestGroup = i.Interest.InterestGroup
                                 }),

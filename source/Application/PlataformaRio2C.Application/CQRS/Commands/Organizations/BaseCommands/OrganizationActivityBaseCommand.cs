@@ -4,7 +4,7 @@
 // Created          : 09-18-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-18-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="OrganizationActivityBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,7 +20,7 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>OrganizationActivityBaseCommand</summary>
-    public class OrganizationActivityBaseCommand : BaseCommand
+    public class OrganizationActivityBaseCommand
     {
         public Guid ActivityUid { get; set; }
         public string ActivityName { get; set; }

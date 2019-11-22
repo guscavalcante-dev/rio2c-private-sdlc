@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-18-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="AttendeeOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -234,12 +234,12 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="valueAlreadyRaised">The value already raised.</param>
         /// <param name="valueStillNeeded">The value still needed.</param>
         /// <param name="isPitching">if set to <c>true</c> [is pitching].</param>
-        /// <param name="titles">The titles.</param>
-        /// <param name="logLines">The log lines.</param>
-        /// <param name="summaries">The summaries.</param>
-        /// <param name="productionPlans">The production plans.</param>
-        /// <param name="additionalInformations">The additional informations.</param>
-        /// <param name="interests">The interests.</param>
+        /// <param name="projectTitles">The project titles.</param>
+        /// <param name="projectLogLines">The project log lines.</param>
+        /// <param name="projectSummaries">The project summaries.</param>
+        /// <param name="projectProductionPlans">The project production plans.</param>
+        /// <param name="projectAdditionalInformations">The project additional informations.</param>
+        /// <param name="projectInterests">The project interests.</param>
         /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="imageLink">The image link.</param>
         /// <param name="teaserLink">The teaser link.</param>
@@ -254,12 +254,12 @@ namespace PlataformaRio2C.Domain.Entities
             string valueAlreadyRaised,
             string valueStillNeeded,
             bool isPitching,
-            List<ProjectTitle> titles,
-            List<ProjectLogLine> logLines,
-            List<ProjectSummary> summaries,
-            List<ProjectProductionPlan> productionPlans,
-            List<ProjectAdditionalInformation> additionalInformations,
-            List<Interest> interests,
+            List<ProjectTitle> projectTitles,
+            List<ProjectLogLine> projectLogLines,
+            List<ProjectSummary> projectSummaries,
+            List<ProjectProductionPlan> projectProductionPlans,
+            List<ProjectAdditionalInformation> projectAdditionalInformations,
+            List<ProjectInterest> projectInterests,
             List<TargetAudience> targetAudiences,
             string imageLink,
             string teaserLink,
@@ -287,12 +287,12 @@ namespace PlataformaRio2C.Domain.Entities
                 valueAlreadyRaised,
                 valueStillNeeded,
                 isPitching,
-                titles,
-                logLines,
-                summaries,
-                productionPlans,
-                additionalInformations,
-                interests,
+                projectTitles,
+                projectLogLines,
+                projectSummaries,
+                projectProductionPlans,
+                projectAdditionalInformations,
+                projectInterests,
                 targetAudiences,
                 imageLink,
                 teaserLink,

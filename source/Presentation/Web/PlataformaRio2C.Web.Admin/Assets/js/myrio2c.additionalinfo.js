@@ -1,22 +1,22 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Web.Site
+// Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-19-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
-// <copyright file="myrio2c.activity.js" company="Softo">
+// <copyright file="myrio2c.additionalinfo.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var MyRio2cCommonActivity = function () {
+var MyRio2cCommonAdditionalInfo = function () {
 
     // Enable checkbox toggle additional info -----------------------------------------------------
     var enableToggleAdditionalInfo = function () {
-        $('.toggle-addicional-info').not('.toggle-event-enabled').on('click', function () {
+        $('.toggle-additional-info').not('.toggle-event-enabled').on('click', function () {
             var dataId = $(this).data('toggle-id');
             if (MyRio2cCommon.isNullOrEmpty(dataId)) {
                 return;
@@ -32,7 +32,7 @@ var MyRio2cCommonActivity = function () {
             }
         });
 
-        $('.toggle-addicional-info').not('.toggle-event-enabled').addClass('toggle-event-enabled');
+        $('.toggle-additional-info').not('.toggle-event-enabled').addClass('toggle-event-enabled');
     };
 
     return {

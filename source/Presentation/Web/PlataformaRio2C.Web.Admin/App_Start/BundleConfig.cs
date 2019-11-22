@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-21-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -250,7 +250,7 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/organizations.create.js").Include(
                 "~/Assets/js/organizations/organizations.create.js",
                 "~/Assets/js/myrio2c.companynumber.js",
-                "~/Assets/js/myrio2c.activity.js"));
+                "~/Assets/js/myrio2c.additionalinfo.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/organizations.update.js").Include(
                 "~/Assets/js/organizations/organizations.update.js"));

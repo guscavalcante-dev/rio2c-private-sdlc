@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-18-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -240,7 +240,7 @@ namespace PlataformaRio2C.Web.Site
             bundles.Add(new ScriptBundle("~/bundles/js/onboarding.playerinfo.js").Include(
                 "~/Assets/js/onboarding/onboarding.playerinfo.js",
                 "~/Assets/js/myrio2c.companynumber.js",
-                "~/Assets/js/myrio2c.activity.js"));
+                "~/Assets/js/myrio2c.additionalinfo.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/onboarding.interests.js").Include(
                 "~/Assets/js/onboarding/onboarding.interests.js"));
@@ -249,7 +249,7 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/js/onboarding/onboarding.companyinfo.js",
                 "~/Assets/js/companies/companyinfo.autocomplete.js",
                 "~/Assets/js/myrio2c.companynumber.js",
-                "~/Assets/js/myrio2c.activity.js"));
+                "~/Assets/js/myrio2c.additionalinfo.js"));
 
             bundles.Add(new StyleBundle("~/bundles/css/onboarding.projects.css").Include(
                 "~/Assets/css/pages/projects/projects.wizard-3.css"));
@@ -262,10 +262,11 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/js/projects/projects.producerinfo.js",
                 "~/Assets/js/companies/companyinfo.autocomplete.js",
                 "~/Assets/js/myrio2c.companynumber.js",
-                "~/Assets/js/myrio2c.activity.js"));
+                "~/Assets/js/myrio2c.additionalinfo.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/projects.projectinfo.js").Include(
-                "~/Assets/js/projects/projects.projectinfo.js"));
+                "~/Assets/js/projects/projects.projectinfo.js",
+                "~/Assets/js/myrio2c.additionalinfo.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/projects.buyercompany.widget.js").Include(
                 "~/Assets/js/projects/projects.buyercompany.widget.js",
@@ -274,7 +275,8 @@ namespace PlataformaRio2C.Web.Site
             bundles.Add(new ScriptBundle("~/bundles/js/projects.widget.js").Include(
                 "~/Assets/js/projects/projects.maininformation.widget.js",
                 "~/Assets/js/projects/projects.interest.widget.js",
-                "~/Assets/js/projects/projects.links.widget.js"));
+                "~/Assets/js/projects/projects.links.widget.js",
+                "~/Assets/js/myrio2c.additionalinfo.js"));
 
             #endregion
 
@@ -288,7 +290,7 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/js/companies/companies.interest.widget.js",
                 "~/Assets/js/companies/companies.executive.widget.js",
                 "~/Assets/js/myrio2c.companynumber.js",
-                "~/Assets/js/myrio2c.activity.js"));
+                "~/Assets/js/myrio2c.additionalinfo.js"));
 
             #endregion
 
@@ -300,7 +302,7 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/js/companies/companyinfo.autocomplete.js",
                 "~/Assets/js/myrio2c.companynumber.js",
                 "~/Assets/js/myrio2c.publicemail.js",
-                "~/Assets/js/myrio2c.activity.js"));
+                "~/Assets/js/myrio2c.additionalinfo.js"));
 
             #endregion
 

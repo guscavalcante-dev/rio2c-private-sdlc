@@ -4,7 +4,7 @@
 // Created          : 10-08-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-10-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="AttendeeOrganizationSiteInterestWidgetDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -44,7 +44,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <returns></returns>
         public OrganizationInterestDto GetOrganizationInterestDtoByInterestUid(Guid interestUid)
         {
-            return this.OrganizationInterestDtos?.FirstOrDefault(oid => oid.InterestUid == interestUid);
+            return this.OrganizationInterestDtos?.FirstOrDefault(oid => oid.Interest.Uid == interestUid);
         }
     }
 }

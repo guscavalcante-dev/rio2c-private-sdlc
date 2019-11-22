@@ -4,7 +4,7 @@
 // Created          : 11-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-17-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="CreateProject.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,8 +24,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Initializes a new instance of the <see cref="CreateProject"/> class.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
-        /// <param name="activities">The activities.</param>
         /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="interestsDtos">The interests dtos.</param>
         /// <param name="groupedInterests">The grouped interests.</param>
         /// <param name="isDataRequired">if set to <c>true</c> [is data required].</param>
         /// <param name="isProductionPlanRequired">if set to <c>true</c> [is production plan required].</param>
@@ -33,8 +33,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public CreateProject(
             ProjectDto entity,
             List<LanguageDto> languagesDtos,
-            List<Activity> activities,
             List<TargetAudience> targetAudiences,
+            List<InterestDto> interestsDtos,
             List<IGrouping<InterestGroup, Interest>> groupedInterests,
             bool isDataRequired,
             bool isProductionPlanRequired,
@@ -43,8 +43,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateBaseProperties(
                 entity,
                 languagesDtos,
-                activities,
                 targetAudiences,
+                interestsDtos,
                 groupedInterests,
                 isDataRequired,
                 isProductionPlanRequired,

@@ -4,7 +4,7 @@
 // Created          : 09-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="OnboardPlayerInterests.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -44,7 +44,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdaterBaseDto = entity.UpdaterDto;
             this.UpdateDate = entity.UpdateDate;
             this.UpdateRestrictionSpecifics(entity, languagesDtos, isRestrictionSpecificRequired);
-            this.InterestsUids = entity?.OrganizationInterestsDtos?.Select(oid => oid.InterestUid)?.ToList();
+            this.InterestsUids = entity?.OrganizationInterestsDtos?.Select(oid => oid.Interest.Uid)?.ToList();
             this.UpdateDropdownProperties(groupedInterests);
         }
 

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-18-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="Project.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -73,12 +73,12 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="valueAlreadyRaised">The value already raised.</param>
         /// <param name="valueStillNeeded">The value still needed.</param>
         /// <param name="isPitching">if set to <c>true</c> [is pitching].</param>
-        /// <param name="titles">The titles.</param>
-        /// <param name="logLines">The log lines.</param>
-        /// <param name="summaries">The summaries.</param>
-        /// <param name="productionPlans">The production plans.</param>
-        /// <param name="additionalInformations">The additional informations.</param>
-        /// <param name="interests">The interests.</param>
+        /// <param name="projectTitles">The project titles.</param>
+        /// <param name="projectLogLines">The project log lines.</param>
+        /// <param name="projectSummaries">The project summaries.</param>
+        /// <param name="projectProductionPlans">The project production plans.</param>
+        /// <param name="projectAdditionalInformations">The project additional informations.</param>
+        /// <param name="projectInterests">The project interests.</param>
         /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="imageLink">The image link.</param>
         /// <param name="teaserLink">The teaser link.</param>
@@ -94,12 +94,12 @@ namespace PlataformaRio2C.Domain.Entities
             string valueAlreadyRaised,
             string valueStillNeeded,
             bool isPitching,
-            List<ProjectTitle> titles,
-            List<ProjectLogLine> logLines,
-            List<ProjectSummary> summaries,
-            List<ProjectProductionPlan> productionPlans,
-            List<ProjectAdditionalInformation> additionalInformations,
-            List<Interest> interests,
+            List<ProjectTitle> projectTitles,
+            List<ProjectLogLine> projectLogLines,
+            List<ProjectSummary> projectSummaries,
+            List<ProjectProductionPlan> projectProductionPlans,
+            List<ProjectAdditionalInformation> projectAdditionalInformations,
+            List<ProjectInterest> projectInterests,
             List<TargetAudience> targetAudiences,
             string imageLink,
             string teaserLink,
@@ -120,12 +120,12 @@ namespace PlataformaRio2C.Domain.Entities
             this.FinishDate = null;
             this.ProjectBuyerEvaluationsCount = 0;
 
-            this.SynchronizeTitles(titles, userId);
-            this.SynchronizeLogLines(logLines, userId);
-            this.SynchronizeSummaries(summaries, userId);
-            this.SynchronizeProductionPlans(productionPlans, userId);
-            this.SynchronizeAdditionalInformations(additionalInformations, userId);
-            this.SynchronizeInterests(interests, userId);
+            this.SynchronizeTitles(projectTitles, userId);
+            this.SynchronizeLogLines(projectLogLines, userId);
+            this.SynchronizeSummaries(projectSummaries, userId);
+            this.SynchronizeProductionPlans(projectProductionPlans, userId);
+            this.SynchronizeAdditionalInformations(projectAdditionalInformations, userId);
+            this.SynchronizeInterests(projectInterests, userId);
             this.SynchronizeTargetAudiences(targetAudiences, userId);
             this.SynchronizeImageLinks(imageLink, userId);
             this.SynchronizeTeaserLinks(teaserLink, userId);
@@ -149,11 +149,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="valueAlreadyRaised">The value already raised.</param>
         /// <param name="valueStillNeeded">The value still needed.</param>
         /// <param name="isPitching">if set to <c>true</c> [is pitching].</param>
-        /// <param name="titles">The titles.</param>
-        /// <param name="logLines">The log lines.</param>
-        /// <param name="summaries">The summaries.</param>
-        /// <param name="productionPlans">The production plans.</param>
-        /// <param name="additionalInformations">The additional informations.</param>
+        /// <param name="projectTitles">The project titles.</param>
+        /// <param name="projectLogLines">The project log lines.</param>
+        /// <param name="projectSummaries">The project summaries.</param>
+        /// <param name="projectProductionPlans">The project production plans.</param>
+        /// <param name="projectAdditionalInformations">The project additional informations.</param>
         /// <param name="userId">The user identifier.</param>
         public void UpdateMainInformation(
             string totalPlayingTime,
@@ -164,11 +164,11 @@ namespace PlataformaRio2C.Domain.Entities
             string valueAlreadyRaised,
             string valueStillNeeded,
             bool isPitching,
-            List<ProjectTitle> titles,
-            List<ProjectLogLine> logLines,
-            List<ProjectSummary> summaries,
-            List<ProjectProductionPlan> productionPlans,
-            List<ProjectAdditionalInformation> additionalInformations,
+            List<ProjectTitle> projectTitles,
+            List<ProjectLogLine> projectLogLines,
+            List<ProjectSummary> projectSummaries,
+            List<ProjectProductionPlan> projectProductionPlans,
+            List<ProjectAdditionalInformation> projectAdditionalInformations,
             int userId)
         {
             this.TotalPlayingTime = totalPlayingTime;
@@ -180,11 +180,11 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValueStillNeeded = valueStillNeeded?.Trim();
             this.IsPitching = isPitching;
 
-            this.SynchronizeTitles(titles, userId);
-            this.SynchronizeLogLines(logLines, userId);
-            this.SynchronizeSummaries(summaries, userId);
-            this.SynchronizeProductionPlans(productionPlans, userId);
-            this.SynchronizeAdditionalInformations(additionalInformations, userId);
+            this.SynchronizeTitles(projectTitles, userId);
+            this.SynchronizeLogLines(projectLogLines, userId);
+            this.SynchronizeSummaries(projectSummaries, userId);
+            this.SynchronizeProductionPlans(projectProductionPlans, userId);
+            this.SynchronizeAdditionalInformations(projectAdditionalInformations, userId);
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
@@ -573,13 +573,13 @@ namespace PlataformaRio2C.Domain.Entities
         #region Interests
 
         /// <summary>Updates the interests.</summary>
-        /// <param name="interests">The interests.</param>
+        /// <param name="projectInterests">The project interests.</param>
         /// <param name="userId">The user identifier.</param>
         public void UpdateInterests(
-            List<Interest> interests,
+            List<ProjectInterest> projectInterests,
             int userId)
         {
-            this.SynchronizeInterests(interests, userId);
+            this.SynchronizeInterests(projectInterests, userId);
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
@@ -587,55 +587,47 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>Synchronizes the interests.</summary>
-        /// <param name="interests">The interests.</param>
+        /// <param name="projectInterests">The project interests.</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeInterests(List<Interest> interests, int userId)
+        private void SynchronizeInterests(List<ProjectInterest> projectInterests, int userId)
         {
             if (this.Interests == null)
             {
                 this.Interests = new List<ProjectInterest>();
             }
 
-            this.DeleteInterests(interests, userId);
+            this.DeleteInterests(projectInterests, userId);
 
-            if (interests?.Any() != true)
+            if (projectInterests?.Any() != true)
             {
                 return;
             }
 
             // Create or update interests
-            foreach (var interest in interests)
+            foreach (var projectInterest in projectInterests)
             {
-                var interestDb = this.Interests.FirstOrDefault(a => a.Interest.Uid == interest.Uid);
+                var interestDb = this.Interests.FirstOrDefault(a => a.Interest.Uid == projectInterest.Interest.Uid);
                 if (interestDb != null)
                 {
-                    interestDb.Update(userId);
+                    interestDb.Update(projectInterest, userId);
                 }
                 else
                 {
-                    this.CreateInterest(interest, userId);
+                    this.Interests.Add(projectInterest);
                 }
             }
         }
 
         /// <summary>Deletes the interests.</summary>
-        /// <param name="newInterests">The new interests.</param>
+        /// <param name="newProjectInterests">The new project interests.</param>
         /// <param name="userId">The user identifier.</param>
-        private void DeleteInterests(List<Interest> newInterests, int userId)
+        private void DeleteInterests(List<ProjectInterest> newProjectInterests, int userId)
         {
-            var interestsToDelete = this.Interests.Where(db => newInterests?.Select(a => a.Uid)?.Contains(db.Interest.Uid) == false && !db.IsDeleted).ToList();
-            foreach (var interestToDelete in interestsToDelete)
+            var projectInterestsToDelete = this.Interests.Where(db => newProjectInterests?.Select(a => a.Interest.Uid)?.Contains(db.Interest.Uid) == false && !db.IsDeleted).ToList();
+            foreach (var projectInterestToDelete in projectInterestsToDelete)
             {
-                interestToDelete.Delete(userId);
+                projectInterestToDelete.Delete(userId);
             }
-        }
-
-        /// <summary>Creates the interest.</summary>
-        /// <param name="intestest">The intestest.</param>
-        /// <param name="userId">The user identifier.</param>
-        private void CreateInterest(Interest intestest, int userId)
-        {
-            this.Interests.Add(new ProjectInterest(this, intestest, userId));
         }
 
         #endregion
