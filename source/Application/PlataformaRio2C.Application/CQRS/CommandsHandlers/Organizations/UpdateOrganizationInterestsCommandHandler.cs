@@ -4,7 +4,7 @@
 // Created          : 10-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-10-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="UpdateOrganizationInterestsCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -68,10 +68,27 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #endregion
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
+            var interestsDtos = await this.interestRepo.FindAllDtosAsync();
 
-            organization.UpdateInterests(
+            // Interests
+            var organizationInterests = new List<OrganizationInterest>();
+            if (cmd.Interests?.Any() == true)
+            {
+                foreach (var interestBaseCommands in cmd.Interests)
+                {
+                    foreach (var interestBaseCommand in interestBaseCommands?.Where(ibc => ibc.IsChecked)?.ToList())
+                    {
+                        organizationInterests.Add(new OrganizationInterest(interestsDtos?.FirstOrDefault(id => id.Interest.Uid == interestBaseCommand.InterestUid)?.Interest, interestBaseCommand.AdditionalInfo, cmd.UserId));
+                    }
+                }
+            }
+
+            organization.UpdateOrganizationRestrictionSpecifics(
                 cmd.RestrictionSpecifics?.Select(d => new OrganizationRestrictionSpecific(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
-                cmd.InterestsUids?.Any() == true ? await this.interestRepo.FindAllByUidsAsync(cmd.InterestsUids) : new List<Interest>(),
+                cmd.UserId);
+
+            organization.UpdateOrganizationInterests(
+                organizationInterests,
                 cmd.UserId);
             if (!organization.IsValid())
             {

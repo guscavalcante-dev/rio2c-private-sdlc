@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-10-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="UpdateOrganizationActivitiesCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -64,7 +64,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var activities = await this.activityRepo.FindAllAsync();
 
-            organization.UpdateActivities(
+            organization.UpdateOrganizationActivities(
                 cmd.OrganizationActivities?.Where(oa => oa.IsChecked)?.Select(oa => new OrganizationActivity(activities?.FirstOrDefault(a => a.Uid == oa.ActivityUid), oa.AdditionalInfo, cmd.UserId))?.ToList(),
                 cmd.UserId);
             if (!organization.IsValid())

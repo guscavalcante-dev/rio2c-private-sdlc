@@ -454,7 +454,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             {
                                 AttendeeOrganization = ao,
                                 Organization = ao.Organization,
-                                DescriptionsDtos = ao.Organization.Descriptions.Where(d => !d.IsDeleted).Select(d => new OrganizationDescriptionDto
+                                DescriptionsDtos = ao.Organization.OrganizationDescriptions.Where(d => !d.IsDeleted).Select(d => new OrganizationDescriptionDto
                                 {
                                     Id = d.Id,
                                     Uid = d.Uid,
@@ -605,7 +605,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 {
                                     AttendeeOrganization = ao,
                                     Organization = ao.Organization,
-                                    RestrictionSpecificDtos = ao.Organization.RestrictionSpecifics.Where(rs => !rs.IsDeleted).Select(rs => new OrganizationRestrictionSpecificDto
+                                    RestrictionSpecificDtos = ao.Organization.OrganizationRestrictionSpecifics.Where(rs => !rs.IsDeleted).Select(rs => new OrganizationRestrictionSpecificDto
                                     {
                                         Id = rs.Id,
                                         Uid = rs.Uid,
@@ -620,7 +620,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     }),
                                     OrganizationInterestDtos = ao.Organization.OrganizationInterests.Where(oi => !oi.IsDeleted).Select(oi => new OrganizationInterestDto
                                     {
-                                        ProjectInterest = oi,
+                                        OrganizationInterest = oi,
                                         Interest = oi.Interest,
                                         InterestGroup = oi.Interest.InterestGroup
                                     })

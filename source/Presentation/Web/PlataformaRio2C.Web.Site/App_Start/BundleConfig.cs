@@ -243,7 +243,8 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/js/myrio2c.additionalinfo.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/onboarding.interests.js").Include(
-                "~/Assets/js/onboarding/onboarding.interests.js"));
+                "~/Assets/js/onboarding/onboarding.interests.js",
+                "~/Assets/js/myrio2c.additionalinfo.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/onboarding.companyinfo.js").Include(
                 "~/Assets/js/onboarding/onboarding.companyinfo.js",

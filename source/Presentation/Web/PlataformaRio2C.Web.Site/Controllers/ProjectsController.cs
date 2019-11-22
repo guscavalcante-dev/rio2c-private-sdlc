@@ -781,7 +781,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                 await this.targetAudienceRepo.FindAllAsync(),
                 await this.interestRepo.FindAllDtosAsync(),
-                await this.interestRepo.FindAllGroupedByInterestGroupsAsync(),
                 true,
                 false,
                 false);

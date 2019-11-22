@@ -18,7 +18,7 @@ namespace PlataformaRio2C.Domain.Dtos
     /// <summary>OrganizationInterestDto</summary>
     public class OrganizationInterestDto
     {
-        public OrganizationInterest ProjectInterest { get; set; }
+        public OrganizationInterest OrganizationInterest { get; set; }
         public Interest Interest { get; set; }
         public InterestGroup InterestGroup { get; set; }
 

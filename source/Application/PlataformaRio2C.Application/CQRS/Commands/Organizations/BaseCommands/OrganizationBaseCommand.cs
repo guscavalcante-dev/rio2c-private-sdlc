@@ -76,7 +76,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<OrganizationActivityBaseCommand> OrganizationActivities { get; set; }
 
         public List<Guid> TargetAudiencesUids { get; set; }
-        public List<Guid> InterestsUids { get; set; }
+
+        public InterestBaseCommand[][] Interests { get; set; }
 
         [Display(Name = "DisplayOnSite", ResourceType = typeof(Labels))]
         public bool IsApiDisplayEnabled { get; set; }
@@ -85,7 +86,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public OrganizationType OrganizationType { get; private set; }
         public List<Activity> Activities { get; private set; }
         public List<TargetAudience> TargetAudiences { get; private set; }
-        public List<IGrouping<InterestGroup, Interest>> GroupedInterests { get; private set; }
         public List<CountryBaseDto> CountriesBaseDtos { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="OrganizationBaseCommand"/> class.</summary>
@@ -100,7 +100,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
         /// <param name="activities">The activities.</param>
         /// <param name="targetAudiences">The target audiences.</param>
-        /// <param name="groupedInterests">The grouped interests.</param>
+        /// <param name="interestsDtos">The interests dtos.</param>
         /// <param name="isDescriptionRequired">if set to <c>true</c> [is description required].</param>
         /// <param name="isAddressRequired">if set to <c>true</c> [is address required].</param>
         /// <param name="isRestrictionSpecificRequired">if set to <c>true</c> [is restriction specific required].</param>
@@ -112,7 +112,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<CountryBaseDto> countriesBaseDtos,
             List<Activity> activities,
             List<TargetAudience> targetAudiences,
-            List<IGrouping<InterestGroup, Interest>> groupedInterests,
+            List<InterestDto> interestsDtos,
             bool isDescriptionRequired, 
             bool isAddressRequired, 
             bool isRestrictionSpecificRequired, 
@@ -133,11 +133,52 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateRestrictionSpecifics(entity, languagesDtos, isRestrictionSpecificRequired);
             this.UpdateActivities(entity, activities);
             this.UpdateCropperImage(entity, isImageRequired);
-            this.UpdateDropdownProperties(holdingBaseDtos, countriesBaseDtos, activities, targetAudiences, groupedInterests);
+            this.UpdateDropdownProperties(holdingBaseDtos, countriesBaseDtos, activities, targetAudiences);
             this.TargetAudiencesUids = entity?.OrganizationTargetAudiencesDtos?.Select(otad => otad.TargetAudienceUid)?.ToList();
-            this.InterestsUids = entity?.OrganizationInterestsDtos?.Select(oid => oid.Interest.Uid)?.ToList();
+            this.UpdateInterests(entity, interestsDtos);
             this.IsApiDisplayEnabled = entity?.IsApiDisplayEnabled ?? false;
         }
+
+        /// <summary>Updates the dropdown properties.</summary>
+        /// <param name="holdingBaseDtos">The holding base dtos.</param>
+        /// <param name="countriesBaseDtos">The countries base dtos.</param>
+        /// <param name="activities">The activities.</param>
+        /// <param name="targetAudiences">The target audiences.</param>
+        public void UpdateDropdownProperties(
+            List<HoldingBaseDto> holdingBaseDtos,
+            List<CountryBaseDto> countriesBaseDtos,
+            List<Activity> activities,
+            List<TargetAudience> targetAudiences)
+        {
+            this.HoldingBaseDtos = holdingBaseDtos;
+            this.Activities = activities;
+            this.TargetAudiences = targetAudiences;
+            this.CountriesBaseDtos = countriesBaseDtos?
+                .OrderBy(c => c.Ordering)?
+                .ThenBy(c => c.DisplayName)?
+                .ToList();
+        }
+
+        /// <summary>Updates the pre send properties.</summary>
+        /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="userUid">The user uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="editionUid">The edition uid.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        public void UpdatePreSendProperties(
+            OrganizationType organizationType,
+            int userId,
+            Guid userUid,
+            int? editionId,
+            Guid? editionUid,
+            string userInterfaceLanguage)
+        {
+            this.OrganizationType = organizationType;
+            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
+        }
+
+        #region Private methods
 
         /// <summary>Updates the address.</summary>
         /// <param name="entity">The entity.</param>
@@ -191,6 +232,34 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             }
         }
 
+        /// <summary>Updates the interests.</summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="interestsDtos">The interests dtos.</param>
+        private void UpdateInterests(OrganizationDto entity, List<InterestDto> interestsDtos)
+        {
+            var interestsBaseCommands = new List<InterestBaseCommand>();
+            foreach (var interestDto in interestsDtos)
+            {
+                var organizationInterest = entity?.OrganizationInterestDtos?.FirstOrDefault(oad => oad.Interest.Uid == interestDto.Interest.Uid);
+                interestsBaseCommands.Add(organizationInterest != null ? new InterestBaseCommand(organizationInterest) :
+                                                                         new InterestBaseCommand(interestDto));
+            }
+
+            var groupedInterestsDtos = interestsBaseCommands?
+                                            .GroupBy(i => new { i.InterestGroupUid, i.InterestGroupName, i.InterestGroupDisplayOrder })?
+                                            .OrderBy(g => g.Key.InterestGroupDisplayOrder)?
+                                            .ToList();
+
+            if (groupedInterestsDtos?.Any() == true)
+            {
+                this.Interests = new InterestBaseCommand[groupedInterestsDtos.Count][];
+                for (int i = 0; i < groupedInterestsDtos.Count; i++)
+                {
+                    this.Interests[i] = groupedInterestsDtos[i].ToArray();
+                }
+            }
+        }
+
         /// <summary>Updates the cropper image.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
@@ -199,46 +268,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.CropperImage = new CropperImageBaseCommand(entity?.ImageUploadDate, entity?.Uid, FileRepositoryPathType.OrganizationImage, isImageRequired);
         }
 
-        /// <summary>Updates the dropdown properties.</summary>
-        /// <param name="holdingBaseDtos">The holding base dtos.</param>
-        /// <param name="countriesBaseDtos">The countries base dtos.</param>
-        /// <param name="activities">The activities.</param>
-        /// <param name="targetAudiences">The target audiences.</param>
-        /// <param name="groupedInterests">The grouped interests.</param>
-        public void UpdateDropdownProperties(
-            List<HoldingBaseDto> holdingBaseDtos, 
-            List<CountryBaseDto> countriesBaseDtos,
-            List<Activity> activities,
-            List<TargetAudience> targetAudiences,
-            List<IGrouping<InterestGroup, Interest>> groupedInterests)
-        {
-            this.HoldingBaseDtos = holdingBaseDtos;
-            this.Activities = activities;
-            this.TargetAudiences = targetAudiences;
-            this.GroupedInterests = groupedInterests;
-            this.CountriesBaseDtos = countriesBaseDtos?
-                                        .OrderBy(c => c.Ordering)?
-                                        .ThenBy(c => c.DisplayName)?
-                                        .ToList();
-        }
-
-        /// <summary>Updates the pre send properties.</summary>
-        /// <param name="organizationType">Type of the organization.</param>
-        /// <param name="userId">The user identifier.</param>
-        /// <param name="userUid">The user uid.</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <param name="editionUid">The edition uid.</param>
-        /// <param name="userInterfaceLanguage">The user interface language.</param>
-        public void UpdatePreSendProperties(
-            OrganizationType organizationType,
-            int userId,
-            Guid userUid,
-            int? editionId,
-            Guid? editionUid,
-            string userInterfaceLanguage)
-        {
-            this.OrganizationType = organizationType;
-            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
-        }
+        #endregion
     }
 }

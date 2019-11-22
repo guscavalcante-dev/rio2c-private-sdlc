@@ -386,7 +386,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     Address1 = o.Address.Address1,
                                     AddressZipCode = o.Address.ZipCode,
                                 },
-                                DescriptionsDtos = o.Descriptions.Select(d => new OrganizationDescriptionDto
+                                DescriptionsDtos = o.OrganizationDescriptions.Select(d => new OrganizationDescriptionDto
                                 {
                                     Id = d.Id,
                                     Uid = d.Uid,
@@ -399,7 +399,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         Code = d.Language.Code
                                     }
                                 }),
-                                RestrictionSpecificsDtos = o.RestrictionSpecifics.Select(d => new OrganizationRestrictionSpecificDto
+                                RestrictionSpecificsDtos = o.OrganizationRestrictionSpecifics.Select(d => new OrganizationRestrictionSpecificDto
                                 {
                                     Id = d.Id,
                                     Uid = d.Uid,
@@ -430,9 +430,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     TargetAudienceUid = oa.TargetAudience.Uid,
                                     TargetAudienceName = oa.TargetAudience.Name
                                 }),
-                                OrganizationInterestsDtos = o.OrganizationInterests.Where(ota => !ota.IsDeleted).Select(oi => new OrganizationInterestDto
+                                OrganizationInterestDtos = o.OrganizationInterests.Where(ota => !ota.IsDeleted).Select(oi => new OrganizationInterestDto
                                 {
-                                    ProjectInterest = oi,
+                                    OrganizationInterest = oi,
                                     Interest = oi.Interest,
                                     InterestGroup = oi.Interest.InterestGroup
                                 })
@@ -608,7 +608,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 Website = o.Website,
                                 SocialMedia = o.SocialMedia,
                                 ImageUploadDate = o.ImageUploadDate,
-                                DescriptionsDtos = o.Descriptions.Select(d => new OrganizationDescriptionDto
+                                DescriptionsDtos = o.OrganizationDescriptions.Select(d => new OrganizationDescriptionDto
                                 {
                                     Id = d.Id,
                                     Uid = d.Uid,
@@ -639,12 +639,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 //    TargetAudienceUid = oa.TargetAudience.Uid,
                                 //    TargetAudienceName = oa.TargetAudience.Name
                                 //}),
-                                OrganizationInterestsDtos = o.OrganizationInterests.Where(ota => !ota.IsDeleted)
+                                OrganizationInterestDtos = o.OrganizationInterests.Where(ota => !ota.IsDeleted)
                                                                 .OrderBy(oi => oi.Interest.InterestGroup.DisplayOrder)
                                                                 .ThenBy(oi => oi.Interest.DisplayOrder)
                                                                 .Select(oi => new OrganizationInterestDto
                                                                 {
-                                                                    ProjectInterest = oi,
+                                                                    OrganizationInterest = oi,
                                                                     Interest = oi.Interest,
                                                                     InterestGroup = oi.Interest.InterestGroup
                                                                 }),

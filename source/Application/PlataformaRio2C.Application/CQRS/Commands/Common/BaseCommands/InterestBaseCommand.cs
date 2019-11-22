@@ -50,7 +50,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.InterestDisplayOrder = entity.Interest.DisplayOrder;
             this.InterestHasAdditionalInfo = entity.Interest.HasAdditionalInfo;
 
-            this.AdditionalInfo = entity.ProjectInterest.AdditionalInfo;
+            this.AdditionalInfo = entity.OrganizationInterest.AdditionalInfo;
             this.IsChecked = true;
         }
 

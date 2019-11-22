@@ -99,7 +99,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="interestsDtos">The interests dtos.</param>
-        /// <param name="groupedInterests">The grouped interests.</param>
         /// <param name="isDataRequired">if set to <c>true</c> [is data required].</param>
         /// <param name="isProductionPlanRequired">if set to <c>true</c> [is production plan required].</param>
         /// <param name="isAdditionalInformationRequired">if set to <c>true</c> [is additional information required].</param>
@@ -108,7 +107,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<LanguageDto> languagesDtos,
             List<TargetAudience> targetAudiences,
             List<InterestDto> interestsDtos,
-            List<IGrouping<InterestGroup, Interest>> groupedInterests,
             bool isDataRequired,
             bool isProductionPlanRequired,
             bool isAdditionalInformationRequired)

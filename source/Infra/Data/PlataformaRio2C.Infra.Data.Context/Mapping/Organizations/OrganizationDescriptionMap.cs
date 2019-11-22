@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="OrganizationDescriptionMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,7 +29,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
 
             //Relationships
             this.HasRequired(t => t.Organization)
-                .WithMany(e => e.Descriptions)
+                .WithMany(e => e.OrganizationDescriptions)
                 .HasForeignKey(d => d.OrganizationId);
 
             this.HasRequired(t => t.Language)

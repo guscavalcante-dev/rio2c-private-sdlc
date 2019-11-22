@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 using System.Collections.Generic;
-using System.Linq;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 
@@ -26,7 +25,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="interestsDtos">The interests dtos.</param>
-        /// <param name="groupedInterests">The grouped interests.</param>
         /// <param name="isDataRequired">if set to <c>true</c> [is data required].</param>
         /// <param name="isProductionPlanRequired">if set to <c>true</c> [is production plan required].</param>
         /// <param name="isAdditionalInformationRequired">if set to <c>true</c> [is additional information required].</param>
@@ -35,7 +33,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<LanguageDto> languagesDtos,
             List<TargetAudience> targetAudiences,
             List<InterestDto> interestsDtos,
-            List<IGrouping<InterestGroup, Interest>> groupedInterests,
             bool isDataRequired,
             bool isProductionPlanRequired,
             bool isAdditionalInformationRequired)
@@ -45,7 +42,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 languagesDtos,
                 targetAudiences,
                 interestsDtos,
-                groupedInterests,
                 isDataRequired,
                 isProductionPlanRequired,
                 isAdditionalInformationRequired);

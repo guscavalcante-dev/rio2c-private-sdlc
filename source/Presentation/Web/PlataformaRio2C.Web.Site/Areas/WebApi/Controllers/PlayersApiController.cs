@@ -193,7 +193,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "Player not found." } });
             }
 
-            var interestsGroups = organizationApiDto?.OrganizationInterestsDtos?.GroupBy(oid => new
+            var interestsGroups = organizationApiDto?.OrganizationInterestDtos?.GroupBy(oid => new
             {
                 InterestGroupId = oid.InterestGroup.Id,
                 InterestGroupUid = oid.InterestGroup.Uid,

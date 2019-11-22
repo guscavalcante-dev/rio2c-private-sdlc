@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-30-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="OrganizationDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,7 +24,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public bool IsApiDisplayEnabled { get; set; }
         public IEnumerable<OrganizationActivityDto> OrganizationActivitiesDtos { get; set; }
         public IEnumerable<OrganizationTargetAudienceDto> OrganizationTargetAudiencesDtos { get; set; }
-        public IEnumerable<OrganizationInterestDto> OrganizationInterestsDtos { get; set; }
+        public IEnumerable<OrganizationInterestDto> OrganizationInterestDtos { get; set; }
         public int CreateUserId { get; set; }
         public int UpdateUserId { get; set; }
 

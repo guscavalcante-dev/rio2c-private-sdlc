@@ -4,7 +4,7 @@
 // Created          : 09-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-21-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="OrganizationInterest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -46,14 +46,32 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>Initializes a new instance of the <see cref="OrganizationInterest"/> class.</summary>
+        /// <param name="interest">The interest.</param>
+        /// <param name="additionalInfo">The additional information.</param>
+        /// <param name="userId">The user identifier.</param>
+        public OrganizationInterest(Interest interest, string additionalInfo, int userId)
+        {
+            this.InterestId = interest?.Id ?? 0;
+            this.Interest = interest;
+            this.AdditionalInfo = additionalInfo?.Trim();
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="OrganizationInterest"/> class.</summary>
         protected OrganizationInterest()
         {
         }
 
-        /// <summary>Updates the specified user identifier.</summary>
+        /// <summary>Updates the specified organization interest.</summary>
+        /// <param name="organizationInterest">The organization interest.</param>
         /// <param name="userId">The user identifier.</param>
-        public void Update(int userId)
+        public void Update(OrganizationInterest organizationInterest, int userId)
         {
+            this.AdditionalInfo = organizationInterest?.AdditionalInfo?.Trim();
+
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
