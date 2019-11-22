@@ -11,11 +11,11 @@
     <label class="kt-checkbox" style="margin-bottom: 5px;">
         @if (!Model.InterestHasAdditionalInfo)
         {
-            @Html.CheckBoxFor(m => m.IsChecked, new { @class = "require-one", data_id = "activity-group" })
+            @Html.CheckBoxFor(m => m.IsChecked, new { @class = "require-one", data_id = Model.InterestGroupUid })
         }
         else
         {
-            @Html.CheckBoxFor(m => m.IsChecked, new { @class = "require-one toggle-additional-info", data_id = "activity-group", data_toggle_id = Model.InterestUid })
+            @Html.CheckBoxFor(m => m.IsChecked, new { @class = "require-one toggle-additional-info", data_id = Model.InterestGroupUid, data_toggle_id = Model.InterestUid })
         }
         @Model.InterestName.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')
         <span></span>

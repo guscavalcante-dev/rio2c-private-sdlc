@@ -17,11 +17,6 @@ var ProjectsProjectInfo = function () {
     //var modalId = '#UpdatePlayerExecutiveModal';
     var formId = '#CreateProjectForm';
 
-    // Enable form validation ---------------------------------------------------------------------
-    //var enableFormValidation = function () {
-    //    MyRio2cCommon.enableFormValidation({ formIdOrClass: formId, enableHiddenInputsValidation: true, enableMaxlength: true });
-    //};
-
     // Enable plugins -----------------------------------------------------------------------------
     var enablePlugins = function () {
         MyRio2cInputMask.enableMask('#TotalPlayingTime', '99:99:99');
@@ -34,26 +29,26 @@ var ProjectsProjectInfo = function () {
         }
     };
 
-    // Form submit --------------------------------------------------------------------------------
-    var submit = function () {
-        var validator = $(formId).validate();
-        var formValidation = $(formId).valid();
-        //var interestsValidation = MyRio2cCommon.validateRequireOneGroup();
+    //// Form submit --------------------------------------------------------------------------------
+    //var submit = function () {
+    //    var validator = $(formId).validate();
+    //    var formValidation = $(formId).valid();
+    //    //var interestsValidation = MyRio2cCommon.validateRequireOneGroup();
 
-        if (formValidation/* && interestsValidation*/) {
-            MyRio2cCommon.submitForm(formId);
-        }
-        else {
-            validator.focusInvalid();
-        }
-    };
+    //    if (formValidation/* && interestsValidation*/) {
+    //        MyRio2cCommon.submitForm(formId);
+    //    }
+    //    else {
+    //        validator.focusInvalid();
+    //    }
+    //};
 
     return {
         init: function () {
             enablePlugins();
         },
-        submit: function () {
-            submit();
-        }
+        //submit: function () {
+        //    submit();
+        //}
     };
 }();

@@ -30,7 +30,7 @@
                             {
                                 var group = Model.Interests[i].FirstOrDefault();
                                 <h5 class="mt-30">@(group?.InterestGroupName?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</h5>
-                                @Html.ValidationMessage(group?.InterestGroupUid.ToString(), new {@class = "text-danger"})
+                                @Html.ValidationMessage(group?.InterestGroupUid.ToString(), new { @class = "text-danger" })
                                 <div class="kt-section__content mt-3">
                                     <div class="row require-one-group" data-id="@(group?.InterestGroupUid)">
                                         @Html.EditorFor(x => Model.Interests[i])

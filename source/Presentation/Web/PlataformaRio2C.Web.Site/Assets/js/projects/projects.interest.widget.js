@@ -110,19 +110,19 @@ var ProjectsInterestWidget = function () {
         });
     };
 
-    // Form submit --------------------------------------------------------------------------------
-    var submit = function () {
-        var validator = $(updateFormId).validate();
-        var formValidation = $(updateFormId).valid();
-        //var interestsValidation = MyRio2cCommon.validateRequireOneGroup();
+    //// Form submit --------------------------------------------------------------------------------
+    //var submit = function () {
+    //    var validator = $(updateFormId).validate();
+    //    var formValidation = $(updateFormId).valid();
+    //    //var interestsValidation = MyRio2cCommon.validateRequireOneGroup();
 
-        if (formValidation/* && interestsValidation*/) {
-            MyRio2cCommon.submitForm(updateFormId);
-        }
-        else {
-            validator.focusInvalid();
-        }
-    };
+    //    if (formValidation/* && interestsValidation*/) {
+    //        MyRio2cCommon.submitForm(updateFormId);
+    //    }
+    //    else {
+    //        validator.focusInvalid();
+    //    }
+    //};
 
     return {
         init: function () {
@@ -132,8 +132,8 @@ var ProjectsInterestWidget = function () {
         showUpdateModal: function () {
             showUpdateModal();
         },
-        submit: function () {
-            submit();
-        }
+        //submit: function () {
+        //    submit();
+        //}
     };
 }();

@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-16-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -305,35 +305,41 @@ var MyRio2cCommon = function () {
                 }
 
                 var dataId = $(element).attr("data-id");
+                var dataValMsgFor = $('[data-valmsg-for="' + name + '"]');
+
                 if (!MyRio2cCommon.isNullOrEmpty(dataId)) {
+                    var dataValMsgForDataId = $('[data-valmsg-for="' + dataId + '"]');
+                    if (dataValMsgFor.length <= 0 && dataValMsgForDataId.length > 0) {
+                        dataValMsgFor = dataValMsgForDataId;
+                    }
 
                     if ($('[data-id="' + $(element).attr("data-id") + '"].require-one:checked').length > 0) {
-                        $('[data-valmsg-for="' + name + '"]').html('');
-                        $('[data-valmsg-for="' + name + '"]').addClass('field-validation-valid');
-                        $('[data-valmsg-for="' + name + '"]').removeClass('field-validation-error');
+                        dataValMsgFor.html('');
+                        dataValMsgFor.addClass('field-validation-valid');
+                        dataValMsgFor.removeClass('field-validation-error');
 
                         return true;
                     }
                     else {
-                        $('[data-valmsg-for="' + name + '"]').html('<span for="' + name + '" generated="true" class="">' + labels.selectAtLeastOneOption + '</span>');
-                        $('[data-valmsg-for="' + name + '"]').removeClass('field-validation-valid');
-                        $('[data-valmsg-for="' + name + '"]').addClass('field-validation-error');
+                        dataValMsgFor.html('<span for="' + name + '" generated="true" class="">' + labels.selectAtLeastOneOption + '</span>');
+                        dataValMsgFor.removeClass('field-validation-valid');
+                        dataValMsgFor.addClass('field-validation-error');
 
                         return false;
                     }
                 }
                 else {
                     if ($('.require-one:checked').length > 0) {
-                        $('[data-valmsg-for="' + name + '"]').html('');
-                        $('[data-valmsg-for="' + name + '"]').addClass('field-validation-valid');
-                        $('[data-valmsg-for="' + name + '"]').removeClass('field-validation-error');
+                        dataValMsgFor.html('');
+                        dataValMsgFor.addClass('field-validation-valid');
+                        dataValMsgFor.removeClass('field-validation-error');
 
                         return true;
                     }
                     else {
-                        $('[data-valmsg-for="' + name + '"]').html('<span for="' + name + '" generated="true" class="">' + labels.selectAtLeastOneOption + '</span>');
-                        $('[data-valmsg-for="' + name + '"]').removeClass('field-validation-valid');
-                        $('[data-valmsg-for="' + name + '"]').addClass('field-validation-error');
+                        dataValMsgFor.html('<span for="' + name + '" generated="true" class="">' + labels.selectAtLeastOneOption + '</span>');
+                        dataValMsgFor.removeClass('field-validation-valid');
+                        dataValMsgFor.addClass('field-validation-error');
 
                         return false;
                     }

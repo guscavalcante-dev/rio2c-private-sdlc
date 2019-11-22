@@ -812,6 +812,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateAdditionalInformations();
             this.ValidateImageLinks();
             this.ValidateTeaserLinks();
+            this.ValidateInterests();
             this.ValidateBuyerEvaluations();
 
             return this.ValidationResult.IsValid;
@@ -990,6 +991,20 @@ namespace PlataformaRio2C.Domain.Entities
             foreach (var teaserLink in this.TeaserLinks?.Where(t => !t.IsValid())?.ToList())
             {
                 this.ValidationResult.Add(teaserLink.ValidationResult);
+            }
+        }
+
+        /// <summary>Validates the interests.</summary>
+        public void ValidateInterests()
+        {
+            if (this.ProductionPlans?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var interest in this.Interests?.Where(t => !t.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(interest.ValidationResult);
             }
         }
 
