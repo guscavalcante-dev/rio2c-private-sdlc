@@ -33,19 +33,19 @@ var OnboardingInterests = function () {
         }
     };
 
-    // Form submit --------------------------------------------------------------------------------
-    var submit = function () {
-        var validator = $(formId).validate();
-        var formValidation = $(formId).valid();
-        //var interestsValidation = MyRio2cCommon.validateRequireOneGroup();
+    //// Form submit --------------------------------------------------------------------------------
+    //var submit = function () {
+    //    var validator = $(formId).validate();
+    //    var formValidation = $(formId).valid();
+    //    //var interestsValidation = MyRio2cCommon.validateRequireOneGroup();
 
-        if (formValidation/* && interestsValidation*/) {
-            MyRio2cCommon.submitForm(formId);
-        }
-        else {
-            validator.focusInvalid();
-        }
-    };
+    //    if (formValidation/* && interestsValidation*/) {
+    //        MyRio2cCommon.submitForm(formId);
+    //    }
+    //    else {
+    //        validator.focusInvalid();
+    //    }
+    //};
 
     return {
         init: function () {
@@ -54,8 +54,8 @@ var OnboardingInterests = function () {
         validateInterests: function () {
             return validateInterests();
         },
-        submit: function () {
-            submit();
-        }
+        //submit: function () {
+        //    submit();
+        //}
     };
 }();

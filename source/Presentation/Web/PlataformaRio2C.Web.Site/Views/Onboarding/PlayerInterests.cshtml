@@ -67,7 +67,7 @@
                     <div class="kt-form__actions">
                         @if (userAccessControlDto?.IsAttendeeCollaboratorOnboardingFinished() == false || userAccessControlDto?.IsPlayerAttendeeOrganizationsOnboardingFinished() == false)
                         {
-                            <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="OnboardingInterests.submit();">
+                            <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="MyRio2cCommon.submitForm('#PlayerInterestssDataForm');">
                                 @Labels.NextStep
                             </button>
                         }
