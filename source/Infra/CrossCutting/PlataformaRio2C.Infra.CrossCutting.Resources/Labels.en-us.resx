@@ -1714,4 +1714,8 @@
     <value>Submit</value>
     <comment>Inscrever</comment>
   </data>
+  <data name="ExecutivesListDownload" xml:space="preserve">
+    <value>Executives’ List - Industry Category</value>
+    <comment>Lista de Executivos - Categoria Industry</comment>
+  </data>
 </root>
