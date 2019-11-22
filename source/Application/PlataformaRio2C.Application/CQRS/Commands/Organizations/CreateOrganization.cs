@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-16-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="CreateOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 using System.Collections.Generic;
-using System.Linq;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 
@@ -27,7 +26,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
         /// <param name="activities">The activities.</param>
         /// <param name="targetAudiences">The target audiences.</param>
-        /// <param name="groupedInterests">The grouped interests.</param>
+        /// <param name="interestsDtos">The interests dtos.</param>
         /// <param name="isDescriptionRequired">if set to <c>true</c> [is description required].</param>
         /// <param name="isAddressRequired">if set to <c>true</c> [is address required].</param>
         /// <param name="isRestrictionSpecificRequired">if set to <c>true</c> [is restriction specific required].</param>
@@ -38,7 +37,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<CountryBaseDto> countriesBaseDtos,
             List<Activity> activities,
             List<TargetAudience> targetAudiences,
-            List<IGrouping<InterestGroup, Interest>> groupedInterests,
+            List<InterestDto> interestsDtos,
             bool isDescriptionRequired, 
             bool isAddressRequired, 
             bool isRestrictionSpecificRequired, 
@@ -50,8 +49,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 languagesDtos, 
                 countriesBaseDtos, 
                 activities, 
-                targetAudiences, 
-                groupedInterests, 
+                targetAudiences,
+                interestsDtos, 
                 isDescriptionRequired, 
                 isAddressRequired, 
                 isRestrictionSpecificRequired,

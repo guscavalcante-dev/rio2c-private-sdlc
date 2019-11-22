@@ -4,7 +4,7 @@
 // Created          : 11-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-18-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="projects.interest.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -77,6 +77,11 @@ var ProjectsInterestWidget = function () {
         MyRio2cCommon.enableAtLeastOnCheckboxByNameValidation(updateFormId);
         enableAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
+
+        // Enable additional info textbox
+        if (typeof (MyRio2cCommonAdditionalInfo) !== 'undefined') {
+            MyRio2cCommonAdditionalInfo.init();
+        }
     };
 
     var showUpdateModal = function () {
@@ -105,19 +110,19 @@ var ProjectsInterestWidget = function () {
         });
     };
 
-    // Form submit --------------------------------------------------------------------------------
-    var submit = function () {
-        var validator = $(updateFormId).validate();
-        var formValidation = $(updateFormId).valid();
-        var interestsValidation = MyRio2cCommon.validateRequireOneGroup();
+    //// Form submit --------------------------------------------------------------------------------
+    //var submit = function () {
+    //    var validator = $(updateFormId).validate();
+    //    var formValidation = $(updateFormId).valid();
+    //    //var interestsValidation = MyRio2cCommon.validateRequireOneGroup();
 
-        if (formValidation && interestsValidation) {
-            MyRio2cCommon.submitForm(updateFormId);
-        }
-        else {
-            validator.focusInvalid();
-        }
-    };
+    //    if (formValidation/* && interestsValidation*/) {
+    //        MyRio2cCommon.submitForm(updateFormId);
+    //    }
+    //    else {
+    //        validator.focusInvalid();
+    //    }
+    //};
 
     return {
         init: function () {
@@ -127,8 +132,8 @@ var ProjectsInterestWidget = function () {
         showUpdateModal: function () {
             showUpdateModal();
         },
-        submit: function () {
-            submit();
-        }
+        //submit: function () {
+        //    submit();
+        //}
     };
 }();

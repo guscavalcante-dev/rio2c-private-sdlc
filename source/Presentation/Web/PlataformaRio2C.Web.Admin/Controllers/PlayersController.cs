@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-18-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="PlayersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -187,7 +187,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                 await this.activityRepo.FindAllAsync(),
                 await this.targetAudienceRepo.FindAllAsync(),
-                await this.interestRepo.FindAllGroupedByInterestGroupsAsync(),
+                await this.interestRepo.FindAllDtosAsync(),
                 false,
                 false,
                 false,
@@ -243,8 +243,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                     await this.activityRepo.FindAllAsync(),
-                    await this.targetAudienceRepo.FindAllAsync(),
-                    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
+                    await this.targetAudienceRepo.FindAllAsync());
 
                 return Json(new
                 {
@@ -287,7 +286,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                     await this.activityRepo.FindAllAsync(),
                     await this.targetAudienceRepo.FindAllAsync(),
-                    await this.interestRepo.FindAllGroupedByInterestGroupsAsync(),
+                    await this.interestRepo.FindAllDtosAsync(),
                     isAddingToCurrentEdition,
                     false,
                     false,
@@ -349,8 +348,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                     await this.activityRepo.FindAllAsync(),
-                    await this.targetAudienceRepo.FindAllAsync(),
-                    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
+                    await this.targetAudienceRepo.FindAllAsync());
 
                 return Json(new
                 {

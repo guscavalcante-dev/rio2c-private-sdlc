@@ -4,7 +4,7 @@
 // Created          : 11-07-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-17-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="CreateProjectCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -79,6 +79,20 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #endregion
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
+            var interestsDtos = await this.interestRepo.FindAllDtosAsync();
+
+            // Interests
+            var projectInterests = new List<ProjectInterest>();
+            if (cmd.Interests?.Any() == true)
+            {
+                foreach (var interestBaseCommands in cmd.Interests)
+                {
+                    foreach (var interestBaseCommand in interestBaseCommands?.Where(ibc => ibc.IsChecked)?.ToList())
+                    {
+                        projectInterests.Add(new ProjectInterest(interestsDtos?.FirstOrDefault(id => id.Interest.Uid == interestBaseCommand.InterestUid)?.Interest, interestBaseCommand.AdditionalInfo, cmd.UserId));
+                    }
+                }
+            }
 
             attendeeOrganization.CreateProject(
                 await this.projectTypeRepo.GetAsync(pt => pt.Uid == cmd.ProjectTypeUid && !pt.IsDeleted),
@@ -95,7 +109,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.Summaries?.Select(d => new ProjectSummary(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.ProductPlans?.Select(d => new ProjectProductionPlan(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.AdditionalInformations?.Select(d => new ProjectAdditionalInformation(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
-                cmd.InterestsUids?.Any() == true ? await this.interestRepo.FindAllByUidsAsync(cmd.InterestsUids) : new List<Interest>(),
+                projectInterests,
                 cmd.TargetAudiencesUids?.Any() == true ? await this.targetAudienceRepo.FindAllByUidsAsync(cmd.TargetAudiencesUids) : new List<TargetAudience>(),
                 cmd.ImageLinks,
                 cmd.TeaserLinks,

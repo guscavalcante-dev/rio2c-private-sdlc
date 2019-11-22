@@ -4,7 +4,7 @@
 // Created          : 08-29-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-18-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="OnboardingController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -585,7 +585,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             var cmd = new OnboardPlayerInterests(
                 await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(currentOrganization.Uid, this.EditionDto.Id, this.UserInterfaceLanguage)),
-                await this.interestRepo.FindAllGroupedByInterestGroupsAsync(),
+                await this.interestRepo.FindAllDtosAsync(),
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                 true);
 
@@ -645,8 +645,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
                 this.StatusMessageToastr(ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
 
-                cmd.UpdateDropdownProperties(
-                    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
+                //cmd.UpdateDropdownProperties(
+                //    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
 
                 return View(cmd);
             }
@@ -655,8 +655,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
 
-                cmd.UpdateDropdownProperties(
-                    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
+                //cmd.UpdateDropdownProperties(
+                //    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
 
                 return View(cmd);
             }

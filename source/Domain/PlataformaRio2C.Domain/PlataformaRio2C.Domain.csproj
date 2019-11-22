@@ -103,6 +103,7 @@
     <Compile Include="Dtos\Editions\EditionBaseDto.cs" />
     <Compile Include="Dtos\Editions\EditionDto.cs" />
     <Compile Include="Dtos\Messages\ConversationDto.cs" />
+    <Compile Include="Dtos\Interests\InterestDto.cs" />
     <Compile Include="Dtos\OrganizationDescriptions\OrganizationRestrictionSpecificDto.cs" />
     <Compile Include="Dtos\OrganizationDescriptions\OrganizationRestrictionSpecificBaseDto.cs" />
     <Compile Include="Dtos\Organizations\OrganizationApiListDto.cs" />

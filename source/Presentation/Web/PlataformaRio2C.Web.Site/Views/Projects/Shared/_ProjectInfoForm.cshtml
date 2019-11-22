@@ -1,5 +1,4 @@
-﻿@using System.Globalization
-@using PlataformaRio2C.Domain.Dtos
+﻿@using PlataformaRio2C.Domain.Dtos
 @model PlataformaRio2C.Application.CQRS.Commands.ProjectBaseCommand
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
@@ -22,35 +21,26 @@
                     @Html.EditorFor(m => m.Summaries)
                 </div>
             </div>
-            <div class="kt-section">
-                <div class="kt-section__content">
-                    <div class="kt-checkbox-list">
-                        @foreach (var interests in Model.GroupedInterests)
-                        {
-                            <h5 class="mt-30">@interests.Key.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')</h5>
-                            @Html.ValidationMessage(interests.Key.Uid.ToString(), new { @class = "text-danger" })
-                            <div class="kt-section__content mt-3">
-                                <div class="row require-one-group" data-id="@interests.Key.Uid">
-                                    @foreach (var interest in interests?.OrderBy(ig => ig.DisplayOrder))
-                                    {
-                                        <div class="col-sm-4">
-                                            <label class="kt-checkbox">
-                                                <input type="checkbox"
-                                                       name="InterestsUids"
-                                                       value="@interest.Uid"
-                                                       class="require-one-item"
-                                                       data-id="@interests.Key.Uid"
-                                                       @if (Model.InterestsUids?.Contains(interest.Uid) == true) { <text> checked </text> } /> @interest.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')
-                                                    <span></span>
-                                                </label>
-                                            </div>
-                                        }
+            @if (Model.Interests?.Any() == true)
+            {
+                <div class="kt-section">
+                    <div class="kt-section__content">
+                        <div class="kt-checkbox-list">
+                            @for (int i = 0; i < Model.Interests.Length; i++)
+                            {
+                                var group = Model.Interests[i].FirstOrDefault();
+                                <h5 class="mt-30">@(group?.InterestGroupName?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</h5>
+                                @Html.ValidationMessage(group?.InterestGroupUid.ToString(), new { @class = "text-danger" })
+                                <div class="kt-section__content mt-3">
+                                    <div class="row require-one-group" data-id="@(group?.InterestGroupUid)">
+                                        @Html.EditorFor(x => Model.Interests[i])
+                                    </div>
                                 </div>
-                            </div>
-                        }
+                            }
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
             <div class="kt-section">
                 <h5>@Labels.TargetAudience <small>@Labels.AgeGroup</small></h5>
                 @Html.ValidationMessage("TargetAudiencesUids", new { @class = "text-danger" })
@@ -64,7 +54,7 @@
                                        value="@targetAudience.Uid"
                                        class="require-one"
                                        data-id="targetaudience-group"
-                                       @if (Model.TargetAudiencesUids?.Contains(targetAudience.Uid) == true) { <text> checked </text> } /> @targetAudience.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')
+                                       @if (Model.TargetAudiencesUids?.Contains(targetAudience.Uid) == true) { <text> checked </text> } /> @targetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
                                     <span></span>
                                 </label>
                             }

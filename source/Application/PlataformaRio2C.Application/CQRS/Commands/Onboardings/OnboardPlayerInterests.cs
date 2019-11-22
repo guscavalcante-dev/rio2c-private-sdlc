@@ -4,7 +4,7 @@
 // Created          : 09-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="OnboardPlayerInterests.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,8 +23,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     public class OnboardPlayerInterests : BaseCommand
     {
         public Guid OrganizationUid { get; set; }
-        public List<Guid> InterestsUids { get; set; }
         public List<OrganizationRestrictionSpecificsBaseCommand> RestrictionSpecifics { get; set; }
+        public InterestBaseCommand[][] Interests { get; set; }
 
         public List<IGrouping<InterestGroup, Interest>> GroupedInterests { get; private set; }
         public UserBaseDto UpdaterBaseDto { get; private set; }
@@ -35,44 +35,25 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Initializes a new instance of the <see cref="OnboardPlayerInterests"/> class.</summary>
         /// <param name="entity">The entity.</param>
-        /// <param name="groupedInterests">The grouped interests.</param>
+        /// <param name="interestsDtos">The interests dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="isRestrictionSpecificRequired">if set to <c>true</c> [is restriction specific required].</param>
-        public OnboardPlayerInterests(OrganizationDto entity, List<IGrouping<InterestGroup, Interest>> groupedInterests, List<LanguageDto> languagesDtos, bool isRestrictionSpecificRequired)
+        public OnboardPlayerInterests(
+            OrganizationDto entity,
+            List<InterestDto> interestsDtos,
+            List<LanguageDto> languagesDtos, 
+            bool isRestrictionSpecificRequired)
         {
             this.OrganizationUid = entity.Uid;
             this.UpdaterBaseDto = entity.UpdaterDto;
             this.UpdateDate = entity.UpdateDate;
             this.UpdateRestrictionSpecifics(entity, languagesDtos, isRestrictionSpecificRequired);
-            this.InterestsUids = entity?.OrganizationInterestsDtos?.Select(oid => oid.InterestUid)?.ToList();
-            this.UpdateDropdownProperties(groupedInterests);
+            this.UpdateInterests(entity, interestsDtos);
         }
 
         /// <summary>Initializes a new instance of the <see cref="OnboardPlayerInterests"/> class.</summary>
         public OnboardPlayerInterests()
         {
-        }
-
-        /// <summary>Updates the restriction specifics.</summary>
-        /// <param name="entity">The entity.</param>
-        /// <param name="languagesDtos">The languages dtos.</param>
-        /// <param name="isRestrictionSpecificRequired">if set to <c>true</c> [is restriction specific required].</param>
-        private void UpdateRestrictionSpecifics(OrganizationDto entity, List<LanguageDto> languagesDtos, bool isRestrictionSpecificRequired)
-        {
-            this.RestrictionSpecifics = new List<OrganizationRestrictionSpecificsBaseCommand>();
-            foreach (var languageDto in languagesDtos)
-            {
-                var restrictionSpecific = entity?.RestrictionSpecificsDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
-                this.RestrictionSpecifics.Add(restrictionSpecific != null ? new OrganizationRestrictionSpecificsBaseCommand(restrictionSpecific, isRestrictionSpecificRequired) :
-                                                                            new OrganizationRestrictionSpecificsBaseCommand(languageDto, isRestrictionSpecificRequired));
-            }
-        }
-
-        /// <summary>Updates the dropdown properties.</summary>
-        /// <param name="groupedInterests">The grouped interests.</param>
-        public void UpdateDropdownProperties(List<IGrouping<InterestGroup, Interest>> groupedInterests)
-        {
-            this.GroupedInterests = groupedInterests;
         }
 
         /// <summary>Updates the pre send properties.</summary>
@@ -93,5 +74,52 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.OrganizationType = organizationType;
             this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
         }
+
+        #region Private methods
+
+        /// <summary>Updates the restriction specifics.</summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="languagesDtos">The languages dtos.</param>
+        /// <param name="isRestrictionSpecificRequired">if set to <c>true</c> [is restriction specific required].</param>
+        private void UpdateRestrictionSpecifics(OrganizationDto entity, List<LanguageDto> languagesDtos, bool isRestrictionSpecificRequired)
+        {
+            this.RestrictionSpecifics = new List<OrganizationRestrictionSpecificsBaseCommand>();
+            foreach (var languageDto in languagesDtos)
+            {
+                var restrictionSpecific = entity?.RestrictionSpecificsDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
+                this.RestrictionSpecifics.Add(restrictionSpecific != null ? new OrganizationRestrictionSpecificsBaseCommand(restrictionSpecific, isRestrictionSpecificRequired) :
+                                                                            new OrganizationRestrictionSpecificsBaseCommand(languageDto, isRestrictionSpecificRequired));
+            }
+        }
+
+        /// <summary>Updates the interests.</summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="interestsDtos">The interests dtos.</param>
+        private void UpdateInterests(OrganizationDto entity, List<InterestDto> interestsDtos)
+        {
+            var interestsBaseCommands = new List<InterestBaseCommand>();
+            foreach (var interestDto in interestsDtos)
+            {
+                var organizationInterest = entity?.OrganizationInterestDtos?.FirstOrDefault(oad => oad.Interest.Uid == interestDto.Interest.Uid);
+                interestsBaseCommands.Add(organizationInterest != null ? new InterestBaseCommand(organizationInterest) :
+                                                                         new InterestBaseCommand(interestDto));
+            }
+
+            var groupedInterestsDtos = interestsBaseCommands?
+                                            .GroupBy(i => new { i.InterestGroupUid, i.InterestGroupName, i.InterestGroupDisplayOrder })?
+                                            .OrderBy(g => g.Key.InterestGroupDisplayOrder)?
+                                            .ToList();
+
+            if (groupedInterestsDtos?.Any() == true)
+            {
+                this.Interests = new InterestBaseCommand[groupedInterestsDtos.Count][];
+                for (int i = 0; i < groupedInterestsDtos.Count; i++)
+                {
+                    this.Interests[i] = groupedInterestsDtos[i].ToArray();
+                }
+            }
+        }
+
+        #endregion
     }
 }

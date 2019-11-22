@@ -4,7 +4,7 @@
 // Created          : 09-13-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-08-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="onboarding.interests.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,21 +26,26 @@ var OnboardingInterests = function () {
     var enablePlugins = function () {
         //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-restrictions', maxCharCount: 270 });
         MyRio2cCommon.enableAtLeastOnCheckboxByNameValidation(formId);
-    };
 
-    // Form submit --------------------------------------------------------------------------------
-    var submit = function () {
-        var validator = $(formId).validate();
-        var formValidation = $(formId).valid();
-        var interestsValidation = MyRio2cCommon.validateRequireOneGroup();
-
-        if (formValidation && interestsValidation) {
-            MyRio2cCommon.submitForm(formId);
-        }
-        else {
-            validator.focusInvalid();
+        // Enable additional info textbox
+        if (typeof (MyRio2cCommonAdditionalInfo) !== 'undefined') {
+            MyRio2cCommonAdditionalInfo.init();
         }
     };
+
+    //// Form submit --------------------------------------------------------------------------------
+    //var submit = function () {
+    //    var validator = $(formId).validate();
+    //    var formValidation = $(formId).valid();
+    //    //var interestsValidation = MyRio2cCommon.validateRequireOneGroup();
+
+    //    if (formValidation/* && interestsValidation*/) {
+    //        MyRio2cCommon.submitForm(formId);
+    //    }
+    //    else {
+    //        validator.focusInvalid();
+    //    }
+    //};
 
     return {
         init: function () {
@@ -49,8 +54,8 @@ var OnboardingInterests = function () {
         validateInterests: function () {
             return validateInterests();
         },
-        submit: function () {
-            submit();
-        }
+        //submit: function () {
+        //    submit();
+        //}
     };
 }();

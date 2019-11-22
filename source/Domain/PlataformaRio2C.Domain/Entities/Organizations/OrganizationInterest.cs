@@ -4,7 +4,7 @@
 // Created          : 09-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-09-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="OrganizationInterest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,8 +20,12 @@ namespace PlataformaRio2C.Domain.Entities
     /// <summary>OrganizationInterest</summary>
     public class OrganizationInterest : Entity
     {
+        public static readonly int AdditionalInfoMinLength = 1;
+        public static readonly int AdditionalInfoMaxLength = 200;
+
         public int OrganizationId { get; private set; }
         public int InterestId { get; private set; }
+        public string AdditionalInfo { get; private set; }
 
         public virtual Organization Organization { get; private set; }
         public virtual Interest Interest { get; private set; }
@@ -42,14 +46,32 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>Initializes a new instance of the <see cref="OrganizationInterest"/> class.</summary>
+        /// <param name="interest">The interest.</param>
+        /// <param name="additionalInfo">The additional information.</param>
+        /// <param name="userId">The user identifier.</param>
+        public OrganizationInterest(Interest interest, string additionalInfo, int userId)
+        {
+            this.InterestId = interest?.Id ?? 0;
+            this.Interest = interest;
+            this.AdditionalInfo = additionalInfo?.Trim();
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="OrganizationInterest"/> class.</summary>
         protected OrganizationInterest()
         {
         }
 
-        /// <summary>Updates the specified user identifier.</summary>
+        /// <summary>Updates the specified organization interest.</summary>
+        /// <param name="organizationInterest">The organization interest.</param>
         /// <param name="userId">The user identifier.</param>
-        public void Update(int userId)
+        public void Update(OrganizationInterest organizationInterest, int userId)
         {
+            this.AdditionalInfo = organizationInterest?.AdditionalInfo?.Trim();
+
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
@@ -73,34 +95,19 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.ValidationResult = new ValidationResult();
 
-            //this.ValidateValue();
-            //this.ValidateLanguage();
+            this.ValidateAdditionalInfo();
 
             return this.ValidationResult.IsValid;
         }
 
-        ///// <summary>Validates the value.</summary>
-        //public void ValidateValue()
-        //{
-        //    //if (string.IsNullOrEmpty(this.Value?.Trim()))
-        //    //{
-        //    //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Descriptions), new string[] { "Descriptions" }));
-        //    //}
-
-        //    if (this.Value?.Trim().Length < ValueMinLength || this.Value?.Trim().Length > ValueMaxLength)
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Descriptions, ValueMaxLength, ValueMinLength), new string[] { "Descriptions" }));
-        //    }
-        //}
-
-        ///// <summary>Validates the language.</summary>
-        //public void ValidateLanguage()
-        //{
-        //    if (this.Language == null)
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Language), new string[] { "Descriptions" }));
-        //    }
-        //}
+        /// <summary>Validates the additional information.</summary>
+        public void ValidateAdditionalInfo()
+        {
+            if (!string.IsNullOrEmpty(this.AdditionalInfo) && this.AdditionalInfo?.Trim().Length < AdditionalInfoMinLength && this.AdditionalInfo?.Trim().Length > AdditionalInfoMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "Additional Info"/*Labels.LastNames*/, AdditionalInfoMaxLength, AdditionalInfoMinLength), new string[] { "AdditionalInfo" }));
+            }
+        }
 
         #endregion
     }

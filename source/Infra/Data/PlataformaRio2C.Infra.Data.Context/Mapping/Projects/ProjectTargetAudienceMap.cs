@@ -4,7 +4,7 @@
 // Created          : 11-08-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-08-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="ProjectTargetAudienceMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,7 +26,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
 
             //Relationships
             this.HasRequired(t => t.Project)
-                .WithMany(e => e.TargetAudiences)
+                .WithMany(e => e.ProjectTargetAudiences)
                 .HasForeignKey(d => d.ProjectId);
 
             this.HasRequired(t => t.TargetAudience)

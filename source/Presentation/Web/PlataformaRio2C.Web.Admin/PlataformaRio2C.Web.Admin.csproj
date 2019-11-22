@@ -423,7 +423,7 @@
     <Content Include="Assets\js\organizations\organizations.editioncount.widget.js" />
     <Content Include="Assets\js\organizations\organizations.totalcount.widget.js" />
     <Content Include="Assets\js\organizations\organizations.update.js" />
-    <Content Include="Assets\js\myrio2c.activity.js" />
+    <Content Include="Assets\js\myrio2c.additionalinfo.js" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.css" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.min.css" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.rtl.css" />
@@ -8158,6 +8158,7 @@
     <Content Include="Views\AdminMailerService\ForgotPassword.cshtml" />
     <Content Include="Views\Account\Modals\UpdatePasswordForm.cshtml" />
     <Content Include="Views\Account\Modals\UpdatePasswordModal.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\InterestBaseCommand.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -4,7 +4,7 @@
 // Created          : 10-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-10-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="UpdateOrganizationTargetAudiencesCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -63,7 +63,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            organization.UpdateTargetAudiences(
+            organization.UpdateOrganizationTargetAudiences(
                 cmd.TargetAudiencesUids?.Any() == true ? await this.targetAudienceRepo.FindAllByUidsAsync(cmd.TargetAudiencesUids) : new List<TargetAudience>(),
                 cmd.UserId);
             if (!organization.IsValid())

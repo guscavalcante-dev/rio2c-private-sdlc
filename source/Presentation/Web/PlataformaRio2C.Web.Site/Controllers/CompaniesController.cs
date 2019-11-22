@@ -4,7 +4,7 @@
 // Created          : 10-08-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-29-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="CompaniesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -653,7 +653,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
                 cmd = new UpdateOrganizationInterests(
                     interestWidgetDto,
-                    await this.interestRepo.FindAllGroupedByInterestGroupsAsync(),
+                    await this.interestRepo.FindAllDtosAsync(),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     true);
             }
@@ -707,7 +707,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
-                cmd.UpdateModelsAndLists(await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
+                //cmd.UpdateModelsAndLists(await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
 
                 return Json(new
                 {

@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-22-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -386,7 +386,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     Address1 = o.Address.Address1,
                                     AddressZipCode = o.Address.ZipCode,
                                 },
-                                DescriptionsDtos = o.Descriptions.Select(d => new OrganizationDescriptionDto
+                                DescriptionsDtos = o.OrganizationDescriptions.Select(d => new OrganizationDescriptionDto
                                 {
                                     Id = d.Id,
                                     Uid = d.Uid,
@@ -399,7 +399,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         Code = d.Language.Code
                                     }
                                 }),
-                                RestrictionSpecificsDtos = o.RestrictionSpecifics.Select(d => new OrganizationRestrictionSpecificDto
+                                RestrictionSpecificsDtos = o.OrganizationRestrictionSpecifics.Select(d => new OrganizationRestrictionSpecificDto
                                 {
                                     Id = d.Id,
                                     Uid = d.Uid,
@@ -430,16 +430,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     TargetAudienceUid = oa.TargetAudience.Uid,
                                     TargetAudienceName = oa.TargetAudience.Name
                                 }),
-                                OrganizationInterestsDtos = o.OrganizationInterests.Where(ota => !ota.IsDeleted).Select(oi => new OrganizationInterestDto
+                                OrganizationInterestDtos = o.OrganizationInterests.Where(ota => !ota.IsDeleted).Select(oi => new OrganizationInterestDto
                                 {
-                                    OrganizationInterestId = oi.Id,
-                                    OrganizationInterestUid = oi.Uid,
-                                    InterestGroupId = oi.Interest.InterestGroup.Id,
-                                    InterestGroupUid = oi.Interest.InterestGroup.Uid,
-                                    InterestGroupName = oi.Interest.InterestGroup.Name,
-                                    InterestId = oi.Interest.Id,
-                                    InterestUid = oi.Interest.Uid,
-                                    InterestName = oi.Interest.Name
+                                    OrganizationInterest = oi,
+                                    Interest = oi.Interest,
+                                    InterestGroup = oi.Interest.InterestGroup
                                 })
                             }).FirstOrDefaultAsync();
         }
@@ -613,7 +608,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 Website = o.Website,
                                 SocialMedia = o.SocialMedia,
                                 ImageUploadDate = o.ImageUploadDate,
-                                DescriptionsDtos = o.Descriptions.Select(d => new OrganizationDescriptionDto
+                                DescriptionsDtos = o.OrganizationDescriptions.Select(d => new OrganizationDescriptionDto
                                 {
                                     Id = d.Id,
                                     Uid = d.Uid,
@@ -644,20 +639,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 //    TargetAudienceUid = oa.TargetAudience.Uid,
                                 //    TargetAudienceName = oa.TargetAudience.Name
                                 //}),
-                                OrganizationInterestsDtos = o.OrganizationInterests.Where(ota => !ota.IsDeleted)
+                                OrganizationInterestDtos = o.OrganizationInterests.Where(ota => !ota.IsDeleted)
                                                                 .OrderBy(oi => oi.Interest.InterestGroup.DisplayOrder)
                                                                 .ThenBy(oi => oi.Interest.DisplayOrder)
                                                                 .Select(oi => new OrganizationInterestDto
-                                {
-                                    OrganizationInterestId = oi.Id,
-                                    OrganizationInterestUid = oi.Uid,
-                                    InterestGroupId = oi.Interest.InterestGroup.Id,
-                                    InterestGroupUid = oi.Interest.InterestGroup.Uid,
-                                    InterestGroupName = oi.Interest.InterestGroup.Name,
-                                    InterestId = oi.Interest.Id,
-                                    InterestUid = oi.Interest.Uid,
-                                    InterestName = oi.Interest.Name
-                                }),
+                                                                {
+                                                                    OrganizationInterest = oi,
+                                                                    Interest = oi.Interest,
+                                                                    InterestGroup = oi.Interest.InterestGroup
+                                                                }),
                                 CollaboratorsDtos = o.AttendeeOrganizations
                                                             .Where(ao => !ao.IsDeleted && ao.EditionId == editionId)
                                                             .SelectMany(ao => ao.AttendeeOrganizationCollaborators

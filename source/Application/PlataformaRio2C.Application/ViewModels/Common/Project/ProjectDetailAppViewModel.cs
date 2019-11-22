@@ -51,10 +51,10 @@ namespace PlataformaRio2C.Application.ViewModels
             {
                 Uid = entity.Uid;
 
-                if (entity.Titles.Any())
+                if (entity.ProjectTitles.Any())
                 {
-                    var titlePt = entity.Titles.FirstOrDefault(e => e.Language.Code == "PtBr");
-                    var titleEn = entity.Titles.FirstOrDefault(e => e.Language.Code == "En");
+                    var titlePt = entity.ProjectTitles.FirstOrDefault(e => e.Language.Code == "PtBr");
+                    var titleEn = entity.ProjectTitles.FirstOrDefault(e => e.Language.Code == "En");
 
                     if (titlePt != null && titleEn != null)
                     {
@@ -62,21 +62,21 @@ namespace PlataformaRio2C.Application.ViewModels
                     }
                 }
 
-                if (entity.Summaries.Any())
+                if (entity.ProjectSummaries.Any())
                 {
-                    Summaries = ProjectSummaryAppViewModel.MapList(entity.Summaries);
+                    Summaries = ProjectSummaryAppViewModel.MapList(entity.ProjectSummaries);
                 }
 
-                if (entity.Interests != null)
+                if (entity.ProjectInterests != null)
                 {
-                    Platforms = GetInterestsName(entity.Interests, "Platforms");
-                    ProjectStatus = GetInterestsName(entity.Interests, "Status");
-                    LookingFor = GetInterestsName(entity.Interests, "Looking For");                    
-                    Seeking = GetInterestsName(entity.Interests, "Seeking");
-                    Formats = GetInterestsName(entity.Interests, "Format");
-                    Genres = GetInterestsName(entity.Interests, "Gênero");
-                    SubGenres = GetInterestsName(entity.Interests, "Sub-genre");
-                    TargetAudience = GetInterestsName(entity.Interests, "Target audience");
+                    Platforms = GetInterestsName(entity.ProjectInterests, "Platforms");
+                    ProjectStatus = GetInterestsName(entity.ProjectInterests, "Status");
+                    LookingFor = GetInterestsName(entity.ProjectInterests, "Looking For");                    
+                    Seeking = GetInterestsName(entity.ProjectInterests, "Seeking");
+                    Formats = GetInterestsName(entity.ProjectInterests, "Format");
+                    Genres = GetInterestsName(entity.ProjectInterests, "Gênero");
+                    SubGenres = GetInterestsName(entity.ProjectInterests, "Sub-genre");
+                    TargetAudience = GetInterestsName(entity.ProjectInterests, "Target audience");
                 }
 
                 //if (entity.PlayersRelated != null && entity.PlayersRelated.Any())

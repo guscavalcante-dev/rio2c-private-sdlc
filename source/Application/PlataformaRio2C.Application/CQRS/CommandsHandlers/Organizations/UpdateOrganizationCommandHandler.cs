@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-30-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="UpdateOrganizationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -114,6 +114,20 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var edition = await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty);
             var organizationType = await this.organizationTypeRepo.GetAsync(cmd.OrganizationType?.Uid ?? Guid.Empty);
             var activities = await this.activityRepo.FindAllAsync();
+            var interestsDtos = await this.interestRepo.FindAllDtosAsync();
+
+            // Interests
+            var organizationInterests = new List<OrganizationInterest>();
+            if (cmd.Interests?.Any() == true)
+            {
+                foreach (var interestBaseCommands in cmd.Interests)
+                {
+                    foreach (var interestBaseCommand in interestBaseCommands?.Where(ibc => ibc.IsChecked)?.ToList())
+                    {
+                        organizationInterests.Add(new OrganizationInterest(interestsDtos?.FirstOrDefault(id => id.Interest.Uid == interestBaseCommand.InterestUid)?.Interest, interestBaseCommand.AdditionalInfo, cmd.UserId));
+                    }
+                }
+            }
 
             organization.Update(
                 holding,
@@ -141,7 +155,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.RestrictionSpecifics?.Select(d => new OrganizationRestrictionSpecific(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.OrganizationActivities?.Where(oa => oa.IsChecked)?.Select(oa => new OrganizationActivity(activities?.FirstOrDefault(a => a.Uid == oa.ActivityUid), oa.AdditionalInfo, cmd.UserId))?.ToList(),
                 cmd.TargetAudiencesUids?.Any() == true ? await this.targetAudienceRepo.FindAllByUidsAsync(cmd.TargetAudiencesUids) : new List<TargetAudience>(),
-                cmd.InterestsUids?.Any() == true ? await this.interestRepo.FindAllByUidsAsync(cmd.InterestsUids) : new List<Interest>(),
+                organizationInterests,
                 cmd.IsAddingToCurrentEdition,
                 cmd.UserId);
             if (!organization.IsValid())

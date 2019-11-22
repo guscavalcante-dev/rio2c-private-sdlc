@@ -43,10 +43,16 @@
                                     <h3 class="kt-heading kt-heading--sm mb-0 @(isFirstGroup ? "mt-0" : string.Empty)">@interests.Key.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</h3>
                                     @foreach (var interest in interests?.OrderBy(ig => ig.DisplayOrder))
                                     {
-                                        var organizationInterestDto = Model.GetInterestDtoByInterestUid(interest.Uid);
-                                        if (organizationInterestDto != null)
+                                        var projectInterestDto = Model.GetInterestDtoByInterestUid(interest.Uid);
+                                        if (projectInterestDto != null)
                                         {
-                                            <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
+                                            <span class="kt-badge kt-badge--inline kt-badge--info mt-1">
+                                                @interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                                                @if (interest.HasAdditionalInfo && !string.IsNullOrEmpty(projectInterestDto.ProjectInterest.AdditionalInfo))
+                                                {
+                                                    @("» " + projectInterestDto.ProjectInterest.AdditionalInfo.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                                                }
+                                            </span>
                                         }
                                     }
                                 </div>

@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-21-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -410,7 +410,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
                 cmd = new UpdateProjectInterests(
                     interestWidgetDto,
-                    await this.interestRepo.FindAllGroupedByInterestGroupsAsync(),
+                    await this.interestRepo.FindAllDtosAsync(),
                     await this.targetAudienceRepo.FindAllAsync());
             }
             catch (DomainException ex)
@@ -465,7 +465,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
 
                 cmd.UpdateDropdownProperties(
-                    await this.interestRepo.FindAllGroupedByInterestGroupsAsync(),
                     await this.targetAudienceRepo.FindAllAsync());
 
                 return Json(new
@@ -780,9 +779,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
             var cmd = new CreateProject(
                 projectDto,
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
-                await this.activityRepo.FindAllAsync(),
                 await this.targetAudienceRepo.FindAllAsync(),
-                await this.interestRepo.FindAllGroupedByInterestGroupsAsync(),
+                await this.interestRepo.FindAllDtosAsync(),
                 true,
                 false,
                 false);
@@ -852,9 +850,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 this.StatusMessageToastr(toastrError?.Message ?? ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
 
                 cmd.UpdateDropdownProperties(
-                    await this.activityRepo.FindAllAsync(),
-                    await this.targetAudienceRepo.FindAllAsync(),
-                    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
+                    await this.targetAudienceRepo.FindAllAsync());
 
                 return View(cmd);
             }
@@ -864,9 +860,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
 
                 cmd.UpdateDropdownProperties(
-                    await this.activityRepo.FindAllAsync(),
-                    await this.targetAudienceRepo.FindAllAsync(),
-                    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
+                    await this.targetAudienceRepo.FindAllAsync());
 
                 return View(cmd);
             }

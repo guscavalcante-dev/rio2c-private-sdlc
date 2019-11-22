@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-08-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="ProjectTitleMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -31,7 +31,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
 
             //Relationships
             this.HasRequired(t => t.Project)
-                .WithMany(e => e.Titles)
+                .WithMany(e => e.ProjectTitles)
                 .HasForeignKey(t => t.ProjectId);
         }
     }

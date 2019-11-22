@@ -454,6 +454,7 @@
     <Content Include="Assets\js\myrio2c.cropper.js" />
     <Content Include="Assets\js\myrio2c.activity.js" />
     <Content Include="Assets\js\networks\networks.contacts.js" />
+    <Content Include="Assets\js\myrio2c.additionalinfo.js" />
     <Content Include="Assets\js\onboarding\onboarding.interests.js" />
     <Content Include="Assets\js\onboarding\onboarding.companyinfo.js" />
     <Content Include="Assets\js\projects\projects.interest.widget.js" />
@@ -7237,6 +7238,7 @@
     <Content Include="Views\Projects\Widgets\ProjectMatchBuyerCompanyWidget.cshtml" />
     <Content Include="Views\Projects\Widgets\ProjectAllBuyerCompanyWidget.cshtml" />
     <Content Include="Views\Projects\Widgets\LinksWidget.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\InterestBaseCommand.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

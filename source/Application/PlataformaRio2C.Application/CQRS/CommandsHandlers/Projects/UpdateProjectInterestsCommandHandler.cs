@@ -4,7 +4,7 @@
 // Created          : 11-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-14-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="UpdateProjectInterestsCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -59,6 +59,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.Uow.BeginTransaction();
 
             var project = await this.GetProjectByUid(cmd.ProjectUid ?? Guid.Empty);
+            var interestsDtos = await this.interestRepo.FindAllDtosAsync();
 
             #region Initial validations
 
@@ -80,15 +81,24 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            project.UpdateInterests(
-                //await this.projectTypeRepo.GetAsync(pt => pt.Uid == cmd.ProjectTypeUid),
-                //cmd.AttendeeOrganizationUid.HasValue ? await this.attendeeOrganizationRepo.GetAsync(ao => ao.Uid == cmd.AttendeeOrganizationUid) : null,
-                cmd.InterestsUids?.Any() == true ? await this.interestRepo.FindAllByUidsAsync(cmd.InterestsUids) : new List<Interest>(),
+            // Interests
+            var projectInterests = new List<ProjectInterest>();
+            if (cmd.Interests?.Any() == true)
+            {
+                foreach (var interestBaseCommands in cmd.Interests)
+                {
+                    foreach (var interestBaseCommand in interestBaseCommands?.Where(ibc => ibc.IsChecked)?.ToList())
+                    {
+                        projectInterests.Add(new ProjectInterest(interestsDtos?.FirstOrDefault(id => id.Interest.Uid == interestBaseCommand.InterestUid)?.Interest, interestBaseCommand.AdditionalInfo, cmd.UserId));
+                    }
+                }
+            }
+
+            project.UpdateProjectInterests(
+                projectInterests,
                 cmd.UserId);
 
-            project.UpdateTargetAudiences(
-                //await this.projectTypeRepo.GetAsync(pt => pt.Uid == cmd.ProjectTypeUid),
-                //cmd.AttendeeOrganizationUid.HasValue ? await this.attendeeOrganizationRepo.GetAsync(ao => ao.Uid == cmd.AttendeeOrganizationUid) : null,
+            project.UpdateProjectTargetAudiences(
                 cmd.TargetAudiencesUids?.Any() == true ? await this.targetAudienceRepo.FindAllByUidsAsync(cmd.TargetAudiencesUids) : new List<TargetAudience>(),
                 cmd.UserId);
             if (!project.IsValid())

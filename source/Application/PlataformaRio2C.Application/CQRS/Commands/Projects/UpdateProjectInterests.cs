@@ -4,7 +4,7 @@
 // Created          : 11-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-11-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="UpdateProjectInterests.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,10 +24,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         public Guid? ProjectUid { get; set; }
 
-        public List<Guid> InterestsUids { get; set; }
+        public InterestBaseCommand[][] Interests { get; set; }
+
         public List<Guid> TargetAudiencesUids { get; set; }
 
-        public List<IGrouping<InterestGroup, Interest>> GroupedInterests { get; private set; }
         public List<TargetAudience> TargetAudiences { get; private set; }
 
         public Guid? AttendeeOrganizationUid { get; private set; }
@@ -35,17 +35,17 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Initializes a new instance of the <see cref="UpdateProjectInterests"/> class.</summary>
         /// <param name="entity">The entity.</param>
-        /// <param name="groupedInterests">The grouped interests.</param>
+        /// <param name="interestsDtos">The interests dtos.</param>
         /// <param name="targetAudiences">The target audiences.</param>
         public UpdateProjectInterests(
             ProjectDto entity,
-            List<IGrouping<InterestGroup, Interest>> groupedInterests,
+            List<InterestDto> interestsDtos,
             List<TargetAudience> targetAudiences)
         {
-            this.InterestsUids = entity?.ProjectInterestDtos?.Select(pid => pid.Interest.Uid)?.ToList();
+            this.UpdateInterests(entity, interestsDtos);
             this.TargetAudiencesUids = entity?.ProjectTargetAudienceDtos?.Select(pta => pta.TargetAudience.Uid)?.ToList();
 
-            this.UpdateDropdownProperties(groupedInterests, targetAudiences);
+            this.UpdateDropdownProperties(targetAudiences);
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateProjectInterests"/> class.</summary>
@@ -54,13 +54,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         }
 
         /// <summary>Updates the dropdown properties.</summary>
-        /// <param name="groupedInterests">The grouped interests.</param>
         /// <param name="targetAudiences">The target audiences.</param>
-        public void UpdateDropdownProperties(
-            List<IGrouping<InterestGroup, Interest>> groupedInterests,
-            List<TargetAudience> targetAudiences)
+        public void UpdateDropdownProperties(List<TargetAudience> targetAudiences)
         {
-            this.GroupedInterests = groupedInterests;
             this.TargetAudiences = targetAudiences;
         }
 
@@ -82,5 +78,37 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.ProjectTypeUid = projectTypeUid;
             this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
         }
+
+        #region Private methods
+
+        /// <summary>Updates the interests.</summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="interestsDtos">The interests dtos.</param>
+        private void UpdateInterests(ProjectDto entity, List<InterestDto> interestsDtos)
+        {
+            var interestsBaseCommands = new List<InterestBaseCommand>();
+            foreach (var interestDto in interestsDtos)
+            {
+                var projectInterest = entity?.ProjectInterestDtos?.FirstOrDefault(oad => oad.Interest.Uid == interestDto.Interest.Uid);
+                interestsBaseCommands.Add(projectInterest != null ? new InterestBaseCommand(projectInterest) :
+                    new InterestBaseCommand(interestDto));
+            }
+
+            var groupedInterestsDtos = interestsBaseCommands?
+                .GroupBy(i => new { i.InterestGroupUid, i.InterestGroupName, i.InterestGroupDisplayOrder })?
+                .OrderBy(g => g.Key.InterestGroupDisplayOrder)?
+                .ToList();
+
+            if (groupedInterestsDtos?.Any() == true)
+            {
+                this.Interests = new InterestBaseCommand[groupedInterestsDtos.Count][];
+                for (int i = 0; i < groupedInterestsDtos.Count; i++)
+                {
+                    this.Interests[i] = groupedInterestsDtos[i].ToArray();
+                }
+            }
+        }
+
+        #endregion
     }
 }

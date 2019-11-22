@@ -4,7 +4,7 @@
 // Created          : 09-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-21-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="onboarding.playerinfo.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,9 +30,9 @@ var OnboardingPlayerInfo = function () {
         //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c', maxCharCount: 710 });
         MyRio2cCommon.enableAtLeastOnCheckboxByNameValidation(formId);
 
-        // Enable activity additional info textbox
-        if (typeof (MyRio2cCommonActivity) !== 'undefined') {
-            MyRio2cCommonActivity.init();
+        // Enable additional info textbox
+        if (typeof (MyRio2cCommonAdditionalInfo) !== 'undefined') {
+            MyRio2cCommonAdditionalInfo.init();
         }
     };
 

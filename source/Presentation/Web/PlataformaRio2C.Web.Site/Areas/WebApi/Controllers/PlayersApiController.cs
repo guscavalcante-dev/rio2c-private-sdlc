@@ -4,7 +4,7 @@
 // Created          : 09-25-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-31-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="PlayersApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -193,7 +193,12 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "Player not found." } });
             }
 
-            var interestsGroups = organizationApiDto?.OrganizationInterestsDtos?.GroupBy(oid => new { oid.InterestGroupId, oid.InterestGroupUid, oid.InterestGroupName });
+            var interestsGroups = organizationApiDto?.OrganizationInterestDtos?.GroupBy(oid => new
+            {
+                InterestGroupId = oid.InterestGroup.Id,
+                InterestGroupUid = oid.InterestGroup.Uid,
+                InterestGroupName = oid.InterestGroup.Name
+            });
 
             return await Json(new PlayerApiResponse
             {
@@ -214,8 +219,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     Name = ig.Key.InterestGroupName,
                     InterestsApiResponses = ig.Select(i => new InterestApiResponse
                     {
-                        Uid = i.InterestUid,
-                        Name = i.InterestName
+                        Uid = i.Interest.Uid,
+                        Name = i.Interest.Name
                     })?.ToList()
                 })?.ToList(),
                 CollaboratorsApiResponses = organizationApiDto.CollaboratorsDtos?.Select(cd => new CollaboratorApiResponse

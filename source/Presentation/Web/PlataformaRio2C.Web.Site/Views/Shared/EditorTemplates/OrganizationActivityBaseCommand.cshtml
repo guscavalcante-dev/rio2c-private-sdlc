@@ -11,7 +11,7 @@
         }
         else
         {
-            @Html.CheckBoxFor(m => m.IsChecked, new { @class = "require-one toggle-addicional-info", data_id = "activity-group", data_toggle_id = Model.ActivityUid })
+            @Html.CheckBoxFor(m => m.IsChecked, new { @class = "require-one toggle-additional-info", data_id = "activity-group", data_toggle_id = Model.ActivityUid })
         }
         @Model.ActivityName.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')
         <span></span>

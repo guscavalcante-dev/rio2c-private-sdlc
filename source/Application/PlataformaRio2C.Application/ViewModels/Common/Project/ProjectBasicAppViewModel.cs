@@ -75,24 +75,24 @@ namespace PlataformaRio2C.Application.ViewModels
             //ValueStillNeeded = entity.ValueStillNeeded;
             //Pitching = entity.Pitching;
 
-            if (entity.Titles != null && entity.Titles.Any())
+            if (entity.ProjectTitles != null && entity.ProjectTitles.Any())
             {
-                Titles = ProjectTitleAppViewModel.MapList(entity.Titles);
+                Titles = ProjectTitleAppViewModel.MapList(entity.ProjectTitles);
             }
 
-            if (entity.LogLines != null && entity.LogLines.Any())
+            if (entity.ProjectLogLines != null && entity.ProjectLogLines.Any())
             {
-                LogLines = ProjectLogLineAppViewModel.MapList(entity.LogLines);
+                LogLines = ProjectLogLineAppViewModel.MapList(entity.ProjectLogLines);
             }
 
-            if (entity.Summaries != null && entity.Summaries.Any())
+            if (entity.ProjectSummaries != null && entity.ProjectSummaries.Any())
             {
-                Summaries = ProjectSummaryAppViewModel.MapList(entity.Summaries);
+                Summaries = ProjectSummaryAppViewModel.MapList(entity.ProjectSummaries);
             }
 
-            if (entity.ProductionPlans != null && entity.ProductionPlans.Any())
+            if (entity.ProjectProductionPlans != null && entity.ProjectProductionPlans.Any())
             {
-                ProductionPlans = ProjectProductionPlanAppViewModel.MapList(entity.ProductionPlans);
+                ProductionPlans = ProjectProductionPlanAppViewModel.MapList(entity.ProjectProductionPlans);
             }
 
             //if (entity.LinksImage != null && entity.LinksImage.Any())
@@ -105,9 +105,9 @@ namespace PlataformaRio2C.Application.ViewModels
             //    LinksTeaser = ProjectLinkTeaserAppViewModel.MapList(entity.LinksTeaser);
             //}
 
-            if (entity.AdditionalInformations != null && entity.AdditionalInformations.Any())
+            if (entity.ProjectAdditionalInformations != null && entity.ProjectAdditionalInformations.Any())
             {
-                AdditionalInformations = ProjectAdditionalInformationAppViewModel.MapList(entity.AdditionalInformations);
+                AdditionalInformations = ProjectAdditionalInformationAppViewModel.MapList(entity.ProjectAdditionalInformations);
             }
         }
 

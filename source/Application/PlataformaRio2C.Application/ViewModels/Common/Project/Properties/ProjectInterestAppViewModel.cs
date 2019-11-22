@@ -52,7 +52,7 @@ namespace PlataformaRio2C.Application.ViewModels
             //Player = new PlayerAppViewModel(entity.Project);            
             Interest = new InterestAppViewModel(entity.Interest);
 
-            Selected = entity.Project != null && entity.Project.Interests != null && entity.Project.Interests.Any(e => e.Interest.Name == entity.Interest.Name);
+            Selected = entity.Project != null && entity.Project.ProjectInterests != null && entity.Project.ProjectInterests.Any(e => e.Interest.Name == entity.Interest.Name);
         }
 
         public static IEnumerable<ProjectInterestAppViewModel> MapList(IEnumerable<Interest> interests, Project project, Edition _event)

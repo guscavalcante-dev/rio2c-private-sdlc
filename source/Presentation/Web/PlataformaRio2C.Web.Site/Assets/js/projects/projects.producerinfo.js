@@ -4,7 +4,7 @@
 // Created          : 10-29-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-08-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="projects.producerinfo.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -39,9 +39,9 @@ var ProjectsProducerInfo = function () {
         MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });
         MyRio2cCommon.enableAtLeastOnCheckboxByNameValidation(formId);
 
-        // Enable activity additional info textbox
-        if (typeof (MyRio2cCommonActivity) !== 'undefined') {
-            MyRio2cCommonActivity.init();
+        // Enable additional info textbox
+        if (typeof (MyRio2cCommonAdditionalInfo) !== 'undefined') {
+            MyRio2cCommonAdditionalInfo.init();
         }
 
         MyRio2cCommon.enableFormValidation({ formIdOrClass: formId, enableHiddenInputsValidation: true, enableMaxlength: true });

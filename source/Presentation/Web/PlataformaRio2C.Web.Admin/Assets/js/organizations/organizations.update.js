@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-21-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="organizations.update.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -32,9 +32,9 @@ var OrganizationsUpdate = function () {
         enableAjaxForm();
         enableFormValidation();
 
-        // Enable activity additional info textbox
-        if (typeof (MyRio2cCommonActivity) !== 'undefined') {
-            MyRio2cCommonActivity.init();
+        // Enable additional info textbox
+        if (typeof (MyRio2cCommonAdditionalInfo) !== 'undefined') {
+            MyRio2cCommonAdditionalInfo.init();
         }
     };
 

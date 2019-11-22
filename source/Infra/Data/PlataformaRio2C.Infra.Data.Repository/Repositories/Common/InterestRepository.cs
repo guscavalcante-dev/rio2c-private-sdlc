@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="InterestRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,6 +20,7 @@ using System.Linq.Expressions;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -100,6 +101,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return @readonly
                         ? consult.AsNoTracking()
                         : consult;
+        }
+
+        /// <summary>Finds all dto asynchronous.</summary>
+        /// <returns></returns>
+        public async Task<List<InterestDto>> FindAllDtosAsync()
+        {
+            var query = this.GetBaseQuery();
+
+            return await query
+                            .Order()
+                            .Select(i => new InterestDto
+                            {
+                                Interest = i,
+                                InterestGroup = i.InterestGroup
+                            })
+                            .ToListAsync();
         }
 
         /// <summary>Finds all grouped by interest groups asynchronous.</summary>

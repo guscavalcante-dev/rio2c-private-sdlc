@@ -51,21 +51,21 @@ namespace PlataformaRio2C.Application.ViewModels
             {
                 Uid = entity.Uid;
 
-                if (entity.Titles.Any())
+                if (entity.ProjectTitles.Any())
                 {
-                    Titles = ProjectTitleAppViewModel.MapList(entity.Titles);
+                    Titles = ProjectTitleAppViewModel.MapList(entity.ProjectTitles);
                     TitlePt = string.Join("", Titles.Where(e => e.LanguageCode == "PtBr").Select(e => e.Value));
                     TitleEn = string.Join("", Titles.Where(e => e.LanguageCode == "En").Select(e => e.Value));
                 }
 
-                if (entity.Summaries.Any())
+                if (entity.ProjectSummaries.Any())
                 {
-                    Summaries = ProjectSummaryAppViewModel.MapList(entity.Summaries);
+                    Summaries = ProjectSummaryAppViewModel.MapList(entity.ProjectSummaries);
                 }
 
-                if (entity.Interests != null)
+                if (entity.ProjectInterests != null)
                 {
-                    var genres = entity.Interests.Where(e => e.Interest.InterestGroup.Name.Contains("Gênero")).Select(e => e.Interest.Name);
+                    var genres = entity.ProjectInterests.Where(e => e.Interest.InterestGroup.Name.Contains("Gênero")).Select(e => e.Interest.Name);
 
                     if (genres != null)
                     {
@@ -149,9 +149,9 @@ namespace PlataformaRio2C.Application.ViewModels
             {
                 Uid = entity.Uid;
 
-                if (entity.Titles.Any())
+                if (entity.ProjectTitles.Any())
                 {
-                    Titles = ProjectTitleAppViewModel.MapList(entity.Titles);
+                    Titles = ProjectTitleAppViewModel.MapList(entity.ProjectTitles);
                     TitlePt = string.Join("", Titles.Where(e => e.LanguageCode == "PtBr").Select(e => e.Value));
                     TitleEn = string.Join("", Titles.Where(e => e.LanguageCode == "En").Select(e => e.Value));
                 }
@@ -276,9 +276,9 @@ namespace PlataformaRio2C.Application.ViewModels
             {
                 Uid = entity.Uid;
 
-                if (entity.Titles.Any())
+                if (entity.ProjectTitles.Any())
                 {
-                    Titles = ProjectTitleAppViewModel.MapList(entity.Titles);
+                    Titles = ProjectTitleAppViewModel.MapList(entity.ProjectTitles);
                     TitlePt = string.Join("", Titles.Where(e => e.LanguageCode == "PtBr").Select(e => e.Value));
                     TitleEn = string.Join("", Titles.Where(e => e.LanguageCode == "En").Select(e => e.Value));
                 }
@@ -403,9 +403,9 @@ namespace PlataformaRio2C.Application.ViewModels
             {
                 Uid = entity.Uid;
 
-                if (entity.Titles.Any())
+                if (entity.ProjectTitles.Any())
                 {
-                    Titles = ProjectTitleAppViewModel.MapList(entity.Titles);
+                    Titles = ProjectTitleAppViewModel.MapList(entity.ProjectTitles);
                     TitlePt = string.Join("", Titles.Where(e => e.LanguageCode == "PtBr").Select(e => e.Value));
                     TitleEn = string.Join("", Titles.Where(e => e.LanguageCode == "En").Select(e => e.Value));
                 }

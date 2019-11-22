@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-08-2019
+// Last Modified On : 11-22-2019
 // ***********************************************************************
 // <copyright file="Organization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -47,9 +47,9 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual Address Address { get; private set; }
         public virtual User Updater { get; private set; }
 
-        public virtual ICollection<OrganizationDescription> Descriptions { get; private set; }
-        public virtual ICollection<OrganizationRestrictionSpecific> RestrictionSpecifics { get; private set; }
         public virtual ICollection<AttendeeOrganization> AttendeeOrganizations { get; private set; }
+        public virtual ICollection<OrganizationDescription> OrganizationDescriptions { get; private set; }
+        public virtual ICollection<OrganizationRestrictionSpecific> OrganizationRestrictionSpecifics { get; private set; }
         public virtual ICollection<OrganizationActivity> OrganizationActivities { get; private set; }
         public virtual ICollection<OrganizationTargetAudience> OrganizationTargetAudiences { get; private set; }
         public virtual ICollection<OrganizationInterest> OrganizationInterests { get; private set; }
@@ -83,11 +83,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="isApiDisplayEnabled">if set to <c>true</c> [is API display enabled].</param>
-        /// <param name="descriptions">The descriptions.</param>
-        /// <param name="restrictionSpecifics">The restriction specifics.</param>
+        /// <param name="organizationDescriptions">The organization descriptions.</param>
+        /// <param name="organizationRestrictionSpecifics">The organization restriction specifics.</param>
         /// <param name="organizationActivities">The organization activities.</param>
         /// <param name="targetAudiences">The target audiences.</param>
-        /// <param name="interests">The interests.</param>
+        /// <param name="organizationInterests">The organization interests.</param>
         /// <param name="userId">The user identifier.</param>
         public Organization(
             Guid uid, 
@@ -111,11 +111,11 @@ namespace PlataformaRio2C.Domain.Entities
             bool addressIsManual,
             bool isImageUploaded,
             bool isApiDisplayEnabled,
-            List<OrganizationDescription> descriptions,
-            List<OrganizationRestrictionSpecific> restrictionSpecifics,
+            List<OrganizationDescription> organizationDescriptions,
+            List<OrganizationRestrictionSpecific> organizationRestrictionSpecifics,
             List<OrganizationActivity> organizationActivities,
             List<TargetAudience> targetAudiences,
-            List<Interest> interests,
+            List<OrganizationInterest> organizationInterests,
             int userId)
         {
             //this.Uid = uid;
@@ -132,13 +132,13 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
-            this.SynchronizeDescriptions(descriptions, userId);
-            this.SynchronizeRestrictionSpecifics(restrictionSpecifics, userId);
+            this.SynchronizeOrganizationDescriptions(organizationDescriptions, userId);
+            this.SynchronizeOrganizationRestrictionSpecifics(organizationRestrictionSpecifics, userId);
             this.SynchronizeAttendeeOrganizations(edition, organizationType, null, isApiDisplayEnabled, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
             this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
-            this.SynchronizeOrganizationInterests(interests, userId);
+            this.SynchronizeOrganizationInterests(organizationInterests, userId);
         }
 
         /// <summary>Initializes a new instance of the <see cref="Organization"/> class for ticket buyer onboarding.</summary>
@@ -158,7 +158,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="addressZipCode">The address zip code.</param>
         /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
-        /// <param name="descriptions">The descriptions.</param>
+        /// <param name="organizationDscriptions">The organization dscriptions.</param>
         /// <param name="userId">The user identifier.</param>
         public Organization(
             Edition edition,
@@ -177,7 +177,7 @@ namespace PlataformaRio2C.Domain.Entities
             string addressZipCode,
             bool addressIsManual,
             bool isImageUploaded,
-            List<OrganizationDescription> descriptions,
+            List<OrganizationDescription> organizationDscriptions,
             int userId)
         {
             this.Name = tradeName?.Trim();
@@ -190,7 +190,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
-            this.SynchronizeDescriptions(descriptions, userId);
+            this.SynchronizeOrganizationDescriptions(organizationDscriptions, userId);
             this.SynchronizeAttendeeOrganizations(edition, null, attendeeCollaborator, false, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.OnboardTicketBuyerAttendeeOrganizationData(edition, userId);
@@ -213,7 +213,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="addressZipCode">The address zip code.</param>
         /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
-        /// <param name="descriptions">The descriptions.</param>
+        /// <param name="organizationDescriptions">The organization descriptions.</param>
         /// <param name="organizationActivities">The organization activities.</param>
         /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="userId">The user identifier.</param>
@@ -234,7 +234,7 @@ namespace PlataformaRio2C.Domain.Entities
             string addressZipCode,
             bool addressIsManual,
             bool isImageUploaded,
-            List<OrganizationDescription> descriptions,
+            List<OrganizationDescription> organizationDescriptions,
             List<OrganizationActivity> organizationActivities,
             List<TargetAudience> targetAudiences,
             int userId)
@@ -249,7 +249,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
-            this.SynchronizeDescriptions(descriptions, userId);
+            this.SynchronizeOrganizationDescriptions(organizationDescriptions, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
             this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
             this.SynchronizeAttendeeOrganizations(edition, null, attendeeCollaborator, false, true, userId);
@@ -284,11 +284,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
         /// <param name="isApiDisplayEnabled">if set to <c>true</c> [is API display enabled].</param>
-        /// <param name="descriptions">The descriptions.</param>
-        /// <param name="restrictionSpecifics">The restriction specifics.</param>
+        /// <param name="organizationDscriptions">The organization dscriptions.</param>
+        /// <param name="organizationRestrictionSpecifics">The organization restriction specifics.</param>
         /// <param name="organizationActivities">The organization activities.</param>
         /// <param name="targetAudiences">The target audiences.</param>
-        /// <param name="interests">The interests.</param>
+        /// <param name="organizationIterests">The organization iterests.</param>
         /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
         /// <param name="userId">The user identifier.</param>
         public void Update (
@@ -313,11 +313,11 @@ namespace PlataformaRio2C.Domain.Entities
             bool isImageUploaded,
             bool isImageDeleted,
             bool isApiDisplayEnabled,
-            List<OrganizationDescription> descriptions,
-            List<OrganizationRestrictionSpecific> restrictionSpecifics,
+            List<OrganizationDescription> organizationDscriptions,
+            List<OrganizationRestrictionSpecific> organizationRestrictionSpecifics,
             List<OrganizationActivity> organizationActivities,
             List<TargetAudience> targetAudiences,
-            List<Interest> interests,
+            List<OrganizationInterest> organizationIterests,
             bool isAddingToCurrentEdition,
             int userId)
         {
@@ -335,13 +335,13 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.SynchronizeDescriptions(descriptions, userId);
-            this.SynchronizeRestrictionSpecifics(restrictionSpecifics, userId);
+            this.SynchronizeOrganizationDescriptions(organizationDscriptions, userId);
+            this.SynchronizeOrganizationRestrictionSpecifics(organizationRestrictionSpecifics, userId);
             this.SynchronizeAttendeeOrganizations(edition, organizationType, null, isApiDisplayEnabled, isAddingToCurrentEdition, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
             this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
-            this.SynchronizeOrganizationInterests(interests, userId);
+            this.SynchronizeOrganizationInterests(organizationIterests, userId);
         }
 
         /// <summary>Updates the main information.</summary>
@@ -353,7 +353,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="socialMedia">The social media.</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
-        /// <param name="descriptions">The descriptions.</param>
+        /// <param name="organizationDescriptions">The organization descriptions.</param>
         /// <param name="userId">The user identifier.</param>
         public void UpdateMainInformation(
             Edition edition,
@@ -364,7 +364,7 @@ namespace PlataformaRio2C.Domain.Entities
             string socialMedia,
             bool isImageUploaded,
             bool isImageDeleted,
-            List<OrganizationDescription> descriptions,
+            List<OrganizationDescription> organizationDescriptions,
             int userId)
         {
             this.CompanyName = companyName?.Trim();
@@ -375,7 +375,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.SynchronizeDescriptions(descriptions, userId);
+            this.SynchronizeOrganizationDescriptions(organizationDescriptions, userId);
         }
 
         /// <summary>Deletes the specified edition.</summary>
@@ -445,7 +445,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
-        /// <param name="descriptions">The descriptions.</param>
+        /// <param name="organizationDescriptions">The organization descriptions.</param>
         /// <param name="organizationActivities">The organization activities.</param>
         /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="userId">The user identifier.</param>
@@ -467,7 +467,7 @@ namespace PlataformaRio2C.Domain.Entities
             bool addressIsManual,
             bool isImageUploaded,
             bool isImageDeleted,
-            List<OrganizationDescription> descriptions,
+            List<OrganizationDescription> organizationDescriptions,
             List<OrganizationActivity> organizationActivities,
             List<TargetAudience> targetAudiences,
             int userId)
@@ -481,7 +481,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.SynchronizeDescriptions(descriptions, userId);
+            this.SynchronizeOrganizationDescriptions(organizationDescriptions, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
             this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
             this.SynchronizeAttendeeOrganizations(edition, organizationType, null, null, true, userId);
@@ -492,18 +492,18 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Called when [interests].</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="organizationType">Type of the organization.</param>
-        /// <param name="restrictionSpecifics">The restriction specifics.</param>
-        /// <param name="interests">The interests.</param>
+        /// <param name="organizationRestrictionSpecifics">The organization restriction specifics.</param>
+        /// <param name="organizationInterests">The organization interests.</param>
         /// <param name="userId">The user identifier.</param>
         public void OnboardInterests(
             Edition edition,
             OrganizationType organizationType,
-            List<OrganizationRestrictionSpecific> restrictionSpecifics,
-            List<Interest> interests,
+            List<OrganizationRestrictionSpecific> organizationRestrictionSpecifics,
+            List<OrganizationInterest> organizationInterests,
             int userId)
         {
-            this.SynchronizeRestrictionSpecifics(restrictionSpecifics, userId);
-            this.SynchronizeOrganizationInterests(interests, userId);
+            this.SynchronizeOrganizationRestrictionSpecifics(organizationRestrictionSpecifics, userId);
+            this.SynchronizeOrganizationInterests(organizationInterests, userId);
             this.OnboardAttendeeOrganizationInterests(edition, userId);
         }
 
@@ -525,7 +525,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
-        /// <param name="descriptions">The descriptions.</param>
+        /// <param name="organizationDescriptions">The organization descriptions.</param>
         /// <param name="userId">The user identifier.</param>
         public void OnboardTicketBuyerCompanyData(
             Edition edition,
@@ -545,7 +545,7 @@ namespace PlataformaRio2C.Domain.Entities
             bool addressIsManual,
             bool isImageUploaded,
             bool isImageDeleted,
-            List<OrganizationDescription> descriptions,
+            List<OrganizationDescription> organizationDescriptions,
             int userId)
         {
             this.CompanyName = companyName?.Trim();
@@ -557,7 +557,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.SynchronizeDescriptions(descriptions, userId);
+            this.SynchronizeOrganizationDescriptions(organizationDescriptions, userId);
             this.SynchronizeAttendeeOrganizations(edition, null, attendeeCollaborator, null, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.OnboardTicketBuyerAttendeeOrganizationData(edition, userId);
@@ -581,7 +581,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
-        /// <param name="descriptions">The descriptions.</param>
+        /// <param name="organizationDescriptions">The organization descriptions.</param>
         /// <param name="organizationActivities">The organization activities.</param>
         /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="userId">The user identifier.</param>
@@ -603,7 +603,7 @@ namespace PlataformaRio2C.Domain.Entities
             bool addressIsManual,
             bool isImageUploaded,
             bool isImageDeleted,
-            List<OrganizationDescription> descriptions,
+            List<OrganizationDescription> organizationDescriptions,
             List<OrganizationActivity> organizationActivities,
             List<TargetAudience> targetAudiences,
             int userId)
@@ -617,7 +617,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.SynchronizeDescriptions(descriptions, userId);
+            this.SynchronizeOrganizationDescriptions(organizationDescriptions, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
             this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
             this.SynchronizeAttendeeOrganizations(edition, null, attendeeCollaborator, null, true, userId);
@@ -682,110 +682,122 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Descriptions
 
-        /// <summary>Synchronizes the descriptions.</summary>
-        /// <param name="descriptions">The descriptions.</param>
+        /// <summary>Synchronizes the organization descriptions.</summary>
+        /// <param name="organizationDescriptions">The organization descriptions.</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeDescriptions(List<OrganizationDescription> descriptions, int userId)
+        private void SynchronizeOrganizationDescriptions(List<OrganizationDescription> organizationDescriptions, int userId)
         {
-            if (this.Descriptions == null)
+            if (this.OrganizationDescriptions == null)
             {
-                this.Descriptions = new List<OrganizationDescription>();
+                this.OrganizationDescriptions = new List<OrganizationDescription>();
             }
 
-            this.DeleteDescriptions(descriptions, userId);
+            this.DeleteOrganizationDescriptions(organizationDescriptions, userId);
 
-            if (descriptions?.Any() != true)
+            if (organizationDescriptions?.Any() != true)
             {
                 return;
             }
 
             // Create or update descriptions
-            foreach (var description in descriptions)
+            foreach (var description in organizationDescriptions)
             {
-                var descriptionDb = this.Descriptions.FirstOrDefault(d => d.Language.Code == description.Language.Code);
+                var descriptionDb = this.OrganizationDescriptions.FirstOrDefault(d => d.Language.Code == description.Language.Code);
                 if (descriptionDb != null)
                 {
                     descriptionDb.Update(description);
                 }
                 else
                 {
-                    this.CreateDescription(description);
+                    this.CreateOrganizationDescription(description);
                 }
             }
         }
 
-        /// <summary>Deletes the descriptions.</summary>
-        /// <param name="newDescriptions">The new descriptions.</param>
+        /// <summary>Deletes the organization descriptions.</summary>
+        /// <param name="newOrganizationDescriptions">The new organization descriptions.</param>
         /// <param name="userId">The user identifier.</param>
-        private void DeleteDescriptions(List<OrganizationDescription> newDescriptions, int userId)
+        private void DeleteOrganizationDescriptions(List<OrganizationDescription> newOrganizationDescriptions, int userId)
         {
-            var descriptionsToDelete = this.Descriptions.Where(db => newDescriptions?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false && !db.IsDeleted).ToList();
+            var descriptionsToDelete = this.OrganizationDescriptions.Where(db => newOrganizationDescriptions?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false && !db.IsDeleted).ToList();
             foreach (var descriptionToDelete in descriptionsToDelete)
             {
                 descriptionToDelete.Delete(userId);
             }
         }
 
-        /// <summary>Creates the description.</summary>
-        /// <param name="description">The description.</param>
-        private void CreateDescription(OrganizationDescription description)
+        /// <summary>Creates the organization description.</summary>
+        /// <param name="organiationDescription">The organiation description.</param>
+        private void CreateOrganizationDescription(OrganizationDescription organiationDescription)
         {
-            this.Descriptions.Add(description);
+            this.OrganizationDescriptions.Add(organiationDescription);
         }
 
         #endregion
 
         #region Restriction Specifics
 
-        /// <summary>Synchronizes the restriction specifics.</summary>
-        /// <param name="restrictionSpecifics">The restriction specifics.</param>
+        /// <summary>Updates the organization restriction specifics.</summary>
+        /// <param name="organizationRstrictionSpecifics">The organization rstriction specifics.</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeRestrictionSpecifics(List<OrganizationRestrictionSpecific> restrictionSpecifics, int userId)
+        public void UpdateOrganizationRestrictionSpecifics(List<OrganizationRestrictionSpecific> organizationRstrictionSpecifics, int userId)
         {
-            if (this.RestrictionSpecifics == null)
+            this.SynchronizeOrganizationRestrictionSpecifics(organizationRstrictionSpecifics, userId);
+
+            this.IsDeleted = false;
+            this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.Now;
+        }
+
+        /// <summary>Synchronizes the organization restriction specifics.</summary>
+        /// <param name="organizationRstrictionSpecifics">The organization rstriction specifics.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeOrganizationRestrictionSpecifics(List<OrganizationRestrictionSpecific> organizationRstrictionSpecifics, int userId)
+        {
+            if (this.OrganizationRestrictionSpecifics == null)
             {
-                this.RestrictionSpecifics = new List<OrganizationRestrictionSpecific>();
+                this.OrganizationRestrictionSpecifics = new List<OrganizationRestrictionSpecific>();
             }
 
-            this.DeleteRestrictionSpecifics(restrictionSpecifics, userId);
+            this.DeleteOrganizationRestrictionSpecifics(organizationRstrictionSpecifics, userId);
 
-            if (restrictionSpecifics?.Any() != true)
+            if (organizationRstrictionSpecifics?.Any() != true)
             {
                 return;
             }
 
             // Create or update restriction specifics
-            foreach (var restrictionSpecific in restrictionSpecifics)
+            foreach (var restrictionSpecific in organizationRstrictionSpecifics)
             {
-                var restrictionSpecificDb = this.RestrictionSpecifics.FirstOrDefault(d => d.Language.Code == restrictionSpecific.Language.Code);
+                var restrictionSpecificDb = this.OrganizationRestrictionSpecifics.FirstOrDefault(d => d.Language.Code == restrictionSpecific.Language.Code);
                 if (restrictionSpecificDb != null)
                 {
                     restrictionSpecificDb.Update(restrictionSpecific);
                 }
                 else
                 {
-                    this.CreateRestrictionSpecific(restrictionSpecific);
+                    this.CreateOrganizationRestrictionSpecific(restrictionSpecific);
                 }
             }
         }
 
-        /// <summary>Deletes the restriction specifics.</summary>
-        /// <param name="newRestrictionSpecifics">The new restriction specifics.</param>
+        /// <summary>Deletes the organization restriction specifics.</summary>
+        /// <param name="newOrganizationRestrictionSpecifics">The new organization restriction specifics.</param>
         /// <param name="userId">The user identifier.</param>
-        private void DeleteRestrictionSpecifics(List<OrganizationRestrictionSpecific> newRestrictionSpecifics, int userId)
+        private void DeleteOrganizationRestrictionSpecifics(List<OrganizationRestrictionSpecific> newOrganizationRestrictionSpecifics, int userId)
         {
-            var restrictionSpecificsToDelete = this.RestrictionSpecifics.Where(db => newRestrictionSpecifics?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false && !db.IsDeleted).ToList();
+            var restrictionSpecificsToDelete = this.OrganizationRestrictionSpecifics.Where(db => newOrganizationRestrictionSpecifics?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false && !db.IsDeleted).ToList();
             foreach (var restrictionSpecificToDelete in restrictionSpecificsToDelete)
             {
                 restrictionSpecificToDelete.Delete(userId);
             }
         }
 
-        /// <summary>Creates the restriction specific.</summary>
-        /// <param name="restrictionSpecific">The restriction specific.</param>
-        private void CreateRestrictionSpecific(OrganizationRestrictionSpecific restrictionSpecific)
+        /// <summary>Creates the organization restriction specific.</summary>
+        /// <param name="organizationRestrictionSpecific">The organization restriction specific.</param>
+        private void CreateOrganizationRestrictionSpecific(OrganizationRestrictionSpecific organizationRestrictionSpecific)
         {
-            this.RestrictionSpecifics.Add(restrictionSpecific);
+            this.OrganizationRestrictionSpecifics.Add(organizationRestrictionSpecific);
         }
 
         #endregion
@@ -903,14 +915,12 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        #region Organization Activities
+        #region Activities
 
-        /// <summary>Updates the activities.</summary>
+        /// <summary>Updates the organization activities.</summary>
         /// <param name="organizationActivities">The organization activities.</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateActivities(
-            List<OrganizationActivity> organizationActivities,
-            int userId)
+        public void UpdateOrganizationActivities(List<OrganizationActivity> organizationActivities, int userId)
         {
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
@@ -972,14 +982,12 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        #region Organization Target Audiences
+        #region Target Audiences
 
-        /// <summary>Updates the target audiences.</summary>
+        /// <summary>Updates the organization target audiences.</summary>
         /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateTargetAudiences(
-            List<TargetAudience> targetAudiences,
-            int userId)
+        public void UpdateOrganizationTargetAudiences(List<TargetAudience> targetAudiences, int userId)
         {
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
@@ -1040,73 +1048,59 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        #region Organization Interests
+        #region Interests
 
-        /// <summary>Updates the interests.</summary>
-        /// <param name="restrictionSpecifics">The restriction specifics.</param>
-        /// <param name="interests">The interests.</param>
+        /// <summary>Updates the organization interests.</summary>
+        /// <param name="organizationInterests">The organization interests.</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateInterests(
-            List<OrganizationRestrictionSpecific> restrictionSpecifics,
-            List<Interest> interests,
-            int userId)
+        public void UpdateOrganizationInterests(List<OrganizationInterest> organizationInterests, int userId)
         {
-            this.UpdateDate = DateTime.Now;
+            this.SynchronizeOrganizationInterests(organizationInterests, userId);
+
+            this.IsDeleted = false;
             this.UpdateUserId = userId;
-            this.SynchronizeRestrictionSpecifics(restrictionSpecifics, userId);
-            this.SynchronizeOrganizationInterests(interests, userId);
+            this.UpdateDate = DateTime.Now;
         }
 
         /// <summary>Synchronizes the organization interests.</summary>
-        /// <param name="interests">The interests.</param>
+        /// <param name="organizationInterests">The organization interests.</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeOrganizationInterests(List<Interest> interests, int userId)
+        private void SynchronizeOrganizationInterests(List<OrganizationInterest> organizationInterests, int userId)
         {
             if (this.OrganizationInterests == null)
             {
                 this.OrganizationInterests = new List<OrganizationInterest>();
             }
 
-            this.DeleteOrganizationInterests(interests, userId);
+            this.DeleteOrganizationInterests(organizationInterests, userId);
 
-            if (interests?.Any() != true)
+            if (organizationInterests?.Any() != true)
             {
                 return;
             }
 
             // Create or update interests
-            foreach (var interest in interests)
+            foreach (var organizationInterest in organizationInterests)
             {
-                var organizationInterestDb = this.OrganizationInterests.FirstOrDefault(a => a.Interest.Uid == interest.Uid);
-                if (organizationInterestDb != null)
+                var interestDb = this.OrganizationInterests.FirstOrDefault(a => a.Interest.Uid == organizationInterest.Interest.Uid);
+                if (interestDb != null)
                 {
-                    organizationInterestDb.Update(userId);
+                    interestDb.Update(organizationInterest, userId);
                 }
                 else
                 {
-                    this.CreateOrganizationInterest(interest, userId);
+                    this.OrganizationInterests.Add(organizationInterest);
                 }
             }
         }
 
-        /// <summary>Deletes the organization interests.</summary>
-        /// <param name="newInterests">The new interests.</param>
-        /// <param name="userId">The user identifier.</param>
-        private void DeleteOrganizationInterests(List<Interest> newInterests, int userId)
+        private void DeleteOrganizationInterests(List<OrganizationInterest> newOrganizationInterests, int userId)
         {
-            var organizationInterestsToDelete = this.OrganizationInterests.Where(db => newInterests?.Select(a => a.Uid)?.Contains(db.Interest.Uid) == false && !db.IsDeleted).ToList();
+            var organizationInterestsToDelete = this.OrganizationInterests.Where(db => newOrganizationInterests?.Select(a => a.Interest.Uid)?.Contains(db.Interest.Uid) == false && !db.IsDeleted).ToList();
             foreach (var organizationInterestToDelete in organizationInterestsToDelete)
             {
                 organizationInterestToDelete.Delete(userId);
             }
-        }
-
-        /// <summary>Creates the organization interest.</summary>
-        /// <param name="intestest">The intestest.</param>
-        /// <param name="userId">The user identifier.</param>
-        private void CreateOrganizationInterest(Interest intestest, int userId)
-        {
-            this.OrganizationInterests.Add(new OrganizationInterest(this, intestest, userId));
         }
 
         #endregion
@@ -1129,6 +1123,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidatePhoneNumber();
             this.ValidateDescriptions();
             this.ValidateRestrictionSpecifics();
+            this.ValidateInterests();
+            this.ValidateActivities();
             this.ValidateAddress();
 
             return this.ValidationResult.IsValid;
@@ -1205,12 +1201,12 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Validates the descriptions.</summary>
         public void ValidateDescriptions()
         {
-            if (this.Descriptions?.Any() != true)
+            if (this.OrganizationDescriptions?.Any() != true)
             {
                 return;
             }
 
-            foreach (var description in this.Descriptions?.Where(d => !d.IsValid())?.ToList())
+            foreach (var description in this.OrganizationDescriptions?.Where(d => !d.IsValid())?.ToList())
             {
                 this.ValidationResult.Add(description.ValidationResult);
             }
@@ -1219,14 +1215,42 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Validates the restriction specifics.</summary>
         public void ValidateRestrictionSpecifics()
         {
-            if (this.RestrictionSpecifics?.Any() != true)
+            if (this.OrganizationRestrictionSpecifics?.Any() != true)
             {
                 return;
             }
 
-            foreach (var restrictionSpecific in this.RestrictionSpecifics?.Where(d => !d.IsValid())?.ToList())
+            foreach (var restrictionSpecific in this.OrganizationRestrictionSpecifics?.Where(d => !d.IsValid())?.ToList())
             {
                 this.ValidationResult.Add(restrictionSpecific.ValidationResult);
+            }
+        }
+
+        /// <summary>Validates the interests.</summary>
+        public void ValidateInterests()
+        {
+            if (this.OrganizationRestrictionSpecifics?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var interest in this.OrganizationInterests?.Where(d => !d.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(interest.ValidationResult);
+            }
+        }
+
+        /// <summary>Validates the activities.</summary>
+        public void ValidateActivities()
+        {
+            if (this.OrganizationRestrictionSpecifics?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var activity in this.OrganizationActivities?.Where(d => !d.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(activity.ValidationResult);
             }
         }
 
