@@ -2846,6 +2846,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adquira seu ingresso aqui.
+        /// </summary>
+        public static string RegisterHere {
+            get {
+                return ResourceManager.GetString("RegisterHere", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to + Registrar novo Executivo.
         /// </summary>
         public static string RegisterNewExecutive {

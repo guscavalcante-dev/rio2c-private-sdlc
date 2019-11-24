@@ -4,6 +4,7 @@
 */
 /* Small devices (landscape phones, 576px and up)*/
 @media (min-width: 576px) {
+    
 }
 
 /* Medium devices (tablets, 768px and up)*/
@@ -17,6 +18,17 @@
 @media (max-width: 1024px) {
     .r2c-login-header__topbar {
         position: absolute !important;
+    }
+    .kt-login__body .kt-iconbox {
+        margin-bottom: 30px !important;
+    }
+
+    .kt-login.kt-login--v1 .kt-login__wrapper .kt-login__body {
+        margin-top:unset !important;
+    }
+
+    .kt-login.kt-login--v1 .kt-login__wrapper .kt-login__body .kt-login__form .kt-login__title{
+        margin-bottom:unset !important;
     }
 }
 
