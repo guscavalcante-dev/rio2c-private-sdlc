@@ -433,6 +433,7 @@
     <Content Include="Assets\img\logo-rio2c-footer.png" />
     <Content Include="Assets\img\logo_rio2c_color.png" />
     <Content Include="Assets\img\logo_rio2c_white.png" />
+    <Content Include="Assets\img\rio2cmarket-pt-br.png" />
     <Content Include="Assets\js\accounts\accounts.password.js" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
     <Content Include="Assets\js\attendeeorganizations\attendeeorganizations.form.js" />

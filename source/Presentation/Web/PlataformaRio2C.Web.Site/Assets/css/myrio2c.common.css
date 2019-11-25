@@ -229,3 +229,12 @@ a.r2c-login__footer-link, a.r2c-footer-link {
 .kt-login__body .kt-iconbox {
 margin-bottom: 80px;
 }
+
+/*
+    weconnected
+*/
+
+.r2c-we-connected-banner {
+    width: 100%;
+    height: auto;
+}
