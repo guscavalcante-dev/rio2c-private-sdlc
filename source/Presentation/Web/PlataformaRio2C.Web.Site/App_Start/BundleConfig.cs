@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified On : 11-25-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -214,7 +214,14 @@ namespace PlataformaRio2C.Web.Site
 
             bundles.Add(new ScriptBundle("~/bundles/js/jquery.autocomplete.js").Include(
                 "~/Assets/components/jquery.autocomplete/dist/jquery.autocomplete.js"));
-            
+
+            #endregion
+
+            #region TimeAgo
+
+            bundles.Add(new ScriptBundle("~/bundles/js/jquery.timeago.js").Include(
+                "~/Assets/components/jquery.timeago/jquery.timeago.js"));
+
             #endregion
 
             #region Dynamic List
@@ -325,6 +332,9 @@ namespace PlataformaRio2C.Web.Site
 
             bundles.Add(new ScriptBundle("~/bundles/js/networks.contacts.js").Include(
                 "~/Assets/js/networks/networks.contacts.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/networks.chat.js").Include(
+                "~/Assets/themes/metronic/js/demo4/pages/custom/chat/chat.js"));
 
             #endregion
 

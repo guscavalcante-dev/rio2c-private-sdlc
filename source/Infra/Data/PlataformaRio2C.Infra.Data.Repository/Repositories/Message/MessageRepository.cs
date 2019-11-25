@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-21-2019
+// Last Modified On : 11-25-2019
 // ***********************************************************************
 // <copyright file="MessageRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -163,10 +163,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                 Organization = aoc.AttendeeOrganization.Organization
                                                                                             })
                                 },
-                                LastMessage = g.Max(m => m.SendDate),
+                                LastMessageDate = g.Max(m => m.SendDate),
                                 UnreadMessagesCount = g.Count(m => !m.ReadDate.HasValue)
                             })
                             .OrderByDescending(cd => cd.UnreadMessagesCount > 0 ? 1 : 0)
+                            .ThenByDescending(cd => cd.LastMessageDate)
                             .ThenBy(cd => cd.User.Name)
                             .ToListAsync();
         }

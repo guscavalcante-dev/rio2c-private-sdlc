@@ -42,7 +42,7 @@
                     }
                 </div>
                 @{
-                    var jobTitleDto = @Model.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
+                    var jobTitleDto = Model.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
                 }
                 @if (jobTitleDto != null)
                 {
