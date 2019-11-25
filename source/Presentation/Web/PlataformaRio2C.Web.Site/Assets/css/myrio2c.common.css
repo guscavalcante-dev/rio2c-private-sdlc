@@ -264,3 +264,13 @@ a.r2c-login__footer-link, a.r2c-footer-link {
     .kt-pagination.kt-pagination--brand .kt-pagination__links .kt-pagination__link--last.disabled:hover a {
         color: #366cf3;
     }
+
+
+/*
+    weconnected
+*/
+
+.r2c-we-connected-banner {
+    width: 100%;
+    height: auto;
+}
