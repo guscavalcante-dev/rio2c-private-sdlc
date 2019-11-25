@@ -1567,11 +1567,11 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Informações</comment>
   </data>
   <data name="PlayersRegulationPdf" xml:space="preserve">
-    <value>PLAYER_Regulamento Rodadas de Negócio - Rio2C 2020.pdf</value>
+    <value>PLAYER_Regulamento Rodadas de Negócio - Rio2C 2020 (PDF)</value>
     <comment>PLAYER_Regulamento Rodadas de Negócio - Rio2C 2020.pdf</comment>
   </data>
   <data name="ProducersRegulationPdf" xml:space="preserve">
-    <value>Regulamento Rodadas de Negócio - Rio2C 2020.pdf</value>
+    <value>Regulamento Rodadas de Negócio - Rio2C 2020 (PDF)</value>
     <comment>Regulamento Rodadas de Negócio - Rio2C 2020.pdf</comment>
   </data>
   <data name="Later" xml:space="preserve">
@@ -1583,7 +1583,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Pular</comment>
   </data>
   <data name="AudiovisualProjectsFormTemplate" xml:space="preserve">
-    <value>Ficha de inscrição Projetos de Audiovisual - MODELO.pdf</value>
+    <value>Ficha de inscrição Projetos de Audiovisual - MODELO (PDF)</value>
     <comment>Ficha de inscrição Projetos de Audiovisual - MODELO.pdf</comment>
   </data>
   <data name="ChooseNewPassword" xml:space="preserve">
@@ -1733,5 +1733,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="RegisterHere" xml:space="preserve">
     <value>Adquira seu ingresso aqui</value>
     <comment>Adquira seu ingresso aqui</comment>
+  </data>
+  <data name="StepByStepForAudiovisualProjectEnrollment" xml:space="preserve">
+    <value>Passo a passo para Inscrição de Projetos Audiovisual (PDF)</value>
+    <comment>Passo a passo para Inscrição de Projetos Audiovisual</comment>
   </data>
 </root>
