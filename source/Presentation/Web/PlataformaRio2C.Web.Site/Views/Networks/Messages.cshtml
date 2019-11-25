@@ -381,16 +381,10 @@
 @section Scripts {
     @Scripts.Render("~/bundles/js/jquery.timeago.js")
     <script src="~/Assets/components/jquery.timeago/locales/jquery.timeago.@(ViewBag.UserInterfaceLanguage)-short.js" type="text/javascript"></script>
-    @Scripts.Render("~/bundles/js/networks.chat.js")
+    @Scripts.Render("~/bundles/js/networks.messages.js")
     <script>
         jQuery(document).ready(function () {
-            $("time.timeago").timeago();
+            NetworksMessages.init();
         });
     </script>
-    @*@Scripts.Render("~/bundles/js/networks.contacts.js")
-        <script>
-            jQuery(document).ready(function () {
-                NetworksContacts.init();
-            });
-        </script>*@
 }

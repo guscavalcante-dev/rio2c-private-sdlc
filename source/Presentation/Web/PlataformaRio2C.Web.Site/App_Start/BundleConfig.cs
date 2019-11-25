@@ -333,7 +333,8 @@ namespace PlataformaRio2C.Web.Site
             bundles.Add(new ScriptBundle("~/bundles/js/networks.contacts.js").Include(
                 "~/Assets/js/networks/networks.contacts.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/networks.chat.js").Include(
+            bundles.Add(new ScriptBundle("~/bundles/js/networks.messages.js").Include(
+                "~/Assets/js/networks/networks.messages.js",
                 "~/Assets/themes/metronic/js/demo4/pages/custom/chat/chat.js"));
 
             #endregion
