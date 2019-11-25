@@ -770,4 +770,8 @@
     <value>No conversations found.</value>
     <comment>Nenhuma conversa encontrada.</comment>
   </data>
+  <data name="ToAccessMyRio2CPlatform" xml:space="preserve">
+    <value>To access MyRio2C platform you must have a Rio2C ticket.</value>
+    <comment>To access MyRio2C platform you must have a Rio2C ticket.</comment>
+  </data>
 </root>

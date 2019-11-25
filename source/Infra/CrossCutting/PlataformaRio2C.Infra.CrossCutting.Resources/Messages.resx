@@ -775,4 +775,8 @@
     <value>Nenhuma conversa encontrada.</value>
     <comment>Nenhuma conversa encontrada.</comment>
   </data>
+  <data name="ToAccessMyRio2CPlatform" xml:space="preserve">
+    <value>Para acessar a plataforma MyRio2C é necessário estar credenciado.</value>
+    <comment>Para acessar a plataforma MyRio2C é necessário estar credenciado.</comment>
+  </data>
 </root>

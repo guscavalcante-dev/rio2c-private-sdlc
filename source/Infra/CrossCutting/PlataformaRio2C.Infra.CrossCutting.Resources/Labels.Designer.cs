@@ -1267,6 +1267,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lista de Executivos - Categoria Industry.
+        /// </summary>
+        public static string ExecutivesListDownload {
+            get {
+                return ResourceManager.GetString("ExecutivesListDownload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Executivos cadastrados.
         /// </summary>
         public static string ExecutivesRegistered {
@@ -2842,6 +2851,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string RegisteredProjects {
             get {
                 return ResourceManager.GetString("RegisteredProjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adquira seu ingresso aqui.
+        /// </summary>
+        public static string RegisterHere {
+            get {
+                return ResourceManager.GetString("RegisterHere", resourceCulture);
             }
         }
         

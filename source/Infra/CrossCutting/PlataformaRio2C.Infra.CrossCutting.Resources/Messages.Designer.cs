@@ -1608,6 +1608,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Para acessar a plataforma MyRio2C é necessário estar credenciado..
+        /// </summary>
+        public static string ToAccessMyRio2CPlatform {
+            get {
+                return ResourceManager.GetString("ToAccessMyRio2CPlatform", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Para prosseguir você deve aceitar o regulamento.
         /// </summary>
         public static string ToProceedYouMustAcceptTheTerm {

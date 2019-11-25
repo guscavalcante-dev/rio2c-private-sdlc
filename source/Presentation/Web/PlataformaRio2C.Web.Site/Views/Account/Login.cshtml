@@ -3,69 +3,91 @@
     Layout = "~/Views/Themes/Metronic/_InternalOutside.cshtml";
     ViewBag.Title = Labels.Enter;
 }
-<!--begin::Signin-->
-<div class="kt-login__form">
-    <div class="kt-login__title">
-        <h3>@Labels.SignIn</h3>
-    </div>
-    <!--begin::Form-->
-    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-signin kt-form", role = "form", novalidade = "novalidate" }))
-    {
-        @Html.AntiForgeryToken()
-        <div class="form-group">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Email), autocomplete = "off" })
-            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-        </div>
-        <div class="form-group">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control showhidepassword", placeholder = Html.DisplayNameFor(m => m.Password) })
-            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-        </div>
-        @Html.ValidationSummary(true, null, new { @class = "text-danger list-unstyled" })
-        <!--begin::Action-->
-        <div class="kt-login__actions">
-            <a href="@Url.Action("ForgotPassword", "Account", new { Area = "" })" class="kt-link kt-login__link-forgot">
-                @(Labels.ForgotPassword)?
-            </a>
-            <input type="submit" value="@Labels.SignIn" class="btn btn-primary btn-elevate kt-login__btn-primary" />
-        </div>
-        <!--end::Action-->
-    }
-    <!--end::Form-->
-    @*<!--begin::Divider-->
-        <div class="kt-login__divider">
-            <div class="kt-divider">
-                <span></span>
-                <span>OR</span>
-                <span></span>
+
+        <div class="kt-portlet kt-iconbox kt-iconbox--wave">
+            <div class="kt-portlet__body">
+                <div class="kt-iconbox__body">
+                    <div class="kt-iconbox__icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24" />
+                                <path d="M3,10.0500091 L3,8 C3,7.44771525 3.44771525,7 4,7 L9,7 L9,9 C9,9.55228475 9.44771525,10 10,10 C10.5522847,10 11,9.55228475 11,9 L11,7 L21,7 C21.5522847,7 22,7.44771525 22,8 L22,10.0500091 C20.8588798,10.2816442 20,11.290521 20,12.5 C20,13.709479 20.8588798,14.7183558 22,14.9499909 L22,17 C22,17.5522847 21.5522847,18 21,18 L11,18 L11,16 C11,15.4477153 10.5522847,15 10,15 C9.44771525,15 9,15.4477153 9,16 L9,18 L4,18 C3.44771525,18 3,17.5522847 3,17 L3,14.9499909 C4.14112016,14.7183558 5,13.709479 5,12.5 C5,11.290521 4.14112016,10.2816442 3,10.0500091 Z M10,11 C9.44771525,11 9,11.4477153 9,12 L9,13 C9,13.5522847 9.44771525,14 10,14 C10.5522847,14 11,13.5522847 11,13 L11,12 C11,11.4477153 10.5522847,11 10,11 Z" fill="#000000" opacity="0.3" transform="translate(12.500000, 12.500000) rotate(-45.000000) translate(-12.500000, -12.500000) " />
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="kt-iconbox__desc">
+                        <div class="kt-iconbox__content">
+                           @Messages.ToAccessMyRio2CPlatform <a class="kt-link" href="https://rio2c2020.eventbrite.com.br/">@Labels.RegisterHere</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <!--end::Divider-->
-        <!--begin::Options-->
-        <div class="kt-login__options">
-            <a href="#" class="btn btn-primary kt-btn">
-                <i class="fab fa-facebook-f"></i>
-                Facebook
-            </a>
-            <a href="#" class="btn btn-info kt-btn">
-                <i class="fab fa-twitter"></i>
-                Twitter
-            </a>
-            <a href="#" class="btn btn-danger kt-btn">
-                <i class="fab fa-google"></i>
-                Google
-            </a>
+
+        <!--begin::Signin-->
+        <div class="kt-login__form">
+            <div class="kt-login__title">
+                <h3>@Labels.SignIn</h3>
+            </div>
+            <!--begin::Form-->
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-signin kt-form", role = "form", novalidade = "novalidate" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Email), autocomplete = "off" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control showhidepassword", placeholder = Html.DisplayNameFor(m => m.Password) })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </div>
+                @Html.ValidationSummary(true, null, new { @class = "text-danger list-unstyled" })
+                <!--begin::Action-->
+                <div class="kt-login__actions">
+                    <a href="@Url.Action("ForgotPassword", "Account", new { Area = "" })" class="kt-link kt-login__link-forgot">
+                        @(Labels.ForgotPassword)?
+                    </a>
+                    <input type="submit" value="@Labels.SignIn" class="btn btn-primary btn-elevate kt-login__btn-primary" />
+                </div>
+                <!--end::Action-->
+            }
+            <!--end::Form-->
+            @*<!--begin::Divider-->
+            <div class="kt-login__divider">
+                <div class="kt-divider">
+                    <span></span>
+                    <span>OR</span>
+                    <span></span>
+                </div>
+            </div>
+            <!--end::Divider-->
+            <!--begin::Options-->
+            <div class="kt-login__options">
+                <a href="#" class="btn btn-primary kt-btn">
+                    <i class="fab fa-facebook-f"></i>
+                    Facebook
+                </a>
+                <a href="#" class="btn btn-info kt-btn">
+                    <i class="fab fa-twitter"></i>
+                    Twitter
+                </a>
+                <a href="#" class="btn btn-danger kt-btn">
+                    <i class="fab fa-google"></i>
+                    Google
+                </a>
+            </div>
+            <!--end::Options-->*@
         </div>
-        <!--end::Options-->*@
-</div>
-<!--end::Signin-->
-@section Styles {
-    @Styles.Render("~/bundles/css/loginCustomStyles.css")
-}
-@section Scripts {
-    @Scripts.Render("~/bundles/js/loginCustomScripts.js")
-    <script type="text/javascript">
-        jQuery(document).ready(function () {
-            MyRio2cShowHidePassword.init();
-        });
-    </script>
-}
+        <!--end::Signin-->
+
+    @section Styles {
+        @Styles.Render("~/bundles/css/loginCustomStyles.css")
+    }
+    @section Scripts {
+        @Scripts.Render("~/bundles/js/loginCustomScripts.js")
+        <script type="text/javascript">
+            jQuery(document).ready(function () {
+                MyRio2cShowHidePassword.init();
+            });
+        </script>
+    }

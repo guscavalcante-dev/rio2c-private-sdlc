@@ -91,6 +91,15 @@ section.footer .social-networks a{
 /*
     Login
 */
+.kt-login__body {
+    flex-direction: column !important;
+    height:unset !important;
+}
+
+    .kt-login__body .kt-iconbox {
+        margin-bottom: 80px;
+    }
+
 .r2c-login__logo {
     height: 80px;
     width: 80px;
@@ -148,6 +157,7 @@ a.r2c-login__footer-link, a.r2c-footer-link {
     background-color: #777;
     border-radius: 10px;
 }
+
 
 /*
     Modal

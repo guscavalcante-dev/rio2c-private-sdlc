@@ -1722,4 +1722,12 @@
     <value>Messages</value>
     <comment>Mensagens</comment>
   </data>
+  <data name="ExecutivesListDownload" xml:space="preserve">
+    <value>Executives’ List - Industry Category</value>
+    <comment>Lista de Executivos - Categoria Industry</comment>
+  </data>
+  <data name="RegisterHere" xml:space="preserve">
+    <value>Register here</value>
+    <comment>Register here</comment>
+  </data>
 </root>

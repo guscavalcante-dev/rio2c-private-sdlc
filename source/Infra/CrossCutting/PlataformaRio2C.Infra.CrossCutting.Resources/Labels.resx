@@ -1734,4 +1734,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Mensagens</value>
     <comment>Mensagens</comment>
   </data>
+  <data name="ExecutivesListDownload" xml:space="preserve">
+    <value>Lista de Executivos - Categoria Industry</value>
+    <comment>Lista de Executivos - Categoria Industry</comment>
+  </data>
+  <data name="RegisterHere" xml:space="preserve">
+    <value>Adquira seu ingresso aqui</value>
+    <comment>Adquira seu ingresso aqui</comment>
+  </data>
 </root>
