@@ -274,3 +274,38 @@ a.r2c-login__footer-link, a.r2c-footer-link {
     width: 100%;
     height: auto;
 }
+
+
+/*
+    Media
+*/
+
+.kt-media.kt-media--circle span {
+    border-radius: 50%;
+}
+
+.kt-media.kt-media--brand span {
+    background: rgba(93,120,255,.1);
+    color: #5d78ff;
+}
+
+.kt-media span {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    font-weight: 600;
+    color: #74788d;
+    border-radius: 4px;
+}
+
+.kt-media span {
+    width: 43px;
+    height: 43px;
+    font-size: 1.3rem;
+}
