@@ -349,6 +349,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pitching de Audiovisual.
+        /// </summary>
+        public static string AudiovisualPitchingSessions {
+            get {
+                return ResourceManager.GetString("AudiovisualPitchingSessions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Projetos de Audiovisual.
         /// </summary>
         public static string AudiovisualProjects {
@@ -412,6 +421,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Summit Marcas.
+        /// </summary>
+        public static string BrandContentSummit {
+            get {
+                return ResourceManager.GetString("BrandContentSummit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Modo de Navegação.
         /// </summary>
         public static string BrowsingMode {
@@ -435,6 +453,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string BusinessRoundtable {
             get {
                 return ResourceManager.GetString("BusinessRoundtable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comprar Ingresso.
+        /// </summary>
+        public static string BuyTicket {
+            get {
+                return ResourceManager.GetString("BuyTicket", resourceCulture);
             }
         }
         
@@ -538,7 +565,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Notícias.
+        ///   Looks up a localized string similar to Na Mídia.
         /// </summary>
         public static string Clipping {
             get {
@@ -570,6 +597,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Code {
             get {
                 return ResourceManager.GetString("Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Código de ética.
+        /// </summary>
+        public static string CodeOfEthics {
+            get {
+                return ResourceManager.GetString("CodeOfEthics", resourceCulture);
             }
         }
         
@@ -682,7 +718,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Palestra.
+        ///   Looks up a localized string similar to Conferência.
         /// </summary>
         public static string Conference {
             get {
@@ -723,6 +759,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ConfirmPassword {
             get {
                 return ResourceManager.GetString("ConfirmPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contato.
+        /// </summary>
+        public static string Contact {
+            get {
+                return ResourceManager.GetString("Contact", resourceCulture);
             }
         }
         
@@ -2302,6 +2347,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Parcerias e Patrocínios.
+        /// </summary>
+        public static string PartnersAndSponsors {
+            get {
+                return ResourceManager.GetString("PartnersAndSponsors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Senha.
         /// </summary>
         public static string Password {
@@ -2554,6 +2608,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Press {
             get {
                 return ResourceManager.GetString("Press", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Imprensa.
+        /// </summary>
+        public static string PressCenter {
+            get {
+                return ResourceManager.GetString("PressCenter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assessoria.
+        /// </summary>
+        public static string PressOffice {
+            get {
+                return ResourceManager.GetString("PressOffice", resourceCulture);
             }
         }
         
@@ -2855,7 +2927,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Adquira seu ingresso aqui.
+        ///   Looks up a localized string similar to Adquira sua credencial aqui.
         /// </summary>
         public static string RegisterHere {
             get {
@@ -2982,6 +3054,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Rio2cChatTitle {
             get {
                 return ResourceManager.GetString("Rio2cChatTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rio2C Connections.
+        /// </summary>
+        public static string Rio2cConnections {
+            get {
+                return ResourceManager.GetString("Rio2cConnections", resourceCulture);
             }
         }
         

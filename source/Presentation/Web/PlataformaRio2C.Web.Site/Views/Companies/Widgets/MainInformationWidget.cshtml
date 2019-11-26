@@ -74,31 +74,26 @@
             <div class="kt-widget__item">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.Website</span>
-                    <span class="kt-widget__value"><span>
-                    @if (Model.Organization.Website != null)
-                    {
-                        <a href="@(Model.Organization.Website)" target="_blank">@(Model.Organization.Website)</a>
-                    }
-                    else
-                    {
-                        @("-")
-                    }
-                </span></span>
+                    <span class="kt-widget__value">
+                        <span>
+                            @if (Model.Organization.Website != null)
+                            {
+                                <a href="@(Model.Organization.Website.GetUrlWithProtocol())" target="_blank">@(Model.Organization.Website)</a>
+                            }
+                            else
+                            {
+                                @("-")
+                            }
+                        </span>
+                    </span>
                 </div>
             </div>
             <div class="kt-widget__item">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.SocialMedia</span>
-                    <span class="kt-widget__value"><span>
-                    @if (Model.Organization.SocialMedia != null)
-                    {
-                        <a href="@(Model.Organization.SocialMedia)" target="_blank">@(Model.Organization.SocialMedia)</a>
-                    }
-                    else
-                    {
-                        @("-")
-                    }
-                    </span></span>
+                    <span class="kt-widget__value">
+                        <span>@(Model.Organization?.SocialMedia ?? "-")</span>
+                    </span>
                 </div>
             </div>
         </div>

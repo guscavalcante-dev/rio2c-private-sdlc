@@ -338,9 +338,8 @@
                                                         &lt;p&gt;Your Rio2C schedule is already available at: &lt;a href="@{urlSistema}"&gt;@{urlSistema}&lt;/a&gt;&lt;/p&gt;</value>
   </data>
   <data name="FooterText" xml:space="preserve">
-    <value>Rio2C®, Rio Creative Conference®, RioContentMarket®, are registered trademarks. All rights reserved and held by Rio Creative Conferences Ltda.,
-CNPJ: 26.079.220/0001-46. Any unauthorized use of the names or their variations is a violation of international trademark registration law.</value>
-    <comment>Rio2C®, Rio Creative Conference®, RioContentMarket®, PitchingShow®, BrainSpace®, Festivalia®, são marcas registradas. Todos os direitos de uso pertencem a Rio Creative Conferences Ltda., CNPJ: 26.079.220/0001-46. Qualquer uso sem autorização dos nomes ou suas variações é uma violação da lei internacional de registro de marcas.</comment>
+    <value>Rio2C®, Rio Creative Conference®, PitchingShow®, BrainSpace®, Festivalia®, are registered trademarks. All rights reserved and held by Rio Creative Conferences Ltda., CNPJ: 26.079.220/0001-46. Any unauthorized use of these names or their variations is a violation of international trademark registration law.</value>
+    <comment>Rio2C®, Rio Creative Conference®, PitchingShow®, BrainSpace®, Festivalia®, são marcas registradas. Todos os direitos de uso pertencem a Rio Creative Conferences Ltda., CNPJ: 26.079.220/0001-46. Qualquer uso sem autorização dos nomes ou suas variações é uma violação da lei internacional de registro de marcas.</comment>
   </data>
   <data name="WelcomeLogin" xml:space="preserve">
     <value>Latin America’s leading event in creativity and innovation</value>

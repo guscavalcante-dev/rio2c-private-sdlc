@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-18-2019
+// Last Modified On : 11-26-2019
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -316,6 +316,19 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                     </div>                                        
                 </div>
              */
+        }
+
+        /// <summary>Gets the URL with protocol.</summary>
+        /// <param name="s">The s.</param>
+        /// <returns></returns>
+        public static string GetUrlWithProtocol(this string s)
+        {
+            if (!s.Contains("http"))
+            {
+                s = "http://" + s;
+            }
+
+            return s;
         }
     }
 }

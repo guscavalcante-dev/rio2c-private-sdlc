@@ -771,7 +771,7 @@
     <comment>Nenhuma conversa encontrada.</comment>
   </data>
   <data name="ToAccessMyRio2CPlatform" xml:space="preserve">
-    <value>To access MyRio2C platform you must have a Rio2C ticket.</value>
-    <comment>To access MyRio2C platform you must have a Rio2C ticket.</comment>
+    <value>To access MyRio2C platform you must have a Rio2C badge.</value>
+    <comment>Para acessar a plataforma MyRio2C é necessário estar credenciado.</comment>
   </data>
 </root>
