@@ -358,7 +358,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ficha de inscrição Projetos de Audiovisual - MODELO.pdf.
+        ///   Looks up a localized string similar to Ficha de inscrição Projetos de Audiovisual - MODELO (PDF).
         /// </summary>
         public static string AudiovisualProjectsFormTemplate {
             get {
@@ -2464,7 +2464,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PLAYER_Regulamento Rodadas de Negócio - Rio2C 2020.pdf.
+        ///   Looks up a localized string similar to PLAYER_Regulamento Rodadas de Negócio - Rio2C 2020 (PDF).
         /// </summary>
         public static string PlayersRegulationPdf {
             get {
@@ -2630,7 +2630,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Regulamento Rodadas de Negócio - Rio2C 2020.pdf.
+        ///   Looks up a localized string similar to Regulamento Rodadas de Negócio - Rio2C 2020 (PDF).
         /// </summary>
         public static string ProducersRegulationPdf {
             get {
@@ -3459,6 +3459,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Status {
             get {
                 return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Passo a passo para Inscrição de Projetos Audiovisual (PDF).
+        /// </summary>
+        public static string StepByStepForAudiovisualProjectEnrollment {
+            get {
+                return ResourceManager.GetString("StepByStepForAudiovisualProjectEnrollment", resourceCulture);
             }
         }
         
