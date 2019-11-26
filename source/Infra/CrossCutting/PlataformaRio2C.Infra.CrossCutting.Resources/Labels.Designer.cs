@@ -2918,7 +2918,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Adquira seu ingresso aqui.
+        ///   Looks up a localized string similar to Adquira sua credencial aqui.
         /// </summary>
         public static string RegisterHere {
             get {

@@ -1732,8 +1732,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Lista de Executivos - Categoria Industry</comment>
   </data>
   <data name="RegisterHere" xml:space="preserve">
-    <value>Adquira seu ingresso aqui</value>
-    <comment>Adquira seu ingresso aqui</comment>
+    <value>Adquira sua credencial aqui</value>
+    <comment>Adquira sua credencial aqui</comment>
   </data>
   <data name="StepByStepForAudiovisualProjectEnrollment" xml:space="preserve">
     <value>Passo a passo para Inscrição de Projetos Audiovisual (PDF)</value>
