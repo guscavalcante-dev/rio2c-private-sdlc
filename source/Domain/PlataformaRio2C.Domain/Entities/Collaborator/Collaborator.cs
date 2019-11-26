@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-29-2019
+// Last Modified On : 11-26-2019
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1085,7 +1085,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Validates the user.</summary>
         public void ValidateUser()
         {
-            if (this.User != null && !this.User.IsDeleted)
+            if (this.User != null && !this.User.IsDeleted && !this.User.IsValid())
             {
                 this.ValidationResult.Add(this.User.ValidationResult);
             }
