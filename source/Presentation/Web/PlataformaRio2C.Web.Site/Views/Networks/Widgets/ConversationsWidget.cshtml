@@ -1,0 +1,58 @@
+﻿@using System.Globalization
+@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Statics
+@model List<ConversationDto>
+@{
+    ViewBag.Title = Labels.Messages;
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var editionDto = ViewBag.EditionDto as EditionDto;
+}
+@if (Model?.Any() == true)
+{
+    foreach (var conversationDto in Model)
+    {
+        <div class="kt-widget__item">
+            @if (conversationDto.AttendeeCollaboratorDto?.Collaborator?.HasImage() == true)
+            {
+                <span class="kt-userpic kt-userpic--circle">
+                    <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, conversationDto.AttendeeCollaboratorDto.Collaborator.Uid, conversationDto.AttendeeCollaboratorDto.Collaborator.ImageUploadDate, true)" alt="image">
+                </span>
+            }
+            else
+            {
+                <a href="#" class="kt-media kt-media--circle kt-media--brand">
+                    <span>@(conversationDto.AttendeeCollaboratorDto?.Collaborator?.GetNameAbbreviation() ?? "-")</span>
+                </a>
+            }
+            <div class="kt-widget__info">
+                <div class="kt-widget__section">
+                    <a href="#" class="kt-widget__username">@(conversationDto?.AttendeeCollaboratorDto?.Collaborator?.Badge ?? "-")</a>
+                    @*<span class="kt-badge kt-badge--success kt-badge--dot"></span>*@
+                </div>
+                @{
+                    var jobTitle = conversationDto.AttendeeCollaboratorDto?.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value;
+                }
+                @if (!string.IsNullOrEmpty(jobTitle))
+                {
+                    <span class="kt-widget__desc">
+                        @jobTitle
+                    </span>
+                }
+            </div>
+            <div class="kt-widget__action">
+                <time class="timeago kt-widget__date" datetime="@conversationDto.LastMessageDate.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.CurrentCulture)">@conversationDto.LastMessageDate.ToShortDateString() @conversationDto.LastMessageDate.ToLongTimeString()</time>
+                @if (conversationDto.UnreadMessagesCount > 0)
+                {
+                    <span class="kt-badge kt-badge--success kt-font-bold">@conversationDto.UnreadMessagesCount</span>
+                }
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="row">
+        <div class="col-12 text-center mt-50">@Messages.NoConversationsFound</div>
+    </div>
+}

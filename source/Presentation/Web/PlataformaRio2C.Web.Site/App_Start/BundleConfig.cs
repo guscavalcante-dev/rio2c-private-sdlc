@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-25-2019
+// Last Modified On : 11-26-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -133,6 +133,13 @@ namespace PlataformaRio2C.Web.Site
             #endregion
 
             #region Components Bundles
+
+            #region SignalR
+
+            bundles.Add(new ScriptBundle("~/bundles/js/jquery.signalR.js").Include(
+                "~/Scripts/jquery.signalR-2.4.1.js"));
+
+            #endregion
 
             #region JQuery Validation
 
