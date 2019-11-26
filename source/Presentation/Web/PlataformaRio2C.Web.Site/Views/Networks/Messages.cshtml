@@ -37,7 +37,7 @@
                 </div>
                 <div class="kt-widget kt-widget--users kt-mt-20">
                     <div class="kt-scroll kt-scroll--pull">
-                        <div class="kt-widget__items">
+                        <div id="MessagesConversationsWidget" class="kt-widget__items">
                             @Html.Partial("Widgets/ConversationsWidget", Model)
                         </div>
                     </div>
@@ -48,7 +48,11 @@
     </div>
     <!--End:: App Aside-->
     <!--Begin:: App Content-->
-    @Html.Partial("Widgets/ConversationWidget", Model)
+    <div @*id="kt_chat_content"*@ class="kt-grid__item kt-grid__item--fluid kt-app__content">
+        <div id="MessagesConversationWidget" class="kt-chat">
+            @Html.Partial("Widgets/ConversationWidget", Model)
+        </div>
+    </div>
     <!--End:: App Content-->
 </div>
 @section Styles {
