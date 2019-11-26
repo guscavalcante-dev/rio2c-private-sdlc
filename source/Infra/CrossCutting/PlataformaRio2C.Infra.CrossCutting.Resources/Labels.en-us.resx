@@ -742,6 +742,7 @@
   </data>
   <data name="Conference" xml:space="preserve">
     <value>Conference</value>
+    <comment>Conferência</comment>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Title</value>
@@ -906,7 +907,7 @@
   </data>
   <data name="Clipping" xml:space="preserve">
     <value>Clipping</value>
-    <comment>Notícias</comment>
+    <comment>Na Mídia</comment>
   </data>
   <data name="Commercial" xml:space="preserve">
     <value>Commercial</value>
@@ -1724,5 +1725,41 @@
   </data>
   <data name="StepByStepForAudiovisualProjectEnrollment" xml:space="preserve">
     <value>Step By Step For Audiovisual Project Enrollment (PDF)</value>
+  </data>
+  <data name="AudiovisualPitchingSessions" xml:space="preserve">
+    <value>Audiovisual Pitching Sessions</value>
+    <comment>Pitching de Audiovisual</comment>
+  </data>
+  <data name="BrandContentSummit" xml:space="preserve">
+    <value>Brand Content Summit</value>
+    <comment>Summit Marcas</comment>
+  </data>
+  <data name="BuyTicket" xml:space="preserve">
+    <value>Buy Ticket</value>
+    <comment>Comprar Ingresso</comment>
+  </data>
+  <data name="CodeOfEthics" xml:space="preserve">
+    <value>Code of Ethics</value>
+    <comment>Código de ética</comment>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>Contact</value>
+    <comment>Contato</comment>
+  </data>
+  <data name="PartnersAndSponsors" xml:space="preserve">
+    <value>Partners and Sponsors</value>
+    <comment>Parcerias e Patrocínios</comment>
+  </data>
+  <data name="PressCenter" xml:space="preserve">
+    <value>Press Center</value>
+    <comment>Imprensa</comment>
+  </data>
+  <data name="PressOffice" xml:space="preserve">
+    <value>Press Office</value>
+    <comment>Assessoria</comment>
+  </data>
+  <data name="Rio2cConnections" xml:space="preserve">
+    <value>Rio2C Connections</value>
+    <comment>Rio2C Connections</comment>
   </data>
 </root>
