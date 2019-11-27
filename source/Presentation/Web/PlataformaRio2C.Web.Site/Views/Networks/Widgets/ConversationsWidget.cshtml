@@ -8,7 +8,7 @@
     var isChatSelected = false;
     foreach (var conversationDto in Model)
     {
-        <div class="kt-widget__item @(!isChatSelected ? "chat-selected" : string.Empty)" data-recipient-id="@conversationDto.OtherUser.Id" data-recipient-uid="@conversationDto.OtherUser.Uid">
+        <div class="kt-widget__item clickable @(!isChatSelected ? "chat-selected" : string.Empty)" data-recipient-id="@conversationDto.OtherUser.Id" data-recipient-uid="@conversationDto.OtherUser.Uid" onclick="NetworksMessagesConversationsWidget.change($(this));">
             @if (conversationDto.OtherAttendeeCollaboratorDto?.Collaborator?.HasImage() == true)
             {
                 <span class="kt-userpic kt-userpic--circle">
@@ -23,9 +23,11 @@
             }
             <div class="kt-widget__info">
                 <div class="kt-widget__section">
-                    <a href="#" class="kt-widget__username">@(conversationDto?.OtherAttendeeCollaboratorDto?.Collaborator?.Badge ?? 
-                                                              conversationDto?.OtherAttendeeCollaboratorDto?.Collaborator?.GetFullName() ?? 
-                                                              conversationDto?.OtherUser?.Name ?? "-")</a>
+                    <a href="#" class="kt-widget__username">
+                        @(conversationDto?.OtherAttendeeCollaboratorDto?.Collaborator?.Badge ??
+                          conversationDto?.OtherAttendeeCollaboratorDto?.Collaborator?.GetFullName() ??
+                          conversationDto?.OtherUser?.Name ?? "-")
+                    </a>
                     @*<span class="kt-badge kt-badge--success kt-badge--dot"></span>*@
                 </div>
                 @{

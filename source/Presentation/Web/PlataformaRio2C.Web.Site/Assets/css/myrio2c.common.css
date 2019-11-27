@@ -38,6 +38,11 @@ table.image-side-text td {
         max-height: 50px;
     }
 
+.clickable {
+    cursor: pointer;
+}
+
+
 /*
     Footer
 */

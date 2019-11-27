@@ -55,10 +55,30 @@ var NetworksMessagesConversationsWidget = function () {
         });
     };
 
+    // Change -------------------------------------------------------------------------------------
+    var change = function (element) {
+        if (MyRio2cCommon.isNullOrEmpty(element)) {
+            return;
+        }
+
+        $('.kt-widget__item.chat-selected').each(function() {
+            $(this).removeClass('chat-selected');
+        });
+
+        element.addClass('chat-selected');
+
+        if (typeof (NetworksMessagesConversationWidget) !== 'undefined') {
+            NetworksMessagesConversationWidget.init();
+        }
+    };
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
+        },
+        change: function (element) {
+            change(element);
         }
     };
 }();
