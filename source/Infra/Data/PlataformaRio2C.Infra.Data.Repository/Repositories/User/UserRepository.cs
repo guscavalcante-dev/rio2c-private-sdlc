@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-10-2019
+// Last Modified On : 11-27-2019
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,6 +17,7 @@ using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
@@ -101,6 +102,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             base.Delete(entity);
         }
 
+        /// <summary>Finds the user dto by user identifier asynchronous.</summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public async Task<UserDto> FindUserDtoByUserIdAsync(int userId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindById(userId);
+
+            return await query.Select(u => new UserDto
+            {
+                User = u,
+                Collaborator = u.Collaborator
+            })
+            .FirstOrDefaultAsync();
+        }
+
         /// <summary>Finds the admin access control dto by user identifier and by edition identifier.</summary>
         /// <param name="userId">The user identifier.</param>
         /// <param name="editionId">The edition identifier.</param>
@@ -179,9 +196,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         .FirstOrDefault();
         }
 
-        /// <summary>Finds the admin access control dto by user identifier and by edition identifier.</summary>
+        /// <summary>Finds the user language by user identifier.</summary>
         /// <param name="userId">The user identifier.</param>
-        /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
         public UserLanguageDto FindUserLanguageByUserId(int userId)
         {

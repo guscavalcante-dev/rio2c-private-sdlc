@@ -1,8 +1,5 @@
-﻿@using PlataformaRio2C.Domain.Dtos
-@{
+﻿@{
     ViewBag.Title = Labels.Messages;
-    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
-    var editionDto = ViewBag.EditionDto as EditionDto;
 }
 <div class="kt-grid kt-grid--desktop kt-grid--ver kt-grid--ver-desktop kt-app">
     <!--Begin:: App Aside Mobile Toggle-->
@@ -112,7 +109,6 @@
     <script>
         jQuery(document).ready(function () {
             NetworksMessagesConversationsWidget.init();
-            NetworksMessagesConversationWidget.init();
         });
     </script>
 }

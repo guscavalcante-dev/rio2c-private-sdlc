@@ -1770,4 +1770,8 @@
     <value>Rio2C Connections</value>
     <comment>Rio2C Connections</comment>
   </data>
+  <data name="You" xml:space="preserve">
+    <value>You</value>
+    <comment>Você</comment>
+  </data>
 </root>

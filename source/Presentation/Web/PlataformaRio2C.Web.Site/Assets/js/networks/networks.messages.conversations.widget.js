@@ -36,6 +36,10 @@ var NetworksMessagesConversationsWidget = function () {
                 // Success
                 onSuccess: function () {
                     enableShowPlugins();
+
+                    if (typeof (NetworksMessagesConversationWidget) !== 'undefined') {
+                        NetworksMessagesConversationWidget.init();
+                    }
                 },
                 // Error
                 onError: function () {

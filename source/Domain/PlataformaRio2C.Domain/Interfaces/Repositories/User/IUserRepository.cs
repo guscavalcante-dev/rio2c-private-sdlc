@@ -4,13 +4,14 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-27-2019
+// Last Modified On : 11-27-2019
 // ***********************************************************************
 // <copyright file="IUserRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System.Threading.Tasks;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 
@@ -19,6 +20,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>IUserRepository</summary>
     public interface IUserRepository : IRepository<User>
     {
+        Task<UserDto> FindUserDtoByUserIdAsync(int userId);
         AdminAccessControlDto FindAdminAccessControlDtoByUserIdAndByEditionId(int userId, int editionId);
         UserAccessControlDto FindUserAccessControlDtoByUserIdAndByEditionId(int userId, int editionId);
         UserLanguageDto FindUserLanguageByUserId(int userId);

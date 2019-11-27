@@ -3,34 +3,33 @@
 @using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2C.Domain.Statics
 @model List<ConversationDto>
-@{
-    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
-    var editionDto = ViewBag.EditionDto as EditionDto;
-}
 @if (Model?.Any() == true)
 {
+    var isChatSelected = false;
     foreach (var conversationDto in Model)
     {
-        <div class="kt-widget__item">
-            @if (conversationDto.AttendeeCollaboratorDto?.Collaborator?.HasImage() == true)
+        <div class="kt-widget__item @(!isChatSelected ? "chat-selected" : string.Empty)" data-recipient-id="@conversationDto.OtherUser.Id" data-recipient-uid="@conversationDto.OtherUser.Uid">
+            @if (conversationDto.OtherAttendeeCollaboratorDto?.Collaborator?.HasImage() == true)
             {
                 <span class="kt-userpic kt-userpic--circle">
-                    <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, conversationDto.AttendeeCollaboratorDto.Collaborator.Uid, conversationDto.AttendeeCollaboratorDto.Collaborator.ImageUploadDate, true)" alt="image">
+                    <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, conversationDto.OtherAttendeeCollaboratorDto.Collaborator.Uid, conversationDto.OtherAttendeeCollaboratorDto.Collaborator.ImageUploadDate, true)" alt="image">
                 </span>
             }
             else
             {
                 <a href="#" class="kt-media kt-media--circle kt-media--brand">
-                    <span>@(conversationDto.AttendeeCollaboratorDto?.Collaborator?.GetNameAbbreviation() ?? "-")</span>
+                    <span>@(conversationDto.OtherAttendeeCollaboratorDto?.Collaborator?.GetNameAbbreviation() ?? "-")</span>
                 </a>
             }
             <div class="kt-widget__info">
                 <div class="kt-widget__section">
-                    <a href="#" class="kt-widget__username">@(conversationDto?.AttendeeCollaboratorDto?.Collaborator?.Badge ?? "-")</a>
+                    <a href="#" class="kt-widget__username">@(conversationDto?.OtherAttendeeCollaboratorDto?.Collaborator?.Badge ?? 
+                                                              conversationDto?.OtherAttendeeCollaboratorDto?.Collaborator?.GetFullName() ?? 
+                                                              conversationDto?.OtherUser?.Name ?? "-")</a>
                     @*<span class="kt-badge kt-badge--success kt-badge--dot"></span>*@
                 </div>
                 @{
-                    var jobTitle = conversationDto.AttendeeCollaboratorDto?.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value;
+                    var jobTitle = conversationDto.OtherAttendeeCollaboratorDto?.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value;
                 }
                 @if (!string.IsNullOrEmpty(jobTitle))
                 {
@@ -47,6 +46,8 @@
                 }
             </div>
         </div>
+
+        isChatSelected = true;
     }
 }
 else

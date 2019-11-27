@@ -4,13 +4,14 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-25-2019
+// Last Modified On : 11-27-2019
 // ***********************************************************************
 // <copyright file="MessageRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using System.Collections.Generic;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
@@ -52,6 +53,28 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static IQueryable<Message> FindByUserId(this IQueryable<Message> query, int userId)
         {
             query = query.Where(m => m.SenderId == userId || m.RecipientId == userId);
+
+            return query;
+        }
+
+        /// <summary>Finds the by recipient identifier.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="recipientId">The recipient identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<Message> FindByRecipientId(this IQueryable<Message> query, int recipientId)
+        {
+            query = query.Where(m => m.RecipientId == recipientId);
+
+            return query;
+        }
+
+        /// <summary>Finds the by recipient uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="recipientUid">The recipient uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<Message> FindByRecipientUid(this IQueryable<Message> query, Guid recipientUid)
+        {
+            query = query.Where(m => m.Recipient.Uid == recipientUid);
 
             return query;
         }
@@ -132,8 +155,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             })
                             .Select(g => new ConversationDto
                             {
-                                User = g.Key.User,
-                                AttendeeCollaboratorDto = new AttendeeCollaboratorDto
+                                OtherUser = g.Key.User,
+                                OtherAttendeeCollaboratorDto = new AttendeeCollaboratorDto
                                 {
                                     AttendeeCollaborator = g.Key.User.Collaborator.AttendeeCollaborators
                                                                                         .FirstOrDefault(ac => !ac.IsDeleted && ac.EditionId == editionId),
@@ -164,11 +187,36 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                             })
                                 },
                                 LastMessageDate = g.Max(m => m.SendDate),
-                                UnreadMessagesCount = g.Count(m => !m.ReadDate.HasValue)
+                                UnreadMessagesCount = g.Count(m => m.RecipientId == userId && !m.ReadDate.HasValue)
                             })
                             .OrderByDescending(cd => cd.UnreadMessagesCount > 0 ? 1 : 0)
                             .ThenByDescending(cd => cd.LastMessageDate)
-                            .ThenBy(cd => cd.User.Name)
+                            .ThenBy(cd => cd.OtherAttendeeCollaboratorDto.AttendeeCollaborator.Collaborator.Badge)
+                            .ToListAsync();
+        }
+
+        /// <summary>Finds all messages dtos by edition identifier and by user identifier and by recipient identifier and by recipient uid.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="recipientId">The recipient identifier.</param>
+        /// <param name="recipientUid">The recipient uid.</param>
+        /// <returns></returns>
+        public async Task<List<MessageDto>> FindAllMessagesDtosByEditionIdAndByUserIdAndByRecipientIdAndByRecipientUid(int editionId, int userId, int recipientId, Guid recipientUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUserId(userId)
+                                .FindByUserId(recipientId);
+
+            return await query
+                            .Select(m => new MessageDto
+                            {
+                                SenderUser = m.Sender,
+                                SenderCollaborator = m.Sender.Collaborator,
+                                RecipientUser = m.Recipient,
+                                RecipientCollaborator = m.Recipient.Collaborator,
+                                Message = m
+                            })
+                            .OrderBy(md => md.Message.SendDate)
                             .ToListAsync();
         }
 

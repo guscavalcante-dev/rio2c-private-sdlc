@@ -1783,4 +1783,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Rio2C Connections</value>
     <comment>Rio2C Connections</comment>
   </data>
+  <data name="You" xml:space="preserve">
+    <value>Você</value>
+    <comment>Você</comment>
+  </data>
 </root>

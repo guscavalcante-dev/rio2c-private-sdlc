@@ -309,3 +309,22 @@ a.r2c-login__footer-link, a.r2c-footer-link {
     height: 43px;
     font-size: 1.3rem;
 }
+
+.kt-media.kt-media--sm span {
+    width: 27px;
+    height: 27px;
+    font-size: 0.8rem;
+}
+
+/*
+    Messages/Chat
+*/
+
+.kt-widget__item.chat-selected {
+    background-color: #f2f3f7;
+    border-radius: 4px;
+}
+
+.kt-widget__item:hover {
+    background-color: #f2f3f7;
+}

@@ -32,21 +32,25 @@ namespace PlataformaRio2C.Web.Site.Controllers
     public class NetworksController : BaseController
     {
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
+        private readonly IUserRepository userRepo;
         private readonly IMessageRepository messageRepo;
 
         /// <summary>Initializes a new instance of the <see cref="NetworksController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
+        /// <param name="userRepository">The user repository.</param>
         /// <param name="messageRepository">The message repository.</param>
         public NetworksController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
+            IUserRepository userRepository,
             IMessageRepository messageRepository)
             : base(commandBus, identityController)
         {
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
+            this.userRepo = userRepository;
             this.messageRepo = messageRepository;
         }
 
@@ -113,20 +117,27 @@ namespace PlataformaRio2C.Web.Site.Controllers
         #region Main Conversations Widget
 
         /// <summary>Shows the conversation widget.</summary>
-        /// <param name="userId">The user identifier.</param>
-        /// <param name="userUid">The user uid.</param>
+        /// <param name="recipientId">The recipient identifier.</param>
+        /// <param name="recipientUid">The recipient uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowConversationWidget(int? userId, Guid? userUid)
+        public async Task<ActionResult> ShowConversationWidget(int? recipientId, Guid? recipientUid)
         {
-            //var conversations = await this.messageRepo.FindAllConversationsDtosByEditionIdAndByUserId(this.EditionDto.Id, this.UserAccessControlDto.User.Id);
+            if (!recipientId.HasValue || !recipientUid.HasValue)
+            {
+                return Json(new { status = "error", message = string.Format(Infra.CrossCutting.Resources.Messages.EntityNotAction, Labels.User, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            ViewBag.OtherUserDto = await this.userRepo.FindUserDtoByUserIdAsync(recipientId.Value);
+
+            var messagesDtos = await this.messageRepo.FindAllMessagesDtosByEditionIdAndByUserIdAndByRecipientIdAndByRecipientUid(this.EditionDto.Id, this.UserAccessControlDto.User.Id, recipientId.Value, recipientUid.Value);
 
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/ConversationWidget", null), divIdOrClass = "#MessagesConversationWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/ConversationWidget", messagesDtos), divIdOrClass = "#MessagesConversationWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }

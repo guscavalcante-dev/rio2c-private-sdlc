@@ -1,7 +1,13 @@
-﻿@using PlataformaRio2C.Domain.Dtos
+﻿@using System.Globalization
+@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Statics
+@model List<MessageDto>
 @{
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
-    var editionDto = ViewBag.EditionDto as EditionDto;
+    var userImageUrl = userAccessControlDto?.Collaborator?.HasImage() == true ? ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, userAccessControlDto.Collaborator.Uid, userAccessControlDto.Collaborator.ImageUploadDate, true) : string.Empty;
+    var otherUserDto = ViewBag.OtherUserDto as UserDto;
+    var otherUserImageUrl = otherUserDto?.Collaborator?.HasImage() == true ? ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, otherUserDto.Collaborator.Uid, otherUserDto.Collaborator.ImageUploadDate, true) : string.Empty;
 }
 <div class="kt-portlet__head">
     <div class="kt-chat__head ">
@@ -73,7 +79,12 @@
         </div>
         <div class="kt-chat__center">
             <div class="kt-chat__label">
-                <a href="#" class="kt-chat__title">Jason Muller</a>
+                <a href="#" class="kt-chat__title">
+                    @(otherUserDto?.Collaborator?.Badge ??
+                      otherUserDto?.Collaborator?.GetFullName() ??
+                      otherUserDto?.User.Name ?? 
+                      "-")
+                </a>
                 @*<span class="kt-chat__status">
                         <span class="kt-badge kt-badge--dot kt-badge--success"></span> Active
                     </span>*@
@@ -142,6 +153,74 @@
 <div class="kt-portlet__body">
     <div class="rio2c-scroll" data-height="400" data-scrollbar-shown="true" @*class="kt-scroll kt-scroll--pull" data-mobile-height="300"*@>
         <div class="kt-chat__messages" id="Messages">
+            @if (Model?.Any() == true)
+            {
+                foreach (var messageDto in Model)
+                {
+                    if (messageDto.SenderUser?.Uid == userAccessControlDto?.User?.Uid)
+                    {
+                        <div class="kt-chat__message kt-chat__message--right">
+                            <div class="kt-chat__user">
+                                <span class="kt-chat__datetime">
+                                    <time class="timeago kt-widget__date" datetime="@messageDto.Message.SendDate.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.CurrentCulture)">@messageDto.Message.SendDate.ToShortDateString() @messageDto.Message.SendDate.ToLongTimeString()</time>
+                                </span>
+                                <a href="#" class="kt-chat__username">@Labels.You</a>
+                                @if (!string.IsNullOrEmpty(userImageUrl))
+                                {
+                                    <span class="kt-userpic kt-userpic--circle kt-userpic--sm">
+                                        <img src="@userImageUrl" alt="image">
+                                    </span>
+                                }
+                                else
+                                {
+                                    <a href="#" class="kt-media kt-media--circle kt-media--brand kt-media--sm d-inline-block">
+                                        <span>
+                                            @(userAccessControlDto?.Collaborator?.Badge?.GetTwoLetterCode() ??
+                                              userAccessControlDto?.Collaborator?.GetNameAbbreviation() ??
+                                              userAccessControlDto?.User?.Name?.GetTwoLetterCode() ??
+                                              "-")
+                                        </span>
+                                    </a>
+                                }
+                            </div>
+                            <div class="kt-chat__text kt-bg-light-brand">
+                                @Html.Raw(messageDto.Message?.Text)
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="kt-chat__message">
+                            <div class="kt-chat__user">
+                                @if (!string.IsNullOrEmpty(otherUserImageUrl))
+                                {
+                                    <span class="kt-userpic kt-userpic--circle kt-userpic--sm">
+                                        <img src="@otherUserImageUrl" alt="image">
+                                    </span>
+                                }
+                                else
+                                {
+                                    <a href="#" class="kt-media kt-media--circle kt-media--brand kt-media--sm d-inline-block">
+                                        <span>
+                                            @(otherUserDto?.Collaborator?.Badge?.GetTwoLetterCode() ??
+                                              otherUserDto?.Collaborator?.GetNameAbbreviation() ??
+                                              otherUserDto?.User.Name?.GetTwoLetterCode() ??
+                                              "-")
+                                        </span>
+                                    </a>
+                                }
+                                <a href="#" class="kt-chat__username">@(messageDto.SenderCollaborator?.Badge)</a>
+                                <span class="kt-chat__datetime">
+                                    <time class="timeago kt-widget__date" datetime="@messageDto.Message.SendDate.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.CurrentCulture)">@messageDto.Message.SendDate.ToShortDateString() @messageDto.Message.SendDate.ToLongTimeString()</time>
+                                </span>
+                            </div>
+                            <div class="kt-chat__text kt-bg-light-success">
+                                @Html.Raw(messageDto.Message?.Text)
+                            </div>
+                        </div>
+                    }
+                }
+            }
             @*<div class="kt-chat__message">
                     <div class="kt-chat__user">
                         <span class="kt-userpic kt-userpic--circle kt-userpic--sm">

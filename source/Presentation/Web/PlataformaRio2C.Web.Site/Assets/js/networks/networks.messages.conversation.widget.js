@@ -28,8 +28,14 @@ var NetworksMessagesConversationWidget = function () {
             return;
         }
 
+        var chatSelectedElement = $('.chat-selected');
+        if (chatSelectedElement.length <= 0) {
+            return;
+        }
+
         var jsonParameters = new Object();
-        //jsonParameters.organizationUid = $('#AggregateId').val();
+        jsonParameters.recipientId = chatSelectedElement.data('recipient-id');
+        jsonParameters.recipientUid = chatSelectedElement.data('recipient-uid');
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Networks/ShowConversationWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
