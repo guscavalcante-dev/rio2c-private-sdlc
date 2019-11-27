@@ -4,13 +4,14 @@
 // Created          : 11-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-21-2019
+// Last Modified On : 11-27-2019
 // ***********************************************************************
 // <copyright file="NetworksController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using System.Web.Mvc;
 using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
@@ -70,6 +71,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
             return View(attendeeCollaboratos);
         }
 
+        #region Messages
+
         /// <summary>Messageses this instance.</summary>
         /// <returns></returns>
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.ExecutiveAudiovisual + "," + Constants.CollaboratorType.Industry)]
@@ -83,9 +86,53 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             #endregion
 
+            return View();
+        }
+
+        #region Main Conversations Widget
+
+        /// <summary>Shows the conversations widget.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowConversationsWidget()
+        {
             var conversations = await this.messageRepo.FindAllConversationsDtosByEditionIdAndByUserId(this.EditionDto.Id, this.UserAccessControlDto.User.Id);
 
-            return View(conversations);
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/ConversationsWidget", conversations), divIdOrClass = "#MessagesConversationsWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
         }
+
+        #endregion
+
+        #region Main Conversations Widget
+
+        /// <summary>Shows the conversation widget.</summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="userUid">The user uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowConversationWidget(int? userId, Guid? userUid)
+        {
+            //var conversations = await this.messageRepo.FindAllConversationsDtosByEditionIdAndByUserId(this.EditionDto.Id, this.UserAccessControlDto.User.Id);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/ConversationWidget", null), divIdOrClass = "#MessagesConversationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #endregion
     }
 }

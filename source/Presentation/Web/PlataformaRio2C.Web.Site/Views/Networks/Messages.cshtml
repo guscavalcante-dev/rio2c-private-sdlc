@@ -1,8 +1,4 @@
-﻿@using System.Globalization
-@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
-@using PlataformaRio2C.Domain.Dtos
-@using PlataformaRio2C.Domain.Statics
-@model List<ConversationDto>
+﻿@using PlataformaRio2C.Domain.Dtos
 @{
     ViewBag.Title = Labels.Messages;
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
@@ -36,11 +32,7 @@
                     </div>
                 </div>
                 <div class="kt-widget kt-widget--users kt-mt-20">
-                    <div class="kt-scroll kt-scroll--pull">
-                        <div id="MessagesConversationsWidget" class="kt-widget__items">
-                            @Html.Partial("Widgets/ConversationsWidget", Model)
-                        </div>
-                    </div>
+                    <div id="MessagesConversationsWidget" class="kt-widget__items rio2c-scroll" data-height="590" data-scrollbar-shown="true"></div>
                 </div>
             </div>
         </div>
@@ -49,8 +41,8 @@
     <!--End:: App Aside-->
     <!--Begin:: App Content-->
     <div @*id="kt_chat_content"*@ class="kt-grid__item kt-grid__item--fluid kt-app__content">
-        <div id="MessagesConversationWidget" class="kt-chat">
-            @Html.Partial("Widgets/ConversationWidget", Model)
+        <div class="kt-chat">
+            <div id="MessagesConversationWidget" class="kt-portlet kt-portlet--head-lg kt-portlet--last" style="height: 698px;"></div>
         </div>
     </div>
     <!--End:: App Content-->
@@ -61,11 +53,6 @@
     @Scripts.Render("~/bundles/js/jquery.timeago.js")
     <script src="~/Assets/components/jquery.timeago/locales/jquery.timeago.@(ViewBag.UserInterfaceLanguage)-short.js" type="text/javascript"></script>
     @Scripts.Render("~/bundles/js/networks.messages.js")
-    <script>
-        jQuery(document).ready(function () {
-            NetworksMessages.init();
-        });
-    </script>
     <!--SignalR script to update the chat page and send messages.-->
     <script>
         $(function () {
@@ -76,15 +63,15 @@
             messageHub.client.receiveMessage = function (name, message) {
                 var html = 
                     '<div class="kt-chat__message">' + 
-                    '   <div class="kt-chat__user">' + 
-                    '       <span class="kt-userpic kt-userpic--circle kt-userpic--sm">' +
-                    '           <img src="https://dev.assets.my.rio2c.com/img/users/1d42aa30-7498-41e9-9e4e-66bd1d416314_thumbnail.png?v=20191125134854" alt="image">' +
-                    '       </span>' +
-                    '       <a href="#" class="kt-chat__username">' + htmlEncode(name) + '</a>' + 
-                    '       <span class="kt-chat__datetime">2 Hours</span>' + 
-                    '   </div>' +
-                    '   <div class="kt-chat__text kt-bg-light-success text-wrap">' + htmlEncode(message) + '</div>' +
-                    '</div>';
+                        '   <div class="kt-chat__user">' + 
+                        '       <span class="kt-userpic kt-userpic--circle kt-userpic--sm">' +
+                        '           <img src="https://dev.assets.my.rio2c.com/img/users/1d42aa30-7498-41e9-9e4e-66bd1d416314_thumbnail.png?v=20191125134854" alt="image">' +
+                        '       </span>' +
+                        '       <a href="#" class="kt-chat__username">' + htmlEncode(name) + '</a>' + 
+                        '       <span class="kt-chat__datetime">2 Hours</span>' + 
+                        '   </div>' +
+                        '   <div class="kt-chat__text kt-bg-light-success text-wrap">' + htmlEncode(message) + '</div>' +
+                        '</div>';
                 $('#Messages').append(html);
             };
             // Get the user name and store it to prepend to messages.
@@ -108,7 +95,7 @@
                             '       </span>' +
                             '   </div>' +
                             '   <div class="kt-chat__text kt-bg-light-brand">' + htmlEncode($('#Text').val()) + '</div>' +
-                        '</div>';
+                            '</div>';
                     $('#Messages').append(html);
                     $('#Messages').scrollTop($('#Messages')[0].scrollHeight);
                     // Clear text box and reset focus for next comment.
@@ -121,5 +108,11 @@
             var encodedValue = $('<div />').text(value).html();
             return encodedValue;
         }
+    </script>
+    <script>
+        jQuery(document).ready(function () {
+            NetworksMessagesConversationsWidget.init();
+            NetworksMessagesConversationWidget.init();
+        });
     </script>
 }
