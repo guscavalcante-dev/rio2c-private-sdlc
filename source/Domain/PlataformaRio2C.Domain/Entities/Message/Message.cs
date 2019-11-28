@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-21-2019
+// Last Modified On : 11-28-2019
 // ***********************************************************************
 // <copyright file="Message.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -36,6 +36,25 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual User Recipient { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="Message"/> class.</summary>
+        /// <param name="messageUid">The message uid.</param>
+        /// <param name="edition">The edition.</param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="recipient">The recipient.</param>
+        /// <param name="text">The text.</param>
+        public Message(Guid messageUid, Edition edition, User sender, User recipient, string text)
+        {
+            this.Uid = messageUid;
+            this.EditionId = edition?.Id ?? 0;
+            this.Edition = edition;
+            this.SenderId = sender?.Id ?? 0;
+            this.Sender = sender;
+            this.RecipientId = recipient?.Id ?? 0;
+            this.Recipient = recipient;
+
+            this.SendDate = DateTime.Now;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="Message"/> class.</summary>
         protected Message()
         {
         }
@@ -49,13 +68,13 @@ namespace PlataformaRio2C.Domain.Entities
         {
             ValidationResult = new ValidationResult();
 
-            this.ValidateName();
+            this.ValidateText();
 
             return ValidationResult.IsValid;
         }
 
-        /// <summary>Validates the name.</summary>
-        public void ValidateName()
+        /// <summary>Validates the text.</summary>
+        public void ValidateText()
         {
             if (string.IsNullOrEmpty(this.Text?.Trim()))
             {

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-26-2019
+// Last Modified On : 11-28-2019
 // ***********************************************************************
 // <copyright file="MessageHub.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,15 +16,14 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
-using Microsoft.AspNet.Identity;
+using MediatR;
 using Microsoft.AspNet.SignalR.Hubs;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using PlataformaRio2C.Application.Interfaces.Services;
+using PlataformaRio2C.Application;
+using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.ViewModels;
-using PlataformaRio2C.Infra.CrossCutting.IOC;
-using SimpleInjector.Lifestyles;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 
 namespace PlataformaRio2C.Web.Site.Hub
 {
@@ -32,61 +31,144 @@ namespace PlataformaRio2C.Web.Site.Hub
     //[Microsoft.AspNet.SignalR.Authorize(Roles = "Player,Producer")]
     public class MessageHub: Microsoft.AspNet.SignalR.Hub
     {
-        private readonly static ConnectionMapping<string> _connections = new ConnectionMapping<string>();       
-        public IMessageAppService _messageAppService { get; set; }
+        private static readonly ConnectionMapping<string> _connections = new ConnectionMapping<string>();
+        //public IMessageAppService _messageAppService { get; set; }
+        private IMediator commandBus { get; set; }
+
+        /// <summary>Initializes a new instance of the <see cref="MessageHub"/> class.</summary>
+        /// <param name="commandBus">The command bus.</param>
+        public MessageHub(IMediator commandBus)
+        {
+            this.commandBus = commandBus;
+        }
 
         /// <summary>Sends the message.</summary>
-        /// <param name="emailRecipient">The email recipient.</param>
-        /// <param name="message">The message.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="editionUid">The edition uid.</param>
+        /// <param name="senderId">The sender identifier.</param>
+        /// <param name="senderUid">The sender uid.</param>
+        /// <param name="recipientId">The recipient identifier.</param>
+        /// <param name="recipientUid">The recipient uid.</param>
+        /// <param name="recipientEmail">The recipient email.</param>
+        /// <param name="text">The text.</param>
         /// <returns></returns>
-        public async Task<string> SendMessage(string emailRecipient, string message)
+        public async Task<string> SendMessage(int editionId, Guid editionUid, int senderId, Guid senderUid, int recipientId, Guid recipientUid, string recipientEmail, string text)
         {
-            await Task.Delay(1);
+            //await Task.Delay(1);
+
+            var result = new AppValidationResult();
 
             try
             {
-                var viewModel = new MessageChatAppViewModel() { Text = message, RecipientEmail = emailRecipient };            
+                //var identity = HttpContext.Current.User.Identity;
+                //var userId = identity.GetUserId<int>();
 
-                var container = BootStrapperHub.InitializeThreadScoped();
-                using (ThreadScopedLifestyle.BeginScope(container))
+                result = await this.commandBus.Send(new CreateMessage(
+                    recipientId,
+                    recipientUid,
+                    text,
+                    senderId,
+                    senderUid,
+                    editionId,
+                    editionUid,
+                    null));
+                if (!result.IsValid)
                 {
-                    _messageAppService = container.GetInstance<IMessageAppService>();
-
-                    var identity = HttpContext.Current.User.Identity;                  
-                    int userId = identity.GetUserId<int>();
-
-                    //var result = _messageAppService.Send(userId, ref viewModel);
-
-                    var jsonSerializerSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
-
-                    //if (result.IsValid)
-                    //{
-                        viewModel.SenderEmail = "rafael.ruiz@sof.to";
-                        var viewModelSerialize =  JsonConvert.SerializeObject(viewModel, Formatting.None, jsonSerializerSettings);
-
-                        foreach (var connectionId in _connections.GetConnections(emailRecipient))
-                        {
-                            Clients.Client(connectionId).receiveMessage(viewModel.SenderEmail, viewModelSerialize);
-                            Clients.Client(connectionId).addUnreadsMessages(viewModelSerialize);                            
-                        }
-                       
-                        return viewModelSerialize;
-                    //}
-                    //else
-                    //{
-                    //    var viewModelSerialize = JsonConvert.SerializeObject(result, Formatting.None, jsonSerializerSettings);
-
-                    //    return viewModelSerialize;
-                    //}
+                    throw new DomainException("Errorrrr");
                 }
+
+                //var container = BootStrapperHub.InitializeThreadScoped();
+                //using (ThreadScopedLifestyle.BeginScope(container))
+                //{
+                //    this.commandBus = container.GetInstance<IMediator>();
+
+                //}
             }
-            catch (Exception e)
+            catch (DomainException ex)
             {
+                //foreach (var error in result.Errors)
+                //{
+                //    var target = error.Target ?? "";
+                //    ModelState.AddModelError(target, error.Message);
+                //}
 
-                throw;
+                //cmd.UpdateModelsAndLists(
+                //    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
+
+                //return Json(new
+                //{
+                //    status = "error",
+                //    message = ex.GetInnerMessage(),
+                //    pages = new List<dynamic>
+                //    {
+                //        new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationForm", cmd), divIdOrClass = "#form-container" },
+                //    }
+                //}, JsonRequestBehavior.AllowGet);
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                //return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+                return null;
             }
 
-            return null;
+            //try
+            //{
+            //    var viewModel = new MessageChatAppViewModel() { Text = message, RecipientEmail = emailRecipient };            
+
+            //    var container = BootStrapperHub.InitializeThreadScoped();
+            //    using (ThreadScopedLifestyle.BeginScope(container))
+            //    {
+            //        //_messageAppService = container.GetInstance<IMessageAppService>();
+
+            //        var identity = HttpContext.Current.User.Identity;                  
+            //        int userId = identity.GetUserId<int>();
+
+            //        //var result = _messageAppService.Send(userId, ref viewModel);
+
+            //        var jsonSerializerSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
+
+            //        //if (result.IsValid)
+            //        //{
+            //            viewModel.SenderEmail = "rafael.ruiz@sof.to";
+            //            var viewModelSerialize =  JsonConvert.SerializeObject(viewModel, Formatting.None, jsonSerializerSettings);
+
+            //            foreach (var connectionId in _connections.GetConnections(emailRecipient))
+            //            {
+            //                Clients.Client(connectionId).receiveMessage(viewModel.SenderEmail, viewModelSerialize);
+            //                Clients.Client(connectionId).addUnreadsMessages(viewModelSerialize);                            
+            //            }
+
+            //            return viewModelSerialize;
+            //        //}
+            //        //else
+            //        //{
+            //        //    var viewModelSerialize = JsonConvert.SerializeObject(result, Formatting.None, jsonSerializerSettings);
+
+            //        //    return viewModelSerialize;
+            //        //}
+            //    }
+            //}
+            //catch (Exception e)
+            //{
+
+            //    throw;
+            //}
+
+            var jsonSerializerSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
+            var viewModel = new MessageChatAppViewModel() { Text = text, RecipientEmail = recipientEmail };
+
+            var viewModelSerialize = JsonConvert.SerializeObject(viewModel, Formatting.None, jsonSerializerSettings);
+
+            foreach (var connectionId in _connections.GetConnections(recipientEmail))
+            {
+                Clients.Client(connectionId).receiveMessage(viewModel.SenderEmail, viewModelSerialize);
+                Clients.Client(connectionId).addUnreadsMessages(viewModelSerialize);
+            }
+
+            return viewModelSerialize;
         }
 
         /// <summary>Called when the connection connects to this hub instance.</summary>

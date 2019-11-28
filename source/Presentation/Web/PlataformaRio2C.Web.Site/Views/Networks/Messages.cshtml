@@ -1,5 +1,8 @@
-﻿@{
+﻿@using PlataformaRio2C.Domain.Dtos
+@{
     ViewBag.Title = Labels.Messages;
+    var editionDto = ViewBag.EditionDto as EditionDto;
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
 }
 <div class="kt-grid kt-grid--desktop kt-grid--ver kt-grid--ver-desktop kt-app">
     <!--Begin:: App Aside Mobile Toggle-->
@@ -50,63 +53,14 @@
     @Scripts.Render("~/bundles/js/jquery.timeago.js")
     <script src="~/Assets/components/jquery.timeago/locales/jquery.timeago.@(ViewBag.UserInterfaceLanguage)-short.js" type="text/javascript"></script>
     @Scripts.Render("~/bundles/js/networks.messages.js")
-    <!--SignalR script to update the chat page and send messages.-->
     <script>
-        $(function () {
-            // Reference the auto-generated proxy for the hub.
-            var messageHub = $.connection.messageHub;
-
-            // Create a function that the hub can call back to display messages.
-            messageHub.client.receiveMessage = function (name, message) {
-                var html = 
-                    '<div class="kt-chat__message">' + 
-                        '   <div class="kt-chat__user">' + 
-                        '       <span class="kt-userpic kt-userpic--circle kt-userpic--sm">' +
-                        '           <img src="https://dev.assets.my.rio2c.com/img/users/1d42aa30-7498-41e9-9e4e-66bd1d416314_thumbnail.png?v=20191125134854" alt="image">' +
-                        '       </span>' +
-                        '       <a href="#" class="kt-chat__username">' + htmlEncode(name) + '</a>' + 
-                        '       <span class="kt-chat__datetime">2 Hours</span>' + 
-                        '   </div>' +
-                        '   <div class="kt-chat__text kt-bg-light-success text-wrap">' + htmlEncode(message) + '</div>' +
-                        '</div>';
-                $('#Messages').append(html);
-            };
-            // Get the user name and store it to prepend to messages.
-            //$('#displayname').val(prompt('Enter your name:', ''));
-            // Set initial focus to message input box.
-            $('#Text').focus();
-
-            // Start the connection.
-            $.connection.hub.start().done(function () {
-                $('#SendMessage').click(function () {
-                    // Call the Send method on the hub.
-                    messageHub.server.sendMessage('rafael.ruiz@sof.to', $('#Text').val());
-
-                    var html =
-                        '<div class="kt-chat__message kt-chat__message--right">' +
-                            '   <div class="kt-chat__user">' +
-                            '       <span class="kt-chat__datetime">30 Seconds</span>' +
-                            '       <a href="#" class="kt-chat__username">You</a>' +
-                            '       <span class="kt-userpic kt-userpic--circle kt-userpic--sm">' +
-                            '           <img src="https://dev.assets.my.rio2c.com/img/users/1d42aa30-7498-41e9-9e4e-66bd1d416314_thumbnail.png?v=20191125134854" alt="image">' +
-                            '       </span>' +
-                            '   </div>' +
-                            '   <div class="kt-chat__text kt-bg-light-brand">' + htmlEncode($('#Text').val()) + '</div>' +
-                            '</div>';
-                    $('#Messages').append(html);
-                    $('#Messages').scrollTop($('#Messages')[0].scrollHeight);
-                    // Clear text box and reset focus for next comment.
-                    $('#Text').val('').focus();
-                });
-            });
-        });
-        // This optional function html-encodes messages for display in the page.
-        function htmlEncode(value) {
-            var encodedValue = $('<div />').text(value).html();
-            return encodedValue;
+        var messagesConfig = {
+            editionId: '@(editionDto?.Id)',
+            editionUid: '@(editionDto?.Uid)',
+            senderId: '@(userAccessControlDto?.User?.Id)',
+            senderUid: '@(userAccessControlDto?.User?.Uid)'
         }
-    </script>
-    <script>
+
         jQuery(document).ready(function () {
             NetworksMessagesConversationsWidget.init();
         });

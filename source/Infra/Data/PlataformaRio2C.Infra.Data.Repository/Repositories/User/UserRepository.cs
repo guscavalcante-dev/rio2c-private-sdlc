@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-27-2019
+// Last Modified On : 11-28-2019
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -73,6 +73,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
         }
 
+        /// <summary>Gets the base query.</summary>
+        /// <param name="readonly">if set to <c>true</c> [readonly].</param>
+        /// <returns></returns>
         private IQueryable<User> GetBaseQuery(bool @readonly = false)
         {
             var consult = this.dbSet
@@ -83,23 +86,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
-        /// <summary>Método que remove a entidade do Contexto</summary>
-        /// <param name="entity">Entidade</param>
-        public override void Delete(User entity)
+        /// <summary>Finds the by identifier asynchronous.</summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public async Task<User> FindByIdAsync(int userId)
         {
-            entity.Roles.Clear();
+            var query = this.GetBaseQuery()
+                                .FindById(userId);
 
-            if (entity.UserUseTerms != null && entity.UserUseTerms.Any())
-            {
-                var terms = entity.UserUseTerms.ToList();
-
-                foreach (var term in terms)
-                {
-                    _context.Entry(term).State = EntityState.Deleted;
-                }
-            }
-
-            base.Delete(entity);
+            return await query
+                            .FirstOrDefaultAsync();
         }
 
         /// <summary>Finds the user dto by user identifier asynchronous.</summary>
@@ -211,5 +207,28 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         })
                         .FirstOrDefault();
         }
+
+        #region Old Methods
+
+        /// <summary>Método que remove a entidade do Contexto</summary>
+        /// <param name="entity">Entidade</param>
+        public override void Delete(User entity)
+        {
+            entity.Roles.Clear();
+
+            if (entity.UserUseTerms != null && entity.UserUseTerms.Any())
+            {
+                var terms = entity.UserUseTerms.ToList();
+
+                foreach (var term in terms)
+                {
+                    _context.Entry(term).State = EntityState.Deleted;
+                }
+            }
+
+            base.Delete(entity);
+        }
+
+        #endregion
     }
 }
