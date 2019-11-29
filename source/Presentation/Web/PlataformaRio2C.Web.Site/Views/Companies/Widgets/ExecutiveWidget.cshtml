@@ -27,7 +27,7 @@
     @if (Model.AttendeeCollaboratorsDtos?.Any() == true)
     {
         <div class="row rio2c-scroll" style="height: 200px;">
-            @foreach (var attendeeCollaboratorDto in Model.AttendeeCollaboratorsDtos)
+            @foreach (var attendeeCollaboratorDto in Model.AttendeeCollaboratorsDtos?.OrderBy(acd => acd.Collaborator.GetDisplayName()))
             {
                 <div class="col-sm-6 col-md-6 col-xl-4">
                     <!--Begin::Portlet-->
@@ -45,12 +45,14 @@
                                         else
                                         {
                                             <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest">
-                                                @(attendeeCollaboratorDto.Collaborator.GetNameAbbreviation())
+                                                @attendeeCollaboratorDto.Collaborator.GetDisplayNameAbbreviation()
                                             </div>
                                         }
                                     </div>
                                     <div class="kt-widget__info">
-                                        <a href="@Url.Action("Details", "Executives", new { id = attendeeCollaboratorDto.Collaborator.Uid })" class="kt-widget__username">@attendeeCollaboratorDto.Collaborator.GetFullName()</a>
+                                        <a href="@Url.Action("Details", "Executives", new {id = attendeeCollaboratorDto.Collaborator.Uid})" class="kt-widget__username">
+                                            @attendeeCollaboratorDto.Collaborator.GetDisplayName()
+                                        </a>
                                         @{
                                             var jobTitle = attendeeCollaboratorDto.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value;
                                         }

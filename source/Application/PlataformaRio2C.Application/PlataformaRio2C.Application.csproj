@@ -292,8 +292,6 @@
     <Compile Include="CQRS\QueriesHandlers\Users\FindUserAccessControlDtoQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\AttendeeOrganizations\FindAllAttendeeOrganizationsBaseDtosByEditionUidAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Cities\FindAllCitiesBaseDtosByStateUidAsyncQueryHandler.cs" />
-    <Compile Include="CQRS\QueriesHandlers\Collaborators\CountAllCollaboratorsAsyncQueryHandler.cs" />
-    <Compile Include="CQRS\QueriesHandlers\Collaborators\FindAllCollaboratorsBaseDtosAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Collaborators\FindCollaboratorDtoByUidAndByEditionIdAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\States\FindAllStatesBaseDtosByCountryUidAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Countries\FindAllCountriesBaseDtosAsyncQueryHandler.cs" />
@@ -315,8 +313,6 @@
     <Compile Include="CQRS\Queries\AttendeeOrganizations\FindAllAttendeeOrganizationsBaseDtosByEditionUidAsync.cs" />
     <Compile Include="CQRS\Queries\BaseQuery.cs" />
     <Compile Include="CQRS\Queries\Cities\FindAllCitiesBaseDtosByStateUidAsync.cs" />
-    <Compile Include="CQRS\Queries\Collaborators\CountAllCollaboratorsAsync.cs" />
-    <Compile Include="CQRS\Queries\Collaborators\FindAllCollaboratorsBaseDtosAsync.cs" />
     <Compile Include="CQRS\Queries\Collaborators\FindCollaboratorDtoByUidAndByEditionIdAsync.cs" />
     <Compile Include="CQRS\Queries\Organizations\FindAllOrganizationsBaseDtosAsync.cs" />
     <Compile Include="CQRS\Queries\States\FindAllStatesBaseDtosByCountryUidAsync.cs" />

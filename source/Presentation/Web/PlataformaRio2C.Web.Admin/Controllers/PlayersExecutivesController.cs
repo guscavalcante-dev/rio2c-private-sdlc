@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-18-2019
+// Last Modified On : 11-29-2019
 // ***********************************************************************
 // <copyright file="PlayersExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -93,21 +93,19 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllExecutives, bool showAllParticipants)
         {
-            var playersExecutives = await this.CommandBus.Send(new FindAllCollaboratorsBaseDtosAsync(
+            var playersExecutives = await this.collaboratorRepo.FindAllByDataTable(
                 request.Start / request.Length,
                 request.Length,
                 request.Search?.Value,
                 request.GetSortColumns(),
-                null,
+                this.GetCollaboratorsUids(null),
                 OrganizationType.Player.Uid,
+                Constants.CollaboratorType.ExecutiveAudiovisual,
                 showAllEditions,
                 showAllExecutives,
                 showAllParticipants,
-                this.AdminAccessControlDto.User.Id,
-                this.AdminAccessControlDto.User.Uid,
-                this.EditionDto.Id,
-                this.EditionDto.Uid,
-                this.UserInterfaceLanguage));
+                this.EditionDto?.Id
+            );
 
             var response = DataTablesResponse.Create(request, playersExecutives.TotalItemCount, playersExecutives.TotalItemCount, playersExecutives);
 
@@ -116,6 +114,30 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 status = "success",
                 dataTable = response
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Gets the collaborators uids.</summary>
+        /// <param name="selectedCollaboratorsUids">The selected collaborators uids.</param>
+        /// <returns></returns>
+        private List<Guid> GetCollaboratorsUids(string selectedCollaboratorsUids)
+        {
+            var collaboratorsUids = new List<Guid>();
+
+            if (string.IsNullOrEmpty(selectedCollaboratorsUids))
+            {
+                return collaboratorsUids;
+            }
+
+            var selectedCollaboratorsUidsSplit = selectedCollaboratorsUids.Split(',');
+            foreach (var selectedCollaboratorUid in selectedCollaboratorsUidsSplit)
+            {
+                if (Guid.TryParse(selectedCollaboratorUid, out Guid collaboratorUid))
+                {
+                    collaboratorsUids.Add(collaboratorUid); ;
+                }
+            }
+
+            return collaboratorsUids;
         }
 
         #endregion
@@ -156,21 +178,19 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             try
             {
-                var playersExecutives = await this.CommandBus.Send(new FindAllCollaboratorsBaseDtosAsync(
+                var playersExecutives = await this.collaboratorRepo.FindAllByDataTable(
                     1,
                     10000,
                     request?.Search?.Value,
                     request?.GetSortColumns(),
-                    selectedCollaboratorsUids,
+                    this.GetCollaboratorsUids(null),
                     OrganizationType.Player.Uid,
+                    Constants.CollaboratorType.ExecutiveAudiovisual,
                     showAllEditions,
                     showAllExecutives,
                     showAllParticipants,
-                    this.AdminAccessControlDto.User.Id,
-                    this.AdminAccessControlDto.User.Uid,
-                    this.EditionDto.Id,
-                    this.EditionDto.Uid,
-                    this.UserInterfaceLanguage));
+                    this.EditionDto?.Id
+                );
 
                 eventbriteCsv = playersExecutives?.Select(pe => new EventbriteCsv
                 {
@@ -213,16 +233,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     throw new DomainException(Messages.SelectAtLeastOneOption);
                 }
 
-                var collaboratorsUids = new List<Guid>();
-                var selectedCollaboratorsUidsSplit = selectedCollaboratorsUids.Split(',');
-                foreach (var selectedCollaboratorUid in selectedCollaboratorsUidsSplit)
-                {
-                    if (Guid.TryParse(selectedCollaboratorUid, out Guid collaboratorUid))
-                    {
-                        collaboratorsUids.Add(collaboratorUid);
-                    }
-                }
-
+                var collaboratorsUids = this.GetCollaboratorsUids(selectedCollaboratorsUids);
                 if (!collaboratorsUids.Any())
                 {
                     throw new DomainException(Messages.SelectAtLeastOneOption);
@@ -291,21 +302,18 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowTotalCountWidget()
         {
-            var holdingsCount = await this.CommandBus.Send(new CountAllCollaboratorsAsync(
-                OrganizationType.Player.Uid,
-                true,
-                this.AdminAccessControlDto.User.Id,
-                this.AdminAccessControlDto.User.Uid,
-                this.EditionDto.Id,
-                this.EditionDto.Uid,
-                this.UserInterfaceLanguage));
+            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
+                OrganizationType.Player.Uid, 
+                Constants.CollaboratorType.ExecutiveAudiovisual, 
+                true, 
+                this.EditionDto.Id);
 
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", holdingsCount), divIdOrClass = "#PlayersExecutivesTotalCountWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", executivesCount), divIdOrClass = "#PlayersExecutivesTotalCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -318,21 +326,18 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <returns></returns>
         public async Task<ActionResult> ShowEditionCountWidget()
         {
-            var holdingsCount = await this.CommandBus.Send(new CountAllCollaboratorsAsync(
-                OrganizationType.Player.Uid,
-                false,
-                this.AdminAccessControlDto.User.Id,
-                this.AdminAccessControlDto.User.Uid,
-                this.EditionDto.Id,
-                this.EditionDto.Uid,
-                this.UserInterfaceLanguage));
+            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
+                OrganizationType.Player.Uid, 
+                Constants.CollaboratorType.ExecutiveAudiovisual, 
+                false, 
+                this.EditionDto.Id);
 
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", holdingsCount), divIdOrClass = "#PlayersExecutivesEditionCountWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", executivesCount), divIdOrClass = "#PlayersExecutivesEditionCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }

@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified On : 11-29-2019
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -569,8 +569,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 //.FindByOrganizationTypeUidAndByEditionId(Guid.Empty, true, true, editionId)
                                 .FindByCompanyName(companyName)
                                 .FindByTradeName(tradeName)
-                                .FindByEqualDocument(document)
-                                .FindByNotOrganiationsTypesNames(new List<string> { Domain.Constants.OrganizationType.AudiovisualBuyer }); ;
+                                .FindByEqualDocument(document);
+                                //.FindByNotOrganiationsTypesNames(new List<string> { Domain.Constants.OrganizationType.AudiovisualBuyer });
 
             return await query
                             .Select(o => new OrganizationApiListDto

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-28-2019
+// Last Modified On : 11-29-2019
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -71,6 +71,30 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds the by collaborator type name and by edition identifier.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="showAllExecutives">if set to <c>true</c> [show all executives].</param>
+        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> FindByCollaboratorTypeNameAndByEditionId(this IQueryable<Collaborator> query, string collaboratorTypeName, bool showAllEditions, bool showAllExecutives, bool showAllParticipants, int? editionId)
+        {
+            query = query.Where(c => c.AttendeeCollaborators.Any(ac => (showAllEditions || ac.EditionId == editionId)
+                                                                       && !ac.IsDeleted
+                                                                       && !ac.Edition.IsDeleted
+                                                                       && (showAllParticipants
+                                                                           || (showAllExecutives && ac.AttendeeOrganizationCollaborators
+                                                                                                            .Any(aoc => !aoc.IsDeleted))
+                                                                           || (!showAllExecutives && ac.AttendeeCollaboratorTypes
+                                                                                                            .Any(act => !act.IsDeleted
+                                                                                                                        && !act.CollaboratorType.IsDeleted
+                                                                                                                        && act.CollaboratorType.Name == collaboratorTypeName)))));
+
+            return query;
+        }
+
         /// <summary>Finds the by organization type uid and by edition identifier.</summary>
         /// <param name="query">The query.</param>
         /// <param name="organizationTypeUid">The organization type uid.</param>
@@ -86,11 +110,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                        && !ac.Edition.IsDeleted
                                                                        && (showAllParticipants
                                                                            || ac.AttendeeOrganizationCollaborators
-                                                                               .Any(aoc => !aoc.IsDeleted
-                                                                                           && !aoc.AttendeeOrganization.IsDeleted
-                                                                                           && aoc.AttendeeOrganization.AttendeeOrganizationTypes
-                                                                                                   .Any(aot => !aot.IsDeleted
-                                                                                                               && (showAllExecutives || aot.OrganizationType.Uid == organizationTypeUid))))));
+                                                                                   .Any(aoc => !aoc.IsDeleted
+                                                                                               && !aoc.AttendeeOrganization.IsDeleted
+                                                                                               && aoc.AttendeeOrganization.AttendeeOrganizationTypes
+                                                                                                       .Any(aot => !aot.IsDeleted
+                                                                                                                   && (showAllExecutives || aot.OrganizationType.Uid == organizationTypeUid))))));
 
             return query;
         }
@@ -366,6 +390,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="sortColumns">The sort columns.</param>
         /// <param name="collaboratorsUids">The collaborators uids.</param>
         /// <param name="organizationTypeUid">The organization type uid.</param>
+        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="showAllExecutives">if set to <c>true</c> [show all executives].</param>
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
@@ -378,6 +403,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             List<Tuple<string, string>> sortColumns, 
             List<Guid> collaboratorsUids,
             Guid organizationTypeUid,
+            string collaboratorTypeName,
             bool showAllEditions,
             bool showAllExecutives,
             bool showAllParticipants,
@@ -385,7 +411,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords, editionId)
-                                .FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, showAllEditions, showAllExecutives, showAllParticipants, editionId)
+                                .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeName, showAllEditions, showAllExecutives, showAllParticipants, editionId)
+                                //.FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, showAllEditions, showAllExecutives, showAllParticipants, editionId)
                                 .FindByUids(collaboratorsUids);
 
             return await query
@@ -439,13 +466,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         /// <summary>Counts all by data table.</summary>
         /// <param name="organizationTypeId">The organization type identifier.</param>
+        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<int> CountAllByDataTable(Guid organizationTypeId, bool showAllEditions, int? editionId)
+        public async Task<int> CountAllByDataTable(Guid organizationTypeId, string collaboratorTypeName, bool showAllEditions, int? editionId)
         {
             var query = this.GetBaseQuery()
-                                .FindByOrganizationTypeUidAndByEditionId(organizationTypeId, showAllEditions, false, false, editionId);
+                                .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeName, showAllEditions, false, false, editionId);
+                                //.FindByOrganizationTypeUidAndByEditionId(organizationTypeId, showAllEditions, false, false, editionId);
 
             return await query.CountAsync();
         }
