@@ -29,9 +29,6 @@ namespace PlataformaRio2C.Application.ViewModels
         public string RecipientEmail { get; set; }
         public string RecipientName { get; set; }
 
-
-
-
         public MessageChatAppViewModel()
             :base()
         {

@@ -15,12 +15,14 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Application;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.HubApplication.CQRS.Commands;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
-namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
+namespace PlataformaRio2C.HubApplication.CQRS.CommandsHandlers
 {
     /// <summary>CreateMessageCommandHandler</summary>
     public class CreateMessageCommandHandler : BaseMessageCommandHandler, IRequestHandler<CreateMessage, AppValidationResult>
@@ -50,11 +52,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var messageUid = Guid.NewGuid();
 
+            var edition = await this.editionRepo.FindByUidAsync(cmd.EditionUid ?? Guid.Empty, false);
+            var senderUser = await this.userRepo.FindByIdAsync(cmd.UserId);
+            var recipientUser = await this.userRepo.FindByIdAsync(cmd.RecipientId);
+
             var message = new Message(
                 messageUid,
-                await this.editionRepo.FindByUidAsync(cmd.EditionUid ?? Guid.Empty, false),
-                await this.userRepo.FindByIdAsync(cmd.UserId),
-                await this.userRepo.FindByIdAsync(cmd.RecipientId),
+                edition,
+                senderUser,
+                recipientUser,
                 cmd.Text);
             if (!message.IsValid())
             {
@@ -64,7 +70,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             this.MessageRepo.Create(message);
             this.Uow.SaveChanges();
-            this.AppValidationResult.Data = message;
+            this.AppValidationResult.Data = new MessageDto
+            {
+                SenderUser = senderUser,
+                SenderCollaborator = senderUser.Collaborator,
+                RecipientUser = recipientUser,
+                RecipientCollaborator = recipientUser.Collaborator,
+                Message = message
+            };
 
             return this.AppValidationResult;
 

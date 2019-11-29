@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-17-2019
+// Last Modified On : 11-28-2019
 // ***********************************************************************
 // <copyright file="IProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -41,9 +41,6 @@ namespace PlataformaRio2C.Domain.Interfaces
         IEnumerable<Project> GetAllByAdmin();
         IEnumerable<Project> GetAllExcel();
         IEnumerable<Project> GetDataExcel();
-        int GetMaxNumberProjectPerProducer();
-        int GetMaxNumberPlayerPerProject();
-        string GetMaximumDateForEvaluation();
 
         Project GetSimpleWithProducer(Expression<Func<Project, bool>> filter);
         Project GetSimpleWithPlayers(Expression<Func<Project, bool>> filter);

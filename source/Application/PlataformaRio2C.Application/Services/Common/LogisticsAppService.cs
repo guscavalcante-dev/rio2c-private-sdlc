@@ -33,7 +33,6 @@ namespace PlataformaRio2C.Application.Services
         private readonly ICollaboratorRepository _collaboratorRepository;
         private readonly IProducerRepository _producerRepository;
         private readonly IEditionRepository _eventRepository;
-        private readonly ISystemParameterRepository _systemParameterRepository;
         private readonly IEmailAppService _emailAppService;
 
         /// <summary>Initializes a new instance of the <see cref="LogisticsAppService"/> class.</summary>
@@ -42,14 +41,13 @@ namespace PlataformaRio2C.Application.Services
         /// <param name="repositoryFactory">The repository factory.</param>
         /// <param name="emailAppService">The email application service.</param>
         /// <param name="systemParameterRepository">The system parameter repository.</param>
-        public LogisticsAppService(ILogisticsService service, IUnitOfWork unitOfWork, IRepositoryFactory repositoryFactory, IEmailAppService emailAppService, ISystemParameterRepository systemParameterRepository)
+        public LogisticsAppService(ILogisticsService service, IUnitOfWork unitOfWork, IRepositoryFactory repositoryFactory, IEmailAppService emailAppService)
             : base(unitOfWork, service)
         {
             _collaboratorRepository = repositoryFactory.CollaboratorRepository;
             _eventRepository = repositoryFactory.EditionRepository;
             _producerRepository = repositoryFactory.ProducerRepository;
             _emailAppService = emailAppService;
-            _systemParameterRepository = systemParameterRepository;
         }
 
         public override LogisticsEditAppViewModel GetEditViewModel()

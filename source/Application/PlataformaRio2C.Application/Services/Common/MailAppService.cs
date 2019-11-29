@@ -19,20 +19,18 @@ namespace PlataformaRio2C.Application.Services
     public class MailAppService : AppService<Infra.Data.Context.PlataformaRio2CContext, Mail, MailAppViewModel, MailAppViewModel, MailCollaboratorEditAppViewModel, MailAppViewModel>, IMailAppService
     {
         private readonly IUserRepository _userRepository;
-        private readonly ISystemParameterRepository _systemParameterRepository;
         private readonly IMailCollaboratorRepository _mailCollaboratorRepository;
         private readonly IMailRepository _mailRepository;
         private readonly ICollaboratorRepository _collaboratorRepository;
         //private readonly ICollaboratorPlayerRepository _collaboratorPlayerRepository;
 
         public MailAppService(IMailService service, IUnitOfWork unitOfWork,
-            IRepositoryFactory repositoryFactory, ISystemParameterRepository systemParameterRepository,
+            IRepositoryFactory repositoryFactory,
             IMailRepository mailRepository, IMailCollaboratorRepository mailCollaboratorRepository,
             ICollaboratorRepository collaboratorRepository)
             : base(unitOfWork, service)
         {
             _userRepository = repositoryFactory.UserRepository;
-            _systemParameterRepository = systemParameterRepository;
             _mailCollaboratorRepository = mailCollaboratorRepository;
             _mailRepository = mailRepository;
             _collaboratorRepository = collaboratorRepository;

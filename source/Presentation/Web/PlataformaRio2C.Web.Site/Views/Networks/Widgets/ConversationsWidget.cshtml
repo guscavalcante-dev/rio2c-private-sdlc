@@ -8,7 +8,7 @@
     var isChatSelected = false;
     foreach (var conversationDto in Model)
     {
-        <div class="kt-widget__item clickable @(!isChatSelected ? "chat-selected" : string.Empty)" data-recipient-id="@conversationDto.OtherUser.Id" data-recipient-uid="@conversationDto.OtherUser.Uid" data-recipient-email="@HttpUtility.UrlEncode(conversationDto.OtherUser.Email)" onclick="NetworksMessagesConversationsWidget.change($(this));">
+        <div class="kt-widget__item clickable @(!isChatSelected ? "chat-selected" : string.Empty)" data-recipient-id="@conversationDto.OtherUser.Id" data-recipient-uid="@conversationDto.OtherUser.Uid" onclick="NetworksMessagesConversationsWidget.change($(this));">
             @if (conversationDto.OtherAttendeeCollaboratorDto?.Collaborator?.HasImage() == true)
             {
                 <span class="kt-userpic kt-userpic--circle">

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified On : 11-28-2019
 // ***********************************************************************
 // <copyright file="ProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,7 +13,6 @@
 // ***********************************************************************
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Infra.CrossCutting.SystemParameter;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
@@ -170,15 +169,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     /// <summary>ProjectRepository</summary>
     public class ProjectRepository : Repository<Context.PlataformaRio2CContext, Project>, IProjectRepository
     {
-        private readonly ISystemParameterRepository _systemParameterRepository;
-
         /// <summary>Initializes a new instance of the <see cref="ProjectRepository"/> class.</summary>
         /// <param name="context">The context.</param>
-        /// <param name="systemParameterRepository">The system parameter repository.</param>
-        public ProjectRepository(Context.PlataformaRio2CContext context, ISystemParameterRepository systemParameterRepository)
+        public ProjectRepository(Context.PlataformaRio2CContext context)
             : base(context)
         {
-            _systemParameterRepository = systemParameterRepository;
         }
 
         /// <summary>Gets the base query.</summary>
@@ -588,21 +583,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public override Project Get(Guid uid)
         {
             return this.GetAll().FirstOrDefault(e => e.Uid == uid);
-        }
-
-        public int GetMaxNumberProjectPerProducer()
-        {
-            return _systemParameterRepository.Get<int>(SystemParameterCodes.ProjectsMaxNumberPerProducer);
-        }
-
-        public int GetMaxNumberPlayerPerProject()
-        {
-            return _systemParameterRepository.Get<int>(SystemParameterCodes.ProjectsMaxNumberPlayerPerProject);
-        }
-
-        public string GetMaximumDateForEvaluation()
-        {
-            return _systemParameterRepository.Get<string>(SystemParameterCodes.ProjectsMaximumDateForEvaluation);
         }
 
         public Project GetSimpleWithProducer(Expression<Func<Project, bool>> filter)

@@ -22,13 +22,9 @@ namespace PlataformaRio2C.Application.Services
     /// <summary>EmailAppService</summary>
     public class EmailAppService: IEmailAppService
     {
-        private readonly ISystemParameterRepository _systemParameterRepository;
-
         /// <summary>Initializes a new instance of the <see cref="EmailAppService"/> class.</summary>
-        /// <param name="systemParameterRepository">The system parameter repository.</param>
-        public EmailAppService(ISystemParameterRepository systemParameterRepository)
+        public EmailAppService()
         {
-            _systemParameterRepository = systemParameterRepository;
         }
 
         public bool SeendEmailTemplateDefault(string email, string subject, string message, bool enableMock, bool enableHiddenCopy)
@@ -58,60 +54,60 @@ namespace PlataformaRio2C.Application.Services
                 var currentPath = AppDomain.CurrentDomain.BaseDirectory;
                 var recipient = email;
 
-                if (enableMock && _systemParameterRepository.Get<bool>(SystemParameterCodes.MockEnableRecipientSendEmail))
-                {
-                    recipient = _systemParameterRepository.Get<string>(SystemParameterCodes.MockRecipientSendEmail);
-                }
+                //if (enableMock && _systemParameterRepository.Get<bool>(SystemParameterCodes.MockEnableRecipientSendEmail))
+                //{
+                //    recipient = _systemParameterRepository.Get<string>(SystemParameterCodes.MockRecipientSendEmail);
+                //}
 
-                MailMessage mail = new MailMessage(_systemParameterRepository.Get<string>(SystemParameterCodes.SmtpDefaultSenderEmail), recipient);
+                //MailMessage mail = new MailMessage(_systemParameterRepository.Get<string>(SystemParameterCodes.SmtpDefaultSenderEmail), recipient);
 
-                var hiddenCopy = _systemParameterRepository.Get<string>(SystemParameterCodes.EmailHiddenCopySender);
+                //var hiddenCopy = _systemParameterRepository.Get<string>(SystemParameterCodes.EmailHiddenCopySender);
 
-                if (enableHiddenCopy && hiddenCopy != null && !string.IsNullOrWhiteSpace(hiddenCopy))
-                {
-                    var senders = hiddenCopy.Split(';');
+                //if (enableHiddenCopy && hiddenCopy != null && !string.IsNullOrWhiteSpace(hiddenCopy))
+                //{
+                //    var senders = hiddenCopy.Split(';');
 
-                    foreach (var sender in senders)
-                    {
-                        MailAddress bcc = new MailAddress(sender);
-                        mail.Bcc.Add(bcc);
-                    }
-                }
+                //    foreach (var sender in senders)
+                //    {
+                //        MailAddress bcc = new MailAddress(sender);
+                //        mail.Bcc.Add(bcc);
+                //    }
+                //}
 
-                mail.Subject = subject;
-                mail.IsBodyHtml = _systemParameterRepository.Get<bool>(SystemParameterCodes.SmtpIsBodyHtml);
+                //mail.Subject = subject;
+                //mail.IsBodyHtml = _systemParameterRepository.Get<bool>(SystemParameterCodes.SmtpIsBodyHtml);
 
-                if (attachment != null)
-                {
-                    mail.Attachments.Add(attachment);
-                }
+                //if (attachment != null)
+                //{
+                //    mail.Attachments.Add(attachment);
+                //}
 
-                LinkedResource inlineHeader1 = new LinkedResource(string.Format("{0}/TemplatesEmail/img/header_email_1.jpg", currentPath), MediaTypeNames.Image.Jpeg);
-                inlineHeader1.ContentId = "ContentIdImgHeader1";
-                inlineHeader1.TransferEncoding = System.Net.Mime.TransferEncoding.Base64;
+                //LinkedResource inlineHeader1 = new LinkedResource(string.Format("{0}/TemplatesEmail/img/header_email_1.jpg", currentPath), MediaTypeNames.Image.Jpeg);
+                //inlineHeader1.ContentId = "ContentIdImgHeader1";
+                //inlineHeader1.TransferEncoding = System.Net.Mime.TransferEncoding.Base64;
 
-                AlternateView alternateView = AlternateView.CreateAlternateViewFromString(message, new System.Net.Mime.ContentType("text/html"));
-                alternateView.LinkedResources.Add(inlineHeader1);
+                //AlternateView alternateView = AlternateView.CreateAlternateViewFromString(message, new System.Net.Mime.ContentType("text/html"));
+                //alternateView.LinkedResources.Add(inlineHeader1);
 
-                mail.AlternateViews.Add(alternateView);
+                //mail.AlternateViews.Add(alternateView);
 
-                mail.Priority = MailPriority.Normal;
+                //mail.Priority = MailPriority.Normal;
 
-                SmtpClient client = new SmtpClient();
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                //SmtpClient client = new SmtpClient();
+                //client.DeliveryMethod = SmtpDeliveryMethod.Network;
 
-                client.Host = _systemParameterRepository.Get<string>(SystemParameterCodes.SmtpHost);
-                client.Port = _systemParameterRepository.Get<int>(SystemParameterCodes.SmtpPort);
-                client.EnableSsl = _systemParameterRepository.Get<bool>(SystemParameterCodes.SmtpEnableSsl);
+                //client.Host = _systemParameterRepository.Get<string>(SystemParameterCodes.SmtpHost);
+                //client.Port = _systemParameterRepository.Get<int>(SystemParameterCodes.SmtpPort);
+                //client.EnableSsl = _systemParameterRepository.Get<bool>(SystemParameterCodes.SmtpEnableSsl);
 
-                if (!client.UseDefaultCredentials)
-                {
-                    client.Credentials = new System.Net.NetworkCredential(_systemParameterRepository.Get<string>(SystemParameterCodes.SmtpCredentialUser), _systemParameterRepository.Get<string>(SystemParameterCodes.SmtpCredentialPass));
-                }
+                //if (!client.UseDefaultCredentials)
+                //{
+                //    client.Credentials = new System.Net.NetworkCredential(_systemParameterRepository.Get<string>(SystemParameterCodes.SmtpCredentialUser), _systemParameterRepository.Get<string>(SystemParameterCodes.SmtpCredentialPass));
+                //}
 
-                client.UseDefaultCredentials = _systemParameterRepository.Get<bool>(SystemParameterCodes.SmtpUseDefaultCredentials);
+                //client.UseDefaultCredentials = _systemParameterRepository.Get<bool>(SystemParameterCodes.SmtpUseDefaultCredentials);
 
-                client.Send(mail);
+                //client.Send(mail);
 
                 return true;
             }

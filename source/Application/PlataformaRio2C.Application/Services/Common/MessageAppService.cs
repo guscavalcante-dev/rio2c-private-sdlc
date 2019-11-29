@@ -24,15 +24,13 @@ namespace PlataformaRio2C.Application.Services
         private readonly ICollaboratorRepository _collaboratorRepository;
         private readonly IUserRepository _userRepository;
         private readonly ICollaboratorService _collaboratorService;
-        private readonly ISystemParameterRepository _systemParameterRepository;
 
-        public MessageAppService(IMessageService service, IUnitOfWork unitOfWork, IRepositoryFactory repositoryFactory, ICollaboratorService collaboratorService, ISystemParameterRepository systemParameterRepository)
+        public MessageAppService(IMessageService service, IUnitOfWork unitOfWork, IRepositoryFactory repositoryFactory, ICollaboratorService collaboratorService)
             : base(unitOfWork, service)
         {
             _collaboratorRepository = repositoryFactory.CollaboratorRepository;
             _userRepository = repositoryFactory.UserRepository;
             _collaboratorService = collaboratorService;
-            _systemParameterRepository = systemParameterRepository;
         }
 
         public IEnumerable<MessageChatAppViewModel> GetAll(int userId, string email)
@@ -179,7 +177,7 @@ namespace PlataformaRio2C.Application.Services
 
             ExcelWorksheet worksheetPlayers = excelFile.Workbook.Worksheets.Add(Labels.Players);
 
-            var emailsHidden = _systemParameterRepository.Get<string>(SystemParameterCodes.NetworkRio2CEmailsThatShouldBeHidden);
+            //var emailsHidden = _systemParameterRepository.Get<string>(SystemParameterCodes.NetworkRio2CEmailsThatShouldBeHidden);
 
             var collaborators = _collaboratorService.GetOptionsChat(userId);
 
@@ -309,7 +307,7 @@ namespace PlataformaRio2C.Application.Services
 
             ExcelWorksheet worksheetPlayers = excelFile.Workbook.Worksheets.Add(Labels.Players);
 
-            var emailsHidden = _systemParameterRepository.Get<string>(SystemParameterCodes.NetworkRio2CEmailsThatShouldBeHidden);
+            //var emailsHidden = _systemParameterRepository.Get<string>(SystemParameterCodes.NetworkRio2CEmailsThatShouldBeHidden);
 
             var collaborators = _collaboratorService.GetOptionsChat(0);
 

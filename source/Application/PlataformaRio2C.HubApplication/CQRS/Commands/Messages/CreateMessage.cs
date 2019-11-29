@@ -12,8 +12,9 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using PlataformaRio2C.Application.CQRS.Commands;
 
-namespace PlataformaRio2C.Application.CQRS.Commands
+namespace PlataformaRio2C.HubApplication.CQRS.Commands
 {
     /// <summary>CreateMessage</summary>
     public class CreateMessage : BaseCommand

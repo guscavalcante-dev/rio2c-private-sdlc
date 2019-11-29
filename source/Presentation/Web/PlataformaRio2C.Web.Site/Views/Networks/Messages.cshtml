@@ -58,7 +58,9 @@
             editionId: '@(editionDto?.Id)',
             editionUid: '@(editionDto?.Uid)',
             senderId: '@(userAccessControlDto?.User?.Id)',
-            senderUid: '@(userAccessControlDto?.User?.Uid)'
+            senderUid: '@(userAccessControlDto?.User?.Uid)',
+            senderEmail: '@(userAccessControlDto?.User?.Email)',
+            you: '@Labels.You'
         }
 
         jQuery(document).ready(function () {

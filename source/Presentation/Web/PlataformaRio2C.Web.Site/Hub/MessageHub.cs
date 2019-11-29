@@ -20,10 +20,15 @@ using MediatR;
 using Microsoft.AspNet.SignalR.Hubs;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using PlataformaRio2C.Application;
-using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Application.ViewModels;
+using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
+using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Statics;
+using PlataformaRio2C.HubApplication.CQRS.Commands;
+using PlataformaRio2C.Infra.CrossCutting.IOC;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using SimpleInjector.Lifestyles;
 
 namespace PlataformaRio2C.Web.Site.Hub
 {
@@ -32,140 +37,117 @@ namespace PlataformaRio2C.Web.Site.Hub
     public class MessageHub: Microsoft.AspNet.SignalR.Hub
     {
         private static readonly ConnectionMapping<string> _connections = new ConnectionMapping<string>();
-        //public IMessageAppService _messageAppService { get; set; }
-        private IMediator commandBus { get; set; }
-
-        /// <summary>Initializes a new instance of the <see cref="MessageHub"/> class.</summary>
-        /// <param name="commandBus">The command bus.</param>
-        public MessageHub(IMediator commandBus)
-        {
-            this.commandBus = commandBus;
-        }
 
         /// <summary>Sends the message.</summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="editionUid">The edition uid.</param>
         /// <param name="senderId">The sender identifier.</param>
         /// <param name="senderUid">The sender uid.</param>
+        /// <param name="senderEmail">The sender email.</param>
         /// <param name="recipientId">The recipient identifier.</param>
         /// <param name="recipientUid">The recipient uid.</param>
-        /// <param name="recipientEmail">The recipient email.</param>
         /// <param name="text">The text.</param>
         /// <returns></returns>
-        public async Task<string> SendMessage(int editionId, Guid editionUid, int senderId, Guid senderUid, int recipientId, Guid recipientUid, string recipientEmail, string text)
+        public async Task<string> SendMessage(int editionId, Guid editionUid, int senderId, Guid senderUid, string senderEmail, int recipientId, Guid recipientUid, string text)
         {
-            //await Task.Delay(1);
-
-            var result = new AppValidationResult();
+            MessageDto messageDto = null;
+            HubBaseDto<MessageHubDto> hubBaseDto = null;
 
             try
             {
-                //var identity = HttpContext.Current.User.Identity;
-                //var userId = identity.GetUserId<int>();
-
-                result = await this.commandBus.Send(new CreateMessage(
-                    recipientId,
-                    recipientUid,
-                    text,
-                    senderId,
-                    senderUid,
-                    editionId,
-                    editionUid,
-                    null));
-                if (!result.IsValid)
+                var container = HubBootStrapper.InitializeThreadScoped();
+                using (ThreadScopedLifestyle.BeginScope(container))
                 {
-                    throw new DomainException("Errorrrr");
+                    var commandBus = container.GetInstance<IMediator>();
+
+                    var result = await commandBus.Send(new CreateMessage(
+                        recipientId,
+                        recipientUid,
+                        text,
+                        senderId,
+                        senderUid,
+                        editionId,
+                        editionUid,
+                        null));
+                    if (!result.IsValid)
+                    {
+                        throw new DomainException("The message could not be created.");
+                    }
+
+                    messageDto = result.Data as MessageDto;
+                    if (messageDto == null)
+                    {
+                        throw new DomainException("The message could not be created.");
+                    }
                 }
-
-                //var container = BootStrapperHub.InitializeThreadScoped();
-                //using (ThreadScopedLifestyle.BeginScope(container))
-                //{
-                //    this.commandBus = container.GetInstance<IMediator>();
-
-                //}
             }
             catch (DomainException ex)
             {
-                //foreach (var error in result.Errors)
-                //{
-                //    var target = error.Target ?? "";
-                //    ModelState.AddModelError(target, error.Message);
-                //}
-
-                //cmd.UpdateModelsAndLists(
-                //    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
-
-                //return Json(new
-                //{
-                //    status = "error",
-                //    message = ex.GetInnerMessage(),
-                //    pages = new List<dynamic>
-                //    {
-                //        new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationForm", cmd), divIdOrClass = "#form-container" },
-                //    }
-                //}, JsonRequestBehavior.AllowGet);
-
-                return null;
+                hubBaseDto = new HubBaseDto<MessageHubDto>
+                {
+                    Status = "error",
+                    Message = ex.GetInnerMessage(),
+                    Data = null
+                };
             }
             catch (Exception ex)
             {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                //return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-                return null;
+                hubBaseDto = new HubBaseDto<MessageHubDto>
+                {
+                    Status = "error",
+                    Message = "Generic message",
+                    Data = null
+                };
             }
 
-            //try
-            //{
-            //    var viewModel = new MessageChatAppViewModel() { Text = message, RecipientEmail = emailRecipient };            
-
-            //    var container = BootStrapperHub.InitializeThreadScoped();
-            //    using (ThreadScopedLifestyle.BeginScope(container))
-            //    {
-            //        //_messageAppService = container.GetInstance<IMessageAppService>();
-
-            //        var identity = HttpContext.Current.User.Identity;                  
-            //        int userId = identity.GetUserId<int>();
-
-            //        //var result = _messageAppService.Send(userId, ref viewModel);
-
-            //        var jsonSerializerSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
-
-            //        //if (result.IsValid)
-            //        //{
-            //            viewModel.SenderEmail = "rafael.ruiz@sof.to";
-            //            var viewModelSerialize =  JsonConvert.SerializeObject(viewModel, Formatting.None, jsonSerializerSettings);
-
-            //            foreach (var connectionId in _connections.GetConnections(emailRecipient))
-            //            {
-            //                Clients.Client(connectionId).receiveMessage(viewModel.SenderEmail, viewModelSerialize);
-            //                Clients.Client(connectionId).addUnreadsMessages(viewModelSerialize);                            
-            //            }
-
-            //            return viewModelSerialize;
-            //        //}
-            //        //else
-            //        //{
-            //        //    var viewModelSerialize = JsonConvert.SerializeObject(result, Formatting.None, jsonSerializerSettings);
-
-            //        //    return viewModelSerialize;
-            //        //}
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-
-            //    throw;
-            //}
-
             var jsonSerializerSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
-            var viewModel = new MessageChatAppViewModel() { Text = text, RecipientEmail = recipientEmail };
 
-            var viewModelSerialize = JsonConvert.SerializeObject(viewModel, Formatting.None, jsonSerializerSettings);
-
-            foreach (var connectionId in _connections.GetConnections(recipientEmail))
+            if (hubBaseDto == null)
             {
-                Clients.Client(connectionId).receiveMessage(viewModel.SenderEmail, viewModelSerialize);
-                Clients.Client(connectionId).addUnreadsMessages(viewModelSerialize);
+                hubBaseDto = new HubBaseDto<MessageHubDto>
+                {
+                    Status = "success",
+                    Message = null,
+                    Data = new MessageHubDto
+                    {
+                        SenderUserUid = messageDto.SenderUser.Uid,
+                        SenderEmail = messageDto.SenderUser.Email,
+                        SenderName = messageDto.SenderCollaborator?.Badge ??
+                                     messageDto.SenderCollaborator?.GetFullName() ??
+                                     messageDto.SenderUser?.Name,
+                        SenderNameInitials = messageDto.SenderCollaborator?.Badge?.GetTwoLetterCode() ??
+                                             messageDto.SenderCollaborator?.GetNameAbbreviation() ??
+                                             messageDto.SenderUser?.Name?.GetTwoLetterCode(),
+                        SenderImageUrl = messageDto.SenderCollaborator?.ImageUploadDate != null ? ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, messageDto.SenderCollaborator.Uid, messageDto.SenderCollaborator.ImageUploadDate, true) : 
+                                                                                                  null,
+                        RecipientEmail = messageDto.RecipientUser.Email,
+                        SendDate = messageDto.Message.SendDate.ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.CurrentCulture),
+                        SendDateFormatted = messageDto.Message.SendDate.ToShortDateString() + " " + messageDto.Message.SendDate.ToLongTimeString(),
+                        ReadDate = messageDto.Message.ReadDate?.ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.CurrentCulture),
+                        ReadDateFormatted = messageDto.Message.ReadDate?.ToShortDateString() + " " + messageDto.Message.ReadDate?.ToLongTimeString(),
+                        Text = messageDto.Message.Text
+                    }
+                };
+            }
+
+            var viewModelSerialize = JsonConvert.SerializeObject(hubBaseDto, Formatting.None, jsonSerializerSettings);
+
+            // Send message to sender
+            foreach (var connectionId in _connections.GetConnections(senderEmail))
+            {
+                Clients.Client(connectionId).receiveSenderMessage(viewModelSerialize);
+                //Clients.Client(connectionId).addUnreadsMessages(viewModelSerialize);
+            }
+
+            // Send message to receiver
+            if (!string.IsNullOrEmpty(hubBaseDto?.Data?.RecipientEmail))
+            {
+                foreach (var connectionId in _connections.GetConnections(hubBaseDto.Data.RecipientEmail))
+                {
+                    Clients.Client(connectionId).receiveRecipientMessage(viewModelSerialize);
+                    //Clients.Client(connectionId).addUnreadsMessages(viewModelSerialize);
+                }
             }
 
             return viewModelSerialize;

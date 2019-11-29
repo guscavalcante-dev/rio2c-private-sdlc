@@ -10,11 +10,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.WebApi.Controllers
     [RoutePrefix("api/financialreports")]
     public class FinancialReportController : BaseApiController
     {
-        private readonly IApiSymplaAppService _appService;
+        //private readonly IApiSymplaAppService _appService;
 
-        public FinancialReportController(IApiSymplaAppService appService)
+        public FinancialReportController(/*IApiSymplaAppService appService*/)
         {
-            _appService = appService;
+            //_appService = appService;
         }
 
         [Route("Sales")]
@@ -23,17 +23,17 @@ namespace PlataformaRio2C.Web.Admin.Areas.WebApi.Controllers
         {
             string userEmail = User.Identity.GetUserName();
 
-            if (!(await _appService.ConfirmUserAllowedFinancialReport(userEmail)))
-            {
-                return Unauthorized();
-            }
+            //if (!(await _appService.ConfirmUserAllowedFinancialReport(userEmail)))
+            //{
+            //    return Unauthorized();
+            //}
 
-            var result = await _appService.GetReportSales();
+            //var result = await _appService.GetReportSales();
 
-            if (result != null)
-            {
-                return await Json(result);
-            }
+            //if (result != null)
+            //{
+            //    return await Json(result);
+            //}
 
             return NotFound();
         }
@@ -44,17 +44,17 @@ namespace PlataformaRio2C.Web.Admin.Areas.WebApi.Controllers
         {
             string userEmail = User.Identity.GetUserName();
 
-            if (!(await _appService.ConfirmUserAllowedFinancialReport(userEmail)))
-            {
-                return Unauthorized();
-            }
+            //if (!(await _appService.ConfirmUserAllowedFinancialReport(userEmail)))
+            //{
+            //    return Unauthorized();
+            //}
 
-            var result = await _appService.GetReportSalesByCategory();
+            //var result = await _appService.GetReportSalesByCategory();
 
-            if (result != null)
-            {
-                return await Json(result);
-            }
+            //if (result != null)
+            //{
+            //    return await Json(result);
+            //}
 
             return NotFound();
         }
@@ -65,17 +65,17 @@ namespace PlataformaRio2C.Web.Admin.Areas.WebApi.Controllers
         {
             string userEmail = User.Identity.GetUserName();
 
-            if (!(await _appService.ConfirmUserAllowedFinancialReport(userEmail)))
-            {
-                return Unauthorized();
-            }
+            //if (!(await _appService.ConfirmUserAllowedFinancialReport(userEmail)))
+            //{
+            //    return Unauthorized();
+            //}
 
-            var result = await _appService.GetReportSalesByRegion();
+            //var result = await _appService.GetReportSalesByRegion();
 
-            if (result != null)
-            {
-                return await Json(result);
-            }
+            //if (result != null)
+            //{
+            //    return await Json(result);
+            //}
 
             return NotFound();
         }
@@ -87,17 +87,17 @@ namespace PlataformaRio2C.Web.Admin.Areas.WebApi.Controllers
         {
             string userEmail = User.Identity.GetUserName();
 
-            if (!(await _appService.ConfirmUserAllowedFinancialReport(userEmail)))
-            {
-                return Unauthorized();
-            }
+            //if (!(await _appService.ConfirmUserAllowedFinancialReport(userEmail)))
+            //{
+            //    return Unauthorized();
+            //}
 
-            var result = await _appService.GetReportSalesByPeriod();
+            //var result = await _appService.GetReportSalesByPeriod();
 
-            if (result != null)
-            {
-                return await Json(result);
-            }
+            //if (result != null)
+            //{
+            //    return await Json(result);
+            //}
 
             return NotFound();
         }
@@ -108,17 +108,17 @@ namespace PlataformaRio2C.Web.Admin.Areas.WebApi.Controllers
         {
             string userEmail = User.Identity.GetUserName();
 
-            if (!(await _appService.ConfirmUserAllowedFinancialReport(userEmail)))
-            {
-                return Unauthorized();
-            }
+            //if (!(await _appService.ConfirmUserAllowedFinancialReport(userEmail)))
+            //{
+            //    return Unauthorized();
+            //}
 
-            var result = await _appService.GetReportSalesByTypeOfPayment();
+            //var result = await _appService.GetReportSalesByTypeOfPayment();
 
-            if (result != null)
-            {
-                return await Json(result);
-            }
+            //if (result != null)
+            //{
+            //    return await Json(result);
+            //}
 
             return NotFound();
         }

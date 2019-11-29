@@ -4,7 +4,7 @@
 // Created          : 11-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-12-2019
+// Last Modified On : 11-28-2019
 // ***********************************************************************
 // <copyright file="ProjectEvaluationStatusRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,7 +13,6 @@
 // ***********************************************************************
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Infra.CrossCutting.SystemParameter;
 using System;
 using System.Linq;
 using System.Data.Entity;
@@ -52,15 +51,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     /// <summary>ProjectEvaluationStatusRepository</summary>
     public class ProjectEvaluationStatusRepository : Repository<Context.PlataformaRio2CContext, ProjectEvaluationStatus>, IProjectEvaluationStatusRepository
     {
-        private readonly ISystemParameterRepository _systemParameterRepository;
-
         /// <summary>Initializes a new instance of the <see cref="ProjectEvaluationStatusRepository"/> class.</summary>
         /// <param name="context">The context.</param>
-        /// <param name="systemParameterRepository">The system parameter repository.</param>
-        public ProjectEvaluationStatusRepository(Context.PlataformaRio2CContext context, ISystemParameterRepository systemParameterRepository)
+        public ProjectEvaluationStatusRepository(Context.PlataformaRio2CContext context)
             : base(context)
         {
-            _systemParameterRepository = systemParameterRepository;
         }
 
         /// <summary>Gets the base query.</summary>

@@ -43,7 +43,6 @@ namespace PlataformaRio2C.Application.Services
         private readonly ICollaboratorJobTitleRepository _collaboratorJobTitleRepository;
         private readonly ICollaboratorMiniBioRepository _collaboratorMiniBioRepository;
         private readonly IPlayerRepository _playerRepository;
-        private readonly ISystemParameterRepository _systemParameterRepository;
         private readonly IdentityAutenticationService _identityController;
         private readonly IEditionRepository _eventRepository;
         private readonly ICountryRepository _countryRepository;
@@ -54,7 +53,7 @@ namespace PlataformaRio2C.Application.Services
 
         #region ctor
 
-        public CollaboratorAppService(ICollaboratorService service, IUnitOfWork unitOfWork, IRepositoryFactory repositoryFactory, ISystemParameterRepository systemParameterRepository, IdentityAutenticationService identityController)
+        public CollaboratorAppService(ICollaboratorService service, IUnitOfWork unitOfWork, IRepositoryFactory repositoryFactory, IdentityAutenticationService identityController)
             : base(unitOfWork, service)
         {
             _roleRepository = repositoryFactory.RoleRepository;
@@ -63,7 +62,6 @@ namespace PlataformaRio2C.Application.Services
             _collaboratorMiniBioRepository = repositoryFactory.CollaboratorMiniBioRepository;
             _playerRepository = repositoryFactory.PlayerRepository;
             _eventRepository = repositoryFactory.EditionRepository;
-            _systemParameterRepository = systemParameterRepository;
             _identityController = identityController;
             _countryRepository = repositoryFactory.CountryRepository;
             _stateRepository = repositoryFactory.StateRepository;
@@ -403,56 +401,56 @@ namespace PlataformaRio2C.Application.Services
                     string message = CompileHtmlMessageInvitationToCollaborator();
                     message = message.Replace("@{Message}", Texts.EmailInviteCollaborator);
                     message = message.Replace("@{Name}", collaborator.FirstName);
-                    message = message.Replace("@{UrlSite}", _systemParameterRepository.Get<string>(SystemParameterCodes.SiteUrl));
+                    //message = message.Replace("@{UrlSite}", _systemParameterRepository.Get<string>(SystemParameterCodes.SiteUrl));
                     message = message.Replace("@{NameEvent}", eventRio2c.Name);
                     message = message.Replace("@{Email}", collaborator.User.Email);
                     message = message.Replace("@{Password}", password);
 
-                    MailMessage mail = new MailMessage(_systemParameterRepository.Get<string>(SystemParameterCodes.SmtpDefaultSenderEmail), collaborator.User.Email);
-                    mail.Subject = _systemParameterRepository.Get<string>(SystemParameterCodes.EmailInviteCollaboratorSubject);
-                    mail.IsBodyHtml = _systemParameterRepository.Get<bool>(SystemParameterCodes.SmtpIsBodyHtml);
-                    mail.BodyEncoding = System.Text.Encoding.UTF8;
+                    //MailMessage mail = new MailMessage(_systemParameterRepository.Get<string>(SystemParameterCodes.SmtpDefaultSenderEmail), collaborator.User.Email);
+                    //mail.Subject = _systemParameterRepository.Get<string>(SystemParameterCodes.EmailInviteCollaboratorSubject);
+                    //mail.IsBodyHtml = _systemParameterRepository.Get<bool>(SystemParameterCodes.SmtpIsBodyHtml);
+                    //mail.BodyEncoding = System.Text.Encoding.UTF8;
 
 
-                    var hiddenCopy = _systemParameterRepository.Get<string>(SystemParameterCodes.EmailHiddenCopySender);
+                    //var hiddenCopy = _systemParameterRepository.Get<string>(SystemParameterCodes.EmailHiddenCopySender);
 
-                    if (hiddenCopy != null && !string.IsNullOrWhiteSpace(hiddenCopy))
-                    {
-                        var senders = hiddenCopy.Split(';');
+                    //if (hiddenCopy != null && !string.IsNullOrWhiteSpace(hiddenCopy))
+                    //{
+                    //    var senders = hiddenCopy.Split(';');
 
-                        foreach (var sender in senders)
-                        {
-                            MailAddress bcc = new MailAddress(sender);
-                            mail.Bcc.Add(bcc);
-                        }
-                    }
+                    //    foreach (var sender in senders)
+                    //    {
+                    //        MailAddress bcc = new MailAddress(sender);
+                    //        mail.Bcc.Add(bcc);
+                    //    }
+                    //}
 
-                    LinkedResource inlineHeader1 = new LinkedResource(string.Format("{0}/TemplatesEmail/img/header_email_1.jpg", currentPath), MediaTypeNames.Image.Jpeg);
-                    inlineHeader1.ContentId = "ContentIdImgHeader1";
-                    inlineHeader1.TransferEncoding = System.Net.Mime.TransferEncoding.Base64;
+                    //LinkedResource inlineHeader1 = new LinkedResource(string.Format("{0}/TemplatesEmail/img/header_email_1.jpg", currentPath), MediaTypeNames.Image.Jpeg);
+                    //inlineHeader1.ContentId = "ContentIdImgHeader1";
+                    //inlineHeader1.TransferEncoding = System.Net.Mime.TransferEncoding.Base64;
 
-                    AlternateView alternateView = AlternateView.CreateAlternateViewFromString(message, Encoding.GetEncoding("utf-8"), "text/html");
-                    alternateView.LinkedResources.Add(inlineHeader1);
+                    //AlternateView alternateView = AlternateView.CreateAlternateViewFromString(message, Encoding.GetEncoding("utf-8"), "text/html");
+                    //alternateView.LinkedResources.Add(inlineHeader1);
 
-                    mail.AlternateViews.Add(alternateView);
+                    //mail.AlternateViews.Add(alternateView);
 
-                    mail.Priority = MailPriority.Normal;
+                    //mail.Priority = MailPriority.Normal;
 
-                    SmtpClient client = new SmtpClient();
-                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    //SmtpClient client = new SmtpClient();
+                    //client.DeliveryMethod = SmtpDeliveryMethod.Network;
 
-                    client.Host = _systemParameterRepository.Get<string>(SystemParameterCodes.SmtpHost);
-                    client.Port = _systemParameterRepository.Get<int>(SystemParameterCodes.SmtpPort);
-                    client.EnableSsl = _systemParameterRepository.Get<bool>(SystemParameterCodes.SmtpEnableSsl);
+                    //client.Host = _systemParameterRepository.Get<string>(SystemParameterCodes.SmtpHost);
+                    //client.Port = _systemParameterRepository.Get<int>(SystemParameterCodes.SmtpPort);
+                    //client.EnableSsl = _systemParameterRepository.Get<bool>(SystemParameterCodes.SmtpEnableSsl);
 
-                    if (!client.UseDefaultCredentials)
-                    {
-                        client.Credentials = new System.Net.NetworkCredential(_systemParameterRepository.Get<string>(SystemParameterCodes.SmtpCredentialUser), _systemParameterRepository.Get<string>(SystemParameterCodes.SmtpCredentialPass));
-                    }
+                    //if (!client.UseDefaultCredentials)
+                    //{
+                    //    client.Credentials = new System.Net.NetworkCredential(_systemParameterRepository.Get<string>(SystemParameterCodes.SmtpCredentialUser), _systemParameterRepository.Get<string>(SystemParameterCodes.SmtpCredentialPass));
+                    //}
 
-                    client.UseDefaultCredentials = _systemParameterRepository.Get<bool>(SystemParameterCodes.SmtpUseDefaultCredentials);
+                    //client.UseDefaultCredentials = _systemParameterRepository.Get<bool>(SystemParameterCodes.SmtpUseDefaultCredentials);
 
-                    client.Send(mail);
+                    //client.Send(mail);
                 }
                 catch (Exception ex)
                 {

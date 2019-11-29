@@ -189,8 +189,6 @@
     <Compile Include="CQRS\CommandsHandlers\Holdings\DeleteHoldingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\UpdateHoldingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\CreateHoldingCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Messages\BaseMessageCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Messages\CreateMessageCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardProducerTermsAcceptanceCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\SkipOnboardTicketBuyerOrganizationDataCommandHandler.cs" />
@@ -231,7 +229,6 @@
     <Compile Include="CQRS\Commands\Common\BaseCommands\InterestBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Emails\Common\SendForgotPasswordEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Site\SendProducerWelcomeEmailAsync.cs" />
-    <Compile Include="CQRS\Commands\Messages\CreateMessage.cs" />
     <Compile Include="CQRS\Commands\Onboardings\OnboardCollaborator.cs" />
     <Compile Include="CQRS\Commands\Onboardings\OnboardProducerTermsAcceptance.cs" />
     <Compile Include="CQRS\Commands\Onboardings\SkipOnboardTicketBuyerOrganizationData.cs" />

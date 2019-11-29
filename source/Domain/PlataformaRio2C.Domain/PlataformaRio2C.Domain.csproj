@@ -102,6 +102,8 @@
     <Compile Include="Dtos\Collaborators\CollaboratorJobTitleBaseDto.cs" />
     <Compile Include="Dtos\Editions\EditionBaseDto.cs" />
     <Compile Include="Dtos\Editions\EditionDto.cs" />
+    <Compile Include="Dtos\Messages\HubBaseDto.cs" />
+    <Compile Include="Dtos\Messages\MessageHubDto.cs" />
     <Compile Include="Dtos\Messages\MessageDto.cs" />
     <Compile Include="Dtos\Messages\ConversationDto.cs" />
     <Compile Include="Dtos\Interests\InterestDto.cs" />

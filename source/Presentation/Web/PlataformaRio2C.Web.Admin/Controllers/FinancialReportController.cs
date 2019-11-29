@@ -28,16 +28,16 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     [Authorize(Roles = "Administrator")]
     public class FinancialReportController : BaseController
     {
-        private readonly IApiSymplaAppService _appService;
+        //private readonly IApiSymplaAppService _appService;
 
         /// <summary>Initializes a new instance of the <see cref="FinancialReportController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="appService">The application service.</param>
-        public FinancialReportController(IMediator commandBus, IdentityAutenticationService identityController, IApiSymplaAppService appService)
+        public FinancialReportController(IMediator commandBus, IdentityAutenticationService identityController/*, IApiSymplaAppService appService*/)
             : base(commandBus, identityController)
         {
-            _appService = appService;
+            //_appService = appService;
         }
 
         // GET: FinancialReport
@@ -46,11 +46,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
            
             string userEmail = User.Identity.GetUserName();
 
-            if (!(await _appService.ConfirmUserAllowedFinancialReport(userEmail)))
-            {
-                this.StatusMessage("Acesso negado!", Infra.CrossCutting.Tools.Enums.StatusMessageType.Danger);
-                return RedirectToAction("Index", "Dashboard");
-            }
+            //if (!(await _appService.ConfirmUserAllowedFinancialReport(userEmail)))
+            //{
+            //    this.StatusMessage("Acesso negado!", Infra.CrossCutting.Tools.Enums.StatusMessageType.Danger);
+            //    return RedirectToAction("Index", "Dashboard");
+            //}
 
             return View();
         }
@@ -60,28 +60,28 @@ namespace PlataformaRio2C.Web.Admin.Controllers
            
             string userEmail = User.Identity.GetUserName();
 
-            if (!(await _appService.ConfirmUserAllowedFinancialReport(userEmail)))
-            {
-                this.StatusMessage("Acesso negado!", Infra.CrossCutting.Tools.Enums.StatusMessageType.Danger);
-                return RedirectToAction("Index", "Dashboard");
-            }
+            //if (!(await _appService.ConfirmUserAllowedFinancialReport(userEmail)))
+            //{
+            //    this.StatusMessage("Acesso negado!", Infra.CrossCutting.Tools.Enums.StatusMessageType.Danger);
+            //    return RedirectToAction("Index", "Dashboard");
+            //}
 
-            var result = _appService.ExportReportSalesByCategory().Result;
+            //var result = _appService.ExportReportSalesByCategory().Result;
 
-            if (result != null)
-            {
-                using (ExcelPackage excelFile = result)
-                {
-                    var stream = new MemoryStream();
-                    excelFile.SaveAs(stream);
-                    string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                    string fileName = string.Format("Rio2C - Relatório vendas por categoria - {0}.xlsx", DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
+            //if (result != null)
+            //{
+            //    using (ExcelPackage excelFile = result)
+            //    {
+            //        var stream = new MemoryStream();
+            //        excelFile.SaveAs(stream);
+            //        string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            //        string fileName = string.Format("Rio2C - Relatório vendas por categoria - {0}.xlsx", DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
 
-                    stream.Position = 0;
+            //        stream.Position = 0;
 
-                    return File(stream, contentType, fileName);
-                }
-            }
+            //        return File(stream, contentType, fileName);
+            //    }
+            //}
 
             this.StatusMessage("Não foi possível fazer download da planilha", Infra.CrossCutting.Tools.Enums.StatusMessageType.Danger);
             return RedirectToAction("SalesByCategory");
@@ -93,28 +93,28 @@ namespace PlataformaRio2C.Web.Admin.Controllers
            
             string userEmail = User.Identity.GetUserName();
 
-            if (!(await _appService.ConfirmUserAllowedFinancialReport(userEmail)))
-            {
-                this.StatusMessage("Acesso negado!", Infra.CrossCutting.Tools.Enums.StatusMessageType.Danger);
-                return RedirectToAction("Index", "Dashboard");
-            }
+            //if (!(await _appService.ConfirmUserAllowedFinancialReport(userEmail)))
+            //{
+            //    this.StatusMessage("Acesso negado!", Infra.CrossCutting.Tools.Enums.StatusMessageType.Danger);
+            //    return RedirectToAction("Index", "Dashboard");
+            //}
 
-            var result = _appService.ExportReportSales().Result;
+            //var result = _appService.ExportReportSales().Result;
 
-            if (result != null)
-            {
-                using (ExcelPackage excelFile = result)
-                {
-                    var stream = new MemoryStream();
-                    excelFile.SaveAs(stream);
-                    string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                    string fileName = string.Format("Rio2C - Relatório todos os Dados Sympla - {0}.xlsx", DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
+            //if (result != null)
+            //{
+            //    using (ExcelPackage excelFile = result)
+            //    {
+            //        var stream = new MemoryStream();
+            //        excelFile.SaveAs(stream);
+            //        string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            //        string fileName = string.Format("Rio2C - Relatório todos os Dados Sympla - {0}.xlsx", DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
 
-                    stream.Position = 0;
+            //        stream.Position = 0;
 
-                    return File(stream, contentType, fileName);
-                }
-            }
+            //        return File(stream, contentType, fileName);
+            //    }
+            //}
 
             this.StatusMessage("Não foi possível fazer download da planilha", Infra.CrossCutting.Tools.Enums.StatusMessageType.Danger);
             return RedirectToAction("SalesByCategory");
@@ -123,13 +123,13 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         public async Task<ActionResult> SalesByRegion()
         {
            
-            string userEmail = User.Identity.GetUserName();
+            //string userEmail = User.Identity.GetUserName();
 
-            if (!(await _appService.ConfirmUserAllowedFinancialReport(userEmail)))
-            {
-                this.StatusMessage("Acesso negado!", Infra.CrossCutting.Tools.Enums.StatusMessageType.Danger);
-                return RedirectToAction("Index", "Dashboard");
-            }
+            //if (!(await _appService.ConfirmUserAllowedFinancialReport(userEmail)))
+            //{
+            //    this.StatusMessage("Acesso negado!", Infra.CrossCutting.Tools.Enums.StatusMessageType.Danger);
+            //    return RedirectToAction("Index", "Dashboard");
+            //}
 
             return View();
         }
@@ -139,11 +139,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
            
             string userEmail = User.Identity.GetUserName();
 
-            if (!(await _appService.ConfirmUserAllowedFinancialReport(userEmail)))
-            {
-                this.StatusMessage("Acesso negado!", Infra.CrossCutting.Tools.Enums.StatusMessageType.Danger);
-                return RedirectToAction("Index", "Dashboard");
-            }
+            //if (!(await _appService.ConfirmUserAllowedFinancialReport(userEmail)))
+            //{
+            //    this.StatusMessage("Acesso negado!", Infra.CrossCutting.Tools.Enums.StatusMessageType.Danger);
+            //    return RedirectToAction("Index", "Dashboard");
+            //}
 
             return View();
         }
@@ -153,11 +153,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
            
             string userEmail = User.Identity.GetUserName();
 
-            if (!(await _appService.ConfirmUserAllowedFinancialReport(userEmail)))
-            {
-                this.StatusMessage("Acesso negado!", Infra.CrossCutting.Tools.Enums.StatusMessageType.Danger);
-                return RedirectToAction("Index", "Dashboard");
-            }
+            //if (!(await _appService.ConfirmUserAllowedFinancialReport(userEmail)))
+            //{
+            //    this.StatusMessage("Acesso negado!", Infra.CrossCutting.Tools.Enums.StatusMessageType.Danger);
+            //    return RedirectToAction("Index", "Dashboard");
+            //}
 
             return View();
         }
@@ -168,11 +168,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
            
             string userEmail = User.Identity.GetUserName();
 
-            if (!(await _appService.ConfirmUserAllowedFinancialReport(userEmail)))
-            {
-                this.StatusMessage("Acesso negado!", Infra.CrossCutting.Tools.Enums.StatusMessageType.Danger);
-                return RedirectToAction("Index", "Dashboard");
-            }
+            //if (!(await _appService.ConfirmUserAllowedFinancialReport(userEmail)))
+            //{
+            //    this.StatusMessage("Acesso negado!", Infra.CrossCutting.Tools.Enums.StatusMessageType.Danger);
+            //    return RedirectToAction("Index", "Dashboard");
+            //}
 
             return View();
         }
@@ -183,11 +183,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
            
             string userEmail = User.Identity.GetUserName();
 
-            if (!(await _appService.ConfirmUserAllowedFinancialReport(userEmail)))
-            {
-                this.StatusMessage("Acesso negado!", Infra.CrossCutting.Tools.Enums.StatusMessageType.Danger);
-                return RedirectToAction("Index", "Dashboard");
-            }
+            //if (!(await _appService.ConfirmUserAllowedFinancialReport(userEmail)))
+            //{
+            //    this.StatusMessage("Acesso negado!", Infra.CrossCutting.Tools.Enums.StatusMessageType.Danger);
+            //    return RedirectToAction("Index", "Dashboard");
+            //}
 
             return View();
         }

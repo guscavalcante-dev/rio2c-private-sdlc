@@ -7296,6 +7296,10 @@
       <Project>{5c6e9cb9-b206-4ecf-ae1a-7e07995d39f7}</Project>
       <Name>PlataformaRio2C.Application</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Application\PlataformaRio2C.HubApplication\PlataformaRio2C.HubApplication.csproj">
+      <Project>{86679b6e-04fe-44af-9d95-f5a579a63180}</Project>
+      <Name>PlataformaRio2C.HubApplication</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Domain\PlataformaRio2C.Domain\PlataformaRio2C.Domain.csproj">
       <Project>{9CFDDB5C-4DA2-437B-AEDD-CABE12EF09BC}</Project>
       <Name>PlataformaRio2C.Domain</Name>
@@ -7320,13 +7324,25 @@
       <Project>{73e650a2-a5c8-4035-b206-586c4e4b0846}</Project>
       <Name>PlataformaRio2C.Infra.CrossCutting.SalesPlatforms</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.SystemParameter\PlataformaRio2C.Infra.CrossCutting.SystemParameter.csproj">
+      <Project>{0C86C61E-C23C-4469-90A1-6ED8E75814DB}</Project>
+      <Name>PlataformaRio2C.Infra.CrossCutting.SystemParameter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.Tools\PlataformaRio2C.Infra.CrossCutting.Tools.csproj">
       <Project>{EC0B684E-F8A3-417A-9567-819FFC7C41CC}</Project>
       <Name>PlataformaRio2C.Infra.CrossCutting.Tools</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Infra\Data\PlataformaRio2C.Infra.Data.Context\PlataformaRio2C.Infra.Data.Context.csproj">
+      <Project>{30c4d007-1a78-410c-9fcd-63699985c39b}</Project>
+      <Name>PlataformaRio2C.Infra.Data.Context</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Infra\Data\PlataformaRio2c.Infra.Data.FileRepository\PlataformaRio2c.Infra.Data.FileRepository.csproj">
       <Project>{6f4648ee-2d98-4e95-bc92-0760af1fd909}</Project>
       <Name>PlataformaRio2c.Infra.Data.FileRepository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Infra\Data\PlataformaRio2C.Infra.Data.Repository\PlataformaRio2C.Infra.Data.Repository.csproj">
+      <Project>{CF083D1D-24AD-412F-B28C-648A27D78D7D}</Project>
+      <Name>PlataformaRio2C.Infra.Data.Repository</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

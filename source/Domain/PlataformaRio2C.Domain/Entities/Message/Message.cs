@@ -50,6 +50,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Sender = sender;
             this.RecipientId = recipient?.Id ?? 0;
             this.Recipient = recipient;
+            this.Text = text?.Trim();
 
             this.SendDate = DateTime.Now;
         }
