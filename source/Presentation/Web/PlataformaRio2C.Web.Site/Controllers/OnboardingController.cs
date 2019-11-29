@@ -4,7 +4,7 @@
 // Created          : 08-29-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified On : 11-29-2019
 // ***********************************************************************
 // <copyright file="OnboardingController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -835,14 +835,17 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <summary>Sets the view bags.</summary>
         private void SetViewBags()
         {
-            var playerAttendeeOrganizations = this.UserAccessControlDto?.EditionAttendeeOrganizations?
-                                                                                    .Where(eao => !eao.IsDeleted
-                                                                                                  && eao.AttendeeOrganizationTypes?
-                                                                                                            .Any(aot => !aot.IsDeleted 
-                                                                                                                        && aot.OrganizationType.Name == Constants.OrganizationType.AudiovisualBuyer) == true)?.ToList();
+            var isPlayer = ViewBag.IsPlayer = this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual);
 
-            ViewBag.PlayerAttendeeOrganizations = playerAttendeeOrganizations;
-            ViewBag.IsPlayer = playerAttendeeOrganizations?.Any() == true;
+            if (isPlayer)
+            {
+                ViewBag.PlayerAttendeeOrganizations = this.UserAccessControlDto?.EditionAttendeeOrganizations?
+                                                                .Where(eao => !eao.IsDeleted
+                                                                              && eao.AttendeeOrganizationTypes?
+                                                                                  .Any(aot => !aot.IsDeleted
+                                                                                              && aot.OrganizationType.Name == Constants.OrganizationType.AudiovisualBuyer) == true)?
+                                                                .ToList();
+            }
         }
 
         #endregion

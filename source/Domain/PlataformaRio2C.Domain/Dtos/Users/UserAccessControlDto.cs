@@ -4,7 +4,7 @@
 // Created          : 09-04-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-16-2019
+// Last Modified On : 11-29-2019
 // ***********************************************************************
 // <copyright file="UserAccessControlDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -40,26 +40,40 @@ namespace PlataformaRio2C.Domain.Dtos
 
         #region Properties manipulation 
 
+        /// <summary>Gets the display name.</summary>
+        /// <returns></returns>
+        public string GetDisplayName()
+        {
+            return this.Collaborator?.GetDisplayName() ?? this.User.Name;
+        }
+
+        /// <summary>Gets the display name abbreviation.</summary>
+        /// <returns></returns>
+        public string GetDisplayNameAbbreviation()
+        {
+            return this.GetDisplayName().GetTwoLetterCode();
+        }
+
         /// <summary>Gets the full name.</summary>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         /// <returns></returns>
         public string GetFullName(string userInterfaceLanguage)
         {
-            return this.User?.Name?.UppercaseFirstOfEachWord(userInterfaceLanguage);
+            return this.GetDisplayName()?.UppercaseFirstOfEachWord(userInterfaceLanguage);
         }
 
         /// <summary>Gets the first name.</summary>
         /// <returns></returns>
         public string GetFirstName()
         {
-            return this.User?.Name?.GetFirstWord();
+            return this.GetDisplayName()?.GetFirstWord();
         }
 
         /// <summary>Gets the name abbreviation code.</summary>
         /// <returns></returns>
         public string GetNameAbbreviationCode()
         {
-            return this.User?.Name?.GetTwoLetterCode();
+            return this.GetDisplayName()?.GetTwoLetterCode();
         }
 
         /// <summary>Determines whether this instance has image.</summary>
@@ -96,16 +110,6 @@ namespace PlataformaRio2C.Domain.Dtos
         public AttendeeOrganization GetFirstAttendeeOrganizationCreated()
         {
             return this.EditionAttendeeOrganizations?.Where(eao => !eao.IsDeleted)?.OrderBy(eao => eao.Id).FirstOrDefault();
-        }
-
-        /// <summary>Determines whether [has player organization].</summary>
-        /// <returns>
-        ///   <c>true</c> if [has player organization]; otherwise, <c>false</c>.</returns>
-        public bool HasPlayerOrganization()
-        {
-            return this.EditionAttendeeOrganizations?.Any(eao => eao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted
-                                                                                                          && !aot.OrganizationType.IsDeleted
-                                                                                                          && aot.OrganizationType.Name == Domain.Constants.OrganizationType.AudiovisualBuyer)) == true;
         }
 
         #endregion
@@ -195,8 +199,9 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is player terms acceptance finished]; otherwise, <c>false</c>.</returns>
         public bool IsPlayerTermsAcceptanceFinished()
         {
-            return !this.HasPlayerOrganization()
-                   || this.EditionAttendeeCollaborator?.PlayerTermsAcceptanceDate != null;
+            return !this.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual)                                              // // Not Player //TODO: Change to check attendee organization type (must be dto)
+                   || this.EditionAttendeeCollaborator?.PlayerTermsAcceptanceDate != null;                                                 // Or has accepted the player terms
+                   //|| !this.HasPlayerOrganization()
         }
 
         /// <summary>Determines whether [is user onboarding finished].</summary>

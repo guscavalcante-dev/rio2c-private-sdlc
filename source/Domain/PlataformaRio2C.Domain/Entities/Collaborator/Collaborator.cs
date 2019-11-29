@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-26-2019
+// Last Modified On : 11-29-2019
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -259,6 +259,20 @@ namespace PlataformaRio2C.Domain.Entities
             {
                 this.ImageUploadDate = null;
             }
+        }
+
+        /// <summary>Gets the display name.</summary>
+        /// <returns></returns>
+        public string GetDisplayName()
+        {
+            return this.Badge ?? this.GetFullName();
+        }
+
+        /// <summary>Gets the display name abbreviation.</summary>
+        /// <returns></returns>
+        public string GetDisplayNameAbbreviation()
+        {
+            return this.GetDisplayName().GetTwoLetterCode();
         }
 
         /// <summary>Gets the full name.</summary>
