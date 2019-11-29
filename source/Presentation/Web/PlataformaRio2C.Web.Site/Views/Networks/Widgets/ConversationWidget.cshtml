@@ -82,7 +82,7 @@
                 <a href="#" class="kt-chat__title">
                     @(otherUserDto?.Collaborator?.Badge ??
                       otherUserDto?.Collaborator?.GetFullName() ??
-                      otherUserDto?.User.Name ?? 
+                      otherUserDto?.User.Name ??
                       "-")
                 </a>
                 @*<span class="kt-chat__status">
@@ -151,7 +151,7 @@
     </div>
 </div>
 <div class="kt-portlet__body">
-    <div class="rio2c-scroll" data-height="400" data-scrollbar-shown="true" @*class="kt-scroll kt-scroll--pull" data-mobile-height="300"*@>
+    <div class="kt-scroll kt-scroll--pull" data-mobile-height="300">
         <div class="kt-chat__messages" id="Messages">
             @if (Model?.Any() == true)
             {
@@ -257,7 +257,7 @@
                         Ok, Understood!
                     </div>
                 </div>*@
-        </div>
+    </div>
     </div>
 </div>
 <div class="kt-portlet__foot">

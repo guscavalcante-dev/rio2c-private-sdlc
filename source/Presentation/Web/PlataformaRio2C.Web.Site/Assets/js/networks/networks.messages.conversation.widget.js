@@ -4,7 +4,7 @@
 // Created          : 11-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-28-2019
+// Last Modified On : 11-29-2019
 // ***********************************************************************
 // <copyright file="networks.messages.conversation.widget" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -61,8 +61,10 @@ var NetworksMessagesConversationWidget = function () {
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
+        MyRio2cKTAppChat.init();
         $("time.timeago").timeago();
-        MyRio2cCommon.initScroll();
+        NetworksMessagesConversationWidget.handleMessaging();
+        //MyRio2cCommon.initScroll();
         enableChat();
     };
 
@@ -104,10 +106,36 @@ var NetworksMessagesConversationWidget = function () {
         });
     };
 
+    var handleMessaging = function () {
+        var parentEl = KTUtil.getByID('kt_chat_content');
+        var scrollEl = KTUtil.find(parentEl, '.kt-scroll');
+        var messagesEl = KTUtil.find(parentEl, '.kt-chat__messages');
+
+        var node = document.createElement("DIV");
+        KTUtil.addClass(node, 'kt-chat__message kt-chat__message--brand kt-chat__message--right');
+        scrollEl.scrollTop = parseInt(KTUtil.css(messagesEl, 'height'));
+
+        var ps;
+        if (ps = KTUtil.data(scrollEl).get('ps')) {
+            ps.update();
+        }
+
+        KTUtil.addClass(node, 'kt-chat__message kt-chat__message--success');
+        scrollEl.scrollTop = parseInt(KTUtil.css(messagesEl, 'height'));
+
+        var ps;
+        if (ps = KTUtil.data(scrollEl).get('ps')) {
+            ps.update();
+        }
+    };
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
+        },
+        handleMessaging: function() {
+            handleMessaging();
         }
     };
 }();
@@ -151,6 +179,7 @@ jQuery(document).ready(function () {
 
                 $('#Messages').append(html);
                 $("time.timeago").timeago();
+                NetworksMessagesConversationWidget.handleMessaging();
             },
             // Error
             onError: function () {
@@ -191,6 +220,7 @@ jQuery(document).ready(function () {
 
                 $('#Messages').append(html);
                 $("time.timeago").timeago();
+                NetworksMessagesConversationWidget.handleMessaging();
             },
             // Error
             onError: function () {
