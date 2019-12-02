@@ -36,7 +36,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 {
     /// <summary>ProjectsController</summary>
     [AjaxAuthorize(Order = 1)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.ExecutiveAudiovisual + "," + Constants.CollaboratorType.Industry )]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.ExecutiveAudiovisual + "," + Constants.CollaboratorType.Industry)]
     public class ProjectsController : BaseController
     {
         private readonly IProjectRepository projectRepo;
@@ -55,7 +55,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="languageRepo">The language repo.</param>
         public ProjectsController(
-            IMediator commandBus, 
+            IMediator commandBus,
             IdentityAutenticationService identityController,
             IProjectRepository projectRepository,
             IInterestRepository interestRepository,
@@ -751,7 +751,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             var firstAttendeeOrganizationCreated = this.UserAccessControlDto.GetFirstAttendeeOrganizationCreated();
             if (firstAttendeeOrganizationCreated != null)
             {
-                var projectsCount = this.projectRepo.Count(p => p.SellerAttendeeOrganization.Uid == firstAttendeeOrganizationCreated.Uid 
+                var projectsCount = this.projectRepo.Count(p => p.SellerAttendeeOrganization.Uid == firstAttendeeOrganizationCreated.Uid
                                                                 && !p.IsDeleted);
                 var projectMaxCount = this.EditionDto?.AttendeeOrganizationMaxSellProjectsCount ?? 0;
                 if (projectsCount >= projectMaxCount)
@@ -1485,6 +1485,55 @@ namespace PlataformaRio2C.Web.Site.Controllers
             #endregion
 
             return View();
+        }
+
+        #endregion
+
+        #region Submitted List Player Evaluation
+
+        /// <summary>Sends to players.</summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.ExecutiveAudiovisual)]
+        [HttpGet]
+        public async Task<ActionResult> SubmittedListBuyerEvaluation()
+        {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedListBuyerEvaluation", "Projects", new { Area = "" })),
+            });
+
+            #endregion
+
+            return View();
+        }
+
+        /// <summary>Submitted list.</summary>
+        /// <returns></returns>
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.ExecutiveAudiovisual)]
+        [HttpGet]
+        public async Task<ActionResult> UpdateSubmittedListEvaluation(string searchKeywords, int page = 1, int pageSize = 10)
+        {
+            var projects = await this.projectRepo.FindAllProjectsToEvaluateUidAsync(
+                this.UserAccessControlDto?.Collaborator?.Uid ?? Guid.Empty, searchKeywords, page-1, pageSize);
+
+            if (projects == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            ViewBag.SubmittedListBuyerEvaluation = $"&pageSize={pageSize}";
+            ViewBag.SearchKeywords = searchKeywords;
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/UpdateSubmittedListModal", projects), divIdOrClass = "#ProjectBuyerEvaluationWidget" },
+                    }
+            }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

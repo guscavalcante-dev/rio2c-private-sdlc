@@ -22,6 +22,7 @@ using System.Data.Entity;
 using System.Threading.Tasks;
 using PlataformaRio2C.Domain.Dtos;
 using X.PagedList;
+using LinqKit;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -50,6 +51,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static IQueryable<Project> FindByAttendeeOrganizationUid(this IQueryable<Project> query, Guid attendeeOrganizationUid)
         {
             query = query.Where(p => p.SellerAttendeeOrganization.Uid == attendeeOrganizationUid);
+
+            return query;
+        }
+
+        /// <summary>Finds the by attendee organization uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> FindByAttendeeCollabratorUid(this IQueryable<Project> query, Guid attendeeCollaboratorUid)
+        {
+            query = query.Where(p => p.ProjectBuyerEvaluations.Any(pbe => pbe.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators.Any(ao => ao.AttendeeCollaborator.Collaborator.Uid == attendeeCollaboratorUid 
+                                                                                                                                              && !ao.IsDeleted)
+                                                                             && !p.IsDeleted
+                                                                             && !pbe.IsDeleted
+                                                                             && !pbe.Project.IsDeleted));
 
             return query;
         }
@@ -109,20 +125,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<Project> FindByKeywords(this IQueryable<Project> query, string keywords)
         {
-            //if (!string.IsNullOrEmpty(keywords))
-            //{
-            //    var predicate = PredicateBuilder.New<Holding>(true);
+            if (!string.IsNullOrEmpty(keywords))
+            {
+                var predicate = PredicateBuilder.New<Project>(true);
 
-            //    foreach (var keyword in keywords.Split(' '))
-            //    {
-            //        if (!string.IsNullOrEmpty(keyword))
-            //        {
-            //            predicate = predicate.And(h => h.Name.Contains(keyword));
-            //        }
-            //    }
+                foreach (var keyword in keywords.Split(' '))
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        predicate = predicate.Or(p => p.ProjectTitles.Any(t => t.Value.Contains(keyword)));
+                        predicate = predicate.Or(p => p.ProjectInterests.Any(i => i.Interest.Name.Contains(keyword)));
+                        predicate = predicate.Or(p => p.SellerAttendeeOrganization.Organization.Name.Contains(keyword));
+                    }
+                }
 
-            //    query = query.AsExpandable().Where(predicate);
-            //}
+                query = query.AsExpandable().Where(predicate);
+            }
 
             return query;
         }
@@ -246,6 +264,58 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return await query
                             .OrderBy(pd => pd.Project.CreateDate)
                             .ToListAsync();
+        }
+
+
+        public async Task<IPagedList<ProjectDto>> FindAllProjectsToEvaluateUidAsync(Guid attendeeCollaboratorUid, string searchKeywords, int page, int pageSize)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByAttendeeCollabratorUid(attendeeCollaboratorUid)
+                                .FindByKeywords(searchKeywords)
+                                .Select(p => new ProjectDto
+                                {
+                                    Project = p,
+                                    ProjectType = p.ProjectType,
+                                    SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                    {
+                                        AttendeeOrganization = p.SellerAttendeeOrganization,
+                                        Organization = p.SellerAttendeeOrganization.Organization,
+                                        Edition = p.SellerAttendeeOrganization.Edition
+                                    },
+                                    ProjectTitleDtos = p.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                    {
+                                        ProjectTitle = t,
+                                        Language = t.Language
+                                    }),
+                                    ProjectLogLineDtos = p.ProjectLogLines.Where(ll => !ll.IsDeleted).Select(ll => new ProjectLogLineDto
+                                    {
+                                        ProjectLogLine = ll,
+                                        Language = ll.Language
+                                    }),
+                                    ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted).Select(i => new ProjectInterestDto
+                                    {
+                                        ProjectInterest = i,
+                                        Interest = i.Interest,
+                                        InterestGroup = i.Interest.InterestGroup
+                                    }),
+                                    ProjectBuyerEvaluationDtos = p.ProjectBuyerEvaluations.Where(be => !be.IsDeleted 
+                                                                                                 && be.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators.Any(ao => ao.AttendeeCollaborator.Collaborator.Uid == attendeeCollaboratorUid))
+                                    .Select(be => new ProjectBuyerEvaluationDto
+                                    {
+                                        ProjectBuyerEvaluation = be,
+                                        BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                        {
+                                            AttendeeOrganization = be.BuyerAttendeeOrganization,
+                                            Organization = be.BuyerAttendeeOrganization.Organization,
+                                            Edition = be.BuyerAttendeeOrganization.Edition
+                                        },
+                                        ProjectEvaluationStatus = be.ProjectEvaluationStatus
+                                    })
+                                });
+
+            return await query
+                            .OrderBy(pd => pd.Project.CreateDate)
+                            .ToListPagedAsync(page, pageSize);
         }
 
         #region Site Widgets

@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = Labels.ProjectSubscription;
+}
+
+
+<div class="kt-portlet kt-portlet--height-fluid">
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="d-flex">
+                            @Html.TextBox("SearchKeywords", null, new { @class = "form-control mr-1", type = "search", placeholder = Labels.Search })
+                            <button type="button" class="btn btn-primary btn-icon" onclick="ProjectsBuyerEvaluationWidget.search();"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <div class="col-12" id="ProjectBuyerEvaluationWidget" style="min-height: 500px"></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Styles {
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/projects.buyercompany.widget.js")
+    <script>
+        jQuery(document).ready(function () {
+            ProjectsBuyerEvaluationWidget.init();
+        });
+    </script>
+}

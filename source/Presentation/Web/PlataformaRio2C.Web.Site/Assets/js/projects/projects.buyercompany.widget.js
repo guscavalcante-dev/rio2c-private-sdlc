@@ -42,17 +42,17 @@ var ProjectsBuyerCompanyWidget = function () {
                     enableShowPlugins();
                 },
                 // Error
-                onError: function() {
+                onError: function () {
                 }
             });
         })
-        .fail(function () {
-            //showAlert();
-            //MyRio2cCommon.unblock(widgetElementId);
-        })
-        .always(function() {
-            MyRio2cCommon.unblock({ idOrClass: widgetElementId });
-        });
+            .fail(function () {
+                //showAlert();
+                //MyRio2cCommon.unblock(widgetElementId);
+            })
+            .always(function () {
+                MyRio2cCommon.unblock({ idOrClass: widgetElementId });
+            });
     };
 
     // Search -------------------------------------------------------------------------------------
@@ -112,18 +112,18 @@ var ProjectsBuyerCompanyWidget = function () {
                 }
             });
         })
-        .fail(function () {
-        })
-        .always(function () {
-            MyRio2cCommon.unblock();
-        });
+            .fail(function () {
+            })
+            .always(function () {
+                MyRio2cCommon.unblock();
+            });
     };
 
     // Select/Unselect company --------------------------------------------------------------------
     var toggleSelectButtons = function () {
         var selectedBuyerEvaluations = $('.selected-buyer-evaluation');
         if ($('#ProjectsBuyerEvaluationsAvailable').val() <= 0) {
-            $('.select-buyer-evaluation-button').each(function() {
+            $('.select-buyer-evaluation-button').each(function () {
                 MyRio2cCommon.hide($(this));
             });
         }
@@ -168,11 +168,11 @@ var ProjectsBuyerCompanyWidget = function () {
                 }
             });
         })
-        .fail(function () {
-        })
-        .always(function () {
-            MyRio2cCommon.unblock();
-        });
+            .fail(function () {
+            })
+            .always(function () {
+                MyRio2cCommon.unblock();
+            });
     };
 
     var unselectCompany = function (attendeeOrganizationUid) {
@@ -203,11 +203,11 @@ var ProjectsBuyerCompanyWidget = function () {
                 }
             });
         })
-        .fail(function () {
-        })
-        .always(function () {
-            MyRio2cCommon.unblock();
-        });
+            .fail(function () {
+            })
+            .always(function () {
+                MyRio2cCommon.unblock();
+            });
     };
 
     // Finish -------------------------------------------------------------------------------------
@@ -219,38 +219,38 @@ var ProjectsBuyerCompanyWidget = function () {
         jsonParameters.originPage = originPage;
 
         $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/Finish'), jsonParameters, function (data) {
-                MyRio2cCommon.handleAjaxReturn({
-                    data: data,
-                    // Success
-                    onSuccess: function () {
-                        if (originPage === 'SubmittedDetails') {
-                            if (typeof (ProjectsMainInformationWidget) !== 'undefined') {
-                                ProjectsMainInformationWidget.init();
-                            }
-
-                            if (typeof (ProjectsInterestWidget) !== 'undefined') {
-                                ProjectsInterestWidget.init();
-                            }
-
-                            if (typeof (ProjectsLinksWidget) !== 'undefined') {
-                                ProjectsLinksWidget.init();
-                            }
-
-                            if (typeof (ProjectsBuyerCompanyWidget) !== 'undefined') {
-                                ProjectsBuyerCompanyWidget.init();
-                            }
-
-                            var modal = $(updateModalId);
-                            if (modal.length > 0) {
-                                modal.modal('hide');
-                            }
+            MyRio2cCommon.handleAjaxReturn({
+                data: data,
+                // Success
+                onSuccess: function () {
+                    if (originPage === 'SubmittedDetails') {
+                        if (typeof (ProjectsMainInformationWidget) !== 'undefined') {
+                            ProjectsMainInformationWidget.init();
                         }
-                    },
-                    // Error
-                    onError: function () {
+
+                        if (typeof (ProjectsInterestWidget) !== 'undefined') {
+                            ProjectsInterestWidget.init();
+                        }
+
+                        if (typeof (ProjectsLinksWidget) !== 'undefined') {
+                            ProjectsLinksWidget.init();
+                        }
+
+                        if (typeof (ProjectsBuyerCompanyWidget) !== 'undefined') {
+                            ProjectsBuyerCompanyWidget.init();
+                        }
+
+                        var modal = $(updateModalId);
+                        if (modal.length > 0) {
+                            modal.modal('hide');
+                        }
                     }
-                });
-            })
+                },
+                // Error
+                onError: function () {
+                }
+            });
+        })
             .fail(function () {
             })
             .always(function () {
@@ -291,8 +291,8 @@ var ProjectsBuyerCompanyWidget = function () {
             bootbox.dialog({
                 title: translations.finishModalTitle,
                 message: translations.finishPendingModalMessage
-                                            .replace('{0}', buyerEvaluationsAvailable)
-                                            .replace('{1}', playerTranslation),
+                    .replace('{0}', buyerEvaluationsAvailable)
+                    .replace('{1}', playerTranslation),
                 closeButton: false,
                 className: "modal-bg-red",
                 buttons: {
@@ -389,13 +389,13 @@ var ProjectsBuyerCompanySelectedWidget = function () {
                 }
             });
         })
-        .fail(function () {
-            //showAlert();
-            //MyRio2cCommon.unblock(widgetElementId);
-        })
-        .always(function () {
-            MyRio2cCommon.unblock({ idOrClass: widgetElementId });
-        });
+            .fail(function () {
+                //showAlert();
+                //MyRio2cCommon.unblock(widgetElementId);
+            })
+            .always(function () {
+                MyRio2cCommon.unblock({ idOrClass: widgetElementId });
+            });
     };
 
     return {
@@ -437,17 +437,17 @@ var ProjectsMatchBuyerCompanyWidget = function () {
         jsonParameters.searchKeywords = $('#SearchKeywords').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/ShowProjectMatchBuyerCompanyWidget'), jsonParameters, function (data) {
-                MyRio2cCommon.handleAjaxReturn({
-                    data: data,
-                    // Success
-                    onSuccess: function () {
-                        enableShowPlugins();
-                    },
-                    // Error
-                    onError: function () {
-                    }
-                });
-            })
+            MyRio2cCommon.handleAjaxReturn({
+                data: data,
+                // Success
+                onSuccess: function () {
+                    enableShowPlugins();
+                },
+                // Error
+                onError: function () {
+                }
+            });
+        })
             .fail(function () {
                 //showAlert();
                 //MyRio2cCommon.unblock(widgetElementId);
@@ -486,7 +486,7 @@ var ProjectsMatchBuyerCompanyWidget = function () {
         changePage: function () {
             changePage();
         },
-        handlePaginationReturn: function(data) {
+        handlePaginationReturn: function (data) {
             handlePaginationReturn(data);
         }
     };
@@ -533,13 +533,13 @@ var ProjectsAllBuyerCompanyWidget = function () {
                 }
             });
         })
-        .fail(function () {
-            //showAlert();
-            //MyRio2cCommon.unblock(widgetElementId);
-        })
-        .always(function () {
-            MyRio2cCommon.unblock({ idOrClass: widgetElementId });
-        });
+            .fail(function () {
+                //showAlert();
+                //MyRio2cCommon.unblock(widgetElementId);
+            })
+            .always(function () {
+                MyRio2cCommon.unblock({ idOrClass: widgetElementId });
+            });
     };
 
     // Pagination ---------------------------------------------------------------------------------
@@ -576,3 +576,86 @@ var ProjectsAllBuyerCompanyWidget = function () {
         }
     };
 }();
+
+
+// Buyer Project Evaluation
+
+var ProjectsBuyerEvaluationWidget = function () {
+
+    var widgetElementId = '#ProjectBuyerEvaluationWidget';
+    var widgetElement = $(widgetElementId);
+
+
+    // Show ---------------------------------------------------------------------------------------
+    var enableShowPlugins = function () {
+        KTApp.initTooltips();
+        MyRio2cCommon.initScroll();
+    };
+
+    var show = function () {
+        if (widgetElement.length <= 0) {
+            return;
+        }
+
+        var jsonParameters = new Object();
+        jsonParameters.searchKeywords = $('#SearchKeywords').val();
+
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/UpdateSubmittedListEvaluation'), jsonParameters, function (data) {
+            MyRio2cCommon.handleAjaxReturn({
+                data: data,
+                // Success
+                onSuccess: function () {
+                    enableShowPlugins();
+                },
+                // Error
+                onError: function () {
+                }
+            });
+        })
+            .fail(function () {
+            })
+            .always(function () {
+                MyRio2cCommon.unblock({ idOrClass: widgetElementId });
+            });
+    };
+
+
+    // Pagination ---------------------------------------------------------------------------------
+    var changePage = function () {
+        MyRio2cCommon.block({ idOrClass: widgetElementId });
+    };
+
+    var handlePaginationReturn = function (data) {
+        MyRio2cCommon.handleAjaxReturn({
+            data: data,
+            // Success
+            onSuccess: function () {
+                enableShowPlugins();
+                MyRio2cCommon.unblock({ idOrClass: widgetElementId });
+            },
+            // Error
+            onError: function () {
+                MyRio2cCommon.unblock({ idOrClass: widgetElementId });
+            }
+        });
+    };
+
+
+    return {
+        init: function () {
+            MyRio2cCommon.block({ idOrClass: widgetElementId });
+            show();
+        },
+        search: function () {
+            show();
+        },
+        changePage: function () {
+            changePage();
+        },
+        handlePaginationReturn: function (data) {
+            handlePaginationReturn(data);
+        }
+    };
+}();
+
+// End Buyer Project Evaluation
