@@ -270,8 +270,3 @@ jQuery(document).ready(function () {
         });
     };
 });
-
-//function htmlEncode(value) {
-//    var encodedValue = $('<div />').text(value).html();
-//    return encodedValue;
-//}

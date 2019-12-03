@@ -75,7 +75,7 @@ var MyRio2cKTAppChat = function () {
 				}
 
 				// remove additional space
-				height = height - 60;
+				height = height - 93;
 				
 				return height;
 			} 
