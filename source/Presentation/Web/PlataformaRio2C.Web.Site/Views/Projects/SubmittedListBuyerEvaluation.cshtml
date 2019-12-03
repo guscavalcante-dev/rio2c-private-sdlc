@@ -1,25 +1,47 @@
-﻿
+﻿@using PlataformaRio2C.Domain.Dtos
+
+@model List<InterestDto>
 @{
     ViewBag.Title = Labels.ProjectSubscription;
 }
 
-
-<div class="kt-portlet kt-portlet--height-fluid">
-    <div class="kt-portlet__body">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="d-flex">
-                            @Html.TextBox("SearchKeywords", null, new { @class = "form-control mr-1", type = "search", placeholder = Labels.Search })
-                            <button type="button" class="btn btn-primary btn-icon" onclick="ProjectsBuyerEvaluationWidget.search();"><i class="fa fa-search"></i></button>
-                        </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="kt-portlet">
+            <div class="kt-portlet__body">
+                <div class="kt-infobox">
+                    <div class="kt-infobox__header">
+                        <h2 class="kt-infobox__title">Projetos disponíveis para avaliação</h2>
                     </div>
                 </div>
-                <div class="row mt-3">
-                    <div class="col-12">
-                        <div class="col-12" id="ProjectBuyerEvaluationWidget" style="min-height: 500px"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
+<div class="row">
+    <div class="col-md-12">
+        <div class="kt-portlet">
+            <div class="kt-portlet__body">
+                <div class="kt-infobox">
+                    <div class="d-flex">
+                        <div class="col-md-6">
+                            @Html.TextBox("SearchKeywords", null, new { @class = "form-control mr-1", type = "search", placeholder = Labels.Search })
+                        </div>
+                        <div class="col-md-4">
+                            <select name="@Html.NameFor(m => m.FirstOrDefault().Interest)" id="@Html.IdFor(m => m.FirstOrDefault().Interest.Uid)" class="form-control enable-select2">
+                                <option value="">@(Labels.Select)...</option>
+                                @foreach (var item in Model)
+                                {
+                                    <option value="@item.Interest.Uid">
+                                        @item.Interest.Name
+                                    </option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-primary btn-icon" onclick="ProjectsBuyerEvaluationWidget.search();"><i class="fa fa-search"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -28,11 +50,15 @@
 </div>
 
 
+<div id="ProjectBuyerEvaluationWidget" style="min-height: 500px"></div>
+
 
 @section Styles {
+    @Styles.Render("~/bundles/css/select2.css")
 }
 @section Scripts {
     @Scripts.Render("~/bundles/js/projects.buyercompany.widget.js")
+    @Scripts.Render("~/bundles/js/select2.js")
     <script>
         jQuery(document).ready(function () {
             ProjectsBuyerEvaluationWidget.init();

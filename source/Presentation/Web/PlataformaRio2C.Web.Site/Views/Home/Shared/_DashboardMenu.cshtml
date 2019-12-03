@@ -135,6 +135,11 @@
                         {
                             projectsUrl = Url.Action("SubmittedList", "Projects", new {Area = ""});
                         }
+                        else if(userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual) == true)
+                        {
+                            projectsUrl = Url.Action("SubmittedListBuyerEvaluation", "Projects", new {Area = ""});
+                        }
+
                         <li class="kt-nav__item @this.IsOpen(menuOpenCssClass, null, "Projects", null)">
                             <a class="kt-nav__link" href="@projectsUrl">
                                 <span class="kt-nav__link-icon">

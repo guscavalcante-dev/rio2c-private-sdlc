@@ -590,6 +590,8 @@ var ProjectsBuyerEvaluationWidget = function () {
     var enableShowPlugins = function () {
         KTApp.initTooltips();
         MyRio2cCommon.initScroll();
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: '.enable-select2' });
+
     };
 
     var show = function () {
@@ -599,6 +601,7 @@ var ProjectsBuyerEvaluationWidget = function () {
 
         var jsonParameters = new Object();
         jsonParameters.searchKeywords = $('#SearchKeywords').val();
+        jsonParameters.interestUid = $('#Interest_Uid').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/UpdateSubmittedListEvaluation'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({

@@ -1506,17 +1506,19 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             #endregion
 
-            return View();
+            var projectInterests = await this.interestRepo.FindAllDtosAsync();
+
+            return View(projectInterests);
         }
 
         /// <summary>Submitted list.</summary>
         /// <returns></returns>
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.ExecutiveAudiovisual)]
         [HttpGet]
-        public async Task<ActionResult> UpdateSubmittedListEvaluation(string searchKeywords, int page = 1, int pageSize = 10)
+        public async Task<ActionResult> UpdateSubmittedListEvaluation(string searchKeywords, Guid? interestUid, int page = 1, int pageSize = 10)
         {
             var projects = await this.projectRepo.FindAllProjectsToEvaluateUidAsync(
-                this.UserAccessControlDto?.Collaborator?.Uid ?? Guid.Empty, searchKeywords, page-1, pageSize);
+                this.UserAccessControlDto?.Collaborator?.Uid ?? Guid.Empty, searchKeywords, interestUid, page, pageSize);
 
             if (projects == null)
             {

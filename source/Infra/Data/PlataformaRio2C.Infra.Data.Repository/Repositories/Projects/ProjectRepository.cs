@@ -61,7 +61,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<Project> FindByAttendeeCollabratorUid(this IQueryable<Project> query, Guid attendeeCollaboratorUid)
         {
-            query = query.Where(p => p.ProjectBuyerEvaluations.Any(pbe => pbe.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators.Any(ao => ao.AttendeeCollaborator.Collaborator.Uid == attendeeCollaboratorUid 
+            query = query.Where(p => p.ProjectBuyerEvaluations.Any(pbe => pbe.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators.Any(ao => ao.AttendeeCollaborator.Collaborator.Uid == attendeeCollaboratorUid
                                                                                                                                               && !ao.IsDeleted)
                                                                              && !p.IsDeleted
                                                                              && !pbe.IsDeleted
@@ -145,6 +145,23 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds the by interest.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="interstUid">The interest Uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> FindByInterest(this IQueryable<Project> query, Guid? interestUid)
+        {
+            if (interestUid != null)
+            {
+                var predicate = PredicateBuilder.New<Project>(true);
+                predicate = predicate.And(p => p.ProjectInterests.Any(i => i.Interest.Uid == interestUid));
+
+                query = query.AsExpandable().Where(predicate);
+            }
+
+            return query;
+        }
+
         /// <summary>Determines whether [is not deleted].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
@@ -174,8 +191,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static async Task<IPagedList<ProjectDto>> ToListPagedAsync(this IQueryable<ProjectDto> query, int page, int pageSize)
         {
-            page++;
-
             // Page the list
             var pagedList = await query.ToPagedListAsync(page, pageSize);
             if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
@@ -267,11 +282,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
 
-        public async Task<IPagedList<ProjectDto>> FindAllProjectsToEvaluateUidAsync(Guid attendeeCollaboratorUid, string searchKeywords, int page, int pageSize)
+        public async Task<IPagedList<ProjectDto>> FindAllProjectsToEvaluateUidAsync(Guid attendeeCollaboratorUid, string searchKeywords, Guid? interestUid, int page, int pageSize)
         {
             var query = this.GetBaseQuery()
                                 .FindByAttendeeCollabratorUid(attendeeCollaboratorUid)
                                 .FindByKeywords(searchKeywords)
+                                .FindByInterest(interestUid)
                                 .Select(p => new ProjectDto
                                 {
                                     Project = p,
@@ -298,7 +314,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         Interest = i.Interest,
                                         InterestGroup = i.Interest.InterestGroup
                                     }),
-                                    ProjectBuyerEvaluationDtos = p.ProjectBuyerEvaluations.Where(be => !be.IsDeleted 
+                                    ProjectBuyerEvaluationDtos = p.ProjectBuyerEvaluations.Where(be => !be.IsDeleted
                                                                                                  && be.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators.Any(ao => ao.AttendeeCollaborator.Collaborator.Uid == attendeeCollaboratorUid))
                                     .Select(be => new ProjectBuyerEvaluationDto
                                     {
@@ -622,25 +638,25 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public override IQueryable<Project> GetAll(bool @readonly = false)
         {
             var consult = this.dbSet;
-                                //.Include(i => i.Titles)
-                                //.Include(i => i.Titles.Select(t => t.Language))
-                                //.Include(i => i.LogLines)
-                                //.Include(i => i.LogLines.Select(t => t.Language))
-                                //.Include(i => i.Summaries)
-                                //.Include(i => i.Summaries.Select(t => t.Language))
-                                //.Include(i => i.ProductionPlans)
-                                //.Include(i => i.ProductionPlans.Select(t => t.Language))
-                                //.Include(i => i.Interests)
-                                //.Include(i => i.Interests.Select(e => e.Interest))
-                                //.Include(i => i.Interests.Select(e => e.Interest.InterestGroup))
-                                //.Include(i => i.LinksImage)
-                                //.Include(i => i.LinksTeaser)
-                                //.Include(i => i.AdditionalInformations)
-                                //.Include(i => i.AdditionalInformations.Select(t => t.Language))
-                                //.Include(i => i.PlayersRelated)
-                                //.Include(i => i.PlayersRelated.Select(t => t.Player))
-                                //.Include(i => i.PlayersRelated.Select(t => t.Evaluation))
-                                //.Include(i => i.Producer);
+            //.Include(i => i.Titles)
+            //.Include(i => i.Titles.Select(t => t.Language))
+            //.Include(i => i.LogLines)
+            //.Include(i => i.LogLines.Select(t => t.Language))
+            //.Include(i => i.Summaries)
+            //.Include(i => i.Summaries.Select(t => t.Language))
+            //.Include(i => i.ProductionPlans)
+            //.Include(i => i.ProductionPlans.Select(t => t.Language))
+            //.Include(i => i.Interests)
+            //.Include(i => i.Interests.Select(e => e.Interest))
+            //.Include(i => i.Interests.Select(e => e.Interest.InterestGroup))
+            //.Include(i => i.LinksImage)
+            //.Include(i => i.LinksTeaser)
+            //.Include(i => i.AdditionalInformations)
+            //.Include(i => i.AdditionalInformations.Select(t => t.Language))
+            //.Include(i => i.PlayersRelated)
+            //.Include(i => i.PlayersRelated.Select(t => t.Player))
+            //.Include(i => i.PlayersRelated.Select(t => t.Evaluation))
+            //.Include(i => i.Producer);
 
             return @readonly
               ? consult.AsNoTracking()
@@ -823,16 +839,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public int CountUnsent()
         {
             return this.dbSet.Count();
-                                //.Include(i => i.PlayersRelated)
-                                //.Count(e => !e.PlayersRelated.Any() || (e.PlayersRelated.Count(p => !p.Sent) == e.PlayersRelated.Count()));
+            //.Include(i => i.PlayersRelated)
+            //.Count(e => !e.PlayersRelated.Any() || (e.PlayersRelated.Count(p => !p.Sent) == e.PlayersRelated.Count()));
 
         }
 
         public int CountSent()
         {
             return this.dbSet.Count();
-                                //.Include(i => i.PlayersRelated)
-                                //.Count(e => e.PlayersRelated.Any(p => p.Sent));
+            //.Include(i => i.PlayersRelated)
+            //.Count(e => e.PlayersRelated.Any(p => p.Sent));
 
         }
 
