@@ -1774,4 +1774,8 @@
     <value>You</value>
     <comment>Você</comment>
   </data>
+  <data name="Participant" xml:space="preserve">
+    <value>Participant</value>
+    <comment>Participante</comment>
+  </data>
 </root>

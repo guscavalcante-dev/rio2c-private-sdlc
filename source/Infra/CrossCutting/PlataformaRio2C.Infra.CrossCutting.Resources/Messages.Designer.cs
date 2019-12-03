@@ -924,6 +924,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nenhum {0} {1}..
+        /// </summary>
+        public static string NoneEntityAction {
+            get {
+                return ResourceManager.GetString("NoneEntityAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Número inválido..
         /// </summary>
         public static string NumberIsInvalid {

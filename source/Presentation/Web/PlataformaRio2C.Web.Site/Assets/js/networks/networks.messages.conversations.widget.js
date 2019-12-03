@@ -4,7 +4,7 @@
 // Created          : 11-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-27-2019
+// Last Modified On : 12-03-2019
 // ***********************************************************************
 // <copyright file="networks.messages.conversations.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,7 +28,9 @@ var NetworksMessagesConversationsWidget = function () {
         }
 
         var jsonParameters = new Object();
-        //jsonParameters.organizationUid = $('#AggregateId').val();
+        jsonParameters.userUid = $('#UserUid').val();
+
+        $('#UserUid').val('');
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Networks/ShowConversationsWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({

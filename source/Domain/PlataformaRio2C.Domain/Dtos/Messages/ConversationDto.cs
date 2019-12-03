@@ -4,7 +4,7 @@
 // Created          : 11-21-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-27-2019
+// Last Modified On : 12-03-2019
 // ***********************************************************************
 // <copyright file="ConversationDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,7 +21,7 @@ namespace PlataformaRio2C.Domain.Dtos
     {
         public User OtherUser { get; set; }
         public AttendeeCollaboratorDto OtherAttendeeCollaboratorDto { get; set; }
-        public DateTime LastMessageDate { get; set; }
+        public DateTime? LastMessageDate { get; set; }
         public int UnreadMessagesCount { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="ConversationDto"/> class.</summary>

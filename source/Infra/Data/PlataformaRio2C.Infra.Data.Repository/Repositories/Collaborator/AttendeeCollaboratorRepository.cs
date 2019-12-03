@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-19-2019
+// Last Modified On : 12-03-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -342,6 +342,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             {
                                 AttendeeCollaborator = ac,
                                 Collaborator = ac.Collaborator,
+                                User = ac.Collaborator.User,
                                 JobTitlesDtos = ac.Collaborator.JobTitles.Where(d => !d.IsDeleted).Select(d => new CollaboratorJobTitleBaseDto
                                 {
                                     Id = d.Id,

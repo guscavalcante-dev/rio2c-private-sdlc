@@ -4,7 +4,7 @@
 // Created          : 11-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-27-2019
+// Last Modified On : 12-03-2019
 // ***********************************************************************
 // <copyright file="NetworksController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,7 +16,9 @@ using System.Web.Mvc;
 using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -80,7 +82,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <summary>Messageses this instance.</summary>
         /// <returns></returns>
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.ExecutiveAudiovisual + "," + Constants.CollaboratorType.Industry)]
-        public async Task<ActionResult> Messages()
+        public async Task<ActionResult> Messages(Guid? id)
         {
             #region Breadcrumb
 
@@ -90,7 +92,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             #endregion
 
-            return View();
+            return View(id);
         }
 
         #region Main Conversations Widget
@@ -98,9 +100,30 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <summary>Shows the conversations widget.</summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowConversationsWidget()
+        public async Task<ActionResult> ShowConversationsWidget(Guid? userUid)
         {
-            var conversations = await this.messageRepo.FindAllConversationsDtosByEditionIdAndByUserId(this.EditionDto.Id, this.UserAccessControlDto.User.Id);
+            var conversations = await this.messageRepo.FindAllConversationsDtosByEditionIdAndByUserId(this.EditionDto.Id, this.UserAccessControlDto.User.Id) ??
+                                new List<ConversationDto>();
+            
+            // Create conversation menu for selected user to send message
+            if (userUid.HasValue)
+            {
+                // Check if already has a conversation e move to the top
+                var conversation = conversations?.FirstOrDefault(c => c.OtherUser.Uid == userUid);
+                if (conversation != null)
+                {
+                    conversations.Remove(conversation);
+                    conversations.Insert(0, conversation);
+                }
+                else
+                {
+                    var newConversation = await this.messageRepo.FindNewConversationsDtoByEditionIdAndByOtherUserUid(this.EditionDto.Id, userUid.Value);
+                    if (newConversation != null)
+                    {
+                        conversations.Insert(0, newConversation);
+                    }
+                }
+            }
 
             return Json(new
             {

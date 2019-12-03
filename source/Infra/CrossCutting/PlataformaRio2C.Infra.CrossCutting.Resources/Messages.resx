@@ -779,4 +779,8 @@
     <value>Para acessar a plataforma MyRio2C é necessário estar credenciado.</value>
     <comment>Para acessar a plataforma MyRio2C é necessário estar credenciado.</comment>
   </data>
+  <data name="NoneEntityAction" xml:space="preserve">
+    <value>Nenhum {0} {1}.</value>
+    <comment>Nenhum {0} {1}.</comment>
+  </data>
 </root>

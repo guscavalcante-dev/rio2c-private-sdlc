@@ -85,7 +85,7 @@
                                 </div>
 
                                 <div class="kt-widget__footer">
-                                    <button type="button" class="btn btn-label-brand btn-lg btn-upper">@Labels.SendMessage</button>
+                                    <a href="@Url.Action("Messages", "Networks", new { id = attendeeCollaboratorNetworkDto.User.Uid, Area = "" })" class="btn btn-label-brand btn-lg btn-upper">@Labels.SendMessage</a>
                                 </div>
                             </div>
                             <!--end::Widget -->
@@ -97,7 +97,7 @@
         }
         else
         {
-            <div class="col-12">Nenhum participante encontrado.</div>
+            <div class="col-12">@string.Format(Messages.NoneEntityAction, Labels.Participant.ToLowerInvariant(), Labels.FoundM)</div>
         }
     </div>
     <!--End::List-->

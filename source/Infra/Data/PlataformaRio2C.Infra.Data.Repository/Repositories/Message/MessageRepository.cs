@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-27-2019
+// Last Modified On : 12-03-2019
 // ***********************************************************************
 // <copyright file="MessageRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -137,6 +137,56 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return @readonly
                         ? consult.AsNoTracking()
                         : consult;
+        }
+
+        /// <summary>Finds the new conversations dto by edition identifier and by other user uid.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="otherUserUid">The other user uid.</param>
+        /// <returns></returns>
+        public async Task<ConversationDto> FindNewConversationsDtoByEditionIdAndByOtherUserUid(int editionId, Guid otherUserUid)
+        {
+            var query = this._context.Users
+                                        .IsNotDeleted()
+                                        .FindByUid(otherUserUid);
+
+            return await query
+                        .Select(u => new ConversationDto
+                        {
+                            OtherUser = u,
+                            OtherAttendeeCollaboratorDto = new AttendeeCollaboratorDto
+                            {
+                                AttendeeCollaborator = u.Collaborator.AttendeeCollaborators
+                                                                            .FirstOrDefault(ac => !ac.IsDeleted && ac.EditionId == editionId),
+                                Collaborator = u.Collaborator,
+                                JobTitlesDtos = u.Collaborator.JobTitles
+                                                                    .Where(jb => !jb.IsDeleted)
+                                                                    .Select(jb => new CollaboratorJobTitleBaseDto
+                                                                    {
+                                                                        Id = jb.Id,
+                                                                        Uid = jb.Uid,
+                                                                        Value = jb.Value,
+                                                                        LanguageDto = new LanguageBaseDto
+                                                                        {
+                                                                            Id = jb.Language.Id,
+                                                                            Uid = jb.Language.Uid,
+                                                                            Name = jb.Language.Name,
+                                                                            Code = jb.Language.Code
+                                                                        }
+                                                                    }),
+                                AttendeeOrganizationsDtos = u.Collaborator.AttendeeCollaborators
+                                                                                .FirstOrDefault(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                                                .AttendeeOrganizationCollaborators
+                                                                                .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted && !aoc.AttendeeOrganization.Organization.IsDeleted)
+                                                                                .Select(aoc => new AttendeeOrganizationDto
+                                                                                {
+                                                                                    AttendeeOrganization = aoc.AttendeeOrganization,
+                                                                                    Organization = aoc.AttendeeOrganization.Organization
+                                                                                })
+                            },
+                            LastMessageDate = null,
+                            UnreadMessagesCount = 0
+                        })
+                        .FirstOrDefaultAsync();
         }
 
         /// <summary>Finds all conversations dtos by edition identifier and by user identifier.</summary>

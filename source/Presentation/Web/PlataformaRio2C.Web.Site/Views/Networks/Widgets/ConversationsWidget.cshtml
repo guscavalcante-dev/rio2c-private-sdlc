@@ -24,24 +24,35 @@
             <div class="kt-widget__info">
                 <div class="kt-widget__section">
                     <span class="kt-widget__username">
-                        @(conversationDto?.OtherAttendeeCollaboratorDto?.Collaborator?.Badge ??
-                          conversationDto?.OtherAttendeeCollaboratorDto?.Collaborator?.GetFullName() ??
-                          conversationDto?.OtherUser?.Name ?? "-")
+                        @(conversationDto.OtherAttendeeCollaboratorDto?.Collaborator?.Badge ??
+                          conversationDto.OtherAttendeeCollaboratorDto?.Collaborator?.GetFullName() ??
+                          conversationDto.OtherUser?.Name ?? "-")
                     </span>
                     @*<span class="kt-badge kt-badge--success kt-badge--dot"></span>*@
                 </div>
                 @{
+                    var orgazanition = conversationDto.OtherAttendeeCollaboratorDto?.AttendeeOrganizationsDtos?.FirstOrDefault()?.Organization;
                     var jobTitle = conversationDto.OtherAttendeeCollaboratorDto?.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value;
                 }
-                @if (!string.IsNullOrEmpty(jobTitle))
+                @if (orgazanition != null || !string.IsNullOrEmpty(jobTitle))
                 {
                     <span class="kt-widget__desc">
-                        @jobTitle
+                        @if (orgazanition != null)
+                        {
+                            @orgazanition.TradeName<br />
+                        }
+                        @if (!string.IsNullOrEmpty(jobTitle))
+                        {
+                            <small>@jobTitle</small>
+                        }
                     </span>
                 }
             </div>
             <div class="kt-widget__action">
-                <time class="timeago kt-widget__date" datetime="@conversationDto.LastMessageDate.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.CurrentCulture)">@conversationDto.LastMessageDate.ToShortDateString() @conversationDto.LastMessageDate.ToLongTimeString()</time>
+                @if (conversationDto.LastMessageDate.HasValue)
+                {
+                    <time class="timeago kt-widget__date" datetime="@conversationDto.LastMessageDate.Value.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.CurrentCulture)">@conversationDto.LastMessageDate.Value.ToShortDateString() @conversationDto.LastMessageDate.Value.ToLongTimeString()</time>
+                }
                 @if (conversationDto.UnreadMessagesCount > 0)
                 {
                     <span class="kt-badge kt-badge--success kt-font-bold">@conversationDto.UnreadMessagesCount</span>

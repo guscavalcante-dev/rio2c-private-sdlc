@@ -285,6 +285,11 @@ a.r2c-login__footer-link, a.r2c-footer-link {
     Media
 */
 
+.kt-userpic.my-userpic--43 img {
+    width: 43px;
+    height: 43px;
+}
+
 .kt-media.kt-media--circle span {
     border-radius: 50%;
 }
@@ -325,11 +330,11 @@ a.r2c-login__footer-link, a.r2c-footer-link {
     Messages/Chat
 */
 
-.kt-widget__item.chat-selected {
+.kt-widget--users .kt-widget__item.chat-selected {
     background-color: #f2f3f7;
     border-radius: 4px;
 }
 
-.kt-widget__item:hover {
+.kt-widget--users .kt-widget__item:hover {
     background-color: #f2f3f7;
 }

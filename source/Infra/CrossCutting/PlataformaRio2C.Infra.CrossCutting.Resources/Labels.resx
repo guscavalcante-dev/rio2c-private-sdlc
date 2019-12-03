@@ -1787,4 +1787,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Você</value>
     <comment>Você</comment>
   </data>
+  <data name="Participant" xml:space="preserve">
+    <value>Participante</value>
+    <comment>Participante</comment>
+  </data>
 </root>

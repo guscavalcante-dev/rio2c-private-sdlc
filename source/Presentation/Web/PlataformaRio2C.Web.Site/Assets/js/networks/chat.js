@@ -1,3 +1,16 @@
+// ***********************************************************************
+// Assembly         : PlataformaRio2C.Web.Admin
+// Author           : Rafael Dantas Ruiz
+// Created          : 11-29-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 12-03-2019
+// ***********************************************************************
+// <copyright file="chat.js" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 "use strict";
 
 // Class definition
@@ -22,7 +35,8 @@ var MyRio2cKTAppChat = function () {
 		}
 
 		// Initialize perfect scrollbar(see:  https://github.com/utatti/perfect-scrollbar) 
-		KTUtil.scrollInit(userListEl, {
+        KTUtil.scrollInit(userListEl, {
+            windowScroll: false,
 			mobileNativeScroll: true,  // enable native scroll for mobile
 			desktopNativeScroll: false, // disable native scroll and use custom scroll for desktop 
 			resetHeightOnDestroy: true,  // reset css height on scroll feature destroyed
@@ -61,7 +75,7 @@ var MyRio2cKTAppChat = function () {
 				}
 
 				// remove additional space
-				height = height - 5;
+				height = height - 60;
 				
 				return height;
 			} 
