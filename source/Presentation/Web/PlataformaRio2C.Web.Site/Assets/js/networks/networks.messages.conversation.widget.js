@@ -12,13 +12,13 @@
 // <summary></summary>
 // ***********************************************************************
 
+var otherUserId;
+var otherUserUid;
+
 var NetworksMessagesConversationWidget = function () {
 
     var widgetElementId = '#MessagesConversationWidget';
     var widgetElement = $(widgetElementId);
-
-    var otherUserId;
-    var otherUserUid;
 
     // Signalr ------------------------------------------------------------------------------------
     var enableChat = function () {
@@ -59,8 +59,8 @@ var NetworksMessagesConversationWidget = function () {
     };
 
     // Read messages ------------------------------------------------------------------------------
-    var readMessages = function () {
-        if (!$('.chat-selected #UnreadMessagesCount').hasClass('d-none')) {
+    var readMessages = function (isChatOpen) {
+        if (isChatOpen || !$('.chat-selected #UnreadMessagesCount').hasClass('d-none')) {
             $.connection.hub.start().done(function () {
                 window.messageHub.server.readMessages(
                     otherUserId,
@@ -141,7 +141,10 @@ var NetworksMessagesConversationWidget = function () {
 
         var node = document.createElement("DIV");
         KTUtil.addClass(node, 'kt-chat__message kt-chat__message--brand kt-chat__message--right');
-        scrollEl.scrollTop = parseInt(KTUtil.css(messagesEl, 'height'));
+
+        if (!MyRio2cCommon.isNullOrEmpty(KTUtil.css(messagesEl, 'height'))) {
+            scrollEl.scrollTop = parseInt(KTUtil.css(messagesEl, 'height'));
+        }
 
         var ps;
         if (ps = KTUtil.data(scrollEl).get('ps')) {
@@ -149,7 +152,10 @@ var NetworksMessagesConversationWidget = function () {
         }
 
         KTUtil.addClass(node, 'kt-chat__message kt-chat__message--success');
-        scrollEl.scrollTop = parseInt(KTUtil.css(messagesEl, 'height'));
+
+        if (!MyRio2cCommon.isNullOrEmpty(KTUtil.css(messagesEl, 'height'))) {
+            scrollEl.scrollTop = parseInt(KTUtil.css(messagesEl, 'height'));
+        }
 
         var ps;
         if (ps = KTUtil.data(scrollEl).get('ps')) {
@@ -163,6 +169,9 @@ var NetworksMessagesConversationWidget = function () {
         },
         handleMessaging: function() {
             handleMessaging();
+        },
+        readMessages: function (isChatOpen) {
+            readMessages(isChatOpen);
         }
     };
 }();
@@ -180,33 +189,35 @@ jQuery(document).ready(function () {
             data: messageHubDto,
             // Success
             onSuccess: function () {
-                var html =
-                    '<div class="kt-chat__message kt-chat__message--right">' +
-                        '   <div class="kt-chat__user">' +
-                        '       <time class="timeago kt-widget__date" datetime="' + messageHubDto.data.sendDate + '">' + messageHubDto.data.sendDateFormatted  + '</time>' +
-                        '       <a href="#" class="kt-chat__username">' + messagesConfig.you + '</a>';
+                if (otherUserUid === messageHubDto.data.recipientUserUid) {
+                    var html =
+                        '<div class="kt-chat__message kt-chat__message--right">' +
+                            '   <div class="kt-chat__user">' +
+                            '       <time class="timeago kt-widget__date" datetime="' + messageHubDto.data.sendDate + '">' + messageHubDto.data.sendDateFormatted + '</time>' +
+                            '       <a href="#" class="kt-chat__username">' + messagesConfig.you + '</a>';
 
-                if (!MyRio2cCommon.isNullOrEmpty(messageHubDto.data.senderImageUrl)) {
-                    html +=
-                        '       <span class="kt-userpic kt-userpic--circle kt-userpic--sm">' +
-                        '           <img src="' + messageHubDto.data.senderImageUrl + '" alt="image">' +
-                        '       </span>';
-                }
-                else {
-                    html +=
-                        '       <span class="kt-media kt-media--circle kt-media--brand kt-media--sm d-inline-block">' +
-                        '           <span>' + messageHubDto.data.senderNameInitials  + '</span>' +
-                        '       </span>';
-                }
+                    if (!MyRio2cCommon.isNullOrEmpty(messageHubDto.data.senderImageUrl)) {
+                        html +=
+                            '       <span class="kt-userpic kt-userpic--circle kt-userpic--sm">' +
+                            '           <img src="' + messageHubDto.data.senderImageUrl + '" alt="image">' +
+                            '       </span>';
+                    }
+                    else {
+                        html +=
+                            '       <span class="kt-media kt-media--circle kt-media--brand kt-media--sm d-inline-block">' +
+                            '           <span>' + messageHubDto.data.senderNameInitials + '</span>' +
+                            '       </span>';
+                    }
 
-                html +=
+                    html +=
                         '   </div>' +
                         '   <div class="kt-chat__text kt-bg-light-brand">' + messageHubDto.data.text.replace(/(?:\r\n|\r|\n)/g, '<br>') + '</div>' +
                         '</div>';
 
-                $('#Messages').append(html);
-                $("time.timeago").timeago();
-                NetworksMessagesConversationWidget.handleMessaging();
+                    $('#Messages').append(html);
+                    $("time.timeago").timeago();
+                    NetworksMessagesConversationWidget.handleMessaging();
+                }
             },
             // Error
             onError: function () {
@@ -221,33 +232,37 @@ jQuery(document).ready(function () {
             data: messageHubDto,
             // Success
             onSuccess: function () {
-                var html =
-                    '<div class="kt-chat__message">' +
-                        '   <div class="kt-chat__user">';
 
-                if (!MyRio2cCommon.isNullOrEmpty(messageHubDto.data.senderImageUrl)) {
-                    html +=
-                        '       <span class="kt-userpic kt-userpic--circle kt-userpic--sm">' +
-                        '           <img src="' + messageHubDto.data.senderImageUrl + '" alt="image">' +
-                        '       </span>';
-                }
-                else {
-                    html +=
-                        '       <span class="kt-media kt-media--circle kt-media--brand kt-media--sm d-inline-block">' +
-                        '           <span>' + messageHubDto.data.senderNameInitials  + '</span>' +
-                        '       </span>';
-                }
+                if (otherUserUid === messageHubDto.data.senderUserUid) {
+                    var html =
+                        '<div class="kt-chat__message">' +
+                            '   <div class="kt-chat__user">';
 
-                html +=
+                    if (!MyRio2cCommon.isNullOrEmpty(messageHubDto.data.senderImageUrl)) {
+                        html +=
+                            '       <span class="kt-userpic kt-userpic--circle kt-userpic--sm">' +
+                            '           <img src="' + messageHubDto.data.senderImageUrl + '" alt="image">' +
+                            '       </span>';
+                    }
+                    else {
+                        html +=
+                            '       <span class="kt-media kt-media--circle kt-media--brand kt-media--sm d-inline-block">' +
+                            '           <span>' + messageHubDto.data.senderNameInitials + '</span>' +
+                            '       </span>';
+                    }
+
+                    html +=
                         '       <a href="#" class="kt-chat__username">' + messageHubDto.data.senderName + '</a>' +
-                        '       <time class="timeago kt-widget__date" datetime="' + messageHubDto.data.sendDate + '">' + messageHubDto.data.sendDateFormatted  + '</time>' +
+                        '       <time class="timeago kt-widget__date" datetime="' + messageHubDto.data.sendDate + '">' + messageHubDto.data.sendDateFormatted + '</time>' +
                         '   </div>' +
                         '   <div class="kt-chat__text kt-bg-light-success text-wrap">' + messageHubDto.data.text.replace(/(?:\r\n|\r|\n)/g, '<br>') + '</div>' +
-                    '</div>';
+                        '</div>';
 
-                $('#Messages').append(html);
-                $("time.timeago").timeago();
-                NetworksMessagesConversationWidget.handleMessaging();
+                    $('#Messages').append(html);
+                    $("time.timeago").timeago();
+                    NetworksMessagesConversationWidget.handleMessaging();
+                    NetworksMessagesConversationWidget.readMessages(true);
+                }
             },
             // Error
             onError: function () {

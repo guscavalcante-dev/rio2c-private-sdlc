@@ -121,6 +121,7 @@ namespace PlataformaRio2C.Web.Site.Hub
                                              messageDto.SenderUser?.Name?.GetTwoLetterCode(),
                         SenderImageUrl = messageDto.SenderCollaborator?.ImageUploadDate != null ? ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, messageDto.SenderCollaborator.Uid, messageDto.SenderCollaborator.ImageUploadDate, true) : 
                                                                                                   null,
+                        RecipientUserUid = messageDto.RecipientUser.Uid,
                         RecipientEmail = messageDto.RecipientUser.Email,
                         SendDate = messageDto.Message.SendDate.ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.CurrentCulture),
                         SendDateFormatted = messageDto.Message.SendDate.ToShortDateString() + " " + messageDto.Message.SendDate.ToLongTimeString(),

@@ -4,7 +4,7 @@
 // Created          : 11-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-28-2019
+// Last Modified On : 12-03-2019
 // ***********************************************************************
 // <copyright file="MessageHubDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,6 +23,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public string SenderName { get; set; }
         public string SenderNameInitials { get; set; }
         public string SenderImageUrl { get; set; }
+        public Guid RecipientUserUid { get; set; }
         public string RecipientEmail { get; set; }
         public string Text { get; set; }
         public string SendDate { get; set; }
