@@ -19,14 +19,14 @@
                 else
                 {
                     <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest" style="width: 110px; height: 110px;">
-                        @(Model.Collaborator?.GetNameAbbreviation() ?? "-")
+                        @(Model.Collaborator?.GetDisplayNameAbbreviation() ?? "-")
                     </div>
                 }
             </div> 
             <div class="kt-widget__content" style="overflow: hidden;">
                 <div class="kt-widget__head">
                     <span class="kt-widget__username">
-                        @(Model.Collaborator?.GetFullName() ?? "-")
+                        @(Model.Collaborator?.GetDisplayName() ?? "-")
                         @if (Model.AttendeeCollaborator?.OnboardingFinishDate != null)
                         {
                             <i class="flaticon2-correct"></i>
@@ -68,8 +68,8 @@
             <div class="kt-widget__bottom">
                 <div class="kt-widget__item">
                     <div class="kt-widget__details">
-                        <span class="kt-widget__title">@Labels.BadgeName</span>
-                        <span class="kt-widget__value"><span>@(Model.Collaborator?.Badge ?? "-")</span></span>
+                        <span class="kt-widget__title">@Labels.FullName</span>
+                        <span class="kt-widget__value"><span>@(Model.Collaborator?.GetFullName() ?? "-")</span></span>
                     </div>
                 </div>
                 <div class="kt-widget__item">
