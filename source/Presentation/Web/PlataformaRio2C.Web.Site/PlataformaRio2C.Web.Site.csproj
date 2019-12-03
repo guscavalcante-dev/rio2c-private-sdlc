@@ -461,6 +461,7 @@
     <Content Include="Assets\js\myrio2c.showhidepassword.js" />
     <Content Include="Assets\js\myrio2c.cropper.js" />
     <Content Include="Assets\js\networks\chat.js" />
+    <Content Include="Assets\js\networks\networks.notification.common.js" />
     <Content Include="Assets\js\networks\networks.messages.conversation.widget.js" />
     <Content Include="Assets\js\networks\networks.messages.conversations.widget.js" />
     <Content Include="Assets\js\networks\networks.contacts.js" />

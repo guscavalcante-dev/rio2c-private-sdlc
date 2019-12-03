@@ -77,7 +77,6 @@ var NetworksMessagesConversationWidget = function () {
         }
     };
 
-
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         MyRio2cKTAppChat.init();
@@ -97,8 +96,17 @@ var NetworksMessagesConversationWidget = function () {
             return;
         }
 
-        otherUserId = chatSelectedElement.data('otheruser-id');
-        otherUserUid = chatSelectedElement.data('otheruser-uid');
+        var newOtherUserId = chatSelectedElement.data('otheruser-id');
+        var newOtherUserUid = chatSelectedElement.data('otheruser-uid');
+
+        if (newOtherUserUid === otherUserUid) {
+            return;
+        }
+
+        MyRio2cCommon.block({ idOrClass: widgetElementId });
+
+        otherUserId = newOtherUserId;
+        otherUserUid = newOtherUserUid;
 
         var jsonParameters = new Object();
         jsonParameters.recipientId = otherUserId;
@@ -151,7 +159,6 @@ var NetworksMessagesConversationWidget = function () {
 
     return {
         init: function () {
-            MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
         },
         handleMessaging: function() {

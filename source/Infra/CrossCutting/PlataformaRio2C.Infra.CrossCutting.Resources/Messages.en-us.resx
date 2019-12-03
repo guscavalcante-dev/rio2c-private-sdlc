@@ -778,4 +778,8 @@
     <value>No {0} {1}.</value>
     <comment>Nenhum {0} {1}.</comment>
   </data>
+  <data name="YouReceivedMessageFrom" xml:space="preserve">
+    <value>Your received a message from &lt;b&gt;{0}&lt;/b&gt;.&lt;br /&gt;&lt;br /&gt;Click here to be redirected to your inbox.</value>
+    <comment>Você recebeu uma mensagem de &lt;b&gt;{0}&lt;/b&gt;.&lt;br /&gt;&lt;br /&gt;Clique aqui para ser direcionado para a sua caixa de mensagens.</comment>
+  </data>
 </root>

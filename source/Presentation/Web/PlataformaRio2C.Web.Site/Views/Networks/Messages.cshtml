@@ -28,7 +28,9 @@
                     else
                     {
                         <span class="kt-media kt-media--circle kt-media--brand">
-                            <span>@(userAccessControlDto?.Collaborator?.GetNameAbbreviation() ?? "-")</span>
+                            <span>@(userAccessControlDto?.Collaborator?.GetDisplayNameAbbreviation() ?? 
+                                    userAccessControlDto?.User?.Name?.GetTwoLetterCode() ??
+                                    "-")</span>
                         </span>
                     }
                     <a href="@Url.Action("Index", "Networks", new { Area = "" })" class="btn btn-clean btn-sm btn-icon btn-icon-md float-right">

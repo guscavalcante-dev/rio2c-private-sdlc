@@ -22,15 +22,21 @@ var NetworksMessagesConversationsWidget = function () {
         $("time.timeago").timeago();
     };
 
-    var show = function () {
+    var show = function (otherUserUid) {
         if (widgetElement.length <= 0) {
             return;
         }
 
         var jsonParameters = new Object();
-        jsonParameters.userUid = $('#InitialUserUid').val();
 
-        $('#InitialUserUid').val('');
+        var initialOtherUserIdElement = $('#InitialUserUid');
+        if (!MyRio2cCommon.isNullOrEmpty(otherUserUid)) {
+            jsonParameters.userUid = otherUserUid;
+        }
+        else if (!MyRio2cCommon.isNullOrEmpty(initialOtherUserIdElement.val())) {
+            jsonParameters.userUid = $('#InitialUserUid').val();
+            $('#InitialUserUid').val('');
+        }
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Networks/ShowConversationsWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -57,6 +63,18 @@ var NetworksMessagesConversationsWidget = function () {
         });
     };
 
+    // Reload ------------------------------------------------------------------------------------
+    var reload = function () {
+        var otherUserUid = '';
+
+        var chatSelectedElement = $('.chat-selected');
+        if (chatSelectedElement.length > 0) {
+            otherUserUid = chatSelectedElement.data('otheruser-uid');
+        }
+
+        show(otherUserUid);
+    };
+
     // Change -------------------------------------------------------------------------------------
     var change = function (element) {
         if (MyRio2cCommon.isNullOrEmpty(element)) {
@@ -81,6 +99,9 @@ var NetworksMessagesConversationsWidget = function () {
         },
         change: function (element) {
             change(element);
+        },
+        reload: function() {
+            reload();
         }
     };
 }();

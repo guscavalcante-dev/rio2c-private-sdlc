@@ -1779,6 +1779,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Você recebeu uma mensagem de &lt;b&gt;{0}&lt;/b&gt;.&lt;br /&gt;&lt;br /&gt;Clique aqui para ser direcionado para a sua caixa de mensagens..
+        /// </summary>
+        public static string YouReceivedMessageFrom {
+            get {
+                return ResourceManager.GetString("YouReceivedMessageFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sua senha foi alterada com sucesso!.
         /// </summary>
         public static string YourPasswordHasBeenChangedSuccessfully {

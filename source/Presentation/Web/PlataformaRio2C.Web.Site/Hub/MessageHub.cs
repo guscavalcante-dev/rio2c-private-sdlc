@@ -146,6 +146,7 @@ namespace PlataformaRio2C.Web.Site.Hub
                 foreach (var connectionId in _connections.GetConnections(hubBaseDto.Data.RecipientEmail))
                 {
                     Clients.Client(connectionId).receiveRecipientMessage(viewModelSerialize);
+                    Clients.Client(connectionId).receiveNotification(viewModelSerialize);
                     //Clients.Client(connectionId).addUnreadsMessages(viewModelSerialize);
                 }
             }

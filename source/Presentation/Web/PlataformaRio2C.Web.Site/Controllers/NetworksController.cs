@@ -108,13 +108,13 @@ namespace PlataformaRio2C.Web.Site.Controllers
             // Create conversation menu for selected user to send message
             if (userUid.HasValue)
             {
-                // Check if already has a conversation e move to the top
+                // Check if already has a conversation and set viewbag to select it
                 var conversation = conversations?.FirstOrDefault(c => c.OtherUser.Uid == userUid);
                 if (conversation != null)
                 {
-                    conversations.Remove(conversation);
-                    conversations.Insert(0, conversation);
+                    ViewBag.OtherUserUid = conversation.OtherUser.Uid;
                 }
+                // If there is no conversation, create one at the top of the list
                 else
                 {
                     var newConversation = await this.messageRepo.FindNewConversationsDtoByEditionIdAndByOtherUserUid(this.EditionDto.Id, userUid.Value);
