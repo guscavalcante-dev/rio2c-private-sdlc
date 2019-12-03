@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-28-2019
+// Last Modified On : 12-03-2019
 // ***********************************************************************
 // <copyright file="MessageHub.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -151,6 +151,54 @@ namespace PlataformaRio2C.Web.Site.Hub
             }
 
             return viewModelSerialize;
+        }
+
+        /// <summary>Reads the messages.</summary>
+        /// <param name="otherUserId">The other user identifier.</param>
+        /// <param name="otherUserUid">The other user uid.</param>
+        /// <param name="currentUserId">The current user identifier.</param>
+        /// <param name="currentUserUid">The current user uid.</param>
+        /// <returns></returns>
+        public async Task<string> ReadMessages(int otherUserId, Guid otherUserUid, int currentUserId, Guid currentUserUid)
+        {
+            MessageDto messageDto = null;
+            HubBaseDto<MessageHubDto> hubBaseDto = null;
+
+            try
+            {
+                var container = HubBootStrapper.InitializeThreadScoped();
+                using (ThreadScopedLifestyle.BeginScope(container))
+                {
+                    var commandBus = container.GetInstance<IMediator>();
+
+                    var result = await commandBus.Send(new ReadMessages(
+                        otherUserId,
+                        otherUserUid,
+                        currentUserId,
+                        currentUserUid,
+                        null));
+                    if (!result.IsValid)
+                    {
+                        throw new DomainException("The message could not be read.");
+                    }
+
+                    messageDto = result.Data as MessageDto;
+                    if (messageDto == null)
+                    {
+                        throw new DomainException("The message could not be read.");
+                    }
+                }
+            }
+            catch (DomainException)
+            {
+                // Ignore
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+            }
+
+            return null;
         }
 
         /// <summary>Called when the connection connects to this hub instance.</summary>

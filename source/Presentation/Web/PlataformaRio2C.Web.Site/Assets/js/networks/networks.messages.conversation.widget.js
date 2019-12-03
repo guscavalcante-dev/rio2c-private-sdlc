@@ -4,7 +4,7 @@
 // Created          : 11-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-29-2019
+// Last Modified On : 12-03-2019
 // ***********************************************************************
 // <copyright file="networks.messages.conversation.widget" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,12 +14,11 @@
 
 var NetworksMessagesConversationWidget = function () {
 
-    //int editionId, Guid editionUid, int senderId, Guid senderUid, int recipientId, Guid recipientUid, string recipientEmail, string text
     var widgetElementId = '#MessagesConversationWidget';
     var widgetElement = $(widgetElementId);
 
-    var recipientId;
-    var recipientUid;
+    var otherUserId;
+    var otherUserUid;
 
     // Signalr ------------------------------------------------------------------------------------
     var enableChat = function () {
@@ -29,11 +28,11 @@ var NetworksMessagesConversationWidget = function () {
                 window.messageHub.server.sendMessage(
                     messagesConfig.editionId,
                     messagesConfig.editionUid,
-                    messagesConfig.senderId,
-                    messagesConfig.senderUid,
-                    messagesConfig.senderEmail,
-                    recipientId,
-                    recipientUid,
+                    messagesConfig.currentUserId,
+                    messagesConfig.currentUserUid,
+                    messagesConfig.currentUserEmail,
+                    otherUserId,
+                    otherUserUid,
                     $('#Text').val());
 
                 //var html =
@@ -59,6 +58,26 @@ var NetworksMessagesConversationWidget = function () {
         $('#Text').focus();
     };
 
+    // Read messages ------------------------------------------------------------------------------
+    var readMessages = function () {
+        if (!$('.chat-selected #UnreadMessagesCount').hasClass('d-none')) {
+            $.connection.hub.start().done(function () {
+                window.messageHub.server.readMessages(
+                    otherUserId,
+                    otherUserUid,
+                    messagesConfig.currentUserId,
+                    messagesConfig.currentUserUid
+                )
+                .done(function () {
+                    $('.chat-selected #UnreadMessagesCount')
+                        .html(0)
+                        .addClass('d-none');
+                });
+            });
+        }
+    };
+
+
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         MyRio2cKTAppChat.init();
@@ -78,12 +97,12 @@ var NetworksMessagesConversationWidget = function () {
             return;
         }
 
-        recipientId = chatSelectedElement.data('recipient-id');
-        recipientUid = chatSelectedElement.data('recipient-uid');
+        otherUserId = chatSelectedElement.data('otheruser-id');
+        otherUserUid = chatSelectedElement.data('otheruser-uid');
 
         var jsonParameters = new Object();
-        jsonParameters.recipientId = recipientId;
-        jsonParameters.recipientUid = recipientUid;
+        jsonParameters.recipientId = otherUserId;
+        jsonParameters.recipientUid = otherUserUid;
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Networks/ShowConversationWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -91,6 +110,7 @@ var NetworksMessagesConversationWidget = function () {
                 // Success
                 onSuccess: function () {
                     enableShowPlugins();
+                    readMessages();
                 },
                 // Error
                 onError: function () {

@@ -8,7 +8,7 @@
     var isChatSelected = false;
     foreach (var conversationDto in Model)
     {
-        <div class="kt-widget__item clickable @(!isChatSelected ? "chat-selected" : string.Empty)" data-recipient-id="@conversationDto.OtherUser.Id" data-recipient-uid="@conversationDto.OtherUser.Uid" onclick="NetworksMessagesConversationsWidget.change($(this));">
+        <div class="kt-widget__item clickable @(!isChatSelected ? "chat-selected" : string.Empty)" data-otheruser-id="@conversationDto.OtherUser.Id" data-otheruser-uid="@conversationDto.OtherUser.Uid" onclick="NetworksMessagesConversationsWidget.change($(this));">
             @if (conversationDto.OtherAttendeeCollaboratorDto?.Collaborator?.HasImage() == true)
             {
                 <span class="kt-userpic kt-userpic--circle">
@@ -53,10 +53,7 @@
                 {
                     <time class="timeago kt-widget__date" datetime="@conversationDto.LastMessageDate.Value.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.CurrentCulture)">@conversationDto.LastMessageDate.Value.ToShortDateString() @conversationDto.LastMessageDate.Value.ToLongTimeString()</time>
                 }
-                @if (conversationDto.UnreadMessagesCount > 0)
-                {
-                    <span class="kt-badge kt-badge--success kt-font-bold">@conversationDto.UnreadMessagesCount</span>
-                }
+                <span id="UnreadMessagesCount" class="kt-badge kt-badge--success kt-font-bold @(conversationDto.UnreadMessagesCount > 0 ? string.Empty : "d-none")">@conversationDto.UnreadMessagesCount</span>
             </div>
         </div>
 

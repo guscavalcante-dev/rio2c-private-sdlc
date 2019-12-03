@@ -39,7 +39,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="d-flex">
-                                @Html.Hidden("UserUid", Model)
+                                @Html.Hidden("InitialUserUid", Model)
                                 @Html.TextBox("SearchKeywords", null, new { @class = "form-control mr-1", type = "search", placeholder = Labels.Search })
                                 <button type="button" class="btn btn-primary btn-icon" onclick="ProjectsBuyerCompanyWidget.search();"><i class="fa fa-search"></i></button>
                             </div>
@@ -72,9 +72,9 @@
         var messagesConfig = {
             editionId: '@(editionDto?.Id)',
             editionUid: '@(editionDto?.Uid)',
-            senderId: '@(userAccessControlDto?.User?.Id)',
-            senderUid: '@(userAccessControlDto?.User?.Uid)',
-            senderEmail: '@(userAccessControlDto?.User?.Email)',
+            currentUserId: '@(userAccessControlDto?.User?.Id)',
+            currentUserUid: '@(userAccessControlDto?.User?.Uid)',
+            currentUserEmail: '@(userAccessControlDto?.User?.Email)',
             you: '@Labels.You'
         }
 

@@ -57,6 +57,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds the by sender identifier.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="senderId">The sender identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<Message> FindBySenderId(this IQueryable<Message> query, int senderId)
+        {
+            query = query.Where(m => m.SenderId == senderId);
+
+            return query;
+        }
+
         /// <summary>Finds the by recipient identifier.</summary>
         /// <param name="query">The query.</param>
         /// <param name="recipientId">The recipient identifier.</param>
@@ -267,6 +278,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 Message = m
                             })
                             .OrderBy(md => md.Message.SendDate)
+                            .ToListAsync();
+        }
+
+        /// <summary>Finds all not read by sender identifier and by recipient identifier.</summary>
+        /// <param name="senderId">The sender identifier.</param>
+        /// <param name="recipientId">The recipient identifier.</param>
+        /// <returns></returns>
+        public async Task<List<Message>> FindAllNotReadBySenderIdAndByRecipientId(int senderId, int recipientId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindBySenderId(senderId)
+                                .FindByRecipientId(recipientId);
+
+            return await query
                             .ToListAsync();
         }
 

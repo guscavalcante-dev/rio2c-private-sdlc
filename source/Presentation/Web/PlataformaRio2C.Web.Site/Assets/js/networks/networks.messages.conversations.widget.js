@@ -28,9 +28,9 @@ var NetworksMessagesConversationsWidget = function () {
         }
 
         var jsonParameters = new Object();
-        jsonParameters.userUid = $('#UserUid').val();
+        jsonParameters.userUid = $('#InitialUserUid').val();
 
-        $('#UserUid').val('');
+        $('#InitialUserUid').val('');
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Networks/ShowConversationsWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({

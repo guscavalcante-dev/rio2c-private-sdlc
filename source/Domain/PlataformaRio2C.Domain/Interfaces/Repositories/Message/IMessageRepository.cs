@@ -25,5 +25,6 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<ConversationDto> FindNewConversationsDtoByEditionIdAndByOtherUserUid(int editionId, Guid otherUserUid);
         Task<List<ConversationDto>> FindAllConversationsDtosByEditionIdAndByUserId(int editionId, int userId);
         Task<List<MessageDto>> FindAllMessagesDtosByEditionIdAndByUserIdAndByRecipientIdAndByRecipientUid(int editionId, int userId, int recipientId, Guid recipientUid);
+        Task<List<Message>> FindAllNotReadBySenderIdAndByRecipientId(int senderId, int recipientId);
     }    
 }
