@@ -2374,6 +2374,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lida.
+        /// </summary>
+        public static string PastReadF {
+            get {
+                return ResourceManager.GetString("PastReadF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lido.
+        /// </summary>
+        public static string PastReadM {
+            get {
+                return ResourceManager.GetString("PastReadM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dados pessoais.
         /// </summary>
         public static string PersonalInformation {

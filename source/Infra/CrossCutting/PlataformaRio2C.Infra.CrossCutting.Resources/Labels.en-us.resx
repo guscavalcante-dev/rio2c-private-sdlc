@@ -1778,6 +1778,14 @@
     <value>Participant</value>
     <comment>Participante</comment>
   </data>
+  <data name="PastReadF" xml:space="preserve">
+    <value>Read</value>
+    <comment>Lida</comment>
+  </data>
+  <data name="PastReadM" xml:space="preserve">
+    <value>Read</value>
+    <comment>Lido</comment>
+  </data>
   <data name="ViewMessages" xml:space="preserve">
     <value>View messages</value>
     <comment>Ver mensagens</comment>

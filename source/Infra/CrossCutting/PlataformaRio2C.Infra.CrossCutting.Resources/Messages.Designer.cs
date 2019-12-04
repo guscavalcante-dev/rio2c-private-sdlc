@@ -466,6 +466,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} não pode ser {1}..
+        /// </summary>
+        public static string EntityCouldNotBeAction {
+            get {
+                return ResourceManager.GetString("EntityCouldNotBeAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Já existe {0} com {1} &apos;{2}&apos;..
         /// </summary>
         public static string EntityExistsWithSameProperty {

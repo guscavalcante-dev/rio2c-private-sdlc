@@ -71,13 +71,13 @@ namespace PlataformaRio2C.Web.Site.Hub
                         null));
                     if (!result.IsValid)
                     {
-                        throw new DomainException("The message could not be created.");
+                        throw new DomainException(string.Format(Messages.EntityCouldNotBeAction, Labels.Message, Labels.CreatedF.ToLowerInvariant()));
                     }
 
                     messageDto = result.Data as MessageDto;
                     if (messageDto == null)
                     {
-                        throw new DomainException("The message could not be created.");
+                        throw new DomainException(string.Format(Messages.EntityCouldNotBeAction, Labels.Message, Labels.CreatedF.ToLowerInvariant()));
                     }
                 }
             }
@@ -181,13 +181,13 @@ namespace PlataformaRio2C.Web.Site.Hub
                         null));
                     if (!result.IsValid)
                     {
-                        throw new DomainException("The message could not be read.");
+                        throw new DomainException(string.Format(Messages.EntityCouldNotBeAction, Labels.Message, Labels.PastReadF.ToLowerInvariant()));
                     }
 
                     messageDto = result.Data as MessageDto;
                     if (messageDto == null)
                     {
-                        throw new DomainException("The message could not be read.");
+                        throw new DomainException(string.Format(Messages.EntityCouldNotBeAction, Labels.Message, Labels.PastReadF.ToLowerInvariant()));
                     }
                 }
             }

@@ -1791,6 +1791,14 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Participante</value>
     <comment>Participante</comment>
   </data>
+  <data name="PastReadF" xml:space="preserve">
+    <value>Lida</value>
+    <comment>Lida</comment>
+  </data>
+  <data name="PastReadM" xml:space="preserve">
+    <value>Lido</value>
+    <comment>Lido</comment>
+  </data>
   <data name="ViewMessages" xml:space="preserve">
     <value>Ver mensagens</value>
     <comment>Ver mensagens</comment>

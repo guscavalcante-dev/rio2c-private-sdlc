@@ -787,6 +787,10 @@
     <value>Você recebeu uma mensagem de &lt;b&gt;{0}&lt;/b&gt;.&lt;br /&gt;&lt;br /&gt;Clique aqui para ser direcionado para a sua caixa de mensagens.</value>
     <comment>Você recebeu uma mensagem de &lt;b&gt;{0}&lt;/b&gt;.&lt;br /&gt;&lt;br /&gt;Clique aqui para ser direcionado para a sua caixa de mensagens.</comment>
   </data>
+  <data name="EntityCouldNotBeAction" xml:space="preserve">
+    <value>{0} não pode ser {1}.</value>
+    <comment>{0} não pode ser {1}.</comment>
+  </data>
   <data name="UserSentYouMessage" xml:space="preserve">
     <value>{0} enviou uma mensagem</value>
     <comment>{0} enviou uma mensagem</comment>
