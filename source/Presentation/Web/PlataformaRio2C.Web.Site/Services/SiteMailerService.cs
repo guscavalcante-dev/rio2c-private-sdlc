@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-17-2019
+// Last Modified On : 12-03-2019
 // ***********************************************************************
 // <copyright file="SiteMailerService.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -80,6 +80,34 @@ namespace PlataformaRio2C.Web.Site.Services
                 x.Subject = this.GetSubject(string.Format("Bem-vindo ao {0} | Welcome to {0}", cmd.EditionName));
                 //x.Subject = this.GetSubject(string.Format(Labels.WelcomeToEdition, cmd.EditionName));
                 x.ViewName = "TicketBuyerWelcome";
+                x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
+                x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
+                ViewBag.SentEmailUid = sentEmailUid;
+
+                if (!string.IsNullOrEmpty(this.GetBccEmailRecipient()))
+                {
+                    x.Bcc.Add(this.GetBccEmailRecipient());
+                }
+            });
+        }
+
+        /// <summary>Sends the unread conversation email.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <param name="sentEmailUid">The sent email uid.</param>
+        /// <returns></returns>
+        public MvcMailMessage SendUnreadConversationEmail(SendUnreadConversationEmailAsync cmd, Guid sentEmailUid)
+        {
+            this.SetCulture(cmd.UserInterfaceLanguage);
+
+            this.ViewData = new ViewDataDictionary(cmd);
+
+            var senderName = cmd.NotificationEmailConversationDto.OtherAttendeeCollaboratorDto?.Collaborator?.GetDisplayName() ??
+                             cmd.NotificationEmailConversationDto.OtherUser?.Name;
+
+            return Populate(x =>
+            {
+                x.Subject = this.GetSubject(string.Format(Messages.UserSentYouMessage, senderName));
+                x.ViewName = "UnreadConversationEmail";
                 x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
                 x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
                 ViewBag.SentEmailUid = sentEmailUid;

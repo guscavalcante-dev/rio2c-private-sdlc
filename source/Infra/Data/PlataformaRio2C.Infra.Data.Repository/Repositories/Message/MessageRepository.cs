@@ -114,15 +114,28 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
-        ///// <summary>Determines whether [is not deleted].</summary>
-        ///// <param name="query">The query.</param>
-        ///// <returns></returns>
-        //internal static IQueryable<Message> IsNotDeleted(this IQueryable<Message> query)
-        //{
-        //    query = query.Where(m => !m.IsDeleted);
+        /// <summary>Determines whether [is not read].</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<Message> IsNotRead(this IQueryable<Message> query)
+        {
+            query = query.Where(m => !m.ReadDate.HasValue);
 
-        //    return query;
-        //}
+            return query;
+        }
+
+        /// <summary>Determines whether [is notification email not sent].</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<Message> IsNotificationEmailNotSent(this IQueryable<Message> query)
+        {
+            var date = DateTime.Now.Date.AddMinutes(-10);
+
+            query = query.Where(m => !m.NotificationEmailSendDate.HasValue
+                                     && m.SendDate > date);
+
+            return query;
+        }
     }
 
     #endregion
@@ -292,6 +305,67 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByRecipientId(recipientId);
 
             return await query
+                            .ToListAsync();
+        }
+
+        /// <summary>Finds all notification email conversations dtos by edition identifier.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<List<NotificationEmailConversationDto>> FindAllNotificationEmailConversationsDtosByEditionId(int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                    .IsNotRead()
+                                    .IsNotificationEmailNotSent();
+
+            return await query
+                            .GroupBy(m => new
+                            {
+                                m.Recipient,
+                                m.Sender
+                            })
+                            .Select(g => new NotificationEmailConversationDto
+                            {
+                                RecipientUser = g.Key.Recipient,
+                                RecipientCollaborator = g.Key.Recipient.Collaborator,
+                                RecipientLanguage = g.Key.Recipient.UserInterfaceLanguage,
+                                OtherUser = g.Key.Sender,
+                                OtherAttendeeCollaboratorDto = new AttendeeCollaboratorDto
+                                {
+                                    AttendeeCollaborator = g.Key.Sender.Collaborator.AttendeeCollaborators
+                                                                                        .FirstOrDefault(ac => !ac.IsDeleted && ac.EditionId == editionId),
+                                    Collaborator = g.Key.Sender.Collaborator,
+                                    JobTitlesDtos = g.Key.Sender.Collaborator.JobTitles
+                                                                                .Where(jb => !jb.IsDeleted)
+                                                                                .Select(jb => new CollaboratorJobTitleBaseDto
+                                                                                {
+                                                                                    Id = jb.Id,
+                                                                                    Uid = jb.Uid,
+                                                                                    Value = jb.Value,
+                                                                                    LanguageDto = new LanguageBaseDto
+                                                                                    {
+                                                                                        Id = jb.Language.Id,
+                                                                                        Uid = jb.Language.Uid,
+                                                                                        Name = jb.Language.Name,
+                                                                                        Code = jb.Language.Code
+                                                                                    }
+                                                                                }),
+                                    AttendeeOrganizationsDtos = g.Key.Sender.Collaborator.AttendeeCollaborators
+                                                                                            .FirstOrDefault(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                                                            .AttendeeOrganizationCollaborators
+                                                                                            .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted && !aoc.AttendeeOrganization.Organization.IsDeleted)
+                                                                                            .Select(aoc => new AttendeeOrganizationDto
+                                                                                            {
+                                                                                                AttendeeOrganization = aoc.AttendeeOrganization,
+                                                                                                Organization = aoc.AttendeeOrganization.Organization
+                                                                                            })
+                                },
+                                Messages = g,
+                                LastMessageDate = g.Max(m => m.SendDate),
+                                UnreadMessagesCount = g.Count(m => !m.ReadDate.HasValue)
+                            })
+                            .OrderByDescending(cd => cd.UnreadMessagesCount > 0 ? 1 : 0)
+                            .ThenByDescending(cd => cd.LastMessageDate)
+                            .ThenBy(cd => cd.OtherAttendeeCollaboratorDto.AttendeeCollaborator.Collaborator.Badge)
                             .ToListAsync();
         }
 

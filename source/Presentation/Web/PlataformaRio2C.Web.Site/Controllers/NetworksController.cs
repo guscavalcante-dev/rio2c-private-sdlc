@@ -16,12 +16,17 @@ using System.Web.Mvc;
 using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
+using PlataformaRio2C.Application;
+using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Site.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
@@ -163,6 +168,46 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     new { page = this.RenderRazorViewToString("Widgets/ConversationWidget", messagesDtos), divIdOrClass = "#MessagesConversationWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Send unread messages email
+
+        /// <summary>Sends the unread conversations emails.</summary>
+        /// <param name="key">The key.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<ActionResult> SendUnreadConversationsEmails(string key)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (key?.ToLowerInvariant() != ConfigurationManager.AppSettings["SendUnreadConversationsEmailsApiKey"]?.ToLowerInvariant())
+                {
+                    throw new Exception("Invalid key to execute send unread conversations emails.");
+                }
+
+                result = await this.CommandBus.Send(new SendUnreadConversationsEmailsAsync());
+                if (!result.IsValid)
+                {
+                    throw new DomainException("Send unread conversations emails processed with some errors.");
+                }
+            }
+            catch (DomainException ex)
+            {
+                //Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "success", message = ex.GetInnerMessage(), errors = result?.Errors?.Select(e => new { e.Code, e.Message }) }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = "Send unread conversations emails failed." }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = "Send unread conversations emails processed successfully without errors." }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

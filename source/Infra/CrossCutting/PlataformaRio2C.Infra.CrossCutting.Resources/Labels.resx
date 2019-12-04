@@ -1400,8 +1400,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Talentos</comment>
   </data>
   <data name="Dear" xml:space="preserve">
-    <value>Caro</value>
-    <comment>Caro</comment>
+    <value>Caro(a)</value>
+    <comment>Caro(a)</comment>
   </data>
   <data name="CompanyProfiles" xml:space="preserve">
     <value>Resumos sobre a empresa</value>
@@ -1790,5 +1790,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Participant" xml:space="preserve">
     <value>Participante</value>
     <comment>Participante</comment>
+  </data>
+  <data name="ViewMessages" xml:space="preserve">
+    <value>Ver mensagens</value>
+    <comment>Ver mensagens</comment>
   </data>
 </root>

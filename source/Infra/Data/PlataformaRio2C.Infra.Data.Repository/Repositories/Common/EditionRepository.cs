@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-28-2019
+// Last Modified On : 12-03-2019
 // ***********************************************************************
 // <copyright file="EditionRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -54,6 +54,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Determines whether this instance is current.</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<Edition> IsCurrent(this IQueryable<Edition> query)
+        {
+            query = query.Where(e => e.IsCurrent);
+
+            return query;
+        }
+
         /// <summary>Determines whether [is not deleted].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
@@ -99,6 +109,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                 .IsActive(showInactive)
                                 .FindByUid(editionUid);
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>Finds the by is current asynchronous.</summary>
+        /// <returns></returns>
+        public async Task<Edition> FindByIsCurrentAsync()
+        {
+            var query = this.GetBaseQuery()
+                                .IsCurrent();
 
             return await query
                             .FirstOrDefaultAsync();

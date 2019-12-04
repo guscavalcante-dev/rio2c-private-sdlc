@@ -782,4 +782,16 @@
     <value>Your received a message from &lt;b&gt;{0}&lt;/b&gt;.&lt;br /&gt;&lt;br /&gt;Click here to be redirected to your inbox.</value>
     <comment>Você recebeu uma mensagem de &lt;b&gt;{0}&lt;/b&gt;.&lt;br /&gt;&lt;br /&gt;Clique aqui para ser direcionado para a sua caixa de mensagens.</comment>
   </data>
+  <data name="UserSentYouMessage" xml:space="preserve">
+    <value>{0} sent you a message</value>
+    <comment>{0} enviou uma mensagem</comment>
+  </data>
+  <data name="YouHaveNewMessage" xml:space="preserve">
+    <value>You have &lt;b&gt;{0} new message&lt;/b&gt;.</value>
+    <comment>Você tem &lt;b&gt;{0} nova mensagem&lt;/b&gt;.</comment>
+  </data>
+  <data name="YouHaveNewMessages" xml:space="preserve">
+    <value>You have &lt;b&gt;{0} new messages&lt;/b&gt;.</value>
+    <comment>Você tem &lt;b&gt;{0} novas mensagens&lt;/b&gt;.</comment>
+  </data>
 </root>

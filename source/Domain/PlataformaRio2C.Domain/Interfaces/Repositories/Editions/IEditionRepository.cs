@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-28-2019
+// Last Modified On : 12-03-2019
 // ***********************************************************************
 // <copyright file="IEditionRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,6 +22,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface IEditionRepository : IRepository<Edition>
     {
         Task<Edition> FindByUidAsync(Guid editionUid, bool showInactive);
+        Task<Edition> FindByIsCurrentAsync();
         List<Edition> FindAllByIsActive(bool showInactive);
     }    
 }

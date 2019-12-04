@@ -71,6 +71,17 @@ namespace PlataformaRio2C.Domain.Entities
             this.ReadDate = DateTime.Now;
         }
 
+        /// <summary>Sends the notification email.</summary>
+        public void SendNotificationEmail()
+        {
+            if (this.NotificationEmailSendDate.HasValue)
+            {
+                return;
+            }
+
+            this.NotificationEmailSendDate = DateTime.Now;
+        }
+
         #region Validations
 
         /// <summary>Returns true if ... is valid.</summary>

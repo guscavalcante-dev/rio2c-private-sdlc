@@ -925,7 +925,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Caro.
+        ///   Looks up a localized string similar to Caro(a).
         /// </summary>
         public static string Dear {
             get {
@@ -3990,6 +3990,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ViewInterests {
             get {
                 return ResourceManager.GetString("ViewInterests", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ver mensagens.
+        /// </summary>
+        public static string ViewMessages {
+            get {
+                return ResourceManager.GetString("ViewMessages", resourceCulture);
             }
         }
         

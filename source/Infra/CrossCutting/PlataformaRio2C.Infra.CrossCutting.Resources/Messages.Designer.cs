@@ -1662,6 +1662,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} enviou uma mensagem.
+        /// </summary>
+        public static string UserSentYouMessage {
+            get {
+                return ResourceManager.GetString("UserSentYouMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CNPJ inválido.
         /// </summary>
         public static string VatNumberIsInvalid {
@@ -1766,6 +1775,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string YouDontHaveAdminProfile {
             get {
                 return ResourceManager.GetString("YouDontHaveAdminProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Você tem &lt;b&gt;{0} nova mensagem&lt;/b&gt;..
+        /// </summary>
+        public static string YouHaveNewMessage {
+            get {
+                return ResourceManager.GetString("YouHaveNewMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Você tem &lt;b&gt;{0} novas mensagens&lt;/b&gt;..
+        /// </summary>
+        public static string YouHaveNewMessages {
+            get {
+                return ResourceManager.GetString("YouHaveNewMessages", resourceCulture);
             }
         }
         

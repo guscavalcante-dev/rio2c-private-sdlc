@@ -4,7 +4,7 @@
 // Created          : 08-31-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-22-2019
+// Last Modified On : 12-03-2019
 // ***********************************************************************
 // <copyright file="ProcessPendingPlatformWebhookRequestsAsyncCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -66,6 +66,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             if (attendeeSalesPlatformsDtos?.Any() != true)
             {
                 this.ValidationResult.Add(new ValidationError("Webhook requests will not be processed because there is no active sales platform."));
+                return this.AppValidationResult;
             }
 
             var pendingRequestsDtos = await this.CommandBus.Send(new FindAllSalesPlatformWebhooRequestsDtoByPending(), cancellationToken);
