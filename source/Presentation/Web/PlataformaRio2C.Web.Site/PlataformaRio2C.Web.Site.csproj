@@ -334,6 +334,7 @@
     <Compile Include="Areas\WebApi\Controllers\MessageController.cs" />
     <Compile Include="Areas\WebApi\Controllers\OrganizationsApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\PlayersApiController.cs" />
+    <Compile Include="Areas\WebApi\Controllers\NetworksApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\SalesPlatformsController.cs" />
     <Compile Include="Areas\WebApi\Controllers\ScheduleController.cs" />
     <Compile Include="Areas\WebApi\Controllers\ProducerController.cs" />
