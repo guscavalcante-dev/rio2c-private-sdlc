@@ -461,7 +461,7 @@
             <!--end: Notifications -->
             <!--begin: My Network -->
             <div class="kt-header__topbar-item">
-                <div class="kt-header__topbar-wrapper" @*data-toggle="dropdown" data-offset="10px,0px"*@ data-toggle="kt-tooltip" title="" data-placement="bottom" data-original-title="@Labels.ComingSoon...">
+                <div class="kt-header__topbar-wrapper" @*data-toggle="dropdown" data-offset="10px,0px"*@ onclick="window.location = MyRio2cCommon.getUrlWithCultureAndEdition('/Networks');">
                     <span class="kt-header__topbar-icon">
                         @*<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -472,7 +472,7 @@
                             </svg>*@
 
                         <i class="flaticon-users"></i>
-                        <span class="kt-pulse__ring"></span>
+                        @*<span class="kt-pulse__ring"></span>*@
                     </span>
                     <!--<span class="kt-badge kt-badge--light"></span>-->
                 </div>
@@ -480,7 +480,7 @@
             <!--end: My Network -->
             <!--begin: My Inbox -->
             <div class="kt-header__topbar-item">
-                <div class="kt-header__topbar-wrapper" @*data-toggle="dropdown" data-offset="10px,0px"*@ data-toggle="kt-tooltip" title="" data-placement="bottom" data-original-title="@Labels.ComingSoon...">
+                <div class="kt-header__topbar-wrapper" @*data-toggle="dropdown" data-offset="10px,0px"*@ onclick="window.location = MyRio2cCommon.getUrlWithCultureAndEdition('/Networks/Messages');">
                     <span class="kt-header__topbar-icon kt-pulse kt-pulse--light">
                         @*<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -491,7 +491,7 @@
                             </svg>*@
 
                         <i class="flaticon-chat-1"></i>
-                        <span class="kt-pulse__ring"></span>
+                        <span id="NewMessagePulse" class="kt-pulse__ring d-none"></span>
                     </span>
                     <!--<span class="kt-badge kt-badge--light"></span>-->
                 </div>

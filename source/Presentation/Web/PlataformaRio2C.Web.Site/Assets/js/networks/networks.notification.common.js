@@ -47,6 +47,11 @@ jQuery(document).ready(function () {
                             window.location.replace(MyRio2cCommon.getUrlWithCultureAndEdition('/Networks/Messages'));
                         }
                     });
+
+                    var newMessagePulseElement = $('#NewMessagePulse');
+                    if (newMessagePulseElement.length > 0) {
+                        newMessagePulseElement.removeClass('d-none');
+                    }
                 }
             },
             // Error

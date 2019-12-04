@@ -20,6 +20,11 @@ var NetworksMessagesConversationsWidget = function () {
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         $("time.timeago").timeago();
+
+        var newMessagePulseElement = $('#NewMessagePulse');
+        if (newMessagePulseElement.length > 0) {
+            newMessagePulseElement.addClass('d-none');
+        }
     };
 
     var show = function (otherUserUid) {
