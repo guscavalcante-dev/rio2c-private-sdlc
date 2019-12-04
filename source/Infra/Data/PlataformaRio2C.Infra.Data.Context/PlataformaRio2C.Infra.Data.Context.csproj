@@ -373,6 +373,7 @@
     <Content Include="SqlScripts\03_TicketSettings.sql" />
     <Content Include="SqlScripts\04_InitialData.sql" />
     <Content Include="SqlScripts\Deltas\20190930_114613_0001_ChangesForPlayersApi.sql" />
+    <Content Include="SqlScripts\Deltas\20191204_142731_0008_ChangesForEmailsOptInOptOut.sql" />
     <Content Include="SqlScripts\Deltas\20191203_225413_0007_AddIndexesToMessages.sql" />
     <Content Include="SqlScripts\Deltas\20191121_160045_0006_AddAdditionalInfoToInterests.sql" />
     <Content Include="SqlScripts\Deltas\20191118_131712_0006_ChangesForProjectsSubscription.sql" />
