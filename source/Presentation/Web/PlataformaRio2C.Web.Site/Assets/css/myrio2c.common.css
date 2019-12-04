@@ -338,3 +338,7 @@ a.r2c-login__footer-link, a.r2c-footer-link {
 .kt-widget--users .kt-widget__item:hover {
     background-color: #f2f3f7;
 }
+
+.kt-chat .kt-chat__input .kt-chat__editor textarea {
+    color: #495057 !important;
+}
