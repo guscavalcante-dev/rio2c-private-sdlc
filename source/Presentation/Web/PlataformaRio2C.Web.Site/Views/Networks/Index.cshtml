@@ -18,7 +18,7 @@
             {
                 var attendeeOrganizationDto = attendeeCollaboratorNetworkDto.AttendeeOrganizationsDtos?.FirstOrDefault();
 
-                <div class="col-sm-6 col-lg-4">
+                <div class="col-sm-6 col-lg-6 col-xl-4">
                     <!--Begin::Portlet-->
                     <div class="kt-portlet kt-portlet--height-fluid">
                         <div class="kt-portlet__head kt-portlet__head--noborder">
@@ -44,7 +44,7 @@
                         <div class="kt-portlet__body">
                             <!--begin::Widget -->
                             <div class="kt-widget kt-widget--user-profile-2">
-                                <div class="kt-widget__head">
+                                <div class="kt-widget__head" style="min-height: 120px;">
                                     <div class="kt-widget__media">
                                         @if (attendeeCollaboratorNetworkDto?.Collaborator?.HasImage() == true)
                                         {
@@ -73,10 +73,10 @@
                                             <span class="kt-widget__label">@Labels.Email:</span><br />
                                             <span class="kt-widget__data text-break">@(attendeeCollaboratorNetworkDto.Collaborator.PublicEmail ?? "-")</span>
                                         </div>
-                                        <div class="kt-widget__contact d-block mt-2">
+                                        @*<div class="kt-widget__contact d-block mt-2">
                                             <span class="kt-widget__label">@Labels.CellPhone:</span><br />
                                             <span class="kt-widget__data text-break">@(attendeeCollaboratorNetworkDto.Collaborator.CellPhone ?? "-")</span>
-                                        </div>
+                                        </div>*@
                                         @*<div class="kt-widget__contact">
                                                 <span class="kt-widget__label">Location:</span>
                                                 <span class="kt-widget__data">Barcelona</span>
