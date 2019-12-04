@@ -26,3 +26,9 @@ CREATE NONCLUSTERED INDEX "IDX_Messages_ReadDate" ON "dbo"."Messages"
 	"ReadDate"            ASC
 )
 go
+
+CREATE NONCLUSTERED INDEX "IDX_Users_IsDeleted" ON "dbo"."Users"
+(
+	"IsDeleted" ASC
+)
+GO
