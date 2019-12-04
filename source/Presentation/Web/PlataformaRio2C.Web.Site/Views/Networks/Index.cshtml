@@ -106,14 +106,14 @@
             <div class="kt-portlet">
                 <div class="kt-portlet__body">
                     <!--begin: Pagination-->
-                    <div class="kt-pagination kt-pagination--brand">
+                    <div class="kt-pagination kt-pagination--brand justify-content-center justify-content-sm-between">
                         @Html.PagedListPager(
                             Model,
                             page => Url.Action("Index", "Networks", new { searchKeywords = ViewBag.SearchKeywords, page }) + ViewBag.ShowProjectMatchBuyerCompanySearch,
                             new PagedListRenderOptions
                             {
                                 DisplayLinkToIndividualPages = true,
-                                MaximumPageNumbersToDisplay = 5,
+                                MaximumPageNumbersToDisplay = 3,
                                 DisplayLinkToFirstPage = PagedListDisplayMode.Always,
                                 DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
                                 DisplayLinkToNextPage = PagedListDisplayMode.Always,
