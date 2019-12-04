@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-03-2019
+// Last Modified On : 12-04-2019
 // ***********************************************************************
 // <copyright file="MessageRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -92,23 +92,57 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         /// <summary>Finds the by keywords.</summary>
         /// <param name="query">The query.</param>
+        /// <param name="userId">The user identifier.</param>
         /// <param name="keywords">The keywords.</param>
         /// <returns></returns>
-        internal static IQueryable<Message> FindByKeywords(this IQueryable<Message> query, string keywords)
+        internal static IQueryable<Message> FindByKeywords(this IQueryable<Message> query, int userId, string keywords)
         {
             if (!string.IsNullOrEmpty(keywords))
             {
-                var predicate = PredicateBuilder.New<Message>(true);
+                var outerWhere = PredicateBuilder.New<Message>(false);
+                var innerMessageTextWhere = PredicateBuilder.New<Message>(true);
+                var innerOtherUserNameWhere = PredicateBuilder.New<Message>(true);
+                var innerOtherUserJobTitleWhere = PredicateBuilder.New<Message>(true);
+                var innerOtherUserOrganizationWhere = PredicateBuilder.New<Message>(true);
 
                 foreach (var keyword in keywords.Split(' '))
                 {
                     if (!string.IsNullOrEmpty(keyword))
                     {
-                        predicate = predicate.And(m => m.Text.Contains(keyword));
+                        innerMessageTextWhere = innerMessageTextWhere.And(m => m.Text.Contains(keyword));
+                        innerOtherUserNameWhere = innerOtherUserNameWhere.And(m => m.SenderId == userId ? 
+                                                                                        m.Recipient.Name.Contains(keyword) : 
+                                                                                        m.Sender.Name.Contains(keyword));
+                        innerOtherUserJobTitleWhere = innerOtherUserJobTitleWhere.And(m => m.SenderId == userId ? 
+                                                                                        m.Recipient.Collaborator.JobTitles.Any(jb => 
+                                                                                            !jb.IsDeleted 
+                                                                                            && jb.Value.Contains(keyword)) :
+                                                                                        m.Sender.Collaborator.JobTitles.Any(jb => 
+                                                                                            !jb.IsDeleted 
+                                                                                            && jb.Value.Contains(keyword)));
+                        innerOtherUserOrganizationWhere = innerOtherUserOrganizationWhere.And(m => m.SenderId == userId ? 
+                                                                                        m.Recipient.Collaborator.AttendeeCollaborators.Any(ac => 
+                                                                                            !ac.IsDeleted 
+                                                                                            && ac.AttendeeOrganizationCollaborators.Any(aoc => 
+                                                                                                !aoc.IsDeleted
+                                                                                                && !aoc.AttendeeOrganization.IsDeleted
+                                                                                                && !aoc.AttendeeOrganization.Organization.IsDeleted
+                                                                                                && aoc.AttendeeOrganization.Organization.TradeName.Contains(keyword))) :
+                                                                                        m.Sender.Collaborator.AttendeeCollaborators.Any(ac =>
+                                                                                            !ac.IsDeleted
+                                                                                            && ac.AttendeeOrganizationCollaborators.Any(aoc =>
+                                                                                                !aoc.IsDeleted
+                                                                                                && !aoc.AttendeeOrganization.IsDeleted
+                                                                                                && !aoc.AttendeeOrganization.Organization.IsDeleted
+                                                                                                && aoc.AttendeeOrganization.Organization.TradeName.Contains(keyword))));
                     }
                 }
 
-                query = query.AsExpandable().Where(predicate);
+                outerWhere = outerWhere.Or(innerMessageTextWhere);
+                outerWhere = outerWhere.Or(innerOtherUserNameWhere);
+                outerWhere = outerWhere.Or(innerOtherUserJobTitleWhere);
+                outerWhere = outerWhere.Or(innerOtherUserOrganizationWhere);
+                query = query.Where(outerWhere);
             }
 
             return query;
@@ -213,14 +247,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         .FirstOrDefaultAsync();
         }
 
-        /// <summary>Finds all conversations dtos by edition identifier and by user identifier.</summary>
+        /// <summary>Finds all conversations dtos by edition identifier and by user identifier and by search keywords.</summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="userId">The user identifier.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
         /// <returns></returns>
-        public async Task<List<ConversationDto>> FindAllConversationsDtosByEditionIdAndByUserId(int editionId, int userId)
+        public async Task<List<ConversationDto>> FindAllConversationsDtosByEditionIdAndByUserIdAndBySearchKeywords(int editionId, int userId, string searchKeywords)
         {
             var query = this.GetBaseQuery()
-                                .FindByUserId(userId);
+                                .FindByUserId(userId)
+                                .FindByKeywords(userId, searchKeywords);
 
             return await query
                             .GroupBy(m => new

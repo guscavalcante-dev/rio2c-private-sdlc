@@ -4,7 +4,7 @@
 // Created          : 11-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-03-2019
+// Last Modified On : 12-04-2019
 // ***********************************************************************
 // <copyright file="networks.messages.conversations.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,9 +17,25 @@ var NetworksMessagesConversationsWidget = function () {
     var widgetElementId = '#MessagesConversationsWidget';
     var widgetElement = $(widgetElementId);
 
+    // Search -------------------------------------------------------------------------------------
+    var search = function () {
+        if (typeof (NetworksMessagesConversationsWidget) !== 'undefined') {
+            NetworksMessagesConversationsWidget.init();
+        }
+    };
+
+    var enableSearchEvent = function () {
+        $('#SearchKeywords').not('.search-event-enabled').on('search', function () {
+            search();
+        });
+
+        $('#SearchKeywords').addClass('search-event-enabled');
+    };
+
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         $("time.timeago").timeago();
+        enableSearchEvent();
 
         var newMessagePulseElement = $('#NewMessagePulse');
         if (newMessagePulseElement.length > 0) {
@@ -42,6 +58,8 @@ var NetworksMessagesConversationsWidget = function () {
             jsonParameters.userUid = $('#InitialUserUid').val();
             $('#InitialUserUid').val('');
         }
+
+        jsonParameters.searchKeywords = $('#SearchKeywords').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Networks/ShowConversationsWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -101,6 +119,9 @@ var NetworksMessagesConversationsWidget = function () {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
+        },
+        search: function () {
+            search();
         },
         change: function (element) {
             change(element);

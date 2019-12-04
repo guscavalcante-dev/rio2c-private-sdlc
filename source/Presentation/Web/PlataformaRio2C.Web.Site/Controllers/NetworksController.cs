@@ -4,7 +4,7 @@
 // Created          : 11-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-03-2019
+// Last Modified On : 12-04-2019
 // ***********************************************************************
 // <copyright file="NetworksController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -56,6 +56,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
             this.messageRepo = messageRepository;
         }
 
+        #region Contacts list
+
         /// <summary>Indexes this instance.</summary>
         /// <returns></returns>
         [HttpGet]
@@ -76,6 +78,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             return View(attendeeCollaboratos);
         }
+
+        #endregion
 
         #region Messages
 
@@ -99,11 +103,13 @@ namespace PlataformaRio2C.Web.Site.Controllers
         #region Main Conversations Widget
 
         /// <summary>Shows the conversations widget.</summary>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="userUid">The user uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowConversationsWidget(Guid? userUid)
+        public async Task<ActionResult> ShowConversationsWidget(string searchKeywords, Guid? userUid)
         {
-            var conversations = await this.messageRepo.FindAllConversationsDtosByEditionIdAndByUserId(this.EditionDto.Id, this.UserAccessControlDto.User.Id) ??
+            var conversations = await this.messageRepo.FindAllConversationsDtosByEditionIdAndByUserIdAndBySearchKeywords(this.EditionDto.Id, this.UserAccessControlDto.User.Id, searchKeywords) ??
                                 new List<ConversationDto>();
             
             // Create conversation menu for selected user to send message
