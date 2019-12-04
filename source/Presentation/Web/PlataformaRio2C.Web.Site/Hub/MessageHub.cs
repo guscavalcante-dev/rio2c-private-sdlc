@@ -33,7 +33,7 @@ using SimpleInjector.Lifestyles;
 namespace PlataformaRio2C.Web.Site.Hub
 {
     /// <summary>MessageHub</summary>
-    //[Microsoft.AspNet.SignalR.Authorize(Roles = "Player,Producer")]
+    [Microsoft.AspNet.SignalR.Authorize]
     public class MessageHub: Microsoft.AspNet.SignalR.Hub
     {
         private static readonly ConnectionMapping<string> _connections = new ConnectionMapping<string>();

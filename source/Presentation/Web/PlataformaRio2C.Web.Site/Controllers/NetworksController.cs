@@ -30,7 +30,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 {
     /// <summary>NetworksController</summary>
     [AjaxAuthorize(Order = 1)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.ExecutiveAudiovisual + "," + Constants.CollaboratorType.Industry )]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.NetworksString)]
     public class NetworksController : BaseController
     {
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
@@ -59,7 +59,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <summary>Indexes this instance.</summary>
         /// <returns></returns>
         [HttpGet]
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.Industry)]
+        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.Industry)]
         public async Task<ActionResult> Index(int? page = 1, int? pageSize = 15)
         {
             #region Breadcrumb
@@ -81,7 +81,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         /// <summary>Messageses this instance.</summary>
         /// <returns></returns>
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.ExecutiveAudiovisual + "," + Constants.CollaboratorType.Industry)]
+        [HttpGet]
+        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.ExecutiveAudiovisual + "," + Constants.CollaboratorType.Industry)]
         public async Task<ActionResult> Messages(Guid? id)
         {
             #region Breadcrumb

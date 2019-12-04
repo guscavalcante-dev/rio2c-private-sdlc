@@ -4,7 +4,7 @@
 // Created          : 09-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-23-2019
+// Last Modified On : 12-03-2019
 // ***********************************************************************
 // <copyright file="CollaboratorType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -38,5 +38,16 @@ namespace PlataformaRio2C.Domain.Constants
         {
             ExecutiveAudiovisual, ExecutiveMusic, ExecutiveInnovation
         };
+
+        #region Networks
+
+        public static readonly string[] NetworksArray =
+        {
+            ExecutiveAudiovisual, Industry, Creator
+        };
+
+        public const string NetworksString = ExecutiveAudiovisual + "," + Industry + "," + Creator;
+
+        #endregion
     }
 }
