@@ -87,8 +87,8 @@
             <span class="kt-menu__link-text">@Labels.Program</span>
         </a>
     </li>
-    <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "Index", "Rio2CNetwork", null)" aria-haspopup="true">
-        <a class="kt-menu__link" href="#" onclick="return false;" data-toggle="kt-tooltip" title="" data-placement="bottom" data-original-title="@Labels.ComingSoon...">
+    <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "Networks", null)" aria-haspopup="true">
+        <a class="kt-menu__link" href="@Url.Action("Index", "Networks", new { Area = "" })">
             @*<span class="kt-menu__link-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
