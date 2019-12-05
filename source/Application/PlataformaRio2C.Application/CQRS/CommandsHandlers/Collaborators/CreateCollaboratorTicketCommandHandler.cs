@@ -4,7 +4,7 @@
 // Created          : 08-31-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-28-2019
+// Last Modified On : 12-05-2019
 // ***********************************************************************
 // <copyright file="CreateCollaboratorWithTicketsHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,7 +27,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     {
         private readonly IUserRepository userRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="CreateCollaboratorCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="CreateCollaboratorWithTicketsHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>

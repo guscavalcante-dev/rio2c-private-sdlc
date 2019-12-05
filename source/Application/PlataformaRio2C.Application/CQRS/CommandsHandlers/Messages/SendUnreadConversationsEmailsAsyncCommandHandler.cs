@@ -4,26 +4,20 @@
 // Created          : 12-03-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-03-2019
+// Last Modified On : 12-05-2019
 // ***********************************************************************
 // <copyright file="SendUnreadConversationsEmailsAsyncCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Validation;
-using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms;
-using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -34,6 +28,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IEditionRepository editionRepo;
         private readonly IMessageRepository messageRepo;
 
+        /// <summary>Initializes a new instance of the <see cref="SendUnreadConversationsEmailsAsyncCommandHandler"/> class.</summary>
+        /// <param name="commandBus">The command bus.</param>
+        /// <param name="uow">The uow.</param>
+        /// <param name="editionRepository">The edition repository.</param>
+        /// <param name="messageRepository">The message repository.</param>
         public SendUnreadConversationsEmailsAsyncCommandHandler(
             IMediator commandBus,
             IUnitOfWork uow,

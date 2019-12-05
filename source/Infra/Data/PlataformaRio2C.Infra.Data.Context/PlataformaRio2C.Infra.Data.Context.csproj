@@ -150,6 +150,8 @@
     <Compile Include="Mapping\SalesPlatform\SalesPlatformMap.cs" />
     <Compile Include="Mapping\SentEmails\SentEmailMap.cs" />
     <Compile Include="Mapping\Speaker\SpeakerMap.cs" />
+    <Compile Include="Mapping\SubscribeLists\UserUnsubscribedListMap.cs" />
+    <Compile Include="Mapping\SubscribeLists\SubscribeListMap.cs" />
     <Compile Include="Mapping\TargetAudienceMap.cs" />
     <Compile Include="Mapping\Collaborator\CollaboratorTypeMap.cs" />
     <Compile Include="Mapping\User\UserRoleMap.cs" />

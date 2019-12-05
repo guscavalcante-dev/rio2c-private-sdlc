@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-18-2019
+// Last Modified On : 12-05-2019
 // ***********************************************************************
 // <copyright file="User.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -52,6 +52,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<Holding> UpdatedHoldings { get; set; }
         public virtual ICollection<Organization> UpdatedOrganizations { get; set; }
         public virtual ICollection<Collaborator> UpdatedCollaborators { get; set; }
+        public virtual ICollection<UserUnsubscribedList> UserUnsubscribedLists { get; set; }
 
         //public override ValidationResult ValidationResult { get; set; }
 
@@ -111,6 +112,15 @@ namespace PlataformaRio2C.Domain.Entities
             this.PasswordHash = passwordHash;
         }
 
+        /// <summary>Updates the interface language.</summary>
+        /// <param name="language">The language.</param>
+        public void UpdateInterfaceLanguage(Language language)
+        {
+            this.UserInterfaceLanguageId = language?.Id;
+            this.UserInterfaceLanguage = language;
+            this.UpdateDate = DateTime.Now;
+        }
+
         #region Roles
 
         /// <summary>Synchronizes the roles.</summary>
@@ -156,6 +166,61 @@ namespace PlataformaRio2C.Domain.Entities
         private void CreateRole(Role role)
         {
             this.Roles.Add(role);
+        }
+
+        #endregion
+
+        #region Unsubscribed Lists
+
+        /// <summary>Synchronizes the user unsubscribed lists.</summary>
+        /// <param name="unsubscribedLists">The unsubscribed lists.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeUserUnsubscribedLists(List<SubscribeList> unsubscribedLists, int userId)
+        {
+            if (this.UserUnsubscribedLists == null)
+            {
+                this.UserUnsubscribedLists = new List<UserUnsubscribedList>();
+            }
+
+            this.DeleteUserUnsubscribedLists(unsubscribedLists, userId);
+
+            if (unsubscribedLists?.Any() != true)
+            {
+                return;
+            }
+
+            // Create or update unsubscribed lists
+            foreach (var unsubscribedList in unsubscribedLists)
+            {
+                var userUnsubscribedListDb = this.UserUnsubscribedLists.FirstOrDefault(uul => uul.SubscribeListId == unsubscribedList.Id);
+                if (userUnsubscribedListDb != null && userUnsubscribedListDb.IsDeleted)
+                {
+                    userUnsubscribedListDb.Restore(userId);
+                }
+                else
+                {
+                    this.CreateUserUnsubscribedList(unsubscribedList);
+                }
+            }
+        }
+
+        /// <summary>Deletes the user unsubscribed lists.</summary>
+        /// <param name="newUnsubscribedLists">The new unsubscribed lists.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteUserUnsubscribedLists(List<SubscribeList> newUnsubscribedLists, int userId)
+        {
+            var unsubscribedListsUsersToDelete = this.UserUnsubscribedLists.Where(db => newUnsubscribedLists?.Select(nul => nul.Id)?.Contains(db.SubscribeListId) == false && !db.IsDeleted).ToList();
+            foreach (var unsubscribedListUserToDelete in unsubscribedListsUsersToDelete)
+            {
+                unsubscribedListUserToDelete.Delete(userId);
+            }
+        }
+
+        /// <summary>Creates the user unsubscribed list.</summary>
+        /// <param name="unsubscribedList">The unsubscribed list.</param>
+        private void CreateUserUnsubscribedList(SubscribeList unsubscribedList)
+        {
+            this.UserUnsubscribedLists.Add(new UserUnsubscribedList(this, unsubscribedList));
         }
 
         #endregion
@@ -244,13 +309,6 @@ namespace PlataformaRio2C.Domain.Entities
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Email, EmailMaxLength, 1), new string[] { "Email" }));
             }
-        }
-
-        public void UpdateInterfaceLanguage(Language language)
-        {
-            this.UserInterfaceLanguageId = language?.Id;
-            this.UserInterfaceLanguage = language;
-            this.UpdateDate = DateTime.Now;
         }
 
         #endregion

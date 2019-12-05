@@ -1803,4 +1803,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Ver mensagens</value>
     <comment>Ver mensagens</comment>
   </data>
+  <data name="SubscribeList" xml:space="preserve">
+    <value>Lista de Inscrição</value>
+    <comment>Lista de Inscrição</comment>
+  </data>
 </root>

@@ -1790,4 +1790,8 @@
     <value>View messages</value>
     <comment>Ver mensagens</comment>
   </data>
+  <data name="SubscribeList" xml:space="preserve">
+    <value>Subscribe List</value>
+    <comment>Lista de Inscrição</comment>
+  </data>
 </root>

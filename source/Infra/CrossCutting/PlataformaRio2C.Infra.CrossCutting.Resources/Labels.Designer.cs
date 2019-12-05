@@ -3634,6 +3634,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lista de Inscrição.
+        /// </summary>
+        public static string SubscribeList {
+            get {
+                return ResourceManager.GetString("SubscribeList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inscrição.
         /// </summary>
         public static string Subscription {
