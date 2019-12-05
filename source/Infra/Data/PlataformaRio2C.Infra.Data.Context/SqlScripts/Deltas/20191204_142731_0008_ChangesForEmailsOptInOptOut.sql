@@ -30,12 +30,12 @@ CREATE NONCLUSTERED INDEX "IDX_SubscribeLists_IsDeleted" ON "SubscribeLists"
 )
 go
 
-CREATE TABLE "SubscribeListUsers"
+CREATE TABLE "UserUnsubscribedLists"
 ( 
 	"Id"                 int IDENTITY ( 1,1 ) ,
 	"Uid"                uniqueidentifier  NOT NULL ,
-	"SubscribeListId"    int  NOT NULL ,
 	"UserId"             int  NOT NULL ,
+	"SubscribeListId"    int  NOT NULL ,
 	"IsDeleted"          bit  NOT NULL ,
 	"CreateDate"         datetime  NOT NULL ,
 	"CreateUserId"       int  NOT NULL ,
@@ -44,36 +44,30 @@ CREATE TABLE "SubscribeListUsers"
 )
 go
 
-CREATE NONCLUSTERED INDEX "IDX_SubscribeListUsers_IsDeleted" ON "SubscribeListUsers"
-( 
-	"IsDeleted"           ASC
-)
-go
-
-CREATE NONCLUSTERED INDEX "IDX_SubscribeListUsers_UserId" ON "SubscribeListUsers"
-( 
-	"UserId"              ASC
-)
-go
-
 ALTER TABLE "SubscribeLists"
 ADD CONSTRAINT "PK_SubscribeLists" PRIMARY KEY  CLUSTERED ("Id" ASC)
 go
+
+
 
 ALTER TABLE "SubscribeLists"
 ADD CONSTRAINT "IDX_UQ_SubscribeLists_Uid" UNIQUE ("Uid"  ASC)
 go
 
-ALTER TABLE "SubscribeListUsers"
-ADD CONSTRAINT "PK_SubscribeListUsers" PRIMARY KEY  CLUSTERED ("Id" ASC)
+ALTER TABLE "UserUnsubscribedLists"
+ADD CONSTRAINT "PK_UserUnsubscribedLists" PRIMARY KEY  CLUSTERED ("Id" ASC)
 go
 
-ALTER TABLE "SubscribeListUsers"
-ADD CONSTRAINT "IDX_UQ_SubscribeListUsers_Uid" UNIQUE ("Uid"  ASC)
+ALTER TABLE "UserUnsubscribedLists"
+ADD CONSTRAINT "IDX_UQ_UserUnsubscribedLists_Uid" UNIQUE ("Uid"  ASC)
 go
 
-ALTER TABLE "SubscribeListUsers"
-ADD CONSTRAINT "IDX_UQ_SubscribeListUsers_SubscribeListId_UserId" UNIQUE ("SubscribeListId"  ASC,"UserId"  ASC)
+ALTER TABLE "UserUnsubscribedLists"
+ADD CONSTRAINT "IDX_UQ_UserUnsubscribedLists_UserId_SubscribeListId" UNIQUE ("Uid"  ASC,"SubscribeListId"  ASC)
+go
+
+ALTER TABLE "UserUnsubscribedLists"
+ADD CONSTRAINT "IDX_UserUnsubscribedLists_SubscribeListId" UNIQUE ("SubscribeListId"  ASC)
 go
 
 ALTER TABLE "SubscribeLists"
@@ -84,21 +78,22 @@ ALTER TABLE "SubscribeLists"
 	ADD CONSTRAINT "FK_Users_SubscribeLists_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
 go
 
-ALTER TABLE "SubscribeListUsers"
-	ADD CONSTRAINT "FK_SubscribeLists_SubscribeListUsers_SubscribeListId" FOREIGN KEY ("SubscribeListId") REFERENCES "SubscribeLists"("Id")
+ALTER TABLE "UserUnsubscribedLists"
+	ADD CONSTRAINT "FK_Users_UserUnsubscribedLists_UserId" FOREIGN KEY ("UserId") REFERENCES "dbo"."Users"("Id")
 go
 
-ALTER TABLE "SubscribeListUsers"
-	ADD CONSTRAINT "FK_Users_SubscribeListUsers_UserId" FOREIGN KEY ("UserId") REFERENCES "dbo"."Users"("Id")
+ALTER TABLE "UserUnsubscribedLists"
+	ADD CONSTRAINT "FK_SubscribeLists_UserUnsubscribedLists_SubscribeListId" FOREIGN KEY ("SubscribeListId") REFERENCES "SubscribeLists"("Id")
 go
 
-ALTER TABLE "SubscribeListUsers"
-	ADD CONSTRAINT "FK_Users_SubscribeListUsers_CreateUserId" FOREIGN KEY ("CreateUserId") REFERENCES "dbo"."Users"("Id")
+ALTER TABLE "UserUnsubscribedLists"
+	ADD CONSTRAINT "FK_Users_UserUnsubscribedLists_CreateUserId" FOREIGN KEY ("CreateUserId") REFERENCES "dbo"."Users"("Id")
 go
 
-ALTER TABLE "SubscribeListUsers"
-	ADD CONSTRAINT "FK_Users_SubscribeListUsers_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
+ALTER TABLE "UserUnsubscribedLists"
+	ADD CONSTRAINT "FK_Users_UserUnsubscribedLists_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
 go
+
 
 SET IDENTITY_INSERT [dbo].[SubscribeLists] ON 
 GO
@@ -106,7 +101,3 @@ INSERT [dbo].[SubscribeLists] ([Id], [Uid], [Name], [Description], [Code], [IsDe
 GO
 SET IDENTITY_INSERT [dbo].[SubscribeLists] OFF
 GO
-
-INSERT INTO dbo.SubscribeListUsers (Uid, SubscribeListId, UserId, IsDeleted, CreateDate, CreateUserId, UpdateDate, UpdateUserId)
-	SELECT NEWID(), sl.Id, u.Id, 0, GETDATE(), 1, GETDATE(), 1 FROM dbo.Users u, dbo.SubscribeLists sl
-go

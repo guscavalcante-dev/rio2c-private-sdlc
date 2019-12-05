@@ -2068,36 +2068,6 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[SubscribeListUsers](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Uid] [uniqueidentifier] NOT NULL,
-	[SubscribeListId] [int] NOT NULL,
-	[UserId] [int] NOT NULL,
-	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
-	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
-	[UpdateUserId] [int] NOT NULL,
- CONSTRAINT [PK_SubscribeListUsers] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
- CONSTRAINT [IDX_UQ_SubscribeListUsers_SubscribeListId_UserId] UNIQUE NONCLUSTERED 
-(
-	[SubscribeListId] ASC,
-	[UserId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
- CONSTRAINT [IDX_UQ_SubscribeListUsers_Uid] UNIQUE NONCLUSTERED 
-(
-	[Uid] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
 SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[SystemParameters](
@@ -2250,6 +2220,40 @@ CREATE TABLE [dbo].[UsersRoles](
 (
 	[UserId] ASC,
 	[RoleId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[UserUnsubscribedLists](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[UserId] [int] NOT NULL,
+	[SubscribeListId] [int] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_UserUnsubscribedLists] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_UserUnsubscribedLists_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_UserUnsubscribedLists_UserId_SubscribeListId] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC,
+	[SubscribeListId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UserUnsubscribedLists_SubscribeListId] UNIQUE NONCLUSTERED 
+(
+	[SubscribeListId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
@@ -2453,16 +2457,6 @@ GO
 CREATE NONCLUSTERED INDEX [IDX_SubscribeLists_IsDeleted] ON [dbo].[SubscribeLists]
 (
 	[IsDeleted] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-CREATE NONCLUSTERED INDEX [IDX_SubscribeListUsers_IsDeleted] ON [dbo].[SubscribeListUsers]
-(
-	[IsDeleted] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-CREATE NONCLUSTERED INDEX [IDX_SubscribeListUsers_UserId] ON [dbo].[SubscribeListUsers]
-(
-	[UserId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
 CREATE NONCLUSTERED INDEX [IDX_TargetAudiences_ProjectTypeId] ON [dbo].[TargetAudiences]
@@ -3598,26 +3592,6 @@ REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[SubscribeLists] CHECK CONSTRAINT [FK_Users_SubscribeLists_UpdateUserId]
 GO
-ALTER TABLE [dbo].[SubscribeListUsers]  WITH CHECK ADD  CONSTRAINT [FK_SubscribeLists_SubscribeListUsers_SubscribeListId] FOREIGN KEY([SubscribeListId])
-REFERENCES [dbo].[SubscribeLists] ([Id])
-GO
-ALTER TABLE [dbo].[SubscribeListUsers] CHECK CONSTRAINT [FK_SubscribeLists_SubscribeListUsers_SubscribeListId]
-GO
-ALTER TABLE [dbo].[SubscribeListUsers]  WITH CHECK ADD  CONSTRAINT [FK_Users_SubscribeListUsers_CreateUserId] FOREIGN KEY([CreateUserId])
-REFERENCES [dbo].[Users] ([Id])
-GO
-ALTER TABLE [dbo].[SubscribeListUsers] CHECK CONSTRAINT [FK_Users_SubscribeListUsers_CreateUserId]
-GO
-ALTER TABLE [dbo].[SubscribeListUsers]  WITH CHECK ADD  CONSTRAINT [FK_Users_SubscribeListUsers_UpdateUserId] FOREIGN KEY([UpdateUserId])
-REFERENCES [dbo].[Users] ([Id])
-GO
-ALTER TABLE [dbo].[SubscribeListUsers] CHECK CONSTRAINT [FK_Users_SubscribeListUsers_UpdateUserId]
-GO
-ALTER TABLE [dbo].[SubscribeListUsers]  WITH CHECK ADD  CONSTRAINT [FK_Users_SubscribeListUsers_UserId] FOREIGN KEY([UserId])
-REFERENCES [dbo].[Users] ([Id])
-GO
-ALTER TABLE [dbo].[SubscribeListUsers] CHECK CONSTRAINT [FK_Users_SubscribeListUsers_UserId]
-GO
 ALTER TABLE [dbo].[TargetAudiences]  WITH CHECK ADD  CONSTRAINT [FK_ProjectTypes_TargetAudiences_ProjectTypeId] FOREIGN KEY([ProjectTypeId])
 REFERENCES [dbo].[ProjectTypes] ([Id])
 GO
@@ -3658,3 +3632,22 @@ REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[UsersRoles] CHECK CONSTRAINT [FK_Users_UsersRoles_UserId]
 GO
+ALTER TABLE [dbo].[UserUnsubscribedLists]  WITH CHECK ADD  CONSTRAINT [FK_SubscribeLists_UserUnsubscribedLists_SubscribeListId] FOREIGN KEY([SubscribeListId])
+REFERENCES [dbo].[SubscribeLists] ([Id])
+GO
+ALTER TABLE [dbo].[UserUnsubscribedLists] CHECK CONSTRAINT [FK_SubscribeLists_UserUnsubscribedLists_SubscribeListId]
+GO
+ALTER TABLE [dbo].[UserUnsubscribedLists]  WITH CHECK ADD  CONSTRAINT [FK_Users_UserUnsubscribedLists_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[UserUnsubscribedLists] CHECK CONSTRAINT [FK_Users_UserUnsubscribedLists_CreateUserId]
+GO
+ALTER TABLE [dbo].[UserUnsubscribedLists]  WITH CHECK ADD  CONSTRAINT [FK_Users_UserUnsubscribedLists_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[UserUnsubscribedLists] CHECK CONSTRAINT [FK_Users_UserUnsubscribedLists_UpdateUserId]
+GO
+ALTER TABLE [dbo].[UserUnsubscribedLists]  WITH CHECK ADD  CONSTRAINT [FK_Users_UserUnsubscribedLists_UserId] FOREIGN KEY([UserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[UserUnsubscribedLists] CHECK CONSTRAINT [FK_Users_UserUnsubscribedLists_UserId]
