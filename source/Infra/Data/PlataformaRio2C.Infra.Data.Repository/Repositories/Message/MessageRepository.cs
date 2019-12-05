@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-04-2019
+// Last Modified On : 12-05-2019
 // ***********************************************************************
 // <copyright file="MessageRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -163,10 +163,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<Message> IsNotificationEmailNotSent(this IQueryable<Message> query)
         {
-            var date = DateTime.Now.Date.AddMinutes(-10);
+            var date = DateTime.Now.AddMinutes(-10);
 
             query = query.Where(m => !m.NotificationEmailSendDate.HasValue
-                                     && m.SendDate > date);
+                                     && m.SendDate < date);
+
+            return query;
+        }
+
+        /// <summary>Determines whether [is recipient subscribed].</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<Message> IsRecipientSubscribed(this IQueryable<Message> query)
+        {
+            query = query.Where(m => !m.Recipient.UserUnsubscribedLists.Any(uul => !uul.IsDeleted
+                                                                                   && uul.SubscribeList.Code == SubscribeList.UnreadConversationEmail.Code));
 
             return query;
         }
@@ -351,7 +362,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery()
                                     .IsNotRead()
-                                    .IsNotificationEmailNotSent();
+                                    .IsNotificationEmailNotSent()
+                                    .IsRecipientSubscribed();
 
             return await query
                             .GroupBy(m => new

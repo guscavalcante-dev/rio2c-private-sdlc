@@ -26,6 +26,12 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int CodeMinLength = 1;
         public static readonly int CodeMaxLength = 50;
 
+        #region Configurations
+
+        public static SubscribeList UnreadConversationEmail = new SubscribeList("UnreadConversationEmail");
+
+        #endregion
+
         public string Name { get; set; }
         public string Description { get; set; }
         public string Code { get; set; }
@@ -35,6 +41,13 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Initializes a new instance of the <see cref="SubscribeList"/> class.</summary>
         protected SubscribeList()
         {
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="SubscribeList"/> class.</summary>
+        /// <param name="code">The code.</param>
+        private SubscribeList(string code)
+        {
+            this.Code = code?.Trim();
         }
 
         #region Validations
