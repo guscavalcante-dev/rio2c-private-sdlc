@@ -4,7 +4,7 @@
 // Created          : 11-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-04-2019
+// Last Modified On : 12-05-2019
 // ***********************************************************************
 // <copyright file="NetworksController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -58,11 +58,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #region Contacts list
 
-        /// <summary>Indexes this instance.</summary>
+        /// <summary>Indexes the specified search keywords.</summary>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
         //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.Industry)]
-        public async Task<ActionResult> Index(int? page = 1, int? pageSize = 15)
+        public async Task<ActionResult> Index(string searchKeywords, int? page = 1, int? pageSize = 15)
         {
             #region Breadcrumb
 
@@ -72,11 +75,35 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             #endregion
 
-            var attendeeCollaboratos = await this.attendeeCollaboratorRepo.FindAllNetworkDtoByEditionIdPagedAsync(this.EditionDto.Id, page.Value, pageSize.Value);
-
+            ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
+            ViewBag.SearchKeywords = searchKeywords;
 
-            return View(attendeeCollaboratos);
+            return View();
+        }
+
+        /// <summary>Shows the contacts list widget.</summary>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowContactsListWidget(string searchKeywords, int? page = 1, int? pageSize = 15)
+        {
+            var attendeeCollaboratos = await this.attendeeCollaboratorRepo.FindAllNetworkDtoByEditionIdPagedAsync(this.EditionDto.Id, searchKeywords, page.Value, pageSize.Value);
+
+            ViewBag.Page = page;
+            ViewBag.PageSize = pageSize;
+            ViewBag.SearchKeywords = searchKeywords;
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/ContactsWidget", attendeeCollaboratos), divIdOrClass = "#NetworksContactsListWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

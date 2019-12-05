@@ -463,6 +463,7 @@
     <Content Include="Assets\js\myrio2c.showhidepassword.js" />
     <Content Include="Assets\js\myrio2c.cropper.js" />
     <Content Include="Assets\js\networks\chat.js" />
+    <Content Include="Assets\js\networks\networks.contacts.list.widget.js" />
     <Content Include="Assets\js\networks\networks.notification.common.js" />
     <Content Include="Assets\js\networks\networks.messages.conversation.widget.js" />
     <Content Include="Assets\js\networks\networks.messages.conversations.widget.js" />
@@ -7151,6 +7152,7 @@
     <Content Include="Views\Networks\Widgets\ConversationWidget.cshtml" />
     <Content Include="Views\Account\Modals\UpdateEmailSettingsModal.cshtml" />
     <Content Include="Views\Account\Modals\UpdateEmailSettingsForm.cshtml" />
+    <Content Include="Views\Networks\Widgets\ContactsWidget.cshtml" />
     <None Include="Views\Projects\Index.cshtml.old" />
     <Content Include="Views\Projects\Modals\UpdateMainInformationModal.cshtml" />
     <Content Include="Views\Projects\Modals\UpdateMainInformationForm.cshtml" />

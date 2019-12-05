@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-03-2019
+// Last Modified On : 12-05-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using LinqKit;
 using PlataformaRio2C.Domain.Dtos;
 using X.PagedList;
 
@@ -124,6 +125,45 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                               && !act.CollaboratorType.IsDeleted
                                                                               && (act.CollaboratorType.Name == Domain.Constants.CollaboratorType.Industry
                                                                                   || act.CollaboratorType.Name == Domain.Constants.CollaboratorType.ExecutiveAudiovisual)));
+
+            return query;
+        }
+
+        /// <summary>Finds the by keywords.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeCollaborator> FindByKeywords(this IQueryable<AttendeeCollaborator> query, string keywords)
+        {
+            if (!string.IsNullOrEmpty(keywords))
+            {
+                var outerWhere = PredicateBuilder.New<AttendeeCollaborator>(false);
+                var innerBadgeWhere = PredicateBuilder.New<AttendeeCollaborator>(true);
+                var innerJobTitleWhere = PredicateBuilder.New<AttendeeCollaborator>(true);
+                var innerOrganizationNameWhere = PredicateBuilder.New<AttendeeCollaborator>(true);
+                
+
+                foreach (var keyword in keywords.Split(' '))
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        innerBadgeWhere = innerBadgeWhere.And(ac => ac.Collaborator.Badge.Contains(keyword));
+                        innerJobTitleWhere = innerJobTitleWhere.And(ac => ac.Collaborator.JobTitles.Any(jb => !jb.IsDeleted
+                                                                                                              && jb.Value.Contains(keyword)));
+                        innerOrganizationNameWhere = innerOrganizationNameWhere.And(ac =>
+                            ac.AttendeeOrganizationCollaborators.Any(aoc =>
+                                    !aoc.IsDeleted
+                                    && !aoc.AttendeeOrganization.IsDeleted
+                                    && !aoc.AttendeeOrganization.Organization.IsDeleted
+                                    && aoc.AttendeeOrganization.Organization.TradeName.Contains(keyword)));
+                    }
+                }
+
+                outerWhere = outerWhere.Or(innerBadgeWhere);
+                outerWhere = outerWhere.Or(innerJobTitleWhere);
+                outerWhere = outerWhere.Or(innerOrganizationNameWhere);
+                query = query.Where(outerWhere);
+            }
 
             return query;
         }
@@ -327,15 +367,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         /// <summary>Finds all network dto by edition identifier paged asynchronous.</summary>
         /// <param name="editionId">The edition identifier.</param>
+        /// <param name="keywords">The keywords.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<AttendeeCollaboratorNetworkDto>> FindAllNetworkDtoByEditionIdPagedAsync(int editionId, int page, int pageSize)
+        public async Task<IPagedList<AttendeeCollaboratorNetworkDto>> FindAllNetworkDtoByEditionIdPagedAsync(int editionId, string keywords, int page, int pageSize)
         {
             var query = this.GetBaseQuery(true)
                                 .FindByEditionId(editionId, false)
                                 .IsOnboardingFinished()
-                                .IsAudiovisualParticipant();
+                                .IsAudiovisualParticipant()
+                                .FindByKeywords(keywords);
 
             return await query
                             .Select(ac => new AttendeeCollaboratorNetworkDto

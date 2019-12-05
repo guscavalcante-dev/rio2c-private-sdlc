@@ -1,0 +1,166 @@
+﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Statics
+@using X.PagedList.Mvc
+@using X.PagedList.Mvc.Common
+@model X.PagedList.IPagedList<AttendeeCollaboratorNetworkDto>
+<!--Begin::List-->
+<div class="row">
+    @if (Model?.Any() == true)
+    {
+        foreach (var attendeeCollaboratorNetworkDto in Model)
+        {
+            var attendeeOrganizationDto = attendeeCollaboratorNetworkDto.AttendeeOrganizationsDtos?.FirstOrDefault();
+
+            <div class="col-sm-6 col-lg-6 col-xl-4">
+                <!--Begin::Portlet-->
+                <div class="kt-portlet kt-portlet--height-fluid">
+                    <div class="kt-portlet__head kt-portlet__head--noborder">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title"></h3>
+                        </div>
+                        @*<div class="kt-portlet__head-toolbar">
+                                <a href="#" class="btn btn-icon" data-toggle="dropdown">
+                                    <i class="flaticon-more-1 kt-font-brand"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <ul class="kt-nav">
+                                        <li class="kt-nav__item">
+                                            <a href="#" class="kt-nav__link">
+                                                <i class="kt-nav__link-icon flaticon2-line-chart"></i>
+                                                <span class="kt-nav__link-text">@Labels.SeeMiniBio</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>*@
+                    </div>
+                    <div class="kt-portlet__body">
+                        <!--begin::Widget -->
+                        <div class="kt-widget kt-widget--user-profile-2">
+                            <div class="kt-widget__head" style="min-height: 120px;">
+                                <div class="kt-widget__media">
+                                    @if (attendeeCollaboratorNetworkDto?.Collaborator?.HasImage() == true)
+                                    {
+                                        <img class="kt-widget__img" src="@ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, attendeeCollaboratorNetworkDto.Collaborator.Uid, attendeeCollaboratorNetworkDto.Collaborator.ImageUploadDate, true)" alt="">
+                                    }
+                                    else
+                                    {
+                                        <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest">@(attendeeCollaboratorNetworkDto?.Collaborator?.GetNameAbbreviation())</div>
+                                    }
+                                </div>
+                                <div class="kt-widget__info">
+                                    <a href="@Url.Action("Details", "Executives", new { id = attendeeCollaboratorNetworkDto?.Collaborator?.Uid })" class="kt-widget__username" target="_blank">
+                                        @(attendeeCollaboratorNetworkDto?.Collaborator?.Badge)
+                                    </a><br />
+                                    <span class="kt-widget__section">
+                                        @(attendeeCollaboratorNetworkDto.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value)
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="kt-widget__body">
+                                <div class="kt-widget__desc text-center mt-3" style="min-height: 60px;">
+                                    <h5>@(attendeeOrganizationDto?.Organization?.TradeName)</h5>
+                                </div>
+                                <div class="kt-widget__item">
+                                    <div class="kt-widget__contact d-block">
+                                        <span class="kt-widget__label">@Labels.Email:</span><br />
+                                        <span class="kt-widget__data text-break">@(attendeeCollaboratorNetworkDto.Collaborator.PublicEmail ?? "-")</span>
+                                    </div>
+                                    @*<div class="kt-widget__contact d-block mt-2">
+                                            <span class="kt-widget__label">@Labels.CellPhone:</span><br />
+                                            <span class="kt-widget__data text-break">@(attendeeCollaboratorNetworkDto.Collaborator.CellPhone ?? "-")</span>
+                                        </div>*@
+                                    @*<div class="kt-widget__contact">
+                                            <span class="kt-widget__label">Location:</span>
+                                            <span class="kt-widget__data">Barcelona</span>
+                                        </div>*@
+                                </div>
+                            </div>
+
+                            <div class="kt-widget__footer">
+                                <a href="@Url.Action("Messages", "Networks", new { id = attendeeCollaboratorNetworkDto.User.Uid, Area = "" })" class="btn btn-label-brand btn-lg btn-upper">@Labels.SendMessage</a>
+                            </div>
+                        </div>
+                        <!--end::Widget -->
+                    </div>
+                </div>
+                <!--End::Portlet-->
+            </div>
+        }
+    }
+    else
+    {
+        <div class="col-12">@string.Format(Messages.NoneEntityAction, Labels.Participant.ToLowerInvariant(), Labels.FoundM)</div>
+    }
+</div>
+<!--End::List-->
+<!--Begin::Pagination-->
+<div class="row">
+    <div class="col-xl-12">
+        <!--begin:: Components/Pagination/Default-->
+        <div class="kt-portlet">
+            <div class="kt-portlet__body">
+                <!--begin: Pagination-->
+                <div class="kt-pagination kt-pagination--brand justify-content-center justify-content-sm-between">
+                    @Html.PagedListPager(
+                        Model,
+                        page => Url.Action("ShowContactsListWidget", "Networks", new { searchKeywords = ViewBag.SearchKeywords, page, pageSize = ViewBag.PageSize }),
+                        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
+                            new PagedListRenderOptions
+                            {
+                                DisplayLinkToIndividualPages = true,
+                                MaximumPageNumbersToDisplay = 3,
+                                DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                                DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                                DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                                DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                                //ContainerDivClasses = new string[] { "kt-pagination kt-pagination--brand" },
+                                UlElementClasses = new string[] {"kt-pagination__links"},
+                                LiElementClasses = new string[] {""},
+                                PreviousElementClass = "kt-pagination__link--prev",
+                                NextElementClass = "kt-pagination__link--next",
+                                ClassToApplyToFirstListItemInPager = "kt-pagination__link--first",
+                                ClassToApplyToLastListItemInPager = "kt-pagination__link--last kt-font-brand",
+                                ActiveLiElementClass = "kt-pagination__link--active",
+                                PageClasses = new string[] {""},
+                                EllipsesElementClass = ""
+                            }
+                            , new AjaxOptions { HttpMethod = "GET", OnBegin = "NetworksContactsListWidget.changePage", OnSuccess = "NetworksContactsListWidget.handlePaginationReturn" }))
+                    <div class="kt-pagination__toolbar">
+                        @{
+                            var pageSizes = new[] { 6, 15, 30 };
+                        }
+                        <select name="PageSizeDropdown" id="PageSizeDropdown" class="form-control kt-font-brand" style="width: 60px">
+                            @foreach (var pageSize in pageSizes)
+                            {
+                                <option value="@pageSize" @(ViewBag.PageSize == pageSize ? "selected" : string.Empty)>@pageSize</option>
+                            }
+                        </select>
+                        @Html.PagedListPager(
+                            Model,
+                            page => Url.Action(null, new {page}),
+                            PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
+                                new PagedListRenderOptions
+                                {
+                                    ItemSliceAndTotalFormat = Messages.PaginationMessage,
+                                    DisplayItemSliceAndTotal = true,
+                                    DisplayLinkToIndividualPages = false,
+                                    DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+                                    DisplayLinkToPreviousPage = PagedListDisplayMode.Never,
+                                    DisplayLinkToNextPage = PagedListDisplayMode.Never,
+                                    DisplayLinkToLastPage = PagedListDisplayMode.Never,
+                                    ContainerDivClasses = new[] {"pagination__desc"},
+                                    UlElementClasses = new string[] {"pagination mb-0"},
+                                    LiElementClasses = new string[] {"page-item"},
+                                    PageClasses = new string[] {"page-link"}
+                                }, null))
+                    </div>
+                </div>
+                <!--end: Pagination-->
+            </div>
+        </div>
+        <!--end:: Components/Pagination/Default-->
+    </div>
+</div>
+<!--End::Pagination-->

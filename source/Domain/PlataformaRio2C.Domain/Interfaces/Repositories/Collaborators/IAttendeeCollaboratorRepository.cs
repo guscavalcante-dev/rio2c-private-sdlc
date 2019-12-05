@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-19-2019
+// Last Modified On : 12-05-2019
 // ***********************************************************************
 // <copyright file="IAttendeeCollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,7 +34,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         #region Networks
 
         Task<List<AttendeeCollaboratorNetworkDto>> FindAllExcelNetworkDtoByEditionIdAsync(int editionId);
-        Task<IPagedList<AttendeeCollaboratorNetworkDto>> FindAllNetworkDtoByEditionIdPagedAsync(int editionId, int page, int pageSize);
+        Task<IPagedList<AttendeeCollaboratorNetworkDto>> FindAllNetworkDtoByEditionIdPagedAsync(int editionId, string searchKeyworkds, int page, int pageSize);
 
         #endregion
     }

@@ -340,7 +340,9 @@ namespace PlataformaRio2C.Web.Site
             #region Networks
 
             bundles.Add(new ScriptBundle("~/bundles/js/networks.contacts.js").Include(
-                "~/Assets/js/networks/networks.contacts.js"));
+                "~/Assets/js/networks/networks.contacts.js",
+                "~/Assets/js/networks/networks.contacts.list.widget.js",
+                "~/Scripts/jquery.unobtrusive-ajax.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/networks.messages.js").Include(
                 "~/Assets/js/networks/networks.messages.conversations.widget.js",
