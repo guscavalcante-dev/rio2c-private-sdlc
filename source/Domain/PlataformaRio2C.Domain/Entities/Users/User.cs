@@ -172,6 +172,14 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Unsubscribed Lists
 
+        /// <summary>Updates the user unsubscribed lists.</summary>
+        /// <param name="unsubscribeLists">The unsubscribe lists.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateUserUnsubscribedLists(List<SubscribeList> unsubscribeLists, int userId)
+        {
+            this.SynchronizeUserUnsubscribedLists(unsubscribeLists, userId);
+        }
+
         /// <summary>Synchronizes the user unsubscribed lists.</summary>
         /// <param name="unsubscribedLists">The unsubscribed lists.</param>
         /// <param name="userId">The user identifier.</param>

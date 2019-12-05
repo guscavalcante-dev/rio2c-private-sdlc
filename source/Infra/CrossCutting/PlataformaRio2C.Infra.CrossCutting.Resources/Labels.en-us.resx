@@ -1794,4 +1794,12 @@
     <value>Subscribe List</value>
     <comment>Lista de Inscrição</comment>
   </data>
+  <data name="EmailSettings" xml:space="preserve">
+    <value>Email Settings</value>
+    <comment>Configurações de Email</comment>
+  </data>
+  <data name="Unsubscribe" xml:space="preserve">
+    <value>Unsubscribe</value>
+    <comment>Cancelar recebimento</comment>
+  </data>
 </root>

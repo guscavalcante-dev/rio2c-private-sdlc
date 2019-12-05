@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-18-2019
+// Last Modified On : 12-05-2019
 // ***********************************************************************
 // <copyright file="AccountController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -31,7 +31,9 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Application.Common;
 using System.Text.RegularExpressions;
+using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using Constants = PlataformaRio2C.Domain.Constants;
@@ -43,15 +45,26 @@ namespace PlataformaRio2C.Web.Site.Controllers
     public class AccountController : BaseController
     {
         private readonly IdentityAutenticationService _identityController;
+        private readonly IUserRepository userRepo;
+        private readonly ISubscribeListRepository subscribeListRepo;
+
         private IAuthenticationManager authenticationManager => HttpContext.GetOwinContext().Authentication;
 
         /// <summary>Initializes a new instance of the <see cref="AccountController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        public AccountController(IMediator commandBus, IdentityAutenticationService identityController)
+        /// <param name="userRepository">The user repository.</param>
+        /// <param name="subscribeListRepository">The subscribe list repository.</param>
+        public AccountController(
+            IMediator commandBus, 
+            IdentityAutenticationService identityController,
+            IUserRepository userRepository,
+            ISubscribeListRepository subscribeListRepository)
             : base(commandBus, identityController)
         {
             _identityController = identityController;
+            this.userRepo = userRepository;
+            this.subscribeListRepo = subscribeListRepository;
         }
 
         /// <summary>Indexes this instance.</summary>
@@ -426,7 +439,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <summary>Updates the password.</summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
-        /// <exception cref="DomainException"></exception>
         [HttpPost]
         public async Task<ActionResult> UpdatePassword(ChangePasswordViewModel cmd)
         {
@@ -554,6 +566,92 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
 
             return RedirectToAction("Index", "Quiz");
+        }
+
+        #endregion
+
+        #region Email Settings
+
+        /// <summary>Shows the update email settings modal.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowUpdateEmailSettingsModal()
+        {
+            UpdateUserEmailSettings cmd;
+
+            try
+            {
+                cmd = new UpdateUserEmailSettings(
+                    await this.userRepo.FindUserEmailSettingsDtoByUserIdAsync(this.UserAccessControlDto?.User?.Id ?? 0),
+                    await this.subscribeListRepo.FindAllAsync());
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/UpdateEmailSettingsModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Updates the email settings.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> UpdateEmailSettings(UpdateUserEmailSettings cmd)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.UserAccessControlDto.User.Id,
+                    this.UserAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                return Json(new
+                {
+                    status = "error",
+                    message = ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/UpdateEmailSettingsForm", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.EmailSettings, Labels.UpdatedF) });
         }
 
         #endregion

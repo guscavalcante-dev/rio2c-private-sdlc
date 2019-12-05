@@ -798,4 +798,8 @@
     <value>You have &lt;b&gt;{0} new messages&lt;/b&gt;.</value>
     <comment>Você tem &lt;b&gt;{0} novas mensagens&lt;/b&gt;.</comment>
   </data>
+  <data name="ClickHereToChangeEmailSettings" xml:space="preserve">
+    <value>Click here to change your email settings</value>
+    <comment>Clique aqui para alterar suas configurações de email</comment>
+  </data>
 </root>

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-28-2019
+// Last Modified On : 12-05-2019
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -198,14 +198,37 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public UserLanguageDto FindUserLanguageByUserId(int userId)
         {
             var query = this.GetBaseQuery()
-                                 .FindById(userId);
+                                .FindById(userId)
+                                .Where(u => u.UserInterfaceLanguageId != null);
 
-            return query.Where(u => u.UserInterfaceLanguageId != null)
+            return query
                         .Select(u => new UserLanguageDto
                         {
                             Language = u.UserInterfaceLanguage
                         })
                         .FirstOrDefault();
+        }
+
+        /// <summary>Finds the user email settings dto by user identifier asynchronous.</summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public async Task<UserEmailSettingsDto> FindUserEmailSettingsDtoByUserIdAsync(int userId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindById(userId);
+
+            return await query
+                            .Select(u => new UserEmailSettingsDto
+                            {
+                                User = u,
+                                UserUnsubscribedListDtos = u.UserUnsubscribedLists.Where(uul => !uul.IsDeleted).Select(uul => new UserUnsubscribedListDto
+                                {
+                                    UserUnsubscribedList = uul,
+                                    User = u,
+                                    SubscribeList = uul.SubscribeList
+                                })
+                            })
+                            .FirstOrDefaultAsync();
         }
 
         #region Old Methods

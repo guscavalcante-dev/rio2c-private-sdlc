@@ -443,6 +443,7 @@
     <Content Include="Assets\img\logo_rio2c_white.png" />
     <Content Include="Assets\img\rio2cmarket-en-us.png" />
     <Content Include="Assets\img\rio2cmarket-pt-br.png" />
+    <Content Include="Assets\js\accounts\accounts.emailsettings.js" />
     <Content Include="Assets\js\accounts\accounts.password.js" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
     <Content Include="Assets\js\attendeeorganizations\attendeeorganizations.form.js" />
@@ -7148,6 +7149,8 @@
     <Content Include="Views\Networks\Messages.cshtml" />
     <Content Include="Views\Networks\Widgets\ConversationsWidget.cshtml" />
     <Content Include="Views\Networks\Widgets\ConversationWidget.cshtml" />
+    <Content Include="Views\Account\Modals\UpdateEmailSettingsModal.cshtml" />
+    <Content Include="Views\Account\Modals\UpdateEmailSettingsForm.cshtml" />
     <None Include="Views\Projects\Index.cshtml.old" />
     <Content Include="Views\Projects\Modals\UpdateMainInformationModal.cshtml" />
     <Content Include="Views\Projects\Modals\UpdateMainInformationForm.cshtml" />

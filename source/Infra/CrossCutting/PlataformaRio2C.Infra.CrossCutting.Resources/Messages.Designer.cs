@@ -169,6 +169,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clique aqui para alterar suas configurações de email.
+        /// </summary>
+        public static string ClickHereToChangeEmailSettings {
+            get {
+                return ResourceManager.GetString("ClickHereToChangeEmailSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clique aqui para alterar sua senha.
         /// </summary>
         public static string ClickHereToChangePassword {

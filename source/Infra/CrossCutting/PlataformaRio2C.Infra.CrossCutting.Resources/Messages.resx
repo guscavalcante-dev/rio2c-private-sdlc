@@ -803,4 +803,8 @@
     <value>Você tem &lt;b&gt;{0} novas mensagens&lt;/b&gt;.</value>
     <comment>Você tem &lt;b&gt;{0} novas mensagens&lt;/b&gt;.</comment>
   </data>
+  <data name="ClickHereToChangeEmailSettings" xml:space="preserve">
+    <value>Clique aqui para alterar suas configurações de email</value>
+    <comment>Clique aqui para alterar suas configurações de email</comment>
+  </data>
 </root>

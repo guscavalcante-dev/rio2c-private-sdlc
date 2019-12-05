@@ -33,3 +33,15 @@
         *@
     </div>
 </div>
+@section Styles {
+}
+@section Scripts {
+    <script>
+        jQuery(document).ready(function () {
+            @if (ViewBag.ShowEmailSettings == true)
+            {
+                <text>AccountsEmailSettings.showUpdateModal();</text>
+            }
+        });
+    </script>
+}

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-28-2019
+// Last Modified On : 12-05-2019
 // ***********************************************************************
 // <copyright file="IUserRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,5 +25,6 @@ namespace PlataformaRio2C.Domain.Interfaces
         AdminAccessControlDto FindAdminAccessControlDtoByUserIdAndByEditionId(int userId, int editionId);
         UserAccessControlDto FindUserAccessControlDtoByUserIdAndByEditionId(int userId, int editionId);
         UserLanguageDto FindUserLanguageByUserId(int userId);
+        Task<UserEmailSettingsDto> FindUserEmailSettingsDtoByUserIdAsync(int userId);
     }    
 }

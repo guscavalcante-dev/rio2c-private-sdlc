@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-03-2019
+// Last Modified On : 12-05-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -127,6 +127,7 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/components/jquery.form/jquery.form.js",
                 "~/Assets/components/hideshowpassword/hideShowPassword.js",
                 "~/Assets/js/myrio2c.showhidepassword.js",
+                "~/Assets/js/accounts/accounts.emailsettings.js",
                 "~/Assets/js/accounts/accounts.password.js",
                 "~/Assets/components/bootstrap-maxlength/src/bootstrap-maxlength.js",
                 "~/Assets/js/networks/networks.notification.common.js"));

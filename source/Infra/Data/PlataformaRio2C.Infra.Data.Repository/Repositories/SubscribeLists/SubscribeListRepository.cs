@@ -11,6 +11,7 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context;
@@ -28,12 +29,26 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     /// </summary>
     internal static class SubscribeListIQueryableExtensions
     {
+        /// <summary>Finds the by not uids.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="subscribeListUids">The subscribe list uids.</param>
+        /// <returns></returns>
+        internal static IQueryable<SubscribeList> FindByNotUids(this IQueryable<SubscribeList> query, List<Guid> subscribeListUids)
+        {
+            if (subscribeListUids?.Any() == true)
+            {
+                query = query.Where(sl => !subscribeListUids.Contains(sl.Uid));
+            }
+
+            return query;
+        }
+
         /// <summary>Determines whether [is not deleted].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
         internal static IQueryable<SubscribeList> IsNotDeleted(this IQueryable<SubscribeList> query)
         {
-            query = query.Where(o => !o.IsDeleted);
+            query = query.Where(sl => !sl.IsDeleted);
 
             return query;
         }
@@ -64,13 +79,26 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
-        /// <summary>Finds all subscribe lists asynchronous.</summary>
+        /// <summary>Finds all asynchronous.</summary>
         /// <returns></returns>
-        public async Task<List<SubscribeList>> FindAllSubscribeListsAsync()
+        public async Task<List<SubscribeList>> FindAllAsync()
         {
             var query = this.GetBaseQuery();
 
-            return await query.ToListAsync();
+            return await query
+                            .ToListAsync();
+        }
+
+        /// <summary>Finds all by not uids.</summary>
+        /// <param name="subscribeListUids">The subscribe list uids.</param>
+        /// <returns></returns>
+        public async Task<List<SubscribeList>> FindAllByNotUids(List<Guid> subscribeListUids)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByNotUids(subscribeListUids);
+
+            return await query
+                            .ToListAsync();
         }
     }
 }
