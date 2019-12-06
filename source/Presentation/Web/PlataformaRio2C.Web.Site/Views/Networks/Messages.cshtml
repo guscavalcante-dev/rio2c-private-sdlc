@@ -21,13 +21,13 @@
                 <div class="kt-widget__item mb-3">
                     @if (userAccessControlDto?.Collaborator?.HasImage() == true)
                     {
-                        <span class="kt-userpic kt-userpic--circle my-userpic--43">
+                        <span class="kt-userpic kt-userpic--circle my-userpic--43 d-inline-block">
                             <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, userAccessControlDto.Collaborator.Uid, userAccessControlDto.Collaborator.ImageUploadDate, true)" alt="image">
                         </span>
                     }
                     else
                     {
-                        <span class="kt-media kt-media--circle kt-media--brand">
+                        <span class="kt-media kt-media--circle kt-media--brand d-inline-block">
                             <span>@(userAccessControlDto?.Collaborator?.GetDisplayNameAbbreviation() ?? 
                                     userAccessControlDto?.User?.Name?.GetTwoLetterCode() ??
                                     "-")</span>
