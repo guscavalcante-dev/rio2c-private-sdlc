@@ -1831,4 +1831,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Conexão lenta</value>
     <comment>Conexão lenta</comment>
   </data>
+  <data name="StartNewConversation" xml:space="preserve">
+    <value>Iniciar nova conversa</value>
+    <comment>Iniciar nova conversa</comment>
+  </data>
 </root>

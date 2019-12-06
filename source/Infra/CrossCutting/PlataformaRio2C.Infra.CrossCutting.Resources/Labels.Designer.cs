@@ -3571,6 +3571,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Iniciar nova conversa.
+        /// </summary>
+        public static string StartNewConversation {
+            get {
+                return ResourceManager.GetString("StartNewConversation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hora de início.
         /// </summary>
         public static string StartTime {

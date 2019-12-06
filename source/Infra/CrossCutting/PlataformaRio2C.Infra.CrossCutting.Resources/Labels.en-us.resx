@@ -1818,4 +1818,8 @@
     <value>Connection slow</value>
     <comment>Conexão lenta</comment>
   </data>
+  <data name="StartNewConversation" xml:space="preserve">
+    <value>Start new conversation</value>
+    <comment>Iniciar nova conversa</comment>
+  </data>
 </root>

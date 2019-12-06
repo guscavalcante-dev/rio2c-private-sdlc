@@ -39,7 +39,7 @@
                         <span id="StatusConnected" class="connection-status d-none"><span class="kt-badge kt-badge--dot kt-badge--success"></span> @Labels.Connected</span>
                         <span id="StatusDisconnected" class="connection-status d-none"><span class="kt-badge kt-badge--dot kt-badge--danger"></span> @Labels.Disconnected</span>
                     </span>
-                    <a href="@Url.Action("Index", "Networks", new { Area = "" })" class="btn btn-clean btn-sm btn-icon btn-icon-md float-right">
+                    <a href="@Url.Action("Index", "Networks", new { Area = "" })" class="btn btn-clean btn-sm btn-icon btn-icon-md float-right" data-toggle="kt-tooltip" title="" data-placement="bottom" data-original-title="@Labels.StartNewConversation">
                         <i class="flaticon2-add-1"></i>
                     </a>
                 </div>
