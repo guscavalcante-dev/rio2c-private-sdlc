@@ -60,7 +60,7 @@ var NetworksMessagesConversationWidget = function () {
 
     // Read messages ------------------------------------------------------------------------------
     var readMessages = function (isChatOpen) {
-        if (isChatOpen || !$('.chat-selected #UnreadMessagesCount').hasClass('d-none')) {
+        if (isChatOpen || !$('.chat-selected .unread-messages-count').hasClass('d-none')) {
             window.messageHub.server.readMessages(
                 otherUserId,
                 otherUserUid,
@@ -68,10 +68,12 @@ var NetworksMessagesConversationWidget = function () {
                 messagesConfig.currentUserUid
             )
             .done(function () {
-                $('.chat-selected #UnreadMessagesCount')
+                $('.chat-selected .unread-messages-count')
                     .html(0)
                     .addClass('d-none');
-            });
+
+                    NetworksMessagesConversationsWidget.disableAlertPulse();
+             });
         }
     };
 

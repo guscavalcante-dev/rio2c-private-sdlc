@@ -4,7 +4,7 @@
 // Created          : 11-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-04-2019
+// Last Modified On : 12-05-2019
 // ***********************************************************************
 // <copyright file="networks.messages.conversations.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,14 +33,17 @@ var NetworksMessagesConversationsWidget = function () {
     };
 
     // Show ---------------------------------------------------------------------------------------
+    var disableAlertPulse = function () {
+        var newMessagePulseElement = $('#NewMessagePulse');
+        if (newMessagePulseElement.length > 0 && $('.unread-messages-count:not(".d-none")').length === 0) {
+            newMessagePulseElement.addClass('d-none');
+        }
+    };
+
     var enableShowPlugins = function () {
         $("time.timeago").timeago();
         enableSearchEvent();
-
-        var newMessagePulseElement = $('#NewMessagePulse');
-        if (newMessagePulseElement.length > 0) {
-            newMessagePulseElement.addClass('d-none');
-        }
+        disableAlertPulse();
     };
 
     var show = function (otherUserUid) {
@@ -119,6 +122,9 @@ var NetworksMessagesConversationsWidget = function () {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
+        },
+        disableAlertPulse: function () {
+            disableAlertPulse();
         },
         search: function () {
             search();

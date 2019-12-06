@@ -71,7 +71,7 @@
                 {
                     <time class="timeago kt-widget__date" datetime="@conversationDto.LastMessageDate.Value.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.CurrentCulture)">@conversationDto.LastMessageDate.Value.ToShortDateString() @conversationDto.LastMessageDate.Value.ToLongTimeString()</time>
                 }
-                <span id="UnreadMessagesCount" class="kt-badge kt-badge--success kt-font-bold @(conversationDto.UnreadMessagesCount > 0 ? string.Empty : "d-none")">@conversationDto.UnreadMessagesCount</span>
+                <span class="kt-badge kt-badge--success kt-font-bold unread-messages-count @(conversationDto.UnreadMessagesCount > 0 ? string.Empty : "d-none")">@conversationDto.UnreadMessagesCount</span>
             </div>
         </div>
 
