@@ -111,7 +111,7 @@
 <div class="kt-portlet__foot">
     <div class="kt-chat__input">
         <div class="kt-chat__editor">
-            @Html.TextArea("Text", null, new { placeholder = Labels.TypeYourMessage + "...", rows = 3 })
+            @Html.TextArea("Text", null, new { placeholder = Labels.TypeYourMessage + "...", rows = 3, disabled = true })
             @*<textarea style="height: 50px" placeholder="Type here..."></textarea>*@
         </div>
         <div class="kt-chat__toolbar">
@@ -121,7 +121,7 @@
                     <a href="#"><i class="flaticon2-photo-camera"></i></a>*@
             </div>
             <div class="kt_chat__actions">
-                <button type="button" class="btn btn-brand btn-md btn-upper btn-bold kt-chat__reply" id="SendMessage">@Labels.Send</button>
+                <button id="SendMessage" type="button" class="btn btn-brand btn-md btn-upper btn-bold kt-chat__reply" disabled>@Labels.Send</button>
             </div>
         </div>
     </div>

@@ -4,7 +4,7 @@
 // Created          : 11-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-03-2019
+// Last Modified On : 12-05-2019
 // ***********************************************************************
 // <copyright file="networks.messages.conversation.widget" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,37 +22,37 @@ var NetworksMessagesConversationWidget = function () {
 
     // Signalr ------------------------------------------------------------------------------------
     var enableChat = function () {
-        $.connection.hub.start().done(function () {
-            $('#SendMessage').click(function () {
-                // Call the Send method on the hub.
-                window.messageHub.server.sendMessage(
-                    messagesConfig.editionId,
-                    messagesConfig.editionUid,
-                    messagesConfig.currentUserId,
-                    messagesConfig.currentUserUid,
-                    messagesConfig.currentUserEmail,
-                    otherUserId,
-                    otherUserUid,
-                    $('#Text').val());
+        startHub();
 
-                //var html =
-                //    '<div class="kt-chat__message kt-chat__message--right">' +
-                //        '   <div class="kt-chat__user">' +
-                //        '       <span class="kt-chat__datetime">30 Seconds</span>' +
-                //        '       <a href="#" class="kt-chat__username">You</a>' +
-                //        '       <span class="kt-userpic kt-userpic--circle kt-userpic--sm">' +
-                //        '           <img src="https://dev.assets.my.rio2c.com/img/users/1d42aa30-7498-41e9-9e4e-66bd1d416314_thumbnail.png?v=20191125134854" alt="image">' +
-                //        '       </span>' +
-                //        '   </div>' +
-                //        '   <div class="kt-chat__text kt-bg-light-brand">' + htmlEncode($('#Text').val()) + '</div>' +
-                //    '</div>';
+        $('#SendMessage').click(function () {
+            // Call the Send method on the hub.
+            window.messageHub.server.sendMessage(
+                messagesConfig.editionId,
+                messagesConfig.editionUid,
+                messagesConfig.currentUserId,
+                messagesConfig.currentUserUid,
+                messagesConfig.currentUserEmail,
+                otherUserId,
+                otherUserUid,
+                $('#Text').val());
 
-                //$('#Messages').append(html);
-                //$('#Messages').scrollTop($('#Messages')[0].scrollHeight);
-                // Clear text box and reset focus for next comment.
+            //var html =
+            //    '<div class="kt-chat__message kt-chat__message--right">' +
+            //        '   <div class="kt-chat__user">' +
+            //        '       <span class="kt-chat__datetime">30 Seconds</span>' +
+            //        '       <a href="#" class="kt-chat__username">You</a>' +
+            //        '       <span class="kt-userpic kt-userpic--circle kt-userpic--sm">' +
+            //        '           <img src="https://dev.assets.my.rio2c.com/img/users/1d42aa30-7498-41e9-9e4e-66bd1d416314_thumbnail.png?v=20191125134854" alt="image">' +
+            //        '       </span>' +
+            //        '   </div>' +
+            //        '   <div class="kt-chat__text kt-bg-light-brand">' + htmlEncode($('#Text').val()) + '</div>' +
+            //    '</div>';
 
-                $('#Text').val('').focus();
-            });
+            //$('#Messages').append(html);
+            //$('#Messages').scrollTop($('#Messages')[0].scrollHeight);
+            // Clear text box and reset focus for next comment.
+
+            $('#Text').val('').focus();
         });
 
         $('#Text').focus();
@@ -61,18 +61,16 @@ var NetworksMessagesConversationWidget = function () {
     // Read messages ------------------------------------------------------------------------------
     var readMessages = function (isChatOpen) {
         if (isChatOpen || !$('.chat-selected #UnreadMessagesCount').hasClass('d-none')) {
-            $.connection.hub.start().done(function () {
-                window.messageHub.server.readMessages(
-                    otherUserId,
-                    otherUserUid,
-                    messagesConfig.currentUserId,
-                    messagesConfig.currentUserUid
-                )
-                .done(function () {
-                    $('.chat-selected #UnreadMessagesCount')
-                        .html(0)
-                        .addClass('d-none');
-                });
+            window.messageHub.server.readMessages(
+                otherUserId,
+                otherUserUid,
+                messagesConfig.currentUserId,
+                messagesConfig.currentUserUid
+            )
+            .done(function () {
+                $('.chat-selected #UnreadMessagesCount')
+                    .html(0)
+                    .addClass('d-none');
             });
         }
     };
@@ -163,6 +161,17 @@ var NetworksMessagesConversationWidget = function () {
         }
     };
 
+    // Toggle conversation ------------------------------------------------------------------------
+    var disableConversation = function () {
+        $('#Text').prop('disabled', true);
+        $('#SendMessage').prop('disabled', true);
+    };
+
+    var enableConversation = function () {
+        $('#Text').prop('disabled', false);
+        $('#SendMessage').prop('disabled', false);
+    };
+
     return {
         init: function () {
             show();
@@ -172,10 +181,32 @@ var NetworksMessagesConversationWidget = function () {
         },
         readMessages: function (isChatOpen) {
             readMessages(isChatOpen);
+        },
+        disableConversation: function () {
+            disableConversation();
+        },
+        enableConversation: function () {
+            enableConversation();
         }
     };
 }();
 
+var startHub = function () {
+    $('.connection-status').addClass('d-none');
+    $('#StatusConnecting').removeClass('d-none');
+
+    $.connection.hub.start()
+        .done(function () {
+            NetworksMessagesConversationWidget.enableConversation();
+            $('.connection-status').addClass('d-none');
+            $('#StatusConnected').removeClass('d-none');
+        })
+        .fail(function () {
+            NetworksMessagesConversationWidget.disableConversation();
+            $('.connection-status').addClass('d-none');
+            $('#StatusDisconnected').removeClass('d-none');
+        });
+};
 
 jQuery(document).ready(function () {
     if (typeof (window.messageHub) === 'undefined') {
@@ -269,4 +300,36 @@ jQuery(document).ready(function () {
             }
         });
     };
+
+    $.connection.hub.logging = true;
+
+    $.connection.hub.connectionSlow(function () {
+        $('.connection-status').addClass('d-none');
+        $('#StatusConnectionSlow').removeClass('d-none');
+    });
+
+    $.connection.hub.reconnecting(function () {
+        NetworksMessagesConversationWidget.disableConversation();
+        $('.connection-status').addClass('d-none');
+        $('#StatusConnecting').removeClass('d-none');
+    });
+
+    $.connection.hub.reconnected(function () {
+        NetworksMessagesConversationWidget.enableConversation();
+        $('.connection-status').addClass('d-none');
+        $('#StatusConnected').removeClass('d-none');
+    });
+
+    $.connection.hub.disconnected(function () {
+        NetworksMessagesConversationWidget.disableConversation();
+        $('.connection-status').addClass('d-none');
+        $('#StatusDisconnected').removeClass('d-none');
+
+        // Try to reconnect
+        setTimeout(function () {
+            startHub();
+        }, 10000); // Restart connection after 5 seconds.
+    });
+
+    startHub();
 });

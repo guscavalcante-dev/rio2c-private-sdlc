@@ -33,6 +33,12 @@
                                     "-")</span>
                         </span>
                     }
+                    <span class="kt-chat__status ml-3">
+                        <span id="StatusConnecting" class="connection-status"><span class="kt-badge kt-badge--dot kt-badge--warning"></span> @Labels.Connecting</span>
+                        <span id="StatusConnectionSlow" class="connection-status d-none"><span class="kt-badge kt-badge--dot kt-badge--success"></span> @Labels.ConnectionSlow</span>
+                        <span id="StatusConnected" class="connection-status d-none"><span class="kt-badge kt-badge--dot kt-badge--success"></span> @Labels.Connected</span>
+                        <span id="StatusDisconnected" class="connection-status d-none"><span class="kt-badge kt-badge--dot kt-badge--danger"></span> @Labels.Disconnected</span>
+                    </span>
                     <a href="@Url.Action("Index", "Networks", new { Area = "" })" class="btn btn-clean btn-sm btn-icon btn-icon-md float-right">
                         <i class="flaticon2-add-1"></i>
                     </a>

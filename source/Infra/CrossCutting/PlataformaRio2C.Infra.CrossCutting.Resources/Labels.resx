@@ -1807,6 +1807,18 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Lista de Inscrição</value>
     <comment>Lista de Inscrição</comment>
   </data>
+  <data name="Connected" xml:space="preserve">
+    <value>Conectado</value>
+    <comment>Conectado</comment>
+  </data>
+  <data name="Connecting" xml:space="preserve">
+    <value>Conectando</value>
+    <comment>Conectando</comment>
+  </data>
+  <data name="Disconnected" xml:space="preserve">
+    <value>Desconectado</value>
+    <comment>Desconectado</comment>
+  </data>
   <data name="EmailSettings" xml:space="preserve">
     <value>Configurações de Email</value>
     <comment>Configurações de Email</comment>
@@ -1814,5 +1826,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Unsubscribe" xml:space="preserve">
     <value>Cancelar recebimento</value>
     <comment>Cancelar recebimento</comment>
+  </data>
+  <data name="ConnectionSlow" xml:space="preserve">
+    <value>Conexão lenta</value>
+    <comment>Conexão lenta</comment>
   </data>
 </root>
