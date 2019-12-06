@@ -4,7 +4,7 @@
 // Created          : 12-03-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-03-2019
+// Last Modified On : 12-05-2019
 // ***********************************************************************
 // <copyright file="networks.notification.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -60,5 +60,7 @@ jQuery(document).ready(function () {
         });
     };
 
-    $.connection.hub.start();
+    if (typeof (startHub) === 'undefined') {
+        $.connection.hub.start();
+    }
 });
