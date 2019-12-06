@@ -19,7 +19,12 @@ var MyRio2cKTAppChat = function () {
 	var chatContentEl;
 
 	// Private functions
-	var initAside = function () {
+    var initAside = function () {
+
+        // Disable canvas when new conversation selected
+        KTUtil.data(chatAsideEl).remove('offcanvas');
+        $('#kt_chat_aside_close').click();
+
 		// Mobile offcanvas for mobile mode
 		var offcanvas = new KTOffcanvas(chatAsideEl, {
             overlay: true,  
