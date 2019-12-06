@@ -1,0 +1,33 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateCollaboratorMainInformation
+<div class="modal fade" id="ShowContactsListModal" role="dialog" aria-labelledby="ShowContactsListModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    @Labels.NetworkRio2C
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="kt-portlet">
+                    <div class="kt-portlet__body">
+                        <div class="row">
+                            <div class="col-12 d-flex">
+                                @Html.Hidden("Page", ViewBag.Page as int?)
+                                @Html.Hidden("PageSize", ViewBag.PageSize as int?)
+                                @Html.Hidden("IsModal", ViewBag.IsModal as bool? ?? false)
+                                @Html.TextBox("ContactsSearchKeywords", null, new { @class = "form-control mr-1", type = "search", placeholder = Labels.Search })
+                                <button type="button" class="btn btn-primary btn-icon" onclick="NetworksContacts.search();"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>        
+                    </div>
+                </div>
+                <div id="NetworksContactsListWidget" class="kt-grid__item kt-grid__item--fluid"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">@Labels.Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+

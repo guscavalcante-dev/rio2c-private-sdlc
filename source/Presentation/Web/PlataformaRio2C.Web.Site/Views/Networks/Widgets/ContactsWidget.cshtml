@@ -4,15 +4,18 @@
 @using X.PagedList.Mvc
 @using X.PagedList.Mvc.Common
 @model X.PagedList.IPagedList<AttendeeCollaboratorNetworkDto>
+@{
+    var isModal = ViewBag.IsModal as bool? ?? false;
+}
 <!--Begin::List-->
-<div class="row">
-    @if (Model?.Any() == true)
-    {
-        foreach (var attendeeCollaboratorNetworkDto in Model)
+@if (Model?.Any() == true)
+{
+    <div class="row">
+        @foreach (var attendeeCollaboratorNetworkDto in Model)
         {
             var attendeeOrganizationDto = attendeeCollaboratorNetworkDto.AttendeeOrganizationsDtos?.FirstOrDefault();
 
-            <div class="col-sm-6 col-lg-6 col-xl-4">
+            <div class="@(!isModal ? "col-sm-6 col-lg-6 col-xl-4" : "col-sm-6")">
                 <!--Begin::Portlet-->
                 <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-portlet__head kt-portlet__head--noborder">
@@ -79,7 +82,14 @@
                             </div>
 
                             <div class="kt-widget__footer">
-                                <a href="@Url.Action("Messages", "Networks", new { id = attendeeCollaboratorNetworkDto.User.Uid, Area = "" })" class="btn btn-label-brand btn-lg btn-upper">@Labels.SendMessage</a>
+                                @if (!isModal)
+                                {
+                                    <a href="@Url.Action("Messages", "Networks", new {id = attendeeCollaboratorNetworkDto.User.Uid, Area = ""})" class="btn btn-label-brand btn-lg btn-upper">@Labels.SendMessage</a>
+                                }
+                                else
+                                {
+                                    <a href="#" onclick="return NetworksContacts.sendMessage('@attendeeCollaboratorNetworkDto.User.Uid');" class="btn btn-label-brand btn-lg btn-upper">@Labels.SendMessage</a>
+                                }
                             </div>
                         </div>
                         <!--end::Widget -->
@@ -88,12 +98,18 @@
                 <!--End::Portlet-->
             </div>
         }
-    }
-    else
-    {
-        <div class="col-12">@string.Format(Messages.NoneEntityAction, Labels.Participant.ToLowerInvariant(), Labels.FoundM)</div>
-    }
-</div>
+    </div>
+}
+else
+{
+    <div class="kt-portlet">
+        <div class="kt-portlet__body">
+            <div class="row">
+                <div class="col-12 text-center">@string.Format(Messages.NoneEntityAction, Labels.Participant.ToLowerInvariant(), Labels.FoundM)</div>
+            </div>
+        </div>
+    </div>
+}
 <!--End::List-->
 <!--Begin::Pagination-->
 <div class="row">
@@ -105,7 +121,7 @@
                 <div class="kt-pagination kt-pagination--brand justify-content-center justify-content-sm-between">
                     @Html.PagedListPager(
                         Model,
-                        page => Url.Action("ShowContactsListWidget", "Networks", new { searchKeywords = ViewBag.SearchKeywords, page, pageSize = ViewBag.PageSize }),
+                        page => Url.Action("ShowContactsListWidget", "Networks", new { searchKeywords = ViewBag.SearchKeywords, isModal = ViewBag.IsModal, page, pageSize = ViewBag.PageSize }),
                         PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
                             new PagedListRenderOptions
                             {

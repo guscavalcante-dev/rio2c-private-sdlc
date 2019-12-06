@@ -4,7 +4,7 @@
 // Created          : 11-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-05-2019
+// Last Modified On : 12-06-2019
 // ***********************************************************************
 // <copyright file="networks.messages.conversations.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,11 +25,11 @@ var NetworksMessagesConversationsWidget = function () {
     };
 
     var enableSearchEvent = function () {
-        $('#SearchKeywords').not('.search-event-enabled').on('search', function () {
+        $('#ConversationsSearchKeywords').not('.search-event-enabled').on('search', function () {
             search();
         });
 
-        $('#SearchKeywords').addClass('search-event-enabled');
+        $('#ConversationsSearchKeywords').addClass('search-event-enabled');
     };
 
     // Show ---------------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ var NetworksMessagesConversationsWidget = function () {
             $('#InitialUserUid').val('');
         }
 
-        jsonParameters.searchKeywords = $('#SearchKeywords').val();
+        jsonParameters.searchKeywords = $('#ConversationsSearchKeywords').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Networks/ShowConversationsWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -122,6 +122,9 @@ var NetworksMessagesConversationsWidget = function () {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
+        },
+        show: function (otherUserUid) {
+            show(otherUserUid);
         },
         disableAlertPulse: function () {
             disableAlertPulse();

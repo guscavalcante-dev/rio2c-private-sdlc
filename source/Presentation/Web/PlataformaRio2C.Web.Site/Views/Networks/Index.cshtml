@@ -7,10 +7,11 @@
             <div class="col-12 d-flex">
                 @Html.Hidden("Page", ViewBag.Page as int?)
                 @Html.Hidden("PageSize", ViewBag.PageSize as int?)
-                @Html.TextBox("SearchKeywords", null, new { @class = "form-control mr-1", type = "search", placeholder = Labels.Search })
+                @Html.Hidden("IsModal", ViewBag.IsModal as bool? ?? false)
+                @Html.TextBox("ContactsSearchKeywords", null, new { @class = "form-control mr-1", type = "search", placeholder = Labels.Search })
                 <button type="button" class="btn btn-primary btn-icon" onclick="NetworksContacts.search();"><i class="fa fa-search"></i></button>
             </div>
-        </div>        
+        </div>
     </div>
 </div>
 <div id="NetworksContactsListWidget" class="kt-grid__item kt-grid__item--fluid"></div>

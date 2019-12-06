@@ -4,7 +4,7 @@
 // Created          : 11-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-05-2019
+// Last Modified On : 12-06-2019
 // ***********************************************************************
 // <copyright file="NetworksController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -82,19 +82,44 @@ namespace PlataformaRio2C.Web.Site.Controllers
             return View();
         }
 
-        /// <summary>Shows the contacts list widget.</summary>
+        /// <summary>Shows the contacts list modal.</summary>
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowContactsListWidget(string searchKeywords, int? page = 1, int? pageSize = 15)
+        public async Task<ActionResult> ShowContactsListModal(string searchKeywords, int? page = 1, int? pageSize = 6)
+        {
+            ViewBag.Page = page;
+            ViewBag.PageSize = pageSize;
+            ViewBag.SearchKeywords = searchKeywords;
+            ViewBag.IsModal = true;
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/ShowContactsListModal", null), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Shows the contacts list widget.</summary>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="isModal">The is modal.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowContactsListWidget(string searchKeywords, bool? isModal = false, int? page = 1, int? pageSize = 15)
         {
             var attendeeCollaboratos = await this.attendeeCollaboratorRepo.FindAllNetworkDtoByEditionIdPagedAsync(this.EditionDto.Id, searchKeywords, page.Value, pageSize.Value);
 
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
             ViewBag.SearchKeywords = searchKeywords;
+            ViewBag.IsModal = isModal;
 
             return Json(new
             {

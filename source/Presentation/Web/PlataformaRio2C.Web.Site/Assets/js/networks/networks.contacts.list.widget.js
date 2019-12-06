@@ -4,7 +4,7 @@
 // Created          : 12-05-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-05-2019
+// Last Modified On : 12-06-2019
 // ***********************************************************************
 // <copyright file="networks.contacts.list.widget" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,7 +15,12 @@
 var NetworksContactsListWidget = function () {
 
     var widgetElementId = '#NetworksContactsListWidget';
-    var widgetElement = $(widgetElementId);
+    var widgetElement;
+
+    // Initialize Elements ------------------------------------------------------------------------
+    var initElements = function() {
+        widgetElement = $(widgetElementId);
+    };
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
@@ -28,9 +33,10 @@ var NetworksContactsListWidget = function () {
         }
 
         var jsonParameters = new Object();
-        jsonParameters.searchKeywords = $('#SearchKeywords').val();
+        jsonParameters.searchKeywords = $('#ContactsSearchKeywords').val();
         jsonParameters.page = $('#Page').val();
         jsonParameters.pageSize = $('#PageSize').val();
+        jsonParameters.isModal = $('#IsModal').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Networks/ShowContactsListWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -38,7 +44,7 @@ var NetworksContactsListWidget = function () {
                 // Success
                 onSuccess: function () {
                     enableShowPlugins();
-                    $('#SearchKeywords').focus();
+                    $('#ContactsSearchKeywords').focus();
                 },
                 // Error
                 onError: function () {
@@ -81,7 +87,7 @@ var NetworksContactsListWidget = function () {
             onSuccess: function () {
                 enableShowPlugins();
                 MyRio2cCommon.unblock();
-                $('#SearchKeywords').focus();
+                $('#ContactsSearchKeywords').focus();
             },
             // Error
             onError: function () {
@@ -93,6 +99,7 @@ var NetworksContactsListWidget = function () {
     return {
         init: function () {
             MyRio2cCommon.block();
+            initElements();
             show();
         },
         search: function () {

@@ -39,16 +39,19 @@
                         <span id="StatusConnected" class="connection-status d-none"><span class="kt-badge kt-badge--dot kt-badge--success"></span> @Labels.Connected</span>
                         <span id="StatusDisconnected" class="connection-status d-none"><span class="kt-badge kt-badge--dot kt-badge--danger"></span> @Labels.Disconnected</span>
                     </span>
-                    <a href="@Url.Action("Index", "Networks", new { Area = "" })" class="btn btn-clean btn-sm btn-icon btn-icon-md float-right" data-toggle="kt-tooltip" title="" data-placement="bottom" data-original-title="@Labels.StartNewConversation">
+                    <a href="#" onclick="NetworksContacts.showListModal(); return false;" class="btn btn-clean btn-sm btn-icon btn-icon-md float-right" data-toggle="kt-tooltip" title="" data-placement="bottom" data-original-title="@Labels.StartNewConversation">
                         <i class="flaticon2-add-1"></i>
                     </a>
+                    @*<a href="@Url.Action("Index", "Networks", new { Area = "" })" class="btn btn-clean btn-sm btn-icon btn-icon-md float-right" data-toggle="kt-tooltip" title="" data-placement="bottom" data-original-title="@Labels.StartNewConversation">
+                        <i class="flaticon2-add-1"></i>
+                    </a>*@
                 </div>
                 <div class="kt-searchbar">
                     <div class="row">
                         <div class="col-12">
                             <div class="d-flex">
                                 @Html.Hidden("InitialUserUid", Model)
-                                @Html.TextBox("SearchKeywords", null, new { @class = "form-control mr-1", type = "search", placeholder = Labels.Search })
+                                @Html.TextBox("ConversationsSearchKeywords", null, new { @class = "form-control mr-1", type = "search", placeholder = Labels.Search })
                                 <button type="button" class="btn btn-primary btn-icon" onclick="NetworksMessagesConversationsWidget.search();"><i class="fa fa-search"></i></button>
                             </div>
                         </div>
@@ -84,6 +87,7 @@
     @Scripts.Render("~/bundles/js/jquery.timeago.js")
     <script src="~/Assets/components/jquery.timeago/locales/jquery.timeago.@(ViewBag.UserInterfaceLanguage)-short.js" type="text/javascript"></script>
     @Scripts.Render("~/bundles/js/networks.messages.js")
+    @Scripts.Render("~/bundles/js/networks.contacts.js")
     <script>
         var messagesConfig = {
             editionId: '@(editionDto?.Id)',
