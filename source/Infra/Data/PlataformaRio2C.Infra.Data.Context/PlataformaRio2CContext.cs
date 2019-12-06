@@ -15,6 +15,7 @@ using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.Data.Context.Config;
 using PlataformaRio2C.Infra.Data.Context.Mapping;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 
 namespace PlataformaRio2C.Infra.Data.Context
 {
@@ -31,6 +32,7 @@ namespace PlataformaRio2C.Infra.Data.Context
         public PlataformaRio2CContext()
             : base("PlataformaRio2CConnection")
         {
+            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = 180;
         }
 
         /// <summary>Called when [model creating].</summary>

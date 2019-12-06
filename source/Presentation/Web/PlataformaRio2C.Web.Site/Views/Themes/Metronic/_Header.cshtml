@@ -494,7 +494,7 @@
                             </svg>*@
 
                         <i class="flaticon-chat-1"></i>
-                        <span id="NewMessagePulse" class="kt-pulse__ring d-none"></span>
+                        <span id="NewMessagePulse" class="kt-pulse__ring @(userAccessControlDto.HasUnreadMessages ? string.Empty : "d-none")"></span>
                     </span>
                     <!--<span class="kt-badge kt-badge--light"></span>-->
                 </div>

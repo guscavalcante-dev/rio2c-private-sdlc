@@ -154,6 +154,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             User = u,
                             Roles = u.Roles,
                             Language = u.UserInterfaceLanguage,
+                            HasUnreadMessages = u.RecipientMessages.Any(rm => !rm.ReadDate.HasValue),
                             Collaborator = u.Collaborator,
                             EditionAttendeeCollaborator = u.Collaborator.AttendeeCollaborators.FirstOrDefault(ac => !ac.IsDeleted && ac.EditionId == editionId),
                             EditionCollaboratorTypes = u.Collaborator.AttendeeCollaborators

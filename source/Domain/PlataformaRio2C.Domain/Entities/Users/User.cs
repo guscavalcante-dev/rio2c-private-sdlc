@@ -53,6 +53,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<Organization> UpdatedOrganizations { get; set; }
         public virtual ICollection<Collaborator> UpdatedCollaborators { get; set; }
         public virtual ICollection<UserUnsubscribedList> UserUnsubscribedLists { get; set; }
+        public virtual ICollection<Message> RecipientMessages { get; set; }
 
         //public override ValidationResult ValidationResult { get; set; }
 

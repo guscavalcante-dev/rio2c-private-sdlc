@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-21-2019
+// Last Modified On : 12-05-2019
 // ***********************************************************************
 // <copyright file="MessageMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -43,7 +43,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                 .HasForeignKey(d => d.SenderId);
 
             this.HasRequired(t => t.Recipient)
-                .WithMany()
+                .WithMany(e => e.RecipientMessages)
                 .HasForeignKey(d => d.RecipientId);
         }
     }
