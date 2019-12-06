@@ -139,12 +139,12 @@
                                                                                             {
                                                                                                 var color = "warning";
                                                                                                 var icon = "fa-diagnoses";
-                                                                                                if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == "Accepted")
+                                                                                                if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == ProjectEvaluationStatus.Accepted.Code)
                                                                                                 {
                                                                                                     color = "success";
                                                                                                     icon = "fa-thumbs-up";
                                                                                                 }
-                                                                                                else if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == "Rejected")
+                                                                                                else if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == ProjectEvaluationStatus.Rejected.Code)
                                                                                                 {
                                                                                                     color = "danger";
                                                                                                     icon = "fa-thumbs-down";

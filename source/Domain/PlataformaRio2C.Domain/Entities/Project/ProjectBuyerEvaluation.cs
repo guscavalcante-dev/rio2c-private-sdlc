@@ -98,6 +98,32 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.Now;
         }
 
+        public void Approve(ProjectBuyerEvaluationData data)
+        {
+            this.ProjectEvaluationStatusId = data.ProjectEvaluationStatusId;
+            this.IsSent = data.IsSent;
+            this.BuyerEvaluationUserId = data.BuyerEvaluationUserId;
+            this.EvaluationDate = data.EvaluationDate;
+           
+
+            this.IsDeleted = false;
+            this.UpdateUserId = data.BuyerEvaluationUserId; ;
+            this.UpdateDate = DateTime.Now;
+        }
+
+        public void Reject(ProjectBuyerEvaluationData data)
+        {
+            this.ProjectEvaluationStatusId = data.ProjectEvaluationStatusId;
+            this.IsSent = data.IsSent;
+            this.BuyerEvaluationUserId = data.BuyerEvaluationUserId;
+            this.EvaluationDate = data.EvaluationDate;
+            this.Reason = data.Reason;
+
+            this.IsDeleted = false;
+            this.UpdateUserId = data.BuyerEvaluationUserId; ;
+            this.UpdateDate = DateTime.Now;
+        }
+
         #region Validations
 
         /// <summary>Returns true if ... is valid.</summary>

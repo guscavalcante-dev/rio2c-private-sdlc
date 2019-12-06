@@ -179,7 +179,19 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return RedirectToAction("SubmittedList", "Projects", new { Area = "" });
             }
 
-            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+            if (!projectDto.Project.IsFinished())
+            {
+                if (this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual) == true)
+                {
+                    if (this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) != true)
+                    {
+                        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                        return RedirectToAction("SubmittedList", "Projects", new { Area = "" });
+                    }
+                }
+            }
+
+            if (!this.HasEdition(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid))
             {
                 this.StatusMessageToastr(Texts.ForbiddenErrorMessage, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
                 return RedirectToAction("SubmittedList", "Projects", new { Area = "" });
@@ -197,6 +209,55 @@ namespace PlataformaRio2C.Web.Site.Controllers
             return View(projectDto);
         }
 
+        /// <summary>Submitteds the details.</summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.ExecutiveAudiovisual)]
+        public async Task<ActionResult> SubmittedDetailsEvaluation(Guid? id)
+        {
+            if (this.EditionDto?.IsProjectSubmitStarted() != true)
+            {
+                return RedirectToAction("Index", "Projects", new { Area = "" });
+            }
+
+            var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(id ?? Guid.Empty);
+            if (projectDto == null)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("SubmittedList", "Projects", new { Area = "" });
+            }
+
+            if (!projectDto.Project.IsFinished())
+            {
+                if (this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual) == true)
+                {
+                    if (this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) != true)
+                    {
+                        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                        return RedirectToAction("SubmittedList", "Projects", new { Area = "" });
+                    }
+                }
+            }
+
+            if (!this.HasEdition(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid))
+            {
+                this.StatusMessageToastr(Texts.ForbiddenErrorMessage, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("SubmittedList", "Projects", new { Area = "" });
+            }
+
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedListBuyerEvaluation", "Projects", new { Area = "" })),
+                new BreadcrumbItemHelper(projectDto.GetTitleDtoByLanguageCode(this.UserInterfaceLanguage)?.ProjectTitle?.Value ?? Labels.Project, Url.Action("SubmittedDetailsEvaluation", "Projects", new { id }))
+            });
+
+            #endregion
+
+            return View("SubmittedDetails", projectDto);
+        }
+
+
         #region Main Information Widget
 
         /// <summary>Shows the main information widget.</summary>
@@ -211,9 +272,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(mainInformationWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+            if (!this.HasEdition(mainInformationWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid))
             {
-                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+                this.StatusMessageToastr(Texts.ForbiddenErrorMessage, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("SubmittedList", "Projects", new { Area = "" });
             }
 
             return Json(new
@@ -248,6 +310,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 {
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
+
 
                 if (this.EditionDto?.IsProjectSubmitOpen() != true)
                 {
@@ -357,7 +420,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+            if (!this.HasEdition(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid))
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
@@ -504,10 +567,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(linksWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+            if (!this.HasEdition(linksWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid))
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
+
 
             return Json(new
             {
@@ -645,7 +709,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(buyerCompanyWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+            if (!this.HasEdition(buyerCompanyWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid))
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
@@ -1538,6 +1602,178 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
+        #region Update
+        [HttpPost]
+        public async Task<ActionResult> SubmitApproval(Guid? id)
+        {
+
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(id ?? Guid.Empty);
+
+                if (projectDto == null)
+                {
+                    return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+                }
+
+                var projectBuyerEvaluation = projectDto.Project.ProjectBuyerEvaluations
+                    .Where(p => p.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators
+                    .Any(ao => ao.AttendeeCollaborator.Collaborator.Uid == this.UserAccessControlDto.Collaborator.Uid))
+                    .FirstOrDefault(); //TODO: Substituir pela empresa selecionada no modal
+
+                var projectBuyerEvaluationData = new ProjectBuyerEvaluationData()
+                {
+                    Uid = projectBuyerEvaluation.Uid,
+                    BuyerAttendeeOrganizationId = projectBuyerEvaluation.BuyerAttendeeOrganizationId,
+                    BuyerEvaluationUserId = this.UserAccessControlDto.User.Id,
+                    EvaluationDate = DateTime.Now,
+                    ProjectEvaluationStatusId = 2,
+                };
+
+                var cmd = new ApproveProjectBuyerEvaluation(projectBuyerEvaluationData);
+                cmd.UpdatePreSendProperties(
+                    this.UserAccessControlDto.User.Id,
+                    this.UserAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                //return RedirectToAction("SubmittedListBuyerEvaluation", "Projects");
+            }
+
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
+
+                //cmd.UpdateModelsAndLists(
+                //    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
+
+                return Json(new { status = "error", message = toastrError?.Message ?? ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.UpdatedM) });
+        }
+
+        public async Task<ActionResult> SubmitRefusal(Guid? id, string reason)
+        {
+
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(id ?? Guid.Empty);
+
+                if (projectDto == null)
+                {
+                    return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+                }
+
+                var projectBuyerEvaluation = projectDto.Project.ProjectBuyerEvaluations
+                    .Where(p => p.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators
+                    .Any(ao => ao.AttendeeCollaborator.Collaborator.Uid == this.UserAccessControlDto.Collaborator.Uid))
+                    .FirstOrDefault(); //TODO: Substituir pela empresa selecionada no modal
+
+                var projectBuyerEvaluationData = new ProjectBuyerEvaluationData()
+                {
+                    Uid = projectBuyerEvaluation.Uid,
+                    BuyerAttendeeOrganizationId = projectBuyerEvaluation.BuyerAttendeeOrganizationId,
+                    BuyerEvaluationUserId = this.UserAccessControlDto.User.Id,
+                    EvaluationDate = DateTime.Now,
+                    ProjectEvaluationStatusId = 3,
+                    Reason = reason
+                };
+
+                var cmd = new RejectProjectBuyerEvaluation(projectBuyerEvaluationData);
+                cmd.UpdatePreSendProperties(
+                    this.UserAccessControlDto.User.Id,
+                    this.UserAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                //return RedirectToAction("SubmittedListBuyerEvaluation", "Projects");
+            }
+
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
+
+                //cmd.UpdateModelsAndLists(
+                //    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
+
+                return Json(new { status = "error", message = toastrError?.Message ?? ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.UpdatedM) });
+        }
+
         #endregion
+
+        #endregion
+
+        internal bool HasEdition(Guid idAtendeeOrganization)
+        {
+            if (this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual) != true)
+            {
+                if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(idAtendeeOrganization) != true)
+                {
+                    return false;
+                }
+                return true;
+            }
+            else
+            {
+                foreach (var item in this.UserAccessControlDto?.EditionAttendeeCollaborator.AttendeeOrganizationCollaborators)
+                {
+                    if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(item.AttendeeOrganization.Uid) == true)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
     }
 }

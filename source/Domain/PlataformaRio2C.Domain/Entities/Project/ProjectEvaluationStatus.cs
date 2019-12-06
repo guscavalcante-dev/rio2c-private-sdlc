@@ -23,6 +23,13 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int CodeMinLength = 1;
         public static readonly int CodeMaxLength = 50;
 
+        #region Configurations
+
+        public static ProjectEvaluationStatus Accepted = new ProjectEvaluationStatus("Accepted");
+        public static ProjectEvaluationStatus Rejected = new ProjectEvaluationStatus("Rejected");
+
+        #endregion
+
         public string Name { get; private set; }
         public string Code { get; private set; }
         public bool IsEvaluated { get; private set; }
@@ -30,6 +37,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Initializes a new instance of the <see cref="ProjectEvaluationStatus"/> class.</summary>
         protected ProjectEvaluationStatus()
         {
+        }
+
+        public ProjectEvaluationStatus(string code)
+        {
+            this.Code = code?.Trim();
         }
 
         #region Validations

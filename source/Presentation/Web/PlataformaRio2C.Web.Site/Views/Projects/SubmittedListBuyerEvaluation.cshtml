@@ -59,8 +59,27 @@
 @section Scripts {
     @Scripts.Render("~/bundles/js/projects.buyercompany.widget.js")
     @Scripts.Render("~/bundles/js/select2.js")
+    @Scripts.Render("~/bundles/js/bootbox.js")
     <script>
+        // Page translations ----------------------------------------------------------------------
+        var translations = {
+            finishModalTitle: '@Labels.RefuseProject',
+            finishModalMessage: '@Html.Raw(Texts.DoYouReallyWishRefuse)',
+            finishPendingModalMessage: '@Html.Raw(string.Format(Texts.DoYouReallyWishRefuse, "{0}", "{1}", Labels.Player))',
+            player: '@Labels.Player',
+            players: '@Labels.Players'
+        };
+
+        var translations2 = {
+            finishModalTitle: '@Labels.AcceptProject',
+            finishModalMessage: '@Html.Raw(Texts.DoYouReallyWishAccept)',
+            finishPendingModalMessage: '@Html.Raw(string.Format(Texts.DoYouReallyWishAccept, "{0}", "{1}", Labels.Player))',
+            player: '@Labels.Player',
+            players: '@Labels.Players'
+        };
+
         jQuery(document).ready(function () {
+
             ProjectsBuyerEvaluationWidget.init();
         });
     </script>

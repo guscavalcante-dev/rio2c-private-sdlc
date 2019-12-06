@@ -65,7 +65,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                                                               && !ao.IsDeleted)
                                                                              && !p.IsDeleted
                                                                              && !pbe.IsDeleted
-                                                                             && !pbe.Project.IsDeleted));
+                                                                             && !pbe.Project.IsDeleted)
+                                                                             && p.FinishDate != null);
 
             return query;
         }

@@ -10,7 +10,6 @@
     ViewBag.Title = Labels.Projects;
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var editionDto = ViewBag.EditionDto as EditionDto;
-    var isProjectSubmissionEnded = editionDto?.IsProjectEvaluationEnded() == true;
     var hasProjectSpace = Model.Any(m => m.IsFakeProject);
 }
 <div class="row">
@@ -37,7 +36,7 @@
                                                 <div class="kt-widget__info mt-0 pl-0">
                                                     @if (!projectDto.IsFakeProject)
                                                     {
-                                                        <a href="@Url.Action("SubmittedDetails", "Projects", new { id = projectDto.Project.Uid, Area = "" })" class="kt-widget__title">
+                                                        <a href="@Url.Action("SubmittedDetailsEvaluation", "Projects", new { id = projectDto.Project.Uid, Area = "" })" class="kt-widget__title">
                                                             @projectTitle
                                                         </a>
                                                     }
@@ -78,7 +77,9 @@
                                                 </span>
                                                 if (projectDto.ProjectBuyerEvaluationDtos?.Any() == true)
                                                 {
-                                                    if (projectDto.ProjectBuyerEvaluationDtos.Count() > 1)
+                                                    var hasEvaluation = projectDto.ProjectBuyerEvaluationDtos.Where(p => p.ProjectBuyerEvaluation.ProjectEvaluationStatusId != 1);
+
+                                                    if (projectDto.ProjectBuyerEvaluationDtos.Count() > 1 || hasEvaluation.Count() > 0)
                                                     {
                                                         <div class="kt-widget__content">
                                                             <div class="kt-widget__details" style="width: 100%;">
@@ -106,28 +107,39 @@
                                                                                         </div>
                                                                                         <div class="kt-widget__content pt-0 d-flex flex-column">
                                                                                             <div class="kt-widget__section mx-auto">
-                                                                                                <a href="@Url.Action("Details", "Companies", new {id = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid})" class="kt-widget__username" target="_blank">
+                                                                                                <a href="@Url.Action("Details", "Companies", new { id = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid })" class="kt-widget__username" target="_blank">
                                                                                                     <small>@projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Name</small>
                                                                                                 </a>
-                                                                                                @if (isProjectSubmissionEnded)
+                                                                                                @if (hasEvaluation.Where(p => p.BuyerAttendeeOrganizationDto.Organization.Uid == projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid).Count() > 0)
                                                                                                 {
                                                                                                     var color = "warning";
                                                                                                     var icon = "fa-diagnoses";
-                                                                                                    if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == "Accepted")
+                                                                                                    if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == ProjectEvaluationStatus.Accepted.Code)
                                                                                                     {
                                                                                                         color = "success";
                                                                                                         icon = "fa-thumbs-up";
                                                                                                     }
-                                                                                                    else if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == "Rejected")
+                                                                                                    else if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == ProjectEvaluationStatus.Rejected.Code)
                                                                                                     {
                                                                                                         color = "danger";
                                                                                                         icon = "fa-thumbs-down";
                                                                                                     }
+
+                                                                                                    <div class="kt-widget--user-profile-1 kt-widget__username">
+                                                                                                        <small>@projectBuyerEvaluationDto.ProjectBuyerEvaluation.BuyerEvaluationUser.Name</small>
+                                                                                                    </div>
+
                                                                                                     <div class="kt-widget__button">
                                                                                                         <span class="btn btn-label-@(color) btn-sm">
                                                                                                             <i class="fa @(icon) mr-1"></i> @(projectBuyerEvaluationDto.ProjectEvaluationStatus.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
                                                                                                         </span>
                                                                                                     </div>
+                                                                                                    if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == "Rejected")
+                                                                                                    {
+                                                                                                        <div class="kt-widget12__info kt-widget__text">
+                                                                                                            @projectBuyerEvaluationDto.ProjectBuyerEvaluation.Reason
+                                                                                                        </div>
+                                                                                                    }
                                                                                                 }
                                                                                             </div>
                                                                                         </div>
@@ -153,28 +165,19 @@
                                 </div>
                                 <div class="row mt-20 justify-content-end">
                                     @{
-                                        var isFinished = projectDto.Project.IsFinished();
-
-                                        if (hasProjectSpace)
-                                        {
-                                            <div class="col-4 text-center">
-                                                <a class="btn btn-brand" href="@Url.Action("Submit", "Projects", new { id = projectDto.Project.Uid, Area = "" })">@string.Format(Labels.DuplicateEntity, Labels.Project)</a>
-                                            </div>
-                                        }
                                         <div class="col-4 text-center">
-                                            <a href="@Url.Action("SubmittedDetails", "Projects", new { id = projectDto.Project.Uid, Area = "" })" class="btn btn-brand">
-                                                @(!isFinished ? Labels.Edit : Labels.View)
+                                            <button type="button" class="btn btn-secondary" onclick="ProjectsBuyerEvaluationWidget.confirmRefuse();">@Labels.Refuse</button>
+                                        </div>
+                                        <div class="col-4 text-center">
+                                            <a href="@Url.Action("SubmittedDetailsEvaluation", "Projects", new { id = projectDto.Project.Uid, Area = "" })" class="btn btn-brand">
+                                                @Labels.View
                                             </a>
                                         </div>
                                         <div class="col-4 text-center">
-                                            <a href="#" class="btn btn-brand">
-                                                @Labels.AcceptProject
-                                            </a>
 
-                                            <a class="btn btn-secondary ">
-                                                @Labels.Refuse
-                                            </a>
+                                            <button type="button" class="btn btn-brand" onclick="ProjectsBuyerEvaluationWidget.confirmAccept();">@Labels.AcceptProject</button>
                                         </div>
+
                                     }
                                 </div>
                             </div>
