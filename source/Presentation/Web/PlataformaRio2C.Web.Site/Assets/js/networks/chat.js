@@ -4,7 +4,7 @@
 // Created          : 11-29-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-03-2019
+// Last Modified On : 12-05-2019
 // ***********************************************************************
 // <copyright file="chat.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -42,42 +42,44 @@ var MyRio2cKTAppChat = function () {
 			resetHeightOnDestroy: true,  // reset css height on scroll feature destroyed
 			handleWindowResize: true, // recalculate hight on window resize
 			rememberPosition: true, // remember scroll position in cookie
-			height: function() {  // calculate height
-				var height;
-				var portletBodyEl = KTUtil.find(chatAsideEl, '.kt-portlet > .kt-portlet__body');
-				var widgetEl = KTUtil.find(chatAsideEl, '.kt-widget.kt-widget--users');
-				var searchbarEl = KTUtil.find(chatAsideEl, '.kt-searchbar');
+            height: function () {  // calculate height
+                return 533;
 
-				if (KTUtil.isInResponsiveRange('desktop')) {
-					height = KTLayout.getContentHeight();
-				} else {
-					height = KTUtil.getViewPort().height;
-				}
+				//var height;
+				//var portletBodyEl = KTUtil.find(chatAsideEl, '.kt-portlet > .kt-portlet__body');
+				//var widgetEl = KTUtil.find(chatAsideEl, '.kt-widget.kt-widget--users');
+				//var searchbarEl = KTUtil.find(chatAsideEl, '.kt-searchbar');
 
-				if (chatAsideEl) {
-					height = height - parseInt(KTUtil.css(chatAsideEl, 'margin-top')) - parseInt(KTUtil.css(chatAsideEl, 'margin-bottom'));
-					height = height - parseInt(KTUtil.css(chatAsideEl, 'padding-top')) - parseInt(KTUtil.css(chatAsideEl, 'padding-bottom'));
-				}
+				//if (KTUtil.isInResponsiveRange('desktop')) {
+				//	height = KTLayout.getContentHeight();
+				//} else {
+				//	height = KTUtil.getViewPort().height;
+				//}
 
-				if (widgetEl) {
-					height = height - parseInt(KTUtil.css(widgetEl, 'margin-top')) - parseInt(KTUtil.css(widgetEl, 'margin-bottom'));
-					height = height - parseInt(KTUtil.css(widgetEl, 'padding-top')) - parseInt(KTUtil.css(widgetEl, 'padding-bottom'));
-				}
+				//if (chatAsideEl) {
+				//	height = height - parseInt(KTUtil.css(chatAsideEl, 'margin-top')) - parseInt(KTUtil.css(chatAsideEl, 'margin-bottom'));
+				//	height = height - parseInt(KTUtil.css(chatAsideEl, 'padding-top')) - parseInt(KTUtil.css(chatAsideEl, 'padding-bottom'));
+				//}
 
-				if (portletBodyEl) {
-					height = height - parseInt(KTUtil.css(portletBodyEl, 'margin-top')) - parseInt(KTUtil.css(portletBodyEl, 'margin-bottom'));
-					height = height - parseInt(KTUtil.css(portletBodyEl, 'padding-top')) - parseInt(KTUtil.css(portletBodyEl, 'padding-bottom'));
-				}
+				//if (widgetEl) {
+				//	height = height - parseInt(KTUtil.css(widgetEl, 'margin-top')) - parseInt(KTUtil.css(widgetEl, 'margin-bottom'));
+				//	height = height - parseInt(KTUtil.css(widgetEl, 'padding-top')) - parseInt(KTUtil.css(widgetEl, 'padding-bottom'));
+				//}
 
-				if (searchbarEl) {
-					height = height - parseInt(KTUtil.css(searchbarEl, 'height'));
-					height = height - parseInt(KTUtil.css(searchbarEl, 'margin-top')) - parseInt(KTUtil.css(searchbarEl, 'margin-bottom'));
-				}
+				//if (portletBodyEl) {
+				//	height = height - parseInt(KTUtil.css(portletBodyEl, 'margin-top')) - parseInt(KTUtil.css(portletBodyEl, 'margin-bottom'));
+				//	height = height - parseInt(KTUtil.css(portletBodyEl, 'padding-top')) - parseInt(KTUtil.css(portletBodyEl, 'padding-bottom'));
+				//}
 
-				// remove additional space
-				height = height - 93;
+				//if (searchbarEl) {
+				//	height = height - parseInt(KTUtil.css(searchbarEl, 'height'));
+				//	height = height - parseInt(KTUtil.css(searchbarEl, 'margin-top')) - parseInt(KTUtil.css(searchbarEl, 'margin-bottom'));
+				//}
+
+				//// remove additional space
+				//height = height - 93;
 				
-				return height;
+				//return height;
 			} 
 		});
 	};
@@ -114,53 +116,54 @@ var MyRio2cKTChat = function () {
             handleWindowResize: true, // recalculate hight on window resize
             rememberPosition: true, // remember scroll position in cookie
             height: function () {  // calculate height
-                var height;
+                return 400;
+                //var height;
 
-                // Mobile mode
-                if (KTUtil.isInResponsiveRange('tablet-and-mobile')) {
-                    return KTUtil.hasAttr(messageListEl, 'data-mobile-height') ? parseInt(KTUtil.attr(messageListEl, 'data-mobile-height')) : 300;
-                }
+                //// Mobile mode
+                //if (KTUtil.isInResponsiveRange('tablet-and-mobile')) {
+                //    return KTUtil.hasAttr(messageListEl, 'data-mobile-height') ? parseInt(KTUtil.attr(messageListEl, 'data-mobile-height')) : 300;
+                //}
 
-                // Desktop mode
-                if (KTUtil.isInResponsiveRange('desktop') && KTUtil.hasAttr(messageListEl, 'data-height')) {
-                    return parseInt(KTUtil.attr(messageListEl, 'data-height'));
-                }
+                //// Desktop mode
+                //if (KTUtil.isInResponsiveRange('desktop') && KTUtil.hasAttr(messageListEl, 'data-height')) {
+                //    return parseInt(KTUtil.attr(messageListEl, 'data-height'));
+                //}
 
-                var chatEl = KTUtil.find(parentEl, '.kt-chat');
-                var portletHeadEl = KTUtil.find(parentEl, '.kt-portlet > .kt-portlet__head');
-                var portletBodyEl = KTUtil.find(parentEl, '.kt-portlet > .kt-portlet__body');
-                var portletFootEl = KTUtil.find(parentEl, '.kt-portlet > .kt-portlet__foot');
+                //var chatEl = KTUtil.find(parentEl, '.kt-chat');
+                //var portletHeadEl = KTUtil.find(parentEl, '.kt-portlet > .kt-portlet__head');
+                //var portletBodyEl = KTUtil.find(parentEl, '.kt-portlet > .kt-portlet__body');
+                //var portletFootEl = KTUtil.find(parentEl, '.kt-portlet > .kt-portlet__foot');
 
-                if (KTUtil.isInResponsiveRange('desktop')) {
-                    height = KTLayout.getContentHeight();
-                } else {
-                    height = KTUtil.getViewPort().height;
-                }
+                //if (KTUtil.isInResponsiveRange('desktop')) {
+                //    height = KTLayout.getContentHeight();
+                //} else {
+                //    height = KTUtil.getViewPort().height;
+                //}
 
-                if (chatEl) {
-                    height = height - parseInt(KTUtil.css(chatEl, 'margin-top')) - parseInt(KTUtil.css(chatEl, 'margin-bottom'));
-                    height = height - parseInt(KTUtil.css(chatEl, 'padding-top')) - parseInt(KTUtil.css(chatEl, 'padding-bottom'));
-                }
+                //if (chatEl) {
+                //    height = height - parseInt(KTUtil.css(chatEl, 'margin-top')) - parseInt(KTUtil.css(chatEl, 'margin-bottom'));
+                //    height = height - parseInt(KTUtil.css(chatEl, 'padding-top')) - parseInt(KTUtil.css(chatEl, 'padding-bottom'));
+                //}
 
-                if (portletHeadEl) {
-                    height = height - parseInt(KTUtil.css(portletHeadEl, 'height'));
-                    height = height - parseInt(KTUtil.css(portletHeadEl, 'margin-top')) - parseInt(KTUtil.css(portletHeadEl, 'margin-bottom'));
-                }
+                //if (portletHeadEl) {
+                //    height = height - parseInt(KTUtil.css(portletHeadEl, 'height'));
+                //    height = height - parseInt(KTUtil.css(portletHeadEl, 'margin-top')) - parseInt(KTUtil.css(portletHeadEl, 'margin-bottom'));
+                //}
 
-                if (portletBodyEl) {
-                    height = height - parseInt(KTUtil.css(portletBodyEl, 'margin-top')) - parseInt(KTUtil.css(portletBodyEl, 'margin-bottom'));
-                    height = height - parseInt(KTUtil.css(portletBodyEl, 'padding-top')) - parseInt(KTUtil.css(portletBodyEl, 'padding-bottom'));
-                }
+                //if (portletBodyEl) {
+                //    height = height - parseInt(KTUtil.css(portletBodyEl, 'margin-top')) - parseInt(KTUtil.css(portletBodyEl, 'margin-bottom'));
+                //    height = height - parseInt(KTUtil.css(portletBodyEl, 'padding-top')) - parseInt(KTUtil.css(portletBodyEl, 'padding-bottom'));
+                //}
 
-                if (portletFootEl) {
-                    height = height - parseInt(KTUtil.css(portletFootEl, 'height'));
-                    height = height - parseInt(KTUtil.css(portletFootEl, 'margin-top')) - parseInt(KTUtil.css(portletFootEl, 'margin-bottom'));
-                }
+                //if (portletFootEl) {
+                //    height = height - parseInt(KTUtil.css(portletFootEl, 'height'));
+                //    height = height - parseInt(KTUtil.css(portletFootEl, 'margin-top')) - parseInt(KTUtil.css(portletFootEl, 'margin-bottom'));
+                //}
 
-                // remove additional space
-                height = height - 5;
+                //// remove additional space
+                //height = height - 5;
 
-                return height;
+                //return height;
             }
         });
 

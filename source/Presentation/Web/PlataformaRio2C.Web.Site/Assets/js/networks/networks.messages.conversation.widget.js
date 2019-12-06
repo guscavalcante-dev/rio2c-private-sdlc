@@ -303,7 +303,7 @@ jQuery(document).ready(function () {
         });
     };
 
-    $.connection.hub.logging = true;
+    //$.connection.hub.logging = true;
 
     $.connection.hub.connectionSlow(function () {
         $('.connection-status').addClass('d-none');
