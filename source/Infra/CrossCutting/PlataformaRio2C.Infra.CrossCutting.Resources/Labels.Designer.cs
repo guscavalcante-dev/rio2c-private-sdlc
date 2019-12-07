@@ -4084,6 +4084,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ver mensagem.
+        /// </summary>
+        public static string ViewMessage {
+            get {
+                return ResourceManager.GetString("ViewMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ver mensagens.
         /// </summary>
         public static string ViewMessages {

@@ -1835,4 +1835,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Iniciar nova conversa</value>
     <comment>Iniciar nova conversa</comment>
   </data>
+  <data name="ViewMessage" xml:space="preserve">
+    <value>Ver mensagem</value>
+    <comment>Ver mensagem</comment>
+  </data>
 </root>

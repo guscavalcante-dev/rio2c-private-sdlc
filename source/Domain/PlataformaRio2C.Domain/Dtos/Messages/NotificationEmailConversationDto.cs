@@ -4,14 +4,13 @@
 // Created          : 12-03-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-03-2019
+// Last Modified On : 12-06-2019
 // ***********************************************************************
 // <copyright file="NotificationEmailConversationDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using System.Collections.Generic;
 using PlataformaRio2C.Domain.Entities;
 
