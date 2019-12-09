@@ -1,5 +1,4 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
-@using Constants = PlataformaRio2C.Domain.Constants;
 @model ProjectDto
 @{
     ViewBag.Title = $"{Labels.Project}  {Model.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value}";
