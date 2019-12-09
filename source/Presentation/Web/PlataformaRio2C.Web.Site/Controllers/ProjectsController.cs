@@ -1554,10 +1554,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
         #region Evaluation List
 
         /// <summary>Evaluations the list.</summary>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="interestUid">The interest uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.ExecutiveAudiovisual)]
         [HttpGet]
-        public async Task<ActionResult> EvaluationList()
+        public async Task<ActionResult> EvaluationList(string searchKeywords, Guid? interestUid, int? page = 1, int? pageSize = 10)
         {
             #region Breadcrumb
 
@@ -1566,6 +1570,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
             });
 
             #endregion
+
+            ViewBag.SearchKeywords = searchKeywords;
+            ViewBag.InterestUid = interestUid;
+            ViewBag.Page = page;
+            ViewBag.PageSize = pageSize;
 
             var projectInterests = await this.interestRepo.FindAllDtosAsync();
 
@@ -1580,21 +1589,19 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <returns></returns>
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.ExecutiveAudiovisual)]
         [HttpGet]
-        public async Task<ActionResult> ShowEvaluationListWidget(string searchKeywords, Guid? interestUid, int page = 1, int pageSize = 10)
+        public async Task<ActionResult> ShowEvaluationListWidget(string searchKeywords, Guid? interestUid, int? page = 1, int? pageSize = 10)
         {
             var projects = await this.projectRepo.FindAllDtosToEvaluateAsync(
                 this.UserAccessControlDto?.Collaborator?.Uid ?? Guid.Empty, 
                 searchKeywords, 
                 interestUid, 
-                page, 
-                pageSize);
-            if (projects == null)
-            {
-                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-            }
+                page.Value, 
+                pageSize.Value);
 
-            ViewBag.SubmittedListBuyerEvaluation = $"&pageSize={pageSize}";
             ViewBag.SearchKeywords = searchKeywords;
+            ViewBag.InterestUid = interestUid;
+            ViewBag.Page = page;
+            ViewBag.PageSize = pageSize;
 
             return Json(new
             {

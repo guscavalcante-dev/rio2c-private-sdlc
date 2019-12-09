@@ -2,59 +2,77 @@
 @model List<InterestDto>
 @{
     ViewBag.Title = Labels.ProjectSubscription;
+    var editionDto = ViewBag.EditionDto as EditionDto;
 }
-@*
+<div class="kt-portlet">
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-12 col-md-6 mt-2">
+                @Html.Hidden("Page", ViewBag.Page as int?)
+                @Html.Hidden("PageSize", ViewBag.PageSize as int?)
+                @Html.Hidden("InterestUid", ViewBag.InterestUid as Guid?)
+                @Html.TextBox("SearchKeywords", null, new { @class = "form-control mr-1", type = "search", placeholder = Labels.Search })
+            </div>
+            <div class="col-10 col-md-4 col-lg-5 mt-2">
+                <select name="@Html.NameFor(m => m.FirstOrDefault().Interest)" id="@Html.IdFor(m => m.FirstOrDefault().Interest.Uid)" class="form-control enable-select2">
+                    <option value="">@(Labels.Select)...</option>
+                    @foreach (var item in Model)
+                    {
+                        <option value="@item.Interest.Uid">
+                            @item.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                        </option>
+                    }
+                </select>
+            </div>
+            <div class="col-2 col-lg-1 mt-2">
+                <button type="button" class="btn btn-primary btn-icon" onclick="ProjectsBuyerEvaluationWidget.search();"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="ProjectBuyerEvaluationWidget"></div>
 <div class="row">
-    <div class="col-md-12">
-        <div class="kt-portlet">
-            <div class="kt-portlet__body">
-                <div class="kt-infobox">
-                    <div class="kt-infobox__header">
-                        <h2 class="kt-infobox__title">Projetos disponíveis para avaliação</h2>
+    <div class="col-xl-12">
+        <div class="kt-portlet kt-iconbox kt-iconbox--wave" style="height:100%">
+            <div class="kt-portlet__body" style="height:100%">
+                <div class="kt-iconbox__body">
+                    <div class="kt-iconbox__icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect id="bound" x="0" y="0" width="24" height="24"></rect>
+                                <path d="M2.56066017,10.6819805 L4.68198052,8.56066017 C5.26776695,7.97487373 6.21751442,7.97487373 6.80330086,8.56066017 L8.9246212,10.6819805 C9.51040764,11.267767 9.51040764,12.2175144 8.9246212,12.8033009 L6.80330086,14.9246212 C6.21751442,15.5104076 5.26776695,15.5104076 4.68198052,14.9246212 L2.56066017,12.8033009 C1.97487373,12.2175144 1.97487373,11.267767 2.56066017,10.6819805 Z M14.5606602,10.6819805 L16.6819805,8.56066017 C17.267767,7.97487373 18.2175144,7.97487373 18.8033009,8.56066017 L20.9246212,10.6819805 C21.5104076,11.267767 21.5104076,12.2175144 20.9246212,12.8033009 L18.8033009,14.9246212 C18.2175144,15.5104076 17.267767,15.5104076 16.6819805,14.9246212 L14.5606602,12.8033009 C13.9748737,12.2175144 13.9748737,11.267767 14.5606602,10.6819805 Z" id="Combined-Shape" fill="#000000" opacity="0.3"></path>
+                                <path d="M8.56066017,16.6819805 L10.6819805,14.5606602 C11.267767,13.9748737 12.2175144,13.9748737 12.8033009,14.5606602 L14.9246212,16.6819805 C15.5104076,17.267767 15.5104076,18.2175144 14.9246212,18.8033009 L12.8033009,20.9246212 C12.2175144,21.5104076 11.267767,21.5104076 10.6819805,20.9246212 L8.56066017,18.8033009 C7.97487373,18.2175144 7.97487373,17.267767 8.56066017,16.6819805 Z M8.56066017,4.68198052 L10.6819805,2.56066017 C11.267767,1.97487373 12.2175144,1.97487373 12.8033009,2.56066017 L14.9246212,4.68198052 C15.5104076,5.26776695 15.5104076,6.21751442 14.9246212,6.80330086 L12.8033009,8.9246212 C12.2175144,9.51040764 11.267767,9.51040764 10.6819805,8.9246212 L8.56066017,6.80330086 C7.97487373,6.21751442 7.97487373,5.26776695 8.56066017,4.68198052 Z" id="Combined-Shape" fill="#000000"></path>
+                            </g>
+                        </svg>
                     </div>
+                    <div class="kt-iconbox__desc">
+                        <h3 class="kt-iconbox__title">
+                            <a class="kt-link" href="#">@Labels.Program @Labels.AudiovisualProjects</a>
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-iconbox__content mt-3">
+                    <ul class="pl-0 mb-0">
+                        @Html.Raw(string.Format(
+                            Texts.ProducerProjectsDates,
+                            editionDto?.ProjectSubmitStartDate.ToShortDateString(),
+                            editionDto?.ProjectSubmitEndDate.ToShortDateString(),
+                            editionDto?.ProjectEvaluationStartDate.ToShortDateString(),
+                            editionDto?.ProjectEvaluationEndDate.ToShortDateString(),
+                            editionDto?.OneToOneMeetingsScheduleDate.ToShortDateString()))
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
 </div>
-*@
-<div class="row">
-    <div class="col-md-12">
-        <div class="kt-portlet">
-            <div class="kt-portlet__body">
-                <div class="kt-infobox">
-                    <div class="d-flex">
-                        <div class="col-md-6">
-                            @Html.TextBox("SearchKeywords", null, new { @class = "form-control mr-1", type = "search", placeholder = Labels.Search })
-                        </div>
-                        <div class="col-md-4">
-                            <select name="@Html.NameFor(m => m.FirstOrDefault().Interest)" id="@Html.IdFor(m => m.FirstOrDefault().Interest.Uid)" class="form-control enable-select2">
-                                <option value="">@(Labels.Select)...</option>
-                                @foreach (var item in Model)
-                                {
-                                    <option value="@item.Interest.Uid">
-                                        @item.Interest.Name
-                                    </option>
-                                }
-                            </select>
-                        </div>
-                        <div class="col-md-2">
-                            <button type="button" class="btn btn-primary btn-icon" onclick="ProjectsBuyerEvaluationWidget.search();"><i class="fa fa-search"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="ProjectBuyerEvaluationWidget" style="min-height: 500px"></div>
 @section Styles {
     @Styles.Render("~/bundles/css/select2.css")
 }
 @section Scripts {
-    @Scripts.Render("~/bundles/js/projects.buyercompany.widget.js")
     @Scripts.Render("~/bundles/js/select2.js")
     @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/projects.buyerevaluation.widget.js")
     <script>
         // Page translations ----------------------------------------------------------------------
         var translations = {

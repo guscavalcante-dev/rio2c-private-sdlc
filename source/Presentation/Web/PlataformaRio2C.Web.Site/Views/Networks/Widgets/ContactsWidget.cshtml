@@ -7,7 +7,7 @@
 @{
     var isModal = ViewBag.IsModal as bool? ?? false;
 }
-<!--Begin::List-->
+<!--begin::List-->
 @if (Model?.Any() == true)
 {
     <div class="row">
@@ -99,6 +99,67 @@
             </div>
         }
     </div>
+    <!--begin::Pagination-->
+    <div class="row">
+        <div class="col-xl-12">
+            <!--begin:: Components/Pagination/Default-->
+            <div class="kt-portlet">
+                <div class="kt-portlet__body">
+                    <!--begin: Pagination-->
+                    <div class="kt-pagination kt-pagination--brand justify-content-center justify-content-sm-between">
+                        @Html.PagedListPager(
+                            Model,
+                            page => Url.Action("ShowContactsListWidget", "Networks", new { searchKeywords = ViewBag.SearchKeywords, isModal = ViewBag.IsModal, page, pageSize = ViewBag.PageSize }),
+                            PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
+                                new PagedListRenderOptions
+                                {
+                                    DisplayLinkToIndividualPages = true,
+                                    MaximumPageNumbersToDisplay = 3,
+                                    DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                                    DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                                    DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                                    //ContainerDivClasses = new string[] { "kt-pagination kt-pagination--brand" },
+                                    UlElementClasses = new string[] {"kt-pagination__links"},
+                                    LiElementClasses = new string[] {""},
+                                    PreviousElementClass = "kt-pagination__link--prev",
+                                    NextElementClass = "kt-pagination__link--next",
+                                    ClassToApplyToFirstListItemInPager = "kt-pagination__link--first",
+                                    ClassToApplyToLastListItemInPager = "kt-pagination__link--last kt-font-brand",
+                                    ActiveLiElementClass = "kt-pagination__link--active",
+                                    PageClasses = new string[] {""},
+                                    EllipsesElementClass = ""
+                                }
+                                , new AjaxOptions { HttpMethod = "GET", OnBegin = "NetworksContactsListWidget.changePage", OnSuccess = "NetworksContactsListWidget.handlePaginationReturn" }))
+                        <div class="kt-pagination__toolbar">
+                            @Html.DropDownList("PageSizeDropdown", new SelectList(new[] { 1, 6, 15, 30 }, ViewBag.PageSize), null, new { @class = "form-control kt-font-brand", style = "width: 60px;" })
+                            @Html.PagedListPager(
+                                Model,
+                                page => Url.Action(null, new {page}),
+                                PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
+                                    new PagedListRenderOptions
+                                    {
+                                        ItemSliceAndTotalFormat = Messages.PaginationMessage,
+                                        DisplayItemSliceAndTotal = true,
+                                        DisplayLinkToIndividualPages = false,
+                                        DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+                                        DisplayLinkToPreviousPage = PagedListDisplayMode.Never,
+                                        DisplayLinkToNextPage = PagedListDisplayMode.Never,
+                                        DisplayLinkToLastPage = PagedListDisplayMode.Never,
+                                        ContainerDivClasses = new[] {"pagination__desc"},
+                                        UlElementClasses = new string[] {"pagination mb-0"},
+                                        LiElementClasses = new string[] {"page-item"},
+                                        PageClasses = new string[] {"page-link"}
+                                    }, null))
+                        </div>
+                    </div>
+                    <!--end: Pagination-->
+                </div>
+            </div>
+            <!--end:: Components/Pagination/Default-->
+        </div>
+    </div>
+    <!--end::Pagination-->
 }
 else
 {
@@ -110,73 +171,4 @@ else
         </div>
     </div>
 }
-<!--End::List-->
-<!--Begin::Pagination-->
-<div class="row">
-    <div class="col-xl-12">
-        <!--begin:: Components/Pagination/Default-->
-        <div class="kt-portlet">
-            <div class="kt-portlet__body">
-                <!--begin: Pagination-->
-                <div class="kt-pagination kt-pagination--brand justify-content-center justify-content-sm-between">
-                    @Html.PagedListPager(
-                        Model,
-                        page => Url.Action("ShowContactsListWidget", "Networks", new { searchKeywords = ViewBag.SearchKeywords, isModal = ViewBag.IsModal, page, pageSize = ViewBag.PageSize }),
-                        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
-                            new PagedListRenderOptions
-                            {
-                                DisplayLinkToIndividualPages = true,
-                                MaximumPageNumbersToDisplay = 3,
-                                DisplayLinkToFirstPage = PagedListDisplayMode.Always,
-                                DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
-                                DisplayLinkToNextPage = PagedListDisplayMode.Always,
-                                DisplayLinkToLastPage = PagedListDisplayMode.Always,
-                                //ContainerDivClasses = new string[] { "kt-pagination kt-pagination--brand" },
-                                UlElementClasses = new string[] {"kt-pagination__links"},
-                                LiElementClasses = new string[] {""},
-                                PreviousElementClass = "kt-pagination__link--prev",
-                                NextElementClass = "kt-pagination__link--next",
-                                ClassToApplyToFirstListItemInPager = "kt-pagination__link--first",
-                                ClassToApplyToLastListItemInPager = "kt-pagination__link--last kt-font-brand",
-                                ActiveLiElementClass = "kt-pagination__link--active",
-                                PageClasses = new string[] {""},
-                                EllipsesElementClass = ""
-                            }
-                            , new AjaxOptions { HttpMethod = "GET", OnBegin = "NetworksContactsListWidget.changePage", OnSuccess = "NetworksContactsListWidget.handlePaginationReturn" }))
-                    <div class="kt-pagination__toolbar">
-                        @{
-                            var pageSizes = new[] { 6, 15, 30 };
-                        }
-                        <select name="PageSizeDropdown" id="PageSizeDropdown" class="form-control kt-font-brand" style="width: 60px">
-                            @foreach (var pageSize in pageSizes)
-                            {
-                                <option value="@pageSize" @(ViewBag.PageSize == pageSize ? "selected" : string.Empty)>@pageSize</option>
-                            }
-                        </select>
-                        @Html.PagedListPager(
-                            Model,
-                            page => Url.Action(null, new {page}),
-                            PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
-                                new PagedListRenderOptions
-                                {
-                                    ItemSliceAndTotalFormat = Messages.PaginationMessage,
-                                    DisplayItemSliceAndTotal = true,
-                                    DisplayLinkToIndividualPages = false,
-                                    DisplayLinkToFirstPage = PagedListDisplayMode.Never,
-                                    DisplayLinkToPreviousPage = PagedListDisplayMode.Never,
-                                    DisplayLinkToNextPage = PagedListDisplayMode.Never,
-                                    DisplayLinkToLastPage = PagedListDisplayMode.Never,
-                                    ContainerDivClasses = new[] {"pagination__desc"},
-                                    UlElementClasses = new string[] {"pagination mb-0"},
-                                    LiElementClasses = new string[] {"page-item"},
-                                    PageClasses = new string[] {"page-link"}
-                                }, null))
-                    </div>
-                </div>
-                <!--end: Pagination-->
-            </div>
-        </div>
-        <!--end:: Components/Pagination/Default-->
-    </div>
-</div>
-<!--End::Pagination-->
+<!--end::List-->
