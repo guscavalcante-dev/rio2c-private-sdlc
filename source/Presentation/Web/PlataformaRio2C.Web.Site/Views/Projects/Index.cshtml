@@ -17,13 +17,6 @@
                     <div class="kt-infobox__header">
                         <h2 class="kt-infobox__title">@Labels.AudiovisualProjects</h2>
                     </div>
-                    @*<div class="kt-infobox__body">
-                        <div class="kt-infobox__section">
-                            <div class="kt-infobox__content">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi a vehicula ligula. Suspendisse potenti. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                            </div>
-                        </div>
-                    </div>*@
                 </div>
             </div>
         </div>
@@ -117,17 +110,17 @@
                             <div class="kt-iconbox__content mt-3">
                                 <ul class="pl-0 mb-0">
                                     @Html.Raw(string.Format(
-Texts.PlayerProjectsDates,
-editionDto?.ProjectEvaluationStartDate.ToShortDateString(),
-editionDto?.ProjectEvaluationEndDate.ToShortDateString(),
-editionDto?.OneToOneMeetingsScheduleDate.ToShortDateString()))
+                                        Texts.PlayerProjectsDates,
+                                        editionDto?.ProjectEvaluationStartDate.ToShortDateString(),
+                                        editionDto?.ProjectEvaluationEndDate.ToShortDateString(),
+                                        editionDto?.OneToOneMeetingsScheduleDate.ToShortDateString()))
                                 </ul>
                             </div>
                         </div>
                         <div class="kt-portlet__foot pl-0 pr-0">
                             <div class="row align-items-center">
                                 <div class="col-lg-12 kt-align-right pl-0 pr-0">
-                                    @{var resultUrl = Url.Action("SubmittedListBuyerEvaluation", "Projects", new { Area = "" }); }
+                                    @{var resultUrl = Url.Action("EvaluationList", "Projects", new { Area = "" }); }
                                     @if (editionDto?.IsProjectEvaluationOpened() == true)
                                     {
                                         <a href="@resultUrl" class="btn btn-brand">@Labels.EvaluateProjects</a>
@@ -140,7 +133,6 @@ editionDto?.OneToOneMeetingsScheduleDate.ToShortDateString()))
                                     {
                                         <a href="@resultUrl" onclick="return false;" class="btn btn-brand" data-toggle="kt-tooltip" title="" data-placement="bottom" data-original-title="@Labels.ComingSoon...">@Labels.EvaluateProjects</a>
                                     }
-                                    @*<a href="@Url.Action("Review", "Projects", new {Area = ""})" class="btn btn-brand">@Labels.EvaluateProjects</a>*@
                                 </div>
                             </div>
                         </div>
@@ -148,184 +140,7 @@ editionDto?.OneToOneMeetingsScheduleDate.ToShortDateString()))
                 </div>
             }
         </div>
-
-
-
-        @*<div class="kt-portlet kt-portlet--responsive-mobile">
-        <div class="kt-portlet__head">
-        <div class="kt-portlet__head-label">
-            <h3 class="kt-portlet__head-title">
-                Projetos enviados
-            </h3>
-        </div>
-        <div class="kt-portlet__head-toolbar">
-            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <button type="button" class="btn btn-secondary"><i class="la la-file-text-o"></i></button>
-                <button type="button" class="btn btn-secondary"><i class="la la-floppy-o"></i></button>
-                <button type="button" class="btn btn-secondary"><i class="la la-header"></i></button>
-                <div class="btn-group" role="group">
-                    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
-                        <a class="dropdown-item" href="#">Dropdown link</a>
-                        <a class="dropdown-item" href="#">Dropdown link</a>
-                        <a class="dropdown-item" href="#">Dropdown link</a>
-                        <a class="dropdown-item" href="#">Dropdown link</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
-        <div class="kt-portlet__body">
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
-        </div>
-        </div>*@
         <!--end:Main-->
     </div>
     <!--end:Right column-->
 </div>
-
-
-@*<div ng-controller="ProjectPlayerListController as vm">
-        <div class="content content-header-button clearfix">
-            <h1 class="page-title  pull-left">@ViewBag.Title</h1>
-            <div ng-if="!vm.loadingOptions" class="filter-menu pull-left">
-                <div class="btn-group" ng-if="vm.playersOptions.length > 1">
-                    <button data-toggle="dropdown" class="btn-lg btn-default dropdown-toggle" type="button">@Labels.Player <span class="caret"></span></button>
-                    <div role="menu" class="dropdown-menu dropdown-option-filter">
-                        <ul>
-                            <li ng-class="{'active' : vm.playersSelected=== null}">
-                                <a href="#" ng-click="vm.filterByPlayer($event, null)">@Labels.All</a>
-                            </li>
-                            <li ng-repeat="option in vm.playersOptions" ng-class="{'active' : option.selected}">
-                                <a href="#" ng-click="vm.filterByPlayer($event, option)" title="{{option.name}}">{{option.name}}</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="btn-group" ng-if="vm.genresOptions.length > 1">
-                    <button data-toggle="dropdown" class="btn-lg btn-default dropdown-toggle" type="button">@Labels.Genre <span class="caret"></span></button>
-                    <div role="menu" class="dropdown-menu dropdown-option-filter">
-                        <ul>
-                            <li ng-class="{'active' : vm.genreSelected=== null}">
-                                <a href="#" ng-click="vm.filterByGenre($event, null)">@Labels.All</a>
-                            </li>
-                            <li ng-repeat="genre in vm.genresOptions" ng-class="{'active' : genre.selected}">
-                                <a href="#" ng-click="vm.filterByGenre($event, genre)" title="{{genre.name}}">{{genre.name}}</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="btn-group" ng-if="vm.statusOptions.length > 1">
-                    <button data-toggle="dropdown" class="btn-lg btn-default dropdown-toggle" type="button">@Labels.Status <span class="caret"></span></button>
-                    <div role="menu" class="dropdown-menu dropdown-option-filter status-div">
-                        <ul class="status-ul">
-                            <li ng-repeat="option in vm.statusOptions" ng-class="{'active' : option.selected}">
-                                <a href="#" ng-click="vm.filterByStatus($event, option)" title="{{option.text}}">{{option.text}}</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <section class="wrapper-no-margin-top">
-            <div class="content content-abas ">
-                <div class="nav-content clearfix">
-                    <div class="projects-structure">
-
-                        <p ng-if="vm.loadingProjects">@Labels.LoadingProjects</p>
-
-                        <div ng-if="!vm.loadingProjects && vm.isFiltered()">
-                            <h5>Filtrado por: </h5>
-                            <p ng-if="vm.filter.Players !== undefined">
-                                <label>Player:</label>
-                                <span>{{vm.getNamesPlayersFiltered()}}</span>
-                            </p>
-                            <p ng-if="vm.filter.Genres !== undefined && vm.filter.Genres.length > 0">
-                                <label>Genero:</label>
-                                <span>{{vm.filter.Genres.join(',')}}</span>
-                            </p>
-                            <p ng-if="vm.filter.Status !== undefined && vm.filter.Status.length > 0">
-                                <label>Status:</label>
-                                <span>{{vm.getTextStatusFiltered()}}</span>
-                            </p>
-                        </div>
-
-                        <div ng-if="!vm.loadingProjects && vm.projects.length> 0">
-                            <h4>{{vm.projects.length}} @Labels.Projects</h4>
-                            <div class="legend clearfix">
-                                <ul>
-                                    <li><label>@Labels.Caption</label></li>
-                                    <li>
-                                        <i class="icon-time onevaluation" title="@Labels.OnEvaluation"></i>@Labels.OnEvaluation
-                                    </li>
-                                    <li>
-                                        <i class="icon-thumbs-up accepted" title="@Labels.Accepted"></i>@Labels.Accepted
-                                    </li>
-                                    <li>
-                                        <i class="icon-thumbs-down rejected" title="@Labels.Refused"></i>@Labels.Refused
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="list">
-                                <div ng-repeat="project in vm.projects" class="panel panel-project">
-                                    <header class="panel-heading projects-structure-box-header">
-                                        <h3>
-                                            <a href="@Url.Action("Detail", "Project")/?uid={{project.uid}}" >
-                                                {{project.title}}
-                                            </a>
-                                        </h3>
-                                        <div class="project-maker">
-                                            <label>@Labels.Producer</label>: <a href="@Url.Action("Details", "Producer")?uid={{project.producerUid}}">{{project.producerName}} <i class="icon-external-link"></i></a>
-                                        </div>
-                                        <div>
-                                            <label>@Labels.Genre</label>:
-                                            <span class="badge" ng-repeat="genre in project.genres">
-                                                {{genre}}
-                                            </span>
-                                        </div>
-                                    </header>
-                                    <div class="panel-body">
-                                        @*list-images-struture @@
-                                        <div class="list-images-structure ">
-
-                                            <figure class="relative" ng-repeat="player in project.players">
-
-                                                <div>
-                                                    <img ng-model="player" src="~/Content/img/profile-avatar-logo.png" alt="{{player.name}}" title="{{player.name}}" load-image="{{player.uid}}" ng-disable-load-image="{{!player.hasImage}}" url-load="/api/players/thumbimage" class="img-thumbnail" />
-                                                </div>
-                                                <figcaption title="{{player.name}}">
-                                                    {{player.name}}
-                                                </figcaption>
-
-                                                <span class="btn btn-lg btn-remove" data-toggle="modal" data-target="#modalSendToPlayers" title="{{player.status}}">
-                                                    <i ng-if="(player.statusCode | lowercase) == 'onevaluation'" class="{{player.statusCode | lowercase}} icon-time" title="{{player.status}}"></i>
-                                                    <i ng-if="(player.statusCode | lowercase) == 'accepted'" class="{{player.statusCode | lowercase}} icon-thumbs-up" title="{{player.status}}"></i>
-                                                    <i ng-if="(player.statusCode | lowercase) == 'rejected'" class="{{player.statusCode | lowercase}} icon-thumbs-down" title="{{player.status}}"></i>
-
-                                                </span>
-
-                                            </figure>
-
-
-                                        </div>
-                                        @*fim list-images-struture @@
-
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <p ng-if="!vm.loadingProjects && vm.projects.length <= 0" class="rio2c-list-no-items-found">
-                            @Labels.NoProjectWasFound
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>*@

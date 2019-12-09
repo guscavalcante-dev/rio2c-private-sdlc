@@ -2,15 +2,12 @@
 @using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2C.Domain.Entities
 @using PlataformaRio2C.Domain.Statics
-@using Constants = PlataformaRio2C.Domain.Constants;
 @using X.PagedList.Mvc
 @using X.PagedList.Mvc.Common
 @model X.PagedList.IPagedList<ProjectDto>
 @{
     ViewBag.Title = Labels.Projects;
-    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var editionDto = ViewBag.EditionDto as EditionDto;
-    var hasProjectSpace = Model.Any(m => m.IsFakeProject);
 }
 <div class="row">
     <div class="col-md-12">
@@ -83,7 +80,6 @@
                                                     {
                                                         <div class="kt-widget__content">
                                                             <div class="kt-widget__details" style="width: 100%;">
-
                                                                 <span class="kt-widget__subtitle">@Labels.PlayersSelectedForEvaluation:</span>
                                                                 <div class="row">
                                                                     <div class="col-12">
@@ -124,11 +120,9 @@
                                                                                                         color = "danger";
                                                                                                         icon = "fa-thumbs-down";
                                                                                                     }
-
                                                                                                     <div class="kt-widget--user-profile-1 kt-widget__username">
                                                                                                         <small>@projectBuyerEvaluationDto.ProjectBuyerEvaluation.BuyerEvaluationUser.Name</small>
                                                                                                     </div>
-
                                                                                                     <div class="kt-widget__button">
                                                                                                         <span class="btn btn-label-@(color) btn-sm">
                                                                                                             <i class="fa @(icon) mr-1"></i> @(projectBuyerEvaluationDto.ProjectEvaluationStatus.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
@@ -150,7 +144,6 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-
                                                             </div>
                                                         </div>
                                                     }
@@ -177,7 +170,6 @@
 
                                             <button type="button" class="btn btn-brand" onclick="ProjectsBuyerEvaluationWidget.confirmAccept();">@Labels.AcceptProject</button>
                                         </div>
-
                                     }
                                 </div>
                             </div>
@@ -185,7 +177,6 @@
                     </div>
                 </div>
             }
-
             <div class="row mt-10">
                 <div class="col-12">
                     @Html.PagedListPager(
@@ -210,7 +201,7 @@
                 <div class="col-12">
                     @Html.PagedListPager(
                         Model,
-                        page => Url.Action("UpdateSubmittedListEvaluation", "Projects", new { searchKeywords = ViewBag.SearchKeywords, page }) + ViewBag.SubmittedListPlayerEvaluation,
+                        page => Url.Action("ShowEvaluationListWidget", "Projects", new { searchKeywords = ViewBag.SearchKeywords, page }) + ViewBag.SubmittedListPlayerEvaluation,
                         PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
                             new PagedListRenderOptions
                             {
@@ -229,7 +220,6 @@
                 </div>
             </div>
         }
-
         <div class="row">
             <div class="col-xl-12">
                 <div class="kt-portlet kt-iconbox kt-iconbox--wave" style="height:100%">

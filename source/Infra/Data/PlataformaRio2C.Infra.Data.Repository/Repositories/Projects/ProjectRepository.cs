@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-28-2019
+// Last Modified On : 12-09-2019
 // ***********************************************************************
 // <copyright file="ProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -43,52 +43,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
-        /// <summary>Finds the by attendee organization uid.</summary>
-        /// <param name="query">The query.</param>
-        /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
-        /// <returns></returns>
-        internal static IQueryable<Project> FindByAttendeeOrganizationUid(this IQueryable<Project> query, Guid attendeeOrganizationUid)
-        {
-            query = query.Where(p => p.SellerAttendeeOrganization.Uid == attendeeOrganizationUid);
-
-            return query;
-        }
-
-        /// <summary>Finds the by attendee organization uid.</summary>
-        /// <param name="query">The query.</param>
-        /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
-        /// <returns></returns>
-        internal static IQueryable<Project> FindByAttendeeCollabratorUid(this IQueryable<Project> query, Guid attendeeCollaboratorUid)
-        {
-            query = query.Where(p => p.ProjectBuyerEvaluations.Any(pbe => pbe.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators.Any(ao => ao.AttendeeCollaborator.Collaborator.Uid == attendeeCollaboratorUid
-                                                                                                                                              && !ao.IsDeleted)
-                                                                             && !p.IsDeleted
-                                                                             && !pbe.IsDeleted
-                                                                             && !pbe.Project.IsDeleted)
-                                                                             && p.FinishDate != null);
-
-            return query;
-        }
-
-        /// <summary>Finds the by attendee organizations uids.</summary>
-        /// <param name="query">The query.</param>
-        /// <param name="attendeeOrganizationsUids">The attendee organizations uids.</param>
-        /// <param name="showAll">if set to <c>true</c> [show all].</param>
-        /// <returns></returns>
-        internal static IQueryable<Project> FindByAttendeeOrganizationsUids(this IQueryable<Project> query, List<Guid> attendeeOrganizationsUids, bool showAll)
-        {
-            if (attendeeOrganizationsUids?.Any() == true)
-            {
-                query = query.Where(p => attendeeOrganizationsUids.Contains(p.SellerAttendeeOrganization.Uid));
-            }
-            else if (!showAll)
-            {
-                query = query.Where(p => 1 == 2);
-            }
-
-            return query;
-        }
-
         /// <summary>Finds the by seller attendee organization uid.</summary>
         /// <param name="query">The query.</param>
         /// <param name="sellerAttendeeOrganizationUid">The seller attendee organization uid.</param>
@@ -119,6 +73,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds the by buyer attendee collabrator uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="buyerAttendeeCollaboratorUid">The buyer attendee collaborator uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> FindByBuyerAttendeeCollabratorUid(this IQueryable<Project> query, Guid buyerAttendeeCollaboratorUid)
+        {
+            query = query.Where(p => p.ProjectBuyerEvaluations.Any(pbe => !pbe.IsDeleted
+                                                                          && pbe.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators.Any(aoc => aoc.AttendeeCollaborator.Collaborator.Uid == buyerAttendeeCollaboratorUid
+                                                                                                                                                        && !aoc.IsDeleted)));
+
+            return query;
+        }
+
         /// <summary>Finds the by keywords.</summary>
         /// <param name="query">The query.</param>
         /// <param name="keywords">The keywords.</param>
@@ -127,19 +94,25 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             if (!string.IsNullOrEmpty(keywords))
             {
-                var predicate = PredicateBuilder.New<Project>(true);
+                var outerWhere = PredicateBuilder.New<Project>(false);
+                var innerProjectTitleNameWhere = PredicateBuilder.New<Project>(true);
+                var innerProjectInterestNameWhere = PredicateBuilder.New<Project>(true);
+                var innerSellerAttendeeOrganizationNameWhere = PredicateBuilder.New<Project>(true);
 
                 foreach (var keyword in keywords.Split(' '))
                 {
                     if (!string.IsNullOrEmpty(keyword))
                     {
-                        predicate = predicate.Or(p => p.ProjectTitles.Any(t => t.Value.Contains(keyword)));
-                        predicate = predicate.Or(p => p.ProjectInterests.Any(i => i.Interest.Name.Contains(keyword)));
-                        predicate = predicate.Or(p => p.SellerAttendeeOrganization.Organization.Name.Contains(keyword));
+                        innerProjectTitleNameWhere = innerProjectTitleNameWhere.Or(p => p.ProjectTitles.Any(pt => !pt.IsDeleted && pt.Value.Contains(keyword)));
+                        innerProjectInterestNameWhere = innerProjectInterestNameWhere.Or(p => p.ProjectInterests.Any(pi => !pi.IsDeleted && pi.Interest.Name.Contains(keyword)));
+                        innerSellerAttendeeOrganizationNameWhere = innerSellerAttendeeOrganizationNameWhere.Or(sao => sao.SellerAttendeeOrganization.Organization.Name.Contains(keyword));
                     }
                 }
 
-                query = query.AsExpandable().Where(predicate);
+                outerWhere = outerWhere.Or(innerProjectTitleNameWhere);
+                outerWhere = outerWhere.Or(innerProjectInterestNameWhere);
+                outerWhere = outerWhere.Or(innerSellerAttendeeOrganizationNameWhere);
+                query = query.Where(outerWhere);
             }
 
             return query;
@@ -147,17 +120,26 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         /// <summary>Finds the by interest.</summary>
         /// <param name="query">The query.</param>
-        /// <param name="interstUid">The interest Uid.</param>
+        /// <param name="interestUid">The interest uid.</param>
         /// <returns></returns>
         internal static IQueryable<Project> FindByInterest(this IQueryable<Project> query, Guid? interestUid)
         {
             if (interestUid != null)
             {
-                var predicate = PredicateBuilder.New<Project>(true);
-                predicate = predicate.And(p => p.ProjectInterests.Any(i => i.Interest.Uid == interestUid));
-
-                query = query.AsExpandable().Where(predicate);
+                query = query.Where(p => p.ProjectInterests.Any(pi => !pi.IsDeleted
+                                                                      && !pi.Interest.IsDeleted
+                                                                      && pi.Interest.Uid == interestUid));
             }
+
+            return query;
+        }
+
+        /// <summary>Determines whether this instance is finished.</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> IsFinished(this IQueryable<Project> query)
+        {
+            query = query.Where(p => p.FinishDate.HasValue);
 
             return query;
         }
@@ -225,14 +207,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
-        /// <summary>Finds all dtos by attendee organization uid asynchronous.</summary>
+        /// <summary>Finds all dtos to sell asynchronous.</summary>
         /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
         /// <param name="showAll">if set to <c>true</c> [show all].</param>
         /// <returns></returns>
-        public async Task<List<ProjectDto>> FindAllDtosByAttendeeOrganizationUidAsync(Guid attendeeOrganizationUid, bool showAll)
+        public async Task<List<ProjectDto>> FindAllDtosToSellAsync(Guid attendeeOrganizationUid, bool showAll)
         {
             var query = this.GetBaseQuery()
-                                .FindByAttendeeOrganizationUid(attendeeOrganizationUid)
+                                .FindBySellerAttendeeOrganizationUid(attendeeOrganizationUid)
                                 .Select(p => new ProjectDto
                                 {
                                     Project = p,
@@ -277,11 +259,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .ToListAsync();
         }
 
-
-        public async Task<IPagedList<ProjectDto>> FindAllProjectsToEvaluateUidAsync(Guid attendeeCollaboratorUid, string searchKeywords, Guid? interestUid, int page, int pageSize)
+        /// <summary>Finds all dtos to evaluate asynchronous.</summary>
+        /// <param name="attendeeCollaboratorUid">The attendee collaborator uid.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="interestUid">The interest uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<ProjectDto>> FindAllDtosToEvaluateAsync(Guid attendeeCollaboratorUid, string searchKeywords, Guid? interestUid, int page, int pageSize)
         {
             var query = this.GetBaseQuery()
-                                .FindByAttendeeCollabratorUid(attendeeCollaboratorUid)
+                                .FindByBuyerAttendeeCollabratorUid(attendeeCollaboratorUid)
+                                .IsFinished()
                                 .FindByKeywords(searchKeywords)
                                 .FindByInterest(interestUid)
                                 .Select(p => new ProjectDto

@@ -4,7 +4,7 @@
 // Created          : 11-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-18-2019
+// Last Modified On : 12-09-2019
 // ***********************************************************************
 // <copyright file="projects.buyercompany.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -603,7 +603,7 @@ var ProjectsBuyerEvaluationWidget = function () {
         jsonParameters.searchKeywords = $('#SearchKeywords').val();
         jsonParameters.interestUid = $('#Interest_Uid').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/UpdateSubmittedListEvaluation'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/ShowEvaluationListWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -654,7 +654,7 @@ var ProjectsBuyerEvaluationWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.id = $('#Uid').val();
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/SubmitApproval'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/Approve'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -720,7 +720,7 @@ var ProjectsBuyerEvaluationWidget = function () {
         jsonParameters.reason = reason;
         //jsonParameters.reason = $('#Reason').val();
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/SubmitRefusal'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/Refuse'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

@@ -1,10 +1,9 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
-
 @model List<InterestDto>
 @{
     ViewBag.Title = Labels.ProjectSubscription;
 }
-
+@*
 <div class="row">
     <div class="col-md-12">
         <div class="kt-portlet">
@@ -18,7 +17,7 @@
         </div>
     </div>
 </div>
-
+*@
 <div class="row">
     <div class="col-md-12">
         <div class="kt-portlet">
@@ -48,11 +47,7 @@
         </div>
     </div>
 </div>
-
-
 <div id="ProjectBuyerEvaluationWidget" style="min-height: 500px"></div>
-
-
 @section Styles {
     @Styles.Render("~/bundles/css/select2.css")
 }
@@ -79,7 +74,6 @@
         };
 
         jQuery(document).ready(function () {
-
             ProjectsBuyerEvaluationWidget.init();
         });
     </script>

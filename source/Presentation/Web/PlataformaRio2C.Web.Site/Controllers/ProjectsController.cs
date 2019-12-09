@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified On : 12-09-2019
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -127,7 +127,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return RedirectToAction("Index", "Projects", new { Area = "" });
             }
 
-            var projects = await this.projectRepo.FindAllDtosByAttendeeOrganizationUidAsync(
+            var projects = await this.projectRepo.FindAllDtosToSellAsync(
                 this.UserAccessControlDto?.GetFirstAttendeeOrganizationCreated()?.Uid ?? Guid.Empty,
                 false);
 
@@ -248,7 +248,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedListBuyerEvaluation", "Projects", new { Area = "" })),
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("EvaluationList", "Projects", new { Area = "" })),
                 new BreadcrumbItemHelper(projectDto.GetTitleDtoByLanguageCode(this.UserInterfaceLanguage)?.ProjectTitle?.Value ?? Labels.Project, Url.Action("SubmittedDetailsEvaluation", "Projects", new { id }))
             });
 
@@ -1535,37 +1535,34 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #region Executive Audiovisual
 
-        /// <summary>Reviews this instance.</summary>
-        /// <returns></returns>
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.ExecutiveAudiovisual)]
-        public ActionResult Review()
-        {
-            #region Breadcrumb
+        ///// <summary>Reviews this instance.</summary>
+        ///// <returns></returns>
+        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.ExecutiveAudiovisual)]
+        //public ActionResult Review()
+        //{
+        //    #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper("Projects for review", new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper("Projects", Url.Action("Index", "Projects", new { Area = "Player" }))
-            });
+        //    ViewBag.Breadcrumb = new BreadcrumbHelper("Projects for review", new List<BreadcrumbItemHelper> {
+        //        new BreadcrumbItemHelper("Projects", Url.Action("Index", "Projects", new { Area = "Player" }))
+        //    });
 
-            #endregion
+        //    #endregion
 
-            return View();
-        }
+        //    return View();
+        //}
 
-        #endregion
+        #region Evaluation List
 
-        #region Submitted List Player Evaluation
-
-        /// <summary>Sends to players.</summary>
-        /// <param name="id">The identifier.</param>
+        /// <summary>Evaluations the list.</summary>
         /// <returns></returns>
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.ExecutiveAudiovisual)]
         [HttpGet]
-        public async Task<ActionResult> SubmittedListBuyerEvaluation()
+        public async Task<ActionResult> EvaluationList()
         {
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedListBuyerEvaluation", "Projects", new { Area = "" })),
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("EvaluationList", "Projects", new { Area = "" })),
             });
 
             #endregion
@@ -1575,15 +1572,22 @@ namespace PlataformaRio2C.Web.Site.Controllers
             return View(projectInterests);
         }
 
-        /// <summary>Submitted list.</summary>
+        /// <summary>Shows the evaluation list widget.</summary>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="interestUid">The interest uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.ExecutiveAudiovisual)]
         [HttpGet]
-        public async Task<ActionResult> UpdateSubmittedListEvaluation(string searchKeywords, Guid? interestUid, int page = 1, int pageSize = 10)
+        public async Task<ActionResult> ShowEvaluationListWidget(string searchKeywords, Guid? interestUid, int page = 1, int pageSize = 10)
         {
-            var projects = await this.projectRepo.FindAllProjectsToEvaluateUidAsync(
-                this.UserAccessControlDto?.Collaborator?.Uid ?? Guid.Empty, searchKeywords, interestUid, page, pageSize);
-
+            var projects = await this.projectRepo.FindAllDtosToEvaluateAsync(
+                this.UserAccessControlDto?.Collaborator?.Uid ?? Guid.Empty, 
+                searchKeywords, 
+                interestUid, 
+                page, 
+                pageSize);
             if (projects == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
@@ -1596,17 +1600,20 @@ namespace PlataformaRio2C.Web.Site.Controllers
             {
                 status = "success",
                 pages = new List<dynamic>
-                    {
-                        new { page = this.RenderRazorViewToString("Modals/UpdateSubmittedListModal", projects), divIdOrClass = "#ProjectBuyerEvaluationWidget" },
-                    }
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EvaluationListWidget", projects), divIdOrClass = "#ProjectBuyerEvaluationWidget" },
+                }
             }, JsonRequestBehavior.AllowGet);
         }
 
         #region Update
-        [HttpPost]
-        public async Task<ActionResult> SubmitApproval(Guid? id)
-        {
 
+        /// <summary>Approves the specified identifier.</summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> Approve(Guid? id)
+        {
             var result = new AppValidationResult();
 
             try
@@ -1617,16 +1624,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 }
 
                 var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(id ?? Guid.Empty);
-
                 if (projectDto == null)
                 {
                     return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
                 }
 
                 var projectBuyerEvaluation = projectDto.Project.ProjectBuyerEvaluations
-                    .Where(p => p.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators
-                    .Any(ao => ao.AttendeeCollaborator.Collaborator.Uid == this.UserAccessControlDto.Collaborator.Uid))
-                    .FirstOrDefault(); //TODO: Substituir pela empresa selecionada no modal
+                                                    .FirstOrDefault(p => p.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators
+                                                                            .Any(ao => ao.AttendeeCollaborator.Collaborator.Uid == this.UserAccessControlDto.Collaborator.Uid)); //TODO: Substituir pela empresa selecionada no modal
 
                 var projectBuyerEvaluationData = new ProjectBuyerEvaluationData()
                 {
@@ -1652,7 +1657,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
                 //return RedirectToAction("SubmittedListBuyerEvaluation", "Projects");
             }
-
             catch (DomainException ex)
             {
                 foreach (var error in result.Errors)
@@ -1676,9 +1680,12 @@ namespace PlataformaRio2C.Web.Site.Controllers
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.UpdatedM) });
         }
 
-        public async Task<ActionResult> SubmitRefusal(Guid? id, string reason)
+        /// <summary>Refuses the specified identifier.</summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="reason">The reason.</param>
+        /// <returns></returns>
+        public async Task<ActionResult> Refuse(Guid? id, string reason)
         {
-
             var result = new AppValidationResult();
 
             try
@@ -1689,16 +1696,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 }
 
                 var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(id ?? Guid.Empty);
-
                 if (projectDto == null)
                 {
                     return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
                 }
 
                 var projectBuyerEvaluation = projectDto.Project.ProjectBuyerEvaluations
-                    .Where(p => p.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators
-                    .Any(ao => ao.AttendeeCollaborator.Collaborator.Uid == this.UserAccessControlDto.Collaborator.Uid))
-                    .FirstOrDefault(); //TODO: Substituir pela empresa selecionada no modal
+                                                    .FirstOrDefault(p => p.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators
+                                                                            .Any(ao => ao.AttendeeCollaborator.Collaborator.Uid == this.UserAccessControlDto.Collaborator.Uid)); //TODO: Substituir pela empresa selecionada no modal
 
                 var projectBuyerEvaluationData = new ProjectBuyerEvaluationData()
                 {
@@ -1725,7 +1730,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
                 //return RedirectToAction("SubmittedListBuyerEvaluation", "Projects");
             }
-
             catch (DomainException ex)
             {
                 foreach (var error in result.Errors)
@@ -1748,6 +1752,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.UpdatedM) });
         }
+
+        #endregion
 
         #endregion
 
