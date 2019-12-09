@@ -7262,6 +7262,7 @@
     <Content Include="Views\Projects\EvaluationList.cshtml" />
     <Content Include="Views\Projects\Widgets\EvaluationListWidget.cshtml" />
     <Content Include="Views\SiteMailerService\UnreadConversationEmail.cshtml" />
+    <Content Include="Views\Projects\EvaluationDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

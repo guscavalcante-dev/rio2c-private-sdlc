@@ -79,7 +79,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ACEITAR PROJETO.
+        ///   Looks up a localized string similar to Aprovar.
         /// </summary>
         public static string AcceptProject {
             get {
@@ -309,6 +309,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string APlayer {
             get {
                 return ResourceManager.GetString("APlayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aprovar.
+        /// </summary>
+        public static string Approve {
+            get {
+                return ResourceManager.GetString("Approve", resourceCulture);
             }
         }
         
@@ -2972,7 +2981,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to REJEITAR PROJETO.
+        ///   Looks up a localized string similar to Reprovar.
         /// </summary>
         public static string RefuseProject {
             get {

@@ -209,55 +209,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
             return View(projectDto);
         }
 
-        /// <summary>Submitteds the details.</summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns></returns>
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.ExecutiveAudiovisual)]
-        public async Task<ActionResult> SubmittedDetailsEvaluation(Guid? id)
-        {
-            if (this.EditionDto?.IsProjectSubmitStarted() != true)
-            {
-                return RedirectToAction("Index", "Projects", new { Area = "" });
-            }
-
-            var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(id ?? Guid.Empty);
-            if (projectDto == null)
-            {
-                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("SubmittedList", "Projects", new { Area = "" });
-            }
-
-            if (!projectDto.Project.IsFinished())
-            {
-                if (this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual) == true)
-                {
-                    if (this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) != true)
-                    {
-                        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                        return RedirectToAction("SubmittedList", "Projects", new { Area = "" });
-                    }
-                }
-            }
-
-            if (!this.HasEdition(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid))
-            {
-                this.StatusMessageToastr(Texts.ForbiddenErrorMessage, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("SubmittedList", "Projects", new { Area = "" });
-            }
-
-            #region Breadcrumb
-
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("EvaluationList", "Projects", new { Area = "" })),
-                new BreadcrumbItemHelper(projectDto.GetTitleDtoByLanguageCode(this.UserInterfaceLanguage)?.ProjectTitle?.Value ?? Labels.Project, Url.Action("SubmittedDetailsEvaluation", "Projects", new { id }))
-            });
-
-            #endregion
-
-            return View("SubmittedDetails", projectDto);
-        }
-
-
         #region Main Information Widget
 
         /// <summary>Shows the main information widget.</summary>
@@ -1597,7 +1548,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        #region Update
+        #region Approve
 
         /// <summary>Approves the specified identifier.</summary>
         /// <param name="id">The identifier.</param>
@@ -1670,6 +1621,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.UpdatedM) });
         }
+
+        #endregion
+
+        #region Refuse
 
         /// <summary>Refuses the specified identifier.</summary>
         /// <param name="id">The identifier.</param>
@@ -1745,6 +1700,58 @@ namespace PlataformaRio2C.Web.Site.Controllers
         }
 
         #endregion
+
+        #endregion
+
+        #region Evaluation Details
+
+        /// <summary>Evaluations the details.</summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.ExecutiveAudiovisual)]
+        public async Task<ActionResult> EvaluationDetails(Guid? id)
+        {
+            if (this.EditionDto?.IsProjectSubmitStarted() != true)
+            {
+                return RedirectToAction("Index", "Projects", new { Area = "" });
+            }
+
+            var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(id ?? Guid.Empty);
+            if (projectDto == null)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("SubmittedList", "Projects", new { Area = "" });
+            }
+
+            if (!projectDto.Project.IsFinished())
+            {
+                if (this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual) == true)
+                {
+                    if (this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) != true)
+                    {
+                        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                        return RedirectToAction("SubmittedList", "Projects", new { Area = "" });
+                    }
+                }
+            }
+
+            if (!this.HasEdition(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid))
+            {
+                this.StatusMessageToastr(Texts.ForbiddenErrorMessage, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("SubmittedList", "Projects", new { Area = "" });
+            }
+
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("EvaluationList", "Projects", new { Area = "" })),
+                new BreadcrumbItemHelper(projectDto.GetTitleDtoByLanguageCode(this.UserInterfaceLanguage)?.ProjectTitle?.Value ?? Labels.Project, Url.Action("EvaluationDetails", "Projects", new { id }))
+            });
+
+            #endregion
+
+            return View(projectDto);
+        }
 
         #endregion
 

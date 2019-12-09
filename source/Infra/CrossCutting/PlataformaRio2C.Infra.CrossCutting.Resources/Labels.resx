@@ -658,10 +658,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Desmarcar todos</value>
   </data>
   <data name="AcceptProject" xml:space="preserve">
-    <value>ACEITAR PROJETO</value>
+    <value>Aprovar</value>
+    <comment>Aprovar</comment>
   </data>
   <data name="RefuseProject" xml:space="preserve">
-    <value>REJEITAR PROJETO</value>
+    <value>Reprovar</value>
+    <comment>Reprovar</comment>
   </data>
   <data name="EvaluateProject" xml:space="preserve">
     <value>Avaliar projeto</value>
@@ -1838,6 +1840,10 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="ViewMessage" xml:space="preserve">
     <value>Ver mensagem</value>
     <comment>Ver mensagem</comment>
+  </data>
+  <data name="Approve" xml:space="preserve">
+    <value>Aprovar</value>
+    <comment>Aprovar</comment>
   </data>
   <data name="SelectAMEntity" xml:space="preserve">
     <value>Selecione um {0}</value>

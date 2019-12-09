@@ -60,8 +60,52 @@ var ProjectsBuyerEvaluationWidget = function () {
         });
     };
 
-    // Accept -------------------------------------------------------------------------------------
-    var confirmAccept = function () {
+    // Search -------------------------------------------------------------------------------------
+    var search = function () {
+        $('#Page').val('1');
+        ProjectsBuyerEvaluationWidget.init();
+    };
+
+    var enableSearchEvent = function () {
+        $('#SearchKeywords').not('.search-event-enabled').on('search', function () {
+            search();
+        });
+
+        $('#SearchKeywords').addClass('search-event-enabled');
+    };
+
+    // Pagination ---------------------------------------------------------------------------------
+    var enablePageSizeChangeEvent = function () {
+        $('#PageSizeDropdown').not('.change-event-enabled').on('change', function () {
+            $('#PageSize').val($(this).val());
+            ProjectsBuyerEvaluationWidget.search();
+        });
+
+        $('#PageSizeDropdown').addClass('change-event-enabled');
+    };
+
+    var changePage = function () {
+        MyRio2cCommon.block();
+    };
+
+    var handlePaginationReturn = function (data) {
+        MyRio2cCommon.handleAjaxReturn({
+            data: data,
+            // Success
+            onSuccess: function () {
+                enableShowPlugins();
+                MyRio2cCommon.unblock();
+                $('#ContactsSearchKeywords').focus();
+            },
+            // Error
+            onError: function () {
+                MyRio2cCommon.unblock();
+            }
+        });
+    };
+
+    // Approve ------------------------------------------------------------------------------------
+    var showApproveModal = function () {
         var accept = function () {
             if (widgetElement.length <= 0) {
                 return;
@@ -143,10 +187,10 @@ var ProjectsBuyerEvaluationWidget = function () {
         });
     };
 
-    var confirmRefuse = function () {
+    var showRefuseModal = function () {
         var informReason = function () {
             bootbox.alert("Reason is a required field!", function () {
-                confirmRefuse();
+                showRefuseModal();
                 return;
             });
         };
@@ -177,50 +221,6 @@ var ProjectsBuyerEvaluationWidget = function () {
         });
     };
 
-    // Search -------------------------------------------------------------------------------------
-    var search = function () {
-        $('#Page').val('1');
-        ProjectsBuyerEvaluationWidget.init();
-    };
-
-    var enableSearchEvent = function () {
-        $('#SearchKeywords').not('.search-event-enabled').on('search', function () {
-            search();
-        });
-
-        $('#SearchKeywords').addClass('search-event-enabled');
-    };
-
-    // Pagination ---------------------------------------------------------------------------------
-    var enablePageSizeChangeEvent = function () {
-        $('#PageSizeDropdown').not('.change-event-enabled').on('change', function () {
-            $('#PageSize').val($(this).val());
-            ProjectsBuyerEvaluationWidget.search();
-        });
-
-        $('#PageSizeDropdown').addClass('change-event-enabled');
-    };
-
-    var changePage = function () {
-        MyRio2cCommon.block();
-    };
-
-    var handlePaginationReturn = function (data) {
-        MyRio2cCommon.handleAjaxReturn({
-            data: data,
-            // Success
-            onSuccess: function () {
-                enableShowPlugins();
-                MyRio2cCommon.unblock();
-                $('#ContactsSearchKeywords').focus();
-            },
-            // Error
-            onError: function () {
-                MyRio2cCommon.unblock();
-            }
-        });
-    };
-
     return {
         init: function () {
             initElements();
@@ -237,11 +237,11 @@ var ProjectsBuyerEvaluationWidget = function () {
         handlePaginationReturn: function (data) {
             handlePaginationReturn(data);
         },
-        confirmAccept: function () {
-            confirmAccept();
+        showApproveModal: function () {
+            showApproveModal();
         },
-        confirmRefuse: function () {
-            confirmRefuse();
+        showRefuseModal: function () {
+            showRefuseModal();
         }
     };
 }();

@@ -648,10 +648,12 @@
     <value>Refused</value>
   </data>
   <data name="AcceptProject" xml:space="preserve">
-    <value>ACCEPT PROJECT</value>
+    <value>Accept</value>
+    <comment>Aprovar</comment>
   </data>
   <data name="RefuseProject" xml:space="preserve">
-    <value>REFUSE PROJECT</value>
+    <value>Refuse</value>
+    <comment>Reprovar</comment>
   </data>
   <data name="UncheckAll" xml:space="preserve">
     <value>Uncheck all</value>
@@ -1825,6 +1827,10 @@
   <data name="ViewMessage" xml:space="preserve">
     <value>View message</value>
     <comment>Ver mensagem</comment>
+  </data>
+  <data name="Approve" xml:space="preserve">
+    <value>Approve</value>
+    <comment>Aprovar</comment>
   </data>
   <data name="SelectAMEntity" xml:space="preserve">
     <value>Select a {0}</value>
