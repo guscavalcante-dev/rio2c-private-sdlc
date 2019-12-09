@@ -1535,22 +1535,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #region Executive Audiovisual
 
-        ///// <summary>Reviews this instance.</summary>
-        ///// <returns></returns>
-        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.ExecutiveAudiovisual)]
-        //public ActionResult Review()
-        //{
-        //    #region Breadcrumb
-
-        //    ViewBag.Breadcrumb = new BreadcrumbHelper("Projects for review", new List<BreadcrumbItemHelper> {
-        //        new BreadcrumbItemHelper("Projects", Url.Action("Index", "Projects", new { Area = "Player" }))
-        //    });
-
-        //    #endregion
-
-        //    return View();
-        //}
-
         #region Evaluation List
 
         /// <summary>Evaluations the list.</summary>
@@ -1576,9 +1560,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
 
-            var projectInterests = await this.interestRepo.FindAllDtosAsync();
+            var genreInterests = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.Genre.Uid);
 
-            return View(projectInterests);
+            return View(genreInterests);
         }
 
         /// <summary>Shows the evaluation list widget.</summary>

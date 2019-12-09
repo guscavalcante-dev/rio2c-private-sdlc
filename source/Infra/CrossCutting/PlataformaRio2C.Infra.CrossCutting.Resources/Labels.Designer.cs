@@ -3301,11 +3301,29 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Selecione um {0}.
+        /// </summary>
+        public static string SelectAMEntity {
+            get {
+                return ResourceManager.GetString("SelectAMEntity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Selecione um executivo para visualizar as mensagens..
         /// </summary>
         public static string SelectAnExecutiveInChat {
             get {
                 return ResourceManager.GetString("SelectAnExecutiveInChat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selecione um {0}.
+        /// </summary>
+        public static string SelectAnMEntity {
+            get {
+                return ResourceManager.GetString("SelectAnMEntity", resourceCulture);
             }
         }
         

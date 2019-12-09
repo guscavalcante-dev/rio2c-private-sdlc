@@ -10,16 +10,15 @@
             <div class="col-12 col-md-6 mt-2">
                 @Html.Hidden("Page", ViewBag.Page as int?)
                 @Html.Hidden("PageSize", ViewBag.PageSize as int?)
-                @Html.Hidden("InterestUid", ViewBag.InterestUid as Guid?)
                 @Html.TextBox("SearchKeywords", null, new { @class = "form-control mr-1", type = "search", placeholder = Labels.Search })
             </div>
             <div class="col-10 col-md-4 col-lg-5 mt-2">
-                <select name="@Html.NameFor(m => m.FirstOrDefault().Interest)" id="@Html.IdFor(m => m.FirstOrDefault().Interest.Uid)" class="form-control enable-select2">
-                    <option value="">@(Labels.Select)...</option>
-                    @foreach (var item in Model)
+                <select name="InterestUid" id="InterestUid" class="form-control enable-select2">
+                    <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Genre))...</option>
+                    @foreach (var interestDto in Model)
                     {
-                        <option value="@item.Interest.Uid">
-                            @item.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                        <option value="@interestDto.Interest.Uid" @(interestDto.Interest.Uid == ViewBag.InterestUid ? "selected" : string.Empty)>
+                            @interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
                         </option>
                     }
                 </select>

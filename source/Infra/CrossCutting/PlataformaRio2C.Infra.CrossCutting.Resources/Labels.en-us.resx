@@ -1826,4 +1826,12 @@
     <value>View message</value>
     <comment>Ver mensagem</comment>
   </data>
+  <data name="SelectAMEntity" xml:space="preserve">
+    <value>Select a {0}</value>
+    <comment>Selecione um {0}</comment>
+  </data>
+  <data name="SelectAnMEntity" xml:space="preserve">
+    <value>Select an {0}</value>
+    <comment>Selecione um {0}</comment>
+  </data>
 </root>

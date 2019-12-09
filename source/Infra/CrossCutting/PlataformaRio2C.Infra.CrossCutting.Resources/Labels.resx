@@ -1839,4 +1839,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Ver mensagem</value>
     <comment>Ver mensagem</comment>
   </data>
+  <data name="SelectAMEntity" xml:space="preserve">
+    <value>Selecione um {0}</value>
+    <comment>Selecione um {0}</comment>
+  </data>
+  <data name="SelectAnMEntity" xml:space="preserve">
+    <value>Selecione um {0}</value>
+    <comment>Selecione um {0}</comment>
+  </data>
 </root>

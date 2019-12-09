@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified On : 12-09-2019
 // ***********************************************************************
 // <copyright file="InterestRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -52,6 +52,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             {
                 query = query.Where(i => interestsUids.Contains(i.Uid));
             }
+
+            return query;
+        }
+
+        /// <summary>Finds the by interest group uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="interestGroupUid">The interest group uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<Interest> FindByInterestGroupUid(this IQueryable<Interest> query, Guid interestGroupUid)
+        {
+            query = query.Where(i => i.InterestGroup.Uid == interestGroupUid);
 
             return query;
         }
@@ -117,6 +128,24 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 InterestGroup = i.InterestGroup
                             })
                             .ToListAsync();
+        }
+
+        /// <summary>Finds all dtos by interest group uid asynchronous.</summary>
+        /// <param name="interestGroupUid">The interest group uid.</param>
+        /// <returns></returns>
+        public async Task<List<InterestDto>> FindAllDtosByInterestGroupUidAsync(Guid interestGroupUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByInterestGroupUid(interestGroupUid);
+
+            return await query
+                        .Order()
+                        .Select(i => new InterestDto
+                        {
+                            Interest = i,
+                            InterestGroup = i.InterestGroup
+                        })
+                        .ToListAsync();
         }
 
         /// <summary>Finds all grouped by interest groups asynchronous.</summary>

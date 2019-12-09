@@ -7138,7 +7138,6 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\Shared\_DashboardMenu.cshtml" />
     <Content Include="Views\Projects\SubmittedList.cshtml" />
-    <Content Include="Views\Projects\Review.cshtml" />
     <Content Include="Views\Projects\Shared\_ProjectInfoForm.cshtml" />
     <Content Include="Views\Projects\EditorTemplates\ProjectTitleBaseCommand.cshtml" />
     <Content Include="Views\Projects\EditorTemplates\ProjectLogLineBaseCommand.cshtml" />
