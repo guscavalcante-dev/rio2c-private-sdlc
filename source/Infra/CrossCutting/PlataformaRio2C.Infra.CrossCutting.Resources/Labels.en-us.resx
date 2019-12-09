@@ -1393,7 +1393,7 @@
   </data>
   <data name="Dear" xml:space="preserve">
     <value>Dear</value>
-    <comment>Caro</comment>
+    <comment>Caro(a)</comment>
   </data>
   <data name="CompanyProfiles" xml:space="preserve">
     <value>Company profiles</value>
@@ -1711,9 +1711,17 @@
     <value>Contacts</value>
     <comment>Contatos</comment>
   </data>
+  <data name="SendMessage" xml:space="preserve">
+    <value>Send Message</value>
+    <comment>Enviar Mensagem</comment>
+  </data>
   <data name="Submit" xml:space="preserve">
     <value>Submit</value>
     <comment>Inscrever</comment>
+  </data>
+  <data name="Messages" xml:space="preserve">
+    <value>Messages</value>
+    <comment>Mensagens</comment>
   </data>
   <data name="ExecutivesListDownload" xml:space="preserve">
     <value>Executives’ List - Industry Category</value>
@@ -1761,5 +1769,61 @@
   <data name="Rio2cConnections" xml:space="preserve">
     <value>Rio2C Connections</value>
     <comment>Rio2C Connections</comment>
+  </data>
+  <data name="You" xml:space="preserve">
+    <value>You</value>
+    <comment>Você</comment>
+  </data>
+  <data name="Participant" xml:space="preserve">
+    <value>Participant</value>
+    <comment>Participante</comment>
+  </data>
+  <data name="PastReadF" xml:space="preserve">
+    <value>Read</value>
+    <comment>Lida</comment>
+  </data>
+  <data name="PastReadM" xml:space="preserve">
+    <value>Read</value>
+    <comment>Lido</comment>
+  </data>
+  <data name="ViewMessages" xml:space="preserve">
+    <value>View messages</value>
+    <comment>Ver mensagens</comment>
+  </data>
+  <data name="SubscribeList" xml:space="preserve">
+    <value>Subscribe List</value>
+    <comment>Lista de Inscrição</comment>
+  </data>
+  <data name="Connected" xml:space="preserve">
+    <value>Connected</value>
+    <comment>Conectado</comment>
+  </data>
+  <data name="Connecting" xml:space="preserve">
+    <value>Connecting</value>
+    <comment>Conectando</comment>
+  </data>
+  <data name="Disconnected" xml:space="preserve">
+    <value>Disconnected</value>
+    <comment>Desconectado</comment>
+  </data>
+  <data name="EmailSettings" xml:space="preserve">
+    <value>Email Settings</value>
+    <comment>Configurações de Email</comment>
+  </data>
+  <data name="Unsubscribe" xml:space="preserve">
+    <value>Unsubscribe</value>
+    <comment>Cancelar recebimento</comment>
+  </data>
+  <data name="ConnectionSlow" xml:space="preserve">
+    <value>Connection slow</value>
+    <comment>Conexão lenta</comment>
+  </data>
+  <data name="StartNewConversation" xml:space="preserve">
+    <value>Start new conversation</value>
+    <comment>Iniciar nova conversa</comment>
+  </data>
+  <data name="ViewMessage" xml:space="preserve">
+    <value>View message</value>
+    <comment>Ver mensagem</comment>
   </data>
 </root>

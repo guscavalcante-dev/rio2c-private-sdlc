@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-06-2019
+// Last Modified On : 11-28-2019
 // ***********************************************************************
 // <copyright file="IoCBootStrapper.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,7 +30,7 @@ using System;
 using System.Linq;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms;
 using PlataformaRio2C.Infra.CrossCutting.SystemParameter.Context;
-using PlataformaRio2C.Infra.CrossCutting.SystemParameter.Repositories;
+//using PlataformaRio2C.Infra.CrossCutting.SystemParameter.Repositories;
 
 namespace PlataformaRio2C.Infra.CrossCutting.IOC
 {
@@ -64,9 +64,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
             container.Register<PlataformaRio2CContext>(Lifestyle.Scoped);
 
             // SystemParameter Assembly
-            container.Register<ISystemParameterRepository, SystemParameterRepository>(Lifestyle.Scoped);
-            container.Register<ISystemParameterCollection, SystemParameterCollection>(Lifestyle.Scoped);
-            container.Register<ISystemParameterAppService, SystemParameterAppService>(Lifestyle.Scoped);
+            //container.Register<ISystemParameterRepository, SystemParameterRepository>(Lifestyle.Scoped);
+            //container.Register<ISystemParameterCollection, SystemParameterCollection>(Lifestyle.Scoped);
+            //container.Register<ISystemParameterAppService, SystemParameterAppService>(Lifestyle.Scoped);
             container.Register<IUnitOfWorkSystemParameter, SystemParameter.UnitOfWorkWithLog<PlataformaRio2CContext>>(Lifestyle.Scoped);
 
             container.Register<IProducerAppService, ProducerAppService>(Lifestyle.Scoped);
@@ -195,7 +195,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
         /// <param name="container">The container.</param>
         public static void ResolveCollaboratorProducer(Container container)
         {
-            container.Register<IApiSymplaAppService, ApiSymplaAppService>(Lifestyle.Scoped);
+            //container.Register<IApiSymplaAppService, ApiSymplaAppService>(Lifestyle.Scoped);
 
             container.Register<ICollaboratorProducerService, CollaboratorProducerService>(Lifestyle.Scoped);
             container.Register<ICollaboratorProducerAppService, CollaboratorProducerAppService>(Lifestyle.Scoped);

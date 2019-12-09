@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-18-2019
+// Last Modified On : 12-05-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,7 +19,9 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using LinqKit;
 using PlataformaRio2C.Domain.Dtos;
+using X.PagedList;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -114,6 +116,58 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Determines whether [is audiovisual participant].</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeCollaborator> IsAudiovisualParticipant(this IQueryable<AttendeeCollaborator> query)
+        {
+            query = query.Where(ac => ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted // Industry
+                                                                              && !act.CollaboratorType.IsDeleted
+                                                                              && (act.CollaboratorType.Name == Domain.Constants.CollaboratorType.Industry
+                                                                                  || act.CollaboratorType.Name == Domain.Constants.CollaboratorType.ExecutiveAudiovisual)));
+
+            return query;
+        }
+
+        /// <summary>Finds the by keywords.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeCollaborator> FindByKeywords(this IQueryable<AttendeeCollaborator> query, string keywords)
+        {
+            if (!string.IsNullOrEmpty(keywords))
+            {
+                var outerWhere = PredicateBuilder.New<AttendeeCollaborator>(false);
+                var innerBadgeWhere = PredicateBuilder.New<AttendeeCollaborator>(true);
+                var innerJobTitleWhere = PredicateBuilder.New<AttendeeCollaborator>(true);
+                var innerOrganizationNameWhere = PredicateBuilder.New<AttendeeCollaborator>(true);
+                
+
+                foreach (var keyword in keywords.Split(' '))
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        innerBadgeWhere = innerBadgeWhere.And(ac => ac.Collaborator.Badge.Contains(keyword));
+                        innerJobTitleWhere = innerJobTitleWhere.And(ac => ac.Collaborator.JobTitles.Any(jb => !jb.IsDeleted
+                                                                                                              && jb.Value.Contains(keyword)));
+                        innerOrganizationNameWhere = innerOrganizationNameWhere.And(ac =>
+                            ac.AttendeeOrganizationCollaborators.Any(aoc =>
+                                    !aoc.IsDeleted
+                                    && !aoc.AttendeeOrganization.IsDeleted
+                                    && !aoc.AttendeeOrganization.Organization.IsDeleted
+                                    && aoc.AttendeeOrganization.Organization.TradeName.Contains(keyword)));
+                    }
+                }
+
+                outerWhere = outerWhere.Or(innerBadgeWhere);
+                outerWhere = outerWhere.Or(innerJobTitleWhere);
+                outerWhere = outerWhere.Or(innerOrganizationNameWhere);
+                query = query.Where(outerWhere);
+            }
+
+            return query;
+        }
+
         /// <summary>Determines whether [is not deleted].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
@@ -122,6 +176,33 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             query = query.Where(ac => !ac.IsDeleted);
 
             return query;
+        }
+    }
+
+    #endregion
+
+    #region AttendeeCollaboratorNetworkDto IQueryable Extensions
+
+    /// <summary>
+    /// AttendeeCollaboratorNetworkDtoIQueryableExtensions
+    /// </summary>
+    internal static class AttendeeCollaboratorNetworkDtoIQueryableExtensions
+    {
+        /// <summary>
+        /// To the list paged.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        internal static async Task<IPagedList<AttendeeCollaboratorNetworkDto>> ToListPagedAsync(this IQueryable<AttendeeCollaboratorNetworkDto> query, int page, int pageSize)
+        {
+            // Page the list
+            var pagedList = await query.ToPagedListAsync(page, pageSize);
+            if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
+                pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
+
+            return pagedList;
         }
     }
 
@@ -243,12 +324,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
         #endregion
 
-        #region Downloads
+        #region Networks
 
-        /// <summary>Finds all download dto by edition identifier asynchronous.</summary>
+        /// <summary>Finds all excel network dto by edition identifier asynchronous.</summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<List<AttendeeCollaboratorDownloadDto>> FindAllDownloadDtoByEditionIdAsync(int editionId)
+        public async Task<List<AttendeeCollaboratorNetworkDto>> FindAllExcelNetworkDtoByEditionIdAsync(int editionId)
         {
             var query = this.GetBaseQuery(true)
                                 .FindByEditionId(editionId, false)
@@ -256,7 +337,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .IsContactsDownloadExcel();
 
             return await query
-                            .Select(ac => new AttendeeCollaboratorDownloadDto
+                            .Select(ac => new AttendeeCollaboratorNetworkDto
                             {
                                 AttendeeCollaborator = ac,
                                 Collaborator = ac.Collaborator,
@@ -283,6 +364,53 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             })
                             .ToListAsync();
         }
+
+        /// <summary>Finds all network dto by edition identifier paged asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<AttendeeCollaboratorNetworkDto>> FindAllNetworkDtoByEditionIdPagedAsync(int editionId, string keywords, int page, int pageSize)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByEditionId(editionId, false)
+                                .IsOnboardingFinished()
+                                .IsAudiovisualParticipant()
+                                .FindByKeywords(keywords);
+
+            return await query
+                            .Select(ac => new AttendeeCollaboratorNetworkDto
+                            {
+                                AttendeeCollaborator = ac,
+                                Collaborator = ac.Collaborator,
+                                User = ac.Collaborator.User,
+                                JobTitlesDtos = ac.Collaborator.JobTitles.Where(d => !d.IsDeleted).Select(d => new CollaboratorJobTitleBaseDto
+                                {
+                                    Id = d.Id,
+                                    Uid = d.Uid,
+                                    Value = d.Value,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = d.Language.Id,
+                                        Uid = d.Language.Uid,
+                                        Name = d.Language.Name,
+                                        Code = d.Language.Code
+                                    }
+                                }),
+                                AttendeeOrganizationsDtos = ac.AttendeeOrganizationCollaborators
+                                    .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted && !aoc.AttendeeOrganization.Organization.IsDeleted)
+                                    .Select(aoc => new AttendeeOrganizationDto
+                                    {
+                                        AttendeeOrganization = aoc.AttendeeOrganization,
+                                        Organization = aoc.AttendeeOrganization.Organization
+                                    })
+                            })
+                            .OrderBy(acnd => acnd.Collaborator.FirstName)
+                            .ThenBy(acnd => acnd.Collaborator.LastNames)
+                            .ToListPagedAsync(page, pageSize);
+        }
+
 
         #endregion
     }

@@ -113,6 +113,8 @@
     <!--end:: Global Mandatory Vendors -->
     <!--begin:: Global Optional Vendors -->
     @Scripts.Render("~/bundles/js/layoutGlobalOptionalVendors.js")
+    @Scripts.Render("~/bundles/js/jquery.signalR.js")
+    <script src="/signalr/hubs" type="text/javascript"></script>
     <!--end:: Global Optional Vendors -->
     <!--begin::Global Theme Bundle(used by all pages) -->
     @Scripts.Render("~/bundles/js/layoutGlobalThemeBundle.js")
@@ -139,7 +141,8 @@
             deleteConfirmationMessage: '@Messages.ConfirmDelete',
             selectAtLeastOneOption: '@Messages.SelectAtLeastOneOption',
             propertyBetweenLengths: '@Messages.PropertyBetweenLengths',
-            maxlengthCounterMessage: '@Messages.MaxlengthCounterMessage'
+            maxlengthCounterMessage: '@Messages.MaxlengthCounterMessage',
+            youReceivedMessageFrom: '@Html.Raw(Messages.YouReceivedMessageFrom)'
         };
 
         // MyRio2CCommon script -----------------------------------------------

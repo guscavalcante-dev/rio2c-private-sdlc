@@ -38,6 +38,11 @@ table.image-side-text td {
         max-height: 50px;
     }
 
+.clickable {
+    cursor: pointer;
+}
+
+
 /*
     Footer
 */
@@ -91,6 +96,15 @@ section.footer .social-networks a{
 /*
     Login
 */
+.kt-login__body {
+    flex-direction: column !important;
+    height:unset !important;
+}
+
+    .kt-login__body .kt-iconbox {
+        margin-bottom: 80px;
+    }
+
 .r2c-login__logo {
     height: 80px;
     width: 80px;
@@ -148,6 +162,7 @@ a.r2c-login__footer-link, a.r2c-footer-link {
     background-color: #777;
     border-radius: 10px;
 }
+
 
 /*
     Modal
@@ -218,17 +233,43 @@ a.r2c-login__footer-link, a.r2c-footer-link {
     flex: 0 0 25% !important;
 }
 
-/*
-    Login page
-*/
-.kt-login__body {
-    flex-direction: column !important;
-    height:unset !important;
-}
 
-.kt-login__body .kt-iconbox {
-margin-bottom: 80px;
+/*
+    Pagination
+*/
+.kt-pagination .kt-pagination__links .kt-pagination__link--active span {
+    font-weight: 500;
+    color: #fff;
+    font-size: 1rem;
+    padding: 0 .2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    min-width: 30px;
+    min-height: 30px;
+    margin: 0;
 }
+.kt-pagination.kt-pagination--brand .kt-pagination__links .kt-pagination__link--first.disabled:hover,
+.kt-pagination.kt-pagination--brand .kt-pagination__links .kt-pagination__link--prev.disabled:hover,
+.kt-pagination.kt-pagination--brand .kt-pagination__links .kt-pagination__link--next.disabled:hover,
+.kt-pagination.kt-pagination--brand .kt-pagination__links .kt-pagination__link--last.disabled:hover {
+    background: rgba(54, 108, 243, 0.1);
+}
+    .kt-pagination.kt-pagination--brand .kt-pagination__links .kt-pagination__link--first a,
+    .kt-pagination.kt-pagination--brand .kt-pagination__links .kt-pagination__link--prev a,
+    .kt-pagination.kt-pagination--brand .kt-pagination__links .kt-pagination__link--next a,
+    .kt-pagination.kt-pagination--brand .kt-pagination__links .kt-pagination__link--last a {
+        color: #366cf3;
+        font-weight: 900;
+    }
+    .kt-pagination.kt-pagination--brand .kt-pagination__links .kt-pagination__link--first.disabled:hover a,
+    .kt-pagination.kt-pagination--brand .kt-pagination__links .kt-pagination__link--prev.disabled:hover a,
+    .kt-pagination.kt-pagination--brand .kt-pagination__links .kt-pagination__link--next.disabled:hover a,
+    .kt-pagination.kt-pagination--brand .kt-pagination__links .kt-pagination__link--last.disabled:hover a {
+        color: #366cf3;
+    }
+
 
 /*
     weconnected
@@ -237,4 +278,67 @@ margin-bottom: 80px;
 .r2c-we-connected-banner {
     width: 100%;
     height: auto;
+}
+
+
+/*
+    Media
+*/
+
+.kt-userpic.my-userpic--43 img {
+    width: 43px;
+    height: 43px;
+}
+
+.kt-media.kt-media--circle span {
+    border-radius: 50%;
+}
+
+.kt-media.kt-media--brand span {
+    background: rgba(93,120,255,.1);
+    color: #5d78ff;
+}
+
+.kt-media span {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    font-weight: 600;
+    color: #74788d;
+    border-radius: 4px;
+}
+
+.kt-media span {
+    width: 43px;
+    height: 43px;
+    font-size: 1.3rem;
+}
+
+.kt-media.kt-media--sm span {
+    width: 27px;
+    height: 27px;
+    font-size: 0.8rem;
+}
+
+/*
+    Messages/Chat
+*/
+
+.kt-widget--users .kt-widget__item.chat-selected {
+    background-color: #f2f3f7;
+    border-radius: 4px;
+}
+
+.kt-widget--users .kt-widget__item:hover {
+    background-color: #f2f3f7;
+}
+
+.kt-chat .kt-chat__input .kt-chat__editor textarea {
+    color: #495057 !important;
 }

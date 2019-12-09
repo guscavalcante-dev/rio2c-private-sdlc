@@ -29,7 +29,6 @@ namespace PlataformaRio2C.Application.Services
         private readonly IProjectService _projectService;
         private readonly IRoomRepository _roomRepository;
         private readonly IEmailAppService _emailAppService;
-        private readonly ISystemParameterRepository _systemParameterRepository;
 
         private readonly INegotiationRepository _negotiationRepository;
 
@@ -43,7 +42,7 @@ namespace PlataformaRio2C.Application.Services
         //private IList<ProjectPlayer> _projectSubmissionsError = new List<ProjectPlayer>();
 
         #region ctor
-        public NegotiationAppService(INegotiationService service, IUnitOfWork unitOfWork, IRepositoryFactory repositoryFactory, IProjectService projectService, IEmailAppService emailAppService, ISystemParameterRepository systemParameterRepository)
+        public NegotiationAppService(INegotiationService service, IUnitOfWork unitOfWork, IRepositoryFactory repositoryFactory, IProjectService projectService, IEmailAppService emailAppService)
            : base(unitOfWork, service)
         {
             _negotiationConfigRepository = repositoryFactory.NegotiationConfigRepository;
@@ -56,7 +55,6 @@ namespace PlataformaRio2C.Application.Services
             _negotiationRepository = repositoryFactory.NegotiationRepository;
             _emailAppService = emailAppService;
             _producerRepository = repositoryFactory.ProducerRepository;
-            _systemParameterRepository = systemParameterRepository;
         }
         #endregion
 
@@ -836,7 +834,7 @@ namespace PlataformaRio2C.Application.Services
                 var message = CompileHtmlMessageTemplateDefault();
                 message = message.Replace("@{Message}", Texts.EmailProducer);
                 message = message.Replace("@{Name}", collaborator.FirstName);
-                message = message.Replace("@{urlSistema}", _systemParameterRepository.Get<string>(SystemParameterCodes.SiteUrl));
+                //message = message.Replace("@{urlSistema}", _systemParameterRepository.Get<string>(SystemParameterCodes.SiteUrl));
 
                 _emailAppService.SeendEmailTemplateDefault(collaborator.User.Email, "Rio2C - Agenda", message);
             }
@@ -857,7 +855,7 @@ namespace PlataformaRio2C.Application.Services
                 var message = CompileHtmlMessageTemplateDefault();
                 message = message.Replace("@{Message}", Texts.EmailAgenda);
                 message = message.Replace("@{Name}", collaborator.FirstName);
-                message = message.Replace("@{urlSistema}", _systemParameterRepository.Get<string>(SystemParameterCodes.SiteUrl));
+                //message = message.Replace("@{urlSistema}", _systemParameterRepository.Get<string>(SystemParameterCodes.SiteUrl));
 
                 _emailAppService.SeendEmailTemplateDefault(collaborator.User.Email, "Rio2C - Agenda", message);
             }

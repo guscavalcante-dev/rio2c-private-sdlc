@@ -124,6 +124,8 @@
 
         // MyRio2CCommon script -----------------------------------------------
         MyRio2cCommon.init('@ViewBag.UserInterfaceLanguage', '@(ViewBag.EditionDto?.UrlCode)', '@ConfigurationManager.AppSettings["AWSBucket"]');
+
+        @Html.StatusMessageToastr()
     </script>
     <!--end: MyRio2C Scripts-->
     <!--begin::Page Scripts -->

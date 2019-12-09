@@ -334,6 +334,7 @@
     <Compile Include="Areas\WebApi\Controllers\MessageController.cs" />
     <Compile Include="Areas\WebApi\Controllers\OrganizationsApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\PlayersApiController.cs" />
+    <Compile Include="Areas\WebApi\Controllers\NetworksApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\SalesPlatformsController.cs" />
     <Compile Include="Areas\WebApi\Controllers\ScheduleController.cs" />
     <Compile Include="Areas\WebApi\Controllers\ProducerController.cs" />
@@ -367,9 +368,11 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\CompaniesController.cs" />
     <Compile Include="Controllers\DownloadsController.cs" />
+    <Compile Include="Controllers\NetworksController.cs" />
     <Compile Include="Controllers\StatesController.cs" />
     <Compile Include="Filters\AuthorizeCollaboratorTypeAttribute.cs" />
     <Compile Include="Helpers\OnboardingAllowedRoutesHelper.cs" />
+    <Compile Include="Hub\SimpleInjectorHubActivator.cs" />
     <Compile Include="Services\TalentPlatformService.cs" />
     <Compile Include="Services\SiteMailerService.cs" />
     <Compile Include="Controllers\OnboardingController.cs" />
@@ -420,7 +423,12 @@
     <Content Include="Assets\components\jquery.autocomplete\dist\jquery.autocomplete.min.js" />
     <Content Include="Assets\components\jquery.autocomplete\dist\license.txt" />
     <Content Include="Assets\components\jquery.autocomplete\license.txt" />
+    <Content Include="Assets\components\jquery.timeago\jquery.timeago.js" />
     <Content Include="Assets\components\jquery.form\jquery.form.js" />
+    <Content Include="Assets\components\jquery.timeago\locales\jquery.timeago.en-us-short.js" />
+    <Content Include="Assets\components\jquery.timeago\locales\jquery.timeago.en-us.js" />
+    <Content Include="Assets\components\jquery.timeago\locales\jquery.timeago.pt-br-short.js" />
+    <Content Include="Assets\components\jquery.timeago\locales\jquery.timeago.pt-br.js" />
     <Content Include="Assets\css\myrio2c.common.responsive.css" />
     <Content Include="Assets\css\myrio2c.common.css" />
     <Content Include="Assets\css\pages\onboarding\wizard-2.css" />
@@ -435,6 +443,7 @@
     <Content Include="Assets\img\logo_rio2c_white.png" />
     <Content Include="Assets\img\rio2cmarket-en-us.png" />
     <Content Include="Assets\img\rio2cmarket-pt-br.png" />
+    <Content Include="Assets\js\accounts\accounts.emailsettings.js" />
     <Content Include="Assets\js\accounts\accounts.password.js" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
     <Content Include="Assets\js\attendeeorganizations\attendeeorganizations.form.js" />
@@ -453,6 +462,12 @@
     <Content Include="Assets\js\myrio2c.publicemail.js" />
     <Content Include="Assets\js\myrio2c.showhidepassword.js" />
     <Content Include="Assets\js\myrio2c.cropper.js" />
+    <Content Include="Assets\js\networks\chat.js" />
+    <Content Include="Assets\js\networks\networks.contacts.list.widget.js" />
+    <Content Include="Assets\js\networks\networks.notification.common.js" />
+    <Content Include="Assets\js\networks\networks.messages.conversation.widget.js" />
+    <Content Include="Assets\js\networks\networks.messages.conversations.widget.js" />
+    <Content Include="Assets\js\networks\networks.contacts.js" />
     <Content Include="Assets\js\myrio2c.additionalinfo.js" />
     <Content Include="Assets\js\onboarding\onboarding.interests.js" />
     <Content Include="Assets\js\onboarding\onboarding.companyinfo.js" />
@@ -7131,6 +7146,14 @@
     <Content Include="Views\Projects\EditorTemplates\ProjectAdditionalInformationBaseCommand.cshtml" />
     <Content Include="Views\Projects\SubmittedDetails.cshtml" />
     <Content Include="Views\Projects\SendToPlayers.cshtml" />
+    <Content Include="Views\Networks\Index.cshtml" />
+    <Content Include="Views\Networks\Messages.cshtml" />
+    <Content Include="Views\Networks\Widgets\ConversationsWidget.cshtml" />
+    <Content Include="Views\Networks\Widgets\ConversationWidget.cshtml" />
+    <Content Include="Views\Account\Modals\UpdateEmailSettingsModal.cshtml" />
+    <Content Include="Views\Account\Modals\UpdateEmailSettingsForm.cshtml" />
+    <Content Include="Views\Networks\Widgets\ContactsWidget.cshtml" />
+    <Content Include="Views\Networks\Modals\ShowContactsListModal.cshtml" />
     <None Include="Views\Projects\Index.cshtml.old" />
     <Content Include="Views\Projects\Modals\UpdateMainInformationModal.cshtml" />
     <Content Include="Views\Projects\Modals\UpdateMainInformationForm.cshtml" />
@@ -7238,6 +7261,7 @@
     <Content Include="Views\Shared\EditorTemplates\InterestBaseCommand.cshtml" />
     <Content Include="Views\Projects\SubmittedListBuyerEvaluation.cshtml" />
     <Content Include="Views\Projects\Modals\UpdateSubmittedListModal.cshtml" />
+    <Content Include="Views\SiteMailerService\UnreadConversationEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -7284,6 +7308,10 @@
       <Project>{5c6e9cb9-b206-4ecf-ae1a-7e07995d39f7}</Project>
       <Name>PlataformaRio2C.Application</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Application\PlataformaRio2C.HubApplication\PlataformaRio2C.HubApplication.csproj">
+      <Project>{86679b6e-04fe-44af-9d95-f5a579a63180}</Project>
+      <Name>PlataformaRio2C.HubApplication</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Domain\PlataformaRio2C.Domain\PlataformaRio2C.Domain.csproj">
       <Project>{9CFDDB5C-4DA2-437B-AEDD-CABE12EF09BC}</Project>
       <Name>PlataformaRio2C.Domain</Name>
@@ -7308,13 +7336,25 @@
       <Project>{73e650a2-a5c8-4035-b206-586c4e4b0846}</Project>
       <Name>PlataformaRio2C.Infra.CrossCutting.SalesPlatforms</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.SystemParameter\PlataformaRio2C.Infra.CrossCutting.SystemParameter.csproj">
+      <Project>{0C86C61E-C23C-4469-90A1-6ED8E75814DB}</Project>
+      <Name>PlataformaRio2C.Infra.CrossCutting.SystemParameter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.Tools\PlataformaRio2C.Infra.CrossCutting.Tools.csproj">
       <Project>{EC0B684E-F8A3-417A-9567-819FFC7C41CC}</Project>
       <Name>PlataformaRio2C.Infra.CrossCutting.Tools</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Infra\Data\PlataformaRio2C.Infra.Data.Context\PlataformaRio2C.Infra.Data.Context.csproj">
+      <Project>{30c4d007-1a78-410c-9fcd-63699985c39b}</Project>
+      <Name>PlataformaRio2C.Infra.Data.Context</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Infra\Data\PlataformaRio2c.Infra.Data.FileRepository\PlataformaRio2c.Infra.Data.FileRepository.csproj">
       <Project>{6f4648ee-2d98-4e95-bc92-0760af1fd909}</Project>
       <Name>PlataformaRio2c.Infra.Data.FileRepository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Infra\Data\PlataformaRio2C.Infra.Data.Repository\PlataformaRio2C.Infra.Data.Repository.csproj">
+      <Project>{CF083D1D-24AD-412F-B28C-648A27D78D7D}</Project>
+      <Name>PlataformaRio2C.Infra.Data.Repository</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

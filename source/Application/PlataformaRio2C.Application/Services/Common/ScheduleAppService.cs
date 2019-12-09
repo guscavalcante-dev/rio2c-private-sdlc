@@ -12,7 +12,6 @@ namespace PlataformaRio2C.Application.Services
 {
     public class ScheduleAppService : AppService<Infra.Data.Context.PlataformaRio2CContext, Negotiation, NegotiationAppViewModel, NegotiationAppViewModel, NegotiationAppViewModel, NegotiationAppViewModel>, IScheduleAppService
     {
-        private readonly ISystemParameterRepository _systemParameterRepository;
         private readonly INegotiationRepository _negotiationRepository;
         private readonly IConferenceRepository _conferenceRepository;
         private readonly ICollaboratorRepository _collaboratorRepository;
@@ -20,10 +19,9 @@ namespace PlataformaRio2C.Application.Services
 
         #region ctor
 
-        public ScheduleAppService(INegotiationService service, IUnitOfWork unitOfWork, IRepositoryFactory repositoryFactory, ISystemParameterRepository systemParameterRepository)
+        public ScheduleAppService(INegotiationService service, IUnitOfWork unitOfWork, IRepositoryFactory repositoryFactory)
           : base(unitOfWork, service)
         {
-            _systemParameterRepository = systemParameterRepository;
             _negotiationRepository = repositoryFactory.NegotiationRepository;
             _conferenceRepository = repositoryFactory.ConferenceRepository;
             _collaboratorRepository = repositoryFactory.CollaboratorRepository;
@@ -35,7 +33,8 @@ namespace PlataformaRio2C.Application.Services
         #region Public methods
         public bool ScheduleIsEnable()
         {
-            return _systemParameterRepository.Get<bool>(SystemParameterCodes.ScheduleShowViewInSystem);
+            return true;
+            //return _systemParameterRepository.Get<bool>(SystemParameterCodes.ScheduleShowViewInSystem);
         }
 
         public IEnumerable<ScheduleDayAppViewModel> GetSchedulePlayer(int userId)

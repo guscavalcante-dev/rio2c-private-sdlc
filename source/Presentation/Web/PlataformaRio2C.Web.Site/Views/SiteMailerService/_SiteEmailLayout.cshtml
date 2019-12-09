@@ -150,7 +150,17 @@
                         </tr>
                         <tr>
                             <td>
-                                <center><span class="emailinfo">@string.Format(Messages.EmailSentTo, Model.RecipientEmail)</span></center>
+                                <center>
+                                    <span class="emailinfo" style="margin-right: 5px;">
+                                        @string.Format(Messages.EmailSentTo, Model.RecipientEmail)
+                                    </span>
+                                    |
+                                    <span class="emailinfo" style="margin-left: 5px;">
+                                        <a href="@Url.Abs(Url.Action("Index", "Home", new {Area = "", showEmailSettings = true}))">
+                                            @Labels.Unsubscribe
+                                        </a>
+                                    </span>
+                                </center>
                                 @*
                                     //TODO: Pixel to confirm read
                                     @ViewBag.SentEmailUid

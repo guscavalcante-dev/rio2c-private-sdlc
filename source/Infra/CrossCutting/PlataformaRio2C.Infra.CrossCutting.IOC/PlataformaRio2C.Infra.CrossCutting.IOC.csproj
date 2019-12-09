@@ -115,8 +115,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HubBootStrapper.cs" />
     <Compile Include="SiteIoCBootStrapper.cs" />
-    <Compile Include="BootStrapperHub.cs" />
     <Compile Include="AdminIoCBootStrapper.cs" />
     <Compile Include="IoCBootStrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -130,9 +130,17 @@
       <Project>{5C6E9CB9-B206-4ECF-AE1A-7E07995D39F7}</Project>
       <Name>PlataformaRio2C.Application</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Application\PlataformaRio2C.HubApplication\PlataformaRio2C.HubApplication.csproj">
+      <Project>{86679b6e-04fe-44af-9d95-f5a579a63180}</Project>
+      <Name>PlataformaRio2C.HubApplication</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Domain\PlataformaRio2C.Domain\PlataformaRio2C.Domain.csproj">
       <Project>{9CFDDB5C-4DA2-437B-AEDD-CABE12EF09BC}</Project>
       <Name>PlataformaRio2C.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PlataformaRio2C.Infra.CrossCutting.CQRS\PlataformaRio2C.Infra.CrossCutting.CQRS.csproj">
+      <Project>{E414D342-6A28-4844-9F2F-A6022D5AE929}</Project>
+      <Name>PlataformaRio2C.Infra.CrossCutting.CQRS</Name>
     </ProjectReference>
     <ProjectReference Include="..\PlataformaRio2C.Infra.CrossCutting.Identity\PlataformaRio2C.Infra.CrossCutting.Identity.csproj">
       <Project>{D8359323-3DBC-477E-B673-E77BA1128426}</Project>

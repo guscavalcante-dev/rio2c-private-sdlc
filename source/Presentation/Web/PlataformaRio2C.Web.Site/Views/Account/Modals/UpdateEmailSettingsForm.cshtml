@@ -1,0 +1,21 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateUserEmailSettings
+@if (Model.SubscribeLists?.Any() == true)
+{
+    foreach (var subscribeList in Model.SubscribeLists)
+    {
+        <div class="form-group">
+            <div class="kt-checkbox-list">
+                <label class="kt-checkbox">
+                    <input type="checkbox"
+                           name="SelectedSubscribeListUids"
+                           value="@subscribeList.Uid"
+                           @if (Model.SelectedSubscribeListUids?.Contains(subscribeList.Uid) == true) { <text> checked </text> } />
+                    @subscribeList.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')<br />
+                    <span></span>
+                </label>
+            </div>
+            <span class="form-text text-muted">@subscribeList.Description.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
+        </div>
+    }
+}
+@Html.ValidationSummary(true, null, new { @class = "text-danger list-unstyled" })

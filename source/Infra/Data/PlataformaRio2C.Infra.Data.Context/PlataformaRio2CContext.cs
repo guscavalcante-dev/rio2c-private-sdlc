@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-17-2019
+// Last Modified On : 12-05-2019
 // ***********************************************************************
 // <copyright file="PlataformaRio2CContext.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,6 +15,7 @@ using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.Data.Context.Config;
 using PlataformaRio2C.Infra.Data.Context.Mapping;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 
 namespace PlataformaRio2C.Infra.Data.Context
 {
@@ -31,12 +32,17 @@ namespace PlataformaRio2C.Infra.Data.Context
         public PlataformaRio2CContext()
             : base("PlataformaRio2CConnection")
         {
+            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = 180;
         }
 
         /// <summary>Called when [model creating].</summary>
         /// <param name="modelBuilder">The model builder.</param>
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            // User
+            modelBuilder.Configurations.Add(new UserMap());
+            modelBuilder.Configurations.Add(new RoleMap());
+
             // Edition
             modelBuilder.Configurations.Add(new EditionMap());
 
@@ -95,21 +101,26 @@ namespace PlataformaRio2C.Infra.Data.Context
             // Sent emails
             modelBuilder.Configurations.Add(new SentEmailMap());
 
+            // Subscribe lists
+            modelBuilder.Configurations.Add(new SubscribeListMap());
+            modelBuilder.Configurations.Add(new UserUnsubscribedListMap());
+
+            // Networks
+            modelBuilder.Configurations.Add(new MessageMap());
+
             // Common
             modelBuilder.Configurations.Add(new ActivityMap());
             modelBuilder.Configurations.Add(new TargetAudienceMap());
             modelBuilder.Configurations.Add(new InterestGroupMap());
             modelBuilder.Configurations.Add(new InterestMap());
-
+            modelBuilder.Configurations.Add(new LanguageMap());
 
             // TODO: Old mapping that must be reviewed
-            modelBuilder.Configurations.Add(new LanguageMap());
+
             modelBuilder.Configurations.Add(new ImageFileMap());            
             //modelBuilder.Configurations.Add(new PlayerMap());
             modelBuilder.Configurations.Add(new PlayerDescriptionMap());
-            modelBuilder.Configurations.Add(new UserMap());
             modelBuilder.Configurations.Add(new UserUseTermMap());
-            modelBuilder.Configurations.Add(new RoleMap());            
             modelBuilder.Configurations.Add(new PlayerInterestMap());            
             //modelBuilder.Configurations.Add(new PlayerTargetAudienceMap());
             modelBuilder.Configurations.Add(new PlayerRestrictionsSpecificsMap());
@@ -122,8 +133,6 @@ namespace PlataformaRio2C.Infra.Data.Context
             //modelBuilder.Configurations.Add(new ProjectPlayerEvaluationMap());
             modelBuilder.Configurations.Add(new LogisticsMap());
            
-            modelBuilder.Configurations.Add(new MessageMap());
-
             modelBuilder.Configurations.Add(new MailMap());
 
             modelBuilder.Configurations.Add(new ConferenceMap());

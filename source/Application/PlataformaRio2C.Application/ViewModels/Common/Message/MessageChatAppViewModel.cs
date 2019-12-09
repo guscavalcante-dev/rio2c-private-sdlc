@@ -29,9 +29,6 @@ namespace PlataformaRio2C.Application.ViewModels
         public string RecipientEmail { get; set; }
         public string RecipientName { get; set; }
 
-
-
-
         public MessageChatAppViewModel()
             :base()
         {
@@ -42,7 +39,7 @@ namespace PlataformaRio2C.Application.ViewModels
             :base(entity)
         {
             Text = entity.Text;
-            IsRead = entity.IsRead;
+            IsRead = entity.ReadDate.HasValue;
 
 
             if (entity.CreateDate != null)

@@ -169,6 +169,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clique aqui para alterar suas configurações de email.
+        /// </summary>
+        public static string ClickHereToChangeEmailSettings {
+            get {
+                return ResourceManager.GetString("ClickHereToChangeEmailSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clique aqui para alterar sua senha.
         /// </summary>
         public static string ClickHereToChangePassword {
@@ -462,6 +471,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string EntityActionSuccessfull {
             get {
                 return ResourceManager.GetString("EntityActionSuccessfull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} não pode ser {1}..
+        /// </summary>
+        public static string EntityCouldNotBeAction {
+            get {
+                return ResourceManager.GetString("EntityCouldNotBeAction", resourceCulture);
             }
         }
         
@@ -911,6 +929,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string NoBadgesAvaiable {
             get {
                 return ResourceManager.GetString("NoBadgesAvaiable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nenhuma conversa encontrada..
+        /// </summary>
+        public static string NoConversationsFound {
+            get {
+                return ResourceManager.GetString("NoConversationsFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nenhum {0} {1}..
+        /// </summary>
+        public static string NoneEntityAction {
+            get {
+                return ResourceManager.GetString("NoneEntityAction", resourceCulture);
             }
         }
         
@@ -1644,6 +1680,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} enviou uma mensagem.
+        /// </summary>
+        public static string UserSentYouMessage {
+            get {
+                return ResourceManager.GetString("UserSentYouMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CNPJ inválido.
         /// </summary>
         public static string VatNumberIsInvalid {
@@ -1752,11 +1797,38 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Você tem &lt;b&gt;{0} nova mensagem&lt;/b&gt;..
+        /// </summary>
+        public static string YouHaveNewMessage {
+            get {
+                return ResourceManager.GetString("YouHaveNewMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Você tem &lt;b&gt;{0} novas mensagens&lt;/b&gt;..
+        /// </summary>
+        public static string YouHaveNewMessages {
+            get {
+                return ResourceManager.GetString("YouHaveNewMessages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Você atingiu o limite de projetos..
         /// </summary>
         public static string YouReachedProjectsLimit {
             get {
                 return ResourceManager.GetString("YouReachedProjectsLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Você recebeu uma mensagem de &lt;b&gt;{0}&lt;/b&gt;.&lt;br /&gt;&lt;br /&gt;Clique aqui para ser direcionado para a sua caixa de mensagens..
+        /// </summary>
+        public static string YouReceivedMessageFrom {
+            get {
+                return ResourceManager.GetString("YouReceivedMessageFrom", resourceCulture);
             }
         }
         

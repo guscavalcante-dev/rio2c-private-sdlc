@@ -19,7 +19,7 @@ namespace PlataformaRio2C.Application.Services
         private readonly IMusicalCommissionRepository _musicalCommissionRepository;
         private readonly IUserRoleRepository _roleRepository;
 
-        public MusicalCommissionAppService(ICollaboratorAppService CollaboratorService, IMusicalCommissionService service, IUnitOfWork unitOfWork, IRepositoryFactory repositoryFactory, ISystemParameterRepository systemParameterRepository, IdentityAutenticationService identityController)
+        public MusicalCommissionAppService(ICollaboratorAppService CollaboratorService, IMusicalCommissionService service, IUnitOfWork unitOfWork, IRepositoryFactory repositoryFactory, IdentityAutenticationService identityController)
             : base(unitOfWork, service)
         {
             _service = service;

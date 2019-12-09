@@ -3,65 +3,52 @@
 // Author           : William Almado
 // Created          : 10-09-2019
 //
-// Last Modified By : William Almado
-// Last Modified On : 10-09-2019
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 12-05-2019
 // ***********************************************************************
 // <copyright file="UpdateUserInterfaceLanguageCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
 using MediatR;
-using PlataformaRio2C.Application.CQRS.Commands.User;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using PlataformaRio2C.Application.CQRS.Commands;
 
-namespace PlataformaRio2C.Application.CQRS.CommandsHandlers.User
+namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    public class UpdateUserInterfaceLanguageCommandHandler : BaseCommandHandler, IRequestHandler<UpdateUserInterfaceLanguage, AppValidationResult>
+    public class UpdateUserInterfaceLanguageCommandHandler : BaseUserCommandHandler, IRequestHandler<UpdateUserInterfaceLanguage, AppValidationResult>
     {
-        private readonly IUserRepository userRepo;
-        private readonly IEditionRepository editionRepo;
         private readonly ICollaboratorTypeRepository collaboratorTypeRepo;
-        private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly ILanguageRepository languageRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="UpdateUserInterfaceLanguageCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
-        /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="userRepository">The user repository.</param>
-        /// <param name="editionRepository">The edition repository.</param>
-        /// <param name="collaboratorTypeRepository">The collaborator type repository.</param>
-        /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="languageRepository">The language repository.</param>
         public UpdateUserInterfaceLanguageCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IUserRepository userRepository,
-            IEditionRepository editionRepository,
-            IAttendeeOrganizationRepository attendeeOrganizationRepository,
             ILanguageRepository languageRepository)
-            : base(eventBus, uow)
+            : base(eventBus, uow, userRepository)
         {
-            this.userRepo = userRepository;
-            this.editionRepo = editionRepository;
-            this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.languageRepo = languageRepository;
         }
 
+        /// <summary>Handles the specified update user interface language.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
         public async Task<AppValidationResult> Handle(UpdateUserInterfaceLanguage cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
             
-            var user = await this.userRepo.GetAsync(u => u.Uid == cmd.Userid);
+            var user = await this.GetUserByUid(cmd.Useruid);
             user.UpdateInterfaceLanguage(
                 await this.languageRepo.GetAsync(l => l.Code == cmd.LanguageCode));
 
@@ -71,7 +58,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers.User
                 return this.AppValidationResult;
             }
 
-            this.userRepo.Update(user);
+            this.UserRepo.Update(user);
             this.Uow.SaveChanges();
             this.AppValidationResult.Data = user;
 

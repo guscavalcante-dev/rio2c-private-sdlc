@@ -22,6 +22,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using PlataformaRio2C.Web.Site.Hub;
 
 [assembly: OwinStartupAttribute(typeof(PlataformaRio2C.Web.Site.Startup))]
 namespace PlataformaRio2C.Web.Site

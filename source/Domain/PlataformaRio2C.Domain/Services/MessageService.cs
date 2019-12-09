@@ -27,7 +27,7 @@ namespace PlataformaRio2C.Domain.Services
 
         public IEnumerable<Message> GetAllUnread(int userId)
         {
-            return _repository.GetAll(e => e.RecipientId == userId && !e.IsRead);
+            return _repository.GetAll(e => e.RecipientId == userId && !e.ReadDate.HasValue);
         }
 
         public IEnumerable<Message> GetAll(int userId, string email)

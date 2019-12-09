@@ -771,8 +771,40 @@
     <value>Projeto salvo mas ainda NÃO enviado para Players. Para enviar o projeto para avaliação selecione os Players e clique em Salvar e Enviar.</value>
     <comment>Projeto salvo mas ainda NÃO enviado para Players. Para enviar o projeto para avaliação selecione os Players e clique em Salvar e Enviar.</comment>
   </data>
+  <data name="NoConversationsFound" xml:space="preserve">
+    <value>Nenhuma conversa encontrada.</value>
+    <comment>Nenhuma conversa encontrada.</comment>
+  </data>
   <data name="ToAccessMyRio2CPlatform" xml:space="preserve">
     <value>Para acessar a plataforma MyRio2C é necessário estar credenciado.</value>
     <comment>Para acessar a plataforma MyRio2C é necessário estar credenciado.</comment>
+  </data>
+  <data name="NoneEntityAction" xml:space="preserve">
+    <value>Nenhum {0} {1}.</value>
+    <comment>Nenhum {0} {1}.</comment>
+  </data>
+  <data name="YouReceivedMessageFrom" xml:space="preserve">
+    <value>Você recebeu uma mensagem de &lt;b&gt;{0}&lt;/b&gt;.&lt;br /&gt;&lt;br /&gt;Clique aqui para ser direcionado para a sua caixa de mensagens.</value>
+    <comment>Você recebeu uma mensagem de &lt;b&gt;{0}&lt;/b&gt;.&lt;br /&gt;&lt;br /&gt;Clique aqui para ser direcionado para a sua caixa de mensagens.</comment>
+  </data>
+  <data name="EntityCouldNotBeAction" xml:space="preserve">
+    <value>{0} não pode ser {1}.</value>
+    <comment>{0} não pode ser {1}.</comment>
+  </data>
+  <data name="UserSentYouMessage" xml:space="preserve">
+    <value>{0} enviou uma mensagem</value>
+    <comment>{0} enviou uma mensagem</comment>
+  </data>
+  <data name="YouHaveNewMessage" xml:space="preserve">
+    <value>Você tem &lt;b&gt;{0} nova mensagem&lt;/b&gt;.</value>
+    <comment>Você tem &lt;b&gt;{0} nova mensagem&lt;/b&gt;.</comment>
+  </data>
+  <data name="YouHaveNewMessages" xml:space="preserve">
+    <value>Você tem &lt;b&gt;{0} novas mensagens&lt;/b&gt;.</value>
+    <comment>Você tem &lt;b&gt;{0} novas mensagens&lt;/b&gt;.</comment>
+  </data>
+  <data name="ClickHereToChangeEmailSettings" xml:space="preserve">
+    <value>Clique aqui para alterar suas configurações de email</value>
+    <comment>Clique aqui para alterar suas configurações de email</comment>
   </data>
 </root>

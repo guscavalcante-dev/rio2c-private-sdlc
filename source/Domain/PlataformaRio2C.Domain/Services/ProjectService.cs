@@ -225,11 +225,11 @@ namespace PlataformaRio2C.Domain.Services
         public ValidationResult AcceptByPlayer(Project entity, Guid uidPlayer, int userId)
         {
             var r = _repository as IProjectRepository;
-            var dateMaximumDateForEvaluation = Convert.ToDateTime(r.GetMaximumDateForEvaluation());
-            if (dateMaximumDateForEvaluation < DateTime.Now)
-            {
-                _validationResult.Add(Messages.EvaluationPeriodClosed);
-            }
+            //var dateMaximumDateForEvaluation = Convert.ToDateTime(r.GetMaximumDateForEvaluation());
+            //if (dateMaximumDateForEvaluation < DateTime.Now)
+            //{
+            //    _validationResult.Add(Messages.EvaluationPeriodClosed);
+            //}
             //else
             //{
             //    var status = _projectStatusRepository.Get(e => e.Code == "Accepted");
@@ -268,11 +268,11 @@ namespace PlataformaRio2C.Domain.Services
         public ValidationResult RejectByPlayer(Project entity, Guid uidPlayer, int userId, string reason)
         {
             var r = _repository as IProjectRepository;
-            var dateMaximumDateForEvaluation = Convert.ToDateTime(r.GetMaximumDateForEvaluation());
-            if (dateMaximumDateForEvaluation < DateTime.Now)
-            {
-                _validationResult.Add(Messages.EvaluationPeriodClosed);
-            }
+            //var dateMaximumDateForEvaluation = Convert.ToDateTime(r.GetMaximumDateForEvaluation());
+            //if (dateMaximumDateForEvaluation < DateTime.Now)
+            //{
+            //    _validationResult.Add(Messages.EvaluationPeriodClosed);
+            //}
             //else
             //{
             //    var status = _projectStatusRepository.Get(e => e.Code == "Rejected");
@@ -364,7 +364,7 @@ namespace PlataformaRio2C.Domain.Services
         private bool MaxCountProjectInValid(Project entity, string operation)
         {
             var r = _repository as IProjectRepository;
-            var numberMaxProject = r.GetMaxNumberProjectPerProducer();
+            //var numberMaxProject = r.GetMaxNumberProjectPerProducer();
             //if (entity.Producer != null && entity.Producer.Projects != null)
             //{
             //    int countProjects = entity.Producer.Projects.Count;
@@ -401,7 +401,7 @@ namespace PlataformaRio2C.Domain.Services
         private void CheckMaxPlayerBySelection(Project entity)
         {
             var r = _repository as IProjectRepository;
-            var numberMaxPlayerPerProject = r.GetMaxNumberPlayerPerProject();
+            //var numberMaxPlayerPerProject = r.GetMaxNumberPlayerPerProject();
 
             //if (entity.PlayersRelated.Count == numberMaxPlayerPerProject)
             //{

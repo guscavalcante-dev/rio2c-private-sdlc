@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-18-2019
+// Last Modified On : 11-28-2019
 // ***********************************************************************
 // <copyright file="AccountController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,7 +16,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
-using PlataformaRio2C.Application.Interfaces.Services;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Models;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Identity.ViewModels;
@@ -45,17 +44,14 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     {
         private readonly IdentityAutenticationService _identityController;
         private IAuthenticationManager authenticationManager => HttpContext.GetOwinContext().Authentication;
-        private readonly IApiSymplaAppService _apiSymplaAppService;
 
         /// <summary>Initializes a new instance of the <see cref="AccountController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        /// <param name="apiSymplaAppService">The API sympla application service.</param>
-        public AccountController(IMediator commandBus, IdentityAutenticationService identityController, IApiSymplaAppService apiSymplaAppService)
+        public AccountController(IMediator commandBus, IdentityAutenticationService identityController)
             : base(commandBus, identityController)
         {
             _identityController = identityController;
-            _apiSymplaAppService = apiSymplaAppService;
         }
 
         /// <summary>Indexes this instance.</summary>

@@ -18,7 +18,7 @@ namespace PlataformaRio2C.Application.Services
         private readonly ICollaboratorRepository _collaboratorRepository;
         private readonly ISpeakerRepository _speakerRepository;
 
-        public SpeakerAppService(ICollaboratorAppService CollaboratorService, ISpeakerService service, IUnitOfWork unitOfWork, IRepositoryFactory repositoryFactory, ISystemParameterRepository systemParameterRepository, IdentityAutenticationService identityController)
+        public SpeakerAppService(ICollaboratorAppService CollaboratorService, ISpeakerService service, IUnitOfWork unitOfWork, IRepositoryFactory repositoryFactory, IdentityAutenticationService identityController)
             : base(unitOfWork, service)
         {
             _service = service;

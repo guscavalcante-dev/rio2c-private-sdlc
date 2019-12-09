@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified On : 12-03-2019
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -108,6 +108,12 @@ var MyRio2cCommon = function () {
             });
 
             el.addClass('rio2c-scroll-enabled');
+        });
+    };
+
+    var enablePaginationBlockUi = function () {
+        $(document).on('click', '.kt-pagination .kt-pagination__links a', function() {
+            MyRio2cCommon.block();
         });
     };
 
@@ -1020,6 +1026,10 @@ var MyRio2cCommon = function () {
                 toastr.options.onHidden = options.callbackOnHidden;
             }
 
+            if (hasProperty(options, 'callbackOnClick') && !isNullOrEmpty(options.callbackOnClick)) {
+                toastr.options.onclick = options.callbackOnClick;
+            }
+
             if (hasProperty(options, 'isFixed') && options.isFixed === true) {
                 toastr.options.timeOut = 'none';
             }
@@ -1052,6 +1062,9 @@ var MyRio2cCommon = function () {
         },
         initScroll: function () {
             initScroll();
+        },
+        enablePaginationBlockUi: function () {
+            enablePaginationBlockUi();
         },
         enableAtLeastOnCheckboxByNameValidation: function (formIdOrClass) {
             enableAtLeastOnCheckboxByNameValidation(formIdOrClass);

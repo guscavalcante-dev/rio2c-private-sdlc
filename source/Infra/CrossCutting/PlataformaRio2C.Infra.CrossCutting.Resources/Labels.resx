@@ -1400,8 +1400,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Talentos</comment>
   </data>
   <data name="Dear" xml:space="preserve">
-    <value>Caro</value>
-    <comment>Caro</comment>
+    <value>Caro(a)</value>
+    <comment>Caro(a)</comment>
   </data>
   <data name="CompanyProfiles" xml:space="preserve">
     <value>Resumos sobre a empresa</value>
@@ -1723,9 +1723,17 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Contatos</value>
     <comment>Contatos</comment>
   </data>
+  <data name="SendMessage" xml:space="preserve">
+    <value>Enviar Mensagem</value>
+    <comment>Enviar Mensagem</comment>
+  </data>
   <data name="Submit" xml:space="preserve">
     <value>Inscrever</value>
     <comment>Inscrever</comment>
+  </data>
+  <data name="Messages" xml:space="preserve">
+    <value>Mensagens</value>
+    <comment>Mensagens</comment>
   </data>
   <data name="ExecutivesListDownload" xml:space="preserve">
     <value>Lista de Executivos - Categoria Industry</value>
@@ -1774,5 +1782,61 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Rio2cConnections" xml:space="preserve">
     <value>Rio2C Connections</value>
     <comment>Rio2C Connections</comment>
+  </data>
+  <data name="You" xml:space="preserve">
+    <value>Você</value>
+    <comment>Você</comment>
+  </data>
+  <data name="Participant" xml:space="preserve">
+    <value>Participante</value>
+    <comment>Participante</comment>
+  </data>
+  <data name="PastReadF" xml:space="preserve">
+    <value>Lida</value>
+    <comment>Lida</comment>
+  </data>
+  <data name="PastReadM" xml:space="preserve">
+    <value>Lido</value>
+    <comment>Lido</comment>
+  </data>
+  <data name="ViewMessages" xml:space="preserve">
+    <value>Ver mensagens</value>
+    <comment>Ver mensagens</comment>
+  </data>
+  <data name="SubscribeList" xml:space="preserve">
+    <value>Lista de Inscrição</value>
+    <comment>Lista de Inscrição</comment>
+  </data>
+  <data name="Connected" xml:space="preserve">
+    <value>Conectado</value>
+    <comment>Conectado</comment>
+  </data>
+  <data name="Connecting" xml:space="preserve">
+    <value>Conectando</value>
+    <comment>Conectando</comment>
+  </data>
+  <data name="Disconnected" xml:space="preserve">
+    <value>Desconectado</value>
+    <comment>Desconectado</comment>
+  </data>
+  <data name="EmailSettings" xml:space="preserve">
+    <value>Configurações de Email</value>
+    <comment>Configurações de Email</comment>
+  </data>
+  <data name="Unsubscribe" xml:space="preserve">
+    <value>Cancelar recebimento</value>
+    <comment>Cancelar recebimento</comment>
+  </data>
+  <data name="ConnectionSlow" xml:space="preserve">
+    <value>Conexão lenta</value>
+    <comment>Conexão lenta</comment>
+  </data>
+  <data name="StartNewConversation" xml:space="preserve">
+    <value>Iniciar nova conversa</value>
+    <comment>Iniciar nova conversa</comment>
+  </data>
+  <data name="ViewMessage" xml:space="preserve">
+    <value>Ver mensagem</value>
+    <comment>Ver mensagem</comment>
   </data>
 </root>

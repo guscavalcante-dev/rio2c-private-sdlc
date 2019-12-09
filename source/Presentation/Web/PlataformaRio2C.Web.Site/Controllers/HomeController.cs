@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-22-2019
+// Last Modified On : 12-05-2019
 // ***********************************************************************
 // <copyright file="HomeController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,9 +22,9 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Web.Site.Filters;
-using PlataformaRio2C.Application.CQRS.Commands.User;
 using System.Text.RegularExpressions;
 using PlataformaRio2C.Application.Common;
+using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Web.Site.Services;
@@ -49,16 +49,19 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #region Dashboard
 
-        /// <summary>Indexes this instance.</summary>
+        /// <summary>Indexes the specified show email settings.</summary>
+        /// <param name="showEmailSettings">The show email settings.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(bool? showEmailSettings = false)
         {
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Dashboard, null);
 
             #endregion
+
+            ViewBag.ShowEmailSettings = showEmailSettings;
 
             return View("Index");
 

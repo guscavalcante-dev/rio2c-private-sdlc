@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified On : 12-05-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -127,12 +127,21 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/components/jquery.form/jquery.form.js",
                 "~/Assets/components/hideshowpassword/hideShowPassword.js",
                 "~/Assets/js/myrio2c.showhidepassword.js",
+                "~/Assets/js/accounts/accounts.emailsettings.js",
                 "~/Assets/js/accounts/accounts.password.js",
-                "~/Assets/components/bootstrap-maxlength/src/bootstrap-maxlength.js"));
+                "~/Assets/components/bootstrap-maxlength/src/bootstrap-maxlength.js",
+                "~/Assets/js/networks/networks.notification.common.js"));
 
             #endregion
 
             #region Components Bundles
+
+            #region SignalR
+
+            bundles.Add(new ScriptBundle("~/bundles/js/jquery.signalR.js").Include(
+                "~/Scripts/jquery.signalR-2.4.1.js"));
+
+            #endregion
 
             #region JQuery Validation
 
@@ -214,7 +223,14 @@ namespace PlataformaRio2C.Web.Site
 
             bundles.Add(new ScriptBundle("~/bundles/js/jquery.autocomplete.js").Include(
                 "~/Assets/components/jquery.autocomplete/dist/jquery.autocomplete.js"));
-            
+
+            #endregion
+
+            #region TimeAgo
+
+            bundles.Add(new ScriptBundle("~/bundles/js/jquery.timeago.js").Include(
+                "~/Assets/components/jquery.timeago/jquery.timeago.js"));
+
             #endregion
 
             #region Dynamic List
@@ -318,6 +334,20 @@ namespace PlataformaRio2C.Web.Site
 
             bundles.Add(new ScriptBundle("~/bundles/js/attendeeorganizations.form.js").Include(
                 "~/Assets/js/attendeeorganizations/attendeeorganizations.form.js"));
+
+            #endregion
+
+            #region Networks
+
+            bundles.Add(new ScriptBundle("~/bundles/js/networks.contacts.js").Include(
+                "~/Assets/js/networks/networks.contacts.js",
+                "~/Assets/js/networks/networks.contacts.list.widget.js",
+                "~/Scripts/jquery.unobtrusive-ajax.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/networks.messages.js").Include(
+                "~/Assets/js/networks/networks.messages.conversations.widget.js",
+                "~/Assets/js/networks/networks.messages.conversation.widget.js",
+                "~/Assets/js/networks/chat.js"));
 
             #endregion
 

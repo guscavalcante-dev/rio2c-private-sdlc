@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-17-2019
+// Last Modified On : 12-03-2019
 // ***********************************************************************
 // <copyright file="AdminMailerService.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -140,7 +140,20 @@ namespace PlataformaRio2C.Web.Admin.Services
 
         #region Site Mailers Not implemented
 
+        /// <summary>Sends the producer welcome email.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <param name="sentEmailUid">The sent email uid.</param>
+        /// <returns></returns>
         public MvcMailMessage SendProducerWelcomeEmail(SendProducerWelcomeEmailAsync cmd, Guid sentEmailUid)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>Sends the unread conversation email.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <param name="sentEmailUid">The sent email uid.</param>
+        /// <returns></returns>
+        public MvcMailMessage SendUnreadConversationEmail(SendUnreadConversationEmailAsync cmd, Guid sentEmailUid)
         {
             throw new NotImplementedException();
         }

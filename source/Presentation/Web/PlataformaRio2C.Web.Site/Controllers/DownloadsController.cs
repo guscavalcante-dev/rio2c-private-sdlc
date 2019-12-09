@@ -54,7 +54,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> Contacts()
         {
-            var attendeeCollaboratorsDtos = await this.attendeeCollaboratorRepo.FindAllDownloadDtoByEditionIdAsync(this.EditionDto?.Id ?? 0);
+            var attendeeCollaboratorsDtos = await this.attendeeCollaboratorRepo.FindAllExcelNetworkDtoByEditionIdAsync(this.EditionDto?.Id ?? 0);
 
             var workbook = new XLWorkbook();
             var worksheet = workbook.Worksheets.Add(Labels.Contacts);

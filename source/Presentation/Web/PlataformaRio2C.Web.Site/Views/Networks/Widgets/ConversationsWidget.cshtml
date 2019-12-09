@@ -1,0 +1,86 @@
+﻿@using System.Globalization
+@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Statics
+@model List<ConversationDto>
+@{
+    var otherUserUid = ViewBag.OtherUserUid as Guid?;
+}
+@if (Model?.Any() == true)
+{
+    var isChatSelected = false;
+    var chatSelectedClass = string.Empty;
+    foreach (var conversationDto in Model)
+    {
+        if (otherUserUid.HasValue && otherUserUid.Value == conversationDto.OtherUser.Uid)
+        {
+            chatSelectedClass = "chat-selected";
+        }
+        else if (!otherUserUid.HasValue && !isChatSelected)
+        {
+            chatSelectedClass = "chat-selected";
+        }
+        else
+        {
+            chatSelectedClass = string.Empty;
+        }
+        <div class="kt-widget__item clickable @(chatSelectedClass)" data-otheruser-id="@conversationDto.OtherUser.Id" data-otheruser-uid="@conversationDto.OtherUser.Uid" onclick="NetworksMessagesConversationsWidget.change($(this));">
+            @if (conversationDto.OtherAttendeeCollaboratorDto?.Collaborator?.HasImage() == true)
+            {
+                <span class="kt-userpic kt-userpic--circle">
+                    <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, conversationDto.OtherAttendeeCollaboratorDto.Collaborator.Uid, conversationDto.OtherAttendeeCollaboratorDto.Collaborator.ImageUploadDate, true)" alt="image">
+                </span>
+            }
+            else
+            {
+                <span class="kt-media kt-media--circle kt-media--brand">
+                    <span>@(conversationDto.OtherAttendeeCollaboratorDto?.Collaborator?.GetDisplayNameAbbreviation() ??
+                            conversationDto.OtherUser?.Name?.GetTwoLetterCode() ??
+                            "-")</span>
+                </span>
+            }
+            <div class="kt-widget__info">
+                <div class="kt-widget__section">
+                    <span class="kt-widget__username">
+                        @(conversationDto.OtherAttendeeCollaboratorDto?.Collaborator?.Badge ??
+                          conversationDto.OtherAttendeeCollaboratorDto?.Collaborator?.GetFullName() ??
+                          conversationDto.OtherUser?.Name ?? "-")
+                    </span>
+                    @*<span class="kt-badge kt-badge--success kt-badge--dot"></span>*@
+                </div>
+                @{
+                    var orgazanition = conversationDto.OtherAttendeeCollaboratorDto?.AttendeeOrganizationsDtos?.FirstOrDefault()?.Organization;
+                    var jobTitle = conversationDto.OtherAttendeeCollaboratorDto?.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value;
+                }
+                @if (orgazanition != null || !string.IsNullOrEmpty(jobTitle))
+                {
+                    <span class="kt-widget__desc">
+                        @if (orgazanition != null)
+                        {
+                            @orgazanition.TradeName<br />
+                        }
+                        @if (!string.IsNullOrEmpty(jobTitle))
+                        {
+                            <small>@jobTitle</small>
+                        }
+                    </span>
+                }
+            </div>
+            <div class="kt-widget__action">
+                @if (conversationDto.LastMessageDate.HasValue)
+                {
+                    <time class="timeago kt-widget__date" datetime="@conversationDto.LastMessageDate.Value.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.CurrentCulture)">@conversationDto.LastMessageDate.Value.ToShortDateString() @conversationDto.LastMessageDate.Value.ToLongTimeString()</time>
+                }
+                <span class="kt-badge kt-badge--success kt-font-bold unread-messages-count @(conversationDto.UnreadMessagesCount > 0 ? string.Empty : "d-none")">@conversationDto.UnreadMessagesCount</span>
+            </div>
+        </div>
+
+        isChatSelected = true;
+    }
+}
+else
+{
+    <div class="row">
+        <div class="col-12 text-center mt-50">@Messages.NoConversationsFound</div>
+    </div>
+}

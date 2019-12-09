@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-10-2019
+// Last Modified On : 12-05-2019
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,6 +17,7 @@ using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
@@ -72,6 +73,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
         }
 
+        /// <summary>Gets the base query.</summary>
+        /// <param name="readonly">if set to <c>true</c> [readonly].</param>
+        /// <returns></returns>
         private IQueryable<User> GetBaseQuery(bool @readonly = false)
         {
             var consult = this.dbSet
@@ -82,23 +86,32 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
-        /// <summary>Método que remove a entidade do Contexto</summary>
-        /// <param name="entity">Entidade</param>
-        public override void Delete(User entity)
+        /// <summary>Finds the by identifier asynchronous.</summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public async Task<User> FindByIdAsync(int userId)
         {
-            entity.Roles.Clear();
+            var query = this.GetBaseQuery()
+                                .FindById(userId);
 
-            if (entity.UserUseTerms != null && entity.UserUseTerms.Any())
+            return await query
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>Finds the user dto by user identifier asynchronous.</summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public async Task<UserDto> FindUserDtoByUserIdAsync(int userId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindById(userId);
+
+            return await query.Select(u => new UserDto
             {
-                var terms = entity.UserUseTerms.ToList();
-
-                foreach (var term in terms)
-                {
-                    _context.Entry(term).State = EntityState.Deleted;
-                }
-            }
-
-            base.Delete(entity);
+                User = u,
+                Collaborator = u.Collaborator
+            })
+            .FirstOrDefaultAsync();
         }
 
         /// <summary>Finds the admin access control dto by user identifier and by edition identifier.</summary>
@@ -141,6 +154,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             User = u,
                             Roles = u.Roles,
                             Language = u.UserInterfaceLanguage,
+                            HasUnreadMessages = u.RecipientMessages.Any(rm => !rm.ReadDate.HasValue),
                             Collaborator = u.Collaborator,
                             EditionAttendeeCollaborator = u.Collaborator.AttendeeCollaborators.FirstOrDefault(ac => !ac.IsDeleted && ac.EditionId == editionId),
                             EditionCollaboratorTypes = u.Collaborator.AttendeeCollaborators
@@ -179,21 +193,66 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         .FirstOrDefault();
         }
 
-        /// <summary>Finds the admin access control dto by user identifier and by edition identifier.</summary>
+        /// <summary>Finds the user language by user identifier.</summary>
         /// <param name="userId">The user identifier.</param>
-        /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
         public UserLanguageDto FindUserLanguageByUserId(int userId)
         {
             var query = this.GetBaseQuery()
-                                 .FindById(userId);
+                                .FindById(userId)
+                                .Where(u => u.UserInterfaceLanguageId != null);
 
-            return query.Where(u => u.UserInterfaceLanguageId != null)
+            return query
                         .Select(u => new UserLanguageDto
                         {
                             Language = u.UserInterfaceLanguage
                         })
                         .FirstOrDefault();
         }
+
+        /// <summary>Finds the user email settings dto by user identifier asynchronous.</summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public async Task<UserEmailSettingsDto> FindUserEmailSettingsDtoByUserIdAsync(int userId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindById(userId);
+
+            return await query
+                            .Select(u => new UserEmailSettingsDto
+                            {
+                                User = u,
+                                UserUnsubscribedListDtos = u.UserUnsubscribedLists.Where(uul => !uul.IsDeleted).Select(uul => new UserUnsubscribedListDto
+                                {
+                                    UserUnsubscribedList = uul,
+                                    User = u,
+                                    SubscribeList = uul.SubscribeList
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        #region Old Methods
+
+        /// <summary>Método que remove a entidade do Contexto</summary>
+        /// <param name="entity">Entidade</param>
+        public override void Delete(User entity)
+        {
+            entity.Roles.Clear();
+
+            if (entity.UserUseTerms != null && entity.UserUseTerms.Any())
+            {
+                var terms = entity.UserUseTerms.ToList();
+
+                foreach (var term in terms)
+                {
+                    _context.Entry(term).State = EntityState.Deleted;
+                }
+            }
+
+            base.Delete(entity);
+        }
+
+        #endregion
     }
 }

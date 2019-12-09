@@ -44,15 +44,13 @@ namespace PlataformaRio2C.Application.Services
         private readonly IProducerRepository _producerRepository;
         private readonly ILanguageRepository _languageRepository;
         private readonly IRoleRepository _roleRepository;
-        private readonly ISystemParameterRepository _systemParameterRepository;
         private readonly IdentityAutenticationService _identityController;
         private readonly IEmailAppService _emailAppService;
-        private readonly IApiSymplaAppService _apiSymplaAppService;
 
         #endregion
 
         #region ctor
-        public CollaboratorProducerAppService(ICollaboratorProducerService service, IUnitOfWork unitOfWork, ICollaboratorService collaboratorService, IRepositoryFactory repositoryFactory, IdentityAutenticationService identityController, ISystemParameterRepository systemParameterRepository, IEmailAppService emailAppService, ICollaboratorAppService collaboratorAppService, IApiSymplaAppService apiSymplaAppService)
+        public CollaboratorProducerAppService(ICollaboratorProducerService service, IUnitOfWork unitOfWork, ICollaboratorService collaboratorService, IRepositoryFactory repositoryFactory, IdentityAutenticationService identityController, IEmailAppService emailAppService, ICollaboratorAppService collaboratorAppService)
             : base(unitOfWork, service)
         {
             _collaboratorService = collaboratorService;
@@ -61,10 +59,8 @@ namespace PlataformaRio2C.Application.Services
             _roleRepository = repositoryFactory.RoleRepository;
             _collaboratorRepository = repositoryFactory.CollaboratorRepository;
             _identityController = identityController;
-            _systemParameterRepository = systemParameterRepository;
             _emailAppService = emailAppService;
             _collaboratorAppService = collaboratorAppService;
-            _apiSymplaAppService = apiSymplaAppService;
             _producerRepository = repositoryFactory.ProducerRepository;
         }
 
@@ -169,10 +165,10 @@ namespace PlataformaRio2C.Application.Services
             return ValidationResult;
         }
 
-        public Task<bool> ConfirmPayment(string email, string cnpj)
-        {
-            return _apiSymplaAppService.ConfirmPaymentByCnpj(email, cnpj);
-        }
+        //public Task<bool> ConfirmPayment(string email, string cnpj)
+        //{
+        //    return _apiSymplaAppService.ConfirmPaymentByCnpj(email, cnpj);
+        //}
 
         public ProducerAppViewModel GetProducersByUserId(int id, Guid producerUid)
         {
@@ -349,7 +345,7 @@ namespace PlataformaRio2C.Application.Services
                         {
                             message = message.Replace("@{Message}", Texts.WelcomeText);
                             message = message.Replace("@{Name}", collaborator.FirstName);
-                            message = message.Replace("@{UrlSite}", _systemParameterRepository.Get<string>(SystemParameterCodes.SiteUrl));
+                            //message = message.Replace("@{UrlSite}", _systemParameterRepository.Get<string>(SystemParameterCodes.SiteUrl));
                             message = message.Replace("@{NameEvent}", eventRio2c.Name);
                             message = message.Replace("@{Email}", collaborator.User.Email);
                             message = message.Replace("@{Password}", password);
@@ -361,7 +357,7 @@ namespace PlataformaRio2C.Application.Services
                     {
                         message = message.Replace("@{Message}", Texts.WelcomeTextProducer);
                         message = message.Replace("@{Name}", collaborator.FirstName);
-                        message = message.Replace("@{UrlSite}", _systemParameterRepository.Get<string>(SystemParameterCodes.SiteUrl));
+                        //message = message.Replace("@{UrlSite}", _systemParameterRepository.Get<string>(SystemParameterCodes.SiteUrl));
                         message = message.Replace("@{NameEvent}", eventRio2c.Name);
                         message = message.Replace("@{Email}", collaborator.User.Email);
                         _emailAppService.SeendEmailTemplateDefault(collaborator.User.Email, Texts.RegisterPlatform, message);
