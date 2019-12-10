@@ -1498,6 +1498,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> EvaluationList(string searchKeywords, Guid? interestUid, int? page = 1, int? pageSize = 10)
         {
+            if (this.EditionDto?.IsProjectEvaluationStarted() != true)
+            {
+                return RedirectToAction("Index", "Projects", new { Area = "" });
+            }
+
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
@@ -1526,6 +1531,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowEvaluationListWidget(string searchKeywords, Guid? interestUid, int? page = 1, int? pageSize = 10)
         {
+            if (this.EditionDto?.IsProjectEvaluationStarted() != true)
+            {
+                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+            }
+
             var projects = await this.projectRepo.FindAllDtosToEvaluateAsync(
                 this.UserAccessControlDto?.Collaborator?.Uid ?? Guid.Empty, 
                 searchKeywords, 
@@ -1560,6 +1570,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             try
             {
+                if (this.EditionDto?.IsProjectEvaluationOpen() != true)
+                {
+                    throw new DomainException(Texts.ForbiddenErrorMessage);
+                }
+
                 if (!ModelState.IsValid)
                 {
                     throw new DomainException(Messages.CorrectFormValues);
@@ -1636,6 +1651,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             try
             {
+                if (this.EditionDto?.IsProjectEvaluationOpen() != true)
+                {
+                    throw new DomainException(Texts.ForbiddenErrorMessage);
+                }
+
                 if (!ModelState.IsValid)
                 {
                     throw new DomainException(Messages.CorrectFormValues);

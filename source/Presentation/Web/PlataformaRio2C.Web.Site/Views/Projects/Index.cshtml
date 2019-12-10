@@ -121,7 +121,7 @@
                             <div class="row align-items-center">
                                 <div class="col-lg-12 kt-align-right pl-0 pr-0">
                                     @{var resultUrl = Url.Action("EvaluationList", "Projects", new { Area = "" }); }
-                                    @if (editionDto?.IsProjectEvaluationOpened() == true)
+                                    @if (editionDto?.IsProjectEvaluationOpen() == true)
                                     {
                                         <a href="@resultUrl" class="btn btn-brand">@Labels.EvaluateProjects</a>
                                     }

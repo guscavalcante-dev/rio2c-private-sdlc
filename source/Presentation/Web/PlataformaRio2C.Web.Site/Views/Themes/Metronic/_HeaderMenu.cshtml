@@ -34,6 +34,10 @@
         else if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual) == true)
         {
             projectsUrl = Url.Action("EvaluationList", "Projects", new { Area = "" });
+            if (editionDto?.IsProjectEvaluationStarted() != true)
+            {
+                projectsUrl = Url.Action("Index", "Projects", new { Area = "" });
+            }
         }
         <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "Projects", null)" aria-haspopup="true">
             <a class="kt-menu__link" href="@projectsUrl">

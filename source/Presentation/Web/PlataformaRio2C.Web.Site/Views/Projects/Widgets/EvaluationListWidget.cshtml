@@ -5,6 +5,9 @@
 @using X.PagedList.Mvc
 @using X.PagedList.Mvc.Common
 @model X.PagedList.IPagedList<ProjectDto>
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+}
 <!--begin::List-->
 @if (Model?.Any() == true)
 {
@@ -175,16 +178,19 @@
                             <div class="col-4 text-center">
                                 <a href="@Url.Action("EvaluationDetails", "Projects", new { id = projectDto.Project.Uid, Area = "" })" class="btn btn-brand">@Labels.View</a>
                             </div>
-                            <div class="col-4 text-center">
-                                <button type="button" class="btn btn-success" onclick="ProjectsBuyerEvaluationWidget.showApproveModal();">
-                                    <i class="fa fa-thumbs-up"></i> @Labels.AcceptProject
-                                </button>
-                            </div>
-                            <div class="col-4 text-center">
-                                <button type="button" class="btn btn-danger" onclick="ProjectsBuyerEvaluationWidget.showRefuseModal();">
-                                    <i class="fa fa-thumbs-down"></i> @Labels.RefuseProject
-                                </button>
-                            </div>
+                            @if (editionDto?.IsProjectEvaluationOpen() == true)
+                            {
+                                <div class="col-4 text-center">
+                                    <button type="button" class="btn btn-success" onclick="ProjectsBuyerEvaluationWidget.showApproveModal();">
+                                        <i class="fa fa-thumbs-up"></i> @Labels.AcceptProject
+                                    </button>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <button type="button" class="btn btn-danger" onclick="ProjectsBuyerEvaluationWidget.showRefuseModal();">
+                                        <i class="fa fa-thumbs-down"></i> @Labels.RefuseProject
+                                    </button>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>

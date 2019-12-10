@@ -4,7 +4,7 @@
 // Created          : 08-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-17-2019
+// Last Modified On : 12-09-2019
 // ***********************************************************************
 // <copyright file="EditionDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -125,10 +125,10 @@ namespace PlataformaRio2C.Domain.Dtos
 
         #region Project Evaluation
 
-        /// <summary>Determines whether [is project evaluation opened].</summary>
+        /// <summary>Determines whether [is project evaluation open].</summary>
         /// <returns>
-        ///   <c>true</c> if [is project evaluation opened]; otherwise, <c>false</c>.</returns>
-        public bool IsProjectEvaluationOpened()
+        ///   <c>true</c> if [is project evaluation open]; otherwise, <c>false</c>.</returns>
+        public bool IsProjectEvaluationOpen()
         {
             return DateTime.Now >= this.ProjectSubmitStartDate && DateTime.Now <= this.ProjectEvaluationEndDate;
         }
