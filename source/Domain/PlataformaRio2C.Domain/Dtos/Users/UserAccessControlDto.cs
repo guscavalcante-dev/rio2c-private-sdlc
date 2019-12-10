@@ -4,7 +4,7 @@
 // Created          : 09-04-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-05-2019
+// Last Modified On : 12-09-2019
 // ***********************************************************************
 // <copyright file="UserAccessControlDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -170,6 +170,16 @@ namespace PlataformaRio2C.Domain.Dtos
         public bool HasEditionAttendeeOrganization(Guid attendeeOrganizationUid)
         {
             return this.IsAdmin() || this.EditionAttendeeOrganizations?.Any(eao => eao.Uid == attendeeOrganizationUid) == true;
+        }
+
+        /// <summary>Determines whether [has any edition attendee organization] [the specified attendee organization uids].</summary>
+        /// <param name="attendeeOrganizationUids">The attendee organization uids.</param>
+        /// <returns>
+        ///   <c>true</c> if [has any edition attendee organization] [the specified attendee organization uids]; otherwise, <c>false</c>.</returns>
+        public bool HasAnyEditionAttendeeOrganization(List<Guid> attendeeOrganizationUids)
+        {
+            return this.IsAdmin() 
+                   || (attendeeOrganizationUids?.Any() == true &&  this.EditionAttendeeOrganizations?.Any(eao => attendeeOrganizationUids.Contains(eao.Uid)) == true);
         }
 
         #endregion

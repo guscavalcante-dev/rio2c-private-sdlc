@@ -179,19 +179,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return RedirectToAction("SubmittedList", "Projects", new { Area = "" });
             }
 
-            if (!projectDto.Project.IsFinished())
-            {
-                if (this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual) == true)
-                {
-                    if (this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) != true)
-                    {
-                        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                        return RedirectToAction("SubmittedList", "Projects", new { Area = "" });
-                    }
-                }
-            }
-
-            if (!this.HasEdition(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid))
+            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true) // Is seller
             {
                 this.StatusMessageToastr(Texts.ForbiddenErrorMessage, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
                 return RedirectToAction("SubmittedList", "Projects", new { Area = "" });
@@ -223,10 +211,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            if (!this.HasEdition(mainInformationWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid))
+            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(mainInformationWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true                                                                    // Seller
+                && (this.UserAccessControlDto?.HasAnyEditionAttendeeOrganization(mainInformationWidgetDto.ProjectBuyerEvaluationDtos?.Select(pbed => pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid)?.ToList()) != true   // Buyer with project finished
+                    || mainInformationWidgetDto.Project?.IsFinished() != true))
             {
-                this.StatusMessageToastr(Texts.ForbiddenErrorMessage, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("SubmittedList", "Projects", new { Area = "" });
+                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
 
             return Json(new
@@ -371,7 +360,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            if (!this.HasEdition(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid))
+            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true                                                                    // Seller
+                && (this.UserAccessControlDto?.HasAnyEditionAttendeeOrganization(interestWidgetDto.ProjectBuyerEvaluationDtos?.Select(pbed => pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid)?.ToList()) != true   // Buyer with project finished
+                    || interestWidgetDto.Project?.IsFinished() != true))
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
@@ -518,11 +509,12 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            if (!this.HasEdition(linksWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid))
+            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(linksWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true                                                                    // Seller
+                && (this.UserAccessControlDto?.HasAnyEditionAttendeeOrganization(linksWidgetDto.ProjectBuyerEvaluationDtos?.Select(pbed => pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid)?.ToList()) != true   // Buyer with project finished
+                    || linksWidgetDto.Project?.IsFinished() != true))
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
-
 
             return Json(new
             {
@@ -660,7 +652,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            if (!this.HasEdition(buyerCompanyWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid))
+            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(buyerCompanyWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true) // Seller
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
@@ -1740,25 +1732,19 @@ namespace PlataformaRio2C.Web.Site.Controllers
             if (projectDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("SubmittedList", "Projects", new { Area = "" });
+                return RedirectToAction("EvaluationList", "Projects", new { Area = "" });
             }
 
             if (!projectDto.Project.IsFinished())
             {
-                if (this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual) == true)
-                {
-                    if (this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) != true)
-                    {
-                        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                        return RedirectToAction("SubmittedList", "Projects", new { Area = "" });
-                    }
-                }
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("EvaluationList", "Projects", new { Area = "" });
             }
 
-            if (!this.HasEdition(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid))
+            if (this.UserAccessControlDto?.HasAnyEditionAttendeeOrganization(projectDto.ProjectBuyerEvaluationDtos?.Select(pbed => pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid)?.ToList()) != true) // Is buyer
             {
                 this.StatusMessageToastr(Texts.ForbiddenErrorMessage, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("SubmittedList", "Projects", new { Area = "" });
+                return RedirectToAction("EvaluationList", "Projects", new { Area = "" });
             }
 
             #region Breadcrumb
@@ -1776,28 +1762,5 @@ namespace PlataformaRio2C.Web.Site.Controllers
         #endregion
 
         #endregion
-
-        internal bool HasEdition(Guid idAtendeeOrganization)
-        {
-            if (this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual) != true)
-            {
-                if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(idAtendeeOrganization) != true)
-                {
-                    return false;
-                }
-                return true;
-            }
-            else
-            {
-                foreach (var item in this.UserAccessControlDto?.EditionAttendeeCollaborator.AttendeeOrganizationCollaborators)
-                {
-                    if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(item.AttendeeOrganization.Uid) == true)
-                    {
-                        return true;
-                    }
-                }
-                return false;
-            }
-        }
     }
 }

@@ -347,6 +347,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 {
                                     ProjectTitle = t,
                                     Language = t.Language
+                                }),
+                                ProjectBuyerEvaluationDtos = p.ProjectBuyerEvaluations.Where(be => !be.IsDeleted).Select(be => new ProjectBuyerEvaluationDto
+                                {
+                                    ProjectBuyerEvaluation = be,
+                                    BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                    {
+                                        AttendeeOrganization = be.BuyerAttendeeOrganization,
+                                        Organization = be.BuyerAttendeeOrganization.Organization,
+                                        Edition = be.BuyerAttendeeOrganization.Edition
+                                    },
+                                    ProjectEvaluationStatus = be.ProjectEvaluationStatus
                                 })
                             })
                             .FirstOrDefaultAsync();
@@ -395,6 +406,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 {
                                     ProjectAdditionalInformation = aa,
                                     Language = aa.Language
+                                }),
+                                ProjectBuyerEvaluationDtos = p.ProjectBuyerEvaluations.Where(be => !be.IsDeleted).Select(be => new ProjectBuyerEvaluationDto
+                                {
+                                    ProjectBuyerEvaluation = be,
+                                    BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                    {
+                                        AttendeeOrganization = be.BuyerAttendeeOrganization,
+                                        Organization = be.BuyerAttendeeOrganization.Organization,
+                                        Edition = be.BuyerAttendeeOrganization.Edition
+                                    },
+                                    ProjectEvaluationStatus = be.ProjectEvaluationStatus
                                 })
                             })
                             .FirstOrDefaultAsync();
@@ -428,6 +450,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 ProjectTargetAudienceDtos = p.ProjectTargetAudiences.Where(ta => !ta.IsDeleted).Select(ta => new ProjectTargetAudienceDto
                                 {
                                     TargetAudience = ta.TargetAudience
+                                }),
+                                ProjectBuyerEvaluationDtos = p.ProjectBuyerEvaluations.Where(be => !be.IsDeleted).Select(be => new ProjectBuyerEvaluationDto
+                                {
+                                    ProjectBuyerEvaluation = be,
+                                    BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                    {
+                                        AttendeeOrganization = be.BuyerAttendeeOrganization,
+                                        Organization = be.BuyerAttendeeOrganization.Organization,
+                                        Edition = be.BuyerAttendeeOrganization.Edition
+                                    },
+                                    ProjectEvaluationStatus = be.ProjectEvaluationStatus
                                 })
                             })
                             .FirstOrDefaultAsync();
@@ -459,6 +492,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 ProjectTeaserLinkDtos = p.ProjectTeaserLinks.Where(tl => !tl.IsDeleted).Select(tl => new ProjectTeaserLinkDto
                                 {
                                     ProjectTeaserLink = tl
+                                }),
+                                ProjectBuyerEvaluationDtos = p.ProjectBuyerEvaluations.Where(be => !be.IsDeleted).Select(be => new ProjectBuyerEvaluationDto
+                                {
+                                    ProjectBuyerEvaluation = be,
+                                    BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                    {
+                                        AttendeeOrganization = be.BuyerAttendeeOrganization,
+                                        Organization = be.BuyerAttendeeOrganization.Organization,
+                                        Edition = be.BuyerAttendeeOrganization.Edition
+                                    },
+                                    ProjectEvaluationStatus = be.ProjectEvaluationStatus
                                 })
                             })
                             .FirstOrDefaultAsync();
