@@ -94,7 +94,7 @@
                                                                                     </div>
                                                                                     <div class="kt-widget__content pt-0 d-flex flex-column">
                                                                                         <div class="kt-widget__section mx-auto">
-                                                                                            <a href="@Url.Action("Details", "Companies", new {id = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid})" class="kt-widget__username" target="_blank">
+                                                                                            <a href="@Url.Action("Details", "Companies", new {id = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid})" class="kt-widget__username" target="_blank" style="min-height: 70px;">
                                                                                                 <small>@projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Name</small>
                                                                                             </a>
                                                                                             @if (isProjectSubmissionEnded)
@@ -116,6 +116,14 @@
                                                                                                         <i class="fa @(icon) mr-1"></i> @(projectBuyerEvaluationDto.ProjectEvaluationStatus.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
                                                                                                     </span>
                                                                                                 </div>
+                                                                                                if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == ProjectEvaluationStatus.Refused.Code)
+                                                                                                {
+                                                                                                    <span class="d-block text-justify mt-2" style="font-size: 9px;">
+                                                                                                        @((!projectBuyerEvaluationDto.ProjectEvaluationRefuseReason.HasAdditionalInfo ? 
+                                                                                                                projectBuyerEvaluationDto.ProjectEvaluationRefuseReason?.Name : 
+                                                                                                                projectBuyerEvaluationDto.ProjectBuyerEvaluation.Reason)?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                                                                                                    </span>
+                                                                                                }
                                                                                             }
                                                                                         </div>
                                                                                     </div>
