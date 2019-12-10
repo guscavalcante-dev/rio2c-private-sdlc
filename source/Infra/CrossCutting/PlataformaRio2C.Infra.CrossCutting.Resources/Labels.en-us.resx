@@ -1601,8 +1601,8 @@
     <value>Project Information</value>
     <comment>Informações do Projeto</comment>
   </data>
-  <data name="ProjectSubscription" xml:space="preserve">
-    <value>Project Subscription</value>
+  <data name="ProjectSubmission" xml:space="preserve">
+    <value>Project Submission</value>
     <comment>Inscrição de Projeto</comment>
   </data>
   <data name="ForSeries" xml:space="preserve">
@@ -1843,5 +1843,9 @@
   <data name="SelectAnMEntity" xml:space="preserve">
     <value>Select an {0}</value>
     <comment>Selecione um {0}</comment>
+  </data>
+  <data name="ProjectsSubmission" xml:space="preserve">
+    <value>Projects submission</value>
+    <comment>Inscrição de projetos</comment>
   </data>
 </root>

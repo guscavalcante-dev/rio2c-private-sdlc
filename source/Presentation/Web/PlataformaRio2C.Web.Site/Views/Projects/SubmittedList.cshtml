@@ -2,11 +2,9 @@
 @using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2C.Domain.Entities
 @using PlataformaRio2C.Domain.Statics
-@using Constants = PlataformaRio2C.Domain.Constants;
 @model List<ProjectDto>
 @{
-    ViewBag.Title = Labels.Projects;
-    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    ViewBag.Title = Labels.ProjectsSubmission;
     var editionDto = ViewBag.EditionDto as EditionDto;
     var isProjectSubmissionEnded = editionDto?.IsProjectEvaluationEnded() == true;
     var hasProjectSpace = Model.Any(m => m.IsFakeProject);

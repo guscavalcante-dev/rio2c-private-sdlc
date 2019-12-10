@@ -1613,7 +1613,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Informações do Projeto</value>
     <comment>Informações do Projeto</comment>
   </data>
-  <data name="ProjectSubscription" xml:space="preserve">
+  <data name="ProjectSubmission" xml:space="preserve">
     <value>Inscrição de Projeto</value>
     <comment>Inscrição de Projeto</comment>
   </data>
@@ -1856,5 +1856,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="SelectAnMEntity" xml:space="preserve">
     <value>Selecione um {0}</value>
     <comment>Selecione um {0}</comment>
+  </data>
+  <data name="ProjectsSubmission" xml:space="preserve">
+    <value>Inscrição de projetos</value>
+    <comment>Inscrição de projetos</comment>
   </data>
 </root>

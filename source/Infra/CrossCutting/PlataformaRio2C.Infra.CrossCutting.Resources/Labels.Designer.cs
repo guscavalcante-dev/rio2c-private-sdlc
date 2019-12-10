@@ -2918,6 +2918,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inscrição de projetos.
+        /// </summary>
+        public static string ProjectsSubmission {
+            get {
+                return ResourceManager.GetString("ProjectsSubmission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Status do projeto.
         /// </summary>
         public static string ProjectStatus {
@@ -2929,9 +2938,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Inscrição de Projeto.
         /// </summary>
-        public static string ProjectSubscription {
+        public static string ProjectSubmission {
             get {
-                return ResourceManager.GetString("ProjectSubscription", resourceCulture);
+                return ResourceManager.GetString("ProjectSubmission", resourceCulture);
             }
         }
         
