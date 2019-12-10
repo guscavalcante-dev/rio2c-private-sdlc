@@ -4,6 +4,7 @@
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var isAudiovisualSeller = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true;
     var isAudiovisualBuyer = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual) == true;
+    var hasDownload = false;
 }
 <div class="kt-portlet">
     <div class="kt-portlet__head">
@@ -16,6 +17,8 @@
     <div class="kt-portlet__body">
         @if (isAudiovisualBuyer)
         {
+            hasDownload = true;
+
             <div class="kt-notification">
                 <a class="kt-notification__item" href="https://assets.my.rio2c.com/downloads/Regulamento_Player_2020_2019.10.07.pdf" target="_blank">
                     <div class="kt-notification__item-icon">
@@ -37,6 +40,8 @@
         }
         @if (isAudiovisualSeller)
         {
+            hasDownload = true;
+
             <div class="kt-notification">
                 <a class="kt-notification__item" href="@Url.Action("Contacts", "Downloads", new { Area = "" })" target="_blank">
                     <div class="kt-notification__item-icon">
@@ -110,7 +115,7 @@
                 </a>
             </div>
         }
-        else
+        @if (!hasDownload)
         {
             <span class="text-center">@string.Format(Messages.EntityNotAction, "Downloads", Labels.FoundMP)</span>
         }
