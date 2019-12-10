@@ -26,7 +26,7 @@ namespace PlataformaRio2C.Domain.Entities
         #region Configurations
 
         public static ProjectEvaluationStatus Accepted = new ProjectEvaluationStatus("Accepted");
-        public static ProjectEvaluationStatus Rejected = new ProjectEvaluationStatus("Rejected");
+        public static ProjectEvaluationStatus Refused = new ProjectEvaluationStatus("Refused");
 
         #endregion
 

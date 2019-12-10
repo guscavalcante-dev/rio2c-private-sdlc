@@ -104,7 +104,7 @@
                                                                                         color = "success";
                                                                                         icon = "fa-thumbs-up";
                                                                                     }
-                                                                                    else if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == ProjectEvaluationStatus.Rejected.Code)
+                                                                                    else if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == ProjectEvaluationStatus.Refused.Code)
                                                                                     {
                                                                                         color = "danger";
                                                                                         icon = "fa-thumbs-down";
@@ -147,7 +147,7 @@
                                                             color = "success";
                                                             icon = "fa-thumbs-up";
                                                         }
-                                                        else if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == ProjectEvaluationStatus.Rejected.Code)
+                                                        else if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == ProjectEvaluationStatus.Refused.Code)
                                                         {
                                                             color = "danger";
                                                             icon = "fa-thumbs-down";
@@ -161,7 +161,7 @@
                                                             <i class="fa @(icon) mr-1"></i> @(projectBuyerEvaluationDto.ProjectEvaluationStatus.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
                                                         </span>
                                                     </div>
-                                                    @if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == ProjectEvaluationStatus.Rejected.Code)
+                                                    @if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == ProjectEvaluationStatus.Refused.Code)
                                                     {
                                                         <div class="kt-widget12__info kt-widget__text">
                                                             @projectBuyerEvaluationDto.ProjectBuyerEvaluation.Reason
