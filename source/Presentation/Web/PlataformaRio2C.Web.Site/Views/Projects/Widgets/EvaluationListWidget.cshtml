@@ -110,19 +110,19 @@
                                                                                         icon = "fa-thumbs-down";
                                                                                     }
                                                                                 }
-                                                                                <div class="kt-widget--user-profile-1 kt-widget__username">
-                                                                                    <small>@(projectBuyerEvaluationDto.ProjectBuyerEvaluation?.BuyerEvaluationUser?.Name)</small>
-                                                                                </div>
-                                                                                <div class="kt-widget__button">
-                                                                                    <span class="btn btn-label-@(color) btn-sm">
+                                                                                <span class="kt-widget__button">
+                                                                                    <label class="btn btn-label-@(color) btn-sm">
                                                                                         <i class="fa @(icon) mr-1"></i> @(projectBuyerEvaluationDto.ProjectEvaluationStatus.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
-                                                                                    </span>
-                                                                                </div>
-                                                                                @if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == "Rejected")
+                                                                                    </label>
+                                                                                </span>
+                                                                                <span class="kt-widget--user-profile-1 kt-widget__username d-block">
+                                                                                    <small>@Labels.By</small> @(projectBuyerEvaluationDto.ProjectBuyerEvaluation?.BuyerEvaluationUser?.Name)
+                                                                                </span>
+                                                                                @if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == ProjectEvaluationStatus.Refused.Code)
                                                                                 {
-                                                                                    <div class="kt-widget12__info kt-widget__text">
-                                                                                        @projectBuyerEvaluationDto.ProjectBuyerEvaluation.Reason
-                                                                                    </div>
+                                                                                    <span class="kt-widget--user-profile-1 kt-widget__username d-block">
+                                                                                        <small>@projectBuyerEvaluationDto.ProjectBuyerEvaluation.Reason</small>
+                                                                                    </span>
                                                                                 }
                                                                             </div>
                                                                         </div>
@@ -153,19 +153,19 @@
                                                             icon = "fa-thumbs-down";
                                                         }
                                                     }
-                                                    <div class="kt-widget--user-profile-1 kt-widget__username">
-                                                        <small>@(projectBuyerEvaluationDto.ProjectBuyerEvaluation?.BuyerEvaluationUser?.Name)</small>
-                                                    </div>
-                                                    <div class="kt-widget__button">
-                                                        <span class="btn btn-label-@(color) btn-sm">
+                                                    <span class="kt-widget__button">
+                                                        <label class="btn btn-label-@(color) btn-sm">
                                                             <i class="fa @(icon) mr-1"></i> @(projectBuyerEvaluationDto.ProjectEvaluationStatus.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
-                                                        </span>
-                                                    </div>
+                                                        </label>
+                                                    </span>
+                                                    <span class="kt-widget--user-profile-1 kt-widget__username d-block">
+                                                        <small>@Labels.By</small> @(projectBuyerEvaluationDto.ProjectBuyerEvaluation?.BuyerEvaluationUser?.Name)
+                                                    </span>
                                                     @if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == ProjectEvaluationStatus.Refused.Code)
                                                     {
-                                                        <div class="kt-widget12__info kt-widget__text">
-                                                            @projectBuyerEvaluationDto.ProjectBuyerEvaluation.Reason
-                                                        </div>
+                                                        <span class="kt-widget--user-profile-1 kt-widget__username d-block">
+                                                            <small>@projectBuyerEvaluationDto.ProjectBuyerEvaluation.Reason</small>
+                                                        </span>
                                                     }
                                                 </span>
                                             }
