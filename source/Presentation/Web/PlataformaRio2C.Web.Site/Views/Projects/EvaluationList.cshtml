@@ -24,7 +24,7 @@
                 </select>
             </div>
             <div class="col-2 col-lg-1 mt-2">
-                <button type="button" class="btn btn-primary btn-icon" onclick="ProjectsBuyerEvaluationWidget.search();"><i class="fa fa-search"></i></button>
+                <button type="button" class="btn btn-primary btn-icon" onclick="ProjectsBuyerEvaluationListWidget.search();"><i class="fa fa-search"></i></button>
             </div>
         </div>
     </div>
@@ -70,14 +70,15 @@
 }
 @section Scripts {
     @Scripts.Render("~/bundles/js/select2.js")
-    @Scripts.Render("~/bundles/js/projects.buyerevaluation.widget.js")
+    @Scripts.Render("~/bundles/js/projects.buyerevaluation.list.widget.js")
+    @Scripts.Render("~/bundles/js/projects.buyerevaluation.update.widget.js")
     <script>
         // Page translations ----------------------------------------------------------------------
         var translations = {
         };
 
         jQuery(document).ready(function () {
-            ProjectsBuyerEvaluationWidget.init();
+            ProjectsBuyerEvaluationListWidget.init();
         });
     </script>
 }

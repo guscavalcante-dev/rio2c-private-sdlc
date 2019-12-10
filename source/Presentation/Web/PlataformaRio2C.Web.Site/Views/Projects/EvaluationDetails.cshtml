@@ -27,6 +27,13 @@
             </div>
         </div>
         <!--end:Links Widget-->
+        <!--begin:Evaluation Widget-->
+        <div class="row">
+            <div class="col-12">
+                <div id="ProjectEvaluationWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+        </div>
+        <!--end:Evaluation Widget-->
     </div>
 </div>
 @section Styles {
@@ -37,23 +44,16 @@
     @Scripts.Render("~/bundles/js/inputmask.js")
     @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/projects.widget.js")
-    @Scripts.Render("~/bundles/js/projects.buyercompany.widget.js")
-    @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/projects.buyerevaluation.update.widget.js")
     <script>
         // Page translations ----------------------------------------------------------------------
         var translations = {
-            finishModalTitle: '@Labels.Finish @Labels.Project',
-            finishModalMessage: '@Html.Raw(Texts.FinishProjectConfirmationText)',
-            finishPendingModalMessage: '@Html.Raw(string.Format(Texts.FinishProjectPendingConfirmationText, "{0}", "{1}", Labels.Players))',
-            player: '@Labels.Player',
-            players: '@Labels.Players'
         };
 
         jQuery(document).ready(function () {
             ProjectsMainInformationWidget.init();
             ProjectsInterestWidget.init();
             ProjectsLinksWidget.init();
-            ProjectsBuyerCompanyWidget.init();
         });
     </script>
 }

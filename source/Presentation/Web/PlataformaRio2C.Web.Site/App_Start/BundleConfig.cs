@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-09-2019
+// Last Modified On : 12-10-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -295,9 +295,12 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/js/projects/projects.links.widget.js",
                 "~/Assets/js/myrio2c.additionalinfo.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/projects.buyerevaluation.widget.js").Include(
-                "~/Assets/js/projects/projects.buyerevaluation.widget.js",
+            bundles.Add(new ScriptBundle("~/bundles/js/projects.buyerevaluation.list.widget.js").Include(
+                "~/Assets/js/projects/projects.buyerevaluation.list.widget.js",
                 "~/Scripts/jquery.unobtrusive-ajax.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/projects.buyerevaluation.update.widget.js").Include(
+                "~/Assets/js/projects/projects.buyerevaluation.update.widget.js"));
 
             #endregion
 

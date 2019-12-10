@@ -189,12 +189,12 @@
                             @if (editionDto?.IsProjectEvaluationOpen() == true)
                             {
                                 <div class="col-4 text-center">
-                                    <button type="button" class="btn btn-success" onclick="ProjectsBuyerEvaluationWidget.showAcceptModal('@projectDto.Project.Uid');">
+                                    <button type="button" class="btn btn-success" onclick="ProjectsBuyerEvaluationUpdateWidget.showAcceptModal('@projectDto.Project.Uid');">
                                         <i class="fa fa-thumbs-up"></i> @Labels.AcceptProject
                                     </button>
                                 </div>
                                 <div class="col-4 text-center">
-                                    <button type="button" class="btn btn-danger" onclick="ProjectsBuyerEvaluationWidget.showRefuseModal('@projectDto.Project.Uid');">
+                                    <button type="button" class="btn btn-danger" onclick="ProjectsBuyerEvaluationUpdateWidget.showRefuseModal('@projectDto.Project.Uid');">
                                         <i class="fa fa-thumbs-down"></i> @Labels.RefuseProject
                                     </button>
                                 </div>
@@ -237,7 +237,7 @@
                                     PageClasses = new string[] {""},
                                     EllipsesElementClass = ""
                                 }
-                                , new AjaxOptions { HttpMethod = "GET", OnBegin = "ProjectsBuyerEvaluationWidget.changePage", OnSuccess = "ProjectsBuyerEvaluationWidget.handlePaginationReturn" }))
+                                , new AjaxOptions { HttpMethod = "GET", OnBegin = "ProjectsBuyerEvaluationListWidget.changePage", OnSuccess = "ProjectsBuyerEvaluationListWidget.handlePaginationReturn" }))
                         <div class="kt-pagination__toolbar">
                             @Html.DropDownList("PageSizeDropdown", new SelectList(new[] { 1, 5, 10, 15, 30 }, ViewBag.PageSize), null, new { @class = "form-control kt-font-brand", style = "width: 60px;" })
                             @Html.PagedListPager(
