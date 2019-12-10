@@ -2855,6 +2855,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aprovado.
+        /// </summary>
+        public static string ProjectAccepted {
+            get {
+                return ResourceManager.GetString("ProjectAccepted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Informações adicionais sobre o projeto.
         /// </summary>
         public static string ProjectAdditionalInformations {
@@ -2887,6 +2896,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ProjectNotSubmittedToPlayers {
             get {
                 return ResourceManager.GetString("ProjectNotSubmittedToPlayers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reprovado.
+        /// </summary>
+        public static string ProjectRefused {
+            get {
+                return ResourceManager.GetString("ProjectRefused", resourceCulture);
             }
         }
         

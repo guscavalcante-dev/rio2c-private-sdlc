@@ -1861,4 +1861,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Inscrição de projetos</value>
     <comment>Inscrição de projetos</comment>
   </data>
+  <data name="ProjectAccepted" xml:space="preserve">
+    <value>Aprovado</value>
+    <comment>Aprovado</comment>
+  </data>
+  <data name="ProjectRefused" xml:space="preserve">
+    <value>Reprovado</value>
+    <comment>Reprovado</comment>
+  </data>
 </root>

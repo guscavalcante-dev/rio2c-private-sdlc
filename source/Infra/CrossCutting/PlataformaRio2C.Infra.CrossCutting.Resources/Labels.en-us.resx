@@ -1848,4 +1848,12 @@
     <value>Projects submission</value>
     <comment>Inscrição de projetos</comment>
   </data>
+  <data name="ProjectAccepted" xml:space="preserve">
+    <value>Accepted</value>
+    <comment>Aprovado</comment>
+  </data>
+  <data name="ProjectRefused" xml:space="preserve">
+    <value>Refused</value>
+    <comment>Reprovado</comment>
+  </data>
 </root>
