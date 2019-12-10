@@ -263,7 +263,6 @@
     <Compile Include="Interfaces\Repositories\NegotiationConfig\INegotiationConfigRepository.cs" />
     <Compile Include="Interfaces\Repositories\Negotiation\INegotiationRepository.cs" />
     <Compile Include="Interfaces\Repositories\Projects\IProjectPlayerRepository.cs" />
-    <None Include="Interfaces\Repositories\Projects\IProjectBuyerEvaluationRepository.oldcs" />
     <Compile Include="Interfaces\Repositories\Projects\IProjectStatusRepository.cs" />
     <Compile Include="Interfaces\Repositories\Quiz\IQuizAnswerRepository.cs" />
     <Compile Include="Interfaces\Repositories\Quiz\IQuizOptionRepository.cs" />

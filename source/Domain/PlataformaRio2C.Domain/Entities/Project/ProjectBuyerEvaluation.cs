@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-17-2019
+// Last Modified On : 12-10-2019
 // ***********************************************************************
 // <copyright file="ProjectBuyerEvaluation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,6 +12,8 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
@@ -98,29 +100,39 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.Now;
         }
 
-        public void Approve(ProjectBuyerEvaluationData data)
+        /// <summary>Accepts the specified project evaluation statuses.</summary>
+        /// <param name="projectEvaluationStatuses">The project evaluation statuses.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Accept(List<ProjectEvaluationStatus> projectEvaluationStatuses, int userId)
         {
-            this.ProjectEvaluationStatusId = data.ProjectEvaluationStatusId;
-            this.IsSent = data.IsSent;
-            this.BuyerEvaluationUserId = data.BuyerEvaluationUserId;
-            this.EvaluationDate = data.EvaluationDate;
-           
+            var projectEvaluationStatus = projectEvaluationStatuses?.FirstOrDefault(pes => pes.Code == ProjectEvaluationStatus.Accepted.Code);
+            this.ProjectEvaluationStatusId = projectEvaluationStatus?.Id ?? 0;
+            this.ProjectEvaluationStatus = projectEvaluationStatus;
 
+            this.BuyerEvaluationUserId = userId;
+            this.EvaluationDate = DateTime.Now;
+           
             this.IsDeleted = false;
-            this.UpdateUserId = data.BuyerEvaluationUserId; ;
+            this.UpdateUserId = userId;
             this.UpdateDate = DateTime.Now;
         }
 
-        public void Reject(ProjectBuyerEvaluationData data)
+        /// <summary>Refuses the specified reason.</summary>
+        /// <param name="reason">The reason.</param>
+        /// <param name="projectEvaluationStatuses">The project evaluation statuses.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Refuse(string reason, List<ProjectEvaluationStatus> projectEvaluationStatuses, int userId)
         {
-            this.ProjectEvaluationStatusId = data.ProjectEvaluationStatusId;
-            this.IsSent = data.IsSent;
-            this.BuyerEvaluationUserId = data.BuyerEvaluationUserId;
-            this.EvaluationDate = data.EvaluationDate;
-            this.Reason = data.Reason;
+            var projectEvaluationStatus = projectEvaluationStatuses?.FirstOrDefault(pes => pes.Code == ProjectEvaluationStatus.Refused.Code);
+            this.ProjectEvaluationStatusId = projectEvaluationStatus?.Id ?? 0;
+            this.ProjectEvaluationStatus = projectEvaluationStatus;
+
+            this.Reason = reason?.Trim();
+            this.BuyerEvaluationUserId = userId;
+            this.EvaluationDate = DateTime.Now;
 
             this.IsDeleted = false;
-            this.UpdateUserId = data.BuyerEvaluationUserId; ;
+            this.UpdateUserId = userId;
             this.UpdateDate = DateTime.Now;
         }
 

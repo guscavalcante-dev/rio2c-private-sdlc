@@ -4,7 +4,7 @@
 // Created          : 11-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-28-2019
+// Last Modified On : 12-10-2019
 // ***********************************************************************
 // <copyright file="ProjectEvaluationStatusRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,8 +14,10 @@
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -69,6 +71,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return @readonly
                         ? consult.AsNoTracking()
                         : consult;
+        }
+
+        /// <summary>Finds all asynchronous.</summary>
+        /// <returns></returns>
+        public async Task<List<ProjectEvaluationStatus>> FindAllAsync()
+        {
+            var query = this.GetBaseQuery();
+
+            return await query
+                            .ToListAsync();
         }
     }
 }

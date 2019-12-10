@@ -115,7 +115,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;label&gt;Deseja realmente confirmar o interese no projeto &quot;&lt;span&gt;{0}&lt;/span&gt;&quot; para o player &quot;&lt;span&gt;{1}&lt;/span&gt;&quot;&lt;/label&gt;.
+        ///   Looks up a localized string similar to Deseja aprovar o projeto &quot;&lt;b&gt;{0}&lt;/b&gt;&quot;?.
         /// </summary>
         public static string DoYouReallyWishAccept {
             get {
@@ -124,7 +124,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;label&gt;Deseja realmente recusar o interese no projeto &quot;&lt;span&gt;{0}&lt;/span&gt;&quot; para o player &quot;&lt;span&gt;{1}&lt;/span&gt;&quot;&lt;/label&gt;.
+        ///   Looks up a localized string similar to Deseja reprovar o projeto &quot;&lt;b&gt;{0}&lt;/b&gt;&quot;?.
         /// </summary>
         public static string DoYouReallyWishRefuse {
             get {

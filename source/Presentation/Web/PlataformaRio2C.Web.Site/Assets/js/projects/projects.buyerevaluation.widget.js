@@ -4,7 +4,7 @@
 // Created          : 12-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-09-2019
+// Last Modified On : 12-10-2019
 // ***********************************************************************
 // <copyright file="projects.buyerevaluation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,6 +16,10 @@ var ProjectsBuyerEvaluationWidget = function () {
 
     var widgetElementId = '#ProjectBuyerEvaluationWidget';
     var widgetElement;
+
+    var acceptModalId = '#AcceptEvaluationModal';
+    var acceptFormId = '#AcceptEvaluationForm';
+
 
     // Initialize Elements ------------------------------------------------------------------------
     var initElements = function () {
@@ -104,76 +108,48 @@ var ProjectsBuyerEvaluationWidget = function () {
         });
     };
 
-    // Approve ------------------------------------------------------------------------------------
-    var showApproveModal = function () {
-        var accept = function () {
-            if (widgetElement.length <= 0) {
-                return;
-            }
+    // Accept -------------------------------------------------------------------------------------
+    var enableAcceptAjaxForm = function () {
+        MyRio2cCommon.enableAjaxForm({
+            idOrClass: acceptFormId,
+            onSuccess: function (data) {
+                $(acceptModalId).modal('hide');
 
-            var jsonParameters = new Object();
-            jsonParameters.id = $('#Uid').val();
-
-            $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/Approve'), jsonParameters, function (data) {
-                MyRio2cCommon.handleAjaxReturn({
-                    data: data,
-                    // Success
-                    onSuccess: function () {
-                        enableShowPlugins();
-                        show();
-                    },
-                    // Error
-                    onError: function () {
-                    }
-                });
-            })
-            .fail(function () {
-            })
-            .always(function () {
-                MyRio2cCommon.unblock();
-            });
-        };
-
-        bootbox.dialog({
-            title: translations2.finishModalTitle,
-            message: translations2.finishModalMessage,
-            closeButton: false,
-            buttons: {
-                cancel: {
-                    label: labels.cancel,
-                    className: "btn btn-secondary mr-auto",
-                    callback: function () {
-                    }
-                },
-                confirm: {
-                    label: labels.confirm,
-                    className: "btn btn-info",
-                    callback: function () {
-                        accept();
-                    }
+                if (typeof (ProjectsBuyerEvaluationWidget) !== 'undefined') {
+                    ProjectsBuyerEvaluationWidget.init();
+                }
+            },
+            onError: function (data) {
+                if (MyRio2cCommon.hasProperty(data, 'pages')) {
+                    enableAcceptPlugins();
                 }
             }
         });
     };
 
-    // Refuse -------------------------------------------------------------------------------------
-    var refuse = function (reason) {
-        if (widgetElement.length <= 0) {
+    var enableAcceptPlugins = function () {
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: acceptFormId + ' .enable-select2' });
+        enableAcceptAjaxForm();
+        MyRio2cCommon.enableFormValidation({ formIdOrClass: acceptFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
+    };
+
+    var showAcceptModal = function (projectUid) {
+        if (MyRio2cCommon.isNullOrEmpty(projectUid)) {
             return;
         }
 
-        var jsonParameters = new Object();
-        jsonParameters.id = $('#Uid').val();
-        jsonParameters.reason = reason;
-        //jsonParameters.reason = $('#Reason').val();
+        MyRio2cCommon.block({ isModal: true });
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/Refuse'), jsonParameters, function (data) {
+        var jsonParameters = new Object();
+        jsonParameters.projectUid = projectUid;
+
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/ShowAcceptEvaluationModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
                 onSuccess: function () {
-                    enableShowPlugins();
-                    show();
+                    enableAcceptPlugins();
+                    $(acceptModalId).modal();
                 },
                 // Error
                 onError: function () {
@@ -187,39 +163,114 @@ var ProjectsBuyerEvaluationWidget = function () {
         });
     };
 
-    var showRefuseModal = function () {
-        var informReason = function () {
-            bootbox.alert("Reason is a required field!", function () {
-                showRefuseModal();
-                return;
-            });
-        };
+    //// Accept -------------------------------------------------------------------------------------
+    //var accept = function (projectUid) {
+    //    var jsonParameters = new Object();
+    //    jsonParameters.projectUid = projectUid;
 
-        bootbox.dialog({
-            title: translations.finishModalTitle,
-            message: translations.finishModalMessage + "<br/>Reason: <input type='text' id='reason' class='form-control'>",
-            closeButton: false,
-            buttons: {
-                cancel: {
-                    label: labels.cancel,
-                    className: "btn btn-secondary mr-auto",
-                    callback: function () {
-                    }
-                },
-                confirm: {
-                    label: labels.confirm,
-                    className: "btn btn-info",
-                    callback: function () {
-                        if ($('#reason').val().trim() == "") {
-                            informReason();
-                            return;
-                        }
-                        refuse($('#reason').val());
-                    }
-                }
-            }
-        });
-    };
+    //    $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/Accept'), jsonParameters, function (data) {
+    //        MyRio2cCommon.handleAjaxReturn({
+    //            data: data,
+    //            // Success
+    //            onSuccess: function () {
+    //                enableShowPlugins();
+    //                show();
+    //            },
+    //            // Error
+    //            onError: function () {
+    //            }
+    //        });
+    //    })
+    //    .fail(function () {
+    //    })
+    //    .always(function () {
+    //        MyRio2cCommon.unblock();
+    //    });
+    //};
+
+    //var showAcceptModal = function (projectUid) {
+    //    bootbox.dialog({
+    //        title: translations2.finishModalTitle,
+    //        message: translations2.finishModalMessage,
+    //        closeButton: false,
+    //        buttons: {
+    //            cancel: {
+    //                label: labels.cancel,
+    //                className: "btn btn-secondary mr-auto",
+    //                callback: function () {
+    //                }
+    //            },
+    //            confirm: {
+    //                label: labels.confirm,
+    //                className: "btn btn-info",
+    //                callback: function () {
+    //                    accept();
+    //                }
+    //            }
+    //        }
+    //    });
+    //};
+
+    //// Refuse -------------------------------------------------------------------------------------
+    //var refuse = function (reason) {
+    //    var jsonParameters = new Object();
+    //    jsonParameters.id = $('#Uid').val();
+    //    jsonParameters.reason = reason;
+    //    //jsonParameters.reason = $('#Reason').val();
+
+    //    $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/Refuse'), jsonParameters, function (data) {
+    //        MyRio2cCommon.handleAjaxReturn({
+    //            data: data,
+    //            // Success
+    //            onSuccess: function () {
+    //                enableShowPlugins();
+    //                show();
+    //            },
+    //            // Error
+    //            onError: function () {
+    //            }
+    //        });
+    //    })
+    //    .fail(function () {
+    //    })
+    //    .always(function () {
+    //        MyRio2cCommon.unblock();
+    //    });
+    //};
+
+    //var showRefuseModal = function (projectUid) {
+    //    var informReason = function () {
+    //        bootbox.alert("Reason is a required field!", function () {
+    //            showRefuseModal();
+    //            return;
+    //        });
+    //    };
+
+    //    bootbox.dialog({
+    //        title: translations.finishModalTitle,
+    //        message: translations.finishModalMessage + "<br/>Reason: <input type='text' id='reason' class='form-control'>",
+    //        closeButton: false,
+    //        buttons: {
+    //            cancel: {
+    //                label: labels.cancel,
+    //                className: "btn btn-secondary mr-auto",
+    //                callback: function () {
+    //                }
+    //            },
+    //            confirm: {
+    //                label: labels.confirm,
+    //                className: "btn btn-info",
+    //                callback: function () {
+    //                    if ($('#reason').val().trim() == "") {
+    //                        informReason();
+    //                        return;
+    //                    }
+    //                    refuse($('#reason').val());
+    //                }
+    //            }
+    //        }
+    //    });
+    //};
 
     return {
         init: function () {
@@ -237,11 +288,11 @@ var ProjectsBuyerEvaluationWidget = function () {
         handlePaginationReturn: function (data) {
             handlePaginationReturn(data);
         },
-        showApproveModal: function () {
-            showApproveModal();
+        showAcceptModal: function (projectUid) {
+            showAcceptModal(projectUid);
         },
-        showRefuseModal: function () {
-            showRefuseModal();
+        showRefuseModal: function (projectUid) {
+            showRefuseModal(projectUid);
         }
     };
 }();

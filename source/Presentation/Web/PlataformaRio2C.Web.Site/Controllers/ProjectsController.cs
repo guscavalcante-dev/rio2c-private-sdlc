@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-09-2019
+// Last Modified On : 12-10-2019
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -105,7 +105,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #endregion
 
-        #region Industry
+        #region Seller (Industry)
 
         #region Submitted List
 
@@ -1476,7 +1476,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #endregion
 
-        #region Executive Audiovisual
+        #region Buyer (Executive Audiovisual)
 
         #region Evaluation List
 
@@ -1550,13 +1550,63 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        #region Approve
+        #region Accept
 
-        /// <summary>Approves the specified identifier.</summary>
-        /// <param name="id">The identifier.</param>
+        /// <summary>Shows the accept evaluation modal.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowAcceptEvaluationModal(Guid? projectUid)
+        {
+            AcceptProjectEvaluation cmd;
+
+            try
+            {
+                if (this.EditionDto?.IsProjectEvaluationOpen() != true)
+                {
+                    throw new DomainException(Texts.ForbiddenErrorMessage);
+                }
+
+                var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(projectUid ?? Guid.Empty);
+                if (projectDto == null)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
+                }
+
+                if (!projectDto.Project.IsFinished())
+                {
+                    throw new DomainException(Texts.ForbiddenErrorMessage);
+                }
+
+                if (this.UserAccessControlDto?.HasAnyEditionAttendeeOrganization(projectDto.ProjectBuyerEvaluationDtos?.Select(pbed => pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid)?.ToList()) != true) // Is buyer
+                {
+                    throw new DomainException(Texts.ForbiddenErrorMessage);
+                }
+
+                cmd = new AcceptProjectEvaluation(
+                    projectDto, 
+                    this.UserAccessControlDto?.EditionAttendeeOrganizations?.ToList());
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/AcceptEvaluationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Accepts the specified command.</summary>
+        /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Approve(Guid? id)
+        public async Task<ActionResult> Accept(AcceptProjectEvaluation cmd)
         {
             var result = new AppValidationResult();
 
@@ -1572,26 +1622,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     throw new DomainException(Messages.CorrectFormValues);
                 }
 
-                var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(id ?? Guid.Empty);
-                if (projectDto == null)
-                {
-                    return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-                }
-
-                var projectBuyerEvaluation = projectDto.Project.ProjectBuyerEvaluations
-                                                    .FirstOrDefault(p => p.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators
-                                                                            .Any(ao => ao.AttendeeCollaborator.Collaborator.Uid == this.UserAccessControlDto.Collaborator.Uid)); //TODO: Substituir pela empresa selecionada no modal
-
-                var projectBuyerEvaluationData = new ProjectBuyerEvaluationData()
-                {
-                    Uid = projectBuyerEvaluation.Uid,
-                    BuyerAttendeeOrganizationId = projectBuyerEvaluation.BuyerAttendeeOrganizationId,
-                    BuyerEvaluationUserId = this.UserAccessControlDto.User.Id,
-                    EvaluationDate = DateTime.Now,
-                    ProjectEvaluationStatusId = 2,
-                };
-
-                var cmd = new ApproveProjectBuyerEvaluation(projectBuyerEvaluationData);
                 cmd.UpdatePreSendProperties(
                     this.UserAccessControlDto.User.Id,
                     this.UserAccessControlDto.User.Uid,
@@ -1603,8 +1633,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 {
                     throw new DomainException(Messages.CorrectFormValues);
                 }
-
-                //return RedirectToAction("SubmittedListBuyerEvaluation", "Projects");
             }
             catch (DomainException ex)
             {
@@ -1615,10 +1643,19 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 }
                 var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
 
-                //cmd.UpdateModelsAndLists(
-                //    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
+                cmd.UpdateModelsAndLists(
+                    await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(cmd.ProjectUid ?? Guid.Empty),
+                    this.UserAccessControlDto?.EditionAttendeeOrganizations?.ToList());
 
-                return Json(new { status = "error", message = toastrError?.Message ?? ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+                return Json(new
+                {
+                    status = "error",
+                    message = toastrError?.Message ?? ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/AcceptEvaluationForm", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -1626,7 +1663,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.UpdatedM) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.Accepted.ToLowerInvariant()) });
         }
 
         #endregion

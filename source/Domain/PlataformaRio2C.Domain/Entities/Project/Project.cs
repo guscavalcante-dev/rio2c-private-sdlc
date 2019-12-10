@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified On : 12-10-2019
 // ***********************************************************************
 // <copyright file="Project.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -288,6 +288,27 @@ namespace PlataformaRio2C.Domain.Entities
         public int RecountProjectBuyerEvaluations()
         {
             return this.ProjectBuyerEvaluations?.Count(be => !be.IsDeleted) ?? 0;
+        }
+
+        /// <summary>Accepts the project buyer evaluation.</summary>
+        /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
+        /// <param name="projectEvaluationStatuses">The project evaluation statuses.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void AcceptProjectBuyerEvaluation(Guid attendeeOrganizationUid, List<ProjectEvaluationStatus> projectEvaluationStatuses, int userId)
+        {
+            var buyerEvaluation = this.GetProjectBuyerEvaluationByAttendeeOrganizationUid(attendeeOrganizationUid);
+            buyerEvaluation?.Accept(projectEvaluationStatuses, userId);
+        }
+
+        /// <summary>Refuses the project buyer evaluation.</summary>
+        /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
+        /// <param name="reason">The reason.</param>
+        /// <param name="projectEvaluationStatuses">The project evaluation statuses.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void RefuseProjectBuyerEvaluation(Guid attendeeOrganizationUid, string reason, List<ProjectEvaluationStatus> projectEvaluationStatuses, int userId)
+        {
+            var buyerEvaluation = this.GetProjectBuyerEvaluationByAttendeeOrganizationUid(attendeeOrganizationUid);
+            buyerEvaluation?.Refuse(reason, projectEvaluationStatuses, userId);
         }
 
         /// <summary>Gets the project buyer evaluation by attendee organization uid.</summary>

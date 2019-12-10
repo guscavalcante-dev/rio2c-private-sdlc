@@ -181,12 +181,12 @@
                             @if (editionDto?.IsProjectEvaluationOpen() == true)
                             {
                                 <div class="col-4 text-center">
-                                    <button type="button" class="btn btn-success" onclick="ProjectsBuyerEvaluationWidget.showApproveModal();">
+                                    <button type="button" class="btn btn-success" onclick="ProjectsBuyerEvaluationWidget.showAcceptModal('@projectDto.Project.Uid');">
                                         <i class="fa fa-thumbs-up"></i> @Labels.AcceptProject
                                     </button>
                                 </div>
                                 <div class="col-4 text-center">
-                                    <button type="button" class="btn btn-danger" onclick="ProjectsBuyerEvaluationWidget.showRefuseModal();">
+                                    <button type="button" class="btn btn-danger" onclick="ProjectsBuyerEvaluationWidget.showRefuseModal('@projectDto.Project.Uid');">
                                         <i class="fa fa-thumbs-down"></i> @Labels.RefuseProject
                                     </button>
                                 </div>

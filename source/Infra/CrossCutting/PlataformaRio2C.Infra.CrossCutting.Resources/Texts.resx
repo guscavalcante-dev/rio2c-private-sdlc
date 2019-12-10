@@ -383,10 +383,10 @@ maira@rio2c.com&lt;br/&gt;
     <value>Nenhum projeto cadastrado.</value>
   </data>
   <data name="DoYouReallyWishAccept" xml:space="preserve">
-    <value>&lt;label&gt;Deseja realmente confirmar o interese no projeto "&lt;span&gt;{0}&lt;/span&gt;" para o player "&lt;span&gt;{1}&lt;/span&gt;"&lt;/label&gt;</value>
+    <value>Deseja aprovar o projeto "&lt;b&gt;{0}&lt;/b&gt;"?</value>
   </data>
   <data name="DoYouReallyWishRefuse" xml:space="preserve">
-    <value>&lt;label&gt;Deseja realmente recusar o interese no projeto "&lt;span&gt;{0}&lt;/span&gt;" para o player "&lt;span&gt;{1}&lt;/span&gt;"&lt;/label&gt;</value>
+    <value>Deseja reprovar o projeto "&lt;b&gt;{0}&lt;/b&gt;"?</value>
   </data>
   <data name="PlayersSavedSuccess" xml:space="preserve">
     <value>Player(s) salvo(s) com sucesso</value>

@@ -7163,6 +7163,8 @@
     <Content Include="Views\Projects\Modals\UpdateBuyerCompanyForm.cshtml" />
     <Content Include="Views\Projects\Modals\UpdateLinksModal.cshtml" />
     <Content Include="Views\Projects\Modals\UpdateLinksForm.cshtml" />
+    <Content Include="Views\Projects\Modals\AcceptEvaluationModal.cshtml" />
+    <Content Include="Views\Projects\Modals\AcceptEvaluationForm.cshtml" />
     <None Include="Views\Projects\Submit.cshtml.old" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

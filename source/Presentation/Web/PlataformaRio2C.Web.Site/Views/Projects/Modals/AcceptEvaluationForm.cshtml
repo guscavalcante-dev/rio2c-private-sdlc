@@ -1,0 +1,16 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.AcceptProjectEvaluation
+<div class="row">
+    <div class="form-group col-12">
+        @Html.Raw(string.Format(Texts.DoYouReallyWishAccept, Model.ProjectDto?.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value))
+    </div>
+    @if (Enumerable.Count(Model.AttendeeOrganizations) == 1)
+    {
+        @Html.HiddenFor(m => m.AttendeeOrganizationUid)
+    }
+    else
+    {
+        <div class="form-group col-12">
+            @Html.DropDownListFor(m => m.AttendeeOrganizationUid, new SelectList(Model.AttendeeOrganizations, "Uid", "Name", Model.AttendeeOrganizationUid), Labels.Select + "...", new {@class = "form-control enable-select2" })
+        </div>
+    }
+</div>
