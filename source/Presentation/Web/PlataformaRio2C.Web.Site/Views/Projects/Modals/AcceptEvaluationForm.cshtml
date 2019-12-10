@@ -11,6 +11,7 @@
     {
         <div class="form-group col-12">
             @Html.DropDownListFor(m => m.AttendeeOrganizationUid, new SelectList(Model.AttendeeOrganizations, "Uid", "Name", Model.AttendeeOrganizationUid), Labels.Select + "...", new {@class = "form-control enable-select2" })
+            @Html.ValidationMessageFor(m => m.AttendeeOrganizationUid, "", new { @class = "text-danger" })
         </div>
     }
 </div>
