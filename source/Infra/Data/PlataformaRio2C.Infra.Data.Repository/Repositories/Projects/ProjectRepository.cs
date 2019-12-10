@@ -80,6 +80,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static IQueryable<Project> FindByBuyerAttendeeCollabratorUid(this IQueryable<Project> query, Guid buyerAttendeeCollaboratorUid)
         {
             query = query.Where(p => p.ProjectBuyerEvaluations.Any(pbe => !pbe.IsDeleted
+                                                                          && !pbe.BuyerAttendeeOrganization.IsDeleted
                                                                           && pbe.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators.Any(aoc => aoc.AttendeeCollaborator.Collaborator.Uid == buyerAttendeeCollaboratorUid
                                                                                                                                                         && !aoc.IsDeleted)));
 
@@ -299,8 +300,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         Interest = i.Interest,
                                         InterestGroup = i.Interest.InterestGroup
                                     }),
-                                    ProjectBuyerEvaluationDtos = p.ProjectBuyerEvaluations.Where(be => !be.IsDeleted
-                                                                                                 && be.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators.Any(ao => ao.AttendeeCollaborator.Collaborator.Uid == attendeeCollaboratorUid))
+                                    ProjectBuyerEvaluationDtos = p.ProjectBuyerEvaluations.Where(pbe => !pbe.IsDeleted
+                                                                                                        && !pbe.BuyerAttendeeOrganization.IsDeleted
+                                                                                                        && pbe.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators
+                                                                                                                                            .Any(aoc => !aoc.IsDeleted
+                                                                                                                                                        && aoc.AttendeeCollaborator.Collaborator.Uid == attendeeCollaboratorUid))
                                     .Select(be => new ProjectBuyerEvaluationDto
                                     {
                                         ProjectBuyerEvaluation = be,

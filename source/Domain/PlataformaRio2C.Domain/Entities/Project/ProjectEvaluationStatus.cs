@@ -4,7 +4,7 @@
 // Created          : 11-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-11-2019
+// Last Modified On : 12-09-2019
 // ***********************************************************************
 // <copyright file="ProjectEvaluationStatus.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -39,6 +39,8 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
+        /// <summary>Initializes a new instance of the <see cref="ProjectEvaluationStatus"/> class.</summary>
+        /// <param name="code">The code.</param>
         public ProjectEvaluationStatus(string code)
         {
             this.Code = code?.Trim();

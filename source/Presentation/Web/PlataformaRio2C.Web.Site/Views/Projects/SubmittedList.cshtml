@@ -13,22 +13,6 @@
 }
 <div class="row">
     <div class="col-md-12">
-        @*<div class="kt-portlet">
-                <div class="kt-portlet__body">
-                    <div class="kt-infobox">
-                        <div class="kt-infobox__header">
-                            <h2 class="kt-infobox__title">Projetos enviados para avalição</h2>
-                        </div>
-                        <div class="kt-infobox__body">
-                            <div class="kt-infobox__section">
-                                <div class="kt-infobox__content">
-                                    Nessa área você tem a lista dos seus projetos enviados para avalição.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>*@
         @if (Model?.Any() == true)
         {
             foreach (var projectDto in Model)
@@ -43,11 +27,6 @@
                                     <div class="kt-widget kt-widget--project-1" style="border-bottom: 0.07rem dashed #ebedf2;">
                                         <div class="kt-widget__head pt-0">
                                             <div class="kt-widget__label">
-                                                @*<div class="kt-widget__media">
-                                                        <span class="kt-media kt-media--lg">
-                                                            <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, projectDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.Organization.Uid, projectDto.SellerAttendeeOrganizationDto.AttendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="" style="max-width: 65px; max-height: 65px;">
-                                                        </span>
-                                                    </div>*@
                                                 <div class="kt-widget__info mt-0 pl-0">
                                                     @if (!projectDto.IsFakeProject)
                                                     {
@@ -83,21 +62,6 @@
                                                     }
                                                 </div>
                                             </div>
-                                            @*<div class="kt-portlet__head-toolbar">
-                                                    <a href="#" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown">
-                                                        <i class="flaticon-more-1"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right">
-                                                        <ul class="kt-nav">
-                                                            <li class="kt-nav__item">
-                                                                <a href="@Url.Action("SubmittedDetails", "Projects", new { id = projectDto.Project.Uid, Area = "" })" class="kt-nav__link">
-                                                                    <i class="kt-nav__link-icon flaticon2-line-chart"></i>
-                                                                    <span class="kt-nav__link-text">@Labels.Details</span>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>*@
                                         </div>
                                         <div class="kt-widget__body pb-0">
                                             @if (!projectDto.IsFakeProject)

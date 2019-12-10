@@ -1321,6 +1321,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Avaliações.
+        /// </summary>
+        public static string Evaluations {
+            get {
+                return ResourceManager.GetString("Evaluations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Executivo.
         /// </summary>
         public static string Executive {

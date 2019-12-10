@@ -1832,6 +1832,10 @@
     <value>Approve</value>
     <comment>Aprovar</comment>
   </data>
+  <data name="Evaluations" xml:space="preserve">
+    <value>Evaluations</value>
+    <comment>Avaliações</comment>
+  </data>
   <data name="SelectAMEntity" xml:space="preserve">
     <value>Select a {0}</value>
     <comment>Selecione um {0}</comment>
