@@ -19,7 +19,8 @@ var ProjectsBuyerEvaluationWidget = function () {
 
     var acceptModalId = '#AcceptEvaluationModal';
     var acceptFormId = '#AcceptEvaluationForm';
-
+    var refuseModalId = '#RefuseEvaluationModal';
+    var refuseFormId = '#RefuseEvaluationForm';
 
     // Initialize Elements ------------------------------------------------------------------------
     var initElements = function () {
@@ -163,114 +164,60 @@ var ProjectsBuyerEvaluationWidget = function () {
         });
     };
 
-    //// Accept -------------------------------------------------------------------------------------
-    //var accept = function (projectUid) {
-    //    var jsonParameters = new Object();
-    //    jsonParameters.projectUid = projectUid;
+    // Refuse -------------------------------------------------------------------------------------
+    var enableRefuseAjaxForm = function () {
+        MyRio2cCommon.enableAjaxForm({
+            idOrClass: refuseFormId,
+            onSuccess: function (data) {
+                $(refuseModalId).modal('hide');
 
-    //    $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/Accept'), jsonParameters, function (data) {
-    //        MyRio2cCommon.handleAjaxReturn({
-    //            data: data,
-    //            // Success
-    //            onSuccess: function () {
-    //                enableShowPlugins();
-    //                show();
-    //            },
-    //            // Error
-    //            onError: function () {
-    //            }
-    //        });
-    //    })
-    //    .fail(function () {
-    //    })
-    //    .always(function () {
-    //        MyRio2cCommon.unblock();
-    //    });
-    //};
+                if (typeof (ProjectsBuyerEvaluationWidget) !== 'undefined') {
+                    ProjectsBuyerEvaluationWidget.init();
+                }
+            },
+            onError: function (data) {
+                if (MyRio2cCommon.hasProperty(data, 'pages')) {
+                    enableRefusePlugins();
+                }
+            }
+        });
+    };
 
-    //var showAcceptModal = function (projectUid) {
-    //    bootbox.dialog({
-    //        title: translations2.finishModalTitle,
-    //        message: translations2.finishModalMessage,
-    //        closeButton: false,
-    //        buttons: {
-    //            cancel: {
-    //                label: labels.cancel,
-    //                className: "btn btn-secondary mr-auto",
-    //                callback: function () {
-    //                }
-    //            },
-    //            confirm: {
-    //                label: labels.confirm,
-    //                className: "btn btn-info",
-    //                callback: function () {
-    //                    accept();
-    //                }
-    //            }
-    //        }
-    //    });
-    //};
+    var enableRefusePlugins = function () {
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: refuseFormId + ' .enable-select2' });
+        enableRefuseAjaxForm();
+        MyRio2cCommon.enableFormValidation({ formIdOrClass: refuseFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
+    };
 
-    //// Refuse -------------------------------------------------------------------------------------
-    //var refuse = function (reason) {
-    //    var jsonParameters = new Object();
-    //    jsonParameters.id = $('#Uid').val();
-    //    jsonParameters.reason = reason;
-    //    //jsonParameters.reason = $('#Reason').val();
+    var showRefuseModal = function (projectUid) {
+        if (MyRio2cCommon.isNullOrEmpty(projectUid)) {
+            return;
+        }
 
-    //    $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/Refuse'), jsonParameters, function (data) {
-    //        MyRio2cCommon.handleAjaxReturn({
-    //            data: data,
-    //            // Success
-    //            onSuccess: function () {
-    //                enableShowPlugins();
-    //                show();
-    //            },
-    //            // Error
-    //            onError: function () {
-    //            }
-    //        });
-    //    })
-    //    .fail(function () {
-    //    })
-    //    .always(function () {
-    //        MyRio2cCommon.unblock();
-    //    });
-    //};
+        MyRio2cCommon.block({ isModal: true });
 
-    //var showRefuseModal = function (projectUid) {
-    //    var informReason = function () {
-    //        bootbox.alert("Reason is a required field!", function () {
-    //            showRefuseModal();
-    //            return;
-    //        });
-    //    };
+        var jsonParameters = new Object();
+        jsonParameters.projectUid = projectUid;
 
-    //    bootbox.dialog({
-    //        title: translations.finishModalTitle,
-    //        message: translations.finishModalMessage + "<br/>Reason: <input type='text' id='reason' class='form-control'>",
-    //        closeButton: false,
-    //        buttons: {
-    //            cancel: {
-    //                label: labels.cancel,
-    //                className: "btn btn-secondary mr-auto",
-    //                callback: function () {
-    //                }
-    //            },
-    //            confirm: {
-    //                label: labels.confirm,
-    //                className: "btn btn-info",
-    //                callback: function () {
-    //                    if ($('#reason').val().trim() == "") {
-    //                        informReason();
-    //                        return;
-    //                    }
-    //                    refuse($('#reason').val());
-    //                }
-    //            }
-    //        }
-    //    });
-    //};
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/ShowRefuseEvaluationModal'), jsonParameters, function (data) {
+            MyRio2cCommon.handleAjaxReturn({
+                data: data,
+                // Success
+                onSuccess: function () {
+                    enableRefusePlugins();
+                    $(refuseModalId).modal();
+                },
+                // Error
+                onError: function () {
+                }
+            });
+        })
+        .fail(function () {
+        })
+        .always(function () {
+            MyRio2cCommon.unblock();
+        });
+    };
 
     return {
         init: function () {

@@ -313,10 +313,12 @@
     <value>No project registered</value>
   </data>
   <data name="DoYouReallyWishAccept" xml:space="preserve">
-    <value>&lt;label&gt;Do you really wish to confirm the interest in this project "&lt;span&gt;{0}&lt;/span&gt;" to the player "&lt;span&gt;{1}&lt;/span&gt;"&lt;/label&gt;</value>
+    <value>Do you want to accept the project "&lt;b&gt;{0}&lt;/b&gt;"?</value>
+    <comment>Deseja aprovar o projeto "&lt;b&gt;{0}&lt;/b&gt;"?</comment>
   </data>
   <data name="DoYouReallyWishRefuse" xml:space="preserve">
-    <value>&lt;label&gt;Do you really wish to refuse the interest in this project"&lt;span&gt;{0}&lt;/span&gt;" to the player "&lt;span&gt;{1}&lt;/span&gt;"&lt;/label&gt;</value>
+    <value>Do you want to refuse the project "&lt;b&gt;{0}&lt;/b&gt;"?</value>
+    <comment>Deseja reprovar o projeto "&lt;b&gt;{0}&lt;/b&gt;"?</comment>
   </data>
   <data name="PlayersSavedSuccess" xml:space="preserve">
     <value>Player saved successfully</value>

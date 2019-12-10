@@ -70,22 +70,10 @@
 }
 @section Scripts {
     @Scripts.Render("~/bundles/js/select2.js")
-    @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/projects.buyerevaluation.widget.js")
     <script>
         // Page translations ----------------------------------------------------------------------
         var translations = {
-            finishModalTitle: '@Labels.RefuseProject',
-            finishModalMessage: '@Html.Raw(Texts.DoYouReallyWishRefuse)',
-            finishPendingModalMessage: '@Html.Raw(string.Format(Texts.DoYouReallyWishRefuse, "{0}", "{1}", Labels.Player))',
-            player: '@Labels.Player',
-            players: '@Labels.Players'
-        };
-
-        var translations2 = {
-            finishPendingModalMessage: '@Html.Raw(string.Format(Texts.DoYouReallyWishAccept, "{0}", "{1}", Labels.Player))',
-            player: '@Labels.Player',
-            players: '@Labels.Players'
         };
 
         jQuery(document).ready(function () {

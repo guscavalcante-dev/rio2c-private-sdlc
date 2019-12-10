@@ -212,7 +212,7 @@
     <Compile Include="CQRS\CommandsHandlers\Organizations\UpdateOrganizationMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\UpdateOrganizationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\CreateOrganizationCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Projects\RejectProjectBuyerEvaluationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Projects\RefuseProjectEvaluationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Projects\BaseProjectCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Projects\AcceptProjectEvaluationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Projects\FinishProjectCommandHandler.cs" />
@@ -277,7 +277,7 @@
     <Compile Include="CQRS\Commands\Holdings\UpdateHolding.cs" />
     <Compile Include="CQRS\Commands\Holdings\CreateHolding.cs" />
     <Compile Include="CQRS\Commands\Holdings\BaseCommands\HoldingDescriptionBaseCommand.cs" />
-    <Compile Include="CQRS\Commands\Projects\RejectProjectBuyerEvaluation.cs" />
+    <Compile Include="CQRS\Commands\Projects\RefuseProjectEvaluation.cs" />
     <Compile Include="CQRS\Commands\Projects\BaseCommands\ProjectLogLineBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Projects\BaseCommands\ProjectAdditionalInformationBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Projects\BaseCommands\ProjectProductionPlanBaseCommand.cs" />

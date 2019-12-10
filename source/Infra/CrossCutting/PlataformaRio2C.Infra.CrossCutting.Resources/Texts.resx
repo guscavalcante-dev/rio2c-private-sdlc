@@ -384,9 +384,11 @@ maira@rio2c.com&lt;br/&gt;
   </data>
   <data name="DoYouReallyWishAccept" xml:space="preserve">
     <value>Deseja aprovar o projeto "&lt;b&gt;{0}&lt;/b&gt;"?</value>
+    <comment>Deseja aprovar o projeto "&lt;b&gt;{0}&lt;/b&gt;"?</comment>
   </data>
   <data name="DoYouReallyWishRefuse" xml:space="preserve">
     <value>Deseja reprovar o projeto "&lt;b&gt;{0}&lt;/b&gt;"?</value>
+    <comment>Deseja reprovar o projeto "&lt;b&gt;{0}&lt;/b&gt;"?</comment>
   </data>
   <data name="PlayersSavedSuccess" xml:space="preserve">
     <value>Player(s) salvo(s) com sucesso</value>
