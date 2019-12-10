@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-09-2019
+// Last Modified On : 12-10-2019
 // ***********************************************************************
 // <copyright file="IProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,13 +28,14 @@ namespace PlataformaRio2C.Domain.Interfaces
         #region Site Widgets
 
         Task<List<ProjectDto>> FindAllDtosToSellAsync(Guid attendeeOrganizationUid, bool showAll);
-        Task<IPagedList<ProjectDto>> FindAllDtosToEvaluateAsync(Guid attendeeOrganizationUid, string searchKeywords, Guid? interestUid, int page, int pageSize);
+        Task<IPagedList<ProjectDto>> FindAllDtosToEvaluateAsync(Guid attendeeCollaboratorUid, string searchKeywords, Guid? interestUid, int page, int pageSize);
         Task<ProjectDto> FindSiteDetailsDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteMainInformationWidgetDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteInterestWidgetDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteLinksWidgetDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteBuyerCompanyWidgetDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteDuplicateDtoByProjectUidAsync(Guid projectUid);
+        Task<ProjectDto> FindSiteBuyerEvaluationWidgetDtoByProjectUidAsync(Guid projectUid, Guid attendeeCollaboratorUid);
 
         #endregion
 

@@ -7168,6 +7168,7 @@
     <Content Include="Views\Projects\Modals\AcceptEvaluationForm.cshtml" />
     <Content Include="Views\Projects\Modals\RefuseEvaluationModal.cshtml" />
     <Content Include="Views\Projects\Modals\RefuseEvaluationForm.cshtml" />
+    <Content Include="Views\Projects\Shared\_BuyersEvaluations.cshtml" />
     <None Include="Views\Projects\Submit.cshtml.old" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -7268,6 +7269,7 @@
     <Content Include="Views\Projects\Widgets\EvaluationListWidget.cshtml" />
     <Content Include="Views\SiteMailerService\UnreadConversationEmail.cshtml" />
     <Content Include="Views\Projects\EvaluationDetails.cshtml" />
+    <Content Include="Views\Projects\Widgets\BuyerEvaluationWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

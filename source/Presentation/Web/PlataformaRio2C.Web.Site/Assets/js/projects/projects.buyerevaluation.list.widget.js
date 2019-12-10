@@ -14,7 +14,7 @@
 
 var ProjectsBuyerEvaluationListWidget = function () {
 
-    var widgetElementId = '#ProjectBuyerEvaluationWidget';
+    var widgetElementId = '#ProjectBuyerEvaluationListWidget';
     var widgetElement;
 
     // Initialize Elements ------------------------------------------------------------------------
