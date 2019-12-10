@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -34,19 +35,31 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = "Reason", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [StringLength(300, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public Guid? ProjectEvaluationRefuseReasonUid { get; set; }
+
+        public bool HasAdditionalInfo { get; set; }
+
+        [Display(Name = "Reason", ResourceType = typeof(Labels))]
+        [RequiredIf("HasAdditionalInfo", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [StringLength(500, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Reason { get; set; }
 
         public ProjectDto ProjectDto { get; private set; }
         public dynamic AttendeeOrganizations { get; set; }
+        public List<ProjectEvaluationRefuseReason> ProjectEvaluationRefuseReasons { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="AcceptProjectEvaluation"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="RefuseProjectEvaluation"/> class.</summary>
         /// <param name="projectDto">The project dto.</param>
         /// <param name="currentUserOrganizations">The current user organizations.</param>
-        public RefuseProjectEvaluation(ProjectDto projectDto, List<AttendeeOrganization> currentUserOrganizations)
+        /// <param name="projectEvaluationRefuseReasons">The project evaluation refuse reasons.</param>
+        public RefuseProjectEvaluation(
+            ProjectDto projectDto, 
+            List<AttendeeOrganization> currentUserOrganizations, 
+            List<ProjectEvaluationRefuseReason> projectEvaluationRefuseReasons)
         {
             this.ProjectUid = projectDto?.Project?.Uid;
-            this.UpdateOrganizations(projectDto, currentUserOrganizations);
+            this.UpdateModelsAndLists(projectDto, currentUserOrganizations, projectEvaluationRefuseReasons);
+            this.HasAdditionalInfo = false;
         }
 
         /// <summary>Initializes a new instance of the <see cref="AcceptProjectEvaluation"/> class.</summary>
@@ -57,9 +70,14 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Updates the models and lists.</summary>
         /// <param name="projectDto">The project dto.</param>
         /// <param name="currentUserOrganizations">The current user organizations.</param>
-        public void UpdateModelsAndLists(ProjectDto projectDto, List<AttendeeOrganization> currentUserOrganizations)
+        /// <param name="projectEvaluationRefuseReasons">The project evaluation refuse reasons.</param>
+        public void UpdateModelsAndLists(
+            ProjectDto projectDto, 
+            List<AttendeeOrganization> currentUserOrganizations,
+            List<ProjectEvaluationRefuseReason> projectEvaluationRefuseReasons)
         {
             this.UpdateOrganizations(projectDto, currentUserOrganizations);
+            this.ProjectEvaluationRefuseReasons = projectEvaluationRefuseReasons;
         }
 
         #region Private Methods

@@ -188,7 +188,7 @@
     <Compile Include="Entities\Organizations\OrganizationType.cs" />
     <Compile Include="Entities\Organizations\Organization.cs" />
     <Compile Include="Entities\PlayerProducer\PlayerProducer.cs" />
-    <Compile Include="Entities\Project\ProjectBuyerEvaluationData.cs" />
+    <Compile Include="Entities\Project\ProjectEvaluationRefuseReason.cs" />
     <Compile Include="Entities\Project\ProjectEvaluationStatus.cs" />
     <Compile Include="Entities\Project\ProjectTargetAudience.cs" />
     <Compile Include="Entities\Project\ProjectType.cs" />
@@ -247,7 +247,7 @@
     <Compile Include="Interfaces\Repositories\Addresses\ICityRepository.cs" />
     <Compile Include="Interfaces\Repositories\Addresses\ICountryRepository.cs" />
     <Compile Include="Interfaces\Repositories\Addresses\IStateRepository.cs" />
-    <Compile Include="Interfaces\Repositories\Projects\IProjectBuyerEvaluationRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Projects\IProjectEvaluationRefuseReasonRepository.cs" />
     <Compile Include="Interfaces\Repositories\Projects\IProjectEvaluationStatusRepository.cs" />
     <Compile Include="Interfaces\Repositories\Projects\IProjectTypeRepository.cs" />
     <Compile Include="Interfaces\Repositories\SalesPlatform\IAttendeeSalesPlatformTicketTypeRepository.cs" />

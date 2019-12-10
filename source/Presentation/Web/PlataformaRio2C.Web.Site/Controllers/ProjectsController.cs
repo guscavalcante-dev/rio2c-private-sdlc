@@ -44,6 +44,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         private readonly IActivityRepository activityRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
+        private readonly IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo;
 
         /// <summary>Initializes a new instance of the <see cref="ProjectsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -53,7 +54,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="activityRepository">The activity repository.</param>
         /// <param name="targetAudienceRepository">The target audience repository.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
-        /// <param name="languageRepo">The language repo.</param>
+        /// <param name="projectEvaluationRefuseReasonRepo">The project evaluation refuse reason repo.</param>
         public ProjectsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
@@ -62,7 +63,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             IActivityRepository activityRepository,
             ITargetAudienceRepository targetAudienceRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
-            ILanguageRepository languageRepo)
+            IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo)
             : base(commandBus, identityController)
         {
             this.projectRepo = projectRepository;
@@ -70,6 +71,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             this.activityRepo = activityRepository;
             this.targetAudienceRepo = targetAudienceRepository;
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
+            this.projectEvaluationRefuseReasonRepo = projectEvaluationRefuseReasonRepo;
         }
 
         #region Schedule
@@ -1703,7 +1705,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
                 cmd = new RefuseProjectEvaluation(
                     projectDto,
-                    this.UserAccessControlDto?.EditionAttendeeOrganizations?.ToList());
+                    this.UserAccessControlDto?.EditionAttendeeOrganizations?.ToList(),
+                    await this.projectEvaluationRefuseReasonRepo.FindAllAsync());
             }
             catch (DomainException ex)
             {
@@ -1763,7 +1766,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
                 cmd.UpdateModelsAndLists(
                     await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(cmd.ProjectUid ?? Guid.Empty),
-                    this.UserAccessControlDto?.EditionAttendeeOrganizations?.ToList());
+                    this.UserAccessControlDto?.EditionAttendeeOrganizations?.ToList(),
+                    await this.projectEvaluationRefuseReasonRepo.FindAllAsync());
 
                 return Json(new
                 {

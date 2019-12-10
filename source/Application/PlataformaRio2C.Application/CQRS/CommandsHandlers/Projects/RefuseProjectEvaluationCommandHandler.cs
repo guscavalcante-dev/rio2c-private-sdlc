@@ -24,7 +24,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>RefuseProjectEvaluationCommandHandler</summary>
     public class RefuseProjectEvaluationCommandHandler : BaseProjectCommandHandler, IRequestHandler<RefuseProjectEvaluation, AppValidationResult>
     {
-        private IProjectEvaluationStatusRepository projectEvaluationStatusRepo;
+        private readonly IProjectEvaluationStatusRepository projectEvaluationStatusRepo;
+        private readonly IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo;
 
         /// <summary>Initializes a new instance of the <see cref="RefuseProjectEvaluationCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
@@ -32,15 +33,18 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="projectRepository">The project repository.</param>
         /// <param name="projectEvaluationStatusRepository">The project evaluation status repository.</param>
+        /// <param name="projectEvaluationRefuseReasonRepository">The project evaluation refuse reason repository.</param>
         public RefuseProjectEvaluationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IProjectRepository projectRepository,
-            IProjectEvaluationStatusRepository projectEvaluationStatusRepository)
+            IProjectEvaluationStatusRepository projectEvaluationStatusRepository,
+            IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepository)
             : base(eventBus, uow, attendeeOrganizationRepository, projectRepository)
         {
             this.projectEvaluationStatusRepo = projectEvaluationStatusRepository;
+            this.projectEvaluationRefuseReasonRepo = projectEvaluationRefuseReasonRepository;
         }
 
         /// <summary>Handles the specified refuse project evaluation.</summary>
@@ -63,16 +67,17 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            project.RefuseProjectBuyerEvaluation(
+            var projectBuyerEvaluation = project.RefuseProjectBuyerEvaluation(
                 cmd.AttendeeOrganizationUid.Value,
+                await this.projectEvaluationRefuseReasonRepo.FindByUidAsync(cmd.ProjectEvaluationRefuseReasonUid ?? Guid.Empty),
                 cmd.Reason,
                 await this.projectEvaluationStatusRepo.FindAllAsync(),
                 cmd.UserId);
-            //if (!project.IsValid())
-            //{
-            //    this.AppValidationResult.Add(project.ValidationResult);
-            //    return this.AppValidationResult;
-            //}
+            if (!projectBuyerEvaluation.IsEvaluationValid())
+            {
+                this.AppValidationResult.Add(project.ValidationResult);
+                return this.AppValidationResult;
+            }
 
             this.ProjectRepo.Update(project);
             this.Uow.SaveChanges();

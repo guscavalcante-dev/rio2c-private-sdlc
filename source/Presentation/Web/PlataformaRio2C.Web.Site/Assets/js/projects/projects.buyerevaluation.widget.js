@@ -165,6 +165,33 @@ var ProjectsBuyerEvaluationWidget = function () {
     };
 
     // Refuse -------------------------------------------------------------------------------------
+    var changeIsRequired = function () {
+        var hasAdditionalInfoElement = $('#HasAdditionalInfo');
+
+        var hasAdditionalInfo = $('#ProjectEvaluationRefuseReasonUid').find(":selected").data("hasadditionalinfo");
+        if (!MyRio2cCommon.isNullOrEmpty(hasAdditionalInfo)) {
+            hasAdditionalInfoElement.val(hasAdditionalInfo);
+        }
+        else {
+            hasAdditionalInfoElement.val('False');
+        }
+
+        if (hasAdditionalInfoElement.val() === 'True') {
+            $('#AdditionalReasonContainer').removeClass('d-none');
+        }
+        else {
+            $('#AdditionalReasonContainer').addClass('d-none');
+        }
+    };
+
+    var enableProjectEvaluationRefuseReasonChangeEvent = function () {
+        $('#ProjectEvaluationRefuseReasonUid').not('.change-event-enabled').on('change', function () {
+            changeIsRequired();
+        });
+
+        $('#ProjectEvaluationRefuseReasonUid').addClass('change-event-enabled');
+    };
+
     var enableRefuseAjaxForm = function () {
         MyRio2cCommon.enableAjaxForm({
             idOrClass: refuseFormId,
@@ -184,6 +211,7 @@ var ProjectsBuyerEvaluationWidget = function () {
     };
 
     var enableRefusePlugins = function () {
+        enableProjectEvaluationRefuseReasonChangeEvent();
         MyRio2cCommon.enableSelect2({ inputIdOrClass: refuseFormId + ' .enable-select2' });
         enableRefuseAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: refuseFormId, enableHiddenInputsValidation: true, enableMaxlength: true });

@@ -1338,8 +1338,8 @@ CREATE TABLE [dbo].[ProjectBuyerEvaluations](
 	[ProjectId] [int] NOT NULL,
 	[BuyerAttendeeOrganizationId] [int] NOT NULL,
 	[ProjectEvaluationStatusId] [int] NOT NULL,
+	[ProjectEvaluationRefuseReasonId] [int] NULL,
 	[Reason] [varchar](1500) NULL,
-	[IsSent] [bit] NOT NULL,
 	[SellerUserId] [int] NOT NULL,
 	[BuyerEvaluationUserId] [int] NULL,
 	[EvaluationDate] [datetime] NULL,
@@ -1354,6 +1354,36 @@ CREATE TABLE [dbo].[ProjectBuyerEvaluations](
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
  CONSTRAINT [IDX_UQ_ProjectBuyerEvaluations_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[ProjectEvaluationRefuseReasons](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Name] [varchar](500) NOT NULL,
+	[HasAdditionalInfo] [bit] NOT NULL,
+	[DisplayOrder] [int] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_ProjectEvaluationRefuseReasons] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ProjectEvaluationRefuseReasons_Uid] UNIQUE NONCLUSTERED 
 (
 	[Uid] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -3222,6 +3252,11 @@ REFERENCES [dbo].[AttendeeOrganizations] ([Id])
 GO
 ALTER TABLE [dbo].[ProjectBuyerEvaluations] CHECK CONSTRAINT [FK_AttendeeOrganizations_ProjectBuyerEvaluations_BuyerAttendeeOrganizationId]
 GO
+ALTER TABLE [dbo].[ProjectBuyerEvaluations]  WITH CHECK ADD  CONSTRAINT [FK_ProjectEvaluationRefuseReasons_ProjectBuyerEvaluations_ProjectEvaluationRefuseReasonId] FOREIGN KEY([ProjectEvaluationRefuseReasonId])
+REFERENCES [dbo].[ProjectEvaluationRefuseReasons] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectBuyerEvaluations] CHECK CONSTRAINT [FK_ProjectEvaluationRefuseReasons_ProjectBuyerEvaluations_ProjectEvaluationRefuseReasonId]
+GO
 ALTER TABLE [dbo].[ProjectBuyerEvaluations]  WITH CHECK ADD  CONSTRAINT [FK_ProjectEvaluationStatuses_ProjectBuyerEvaluations_ProjectEvaluationStatusId] FOREIGN KEY([ProjectEvaluationStatusId])
 REFERENCES [dbo].[ProjectEvaluationStatuses] ([Id])
 GO
@@ -3251,6 +3286,16 @@ ALTER TABLE [dbo].[ProjectBuyerEvaluations]  WITH CHECK ADD  CONSTRAINT [FK_User
 REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[ProjectBuyerEvaluations] CHECK CONSTRAINT [FK_Users_ProjectBuyerEvaluations_UpdateUserId]
+GO
+ALTER TABLE [dbo].[ProjectEvaluationRefuseReasons]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectEvaluationRefuseReasons_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectEvaluationRefuseReasons] CHECK CONSTRAINT [FK_Users_ProjectEvaluationRefuseReasons_CreateUserId]
+GO
+ALTER TABLE [dbo].[ProjectEvaluationRefuseReasons]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectEvaluationRefuseReasons_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectEvaluationRefuseReasons] CHECK CONSTRAINT [FK_Users_ProjectEvaluationRefuseReasons_UpdateUserId]
 GO
 ALTER TABLE [dbo].[ProjectEvaluationStatuses]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectEvaluationStatuses_CreateUserId] FOREIGN KEY([CreateUserId])
 REFERENCES [dbo].[Users] ([Id])
@@ -3651,3 +3696,4 @@ ALTER TABLE [dbo].[UserUnsubscribedLists]  WITH CHECK ADD  CONSTRAINT [FK_Users_
 REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[UserUnsubscribedLists] CHECK CONSTRAINT [FK_Users_UserUnsubscribedLists_UserId]
+GO

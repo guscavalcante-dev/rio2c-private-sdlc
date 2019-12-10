@@ -63,15 +63,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            project.AcceptProjectBuyerEvaluation(
+            var projectBuyerEvaluation = project.AcceptProjectBuyerEvaluation(
                 cmd.AttendeeOrganizationUid.Value, 
                 await this.projectEvaluationStatusRepo.FindAllAsync(),
                 cmd.UserId);
-            //if (!project.IsValid())
-            //{
-            //    this.AppValidationResult.Add(project.ValidationResult);
-            //    return this.AppValidationResult;
-            //}
+            if (!projectBuyerEvaluation.IsEvaluationValid())
+            {
+                this.AppValidationResult.Add(project.ValidationResult);
+                return this.AppValidationResult;
+            }
 
             this.ProjectRepo.Update(project);
             this.Uow.SaveChanges();

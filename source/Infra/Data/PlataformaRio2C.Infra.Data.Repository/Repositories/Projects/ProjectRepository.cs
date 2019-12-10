@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-09-2019
+// Last Modified On : 12-10-2019
 // ***********************************************************************
 // <copyright file="ProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -251,7 +251,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                             Organization = be.BuyerAttendeeOrganization.Organization,
                                             Edition = be.BuyerAttendeeOrganization.Edition
                                         },
-                                        ProjectEvaluationStatus = be.ProjectEvaluationStatus
+                                        ProjectEvaluationStatus = be.ProjectEvaluationStatus,
+                                        ProjectEvaluationRefuseReason = be.ProjectEvaluationRefuseReason
                                     })
                                 });
 
@@ -300,11 +301,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         Interest = i.Interest,
                                         InterestGroup = i.Interest.InterestGroup
                                     }),
-                                    ProjectBuyerEvaluationDtos = p.ProjectBuyerEvaluations.Where(pbe => !pbe.IsDeleted
-                                                                                                        && !pbe.BuyerAttendeeOrganization.IsDeleted
-                                                                                                        && pbe.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators
-                                                                                                                                            .Any(aoc => !aoc.IsDeleted
-                                                                                                                                                        && aoc.AttendeeCollaborator.Collaborator.Uid == attendeeCollaboratorUid))
+                                    ProjectBuyerEvaluationDtos = p.ProjectBuyerEvaluations
+                                                                    .Where(pbe => !pbe.IsDeleted
+                                                                                  && !pbe.BuyerAttendeeOrganization.IsDeleted
+                                                                                  && pbe.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators
+                                                                                                                      .Any(aoc => !aoc.IsDeleted
+                                                                                                                                  && aoc.AttendeeCollaborator.Collaborator.Uid == attendeeCollaboratorUid))
                                     .Select(be => new ProjectBuyerEvaluationDto
                                     {
                                         ProjectBuyerEvaluation = be,
@@ -314,7 +316,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                             Organization = be.BuyerAttendeeOrganization.Organization,
                                             Edition = be.BuyerAttendeeOrganization.Edition
                                         },
-                                        ProjectEvaluationStatus = be.ProjectEvaluationStatus
+                                        ProjectEvaluationStatus = be.ProjectEvaluationStatus,
+                                        ProjectEvaluationRefuseReason = be.ProjectEvaluationRefuseReason
                                     })
                                 });
 

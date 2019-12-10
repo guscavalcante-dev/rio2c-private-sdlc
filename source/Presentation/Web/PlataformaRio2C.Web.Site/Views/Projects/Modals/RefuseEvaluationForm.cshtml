@@ -11,13 +11,27 @@
     {
         <div class="form-group col-12">
             @Html.LabelFor(m => m.AttendeeOrganizationUid, new { @class = "control-label" })
-            @Html.DropDownListFor(m => m.AttendeeOrganizationUid, new SelectList(Model.AttendeeOrganizations, "Uid", "Name", Model.AttendeeOrganizationUid), Labels.Select + "...", new {@class = "form-control enable-select2"})
-            @Html.ValidationMessageFor(m => m.AttendeeOrganizationUid, "", new {@class = "text-danger"})
+            @Html.DropDownListFor(m => m.AttendeeOrganizationUid, new SelectList(Model.AttendeeOrganizations, "Uid", "Name", Model.AttendeeOrganizationUid), Labels.Select + "...", new { @class = "form-control enable-select2" })
+            @Html.ValidationMessageFor(m => m.AttendeeOrganizationUid, "", new { @class = "text-danger" })
         </div>
     }
     <div class="form-group col-12">
-        @Html.LabelFor(m => m.Reason, new { @class = "control-label" })
+        @Html.LabelFor(m => m.ProjectEvaluationRefuseReasonUid, new { @class = "control-label" })
+        @Html.HiddenFor(m => m.HasAdditionalInfo)
+        <select name="@Html.NameFor(m => m.ProjectEvaluationRefuseReasonUid)" id="@Html.IdFor(m => m.ProjectEvaluationRefuseReasonUid)" @Html.GetUnobtrusiveValidationAttributesFor(m => m.ProjectEvaluationRefuseReasonUid) class="form-control enable-select2">
+            <option value="" data-hasadditionalinfo="">@(Labels.Select)...</option>
+            @foreach (var projectEvaluationRefuseReason in Model.ProjectEvaluationRefuseReasons)
+            {
+                <option value="@projectEvaluationRefuseReason.Uid" @(projectEvaluationRefuseReason.Uid == Model.ProjectEvaluationRefuseReasonUid ? "selected" : "") data-hasadditionalinfo="@projectEvaluationRefuseReason.HasAdditionalInfo">
+                    @projectEvaluationRefuseReason.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                </option>
+            }
+        </select>
+        @Html.ValidationMessageFor(m => m.ProjectEvaluationRefuseReasonUid, "", new { @class = "text-danger" })
+    </div>
+    <div id="AdditionalReasonContainer" class="form-group col-12 d-none">
         @Html.TextBoxFor(m => m.Reason, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Reason, "", new {@class = "text-danger"})
+        <span class="form-text text-muted">@Messages.TextInPortugueseInEnglish</span>
+        @Html.ValidationMessageFor(m => m.Reason, "", new { @class = "text-danger" })
     </div>
 </div>

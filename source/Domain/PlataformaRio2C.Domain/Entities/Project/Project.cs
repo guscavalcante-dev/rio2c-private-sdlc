@@ -294,21 +294,33 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
         /// <param name="projectEvaluationStatuses">The project evaluation statuses.</param>
         /// <param name="userId">The user identifier.</param>
-        public void AcceptProjectBuyerEvaluation(Guid attendeeOrganizationUid, List<ProjectEvaluationStatus> projectEvaluationStatuses, int userId)
+        /// <returns></returns>
+        public ProjectBuyerEvaluation AcceptProjectBuyerEvaluation(Guid attendeeOrganizationUid, List<ProjectEvaluationStatus> projectEvaluationStatuses, int userId)
         {
             var buyerEvaluation = this.GetProjectBuyerEvaluationByAttendeeOrganizationUid(attendeeOrganizationUid);
             buyerEvaluation?.Accept(projectEvaluationStatuses, userId);
+
+            return buyerEvaluation;
         }
 
         /// <summary>Refuses the project buyer evaluation.</summary>
         /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
+        /// <param name="projectEvaluationRefuseReason">The project evaluation refuse reason.</param>
         /// <param name="reason">The reason.</param>
         /// <param name="projectEvaluationStatuses">The project evaluation statuses.</param>
         /// <param name="userId">The user identifier.</param>
-        public void RefuseProjectBuyerEvaluation(Guid attendeeOrganizationUid, string reason, List<ProjectEvaluationStatus> projectEvaluationStatuses, int userId)
+        /// <returns></returns>
+        public ProjectBuyerEvaluation RefuseProjectBuyerEvaluation(
+            Guid attendeeOrganizationUid, 
+            ProjectEvaluationRefuseReason projectEvaluationRefuseReason, 
+            string reason, 
+            List<ProjectEvaluationStatus> projectEvaluationStatuses, 
+            int userId)
         {
             var buyerEvaluation = this.GetProjectBuyerEvaluationByAttendeeOrganizationUid(attendeeOrganizationUid);
-            buyerEvaluation?.Refuse(reason, projectEvaluationStatuses, userId);
+            buyerEvaluation?.Refuse(projectEvaluationRefuseReason, reason, projectEvaluationStatuses, userId);
+
+            return buyerEvaluation;
         }
 
         /// <summary>Gets the project buyer evaluation by attendee organization uid.</summary>

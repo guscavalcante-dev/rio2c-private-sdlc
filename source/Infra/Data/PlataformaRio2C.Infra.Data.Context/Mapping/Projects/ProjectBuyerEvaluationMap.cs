@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified On : 12-10-2019
 // ***********************************************************************
 // <copyright file="ProjectBuyerEvaluationMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -47,6 +47,10 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.HasRequired(t => t.ProjectEvaluationStatus)
                 .WithMany()
                 .HasForeignKey(d => d.ProjectEvaluationStatusId);
+
+            this.HasOptional(t => t.ProjectEvaluationRefuseReason)
+                .WithMany()
+                .HasForeignKey(d => d.ProjectEvaluationRefuseReasonId);
         }
     }
 }

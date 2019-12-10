@@ -23,13 +23,13 @@ namespace PlataformaRio2C.Domain.Entities
     public class ProjectBuyerEvaluation : Entity
     {
         public static readonly int ReasonMinLength = 1;
-        public static readonly int ReasonMaxLength = 1500;
+        public static readonly int ReasonMaxLength = 500;
 
         public int ProjectId { get; private set; }
         public int BuyerAttendeeOrganizationId { get; private set; }
         public int ProjectEvaluationStatusId { get; private set; }
+        public int? ProjectEvaluationRefuseReasonId { get; private set; }
         public string Reason { get; private set; }
-        public bool IsSent { get; private set; }
         public int SellerUserId { get; private set; }
         public int? BuyerEvaluationUserId { get; private set; }
         public DateTime? EvaluationDate { get; private set; }
@@ -41,6 +41,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual User SellerUser { get; private set; }
         public virtual User BuyerEvaluationUser { get; private set; }
         public virtual ProjectEvaluationStatus ProjectEvaluationStatus { get; private set; }
+        public virtual ProjectEvaluationRefuseReason ProjectEvaluationRefuseReason { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="ProjectBuyerEvaluation"/> class.</summary>
         /// <param name="project">The project.</param>
@@ -56,7 +57,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.ProjectEvaluationStatusId = projectEvaluationStatus?.Id ?? 0;
             this.ProjectEvaluationStatus = projectEvaluationStatus;
             this.Reason = null;
-            this.IsSent = false;
             this.SellerUserId = userId;
             this.BuyerEvaluationUserId = null;
             this.EvaluationDate = null;
@@ -79,7 +79,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.ProjectEvaluationStatusId = projectEvaluationStatus?.Id ?? 0;
             this.ProjectEvaluationStatus = projectEvaluationStatus;
             this.Reason = null;
-            this.IsSent = false;
             this.SellerUserId = userId;
             this.BuyerEvaluationUserId = null;
             this.EvaluationDate = null;
@@ -109,6 +108,9 @@ namespace PlataformaRio2C.Domain.Entities
             this.ProjectEvaluationStatusId = projectEvaluationStatus?.Id ?? 0;
             this.ProjectEvaluationStatus = projectEvaluationStatus;
 
+            this.ProjectEvaluationRefuseReasonId = null;
+            this.ProjectEvaluationRefuseReason = null;
+            this.Reason = null;
             this.BuyerEvaluationUserId = userId;
             this.EvaluationDate = DateTime.Now;
            
@@ -117,16 +119,19 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.Now;
         }
 
-        /// <summary>Refuses the specified reason.</summary>
+        /// <summary>Refuses the specified project evaluation refuse reason.</summary>
+        /// <param name="projectEvaluationRefuseReason">The project evaluation refuse reason.</param>
         /// <param name="reason">The reason.</param>
         /// <param name="projectEvaluationStatuses">The project evaluation statuses.</param>
         /// <param name="userId">The user identifier.</param>
-        public void Refuse(string reason, List<ProjectEvaluationStatus> projectEvaluationStatuses, int userId)
+        public void Refuse(ProjectEvaluationRefuseReason projectEvaluationRefuseReason, string reason, List<ProjectEvaluationStatus> projectEvaluationStatuses, int userId)
         {
             var projectEvaluationStatus = projectEvaluationStatuses?.FirstOrDefault(pes => pes.Code == ProjectEvaluationStatus.Refused.Code);
             this.ProjectEvaluationStatusId = projectEvaluationStatus?.Id ?? 0;
             this.ProjectEvaluationStatus = projectEvaluationStatus;
 
+            this.ProjectEvaluationRefuseReasonId = projectEvaluationRefuseReason?.Id ?? 0;
+            this.ProjectEvaluationRefuseReason = projectEvaluationRefuseReason;
             this.Reason = reason?.Trim();
             this.BuyerEvaluationUserId = userId;
             this.EvaluationDate = DateTime.Now;
@@ -147,6 +152,19 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.ValidateProject();
             this.ValidateBuyerAttendeeOrganization();
+            this.ValidateRefuseReason();
+
+            return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>Determines whether [is evaluation valid].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is evaluation valid]; otherwise, <c>false</c>.</returns>
+        public bool IsEvaluationValid()
+        {
+            this.ValidationResult = new ValidationResult();
+
+            this.ValidateRefuseReason();
 
             return this.ValidationResult.IsValid;
         }
@@ -178,18 +196,24 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        //public void ValidateName()
-        //{
-        //    if (string.IsNullOrEmpty(this.Name?.Trim()))
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Name), new string[] { "Name" }));
-        //    }
+        /// <summary>Validates the refuse reason.</summary>
+        public void ValidateRefuseReason()
+        {
+            if (this.ProjectEvaluationStatus?.Code == ProjectEvaluationStatus.Refused.Code && this.ProjectEvaluationRefuseReason == null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Reason), new string[] { "Reason" }));
+            }
 
-        //    if (this.Name?.Trim().Length < NameMinLength || this.Name?.Trim().Length > NameMaxLength)
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, NameMaxLength, NameMinLength), new string[] { "Name" }));
-        //    }
-        //}
+            if (this.ProjectEvaluationRefuseReason?.HasAdditionalInfo == true && string.IsNullOrEmpty(this.Reason?.Trim()))
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Reason), new string[] { "Reason" }));
+            }
+
+            if (this.Reason?.Trim().Length < ReasonMinLength || this.Reason?.Trim().Length > ReasonMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, ReasonMaxLength, ReasonMinLength), new string[] { "Reason" }));
+            }
+        }
 
         #endregion
 
