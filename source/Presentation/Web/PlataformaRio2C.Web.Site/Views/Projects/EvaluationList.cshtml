@@ -20,8 +20,8 @@
         </div>
         <div class="row">
             <div class="col-12 col-sm-6 mt-2">
-                <select name="InterestUid" id="InterestUid" class="form-control enable-select2">
-                    <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Genre))...</option>
+                <select name="InterestUid" id="InterestUid" class="form-control">
+                    <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Genre.ToLowerInvariant()))...</option>
                     @foreach (var interestDto in genreInterests)
                     {
                         <option value="@interestDto.Interest.Uid" @(interestDto.Interest.Uid == ViewBag.InterestUid ? "selected" : string.Empty)>
@@ -31,8 +31,8 @@
                 </select>
             </div>
             <div class="col-12 col-sm-6 mt-2">
-                <select name="EvaluationStatusUid" id="EvaluationStatusUid" class="form-control enable-select2">
-                    <option value="">@(string.Format(Labels.SelectAMEntity, Labels.ProjectStatus))...</option>
+                <select name="EvaluationStatusUid" id="EvaluationStatusUid" class="form-control">
+                    <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Status.ToLowerInvariant()))...</option>
                     @foreach (var evaluationStatus in projectEvaluationStatuses)
                     {
                         <option value="@evaluationStatus.Uid" @(evaluationStatus.Uid == ViewBag.EvaluationStatusUid ? "selected" : string.Empty)>
@@ -90,6 +90,9 @@
     <script>
         // Page translations ----------------------------------------------------------------------
         var translations = {
+            selectPlaceholder: '@Labels.SelectAMEntity',
+            genre: '@Html.Raw(Labels.Genre.ToLowerInvariant())',
+            status: '@Labels.Status.ToLowerInvariant()'
         };
 
         jQuery(document).ready(function () {

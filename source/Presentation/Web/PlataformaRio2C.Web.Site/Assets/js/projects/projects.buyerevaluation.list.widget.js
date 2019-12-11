@@ -4,7 +4,7 @@
 // Created          : 12-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-10-2019
+// Last Modified On : 12-11-2019
 // ***********************************************************************
 // <copyright file="projects.buyerevaluation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,7 +26,8 @@ var ProjectsBuyerEvaluationListWidget = function () {
     var enableShowPlugins = function () {
         KTApp.initTooltips();
         MyRio2cCommon.initScroll();
-        MyRio2cCommon.enableSelect2({ inputIdOrClass: '.enable-select2' });
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: '#InterestUid', allowClear: true, placeholder: translations.selectPlaceholder.replace('{0}', translations.genre) + '...' });
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: '#EvaluationStatusUid', allowClear: true, placeholder: translations.selectPlaceholder.replace('{0}', translations.status) + '...' });
         enablePageSizeChangeEvent();
     };
 
@@ -67,12 +68,21 @@ var ProjectsBuyerEvaluationListWidget = function () {
         ProjectsBuyerEvaluationListWidget.init();
     };
 
-    var enableSearchEvent = function () {
+    var enableSearchEvents = function () {
         $('#SearchKeywords').not('.search-event-enabled').on('search', function () {
             search();
         });
-
         $('#SearchKeywords').addClass('search-event-enabled');
+
+        $('#InterestUid').not('.change-event-enabled').on('change', function () {
+            search();
+        });
+        $('#InterestUid').addClass('change-event-enabled');
+
+        $('#EvaluationStatusUid').not('.change-event-enabled').on('change', function () {
+            search();
+        });
+        $('#EvaluationStatusUid').addClass('change-event-enabled');
     };
 
     // Pagination ---------------------------------------------------------------------------------
@@ -109,7 +119,7 @@ var ProjectsBuyerEvaluationListWidget = function () {
         init: function () {
             initElements();
             MyRio2cCommon.block();
-            enableSearchEvent();
+            enableSearchEvents();
             show();
         },
         search: function () {
