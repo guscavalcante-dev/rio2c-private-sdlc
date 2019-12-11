@@ -3,7 +3,7 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-09-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
+// Last Modified By : William Sergio Almado Junior
 // Last Modified On : 12-10-2019
 // ***********************************************************************
 // <copyright file="projects.buyerevaluation.widget.js" company="Softo">
