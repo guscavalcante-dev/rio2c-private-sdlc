@@ -96,12 +96,12 @@ section.footer .social-networks a{
 /*
     Login
 */
-.kt-login__body {
+.kt-login__body.with-message {
     flex-direction: column !important;
     height:unset !important;
 }
 
-    .kt-login__body .kt-iconbox {
+    .kt-login__body.with-message .kt-iconbox {
         margin-bottom: 80px;
     }
 

@@ -3,35 +3,36 @@
     Layout = "~/Views/Themes/Metronic/_InternalOutside.cshtml";
     ViewBag.Title = Labels.Enter;
 }
-<!--begin::Signin-->
-<div class="kt-login__form">
-    <div class="kt-login__title">
-        <h3>@Labels.SignIn</h3>
-    </div>
-    <!--begin::Form-->
-    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-signin kt-form", role = "form", novalidade = "novalidate" }))
-    {
-        @Html.AntiForgeryToken()
-        <div class="form-group">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Email), autocomplete = "off" })
-            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+<div class="kt-login__body">
+    <!--begin::Signin-->
+    <div class="kt-login__form">
+        <div class="kt-login__title">
+            <h3>@Labels.SignIn</h3>
         </div>
-        <div class="form-group">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control showhidepassword", placeholder = Html.DisplayNameFor(m => m.Password) })
-            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-        </div>
-        @Html.ValidationSummary(true, null, new { @class = "text-danger list-unstyled" })
-        <!--begin::Action-->
-        <div class="kt-login__actions">
-            <a href="@Url.Action("ForgotPassword", "Account", new { Area = "" })" class="kt-link kt-login__link-forgot">
-                @(Labels.ForgotPassword)?
-            </a>
-            <input type="submit" value="@Labels.SignIn" class="btn btn-primary btn-elevate kt-login__btn-primary" />
-        </div>
-        <!--end::Action-->
-    }
-    <!--end::Form-->
-    @*<!--begin::Divider-->
+        <!--begin::Form-->
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-signin kt-form", role = "form", novalidade = "novalidate" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Email), autocomplete = "off" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control showhidepassword", placeholder = Html.DisplayNameFor(m => m.Password) })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div>
+            @Html.ValidationSummary(true, null, new { @class = "text-danger list-unstyled" })
+            <!--begin::Action-->
+            <div class="kt-login__actions">
+                <a href="@Url.Action("ForgotPassword", "Account", new { Area = "" })" class="kt-link kt-login__link-forgot">
+                    @(Labels.ForgotPassword)?
+                </a>
+                <input type="submit" value="@Labels.SignIn" class="btn btn-primary btn-elevate kt-login__btn-primary" />
+            </div>
+            <!--end::Action-->
+        }
+        <!--end::Form-->
+        @*<!--begin::Divider-->
         <div class="kt-login__divider">
             <div class="kt-divider">
                 <span></span>
@@ -56,8 +57,9 @@
             </a>
         </div>
         <!--end::Options-->*@
+    </div>
+    <!--end::Signin-->
 </div>
-<!--end::Signin-->
 @section Styles {
     @Styles.Render("~/bundles/css/loginCustomStyles.css")
 }
