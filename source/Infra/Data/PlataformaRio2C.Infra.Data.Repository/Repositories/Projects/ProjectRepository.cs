@@ -135,18 +135,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
-
-        /// <summary>Finds projects by status.</summary>
+        /// <summary>Finds the by project evaluation status.</summary>
         /// <param name="query">The query.</param>
-        /// <param name="evaluationStatusUid">The interest uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="attendeeCollaboratorUid">The attendee collaborator uid.</param>
         /// <returns></returns>
-        internal static IQueryable<Project> FindByEvaluationStatus(this IQueryable<Project> query, Guid? evaluationStatusUid)
+        internal static IQueryable<Project> FindByProjectEvaluationStatus(this IQueryable<Project> query, Guid? evaluationStatusUid, Guid attendeeCollaboratorUid)
         {
             if (evaluationStatusUid != null)
             {
-                query = query.Where(p => p.ProjectBuyerEvaluations.Any(pi => !pi.IsDeleted
-                                                                      && !pi.ProjectEvaluationStatus.IsDeleted
-                                                                      && pi.ProjectEvaluationStatus.Uid == evaluationStatusUid));
+                query = query.Where(p => p.ProjectBuyerEvaluations.Any(pbe => !pbe.IsDeleted
+                                                                              && !pbe.ProjectEvaluationStatus.IsDeleted
+                                                                              && pbe.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators.Any(aoc => !aoc.IsDeleted
+                                                                                                                                                            && aoc.AttendeeCollaborator.Uid == attendeeCollaboratorUid)
+                                                                              && pbe.ProjectEvaluationStatus.Uid == evaluationStatusUid));
             }
 
             return query;
@@ -282,6 +284,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="attendeeCollaboratorUid">The attendee collaborator uid.</param>
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="interestUid">The interest uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
@@ -292,7 +295,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .IsFinished()
                                 .FindByKeywords(searchKeywords)
                                 .FindByInterest(interestUid)
-                                .FindByEvaluationStatus(evaluationStatusUid)
+                                .FindByProjectEvaluationStatus(evaluationStatusUid, attendeeCollaboratorUid)
                                 .Select(p => new ProjectDto
                                 {
                                     Project = p,

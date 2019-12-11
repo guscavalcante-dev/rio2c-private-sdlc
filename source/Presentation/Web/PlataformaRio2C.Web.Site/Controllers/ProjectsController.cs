@@ -3,7 +3,7 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-28-2019
 //
-// Last Modified By : William Sergio Almado Junior
+// Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 12-10-2019
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
@@ -1489,6 +1489,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <summary>Evaluations the list.</summary>
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="interestUid">The interest uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
@@ -1511,7 +1512,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             ViewBag.SearchKeywords = searchKeywords;
             ViewBag.InterestUid = interestUid;
-            ViewBag.StatusUid = evaluationStatusUid;
+            ViewBag.EvaluationStatusUid = evaluationStatusUid;
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
 
@@ -1524,6 +1525,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <summary>Shows the evaluation list widget.</summary>
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="interestUid">The interest uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
@@ -1546,7 +1548,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             ViewBag.SearchKeywords = searchKeywords;
             ViewBag.InterestUid = interestUid;
-            ViewBag.StatusUid = evaluationStatusUid;
+            ViewBag.EvaluationStatusUid = evaluationStatusUid;
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
 

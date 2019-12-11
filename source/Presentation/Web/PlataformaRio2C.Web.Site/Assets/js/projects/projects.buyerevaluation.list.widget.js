@@ -3,7 +3,7 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-09-2019
 //
-// Last Modified By : William Sergio Almado Junior
+// Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 12-10-2019
 // ***********************************************************************
 // <copyright file="projects.buyerevaluation.widget.js" company="Softo">
@@ -38,7 +38,7 @@ var ProjectsBuyerEvaluationListWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.searchKeywords = $('#SearchKeywords').val();
         jsonParameters.interestUid = $('#InterestUid').val();
-        jsonParameters.evaluationStatusUid = $('#EvaulationStatusUid').val();
+        jsonParameters.evaluationStatusUid = $('#EvaluationStatusUid').val();
         jsonParameters.page = $('#Page').val();
         jsonParameters.pageSize = $('#PageSize').val();
 

@@ -28,7 +28,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         #region Site Widgets
 
         Task<List<ProjectDto>> FindAllDtosToSellAsync(Guid attendeeOrganizationUid, bool showAll);
-        Task<IPagedList<ProjectDto>> FindAllDtosToEvaluateAsync(Guid attendeeOrganizationUid, string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int page, int pageSize);
+        Task<IPagedList<ProjectDto>> FindAllDtosToEvaluateAsync(Guid attendeeCollaboratorUid, string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int page, int pageSize);
         Task<ProjectDto> FindSiteDetailsDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteMainInformationWidgetDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteInterestWidgetDtoByProjectUidAsync(Guid projectUid);

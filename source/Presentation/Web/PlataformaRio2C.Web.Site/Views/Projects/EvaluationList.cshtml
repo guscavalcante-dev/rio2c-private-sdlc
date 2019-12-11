@@ -9,12 +9,17 @@
 <div class="kt-portlet">
     <div class="kt-portlet__body">
         <div class="row">
-            <div class="col-12 col-md-6 mt-2">
+            <div class="col-10 col-lg-11 mt-2">
                 @Html.Hidden("Page", ViewBag.Page as int?)
                 @Html.Hidden("PageSize", ViewBag.PageSize as int?)
                 @Html.TextBox("SearchKeywords", null, new { @class = "form-control mr-1", type = "search", placeholder = Labels.Search })
             </div>
-            <div class="col-10 col-md-4 col-lg-5 mt-2">
+            <div class="col-2 col-lg-1 mt-2">
+                <button type="button" class="btn btn-primary btn-icon" onclick="ProjectsBuyerEvaluationListWidget.search();"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-sm-6 mt-2">
                 <select name="InterestUid" id="InterestUid" class="form-control enable-select2">
                     <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Genre))...</option>
                     @foreach (var interestDto in genreInterests)
@@ -25,17 +30,12 @@
                     }
                 </select>
             </div>
-            <div class="col-2 col-lg-1 mt-2">
-                <button type="button" class="btn btn-primary btn-icon" onclick="ProjectsBuyerEvaluationListWidget.search();"><i class="fa fa-search"></i></button>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 col-md-6 mt-2">
-                <select name="EvaulationStatusUid" id="EvaulationStatusUid" class="form-control enable-select2">
+            <div class="col-12 col-sm-6 mt-2">
+                <select name="EvaluationStatusUid" id="EvaluationStatusUid" class="form-control enable-select2">
                     <option value="">@(string.Format(Labels.SelectAMEntity, Labels.ProjectStatus))...</option>
                     @foreach (var evaluationStatus in projectEvaluationStatuses)
                     {
-                        <option value="@evaluationStatus.Uid" @(evaluationStatus.Uid == ViewBag.StatusUid ? "selected" : string.Empty)>
+                        <option value="@evaluationStatus.Uid" @(evaluationStatus.Uid == ViewBag.EvaluationStatusUid ? "selected" : string.Empty)>
                             @evaluationStatus.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
                         </option>
                     }
