@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-27-2019
+// Last Modified On : 12-11-2019
 // ***********************************************************************
 // <copyright file="EmailBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System;
 using MediatR;
+using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -25,9 +26,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string RecipientFullName { get; set; }
         public string RecipientEmail { get; set; }
 
-        public int? EditionId { get; set; }
-        public string EditionName { get; set; }
-        public int EditionUrlCode { get; set; }
+        public Edition Edition { get; private set; }
         public string UserInterfaceLanguage { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="EmailBaseCommand"/> class.</summary>
@@ -36,9 +35,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="recipientFirstName">First name of the recipient.</param>
         /// <param name="recipientFfullName">Name of the recipient ffull.</param>
         /// <param name="recipientEmail">The recipient email.</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <param name="editionName">Name of the edition.</param>
-        /// <param name="editionUrlCode">The edition URL code.</param>
+        /// <param name="edition">The edition.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public EmailBaseCommand(
             int recipientUserId, 
@@ -46,12 +43,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string recipientFirstName, 
             string recipientFfullName, 
             string recipientEmail, 
-            int? editionId, 
-            string editionName, 
-            int editionUrlCode, 
+            Edition edition, 
             string userInterfaceLanguage)
         {
-            this.UpdateBaseProperties(recipientUserId, recipientUserUid, recipientFirstName, recipientFfullName, recipientEmail, editionId, editionName, editionUrlCode, userInterfaceLanguage);
+            this.UpdateBaseProperties(recipientUserId, recipientUserUid, recipientFirstName, recipientFfullName, recipientEmail, edition, userInterfaceLanguage);
         }
 
         /// <summary>Initializes a new instance of the <see cref="EmailBaseCommand"/> class.</summary>
@@ -65,9 +60,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="recipientFirstName">First name of the recipient.</param>
         /// <param name="recipientFfullName">Name of the recipient ffull.</param>
         /// <param name="recipientEmail">The recipient email.</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <param name="editionName">Name of the edition.</param>
-        /// <param name="editionUrlCode">The edition URL code.</param>
+        /// <param name="edition">The edition.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         protected void UpdateBaseProperties(
             int recipientUserId,
@@ -75,9 +68,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string recipientFirstName,
             string recipientFfullName,
             string recipientEmail,
-            int? editionId,
-            string editionName,
-            int editionUrlCode,
+            Edition edition,
             string userInterfaceLanguage)
         {
             this.RecipientUserId = recipientUserId;
@@ -85,9 +76,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.RecipientFirstName = recipientFirstName?.Trim();
             this.RecipientFullName = recipientFfullName?.Trim();
             this.RecipientEmail = recipientEmail?.Trim();
-            this.EditionId = editionId;
-            this.EditionName = editionName?.Trim();
-            this.EditionUrlCode = editionUrlCode;
+            this.Edition = edition;
             this.UserInterfaceLanguage = userInterfaceLanguage?.Trim();
         }
     }

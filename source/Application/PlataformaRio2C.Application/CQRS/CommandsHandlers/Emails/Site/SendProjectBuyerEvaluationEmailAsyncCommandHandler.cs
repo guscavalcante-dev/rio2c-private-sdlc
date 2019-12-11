@@ -50,7 +50,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             // Save sent email
             var sentEmailUid = Guid.NewGuid();
-            var sentEmail = new SentEmail(sentEmailUid, cmd.RecipientUserId, cmd.EditionId, "ProjectBuyerEvaluationEmail");
+            var sentEmail = new SentEmail(sentEmailUid, cmd.RecipientUserId, cmd.Edition.Id, "ProjectBuyerEvaluationEmail");
             if (!sentEmail.IsValid())
             {
                 this.AppValidationResult.Add(sentEmail.ValidationResult);

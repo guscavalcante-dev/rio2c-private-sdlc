@@ -81,9 +81,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                             var response = await this.CommandBus.Send(new SendProjectBuyerEvaluationEmailAsync(
                                     unsentProjectBuyerEvaluation,
                                     emailRecipientsDto,
-                                    currentEdition.Id,
-                                    currentEdition.Name,
-                                    currentEdition.UrlCode),
+                                    currentEdition),
                                 cancellationToken);
                             foreach (var error in response?.Errors)
                             {

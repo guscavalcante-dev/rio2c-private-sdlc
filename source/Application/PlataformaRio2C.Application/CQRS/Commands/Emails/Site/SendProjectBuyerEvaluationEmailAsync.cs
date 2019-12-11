@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
@@ -24,24 +25,18 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Initializes a new instance of the <see cref="SendProjectBuyerEvaluationEmailAsync"/> class.</summary>
         /// <param name="projectBuyerEvaluationEmailDto">The project buyer evaluation email dto.</param>
         /// <param name="emailRecipientDto">The email recipient dto.</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <param name="editionName">Name of the edition.</param>
-        /// <param name="editionUrlCode">The edition URL code.</param>
+        /// <param name="edition">The edition.</param>
         public SendProjectBuyerEvaluationEmailAsync(
             ProjectBuyerEvaluationEmailDto projectBuyerEvaluationEmailDto,
             EmailRecipientDto emailRecipientDto,
-            int? editionId,
-            string editionName,
-            int editionUrlCode)
+            Edition edition)
             : base(
                 emailRecipientDto.RecipientUser.Id,
                 emailRecipientDto.RecipientUser.Uid,
                 emailRecipientDto.RecipientUser.Name.GetFirstWord(),
                 emailRecipientDto.RecipientUser.Name,
                 emailRecipientDto.RecipientUser.Email,
-                editionId,
-                editionName,
-                editionUrlCode,
+                edition,
                 emailRecipientDto.RecipientLanguage?.Code ?? "pt-br")
         {
             this.ProjectBuyerEvaluationEmailDto = projectBuyerEvaluationEmailDto;

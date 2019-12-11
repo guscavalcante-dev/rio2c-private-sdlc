@@ -4,7 +4,7 @@
 // Created          : 10-17-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-17-2019
+// Last Modified On : 12-11-2019
 // ***********************************************************************
 // <copyright file="SendForgotPasswordEmailAsyncCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -50,7 +50,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             // Save sent email
             var sentEmailUid = Guid.NewGuid();
-            var sentEmail = new SentEmail(sentEmailUid, cmd.RecipientUserId, cmd.EditionId, "ForgotPassword");
+            var sentEmail = new SentEmail(sentEmailUid, cmd.RecipientUserId, cmd.Edition.Id, "ForgotPassword");
             if (!sentEmail.IsValid())
             {
                 this.AppValidationResult.Add(sentEmail.ValidationResult);

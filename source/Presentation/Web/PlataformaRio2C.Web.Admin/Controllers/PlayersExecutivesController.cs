@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-29-2019
+// Last Modified On : 12-11-2019
 // ***********************************************************************
 // <copyright file="PlayersExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -259,9 +259,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                             collaboratorDto.GetFirstName(),
                             collaboratorDto.GetFullName(collaboratorLanguageCode),
                             collaboratorDto.User.Email,
-                            this.EditionDto.Id,
-                            this.EditionDto.Name,
-                            this.EditionDto.UrlCode,
+                            this.EditionDto.Edition,
                             this.AdminAccessControlDto.User.Id,
                             collaboratorLanguageCode));
                         if (!result.IsValid)

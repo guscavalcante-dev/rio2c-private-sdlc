@@ -4,7 +4,7 @@
 // Created          : 08-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-09-2019
+// Last Modified On : 12-11-2019
 // ***********************************************************************
 // <copyright file="EditionDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,12 +12,14 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
     /// <summary>EditionDto</summary>
     public class EditionDto
     {
+        public Edition Edition { get; private set; }
         public int Id { get; private set; }
         public Guid Uid { get; private set; }
         public string Name { get; private set; }
@@ -58,6 +60,8 @@ namespace PlataformaRio2C.Domain.Dtos
             {
                 return;
             }
+
+            this.Edition = entity;
 
             this.Id = entity.Id;
             this.Uid = entity.Uid;

@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-28-2019
+// Last Modified On : 12-11-2019
 // ***********************************************************************
 // <copyright file="AccountController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -262,9 +262,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     null,
                     null,
                     user.Email,
-                    this.EditionDto.Id,
-                    this.EditionDto.Name,
-                    this.EditionDto.UrlCode,
+                    this.EditionDto.Edition,
                     this.UserInterfaceLanguage));
                 if (!result.IsValid)
                 {

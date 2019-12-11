@@ -77,8 +77,7 @@ namespace PlataformaRio2C.Web.Site.Services
 
             return Populate(x =>
             {
-                x.Subject = this.GetSubject(string.Format("Bem-vindo ao {0} | Welcome to {0}", cmd.EditionName));
-                //x.Subject = this.GetSubject(string.Format(Labels.WelcomeToEdition, cmd.EditionName));
+                x.Subject = this.GetSubject(string.Format("Bem-vindo ao {0} | Welcome to {0}", cmd.Edition.Name));
                 x.ViewName = "TicketBuyerWelcome";
                 x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
                 x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));

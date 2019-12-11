@@ -4,7 +4,7 @@
 // Created          : 09-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-27-2019
+// Last Modified On : 12-11-2019
 // ***********************************************************************
 // <copyright file="SendProducerWelcomeEmailAsync.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -27,9 +28,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="recipientFirstName">First name of the recipient.</param>
         /// <param name="recipientFullName">Full name of the recipient.</param>
         /// <param name="recipientEmail">The recipient email.</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <param name="editionName">Name of the edition.</param>
-        /// <param name="editionUrlCode">The edition URL code.</param>
+        /// <param name="edition">The edition.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public SendProducerWelcomeEmailAsync(
             string userSecurityToken,
@@ -38,11 +37,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string recipientFirstName, 
             string recipientFullName, 
             string recipientEmail, 
-            int? editionId,
-            string editionName, 
-            int editionUrlCode, 
+            Edition edition,
             string userInterfaceLanguage)
-            : base(recipientUserId, recipientUserUid, recipientFirstName, recipientFullName, recipientEmail, editionId, editionName, editionUrlCode, userInterfaceLanguage)
+            : base(recipientUserId, recipientUserUid, recipientFirstName, recipientFullName, recipientEmail, edition, userInterfaceLanguage)
         {
             this.UserSecurityToken = userSecurityToken;
         }

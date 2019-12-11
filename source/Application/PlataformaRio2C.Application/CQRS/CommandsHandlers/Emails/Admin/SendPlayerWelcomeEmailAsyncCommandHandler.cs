@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-17-2019
+// Last Modified On : 12-11-2019
 // ***********************************************************************
 // <copyright file="SendPlayerWelcomeEmailAsyncCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -58,7 +58,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             // Save sent email
             var sentEmailUid = Guid.NewGuid();
-            var sentEmail = new SentEmail(sentEmailUid, cmd.RecipientUserId, cmd.EditionId, "PlayerWelcome");
+            var sentEmail = new SentEmail(sentEmailUid, cmd.RecipientUserId, cmd.Edition.Id, "PlayerWelcome");
             if (!sentEmail.IsValid())
             {
                 this.AppValidationResult.Add(sentEmail.ValidationResult);
@@ -79,7 +79,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             if (collaborator?.AttendeeCollaborators.Any(ac => !ac.IsDeleted 
-                                                              && ac.EditionId == cmd.EditionId
+                                                              && ac.EditionId == cmd.Edition.Id
                                                               && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
                                                                                                          && !act.CollaboratorType.IsDeleted
                                                                                                          && act.CollaboratorType.Name == Domain.Constants.CollaboratorType.ExecutiveAudiovisual)) != true)
@@ -92,7 +92,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
-            collaborator.SendWelcomeEmailSendDate(cmd.EditionId.Value, cmd.UserId);
+            collaborator.SendWelcomeEmailSendDate(cmd.Edition.Id, cmd.UserId);
 
             // Sends the email
             await this.MailerService.SendPlayerWelcomeEmail(cmd, sentEmail.Uid).SendAsync();

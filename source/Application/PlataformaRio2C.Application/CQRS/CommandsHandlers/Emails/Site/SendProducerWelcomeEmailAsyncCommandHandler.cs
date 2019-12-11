@@ -4,7 +4,7 @@
 // Created          : 09-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-27-2019
+// Last Modified On : 12-11-2019
 // ***********************************************************************
 // <copyright file="SendProducerWelcomeEmailAsyncCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -50,7 +50,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             // Save sent email
             var sentEmailUid = Guid.NewGuid();
-            var sentEmail = new SentEmail(sentEmailUid, cmd.RecipientUserId, cmd.EditionId, "ProducerWelcome");
+            var sentEmail = new SentEmail(sentEmailUid, cmd.RecipientUserId, cmd.Edition.Id, "ProducerWelcome");
             if (!sentEmail.IsValid())
             {
                 this.AppValidationResult.Add(sentEmail.ValidationResult);

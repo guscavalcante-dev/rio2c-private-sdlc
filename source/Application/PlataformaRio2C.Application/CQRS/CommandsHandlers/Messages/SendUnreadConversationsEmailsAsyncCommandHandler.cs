@@ -4,7 +4,7 @@
 // Created          : 12-03-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-05-2019
+// Last Modified On : 12-11-2019
 // ***********************************************************************
 // <copyright file="SendUnreadConversationsEmailsAsyncCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -79,9 +79,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
                     var response = await this.CommandBus.Send(new SendUnreadConversationEmailAsync(
                             unreadConversation,
-                            currentEdition.Id,
-                            currentEdition.Name,
-                            currentEdition.UrlCode),
+                            currentEdition),
                         cancellationToken);
                     foreach (var error in response?.Errors)
                     {
