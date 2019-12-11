@@ -332,6 +332,7 @@
     <Compile Include="Areas\WebApi\Controllers\BaseApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\ConferenceController.cs" />
     <Compile Include="Areas\WebApi\Controllers\MessageController.cs" />
+    <Compile Include="Areas\WebApi\Controllers\ProjectsApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\OrganizationsApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\PlayersApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\NetworksApiController.cs" />
@@ -7182,6 +7183,7 @@
     </Content>
     <Content Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -7270,6 +7272,7 @@
     <Content Include="Views\SiteMailerService\UnreadConversationEmail.cshtml" />
     <Content Include="Views\Projects\EvaluationDetails.cshtml" />
     <Content Include="Views\Projects\Widgets\BuyerEvaluationWidget.cshtml" />
+    <Content Include="Views\SiteMailerService\ProjectBuyerEvaluationEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

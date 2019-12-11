@@ -102,6 +102,7 @@
     <Compile Include="Dtos\Collaborators\CollaboratorJobTitleBaseDto.cs" />
     <Compile Include="Dtos\Editions\EditionBaseDto.cs" />
     <Compile Include="Dtos\Editions\EditionDto.cs" />
+    <Compile Include="Dtos\Emails\EmailRecipientDto.cs" />
     <Compile Include="Dtos\Messages\NotificationEmailConversationDto.cs" />
     <Compile Include="Dtos\Messages\HubBaseDto.cs" />
     <Compile Include="Dtos\Messages\MessageHubDto.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="Dtos\Organizations\OrganizationInterestDto.cs" />
     <Compile Include="Dtos\Organizations\OrganizationTargetAudienceDto.cs" />
     <Compile Include="Dtos\Organizations\OrganizationActivityDto.cs" />
+    <Compile Include="Dtos\Projects\ProjectBuyerEvaluationEmailDto.cs" />
     <Compile Include="Dtos\Projects\ProjectBuyerEvaluationDto.cs" />
     <Compile Include="Dtos\Projects\ProjectTeaserLinkDto.cs" />
     <Compile Include="Dtos\Projects\ProjectImageLinkDto.cs" />
@@ -249,6 +251,7 @@
     <Compile Include="Interfaces\Repositories\Addresses\IStateRepository.cs" />
     <Compile Include="Interfaces\Repositories\Projects\IProjectEvaluationRefuseReasonRepository.cs" />
     <Compile Include="Interfaces\Repositories\Projects\IProjectEvaluationStatusRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Projects\IProjectBuyerEvaluationRepository.cs" />
     <Compile Include="Interfaces\Repositories\Projects\IProjectTypeRepository.cs" />
     <Compile Include="Interfaces\Repositories\SalesPlatform\IAttendeeSalesPlatformTicketTypeRepository.cs" />
     <Compile Include="Interfaces\Repositories\SentEmails\ISentEmailRepository.cs" />

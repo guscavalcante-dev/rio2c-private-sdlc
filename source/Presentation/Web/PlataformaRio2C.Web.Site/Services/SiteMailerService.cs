@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-03-2019
+// Last Modified On : 12-11-2019
 // ***********************************************************************
 // <copyright file="SiteMailerService.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -108,6 +108,35 @@ namespace PlataformaRio2C.Web.Site.Services
             {
                 x.Subject = this.GetSubject(string.Format(Messages.UserSentYouMessage, senderName));
                 x.ViewName = "UnreadConversationEmail";
+                x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
+                x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
+                ViewBag.SentEmailUid = sentEmailUid;
+
+                if (!string.IsNullOrEmpty(this.GetBccEmailRecipient()))
+                {
+                    x.Bcc.Add(this.GetBccEmailRecipient());
+                }
+            });
+        }
+
+        /// <summary>Sends the project buyer evaluation email.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <param name="sentEmailUid">The sent email uid.</param>
+        /// <returns></returns>
+        public MvcMailMessage SendProjectBuyerEvaluationEmail(SendProjectBuyerEvaluationEmailAsync cmd, Guid sentEmailUid)
+        {
+            this.SetCulture(cmd.UserInterfaceLanguage);
+
+            this.ViewData = new ViewDataDictionary(cmd);
+
+            //var senderName = cmd.NotificationEmailConversationDto.OtherAttendeeCollaboratorDto?.Collaborator?.GetDisplayName() ??
+            //                 cmd.NotificationEmailConversationDto.OtherUser?.Name;
+
+            return Populate(x =>
+            {
+                //x.Subject = this.GetSubject(string.Format(Messages.UserSentYouMessage, senderName));
+                x.Subject = this.GetSubject("You received a new project for evaluation");
+                x.ViewName = "ProjectBuyerEvaluationEmail";
                 x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
                 x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
                 ViewBag.SentEmailUid = sentEmailUid;

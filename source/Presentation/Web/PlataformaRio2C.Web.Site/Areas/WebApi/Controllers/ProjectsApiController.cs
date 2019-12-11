@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Site
 // Author           : Rafael Dantas Ruiz
-// Created          : 12-03-2019
+// Created          : 12-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 12-11-2019
 // ***********************************************************************
-// <copyright file="NetworksApiController.cs" company="Softo">
+// <copyright file="ProjectsApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -24,41 +24,41 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 {
-    /// <summary>NetworksApiController</summary>
-    [System.Web.Http.RoutePrefix("api/v1.0/networks")]
-    public class NetworksApiController : BaseApiController
+    /// <summary>ProjectsApiController</summary>
+    [System.Web.Http.RoutePrefix("api/v1.0/projects")]
+    public class ProjectsApiController : BaseApiController
     {
         private readonly IMediator commandBus;
 
-        /// <summary>Initializes a new instance of the <see cref="NetworksApiController"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="ProjectsApiController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
-        public NetworksApiController(IMediator commandBus)
+        public ProjectsApiController(IMediator commandBus)
         {
             this.commandBus = commandBus;
         }
 
-        #region Send unread conversations emails
+        #region Send Project Buyer Evaluation Emails
 
-        /// <summary>Sends the unread conversations emails.</summary>
+        /// <summary>Sends the projects buyers evaluations emails.</summary>
         /// <param name="key">The key.</param>
         /// <returns></returns>
         [HttpGet]
-        [Route("SendUnreadConversationsEmails/{key?}")]
-        public async Task<IHttpActionResult> SendUnreadConversationsEmails(string key)
+        [Route("SendProjectsBuyersEvaluationsEmails/{key?}")]
+        public async Task<IHttpActionResult> SendProjectsBuyersEvaluationsEmails(string key)
         {
             var result = new AppValidationResult();
 
             try
             {
-                if (key?.ToLowerInvariant() != ConfigurationManager.AppSettings["SendUnreadConversationsEmailsApiKey"]?.ToLowerInvariant())
+                if (key?.ToLowerInvariant() != ConfigurationManager.AppSettings["SendProjectsBuyersEvaluationsEmailsApiKey"]?.ToLowerInvariant())
                 {
-                    throw new Exception("Invalid key to execute send unread conversations emails.");
+                    throw new Exception("Invalid key to execute send projects buyers evaluations emails.");
                 }
 
-                result = await this.commandBus.Send(new SendUnreadConversationsEmailsAsync());
+                result = await this.commandBus.Send(new SendProjectsBuyersEvaluationsEmailsAsync());
                 if (!result.IsValid)
                 {
-                    throw new DomainException("Send unread conversations emails processed with some errors.");
+                    throw new DomainException("Send projects buyers evaluations emails processed with some errors.");
                 }
             }
             catch (DomainException ex)
@@ -69,10 +69,10 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             catch (Exception ex)
             {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return await Json(new { status = "error", message = "Send unread conversations emails failed." });
+                return await Json(new { status = "error", message = "Send projects buyers evaluations emails failed." });
             }
 
-            return await Json(new { status = "success", message = "Send unread conversations emails processed successfully without errors." });
+            return await Json(new { status = "success", message = "Send projects buyers evaluations emails processed successfully without errors." });
         }
 
         #endregion

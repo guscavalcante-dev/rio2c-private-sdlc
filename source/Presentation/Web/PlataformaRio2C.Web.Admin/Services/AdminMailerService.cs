@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-03-2019
+// Last Modified On : 12-11-2019
 // ***********************************************************************
 // <copyright file="AdminMailerService.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -154,6 +154,15 @@ namespace PlataformaRio2C.Web.Admin.Services
         /// <param name="sentEmailUid">The sent email uid.</param>
         /// <returns></returns>
         public MvcMailMessage SendUnreadConversationEmail(SendUnreadConversationEmailAsync cmd, Guid sentEmailUid)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>Sends the project buyer evaluation email.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <param name="sentEmailUid">The sent email uid.</param>
+        /// <returns></returns>
+        public MvcMailMessage SendProjectBuyerEvaluationEmail(SendProjectBuyerEvaluationEmailAsync cmd, Guid sentEmailUid)
         {
             throw new NotImplementedException();
         }

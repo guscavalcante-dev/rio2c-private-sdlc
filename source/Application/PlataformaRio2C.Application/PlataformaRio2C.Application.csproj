@@ -184,6 +184,7 @@
     <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Common\SendForgotPasswordEmailAsyncCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Emails\Site\SendProjectBuyerEvaluationEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Site\SendUnreadConversationEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Site\SendProducerWelcomeEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\BaseHoldingCommandHandler.cs" />
@@ -217,6 +218,7 @@
     <Compile Include="CQRS\CommandsHandlers\Projects\AcceptProjectEvaluationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Projects\FinishProjectCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Projects\DeleteProjectBuyerEvaluationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Projects\SendProjectsBuyersEvaluationsEmailsAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Projects\UpdateProjectInterestsCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Projects\CreateProjectBuyerEvaluationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Projects\UpdateProjectLinksCommandHandler.cs" />
@@ -234,6 +236,7 @@
     <Compile Include="CQRS\Commands\Collaborators\UpdateCollaboratorMainInformation.cs" />
     <Compile Include="CQRS\Commands\Common\BaseCommands\InterestBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Emails\Common\SendForgotPasswordEmailAsync.cs" />
+    <Compile Include="CQRS\Commands\Emails\Site\SendProjectBuyerEvaluationEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Site\SendUnreadConversationEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Site\SendProducerWelcomeEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Messages\SendUnreadConversationsEmailsAsync.cs" />
@@ -289,6 +292,7 @@
     <Compile Include="CQRS\Commands\Projects\FinishProject.cs" />
     <Compile Include="CQRS\Commands\Projects\DeleteProjectBuyerEvaluation.cs" />
     <Compile Include="CQRS\Commands\Projects\CreateProjectBuyerEvaluation.cs" />
+    <Compile Include="CQRS\Commands\Projects\SendProjectsBuyersEvaluationsEmailsAsync.cs" />
     <Compile Include="CQRS\Commands\Projects\UpdateProjectInterests.cs" />
     <Compile Include="CQRS\Commands\Projects\UpdateProjectBuyerCompanies.cs" />
     <Compile Include="CQRS\Commands\Projects\UpdateProjectLinks.cs" />

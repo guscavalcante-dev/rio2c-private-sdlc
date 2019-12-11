@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Rafael Dantas Ruiz
-// Created          : 12-03-2019
+// Created          : 12-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 12-11-2019
 // ***********************************************************************
-// <copyright file="SendProducerWelcomeEmailAsyncCommandHandler.cs" company="Softo">
+// <copyright file="SendProjectBuyerEvaluationEmailAsyncCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -23,15 +23,15 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>SendUnreadConversationEmailAsyncCommandHandler</summary>
-    public class SendUnreadConversationEmailAsyncCommandHandler : MailerBaseCommandHandler, IRequestHandler<SendUnreadConversationEmailAsync, AppValidationResult>
+    /// <summary>SendProjectBuyerEvaluationEmailAsyncCommandHandler</summary>
+    public class SendProjectBuyerEvaluationEmailAsyncCommandHandler : MailerBaseCommandHandler, IRequestHandler<SendProjectBuyerEvaluationEmailAsync, AppValidationResult>
     {
-        /// <summary>Initializes a new instance of the <see cref="SendUnreadConversationEmailAsyncCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="SendProjectBuyerEvaluationEmailAsyncCommandHandler"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="mailerService">The mailer service.</param>
         /// <param name="sentEmailRepository">The sent email repository.</param>
-        public SendUnreadConversationEmailAsyncCommandHandler(
+        public SendProjectBuyerEvaluationEmailAsyncCommandHandler(
             IMediator commandBus,
             IUnitOfWork uow,
             IMailerService mailerService,
@@ -40,17 +40,17 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
         }
 
-        /// <summary>Handles the specified send unread conversation email asynchronous.</summary>
+        /// <summary>Handles the specified send project buyer evaluation email asynchronous.</summary>
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(SendUnreadConversationEmailAsync cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(SendProjectBuyerEvaluationEmailAsync cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
             // Save sent email
             var sentEmailUid = Guid.NewGuid();
-            var sentEmail = new SentEmail(sentEmailUid, cmd.RecipientUserId, cmd.EditionId, "UnreadConversation");
+            var sentEmail = new SentEmail(sentEmailUid, cmd.RecipientUserId, cmd.EditionId, "ProjectBuyerEvaluationEmail");
             if (!sentEmail.IsValid())
             {
                 this.AppValidationResult.Add(sentEmail.ValidationResult);
@@ -61,7 +61,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             //this.Uow.SaveChanges();
 
             // Sends the email
-            await this.MailerService.SendUnreadConversationEmail(cmd, sentEmail.Uid).SendAsync();
+            await this.MailerService.SendProjectBuyerEvaluationEmail(cmd, sentEmail.Uid).SendAsync();
 
             this.AppValidationResult.Data = sentEmail;
             return this.AppValidationResult;

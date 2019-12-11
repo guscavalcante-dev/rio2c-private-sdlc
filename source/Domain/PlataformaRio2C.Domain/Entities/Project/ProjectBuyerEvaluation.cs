@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-10-2019
+// Last Modified On : 12-11-2019
 // ***********************************************************************
 // <copyright file="ProjectBuyerEvaluation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -139,6 +139,12 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.UpdateUserId = userId;
             this.UpdateDate = DateTime.Now;
+        }
+
+        /// <summary>Sends the buyer email.</summary>
+        public void SendBuyerEmail()
+        {
+            this.BuyerEmailSendDate = DateTime.Now;
         }
 
         #region Validations

@@ -171,6 +171,7 @@
     <Compile Include="Repositories\Negotiation\NegotiationRepository.cs" />
     <Compile Include="Repositories\Projects\ProjectEvaluationRefuseReasonRepository.cs" />
     <Compile Include="Repositories\Projects\ProjectEvaluationStatusRepository.cs" />
+    <Compile Include="Repositories\Projects\ProjectBuyerEvaluationRepository.cs" />
     <Compile Include="Repositories\Projects\ProjectTypeRepository.cs" />
     <Compile Include="Repositories\Projects\ProjectLogLineRepository.cs" />
     <Compile Include="Repositories\Projects\ProjectStatusRepository.cs" />
