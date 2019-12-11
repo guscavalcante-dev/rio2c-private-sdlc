@@ -3,7 +3,7 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-28-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
+// Last Modified By : William Sergio Almado Junior
 // Last Modified On : 12-10-2019
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
@@ -45,6 +45,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         private readonly ITargetAudienceRepository targetAudienceRepo;
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo;
+        private readonly IProjectEvaluationStatusRepository evaluationStatusRepository;
 
         /// <summary>Initializes a new instance of the <see cref="ProjectsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -55,6 +56,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="targetAudienceRepository">The target audience repository.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="projectEvaluationRefuseReasonRepo">The project evaluation refuse reason repo.</param>
+        /// <param name="evaluationStatusRepository">The project evaluation status repository.</param>
         public ProjectsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
@@ -63,7 +65,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
             IActivityRepository activityRepository,
             ITargetAudienceRepository targetAudienceRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
-            IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo)
+            IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo,
+            IProjectEvaluationStatusRepository evaluationStatusRepository)
             : base(commandBus, identityController)
         {
             this.projectRepo = projectRepository;
@@ -72,6 +75,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             this.targetAudienceRepo = targetAudienceRepository;
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.projectEvaluationRefuseReasonRepo = projectEvaluationRefuseReasonRepo;
+            this.evaluationStatusRepository = evaluationStatusRepository;
         }
 
         #region Schedule
@@ -1490,7 +1494,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <returns></returns>
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.ExecutiveAudiovisual)]
         [HttpGet]
-        public async Task<ActionResult> EvaluationList(string searchKeywords, Guid? interestUid, int? page = 1, int? pageSize = 10)
+        public async Task<ActionResult> EvaluationList(string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 10)
         {
             if (this.EditionDto?.IsProjectEvaluationStarted() != true)
             {
@@ -1507,12 +1511,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             ViewBag.SearchKeywords = searchKeywords;
             ViewBag.InterestUid = interestUid;
+            ViewBag.StatusUid = evaluationStatusUid;
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
 
-            var genreInterests = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.Genre.Uid);
+            ViewBag.GenreInterests = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.Genre.Uid);
+            ViewBag.ProjectEvaluationStatuses = await this.evaluationStatusRepository.FindAllAsync();
 
-            return View(genreInterests);
+            return View();
         }
 
         /// <summary>Shows the evaluation list widget.</summary>
@@ -1523,7 +1529,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <returns></returns>
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.ExecutiveAudiovisual)]
         [HttpGet]
-        public async Task<ActionResult> ShowEvaluationListWidget(string searchKeywords, Guid? interestUid, int? page = 1, int? pageSize = 10)
+        public async Task<ActionResult> ShowEvaluationListWidget(string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 10)
         {
             if (this.EditionDto?.IsProjectEvaluationStarted() != true)
             {
@@ -1533,12 +1539,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
             var projects = await this.projectRepo.FindAllDtosToEvaluateAsync(
                 this.UserAccessControlDto?.Collaborator?.Uid ?? Guid.Empty, 
                 searchKeywords, 
-                interestUid, 
+                interestUid,
+                evaluationStatusUid,
                 page.Value, 
                 pageSize.Value);
 
             ViewBag.SearchKeywords = searchKeywords;
             ViewBag.InterestUid = interestUid;
+            ViewBag.StatusUid = evaluationStatusUid;
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
 

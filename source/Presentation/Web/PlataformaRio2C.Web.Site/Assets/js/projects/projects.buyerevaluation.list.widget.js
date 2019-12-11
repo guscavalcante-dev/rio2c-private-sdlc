@@ -38,6 +38,7 @@ var ProjectsBuyerEvaluationListWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.searchKeywords = $('#SearchKeywords').val();
         jsonParameters.interestUid = $('#InterestUid').val();
+        jsonParameters.evaluationStatusUid = $('#EvaulationStatusUid').val();
         jsonParameters.page = $('#Page').val();
         jsonParameters.pageSize = $('#PageSize').val();
 

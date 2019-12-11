@@ -1,8 +1,10 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
-@model List<InterestDto>
+
 @{
     ViewBag.Title = Labels.ProjectsEvaluation;
     var editionDto = ViewBag.EditionDto as EditionDto;
+    var genreInterests = ViewBag.GenreInterests as List<InterestDto>;
+    var projectEvaluationStatuses = ViewBag.ProjectEvaluationStatuses as List<PlataformaRio2C.Domain.Entities.ProjectEvaluationStatus>;
 }
 <div class="kt-portlet">
     <div class="kt-portlet__body">
@@ -15,7 +17,7 @@
             <div class="col-10 col-md-4 col-lg-5 mt-2">
                 <select name="InterestUid" id="InterestUid" class="form-control enable-select2">
                     <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Genre))...</option>
-                    @foreach (var interestDto in Model)
+                    @foreach (var interestDto in genreInterests)
                     {
                         <option value="@interestDto.Interest.Uid" @(interestDto.Interest.Uid == ViewBag.InterestUid ? "selected" : string.Empty)>
                             @interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
@@ -25,6 +27,19 @@
             </div>
             <div class="col-2 col-lg-1 mt-2">
                 <button type="button" class="btn btn-primary btn-icon" onclick="ProjectsBuyerEvaluationListWidget.search();"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6 mt-2">
+                <select name="EvaulationStatusUid" id="EvaulationStatusUid" class="form-control enable-select2">
+                    <option value="">@(string.Format(Labels.SelectAMEntity, Labels.ProjectStatus))...</option>
+                    @foreach (var evaluationStatus in projectEvaluationStatuses)
+                    {
+                        <option value="@evaluationStatus.Uid" @(evaluationStatus.Uid == ViewBag.StatusUid ? "selected" : string.Empty)>
+                            @evaluationStatus.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                        </option>
+                    }
+                </select>
             </div>
         </div>
     </div>

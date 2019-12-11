@@ -135,6 +135,23 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+
+        /// <summary>Finds projects by status.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="evaluationStatusUid">The interest uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> FindByEvaluationStatus(this IQueryable<Project> query, Guid? evaluationStatusUid)
+        {
+            if (evaluationStatusUid != null)
+            {
+                query = query.Where(p => p.ProjectBuyerEvaluations.Any(pi => !pi.IsDeleted
+                                                                      && !pi.ProjectEvaluationStatus.IsDeleted
+                                                                      && pi.ProjectEvaluationStatus.Uid == evaluationStatusUid));
+            }
+
+            return query;
+        }
+
         /// <summary>Determines whether this instance is finished.</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
@@ -268,13 +285,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<ProjectDto>> FindAllDtosToEvaluateAsync(Guid attendeeCollaboratorUid, string searchKeywords, Guid? interestUid, int page, int pageSize)
+        public async Task<IPagedList<ProjectDto>> FindAllDtosToEvaluateAsync(Guid attendeeCollaboratorUid, string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int page, int pageSize)
         {
             var query = this.GetBaseQuery()
                                 .FindByBuyerAttendeeCollabratorUid(attendeeCollaboratorUid)
                                 .IsFinished()
                                 .FindByKeywords(searchKeywords)
                                 .FindByInterest(interestUid)
+                                .FindByEvaluationStatus(evaluationStatusUid)
                                 .Select(p => new ProjectDto
                                 {
                                     Project = p,
