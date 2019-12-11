@@ -1864,4 +1864,8 @@
     <value>Pending</value>
     <comment>Pendente</comment>
   </data>
+  <data name="Evaluate" xml:space="preserve">
+    <value>Evaluate</value>
+    <comment>Avaliar</comment>
+  </data>
 </root>

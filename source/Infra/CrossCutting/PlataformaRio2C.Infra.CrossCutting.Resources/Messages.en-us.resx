@@ -802,4 +802,20 @@
     <value>Click here to change your email settings</value>
     <comment>Clique aqui para alterar suas configurações de email</comment>
   </data>
+  <data name="ProjectBuyerEvaluationEmailMessage1" xml:space="preserve">
+    <value>You have received a project for evaluation.</value>
+    <comment>Você recebeu um projeto para avaliação.</comment>
+  </data>
+  <data name="ProjectBuyerEvaluationEmailMessage2" xml:space="preserve">
+    <value>Kindly login to MyRio2C to make your selection until {0}.</value>
+    <comment>Por favor, acesse o MyRio2C para realizar sua seleção até {0}.</comment>
+  </data>
+  <data name="ProjectBuyerEvaluationEmailMessage3" xml:space="preserve">
+    <value>P.S. Don’t forget to leave your constructive criticism in case you reject any project.</value>
+    <comment>Obs. Não se esqueça de deixar uma crítica construtiva caso rejeite algum projeto.</comment>
+  </data>
+  <data name="ProjectBuyerEvaluationEmailSubject" xml:space="preserve">
+    <value>You have a new project for evaluation</value>
+    <comment>Você tem um novo projeto para avaliação</comment>
+  </data>
 </root>

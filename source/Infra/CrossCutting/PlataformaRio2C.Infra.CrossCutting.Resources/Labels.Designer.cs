@@ -1294,6 +1294,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Avaliar.
+        /// </summary>
+        public static string Evaluate {
+            get {
+                return ResourceManager.GetString("Evaluate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Avaliar projeto.
         /// </summary>
         public static string EvaluateProject {

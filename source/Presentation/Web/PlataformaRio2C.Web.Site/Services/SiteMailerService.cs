@@ -129,13 +129,9 @@ namespace PlataformaRio2C.Web.Site.Services
 
             this.ViewData = new ViewDataDictionary(cmd);
 
-            //var senderName = cmd.NotificationEmailConversationDto.OtherAttendeeCollaboratorDto?.Collaborator?.GetDisplayName() ??
-            //                 cmd.NotificationEmailConversationDto.OtherUser?.Name;
-
             return Populate(x =>
             {
-                //x.Subject = this.GetSubject(string.Format(Messages.UserSentYouMessage, senderName));
-                x.Subject = this.GetSubject("You received a new project for evaluation");
+                x.Subject = this.GetSubject(Messages.ProjectBuyerEvaluationEmailSubject);
                 x.ViewName = "ProjectBuyerEvaluationEmail";
                 x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
                 x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));

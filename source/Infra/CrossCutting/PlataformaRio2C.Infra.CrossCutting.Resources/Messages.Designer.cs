@@ -1122,6 +1122,42 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Você recebeu um projeto para avaliação..
+        /// </summary>
+        public static string ProjectBuyerEvaluationEmailMessage1 {
+            get {
+                return ResourceManager.GetString("ProjectBuyerEvaluationEmailMessage1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Por favor, acesse o MyRio2C para realizar sua seleção até {0}..
+        /// </summary>
+        public static string ProjectBuyerEvaluationEmailMessage2 {
+            get {
+                return ResourceManager.GetString("ProjectBuyerEvaluationEmailMessage2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Obs. Não se esqueça de deixar uma crítica construtiva caso rejeite algum projeto..
+        /// </summary>
+        public static string ProjectBuyerEvaluationEmailMessage3 {
+            get {
+                return ResourceManager.GetString("ProjectBuyerEvaluationEmailMessage3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Você tem um novo projeto para avaliação.
+        /// </summary>
+        public static string ProjectBuyerEvaluationEmailSubject {
+            get {
+                return ResourceManager.GetString("ProjectBuyerEvaluationEmailSubject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O projeto está concluído e não pode ser alterado..
         /// </summary>
         public static string ProjectIsFinishedCannotBeUpdated {

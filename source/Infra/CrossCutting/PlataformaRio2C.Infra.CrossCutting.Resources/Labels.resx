@@ -1877,4 +1877,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Pendente</value>
     <comment>Pendente</comment>
   </data>
+  <data name="Evaluate" xml:space="preserve">
+    <value>Avaliar</value>
+    <comment>Avaliar</comment>
+  </data>
 </root>
