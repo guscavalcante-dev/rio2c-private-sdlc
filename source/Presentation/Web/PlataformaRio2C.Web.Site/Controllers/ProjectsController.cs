@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-10-2019
+// Last Modified On : 12-11-2019
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -92,19 +92,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
             });
 
             #endregion
-
-            //TODO: Enable this projects redirection when projects is implemented
-            //// If the user is not player and industry, redirect to the correct page
-            //if (this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual) == true
-            //    && this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) != true)
-            //{
-            //    return RedirectToAction("Review", "Projects", new { Area = "" });
-            //}
-            //if (this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual) != true
-            //    && this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true)
-            //{
-            //    return RedirectToAction("Submited", "Projects", new { Area = "" });
-            //}
 
             return View();
         }
@@ -1572,7 +1559,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.ExecutiveAudiovisual)]
         public async Task<ActionResult> EvaluationDetails(Guid? id)
         {
-            if (this.EditionDto?.IsProjectSubmitStarted() != true)
+            if (this.EditionDto?.IsProjectEvaluationStarted() != true)
             {
                 return RedirectToAction("Index", "Projects", new { Area = "" });
             }
@@ -1616,7 +1603,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowBuyerEvaluationWidget(Guid? projectUid)
         {
-            if (this.EditionDto?.IsProjectSubmitStarted() != true)
+            if (this.EditionDto?.IsProjectEvaluationStarted() != true)
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }

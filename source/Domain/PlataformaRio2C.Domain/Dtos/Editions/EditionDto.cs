@@ -134,7 +134,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is project evaluation open]; otherwise, <c>false</c>.</returns>
         public bool IsProjectEvaluationOpen()
         {
-            return DateTime.Now >= this.ProjectSubmitStartDate && DateTime.Now <= this.ProjectEvaluationEndDate;
+            return DateTime.Now >= this.ProjectEvaluationStartDate && DateTime.Now <= this.ProjectEvaluationEndDate;
         }
 
         /// <summary>Determines whether [is project evaluation started].</summary>
@@ -142,7 +142,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is project evaluation started]; otherwise, <c>false</c>.</returns>
         public bool IsProjectEvaluationStarted()
         {
-            return DateTime.Now >= this.ProjectSubmitStartDate;
+            return DateTime.Now >= this.ProjectEvaluationStartDate;
         }
 
         /// <summary>Determines whether [is project evaluation ended].</summary>
