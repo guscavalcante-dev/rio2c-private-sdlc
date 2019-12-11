@@ -132,7 +132,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                 .Where(aoc => !aoc.IsDeleted
                                                                                 && !aoc.AttendeeOrganization.IsDeleted
                                                                                 && !aoc.AttendeeCollaborator.IsDeleted
-                                                                                && !aoc.AttendeeCollaborator.Collaborator.IsDeleted)
+                                                                                && !aoc.AttendeeCollaborator.Collaborator.IsDeleted
+                                                                                && !aoc.AttendeeCollaborator.Collaborator.User.UserUnsubscribedLists.Any(uul => !uul.IsDeleted
+                                                                                                                                                                && uul.SubscribeList.Code == SubscribeList.ProjectBuyerEvaluationEmail.Code))
                                                                 .Select(aoc => new EmailRecipientDto
                                                                 {
                                                                     RecipientUser = aoc.AttendeeCollaborator.Collaborator.User,

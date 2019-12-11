@@ -4,7 +4,7 @@
 // Created          : 12-04-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-05-2019
+// Last Modified On : 12-11-2019
 // ***********************************************************************
 // <copyright file="SubscribeList.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,6 +29,7 @@ namespace PlataformaRio2C.Domain.Entities
         #region Configurations
 
         public static SubscribeList UnreadConversationEmail = new SubscribeList("UnreadConversationEmail");
+        public static SubscribeList ProjectBuyerEvaluationEmail = new SubscribeList("ProjectBuyerEvaluationEmail");
 
         #endregion
 

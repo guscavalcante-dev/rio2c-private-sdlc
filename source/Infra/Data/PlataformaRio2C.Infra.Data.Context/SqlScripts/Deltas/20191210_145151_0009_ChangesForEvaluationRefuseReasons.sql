@@ -62,3 +62,10 @@ INSERT [dbo].[ProjectEvaluationRefuseReasons] ([Id], [Uid], [Name], [HasAddition
 GO
 SET IDENTITY_INSERT [dbo].[ProjectEvaluationRefuseReasons] OFF
 GO
+
+SET IDENTITY_INSERT [dbo].[SubscribeLists] ON 
+GO
+INSERT [dbo].[SubscribeLists] ([Id], [Uid], [Name], [Description], [Code], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (2, N'2e91912a-4ea4-4c9e-a284-002a509c9670', N'Emails de projetos para avaliação | Projects for evaluation emails', N'Lista para recebimento de emails de novos projetos para avaliação | List to receive emails of new projects for evaluation', N'ProjectBuyerEvaluationEmail', 0, CAST(N'2019-12-11 15:10:30.321' AS DateTime), 1, CAST(N'2019-12-11 14:38:15.827' AS DateTime), 1)
+GO
+SET IDENTITY_INSERT [dbo].[SubscribeLists] OFF
+GO
