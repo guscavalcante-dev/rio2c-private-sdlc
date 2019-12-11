@@ -121,7 +121,18 @@
                         <div class="kt-notification__item-details">
                             <div class="kt-notification__item-title">
                                 @Labels.Evaluation
+                                @if (editionDto?.IsProjectEvaluationOpen() == true && userAccessControlDto.ProjectEvaluationsPendingCount > 0)
+                                {
+                                    <span class="kt-badge kt-badge--danger float-right mr-2">@userAccessControlDto.ProjectEvaluationsPendingCount</span>
+                                }
                             </div>
+                            @*@if (editionDto?.IsProjectEvaluationOpen() == true && userAccessControlDto.ProjectEvaluationsPendingCount > 0)
+                            {
+                                <div class="kt-notification__item-time">
+                                    @userAccessControlDto.ProjectEvaluationsPendingCount 
+                                    @((userAccessControlDto.ProjectEvaluationsPendingCount == 1 ? Labels.PendingS : Labels.PendingP).ToLowerInvariant())
+                                </div>
+                            }*@
                         </div>
                     </a>
                 }

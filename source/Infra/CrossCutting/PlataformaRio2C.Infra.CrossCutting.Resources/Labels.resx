@@ -1869,4 +1869,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Reprovado</value>
     <comment>Reprovado</comment>
   </data>
+  <data name="PendingP" xml:space="preserve">
+    <value>Pendentes</value>
+    <comment>Pendentes</comment>
+  </data>
+  <data name="PendingS" xml:space="preserve">
+    <value>Pendente</value>
+    <comment>Pendente</comment>
+  </data>
 </root>
