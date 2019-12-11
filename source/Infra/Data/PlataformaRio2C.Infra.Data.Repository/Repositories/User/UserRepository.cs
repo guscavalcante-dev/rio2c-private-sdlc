@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-05-2019
+// Last Modified On : 12-10-2019
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -155,6 +155,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             Roles = u.Roles,
                             Language = u.UserInterfaceLanguage,
                             HasUnreadMessages = u.RecipientMessages.Any(rm => !rm.ReadDate.HasValue),
+                            ProjectEvaluationsPendingCount = (int?)u.Collaborator.AttendeeCollaborators
+                                                                        .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                                        .Sum(ac => ac.AttendeeOrganizationCollaborators
+                                                                                        .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted)
+                                                                                        .Sum(aoc => aoc.AttendeeOrganization.ProjectBuyerEvaluations.Count(pbe => !pbe.IsDeleted
+                                                                                                                                                                  && !pbe.Project.IsDeleted
+                                                                                                                                                                  && pbe.Project.FinishDate.HasValue
+                                                                                                                                                                  && pbe.ProjectEvaluationStatus.Code == ProjectEvaluationStatus.OnEvaluation.Code))) ?? 0,
                             Collaborator = u.Collaborator,
                             EditionAttendeeCollaborator = u.Collaborator.AttendeeCollaborators.FirstOrDefault(ac => !ac.IsDeleted && ac.EditionId == editionId),
                             EditionCollaboratorTypes = u.Collaborator.AttendeeCollaborators

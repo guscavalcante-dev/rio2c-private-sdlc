@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-09-2019
+// Last Modified On : 12-10-2019
 // ***********************************************************************
 // <copyright file="IProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,6 +35,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<ProjectDto> FindSiteLinksWidgetDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteBuyerCompanyWidgetDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteDuplicateDtoByProjectUidAsync(Guid projectUid);
+        Task<ProjectDto> FindSiteBuyerEvaluationWidgetDtoByProjectUidAsync(Guid projectUid, Guid attendeeCollaboratorUid);
 
         #endregion
 

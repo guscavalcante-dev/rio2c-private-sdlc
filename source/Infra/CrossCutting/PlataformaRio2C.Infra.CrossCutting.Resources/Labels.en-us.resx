@@ -1856,4 +1856,12 @@
     <value>Refused</value>
     <comment>Reprovado</comment>
   </data>
+  <data name="PendingP" xml:space="preserve">
+    <value>Pending</value>
+    <comment>Pendentes</comment>
+  </data>
+  <data name="PendingS" xml:space="preserve">
+    <value>Pending</value>
+    <comment>Pendente</comment>
+  </data>
 </root>

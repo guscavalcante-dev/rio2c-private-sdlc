@@ -2455,6 +2455,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pendentes.
+        /// </summary>
+        public static string PendingP {
+            get {
+                return ResourceManager.GetString("PendingP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pendente.
+        /// </summary>
+        public static string PendingS {
+            get {
+                return ResourceManager.GetString("PendingS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dados pessoais.
         /// </summary>
         public static string PersonalInformation {

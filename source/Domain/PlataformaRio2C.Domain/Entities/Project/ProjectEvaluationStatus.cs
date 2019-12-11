@@ -4,7 +4,7 @@
 // Created          : 11-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-09-2019
+// Last Modified On : 12-10-2019
 // ***********************************************************************
 // <copyright file="ProjectEvaluationStatus.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,6 +25,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Configurations
 
+        public static ProjectEvaluationStatus OnEvaluation = new ProjectEvaluationStatus("OnEvaluation");
         public static ProjectEvaluationStatus Accepted = new ProjectEvaluationStatus("Accepted");
         public static ProjectEvaluationStatus Refused = new ProjectEvaluationStatus("Refused");
 

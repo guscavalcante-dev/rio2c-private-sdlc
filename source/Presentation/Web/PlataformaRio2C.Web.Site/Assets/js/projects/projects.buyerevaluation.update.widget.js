@@ -27,12 +27,51 @@ var ProjectsBuyerEvaluationUpdateWidget = function () {
         widgetElement = $(widgetElementId);
     };
 
+    // Show ---------------------------------------------------------------------------------------
+    var enableShowPlugins = function () {
+        KTApp.initTooltips();
+        MyRio2cCommon.initScroll();
+    };
+
+    var show = function () {
+        if (widgetElement.length <= 0) {
+            return;
+        }
+
+        var jsonParameters = new Object();
+        jsonParameters.projectUid = $('#AggregateId').val();
+
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/ShowBuyerEvaluationWidget'), jsonParameters, function (data) {
+            MyRio2cCommon.handleAjaxReturn({
+                data: data,
+                // Success
+                onSuccess: function () {
+                    enableShowPlugins();
+                },
+                // Error
+                onError: function () {
+                }
+            });
+        })
+        .fail(function () {
+            //showAlert();
+            //MyRio2cCommon.unblock(widgetElementId);
+        })
+        .always(function () {
+            MyRio2cCommon.unblock({ idOrClass: widgetElementId });
+        });
+    };
+
     // Accept -------------------------------------------------------------------------------------
     var enableAcceptAjaxForm = function () {
         MyRio2cCommon.enableAjaxForm({
             idOrClass: acceptFormId,
             onSuccess: function (data) {
                 $(acceptModalId).modal('hide');
+
+                if (typeof (ProjectsBuyerEvaluationUpdateWidget) !== 'undefined') {
+                    ProjectsBuyerEvaluationUpdateWidget.init();
+                }
 
                 if (typeof (ProjectsBuyerEvaluationListWidget) !== 'undefined') {
                     ProjectsBuyerEvaluationListWidget.init();
@@ -116,6 +155,10 @@ var ProjectsBuyerEvaluationUpdateWidget = function () {
             onSuccess: function (data) {
                 $(refuseModalId).modal('hide');
 
+                if (typeof (ProjectsBuyerEvaluationUpdateWidget) !== 'undefined') {
+                    ProjectsBuyerEvaluationUpdateWidget.init();
+                }
+
                 if (typeof (ProjectsBuyerEvaluationListWidget) !== 'undefined') {
                     ProjectsBuyerEvaluationListWidget.init();
                 }
@@ -168,7 +211,7 @@ var ProjectsBuyerEvaluationUpdateWidget = function () {
     return {
         init: function () {
             initElements();
-            MyRio2cCommon.block();
+            MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
         },
         showAcceptModal: function (projectUid) {
