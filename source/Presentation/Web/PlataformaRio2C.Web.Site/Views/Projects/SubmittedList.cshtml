@@ -116,12 +116,19 @@
                                                                                                         <i class="fa @(icon) mr-1"></i> @(projectBuyerEvaluationDto.ProjectEvaluationStatus.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
                                                                                                     </span>
                                                                                                 </div>
-                                                                                                if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == ProjectEvaluationStatus.Refused.Code)
+                                                                                                if (projectBuyerEvaluationDto.ProjectEvaluationStatus?.Code == ProjectEvaluationStatus.Refused.Code && projectBuyerEvaluationDto.ProjectEvaluationRefuseReason != null)
                                                                                                 {
-                                                                                                    <span class="d-block text-justify mt-2" style="font-size: 9px;">
-                                                                                                        @((!projectBuyerEvaluationDto.ProjectEvaluationRefuseReason.HasAdditionalInfo ? 
-                                                                                                                projectBuyerEvaluationDto.ProjectEvaluationRefuseReason?.Name : 
-                                                                                                                projectBuyerEvaluationDto.ProjectBuyerEvaluation.Reason)?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                                                                                                    <span class="d-block text-justify mt-2" style="font-size: 11px;">
+                                                                                                        <small>
+                                                                                                            @if (projectBuyerEvaluationDto.ProjectEvaluationRefuseReason.HasAdditionalInfo && !string.IsNullOrEmpty(projectBuyerEvaluationDto.ProjectBuyerEvaluation?.Reason))
+                                                                                                            {
+                                                                                                                @(projectBuyerEvaluationDto.ProjectBuyerEvaluation?.Reason?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                                                                                                            }
+                                                                                                            else
+                                                                                                            {
+                                                                                                                @(projectBuyerEvaluationDto.ProjectEvaluationRefuseReason.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                                                                                                            }
+                                                                                                        </small>
                                                                                                     </span>
                                                                                                 }
                                                                                             }

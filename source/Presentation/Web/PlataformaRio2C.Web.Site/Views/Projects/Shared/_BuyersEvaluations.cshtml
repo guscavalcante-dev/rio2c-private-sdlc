@@ -51,7 +51,7 @@
                                         }
                                         <span class="kt-widget__button">
                                             <label class="btn btn-label-@(color) btn-sm">
-                                                <i class="fa @(icon) mr-1"></i> @(projectBuyerEvaluationDto.ProjectEvaluationStatus.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                                                <i class="fa @(icon) mr-1"></i> @(projectBuyerEvaluationDto.ProjectEvaluationStatus?.Name?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
                                             </label>
                                         </span>
                                         @if (projectBuyerEvaluationDto.ProjectBuyerEvaluation?.BuyerEvaluationUser != null)
@@ -60,13 +60,18 @@
                                                 <small>@Labels.By</small> @(projectBuyerEvaluationDto.ProjectBuyerEvaluation.BuyerEvaluationUser.Name)
                                             </span>
                                         }
-                                        @if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == ProjectEvaluationStatus.Refused.Code)
+                                        @if (projectBuyerEvaluationDto.ProjectEvaluationStatus?.Code == ProjectEvaluationStatus.Refused.Code && projectBuyerEvaluationDto.ProjectEvaluationRefuseReason != null)
                                         {
                                             <span class="kt-widget--user-profile-1 kt-widget__username d-block">
                                                 <small>
-                                                    @((!projectBuyerEvaluationDto.ProjectEvaluationRefuseReason.HasAdditionalInfo ?
-                                                                                          projectBuyerEvaluationDto.ProjectEvaluationRefuseReason?.Name :
-                                                                                          projectBuyerEvaluationDto.ProjectBuyerEvaluation.Reason)?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                                                    @if (projectBuyerEvaluationDto.ProjectEvaluationRefuseReason.HasAdditionalInfo && !string.IsNullOrEmpty(projectBuyerEvaluationDto.ProjectBuyerEvaluation?.Reason))
+                                                    {
+                                                        @(projectBuyerEvaluationDto.ProjectBuyerEvaluation?.Reason?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                                                    }
+                                                    else
+                                                    {
+                                                        @(projectBuyerEvaluationDto.ProjectEvaluationRefuseReason.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                                                    }
                                                 </small>
                                             </span>
                                         }
@@ -101,7 +106,7 @@
             }
             <span class="kt-widget__button">
                 <label class="btn btn-label-@(color) btn-sm">
-                    <i class="fa @(icon) mr-1"></i> @(projectBuyerEvaluationDto.ProjectEvaluationStatus.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                    <i class="fa @(icon) mr-1"></i> @(projectBuyerEvaluationDto.ProjectEvaluationStatus?.Name?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
                 </label>
             </span>
             @if (projectBuyerEvaluationDto.ProjectBuyerEvaluation?.BuyerEvaluationUser != null)
@@ -110,13 +115,18 @@
                     <small>@Labels.By</small> @(projectBuyerEvaluationDto.ProjectBuyerEvaluation.BuyerEvaluationUser.Name)
                 </span>
             }
-            @if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == ProjectEvaluationStatus.Refused.Code)
+            @if (projectBuyerEvaluationDto.ProjectEvaluationStatus?.Code == ProjectEvaluationStatus.Refused.Code && projectBuyerEvaluationDto.ProjectEvaluationRefuseReason != null)
             {
                 <span class="kt-widget--user-profile-1 kt-widget__username d-block">
                     <small>
-                        @((!projectBuyerEvaluationDto.ProjectEvaluationRefuseReason.HasAdditionalInfo ?
-                                              projectBuyerEvaluationDto.ProjectEvaluationRefuseReason?.Name :
-                                              projectBuyerEvaluationDto.ProjectBuyerEvaluation.Reason)?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                        @if (projectBuyerEvaluationDto.ProjectEvaluationRefuseReason.HasAdditionalInfo && !string.IsNullOrEmpty(projectBuyerEvaluationDto.ProjectBuyerEvaluation?.Reason))
+                        {
+                            @(projectBuyerEvaluationDto.ProjectBuyerEvaluation?.Reason?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                        }
+                        else
+                        {
+                            @(projectBuyerEvaluationDto.ProjectEvaluationRefuseReason.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                        }
                     </small>
                 </span>
             }

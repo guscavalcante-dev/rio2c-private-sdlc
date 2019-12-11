@@ -130,7 +130,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.ProjectEvaluationStatusId = projectEvaluationStatus?.Id ?? 0;
             this.ProjectEvaluationStatus = projectEvaluationStatus;
 
-            this.ProjectEvaluationRefuseReasonId = projectEvaluationRefuseReason?.Id ?? 0;
+            this.ProjectEvaluationRefuseReasonId = projectEvaluationRefuseReason?.Id;
             this.ProjectEvaluationRefuseReason = projectEvaluationRefuseReason;
             this.Reason = reason?.Trim();
             this.BuyerEvaluationUserId = userId;
@@ -205,15 +205,15 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Validates the refuse reason.</summary>
         public void ValidateRefuseReason()
         {
-            if (this.ProjectEvaluationStatus?.Code == ProjectEvaluationStatus.Refused.Code && this.ProjectEvaluationRefuseReason == null)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Reason), new string[] { "Reason" }));
-            }
+            //if (this.ProjectEvaluationStatus?.Code == ProjectEvaluationStatus.Refused.Code && this.ProjectEvaluationRefuseReason == null)
+            //{
+            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Reason), new string[] { "Reason" }));
+            //}
 
-            if (this.ProjectEvaluationRefuseReason?.HasAdditionalInfo == true && string.IsNullOrEmpty(this.Reason?.Trim()))
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Reason), new string[] { "Reason" }));
-            }
+            //if (this.ProjectEvaluationRefuseReason?.HasAdditionalInfo == true && string.IsNullOrEmpty(this.Reason?.Trim()))
+            //{
+            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Reason), new string[] { "Reason" }));
+            //}
 
             if (this.Reason?.Trim().Length < ReasonMinLength || this.Reason?.Trim().Length > ReasonMaxLength)
             {
