@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-16-2019
+// Last Modified On : 12-12-2019
 // ***********************************************************************
 // <copyright file="CreateCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,7 +17,7 @@ using PlataformaRio2C.Domain.Dtos;
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>CreateCollaborator</summary>
-    public class CreateCollaborator : CollaboratorBaseCommand
+    public class CreateCollaborator : CollaboratorDataBaseCommand
     {
         /// <summary>Initializes a new instance of the <see cref="CreateCollaborator"/> class.</summary>
         /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>

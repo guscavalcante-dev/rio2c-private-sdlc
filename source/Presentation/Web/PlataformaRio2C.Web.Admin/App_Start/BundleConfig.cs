@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified On : 12-12-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -278,6 +278,27 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/collaborators.delete.js").Include(
                 "~/Assets/js/collaborators/collaborators.delete.js"));
+
+            #endregion
+
+            #region Collaborators - Speakers
+
+            bundles.Add(new ScriptBundle("~/bundles/js/speakers.list.js").Include(
+                "~/Assets/js/speakers/speakers.totalcount.widget.js",
+                "~/Assets/js/speakers/speakers.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/speakers.editioncount.js").Include(
+                "~/Assets/js/speakers/speakers.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/speakers.create.js").Include(
+                "~/Assets/js/speakers/speakers.create.js",
+                "~/Assets/js/myrio2c.publicemail.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/speakers.update.js").Include(
+                "~/Assets/js/speakers/speakers.update.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/speakers.delete.js").Include(
+                "~/Assets/js/speakers/speakers.delete.js"));
 
             #endregion
 

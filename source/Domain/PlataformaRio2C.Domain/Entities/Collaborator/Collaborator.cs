@@ -55,6 +55,34 @@ namespace PlataformaRio2C.Domain.Entities
         //public int? MusicalCommissionId { get;  set; }
         //public virtual ICollection<Speaker> Speaker { get;  set; }
 
+        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class for tiny create on admin.</summary>
+        /// <param name="uid">The uid.</param>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="userId">The user identifier.</param>
+        public Collaborator(
+            Guid uid,
+            Edition edition,
+            CollaboratorType collaboratorType,
+            string firstName,
+            string lastNames,
+            string email,
+            int userId)
+        {
+            //this.Uid = uid;
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, true, userId);
+            this.UpdateUser(email);
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
         /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class for admin.</summary>
         /// <param name="uid">The uid.</param>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
@@ -174,6 +202,34 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class.</summary>
         protected Collaborator()
         {
+        }
+
+        /// <summary>Updates the tiny.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateTiny(
+            Edition edition,
+            CollaboratorType collaboratorType,
+            string firstName,
+            string lastNames,
+            string email,
+            bool isAddingToCurrentEdition,
+            int userId)
+        {
+            //this.Uid = uid;
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, isAddingToCurrentEdition, userId);
+            this.UpdateUser(email);
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
         }
 
         /// <summary>Updates the collaborator for admin.</summary>

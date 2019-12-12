@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-28-2019
+// Last Modified On : 12-12-2019
 // ***********************************************************************
 // <copyright file="UpdateCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,7 +20,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>UpdateCollaborator</summary>
-    public class UpdateCollaborator : CollaboratorBaseCommand
+    public class UpdateCollaborator : CollaboratorDataBaseCommand
     {
         public Guid CollaboratorUid { get; set; }
         public bool IsAddingToCurrentEdition { get; set; }

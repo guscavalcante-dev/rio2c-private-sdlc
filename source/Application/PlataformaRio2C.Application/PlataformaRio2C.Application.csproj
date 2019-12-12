@@ -176,7 +176,9 @@
     <Compile Include="Common\StatusProjectCodes.cs" />
     <Compile Include="CQRS\CommandsHandlers\BaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\BaseCollaboratorCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Collaborators\CreateTinyCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\DeleteCollaboratorTicketCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateTinyCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorTicketCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\CreateCollaboratorTicketCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\CreateCollaboratorCommandHandler.cs" />
@@ -232,7 +234,10 @@
     <Compile Include="CQRS\CommandsHandlers\User\UpdateUserInterfaceLanguageCommandHandler.cs" />
     <Compile Include="CQRS\Commands\Attendees\BaseCommands\AttendeeOrganizationBaseCommand.cs" />
     <Compile Include="CQRS\Commands\BaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Collaborators\BaseCommands\CollaboratorDataBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Collaborators\BaseCommands\CollaboratorMiniBioBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Collaborators\CreateTinyCollaborator.cs" />
+    <Compile Include="CQRS\Commands\Collaborators\UpdateTinyCollaborator.cs" />
     <Compile Include="CQRS\Commands\Collaborators\UpdateCollaboratorMainInformation.cs" />
     <Compile Include="CQRS\Commands\Common\BaseCommands\InterestBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Emails\Common\SendForgotPasswordEmailAsync.cs" />
@@ -518,6 +523,7 @@
     <Compile Include="ViewModels\Common\Room\RoomAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Schedule\ScheduleDayAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Schedule\ScheduleEventAppViewModel.cs" />
+    <Compile Include="ViewModels\Common\Speakers\SpeakerSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Speaker\SpeakerBasicAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Speaker\SpeakerDetailAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Speaker\SpeakerEditAppViewModel.cs" />

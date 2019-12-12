@@ -1868,4 +1868,8 @@
     <value>Evaluate</value>
     <comment>Avaliar</comment>
   </data>
+  <data name="RegisteredP" xml:space="preserve">
+    <value>Registered</value>
+    <comment>Registrados</comment>
+  </data>
 </root>

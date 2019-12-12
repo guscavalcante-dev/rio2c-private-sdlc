@@ -1881,4 +1881,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Avaliar</value>
     <comment>Avaliar</comment>
   </data>
+  <data name="RegisteredP" xml:space="preserve">
+    <value>Registrados</value>
+    <comment>Registrados</comment>
+  </data>
 </root>

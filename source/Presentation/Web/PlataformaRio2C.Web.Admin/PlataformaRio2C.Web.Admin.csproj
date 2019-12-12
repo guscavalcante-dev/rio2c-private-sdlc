@@ -336,6 +336,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\FinancialReportController.cs" />
     <Compile Include="Controllers\CitiesController.cs" />
+    <Compile Include="Controllers\SpeakersController.cs" />
     <Compile Include="Controllers\PlayersExecutivesController.cs" />
     <Compile Include="Controllers\StatesController.cs" />
     <Compile Include="Controllers\PlayersController.cs" />
@@ -381,6 +382,12 @@
     <Content Include="Assets\img\logo-rio2c-footer.png" />
     <Content Include="Assets\js\accounts\accounts.password.js" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
+    <Content Include="Assets\js\Speakers\speakers.create.js" />
+    <Content Include="Assets\js\Speakers\speakers.datatable.widget.js" />
+    <Content Include="Assets\js\Speakers\speakers.delete.js" />
+    <Content Include="Assets\js\Speakers\speakers.editioncount.widget.js" />
+    <Content Include="Assets\js\Speakers\speakers.totalcount.widget.js" />
+    <Content Include="Assets\js\Speakers\speakers.update.js" />
     <Content Include="Assets\js\holdings\holdings.delete.js" />
     <Content Include="Assets\js\dynamic.list.js" />
     <Content Include="Assets\js\myrio2c.publicemail.js" />
@@ -8159,6 +8166,12 @@
     <Content Include="Views\Account\Modals\UpdatePasswordForm.cshtml" />
     <Content Include="Views\Account\Modals\UpdatePasswordModal.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\InterestBaseCommand.cshtml" />
+    <Content Include="Views\Speakers\Modals\CreateModal.cshtml" />
+    <Content Include="Views\Speakers\Modals\CreateForm.cshtml" />
+    <Content Include="Views\Speakers\Index.cshtml" />
+    <Content Include="Views\Speakers\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Views\Speakers\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Views\Speakers\Widgets\TotalCountWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

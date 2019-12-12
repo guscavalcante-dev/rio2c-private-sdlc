@@ -3062,6 +3062,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Registrados.
+        /// </summary>
+        public static string RegisteredP {
+            get {
+                return ResourceManager.GetString("RegisteredP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Projetos Cadastrados.
         /// </summary>
         public static string RegisteredProjects {

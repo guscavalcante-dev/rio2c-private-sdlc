@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-29-2019
+// Last Modified On : 12-12-2019
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -389,7 +389,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="keywords">The keywords.</param>
         /// <param name="sortColumns">The sort columns.</param>
         /// <param name="collaboratorsUids">The collaborators uids.</param>
-        /// <param name="organizationTypeUid">The organization type uid.</param>
         /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="showAllExecutives">if set to <c>true</c> [show all executives].</param>
@@ -402,7 +401,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             string keywords,
             List<Tuple<string, string>> sortColumns, 
             List<Guid> collaboratorsUids,
-            Guid organizationTypeUid,
             string collaboratorTypeName,
             bool showAllEditions,
             bool showAllExecutives,
@@ -465,16 +463,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>Counts all by data table.</summary>
-        /// <param name="organizationTypeId">The organization type identifier.</param>
         /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<int> CountAllByDataTable(Guid organizationTypeId, string collaboratorTypeName, bool showAllEditions, int? editionId)
+        public async Task<int> CountAllByDataTable(string collaboratorTypeName, bool showAllEditions, int? editionId)
         {
             var query = this.GetBaseQuery()
                                 .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeName, showAllEditions, false, false, editionId);
-                                //.FindByOrganizationTypeUidAndByEditionId(organizationTypeId, showAllEditions, false, false, editionId);
 
             return await query.CountAsync();
         }

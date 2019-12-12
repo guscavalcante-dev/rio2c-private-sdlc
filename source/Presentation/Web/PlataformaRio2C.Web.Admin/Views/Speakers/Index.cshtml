@@ -1,0 +1,60 @@
+﻿@model SpeakerSearchViewModel
+@{
+    ViewBag.Title = Labels.Speakers;
+}
+<!--begin:: Quick Stats-->
+<div class="row">
+    <div class="col-sm-6">
+        <!--begin:: Total Count Widget-->
+        <div id="SpeakersTotalCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <!--end:: Total Count Widget-->
+    </div>
+    <div class="col-sm-6">
+        <!--begin:: Edition Count-->
+        <div id="SpeakersEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <!--end:: Edition Count-->
+    </div>
+</div>
+<!--end:: Quick Stats-->
+@Html.Partial("Widgets/DataTablewidget", Model)
+@section Styles {
+    @Styles.Render("~/bundles/css/dataTables.css")
+    @Styles.Render("~/bundles/css/cropper.css")
+    @Styles.Render("~/bundles/css/select2.css")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/dataTables.js")
+    @Scripts.Render("~/bundles/js/chart.js")
+    @Scripts.Render("~/bundles/js/cropper.js")
+    @Scripts.Render("~/bundles/js/select2.js")
+    @*@Scripts.Render("~/bundles/js/ckEditor.js")*@
+    @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/dynamic.list.js")
+    @Scripts.Render("~/bundles/js/speakers.list.js")
+    @Scripts.Render("~/bundles/js/speakers.editioncount.js")
+    @Scripts.Render("~/bundles/js/attendeeorganizations.form.js")
+    @Scripts.Render("~/bundles/js/speakers.create.js")
+    @Scripts.Render("~/bundles/js/speakers.update.js")
+    @Scripts.Render("~/bundles/js/speakers.delete.js")
+    @Scripts.Render("~/bundles/js/addresses.form.js")
+    <script>
+        // Page translations ----------------------------------------------------------------------
+        var addToEdition = '@string.Format(Labels.AddToEdition, ViewBag.EditionDto.UrlCode)';
+        var removeFromEdition = '@string.Format(Labels.RemoveFromEdition, ViewBag.EditionDto.UrlCode)';
+        var theFieldIsRequired = '@Messages.TheFieldIsRequired';
+        var ticketType = '@Labels.Ticket';
+        var sendInvitationEmail = '@Labels.SendInvitationEmail';
+        var exportToEventbrite = '@Labels.ExportToEventbrite';
+        var confirmToSendInvitationEmails = '@Messages.ConfirmToSendInvitationEmails';
+
+        // Pagination -----------------------------------------------------------------------------
+        var initialPage = @(Model.Page?.ToString() ?? "null");
+        var initialPageSize = @(Model.PageSize?.ToString() ?? "null");
+
+        jQuery(document).ready(function () {
+            SpeakersTotalCountWidget.init();
+            SpeakersEditionCountWidget.init();
+            SpeakersDataTableWidget.init();
+        });
+    </script>
+}

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-29-2019
+// Last Modified On : 12-12-2019
 // ***********************************************************************
 // <copyright file="ICollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,8 +26,8 @@ namespace PlataformaRio2C.Domain.Interfaces
     {
         Task<List<AdminAccessControlDto>> FindAllCollaboratorsByCollaboratorsUids(int editionId, List<Guid> collaboratorsUids);
         Task<CollaboratorDto> FindDtoByUidAndByEditionIdAsync(Guid collaboratorUid, int editionId);
-        Task<IPagedList<CollaboratorBaseDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> collaboratorsUids, Guid organizationTypeId, string collaboratorTypeName, bool showAllEditions, bool showAllExecutives, bool showAllParticipants, int? editionId);
-        Task<int> CountAllByDataTable(Guid organizationTypeId, string collaboratorTypeName, bool showAllEditions, int? editionId);
+        Task<IPagedList<CollaboratorBaseDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> collaboratorsUids, string collaboratorTypeName, bool showAllEditions, bool showAllExecutives, bool showAllParticipants, int? editionId);
+        Task<int> CountAllByDataTable(string collaboratorTypeName, bool showAllEditions, int? editionId);
         Task<Collaborator> FindBySalesPlatformAttendeeIdAsync(string salesPlatformAttendeeId);
 
         #region Old
