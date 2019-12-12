@@ -4,7 +4,7 @@
 // Created          : 09-01-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-26-2019
+// Last Modified On : 12-12-2019
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorTicketCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,37 +25,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>UpdateCollaboratorTicketCommandHandler</summary>
     public class DeleteCollaboratorTicketCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<DeleteCollaboratorTicket, AppValidationResult>
     {
-        private readonly IUserRepository userRepo;
-        private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
-        private readonly IEditionRepository editionRepo;
-        private readonly ILanguageRepository languageRepo;
-        private readonly ICountryRepository countryRepo;
-
         /// <summary>Initializes a new instance of the <see cref="DeleteCollaboratorTicketCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
-        /// <param name="userRepository">The user repository.</param>
-        /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
-        /// <param name="editionRepository">The edition repository.</param>
-        /// <param name="languageRepository">The language repository.</param>
-        /// <param name="countryRepository">The country repository.</param>
         public DeleteCollaboratorTicketCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            ICollaboratorRepository collaboratorRepository,
-            IUserRepository userRepository,
-            IAttendeeOrganizationRepository attendeeOrganizationRepository,
-            IEditionRepository editionRepository,
-            ILanguageRepository languageRepository,
-            ICountryRepository countryRepository)
+            ICollaboratorRepository collaboratorRepository)
             : base(eventBus, uow, collaboratorRepository)
         {
-            this.userRepo = userRepository;
-            this.attendeeOrganizationRepo = attendeeOrganizationRepository;
-            this.editionRepo = editionRepository;
-            this.languageRepo = languageRepository;
-            this.countryRepo = countryRepository;
         }
 
         /// <summary>Handles the specified delete collaborator ticket.</summary>

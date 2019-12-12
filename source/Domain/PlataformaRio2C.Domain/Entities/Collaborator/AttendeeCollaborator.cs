@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-30-2019
+// Last Modified On : 12-12-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -490,12 +490,14 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Deletes the attendee collaborator ticket.</summary>
         /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
         /// <param name="salesPlatformUpdateDate">The sales platform update date.</param>
         /// <param name="barcodeUpdateDate">The barcode update date.</param>
         /// <param name="userId">The user identifier.</param>
         public void DeleteAttendeeCollaboratorTicket(
             AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
+            CollaboratorType collaboratorType,
             string salesPlatformAttendeeId,
             DateTime salesPlatformUpdateDate,
             DateTime? barcodeUpdateDate,
@@ -513,9 +515,18 @@ namespace PlataformaRio2C.Domain.Entities
                                                                                                     && !act.IsDeleted);
             attendeeCollaboratorTicket?.Delete(salesPlatformUpdateDate, barcodeUpdateDate, userId);
 
-            if (this.FindAllAttendeeCollaboratorTicketsNotDeleted()?.Any() != true)
+            var attendeeCollaboratorTickets = this.FindAllAttendeeCollaboratorTicketsNotDeleted();
+
+            // All tickets are deleted
+            if (attendeeCollaboratorTickets?.Any() != true)
             {
                 this.IsDeleted = true;
+                this.DeleteAttendeeCollaboratorType(collaboratorType, userId);
+            }
+            // All tickets of the same collaborator type are deleted
+            else if (attendeeCollaboratorTickets?.Any(act => act.AttendeeSalesPlatformTicketType.CollaboratorTypeId == collaboratorType.Id) != true)
+            {
+                this.DeleteAttendeeCollaboratorType(collaboratorType, userId);
             }
         }
 

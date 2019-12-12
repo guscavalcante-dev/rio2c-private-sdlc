@@ -4,9 +4,9 @@
 // Created          : 07-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-18-2019
+// Last Modified On : 12-12-2019
 // ***********************************************************************
-// <copyright file="SalesPlatformsController.cs" company="Softo">
+// <copyright file="SalesPlatformsApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -25,17 +25,15 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 {
-    /// <summary>
-    /// Class for sales platforms endpoints
-    /// </summary>
+    /// <summary>SalesPlatformsApiController</summary>
     [System.Web.Http.RoutePrefix("api/v1.0/salesplatforms")]
-    public class SalesPlatformsController : BaseApiController
+    public class SalesPlatformsApiController : BaseApiController
     {
         private readonly IMediator commandBus;
 
-        /// <summary>Initializes a new instance of the <see cref="SalesPlatformsController"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="SalesPlatformsApiController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
-        public SalesPlatformsController(IMediator commandBus)
+        public SalesPlatformsApiController(IMediator commandBus)
         {
             this.commandBus = commandBus;
         }

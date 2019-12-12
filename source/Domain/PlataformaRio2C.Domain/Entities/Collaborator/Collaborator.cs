@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-29-2019
+// Last Modified On : 12-12-2019
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -727,35 +727,6 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        /// <summary>Deletes the ticket.</summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
-        /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
-        /// <param name="salesPlatformUpdateDate">The sales platform update date.</param>
-        /// <param name="barcodeUpdateDate">The barcode update date.</param>
-        /// <param name="userId">The user identifier.</param>
-        private void DeleteTicket(
-            Edition edition,
-            AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
-            string salesPlatformAttendeeId,
-            DateTime salesPlatformUpdateDate,
-            DateTime? barcodeUpdateDate,
-            int userId)
-        {
-            if (this.AttendeeCollaborators == null)
-            {
-                return;
-            }
-
-            if (edition == null)
-            {
-                return;
-            }
-
-            var attendeeCollaborator = this.AttendeeCollaborators.FirstOrDefault(ao => ao.EditionId == edition.Id);
-            attendeeCollaborator?.DeleteAttendeeCollaboratorTicket(attendeeSalesPlatformTicketType, salesPlatformAttendeeId, salesPlatformUpdateDate, barcodeUpdateDate, userId);
-        }
-
         #endregion
 
         #region Tickets
@@ -836,15 +807,32 @@ namespace PlataformaRio2C.Domain.Entities
         public void DeleteTicket(
             Edition edition,
             AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
-            CollaboratorType collaboratorType, //TODO: Use collaborator type
+            CollaboratorType collaboratorType,
             Role role,
             string salesPlatformAttendeeId,
             DateTime salesPlatformUpdateDate,
             DateTime? barcodeUpdateDate,
             int userId)
         {
-            //this.Uid = collaboratorUid;
-            this.DeleteTicket(edition, attendeeSalesPlatformTicketType, salesPlatformAttendeeId, salesPlatformUpdateDate, barcodeUpdateDate, userId);
+            if (this.AttendeeCollaborators == null)
+            {
+                return;
+            }
+
+            if (edition == null)
+            {
+                return;
+            }
+
+            var attendeeCollaborator = this.AttendeeCollaborators.FirstOrDefault(ao => ao.EditionId == edition.Id);
+            attendeeCollaborator?.DeleteAttendeeCollaboratorTicket(
+                attendeeSalesPlatformTicketType,
+                collaboratorType,
+                salesPlatformAttendeeId,
+                salesPlatformUpdateDate,
+                barcodeUpdateDate,
+                userId);
+
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
             //this.DeleteRole(this.User.Email, role);
