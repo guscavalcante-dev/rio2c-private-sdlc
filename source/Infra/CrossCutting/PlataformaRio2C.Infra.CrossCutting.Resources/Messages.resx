@@ -624,8 +624,8 @@
     <comment>Descreve as restrições e/ou especificações sobre o conteúdo desejado.</comment>
   </data>
   <data name="PublicEmail" xml:space="preserve">
-    <value>Gostaria de disponibilizar algum e-mail para contato entre os participantes da categoria Industry? Este e-mail fará parte somente de uma lista de contatos para download.</value>
-    <comment>Gostaria de disponibilizar algum e-mail para contato entre os participantes da categoria Industry? Este e-mail fará parte somente de uma lista de contatos para download.</comment>
+    <value>Gostaria de disponibilizar algum e-mail para contato entre os participantes da categoria Industry na Rede Rio2C? Este e-mail só ficará visível na plataforma MyRio2C.</value>
+    <comment>Gostaria de disponibilizar algum e-mail para contato entre os participantes da categoria Industry na Rede Rio2C? Este e-mail só ficará visível na plataforma MyRio2C.</comment>
   </data>
   <data name="SelectAtLeastOneOption" xml:space="preserve">
     <value>Selecione pelo menos uma opção do grupo.</value>

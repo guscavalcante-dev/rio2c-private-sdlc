@@ -1446,7 +1446,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gostaria de disponibilizar algum e-mail para contato entre os participantes da categoria Industry? Este e-mail fará parte somente de uma lista de contatos para download..
+        ///   Looks up a localized string similar to Gostaria de disponibilizar algum e-mail para contato entre os participantes da categoria Industry na Rede Rio2C? Este e-mail só ficará visível na plataforma MyRio2C..
         /// </summary>
         public static string PublicEmail {
             get {

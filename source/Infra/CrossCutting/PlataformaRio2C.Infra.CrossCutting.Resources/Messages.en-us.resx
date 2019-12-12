@@ -619,8 +619,8 @@
     <comment>Descreve as restrições e/ou especificações sobre o conteúdo desejado.</comment>
   </data>
   <data name="PublicEmail" xml:space="preserve">
-    <value>Would you like to make available an e-mail for all Industry badge holders? This e-mail will only be part of a downloadable contact list.</value>
-    <comment>Gostaria de disponibilizar algum e-mail para contato entre os participantes da categoria Industry? Este e-mail fará parte somente de uma lista de contatos para download.</comment>
+    <value>Would you like to make available an e-mail for all Industry badge holders at Rio2C Network? This email will only be displayed at MyRio2C platform.</value>
+    <comment>Gostaria de disponibilizar algum e-mail para contato entre os participantes da categoria Industry na Rede Rio2C? Este e-mail só ficará visível na plataforma MyRio2C.</comment>
   </data>
   <data name="SelectAtLeastOneOption" xml:space="preserve">
     <value>Please select at least one option from the group.</value>
