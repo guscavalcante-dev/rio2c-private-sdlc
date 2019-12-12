@@ -173,6 +173,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>Determines whether is pitching</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> IsPitching(this IQueryable<Project> query)
+        {
+            query = query.Where(p => p.IsPitching == true);
+
+            return query;
+        }
+
     }
 
     #endregion
@@ -345,6 +356,71 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return await query
                             .OrderBy(pd => pd.Project.CreateDate)
                             .ToListPagedAsync(page, pageSize);
+        }
+
+        /// <summary>
+        /// Final all dtos to pitching projects
+        /// </summary>
+        /// <param name="searchKeywords"></param>
+        /// <param name="interestUid"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public async Task<IPagedList<ProjectDto>> FindAllPitchingProjectsDtoAsync(string searchKeywords, Guid? interestUid, int page, int pageSize)
+        {
+            var query = this.GetBaseQuery()
+                                .IsPitching()
+                                .FindByInterest(interestUid)
+                                //.FindByKeywords(searchKeywords)
+                                .Select(p => new ProjectDto
+                                {
+                                    Project = p,
+                                    ProjectType = p.ProjectType,
+                                    SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                    {
+                                        AttendeeOrganization = p.SellerAttendeeOrganization,
+                                        Organization = p.SellerAttendeeOrganization.Organization,
+                                        Edition = p.SellerAttendeeOrganization.Edition
+                                    },
+                                    ProjectTitleDtos = p.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                    {
+                                        ProjectTitle = t,
+                                        Language = t.Language
+                                    }),
+                                    ProjectLogLineDtos = p.ProjectLogLines.Where(ll => !ll.IsDeleted).Select(ll => new ProjectLogLineDto
+                                    {
+                                        ProjectLogLine = ll,
+                                        Language = ll.Language
+                                    }),
+                                    ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted).Select(i => new ProjectInterestDto
+                                    {
+                                        ProjectInterest = i,
+                                        Interest = i.Interest,
+                                        InterestGroup = i.Interest.InterestGroup
+                                    }),
+                                    ProjectBuyerEvaluationDtos = p.ProjectBuyerEvaluations
+                                                                    .Where(pbe => !pbe.IsDeleted
+                                                                                  && !pbe.BuyerAttendeeOrganization.IsDeleted
+                                                                                  && pbe.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators
+                                                                                                                      .Any(aoc => !aoc.IsDeleted))
+                                    .Select(be => new ProjectBuyerEvaluationDto
+                                    {
+                                        ProjectBuyerEvaluation = be,
+                                        BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                        {
+                                            AttendeeOrganization = be.BuyerAttendeeOrganization,
+                                            Organization = be.BuyerAttendeeOrganization.Organization,
+                                            Edition = be.BuyerAttendeeOrganization.Edition
+                                        },
+                                        ProjectEvaluationStatus = be.ProjectEvaluationStatus,
+                                        ProjectEvaluationRefuseReason = be.ProjectEvaluationRefuseReason
+                                    })
+                                });
+
+
+            return await query
+                           .OrderBy(pd => pd.Project.CreateDate)
+                           .ToListPagedAsync(page, pageSize);
         }
 
         #region Site Widgets
