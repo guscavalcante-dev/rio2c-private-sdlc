@@ -1680,6 +1680,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to para a página anterior.
+        /// </summary>
+        public static string ToLastPage {
+            get {
+                return ResourceManager.GetString("ToLastPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to para a página de login.
+        /// </summary>
+        public static string ToLoginPage {
+            get {
+                return ResourceManager.GetString("ToLoginPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Para prosseguir você deve aceitar o regulamento.
         /// </summary>
         public static string ToProceedYouMustAcceptTheTerm {

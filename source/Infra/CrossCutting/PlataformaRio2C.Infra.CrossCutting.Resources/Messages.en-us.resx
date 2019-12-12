@@ -818,4 +818,12 @@
     <value>You have a new project for evaluation</value>
     <comment>Você tem um novo projeto para avaliação</comment>
   </data>
+  <data name="ToLastPage" xml:space="preserve">
+    <value>to last page</value>
+    <comment>para a página anterior</comment>
+  </data>
+  <data name="ToLoginPage" xml:space="preserve">
+    <value>to login page</value>
+    <comment>para a página de login</comment>
+  </data>
 </root>
