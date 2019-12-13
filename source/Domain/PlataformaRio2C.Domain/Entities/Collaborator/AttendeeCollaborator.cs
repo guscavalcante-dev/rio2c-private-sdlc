@@ -151,6 +151,10 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.DeleteAttendeeCollaboratorType(collaboratorType, userId);
 
+            // TODO: throw api configuration inside delete methode above
+            this.IsApiDisplayEnabled = false;
+            this.ApiHighlightPosition = null;
+
             if (this.FindAllAttendeeCollaboratorTypesNotDeleted()?.Any() == true)
             {
                 return;

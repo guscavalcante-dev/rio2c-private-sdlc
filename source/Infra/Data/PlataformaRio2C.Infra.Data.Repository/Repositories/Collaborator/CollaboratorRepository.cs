@@ -457,7 +457,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 IsInCurrentEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId
                                                                                                              && !ac.Edition.IsDeleted
                                                                                                              && !ac.IsDeleted
-                                                                                                             && ac.AttendeeCollaboratorTypes.Any(act => !ac.IsDeleted
+                                                                                                             && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
                                                                                                                                                         && act.CollaboratorType.Name == collaboratorTypeName)),
                                 IsInOtherEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId
                                                                                                            && !ac.IsDeleted),
