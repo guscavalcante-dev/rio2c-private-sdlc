@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-12-2019
+// Last Modified On : 12-13-2019
 // ***********************************************************************
 // <copyright file="speakers.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -281,7 +281,7 @@ var SpeakersDataTableWidget = function () {
                 },
                 { data: 'Email' },
                 {
-                    data: 'Player',
+                    data: 'Company',
                     render: function (data, type, row, meta) {
                         var html = '<ul class="m-0 pl-4">';
 

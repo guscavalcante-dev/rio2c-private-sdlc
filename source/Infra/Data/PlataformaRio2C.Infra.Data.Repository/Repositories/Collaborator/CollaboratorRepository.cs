@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-12-2019
+// Last Modified On : 12-13-2019
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -410,7 +410,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords, editionId)
                                 .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeName, showAllEditions, showAllExecutives, showAllParticipants, editionId)
-                                //.FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, showAllEditions, showAllExecutives, showAllParticipants, editionId)
                                 .FindByUids(collaboratorsUids);
 
             return await query
@@ -439,7 +438,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 UpdateDate = c.UpdateDate,
                                 IsInCurrentEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId
                                                                                                              && !ac.Edition.IsDeleted
-                                                                                                             && !ac.IsDeleted),
+                                                                                                             && !ac.IsDeleted
+                                                                                                             && ac.AttendeeCollaboratorTypes.Any(act => !ac.IsDeleted
+                                                                                                                                                        && act.CollaboratorType.Name == collaboratorTypeName)),
                                 IsInOtherEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId
                                                                                                            && !ac.IsDeleted),
                                 AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
