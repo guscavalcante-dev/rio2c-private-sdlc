@@ -152,6 +152,17 @@ a.r2c-login__footer-link, a.r2c-footer-link {
     border-radius: 10px;
 }
 
+table.dataTable tbody tr.selected {
+    color: white !important;
+    background-color: #eeeeee !important;
+}
+
+    .dataTables_wrapper .dataTable .selected th, .dataTables_wrapper .dataTable .selected td {
+        background-color: #e1e3e8 !important;
+        color: #595d6e !important;
+    }
+
+
 /*
     Modal
 */
