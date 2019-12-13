@@ -826,4 +826,8 @@
     <value>to login page</value>
     <comment>para a página de login</comment>
   </data>
+  <data name="ImageAuthorizationForm" xml:space="preserve">
+    <value>Image authorization form</value>
+    <comment>Autorização do uso de imagem</comment>
+  </data>
 </root>

@@ -7156,6 +7156,8 @@
     <Content Include="Views\Account\Modals\UpdateEmailSettingsForm.cshtml" />
     <Content Include="Views\Networks\Widgets\ContactsWidget.cshtml" />
     <Content Include="Views\Networks\Modals\ShowContactsListModal.cshtml" />
+    <Content Include="Views\Onboarding\SpeakerTermsAcceptance.cshtml" />
+    <Content Include="Views\Onboarding\Shared\_SpeakerTermsAcceptanceText.cshtml" />
     <None Include="Views\Projects\Index.cshtml.old" />
     <Content Include="Views\Projects\Modals\UpdateMainInformationModal.cshtml" />
     <Content Include="Views\Projects\Modals\UpdateMainInformationForm.cshtml" />

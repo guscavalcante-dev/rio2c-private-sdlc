@@ -663,6 +663,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Autorização do uso de imagem.
+        /// </summary>
+        public static string ImageAuthorizationForm {
+            get {
+                return ResourceManager.GetString("ImageAuthorizationForm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Imagem obrigatória.
         /// </summary>
         public static string ImageIsRequired {

@@ -831,4 +831,8 @@
     <value>para a página de login</value>
     <comment>para a página de login</comment>
   </data>
+  <data name="ImageAuthorizationForm" xml:space="preserve">
+    <value>Autorização do uso de imagem</value>
+    <comment>Autorização do uso de imagem</comment>
+  </data>
 </root>

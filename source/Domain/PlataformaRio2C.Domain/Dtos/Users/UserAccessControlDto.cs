@@ -4,7 +4,7 @@
 // Created          : 09-04-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-10-2019
+// Last Modified On : 12-13-2019
 // ***********************************************************************
 // <copyright file="UserAccessControlDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -193,7 +193,9 @@ namespace PlataformaRio2C.Domain.Dtos
         public bool IsOnboardingPending()
         {
             return !this.IsAdmin() 
-                   && (!this.IsAttendeeCollaboratorOnboardingFinished() || !this.IsPlayerAttendeeOrganizationsOnboardingFinished() || this.IsTicketBuyerOrganizationOnboardingPending());
+                   && (!this.IsAttendeeCollaboratorOnboardingFinished() 
+                       || !this.IsPlayerAttendeeOrganizationsOnboardingFinished() 
+                       || this.IsTicketBuyerOrganizationOnboardingPending());
         }
 
         #region Collaborator
@@ -203,7 +205,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is attendee collaborator onboarding finished]; otherwise, <c>false</c>.</returns>
         public bool IsAttendeeCollaboratorOnboardingFinished()
         {
-            return this.IsPlayerTermsAcceptanceFinished() && this.IsUserOnboardingFinished() && this.IsCollaboratorOnboardingFinished();
+            return this.IsPlayerTermsAcceptanceFinished() && this.IsUserOnboardingFinished() && this.IsCollaboratorOnboardingFinished() && this.IsSpeakerTermsAcceptanceFinished();
         }
 
         /// <summary>Determines whether [is player terms acceptance finished].</summary>
@@ -211,9 +213,19 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is player terms acceptance finished]; otherwise, <c>false</c>.</returns>
         public bool IsPlayerTermsAcceptanceFinished()
         {
-            return !this.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual)                                              // // Not Player //TODO: Change to check attendee organization type (must be dto)
+            return !this.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual)                                              // Not Player //TODO: Change to check attendee organization type (must be dto)
                    || this.EditionAttendeeCollaborator?.PlayerTermsAcceptanceDate != null;                                                 // Or has accepted the player terms
                    //|| !this.HasPlayerOrganization()
+        }
+
+        /// <summary>Determines whether [is speaker terms acceptance finished].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is speaker terms acceptance finished]; otherwise, <c>false</c>.</returns>
+        public bool IsSpeakerTermsAcceptanceFinished()
+        {
+            return !this.HasCollaboratorType(Constants.CollaboratorType.Speaker)                                                            // Not Speaker //TODO: Change to check attendee organization type (must be dto)
+                   || this.EditionAttendeeCollaborator?.SpeakerTermsAcceptanceDate != null;                                                 // Or has accepted the speaker terms
+            //|| !this.HasPlayerOrganization()
         }
 
         /// <summary>Determines whether [is user onboarding finished].</summary>

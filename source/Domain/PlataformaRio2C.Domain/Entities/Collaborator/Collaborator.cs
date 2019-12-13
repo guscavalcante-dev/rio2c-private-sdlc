@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-12-2019
+// Last Modified On : 12-13-2019
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -599,6 +599,15 @@ namespace PlataformaRio2C.Domain.Entities
             attendeeCollaborator?.OnboardPlayerTermsAcceptance(userId);
         }
 
+        /// <summary>Called when [attendee collaborator speaker terms acceptance].</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardAttendeeCollaboratorSpeakerTermsAcceptance(Edition edition, int userId)
+        {
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+            attendeeCollaborator?.OnboardSpeakerTermsAcceptance(userId);
+        }
+
         /// <summary>Called when [attendee collaborator producer terms acceptance].</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="userId">The user identifier.</param>
@@ -955,11 +964,12 @@ namespace PlataformaRio2C.Domain.Entities
             this.Badge = badge?.Trim();
             this.PhoneNumber = phoneNumber?.Trim();
             this.CellPhone = cellPhone?.Trim();
+            this.OnboardAttendeeCollaboratorAccessData(edition, userId);
+            this.OnboardUser(passwordHash);
+
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.OnboardAttendeeCollaboratorAccessData(edition, userId);
-            this.OnboardUser(passwordHash);
         }
 
         /// <summary>Called when [player terms acceptance].</summary>
@@ -969,12 +979,27 @@ namespace PlataformaRio2C.Domain.Entities
             Edition edition,
             int userId)
         {
+            this.OnboardAttendeeCollaboratorPlayerTermsAcceptance(edition, userId);
+
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.OnboardAttendeeCollaboratorPlayerTermsAcceptance(edition, userId);
         }
 
+        /// <summary>Called when [speaker terms acceptance].</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardSpeakerTermsAcceptance(
+            Edition edition,
+            int userId)
+        {
+            this.OnboardAttendeeCollaboratorSpeakerTermsAcceptance(edition, userId);
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+        
         /// <summary>Called when [data].</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="sharePublicEmail">if set to <c>true</c> [share public email].</param>
@@ -994,12 +1019,13 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.PublicEmail = sharePublicEmail == true ? publicEmail?.Trim() : null;
             this.UpdateImageUploadDate(isImageUploaded, false);
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
-            this.UpdateUserId = userId;
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
             this.OnboardAttendeeCollaboratorData(edition, userId);
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
         }
 
         /// <summary>Called when [producer terms acceptance].</summary>
@@ -1009,10 +1035,11 @@ namespace PlataformaRio2C.Domain.Entities
             Edition edition,
             int userId)
         {
+            this.OnboardAttendeeCollaboratorProducerTermsAcceptance(edition, userId);
+
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.OnboardAttendeeCollaboratorProducerTermsAcceptance(edition, userId);
         }
 
         #endregion

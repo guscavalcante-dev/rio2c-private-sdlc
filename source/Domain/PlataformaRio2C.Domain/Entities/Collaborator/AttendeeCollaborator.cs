@@ -31,6 +31,7 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTime? OnboardingOrganizationDataSkippedDate { get; private set; }
         public DateTime? PlayerTermsAcceptanceDate { get; private set; }
         public DateTime? ProducerTermsAcceptanceDate { get; private set; }
+        public DateTime? SpeakerTermsAcceptanceDate { get; private set; }
         public bool IsApiDisplayEnabled { get; private set; }
         public int? ApiHighlightPosition { get; private set; }
 
@@ -197,60 +198,77 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void OnboardAccessData(int userId)
         {
+            this.OnboardingUserDate = DateTime.Now;
+
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.OnboardingUserDate = DateTime.Now;
         }
 
         /// <summary>Called when [player terms acceptance].</summary>
         /// <param name="userId">The user identifier.</param>
         public void OnboardPlayerTermsAcceptance(int userId)
         {
+            this.PlayerTermsAcceptanceDate = DateTime.Now;
+
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.PlayerTermsAcceptanceDate = DateTime.Now;
+        }
+
+        /// <summary>Called when [speaker terms acceptance].</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardSpeakerTermsAcceptance(int userId)
+        {
+            this.SpeakerTermsAcceptanceDate = DateTime.Now;
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
         }
 
         /// <summary>Called when [data].</summary>
         /// <param name="userId">The user identifier.</param>
         public void OnboardData(int userId)
         {
+            this.OnboardingFinishDate = this.OnboardingCollaboratorDate = DateTime.Now;
+
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.OnboardingFinishDate = this.OnboardingCollaboratorDate = DateTime.Now;
         }
 
         /// <summary>Accepts the producer terms.</summary>
         /// <param name="userId">The user identifier.</param>
         public void AcceptProducerTerms(int userId)
         {
+            this.ProducerTermsAcceptanceDate = DateTime.Now;
+
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.ProducerTermsAcceptanceDate = DateTime.Now;
         }
 
         /// <summary>Skips the onboard ticket buyer company data.</summary>
         /// <param name="userId">The user identifier.</param>
         public void SkipOnboardTicketBuyerCompanyData(int userId)
         {
+            this.OnboardingOrganizationDataSkippedDate = DateTime.Now;
+
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.OnboardingOrganizationDataSkippedDate = DateTime.Now;
         }
 
         /// <summary>Called when [producer terms acceptance].</summary>
         /// <param name="userId">The user identifier.</param>
         public void OnboardProducerTermsAcceptance(int userId)
         {
+            this.ProducerTermsAcceptanceDate = DateTime.Now;
+
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.ProducerTermsAcceptanceDate = DateTime.Now;
         }
 
         #endregion

@@ -78,6 +78,7 @@ CREATE TABLE [dbo].[AttendeeCollaborators](
 	[OnboardingOrganizationDataSkippedDate] [datetime] NULL,
 	[PlayerTermsAcceptanceDate] [datetime] NULL,
 	[ProducerTermsAcceptanceDate] [datetime] NULL,
+	[SpeakerTermsAcceptanceDate] [datetime] NULL,
 	[IsApiDisplayEnabled] [bit] NOT NULL,
 	[ApiHighlightPosition] [int] NULL,
 	[IsDeleted] [bit] NOT NULL,

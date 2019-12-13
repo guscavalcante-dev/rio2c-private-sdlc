@@ -196,6 +196,7 @@
     <Compile Include="CQRS\CommandsHandlers\Holdings\CreateHoldingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Messages\SendUnreadConversationsEmailsAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardCollaboratorCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardSpeakerTermsAcceptanceCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardProducerTermsAcceptanceCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\SkipOnboardTicketBuyerOrganizationDataCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\CreateTicketBuyerOrganizationDataCommandHandler.cs" />
@@ -248,6 +249,7 @@
     <Compile Include="CQRS\Commands\Emails\Site\SendProducerWelcomeEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Messages\SendUnreadConversationsEmailsAsync.cs" />
     <Compile Include="CQRS\Commands\Onboardings\OnboardCollaborator.cs" />
+    <Compile Include="CQRS\Commands\Onboardings\OnboardSpeakerTermsAcceptance.cs" />
     <Compile Include="CQRS\Commands\Onboardings\OnboardProducerTermsAcceptance.cs" />
     <Compile Include="CQRS\Commands\Onboardings\SkipOnboardTicketBuyerOrganizationData.cs" />
     <Compile Include="CQRS\Commands\Collaborators\CreateTicketBuyerOrganizationData.cs" />
