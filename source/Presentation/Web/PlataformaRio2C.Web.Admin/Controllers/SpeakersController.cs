@@ -249,7 +249,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                     try
                     {
-                        result = await this.CommandBus.Send(new SendPlayerWelcomeEmailAsync(
+                        result = await this.CommandBus.Send(new SendSpeakerWelcomeEmailAsync(
                             collaboratorDto.Collaborator.Uid,
                             collaboratorDto.User.SecurityStamp,
                             collaboratorDto.User.Id,

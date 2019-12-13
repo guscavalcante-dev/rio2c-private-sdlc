@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Rafael Dantas Ruiz
-// Created          : 09-02-2019
+// Created          : 12-13-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 12-13-2019
 // ***********************************************************************
-// <copyright file="SendPlayerWelcomeEmailAsyncCommandHandler.cs" company="Softo">
+// <copyright file="SendSpeakerWelcomeEmailAsyncCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -26,18 +26,18 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>SendPlayerWelcomeEmailAsyncCommandHandler</summary>
-    public class SendPlayerWelcomeEmailAsyncCommandHandler : MailerBaseCommandHandler, IRequestHandler<SendPlayerWelcomeEmailAsync, AppValidationResult>
+    /// <summary>SendSpeakerWelcomeEmailAsyncCommandHandler</summary>
+    public class SendSpeakerWelcomeEmailAsyncCommandHandler : MailerBaseCommandHandler, IRequestHandler<SendSpeakerWelcomeEmailAsync, AppValidationResult>
     {
         private readonly ICollaboratorRepository collaboratorRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="SendPlayerWelcomeEmailAsyncCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="SendSpeakerWelcomeEmailAsyncCommandHandler"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="mailerService">The mailer service.</param>
         /// <param name="sentEmailRepository">The sent email repository.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
-        public SendPlayerWelcomeEmailAsyncCommandHandler(
+        public SendSpeakerWelcomeEmailAsyncCommandHandler(
             IMediator commandBus,
             IUnitOfWork uow,
             IMailerService mailerService,
@@ -48,17 +48,17 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.collaboratorRepo = collaboratorRepository;
         }
 
-        /// <summary>Handles the specified send player welcome email asynchronous.</summary>
-        /// <param name="cmd">The command</param>
+        /// <summary>Handles the specified send speaker welcome email asynchronous.</summary>
+        /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(SendPlayerWelcomeEmailAsync cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(SendSpeakerWelcomeEmailAsync cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
             // Save sent email
             var sentEmailUid = Guid.NewGuid();
-            var sentEmail = new SentEmail(sentEmailUid, cmd.RecipientUserId, cmd.Edition.Id, "PlayerWelcome");
+            var sentEmail = new SentEmail(sentEmailUid, cmd.RecipientUserId, cmd.Edition.Id, "SpeakerWelcome");
             if (!sentEmail.IsValid())
             {
                 this.AppValidationResult.Add(sentEmail.ValidationResult);
@@ -74,9 +74,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                                                  && ac.EditionId == cmd.Edition.Id
                                                                  && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
                                                                                                             && !act.CollaboratorType.IsDeleted
-                                                                                                            && act.CollaboratorType.Name == Domain.Constants.CollaboratorType.ExecutiveAudiovisual)))
+                                                                                                            && act.CollaboratorType.Name == Domain.Constants.CollaboratorType.Speaker)))
             {
-                this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundM))));
+                this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Speaker, Labels.FoundM))));
             }
 
             if (!this.AppValidationResult.IsValid)
@@ -87,7 +87,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             collaborator?.SendWelcomeEmailSendDate(cmd.Edition.Id, cmd.UserId);
 
             // Sends the email
-            await this.MailerService.SendPlayerWelcomeEmail(cmd, sentEmail.Uid).SendAsync();
+            await this.MailerService.SendSpeakerWelcomeEmail(cmd, sentEmail.Uid).SendAsync();
 
             this.Uow.SaveChanges();
 

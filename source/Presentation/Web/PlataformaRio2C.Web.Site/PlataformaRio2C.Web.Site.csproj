@@ -7204,7 +7204,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_LayoutBasic.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\SiteMailerService\TicketBuyerWelcome.cshtml" />
+    <Content Include="Views\SiteMailerService\TicketBuyerWelcomeEmail.cshtml" />
     <Content Include="Views\SiteMailerService\_SiteEmailLayout.cshtml" />
     <Content Include="Views\Onboarding\AccessData.cshtml" />
     <Content Include="Views\Onboarding\Shared\_OnboardingMenu.cshtml" />
@@ -7249,7 +7249,7 @@
     <Content Include="Views\Executives\Modals\UpdateMainInformationForm.cshtml" />
     <Content Include="Views\Onboarding\CompanyInfo.cshtml" />
     <Content Include="Views\Companies\Shared\_TicketBuyerCompanyInfoForm.cshtml" />
-    <Content Include="Views\SiteMailerService\ForgotPassword.cshtml" />
+    <Content Include="Views\SiteMailerService\ForgotPasswordEmail.cshtml" />
     <Content Include="Views\Account\Modals\UpdatePasswordForm.cshtml" />
     <Content Include="Views\Account\Modals\UpdatePasswordModal.cshtml" />
     <Content Include="Views\Executives\Modals\CreateCompanyInfoModal.cshtml" />

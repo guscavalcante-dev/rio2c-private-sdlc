@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-11-2019
+// Last Modified On : 12-13-2019
 // ***********************************************************************
 // <copyright file="AdminMailerService.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -55,7 +55,7 @@ namespace PlataformaRio2C.Web.Admin.Services
             return Populate(x =>
             {
                 x.Subject = this.GetSubject(Texts.ForgotPassword);
-                x.ViewName = "ForgotPassword";
+                x.ViewName = "ForgotPasswordEmail";
                 x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
                 x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
                 ViewBag.SentEmailUid = sentEmailUid;
@@ -81,7 +81,34 @@ namespace PlataformaRio2C.Web.Admin.Services
             {
                 x.Subject = this.GetSubject(string.Format("Bem-vindo ao {0} | Welcome to {0}", cmd.Edition.Name));
                 //x.Subject = this.GetSubject(string.Format(Labels.WelcomeToEdition, cmd.EditionName));
-                x.ViewName = "PlayerWelcome";
+                x.ViewName = "PlayerWelcomeEmail";
+                x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
+                x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
+                ViewBag.SentEmailUid = sentEmailUid;
+                ViewBag.SiteUrl = this.siteUrl;
+
+                if (!string.IsNullOrEmpty(this.GetBccEmailRecipient()))
+                {
+                    x.Bcc.Add(this.GetBccEmailRecipient());
+                }
+            });
+        }
+
+        /// <summary>Sends the speaker welcome email.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <param name="sentEmailUid">The sent email uid.</param>
+        /// <returns></returns>
+        public MvcMailMessage SendSpeakerWelcomeEmail(SendSpeakerWelcomeEmailAsync cmd, Guid sentEmailUid)
+        {
+            this.SetCulture(cmd.UserInterfaceLanguage);
+
+            this.ViewData = new ViewDataDictionary(cmd);
+
+            return Populate(x =>
+            {
+                x.Subject = this.GetSubject(string.Format("Bem-vindo ao {0} | Welcome to {0}", cmd.Edition.Name));
+                //x.Subject = this.GetSubject(string.Format(Labels.WelcomeToEdition, cmd.EditionName));
+                x.ViewName = "SpeakerWelcomeEmail";
                 x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
                 x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
                 ViewBag.SentEmailUid = sentEmailUid;

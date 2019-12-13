@@ -185,6 +185,7 @@
     <Compile Include="CQRS\CommandsHandlers\Collaborators\DeleteCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorMainInformationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendSpeakerWelcomeEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Common\SendForgotPasswordEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Site\SendProjectBuyerEvaluationEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Site\SendUnreadConversationEmailAsyncCommandHandler.cs" />
@@ -240,6 +241,7 @@
     <Compile Include="CQRS\Commands\Collaborators\UpdateTinyCollaborator.cs" />
     <Compile Include="CQRS\Commands\Collaborators\UpdateCollaboratorMainInformation.cs" />
     <Compile Include="CQRS\Commands\Common\BaseCommands\InterestBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Emails\Admin\SendSpeakerWelcomeEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Common\SendForgotPasswordEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Site\SendProjectBuyerEvaluationEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Site\SendUnreadConversationEmailAsync.cs" />
