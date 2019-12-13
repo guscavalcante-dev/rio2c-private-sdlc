@@ -1872,4 +1872,8 @@
     <value>Registered</value>
     <comment>Registrados</comment>
   </data>
+  <data name="ShowHighlights" xml:space="preserve">
+    <value>Show highlights</value>
+    <comment>Exibir destaques</comment>
+  </data>
 </root>

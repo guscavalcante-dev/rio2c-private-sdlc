@@ -1885,4 +1885,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Registrados</value>
     <comment>Registrados</comment>
   </data>
+  <data name="ShowHighlights" xml:space="preserve">
+    <value>Exibir destaques</value>
+    <comment>Exibir destaques</comment>
+  </data>
 </root>

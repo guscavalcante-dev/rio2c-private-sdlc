@@ -202,8 +202,8 @@ var SpeakersDataTableWidget = function () {
                             eventbriteCsvExport = dt.ajax.params();
                             eventbriteCsvExport.selectedCollaboratorsUids = $('#speakers-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
                             eventbriteCsvExport.showAllEditions = $('#ShowAllEditions').prop('checked');
-                            //eventbriteCsvExport.showAllExecutives = $('#ShowAllExecutives').prop('checked');
                             eventbriteCsvExport.showAllParticipants = $('#ShowAllParticipants').prop('checked');
+                            eventbriteCsvExport.showHighlights = $('#ShowHighlights').prop('checked');
 
                             showExportEventbriteCsvModal();
                         }
@@ -218,8 +218,8 @@ var SpeakersDataTableWidget = function () {
                 url: MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/Search'),
                 data: function (d) {
                     d.showAllEditions = $('#ShowAllEditions').prop('checked');
-                    //d.showAllExecutives = $('#ShowAllExecutives').prop('checked');
                     d.showAllParticipants = $('#ShowAllParticipants').prop('checked');
+                    d.showHighlights = $('#ShowHighlights').prop('checked');
                 },
                 dataFilter: function (data) {
                     var jsonReturned = jQuery.parseJSON(data);

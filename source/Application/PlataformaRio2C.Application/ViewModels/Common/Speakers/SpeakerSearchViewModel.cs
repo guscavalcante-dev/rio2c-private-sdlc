@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-12-2019
+// Last Modified On : 12-13-2019
 // ***********************************************************************
 // <copyright file="SpeakerSearchViewModel.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,6 +27,9 @@ namespace PlataformaRio2C.Application.ViewModels
 
         [Display(Name = "ShowAllParticipants", ResourceType = typeof(Labels))]
         public bool ShowAllParticipants { get; set; }
+
+        [Display(Name = "ShowHighlights", ResourceType = typeof(Labels))]
+        public bool ShowHighlights { get; set; }
 
         public int? Page { get; set; }
         public int? PageSize { get; set; }

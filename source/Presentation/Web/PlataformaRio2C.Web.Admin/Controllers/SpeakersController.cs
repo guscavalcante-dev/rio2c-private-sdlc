@@ -86,9 +86,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="request">The request.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <param name="showHighlights">if set to <c>true</c> [show highlights].</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllParticipants)
+        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllParticipants, bool? showHighlights)
         {
             var speakers = await this.collaboratorRepo.FindAllByDataTable(
                 request.Start / request.Length,
@@ -100,6 +101,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 showAllEditions,
                 false,
                 showAllParticipants,
+                showHighlights,
                 this.EditionDto?.Id
             );
 
@@ -164,11 +166,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="selectedCollaboratorsUids">The selected collaborators uids.</param>
         /// <param name="ticketClassName">Name of the ticket class.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
-        /// <param name="showAllExecutives">if set to <c>true</c> [show all executives].</param>
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <param name="showHighlights">The show highlights.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ExportEventbriteCsv(IDataTablesRequest request, string selectedCollaboratorsUids, string ticketClassName, bool showAllEditions, bool showAllExecutives, bool showAllParticipants)
+        public async Task<ActionResult> ExportEventbriteCsv(IDataTablesRequest request, string selectedCollaboratorsUids, string ticketClassName, bool showAllEditions, bool showAllParticipants, bool? showHighlights)
         {
             List<EventbriteCsv> eventbriteCsv = null;
 
@@ -182,8 +184,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     this.GetCollaboratorsUids(null),
                     Constants.CollaboratorType.ExecutiveAudiovisual,
                     showAllEditions,
-                    showAllExecutives,
+                    false,
                     showAllParticipants,
+                    showHighlights,
                     this.EditionDto?.Id
                 );
 

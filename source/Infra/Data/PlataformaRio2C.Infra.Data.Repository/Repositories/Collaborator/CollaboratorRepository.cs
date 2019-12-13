@@ -22,8 +22,8 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using LinqKit;
 using PlataformaRio2C.Domain.Dtos;
-using X.PagedList;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using X.PagedList;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -115,6 +115,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                && aoc.AttendeeOrganization.AttendeeOrganizationTypes
                                                                                                        .Any(aot => !aot.IsDeleted
                                                                                                                    && (showAllExecutives || aot.OrganizationType.Uid == organizationTypeUid))))));
+
+            return query;
+        }
+
+        /// <summary>Finds the by highlights.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="showHighlights">The show highlights.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> FindByHighlights(this IQueryable<Collaborator> query, bool? showHighlights)
+        {
+            if (showHighlights.HasValue && showHighlights.Value)
+            {
+                query = query.Where(o => o.AttendeeCollaborators.Any(ac => !ac.IsDeleted
+                                                                           && ac.ApiHighlightPosition.HasValue));
+            }
 
             return query;
         }
@@ -393,6 +408,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="showAllExecutives">if set to <c>true</c> [show all executives].</param>
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <param name="showHighlights">The show highlights.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
         public async Task<IPagedList<CollaboratorBaseDto>> FindAllByDataTable(
@@ -405,12 +421,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             bool showAllEditions,
             bool showAllExecutives,
             bool showAllParticipants,
+            bool? showHighlights,
             int? editionId)
         {
             var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords, editionId)
                                 .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeName, showAllEditions, showAllExecutives, showAllParticipants, editionId)
-                                .FindByUids(collaboratorsUids);
+                                .FindByUids(collaboratorsUids)
+                                .FindByHighlights(showHighlights);
 
             return await query
                             .DynamicOrder<Collaborator>(

@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-12-2019
+// Last Modified On : 12-13-2019
 // ***********************************************************************
 // <copyright file="PlayersExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,7 +25,6 @@ using Newtonsoft.Json;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
@@ -89,9 +88,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="showAllExecutives">if set to <c>true</c> [show all executives].</param>
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <param name="showHighlights">The show highlights.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllExecutives, bool showAllParticipants)
+        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllExecutives, bool showAllParticipants, bool? showHighlights)
         {
             var playersExecutives = await this.collaboratorRepo.FindAllByDataTable(
                 request.Start / request.Length,
@@ -103,6 +103,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 showAllEditions,
                 showAllExecutives,
                 showAllParticipants,
+                showHighlights,
                 this.EditionDto?.Id
             );
 
@@ -169,9 +170,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="showAllExecutives">if set to <c>true</c> [show all executives].</param>
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <param name="showHighlights">The show highlights.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ExportEventbriteCsv(IDataTablesRequest request, string selectedCollaboratorsUids, string ticketClassName, bool showAllEditions, bool showAllExecutives, bool showAllParticipants)
+        public async Task<ActionResult> ExportEventbriteCsv(IDataTablesRequest request, string selectedCollaboratorsUids, string ticketClassName, bool showAllEditions, bool showAllExecutives, bool showAllParticipants, bool? showHighlights)
         {
             List<EventbriteCsv> eventbriteCsv = null;
 
@@ -187,6 +189,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     showAllEditions,
                     showAllExecutives,
                     showAllParticipants,
+                    showHighlights,
                     this.EditionDto?.Id
                 );
 
