@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-13-2019
+// Last Modified On : 12-14-2019
 // ***********************************************************************
 // <copyright file="PlayersExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -184,7 +184,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     10000,
                     request?.Search?.Value,
                     request?.GetSortColumns(),
-                    this.GetCollaboratorsUids(null),
+                    this.GetCollaboratorsUids(selectedCollaboratorsUids),
                     Constants.CollaboratorType.ExecutiveAudiovisual,
                     showAllEditions,
                     showAllExecutives,
@@ -193,14 +193,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     this.EditionDto?.Id
                 );
 
-                eventbriteCsv = playersExecutives?.Select(pe => new EventbriteCsv
-                {
-                    Name = pe.FirstName,
-                    LastName = pe.LastNames,
-                    Email = pe.Email,
-                    TicketClassName = ticketClassName,
-                    Quantity = 1
-                }).ToList();
+                eventbriteCsv = playersExecutives?.Select(pe => new EventbriteCsv(
+                    pe.FirstName,
+                    pe.LastNames,
+                    pe.Email,
+                    ticketClassName, 1)).ToList();
             }
             catch (DomainException ex)
             {

@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-13-2019
+// Last Modified On : 12-14-2019
 // ***********************************************************************
 // <copyright file="SpeakersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -176,13 +176,13 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             try
             {
-                var playersExecutives = await this.collaboratorRepo.FindAllByDataTable(
+                var speakers = await this.collaboratorRepo.FindAllByDataTable(
                     1,
                     10000,
                     request?.Search?.Value,
                     request?.GetSortColumns(),
-                    this.GetCollaboratorsUids(null),
-                    Constants.CollaboratorType.ExecutiveAudiovisual,
+                    this.GetCollaboratorsUids(selectedCollaboratorsUids),
+                    Constants.CollaboratorType.Speaker,
                     showAllEditions,
                     false,
                     showAllParticipants,
@@ -190,14 +190,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     this.EditionDto?.Id
                 );
 
-                eventbriteCsv = playersExecutives?.Select(pe => new EventbriteCsv
-                {
-                    Name = pe.FirstName,
-                    LastName = pe.LastNames,
-                    Email = pe.Email,
-                    TicketClassName = ticketClassName,
-                    Quantity = 1
-                }).ToList();
+                eventbriteCsv = speakers?.Select(s => new EventbriteCsv(
+                    s.FirstName, 
+                    s.LastNames, 
+                    s.Email, 
+                    ticketClassName, 1)).ToList();
             }
             catch (DomainException ex)
             {

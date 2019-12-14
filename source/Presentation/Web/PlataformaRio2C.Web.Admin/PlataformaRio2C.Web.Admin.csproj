@@ -8174,6 +8174,7 @@
     <Content Include="Views\Speakers\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Views\Speakers\Modals\UpdateModal.cshtml" />
     <Content Include="Views\AdminMailerService\SpeakerWelcomeEmail.cshtml" />
+    <Content Include="Views\Speakers\Modals\EventbriteCsvModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
