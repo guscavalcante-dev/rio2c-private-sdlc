@@ -119,6 +119,35 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+
+        /// <summary>Finds the by keywords.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> FindPitchingByKeywords(this IQueryable<Project> query, string keywords)
+        {
+            if (!string.IsNullOrEmpty(keywords))
+            {
+                var outerWhere = PredicateBuilder.New<Project>(false);
+                var innerProjectTitleNameWhere = PredicateBuilder.New<Project>(true);
+                var innerSellerAttendeeOrganizationNameWhere = PredicateBuilder.New<Project>(true);
+
+                foreach (var keyword in keywords.Split(' '))
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        innerProjectTitleNameWhere = innerProjectTitleNameWhere.Or(p => p.ProjectTitles.Any(pt => !pt.IsDeleted && pt.Value.Contains(keyword)));
+                        innerSellerAttendeeOrganizationNameWhere = innerSellerAttendeeOrganizationNameWhere.Or(sao => sao.SellerAttendeeOrganization.Organization.Name.Contains(keyword));
+                    }
+                }
+
+                outerWhere = outerWhere.Or(innerProjectTitleNameWhere);
+                //outerWhere = outerWhere.Or(innerSellerAttendeeOrganizationNameWhere);
+                query = query.Where(outerWhere);
+            }
+
+            return query;
+        }
         /// <summary>Finds the by interest.</summary>
         /// <param name="query">The query.</param>
         /// <param name="interestUid">The interest uid.</param>
@@ -214,6 +243,29 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     }
 
     #endregion
+
+    #region ProjectBaseDto IQueryable Extensions
+    internal static class ProjectBaseDtoIQueryableExtensions
+    {
+        /// <summary>
+        /// To the list paged.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        internal static async Task<IPagedList<ProjectBaseDto>> ToListPagedAsync(this IQueryable<ProjectBaseDto> query, int page, int pageSize)
+        {
+            // Page the list
+            var pagedList = await query.ToPagedListAsync(page, pageSize);
+            if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
+                pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
+
+            return pagedList;
+        }
+
+    }
+    #endregion 
 
     /// <summary>ProjectRepository</summary>
     public class ProjectRepository : Repository<Context.PlataformaRio2CContext, Project>, IProjectRepository
@@ -366,60 +418,25 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public async Task<IPagedList<ProjectDto>> FindAllPitchingProjectsDtoAsync(string searchKeywords, Guid? interestUid, int page, int pageSize)
+        public async Task<IPagedList<ProjectBaseDto>> FindAllPitchingProjectsDtoAsync(string searchKeywords, Guid? interestUid, string languageCode, int page, int pageSize)
         {
             var query = this.GetBaseQuery()
                                 .IsPitching()
                                 .FindByInterest(interestUid)
-                                //.FindByKeywords(searchKeywords)
-                                .Select(p => new ProjectDto
+                                .FindByKeywords(searchKeywords)
+                                .Select(p => new ProjectBaseDto
                                 {
-                                    Project = p,
-                                    ProjectType = p.ProjectType,
-                                    SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
-                                    {
-                                        AttendeeOrganization = p.SellerAttendeeOrganization,
-                                        Organization = p.SellerAttendeeOrganization.Organization,
-                                        Edition = p.SellerAttendeeOrganization.Edition
-                                    },
-                                    ProjectTitleDtos = p.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
-                                    {
-                                        ProjectTitle = t,
-                                        Language = t.Language
-                                    }),
-                                    ProjectLogLineDtos = p.ProjectLogLines.Where(ll => !ll.IsDeleted).Select(ll => new ProjectLogLineDto
-                                    {
-                                        ProjectLogLine = ll,
-                                        Language = ll.Language
-                                    }),
-                                    ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted).Select(i => new ProjectInterestDto
-                                    {
-                                        ProjectInterest = i,
-                                        Interest = i.Interest,
-                                        InterestGroup = i.Interest.InterestGroup
-                                    }),
-                                    ProjectBuyerEvaluationDtos = p.ProjectBuyerEvaluations
-                                                                    .Where(pbe => !pbe.IsDeleted
-                                                                                  && !pbe.BuyerAttendeeOrganization.IsDeleted
-                                                                                  && pbe.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators
-                                                                                                                      .Any(aoc => !aoc.IsDeleted))
-                                    .Select(be => new ProjectBuyerEvaluationDto
-                                    {
-                                        ProjectBuyerEvaluation = be,
-                                        BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
-                                        {
-                                            AttendeeOrganization = be.BuyerAttendeeOrganization,
-                                            Organization = be.BuyerAttendeeOrganization.Organization,
-                                            Edition = be.BuyerAttendeeOrganization.Edition
-                                        },
-                                        ProjectEvaluationStatus = be.ProjectEvaluationStatus,
-                                        ProjectEvaluationRefuseReason = be.ProjectEvaluationRefuseReason
-                                    })
+                                    Id = p.Id,
+                                    Uid = p.Uid,
+                                    ProjectName = p.ProjectTitles.Where(t => t.Language.Code == languageCode).Select(t => t.Value).FirstOrDefault(),
+                                    ProducerName = p.SellerAttendeeOrganization.Organization.Name,
+                                    CreateDate = p.CreateDate,
+                                    FinishDate = p.FinishDate
                                 });
 
 
             return await query
-                           .OrderBy(pd => pd.Project.CreateDate)
+                           .OrderBy(pd => pd.CreateDate)
                            .ToListPagedAsync(page, pageSize);
         }
 

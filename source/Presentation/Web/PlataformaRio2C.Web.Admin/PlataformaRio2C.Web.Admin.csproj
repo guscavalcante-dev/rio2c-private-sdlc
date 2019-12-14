@@ -343,7 +343,7 @@
     <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Controllers\MusicalCommissionController.cs" />
     <Compile Include="Controllers\PlayerProducerController.cs" />
-    <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\InterestController.cs" />
     <Compile Include="Controllers\InterestGroupController.cs" />
     <Compile Include="Controllers\EventController.cs" />
@@ -424,6 +424,7 @@
     <Content Include="Assets\js\organizations\organizations.totalcount.widget.js" />
     <Content Include="Assets\js\organizations\organizations.update.js" />
     <Content Include="Assets\js\myrio2c.additionalinfo.js" />
+    <Content Include="Assets\js\projects\projects.pitching.datatable.widget.js" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.css" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.min.css" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.rtl.css" />
@@ -8159,6 +8160,8 @@
     <Content Include="Views\Account\Modals\UpdatePasswordForm.cshtml" />
     <Content Include="Views\Account\Modals\UpdatePasswordModal.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\InterestBaseCommand.cshtml" />
+    <Content Include="Views\Projects\ProjectsPitchingList.cshtml" />
+    <Content Include="Views\Projects\Widgets\PitchingDataTableWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

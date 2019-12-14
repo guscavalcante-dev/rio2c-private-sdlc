@@ -108,7 +108,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             );
 
             var response = DataTablesResponse.Create(request, playersExecutives.TotalItemCount, playersExecutives.TotalItemCount, playersExecutives);
-
+            Console.WriteLine(response);
             return Json(new
             {
                 status = "success",
