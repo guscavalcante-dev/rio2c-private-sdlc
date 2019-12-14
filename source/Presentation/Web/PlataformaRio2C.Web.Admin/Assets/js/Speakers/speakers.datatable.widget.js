@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-13-2019
+// Last Modified On : 12-14-2019
 // ***********************************************************************
 // <copyright file="speakers.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -125,7 +125,9 @@ var SpeakersDataTableWidget = function () {
                 onSuccess: function () {
                     var json = jQuery.parseJSON(data.data);
                     var csv = MyRio2cCommon.convertJsonToCsv(json);
-                    var csvData = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                    var bom = "\uFEFF";
+                    var csvContent = bom + csv;
+                    var csvData = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
                     var csvUrl = window.URL.createObjectURL(csvData);
                     var tempLink = document.createElement('a');
                     tempLink.href = csvUrl;
