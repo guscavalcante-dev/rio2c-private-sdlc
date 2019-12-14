@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-13-2019
+// Last Modified On : 12-14-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -222,38 +222,10 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.SpeakerTermsAcceptanceDate = DateTime.Now;
 
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
-            this.UpdateUserId = userId;
-        }
-
-        /// <summary>Called when [data].</summary>
-        /// <param name="userId">The user identifier.</param>
-        public void OnboardData(int userId)
-        {
-            this.OnboardingFinishDate = this.OnboardingCollaboratorDate = DateTime.Now;
-
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
-            this.UpdateUserId = userId;
-        }
-
-        /// <summary>Accepts the producer terms.</summary>
-        /// <param name="userId">The user identifier.</param>
-        public void AcceptProducerTerms(int userId)
-        {
-            this.ProducerTermsAcceptanceDate = DateTime.Now;
-
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
-            this.UpdateUserId = userId;
-        }
-
-        /// <summary>Skips the onboard ticket buyer company data.</summary>
-        /// <param name="userId">The user identifier.</param>
-        public void SkipOnboardTicketBuyerCompanyData(int userId)
-        {
-            this.OnboardingOrganizationDataSkippedDate = DateTime.Now;
+            if (!this.OnboardingFinishDate.HasValue)
+            {
+                this.OnboardingFinishDate = DateTime.Now;
+            }
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
@@ -265,6 +237,33 @@ namespace PlataformaRio2C.Domain.Entities
         public void OnboardProducerTermsAcceptance(int userId)
         {
             this.ProducerTermsAcceptanceDate = DateTime.Now;
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Called when [data].</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardData(int userId)
+        {
+            this.OnboardingCollaboratorDate = DateTime.Now;
+
+            if (!this.HasCollaboratorType(Constants.CollaboratorType.Speaker) && !this.OnboardingFinishDate.HasValue)
+            {
+                this.OnboardingFinishDate = DateTime.Now;
+            }
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Skips the onboard ticket buyer company data.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void SkipOnboardTicketBuyerCompanyData(int userId)
+        {
+            this.OnboardingOrganizationDataSkippedDate = DateTime.Now;
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
@@ -318,6 +317,17 @@ namespace PlataformaRio2C.Domain.Entities
         private List<AttendeeCollaboratorType> FindAllAttendeeCollaboratorTypesNotDeleted()
         {
             return this.AttendeeCollaboratorTypes?.Where(act => !act.IsDeleted)?.ToList();
+        }
+
+        /// <summary>Determines whether [has collaborator type] [the specified collaborator type name].</summary>
+        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
+        /// <returns>
+        ///   <c>true</c> if [has collaborator type] [the specified collaborator type name]; otherwise, <c>false</c>.</returns>
+        private bool HasCollaboratorType(string collaboratorTypeName)
+        {
+            return this.AttendeeCollaboratorTypes?.Any(act => !act.IsDeleted
+                                                           && !act.CollaboratorType.IsDeleted
+                                                           && act.CollaboratorType.Name == collaboratorTypeName) == true;
         }
 
         #endregion

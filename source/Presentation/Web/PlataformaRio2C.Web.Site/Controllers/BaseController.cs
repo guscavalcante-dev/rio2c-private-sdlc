@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-11-2019
+// Last Modified On : 12-14-2019
 // ***********************************************************************
 // <copyright file="BaseController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -245,7 +245,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <returns></returns>
         private bool ValidateOnboarding()
         {
-            if (this.UserAccessControlDto?.IsOnboardingPending() != true 
+            var controller = RouteData.Values["controller"] as string;
+            var action = RouteData.Values["action"] as string;
+
+            if ((controller?.ToLower() == "account" && action?.ToLower() == "onboarding")
+                || this.UserAccessControlDto?.IsOnboardingPending() != true 
                 || OnboardingAllowedRoutesHelper.IsRouteAllowed(RouteData.Values["controller"] as string, RouteData.Values["action"] as string))
             {
                 return false;
