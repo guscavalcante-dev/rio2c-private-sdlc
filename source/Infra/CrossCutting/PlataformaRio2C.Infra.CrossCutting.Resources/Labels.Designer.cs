@@ -1339,6 +1339,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Evento.
+        /// </summary>
+        public static string Event {
+            get {
+                return ResourceManager.GetString("Event", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Executivo.
         /// </summary>
         public static string Executive {
@@ -4026,6 +4035,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string TotalValueOfProject {
             get {
                 return ResourceManager.GetString("TotalValueOfProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Track.
+        /// </summary>
+        public static string Track {
+            get {
+                return ResourceManager.GetString("Track", resourceCulture);
             }
         }
         

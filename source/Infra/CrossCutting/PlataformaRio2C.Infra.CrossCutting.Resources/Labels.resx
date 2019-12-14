@@ -1889,4 +1889,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Exibir destaques</value>
     <comment>Exibir destaques</comment>
   </data>
+  <data name="Event" xml:space="preserve">
+    <value>Evento</value>
+    <comment>Evento</comment>
+  </data>
+  <data name="Track" xml:space="preserve">
+    <value>Track</value>
+    <comment>Track</comment>
+  </data>
 </root>

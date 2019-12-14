@@ -1876,4 +1876,12 @@
     <value>Show highlights</value>
     <comment>Exibir destaques</comment>
   </data>
+  <data name="Event" xml:space="preserve">
+    <value>Event</value>
+    <comment>Evento</comment>
+  </data>
+  <data name="Track" xml:space="preserve">
+    <value>Track</value>
+    <comment>Track</comment>
+  </data>
 </root>
