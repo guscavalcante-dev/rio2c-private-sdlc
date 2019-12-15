@@ -88,21 +88,16 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ProjectsPitchingList(string searchKeywords, Guid? interestUid, int? page = 1, int? pageSize = 10)
+        public async Task<ActionResult> ProjectsPitchingList()
         {
             #region Breadcrumb
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Producers, new List<BreadcrumbItemHelper>{
                 new BreadcrumbItemHelper(Labels.ProjectsForPitching, Url.Action("ProjectsPitchingList", "Projects", new { Area = "" }))
             });
-
             #endregion
 
-            ViewBag.SearchKeywords = searchKeywords;
-            ViewBag.InterestUid = interestUid;
-            ViewBag.Page = page;
-            ViewBag.PageSize = pageSize;
-
-            ViewBag.GenreInterests = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.Genre.Uid);
+            ViewBag.Page = 1;
+            ViewBag.PageSize = 10;
 
             return View();
         }
@@ -115,12 +110,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowPitchingListWidget(IDataTablesRequest request, Guid? interestUid, int? page = 1, int? pageSize = 10)
+        public async Task<ActionResult> ShowPitchingListWidget(IDataTablesRequest request)
         {
-            var projects = await this.projectRepo.FindAllPitchingProjectsDtoAsync(request.Search?.Value, interestUid, this.UserInterfaceLanguage, page.Value, pageSize.Value);
+            var projects = await this.projectRepo.FindAllPitchingProjectsDtoAsync(request.Search?.Value, this.UserInterfaceLanguage, request.Start / request.Length, request.Length);
 
-            ViewBag.Page = page;
-            ViewBag.PageSize = pageSize;
+            ViewBag.Page = request.Start / request.Length;
+            ViewBag.PageSize = request.Length;
 
             var response = DataTablesResponse.Create(request, projects.TotalItemCount, projects.TotalItemCount, projects);
 

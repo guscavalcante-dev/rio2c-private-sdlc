@@ -257,6 +257,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static async Task<IPagedList<ProjectBaseDto>> ToListPagedAsync(this IQueryable<ProjectBaseDto> query, int page, int pageSize)
         {
             // Page the list
+            page++;
+
             var pagedList = await query.ToPagedListAsync(page, pageSize);
             if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
                 pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
@@ -418,11 +420,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public async Task<IPagedList<ProjectBaseDto>> FindAllPitchingProjectsDtoAsync(string searchKeywords, Guid? interestUid, string languageCode, int page, int pageSize)
+        public async Task<IPagedList<ProjectBaseDto>> FindAllPitchingProjectsDtoAsync(string searchKeywords, string languageCode, int page, int pageSize)
         {
             var query = this.GetBaseQuery()
                                 .IsPitching()
-                                .FindByInterest(interestUid)
                                 .FindByKeywords(searchKeywords)
                                 .Select(p => new ProjectBaseDto
                                 {

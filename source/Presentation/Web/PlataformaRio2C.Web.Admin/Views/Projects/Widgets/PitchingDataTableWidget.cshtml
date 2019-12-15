@@ -25,7 +25,7 @@
                 <label>@Labels.Search:</label>
                 @Html.Hidden("Page", ViewBag.Page as int?)
                 @Html.Hidden("PageSize", ViewBag.PageSize as int?)
-                @Html.TextBox("Search", null, new { @class = "form-control mr-1", autocomplete = "off", type = "search", placeholder = Labels.Search })
+                @Html.TextBox("Search", null, new { @class = "form-control mr-1", autocomplete = "off", type = "search", placeholder = $"{Labels.Title.ToLowerInvariant()}, {Labels.Producer.ToLowerInvariant()}"  })
             </div>
         </div>
         <!--end: SearchForm-->
