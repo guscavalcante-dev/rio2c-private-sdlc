@@ -13,13 +13,40 @@
 // ***********************************************************************
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>UpdateCollaboratorSiteMainInformation</summary>
     public class UpdateCollaboratorSiteMainInformation : UpdateCollaboratorMainInformationBaseCommand
     {
+        [Display(Name = "FirstName", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "LastNames", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [StringLength(200, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string LastNames { get; set; }
+
+        [Display(Name = "BadgeName", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string Badge { get; set; }
+
+        [Display(Name = "PhoneNumber", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string PhoneNumber { get; set; }
+
+        [Display(Name = "CellPhone", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string CellPhone { get; set; }
+
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorSiteMainInformation"/> class.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
@@ -34,6 +61,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isImageRequired)
             : base (entity, languagesDtos, isJobTitleRequired, isMiniBioRequired, isImageRequired)
         {
+            this.FirstName = entity?.Collaborator?.FirstName;
+            this.LastNames = entity?.Collaborator?.LastNames;
+            this.Badge = entity?.Collaborator?.Badge;
+            this.PhoneNumber = entity?.Collaborator?.PhoneNumber;
+            this.CellPhone = entity?.Collaborator?.CellPhone;
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorSiteMainInformation"/> class.</summary>

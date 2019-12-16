@@ -24,32 +24,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>UpdateCollaboratorMainInformationBaseCommand</summary>
     public class UpdateCollaboratorMainInformationBaseCommand : BaseCommand
-    {
-        [Display(Name = "FirstName", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        public string FirstName { get; set; }
-
-        [Display(Name = "LastNames", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [StringLength(200, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        public string LastNames { get; set; }
-
-        [Display(Name = "BadgeName", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        public string Badge { get; set; }
-
-        [Display(Name = "PhoneNumber", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        public string PhoneNumber { get; set; }
-
-        [Display(Name = "CellPhone", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        public string CellPhone { get; set; }
-        
+    {        
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAnOption")]
         public bool? SharePublicEmail { get; set; }
 
@@ -75,11 +50,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public UpdateCollaboratorMainInformationBaseCommand(AttendeeCollaboratorSiteMainInformationWidgetDto entity, List<LanguageDto> languagesDtos, bool isJobTitleRequired, bool isMiniBioRequired, bool isImageRequired)
         {
             this.CollaboratorUid = entity?.Collaborator?.Uid ?? Guid.Empty;
-            this.FirstName = entity?.Collaborator?.FirstName;
-            this.LastNames = entity?.Collaborator?.LastNames;
-            this.Badge = entity?.Collaborator?.Badge;
-            this.PhoneNumber = entity?.Collaborator?.PhoneNumber;
-            this.CellPhone = entity?.Collaborator?.CellPhone;
             this.PublicEmail = entity?.Collaborator?.PublicEmail;
             this.SharePublicEmail = !string.IsNullOrEmpty(entity?.Collaborator?.PublicEmail);
             this.UpdateJobTitles(entity, languagesDtos, isJobTitleRequired);

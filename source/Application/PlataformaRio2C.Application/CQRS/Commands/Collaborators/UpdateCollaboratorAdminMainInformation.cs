@@ -22,12 +22,33 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>UpdateCollaboratorAdminMainInformation</summary>
     public class UpdateCollaboratorAdminMainInformation : UpdateCollaboratorMainInformationBaseCommand
     {
+        [Display(Name = "FirstName", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "LastNames", ResourceType = typeof(Labels))]
+        [StringLength(200, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string LastNames { get; set; }
+
         [Display(Name = "Email", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [EmailAddress(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "EmailISInvalid")]
         [StringLength(256, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+
+        [Display(Name = "BadgeName", ResourceType = typeof(Labels))]
+        [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string Badge { get; set; }
+
+        [Display(Name = "PhoneNumber", ResourceType = typeof(Labels))]
+        [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string PhoneNumber { get; set; }
+
+        [Display(Name = "CellPhone", ResourceType = typeof(Labels))]
+        [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string CellPhone { get; set; }
 
         public string CollaboratorTypeName { get; private set; }
 
@@ -39,7 +60,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<LanguageDto> languagesDtos)
             : base(entity, languagesDtos, false, false, false)
         {
+            this.FirstName = entity?.Collaborator?.FirstName;
+            this.LastNames = entity?.Collaborator?.LastNames;
             this.Email = entity?.User?.Email;
+            this.Badge = entity?.Collaborator?.Badge;
+            this.PhoneNumber = entity?.Collaborator?.PhoneNumber;
+            this.CellPhone = entity?.Collaborator?.CellPhone;
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorAdminMainInformation"/> class.</summary>
