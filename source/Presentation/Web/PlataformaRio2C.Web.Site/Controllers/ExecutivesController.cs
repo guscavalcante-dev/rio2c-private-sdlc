@@ -4,7 +4,7 @@
 // Created          : 10-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-05-2019
+// Last Modified On : 12-16-2019
 // ***********************************************************************
 // <copyright file="ExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -108,7 +108,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? collaboratorUid)
         {
-            UpdateCollaboratorMainInformation cmd;
+            UpdateCollaboratorSiteMainInformation cmd;
 
             try
             {
@@ -123,7 +123,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
 
-                cmd = new UpdateCollaboratorMainInformation(
+                cmd = new UpdateCollaboratorSiteMainInformation(
                     mainInformationWidgetDto,
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     true,
@@ -149,7 +149,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> UpdateMainInformation(UpdateCollaboratorMainInformation cmd)
+        public async Task<ActionResult> UpdateMainInformation(UpdateCollaboratorSiteMainInformation cmd)
         {
             var result = new AppValidationResult();
 

@@ -178,13 +178,14 @@
     <Compile Include="CQRS\CommandsHandlers\Collaborators\BaseCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\CreateTinyCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\DeleteCollaboratorTicketCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorAdminMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateTinyCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorTicketCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\CreateCollaboratorTicketCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\CreateCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\DeleteCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorMainInformationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorSiteMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendSpeakerWelcomeEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Common\SendForgotPasswordEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Site\SendProjectBuyerEvaluationEmailAsyncCommandHandler.cs" />
@@ -239,8 +240,10 @@
     <Compile Include="CQRS\Commands\Collaborators\BaseCommands\CollaboratorDataBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Collaborators\BaseCommands\CollaboratorMiniBioBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Collaborators\CreateTinyCollaborator.cs" />
+    <Compile Include="CQRS\Commands\Collaborators\BaseCommands\UpdateCollaboratorMainInformationBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Collaborators\UpdateCollaboratorAdminMainInformation.cs" />
     <Compile Include="CQRS\Commands\Collaborators\UpdateTinyCollaborator.cs" />
-    <Compile Include="CQRS\Commands\Collaborators\UpdateCollaboratorMainInformation.cs" />
+    <Compile Include="CQRS\Commands\Collaborators\UpdateCollaboratorSiteMainInformation.cs" />
     <Compile Include="CQRS\Commands\Common\BaseCommands\InterestBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendSpeakerWelcomeEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Common\SendForgotPasswordEmailAsync.cs" />

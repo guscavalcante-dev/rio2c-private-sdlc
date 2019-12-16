@@ -4,7 +4,7 @@
 // Created          : 09-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-26-2019
+// Last Modified On : 12-16-2019
 // ***********************************************************************
 // <copyright file="CollaboratorTypeMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,7 +29,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
 
             // Relationships
             this.HasRequired(t => t.Role)
-                .WithMany(e => e.CollaboratorTypes)
+                .WithMany()
                 .HasForeignKey(e => e.RoleId);
 
             this.HasMany(t => t.AttendeeCollaboratorTypes)

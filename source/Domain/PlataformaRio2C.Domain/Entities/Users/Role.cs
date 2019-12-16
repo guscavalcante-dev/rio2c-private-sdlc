@@ -4,23 +4,19 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-26-2019
+// Last Modified On : 12-16-2019
 // ***********************************************************************
 // <copyright file="Role.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Collections.Generic;
-
 namespace PlataformaRio2C.Domain.Entities
 {
     /// <summary>Role</summary>
     public class Role : Entity
     {
         public string Name { get; set; }
-
-        public virtual ICollection<CollaboratorType> CollaboratorTypes { get; private set; }
 
         /// <summary>Returns true if ... is valid.</summary>
         /// <returns>

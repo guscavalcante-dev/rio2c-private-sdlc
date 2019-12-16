@@ -288,7 +288,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUser(email);
         }
 
-        /// <summary>Updates the collaborator main information for admin.</summary>
+        /// <summary>Updates the collaborator admin main information.</summary>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastNames">The last names.</param>
         /// <param name="email">The email.</param>
@@ -297,12 +298,14 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="phoneNumber">The phone number.</param>
         /// <param name="sharePublicEmail">The share public email.</param>
         /// <param name="publicEmail">The public email.</param>
+        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
         /// <param name="jobTitles">The job titles.</param>
         /// <param name="miniBios">The mini bios.</param>
         /// <param name="edition">The edition.</param>
-        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateCollaboratorMainInformation(
+        public void UpdateCollaboratorAdminMainInformation(
+            CollaboratorType collaboratorType,
             string firstName,
             string lastNames,
             string email,
@@ -311,10 +314,11 @@ namespace PlataformaRio2C.Domain.Entities
             string phoneNumber,
             bool? sharePublicEmail,
             string publicEmail,
+            bool isImageUploaded,
+            bool isImageDeleted,
             List<CollaboratorJobTitle> jobTitles,
             List<CollaboratorMiniBio> miniBios,
             Edition edition,
-            bool isImageUploaded,
             int userId)
         {
             this.FirstName = firstName?.Trim();
@@ -324,7 +328,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.PhoneNumber = phoneNumber?.Trim();
             this.CellPhone = cellPhone?.Trim();
             this.UpdatePublicEmail(sharePublicEmail, publicEmail);
-            this.UpdateImageUploadDate(isImageUploaded, false);
+            this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
             this.OnboardAttendeeCollaboratorData(edition, userId);
@@ -334,7 +338,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
         }
 
-        /// <summary>Updates the collaborator main information for site.</summary>
+        /// <summary>Updates the collaborator site main information.</summary>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastNames">The last names.</param>
         /// <param name="badge">The badge.</param>
@@ -347,7 +351,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="edition">The edition.</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateCollaboratorMainInformation(
+        public void UpdateCollaboratorSiteMainInformation(
             string firstName,
             string lastNames,
             string badge,

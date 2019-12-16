@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
-// Author           : William Almado
-// Created          : 10-15-2019
+// Author           : Rafael Dantas Ruiz
+// Created          : 12-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-23-2019
+// Last Modified On : 12-16-2019
 // ***********************************************************************
-// <copyright file="UpdateCollaboratorMainInformation.cs" company="Softo">
+// <copyright file="UpdateCollaboratorMainInformationBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -22,8 +22,8 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>UpdateCollaboratorMainInformation</summary>
-    public class UpdateCollaboratorMainInformation : BaseCommand
+    /// <summary>UpdateCollaboratorMainInformationBaseCommand</summary>
+    public class UpdateCollaboratorMainInformationBaseCommand : BaseCommand
     {
         [Display(Name = "FirstName", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -66,13 +66,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public Guid CollaboratorUid { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorMainInformation"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorMainInformationBaseCommand"/> class.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
         /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
-        public UpdateCollaboratorMainInformation(AttendeeCollaboratorSiteMainInformationWidgetDto entity, List<LanguageDto> languagesDtos, bool isJobTitleRequired, bool isMiniBioRequired, bool isImageRequired)
+        public UpdateCollaboratorMainInformationBaseCommand(AttendeeCollaboratorSiteMainInformationWidgetDto entity, List<LanguageDto> languagesDtos, bool isJobTitleRequired, bool isMiniBioRequired, bool isImageRequired)
         {
             this.CollaboratorUid = entity?.Collaborator?.Uid ?? Guid.Empty;
             this.FirstName = entity?.Collaborator?.FirstName;
@@ -87,10 +87,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateCropperImage(entity, isImageRequired);
         }
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorMainInformation"/> class.</summary>
-        public UpdateCollaboratorMainInformation()
+        /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorMainInformationBaseCommand"/> class.</summary>
+        public UpdateCollaboratorMainInformationBaseCommand()
         {
         }
+
+        #region Private Methods
 
         /// <summary>Updates the job titles.</summary>
         /// <param name="entity">The entity.</param>
@@ -103,7 +105,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             {
                 var jobTitle = entity?.JobTitlesDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
                 this.JobTitles.Add(jobTitle != null ? new CollaboratorJobTitleBaseCommand(jobTitle, isJobTitleRequired) :
-                                                      new CollaboratorJobTitleBaseCommand(languageDto, isJobTitleRequired));
+                    new CollaboratorJobTitleBaseCommand(languageDto, isJobTitleRequired));
             }
         }
 
@@ -118,7 +120,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             {
                 var miniBio = entity?.MiniBioDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
                 this.MiniBios.Add(miniBio != null ? new CollaboratorMiniBioBaseCommand(miniBio, isMiniBioRequired) :
-                                                    new CollaboratorMiniBioBaseCommand(languageDto, isMiniBioRequired));
+                    new CollaboratorMiniBioBaseCommand(languageDto, isMiniBioRequired));
             }
         }
 
@@ -130,23 +132,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.CropperImage = new CropperImageBaseCommand(entity?.Collaborator?.ImageUploadDate, entity?.Collaborator?.Uid, FileRepositoryPathType.UserImage, isImageRequired);
         }
 
-        /// <summary>Updates the pre send properties.</summary>
-        /// <param name="collaboratorUid">The collaborator uid.</param>
-        /// <param name="userId">The user identifier.</param>
-        /// <param name="userUid">The user uid.</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <param name="editionUid">The edition uid.</param>
-        /// <param name="userInterfaceLanguage">The user interface language.</param>
-        public void UpdatePreSendProperties(
-            Guid collaboratorUid,
-            int userId,
-            Guid userUid,
-            int? editionId,
-            Guid? editionUid,
-            string userInterfaceLanguage)
-        {
-            this.CollaboratorUid = collaboratorUid;
-            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, userInterfaceLanguage);
-        }
+        #endregion
     }
 }

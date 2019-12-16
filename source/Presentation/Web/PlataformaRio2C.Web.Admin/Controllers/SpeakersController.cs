@@ -203,7 +203,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? collaboratorUid)
         {
-            UpdateCollaboratorMainInformation cmd;
+            UpdateCollaboratorAdminMainInformation cmd;
 
             try
             {
@@ -213,12 +213,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Speaker, Labels.FoundM.ToLowerInvariant()));
                 }
 
-                cmd = new UpdateCollaboratorMainInformation(
+                cmd = new UpdateCollaboratorAdminMainInformation(
                     mainInformationWidgetDto,
-                    await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
-                    true,
-                    true,
-                    true);
+                    await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)));
             }
             catch (DomainException ex)
             {
@@ -239,12 +236,13 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> UpdateMainInformation(UpdateCollaboratorMainInformation cmd)
+        public async Task<ActionResult> UpdateMainInformation(UpdateCollaboratorAdminMainInformation cmd)
         {
             var result = new AppValidationResult();
 
             try
             {
+                // Speakers does not have public email
                 if (ModelState.ContainsKey("SharePublicEmail"))
                 {
                     ModelState["SharePublicEmail"].Errors.Clear();
@@ -256,6 +254,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
+                    Domain.Constants.CollaboratorType.Speaker,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,

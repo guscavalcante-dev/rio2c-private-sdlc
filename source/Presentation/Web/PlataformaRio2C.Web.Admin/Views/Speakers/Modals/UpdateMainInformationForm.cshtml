@@ -1,4 +1,4 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateCollaboratorMainInformation
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateCollaboratorAdminMainInformation
 <div class="row">
     <div class="form-group col-lg-4 text-center">
         @Html.EditorFor(m => m.CropperImage)
@@ -10,21 +10,20 @@
                 @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
             </div>
-
             <div class="form-group col-md-6 col-xl-6">
                 @Html.LabelFor(m => m.LastNames, new { @class = "control-label" })
                 @Html.TextBoxFor(m => m.LastNames, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.LastNames, "", new { @class = "text-danger" })
             </div>
         </div>
-        @*<div class="row">
+        <div class="row">
             <div class="form-group col-md-12 col-xl-12">
                 @Html.LabelFor(m => m.Email, new { @class = "control-label" })
                 @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
                 <span class="form-text text-muted">@Messages.EmailInputMessage</span>
                 @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
             </div>
-        </div>*@
+        </div>
         <div class="row">
             <div class="form-group col-md-12 col-xl-12">
                 @Html.LabelFor(m => m.Badge, new { @class = "control-label" })
