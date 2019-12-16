@@ -3,8 +3,8 @@
 // Author           : William Almado
 // Created          : 10-15-2019
 //
-// Last Modified By : William Almado
-// Last Modified On : 10-15-2019
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 12-16-2019
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorMainInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,12 +18,9 @@ using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
 using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
-using PlataformaRio2C.Domain.Validation;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -31,28 +28,25 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>UpdateCollaboratorMainInformationCommandHandler</summary>
     public class UpdateCollaboratorMainInformationCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<UpdateCollaboratorMainInformation, AppValidationResult>
     {
-        private readonly IUserRepository userRepo;
-        private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IEditionRepository editionRepo;
         private readonly ILanguageRepository languageRepo;
-        private readonly ICountryRepository countryRepo;
 
+        /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorMainInformationCommandHandler"/> class.</summary>
+        /// <param name="eventBus">The event bus.</param>
+        /// <param name="uow">The uow.</param>
+        /// <param name="collaboratorRepository">The collaborator repository.</param>
+        /// <param name="editionRepository">The edition repository.</param>
+        /// <param name="languageRepository">The language repository.</param>
         public UpdateCollaboratorMainInformationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             ICollaboratorRepository collaboratorRepository,
-            IUserRepository userRepository,
-            IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IEditionRepository editionRepository,
-            ILanguageRepository languageRepository,
-            ICountryRepository countryRepository)
+            ILanguageRepository languageRepository)
             : base(eventBus, uow, collaboratorRepository)
         {
-            this.userRepo = userRepository;
-            this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.editionRepo = editionRepository;
             this.languageRepo = languageRepository;
-            this.countryRepo = countryRepository;
         }
 
         /// <summary>Handles the specified onboard collaborator access data.</summary>
@@ -78,24 +72,20 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             // Before update values
             var beforeImageUploadDate = collaborator.ImageUploadDate;
 
-            var collaboratorDto = new CollaboratorDto()
-            {
-                FirstName = cmd.FirstName,
-                LastNames = cmd.LastNames,
-                Badge = cmd.Badge,
-                CellPhone = cmd.CellPhone,
-                PhoneNumber = cmd.PhoneNumber,
-                PublicEmail = cmd.PublicEmail,
-                Id = cmd.UserId
-            };
-
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
 
             collaborator.UpdateCollaboratorMainInformation(
-                collaboratorDto,
+                cmd.FirstName,
+                cmd.LastNames,
+                cmd.Badge,
+                cmd.CellPhone,
+                cmd.PhoneNumber,
+                cmd.SharePublicEmail,
+                cmd.PublicEmail,
                 cmd.JobTitles?.Select(d => new CollaboratorJobTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.MiniBios?.Select(d => new CollaboratorMiniBio(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
-                await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty), cmd.CropperImage?.ImageFile != null);
+                await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty), cmd.CropperImage?.ImageFile != null,
+                cmd.UserId);
 
             if (!collaborator.IsValid())
             {

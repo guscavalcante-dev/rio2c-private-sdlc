@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-13-2019
+// Last Modified On : 12-16-2019
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -83,7 +83,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateUserId = this.UpdateUserId = userId;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class for admin.</summary>
+        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class.</summary>
         /// <param name="uid">The uid.</param>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="edition">The edition.</param>
@@ -94,6 +94,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="email">The email.</param>
         /// <param name="phoneNumber">The phone number.</param>
         /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="sharePublicEmail">The share public email.</param>
         /// <param name="publicEmail">The public email.</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="jobTitles">The job titles.</param>
@@ -110,6 +111,7 @@ namespace PlataformaRio2C.Domain.Entities
             string email,
             string phoneNumber,
             string cellPhone,
+            bool? sharePublicEmail,
             string publicEmail,
             bool isImageUploaded,
             List<CollaboratorJobTitle> jobTitles,
@@ -122,7 +124,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Badge = badge?.Trim();
             this.PhoneNumber = phoneNumber?.Trim();
             this.CellPhone = cellPhone?.Trim();
-            this.PublicEmail = publicEmail?.Trim();
+            this.UpdatePublicEmail(sharePublicEmail, publicEmail);
             this.UpdateImageUploadDate(isImageUploaded, false);
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
@@ -232,7 +234,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
         }
 
-        /// <summary>Updates the collaborator for admin.</summary>
+        /// <summary>Updates the specified attendee organizations.</summary>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
@@ -242,6 +244,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="email">The email.</param>
         /// <param name="phoneNumber">The phone number.</param>
         /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="sharePublicEmail">The share public email.</param>
         /// <param name="publicEmail">The public email.</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
@@ -259,6 +262,7 @@ namespace PlataformaRio2C.Domain.Entities
             string email,
             string phoneNumber,
             string cellPhone,
+            bool? sharePublicEmail,
             string publicEmail,
             bool isImageUploaded,
             bool isImageDeleted,
@@ -273,7 +277,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Badge = badge?.Trim();
             this.PhoneNumber = phoneNumber?.Trim();
             this.CellPhone = cellPhone?.Trim();
-            this.PublicEmail = publicEmail?.Trim();
+            this.UpdatePublicEmail(sharePublicEmail, publicEmail);
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
@@ -282,6 +286,108 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeMiniBios(miniBios, userId);
             this.SynchronizeAttendeeCollaborators(edition, collaboratorType, attendeeOrganizations, isAddingToCurrentEdition, userId);
             this.UpdateUser(email);
+        }
+
+        /// <summary>Updates the collaborator main information for admin.</summary>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="badge">The badge.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <param name="sharePublicEmail">The share public email.</param>
+        /// <param name="publicEmail">The public email.</param>
+        /// <param name="jobTitles">The job titles.</param>
+        /// <param name="miniBios">The mini bios.</param>
+        /// <param name="edition">The edition.</param>
+        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateCollaboratorMainInformation(
+            string firstName,
+            string lastNames,
+            string email,
+            string badge,
+            string cellPhone,
+            string phoneNumber,
+            bool? sharePublicEmail,
+            string publicEmail,
+            List<CollaboratorJobTitle> jobTitles,
+            List<CollaboratorMiniBio> miniBios,
+            Edition edition,
+            bool isImageUploaded,
+            int userId)
+        {
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.UpdateUser(email);
+            this.Badge = badge?.Trim();
+            this.PhoneNumber = phoneNumber?.Trim();
+            this.CellPhone = cellPhone?.Trim();
+            this.UpdatePublicEmail(sharePublicEmail, publicEmail);
+            this.UpdateImageUploadDate(isImageUploaded, false);
+            this.SynchronizeJobTitles(jobTitles, userId);
+            this.SynchronizeMiniBios(miniBios, userId);
+            this.OnboardAttendeeCollaboratorData(edition, userId);
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Updates the collaborator main information for site.</summary>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="badge">The badge.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <param name="sharePublicEmail">The share public email.</param>
+        /// <param name="publicEmail">The public email.</param>
+        /// <param name="jobTitles">The job titles.</param>
+        /// <param name="miniBios">The mini bios.</param>
+        /// <param name="edition">The edition.</param>
+        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateCollaboratorMainInformation(
+            string firstName,
+            string lastNames,
+            string badge,
+            string cellPhone,
+            string phoneNumber,
+            bool? sharePublicEmail,
+            string publicEmail,
+            List<CollaboratorJobTitle> jobTitles,
+            List<CollaboratorMiniBio> miniBios,
+            Edition edition,
+            bool isImageUploaded,
+            int userId)
+        {
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.Badge = badge?.Trim();
+            this.PhoneNumber = phoneNumber?.Trim();
+            this.CellPhone = cellPhone?.Trim();
+            this.UpdatePublicEmail(sharePublicEmail, publicEmail);
+            this.UpdateImageUploadDate(isImageUploaded, false);
+            this.SynchronizeJobTitles(jobTitles, userId);
+            this.SynchronizeMiniBios(miniBios, userId);
+            this.OnboardAttendeeCollaboratorData(edition, userId);
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Updates the public email.</summary>
+        /// <param name="sharePublicEmail">The share public email.</param>
+        /// <param name="publicEmail">The public email.</param>
+        private void UpdatePublicEmail(bool? sharePublicEmail, string publicEmail)
+        {
+            if (!sharePublicEmail.HasValue)
+            {
+                return;
+            }
+
+            this.PublicEmail = sharePublicEmail == true ? publicEmail?.Trim() : null;
         }
 
         /// <summary>Deletes the specified edition.</summary>
@@ -905,34 +1011,6 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        #region Executive Player
-
-
-        public void UpdateCollaboratorMainInformation(CollaboratorDto collaborator, List<CollaboratorJobTitle> jobTitles,
-
-            List<CollaboratorMiniBio> miniBios, Edition edition, bool isImageUploaded)
-        {
-            this.FirstName = collaborator.FirstName?.Trim();
-            this.LastNames = collaborator.LastNames?.Trim();
-            this.Badge = collaborator.Badge?.Trim();
-            this.PhoneNumber = collaborator.PhoneNumber?.Trim();
-            this.CellPhone = collaborator.CellPhone?.Trim();
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
-            this.UpdateUserId = collaborator.Id;
-            var sharePublicEmail = !string.IsNullOrEmpty(collaborator.PublicEmail) ? (bool?)true : null;
-            this.PublicEmail = sharePublicEmail == true ? collaborator.PublicEmail?.Trim() : null;
-            this.UpdateImageUploadDate(isImageUploaded, false);
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
-            this.UpdateUserId = collaborator.Id;
-            this.SynchronizeJobTitles(jobTitles, collaborator.Id);
-            this.SynchronizeMiniBios(miniBios, collaborator.Id);
-            this.OnboardAttendeeCollaboratorData(edition, collaborator.Id);
-        }
-
-        #endregion
-
         #endregion
 
         #region Onboarding
@@ -1017,7 +1095,7 @@ namespace PlataformaRio2C.Domain.Entities
             List<CollaboratorMiniBio> miniBios,
             int userId)
         {
-            this.PublicEmail = sharePublicEmail == true ? publicEmail?.Trim() : null;
+            this.UpdatePublicEmail(sharePublicEmail, publicEmail);
             this.UpdateImageUploadDate(isImageUploaded, false);
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);

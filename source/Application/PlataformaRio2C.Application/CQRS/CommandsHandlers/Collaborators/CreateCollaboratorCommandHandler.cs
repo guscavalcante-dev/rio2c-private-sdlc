@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-26-2019
+// Last Modified On : 12-16-2019
 // ***********************************************************************
 // <copyright file="CreateCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -107,6 +107,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.Email,
                     cmd.PhoneNumber,
                     cmd.CellPhone,
+                    cmd.SharePublicEmail,
                     cmd.PublicEmail,
                     cmd.CropperImage?.ImageFile != null,
                     cmd.JobTitles?.Select(d => new CollaboratorJobTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),

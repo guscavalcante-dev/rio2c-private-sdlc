@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Rafael Dantas Ruiz
-// Created          : 12-12-2019
+// Created          : 12-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-14-2019
+// Last Modified On : 12-16-2019
 // ***********************************************************************
 // <copyright file="speakers.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -327,8 +327,9 @@ var SpeakersDataTableWidget = function () {
                         if (!full.IsInCurrentEdition) {
                             html += '<button class="dropdown-item" onclick="SpeakersUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
                         }
-
-                        html += '<button class="dropdown-item" onclick="SpeakersUpdate.showModal(\'' + full.Uid + '\', false);"><i class="la la-edit"></i> ' + labels.edit + '</button>';
+                        else {
+                            html += '<button class="dropdown-item" onclick="SpeakersDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-edit"></i> ' + labels.edit + '</button>';
+                        }
 
                         if (full.IsInCurrentEdition && full.IsInOtherEdition) {
                             html += '<button class="dropdown-item" onclick="SpeakersDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + removeFromEdition + '</button>';
@@ -390,6 +391,14 @@ var SpeakersDataTableWidget = function () {
         table.ajax.reload();
     };
 
+    var showDetails = function (collaboratorUid) {
+        if (MyRio2cCommon.isNullOrEmpty(collaboratorUid)) {
+            return;
+        }
+
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/Details/' + collaboratorUid);
+    };
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
@@ -400,6 +409,9 @@ var SpeakersDataTableWidget = function () {
         },
         exportEventbriteCsv: function() {
             exportEventbriteCsv();
+        },
+        showDetails: function (collaboratorUid) {
+            showDetails(collaboratorUid);
         }
     };
 }();

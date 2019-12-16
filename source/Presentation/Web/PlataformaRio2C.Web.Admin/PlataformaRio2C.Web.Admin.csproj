@@ -382,6 +382,8 @@
     <Content Include="Assets\img\logo-rio2c-footer.png" />
     <Content Include="Assets\js\accounts\accounts.password.js" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
+    <Content Include="Assets\js\Speakers\speakers.company.widget.js" />
+    <Content Include="Assets\js\Speakers\speakers.maininformation.widget.js" />
     <Content Include="Assets\js\Speakers\speakers.create.js" />
     <Content Include="Assets\js\Speakers\speakers.datatable.widget.js" />
     <Content Include="Assets\js\Speakers\speakers.delete.js" />
@@ -8147,7 +8149,7 @@
     <Content Include="Views\PlayersExecutives\_Editor.cshtml" />
     <Content Include="Views\PlayersExecutives\Create.cshtml" />
     <Content Include="Views\PlayersExecutives\Edit.cshtml" />
-    <Content Include="Views\PlayersExecutives\EditorTemplates\CollaboratorJobTitleBaseCommand.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\CollaboratorJobTitleBaseCommand.cshtml" />
     <Content Include="Views\PlayersExecutives\Index.cshtml" />
     <Content Include="Views\PlayersExecutives\Modals\_Form.cshtml" />
     <Content Include="Views\PlayersExecutives\Modals\CreateModal.cshtml" />
@@ -8155,7 +8157,7 @@
     <Content Include="Views\PlayersExecutives\Widgets\DataTableWidget.cshtml" />
     <Content Include="Views\PlayersExecutives\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Views\PlayersExecutives\Widgets\TotalCountWidget.cshtml" />
-    <Content Include="Views\PlayersExecutives\EditorTemplates\CollaboratorMiniBioBaseCommand.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\CollaboratorMiniBioBaseCommand.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AttendeeOrganizationBaseCommand.cshtml" />
     <Content Include="Views\AdminMailerService\_AdminEmailLayout.cshtml" />
     <Content Include="Views\AdminMailerService\PlayerWelcomeEmail.cshtml" />
@@ -8175,6 +8177,12 @@
     <Content Include="Views\Speakers\Modals\UpdateModal.cshtml" />
     <Content Include="Views\AdminMailerService\SpeakerWelcomeEmail.cshtml" />
     <Content Include="Views\Speakers\Modals\EventbriteCsvModal.cshtml" />
+    <Content Include="Views\Speakers\Details.cshtml" />
+    <Content Include="Views\Speakers\Widgets\MainInformationWidget.cshtml" />
+    <Content Include="Views\Speakers\Widgets\CompanyWidget.cshtml" />
+    <Content Include="Views\Speakers\Modals\UpdateMainInformationForm.cshtml" />
+    <Content Include="Views\Speakers\Modals\UpdateMainInformationModal.cshtml" />
+    <Content Include="Views\Speakers\Modals\CreateCompanyInfoModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

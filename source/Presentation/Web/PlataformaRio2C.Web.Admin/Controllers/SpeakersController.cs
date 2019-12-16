@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-14-2019
+// Last Modified On : 12-16-2019
 // ***********************************************************************
 // <copyright file="SpeakersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -43,21 +43,25 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     public class SpeakersController : BaseController
     {
         private readonly ICollaboratorRepository collaboratorRepo;
+        private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
         private readonly IAttendeeSalesPlatformTicketTypeRepository attendeeSalesPlatformTicketTypeRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="PlayersExecutivesController"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="SpeakersController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
+        /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
         /// <param name="attendeeSalesPlatformTicketTypeRepository">The attendee sales platform ticket type repository.</param>
         public SpeakersController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             ICollaboratorRepository collaboratorRepository,
+            IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
             IAttendeeSalesPlatformTicketTypeRepository attendeeSalesPlatformTicketTypeRepository)
             : base(commandBus, identityController)
         {
             this.collaboratorRepo = collaboratorRepository;
+            this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
             this.attendeeSalesPlatformTicketTypeRepo = attendeeSalesPlatformTicketTypeRepository;
         }
 
@@ -139,6 +143,282 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         }
 
         #endregion
+
+        #endregion
+
+        /// <summary>Detailses the specified identifier.</summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> Details(Guid? id)
+        {
+            var attendeeCollaboratorDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUidAndByEditionIdAsync(id ?? Guid.Empty, this.EditionDto.Id);
+            if (attendeeCollaboratorDto == null)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Speaker, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Home", new { Area = "" });
+            }
+
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Speakers, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Speakers, Url.Action("Index", "Speakers", new { id })),
+                new BreadcrumbItemHelper(attendeeCollaboratorDto.Collaborator.GetFullName(), Url.Action("Details", "Speakers", new { id }))
+            });
+
+            #endregion
+
+            return View(attendeeCollaboratorDto);
+        }
+
+        #region Main Information Widget
+
+        /// <summary>Shows the main information widget.</summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowMainInformationWidget(Guid? collaboratorUid)
+        {
+            var mainInformationWidgetDto = await this.attendeeCollaboratorRepo.FindSiteMainInformationWidgetDtoByCollaboratorUidAndByEditionIdAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
+            if (mainInformationWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#SpeakerMainInformationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #region Update
+
+        ///// <summary>Shows the update main information modal.</summary>
+        ///// <param name="collaboratorUid">The collaborator uid.</param>
+        ///// <returns></returns>
+        //[HttpGet]
+        //public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? collaboratorUid)
+        //{
+        //    AdminUpdateCollaboratorMainInformation cmd;
+
+        //    try
+        //    {
+        //        var mainInformationWidgetDto = await this.attendeeCollaboratorRepo.FindSiteMainInformationWidgetDtoByCollaboratorUidAndByEditionIdAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
+        //        if (mainInformationWidgetDto == null)
+        //        {
+        //            throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Speaker, Labels.FoundM.ToLowerInvariant()));
+        //        }
+
+        //        cmd = new AdminUpdateCollaboratorMainInformation(
+        //            mainInformationWidgetDto,
+        //            await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
+        //            true,
+        //            true,
+        //            true);
+        //    }
+        //    catch (DomainException ex)
+        //    {
+        //        return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        pages = new List<dynamic>
+        //        {
+        //            new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+        //        }
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
+
+        ///// <summary>Updates the main information.</summary>
+        ///// <param name="cmd">The command.</param>
+        ///// <returns></returns>
+        //[HttpPost]
+        //public async Task<ActionResult> UpdateMainInformation(AdminUpdateCollaboratorMainInformation cmd)
+        //{
+        //    var result = new AppValidationResult();
+
+        //    try
+        //    {
+        //        if (!ModelState.IsValid)
+        //        {
+        //            throw new DomainException(Messages.CorrectFormValues);
+        //        }
+
+        //        cmd.UpdatePreSendProperties(
+        //            this.AdminAccessControlDto.User.Id,
+        //            this.AdminAccessControlDto.User.Uid,
+        //            this.EditionDto.Id,
+        //            this.EditionDto.Uid,
+        //            this.UserInterfaceLanguage);
+        //        result = await this.CommandBus.Send(cmd);
+        //        if (!result.IsValid)
+        //        {
+        //            throw new DomainException(Messages.CorrectFormValues);
+        //        }
+        //    }
+        //    catch (DomainException ex)
+        //    {
+        //        foreach (var error in result.Errors)
+        //        {
+        //            var target = error.Target ?? "";
+        //            ModelState.AddModelError(target, error.Message);
+        //        }
+
+        //        return Json(new
+        //        {
+        //            status = "error",
+        //            message = ex.GetInnerMessage(),
+        //            pages = new List<dynamic>
+        //            {
+        //                new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationForm", cmd), divIdOrClass = "#form-container" },
+        //            }
+        //        }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Executive, Labels.UpdatedM) });
+        //}
+
+        #endregion
+
+        #endregion
+
+        #region Company Widget
+
+        /// <summary>Shows the company widget.</summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowCompanyWidget(Guid? collaboratorUid)
+        {
+            var companyWidgetDto = await this.attendeeCollaboratorRepo.FindSiteCompanyWidgetDtoByCollaboratorUidAndByEditionIdAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
+            if (companyWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/CompanyWidget", companyWidgetDto), divIdOrClass = "#SpeakerCompanyWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        //#region Create
+
+        ///// <summary>Shows the create company information modal.</summary>
+        ///// <returns></returns>
+        //[HttpGet]
+        //public async Task<ActionResult> ShowCreateCompanyInfoModal()
+        //{
+        //    CreateTicketBuyerOrganizationData cmd;
+
+        //    try
+        //    {
+        //        if (this.UserAccessControlDto?.EditionAttendeeOrganizations?.Any() == true || this.UserAccessControlDto?.HasAnyCollaboratorType(Constants.CollaboratorType.Executives) == true)
+        //        {
+        //            throw new DomainException(Texts.ForbiddenErrorMessage);
+        //        }
+
+        //        cmd = new CreateTicketBuyerOrganizationData(
+        //            null,
+        //            await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
+        //            await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
+        //            false,
+        //            false,
+        //            false);
+        //    }
+        //    catch (DomainException ex)
+        //    {
+        //        return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    ModelState.Clear();
+
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        pages = new List<dynamic>
+        //        {
+        //            new { page = this.RenderRazorViewToString("Modals/CreateCompanyInfoModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+        //        }
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
+
+        ///// <summary>Creates the company information.</summary>
+        ///// <param name="cmd">The command.</param>
+        ///// <returns></returns>
+        //[HttpPost]
+        //public async Task<ActionResult> CreateCompanyInformation(CreateTicketBuyerOrganizationData cmd)
+        //{
+        //    var result = new AppValidationResult();
+
+        //    try
+        //    {
+        //        if (!ModelState.IsValid)
+        //        {
+        //            throw new DomainException(Messages.CorrectFormValues);
+        //        }
+
+        //        if (this.UserAccessControlDto?.EditionAttendeeOrganizations?.Any() == true || this.UserAccessControlDto?.HasAnyCollaboratorType(Constants.CollaboratorType.Executives) == true)
+        //        {
+        //            throw new DomainException(Texts.ForbiddenErrorMessage);
+        //        }
+
+        //        cmd.UpdatePreSendProperties(
+        //            this.UserAccessControlDto.Collaborator.Uid,
+        //            this.UserAccessControlDto.User.Id,
+        //            this.UserAccessControlDto.User.Uid,
+        //            this.EditionDto.Id,
+        //            this.EditionDto.Uid,
+        //            this.UserInterfaceLanguage);
+        //        result = await this.CommandBus.Send(cmd);
+        //        if (!result.IsValid)
+        //        {
+        //            throw new DomainException(Messages.CorrectFormValues);
+        //        }
+        //    }
+        //    catch (DomainException ex)
+        //    {
+        //        foreach (var error in result.Errors)
+        //        {
+        //            var target = error.Target ?? "";
+        //            ModelState.AddModelError(target, error.Message);
+        //        }
+
+        //        return Json(new
+        //        {
+        //            status = "error",
+        //            message = ex.GetInnerMessage(),
+        //            pages = new List<dynamic>
+        //            {
+        //                new { page = this.RenderRazorViewToString("/Views/Companies/Shared/_TicketBuyerCompanyInfoForm.cshtml", cmd), divIdOrClass = "#form-container" },
+        //            }
+        //        }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
+        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Executive, Labels.CreatedM) });
+        //}
+
+        //#endregion
 
         #endregion
 
