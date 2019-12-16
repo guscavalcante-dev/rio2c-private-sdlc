@@ -59,8 +59,8 @@ var SpeakersMainInformationWidget = function () {
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                if (typeof (ExecutivesMainInformationWidget) !== 'undefined') {
-                    ExecutivesMainInformationWidget.init();
+                if (typeof (SpeakersMainInformationWidget) !== 'undefined') {
+                    SpeakersMainInformationWidget.init();
                 }
             },
             onError: function (data) {

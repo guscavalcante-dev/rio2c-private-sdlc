@@ -64,7 +64,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<CollaboratorMiniBioBaseCommand> MiniBios { get; set; }
         public CropperImageBaseCommand CropperImage { get; set; }
 
-        public Guid CollaboratorUid { get; private set; }
+        public Guid CollaboratorUid { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorMainInformation"/> class.</summary>
         /// <param name="entity">The entity.</param>
@@ -74,6 +74,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         public UpdateCollaboratorMainInformation(AttendeeCollaboratorSiteMainInformationWidgetDto entity, List<LanguageDto> languagesDtos, bool isJobTitleRequired, bool isMiniBioRequired, bool isImageRequired)
         {
+            this.CollaboratorUid = entity?.Collaborator?.Uid ?? Guid.Empty;
             this.FirstName = entity?.Collaborator?.FirstName;
             this.LastNames = entity?.Collaborator?.LastNames;
             this.Badge = entity?.Collaborator?.Badge;
