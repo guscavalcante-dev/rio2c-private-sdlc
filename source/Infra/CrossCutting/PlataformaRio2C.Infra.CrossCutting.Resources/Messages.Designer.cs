@@ -61,6 +61,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Declaro estar ciente e concordar com o termo acima..
+        /// </summary>
+        public static string AcceptImageAuthorization {
+            get {
+                return ResourceManager.GetString("AcceptImageAuthorization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Declaro estar ciente e concordar com as regras e regulamentos acima..
         /// </summary>
         public static string AcceptTermsAndConditions {

@@ -830,4 +830,8 @@
     <value>Image authorization form</value>
     <comment>Autorização do uso de imagem</comment>
   </data>
+  <data name="AcceptImageAuthorization" xml:space="preserve">
+    <value>I declare that I am aware and agree with the above-mentioned term.</value>
+    <comment>Declaro estar ciente e concordar com o termo acima.</comment>
+  </data>
 </root>
