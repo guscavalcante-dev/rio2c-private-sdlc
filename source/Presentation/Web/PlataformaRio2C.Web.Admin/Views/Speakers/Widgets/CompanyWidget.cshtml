@@ -2,18 +2,13 @@
 @using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2C.Domain.Statics
 @model AttendeeCollaboratorSiteCompanyWidgetDto
-@{
-    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
-    var hasCompany = userAccessControlDto?.EditionAttendeeOrganizations?.Any() == true;
-}
 <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
         <h3 class="kt-portlet__head-title">
             @Labels.Companies
         </h3>
     </div>
-    @if (!hasCompany)
-    {
+    @*
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-actions">
                 <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="SpeakersCompanyWidget.showCreateModal();">
@@ -21,7 +16,7 @@
                 </button>
             </div>
         </div>
-    }
+    *@
 </div>
 <div class="kt-portlet__body">
     @if (Model.AttendeeOrganizationsDtos?.Any() == true)
@@ -50,10 +45,10 @@
                                         }
                                     </div>
                                     <div class="kt-widget__info">
-                                        <a href="@Url.Action("Details", "Companies", new { id = attendeeOrganizationDto.Organization.Uid })" class="kt-widget__username">@attendeeOrganizationDto.Organization.TradeName</a>
+                                        <a @*href="@Url.Action("Details", "Companies", new { id = attendeeOrganizationDto.Organization.Uid })"*@ class="kt-widget__username">@attendeeOrganizationDto.Organization.TradeName</a>
                                         @*<span class="kt-widget__desc">@(attendeeOrganizationDto.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value ?? "-")</span>*@
                                         <span class="kt-widget__desc">
-                                            <a href="@Url.Action("Details", "Companies", new { id = attendeeOrganizationDto.Organization.Uid })">
+                                            <a @*href="@Url.Action("Details", "Companies", new { id = attendeeOrganizationDto.Organization.Uid })"*@>
                                                 <small><i class="flaticon-profile"></i> @Labels.SeeDescription</small>
                                             </a>
                                         </span>

@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-16-2019
+// Last Modified On : 12-17-2019
 // ***********************************************************************
 // <copyright file="SpeakersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -145,6 +145,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         #endregion
 
         #endregion
+
+        #region Details
 
         /// <summary>Detailses the specified identifier.</summary>
         /// <param name="id">The identifier.</param>
@@ -321,46 +323,41 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        //#region Create
+        #region Create
 
-        ///// <summary>Shows the create company information modal.</summary>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowCreateCompanyInfoModal()
-        //{
-        //    CreateTicketBuyerOrganizationData cmd;
+        /// <summary>Shows the create company information modal.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowCreateCompanyInfoModal()
+        {
+            CreateTicketBuyerOrganizationData cmd;
 
-        //    try
-        //    {
-        //        if (this.UserAccessControlDto?.EditionAttendeeOrganizations?.Any() == true || this.UserAccessControlDto?.HasAnyCollaboratorType(Constants.CollaboratorType.Executives) == true)
-        //        {
-        //            throw new DomainException(Texts.ForbiddenErrorMessage);
-        //        }
+            try
+            {
+                cmd = new CreateTicketBuyerOrganizationData(
+                    null,
+                    await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
+                    false,
+                    false,
+                    false);
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
 
-        //        cmd = new CreateTicketBuyerOrganizationData(
-        //            null,
-        //            await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
-        //            await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-        //            false,
-        //            false,
-        //            false);
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-        //    }
+            ModelState.Clear();
 
-        //    ModelState.Clear();
-
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Modals/CreateCompanyInfoModal", cmd), divIdOrClass = "#GlobalModalContainer" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/CreateCompanyInfoModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
         ///// <summary>Creates the company information.</summary>
         ///// <param name="cmd">The command.</param>
@@ -422,7 +419,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Executive, Labels.CreatedM) });
         //}
 
-        //#endregion
+        #endregion
+
+        #endregion
 
         #endregion
 
