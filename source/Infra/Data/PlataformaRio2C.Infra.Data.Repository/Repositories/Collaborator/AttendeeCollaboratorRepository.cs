@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-16-2019
+// Last Modified On : 12-17-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -116,15 +116,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
-        /// <summary>Determines whether [is audiovisual participant].</summary>
+        /// <summary>Determines whether [is network participant].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
-        internal static IQueryable<AttendeeCollaborator> IsAudiovisualParticipant(this IQueryable<AttendeeCollaborator> query)
+        internal static IQueryable<AttendeeCollaborator> IsNetworkParticipant(this IQueryable<AttendeeCollaborator> query)
         {
             query = query.Where(ac => ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted // Industry
                                                                               && !act.CollaboratorType.IsDeleted
-                                                                              && (act.CollaboratorType.Name == Domain.Constants.CollaboratorType.Industry
-                                                                                  || act.CollaboratorType.Name == Domain.Constants.CollaboratorType.ExecutiveAudiovisual)));
+                                                                              && Domain.Constants.CollaboratorType.NetworksArray.Contains(act.CollaboratorType.Name)));
 
             return query;
         }
@@ -377,7 +376,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery(true)
                                 .FindByEditionId(editionId, false)
                                 .IsOnboardingFinished()
-                                .IsAudiovisualParticipant()
+                                .IsNetworkParticipant()
                                 .FindByKeywords(keywords);
 
             return await query

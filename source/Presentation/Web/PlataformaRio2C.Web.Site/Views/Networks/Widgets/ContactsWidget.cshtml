@@ -6,6 +6,8 @@
 @model X.PagedList.IPagedList<AttendeeCollaboratorNetworkDto>
 @{
     var isModal = ViewBag.IsModal as bool? ?? false;
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var hasFullVisibility = userAccessControlDto?.HasAnyCollaboratorType(PlataformaRio2C.Domain.Constants.CollaboratorType.NetworksFullVisibilityArray) == true;
 }
 <!--begin::List-->
 @if (Model?.Any() == true)
@@ -65,22 +67,26 @@
                                 <div class="kt-widget__desc text-center mt-3" style="min-height: 60px;">
                                     <h5>@(attendeeOrganizationDto?.Organization?.TradeName)</h5>
                                 </div>
-                                <div class="kt-widget__item">
-                                    <div class="kt-widget__contact d-block">
-                                        <span class="kt-widget__label">@Labels.Email:</span><br />
-                                        <span class="kt-widget__data text-break">@(attendeeCollaboratorNetworkDto.Collaborator.PublicEmail ?? "-")</span>
+                                @if (hasFullVisibility)
+                                {
+                                    <div class="kt-widget__item">
+                                        <div class="kt-widget__contact d-block">
+                                            <span class="kt-widget__label">@Labels.Email:</span><br />
+                                            <span class="kt-widget__data text-break">@(attendeeCollaboratorNetworkDto.Collaborator.PublicEmail ?? "-")</span>
+                                        </div>
+                                        @*
+                                            <div class="kt-widget__contact d-block mt-2">
+                                                <span class="kt-widget__label">@Labels.CellPhone:</span><br />
+                                                <span class="kt-widget__data text-break">@(attendeeCollaboratorNetworkDto.Collaborator.CellPhone ?? "-")</span>
+                                            </div>
+                                            <div class="kt-widget__contact">
+                                                <span class="kt-widget__label">Location:</span>
+                                                <span class="kt-widget__data">Barcelona</span>
+                                            </div>
+                                        *@
                                     </div>
-                                    @*<div class="kt-widget__contact d-block mt-2">
-                                            <span class="kt-widget__label">@Labels.CellPhone:</span><br />
-                                            <span class="kt-widget__data text-break">@(attendeeCollaboratorNetworkDto.Collaborator.CellPhone ?? "-")</span>
-                                        </div>*@
-                                    @*<div class="kt-widget__contact">
-                                            <span class="kt-widget__label">Location:</span>
-                                            <span class="kt-widget__data">Barcelona</span>
-                                        </div>*@
-                                </div>
+                                }
                             </div>
-
                             <div class="kt-widget__footer">
                                 @if (!isModal)
                                 {

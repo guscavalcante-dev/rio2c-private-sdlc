@@ -43,10 +43,15 @@ namespace PlataformaRio2C.Domain.Constants
 
         public static readonly string[] NetworksArray =
         {
-            ExecutiveAudiovisual, Speaker, Industry, Creator
+            ExecutiveAudiovisual, Speaker, Industry, Creator, Summit
         };
 
-        public const string NetworksString = ExecutiveAudiovisual + "," + Speaker + "," + Industry + "," + Creator;
+        public const string NetworksString = ExecutiveAudiovisual + "," + Speaker + "," + Industry + "," + Creator + "," + Summit;
+
+        public static readonly string[] NetworksFullVisibilityArray =
+        {
+            ExecutiveAudiovisual, Speaker, Industry
+        };
 
         #endregion
     }
