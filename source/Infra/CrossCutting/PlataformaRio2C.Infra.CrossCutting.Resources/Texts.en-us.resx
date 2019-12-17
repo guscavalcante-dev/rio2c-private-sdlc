@@ -395,4 +395,8 @@
     <value>You can still submit this project to &lt;span class="font-weight-bold"&gt;{0} {1}&lt;/span&gt;.&lt;br /&gt;&lt;br /&gt;If you send this project now, you\'ll no longer be able to change it or send to other {2}.&lt;br /&gt;&lt;br /&gt;Are you sure you want to save it and submit it anyway?</value>
     <comment>Você ainda pode submeter esse projeto para &lt;span class="font-weight-bold"&gt;{0} {1}&lt;/span&gt;.&lt;br /&gt;&lt;br /&gt;Se você enviar agora, não poderá mais alterar o projeto ou enviar para outros {2}.&lt;br /&gt;&lt;br /&gt;Tem certeza de que deseja finalizar e enviar?</comment>
   </data>
+  <data name="SpeakerTermsRestrictions" xml:space="preserve">
+    <value>Should you have any restrictions regarding the terms and conditions of the image use authorization form above, please get in touch via &lt;a href="mailto: curadoria@rio2c.com"&gt;curadoria@rio2c.com&lt;/a&gt;. Your restrictions will be analyzed by our support team, who will endeavor to assist you with completing your registration.</value>
+    <comment>Caso haja alguma restrição aos termos e condições da autorização de uso da imagem acima, por favor, entre em contato com &lt;a href="mailto: curadoria@rio2c.com"&gt;curadoria@rio2c.com&lt;/a&gt;. Suas restrições serão analisadas pela nossa equipe de suporte, que lhe retornará para que o cadastro possa ser concluído com sucesso.</comment>
+  </data>
 </root>

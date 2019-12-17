@@ -502,4 +502,8 @@ maira@rio2c.com&lt;br/&gt;
     <value>Você ainda pode submeter esse projeto para &lt;span class="font-weight-bold"&gt;{0} {1}&lt;/span&gt;.&lt;br /&gt;&lt;br /&gt;Se você enviar agora, não poderá mais alterar o projeto ou enviar para outros {2}.&lt;br /&gt;&lt;br /&gt;Tem certeza de que deseja finalizar e enviar?</value>
     <comment>Você ainda pode submeter esse projeto para &lt;span class="font-weight-bold"&gt;{0} {1}&lt;/span&gt;.&lt;br /&gt;&lt;br /&gt;Se você enviar agora, não poderá mais alterar o projeto ou enviar para outros {2}.&lt;br /&gt;&lt;br /&gt;Tem certeza de que deseja finalizar e enviar?</comment>
   </data>
+  <data name="SpeakerTermsRestrictions" xml:space="preserve">
+    <value>Caso haja alguma restrição aos termos e condições da autorização de uso da imagem acima, por favor, entre em contato com &lt;a href="mailto: curadoria@rio2c.com"&gt;curadoria@rio2c.com&lt;/a&gt;. Suas restrições serão analisadas pela nossa equipe de suporte, que lhe retornará para que o cadastro possa ser concluído com sucesso.</value>
+    <comment>Caso haja alguma restrição aos termos e condições da autorização de uso da imagem acima, por favor, entre em contato com &lt;a href="mailto: curadoria@rio2c.com"&gt;curadoria@rio2c.com&lt;/a&gt;. Suas restrições serão analisadas pela nossa equipe de suporte, que lhe retornará para que o cadastro possa ser concluído com sucesso.</comment>
+  </data>
 </root>

@@ -39,6 +39,13 @@
                                         @Html.ValidationMessageFor(m => m.AcceptTerms, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <small>
+                                            @Html.Raw(Texts.SpeakerTermsRestrictions)
+                                        </small>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
