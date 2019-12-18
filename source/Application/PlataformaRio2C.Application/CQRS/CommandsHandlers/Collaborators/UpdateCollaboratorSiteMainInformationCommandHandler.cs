@@ -4,7 +4,7 @@
 // Created          : 10-15-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-16-2019
+// Last Modified On : 12-18-2019
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorSiteMainInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -74,7 +74,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
 
-            collaborator.UpdateCollaboratorSiteMainInformation(
+            collaborator.UpdateSiteMainInformation(
                 cmd.FirstName,
                 cmd.LastNames,
                 cmd.Badge,
@@ -122,6 +122,5 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             //return Task.FromResult(propertyId); // use it when the methed is not async
         }
-
     }
 }

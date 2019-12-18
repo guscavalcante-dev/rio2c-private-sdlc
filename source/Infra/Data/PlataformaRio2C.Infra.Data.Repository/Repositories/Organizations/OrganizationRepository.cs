@@ -723,7 +723,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         .ToListAsync();
         }
 
-
         #endregion
 
         #region Old

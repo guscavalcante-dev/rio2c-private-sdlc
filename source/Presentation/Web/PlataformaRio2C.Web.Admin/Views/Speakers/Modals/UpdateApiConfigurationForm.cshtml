@@ -1,0 +1,32 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateCollaboratorApiConfiguration
+<div class="row">
+    <div class="col-sm-6">
+        <div class="row">
+            <div class="col-12">
+                @Html.Label($"{string.Format(Labels.DisplayOnSiteEdition, ViewBag.EditionDto.UrlCode)}", new { @class = "control-label" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-12">
+                <span class="kt-switch kt-switch--icon">
+                    <label>
+                        @Html.CheckBoxFor(m => m.IsApiDisplayEnabled, true)
+                        <span></span>
+                    </label>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="row">
+            <div class="col-12">
+                @Html.Label(Labels.HighlightPosition, new { @class = "control-label" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-12">
+                @Html.DropDownListFor(m => m.ApiHighlightPosition, new SelectList(Model.ApiHighlightPositions, Model.ApiHighlightPosition), Labels.Select + "...", new { @class = "form-control enable-select2" })
+            </div>
+        </div>
+    </div>
+</div>

@@ -1078,6 +1078,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Desativado.
+        /// </summary>
+        public static string Disabled {
+            get {
+                return ResourceManager.GetString("Disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Desconectado.
         /// </summary>
         public static string Disconnected {
@@ -1245,6 +1254,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string EmailSettings {
             get {
                 return ResourceManager.GetString("EmailSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ativado.
+        /// </summary>
+        public static string Enabled {
+            get {
+                return ResourceManager.GetString("Enabled", resourceCulture);
             }
         }
         

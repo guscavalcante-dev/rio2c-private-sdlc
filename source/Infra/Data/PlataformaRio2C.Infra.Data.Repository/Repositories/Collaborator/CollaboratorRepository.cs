@@ -509,6 +509,24 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return await query.FirstOrDefaultAsync();
         }
 
+        #region Api
+
+        public async Task<List<Collaborator>> FindAllOrganizationsByHightlightPosition(int editionId, Guid collaboratorTypeUid, int apiHighlightPosition, Guid? organizationUid)
+        {
+            var query = this.GetBaseQuery()
+                                .Where(o => o.Uid != organizationUid
+                                            && o.AttendeeCollaborators.Any(ac => !ac.IsDeleted
+                                                                                 && ac.EditionId == editionId
+                                                                                 && ac.AttendeeCollaboratorTypes.Any(aot => !aot.IsDeleted
+                                                                                                                            && aot.CollaboratorType.Uid == collaboratorTypeUid
+                                                                                                                            && aot.ApiHighlightPosition == apiHighlightPosition)));
+
+            return await query
+                            .ToListAsync();
+        }
+
+        #endregion
+
         #region Old
 
         /// <summary>Método que traz todos os registros</summary>

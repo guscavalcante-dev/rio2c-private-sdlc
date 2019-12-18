@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-16-2019
+// Last Modified On : 12-18-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -294,9 +294,13 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/speakers/speakers.create.js",
                 "~/Assets/js/myrio2c.publicemail.js"));
 
+            bundles.Add(new StyleBundle("~/bundles/css/speakers.details.css").Include(
+                "~/Assets/themes/metronic/css/demo4/pages/pricing/pricing-1.css"));
+
             bundles.Add(new ScriptBundle("~/bundles/js/speakers.details.js").Include(
                 "~/Assets/js/speakers/speakers.maininformation.widget.js",
-                "~/Assets/js/speakers/speakers.company.widget.js"));
+                "~/Assets/js/speakers/speakers.company.widget.js",
+                "~/Assets/js/speakers/speakers.apiconfiguration.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/speakers.update.js").Include(
                 "~/Assets/js/speakers/speakers.update.js"));

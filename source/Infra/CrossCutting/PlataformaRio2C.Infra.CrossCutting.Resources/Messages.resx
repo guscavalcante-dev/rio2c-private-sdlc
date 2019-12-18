@@ -839,4 +839,12 @@
     <value>Declaro estar ciente e concordar com o termo acima.</value>
     <comment>Declaro estar ciente e concordar com o termo acima.</comment>
   </data>
+  <data name="NotShowingOnSiteEdition" xml:space="preserve">
+    <value>Não exibindo na edição {0} do site</value>
+    <comment>Não exibindo na edição {0} do site</comment>
+  </data>
+  <data name="ShowingOnSiteEdition" xml:space="preserve">
+    <value>Exibindo na edição {0} do site</value>
+    <comment>Exibindo na edição {0} do site</comment>
+  </data>
 </root>

@@ -79,9 +79,11 @@
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorNetworkDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorSiteDetailsDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorSiteCompanyWidgetDto.cs" />
+    <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorApiConfigurationWidgetDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorSiteMainInformationWidgetDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorDto.cs" />
-    <Compile Include="Dtos\AttendeeOrganiaztionTypes\AttendeeOrganizationTypeDto.cs" />
+    <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorTypeDto.cs" />
+    <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationTypeDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttemdeeOrganizationSiteDetailsDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\MatchAttendeeOrganizationDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationDto.cs" />
@@ -92,7 +94,7 @@
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationSiteAddressWidgetDto.cs" />
     <Compile Include="Dtos\Addresses\AddressBaseDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorBaseDto.cs" />
-    <Compile Include="Dtos\AttendeeCollaboratorTickets\AttendeeCollaboratorTicketDto.cs" />
+    <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorTicketDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationBaseDto.cs" />
     <Compile Include="Dtos\Cities\CityBaseDto.cs" />
     <Compile Include="Dtos\Collaborators\CollaboratorBaseDto.cs" />

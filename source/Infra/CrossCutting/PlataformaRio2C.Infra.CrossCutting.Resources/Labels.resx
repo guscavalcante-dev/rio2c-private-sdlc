@@ -1905,4 +1905,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Posição no Destaque</value>
     <comment>Posição no Destaque</comment>
   </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Desativado</value>
+    <comment>Desativado</comment>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Ativado</value>
+    <comment>Ativado</comment>
+  </data>
 </root>

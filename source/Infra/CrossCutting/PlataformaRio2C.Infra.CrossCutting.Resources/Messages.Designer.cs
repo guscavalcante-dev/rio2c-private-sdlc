@@ -969,6 +969,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Não exibindo na edição {0} do site.
+        /// </summary>
+        public static string NotShowingOnSiteEdition {
+            get {
+                return ResourceManager.GetString("NotShowingOnSiteEdition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Número inválido..
         /// </summary>
         public static string NumberIsInvalid {
@@ -1568,6 +1577,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string SelectAtLeastOneOption {
             get {
                 return ResourceManager.GetString("SelectAtLeastOneOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exibindo na edição {0} do site.
+        /// </summary>
+        public static string ShowingOnSiteEdition {
+            get {
+                return ResourceManager.GetString("ShowingOnSiteEdition", resourceCulture);
             }
         }
         

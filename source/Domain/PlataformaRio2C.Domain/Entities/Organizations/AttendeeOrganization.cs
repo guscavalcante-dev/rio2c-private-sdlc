@@ -157,10 +157,10 @@ namespace PlataformaRio2C.Domain.Entities
                                                                          && aot.OrganizationTypeId == organizationType?.Id);
         }
 
-        /// <summary>Deletes the attendee organization type highlight position.</summary>
+        /// <summary>Deletes the API highlight position.</summary>
         /// <param name="organizationType">Type of the organization.</param>
         /// <param name="userId">The user identifier.</param>
-        public void DeleteAttendeeOrganizationTypeHighlightPosition(OrganizationType organizationType, int userId)
+        public void DeleteApiHighlightPosition(OrganizationType organizationType, int userId)
         {
             var attendeeOrganizationType = this.FindAttendeeOrganizationTypesByOrganizationType(organizationType);
             attendeeOrganizationType?.DeleteApiHighlightPosition(userId);

@@ -4,7 +4,7 @@
 // Created          : 10-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-09-2019
+// Last Modified On : 11-18-2019
 // ***********************************************************************
 // <copyright file="AttendeeOrganizationTypeDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

@@ -808,6 +808,16 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Attendee Organizations
 
+        /// <summary>Deletes the attendee organization type highlight position.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void DeleteApiHighlightPosition(Edition edition, OrganizationType organizationType, int userId)
+        {
+            var attendeeOrganization = this.GetAttendeeOrganizationByEditionId(edition?.Id ?? 0);
+            attendeeOrganization?.DeleteApiHighlightPosition(organizationType, userId);
+        }
+
         /// <summary>Called when [player attendee organization data].</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="userId">The user identifier.</param>
@@ -1107,20 +1117,6 @@ namespace PlataformaRio2C.Domain.Entities
             {
                 organizationInterestToDelete.Delete(userId);
             }
-        }
-
-        #endregion
-
-        #region Api Configurations
-
-        /// <summary>Deletes the attendee organization type highlight position.</summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="organizationType">Type of the organization.</param>
-        /// <param name="userId">The user identifier.</param>
-        public void DeleteAttendeeOrganizationTypeHighlightPosition(Edition edition, OrganizationType organizationType, int userId)
-        {
-            var attendeeOrganization = this.GetAttendeeOrganizationByEditionId(edition?.Id ?? 0);
-            attendeeOrganization?.DeleteAttendeeOrganizationTypeHighlightPosition(organizationType, userId);
         }
 
         #endregion

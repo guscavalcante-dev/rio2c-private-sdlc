@@ -279,6 +279,28 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Attendee Collaborators Types
 
+        /// <summary>Updates the API configuration.</summary>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="isApiDisplayEnabled">if set to <c>true</c> [is API display enabled].</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateApiConfiguration(CollaboratorType collaboratorType, bool isApiDisplayEnabled, int? apiHighlightPosition, int userId)
+        {
+            this.SynchronizeAttendeeCollaboratorType(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId);
+
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Deletes the API highlight position.</summary>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void DeleteApiHighlightPosition(CollaboratorType collaboratorType, int userId)
+        {
+            var attendeeCollaboratorType = this.FindAttendeeCollaboratorTypeByUid(collaboratorType?.Uid ?? Guid.Empty);
+            attendeeCollaboratorType?.DeleteApiHighlightPosition(userId);
+        }
+
         /// <summary>Synchronizes the type of the attendee collaborator.</summary>
         /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="isApiDisplayEnabled">The is API display enabled.</param>

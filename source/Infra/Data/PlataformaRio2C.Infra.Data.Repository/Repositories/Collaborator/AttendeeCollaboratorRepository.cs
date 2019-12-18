@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-17-2019
+// Last Modified On : 11-18-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -230,7 +230,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
-        #region Site Widgets
+        #region Widgets
 
         /// <summary>Finds the site detailst dto by collaborator uid and by edition identifier asynchronous.</summary>
         /// <param name="collaboratorUid">The collaborator uid.</param>
@@ -322,6 +322,32 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             })
                             .FirstOrDefaultAsync();
         }
+
+        /// <summary>Finds the API configuration widget dto by collaborator uid and by edition identifier asynchronous.</summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttendeeCollaboratorApiConfigurationWidgetDto> FindApiConfigurationWidgetDtoByCollaboratorUidAndByEditionIdAsync(Guid collaboratorUid, int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByCollaboratorUid(collaboratorUid)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(ac => new AttendeeCollaboratorApiConfigurationWidgetDto
+                            {
+                                AttendeeCollaborator = ac,
+                                Collaborator = ac.Collaborator,
+                                User = ac.Collaborator.User,
+                                AttendeeCollaboratorTypeDtos = ac.AttendeeCollaboratorTypes.Where(act => !act.IsDeleted).Select(act => new AttendeeCollaboratorTypeDto
+                                {
+                                    AttendeeCollaboratorType = act,
+                                    CollaboratorType = act.CollaboratorType
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
         #endregion
 
         #region Networks

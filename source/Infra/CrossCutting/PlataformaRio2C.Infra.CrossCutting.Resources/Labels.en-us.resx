@@ -1892,4 +1892,12 @@
     <value>Highlight Position</value>
     <comment>Posição no Destaque</comment>
   </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Disabled</value>
+    <comment>Desativado</comment>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Enabled</value>
+    <comment>Ativado</comment>
+  </data>
 </root>

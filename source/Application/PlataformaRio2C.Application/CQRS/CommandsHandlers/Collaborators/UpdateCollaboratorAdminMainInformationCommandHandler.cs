@@ -4,7 +4,7 @@
 // Created          : 12-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-16-2019
+// Last Modified On : 12-18-2019
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorAdminMainInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -78,7 +78,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
 
-            collaborator.UpdateCollaboratorAdminMainInformation(
+            collaborator.UpdateAdminMainInformation(
                 await this.collaboratorTypeRepo.FindByNameAsunc(cmd.CollaboratorTypeName),
                 cmd.FirstName,
                 cmd.LastNames,

@@ -382,14 +382,15 @@
     <Content Include="Assets\img\logo-rio2c-footer.png" />
     <Content Include="Assets\js\accounts\accounts.password.js" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
-    <Content Include="Assets\js\Speakers\speakers.company.widget.js" />
-    <Content Include="Assets\js\Speakers\speakers.maininformation.widget.js" />
-    <Content Include="Assets\js\Speakers\speakers.create.js" />
-    <Content Include="Assets\js\Speakers\speakers.datatable.widget.js" />
-    <Content Include="Assets\js\Speakers\speakers.delete.js" />
-    <Content Include="Assets\js\Speakers\speakers.editioncount.widget.js" />
-    <Content Include="Assets\js\Speakers\speakers.totalcount.widget.js" />
-    <Content Include="Assets\js\Speakers\speakers.update.js" />
+    <Content Include="Assets\js\speakers\speakers.company.widget.js" />
+    <Content Include="Assets\js\speakers\speakers.apiconfiguration.widget.js" />
+    <Content Include="Assets\js\speakers\speakers.maininformation.widget.js" />
+    <Content Include="Assets\js\speakers\speakers.create.js" />
+    <Content Include="Assets\js\speakers\speakers.datatable.widget.js" />
+    <Content Include="Assets\js\speakers\speakers.delete.js" />
+    <Content Include="Assets\js\speakers\speakers.editioncount.widget.js" />
+    <Content Include="Assets\js\speakers\speakers.totalcount.widget.js" />
+    <Content Include="Assets\js\speakers\speakers.update.js" />
     <Content Include="Assets\js\holdings\holdings.delete.js" />
     <Content Include="Assets\js\dynamic.list.js" />
     <Content Include="Assets\js\myrio2c.publicemail.js" />
@@ -8183,6 +8184,9 @@
     <Content Include="Views\Speakers\Modals\UpdateMainInformationForm.cshtml" />
     <Content Include="Views\Speakers\Modals\UpdateMainInformationModal.cshtml" />
     <Content Include="Views\Speakers\Modals\CreateCompanyInfoModal.cshtml" />
+    <Content Include="Views\Speakers\Widgets\ApiConfigurationWidget.cshtml" />
+    <Content Include="Views\Speakers\Modals\UpdateApiConfigurationModal.cshtml" />
+    <Content Include="Views\Speakers\Modals\UpdateApiConfigurationForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

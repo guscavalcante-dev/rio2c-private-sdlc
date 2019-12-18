@@ -287,7 +287,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUser(email);
         }
 
-        /// <summary>Updates the collaborator admin main information.</summary>
+        /// <summary>Updates the admin main information.</summary>
         /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastNames">The last names.</param>
@@ -303,7 +303,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="miniBios">The mini bios.</param>
         /// <param name="edition">The edition.</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateCollaboratorAdminMainInformation(
+        public void UpdateAdminMainInformation(
             CollaboratorType collaboratorType,
             string firstName,
             string lastNames,
@@ -337,7 +337,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
         }
 
-        /// <summary>Updates the collaborator site main information.</summary>
+        /// <summary>Updates the site main information.</summary>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastNames">The last names.</param>
         /// <param name="badge">The badge.</param>
@@ -350,7 +350,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="edition">The edition.</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateCollaboratorSiteMainInformation(
+        public void UpdateSiteMainInformation(
             string firstName,
             string lastNames,
             string badge,
@@ -672,6 +672,39 @@ namespace PlataformaRio2C.Domain.Entities
         #endregion
 
         #region Attendee Collaborators
+
+        /// <summary>Updates the API configuration.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="isApiDisplayEnabled">if set to <c>true</c> [is API display enabled].</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateApiConfiguration(
+            Edition edition,
+            CollaboratorType collaboratorType,
+            bool isApiDisplayEnabled,
+            int? apiHighlightPosition,
+            int userId)
+        {
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition?.Id ?? 0);
+            attendeeCollaborator?.UpdateApiConfiguration(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId);
+
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Deletes the API highlight position.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void DeleteApiHighlightPosition(Edition edition, CollaboratorType collaboratorType, int userId)
+        {
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition?.Id ?? 0);
+            attendeeCollaborator?.DeleteApiHighlightPosition(collaboratorType, userId);
+
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
 
         /// <summary>Gets the attendee collaborator by edition identifier.</summary>
         /// <param name="editionId">The edition identifier.</param>

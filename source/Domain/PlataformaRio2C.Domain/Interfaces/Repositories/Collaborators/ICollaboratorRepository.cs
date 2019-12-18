@@ -30,6 +30,12 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<int> CountAllByDataTable(string collaboratorTypeName, bool showAllEditions, int? editionId);
         Task<Collaborator> FindBySalesPlatformAttendeeIdAsync(string salesPlatformAttendeeId);
 
+        #region Api
+
+        Task<List<Collaborator>> FindAllOrganizationsByHightlightPosition(int editionId, Guid collaboratorTypeUid, int apiHighlightPosition, Guid? organizationUid);
+
+        #endregion
+
         #region Old
 
         Collaborator GetById(int id);

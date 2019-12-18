@@ -79,6 +79,16 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
         }
 
+        /// <summary>Deletes the API highlight position.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void DeleteApiHighlightPosition(int userId)
+        {
+            this.ApiHighlightPosition = null;
+
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
         /// <summary>Updates the API configurations.</summary>
         /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
         /// <param name="apiHighlightPosition">The API highlight position.</param>

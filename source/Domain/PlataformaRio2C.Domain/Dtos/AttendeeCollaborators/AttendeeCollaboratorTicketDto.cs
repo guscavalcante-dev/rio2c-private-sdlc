@@ -4,7 +4,7 @@
 // Created          : 10-03-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-17-2019
+// Last Modified On : 11-18-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorTicketDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

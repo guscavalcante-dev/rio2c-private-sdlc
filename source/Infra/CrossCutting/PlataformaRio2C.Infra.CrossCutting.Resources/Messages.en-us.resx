@@ -834,4 +834,12 @@
     <value>I declare that I am aware and agree with the above-mentioned term.</value>
     <comment>Declaro estar ciente e concordar com o termo acima.</comment>
   </data>
+  <data name="NotShowingOnSiteEdition" xml:space="preserve">
+    <value>Not showing on site {0} edition</value>
+    <comment>Não exibindo na edição {0} do site</comment>
+  </data>
+  <data name="ShowingOnSiteEdition" xml:space="preserve">
+    <value>Showing on site {0} edition</value>
+    <comment>Exibindo na edição {0} do site</comment>
+  </data>
 </root>

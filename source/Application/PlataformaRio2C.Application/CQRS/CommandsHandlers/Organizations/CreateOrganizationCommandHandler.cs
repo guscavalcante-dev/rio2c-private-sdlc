@@ -173,7 +173,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 {
                     foreach (var sameHighlightPositionOrganization in sameHighlightPositionOrganizations)
                     {
-                        sameHighlightPositionOrganization.DeleteAttendeeOrganizationTypeHighlightPosition(edition, organizationType, cmd.UserId);
+                        sameHighlightPositionOrganization.DeleteApiHighlightPosition(edition, organizationType, cmd.UserId);
                         this.OrganizationRepo.Update(sameHighlightPositionOrganization);
                     }
                 }

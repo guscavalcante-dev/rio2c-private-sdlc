@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-17-2019
+// Last Modified On : 11-18-2019
 // ***********************************************************************
 // <copyright file="SpeakersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -418,6 +418,127 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Executive, Labels.CreatedM) });
         //}
+
+        #endregion
+
+        #endregion
+
+        #region Api Configuration Widget
+
+        /// <summary>Shows the API configuration widget.</summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowApiConfigurationWidget(Guid? collaboratorUid)
+        {
+            var apiConfigurationWidgetDto = await this.attendeeCollaboratorRepo.FindApiConfigurationWidgetDtoByCollaboratorUidAndByEditionIdAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
+            if (apiConfigurationWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/ApiConfigurationWidget", apiConfigurationWidgetDto), divIdOrClass = "#SpeakerApiConfigurationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #region Update
+
+        /// <summary>Shows the update API configuration modal.</summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowUpdateApiConfigurationModal(Guid? collaboratorUid)
+        {
+            UpdateCollaboratorApiConfiguration cmd;
+
+            try
+            {
+                var apiConfigurationWidgetDto = await this.attendeeCollaboratorRepo.FindApiConfigurationWidgetDtoByCollaboratorUidAndByEditionIdAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
+                if (apiConfigurationWidgetDto == null)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Speaker, Labels.FoundM.ToLowerInvariant()));
+                }
+
+                cmd = new UpdateCollaboratorApiConfiguration(
+                    apiConfigurationWidgetDto, 
+                    Constants.CollaboratorType.Speaker);
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/UpdateApiConfigurationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Updates the API configuration.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        /// <exception cref="DomainException"></exception>
+        [HttpPost]
+        public async Task<ActionResult> UpdateApiConfiguration(UpdateCollaboratorApiConfiguration cmd)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    Constants.CollaboratorType.Speaker,
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                return Json(new
+                {
+                    status = "error",
+                    message = ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/UpdateApiConfigurationForm", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Speaker, Labels.UpdatedM) });
+        }
 
         #endregion
 
