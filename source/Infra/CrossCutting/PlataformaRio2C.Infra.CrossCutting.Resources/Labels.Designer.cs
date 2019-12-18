@@ -304,6 +304,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Configurações da API.
+        /// </summary>
+        public static string ApiConfigurations {
+            get {
+                return ResourceManager.GetString("ApiConfigurations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to um player.
         /// </summary>
         public static string APlayer {
@@ -1587,6 +1596,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Hi {
             get {
                 return ResourceManager.GetString("Hi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Posição no Destaque.
+        /// </summary>
+        public static string HighlightPosition {
+            get {
+                return ResourceManager.GetString("HighlightPosition", resourceCulture);
             }
         }
         

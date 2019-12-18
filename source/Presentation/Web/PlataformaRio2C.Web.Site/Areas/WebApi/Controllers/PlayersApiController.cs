@@ -4,7 +4,7 @@
 // Created          : 09-25-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified On : 12-18-2019
 // ***********************************************************************
 // <copyright file="PlayersApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -109,6 +109,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     Uid = o.Uid,
                     TradeName = o.TradeName,
                     CompanyName = o.CompanyName,
+                    HighlightPosition = o.ApiHighlightPosition,
                     Picture = o.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, o.Uid, o.ImageUploadDate, true) : null
                 })?.ToList()
             });

@@ -4,7 +4,7 @@
 // Created          : 09-25-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-18-2019
+// Last Modified On : 12-18-2019
 // ***********************************************************************
 // <copyright file="PlayersApiResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,6 +35,9 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Models
 
         [JsonProperty("companyName")]
         public string CompanyName { get; set; }
+
+        [JsonProperty("highlightPosition")]
+        public int? HighlightPosition { get; set; }
 
         [JsonProperty("picture")]
         public string Picture { get; set; }

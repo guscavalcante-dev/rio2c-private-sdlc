@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-14-2019
+// Last Modified On : 12-18-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -32,8 +32,6 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTime? PlayerTermsAcceptanceDate { get; private set; }
         public DateTime? ProducerTermsAcceptanceDate { get; private set; }
         public DateTime? SpeakerTermsAcceptanceDate { get; private set; }
-        public bool IsApiDisplayEnabled { get; private set; }
-        public int? ApiHighlightPosition { get; private set; }
 
         public virtual Edition Edition { get; private set; }
         public virtual Collaborator Collaborator { get; private set; }
@@ -45,29 +43,32 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Initializes a new instance of the <see cref="AttendeeCollaborator"/> class.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="collaborator">The collaborator.</param>
         /// <param name="shouldDeleteOrganizations">if set to <c>true</c> [should delete organizations].</param>
         /// <param name="userId">The user identifier.</param>
         public AttendeeCollaborator(
             Edition edition, 
-            CollaboratorType collaboratorType, 
+            CollaboratorType collaboratorType,
+            bool? isApiDisplayEnabled,
+            int? apiHighlightPosition,
             List<AttendeeOrganization> attendeeOrganizations,
             Collaborator collaborator, 
-            bool shouldDeleteOrganizations, 
+            bool shouldDeleteOrganizations,
             int userId)
         {
             this.Edition = edition;
             this.Collaborator = collaborator;
-            this.IsApiDisplayEnabled = true; //TODO: Change for speakers
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
-            this.SynchronizeAttendeeCollaboratorType(collaboratorType, userId);
+            this.SynchronizeAttendeeCollaboratorType(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId);
             this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
         }
 
-        /// <summary>Initializes a new instance of the <see cref="AttendeeCollaborator"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="AttendeeCollaborator"/> class for ticket.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="newAttendeeOrganizations">The new attendee organizations.</param>
@@ -104,11 +105,10 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.Edition = edition;
             this.Collaborator = collaborator;
-            this.IsApiDisplayEnabled = true; //TODO: Change for speakers
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
-            this.SynchronizeAttendeeCollaboratorType(collaboratorType, userId);
+            this.SynchronizeAttendeeCollaboratorType(collaboratorType, null, null, userId);
             this.SynchronizeAttendeeOrganizationCollaborators(newAttendeeOrganizations, false, userId);
             this.SynchronizeAttendeeCollaboratorTickets(
                 attendeeSalesPlatformTicketType, 
@@ -133,15 +133,24 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Updates the specified edition.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="shouldDeleteOrganizations">if set to <c>true</c> [should delete organizations].</param>
         /// <param name="userId">The user identifier.</param>
-        public void Update(Edition edition, CollaboratorType collaboratorType, List<AttendeeOrganization> attendeeOrganizations, bool shouldDeleteOrganizations , int userId)
+        public void Update(
+            Edition edition, 
+            CollaboratorType collaboratorType,
+            bool? isApiDisplayEnabled,
+            int? apiHighlightPosition,
+            List<AttendeeOrganization> attendeeOrganizations, 
+            bool shouldDeleteOrganizations , 
+            int userId)
         {
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.SynchronizeAttendeeCollaboratorType(collaboratorType, userId);
+            this.SynchronizeAttendeeCollaboratorType(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId);
             this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
         }
 
@@ -151,10 +160,6 @@ namespace PlataformaRio2C.Domain.Entities
         public void Delete(CollaboratorType collaboratorType, int userId)
         {
             this.DeleteAttendeeCollaboratorType(collaboratorType, userId);
-
-            // TODO: throw api configuration inside delete methode above
-            this.IsApiDisplayEnabled = false;
-            this.ApiHighlightPosition = null;
 
             if (this.FindAllAttendeeCollaboratorTypesNotDeleted()?.Any() == true)
             {
@@ -276,8 +281,10 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Synchronizes the type of the attendee collaborator.</summary>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeAttendeeCollaboratorType(CollaboratorType collaboratorType, int userId)
+        private void SynchronizeAttendeeCollaboratorType(CollaboratorType collaboratorType, bool? isApiDisplayEnabled, int? apiHighlightPosition, int userId)
         {
             if (this.AttendeeCollaboratorTypes == null)
             {
@@ -287,11 +294,11 @@ namespace PlataformaRio2C.Domain.Entities
             var attendeeCollaboratorType = this.FindAttendeeCollaboratorTypeByUid(collaboratorType?.Uid ?? Guid.Empty);
             if (attendeeCollaboratorType == null)
             {
-                this.AttendeeCollaboratorTypes.Add(new AttendeeCollaboratorType(this, collaboratorType, userId));
+                this.AttendeeCollaboratorTypes.Add(new AttendeeCollaboratorType(this, collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId));
             }
             else
             {
-                attendeeCollaboratorType.Update(userId);
+                attendeeCollaboratorType.Update(isApiDisplayEnabled, apiHighlightPosition, userId);
             }
         }
 
@@ -437,7 +444,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.SynchronizeAttendeeCollaboratorType(collaboratorType, userId);
+            this.SynchronizeAttendeeCollaboratorType(collaboratorType, null, null, userId);
             this.SynchronizeAttendeeOrganizationCollaborators(newAttendeeOrganizations, false, userId);
             this.SynchronizeAttendeeCollaboratorTickets(
                 attendeeSalesPlatformTicketType, 

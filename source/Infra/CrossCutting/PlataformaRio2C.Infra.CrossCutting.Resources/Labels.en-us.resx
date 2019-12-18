@@ -1884,4 +1884,12 @@
     <value>Track</value>
     <comment>Track</comment>
   </data>
+  <data name="ApiConfigurations" xml:space="preserve">
+    <value>API Configurations</value>
+    <comment>Configurações da API</comment>
+  </data>
+  <data name="HighlightPosition" xml:space="preserve">
+    <value>Highlight Position</value>
+    <comment>Posição no Destaque</comment>
+  </data>
 </root>

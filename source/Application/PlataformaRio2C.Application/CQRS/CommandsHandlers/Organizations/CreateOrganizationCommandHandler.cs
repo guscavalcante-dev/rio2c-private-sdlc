@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified On : 12-18-2019
 // ***********************************************************************
 // <copyright file="CreateOrganizationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -104,6 +104,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
+            var edition = await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty);
+            var organizationType = await this.organizationTypeRepo.GetAsync(cmd.OrganizationType?.Uid ?? Guid.Empty);
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
             var activities = await this.activityRepo.FindAllAsync();
             var interestsDtos = await this.interestRepo.FindAllDtosAsync();
@@ -124,8 +126,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var organization = new Organization(
                 organizationUid,
                 await this.holdingRepo.GetAsync(cmd.HoldingUid ?? Guid.Empty),
-                await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
-                await this.organizationTypeRepo.GetAsync(cmd.OrganizationType?.Uid ?? Guid.Empty),
+                edition,
+                organizationType,
+                cmd.IsApiDisplayEnabled,
+                cmd.ApiHighlightPosition,
                 cmd.Name,
                 cmd.CompanyName,
                 cmd.TradeName,
@@ -142,7 +146,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.Address?.AddressZipCode,
                 true, //TODO: get AddressIsManual from form
                 cmd.CropperImage?.ImageFile != null,
-                cmd.IsApiDisplayEnabled,
                 cmd.Descriptions?.Select(d => new OrganizationDescription(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.RestrictionSpecifics?.Select(d => new OrganizationRestrictionSpecific(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.OrganizationActivities?.Where(oa => oa.IsChecked)?.Select(oa => new OrganizationActivity(activities?.FirstOrDefault(a => a.Uid == oa.ActivityUid), oa.AdditionalInfo, cmd.UserId))?.ToList(),
@@ -156,6 +159,28 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             this.OrganizationRepo.Create(organization);
+
+            #region Disable same highlight position of other organizations
+
+            if (cmd.IsApiDisplayEnabled && cmd.ApiHighlightPosition.HasValue)
+            {
+                var sameHighlightPositionOrganizations = await this.OrganizationRepo.FindAllOrganizationsByHightlightPosition(
+                    cmd.EditionId ?? 0, 
+                    cmd.OrganizationType?.Uid ?? Guid.Empty, 
+                    cmd.ApiHighlightPosition.Value, 
+                    null);
+                if (sameHighlightPositionOrganizations?.Any() == true)
+                {
+                    foreach (var sameHighlightPositionOrganization in sameHighlightPositionOrganizations)
+                    {
+                        sameHighlightPositionOrganization.DeleteAttendeeOrganizationTypeHighlightPosition(edition, organizationType, cmd.UserId);
+                        this.OrganizationRepo.Update(sameHighlightPositionOrganization);
+                    }
+                }
+            }
+
+            #endregion
+
             this.Uow.SaveChanges();
             this.AppValidationResult.Data = organization;
 

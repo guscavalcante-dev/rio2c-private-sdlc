@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-29-2019
+// Last Modified On : 12-18-2019
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -234,11 +234,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>Determines whether [is API display enabled] [the specified edition identifier].</summary>
         /// <param name="query">The query.</param>
         /// <param name="editionId">The edition identifier.</param>
+        /// <param name="organizationTypeUid">The organization type uid.</param>
         /// <returns></returns>
-        internal static IQueryable<Organization> IsApiDisplayEnabled(this IQueryable<Organization> query, int editionId)
+        internal static IQueryable<Organization> IsApiDisplayEnabled(this IQueryable<Organization> query, int editionId, Guid organizationTypeUid)
         {
             query = query.Where(o => o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
-                                                                       && ao.IsApiDisplayEnabled));
+                                                                       && ao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted
+                                                                                                                  && aot.OrganizationType.Uid == organizationTypeUid
+                                                                                                                  && aot.IsApiDisplayEnabled)));
 
             return query;
         }
@@ -358,7 +361,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 SocialMedia = o.SocialMedia,
                                 PhoneNumber = o.PhoneNumber,
                                 ImageUploadDate = o.ImageUploadDate,
-                                IsApiDisplayEnabled = (bool?)o.AttendeeOrganizations.FirstOrDefault(ao => !ao.IsDeleted && ao.EditionId == editionId).IsApiDisplayEnabled ?? false,
                                 CreateDate = o.CreateDate,
                                 CreateUserId = o.CreateUserId,
                                 UpdateDate = o.UpdateDate,
@@ -435,7 +437,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     OrganizationInterest = oi,
                                     Interest = oi.Interest,
                                     InterestGroup = oi.Interest.InterestGroup
-                                })
+                                }),
+                                AttendeeOrganizationTypesDtos = o.AttendeeOrganizations.Where(ao => !ao.IsDeleted && ao.EditionId == editionId)
+                                                                    .SelectMany(ao => ao.AttendeeOrganizationTypes
+                                                                                            .Where(aot => !aot.IsDeleted)
+                                                                                            .Select(aot => new AttendeeOrganizationTypeDto
+                                                                                            {
+                                                                                                AttendeeOrganizationType = aot,
+                                                                                                OrganizationType = aot.OrganizationType
+                                                                                            }))
                             }).FirstOrDefaultAsync();
         }
 
@@ -537,7 +547,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery()
                                 .FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, false, false, editionId)
-                                .IsApiDisplayEnabled(editionId)
+                                .IsApiDisplayEnabled(editionId, organizationTypeUid)
                                 .FindByFiltersUids(activitiesUids, targetAudiencesUids, interestsUids)
                                 .FindByKeywords(keywords);
 
@@ -548,10 +558,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 CompanyName = o.CompanyName,
                                 TradeName = o.TradeName,
                                 ImageUploadDate = o.ImageUploadDate,
+                                ApiHighlightPosition = o.AttendeeOrganizations.Where(ao => !ao.IsDeleted && ao.EditionId == editionId).FirstOrDefault()
+                                                        .AttendeeOrganizationTypes.Where(aot => !aot.IsDeleted && aot.OrganizationType.Uid == organizationTypeUid).FirstOrDefault()
+                                                        .ApiHighlightPosition,
                                 CreateDate = o.CreateDate,
                                 UpdateDate = o.UpdateDate,
                             })
-                            .OrderBy(o => o.TradeName)
+                            .OrderBy(o => o.ApiHighlightPosition ?? 99)
+                            .ThenBy(o => o.TradeName)
                             .ToListPagedAsync(page, pageSize);
         }
 
@@ -597,7 +611,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                     .FindByUid(organizationUid)
                                     .FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, false, false, editionId)
-                                    .IsApiDisplayEnabled(editionId);
+                                    .IsApiDisplayEnabled(editionId, organizationTypeUid);
 
             return await query
                             .Select(o => new OrganizationDto
@@ -688,6 +702,27 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     }))
                             }).FirstOrDefaultAsync();
         }
+
+        /// <summary>Finds all organizations by hightlight position.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="organizationTypeUid">The organization type uid.</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <returns></returns>
+        public async Task<List<Organization>> FindAllOrganizationsByHightlightPosition(int editionId, Guid organizationTypeUid, int apiHighlightPosition, Guid? organizationUid)
+        {
+            var query = this.GetBaseQuery()
+                                .Where(o => o.Uid != organizationUid
+                                            && o.AttendeeOrganizations.Any(ao => !ao.IsDeleted
+                                                                                && ao.EditionId == editionId
+                                                                                && ao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted
+                                                                                                                            && aot.OrganizationType.Uid == organizationTypeUid
+                                                                                                                            && aot.ApiHighlightPosition == apiHighlightPosition)));
+
+            return await query
+                        .ToListAsync();
+        }
+
 
         #endregion
 

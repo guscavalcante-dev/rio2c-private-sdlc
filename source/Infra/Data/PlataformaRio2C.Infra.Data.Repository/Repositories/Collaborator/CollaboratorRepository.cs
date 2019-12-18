@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-13-2019
+// Last Modified On : 12-18-2019
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -121,14 +121,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         /// <summary>Finds the by highlights.</summary>
         /// <param name="query">The query.</param>
+        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
         /// <param name="showHighlights">The show highlights.</param>
         /// <returns></returns>
-        internal static IQueryable<Collaborator> FindByHighlights(this IQueryable<Collaborator> query, bool? showHighlights)
+        internal static IQueryable<Collaborator> FindByHighlights(this IQueryable<Collaborator> query, string collaboratorTypeName, bool? showHighlights)
         {
             if (showHighlights.HasValue && showHighlights.Value)
             {
                 query = query.Where(o => o.AttendeeCollaborators.Any(ac => !ac.IsDeleted
-                                                                           && ac.ApiHighlightPosition.HasValue));
+                                                                           && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
+                                                                                                                      && act.CollaboratorType.Name == collaboratorTypeName
+                                                                                                                      && act.IsApiDisplayEnabled
+                                                                                                                      && act.ApiHighlightPosition.HasValue)));
             }
 
             return query;
@@ -428,7 +432,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByKeywords(keywords, editionId)
                                 .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeName, showAllEditions, showAllExecutives, showAllParticipants, editionId)
                                 .FindByUids(collaboratorsUids)
-                                .FindByHighlights(showHighlights);
+                                .FindByHighlights(collaboratorTypeName, showHighlights);
 
             return await query
                             .DynamicOrder<Collaborator>(

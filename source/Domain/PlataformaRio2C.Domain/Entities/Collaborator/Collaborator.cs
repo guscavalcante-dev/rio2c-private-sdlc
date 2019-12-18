@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-16-2019
+// Last Modified On : 12-18-2019
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,7 +17,6 @@ using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -75,7 +74,7 @@ namespace PlataformaRio2C.Domain.Entities
             //this.Uid = uid;
             this.FirstName = firstName?.Trim();
             this.LastNames = lastNames?.Trim();
-            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, true, userId);
+            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, null, null, true, userId);
             this.UpdateUser(email);
 
             this.IsDeleted = false;
@@ -83,7 +82,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateUserId = this.UpdateUserId = userId;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class for full create on admin.</summary>
         /// <param name="uid">The uid.</param>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="edition">The edition.</param>
@@ -131,11 +130,11 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
-            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, attendeeOrganizations, true, userId);
+            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, false, null, attendeeOrganizations, true, userId);
             this.UpdateUser(email);
         }
 
-        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class for webhook requests.</summary>
         /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <param name="edition">The edition.</param>
         /// <param name="newAttendeeOrganizations">The new attendee organizations.</param>
@@ -206,7 +205,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Updates the tiny.</summary>
+        /// <summary>Updates the tiny for admin.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="firstName">The first name.</param>
@@ -226,7 +225,7 @@ namespace PlataformaRio2C.Domain.Entities
             //this.Uid = uid;
             this.FirstName = firstName?.Trim();
             this.LastNames = lastNames?.Trim();
-            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, isAddingToCurrentEdition, userId);
+            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, null, null, isAddingToCurrentEdition, userId);
             this.UpdateUser(email);
 
             this.IsDeleted = false;
@@ -234,7 +233,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
         }
 
-        /// <summary>Updates the specified attendee organizations.</summary>
+        /// <summary>Updates the specified attendee organizations for admin.</summary>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
@@ -284,7 +283,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
-            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, attendeeOrganizations, isAddingToCurrentEdition, userId);
+            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, null, attendeeOrganizations, isAddingToCurrentEdition, userId);
             this.UpdateUser(email);
         }
 
@@ -744,7 +743,15 @@ namespace PlataformaRio2C.Domain.Entities
                     this.AttendeeCollaborators = new List<AttendeeCollaborator>();
                 }
 
-                this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, null, null, this, false, userId)); //TODO: Onboard collaborator when the attendee collaborator does not exists (collaborator type)
+                this.AttendeeCollaborators.Add(new AttendeeCollaborator(
+                    edition, 
+                    null,
+                    null,
+                    null,
+                    null, 
+                    this, 
+                    false, 
+                    userId)); //TODO: Onboard collaborator when the attendee collaborator does not exists (collaborator type)
             }
         }
 
@@ -762,10 +769,19 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Synchronizes the attendee collaborators.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeAttendeeCollaborators(Edition edition, CollaboratorType collaboratorType, List<AttendeeOrganization> attendeeOrganizations, bool isAddingToCurrentEdition, int userId)
+        private void SynchronizeAttendeeCollaborators(
+            Edition edition, 
+            CollaboratorType collaboratorType,
+            bool? isApiDisplayEnabled,
+            int? apiHighlightPosition,
+            List<AttendeeOrganization> attendeeOrganizations, 
+            bool isAddingToCurrentEdition, 
+            int userId)
         {
             // Synchronize only when is adding to current edition
             if (!isAddingToCurrentEdition)
@@ -786,11 +802,11 @@ namespace PlataformaRio2C.Domain.Entities
             var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
             if (attendeeCollaborator != null)
             {
-                attendeeCollaborator.Update(edition, collaboratorType, attendeeOrganizations, true, userId);
+                attendeeCollaborator.Update(edition, collaboratorType, isApiDisplayEnabled, apiHighlightPosition, attendeeOrganizations, true, userId);
             }
             else
             {
-                this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, collaboratorType, attendeeOrganizations, this, true, userId));
+                this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, collaboratorType, isApiDisplayEnabled, apiHighlightPosition, attendeeOrganizations, this, true, userId));
             }
         }
 

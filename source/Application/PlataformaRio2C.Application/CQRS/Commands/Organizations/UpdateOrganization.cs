@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified On : 12-18-2019
 // ***********************************************************************
 // <copyright file="UpdateOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,7 +13,6 @@
 // ***********************************************************************
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -31,6 +30,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Initializes a new instance of the <see cref="UpdateOrganization"/> class.</summary>
         /// <param name="entity">The entity.</param>
+        /// <param name="organizationType">Type of the organization.</param>
         /// <param name="holdingBaseDtos">The holding base dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
@@ -44,6 +44,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         public UpdateOrganization(
             OrganizationDto entity, 
+            OrganizationType organizationType,
             List<HoldingBaseDto> holdingBaseDtos,
             List<LanguageDto> languagesDtos, 
             List<CountryBaseDto> countriesBaseDtos,
@@ -67,6 +68,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateDate = entity.UpdateDate;
             this.UpdateBaseProperties(
                 entity, 
+                organizationType,
                 holdingBaseDtos, 
                 languagesDtos, 
                 countriesBaseDtos, 
