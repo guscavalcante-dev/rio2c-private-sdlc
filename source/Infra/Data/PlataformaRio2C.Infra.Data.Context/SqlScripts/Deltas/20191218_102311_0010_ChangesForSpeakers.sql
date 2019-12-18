@@ -61,3 +61,15 @@ go
 ALTER TABLE "dbo"."AttendeeCollaborators"
   DROP COLUMN "ApiHighlightPosition"
 go
+
+CREATE NONCLUSTERED INDEX [IDX_AttendeeCollaboratorTypes_IsApiDisplayEnabled] ON [dbo].[AttendeeCollaboratorTypes]
+(
+	[IsApiDisplayEnabled] ASC
+)
+go
+
+CREATE NONCLUSTERED INDEX [IDX_AttendeeOrganizationTypes_IsApiDisplayEnabled] ON [dbo].[AttendeeOrganizationTypes]
+(
+	[IsApiDisplayEnabled] ASC
+)
+go
