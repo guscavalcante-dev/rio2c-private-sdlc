@@ -30,8 +30,14 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Models
         [JsonProperty("uid")]
         public Guid Uid { get; set; }
 
+        [JsonProperty("badgeName")]
+        public string BadgeName { get; set; }
+
         [JsonProperty("name")]
         public string Name { get; set; }
+
+        [JsonProperty("miniBio")]
+        public string MiniBio { get; set; }
 
         [JsonProperty("jobTitle")]
         public string JobTitle { get; set; }

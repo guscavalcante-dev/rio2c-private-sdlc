@@ -570,8 +570,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             {
                                 Uid = c.Uid,
                                 BadgeName = c.Badge,
+                                Name = c.FirstName + " " + c.LastNames,
                                 ImageUploadDate = c.ImageUploadDate,
-                                JobTitlesDtos = c.JobTitles.Select(d => new CollaboratorJobTitleBaseDto
+                                MiniBiosDtos = c.MiniBios.Where(mb => !mb.IsDeleted).Select(d => new CollaboratorMiniBioBaseDto
+                                {
+                                    Id = d.Id,
+                                    Uid = d.Uid,
+                                    Value = d.Value,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = d.Language.Id,
+                                        Uid = d.Language.Uid,
+                                        Name = d.Language.Name,
+                                        Code = d.Language.Code
+                                    }
+                                }),
+                                JobTitlesDtos = c.JobTitles.Where(jb => !jb.IsDeleted).Select(d => new CollaboratorJobTitleBaseDto
                                 {
                                     Id = d.Id,
                                     Uid = d.Uid,

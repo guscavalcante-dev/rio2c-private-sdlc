@@ -22,16 +22,32 @@ namespace PlataformaRio2C.Domain.Dtos
     {
         public Guid Uid { get; set; }
         public string BadgeName { get; set; }
+        public string Name { get; set; }
         public DateTime? ImageUploadDate { get; set; }
         public int? ApiHighlightPosition { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
 
+        public IEnumerable<CollaboratorMiniBioBaseDto> MiniBiosDtos { get; set; }
         public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CollaboratorApiListDto"/> class.</summary>
         public CollaboratorApiListDto()
         {
+        }
+
+        /// <summary>Gets the collaborator mini bio base dto by language code.</summary>
+        /// <param name="languageCode">The language code.</param>
+        /// <returns></returns>
+        public CollaboratorMiniBioBaseDto GetCollaboratorMiniBioBaseDtoByLanguageCode(string languageCode)
+        {
+            if (string.IsNullOrEmpty(languageCode))
+            {
+                languageCode = "pt-br";
+            }
+
+            return this.MiniBiosDtos?.FirstOrDefault(jtd => jtd.LanguageDto.Code == languageCode) ??
+                   this.MiniBiosDtos?.FirstOrDefault(jtd => jtd.LanguageDto.Code == "pt-br");
         }
 
         /// <summary>Gets the collaborator job title base dto by language code.</summary>

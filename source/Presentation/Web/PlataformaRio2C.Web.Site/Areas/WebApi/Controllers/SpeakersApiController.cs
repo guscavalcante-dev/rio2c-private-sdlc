@@ -88,8 +88,10 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 Speakers = collaboratorsApiDtos?.Select(c => new SpeakersApiListItem
                 {
                     Uid = c.Uid,
-                    Name = c.BadgeName,
-                    JobTitle = c.GetCollaboratorJobTitleBaseDtoByLanguageCode(request?.Culture)?.Value,
+                    BadgeName = c.BadgeName?.Trim(),
+                    Name = c.Name?.Trim(),
+                    MiniBio = c.GetCollaboratorMiniBioBaseDtoByLanguageCode(request?.Culture)?.Value?.Trim(),
+                    JobTitle = c.GetCollaboratorJobTitleBaseDtoByLanguageCode(request?.Culture)?.Value?.Trim(),
                     HighlightPosition = c.ApiHighlightPosition,
                     Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.Uid, c.ImageUploadDate, true) : null
                 })?.ToList()
@@ -142,89 +144,5 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         //}
 
         #endregion
-
-        //#region Details
-
-        ///// <summary>Players the specified request.</summary>
-        ///// <param name="request">The request.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //[Route("player/{uid?}")]
-        //public async Task<IHttpActionResult> Player([FromUri]PlayerApiRequest request)
-        //{
-        //    var editions = this.editionRepo.FindAllByIsActive(false);
-        //    if (editions?.Any() == false)
-        //    {
-        //        return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." }});
-        //    }
-
-        //    // Get edition from request otherwise get current
-        //    var edition = request?.Edition.HasValue == true ? editions?.FirstOrDefault(e => e.UrlCode == request.Edition) :
-        //        editions?.FirstOrDefault(e => e.IsCurrent);
-        //    if (edition == null)
-        //    {
-        //        return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "No editions found." }});
-        //    }
-
-        //    var organizationApiDto = await this.organizationRepo.FindApiDtoByUidAsync(
-        //        request?.Uid ?? Guid.Empty,
-        //        edition.Id,
-        //        OrganizationType.Player.Uid);
-        //    if (organizationApiDto == null)
-        //    {
-        //        return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "Player not found." } });
-        //    }
-
-        //    var interestsGroups = organizationApiDto?.OrganizationInterestDtos?.GroupBy(oid => new
-        //    {
-        //        InterestGroupId = oid.InterestGroup.Id,
-        //        InterestGroupUid = oid.InterestGroup.Uid,
-        //        InterestGroupName = oid.InterestGroup.Name
-        //    });
-
-        //    return await Json(new PlayerApiResponse
-        //    {
-        //        Status = ApiStatus.Success,
-        //        Error = null,
-        //        Uid = organizationApiDto.Uid,
-        //        TradeName = organizationApiDto.TradeName,
-        //        CompanyName = organizationApiDto.CompanyName,
-        //        Picture = organizationApiDto.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, organizationApiDto.Uid, organizationApiDto.ImageUploadDate, true) : null,
-        //        DescriptionsApiResponses = organizationApiDto.DescriptionsDtos?.Select(dd => new LanguageValueApiResponse
-        //        {
-        //            Culture = dd.LanguageDto.Code,
-        //            Value = HttpUtility.HtmlDecode(dd.Value)
-        //        })?.ToList(),
-        //        InterestGroupApiResponses = interestsGroups?.Select(ig => new InterestGroupApiResponse
-        //        {
-        //            Uid = ig.Key.InterestGroupUid,
-        //            Name = ig.Key.InterestGroupName,
-        //            InterestsApiResponses = ig.Select(i => new InterestApiResponse
-        //            {
-        //                Uid = i.Interest.Uid,
-        //                Name = i.Interest.Name
-        //            })?.ToList()
-        //        })?.ToList(),
-        //        CollaboratorsApiResponses = organizationApiDto.CollaboratorsDtos?.Select(cd => new CollaboratorApiResponse
-        //        {
-        //            Uid = cd.Uid,
-        //            BadgeName = cd.Badge,
-        //            Name = cd.FullName,
-        //            Picture = cd.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, cd.Uid, cd.ImageUploadDate, true) : null,
-        //            JobTitlesApiResponses = cd.JobTitlesDtos?.Select(jtd => new LanguageValueApiResponse
-        //            {
-        //                Culture = jtd.LanguageDto.Code,
-        //                Value = HttpUtility.HtmlDecode(jtd.Value)
-        //            })?.ToList(),
-        //            MiniBiosApiResponses = cd.MiniBiosDtos?.Select(jtd => new LanguageValueApiResponse
-        //            {
-        //                Culture = jtd.LanguageDto.Code,
-        //                Value = HttpUtility.HtmlDecode(jtd.Value)
-        //            })?.ToList()
-        //        })?.ToList()
-        //    });
-        //}
-
-        //#endregion
     }
 }
