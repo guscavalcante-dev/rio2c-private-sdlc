@@ -4,7 +4,7 @@
 // Created          : 10-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-16-2019
+// Last Modified On : 12-19-2019
 // ***********************************************************************
 // <copyright file="ExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -155,6 +155,18 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             try
             {
+                var isExecutive = this.UserAccessControlDto?.HasAnyCollaboratorType(Constants.CollaboratorType.Executives) == true;
+                var isIndustry = this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true;
+
+                // Field SharePublicEmail does not exist for this types of users
+                if (!isExecutive && !isIndustry)
+                {
+                    if (ModelState.ContainsKey("SharePublicEmail"))
+                    {
+                        ModelState["SharePublicEmail"].Errors.Clear();
+                    }
+                }
+
                 if (!ModelState.IsValid)
                 {
                     throw new DomainException(Messages.CorrectFormValues);

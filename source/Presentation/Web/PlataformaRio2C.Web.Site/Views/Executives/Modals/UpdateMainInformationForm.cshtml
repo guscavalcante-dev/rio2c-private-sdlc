@@ -1,4 +1,10 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateCollaboratorSiteMainInformation
+﻿@using PlataformaRio2C.Domain.Dtos
+@model PlataformaRio2C.Application.CQRS.Commands.UpdateCollaboratorSiteMainInformation
+@{
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var isExecutive = userAccessControlDto?.HasAnyCollaboratorType(PlataformaRio2C.Domain.Constants.CollaboratorType.Executives) == true;
+    var isIndustry = userAccessControlDto?.HasCollaboratorType(PlataformaRio2C.Domain.Constants.CollaboratorType.Industry) == true;
+}
 <div class="row">
     <div class="form-group col-lg-4 text-center">
         @Html.EditorFor(m => m.CropperImage)
@@ -53,21 +59,24 @@
         @Html.EditorFor(m => m.MiniBios)
     </div>
 </div>
-<div class="form-group row">
-    <div class="col-md-12">
-        @Html.LabelFor(m => m.PublicEmail, Messages.PublicEmail, new { @class = "control-label" })
-        <div class="kt-radio-inline">
-            <label class="kt-radio">
-                @Html.RadioButtonFor(m => m.SharePublicEmail, true) @Labels.Yes
-                <span></span>
-            </label>
-            <label class="kt-radio">
-                @Html.RadioButtonFor(m => m.SharePublicEmail, false) @Labels.No
-                <span></span>
-            </label>
+@if (isExecutive || isIndustry)
+{
+    <div class="form-group row">
+        <div class="col-md-12">
+            @Html.LabelFor(m => m.PublicEmail, Messages.PublicEmail, new { @class = "control-label" })
+            <div class="kt-radio-inline">
+                <label class="kt-radio">
+                    @Html.RadioButtonFor(m => m.SharePublicEmail, true) @Labels.Yes
+                    <span></span>
+                </label>
+                <label class="kt-radio">
+                    @Html.RadioButtonFor(m => m.SharePublicEmail, false) @Labels.No
+                    <span></span>
+                </label>
+            </div>
+            @Html.ValidationMessageFor(m => m.SharePublicEmail, "", new { @class = "text-danger" })
+            @Html.TextBoxFor(m => m.PublicEmail, Model.SharePublicEmail == true ? (object)new { @class = "form-control" } : (object)new { @class = "form-control", disabled = "" })
+            @Html.ValidationMessageFor(m => m.PublicEmail, "", new { @class = "text-danger" })
         </div>
-        @Html.ValidationMessageFor(m => m.SharePublicEmail, "", new { @class = "text-danger" })
-        @Html.TextBoxFor(m => m.PublicEmail, Model.SharePublicEmail == true ? (object)new { @class = "form-control" } : (object)new { @class = "form-control", disabled = "" })
-        @Html.ValidationMessageFor(m => m.PublicEmail, "", new { @class = "text-danger" })
-    </div>
-</div>
+    </div>   
+}
