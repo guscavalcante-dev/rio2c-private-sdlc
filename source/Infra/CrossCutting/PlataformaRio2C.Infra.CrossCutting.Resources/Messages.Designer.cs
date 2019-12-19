@@ -106,6 +106,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Substitui o destaque da lista abaixo..
+        /// </summary>
+        public static string AttentionHighlightsList {
+            get {
+                return ResourceManager.GetString("AttentionHighlightsList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Atenção! Você selecionou somente {0} players de {1} possíveis..
         /// </summary>
         public static string AttentionPossiblePlayersNotSelected {

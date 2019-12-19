@@ -32,7 +32,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<IPagedList<OrganizationApiListDto>> FindAllPublicApiPaged(int editionId, string keywords, Guid organizationTypeUid, List<Guid> activitiesUids, List<Guid> targetAudiencesUids, List<Guid> interestsUids, int page, int pageSize);
         Task<IPagedList<OrganizationApiListDto>> FindAllOrganizationsApiPaged(int editionId, string companyName, string tradeName, string companyNumber, int page, int pageSize);
         Task<OrganizationDto> FindApiDtoByUidAsync(Guid organizationUid, int editionId, Guid organizationTypeUid);
-        Task<List<Organization>> FindAllOrganizationsByHightlightPosition(int editionId, Guid organizationTypeUid, int apiHighlightPosition, Guid? organizationUid);
+        Task<List<Organization>> FindAllByHightlightPosition(int editionId, Guid organizationTypeUid, int apiHighlightPosition, Guid? organizationUid);
 
         #endregion
 

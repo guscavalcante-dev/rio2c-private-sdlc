@@ -467,7 +467,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd = new UpdateCollaboratorApiConfiguration(
                     apiConfigurationWidgetDto, 
-                    Constants.CollaboratorType.Speaker);
+                    Constants.CollaboratorType.Speaker,
+                    await this.attendeeCollaboratorRepo.FindAllApiConfigurationWidgetDtoByHighlight(this.EditionDto.Id, Constants.CollaboratorType.Speaker));
             }
             catch (DomainException ex)
             {
@@ -520,6 +521,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     var target = error.Target ?? "";
                     ModelState.AddModelError(target, error.Message);
                 }
+
+                cmd.UpdateBaseModels(
+                    await this.attendeeCollaboratorRepo.FindAllApiConfigurationWidgetDtoByHighlight(this.EditionDto.Id, Constants.CollaboratorType.Speaker));
 
                 return Json(new
                 {

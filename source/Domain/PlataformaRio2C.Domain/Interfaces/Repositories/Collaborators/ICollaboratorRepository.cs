@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-13-2019
+// Last Modified On : 12-18-2019
 // ***********************************************************************
 // <copyright file="ICollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -32,7 +32,7 @@ namespace PlataformaRio2C.Domain.Interfaces
 
         #region Api
 
-        Task<List<Collaborator>> FindAllOrganizationsByHightlightPosition(int editionId, Guid collaboratorTypeUid, int apiHighlightPosition, Guid? organizationUid);
+        Task<List<Collaborator>> FindAllByHightlightPosition(int editionId, Guid collaboratorTypeUid, int apiHighlightPosition, Guid? organizationUid);
 
         #endregion
 

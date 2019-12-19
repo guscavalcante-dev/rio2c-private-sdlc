@@ -1303,6 +1303,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} em destaque.
+        /// </summary>
+        public static string EntityHighlights {
+            get {
+                return ResourceManager.GetString("EntityHighlights", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Erro.
         /// </summary>
         public static string Error {

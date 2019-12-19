@@ -1913,4 +1913,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Ativado</value>
     <comment>Ativado</comment>
   </data>
+  <data name="EntityHighlights" xml:space="preserve">
+    <value>{0} em destaque</value>
+    <comment>{0} em destaque</comment>
+  </data>
 </root>

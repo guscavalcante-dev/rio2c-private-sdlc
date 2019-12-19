@@ -1900,4 +1900,8 @@
     <value>Enabled</value>
     <comment>Ativado</comment>
   </data>
+  <data name="EntityHighlights" xml:space="preserve">
+    <value>{0} highlights</value>
+    <comment>{0} em destaque</comment>
+  </data>
 </root>

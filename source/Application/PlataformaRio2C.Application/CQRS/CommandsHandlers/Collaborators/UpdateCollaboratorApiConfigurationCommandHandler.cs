@@ -87,7 +87,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             if (cmd.IsApiDisplayEnabled && cmd.ApiHighlightPosition.HasValue)
             {
-                var sameHighlightPositionCollaborators = await this.CollaboratorRepo.FindAllOrganizationsByHightlightPosition(
+                var sameHighlightPositionCollaborators = await this.CollaboratorRepo.FindAllByHightlightPosition(
                     cmd.EditionId ?? 0,
                     collaboratorType?.Uid ?? Guid.Empty,
                     cmd.ApiHighlightPosition.Value,

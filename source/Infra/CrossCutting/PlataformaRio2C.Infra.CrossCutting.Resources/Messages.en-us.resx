@@ -842,4 +842,8 @@
     <value>Showing on site {0} edition</value>
     <comment>Exibindo na edição {0} do site</comment>
   </data>
+  <data name="AttentionHighlightsList" xml:space="preserve">
+    <value>Overwrite the highlight of the below list.</value>
+    <comment>Substitui o destaque da lista abaixo.</comment>
+  </data>
 </root>

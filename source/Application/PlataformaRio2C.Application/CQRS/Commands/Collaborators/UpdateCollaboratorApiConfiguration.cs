@@ -14,6 +14,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
@@ -33,22 +34,39 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string CollaboratorTypeName { get; private set; }
 
         public int[] ApiHighlightPositions = new[] { 1, 2, 3, 4, 5 };
+        public List<AttendeeCollaboratorApiConfigurationWidgetDto> AttendeeCollaboratorApiConfigurationWidgetDtos {  get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorApiConfiguration"/> class.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
-        public UpdateCollaboratorApiConfiguration(AttendeeCollaboratorApiConfigurationWidgetDto entity, string collaboratorTypeName)
+        /// <param name="attendeeCollaboratorApiConfigurationWidgetDtos">The attendee collaborator API configuration widget dtos.</param>
+        public UpdateCollaboratorApiConfiguration(
+            AttendeeCollaboratorApiConfigurationWidgetDto entity, 
+            string collaboratorTypeName,
+            List<AttendeeCollaboratorApiConfigurationWidgetDto> attendeeCollaboratorApiConfigurationWidgetDtos)
         {
             var attendeeCollaboratorTypeDto = entity?.GetAttendeeCollaboratorTypeDtoByCollaboratorTypeName(collaboratorTypeName);
 
             this.CollaboratorUid = entity?.Collaborator?.Uid ?? Guid.Empty;
             this.IsApiDisplayEnabled = attendeeCollaboratorTypeDto?.AttendeeCollaboratorType?.IsApiDisplayEnabled ?? false;
             this.ApiHighlightPosition = attendeeCollaboratorTypeDto?.AttendeeCollaboratorType?.ApiHighlightPosition;
+
+            this.UpdateBaseModels(attendeeCollaboratorApiConfigurationWidgetDtos);
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorApiConfiguration"/> class.</summary>
         public UpdateCollaboratorApiConfiguration()
         {
+        }
+
+        /// <summary>Updates the base models.</summary>
+        /// <param name="attendeeCollaboratorApiConfigurationWidgetDtos">The attendee collaborator API configuration widget dtos.</param>
+        public void UpdateBaseModels(List<AttendeeCollaboratorApiConfigurationWidgetDto> attendeeCollaboratorApiConfigurationWidgetDtos)
+        {
+            this.AttendeeCollaboratorApiConfigurationWidgetDtos = attendeeCollaboratorApiConfigurationWidgetDtos?
+                                                                            .OrderBy(a => a.GetAttendeeCollaboratorTypeDtoByCollaboratorTypeName(
+                                                                                Domain.Constants.CollaboratorType.Speaker).AttendeeCollaboratorType.ApiHighlightPosition)?
+                                                                            .ToList();
         }
 
         /// <summary>Updates the pre send properties.</summary>

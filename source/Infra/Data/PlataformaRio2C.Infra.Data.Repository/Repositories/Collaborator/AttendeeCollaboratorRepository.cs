@@ -439,5 +439,37 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
 
         #endregion
+
+        #region Api
+
+        /// <summary>Finds all API configuration widget dto by highlight.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
+        /// <returns></returns>
+        public async Task<List<AttendeeCollaboratorApiConfigurationWidgetDto>> FindAllApiConfigurationWidgetDtoByHighlight(int editionId, string collaboratorTypeName)
+        {
+            var query = this.GetBaseQuery()
+                                .Where(ac => !ac.IsDeleted
+                                             && ac.EditionId == editionId
+                                             && ac.AttendeeCollaboratorTypes.Any(aot => !aot.IsDeleted
+                                                                                     && aot.CollaboratorType.Name == collaboratorTypeName
+                                                                                     && aot.ApiHighlightPosition.HasValue));
+
+            return await query
+                            .Select(ac => new AttendeeCollaboratorApiConfigurationWidgetDto
+                            {
+                                AttendeeCollaborator = ac,
+                                Collaborator = ac.Collaborator,
+                                User = ac.Collaborator.User,
+                                AttendeeCollaboratorTypeDtos = ac.AttendeeCollaboratorTypes.Where(act => !act.IsDeleted).Select(act => new AttendeeCollaboratorTypeDto
+                                {
+                                    AttendeeCollaboratorType = act,
+                                    CollaboratorType = act.CollaboratorType
+                                })
+                            })
+                            .ToListAsync();
+        }
+
+        #endregion
     }
 }

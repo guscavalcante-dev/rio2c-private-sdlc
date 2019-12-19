@@ -511,7 +511,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         #region Api
 
-        public async Task<List<Collaborator>> FindAllOrganizationsByHightlightPosition(int editionId, Guid collaboratorTypeUid, int apiHighlightPosition, Guid? organizationUid)
+        /// <summary>Finds all by hightlight position.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="collaboratorTypeUid">The collaborator type uid.</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <returns></returns>
+        public async Task<List<Collaborator>> FindAllByHightlightPosition(int editionId, Guid collaboratorTypeUid, int apiHighlightPosition, Guid? organizationUid)
         {
             var query = this.GetBaseQuery()
                                 .Where(o => o.Uid != organizationUid

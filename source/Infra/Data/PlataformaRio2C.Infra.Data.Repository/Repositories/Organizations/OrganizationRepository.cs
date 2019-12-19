@@ -703,13 +703,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             }).FirstOrDefaultAsync();
         }
 
-        /// <summary>Finds all organizations by hightlight position.</summary>
+        /// <summary>Finds all by hightlight position.</summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="organizationTypeUid">The organization type uid.</param>
         /// <param name="apiHighlightPosition">The API highlight position.</param>
         /// <param name="organizationUid">The organization uid.</param>
         /// <returns></returns>
-        public async Task<List<Organization>> FindAllOrganizationsByHightlightPosition(int editionId, Guid organizationTypeUid, int apiHighlightPosition, Guid? organizationUid)
+        public async Task<List<Organization>> FindAllByHightlightPosition(int editionId, Guid organizationTypeUid, int apiHighlightPosition, Guid? organizationUid)
         {
             var query = this.GetBaseQuery()
                                 .Where(o => o.Uid != organizationUid

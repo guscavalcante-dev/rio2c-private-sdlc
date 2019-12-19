@@ -171,7 +171,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             if (cmd.IsApiDisplayEnabled && cmd.ApiHighlightPosition.HasValue)
             {
-                var sameHighlightPositionOrganizations = await this.OrganizationRepo.FindAllOrganizationsByHightlightPosition(
+                var sameHighlightPositionOrganizations = await this.OrganizationRepo.FindAllByHightlightPosition(
                     cmd.EditionId ?? 0, 
                     cmd.OrganizationType?.Uid ?? Guid.Empty, 
                     cmd.ApiHighlightPosition.Value,
