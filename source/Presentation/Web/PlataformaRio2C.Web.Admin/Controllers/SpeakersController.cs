@@ -328,7 +328,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <summary>Shows the update company information modal.</summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowUpdateCompanyInfoModal(Guid? collaboratorUid)
+        public async Task<ActionResult> ShowUpdateCompanyInfoModal(Guid? collaboratorUid, Guid? organizationUid)
         {
             CreateTicketBuyerOrganizationData cmd;
 
@@ -336,12 +336,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             {
                 if (!collaboratorUid.HasValue)
                 {
-                    throw new DomainException("Speaker not found"); //TODO: Use resources
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Speaker, Labels.FoundM.ToLowerInvariant()));
                 }
 
                 cmd = new CreateTicketBuyerOrganizationData(
                     collaboratorUid.Value,
-                    null, //organizationUid.HasValue ? await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(organizationUid, this.EditionDto.Id, this.UserInterfaceLanguage)) : null //TODO: ger current company
+                    organizationUid.HasValue ? await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(organizationUid, this.EditionDto.Id, this.UserInterfaceLanguage)) : null,
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                     false,

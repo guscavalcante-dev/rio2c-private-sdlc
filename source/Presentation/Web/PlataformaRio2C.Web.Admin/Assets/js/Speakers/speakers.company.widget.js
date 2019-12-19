@@ -80,7 +80,7 @@ var SpeakersCompanyWidget = function () {
             AddressesForm.init();
         }
 
-        if (typeof (CompanyInfoAutocomplete) !== 'undefined') {
+        if (typeof (CompanyInfoAutocomplete) !== 'undefined' && $('#OrganizationUid').val() === '') {
             CompanyInfoAutocomplete.init('/Companies/ShowTicketBuyerFilledForm', enableUpdatePlugins);
         }
 
@@ -88,11 +88,12 @@ var SpeakersCompanyWidget = function () {
         MyRio2cCommon.enableFormValidation({ formIdOrClass: createFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
 
-    var showUpdateModal = function () {
+    var showUpdateModal = function (organizationUid) {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
         jsonParameters.collaboratorUid = $('#AggregateId').val();
+        jsonParameters.organizationUid = organizationUid;
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/ShowUpdateCompanyInfoModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -119,8 +120,8 @@ var SpeakersCompanyWidget = function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
         },
-        showUpdateModal: function () {
-            showUpdateModal();
+        showUpdateModal: function (organizationUid) {
+            showUpdateModal(organizationUid);
         }
     };
 }();
