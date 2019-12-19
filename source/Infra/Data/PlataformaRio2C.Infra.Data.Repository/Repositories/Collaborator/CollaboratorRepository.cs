@@ -165,6 +165,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             if (!string.IsNullOrEmpty(keywords))
             {
                 var outerWhere = PredicateBuilder.New<Collaborator>(false);
+                var innerExecutiveBadgeNameWhere = PredicateBuilder.New<Collaborator>(true);
                 var innerExecutiveNameWhere = PredicateBuilder.New<Collaborator>(true);
                 var innerExecutiveEmailWhere = PredicateBuilder.New<Collaborator>(true);
                 var innerOrganizationNameWhere = PredicateBuilder.New<Collaborator>(true);
@@ -174,8 +175,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 {
                     if (!string.IsNullOrEmpty(keyword))
                     {
-                        innerExecutiveNameWhere = innerExecutiveNameWhere.And(c => (c.User.Name).Contains(keyword));
-                        innerExecutiveEmailWhere = innerExecutiveEmailWhere.And(c => (c.User.Email).Contains(keyword));
+                        innerExecutiveBadgeNameWhere = innerExecutiveBadgeNameWhere.And(c => c.Badge.Contains(keyword));
+                        innerExecutiveNameWhere = innerExecutiveNameWhere.And(c => c.User.Name.Contains(keyword));
+                        innerExecutiveEmailWhere = innerExecutiveEmailWhere.And(c => c.User.Email.Contains(keyword));
                         innerOrganizationNameWhere = innerOrganizationNameWhere
                                                         .And(c => c.AttendeeCollaborators.Any(ac => (!editionId.HasValue || ac.EditionId == editionId)
                                                                                                     && !ac.IsDeleted
@@ -199,6 +201,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                     }
                 }
 
+                outerWhere = outerWhere.Or(innerExecutiveBadgeNameWhere);
                 outerWhere = outerWhere.Or(innerExecutiveNameWhere);
                 outerWhere = outerWhere.Or(innerExecutiveEmailWhere);
                 outerWhere = outerWhere.Or(innerOrganizationNameWhere);
