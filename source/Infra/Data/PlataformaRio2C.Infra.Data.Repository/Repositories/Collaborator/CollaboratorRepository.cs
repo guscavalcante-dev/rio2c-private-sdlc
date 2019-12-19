@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-18-2019
+// Last Modified On : 12-19-2019
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -209,6 +209,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Determines whether [is API display enabled] [the specified edition identifier].</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> IsApiDisplayEnabled(this IQueryable<Collaborator> query, int editionId, string collaboratorTypeName)
+        {
+            query = query.Where(c => c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId
+                                                                       && ac.AttendeeCollaboratorTypes.Any(aot => !aot.IsDeleted
+                                                                                                                  && aot.CollaboratorType.Name == collaboratorTypeName
+                                                                                                                  && aot.IsApiDisplayEnabled)));
+
+            return query;
+        }
+
         /// <summary>Determines whether [is not deleted].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
@@ -240,6 +255,31 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             page++;
 
+            // Page the list
+            var pagedList = await query.ToPagedListAsync(page, pageSize);
+            if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
+                pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
+
+            return pagedList;
+        }
+    }
+
+    #endregion
+
+    #region CollaboratorApiListDto IQueryable Extensions
+
+    /// <summary>
+    /// CollaboratorApiListDtoIQueryableExtensions
+    /// </summary>
+    internal static class CollaboratorApiListDtoIQueryableExtensions
+    {
+        /// <summary>Converts to listpagedasync.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        internal static async Task<IPagedList<CollaboratorApiListDto>> ToListPagedAsync(this IQueryable<CollaboratorApiListDto> query, int page, int pageSize)
+        {
             // Page the list
             var pagedList = await query.ToPagedListAsync(page, pageSize);
             if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
@@ -510,6 +550,50 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         #region Api
+
+        /// <summary>Finds all public API paged.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<CollaboratorApiListDto>> FindAllPublicApiPaged(int editionId, string keywords, string collaboratorTypeName, int page, int pageSize)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeName, false, false, false, editionId)
+                                .IsApiDisplayEnabled(editionId, collaboratorTypeName)
+                                .FindByKeywords(keywords, editionId);
+
+            return await query
+                            .Select(c => new CollaboratorApiListDto
+                            {
+                                Uid = c.Uid,
+                                BadgeName = c.Badge,
+                                ImageUploadDate = c.ImageUploadDate,
+                                JobTitlesDtos = c.JobTitles.Select(d => new CollaboratorJobTitleBaseDto
+                                {
+                                    Id = d.Id,
+                                    Uid = d.Uid,
+                                    Value = d.Value,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = d.Language.Id,
+                                        Uid = d.Language.Uid,
+                                        Name = d.Language.Name,
+                                        Code = d.Language.Code
+                                    }
+                                }),
+                                ApiHighlightPosition = c.AttendeeCollaborators.Where(ac => !ac.IsDeleted && ac.EditionId == editionId).FirstOrDefault()
+                                                        .AttendeeCollaboratorTypes.Where(act => !act.IsDeleted && act.CollaboratorType.Name == collaboratorTypeName).FirstOrDefault()
+                                                        .ApiHighlightPosition,
+                                CreateDate = c.CreateDate,
+                                UpdateDate = c.UpdateDate,
+                            })
+                            .OrderBy(o => o.ApiHighlightPosition ?? 99)
+                            .ThenBy(o => o.BadgeName)
+                            .ToListPagedAsync(page, pageSize);
+        }
 
         /// <summary>Finds all by hightlight position.</summary>
         /// <param name="editionId">The edition identifier.</param>
