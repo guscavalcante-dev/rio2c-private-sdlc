@@ -345,11 +345,13 @@
     <Compile Include="Areas\WebApi\Controllers\PlayerController.cs" />
     <Compile Include="Areas\WebApi\Controllers\SpeakersApiController.cs" />
     <Compile Include="Areas\WebApi\Models\ApiPageBaseRequest.cs" />
+    <Compile Include="Areas\WebApi\Models\Collaborators\CollaboratorBaseApiResponse.cs" />
     <Compile Include="Areas\WebApi\Models\ListBaseModel.cs" />
     <Compile Include="Areas\WebApi\Models\ApiBaseResponse.cs" />
     <Compile Include="Areas\WebApi\Models\Error.cs" />
     <Compile Include="Areas\WebApi\Models\Organizations\Requests\OrganiationsApiRequest.cs" />
     <Compile Include="Areas\WebApi\Models\Organizations\Requests\OrganizationApiRequest.cs" />
+    <Compile Include="Areas\WebApi\Models\Organizations\Responses\OrganizationBaseApiResponse.cs" />
     <Compile Include="Areas\WebApi\Models\Organizations\Responses\OrganizationsApiResponse.cs" />
     <Compile Include="Areas\WebApi\Models\Organizations\Responses\OrganizationApiResponse.cs" />
     <Compile Include="Areas\WebApi\Models\Players\Requests\PlayerApiRequest.cs" />

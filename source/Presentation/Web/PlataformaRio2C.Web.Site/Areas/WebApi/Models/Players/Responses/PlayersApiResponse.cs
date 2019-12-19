@@ -4,14 +4,13 @@
 // Created          : 09-25-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-18-2019
+// Last Modified On : 12-19-2019
 // ***********************************************************************
 // <copyright file="PlayersApiResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
@@ -25,21 +24,12 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Models
     }
 
     /// <summary>PlayersApiListItem</summary>
-    public class PlayersApiListItem
+    public class PlayersApiListItem : OrganizationBaseApiResponse
     {
-        [JsonProperty("uid")]
-        public Guid Uid { get; set; }
+        [JsonProperty("name", Order = 101)]
+        public string Name { get; set; }
 
-        [JsonProperty("name")]
-        public string TradeName { get; set; }
-
-        [JsonProperty("companyName")]
-        public string CompanyName { get; set; }
-
-        [JsonProperty("highlightPosition")]
+        [JsonProperty("highlightPosition", Order = 301)]
         public int? HighlightPosition { get; set; }
-
-        [JsonProperty("picture")]
-        public string Picture { get; set; }
     }
 }

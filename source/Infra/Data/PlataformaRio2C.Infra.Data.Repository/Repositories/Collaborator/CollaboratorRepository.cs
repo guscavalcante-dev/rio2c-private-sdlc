@@ -574,6 +574,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 Uid = c.Uid,
                                 BadgeName = c.Badge,
                                 Name = c.FirstName + " " + c.LastNames,
+                                ApiHighlightPosition = c.AttendeeCollaborators.Where(ac => !ac.IsDeleted && ac.EditionId == editionId).FirstOrDefault()
+                                                        .AttendeeCollaboratorTypes.Where(act => !act.IsDeleted && act.CollaboratorType.Name == collaboratorTypeName).FirstOrDefault()
+                                                        .ApiHighlightPosition,
                                 ImageUploadDate = c.ImageUploadDate,
                                 MiniBiosDtos = c.MiniBios.Where(mb => !mb.IsDeleted).Select(d => new CollaboratorMiniBioBaseDto
                                 {
@@ -601,9 +604,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         Code = d.Language.Code
                                     }
                                 }),
-                                ApiHighlightPosition = c.AttendeeCollaborators.Where(ac => !ac.IsDeleted && ac.EditionId == editionId).FirstOrDefault()
-                                                        .AttendeeCollaboratorTypes.Where(act => !act.IsDeleted && act.CollaboratorType.Name == collaboratorTypeName).FirstOrDefault()
-                                                        .ApiHighlightPosition,
+                                OrganizationsDtos = c.AttendeeCollaborators
+                                                            .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                            .SelectMany(ac => ac.AttendeeOrganizationCollaborators
+                                                                                    .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted && !aoc.AttendeeOrganization.Organization.IsDeleted)
+                                                                                    .Select(aoc => new OrganizationApiListDto
+                                                                                    {
+                                                                                        Uid = aoc.AttendeeOrganization.Organization.Uid,
+                                                                                        CompanyName = aoc.AttendeeOrganization.Organization.CompanyName,
+                                                                                        TradeName = aoc.AttendeeOrganization.Organization.TradeName,
+                                                                                        ImageUploadDate = aoc.AttendeeOrganization.Organization.ImageUploadDate
+
+                                                                                    })),
                                 CreateDate = c.CreateDate,
                                 UpdateDate = c.UpdateDate,
                             })

@@ -11,7 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
@@ -25,27 +24,12 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Models
     }
 
     /// <summary>SpeakersApiListItem</summary>
-    public class SpeakersApiListItem
+    public class SpeakersApiListItem : CollaboratorBaseApiResponse
     {
-        [JsonProperty("uid")]
-        public Guid Uid { get; set; }
-
-        [JsonProperty("badgeName")]
-        public string BadgeName { get; set; }
-
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        [JsonProperty("miniBio")]
-        public string MiniBio { get; set; }
-
-        [JsonProperty("jobTitle")]
-        public string JobTitle { get; set; }
-
-        [JsonProperty("highlightPosition")]
+        [JsonProperty("highlightPosition", Order = 301)]
         public int? HighlightPosition { get; set; }
 
-        [JsonProperty("picture")]
-        public string Picture { get; set; }
+        [JsonProperty("companies", Order = 701)]
+        public List<OrganizationBaseApiResponse> Companies { get; set; }
     }
 }

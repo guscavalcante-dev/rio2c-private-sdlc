@@ -90,10 +90,17 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     Uid = c.Uid,
                     BadgeName = c.BadgeName?.Trim(),
                     Name = c.Name?.Trim(),
+                    HighlightPosition = c.ApiHighlightPosition,
+                    Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.Uid, c.ImageUploadDate, true) : null,
                     MiniBio = c.GetCollaboratorMiniBioBaseDtoByLanguageCode(request?.Culture)?.Value?.Trim(),
                     JobTitle = c.GetCollaboratorJobTitleBaseDtoByLanguageCode(request?.Culture)?.Value?.Trim(),
-                    HighlightPosition = c.ApiHighlightPosition,
-                    Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.Uid, c.ImageUploadDate, true) : null
+                    Companies = c.OrganizationsDtos?.Select(od => new OrganizationBaseApiResponse
+                    {
+                        Uid = od.Uid,
+                        TradeName = od.TradeName,
+                        CompanyName = od.CompanyName,
+                        Picture = od.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, od.Uid, od.ImageUploadDate, true) : null
+                    })?.ToList()
                 })?.ToList()
             });
         }

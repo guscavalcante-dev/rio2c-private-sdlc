@@ -4,14 +4,13 @@
 // Created          : 10-14-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-14-2019
+// Last Modified On : 12-19-2019
 // ***********************************************************************
 // <copyright file="OrganizationsApiResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
@@ -23,22 +22,10 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Models
         public List<OrganizationsApiListItem> Organizations { get; set; }
     }
 
-    /// <summary>OrganizationsApiResponseApiListItem</summary>
-    public class OrganizationsApiListItem
+    /// <summary>OrganizationsApiListItem</summary>
+    public class OrganizationsApiListItem : OrganizationBaseApiResponse
     {
-        [JsonProperty("uid")]
-        public Guid Uid { get; set; }
-
-        [JsonProperty("tradeName")]
-        public string TradeName { get; set; }
-
-        [JsonProperty("companyName")]
-        public string CompanyName { get; set; }
-
-        [JsonProperty("companyNumber")]
+        [JsonProperty("companyNumber", Order = 301)]
         public string CompanyNumber { get; set; }
-
-        [JsonProperty("picture")]
-        public string Picture { get; set; }
     }
 }
