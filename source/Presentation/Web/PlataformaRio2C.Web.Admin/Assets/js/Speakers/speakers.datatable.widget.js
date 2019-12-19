@@ -281,7 +281,9 @@ var SpeakersDataTableWidget = function () {
                         return html;
                     }
                 },
-                { data: 'Email' },
+                {
+                     data: 'Email'
+                },
                 {
                     data: 'Company',
                     render: function (data, type, row, meta) {
@@ -305,12 +307,21 @@ var SpeakersDataTableWidget = function () {
                     render: function (data) {
                         return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
-
                 },
                 {
                     data: 'UpdateDate',
                     render: function (data) {
                         return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                    }
+                },
+                {
+                    data: 'CurrentEditionOnboardingFinishDate',
+                    render: function (data) {
+                        if (data !== null) {
+                            return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                        }
+
+                        return '';
                     }
                 },
                 {
@@ -359,6 +370,11 @@ var SpeakersDataTableWidget = function () {
                 {
                     targets: [3, 4],
                     className: "dt-center"
+                },
+                {
+                    targets: [5],
+                    className: "dt-center",
+                    orderable: false
                 },
                 {
                     targets: -1,

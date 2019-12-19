@@ -501,11 +501,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 ImageUploadDate = c.ImageUploadDate,
                                 CreateDate = c.CreateDate,
                                 UpdateDate = c.UpdateDate,
-                                IsInCurrentEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId
-                                                                                                             && !ac.Edition.IsDeleted
-                                                                                                             && !ac.IsDeleted
-                                                                                                             && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
-                                                                                                                                                        && act.CollaboratorType.Name == collaboratorTypeName)),
+                                EditionAttendeeCollaborator = editionId.HasValue ? c.AttendeeCollaborators.FirstOrDefault(ac => ac.EditionId == editionId
+                                                                                                                                && !ac.Edition.IsDeleted
+                                                                                                                                && !ac.IsDeleted
+                                                                                                                                && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
+                                                                                                                                                                           && act.CollaboratorType.Name == collaboratorTypeName)) : 
+                                                                                   null,
                                 IsInOtherEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId
                                                                                                            && !ac.IsDeleted),
                                 AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
