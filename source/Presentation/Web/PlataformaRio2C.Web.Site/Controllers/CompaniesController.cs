@@ -4,7 +4,7 @@
 // Created          : 10-08-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified On : 12-19-2019
 // ***********************************************************************
 // <copyright file="CompaniesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -758,7 +758,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #endregion
 
-        #region Ticket Buyers Autocomplete
+        #region Ticket Buyers Companies Autocomplete
 
         /// <summary>Shows the ticket buyer filled form.</summary>
         /// <param name="organizationUid">The organization uid.</param>
@@ -771,6 +771,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             try
             {
                 cmd = new CreateTicketBuyerOrganizationData(
+                    Guid.Empty,
                     organizationUid.HasValue ? await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(organizationUid, this.EditionDto.Id, this.UserInterfaceLanguage)) : null,
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
@@ -797,7 +798,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #endregion
 
-        #region Ticket Buyers Autocomplete
+        #region Producers Company Autocomplete
 
         /// <summary>Shows the producer filled form.</summary>
         /// <param name="organizationUid">The organization uid.</param>

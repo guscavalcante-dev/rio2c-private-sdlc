@@ -56,6 +56,9 @@
     <Reference Include="Migrations, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Migrations.1.0.1.0\lib\net40-Client\Migrations.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -297,6 +300,26 @@
     <Compile Include="Interfaces\Services\ILogisticsService.cs" />
     <Compile Include="Interfaces\Services\MusicalCommission\IMusicalCommissionService.cs" />
     <Compile Include="Interfaces\Services\Speaker\ISpeakerService.cs" />
+    <Compile Include="ApiModels\ApiBaseResponse.cs" />
+    <Compile Include="ApiModels\ApiPageBaseRequest.cs" />
+    <Compile Include="ApiModels\Collaborators\Responses\CollaboratorBaseApiResponse.cs" />
+    <Compile Include="ApiModels\Error.cs" />
+    <Compile Include="ApiModels\ListBaseModel.cs" />
+    <Compile Include="ApiModels\Organizations\Requests\OrganiationsApiRequest.cs" />
+    <Compile Include="ApiModels\Organizations\Requests\OrganizationApiRequest.cs" />
+    <Compile Include="ApiModels\Organizations\Responses\OrganizationApiResponse.cs" />
+    <Compile Include="ApiModels\Organizations\Responses\OrganizationBaseApiResponse.cs" />
+    <Compile Include="ApiModels\Organizations\Responses\OrganizationsApiResponse.cs" />
+    <Compile Include="ApiModels\Players\Requests\PlayerApiRequest.cs" />
+    <Compile Include="ApiModels\Players\Requests\PlayersApiRequest.cs" />
+    <Compile Include="ApiModels\Players\Responses\ActivityApiResponse.cs" />
+    <Compile Include="ApiModels\Players\Responses\InterestGroupApiResponse.cs" />
+    <Compile Include="ApiModels\Players\Responses\PlayerApiResponse.cs" />
+    <Compile Include="ApiModels\Players\Responses\PlayersApiResponse.cs" />
+    <Compile Include="ApiModels\Players\Responses\PlayersFiltersApiResponse.cs" />
+    <Compile Include="ApiModels\Players\Responses\TargetAudienceApiResponse.cs" />
+    <Compile Include="ApiModels\Speakers\Requests\SpeakersApiRequest.cs" />
+    <Compile Include="ApiModels\Speakers\Responses\SpeakersApiResponse.cs" />
     <Compile Include="Services\ConferenceService.cs" />
     <Compile Include="Services\CountryService.cs" />
     <Compile Include="Services\MailCollaboratorService.cs" />

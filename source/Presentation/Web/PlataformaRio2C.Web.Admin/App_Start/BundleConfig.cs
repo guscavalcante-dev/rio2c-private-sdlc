@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-18-2019
+// Last Modified On : 12-19-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -207,6 +207,16 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+            #region Autocomplete
+
+            bundles.Add(new StyleBundle("~/bundles/css/jquery.autocomplete.css")
+                .Include("~/Assets/components/jquery.autocomplete/content/styles.css"/*, new CssRewriteUrlTransform()*/));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/jquery.autocomplete.js").Include(
+                "~/Assets/components/jquery.autocomplete/dist/jquery.autocomplete.js"));
+
+            #endregion
+
             #region Dynamic List
 
             bundles.Add(new ScriptBundle("~/bundles/js/dynamic.list.js").Include(
@@ -300,6 +310,8 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/speakers.details.js").Include(
                 "~/Assets/js/speakers/speakers.maininformation.widget.js",
                 "~/Assets/js/speakers/speakers.company.widget.js",
+                "~/Assets/js/companies/companyinfo.autocomplete.js",
+                "~/Assets/js/myrio2c.companynumber.js",
                 "~/Assets/js/speakers/speakers.apiconfiguration.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/speakers.update.js").Include(

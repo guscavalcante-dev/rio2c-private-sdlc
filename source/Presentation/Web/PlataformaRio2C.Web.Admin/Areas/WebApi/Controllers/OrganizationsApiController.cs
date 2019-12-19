@@ -1,7 +1,7 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Web.Site
+// Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Rafael Dantas Ruiz
-// Created          : 10-14-2019
+// Created          : 12-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 12-19-2019
@@ -20,7 +20,7 @@ using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 
-namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
+namespace PlataformaRio2C.Web.Admin.Areas.WebApi.Controllers
 {
     /// <summary>
     /// OrganizationsApiController

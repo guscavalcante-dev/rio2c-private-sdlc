@@ -15,9 +15,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using PlataformaRio2c.Infra.Data.FileRepository;
+using PlataformaRio2C.Domain.ApiModels;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
-using PlataformaRio2C.Web.Site.Areas.WebApi.Models;
 
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 {

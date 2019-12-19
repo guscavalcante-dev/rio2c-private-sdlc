@@ -4,7 +4,7 @@
 // Created          : 12-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-16-2019
+// Last Modified On : 12-19-2019
 // ***********************************************************************
 // <copyright file="speakers.company.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,8 +17,8 @@ var SpeakersCompanyWidget = function () {
     var widgetElementId = '#SpeakerCompanyWidget';
     var widgetElement = $(widgetElementId);
 
-    var createModalId = '#CreateCompanyInfoModal';
-    var createFormId = '#CreateCompanyInfoForm';
+    var createModalId = '#UpdateCompanyInfoModal';
+    var createFormId = '#UpdateCompanyInfoForm';
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
@@ -52,7 +52,7 @@ var SpeakersCompanyWidget = function () {
             });
     };
 
-    // Create -------------------------------------------------------------------------------------
+    // Update -------------------------------------------------------------------------------------
     var enableAjaxForm = function () {
         MyRio2cCommon.enableAjaxForm({
             idOrClass: createFormId,
@@ -80,22 +80,21 @@ var SpeakersCompanyWidget = function () {
             AddressesForm.init();
         }
 
-        //if (typeof (CompanyInfoAutocomplete) !== 'undefined') {
-        //    CompanyInfoAutocomplete.init('/Companies/ShowTicketBuyerFilledForm', enableUpdatePlugins);
-        //}
-
-        //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c', maxCharCount: 710 });
+        if (typeof (CompanyInfoAutocomplete) !== 'undefined') {
+            CompanyInfoAutocomplete.init('/Companies/ShowTicketBuyerFilledForm', enableUpdatePlugins);
+        }
 
         enableAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: createFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
 
-    var showCreateModal = function () {
+    var showUpdateModal = function () {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
+        jsonParameters.collaboratorUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/ShowCreateCompanyInfoModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/ShowUpdateCompanyInfoModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -120,8 +119,8 @@ var SpeakersCompanyWidget = function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
         },
-        showCreateModal: function () {
-            showCreateModal();
+        showUpdateModal: function () {
+            showUpdateModal();
         }
     };
 }();

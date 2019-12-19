@@ -63,9 +63,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public OrganizationType OrganizationType { get; private set; }
         public List<CountryBaseDto> CountriesBaseDtos { get; private set; }
 
-        public Guid CollaboratorUid { get; private set; }
+        public Guid CollaboratorUid { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CreateTicketBuyerOrganizationData"/> class.</summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
@@ -73,6 +74,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isAddressRequired">if set to <c>true</c> [is address required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         public CreateTicketBuyerOrganizationData(
+            Guid collaboratorUid,
             OrganizationDto entity, 
             List<LanguageDto> languagesDtos, 
             List<CountryBaseDto> countriesBaseDtos,
@@ -80,6 +82,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isAddressRequired, 
             bool isImageRequired)
         {
+            this.CollaboratorUid = collaboratorUid;
             this.OrganizationUid = entity?.Uid;
             this.CompanyName = entity?.CompanyName;
             this.TradeName = entity?.TradeName;
@@ -98,6 +101,18 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public CreateTicketBuyerOrganizationData()
         {
         }
+
+        /// <summary>Updates the dropdown properties.</summary>
+        /// <param name="countriesBaseDtos">The countries base dtos.</param>
+        public void UpdateDropdownProperties(List<CountryBaseDto> countriesBaseDtos)
+        {
+            this.CountriesBaseDtos = countriesBaseDtos?
+                .OrderBy(c => c.Ordering)?
+                .ThenBy(c => c.DisplayName)?
+                .ToList();
+        }
+
+        #region Private Methods
 
         /// <summary>Updates the address.</summary>
         /// <param name="entity">The entity.</param>
@@ -130,15 +145,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.CropperImage = new CropperImageBaseCommand(entity?.ImageUploadDate, entity?.Uid, FileRepositoryPathType.OrganizationImage, isImageRequired);
         }
 
-        /// <summary>Updates the dropdown properties.</summary>
-        /// <param name="countriesBaseDtos">The countries base dtos.</param>
-        public void UpdateDropdownProperties(List<CountryBaseDto> countriesBaseDtos)
-        {
-            this.CountriesBaseDtos = countriesBaseDtos?
-                                            .OrderBy(c => c.Ordering)?
-                                            .ThenBy(c => c.DisplayName)?
-                                            .ToList();
-        }
+        #endregion
 
         /// <summary>Updates the pre send properties.</summary>
         /// <param name="collaboratorUid">The collaborator uid.</param>

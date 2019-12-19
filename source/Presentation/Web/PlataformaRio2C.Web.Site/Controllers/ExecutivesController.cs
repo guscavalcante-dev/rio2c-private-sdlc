@@ -257,6 +257,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 }
 
                 cmd = new CreateTicketBuyerOrganizationData(
+                    Guid.Empty,
                     null,
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
@@ -334,7 +335,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
             catch (Exception ex)
             {
-                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
