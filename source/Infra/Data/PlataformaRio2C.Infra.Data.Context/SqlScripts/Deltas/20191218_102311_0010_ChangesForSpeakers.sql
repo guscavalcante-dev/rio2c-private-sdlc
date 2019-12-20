@@ -73,3 +73,10 @@ CREATE NONCLUSTERED INDEX [IDX_AttendeeOrganizationTypes_IsApiDisplayEnabled] ON
 	[IsApiDisplayEnabled] ASC
 )
 go
+
+SET IDENTITY_INSERT [dbo].[CollaboratorTypes] ON 
+GO
+INSERT [dbo].[CollaboratorTypes] ([Id], [Uid], [Name], [RoleId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (101, N'4ac5a971-ba73-493b-9749-0f51bb6925b5', N'Curatorship | Audiovisual', 2, 0, CAST(N'2019-09-26 17:48:45.397' AS DateTime), 1, CAST(N'2019-09-26 17:48:45.397' AS DateTime), 1)
+GO
+SET IDENTITY_INSERT [dbo].[CollaboratorTypes] OFF
+GO
