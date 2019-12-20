@@ -13,6 +13,7 @@
                 {
                     @Html.HiddenFor(m => m.CollaboratorUid)
                     @Html.HiddenFor(m => m.OrganizationUid)
+                    @Html.HiddenFor(m => m.IsUpdate)
 
                     <div id="form-container">
                         @Html.Partial("/Views/Companies/Shared/_TicketBuyerCompanyInfoForm.cshtml", Model)

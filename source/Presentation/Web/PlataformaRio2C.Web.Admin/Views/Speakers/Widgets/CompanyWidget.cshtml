@@ -25,12 +25,33 @@
                 <div class="col-sm-6 col-xl-4">
                     <!--Begin::Portlet-->
                     <div class="kt-portlet kt-portlet--height-fluid">
-                        @*<div class="kt-portlet__head kt-portlet__head--noborder"></div>*@
-                        <div class="kt-portlet__head-actions text-right pr-2 pt-2">
+                        <div class="text-right pr-2 pt-2">
+                            <a href="#" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" data-toggle="dropdown" aria-expanded="false">
+                                <i class="flaticon-more-1"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right" style="">
+                                <ul class="kt-nav">
+                                    <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link" onclick="SpeakersCompanyWidget.showUpdateModal('@attendeeOrganizationDto.Organization.Uid'); return false;">
+                                            <i class="kt-nav__link-icon flaticon2-edit"></i>
+                                            <span class="kt-nav__link-text">@Labels.Edit</span>
+                                        </a>
+                                    </li>
+                                    <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link" onclick="SpeakersCompanyWidget.showDeleteModal('@attendeeOrganizationDto.Organization.Uid'); return false;">
+                                            <i class="kt-nav__link-icon flaticon2-delete"></i>
+                                            <span class="kt-nav__link-text">@Labels.Remove</span>
+                                        </a>
+                                    </li>
+                                </ul>							
+                            </div>
+                        </div>
+
+                        @*<div class="kt-portlet__head-actions text-right pr-2 pt-2">
                             <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="SpeakersCompanyWidget.showUpdateModal('@attendeeOrganizationDto.Organization.Uid');">
                                 <i class="flaticon2-edit"></i>
                             </button>
-                        </div>
+                        </div>*@
                         <div class="kt-portlet__body mt-10">
                             <!--begin::Widget -->
                             <div class="kt-widget kt-widget--user-profile-2" style="flex-direction: row;">

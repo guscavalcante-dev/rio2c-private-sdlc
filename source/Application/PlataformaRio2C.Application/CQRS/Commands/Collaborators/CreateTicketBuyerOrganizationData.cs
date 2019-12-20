@@ -64,6 +64,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<CountryBaseDto> CountriesBaseDtos { get; private set; }
 
         public Guid CollaboratorUid { get; set; }
+        public bool IsUpdate { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CreateTicketBuyerOrganizationData"/> class.</summary>
         /// <param name="collaboratorUid">The collaborator uid.</param>
@@ -95,6 +96,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateDescriptions(entity, languagesDtos, isDescriptionRequired);
             this.UpdateCropperImage(entity, isImageRequired);
             this.UpdateDropdownProperties(countriesBaseDtos);
+
+            this.IsUpdate = entity != null;
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateTicketBuyerOrganizationData"/> class.</summary>

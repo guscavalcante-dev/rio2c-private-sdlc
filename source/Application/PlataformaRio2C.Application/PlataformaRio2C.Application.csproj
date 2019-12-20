@@ -177,6 +177,7 @@
     <Compile Include="CQRS\CommandsHandlers\BaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\BaseCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\CreateTinyCollaboratorCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Collaborators\DeleteCollaboratorOrganizationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\DeleteCollaboratorTicketCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorApiConfigurationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorAdminMainInformationCommandHandler.cs" />
@@ -242,6 +243,7 @@
     <Compile Include="CQRS\Commands\Collaborators\BaseCommands\CollaboratorMiniBioBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Collaborators\CreateTinyCollaborator.cs" />
     <Compile Include="CQRS\Commands\Collaborators\BaseCommands\UpdateCollaboratorMainInformationBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Collaborators\DeleteCollaboratorOrganization.cs" />
     <Compile Include="CQRS\Commands\Collaborators\UpdateCollaboratorApiConfiguration.cs" />
     <Compile Include="CQRS\Commands\Collaborators\UpdateCollaboratorAdminMainInformation.cs" />
     <Compile Include="CQRS\Commands\Collaborators\UpdateTinyCollaborator.cs" />

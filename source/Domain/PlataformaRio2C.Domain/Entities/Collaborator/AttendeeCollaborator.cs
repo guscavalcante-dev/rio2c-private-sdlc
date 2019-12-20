@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-18-2019
+// Last Modified On : 12-19-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -399,6 +399,15 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
+        /// <summary>Deletes the attendee organization collaborator.</summary>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void DeleteAttendeeOrganizationCollaborator(Guid organizationUid, int userId)
+        {
+            var attendeeOrganizationCollaborator = this.FindAttendeeOrganizationCollaboratorByOrganizationUid(organizationUid);
+            attendeeOrganizationCollaborator?.Delete(userId);
+        }
+
         /// <summary>Deletes the attendee organization collaborators.</summary>
         /// <param name="newAttendeeOrganizations">The new attendee organizations.</param>
         /// <param name="userId">The user identifier.</param>
@@ -419,6 +428,11 @@ namespace PlataformaRio2C.Domain.Entities
         private void CreateAttendeeOrganizationCollaborator(AttendeeOrganization attendeeOrganization, int userId)
         {
             this.AttendeeOrganizationCollaborators.Add(new AttendeeOrganizationCollaborator(attendeeOrganization, this, userId));
+        }
+
+        private AttendeeOrganizationCollaborator FindAttendeeOrganizationCollaboratorByOrganizationUid(Guid organizationUid)
+        {
+            return this.AttendeeOrganizationCollaborators?.FirstOrDefault(aoc => aoc.AttendeeOrganization.Organization.Uid == organizationUid);
         }
 
         /// <summary>Gets all attendee organizations.</summary>

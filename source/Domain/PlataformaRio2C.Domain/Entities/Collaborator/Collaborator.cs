@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-18-2019
+// Last Modified On : 12-19-2019
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -701,6 +701,19 @@ namespace PlataformaRio2C.Domain.Entities
         {
             var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition?.Id ?? 0);
             attendeeCollaborator?.DeleteApiHighlightPosition(collaboratorType, userId);
+
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Deletes the organization.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void DeleteOrganization(Edition edition, Guid organizationUid, int userId)
+        {
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+            attendeeCollaborator?.DeleteAttendeeOrganizationCollaborator(organizationUid, userId);
 
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
