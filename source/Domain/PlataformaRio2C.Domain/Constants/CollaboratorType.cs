@@ -17,6 +17,7 @@ namespace PlataformaRio2C.Domain.Constants
     public class CollaboratorType
     {
         public const string AdminAudiovisual = "Admin | Audiovisual";
+        public const string CuratorshipAudiovisual = "Curatorship | Audiovisual";
         public const string ExecutiveAudiovisual = "Executive | Audiovisual";
         public const string ExecutiveMusic = "Executive | Music";
         public const string ExecutiveInnovation = "Executive | Innovation";

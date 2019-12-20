@@ -19,6 +19,7 @@ using PlataformaRio2C.Domain.ApiModels;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
+using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Areas.WebApi.Controllers
 {
@@ -26,7 +27,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.WebApi.Controllers
     /// OrganizationsApiController
     /// </summary>
     [System.Web.Http.RoutePrefix("api/v1.0")]
-    [AjaxAuthorize(Order = 1)]
+    [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
     public class OrganizationsApiController : BaseApiController
     {
         private readonly IOrganizationRepository organizationRepo;

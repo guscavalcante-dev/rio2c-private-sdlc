@@ -39,7 +39,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>SpeakersController</summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual)]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CuratorshipAudiovisual)]
     public class SpeakersController : BaseController
     {
         private readonly ICollaboratorRepository collaboratorRepo;
