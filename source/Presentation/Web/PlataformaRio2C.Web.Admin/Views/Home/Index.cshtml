@@ -5,6 +5,7 @@
     var adminAccessControlDto = ViewBag.AdminAccessControlDto as AdminAccessControlDto;
     var isAdminFull = adminAccessControlDto?.IsAdmin() == true;
     var isAdminAudiovisual = adminAccessControlDto?.IsAdminPartial() == true && adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminAudiovisual) == true;
+    var isCuratorshipAudiovisual = adminAccessControlDto?.IsAdminPartial() == true && adminAccessControlDto?.HasCollaboratorType(CollaboratorType.CuratorshipAudiovisual) == true;
 }
 @if (isAdminFull || isAdminAudiovisual)
 {
@@ -25,6 +26,9 @@
             <!--end:: Players Executives Edition Count-->
         </div>
     </div>
+}
+@if (isAdminFull || isAdminAudiovisual || isCuratorshipAudiovisual)
+{
     <div class="row">
         <div class="col-sm-4">
             <!--begin:: Holdings Edition Count-->
@@ -37,10 +41,16 @@
 }
 @section Scripts {
     @Scripts.Render("~/bundles/js/chart.js")
-    @Scripts.Render("~/bundles/js/holdings.editioncount.js")
-    @Scripts.Render("~/bundles/js/organizations.editioncount.js")
-    @Scripts.Render("~/bundles/js/collaborators.editioncount.js")
-    @Scripts.Render("~/bundles/js/speakers.editioncount.js")
+    @if (isAdminFull || isAdminAudiovisual)
+    {
+        @Scripts.Render("~/bundles/js/holdings.editioncount.js")
+        @Scripts.Render("~/bundles/js/organizations.editioncount.js")
+        @Scripts.Render("~/bundles/js/collaborators.editioncount.js")
+    }
+    @if (isAdminFull || isAdminAudiovisual || isCuratorshipAudiovisual)
+    {
+        @Scripts.Render("~/bundles/js/speakers.editioncount.js")
+    }
     <script>
         jQuery(document).ready(function () {
             @if (isAdminFull || isAdminAudiovisual)
@@ -49,6 +59,11 @@
                     HoldingsEditionCountWidget.init();
                     OrganizationsEditionCountWidget.init();
                     CollaboratorsEditionCountWidget.init();
+                </text>
+            }
+            @if (isAdminFull || isAdminAudiovisual || isCuratorshipAudiovisual)
+            {
+                <text>
                     SpeakersEditionCountWidget.init();
                 </text>
             }

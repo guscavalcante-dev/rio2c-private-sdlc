@@ -4,7 +4,7 @@
 // Created          : 12-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified On : 12-19-2019
 // ***********************************************************************
 // <copyright file="CompaniesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,13 +23,11 @@ using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using PlataformaRio2C.Web.Admin.Filters;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>CompaniesController</summary>
     [AjaxAuthorize(Order = 1, Roles = Domain.Constants.Role.AnyAdmin)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Domain.Constants.CollaboratorType.AdminAudiovisual)]
     public class CompaniesController : BaseController
     {
         /// <summary>Initializes a new instance of the <see cref="CompaniesController"/> class.</summary>

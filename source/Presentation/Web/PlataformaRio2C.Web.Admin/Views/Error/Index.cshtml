@@ -10,7 +10,13 @@
         <p class="kt-error-v1__desc">
             @ViewBag.Message
         </p>
-        <p class="kt-error-v1__desc"><a href="javascript: window.history.back();">@Labels.Back</a></p>
+        <p class="kt-error-v1__desc">
+            <small>
+                <a href="javascript: window.history.back();">@Labels.ClickHere</a> @Messages.ToLastPage
+                @Labels.Or.ToLowerInvariant()
+                <a href="@Url.Action("Login", "Account", new {Area = ""})">@Labels.ClickHere.ToLowerInvariant()</a> @Messages.ToLoginPage.
+            </small>
+        </p>
     </div>
 </div>
 <!--end::Error-->
