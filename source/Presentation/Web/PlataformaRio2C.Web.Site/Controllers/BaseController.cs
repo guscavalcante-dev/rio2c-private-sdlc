@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-14-2019
+// Last Modified On : 12-23-2019
 // ***********************************************************************
 // <copyright file="BaseController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -153,7 +153,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
             Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
 
-            ViewBag.UserInterfaceLanguage = this.UserInterfaceLanguage = cultureName;
+            ViewBag.UserInterfaceLanguage = this.UserInterfaceLanguage = cultureName?.ToLowerInvariant();
 
             return false;
         }
