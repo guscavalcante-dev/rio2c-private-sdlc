@@ -1,152 +1,377 @@
-﻿using PlataformaRio2C.Domain.Entities;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Domain
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 12-27-2019
+// ***********************************************************************
+// <copyright file="ConferenceRepository.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Linq.Expressions;
+using System.Threading.Tasks;
+using LinqKit;
+using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using X.PagedList;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
+    #region Conference IQueryable Extensions
+
+    /// <summary>
+    /// ConferenceIQueryableExtensions
+    /// </summary>
+    internal static class ConferenceIQueryableExtensions
+    {
+        /// <summary>Finds the by uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="conferenceUid">The conference uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<Conference> FindByUid(this IQueryable<Conference> query, Guid conferenceUid)
+        {
+            query = query.Where(c => c.Uid == conferenceUid);
+
+            return query;
+        }
+
+        /// <summary>Finds the by uids.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="conferencesUids">The conferences uids.</param>
+        /// <returns></returns>
+        internal static IQueryable<Conference> FindByUids(this IQueryable<Conference> query, List<Guid> conferencesUids)
+        {
+            if (conferencesUids?.Any() == true)
+            {
+                query = query.Where(c => conferencesUids.Contains(c.Uid));
+            }
+
+            return query;
+        }
+
+        /// <summary>Finds the by edition identifier.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<Conference> FindByEditionId(this IQueryable<Conference> query, bool showAllEditions, int editionId)
+        {
+            if (!showAllEditions)
+            {
+                query = query.Where(c => c.EditionId == editionId);
+            }
+
+            return query;
+        }
+
+        /// <summary>Finds the by keywords.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="languageId">The language identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<Conference> FindByKeywords(this IQueryable<Conference> query, string keywords, int editionId, int languageId)
+        {
+            if (!string.IsNullOrEmpty(keywords))
+            {
+                var outerWhere = PredicateBuilder.New<Conference>(false);
+                var innerConferenceTitleWhere = PredicateBuilder.New<Conference>(true);
+                var innerRoomNameWhere = PredicateBuilder.New<Conference>(true);
+
+                foreach (var keyword in keywords.Split(' '))
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        innerConferenceTitleWhere = innerConferenceTitleWhere.And(c => c.ConferenceTitles.Any(ct => !ct.IsDeleted
+                                                                                                                    && ct.LanguageId == languageId
+                                                                                                                    && ct.Value.Contains(keyword)));
+                        innerRoomNameWhere = innerRoomNameWhere.And(c => c.Room.RoomNames.Any(rn => !rn.IsDeleted
+                                                                                                    && rn.LanguageId == languageId
+                                                                                                    && rn.Value.Contains(keyword)));
+                    }
+                }
+
+                outerWhere = outerWhere.Or(innerConferenceTitleWhere);
+                outerWhere = outerWhere.Or(innerRoomNameWhere);
+                query = query.Where(outerWhere);
+            }
+
+            return query;
+        }
+
+        /// <summary>Determines whether [is not deleted].</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<Conference> IsNotDeleted(this IQueryable<Conference> query)
+        {
+            query = query.Where(c => !c.IsDeleted);
+
+            return query;
+        }
+    }
+
+    #endregion
+
+    #region ConferenceJsonDto IQueryable Extensions
+
+    /// <summary>
+    /// ConferenceJsonDtoIQueryableExtensions
+    /// </summary>
+    internal static class ConferenceJsonDtoIQueryableExtensions
+    {
+        /// <summary>Converts to listpagedasync.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        internal static async Task<IPagedList<ConferenceJsonDto>> ToListPagedAsync(this IQueryable<ConferenceJsonDto> query, int page, int pageSize)
+        {
+            page++;
+
+            // Page the list
+            var pagedList = await query.ToPagedListAsync(page, pageSize);
+            if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
+                pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
+
+            return pagedList;
+        }
+    }
+
+    #endregion
+
+    /// <summary>ConferenceRepository</summary>
     public class ConferenceRepository : Repository<PlataformaRio2CContext, Conference>, IConferenceRepository
     {
+        /// <summary>Initializes a new instance of the <see cref="ConferenceRepository"/> class.</summary>
+        /// <param name="context">The context.</param>
         public ConferenceRepository(PlataformaRio2CContext context)
             : base(context)
         {
         }
 
-
-        public override IQueryable<Conference> GetAll(bool @readonly = false)
+        /// <summary>Gets the base query.</summary>
+        /// <param name="readonly">if set to <c>true</c> [readonly].</param>
+        /// <returns></returns>
+        private IQueryable<Conference> GetBaseQuery(bool @readonly = false)
         {
             var consult = this.dbSet
-                                .Include(i => i.Room)
-                                .Include(i => i.Room.Names)
-                                .Include(i => i.Room.Names.Select(e => e.Language))
-                                .Include(i => i.Titles)
-                                .Include(i => i.Titles.Select(e => e.Language))
-                                .Include(i => i.Synopses)
-                                .Include(i => i.Synopses.Select(e => e.Language));
-                                //.Include(i => i.Lecturers)
-                                //.Include(i => i.Lecturers.Select(e => e.Lecturer))
-                                //.Include(i => i.Lecturers.Select(e => e.Collaborator));
-                                
+                                .IsNotDeleted();
 
             return @readonly
-              ? consult.AsNoTracking()
-              : consult;
+                        ? consult.AsNoTracking()
+                        : consult;
         }
 
-        public IQueryable<Conference> GetAllBySchedule()
+        /// <summary>Finds all by data table.</summary>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="sortColumns">The sort columns.</param>
+        /// <param name="conferencesUids">The conferences uids.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="languageId">The language identifier.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<ConferenceJsonDto>> FindAllByDataTable(
+            int page,
+            int pageSize,
+            string keywords,
+            List<Tuple<string, string>> sortColumns,
+            List<Guid> conferencesUids,
+            int editionId,
+            int languageId)
         {
-            return this.dbSet
-                                .Include(i => i.Room)
-                                //.Include(i => i.Lecturers)
-                                //.Include(i => i.Lecturers.Select(e => e.Lecturer))
-                                //.Include(i => i.Lecturers.Select(e => e.Collaborator))
-                                //.Include(i => i.Lecturers.Select(e => e.Collaborator.Players))
-                                //.Include(i => i.Lecturers.Select(e => e.Collaborator.ProducersEvents))
-                                //.Include(i => i.Lecturers.Select(e => e.Collaborator.ProducersEvents.Select(pe => pe.Producer)))
-                                .AsNoTracking();
+            var query = this.GetBaseQuery()
+                                .FindByKeywords(keywords, editionId, languageId)
+                                .FindByEditionId(false, editionId)
+                                .FindByUids(conferencesUids);
+                                //.FindByHighlights(collaboratorTypeName, showHighlights);
+
+            return await query
+                            .DynamicOrder<Conference>(
+                                sortColumns,
+                                new List<Tuple<string, string>>
+                                {
+                                    //new Tuple<string, string>("FullName", "User.Name"),
+                                    //new Tuple<string, string>("Email", "User.Email"),
+                                },
+                                new List<string> { "StartDate", "EndDate", "CreateDate", "UpdateDate" },
+                                "StartDate")
+                            .Select(c => new ConferenceJsonDto
+                            {
+                                Id = c.Id,
+                                Uid = c.Uid,
+                                RoomJsonDto = !c.RoomId.HasValue ? null : new RoomJsonDto
+                                {
+                                    Id = c.Room.Id,
+                                    Uid = c.Room.Uid,
+                                    Name = c.Room.RoomNames.FirstOrDefault(n => !n.IsDeleted && n.LanguageId == languageId).Value
+                                },
+                                StartDate = c.StartDate,
+                                EndDate =  c.EndDate,
+                                Title = c.ConferenceTitles.FirstOrDefault(ct => !ct.IsDeleted && ct.LanguageId == languageId).Value,
+                                Synopsis = c.ConferenceSynopses.FirstOrDefault(cs => !cs.IsDeleted && cs.LanguageId == languageId).Value,
+                                CreateDate = c.CreateDate,
+                                UpdateDate = c.UpdateDate,
+                            })
+                            .ToListPagedAsync(page, pageSize);
         }
 
-        public IQueryable<Conference> GetAllBySchedule(Expression<Func<Conference, bool>> filter)
+        /// <summary>Counts all by data table.</summary>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<int> CountAllByDataTable(bool showAllEditions, int editionId)
         {
-            return this.dbSet
-                                .Include(i => i.Titles)
-                                .Include(i => i.Titles.Select(e => e.Language))
-                                .Include(i => i.Room)
-                                .Include(i => i.Room.Names)
-                                .Include(i => i.Room.Names.Select(e => e.Language))
-                                //.Include(i => i.Lecturers)
-                                //.Include(i => i.Lecturers.Select(e => e.RoleLecturer))
-                                //.Include(i => i.Lecturers.Select(e => e.RoleLecturer.Titles))
-                                //.Include(i => i.Lecturers.Select(e => e.RoleLecturer.Titles.Select(rl => rl.Language)))
-                                //.Include(i => i.Lecturers.Select(l => l.Lecturer))
-                                //.Include(i => i.Lecturers.Select(l => l.Lecturer.JobTitles))
-                                //.Include(i => i.Lecturers.Select(l => l.Lecturer.JobTitles.Select(j => j.Language)))
-                                //.Include(i => i.Lecturers.Select(e => e.Collaborator))
-                                //.Include(i => i.Lecturers.Select(e => e.Collaborator.Players))
-                                //.Include(i => i.Lecturers.Select(e => e.Collaborator.Players.Select(pl => pl.Holding)))
-                                //.Include(i => i.Lecturers.Select(e => e.Collaborator.ProducersEvents))
-                                //.Include(i => i.Lecturers.Select(e => e.Collaborator.ProducersEvents.Select(pe => pe.Producer)))
-                                .AsNoTracking()
-                                .Where(filter);
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(showAllEditions, editionId);
+
+            return await query.CountAsync();
         }
 
-        public override Conference Get(Guid uid)
-        {
-            var consult = this.dbSet
-                                .Include(i => i.Room)
-                                .Include(i => i.Room.Names)
-                                .Include(i => i.Room.Names.Select(e => e.Language))
-                                .Include(i => i.Titles)
-                                .Include(i => i.Titles.Select(e => e.Language))
-                                .Include(i => i.Synopses)
-                                .Include(i => i.Synopses.Select(e => e.Language));
-                                //.Include(i => i.Lecturers)
-                                //.Include(i => i.Lecturers.Select(e => e.RoleLecturer))
-                                //.Include(i => i.Lecturers.Select(e => e.RoleLecturer.Titles))
-                                //.Include(i => i.Lecturers.Select(e => e.RoleLecturer.Titles.Select(t => t.Language)))
-                                //.Include(i => i.Lecturers.Select(e => e.Collaborator))
-                                //.Include(i => i.Lecturers.Select(e => e.Collaborator.Players))
-                                //.Include(i => i.Lecturers.Select(e => e.Collaborator.Players.Select(p => p.Holding)))
-                                //.Include(i => i.Lecturers.Select(e => e.Collaborator.ProducersEvents))
-                                //.Include(i => i.Lecturers.Select(e => e.Collaborator.ProducersEvents.Select(p => p.Producer)))
-                                //.Include(i => i.Lecturers.Select(e => e.Lecturer))
-                                //.Include(i => i.Lecturers.Select(e => e.Lecturer))
-                                //.Include(i => i.Lecturers.Select(e => e.Lecturer.Image))
-                                //.Include(i => i.Lecturers.Select(e => e.Lecturer.JobTitles))
-                                //.Include(i => i.Lecturers.Select(e => e.Lecturer.JobTitles.Select(j => j.Language)));
+        #region Old Methods
+
+        //public override IQueryable<Conference> GetAll(bool @readonly = false)
+        //{
+        //    var consult = this.dbSet
+        //                        .Include(i => i.Room)
+        //                        .Include(i => i.Room.Names)
+        //                        .Include(i => i.Room.Names.Select(e => e.Language))
+        //                        .Include(i => i.Titles)
+        //                        .Include(i => i.Titles.Select(e => e.Language))
+        //                        .Include(i => i.Synopses)
+        //                        .Include(i => i.Synopses.Select(e => e.Language));
+        //                        //.Include(i => i.Lecturers)
+        //                        //.Include(i => i.Lecturers.Select(e => e.Lecturer))
+        //                        //.Include(i => i.Lecturers.Select(e => e.Collaborator));
 
 
-            return consult.FirstOrDefault( e => e.Uid == uid);
-        }
+        //    return @readonly
+        //      ? consult.AsNoTracking()
+        //      : consult;
+        //}
 
-        public override void Delete(Conference entity)
-        {
-            //if (entity.Lecturers != null && entity.Lecturers.Any())
-            //{
-            //    var items = entity.Lecturers.ToList();
-            //    foreach (var item in items)
-            //    {
-            //        if (item.Lecturer != null)
-            //        {
-            //            if (item.Lecturer.JobTitles != null && item.Lecturer.JobTitles.Any())
-            //            {
-            //                var jobtitles = item.Lecturer.JobTitles.ToList();
+        //public IQueryable<Conference> GetAllBySchedule()
+        //{
+        //    return this.dbSet
+        //                        .Include(i => i.Room)
+        //                        //.Include(i => i.Lecturers)
+        //                        //.Include(i => i.Lecturers.Select(e => e.Lecturer))
+        //                        //.Include(i => i.Lecturers.Select(e => e.Collaborator))
+        //                        //.Include(i => i.Lecturers.Select(e => e.Collaborator.Players))
+        //                        //.Include(i => i.Lecturers.Select(e => e.Collaborator.ProducersEvents))
+        //                        //.Include(i => i.Lecturers.Select(e => e.Collaborator.ProducersEvents.Select(pe => pe.Producer)))
+        //                        .AsNoTracking();
+        //}
 
-            //                foreach (var jt in jobtitles)
-            //                {
-            //                    _context.Entry(jt).State = EntityState.Deleted;
-            //                }
-            //            }
+        //public IQueryable<Conference> GetAllBySchedule(Expression<Func<Conference, bool>> filter)
+        //{
+        //    return this.dbSet
+        //                        .Include(i => i.Titles)
+        //                        .Include(i => i.Titles.Select(e => e.Language))
+        //                        .Include(i => i.Room)
+        //                        .Include(i => i.Room.Names)
+        //                        .Include(i => i.Room.Names.Select(e => e.Language))
+        //                        //.Include(i => i.Lecturers)
+        //                        //.Include(i => i.Lecturers.Select(e => e.RoleLecturer))
+        //                        //.Include(i => i.Lecturers.Select(e => e.RoleLecturer.Titles))
+        //                        //.Include(i => i.Lecturers.Select(e => e.RoleLecturer.Titles.Select(rl => rl.Language)))
+        //                        //.Include(i => i.Lecturers.Select(l => l.Lecturer))
+        //                        //.Include(i => i.Lecturers.Select(l => l.Lecturer.JobTitles))
+        //                        //.Include(i => i.Lecturers.Select(l => l.Lecturer.JobTitles.Select(j => j.Language)))
+        //                        //.Include(i => i.Lecturers.Select(e => e.Collaborator))
+        //                        //.Include(i => i.Lecturers.Select(e => e.Collaborator.Players))
+        //                        //.Include(i => i.Lecturers.Select(e => e.Collaborator.Players.Select(pl => pl.Holding)))
+        //                        //.Include(i => i.Lecturers.Select(e => e.Collaborator.ProducersEvents))
+        //                        //.Include(i => i.Lecturers.Select(e => e.Collaborator.ProducersEvents.Select(pe => pe.Producer)))
+        //                        .AsNoTracking()
+        //                        .Where(filter);
+        //}
 
-            //            _context.Entry(item.Lecturer).State = EntityState.Deleted;
-            //        }
+        //public override Conference Get(Guid uid)
+        //{
+        //    var consult = this.dbSet
+        //                        .Include(i => i.Room)
+        //                        .Include(i => i.Room.Names)
+        //                        .Include(i => i.Room.Names.Select(e => e.Language))
+        //                        .Include(i => i.Titles)
+        //                        .Include(i => i.Titles.Select(e => e.Language))
+        //                        .Include(i => i.Synopses)
+        //                        .Include(i => i.Synopses.Select(e => e.Language));
+        //                        //.Include(i => i.Lecturers)
+        //                        //.Include(i => i.Lecturers.Select(e => e.RoleLecturer))
+        //                        //.Include(i => i.Lecturers.Select(e => e.RoleLecturer.Titles))
+        //                        //.Include(i => i.Lecturers.Select(e => e.RoleLecturer.Titles.Select(t => t.Language)))
+        //                        //.Include(i => i.Lecturers.Select(e => e.Collaborator))
+        //                        //.Include(i => i.Lecturers.Select(e => e.Collaborator.Players))
+        //                        //.Include(i => i.Lecturers.Select(e => e.Collaborator.Players.Select(p => p.Holding)))
+        //                        //.Include(i => i.Lecturers.Select(e => e.Collaborator.ProducersEvents))
+        //                        //.Include(i => i.Lecturers.Select(e => e.Collaborator.ProducersEvents.Select(p => p.Producer)))
+        //                        //.Include(i => i.Lecturers.Select(e => e.Lecturer))
+        //                        //.Include(i => i.Lecturers.Select(e => e.Lecturer))
+        //                        //.Include(i => i.Lecturers.Select(e => e.Lecturer.Image))
+        //                        //.Include(i => i.Lecturers.Select(e => e.Lecturer.JobTitles))
+        //                        //.Include(i => i.Lecturers.Select(e => e.Lecturer.JobTitles.Select(j => j.Language)));
 
-            //        _context.Entry(item).State = EntityState.Deleted;
-            //    }
-            //}
 
-            if (entity.Titles != null && entity.Titles.Any())
-            {
-                var items = entity.Titles.ToList();
-                foreach (var item in items)
-                {
-                    _context.Entry(item).State = EntityState.Deleted;
-                }
-            }
+        //    return consult.FirstOrDefault( e => e.Uid == uid);
+        //}
 
-            if (entity.Synopses != null && entity.Synopses.Any())
-            {
-                var items = entity.Synopses.ToList();
-                foreach (var item in items)
-                {
-                    _context.Entry(item).State = EntityState.Deleted;
-                }
-            }
+        //public override void Delete(Conference entity)
+        //{
+        //    //if (entity.Lecturers != null && entity.Lecturers.Any())
+        //    //{
+        //    //    var items = entity.Lecturers.ToList();
+        //    //    foreach (var item in items)
+        //    //    {
+        //    //        if (item.Lecturer != null)
+        //    //        {
+        //    //            if (item.Lecturer.JobTitles != null && item.Lecturer.JobTitles.Any())
+        //    //            {
+        //    //                var jobtitles = item.Lecturer.JobTitles.ToList();
 
-            base.Delete(entity);
-        }        
+        //    //                foreach (var jt in jobtitles)
+        //    //                {
+        //    //                    _context.Entry(jt).State = EntityState.Deleted;
+        //    //                }
+        //    //            }
+
+        //    //            _context.Entry(item.Lecturer).State = EntityState.Deleted;
+        //    //        }
+
+        //    //        _context.Entry(item).State = EntityState.Deleted;
+        //    //    }
+        //    //}
+
+        //    if (entity.Titles != null && entity.Titles.Any())
+        //    {
+        //        var items = entity.Titles.ToList();
+        //        foreach (var item in items)
+        //        {
+        //            _context.Entry(item).State = EntityState.Deleted;
+        //        }
+        //    }
+
+        //    if (entity.Synopses != null && entity.Synopses.Any())
+        //    {
+        //        var items = entity.Synopses.ToList();
+        //        foreach (var item in items)
+        //        {
+        //            _context.Entry(item).State = EntityState.Deleted;
+        //        }
+        //    }
+
+        //    base.Delete(entity);
+        //}
+
+        #endregion
     }
 }

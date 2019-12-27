@@ -539,6 +539,7 @@
     <Compile Include="ViewModels\Common\Speaker\SpeakerDetailAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Speaker\SpeakerEditAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Speaker\SpeakerItemListAppViewModel.cs" />
+    <Compile Include="ViewModels\Conferences\ConferenceSearchViewModel.cs" />
     <Compile Include="ViewModels\Site\Conference\ConferenceDetailAppViewModel.cs" />
     <Compile Include="ViewModels\Site\Conference\ConferenceItemListAppViewModel.cs" />
     <Compile Include="ViewModels\Site\Player\GroupPlayerAppViewModel.cs" />

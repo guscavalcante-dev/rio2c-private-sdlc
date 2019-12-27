@@ -1,8 +1,8 @@
-﻿using PlataformaRio2C.Domain.Entities;
+﻿//using PlataformaRio2C.Domain.Entities;
 
-namespace PlataformaRio2C.Domain.Interfaces
-{
-    public interface IRoomService : IService<Room>
-    {
-    }
-}
+//namespace PlataformaRio2C.Domain.Interfaces
+//{
+//    public interface IRoomService : IService<Room>
+//    {
+//    }
+//}

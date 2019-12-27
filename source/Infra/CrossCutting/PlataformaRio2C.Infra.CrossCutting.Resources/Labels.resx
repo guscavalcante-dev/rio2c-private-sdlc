@@ -1917,4 +1917,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>{0} em destaque</value>
     <comment>{0} em destaque</comment>
   </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>Data Término</value>
+    <comment>Data Término</comment>
+  </data>
 </root>

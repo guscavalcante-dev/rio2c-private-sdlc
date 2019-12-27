@@ -375,23 +375,23 @@ namespace PlataformaRio2C.Infra.Data.Repository
         //    }
         //}
 
-        private IConferenceSynopsisRepository _conferenceSynopsisRepository;
-        public IConferenceSynopsisRepository ConferenceSynopsisRepository
-        {
-            get
-            {
-                return this._conferenceSynopsisRepository ?? (this._conferenceSynopsisRepository = new ConferenceSynopsisRepository(_context));
-            }
-        }
+        //private IConferenceSynopsisRepository _conferenceSynopsisRepository;
+        //public IConferenceSynopsisRepository ConferenceSynopsisRepository
+        //{
+        //    get
+        //    {
+        //        return this._conferenceSynopsisRepository ?? (this._conferenceSynopsisRepository = new ConferenceSynopsisRepository(_context));
+        //    }
+        //}
 
-        private IConferenceTitleRepository _conferenceTitleRepository;
-        public IConferenceTitleRepository ConferenceTitleRepository
-        {
-            get
-            {
-                return this._conferenceTitleRepository ?? (this._conferenceTitleRepository = new ConferenceTitleRepository(_context));
-            }
-        }
+        //private IConferenceTitleRepository _conferenceTitleRepository;
+        //public IConferenceTitleRepository ConferenceTitleRepository
+        //{
+        //    get
+        //    {
+        //        return this._conferenceTitleRepository ?? (this._conferenceTitleRepository = new ConferenceTitleRepository(_context));
+        //    }
+        //}
 
         private IMessageRepository _messageRepository;
         public IMessageRepository MessageRepository
@@ -493,23 +493,23 @@ namespace PlataformaRio2C.Infra.Data.Repository
         //    }
         //}
 
-        private IMailRepository _mailRepository;
-        public IMailRepository MailRepository
-        {
-            get
-            {
-                return this._mailRepository ?? (this._mailRepository = new MailRepository(_context));
-            }
-        }
+        //private IMailRepository _mailRepository;
+        //public IMailRepository MailRepository
+        //{
+        //    get
+        //    {
+        //        return this._mailRepository ?? (this._mailRepository = new MailRepository(_context));
+        //    }
+        //}
 
-        private IMailCollaboratorRepository _mailCollaboratorRepository;
-        public IMailCollaboratorRepository MailCollaboratorRepository
-        {
-            get
-            {
-                return this._mailCollaboratorRepository ?? (this._mailCollaboratorRepository = new MailCollaboratorRepository(_context));
-            }
-        }
+        //private IMailCollaboratorRepository _mailCollaboratorRepository;
+        //public IMailCollaboratorRepository MailCollaboratorRepository
+        //{
+        //    get
+        //    {
+        //        return this._mailCollaboratorRepository ?? (this._mailCollaboratorRepository = new MailCollaboratorRepository(_context));
+        //    }
+        //}
 
         private ICountryRepository _countryRepository;
         public ICountryRepository CountryRepository

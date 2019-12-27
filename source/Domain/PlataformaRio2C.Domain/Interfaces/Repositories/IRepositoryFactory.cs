@@ -55,8 +55,8 @@ namespace PlataformaRio2C.Domain.Interfaces
         ILogisticsRepository LogisticsRepository { get; }
         IConferenceRepository ConferenceRepository { get; }
         //IConferenceLecturerRepository ConferenceLecturerRepository { get; }
-        IConferenceSynopsisRepository ConferenceSynopsisRepository { get; }
-        IConferenceTitleRepository ConferenceTitleRepository { get; }
+        //IConferenceSynopsisRepository ConferenceSynopsisRepository { get; }
+        //IConferenceTitleRepository ConferenceTitleRepository { get; }
         IMessageRepository MessageRepository { get; }
         IRoomRepository RoomRepository { get; }
         //ILecturerRepository LecturerRepository { get; }

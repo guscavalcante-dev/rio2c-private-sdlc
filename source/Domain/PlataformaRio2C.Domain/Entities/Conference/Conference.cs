@@ -1,147 +1,93 @@
-﻿using PlataformaRio2C.Domain.Entities.Validations;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Domain
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 12-27-2019
+// ***********************************************************************
+// <copyright file="Conference.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Threading;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
+    /// <summary>Conference</summary>
     public class Conference : Entity
     {
-        public static readonly int LocalMinLength = 2;
-        public static readonly int LocalMaxLength = 1000;
-        public static readonly int InfoMaxLength = 3000;
+        //public static readonly int LocalMinLength = 2;
+        //public static readonly int LocalMaxLength = 1000;
+        //public static readonly int InfoMaxLength = 3000;
 
-        public DateTime? Date { get; private set; }
-        public TimeSpan? StartTime { get; private set; }
-        public TimeSpan? EndTime { get; private set; }
-        public string Info { get; private set; }
-        
-        public virtual ICollection<ConferenceLecturer> Lecturers { get; private set; }
-        public virtual ICollection<ConferenceTitle> Titles { get; private set; }
-        public virtual ICollection<ConferenceSynopsis> Synopses { get; private set; }
-
+        public int EditionId { get; private set; }
         public int? RoomId { get; private set; }
+        public DateTime StartDate { get; private set; }
+        public DateTime EndDate { get; private set; }
+
+        //public string Info { get; private set; }
+
+        public virtual Edition Edition { get; private set; }
         public virtual Room Room { get; private set; }
 
+        public virtual ICollection<ConferenceTitle> ConferenceTitles { get; private set; }
+        public virtual ICollection<ConferenceSynopsis> ConferenceSynopses { get; private set; }
+        //public virtual ICollection<ConferenceLecturer> Lecturers { get; private set; }
+
+        /// <summary>Initializes a new instance of the <see cref="Conference"/> class.</summary>
         protected Conference()
         {
 
         }
 
-        public Conference(DateTime? date)
-        {
-            SetDate(date);            
-        }     
+        #region Validations
 
-
-        public void SetDate(DateTime? date)
-        {
-            Date = date;
-        }
-
-        public void SetStartTime(TimeSpan? val)
-        {
-            StartTime = val;
-        }
-
-        public void SetEndTime(TimeSpan? val)
-        {
-            EndTime = val;
-        }      
-
-        public void SetInfo(string info)
-        {
-            Info = info;
-        }
-
-        public void SetLecturers(IEnumerable<ConferenceLecturer> lecturers)
-        {
-            if (lecturers != null && lecturers.Any())
-            {
-                Lecturers = lecturers.ToList();
-            }
-            
-        }
-
-        public void SetTitles(IEnumerable<ConferenceTitle> titles)
-        {            
-            if (titles != null && titles.Any())
-            {
-                Titles = titles.ToList();
-            }
-        }
-
-        public void SetSynopses(IEnumerable<ConferenceSynopsis> synopses)
-        {            
-            if (synopses != null && synopses.Any())
-            {
-                Synopses = synopses.ToList();
-            }
-        }
-
-        public void SetRoom(Room room)
-        {
-            Room = room;
-
-            if (room != null)
-            {
-                RoomId = room.Id;
-            }
-        }
-
-        public string GetTitle()
-        {
-            CultureInfo currentCulture = Thread.CurrentThread.CurrentCulture;
-
-            string titlePt = Titles.Where(e => e.Language.Code == "PtBr").Select(e => e.Value).FirstOrDefault();
-            string titleEn = Titles.Where(e => e.Language.Code == "En").Select(e => e.Value).FirstOrDefault();
-
-            if (currentCulture != null && currentCulture.Name == "pt-BR" && !string.IsNullOrWhiteSpace(titlePt))
-            {
-                return titlePt;
-            }
-            else if (!string.IsNullOrWhiteSpace(titleEn))
-            {
-                return titleEn;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        public string GetSinopsis()
-        {
-            CultureInfo currentCulture = Thread.CurrentThread.CurrentCulture;
-
-            string titlePt = Synopses.Where(e => e.Language.Code == "PtBr").Select(e => e.Value).FirstOrDefault();
-            string titleEn = Synopses.Where(e => e.Language.Code == "En").Select(e => e.Value).FirstOrDefault();
-
-            if (currentCulture != null && currentCulture.Name == "pt-BR" && !string.IsNullOrWhiteSpace(titlePt))
-            {
-                return titlePt;
-            }
-            else if (!string.IsNullOrWhiteSpace(titleEn))
-            {
-                return titleEn;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-
+        /// <summary>Returns true if ... is valid.</summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
         public override bool IsValid()
         {
-            ValidationResult = new ValidationResult();
+            this.ValidationResult = new ValidationResult();
 
-            ValidationResult.Add(new ConferenceIsConsistent().Valid(this));
+            this.ValidateEdition();
+            this.ValidateDates();
 
-            return ValidationResult.IsValid;
+            return this.ValidationResult.IsValid;
         }
+
+        /// <summary>Validates the edition.</summary>
+        public void ValidateEdition()
+        {
+            if (this.Edition == null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Edition), new string[] { "Edition" }));
+            }
+        }
+
+        /// <summary>Validates the dates.</summary>
+        public void ValidateDates()
+        {
+            if (this.StartDate < this.Edition.StartDate)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.StartDate), new string[] { "StartDate" }));
+            }
+
+            if (this.EndDate > this.Edition.EndDate)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.EndDate), new string[] { "EndDate" }));
+            }
+
+            if (this.StartDate > this.EndDate)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.StartDate), new string[] { "StartDate" }));
+            }
+        }
+
+        #endregion
     }
 }

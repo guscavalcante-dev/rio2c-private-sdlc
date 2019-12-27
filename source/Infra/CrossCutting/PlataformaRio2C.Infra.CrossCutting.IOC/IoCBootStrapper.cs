@@ -86,9 +86,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
             container.Register<IErrorMessageService, ErrorMessageService>(Lifestyle.Scoped);
 
 
-            container.Register<IRoomService, RoomService>(Lifestyle.Scoped);
+            //container.Register<IRoomService, RoomService>(Lifestyle.Scoped);
             //container.Register<IRoomRepository, RoomRepository>(Lifestyle.Scoped);
-            container.Register<IRoomAppService, RoomAppService>(Lifestyle.Scoped);
+            //container.Register<IRoomAppService, RoomAppService>(Lifestyle.Scoped);
 
             //container.Register<IRoleLecturerService, RoleLecturerService>(Lifestyle.Scoped);
             //container.Register<IRoleLecturerRepository, RoleLecturerRepository>(Lifestyle.Scoped);

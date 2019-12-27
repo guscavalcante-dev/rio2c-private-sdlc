@@ -20,9 +20,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var consult = this.dbSet
                                 .Include(i => i.Rooms)
-                                .Include(i => i.Rooms.Select(e => e.Room))
-                                .Include(i => i.Rooms.Select(e => e.Room.Names))
-                                .Include(i => i.Rooms.Select(e => e.Room.Names.Select(r => r.Language)));
+                                .Include(i => i.Rooms.Select(e => e.Room));
+                                //.Include(i => i.Rooms.Select(e => e.Room.Names))
+                                //.Include(i => i.Rooms.Select(e => e.Room.Names.Select(r => r.Language)));
 
             return @readonly
               ? consult.AsNoTracking()

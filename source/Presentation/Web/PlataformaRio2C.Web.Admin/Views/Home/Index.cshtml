@@ -32,6 +32,11 @@
     <div class="row">
         <div class="col-sm-4">
             <!--begin:: Holdings Edition Count-->
+            <div id="ConferencesEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+            <!--end:: Holdings Edition Count-->
+        </div>
+        <div class="col-sm-4">
+            <!--begin:: Holdings Edition Count-->
             <div id="SpeakersEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
             <!--end:: Holdings Edition Count-->
         </div>
@@ -49,6 +54,7 @@
     }
     @if (isAdminFull || isAdminAudiovisual || isCuratorshipAudiovisual)
     {
+        @Scripts.Render("~/bundles/js/conferences.editioncount.js")
         @Scripts.Render("~/bundles/js/speakers.editioncount.js")
     }
     <script>
@@ -64,6 +70,7 @@
             @if (isAdminFull || isAdminAudiovisual || isCuratorshipAudiovisual)
             {
                 <text>
+                    ConferencesEditionCountWidget.init();
                     SpeakersEditionCountWidget.init();
                 </text>
             }

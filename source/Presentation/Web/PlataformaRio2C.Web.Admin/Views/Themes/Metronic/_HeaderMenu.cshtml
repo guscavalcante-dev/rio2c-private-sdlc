@@ -152,12 +152,12 @@
     }
     @if (isAdminFull || isCuratorshipAudiovisual)
     {
-        <li class="kt-menu__item kt-menu__item--submenu kt-menu__item--rel @this.IsOpen(menuOpenCssClass, "Index", "Conference", null) @this.IsOpen(menuOpenCssClass, "Index", "RoleLecturer", null) @this.IsOpen(menuOpenCssClass, null, "Speakers", null) @this.IsOpen(menuOpenCssClass, "Index", "Room", null)" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
+        <li class="kt-menu__item kt-menu__item--submenu kt-menu__item--rel @this.IsOpen(menuOpenCssClass, "Index", "Conferences", null) @this.IsOpen(menuOpenCssClass, "Index", "RoleLecturer", null) @this.IsOpen(menuOpenCssClass, null, "Speakers", null) @this.IsOpen(menuOpenCssClass, "Index", "Room", null)" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
             <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">@Labels.Conferences</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
             <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
                 <ul class="kt-menu__subnav">
-                    <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "Index", "Conference", null)" aria-haspopup="true">
-                        <a href="#" @*href="@Url.Action("Index", "Conference")"*@ class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Speeches</span></a>
+                    <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "Index", "Conferences", null)" aria-haspopup="true">
+                        <a href="@Url.Action("Index", "Conferences")" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Conferences</span></a>
                     </li>
                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Speakers", null)" aria-haspopup="true">
                         <a href="@Url.Action("Index", "Speakers", new { Area = "" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Speakers</span></a>

@@ -1904,4 +1904,8 @@
     <value>{0} highlights</value>
     <comment>{0} em destaque</comment>
   </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>End Date</value>
+    <comment>Data Término</comment>
+  </data>
 </root>

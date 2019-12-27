@@ -42,7 +42,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Migrations
             SeedActivitys(context);
             SeedTargetAudiences(context);
             SeedProjectStatus(context);
-            SeedRooms(context);
+            //SeedRooms(context);
             //SeedRoleLecturer(context);
             //SeedCity(context);
 
@@ -579,76 +579,76 @@ namespace PlataformaRio2C.Infra.Data.Context.Migrations
             }
         }
 
-        private void SeedRooms(PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext context)
-        {
-            if (!context.Rooms.Any())
-            {
-                var languagePt = context.Languages.FirstOrDefault(e => e.Code == "PtBr");
-                var languageEn = context.Languages.FirstOrDefault(e => e.Code == "En");
+        //private void SeedRooms(PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext context)
+        //{
+        //    if (!context.Rooms.Any())
+        //    {
+        //        var languagePt = context.Languages.FirstOrDefault(e => e.Code == "PtBr");
+        //        var languageEn = context.Languages.FirstOrDefault(e => e.Code == "En");
 
-                var roomNameGrandeSalaPt = new RoomName("Sala 1: Grande Sala", "PtBr");
-                roomNameGrandeSalaPt.SetLanguage(languagePt);
-                var roomNameGrandeSalaEn = new RoomName("Sala 1: Grande Sala", "En");
-                roomNameGrandeSalaEn.SetLanguage(languageEn);
-                var namesGrandeSala = new List<RoomName>() { roomNameGrandeSalaPt, roomNameGrandeSalaEn };
+        //        var roomNameGrandeSalaPt = new RoomName("Sala 1: Grande Sala", "PtBr");
+        //        roomNameGrandeSalaPt.SetLanguage(languagePt);
+        //        var roomNameGrandeSalaEn = new RoomName("Sala 1: Grande Sala", "En");
+        //        roomNameGrandeSalaEn.SetLanguage(languageEn);
+        //        var namesGrandeSala = new List<RoomName>() { roomNameGrandeSalaPt, roomNameGrandeSalaEn };
 
-                var roomNameTeatroCamaraPt = new RoomName("Sala 2: Teatro de Câmara", "PtBr");
-                roomNameTeatroCamaraPt.SetLanguage(languagePt);
-                var roomNameTeatroCamaraEn = new RoomName("Sala 2: Teatro de Câmara", "En");
-                roomNameTeatroCamaraEn.SetLanguage(languageEn);
-                var namesTeatroCamara = new List<RoomName>() { roomNameTeatroCamaraPt, roomNameTeatroCamaraEn };
+        //        var roomNameTeatroCamaraPt = new RoomName("Sala 2: Teatro de Câmara", "PtBr");
+        //        roomNameTeatroCamaraPt.SetLanguage(languagePt);
+        //        var roomNameTeatroCamaraEn = new RoomName("Sala 2: Teatro de Câmara", "En");
+        //        roomNameTeatroCamaraEn.SetLanguage(languageEn);
+        //        var namesTeatroCamara = new List<RoomName>() { roomNameTeatroCamaraPt, roomNameTeatroCamaraEn };
 
-                var roomNameSalaMusicaPt = new RoomName("Sala 3: Sala de Música", "PtBr");
-                roomNameSalaMusicaPt.SetLanguage(languagePt);
-                var roomNameSalaMusicaEn = new RoomName("Sala 3: Sala de Música", "En");
-                roomNameSalaMusicaEn.SetLanguage(languageEn);
-                var namesSalaMusica = new List<RoomName>() { roomNameSalaMusicaPt, roomNameSalaMusicaEn };
+        //        var roomNameSalaMusicaPt = new RoomName("Sala 3: Sala de Música", "PtBr");
+        //        roomNameSalaMusicaPt.SetLanguage(languagePt);
+        //        var roomNameSalaMusicaEn = new RoomName("Sala 3: Sala de Música", "En");
+        //        roomNameSalaMusicaEn.SetLanguage(languageEn);
+        //        var namesSalaMusica = new List<RoomName>() { roomNameSalaMusicaPt, roomNameSalaMusicaEn };
 
-                var roomNameSalaInovacaoPt = new RoomName("Sala 4: Sala de Inovação", "PtBr");
-                roomNameSalaInovacaoPt.SetLanguage(languagePt);
-                var roomNameSalaInovacaoEn = new RoomName("Sala 4: Sala de Inovação", "En");
-                roomNameSalaInovacaoEn.SetLanguage(languageEn);
-                var namesSalaInovacao = new List<RoomName>() { roomNameSalaInovacaoPt, roomNameSalaInovacaoEn };
+        //        var roomNameSalaInovacaoPt = new RoomName("Sala 4: Sala de Inovação", "PtBr");
+        //        roomNameSalaInovacaoPt.SetLanguage(languagePt);
+        //        var roomNameSalaInovacaoEn = new RoomName("Sala 4: Sala de Inovação", "En");
+        //        roomNameSalaInovacaoEn.SetLanguage(languageEn);
+        //        var namesSalaInovacao = new List<RoomName>() { roomNameSalaInovacaoPt, roomNameSalaInovacaoEn };
 
-                var roomNameBrazilianContentPt = new RoomName("Sala 5: Sala Brazilian Content", "PtBr");
-                roomNameBrazilianContentPt.SetLanguage(languagePt);
-                var roomNameBrazilianContentEn = new RoomName("Sala 5: Sala Brazilian Content", "En");
-                roomNameBrazilianContentEn.SetLanguage(languageEn);
-                var namesBrazilianContent = new List<RoomName>() { roomNameBrazilianContentPt, roomNameBrazilianContentEn };
+        //        var roomNameBrazilianContentPt = new RoomName("Sala 5: Sala Brazilian Content", "PtBr");
+        //        roomNameBrazilianContentPt.SetLanguage(languagePt);
+        //        var roomNameBrazilianContentEn = new RoomName("Sala 5: Sala Brazilian Content", "En");
+        //        roomNameBrazilianContentEn.SetLanguage(languageEn);
+        //        var namesBrazilianContent = new List<RoomName>() { roomNameBrazilianContentPt, roomNameBrazilianContentEn };
 
-                var roomNamePitchingAudioVisualPt = new RoomName("Sala 6: Sala de Pitching de ÁudioVisual", "PtBr");
-                roomNamePitchingAudioVisualPt.SetLanguage(languagePt);
-                var roomNamePitchingAudioVisualEn = new RoomName("Sala 6: Sala de Pitching de ÁudioVisual", "En");
-                roomNamePitchingAudioVisualEn.SetLanguage(languageEn);
-                var namesPitchingAudioVisual = new List<RoomName>() { roomNamePitchingAudioVisualPt, roomNamePitchingAudioVisualEn };
+        //        var roomNamePitchingAudioVisualPt = new RoomName("Sala 6: Sala de Pitching de ÁudioVisual", "PtBr");
+        //        roomNamePitchingAudioVisualPt.SetLanguage(languagePt);
+        //        var roomNamePitchingAudioVisualEn = new RoomName("Sala 6: Sala de Pitching de ÁudioVisual", "En");
+        //        roomNamePitchingAudioVisualEn.SetLanguage(languageEn);
+        //        var namesPitchingAudioVisual = new List<RoomName>() { roomNamePitchingAudioVisualPt, roomNamePitchingAudioVisualEn };
 
-                var roomNameRodadasNegocio1Pt = new RoomName("Rodadas de Negócio (Sala 1)", "PtBr");
-                roomNameRodadasNegocio1Pt.SetLanguage(languagePt);
-                var roomNameRodadasNegocio1En = new RoomName("One-to-One meetings - ROOM 1", "En");
-                roomNameRodadasNegocio1En.SetLanguage(languageEn);
-                var namesRodadasNegocio1 = new List<RoomName>() { roomNameRodadasNegocio1Pt, roomNameRodadasNegocio1En };
+        //        var roomNameRodadasNegocio1Pt = new RoomName("Rodadas de Negócio (Sala 1)", "PtBr");
+        //        roomNameRodadasNegocio1Pt.SetLanguage(languagePt);
+        //        var roomNameRodadasNegocio1En = new RoomName("One-to-One meetings - ROOM 1", "En");
+        //        roomNameRodadasNegocio1En.SetLanguage(languageEn);
+        //        var namesRodadasNegocio1 = new List<RoomName>() { roomNameRodadasNegocio1Pt, roomNameRodadasNegocio1En };
 
-                var roomNameRodadasNegocio2Pt = new RoomName("Rodadas de Negócio (Sala 2)", "PtBr");
-                roomNameRodadasNegocio2Pt.SetLanguage(languagePt);
-                var roomNameRodadasNegocio2En = new RoomName("One-to-One meetings - ROOM 2", "En");
-                roomNameRodadasNegocio2En.SetLanguage(languageEn);
-                var namesRodadasNegocio2 = new List<RoomName>() { roomNameRodadasNegocio2Pt, roomNameRodadasNegocio2En };
+        //        var roomNameRodadasNegocio2Pt = new RoomName("Rodadas de Negócio (Sala 2)", "PtBr");
+        //        roomNameRodadasNegocio2Pt.SetLanguage(languagePt);
+        //        var roomNameRodadasNegocio2En = new RoomName("One-to-One meetings - ROOM 2", "En");
+        //        roomNameRodadasNegocio2En.SetLanguage(languageEn);
+        //        var namesRodadasNegocio2 = new List<RoomName>() { roomNameRodadasNegocio2Pt, roomNameRodadasNegocio2En };
 
-                context.Rooms.AddRange(
-                    new List<Room>()
-                    {
-                        new Room(namesGrandeSala),
-                        new Room(namesTeatroCamara),
-                        new Room(namesSalaMusica),
-                        new Room(namesSalaInovacao),
-                        new Room(namesBrazilianContent),
-                        new Room(namesPitchingAudioVisual),
-                        new Room(namesRodadasNegocio1),
-                         new Room(namesRodadasNegocio2)
-                    }
-                );
-            }
-        }
+        //        context.Rooms.AddRange(
+        //            new List<Room>()
+        //            {
+        //                new Room(namesGrandeSala),
+        //                new Room(namesTeatroCamara),
+        //                new Room(namesSalaMusica),
+        //                new Room(namesSalaInovacao),
+        //                new Room(namesBrazilianContent),
+        //                new Room(namesPitchingAudioVisual),
+        //                new Room(namesRodadasNegocio1),
+        //                 new Room(namesRodadasNegocio2)
+        //            }
+        //        );
+        //    }
+        //}
 
         //private void SeedRoleLecturer(PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext context)
         //{

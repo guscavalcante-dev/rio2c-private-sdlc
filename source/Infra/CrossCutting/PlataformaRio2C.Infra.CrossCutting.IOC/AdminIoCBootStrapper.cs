@@ -25,7 +25,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
         public static void RegisterServices(Container container)
         {
             //container.Register<IPlayerService, PlayerAdminService>(Lifestyle.Scoped);
-            container.Register<Application.Interfaces.Services.INegotiationConfigService, Application.Services.NegotiationConfigService>(Lifestyle.Scoped);
+            //container.Register<Application.Interfaces.Services.INegotiationConfigService, Application.Services.NegotiationConfigService>(Lifestyle.Scoped);
             container.Register<Domain.Interfaces.INegotiationConfigService, Domain.Services.NegotiationConfigService>(Lifestyle.Scoped);
 
             //container.Register<IMailAppService, MailAppService>(Lifestyle.Scoped);

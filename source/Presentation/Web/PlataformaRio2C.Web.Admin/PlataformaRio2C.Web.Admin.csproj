@@ -338,6 +338,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\FinancialReportController.cs" />
     <Compile Include="Controllers\CitiesController.cs" />
+    <Compile Include="Controllers\ConferencesController.cs" />
     <Compile Include="Controllers\SpeakersController.cs" />
     <Compile Include="Controllers\PlayersExecutivesController.cs" />
     <Compile Include="Controllers\StatesController.cs" />
@@ -390,6 +391,9 @@
     <Content Include="Assets\js\accounts\accounts.password.js" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
     <Content Include="Assets\js\companies\companyinfo.autocomplete.js" />
+    <Content Include="Assets\js\conferences\conferences.datatable.widget.js" />
+    <Content Include="Assets\js\conferences\conferences.editioncount.widget.js" />
+    <Content Include="Assets\js\conferences\conferences.totalcount.widget.js" />
     <Content Include="Assets\js\speakers\speakers.company.widget.js" />
     <Content Include="Assets\js\speakers\speakers.apiconfiguration.widget.js" />
     <Content Include="Assets\js\speakers\speakers.maininformation.widget.js" />
@@ -8197,6 +8201,11 @@
     <Content Include="Views\Speakers\Modals\UpdateApiConfigurationModal.cshtml" />
     <Content Include="Views\Speakers\Modals\UpdateApiConfigurationForm.cshtml" />
     <Content Include="Views\Companies\Shared\_TicketBuyerCompanyInfoForm.cshtml" />
+    <Content Include="Views\Conferences\Details.cshtml" />
+    <Content Include="Views\Conferences\Index.cshtml" />
+    <Content Include="Views\Conferences\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Views\Conferences\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Views\Conferences\Widgets\TotalCountWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -8221,6 +8230,7 @@
     <Folder Include="Scripts\ckeditor\themes\default\" />
     <Folder Include="UploadsArchives\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Conferences\Modals\" />
     <Folder Include="Views\Event\" />
     <Folder Include="Views\PlayerProducer\" />
     <Folder Include="Views\Rio2CNetwork\" />

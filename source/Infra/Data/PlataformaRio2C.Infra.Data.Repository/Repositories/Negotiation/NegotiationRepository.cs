@@ -25,9 +25,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Include(i => i.Project)
                                 .Include(i => i.Project.ProjectTitles.Select(e => e.Language))
                                 //.Include(i => i.Project.Producer)
-                                .Include(i => i.Room)
-                                .Include(i => i.Room.Names)
-                                .Include(i => i.Room.Names.Select(e => e.Language));
+                                .Include(i => i.Room);
+                                //.Include(i => i.Room.Names)
+                                //.Include(i => i.Room.Names.Select(e => e.Language));
 
             return @readonly
               ? consult.AsNoTracking()
@@ -41,8 +41,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                .Include(i => i.Project)
                                //.Include(i => i.Project.Producer)
                                .Include(i => i.Room)
-                               .Include(i => i.Room.Names)
-                               .Include(i => i.Room.Names.Select(e => e.Language))
+                               //.Include(i => i.Room.Names)
+                               //.Include(i => i.Room.Names.Select(e => e.Language))
                                .AsNoTracking();
 
         }
@@ -102,8 +102,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                .Include(i => i.Project.ProjectTitles.Select(e => e.Language))
                                //.Include(i => i.Project.Producer)
                                .Include(i => i.Room)
-                               .Include(i => i.Room.Names)
-                               .Include(i => i.Room.Names.Select(e => e.Language))
+                               //.Include(i => i.Room.Names)
+                               //.Include(i => i.Room.Names.Select(e => e.Language))
                                .Where(filter);
         }       
     }

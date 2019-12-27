@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-19-2019
+// Last Modified On : 12-27-2019
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -333,6 +333,36 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/addresses.form.js").Include(
                 "~/Assets/js/addresses/addresses.form.js"));
+
+            #endregion
+
+            #region Conferences
+
+            bundles.Add(new ScriptBundle("~/bundles/js/conferences.list.js").Include(
+                "~/Assets/js/conferences/conferences.totalcount.widget.js",
+                "~/Assets/js/conferences/conferences.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/conferences.editioncount.js").Include(
+                "~/Assets/js/conferences/conferences.editioncount.widget.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/js/conferences.create.js").Include(
+            //    "~/Assets/js/conferences/conferences.create.js"));
+
+            //bundles.Add(new StyleBundle("~/bundles/css/conferences.details.css").Include(
+            //    "~/Assets/themes/metronic/css/demo4/pages/pricing/pricing-1.css"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/js/conferences.details.js").Include(
+            //    "~/Assets/js/conferences/conferences.maininformation.widget.js",
+            //    "~/Assets/js/conferences/conferences.company.widget.js",
+            //    "~/Assets/js/companies/companyinfo.autocomplete.js",
+            //    "~/Assets/js/myrio2c.companynumber.js",
+            //    "~/Assets/js/conferences/conferences.apiconfiguration.widget.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/js/conferences.update.js").Include(
+            //    "~/Assets/js/conferences/conferences.update.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/js/conferences.delete.js").Include(
+            //    "~/Assets/js/conferences/conferences.delete.js"));
 
             #endregion
 
