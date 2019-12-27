@@ -29,7 +29,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
             container.Register<Domain.Interfaces.INegotiationConfigService, Domain.Services.NegotiationConfigService>(Lifestyle.Scoped);
 
             //container.Register<IMailAppService, MailAppService>(Lifestyle.Scoped);
-            container.Register<IMailService, MailService>(Lifestyle.Scoped);
+            //container.Register<IMailService, MailService>(Lifestyle.Scoped);
         }       
     }    
 }

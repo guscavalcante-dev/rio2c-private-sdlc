@@ -69,8 +69,8 @@ namespace PlataformaRio2C.Domain.Interfaces
 
         INegotiationRoomConfigRepository NegotiationRoomConfigRepository { get; }
 
-        IMailRepository MailRepository { get; }
-        IMailCollaboratorRepository MailCollaboratorRepository { get; }
+        //IMailRepository MailRepository { get; }
+        //IMailCollaboratorRepository MailCollaboratorRepository { get; }
 
         ICountryRepository CountryRepository { get; }
         IStateRepository StateRepository { get; }

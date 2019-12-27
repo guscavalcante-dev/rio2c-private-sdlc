@@ -141,7 +141,7 @@ namespace PlataformaRio2C.Infra.Data.Context
             //modelBuilder.Configurations.Add(new ProjectPlayerEvaluationMap());
             modelBuilder.Configurations.Add(new LogisticsMap());
            
-            modelBuilder.Configurations.Add(new MailMap());
+            //modelBuilder.Configurations.Add(new MailMap());
 
             //modelBuilder.Configurations.Add(new ConferenceLecturerMap());
             //modelBuilder.Configurations.Add(new LecturerMap());
@@ -200,8 +200,8 @@ namespace PlataformaRio2C.Infra.Data.Context
 
         //public DbSet<RoleLecturer> RoleLecturers { get; set; }
 
-        public DbSet<Mail> Mail { get; set; }
-        public DbSet<MailCollaborator> MailCollaborators { get; set; }
+        //public DbSet<Mail> Mail { get; set; }
+        //public DbSet<MailCollaborator> MailCollaborators { get; set; }
 
         public DbSet<Country> Country { get; set; }
         public DbSet<State> State { get; set; }
