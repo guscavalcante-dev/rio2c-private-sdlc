@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-10-2019
+// Last Modified On : 12-27-2019
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -248,15 +248,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             entity.Roles.Clear();
 
-            if (entity.UserUseTerms != null && entity.UserUseTerms.Any())
-            {
-                var terms = entity.UserUseTerms.ToList();
+            //if (entity.UserUseTerms != null && entity.UserUseTerms.Any())
+            //{
+            //    var terms = entity.UserUseTerms.ToList();
 
-                foreach (var term in terms)
-                {
-                    _context.Entry(term).State = EntityState.Deleted;
-                }
-            }
+            //    foreach (var term in terms)
+            //    {
+            //        _context.Entry(term).State = EntityState.Deleted;
+            //    }
+            //}
 
             base.Delete(entity);
         }

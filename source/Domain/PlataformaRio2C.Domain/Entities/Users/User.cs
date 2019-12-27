@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-05-2019
+// Last Modified On : 12-27-2019
 // ***********************************************************************
 // <copyright file="User.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -48,7 +48,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual Language UserInterfaceLanguage { get; set; }
 
         public virtual ICollection<Role> Roles { get; set; }
-        public virtual ICollection<UserUseTerm> UserUseTerms { get; set; }
+        //public virtual ICollection<UserUseTerm> UserUseTerms { get; set; }
         public virtual ICollection<Holding> UpdatedHoldings { get; set; }
         public virtual ICollection<Organization> UpdatedOrganizations { get; set; }
         public virtual ICollection<Collaborator> UpdatedCollaborators { get; set; }

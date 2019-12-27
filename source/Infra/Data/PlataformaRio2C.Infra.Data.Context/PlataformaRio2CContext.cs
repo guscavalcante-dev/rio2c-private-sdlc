@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-05-2019
+// Last Modified On : 12-27-2019
 // ***********************************************************************
 // <copyright file="PlataformaRio2CContext.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -109,26 +109,33 @@ namespace PlataformaRio2C.Infra.Data.Context
             // Networks
             modelBuilder.Configurations.Add(new MessageMap());
 
+            // Conferences
+            modelBuilder.Configurations.Add(new ConferenceMap());
+            modelBuilder.Configurations.Add(new ConferenceTitleMap());
+            modelBuilder.Configurations.Add(new ConferenceSynopsisMap());
+
             // Common
             modelBuilder.Configurations.Add(new ActivityMap());
             modelBuilder.Configurations.Add(new TargetAudienceMap());
             modelBuilder.Configurations.Add(new InterestGroupMap());
             modelBuilder.Configurations.Add(new InterestMap());
             modelBuilder.Configurations.Add(new LanguageMap());
+            modelBuilder.Configurations.Add(new RoomMap());
+            modelBuilder.Configurations.Add(new RoomNameMap());
 
             // TODO: Old mapping that must be reviewed
 
-            modelBuilder.Configurations.Add(new ImageFileMap());            
+            //modelBuilder.Configurations.Add(new ImageFileMap());            
             //modelBuilder.Configurations.Add(new PlayerMap());
-            modelBuilder.Configurations.Add(new PlayerDescriptionMap());
-            modelBuilder.Configurations.Add(new UserUseTermMap());
-            modelBuilder.Configurations.Add(new PlayerInterestMap());            
+            //modelBuilder.Configurations.Add(new PlayerDescriptionMap());
+            //modelBuilder.Configurations.Add(new UserUseTermMap());
+            //modelBuilder.Configurations.Add(new PlayerInterestMap());            
             //modelBuilder.Configurations.Add(new PlayerTargetAudienceMap());
-            modelBuilder.Configurations.Add(new PlayerRestrictionsSpecificsMap());
-            modelBuilder.Configurations.Add(new ProducerMap());
-            modelBuilder.Configurations.Add(new ProducerDescriptionMap());
-            modelBuilder.Configurations.Add(new ProducerEventMap());
-            modelBuilder.Configurations.Add(new CollaboratorProducerMap());
+            //modelBuilder.Configurations.Add(new PlayerRestrictionsSpecificsMap());
+            //modelBuilder.Configurations.Add(new ProducerMap());
+            //modelBuilder.Configurations.Add(new ProducerDescriptionMap());
+            //modelBuilder.Configurations.Add(new ProducerEventMap());
+            //modelBuilder.Configurations.Add(new CollaboratorProducerMap());
             //modelBuilder.Configurations.Add(new ProjectPlayerMap());
             //modelBuilder.Configurations.Add(new ProjectStatusMap());
             //modelBuilder.Configurations.Add(new ProjectPlayerEvaluationMap());
@@ -136,17 +143,11 @@ namespace PlataformaRio2C.Infra.Data.Context
            
             modelBuilder.Configurations.Add(new MailMap());
 
-            modelBuilder.Configurations.Add(new ConferenceMap());
-            modelBuilder.Configurations.Add(new ConferenceTitleMap());
-            modelBuilder.Configurations.Add(new ConferenceSynopsisMap());
-            modelBuilder.Configurations.Add(new ConferenceLecturerMap());
-            modelBuilder.Configurations.Add(new LecturerMap());
+            //modelBuilder.Configurations.Add(new ConferenceLecturerMap());
+            //modelBuilder.Configurations.Add(new LecturerMap());
             
-            modelBuilder.Configurations.Add(new RoleLecturerMap());
-            modelBuilder.Configurations.Add(new RoleLecturerTitleMap());
-
-            modelBuilder.Configurations.Add(new RoomMap());
-            modelBuilder.Configurations.Add(new RoomNameMap());
+            //modelBuilder.Configurations.Add(new RoleLecturerMap());
+            //modelBuilder.Configurations.Add(new RoleLecturerTitleMap());
 
             modelBuilder.Configurations.Add(new NegotiationConfigMap());
             modelBuilder.Configurations.Add(new NegotiationMap());
@@ -156,9 +157,9 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new QuizOptionMap());
             modelBuilder.Configurations.Add(new QuizAnswerMap());
 
-            modelBuilder.Configurations.Add(new SpeakerMap());
+            //modelBuilder.Configurations.Add(new SpeakerMap());
 
-            modelBuilder.Configurations.Add(new MusicalCommissionMap());
+            //modelBuilder.Configurations.Add(new MusicalCommissionMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -184,20 +185,20 @@ namespace PlataformaRio2C.Infra.Data.Context
 
         // TODO: Old dbsets that must be reviewed
         public DbSet<Language> Languages { get; set; }
-        public DbSet<ImageFile> ImageFiles { get; set; }
+        //public DbSet<ImageFile> ImageFiles { get; set; }
         //public DbSet<Player> Players { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<UserUseTerm> UserUseTerms { get; set; }
+        //public DbSet<UserUseTerm> UserUseTerms { get; set; }
         public DbSet<InterestGroup> InterestGroups { get; set; }
         public DbSet<Interest> Interests { get; set; }
-        public DbSet<PlayerInterest> PlayerInterests { get; set; }        
-        public DbSet<Producer> Producers { get; set; }
+        //public DbSet<PlayerInterest> PlayerInterests { get; set; }        
+        //public DbSet<Producer> Producers { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectStatus> ProjectStatus { get; set; }
 
         public DbSet<Room> Rooms { get; set; }
 
-        public DbSet<RoleLecturer> RoleLecturers { get; set; }
+        //public DbSet<RoleLecturer> RoleLecturers { get; set; }
 
         public DbSet<Mail> Mail { get; set; }
         public DbSet<MailCollaborator> MailCollaborators { get; set; }
@@ -211,9 +212,9 @@ namespace PlataformaRio2C.Infra.Data.Context
         public DbSet<QuizOption> QuizOption { get; set; }
         public DbSet<QuizAnswer> QuizAnswer { get; set; }
 
-        public DbSet<Speaker> Speaker { get; set; }
+        //public DbSet<Speaker> Speaker { get; set; }
 
-        public DbSet<MusicalCommission> MusicalCommission { get; set; }
+        //public DbSet<MusicalCommission> MusicalCommission { get; set; }
 
         public DbSet<SalesPlatform> SalesPlatforms { get; set; }
         public DbSet<SalesPlatformWebhookRequest> SalesPlatformWebhookRequests { get; set; }

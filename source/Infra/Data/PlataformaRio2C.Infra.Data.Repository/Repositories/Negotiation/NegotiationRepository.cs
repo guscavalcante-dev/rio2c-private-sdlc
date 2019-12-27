@@ -21,7 +21,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public override IQueryable<Negotiation> GetAll(bool @readonly = false)
         {
             var consult = this.dbSet
-                                .Include(i => i.Player)
+                                //.Include(i => i.Player)
                                 .Include(i => i.Project)
                                 .Include(i => i.Project.ProjectTitles.Select(e => e.Language))
                                 //.Include(i => i.Project.Producer)
@@ -37,7 +37,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public override IQueryable<Negotiation> GetAllSimple()
         {
             return this.dbSet
-                               .Include(i => i.Player)
+                               //.Include(i => i.Player)
                                .Include(i => i.Project)
                                //.Include(i => i.Project.Producer)
                                .Include(i => i.Room)
@@ -48,31 +48,31 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
 
-        public IEnumerable<Player> GetAllPlayers()
-        {
-            return this.dbSet
-                               .Include(i => i.Player)
-                               .Include(i => i.Player.Holding)
-                               .AsNoTracking()
-                               .ToList()
-                               .Select(e => e.Player)
-                               .GroupBy(e => e.Id)
-                               .Select(e => e.First());
+        //public IEnumerable<Player> GetAllPlayers()
+        //{
+        //    return this.dbSet
+        //                       .Include(i => i.Player)
+        //                       .Include(i => i.Player.Holding)
+        //                       .AsNoTracking()
+        //                       .ToList()
+        //                       .Select(e => e.Player)
+        //                       .GroupBy(e => e.Id)
+        //                       .Select(e => e.First());
 
-        }
+        //}
 
-        public IEnumerable<Producer> GetAllProducers()
-        {
-            return null;
-            //return this.dbSet
-            //                   .Include(i => i.Project)
-            //                   .Include(i => i.Project.Producer)
-            //                   .AsNoTracking()
-            //                   .ToList()
-            //                   .Select(e => e.Project.Producer)
-            //                   .GroupBy(e => e.Id)
-            //                   .Select(e => e.First());
-        }
+        //public IEnumerable<Producer> GetAllProducers()
+        //{
+        //    return null;
+        //    //return this.dbSet
+        //    //                   .Include(i => i.Project)
+        //    //                   .Include(i => i.Project.Producer)
+        //    //                   .AsNoTracking()
+        //    //                   .ToList()
+        //    //                   .Select(e => e.Project.Producer)
+        //    //                   .GroupBy(e => e.Id)
+        //    //                   .Select(e => e.First());
+        //}
 
         public void Truncate()
         {
@@ -95,8 +95,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public IQueryable<Negotiation> GetAllBySchedule(Expression<Func<Negotiation, bool>> filter)
         {
             return this.dbSet
-                               .Include(i => i.Player)
-                               .Include(i => i.Player.Holding)
+                               //.Include(i => i.Player)
+                               //.Include(i => i.Player.Holding)
                                .Include(i => i.Project)
                                .Include(i => i.Project.ProjectTitles)
                                .Include(i => i.Project.ProjectTitles.Select(e => e.Language))

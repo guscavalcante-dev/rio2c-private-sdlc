@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-23-2019
+// Last Modified On : 12-27-2019
 // ***********************************************************************
 // <copyright file="Configuration.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -43,7 +43,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Migrations
             SeedTargetAudiences(context);
             SeedProjectStatus(context);
             SeedRooms(context);
-            SeedRoleLecturer(context);
+            //SeedRoleLecturer(context);
             //SeedCity(context);
 
             SeedQuiz(context);
@@ -650,61 +650,61 @@ namespace PlataformaRio2C.Infra.Data.Context.Migrations
             }
         }
 
-        private void SeedRoleLecturer(PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext context)
-        {
-            if (!context.RoleLecturers.Any())
-            {
-                var languagePt = context.Languages.FirstOrDefault(e => e.Code == "PtBr");
-                var languageEn = context.Languages.FirstOrDefault(e => e.Code == "En");
+        //private void SeedRoleLecturer(PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext context)
+        //{
+        //    if (!context.RoleLecturers.Any())
+        //    {
+        //        var languagePt = context.Languages.FirstOrDefault(e => e.Code == "PtBr");
+        //        var languageEn = context.Languages.FirstOrDefault(e => e.Code == "En");
 
-                var titlePalestrantePt = new RoleLecturerTitle("Palestrante", "PtBr");
-                titlePalestrantePt.SetLanguage(languagePt);
-                var titlePalestranteEn = new RoleLecturerTitle("Speaker", "En");
-                titlePalestranteEn.SetLanguage(languageEn);
-                var titlesPalestrante = new List<RoleLecturerTitle>() { titlePalestrantePt, titlePalestranteEn };
+        //        var titlePalestrantePt = new RoleLecturerTitle("Palestrante", "PtBr");
+        //        titlePalestrantePt.SetLanguage(languagePt);
+        //        var titlePalestranteEn = new RoleLecturerTitle("Speaker", "En");
+        //        titlePalestranteEn.SetLanguage(languageEn);
+        //        var titlesPalestrante = new List<RoleLecturerTitle>() { titlePalestrantePt, titlePalestranteEn };
 
-                var titleKeynotePt = new RoleLecturerTitle("Keynote", "PtBr");
-                titleKeynotePt.SetLanguage(languagePt);
-                var titleKeynoteEn = new RoleLecturerTitle("Keynote", "En");
-                titleKeynoteEn.SetLanguage(languageEn);
-                var titlesKeynotes = new List<RoleLecturerTitle>() { titleKeynotePt, titleKeynoteEn };
+        //        var titleKeynotePt = new RoleLecturerTitle("Keynote", "PtBr");
+        //        titleKeynotePt.SetLanguage(languagePt);
+        //        var titleKeynoteEn = new RoleLecturerTitle("Keynote", "En");
+        //        titleKeynoteEn.SetLanguage(languageEn);
+        //        var titlesKeynotes = new List<RoleLecturerTitle>() { titleKeynotePt, titleKeynoteEn };
 
-                var titleModeradorPt = new RoleLecturerTitle("Moderador", "PtBr");
-                titleModeradorPt.SetLanguage(languagePt);
-                var titleModeradorEn = new RoleLecturerTitle("Moderator", "En");
-                titleModeradorEn.SetLanguage(languageEn);
-                var titlesModeradores = new List<RoleLecturerTitle>() { titleModeradorPt, titleModeradorEn };
+        //        var titleModeradorPt = new RoleLecturerTitle("Moderador", "PtBr");
+        //        titleModeradorPt.SetLanguage(languagePt);
+        //        var titleModeradorEn = new RoleLecturerTitle("Moderator", "En");
+        //        titleModeradorEn.SetLanguage(languageEn);
+        //        var titlesModeradores = new List<RoleLecturerTitle>() { titleModeradorPt, titleModeradorEn };
 
-                var titleInterventorPt = new RoleLecturerTitle("Interventor", "PtBr");
-                titleInterventorPt.SetLanguage(languagePt);
-                var titleInterventorEn = new RoleLecturerTitle("Interventor", "En");
-                titleInterventorEn.SetLanguage(languageEn);
-                var titlesInterventores = new List<RoleLecturerTitle>() { titleInterventorPt, titleInterventorEn };
+        //        var titleInterventorPt = new RoleLecturerTitle("Interventor", "PtBr");
+        //        titleInterventorPt.SetLanguage(languagePt);
+        //        var titleInterventorEn = new RoleLecturerTitle("Interventor", "En");
+        //        titleInterventorEn.SetLanguage(languageEn);
+        //        var titlesInterventores = new List<RoleLecturerTitle>() { titleInterventorPt, titleInterventorEn };
 
-                var titleEntrevistadorPt = new RoleLecturerTitle("Entrevistador", "PtBr");
-                titleEntrevistadorPt.SetLanguage(languagePt);
-                var titleEntrevistadorEn = new RoleLecturerTitle("Interviewer", "En");
-                titleEntrevistadorEn.SetLanguage(languageEn);
-                var titlesEntrevistadores = new List<RoleLecturerTitle>() { titleEntrevistadorPt, titleEntrevistadorEn };
+        //        var titleEntrevistadorPt = new RoleLecturerTitle("Entrevistador", "PtBr");
+        //        titleEntrevistadorPt.SetLanguage(languagePt);
+        //        var titleEntrevistadorEn = new RoleLecturerTitle("Interviewer", "En");
+        //        titleEntrevistadorEn.SetLanguage(languageEn);
+        //        var titlesEntrevistadores = new List<RoleLecturerTitle>() { titleEntrevistadorPt, titleEntrevistadorEn };
 
-                var titleApresentadorPt = new RoleLecturerTitle("Apresentador", "PtBr");
-                titleApresentadorPt.SetLanguage(languagePt);
-                var titleApresentadorEn = new RoleLecturerTitle("Presenter", "En");
-                titleApresentadorEn.SetLanguage(languageEn);
-                var titlesApresentadores = new List<RoleLecturerTitle>() { titleApresentadorPt, titleApresentadorEn };
+        //        var titleApresentadorPt = new RoleLecturerTitle("Apresentador", "PtBr");
+        //        titleApresentadorPt.SetLanguage(languagePt);
+        //        var titleApresentadorEn = new RoleLecturerTitle("Presenter", "En");
+        //        titleApresentadorEn.SetLanguage(languageEn);
+        //        var titlesApresentadores = new List<RoleLecturerTitle>() { titleApresentadorPt, titleApresentadorEn };
 
-                context.RoleLecturers.AddRange(
-                    new List<RoleLecturer>()
-                    {
-                                new RoleLecturer(titlesPalestrante),
-                                new RoleLecturer(titlesKeynotes),
-                                new RoleLecturer(titlesModeradores),
-                                new RoleLecturer(titlesInterventores),
-                                new RoleLecturer(titlesEntrevistadores),
-                                new RoleLecturer(titlesApresentadores)
-                            }
-                        );
-            }
-        }
+        //        context.RoleLecturers.AddRange(
+        //            new List<RoleLecturer>()
+        //            {
+        //                        new RoleLecturer(titlesPalestrante),
+        //                        new RoleLecturer(titlesKeynotes),
+        //                        new RoleLecturer(titlesModeradores),
+        //                        new RoleLecturer(titlesInterventores),
+        //                        new RoleLecturer(titlesEntrevistadores),
+        //                        new RoleLecturer(titlesApresentadores)
+        //                    }
+        //                );
+        //    }
+        //}
     }
 }

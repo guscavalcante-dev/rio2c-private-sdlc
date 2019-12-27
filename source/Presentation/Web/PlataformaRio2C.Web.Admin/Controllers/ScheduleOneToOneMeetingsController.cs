@@ -1,126 +1,126 @@
-﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Rafael Dantas Ruiz
-// Created          : 06-28-2019
-//
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-07-2019
-// ***********************************************************************
-// <copyright file="ScheduleOneToOneMeetingsController.cs" company="Softo">
-//     Copyright (c) Softo. All rights reserved.
-// </copyright>
-// <summary></summary>
-// ***********************************************************************
-using OfficeOpenXml;
-using PlataformaRio2C.Application.Interfaces.Services;
-using PlataformaRio2C.Application.ViewModels;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using System.IO;
-using System.Web.Mvc;
-using MediatR;
-using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
+﻿//// ***********************************************************************
+//// Assembly         : PlataformaRio2C.Web.Admin
+//// Author           : Rafael Dantas Ruiz
+//// Created          : 06-28-2019
+////
+//// Last Modified By : Rafael Dantas Ruiz
+//// Last Modified On : 08-07-2019
+//// ***********************************************************************
+//// <copyright file="ScheduleOneToOneMeetingsController.cs" company="Softo">
+////     Copyright (c) Softo. All rights reserved.
+//// </copyright>
+//// <summary></summary>
+//// ***********************************************************************
+//using OfficeOpenXml;
+//using PlataformaRio2C.Application.Interfaces.Services;
+//using PlataformaRio2C.Application.ViewModels;
+//using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+//using System.IO;
+//using System.Web.Mvc;
+//using MediatR;
+//using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 
-namespace PlataformaRio2C.Web.Admin.Controllers
-{
-    /// <summary>ScheduleOneToOneMeetingsController</summary>
-    [Authorize(Roles = "Administrator")]
-    public class ScheduleOneToOneMeetingsController : BaseController
-    {
-        private readonly INegotiationAppService _negotiationAppService;
+//namespace PlataformaRio2C.Web.Admin.Controllers
+//{
+//    /// <summary>ScheduleOneToOneMeetingsController</summary>
+//    [Authorize(Roles = "Administrator")]
+//    public class ScheduleOneToOneMeetingsController : BaseController
+//    {
+//        private readonly INegotiationAppService _negotiationAppService;
 
-        /// <summary>Initializes a new instance of the <see cref="ScheduleOneToOneMeetingsController"/> class.</summary>
-        /// <param name="commandBus">The command bus.</param>
-        /// <param name="identityController">The identity controller.</param>
-        /// <param name="negotiationAppService">The negotiation application service.</param>
-        public ScheduleOneToOneMeetingsController(IMediator commandBus, IdentityAutenticationService identityController, INegotiationAppService negotiationAppService)
-            : base(commandBus, identityController)
-        {
-            _negotiationAppService = negotiationAppService;
-        }
+//        /// <summary>Initializes a new instance of the <see cref="ScheduleOneToOneMeetingsController"/> class.</summary>
+//        /// <param name="commandBus">The command bus.</param>
+//        /// <param name="identityController">The identity controller.</param>
+//        /// <param name="negotiationAppService">The negotiation application service.</param>
+//        public ScheduleOneToOneMeetingsController(IMediator commandBus, IdentityAutenticationService identityController, INegotiationAppService negotiationAppService)
+//            : base(commandBus, identityController)
+//        {
+//            _negotiationAppService = negotiationAppService;
+//        }
 
-        public ActionResult Index()
-        {
-            return View();
-        }
+//        public ActionResult Index()
+//        {
+//            return View();
+//        }
 
-        public ActionResult Process()
-        {
-            return View();
-        }
+//        public ActionResult Process()
+//        {
+//            return View();
+//        }
 
-        public ActionResult UnscheduledNegotiations()
-        {
-            return View();
-        }
+//        public ActionResult UnscheduledNegotiations()
+//        {
+//            return View();
+//        }
 
-        [Authorize(Users = "projeto.rio2c@marlin.com.br")]
-        public ActionResult Test()
-        {
-            return View();
-        }
+//        [Authorize(Users = "projeto.rio2c@marlin.com.br")]
+//        public ActionResult Test()
+//        {
+//            return View();
+//        }
 
-        public ActionResult RegisterNegotiationManual()
-        {
-            return View(new ManualNegotiationRegisterAppViewModel());
-        }
+//        public ActionResult RegisterNegotiationManual()
+//        {
+//            return View(new ManualNegotiationRegisterAppViewModel());
+//        }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult RegisterNegotiationManual(ManualNegotiationRegisterAppViewModel viewModel)
-        {
-            var result = _negotiationAppService.RegisterNegotiationManual(viewModel);
+//        [HttpPost]
+//        [ValidateAntiForgeryToken]
+//        public ActionResult RegisterNegotiationManual(ManualNegotiationRegisterAppViewModel viewModel)
+//        {
+//            var result = _negotiationAppService.RegisterNegotiationManual(viewModel);
 
-            if (result.IsValid)
-            {
-                this.StatusMessage("Negociação agendada com sucesso!", Infra.CrossCutting.Tools.Enums.StatusMessageType.Success);
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                ModelState.AddModelError("", "Erro ao agendar negociação! Verifique o preenchimento dos campos!");
+//            if (result.IsValid)
+//            {
+//                this.StatusMessage("Negociação agendada com sucesso!", Infra.CrossCutting.Tools.Enums.StatusMessageType.Success);
+//                return RedirectToAction("Index");
+//            }
+//            else
+//            {
+//                ModelState.AddModelError("", "Erro ao agendar negociação! Verifique o preenchimento dos campos!");
 
-                foreach (var error in result.Errors)
-                {
-                    var target = error.Target ?? "";
-                    ModelState.AddModelError(target, error.Message);
-                }
-            }
+//                foreach (var error in result.Errors)
+//                {
+//                    var target = error.Target ?? "";
+//                    ModelState.AddModelError(target, error.Message);
+//                }
+//            }
 
-            return View(viewModel);
-        }
+//            return View(viewModel);
+//        }
 
-        public ActionResult SendEmailToPlayers()
-        {
-            return View();
-        }
+//        public ActionResult SendEmailToPlayers()
+//        {
+//            return View();
+//        }
 
-        public ActionResult SendEmailToProducers()
-        {
-            return View();
-        }
+//        public ActionResult SendEmailToProducers()
+//        {
+//            return View();
+//        }
 
-        public ActionResult Report()
-        {
-            return View();
-        }
+//        public ActionResult Report()
+//        {
+//            return View();
+//        }
 
-        public ActionResult ExportExcel(string date, string roomName)
-        {
-            using (ExcelPackage excelFile = _negotiationAppService.ExportExcel(date, roomName))
-            {
-                var stream = new MemoryStream();
-                excelFile.SaveAs(stream);
+//        public ActionResult ExportExcel(string date, string roomName)
+//        {
+//            using (ExcelPackage excelFile = _negotiationAppService.ExportExcel(date, roomName))
+//            {
+//                var stream = new MemoryStream();
+//                excelFile.SaveAs(stream);
 
-                string dateName = date.Replace('/', '-');
+//                string dateName = date.Replace('/', '-');
 
-                string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                string fileName = string.Format("Relatório agenda - {0} - {1}", dateName, roomName) + ".xlsx";
+//                string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+//                string fileName = string.Format("Relatório agenda - {0} - {1}", dateName, roomName) + ".xlsx";
 
-                stream.Position = 0;
+//                stream.Position = 0;
 
-                return File(stream, contentType, fileName);
-            }
-        }
+//                return File(stream, contentType, fileName);
+//            }
+//        }
 
-    }
-}
+//    }
+//}

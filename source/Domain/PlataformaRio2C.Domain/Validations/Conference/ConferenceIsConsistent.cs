@@ -12,7 +12,7 @@ namespace PlataformaRio2C.Domain.Entities.Validations
             base.AddRule(new ValidationRule<Conference>(new ConferenceStartTimeIsRequired(), "Hora de início é obrigatória!"));
             base.AddRule(new ValidationRule<Conference>(new ConferenceEndTimeIsRequired(), "Hora de término é obrigatória!"));
             base.AddRule(new ValidationRule<Conference>(new ConferenceRoomIsRequired(), "Sala é obrigatória!"));
-            base.AddRule(new ValidationRule<Conference>(new ConferenceMustHaveOneLecturer(), "Pelo menos 1 palestrante é obrigatório!"));
+            //base.AddRule(new ValidationRule<Conference>(new ConferenceMustHaveOneLecturer(), "Pelo menos 1 palestrante é obrigatório!"));
             base.AddRule(new ValidationRule<Conference>(new ConferenceMustHaveOneTitle(), "Pelo menos 1 título é obrigatório!"));
             base.AddRule(new ValidationRule<Conference>(new ConferenceMustHaveOneSynopsis(), "Pelo menos 1 sinopse é obrigatório!"));
             base.AddRule(new ValidationRule<Conference>(new ConferenceTitleEnIsRequired(), "Título em inglês obrigatório!"));

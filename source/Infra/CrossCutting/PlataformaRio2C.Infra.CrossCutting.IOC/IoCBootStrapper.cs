@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-28-2019
+// Last Modified On : 12-27-2019
 // ***********************************************************************
 // <copyright file="IoCBootStrapper.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -69,17 +69,17 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
             //container.Register<ISystemParameterAppService, SystemParameterAppService>(Lifestyle.Scoped);
             container.Register<IUnitOfWorkSystemParameter, SystemParameter.UnitOfWorkWithLog<PlataformaRio2CContext>>(Lifestyle.Scoped);
 
-            container.Register<IProducerAppService, ProducerAppService>(Lifestyle.Scoped);
-            container.Register<IProducerService, ProducerService>(Lifestyle.Scoped);
+            //container.Register<IProducerAppService, ProducerAppService>(Lifestyle.Scoped);
+            //container.Register<IProducerService, ProducerService>(Lifestyle.Scoped);
             //container.Register<IProducerRepository, ProducerRepository>(Lifestyle.Scoped);
 
             container.Register<IEmailAppService, EmailAppService>(Lifestyle.Scoped);
 
-            container.Register<IMessageAppService, MessageAppService>(Lifestyle.Scoped);
+            //container.Register<IMessageAppService, MessageAppService>(Lifestyle.Scoped);
             container.Register<IMessageService, MessageService>(Lifestyle.Scoped);
             //container.Register<IMessageRepository, MessageRepository>(Lifestyle.Scoped);
 
-            container.Register<IProjectService, ProjectService>(Lifestyle.Scoped);
+            //container.Register<IProjectService, ProjectService>(Lifestyle.Scoped);
             //container.Register<IProjectAppService, ProjectAppService>(Lifestyle.Scoped);
             //container.Register<IProjectRepository, ProjectRepository>(Lifestyle.Scoped);
 
@@ -90,17 +90,17 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
             //container.Register<IRoomRepository, RoomRepository>(Lifestyle.Scoped);
             container.Register<IRoomAppService, RoomAppService>(Lifestyle.Scoped);
 
-            container.Register<IRoleLecturerService, RoleLecturerService>(Lifestyle.Scoped);
+            //container.Register<IRoleLecturerService, RoleLecturerService>(Lifestyle.Scoped);
             //container.Register<IRoleLecturerRepository, RoleLecturerRepository>(Lifestyle.Scoped);
-            container.Register<IRoleLecturerAppService, RoleLecturerAppService>(Lifestyle.Scoped);
+            //container.Register<IRoleLecturerAppService, RoleLecturerAppService>(Lifestyle.Scoped);
 
-            container.Register<IDashboardAppService, DashboardAppService>(Lifestyle.Scoped);
+            //container.Register<IDashboardAppService, DashboardAppService>(Lifestyle.Scoped);
 
             container.Register<INegotiationService, NegotiationService>(Lifestyle.Scoped);
             //container.Register<INegotiationRepository, NegotiationRepository>(Lifestyle.Scoped);
-            container.Register<INegotiationAppService, NegotiationAppService>(Lifestyle.Scoped);
+            //container.Register<INegotiationAppService, NegotiationAppService>(Lifestyle.Scoped);
 
-            container.Register<IScheduleAppService, ScheduleAppService>(Lifestyle.Scoped);
+            //container.Register<IScheduleAppService, ScheduleAppService>(Lifestyle.Scoped);
 
             container.Register<IQuizAnswerAppService, QuizAnswerAppService>(Lifestyle.Scoped);
             container.Register<IQuizAnswerService, QuizAnswerService>(Lifestyle.Scoped);
@@ -148,36 +148,36 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
             container.Register<IUserAppService, UserAppService>(Lifestyle.Scoped);
             container.Register<IUserService, UserService>(Lifestyle.Scoped);
 
-            container.Register<IPlayerRestrictionsSpecificsService, PlayerRestrictionsSpecificsService>(Lifestyle.Scoped);
+            //container.Register<IPlayerRestrictionsSpecificsService, PlayerRestrictionsSpecificsService>(Lifestyle.Scoped);
 
-            container.Register<ILogisticsAppService, LogisticsAppService>(Lifestyle.Scoped);
+            //container.Register<ILogisticsAppService, LogisticsAppService>(Lifestyle.Scoped);
             container.Register<ILogisticsService, LogisticsService>(Lifestyle.Scoped);
 
 
-            container.Register<IConferenceAppService, ConferenceAppService>(Lifestyle.Scoped);
-            container.Register<IConferenceService, ConferenceService>(Lifestyle.Scoped);
+            //container.Register<IConferenceAppService, ConferenceAppService>(Lifestyle.Scoped);
+            //container.Register<IConferenceService, ConferenceService>(Lifestyle.Scoped);
 
-            container.Register<ISpeakerService, SpeakerService>(Lifestyle.Scoped);
-            container.Register<ISpeakerAppService, SpeakerAppService>(Lifestyle.Scoped);
+            //container.Register<ISpeakerService, SpeakerService>(Lifestyle.Scoped);
+            //container.Register<ISpeakerAppService, SpeakerAppService>(Lifestyle.Scoped);
 
-            container.Register<IMusicalCommissionService, MusicalCommissionService>(Lifestyle.Scoped);
-            container.Register<IMusicalCommissionAppService, MusicalCommissionAppService>(Lifestyle.Scoped);
+            //container.Register<IMusicalCommissionService, MusicalCommissionService>(Lifestyle.Scoped);
+            //container.Register<IMusicalCommissionAppService, MusicalCommissionAppService>(Lifestyle.Scoped);
         }
 
         /// <summary>Resolves the holding.</summary>
         /// <param name="container">The container.</param>
         public static void ResolveHolding(Container container)
         {
-            container.Register<IHoldingService, HoldingService>(Lifestyle.Scoped);
-            container.Register<IHoldingAppService, HoldingAppService>(Lifestyle.Scoped);
+            //container.Register<IHoldingService, HoldingService>(Lifestyle.Scoped);
+            //container.Register<IHoldingAppService, HoldingAppService>(Lifestyle.Scoped);
         }
 
         /// <summary>Resolves the collaborator.</summary>
         /// <param name="container">The container.</param>
         public static void ResolveCollaborator(Container container)
         {
-            container.Register<ICollaboratorService, CollaboratorService>(Lifestyle.Scoped);
-            container.Register<ICollaboratorAppService, CollaboratorAppService>(Lifestyle.Scoped);
+            //container.Register<ICollaboratorService, CollaboratorService>(Lifestyle.Scoped);
+            //container.Register<ICollaboratorAppService, CollaboratorAppService>(Lifestyle.Scoped);
 
             container.Register<ICountryService, CountryService>(Lifestyle.Scoped);
             container.Register<ICountryAppService, CountryAppService>(Lifestyle.Scoped);
@@ -187,8 +187,8 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
         /// <param name="container">The container.</param>
         public static void ResolveCollaboratorPlayer(Container container)
         {
-            container.Register<ICollaboratorPlayerService, CollaboratorPlayerService>(Lifestyle.Scoped);
-            container.Register<ICollaboratorPlayerAppService, CollaboratorPlayerAppService>(Lifestyle.Scoped);
+            //container.Register<ICollaboratorPlayerService, CollaboratorPlayerService>(Lifestyle.Scoped);
+            //container.Register<ICollaboratorPlayerAppService, CollaboratorPlayerAppService>(Lifestyle.Scoped);
         }
 
         /// <summary>Resolves the collaborator producer.</summary>
@@ -197,24 +197,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
         {
             //container.Register<IApiSymplaAppService, ApiSymplaAppService>(Lifestyle.Scoped);
 
-            container.Register<ICollaboratorProducerService, CollaboratorProducerService>(Lifestyle.Scoped);
-            container.Register<ICollaboratorProducerAppService, CollaboratorProducerAppService>(Lifestyle.Scoped);
+            //container.Register<ICollaboratorProducerService, CollaboratorProducerService>(Lifestyle.Scoped);
+            //container.Register<ICollaboratorProducerAppService, CollaboratorProducerAppService>(Lifestyle.Scoped);
         }
 
         /// <summary>Resolves the player.</summary>
         /// <param name="container">The container.</param>
         public static void ResolvePlayer(Container container)
         {
-            container.Register<IPlayerAppService, PlayerAppService>(Lifestyle.Scoped);
-            container.Register<IPlayerInterestService, PlayerInterestService>(Lifestyle.Scoped);
+            //container.Register<IPlayerAppService, PlayerAppService>(Lifestyle.Scoped);
+            //container.Register<IPlayerInterestService, PlayerInterestService>(Lifestyle.Scoped);
         }
 
         /// <summary>Resolves the user.</summary>
         /// <param name="container">The container.</param>
         public static void ResolveUser(Container container)
         {
-            container.Register<IUserUseTermAppService, UserUseTermAppService>(Lifestyle.Scoped);
-            container.Register<IUserUseTermService, UserUseTermService>(Lifestyle.Scoped);
+            //container.Register<IUserUseTermAppService, UserUseTermAppService>(Lifestyle.Scoped);
+            //container.Register<IUserUseTermService, UserUseTermService>(Lifestyle.Scoped);
         }
 
         /// <summary>Resolves the interest group.</summary>

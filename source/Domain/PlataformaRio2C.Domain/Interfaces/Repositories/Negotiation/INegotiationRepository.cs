@@ -8,8 +8,8 @@ namespace PlataformaRio2C.Domain.Interfaces
 {
     public interface INegotiationRepository : IRepository<Negotiation>
     {
-        IEnumerable<Player> GetAllPlayers();
-        IEnumerable<Producer> GetAllProducers();
+        //IEnumerable<Player> GetAllPlayers();
+        //IEnumerable<Producer> GetAllProducers();
         IQueryable<Negotiation> GetAllBySchedule(Expression<Func<Negotiation, bool>> filter);        
         void Truncate();
     }    

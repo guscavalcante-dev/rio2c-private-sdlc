@@ -1,9 +1,9 @@
-﻿using PlataformaRio2C.Domain.Entities;
-using System;
+﻿//using PlataformaRio2C.Domain.Entities;
+//using System;
 
-namespace PlataformaRio2C.Domain.Interfaces
-{
-    public interface ILecturerRepository : IRepository<Lecturer>
-    {
-    }    
-}
+//namespace PlataformaRio2C.Domain.Interfaces
+//{
+//    public interface ILecturerRepository : IRepository<Lecturer>
+//    {
+//    }    
+//}
