@@ -466,7 +466,8 @@
     <value>Resumo</value>
   </data>
   <data name="Titles" xml:space="preserve">
-    <value>Título</value>
+    <value>Títulos</value>
+    <comment>Títulos</comment>
   </data>
   <data name="TotalValueOfProject" xml:space="preserve">
     <value>Valor total do projeto (USD)</value>
@@ -755,6 +756,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   </data>
   <data name="Title" xml:space="preserve">
     <value>Título</value>
+    <comment>Título</comment>
   </data>
   <data name="ArrivalDate" xml:space="preserve">
     <value>Data da chegada</value>
@@ -1918,7 +1920,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>{0} em destaque</comment>
   </data>
   <data name="EndDate" xml:space="preserve">
-    <value>Data Término</value>
-    <comment>Data Término</comment>
+    <value>Data de término</value>
+    <comment>Data de término</comment>
   </data>
 </root>

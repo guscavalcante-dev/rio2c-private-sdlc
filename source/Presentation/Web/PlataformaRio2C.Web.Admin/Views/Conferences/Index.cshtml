@@ -33,19 +33,12 @@
     @Scripts.Render("~/bundles/js/conferences.list.js")
     @Scripts.Render("~/bundles/js/conferences.editioncount.js")
     @*@Scripts.Render("~/bundles/js/attendeeorganizations.form.js")*@
-    @*@Scripts.Render("~/bundles/js/speakers.create.js")*@
+    @Scripts.Render("~/bundles/js/conferences.create.js")
     @*@Scripts.Render("~/bundles/js/speakers.update.js")*@
     @*@Scripts.Render("~/bundles/js/speakers.delete.js")*@
     @*@Scripts.Render("~/bundles/js/addresses.form.js")*@
     <script>
         // Page translations ----------------------------------------------------------------------
-        var addToEdition = '@string.Format(Labels.AddToEdition, ViewBag.EditionDto.UrlCode)';
-        var removeFromEdition = '@string.Format(Labels.RemoveFromEdition, ViewBag.EditionDto.UrlCode)';
-        var theFieldIsRequired = '@Messages.TheFieldIsRequired';
-        var ticketType = '@Labels.Ticket';
-        var sendInvitationEmail = '@Labels.SendInvitationEmail';
-        var exportToEventbrite = '@Labels.ExportToEventbrite';
-        var confirmToSendInvitationEmails = '@Messages.ConfirmToSendInvitationEmails';
 
         // Pagination -----------------------------------------------------------------------------
         var initialPage = @(Model.Page?.ToString() ?? "null");

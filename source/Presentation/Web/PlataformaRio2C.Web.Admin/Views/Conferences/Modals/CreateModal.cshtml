@@ -1,0 +1,23 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateConference
+<div class="modal fade" id="CreateConferenceModal" role="dialog" aria-labelledby="CreateConferenceModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@Labels.NewF @Labels.Conference</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Create", "Conferences", new { Area = "" }, FormMethod.Post, new { id = "CreateConferenceForm" }))
+                {
+                    <div id="form-container">
+                        @Html.Partial("Modals/_CreateForm", Model)
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">@Labels.Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="$('#CreateConferenceForm').submit();">@Labels.Save</button>
+            </div>
+        </div>
+    </div>
+</div>

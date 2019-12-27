@@ -1267,7 +1267,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data Término.
+        ///   Looks up a localized string similar to Data de término.
         /// </summary>
         public static string EndDate {
             get {
@@ -4039,7 +4039,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Título.
+        ///   Looks up a localized string similar to Títulos.
         /// </summary>
         public static string Titles {
             get {

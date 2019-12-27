@@ -31,6 +31,10 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.HasRequired(t => t.Conference)
                 .WithMany(t => t.ConferenceTitles)
                 .HasForeignKey(d => d.ConferenceId);
+
+            this.HasRequired(t => t.Language)
+                .WithMany()
+                .HasForeignKey(d => d.LanguageId);
         }
     }
 }

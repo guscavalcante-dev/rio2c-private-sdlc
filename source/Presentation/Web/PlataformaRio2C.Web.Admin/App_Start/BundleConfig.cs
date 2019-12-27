@@ -345,8 +345,8 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/conferences.editioncount.js").Include(
                 "~/Assets/js/conferences/conferences.editioncount.widget.js"));
 
-            //bundles.Add(new ScriptBundle("~/bundles/js/conferences.create.js").Include(
-            //    "~/Assets/js/conferences/conferences.create.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/conferences.create.js").Include(
+                "~/Assets/js/conferences/conferences.create.js"));
 
             //bundles.Add(new StyleBundle("~/bundles/css/conferences.details.css").Include(
             //    "~/Assets/themes/metronic/css/demo4/pages/pricing/pricing-1.css"));

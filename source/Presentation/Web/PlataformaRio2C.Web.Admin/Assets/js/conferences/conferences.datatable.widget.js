@@ -129,30 +129,7 @@ var ConferencesDataTableWidget = function () {
             },
             columns: [
                 {
-                    data: 'Title',
-                    render: function (data, type, full, meta) {
-                        var html = '\
-                                <table class="image-side-text text-left">\
-                                    <tr>\
-                                        <td>';
-
-                        if (!MyRio2cCommon.isNullOrEmpty(full.ImageUploadDate)) {
-                            html += '<img src="' + imageDirectory + full.Uid + '_thumbnail.png?v=' + moment(full.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
-                        }
-                        else {
-                            html += '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" /> ';
-                        }
-
-                        html += '       <td> ' + full.FullName + '</td>\
-                                    </tr>\
-                                </table>';
-
-                        if (!full.IsInCurrentEdition) {
-                            html += '<span class="kt-badge kt-badge--inline kt-badge--info mt-2">' + labels.notInEdition + '</span>';
-                        }
-
-                        return html;
-                    }
+                    data: 'Title'
                 },
                 {
                      data: 'Room'
@@ -162,42 +139,12 @@ var ConferencesDataTableWidget = function () {
                     render: function (data) {
                         return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
-                    //render: function (data, type, row, meta) {
-                    //    var html = '<ul class="m-0 pl-4">';
-
-                    //    //loop through all the row details to build output string
-                    //    for (var item in row.AttendeeOrganizationBasesDtos) {
-                    //        if (row.AttendeeOrganizationBasesDtos.hasOwnProperty(item)) {
-                    //            var r = row.AttendeeOrganizationBasesDtos[item];
-                    //            html += '<li>' + r.DisplayName + '</li>';
-                    //        }
-                    //    }
-
-                    //    html += '</ul>';
-
-                    //    return html;
-                    //}
                 },
                 {
                     data: 'EndDate',
                     render: function (data) {
                         return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
-                    //render: function (data, type, row, meta) {
-                    //    var html = '<ul class="m-0 pl-4">';
-
-                    //    //loop through all the row details to build output string
-                    //    for (var item in row.AttendeeOrganizationBasesDtos) {
-                    //        if (row.AttendeeOrganizationBasesDtos.hasOwnProperty(item)) {
-                    //            var r = row.AttendeeOrganizationBasesDtos[item];
-                    //            html += '<li>' + r.DisplayName + '</li>';
-                    //        }
-                    //    }
-
-                    //    html += '</ul>';
-
-                    //    return html;
-                    //}
                 },
                 {
                     data: 'CreateDate',
@@ -222,19 +169,8 @@ var ConferencesDataTableWidget = function () {
                                             </a>\
                                             <div class="dropdown-menu dropdown-menu-right">';
 
-                        if (!full.IsInCurrentEdition) {
-                            html += '<button class="dropdown-item" onclick="ConferencesUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
-                        }
-                        else {
-                            html += '<button class="dropdown-item" onclick="ConferencesDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-edit"></i> ' + labels.edit + '</button>';
-                        }
-
-                        if (full.IsInCurrentEdition && full.IsInOtherEdition) {
-                            html += '<button class="dropdown-item" onclick="ConferencesDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + removeFromEdition + '</button>';
-                        }
-                        else {
-                            html += '<button class="dropdown-item" onclick="ConferencesDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
-                        }
+                        html += '               <button class="dropdown-item" onclick="ConferencesDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-edit"></i> ' + labels.edit + '</button>';
+                        html += '               <button class="dropdown-item" onclick="ConferencesDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
 
                         html += '\
                                             </div>\

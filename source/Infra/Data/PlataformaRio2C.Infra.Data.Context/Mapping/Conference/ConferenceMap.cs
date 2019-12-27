@@ -27,12 +27,6 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             //Property(u => u.Info)
             //   .HasMaxLength(Conference.InfoMaxLength);
 
-            //this.Property(p => p.StartTime)             
-            // .IsRequired();
-
-            //this.Property(p => p.EndTime)            
-            //.IsRequired();
-
             //Relationships 
             this.HasOptional(t => t.Room)
               .WithMany()

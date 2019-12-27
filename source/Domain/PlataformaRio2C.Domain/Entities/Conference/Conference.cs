@@ -14,6 +14,7 @@
 using PlataformaRio2C.Domain.Validation;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
@@ -40,10 +41,91 @@ namespace PlataformaRio2C.Domain.Entities
         //public virtual ICollection<ConferenceLecturer> Lecturers { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="Conference"/> class.</summary>
+        /// <param name="conferenceUid">The conference uid.</param>
+        /// <param name="edition">The edition.</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <param name="conferenceTitles">The conference titles.</param>
+        /// <param name="userId">The user identifier.</param>
+        public Conference(
+            Guid conferenceUid,
+            Edition edition,
+            DateTime startDate,
+            DateTime endDate,
+            List<ConferenceTitle> conferenceTitles,
+            int userId)
+        {
+            //this.Uid = conferenceUid;
+            this.EditionId = edition?.Id ?? 0;
+            this.Edition = edition;
+            this.StartDate = startDate;
+            this.EndDate = endDate;
+            this.SynchronizeConferenceTitles(conferenceTitles, userId);
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="Conference"/> class.</summary>
         protected Conference()
         {
-
         }
+
+        #region Conference Titles
+
+        /// <summary>Synchronizes the conference titles.</summary>
+        /// <param name="conferenceTitles">The conference titles.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeConferenceTitles(List<ConferenceTitle> conferenceTitles, int userId)
+        {
+            if (this.ConferenceTitles == null)
+            {
+                this.ConferenceTitles = new List<ConferenceTitle>();
+            }
+
+            this.DeleteConferenceTitles(conferenceTitles, userId);
+
+            if (conferenceTitles?.Any() != true)
+            {
+                return;
+            }
+
+            // Create or update job titles
+            foreach (var conferenceTitle in conferenceTitles)
+            {
+                var conferenceTitleDb = this.ConferenceTitles.FirstOrDefault(d => d.Language.Code == conferenceTitle.Language.Code);
+                if (conferenceTitleDb != null)
+                {
+                    conferenceTitleDb.Update(conferenceTitle);
+                }
+                else
+                {
+                    this.CreateConferenceTitle(conferenceTitle);
+                }
+            }
+        }
+
+        /// <summary>Deletes the conference titles.</summary>
+        /// <param name="newConferenceTitles">The new conference titles.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteConferenceTitles(List<ConferenceTitle> newConferenceTitles, int userId)
+        {
+            var conferenceTitlesToDelete = this.ConferenceTitles.Where(db => newConferenceTitles?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false && !db.IsDeleted).ToList();
+            foreach (var conferenceTitleToDelete in conferenceTitlesToDelete)
+            {
+                conferenceTitleToDelete.Delete(userId);
+            }
+        }
+
+        /// <summary>Creates the conference title.</summary>
+        /// <param name="conferenceTitle">The conference title.</param>
+        private void CreateConferenceTitle(ConferenceTitle conferenceTitle)
+        {
+            this.ConferenceTitles.Add(conferenceTitle);
+        }
+
+        #endregion
 
         #region Validations
 

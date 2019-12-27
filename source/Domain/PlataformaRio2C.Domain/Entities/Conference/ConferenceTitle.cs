@@ -20,8 +20,8 @@ namespace PlataformaRio2C.Domain.Entities
     /// <summary>ConferenceTitle</summary>
     public class ConferenceTitle : Entity
     {
-        public static readonly int ValueMinLength = 2;
-        public static readonly int ValueMaxLength = 8000;
+        public static readonly int ValueMinLength = 1;
+        public static readonly int ValueMaxLength = 100;
 
         public int ConferenceId { get; private set; }
         public int LanguageId { get; private set; }

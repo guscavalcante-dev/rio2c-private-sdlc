@@ -188,6 +188,8 @@
     <Compile Include="CQRS\CommandsHandlers\Collaborators\DeleteCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorSiteMainInformationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Conferences\ConferenceBaseCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Conferences\CreateConferenceCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendSpeakerWelcomeEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Common\SendForgotPasswordEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Site\SendProjectBuyerEvaluationEmailAsyncCommandHandler.cs" />
@@ -249,6 +251,8 @@
     <Compile Include="CQRS\Commands\Collaborators\UpdateTinyCollaborator.cs" />
     <Compile Include="CQRS\Commands\Collaborators\UpdateCollaboratorSiteMainInformation.cs" />
     <Compile Include="CQRS\Commands\Common\BaseCommands\InterestBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Conferences\BaseCommands\ConferenceTitleBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Conferences\CreateConference.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendSpeakerWelcomeEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Common\SendForgotPasswordEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Site\SendProjectBuyerEvaluationEmailAsync.cs" />

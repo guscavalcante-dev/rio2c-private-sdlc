@@ -394,6 +394,7 @@
     <Content Include="Assets\js\conferences\conferences.datatable.widget.js" />
     <Content Include="Assets\js\conferences\conferences.editioncount.widget.js" />
     <Content Include="Assets\js\conferences\conferences.totalcount.widget.js" />
+    <Content Include="Assets\js\conferences\conferences.create.js" />
     <Content Include="Assets\js\speakers\speakers.company.widget.js" />
     <Content Include="Assets\js\speakers\speakers.apiconfiguration.widget.js" />
     <Content Include="Assets\js\speakers\speakers.maininformation.widget.js" />
@@ -8206,6 +8207,9 @@
     <Content Include="Views\Conferences\Widgets\DataTableWidget.cshtml" />
     <Content Include="Views\Conferences\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Views\Conferences\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Views\Conferences\Modals\CreateModal.cshtml" />
+    <Content Include="Views\Conferences\Modals\_CreateForm.cshtml" />
+    <Content Include="Views\Conferences\EditorTemplates\ConferenceTitleBaseCommand.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -8230,7 +8234,6 @@
     <Folder Include="Scripts\ckeditor\themes\default\" />
     <Folder Include="UploadsArchives\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\Conferences\Modals\" />
     <Folder Include="Views\Event\" />
     <Folder Include="Views\PlayerProducer\" />
     <Folder Include="Views\Rio2CNetwork\" />
