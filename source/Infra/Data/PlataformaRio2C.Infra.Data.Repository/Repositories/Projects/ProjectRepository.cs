@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-10-2019
+// Last Modified By : William Sergio Almado Junior
+// Last Modified On : 12-13-2019
 // ***********************************************************************
 // <copyright file="ProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -439,6 +439,77 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return await query
                            .OrderBy(pd => pd.CreateDate)
                            .ToListPagedAsync(page, pageSize);
+        }
+
+        public async Task<ProjectDto> FindPitchingProjectDtoByUidAsync(Guid projectUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(projectUid)
+                                .IsPitching()
+                                .Select(p => new ProjectDto
+                                {
+                                    Project = p,
+                                    SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                    {
+                                        AttendeeOrganization = p.SellerAttendeeOrganization,
+                                        Organization = p.SellerAttendeeOrganization.Organization,
+                                        Edition = p.SellerAttendeeOrganization.Edition
+                                    },
+                                    ProjectTitleDtos = p.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                    {
+                                        ProjectTitle = t,
+                                        Language = t.Language
+                                    }),
+                                    ProjectSummaryDtos = p.ProjectSummaries.Where(s => !s.IsDeleted).Select(s => new ProjectSummaryDto
+                                    {
+                                        ProjectSummary = s,
+                                        Language = s.Language
+                                    }),
+                                    ProjectLogLineDtos = p.ProjectLogLines.Where(l => !l.IsDeleted).Select(l => new ProjectLogLineDto
+                                    {
+                                        ProjectLogLine = l,
+                                        Language = l.Language
+                                    }),
+                                    ProjectProductionPlanDtos = p.ProjectProductionPlans.Where(pp => !pp.IsDeleted).Select(pp => new ProjectProductionPlanDto
+                                    {
+                                        ProjectProductionPlan = pp,
+                                        Language = pp.Language
+                                    }),
+                                    ProjectAdditionalInformationDtos = p.ProjectAdditionalInformations.Where(a => !a.IsDeleted).Select(a => new ProjectAdditionalInformationDto
+                                    {
+                                        ProjectAdditionalInformation = a,
+                                        Language = a.Language
+                                    }),
+                                    ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted).Select(i => new ProjectInterestDto
+                                    {
+                                        ProjectInterest = i,
+                                        Interest = i.Interest,
+                                        InterestGroup = i.Interest.InterestGroup
+                                    })
+                                });
+
+
+            return await query.FirstOrDefaultAsync();
+        }
+
+        public async Task<List<ProjectBaseDto>> FindAllPitchingProjectsDtoByKeywordsAsync(string searchKeywords, string languageCode)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByKeywords(searchKeywords)
+                                .IsPitching()
+                                .Select(p => new ProjectBaseDto
+                                {
+                                    Id = p.Id,
+                                    Uid = p.Uid,
+                                    ProjectName = p.ProjectTitles.Where(t => t.Language.Code == languageCode).Select(t => t.Value).FirstOrDefault(),
+                                    ProducerName = p.SellerAttendeeOrganization.Organization.Name,
+                                    CreateDate = p.CreateDate,
+                                    FinishDate = p.FinishDate
+                                });
+
+            return await query
+                            .OrderBy(pd => pd.CreateDate)
+                            .ToListAsync(); ;
         }
 
         #region Site Widgets

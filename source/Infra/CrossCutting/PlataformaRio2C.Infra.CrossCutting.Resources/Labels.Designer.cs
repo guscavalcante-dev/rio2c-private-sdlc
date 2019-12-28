@@ -19,7 +19,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Labels {
@@ -1096,6 +1096,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Baixar.
+        /// </summary>
+        public static string Download {
+            get {
+                return ResourceManager.GetString("Download", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Baixar todos os projetos.
+        /// </summary>
+        public static string DownloadAllProjects {
+            get {
+                return ResourceManager.GetString("DownloadAllProjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Baixar lista de executivos.
         /// </summary>
         public static string DownloadListOfExecutives {
@@ -1110,6 +1128,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string DownloadListProjects {
             get {
                 return ResourceManager.GetString("DownloadListProjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Baixar projetos selecionados.
+        /// </summary>
+        public static string DownloadSelectedProjects {
+            get {
+                return ResourceManager.GetString("DownloadSelectedProjects", resourceCulture);
             }
         }
         

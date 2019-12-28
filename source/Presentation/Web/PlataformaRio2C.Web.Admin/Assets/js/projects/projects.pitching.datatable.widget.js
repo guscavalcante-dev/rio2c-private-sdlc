@@ -12,14 +12,104 @@
 // <summary></summary>
 // ***********************************************************************
 
-var ProjectsPitchingDataTableWidget = function () {
+var ProjectsPitchingDataTableWidget = function() {
 
     var widgetElementId = '#ProjectPitchingDataTableWidget';
     var tableElementId = '#projectpitching-list-table';
-
+    var projectData;
     var table;
 
-    var initiListTable = function () {
+    // Invitation email ---------------------------------------------------------------------------
+    var downloadSelectedProjects = function(projectData) {
+        MyRio2cCommon.block();
+
+        var jsonParameters = new Object();
+        jsonParameters.selectedProjectsUids = $('#projectpitching-list-table_wrapper tr.selected').map(function() { return $(this).data('id'); }).get().join(',');
+
+        var listUids = jsonParameters.selectedProjectsUids.split(',');
+
+        $.each(listUids, function(e) {
+            projectData.filter(function(value) {
+                if (value.Uid === listUids[e]) {
+                    window.open(value.UrlDownload);
+                }
+            })
+        });
+
+        MyRio2cCommon.unblock();
+
+    };
+
+    var downloadAllProjects = function() {
+        MyRio2cCommon.block();
+
+        var jsonParameters = new Object();
+        jsonParameters.keyword = $('#Search').val();
+
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/DownloadAllProjects'), jsonParameters, function(data) {
+            MyRio2cCommon.handleAjaxReturn({
+                data: data,
+                // Success
+                onSuccess: function() {
+                    $.each(data["data"], function(key, value) {
+                        window.open(value.UrlDownload);
+                        console.log(value);
+                    });
+                },
+                // Error
+                onError: function() {
+                }
+            });
+        })
+            .fail(function() {
+            })
+            .always(function() {
+                MyRio2cCommon.unblock();
+            });
+    };
+
+    var showDownloadModal = function() {
+        bootbox.dialog({
+            message: translations.confirmDownload,
+            buttons: {
+                cancel: {
+                    label: labels.cancel,
+                    className: "btn btn-secondary btn-elevate mr-auto",
+                    callback: function() {
+                    }
+                },
+                confirm: {
+                    label: labels.send,
+                    className: "btn btn-brand btn-elevate",
+                    callback: function() {
+                        downloadAllProjects();
+                    }
+                }
+            }
+        });
+    };
+
+    var showSelectedListDownloadModal = function(projectData) {
+        bootbox.dialog({
+            message: translations.confirmDownload,
+            buttons: {
+                cancel: {
+                    label: labels.cancel,
+                    className: "btn btn-secondary btn-elevate mr-auto",
+                    callback: function() {
+                    }
+                },
+                confirm: {
+                    label: labels.send,
+                    className: "btn btn-brand btn-elevate",
+                    callback: function() {
+                        downloadSelectedProjects(projectData);
+                    }
+                }
+            }
+        });
+    };
+    var initiListTable = function() {
         var tableElement = $(tableElementId);
 
         // Disable datatable alert
@@ -59,17 +149,25 @@ var ProjectsPitchingDataTableWidget = function () {
             processing: true,
             serverSide: true,
             buttons: [
-            {
-                extend: 'collection',
-                text: labels.actions,
-                buttons: [
-                    {
-                        text: translations.downloadListProjects,
-                        action: function (e, dt, node, config) {
-                            alert('Download');
-                        }
-                    }]
-            }],
+                {
+                    extend: 'collection',
+                    text: labels.actions,
+                    buttons: [
+                        {
+                            text: translations.downloadSelectedProjects,
+                            action: function(e, dt, node, config) {
+                                showSelectedListDownloadModal(projectData);
+                            }
+                        },
+                        {
+                            text: translations.downloadAllProjects,
+                            action: function(e, dt, node, config) {
+                                showDownloadModal();
+                            }
+                        },
+
+                    ]
+                }],
             order: [[0, "asc"]],
             sDom: '<"row"<"col-sm-6"l><"col-sm-6 text-right"B>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
             oSearch: {
@@ -77,16 +175,17 @@ var ProjectsPitchingDataTableWidget = function () {
             },
             ajax: {
                 url: MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/ShowPitchingListWidget'),
-                data: function (d) {
-                    console.log(d);
+                data: function(d) {
                 },
-                dataFilter: function (data) {
+                dataFilter: function(data) {
                     var jsonReturned = JSON.parse(data);
+
+                    projectData = jsonReturned.dataTable.Data;
 
                     return MyRio2cCommon.handleAjaxReturn({
                         data: jsonReturned,
                         // Success
-                        onSuccess: function () {
+                        onSuccess: function() {
                             // Parameters returned with capital letter
                             var json = new Object();
                             json.draw = jsonReturned.dataTable.Draw;
@@ -98,16 +197,16 @@ var ProjectsPitchingDataTableWidget = function () {
                             return JSON.stringify(json); // return JSON string
                         },
                         // Error
-                        onError: function () {
+                        onError: function() {
                         }
                     });
                 },
-                error: function (jqXHR, textStatus, errorThrown) {
+                error: function(jqXHR, textStatus, errorThrown) {
                     $(tableElementId + '_processing').hide();
                     MyRio2cCommon.showAlert();
                 }
             },
-            createdRow: function (row, data, dataIndex) {
+            createdRow: function(row, data, dataIndex) {
                 $(row).attr('data-id', data.Uid);
             },
             columns: [
@@ -115,36 +214,16 @@ var ProjectsPitchingDataTableWidget = function () {
                 { data: 'ProducerName' },
                 {
                     data: 'CreateDate',
-                    render: function (data) {
+                    render: function(data) {
                         return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
                 },
                 {
                     data: 'FinishDate',
-                    render: function (data) {
+                    render: function(data) {
                         return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
                 },
-                {
-                    data: 'Actions',
-                    responsivePriority: -1,
-                    render: function (data, type, full, meta) {
-                        var html = '\
-                                        <span class="dropdown">\
-                                            <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">\
-                                              <i class="la la-ellipsis-h"></i>\
-                                            </a>\
-                                            <div class="dropdown-menu dropdown-menu-right">';
-
-                        
-                        html += '<button class="dropdown-item" onclick="#"><i class="la la-plus"></i> Botao1</button>';
-                        html += '\
-                                            </div>\
-                                        </span>';
-
-                        return html;
-                    }
-                }
             ],
             columnDefs: [
                 {
@@ -160,43 +239,35 @@ var ProjectsPitchingDataTableWidget = function () {
                     targets: [2, 3],
                     className: "dt-center"
                 },
-                {
-                    targets: -1,
-                    title: 'Actions',
-                    width: "10%",
-                    orderable: false,
-                    searchable: false,
-                    className: "dt-center"
-                }
             ],
             initComplete: function() {
                 $('button.buttons-collection').attr('data-toggle', 'dropdown');
             }
         });
 
-        $('#Search').keyup(function (e) {
+        $('#Search').keyup(function(e) {
             if (e.keyCode === 13) {
                 table.search($(this).val()).draw();
             }
         });
 
-        $('.enable-datatable-reload').click(function (e) {
+        $('.enable-datatable-reload').click(function(e) {
             table.ajax.reload();
         });
 
         MyRio2cCommon.unblock({ idOrClass: widgetElementId });
     };
 
-    var refreshData = function () {
+    var refreshData = function() {
         table.ajax.reload();
     };
 
     return {
-        init: function () {
+        init: function() {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             initiListTable();
         },
-        refreshData: function () {
+        refreshData: function() {
             refreshData();
         },
     };

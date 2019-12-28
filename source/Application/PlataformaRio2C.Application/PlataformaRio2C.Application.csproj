@@ -65,6 +65,9 @@
     <Reference Include="HtmlAgilityPack, Version=1.11.16.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\HtmlAgilityPack.1.11.16\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
+    <Reference Include="itextsharp, Version=5.5.9.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\iTextSharp.5.5.9\lib\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="LazyCache, Version=2.0.1.113, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\LazyCache.2.0.1\lib\netstandard2.0\LazyCache.dll</HintPath>
     </Reference>
@@ -420,6 +423,7 @@
     <Compile Include="Services\Common\HoldingAppService.cs" />
     <Compile Include="Services\Common\ScheduleAppService.cs" />
     <Compile Include="Services\Emails\IMailerService.cs" />
+    <Compile Include="TemplateDocuments\ProjectDocumentTemplate.cs" />
     <Compile Include="ViewModels\Admin\ConfigNetworkRio2C\ConfigNetworkRio2CAppViewModel.cs" />
     <Compile Include="ViewModels\Admin\Dashboard\DataItemChartAppViewModel.cs" />
     <Compile Include="ViewModels\Admin\FinancialReport\ItemFinancialReportAppViewModel.cs" />
@@ -615,6 +619,10 @@
     <ProjectReference Include="..\..\Infra\Data\PlataformaRio2c.Infra.Data.FileRepository\PlataformaRio2c.Infra.Data.FileRepository.csproj">
       <Project>{6f4648ee-2d98-4e95-bc92-0760af1fd909}</Project>
       <Name>PlataformaRio2c.Infra.Data.FileRepository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Infra\Report\PlataformaRio2C.Infra.Report\PlataformaRio2C.Infra.Report.csproj">
+      <Project>{d9f58a23-b5eb-4250-83be-08c8a34a98e6}</Project>
+      <Name>PlataformaRio2C.Infra.Report</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

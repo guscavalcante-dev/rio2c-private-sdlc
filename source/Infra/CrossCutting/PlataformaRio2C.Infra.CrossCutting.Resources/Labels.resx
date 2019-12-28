@@ -1881,4 +1881,16 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Avaliar</value>
     <comment>Avaliar</comment>
   </data>
+  <data name="DownloadAllProjects" xml:space="preserve">
+    <value>Baixar todos os projetos</value>
+    <comment>Baixar todos os projetos</comment>
+  </data>
+  <data name="DownloadSelectedProjects" xml:space="preserve">
+    <value>Baixar projetos selecionados</value>
+    <comment>Baixar projetos selecionados</comment>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Baixar</value>
+    <comment>Baixar</comment>
+  </data>
 </root>

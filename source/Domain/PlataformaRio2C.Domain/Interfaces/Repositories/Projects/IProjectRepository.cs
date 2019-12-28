@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-10-2019
+// Last Modified By : William Sergio Almado Junior
+// Last Modified On : 12-28-2019
 // ***********************************************************************
 // <copyright file="IProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,6 +30,8 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<List<ProjectDto>> FindAllDtosToSellAsync(Guid attendeeOrganizationUid, bool showAll);
         Task<IPagedList<ProjectDto>> FindAllDtosToEvaluateAsync(Guid attendeeCollaboratorUid, string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int page, int pageSize);
         Task<IPagedList<ProjectBaseDto>> FindAllPitchingProjectsDtoAsync(string searchKeywords, string languageCode, int page, int pageSize);
+        Task<ProjectDto> FindPitchingProjectDtoByUidAsync(Guid projectUid);
+        Task<List<ProjectBaseDto>> FindAllPitchingProjectsDtoByKeywordsAsync(string searchKeywords, string languageCode);
         Task<ProjectDto> FindSiteDetailsDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteMainInformationWidgetDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteInterestWidgetDtoByProjectUidAsync(Guid projectUid);

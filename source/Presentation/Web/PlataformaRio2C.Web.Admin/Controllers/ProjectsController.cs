@@ -15,16 +15,20 @@ using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
 using Newtonsoft.Json;
-using PlataformaRio2C.Application.ViewModels;
-using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Application.TemplateDocuments;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
+using PlataformaRio2C.Infra.Report;
 using PlataformaRio2C.Web.Admin.Filters;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Constants = PlataformaRio2C.Domain.Constants;
@@ -32,14 +36,13 @@ using Constants = PlataformaRio2C.Domain.Constants;
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>ProjectsController</summary>
-    [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual)] //TODO: Definir roles
+    //[AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
+    //[AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual)] //TODO: Definir roles
     public class ProjectsController : BaseController
     {
 
         private readonly IProjectRepository projectRepo;
         private readonly IInterestRepository interestRepo;
-        private readonly IActivityRepository activityRepo;
 
         /// <summary>Initializes a new instance of the <see cref="ProjectsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -79,7 +82,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #endregion
 
-
         #region Pitching
         /// <summary>Pitching project list</summary>
         /// <param name="searchKeywords"></param>
@@ -88,7 +90,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ProjectsPitchingList()
+        public ActionResult ProjectsPitchingList()
         {
             #region Breadcrumb
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Producers, new List<BreadcrumbItemHelper>{
@@ -113,6 +115,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         public async Task<ActionResult> ShowPitchingListWidget(IDataTablesRequest request)
         {
             var projects = await this.projectRepo.FindAllPitchingProjectsDtoAsync(request.Search?.Value, this.UserInterfaceLanguage, request.Start / request.Length, request.Length);
+            foreach (var item in projects)
+            {
+                item.UrlDownload = this.Url.Action("DownloadProjectDocument", "Projects", new { uid = item.Uid }, this.Request.Url.Scheme);
+            }
+
 
             ViewBag.Page = request.Start / request.Length;
             ViewBag.PageSize = request.Length;
@@ -126,5 +133,62 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
         #endregion
+
+        #region Project Document Generation
+        [HttpGet]
+        public async Task<FileResult> DownloadProjectDocument(Guid uid)
+        {
+            if (uid == null)
+            {
+                throw new DomainException(Messages.SelectAtLeastOneOption);
+            }
+
+            var projectDto = await this.projectRepo.FindPitchingProjectDtoByUidAsync(uid);
+            if (projectDto == null)
+            {
+                throw new DomainException(Messages.SelectAtLeastOneOption);
+            }
+
+            var pdf = new PlataformaRio2CDocument(new ProjectDocumentTemplate(projectDto));
+
+            return File(pdf.GetStream(), "application/pdf", "ProjectDocument_" + uid + ".pdf");
+        }
+
+
+        /// <summary>Download pitching projects.</summary>
+        /// <param name="selectedProjectsUids">The selected projects uids.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> DownloadAllProjects(string keyword)
+        {
+            try
+            {
+                var projectsDtos = await this.projectRepo.FindAllPitchingProjectsDtoByKeywordsAsync(keyword, this.UserInterfaceLanguage);
+                foreach (var item in projectsDtos)
+                {
+                    item.UrlDownload = this.Url.Action("DownloadProjectDocument", "Projects", new { uid = item.Uid }, this.Request.Url.Scheme);
+                }
+
+
+                return Json(new
+                {
+                    status = "success",
+                    data = projectsDtos,
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage(), }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        #endregion
+
     }
 }

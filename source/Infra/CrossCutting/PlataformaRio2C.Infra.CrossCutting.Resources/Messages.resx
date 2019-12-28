@@ -831,4 +831,16 @@
     <value>para a página de login</value>
     <comment>para a página de login</comment>
   </data>
+  <data name="TemplateDocumentCorrupted" xml:space="preserve">
+    <value>O documento modelo está corrompido.</value>
+    <comment>O documento modelo está corrompido.</comment>
+  </data>
+  <data name="TemplateDocumentNotDownloaded" xml:space="preserve">
+    <value>O documento modelo não pode ser baixado.</value>
+    <comment>O documento modelo não pode ser baixado.</comment>
+  </data>
+  <data name="TemplateDocumentNotFound" xml:space="preserve">
+    <value>O doumento modelo não foi encontrado.</value>
+    <comment>O doumento modelo não foi encontrado.</comment>
+  </data>
 </root>

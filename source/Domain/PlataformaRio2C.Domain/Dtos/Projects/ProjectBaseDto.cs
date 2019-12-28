@@ -26,6 +26,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTime CreateDate { get; set; }
         public DateTime? FinishDate { get; set; }
 
+        public string UrlDownload { get; set; }
+
         /// <summary>Initializes a new instance of the <see cref="ProjectBaseDto"/> class.</summary>
         public ProjectBaseDto()
         {
