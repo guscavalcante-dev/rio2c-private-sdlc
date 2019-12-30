@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-29-2019
+// Last Modified On : 12-19-2019
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,8 +22,8 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using LinqKit;
 using PlataformaRio2C.Domain.Dtos;
-using X.PagedList;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using X.PagedList;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -119,6 +119,25 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds the by highlights.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
+        /// <param name="showHighlights">The show highlights.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> FindByHighlights(this IQueryable<Collaborator> query, string collaboratorTypeName, bool? showHighlights)
+        {
+            if (showHighlights.HasValue && showHighlights.Value)
+            {
+                query = query.Where(o => o.AttendeeCollaborators.Any(ac => !ac.IsDeleted
+                                                                           && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
+                                                                                                                      && act.CollaboratorType.Name == collaboratorTypeName
+                                                                                                                      && act.IsApiDisplayEnabled
+                                                                                                                      && act.ApiHighlightPosition.HasValue)));
+            }
+
+            return query;
+        }
+
         /// <summary>Finds the by edition identifier.</summary>
         /// <param name="query">The query.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
@@ -146,6 +165,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             if (!string.IsNullOrEmpty(keywords))
             {
                 var outerWhere = PredicateBuilder.New<Collaborator>(false);
+                var innerExecutiveBadgeNameWhere = PredicateBuilder.New<Collaborator>(true);
                 var innerExecutiveNameWhere = PredicateBuilder.New<Collaborator>(true);
                 var innerExecutiveEmailWhere = PredicateBuilder.New<Collaborator>(true);
                 var innerOrganizationNameWhere = PredicateBuilder.New<Collaborator>(true);
@@ -155,8 +175,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 {
                     if (!string.IsNullOrEmpty(keyword))
                     {
-                        innerExecutiveNameWhere = innerExecutiveNameWhere.And(c => (c.User.Name).Contains(keyword));
-                        innerExecutiveEmailWhere = innerExecutiveEmailWhere.And(c => (c.User.Email).Contains(keyword));
+                        innerExecutiveBadgeNameWhere = innerExecutiveBadgeNameWhere.And(c => c.Badge.Contains(keyword));
+                        innerExecutiveNameWhere = innerExecutiveNameWhere.And(c => c.User.Name.Contains(keyword));
+                        innerExecutiveEmailWhere = innerExecutiveEmailWhere.And(c => c.User.Email.Contains(keyword));
                         innerOrganizationNameWhere = innerOrganizationNameWhere
                                                         .And(c => c.AttendeeCollaborators.Any(ac => (!editionId.HasValue || ac.EditionId == editionId)
                                                                                                     && !ac.IsDeleted
@@ -180,12 +201,28 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                     }
                 }
 
+                outerWhere = outerWhere.Or(innerExecutiveBadgeNameWhere);
                 outerWhere = outerWhere.Or(innerExecutiveNameWhere);
                 outerWhere = outerWhere.Or(innerExecutiveEmailWhere);
                 outerWhere = outerWhere.Or(innerOrganizationNameWhere);
                 outerWhere = outerWhere.Or(innerHoldingNameWhere);
                 query = query.Where(outerWhere);
             }
+
+            return query;
+        }
+
+        /// <summary>Determines whether [is API display enabled] [the specified edition identifier].</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> IsApiDisplayEnabled(this IQueryable<Collaborator> query, int editionId, string collaboratorTypeName)
+        {
+            query = query.Where(c => c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId
+                                                                       && ac.AttendeeCollaboratorTypes.Any(aot => !aot.IsDeleted
+                                                                                                                  && aot.CollaboratorType.Name == collaboratorTypeName
+                                                                                                                  && aot.IsApiDisplayEnabled)));
 
             return query;
         }
@@ -221,6 +258,31 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             page++;
 
+            // Page the list
+            var pagedList = await query.ToPagedListAsync(page, pageSize);
+            if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
+                pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
+
+            return pagedList;
+        }
+    }
+
+    #endregion
+
+    #region CollaboratorApiListDto IQueryable Extensions
+
+    /// <summary>
+    /// CollaboratorApiListDtoIQueryableExtensions
+    /// </summary>
+    internal static class CollaboratorApiListDtoIQueryableExtensions
+    {
+        /// <summary>Converts to listpagedasync.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        internal static async Task<IPagedList<CollaboratorApiListDto>> ToListPagedAsync(this IQueryable<CollaboratorApiListDto> query, int page, int pageSize)
+        {
             // Page the list
             var pagedList = await query.ToPagedListAsync(page, pageSize);
             if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
@@ -389,11 +451,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="keywords">The keywords.</param>
         /// <param name="sortColumns">The sort columns.</param>
         /// <param name="collaboratorsUids">The collaborators uids.</param>
-        /// <param name="organizationTypeUid">The organization type uid.</param>
         /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="showAllExecutives">if set to <c>true</c> [show all executives].</param>
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <param name="showHighlights">The show highlights.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
         public async Task<IPagedList<CollaboratorBaseDto>> FindAllByDataTable(
@@ -402,18 +464,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             string keywords,
             List<Tuple<string, string>> sortColumns, 
             List<Guid> collaboratorsUids,
-            Guid organizationTypeUid,
             string collaboratorTypeName,
             bool showAllEditions,
             bool showAllExecutives,
             bool showAllParticipants,
+            bool? showHighlights,
             int? editionId)
         {
             var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords, editionId)
                                 .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeName, showAllEditions, showAllExecutives, showAllParticipants, editionId)
-                                //.FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, showAllEditions, showAllExecutives, showAllParticipants, editionId)
-                                .FindByUids(collaboratorsUids);
+                                .FindByUids(collaboratorsUids)
+                                .FindByHighlights(collaboratorTypeName, showHighlights);
 
             return await query
                             .DynamicOrder<Collaborator>(
@@ -439,9 +501,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 ImageUploadDate = c.ImageUploadDate,
                                 CreateDate = c.CreateDate,
                                 UpdateDate = c.UpdateDate,
-                                IsInCurrentEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId
-                                                                                                             && !ac.Edition.IsDeleted
-                                                                                                             && !ac.IsDeleted),
+                                EditionAttendeeCollaborator = editionId.HasValue ? c.AttendeeCollaborators.FirstOrDefault(ac => ac.EditionId == editionId
+                                                                                                                                && !ac.Edition.IsDeleted
+                                                                                                                                && !ac.IsDeleted
+                                                                                                                                && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
+                                                                                                                                                                           && act.CollaboratorType.Name == collaboratorTypeName)) : 
+                                                                                   null,
                                 IsInOtherEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId
                                                                                                            && !ac.IsDeleted),
                                 AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
@@ -465,16 +530,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>Counts all by data table.</summary>
-        /// <param name="organizationTypeId">The organization type identifier.</param>
         /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<int> CountAllByDataTable(Guid organizationTypeId, string collaboratorTypeName, bool showAllEditions, int? editionId)
+        public async Task<int> CountAllByDataTable(string collaboratorTypeName, bool showAllEditions, int? editionId)
         {
             var query = this.GetBaseQuery()
                                 .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeName, showAllEditions, false, false, editionId);
-                                //.FindByOrganizationTypeUidAndByEditionId(organizationTypeId, showAllEditions, false, false, editionId);
 
             return await query.CountAsync();
         }
@@ -489,6 +552,100 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return await query.FirstOrDefaultAsync();
         }
+
+        #region Api
+
+        /// <summary>Finds all public API paged.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<CollaboratorApiListDto>> FindAllPublicApiPaged(int editionId, string keywords, string collaboratorTypeName, int page, int pageSize)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeName, false, false, false, editionId)
+                                .IsApiDisplayEnabled(editionId, collaboratorTypeName)
+                                .FindByKeywords(keywords, editionId);
+
+            return await query
+                            .Select(c => new CollaboratorApiListDto
+                            {
+                                Uid = c.Uid,
+                                BadgeName = c.Badge,
+                                Name = c.FirstName + " " + c.LastNames,
+                                ApiHighlightPosition = c.AttendeeCollaborators.Where(ac => !ac.IsDeleted && ac.EditionId == editionId).FirstOrDefault()
+                                                        .AttendeeCollaboratorTypes.Where(act => !act.IsDeleted && act.CollaboratorType.Name == collaboratorTypeName).FirstOrDefault()
+                                                        .ApiHighlightPosition,
+                                ImageUploadDate = c.ImageUploadDate,
+                                MiniBiosDtos = c.MiniBios.Where(mb => !mb.IsDeleted).Select(d => new CollaboratorMiniBioBaseDto
+                                {
+                                    Id = d.Id,
+                                    Uid = d.Uid,
+                                    Value = d.Value,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = d.Language.Id,
+                                        Uid = d.Language.Uid,
+                                        Name = d.Language.Name,
+                                        Code = d.Language.Code
+                                    }
+                                }),
+                                JobTitlesDtos = c.JobTitles.Where(jb => !jb.IsDeleted).Select(d => new CollaboratorJobTitleBaseDto
+                                {
+                                    Id = d.Id,
+                                    Uid = d.Uid,
+                                    Value = d.Value,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = d.Language.Id,
+                                        Uid = d.Language.Uid,
+                                        Name = d.Language.Name,
+                                        Code = d.Language.Code
+                                    }
+                                }),
+                                OrganizationsDtos = c.AttendeeCollaborators
+                                                            .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                            .SelectMany(ac => ac.AttendeeOrganizationCollaborators
+                                                                                    .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted && !aoc.AttendeeOrganization.Organization.IsDeleted)
+                                                                                    .Select(aoc => new OrganizationApiListDto
+                                                                                    {
+                                                                                        Uid = aoc.AttendeeOrganization.Organization.Uid,
+                                                                                        CompanyName = aoc.AttendeeOrganization.Organization.CompanyName,
+                                                                                        TradeName = aoc.AttendeeOrganization.Organization.TradeName,
+                                                                                        ImageUploadDate = aoc.AttendeeOrganization.Organization.ImageUploadDate
+
+                                                                                    })),
+                                CreateDate = c.CreateDate,
+                                UpdateDate = c.UpdateDate,
+                            })
+                            .OrderBy(o => o.ApiHighlightPosition ?? 99)
+                            .ThenBy(o => o.BadgeName)
+                            .ToListPagedAsync(page, pageSize);
+        }
+
+        /// <summary>Finds all by hightlight position.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="collaboratorTypeUid">The collaborator type uid.</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <returns></returns>
+        public async Task<List<Collaborator>> FindAllByHightlightPosition(int editionId, Guid collaboratorTypeUid, int apiHighlightPosition, Guid? organizationUid)
+        {
+            var query = this.GetBaseQuery()
+                                .Where(o => o.Uid != organizationUid
+                                            && o.AttendeeCollaborators.Any(ac => !ac.IsDeleted
+                                                                                 && ac.EditionId == editionId
+                                                                                 && ac.AttendeeCollaboratorTypes.Any(aot => !aot.IsDeleted
+                                                                                                                            && aot.CollaboratorType.Uid == collaboratorTypeUid
+                                                                                                                            && aot.ApiHighlightPosition == apiHighlightPosition)));
+
+            return await query
+                            .ToListAsync();
+        }
+
+        #endregion
 
         #region Old
 

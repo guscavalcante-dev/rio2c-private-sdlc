@@ -61,6 +61,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Declaro estar ciente e concordar com o termo acima..
+        /// </summary>
+        public static string AcceptImageAuthorization {
+            get {
+                return ResourceManager.GetString("AcceptImageAuthorization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Declaro estar ciente e concordar com as regras e regulamentos acima..
         /// </summary>
         public static string AcceptTermsAndConditions {
@@ -93,6 +102,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string AddressIsRequired {
             get {
                 return ResourceManager.GetString("AddressIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Substitui o destaque da lista abaixo..
+        /// </summary>
+        public static string AttentionHighlightsList {
+            get {
+                return ResourceManager.GetString("AttentionHighlightsList", resourceCulture);
             }
         }
         
@@ -663,6 +681,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Autorização do uso de imagem.
+        /// </summary>
+        public static string ImageAuthorizationForm {
+            get {
+                return ResourceManager.GetString("ImageAuthorizationForm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Imagem obrigatória.
         /// </summary>
         public static string ImageIsRequired {
@@ -947,6 +974,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string NoneEntityAction {
             get {
                 return ResourceManager.GetString("NoneEntityAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Não exibindo na edição {0} do site.
+        /// </summary>
+        public static string NotShowingOnSiteEdition {
+            get {
+                return ResourceManager.GetString("NotShowingOnSiteEdition", resourceCulture);
             }
         }
         
@@ -1550,6 +1586,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string SelectAtLeastOneOption {
             get {
                 return ResourceManager.GetString("SelectAtLeastOneOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exibindo na edição {0} do site.
+        /// </summary>
+        public static string ShowingOnSiteEdition {
+            get {
+                return ResourceManager.GetString("ShowingOnSiteEdition", resourceCulture);
             }
         }
         

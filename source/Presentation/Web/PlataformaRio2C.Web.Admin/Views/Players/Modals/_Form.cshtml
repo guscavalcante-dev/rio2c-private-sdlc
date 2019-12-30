@@ -6,7 +6,7 @@
     <div class="kt-separator kt-separator--border-dashed"></div>
     <div class="kt-section__content mt-3">
         <div class="row">
-            <div class="form-group col-lg-4 text-center">
+            <div class="form-group col-lg-4">
                 @Html.EditorFor(m => m.CropperImage)
             </div>
             <div class="col-lg-8">
@@ -165,17 +165,39 @@
 </div>
 <div class="kt-section">
     <div class="kt-separator kt-separator--border-dashed"></div>
-    <h3 class="kt-section__title mb-0">@Labels.Options</h3>
+    <h3 class="kt-section__title mb-0">@Labels.ApiConfigurations</h3>
     <div class="kt-separator kt-separator--border-dashed"></div>
-    <div class="kt-section__content mt-6">
-        @Html.Label($"{string.Format(Labels.DisplayOnSiteEdition, ViewBag.EditionDto.UrlCode)}", new { @class = "col-6 col-form-label" })
-        <div class="col-6">
-            <span class="kt-switch kt-switch--icon">
-                <label>
-                    @Html.CheckBoxFor(m => m.IsApiDisplayEnabled, true)
-                    <span></span>
-                </label>
-            </span>
+    <div class="kt-section__content">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-12">
+                        @Html.Label($"{string.Format(Labels.DisplayOnSiteEdition, ViewBag.EditionDto.UrlCode)}", new { @class = "control-label" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-12">
+                        <span class="kt-switch kt-switch--icon">
+                            <label>
+                                @Html.CheckBoxFor(m => m.IsApiDisplayEnabled, true)
+                                <span></span>
+                            </label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-12">
+                        @Html.Label(Labels.HighlightPosition, new { @class = "control-label" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-12">
+                        @Html.DropDownListFor(m => m.ApiHighlightPosition, new SelectList(Model.ApiHighlightPositions, Model.ApiHighlightPosition), Labels.Select + "...", new { @class = "form-control enable-select2" })
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

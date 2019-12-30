@@ -56,11 +56,15 @@
     <Reference Include="Migrations, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Migrations.1.0.1.0\lib\net40-Client\Migrations.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -73,15 +77,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\CookieName.cs" />
+    <Compile Include="Constants\Culture.cs" />
     <Compile Include="Constants\OrganizationType.cs" />
     <Compile Include="Constants\CollaboratorType.cs" />
     <Compile Include="Constants\Role.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorNetworkDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorSiteDetailsDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorSiteCompanyWidgetDto.cs" />
+    <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorApiConfigurationWidgetDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorSiteMainInformationWidgetDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorDto.cs" />
-    <Compile Include="Dtos\AttendeeOrganiaztionTypes\AttendeeOrganizationTypeDto.cs" />
+    <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorTypeDto.cs" />
+    <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationTypeDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttemdeeOrganizationSiteDetailsDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\MatchAttendeeOrganizationDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationDto.cs" />
@@ -92,9 +99,10 @@
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationSiteAddressWidgetDto.cs" />
     <Compile Include="Dtos\Addresses\AddressBaseDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorBaseDto.cs" />
-    <Compile Include="Dtos\AttendeeCollaboratorTickets\AttendeeCollaboratorTicketDto.cs" />
+    <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorTicketDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationBaseDto.cs" />
     <Compile Include="Dtos\Cities\CityBaseDto.cs" />
+    <Compile Include="Dtos\Collaborators\CollaboratorApiListDto.cs" />
     <Compile Include="Dtos\Collaborators\CollaboratorBaseDto.cs" />
     <Compile Include="Dtos\Collaborators\CollaboratorSiteMainInformationWidgetDto.cs" />
     <Compile Include="Dtos\Collaborators\CollaboratorDto.cs" />
@@ -294,6 +302,26 @@
     <Compile Include="Interfaces\Services\ILogisticsService.cs" />
     <Compile Include="Interfaces\Services\MusicalCommission\IMusicalCommissionService.cs" />
     <Compile Include="Interfaces\Services\Speaker\ISpeakerService.cs" />
+    <Compile Include="ApiModels\ApiBaseResponse.cs" />
+    <Compile Include="ApiModels\ApiPageBaseRequest.cs" />
+    <Compile Include="ApiModels\Collaborators\Responses\CollaboratorBaseApiResponse.cs" />
+    <Compile Include="ApiModels\Error.cs" />
+    <Compile Include="ApiModels\ListBaseModel.cs" />
+    <Compile Include="ApiModels\Organizations\Requests\OrganiationsApiRequest.cs" />
+    <Compile Include="ApiModels\Organizations\Requests\OrganizationApiRequest.cs" />
+    <Compile Include="ApiModels\Organizations\Responses\OrganizationApiResponse.cs" />
+    <Compile Include="ApiModels\Organizations\Responses\OrganizationBaseApiResponse.cs" />
+    <Compile Include="ApiModels\Organizations\Responses\OrganizationsApiResponse.cs" />
+    <Compile Include="ApiModels\Players\Requests\PlayerApiRequest.cs" />
+    <Compile Include="ApiModels\Players\Requests\PlayersApiRequest.cs" />
+    <Compile Include="ApiModels\Players\Responses\ActivityApiResponse.cs" />
+    <Compile Include="ApiModels\Players\Responses\InterestGroupApiResponse.cs" />
+    <Compile Include="ApiModels\Players\Responses\PlayerApiResponse.cs" />
+    <Compile Include="ApiModels\Players\Responses\PlayersApiResponse.cs" />
+    <Compile Include="ApiModels\Players\Responses\PlayersFiltersApiResponse.cs" />
+    <Compile Include="ApiModels\Players\Responses\TargetAudienceApiResponse.cs" />
+    <Compile Include="ApiModels\Speakers\Requests\SpeakersApiRequest.cs" />
+    <Compile Include="ApiModels\Speakers\Responses\SpeakersApiResponse.cs" />
     <Compile Include="Services\ConferenceService.cs" />
     <Compile Include="Services\CountryService.cs" />
     <Compile Include="Services\MailCollaboratorService.cs" />

@@ -4,7 +4,7 @@
 // Created          : 10-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-05-2019
+// Last Modified On : 12-19-2019
 // ***********************************************************************
 // <copyright file="ExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -108,7 +108,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? collaboratorUid)
         {
-            UpdateCollaboratorMainInformation cmd;
+            UpdateCollaboratorSiteMainInformation cmd;
 
             try
             {
@@ -123,7 +123,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
 
-                cmd = new UpdateCollaboratorMainInformation(
+                cmd = new UpdateCollaboratorSiteMainInformation(
                     mainInformationWidgetDto,
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     true,
@@ -149,12 +149,24 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> UpdateMainInformation(UpdateCollaboratorMainInformation cmd)
+        public async Task<ActionResult> UpdateMainInformation(UpdateCollaboratorSiteMainInformation cmd)
         {
             var result = new AppValidationResult();
 
             try
             {
+                var isExecutive = this.UserAccessControlDto?.HasAnyCollaboratorType(Constants.CollaboratorType.Executives) == true;
+                var isIndustry = this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true;
+
+                // Field SharePublicEmail does not exist for this types of users
+                if (!isExecutive && !isIndustry)
+                {
+                    if (ModelState.ContainsKey("SharePublicEmail"))
+                    {
+                        ModelState["SharePublicEmail"].Errors.Clear();
+                    }
+                }
+
                 if (!ModelState.IsValid)
                 {
                     throw new DomainException(Messages.CorrectFormValues);
@@ -245,6 +257,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 }
 
                 cmd = new CreateTicketBuyerOrganizationData(
+                    Guid.Empty,
                     null,
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
@@ -322,7 +335,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
             catch (Exception ex)
             {
-                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 

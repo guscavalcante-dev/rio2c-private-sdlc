@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified On : 12-18-2019
 // ***********************************************************************
 // <copyright file="OrganizationBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -82,11 +82,16 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Display(Name = "DisplayOnSite", ResourceType = typeof(Labels))]
         public bool IsApiDisplayEnabled { get; set; }
 
+        [Display(Name = "HighlightPosition", ResourceType = typeof(Labels))]
+        public int? ApiHighlightPosition { get; set; }
+
         public List<HoldingBaseDto> HoldingBaseDtos { get; private set; }
         public OrganizationType OrganizationType { get; private set; }
         public List<Activity> Activities { get; private set; }
         public List<TargetAudience> TargetAudiences { get; private set; }
         public List<CountryBaseDto> CountriesBaseDtos { get; private set; }
+
+        public int[] ApiHighlightPositions =  new[] { 1, 2, 3, 4, 5 };
 
         /// <summary>Initializes a new instance of the <see cref="OrganizationBaseCommand"/> class.</summary>
         public OrganizationBaseCommand()
@@ -95,6 +100,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Updates the base properties.</summary>
         /// <param name="entity">The entity.</param>
+        /// <param name="organizationType">Type of the organization.</param>
         /// <param name="holdingBaseDtos">The holding base dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
@@ -106,7 +112,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isRestrictionSpecificRequired">if set to <c>true</c> [is restriction specific required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         public void UpdateBaseProperties(
-            OrganizationDto entity, 
+            OrganizationDto entity,
+            OrganizationType organizationType,
             List<HoldingBaseDto> holdingBaseDtos, 
             List<LanguageDto> languagesDtos, 
             List<CountryBaseDto> countriesBaseDtos,
@@ -136,7 +143,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateDropdownProperties(holdingBaseDtos, countriesBaseDtos, activities, targetAudiences);
             this.TargetAudiencesUids = entity?.OrganizationTargetAudiencesDtos?.Select(otad => otad.TargetAudienceUid)?.ToList();
             this.UpdateInterests(entity, interestsDtos);
-            this.IsApiDisplayEnabled = entity?.IsApiDisplayEnabled ?? false;
+            this.UpdateApiConfigurations(entity, organizationType);
         }
 
         /// <summary>Updates the dropdown properties.</summary>
@@ -179,6 +186,21 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         }
 
         #region Private methods
+
+        /// <summary>Updates the API configurations.</summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="organizationType">Type of the organization.</param>
+        private void UpdateApiConfigurations(OrganizationDto entity, OrganizationType organizationType)
+        {
+            var attendeeOrganizationTypeDto = entity?.AttendeeOrganizationTypesDtos?.FirstOrDefault(aotd => aotd.OrganizationType.Uid == organizationType.Uid);
+            if (attendeeOrganizationTypeDto == null)
+            {
+                return;
+            }
+
+            this.IsApiDisplayEnabled = attendeeOrganizationTypeDto?.AttendeeOrganizationType?.IsApiDisplayEnabled ?? false;
+            this.ApiHighlightPosition = this.IsApiDisplayEnabled ? attendeeOrganizationTypeDto?.AttendeeOrganizationType?.ApiHighlightPosition : null;
+        }
 
         /// <summary>Updates the address.</summary>
         /// <param name="entity">The entity.</param>

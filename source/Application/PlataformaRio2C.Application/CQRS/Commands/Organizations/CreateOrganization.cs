@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified On : 12-18-2019
 // ***********************************************************************
 // <copyright file="CreateOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,6 +21,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     public class CreateOrganization : OrganizationBaseCommand
     {
         /// <summary>Initializes a new instance of the <see cref="CreateOrganization"/> class.</summary>
+        /// <param name="organizationType">Type of the organization.</param>
         /// <param name="holdingBaseDtos">The holding base dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
@@ -32,6 +33,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isRestrictionSpecificRequired">if set to <c>true</c> [is restriction specific required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         public CreateOrganization(
+            OrganizationType organizationType,
             List<HoldingBaseDto> holdingBaseDtos,
             List<LanguageDto> languagesDtos, 
             List<CountryBaseDto> countriesBaseDtos,
@@ -44,7 +46,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isImageRequired)
         {
             this.UpdateBaseProperties(
-                null, 
+                null,
+                organizationType,
                 holdingBaseDtos, 
                 languagesDtos, 
                 countriesBaseDtos, 

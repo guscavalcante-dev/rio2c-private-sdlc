@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-11-2019
+// Last Modified On : 12-13-2019
 // ***********************************************************************
 // <copyright file="IMailerService.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,6 +29,7 @@ namespace PlataformaRio2C.Application.Services
         #region Admin Emails
 
         MvcMailMessage SendPlayerWelcomeEmail(SendPlayerWelcomeEmailAsync cmd, Guid sentEmailUid);
+        MvcMailMessage SendSpeakerWelcomeEmail(SendSpeakerWelcomeEmailAsync cmd, Guid sentEmailUid);
 
         #endregion
 

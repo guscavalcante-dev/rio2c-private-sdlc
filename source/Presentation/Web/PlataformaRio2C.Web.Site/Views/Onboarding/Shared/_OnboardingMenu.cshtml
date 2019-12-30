@@ -9,6 +9,7 @@
     var isPlayer = ViewBag.IsPlayer as bool? == true;
     var isIndustry = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true;
     var isTicketBuyer = userAccessControlDto?.HasAnyCollaboratorType(Constants.CollaboratorType.TicketBuyers) == true;
+    var isSpeaker = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Speaker) == true;
 }
 <div class="kt-wizard-v2__nav">
     <div class="kt-wizard-v2__nav-items">
@@ -103,7 +104,21 @@
                     </div>
                 </div>
             </span>
-
+        }
+        @if (isSpeaker)
+        {
+            counter++;
+            <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : 
+                                                                                                  Model > counter || userAccessControlDto?.IsSpeakerTermsAcceptanceFinished() == true ? "done" : 
+                                                                                                  "pending")">
+                <div class="kt-wizard-v2__nav-body">
+                    <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
+                    <div class="kt-wizard-v2__nav-label">
+                        <div class="kt-wizard-v2__nav-label-title">@Messages.ImageAuthorizationForm</div>
+                        <div class="kt-wizard-v2__nav-label-desc">@Messages.ToProceedYouMustAcceptTheTerm</div>
+                    </div>
+                </div>
+            </span>
         }
     </div>
 </div>

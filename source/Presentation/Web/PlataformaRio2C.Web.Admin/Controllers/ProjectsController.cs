@@ -36,8 +36,8 @@ using Constants = PlataformaRio2C.Domain.Constants;
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>ProjectsController</summary>
-    //[AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
-    //[AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual)] //TODO: Definir roles
+    [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual)] //TODO: Definir roles
     public class ProjectsController : BaseController
     {
 
@@ -135,6 +135,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         #endregion
 
         #region Project Document Generation
+        /// <summary>
+        /// Download selected projects from pitching list projects
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<FileResult> DownloadProjectDocument(Guid uid)
         {
@@ -155,7 +160,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         }
 
 
-        /// <summary>Download pitching projects.</summary>
+        /// <summary>Download all pitching projects.</summary>
         /// <param name="selectedProjectsUids">The selected projects uids.</param>
         /// <returns></returns>
         [HttpPost]
@@ -168,7 +173,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 {
                     item.UrlDownload = this.Url.Action("DownloadProjectDocument", "Projects", new { uid = item.Uid }, this.Request.Url.Scheme);
                 }
-
 
                 return Json(new
                 {

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-12-2019
+// Last Modified On : 12-19-2019
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,7 +17,6 @@ using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -55,7 +54,35 @@ namespace PlataformaRio2C.Domain.Entities
         //public int? MusicalCommissionId { get;  set; }
         //public virtual ICollection<Speaker> Speaker { get;  set; }
 
-        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class for admin.</summary>
+        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class for tiny create on admin.</summary>
+        /// <param name="uid">The uid.</param>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="userId">The user identifier.</param>
+        public Collaborator(
+            Guid uid,
+            Edition edition,
+            CollaboratorType collaboratorType,
+            string firstName,
+            string lastNames,
+            string email,
+            int userId)
+        {
+            //this.Uid = uid;
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, null, null, true, userId);
+            this.UpdateUser(email);
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class for full create on admin.</summary>
         /// <param name="uid">The uid.</param>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="edition">The edition.</param>
@@ -66,6 +93,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="email">The email.</param>
         /// <param name="phoneNumber">The phone number.</param>
         /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="sharePublicEmail">The share public email.</param>
         /// <param name="publicEmail">The public email.</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="jobTitles">The job titles.</param>
@@ -82,6 +110,7 @@ namespace PlataformaRio2C.Domain.Entities
             string email,
             string phoneNumber,
             string cellPhone,
+            bool? sharePublicEmail,
             string publicEmail,
             bool isImageUploaded,
             List<CollaboratorJobTitle> jobTitles,
@@ -94,18 +123,18 @@ namespace PlataformaRio2C.Domain.Entities
             this.Badge = badge?.Trim();
             this.PhoneNumber = phoneNumber?.Trim();
             this.CellPhone = cellPhone?.Trim();
-            this.PublicEmail = publicEmail?.Trim();
+            this.UpdatePublicEmail(sharePublicEmail, publicEmail);
             this.UpdateImageUploadDate(isImageUploaded, false);
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
-            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, attendeeOrganizations, true, userId);
+            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, false, null, attendeeOrganizations, true, userId);
             this.UpdateUser(email);
         }
 
-        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class for webhook requests.</summary>
         /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <param name="edition">The edition.</param>
         /// <param name="newAttendeeOrganizations">The new attendee organizations.</param>
@@ -176,7 +205,35 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Updates the collaborator for admin.</summary>
+        /// <summary>Updates the tiny for admin.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateTiny(
+            Edition edition,
+            CollaboratorType collaboratorType,
+            string firstName,
+            string lastNames,
+            string email,
+            bool isAddingToCurrentEdition,
+            int userId)
+        {
+            //this.Uid = uid;
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, null, null, isAddingToCurrentEdition, userId);
+            this.UpdateUser(email);
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Updates the specified attendee organizations for admin.</summary>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
@@ -186,6 +243,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="email">The email.</param>
         /// <param name="phoneNumber">The phone number.</param>
         /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="sharePublicEmail">The share public email.</param>
         /// <param name="publicEmail">The public email.</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
@@ -203,6 +261,7 @@ namespace PlataformaRio2C.Domain.Entities
             string email,
             string phoneNumber,
             string cellPhone,
+            bool? sharePublicEmail,
             string publicEmail,
             bool isImageUploaded,
             bool isImageDeleted,
@@ -217,15 +276,121 @@ namespace PlataformaRio2C.Domain.Entities
             this.Badge = badge?.Trim();
             this.PhoneNumber = phoneNumber?.Trim();
             this.CellPhone = cellPhone?.Trim();
-            this.PublicEmail = publicEmail?.Trim();
+            this.UpdatePublicEmail(sharePublicEmail, publicEmail);
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
-            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, attendeeOrganizations, isAddingToCurrentEdition, userId);
+            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, null, attendeeOrganizations, isAddingToCurrentEdition, userId);
             this.UpdateUser(email);
+        }
+
+        /// <summary>Updates the admin main information.</summary>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="badge">The badge.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <param name="sharePublicEmail">The share public email.</param>
+        /// <param name="publicEmail">The public email.</param>
+        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
+        /// <param name="jobTitles">The job titles.</param>
+        /// <param name="miniBios">The mini bios.</param>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateAdminMainInformation(
+            CollaboratorType collaboratorType,
+            string firstName,
+            string lastNames,
+            string email,
+            string badge,
+            string cellPhone,
+            string phoneNumber,
+            bool? sharePublicEmail,
+            string publicEmail,
+            bool isImageUploaded,
+            bool isImageDeleted,
+            List<CollaboratorJobTitle> jobTitles,
+            List<CollaboratorMiniBio> miniBios,
+            Edition edition,
+            int userId)
+        {
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.UpdateUser(email);
+            this.Badge = badge?.Trim();
+            this.PhoneNumber = phoneNumber?.Trim();
+            this.CellPhone = cellPhone?.Trim();
+            this.UpdatePublicEmail(sharePublicEmail, publicEmail);
+            this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
+            this.SynchronizeJobTitles(jobTitles, userId);
+            this.SynchronizeMiniBios(miniBios, userId);
+            this.OnboardAttendeeCollaboratorData(edition, userId);
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Updates the site main information.</summary>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="badge">The badge.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <param name="sharePublicEmail">The share public email.</param>
+        /// <param name="publicEmail">The public email.</param>
+        /// <param name="jobTitles">The job titles.</param>
+        /// <param name="miniBios">The mini bios.</param>
+        /// <param name="edition">The edition.</param>
+        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateSiteMainInformation(
+            string firstName,
+            string lastNames,
+            string badge,
+            string cellPhone,
+            string phoneNumber,
+            bool? sharePublicEmail,
+            string publicEmail,
+            List<CollaboratorJobTitle> jobTitles,
+            List<CollaboratorMiniBio> miniBios,
+            Edition edition,
+            bool isImageUploaded,
+            int userId)
+        {
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.Badge = badge?.Trim();
+            this.PhoneNumber = phoneNumber?.Trim();
+            this.CellPhone = cellPhone?.Trim();
+            this.UpdatePublicEmail(sharePublicEmail, publicEmail);
+            this.UpdateImageUploadDate(isImageUploaded, false);
+            this.SynchronizeJobTitles(jobTitles, userId);
+            this.SynchronizeMiniBios(miniBios, userId);
+            this.OnboardAttendeeCollaboratorData(edition, userId);
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Updates the public email.</summary>
+        /// <param name="sharePublicEmail">The share public email.</param>
+        /// <param name="publicEmail">The public email.</param>
+        private void UpdatePublicEmail(bool? sharePublicEmail, string publicEmail)
+        {
+            if (!sharePublicEmail.HasValue)
+            {
+                return;
+            }
+
+            this.PublicEmail = sharePublicEmail == true ? publicEmail?.Trim() : null;
         }
 
         /// <summary>Deletes the specified edition.</summary>
@@ -508,6 +673,52 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Attendee Collaborators
 
+        /// <summary>Updates the API configuration.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="isApiDisplayEnabled">if set to <c>true</c> [is API display enabled].</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateApiConfiguration(
+            Edition edition,
+            CollaboratorType collaboratorType,
+            bool isApiDisplayEnabled,
+            int? apiHighlightPosition,
+            int userId)
+        {
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition?.Id ?? 0);
+            attendeeCollaborator?.UpdateApiConfiguration(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId);
+
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Deletes the API highlight position.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void DeleteApiHighlightPosition(Edition edition, CollaboratorType collaboratorType, int userId)
+        {
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition?.Id ?? 0);
+            attendeeCollaborator?.DeleteApiHighlightPosition(collaboratorType, userId);
+
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Deletes the organization.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void DeleteOrganization(Edition edition, Guid organizationUid, int userId)
+        {
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+            attendeeCollaborator?.DeleteAttendeeOrganizationCollaborator(organizationUid, userId);
+
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
         /// <summary>Gets the attendee collaborator by edition identifier.</summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
@@ -543,6 +754,15 @@ namespace PlataformaRio2C.Domain.Entities
             attendeeCollaborator?.OnboardPlayerTermsAcceptance(userId);
         }
 
+        /// <summary>Called when [attendee collaborator speaker terms acceptance].</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardAttendeeCollaboratorSpeakerTermsAcceptance(Edition edition, int userId)
+        {
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+            attendeeCollaborator?.OnboardSpeakerTermsAcceptance(userId);
+        }
+
         /// <summary>Called when [attendee collaborator producer terms acceptance].</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="userId">The user identifier.</param>
@@ -569,7 +789,15 @@ namespace PlataformaRio2C.Domain.Entities
                     this.AttendeeCollaborators = new List<AttendeeCollaborator>();
                 }
 
-                this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, null, null, this, false, userId)); //TODO: Onboard collaborator when the attendee collaborator does not exists (collaborator type)
+                this.AttendeeCollaborators.Add(new AttendeeCollaborator(
+                    edition, 
+                    null,
+                    null,
+                    null,
+                    null, 
+                    this, 
+                    false, 
+                    userId)); //TODO: Onboard collaborator when the attendee collaborator does not exists (collaborator type)
             }
         }
 
@@ -587,10 +815,19 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Synchronizes the attendee collaborators.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeAttendeeCollaborators(Edition edition, CollaboratorType collaboratorType, List<AttendeeOrganization> attendeeOrganizations, bool isAddingToCurrentEdition, int userId)
+        private void SynchronizeAttendeeCollaborators(
+            Edition edition, 
+            CollaboratorType collaboratorType,
+            bool? isApiDisplayEnabled,
+            int? apiHighlightPosition,
+            List<AttendeeOrganization> attendeeOrganizations, 
+            bool isAddingToCurrentEdition, 
+            int userId)
         {
             // Synchronize only when is adding to current edition
             if (!isAddingToCurrentEdition)
@@ -611,11 +848,11 @@ namespace PlataformaRio2C.Domain.Entities
             var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
             if (attendeeCollaborator != null)
             {
-                attendeeCollaborator.Update(edition, collaboratorType, attendeeOrganizations, true, userId);
+                attendeeCollaborator.Update(edition, collaboratorType, isApiDisplayEnabled, apiHighlightPosition, attendeeOrganizations, true, userId);
             }
             else
             {
-                this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, collaboratorType, attendeeOrganizations, this, true, userId));
+                this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, collaboratorType, isApiDisplayEnabled, apiHighlightPosition, attendeeOrganizations, this, true, userId));
             }
         }
 
@@ -840,34 +1077,6 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        #region Executive Player
-
-
-        public void UpdateCollaboratorMainInformation(CollaboratorDto collaborator, List<CollaboratorJobTitle> jobTitles,
-
-            List<CollaboratorMiniBio> miniBios, Edition edition, bool isImageUploaded)
-        {
-            this.FirstName = collaborator.FirstName?.Trim();
-            this.LastNames = collaborator.LastNames?.Trim();
-            this.Badge = collaborator.Badge?.Trim();
-            this.PhoneNumber = collaborator.PhoneNumber?.Trim();
-            this.CellPhone = collaborator.CellPhone?.Trim();
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
-            this.UpdateUserId = collaborator.Id;
-            var sharePublicEmail = !string.IsNullOrEmpty(collaborator.PublicEmail) ? (bool?)true : null;
-            this.PublicEmail = sharePublicEmail == true ? collaborator.PublicEmail?.Trim() : null;
-            this.UpdateImageUploadDate(isImageUploaded, false);
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
-            this.UpdateUserId = collaborator.Id;
-            this.SynchronizeJobTitles(jobTitles, collaborator.Id);
-            this.SynchronizeMiniBios(miniBios, collaborator.Id);
-            this.OnboardAttendeeCollaboratorData(edition, collaborator.Id);
-        }
-
-        #endregion
-
         #endregion
 
         #region Onboarding
@@ -899,11 +1108,12 @@ namespace PlataformaRio2C.Domain.Entities
             this.Badge = badge?.Trim();
             this.PhoneNumber = phoneNumber?.Trim();
             this.CellPhone = cellPhone?.Trim();
+            this.OnboardAttendeeCollaboratorAccessData(edition, userId);
+            this.OnboardUser(passwordHash);
+
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.OnboardAttendeeCollaboratorAccessData(edition, userId);
-            this.OnboardUser(passwordHash);
         }
 
         /// <summary>Called when [player terms acceptance].</summary>
@@ -913,12 +1123,27 @@ namespace PlataformaRio2C.Domain.Entities
             Edition edition,
             int userId)
         {
+            this.OnboardAttendeeCollaboratorPlayerTermsAcceptance(edition, userId);
+
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.OnboardAttendeeCollaboratorPlayerTermsAcceptance(edition, userId);
         }
 
+        /// <summary>Called when [speaker terms acceptance].</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardSpeakerTermsAcceptance(
+            Edition edition,
+            int userId)
+        {
+            this.OnboardAttendeeCollaboratorSpeakerTermsAcceptance(edition, userId);
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+        
         /// <summary>Called when [data].</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="sharePublicEmail">if set to <c>true</c> [share public email].</param>
@@ -936,14 +1161,15 @@ namespace PlataformaRio2C.Domain.Entities
             List<CollaboratorMiniBio> miniBios,
             int userId)
         {
-            this.PublicEmail = sharePublicEmail == true ? publicEmail?.Trim() : null;
+            this.UpdatePublicEmail(sharePublicEmail, publicEmail);
             this.UpdateImageUploadDate(isImageUploaded, false);
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
-            this.UpdateUserId = userId;
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
             this.OnboardAttendeeCollaboratorData(edition, userId);
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
         }
 
         /// <summary>Called when [producer terms acceptance].</summary>
@@ -953,10 +1179,11 @@ namespace PlataformaRio2C.Domain.Entities
             Edition edition,
             int userId)
         {
+            this.OnboardAttendeeCollaboratorProducerTermsAcceptance(edition, userId);
+
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.OnboardAttendeeCollaboratorProducerTermsAcceptance(edition, userId);
         }
 
         #endregion

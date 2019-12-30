@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-23-2019
+// Last Modified On : 12-13-2019
 // ***********************************************************************
 // <copyright file="OnboardingAllowedRoutesHelper.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -43,6 +43,7 @@ namespace PlataformaRio2C.Web.Site.Helpers
             new OnboardingAllowedRoute("Onboarding", "PlayerInterests"),
             new OnboardingAllowedRoute("Onboarding", "CompanyInfo"),
             new OnboardingAllowedRoute("Onboarding", "SkipCompanyInfo"),
+            new OnboardingAllowedRoute("Onboarding", "SpeakerTermsAcceptance"),
             new OnboardingAllowedRoute("Companies", "ShowTicketBuyerFilledForm"),
         };
 

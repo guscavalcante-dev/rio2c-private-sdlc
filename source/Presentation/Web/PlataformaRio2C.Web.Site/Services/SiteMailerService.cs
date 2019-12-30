@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-11-2019
+// Last Modified On : 12-17-2019
 // ***********************************************************************
 // <copyright file="SiteMailerService.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,9 +33,9 @@ namespace PlataformaRio2C.Web.Site.Services
         /// <summary>Initializes a new instance of the <see cref="SiteMailerService"/> class.</summary>
         public SiteMailerService()
         {
-            environment = ConfigurationManager.AppSettings["Environment"];
-            toEmail = ConfigurationManager.AppSettings["MvcMailer.ToEmail"];
-            bccEmail = ConfigurationManager.AppSettings["MvcMailer.BccEmail"];
+            this.environment = ConfigurationManager.AppSettings["Environment"];
+            this.toEmail = ConfigurationManager.AppSettings["MvcMailer.ToEmail"];
+            this.bccEmail = ConfigurationManager.AppSettings["MvcMailer.BccEmail"];
 
             this.MasterName = "_SiteEmailLayout";
         }
@@ -53,14 +53,14 @@ namespace PlataformaRio2C.Web.Site.Services
             return Populate(x =>
             {
                 x.Subject = this.GetSubject(Texts.ForgotPassword);
-                x.ViewName = "ForgotPassword";
+                x.ViewName = "ForgotPasswordEmail";
                 x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
                 x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
                 ViewBag.SentEmailUid = sentEmailUid;
 
-                if (!string.IsNullOrEmpty(this.GetBccEmailRecipient()))
+                if (!string.IsNullOrEmpty(this.GetBccEmailRecipient(false)))
                 {
-                    x.Bcc.Add(this.GetBccEmailRecipient());
+                    x.Bcc.Add(this.GetBccEmailRecipient(false));
                 }
             });
         }
@@ -78,14 +78,14 @@ namespace PlataformaRio2C.Web.Site.Services
             return Populate(x =>
             {
                 x.Subject = this.GetSubject(string.Format("Bem-vindo ao {0} | Welcome to {0}", cmd.Edition.Name));
-                x.ViewName = "TicketBuyerWelcome";
+                x.ViewName = "TicketBuyerWelcomeEmail";
                 x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
                 x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
                 ViewBag.SentEmailUid = sentEmailUid;
 
-                if (!string.IsNullOrEmpty(this.GetBccEmailRecipient()))
+                if (!string.IsNullOrEmpty(this.GetBccEmailRecipient(true)))
                 {
-                    x.Bcc.Add(this.GetBccEmailRecipient());
+                    x.Bcc.Add(this.GetBccEmailRecipient(true));
                 }
             });
         }
@@ -111,9 +111,9 @@ namespace PlataformaRio2C.Web.Site.Services
                 x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
                 ViewBag.SentEmailUid = sentEmailUid;
 
-                if (!string.IsNullOrEmpty(this.GetBccEmailRecipient()))
+                if (!string.IsNullOrEmpty(this.GetBccEmailRecipient(false)))
                 {
-                    x.Bcc.Add(this.GetBccEmailRecipient());
+                    x.Bcc.Add(this.GetBccEmailRecipient(false));
                 }
             });
         }
@@ -136,9 +136,9 @@ namespace PlataformaRio2C.Web.Site.Services
                 x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
                 ViewBag.SentEmailUid = sentEmailUid;
 
-                if (!string.IsNullOrEmpty(this.GetBccEmailRecipient()))
+                if (!string.IsNullOrEmpty(this.GetBccEmailRecipient(true)))
                 {
-                    x.Bcc.Add(this.GetBccEmailRecipient());
+                    x.Bcc.Add(this.GetBccEmailRecipient(true));
                 }
             });
         }
@@ -165,9 +165,15 @@ namespace PlataformaRio2C.Web.Site.Services
         }
 
         /// <summary>Gets the BCC email recipient.</summary>
+        /// <param name="sendProdBccEmail">if set to <c>true</c> [send product BCC email].</param>
         /// <returns></returns>
-        private string GetBccEmailRecipient()
+        private string GetBccEmailRecipient(bool sendProdBccEmail)
         {
+            if (!sendProdBccEmail && this.environment.ToLower() == "prod")
+            {
+                return null;
+            }
+
             return this.bccEmail;
         }
 
@@ -189,7 +195,22 @@ namespace PlataformaRio2C.Web.Site.Services
 
         #region Admin Mailers Not implemented
 
+        /// <summary>Sends the player welcome email.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <param name="sentEmailUid">The sent email uid.</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public MvcMailMessage SendPlayerWelcomeEmail(SendPlayerWelcomeEmailAsync cmd, Guid sentEmailUid)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>Sends the speaker welcome email.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <param name="sentEmailUid">The sent email uid.</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public MvcMailMessage SendSpeakerWelcomeEmail(SendSpeakerWelcomeEmailAsync cmd, Guid sentEmailUid)
         {
             throw new NotImplementedException();
         }

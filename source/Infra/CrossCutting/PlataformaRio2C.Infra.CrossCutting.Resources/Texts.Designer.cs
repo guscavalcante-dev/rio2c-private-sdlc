@@ -486,6 +486,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Caso haja alguma restrição aos termos e condições da autorização de uso da imagem acima, por favor, entre em contato com &lt;a href=&quot;mailto: curadoria@rio2c.com&quot;&gt;curadoria@rio2c.com&lt;/a&gt;. Suas restrições serão analisadas pela nossa equipe de suporte, que lhe retornará para que o cadastro possa ser concluído com sucesso..
+        /// </summary>
+        public static string SpeakerTermsRestrictions {
+            get {
+                return ResourceManager.GetString("SpeakerTermsRestrictions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Obrigado por confirmar seu e-mail..
         /// </summary>
         public static string ThanksConfirmation {

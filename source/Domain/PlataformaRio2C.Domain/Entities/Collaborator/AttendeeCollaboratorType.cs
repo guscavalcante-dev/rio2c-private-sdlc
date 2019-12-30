@@ -4,7 +4,7 @@
 // Created          : 09-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-26-2019
+// Last Modified On : 12-18-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,6 +22,8 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public int AttendeeCollaboratorId { get; private set; }
         public int CollaboratorTypeId { get; private set; }
+        public bool IsApiDisplayEnabled { get; private set; }
+        public int? ApiHighlightPosition { get; private set; }
 
         public virtual AttendeeCollaborator AttendeeCollaborator { get; private set; }
         public virtual CollaboratorType CollaboratorType { get; private set; }
@@ -29,14 +31,20 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Initializes a new instance of the <see cref="AttendeeCollaboratorType"/> class.</summary>
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
         /// <param name="userId">The user identifier.</param>
         public AttendeeCollaboratorType(
             AttendeeCollaborator attendeeCollaborator, 
-            CollaboratorType collaboratorType, 
+            CollaboratorType collaboratorType,
+            bool? isApiDisplayEnabled, 
+            int? apiHighlightPosition,
             int userId)
         {
             this.AttendeeCollaborator = attendeeCollaborator;
             this.CollaboratorType = collaboratorType;
+            this.UpdateApiConfigurations(isApiDisplayEnabled, apiHighlightPosition);
+
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId= userId;
@@ -47,14 +55,13 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Updates the specified user identifier.</summary>
+        /// <summary>Updates the specified is API display enabled.</summary>
+        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
         /// <param name="userId">The user identifier.</param>
-        public void Update(int userId)
+        public void Update(bool? isApiDisplayEnabled, int? apiHighlightPosition, int userId)
         {
-            if (!this.IsDeleted)
-            {
-                return;
-            }
+            this.UpdateApiConfigurations(isApiDisplayEnabled, apiHighlightPosition);
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
@@ -65,9 +72,35 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void Delete(int userId)
         {
+            this.UpdateApiConfigurations(false, null);
+
             this.IsDeleted = true;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
+        }
+
+        /// <summary>Deletes the API highlight position.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void DeleteApiHighlightPosition(int userId)
+        {
+            this.ApiHighlightPosition = null;
+
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Updates the API configurations.</summary>
+        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
+        private void UpdateApiConfigurations(bool? isApiDisplayEnabled, int? apiHighlightPosition)
+        {
+            if (!isApiDisplayEnabled.HasValue)
+            {
+                return;
+            }
+
+            this.IsApiDisplayEnabled = isApiDisplayEnabled.Value;
+            this.ApiHighlightPosition = isApiDisplayEnabled.Value ? apiHighlightPosition : null;
         }
 
         #region Validations

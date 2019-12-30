@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-11-2019
+// Last Modified On : 12-14-2019
 // ***********************************************************************
 // <copyright file="PlayersExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,7 +25,6 @@ using Newtonsoft.Json;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
@@ -89,9 +88,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="showAllExecutives">if set to <c>true</c> [show all executives].</param>
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <param name="showHighlights">The show highlights.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllExecutives, bool showAllParticipants)
+        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllExecutives, bool showAllParticipants, bool? showHighlights)
         {
             var playersExecutives = await this.collaboratorRepo.FindAllByDataTable(
                 request.Start / request.Length,
@@ -99,11 +99,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 request.Search?.Value,
                 request.GetSortColumns(),
                 this.GetCollaboratorsUids(null),
-                OrganizationType.Player.Uid,
                 Constants.CollaboratorType.ExecutiveAudiovisual,
                 showAllEditions,
                 showAllExecutives,
                 showAllParticipants,
+                showHighlights,
                 this.EditionDto?.Id
             );
 
@@ -170,9 +170,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="showAllExecutives">if set to <c>true</c> [show all executives].</param>
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <param name="showHighlights">The show highlights.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ExportEventbriteCsv(IDataTablesRequest request, string selectedCollaboratorsUids, string ticketClassName, bool showAllEditions, bool showAllExecutives, bool showAllParticipants)
+        public async Task<ActionResult> ExportEventbriteCsv(IDataTablesRequest request, string selectedCollaboratorsUids, string ticketClassName, bool showAllEditions, bool showAllExecutives, bool showAllParticipants, bool? showHighlights)
         {
             List<EventbriteCsv> eventbriteCsv = null;
 
@@ -183,23 +184,20 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     10000,
                     request?.Search?.Value,
                     request?.GetSortColumns(),
-                    this.GetCollaboratorsUids(null),
-                    OrganizationType.Player.Uid,
+                    this.GetCollaboratorsUids(selectedCollaboratorsUids),
                     Constants.CollaboratorType.ExecutiveAudiovisual,
                     showAllEditions,
                     showAllExecutives,
                     showAllParticipants,
+                    showHighlights,
                     this.EditionDto?.Id
                 );
 
-                eventbriteCsv = playersExecutives?.Select(pe => new EventbriteCsv
-                {
-                    Name = pe.FirstName,
-                    LastName = pe.LastNames,
-                    Email = pe.Email,
-                    TicketClassName = ticketClassName,
-                    Quantity = 1
-                }).ToList();
+                eventbriteCsv = playersExecutives?.Select(pe => new EventbriteCsv(
+                    pe.FirstName,
+                    pe.LastNames,
+                    pe.Email,
+                    ticketClassName, 1)).ToList();
             }
             catch (DomainException ex)
             {
@@ -300,11 +298,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowTotalCountWidget()
         {
-            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
-                OrganizationType.Player.Uid, 
-                Constants.CollaboratorType.ExecutiveAudiovisual, 
-                true, 
-                this.EditionDto.Id);
+            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(Constants.CollaboratorType.ExecutiveAudiovisual, true, this.EditionDto.Id);
 
             return Json(new
             {
@@ -324,11 +318,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <returns></returns>
         public async Task<ActionResult> ShowEditionCountWidget()
         {
-            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
-                OrganizationType.Player.Uid, 
-                Constants.CollaboratorType.ExecutiveAudiovisual, 
-                false, 
-                this.EditionDto.Id);
+            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(Constants.CollaboratorType.ExecutiveAudiovisual, false, this.EditionDto.Id);
 
             return Json(new
             {

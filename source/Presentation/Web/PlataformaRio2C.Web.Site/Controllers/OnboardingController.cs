@@ -4,7 +4,7 @@
 // Created          : 08-29-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-29-2019
+// Last Modified On : 12-19-2019
 // ***********************************************************************
 // <copyright file="OnboardingController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -103,13 +103,17 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return RedirectToAction("PlayerInterests", "Onboarding");
             }
 
-            // Redirect to ticket buyer organization if not finished
+            // Redirect to ticket buyer organization if not finished or speaker
             if (this.UserAccessControlDto?.IsTicketBuyerOrganizationOnboardingPending() == true)
             {
                 return RedirectToAction("CompanyInfo", "Onboarding");
             }
 
-            //TODO: Producer onboarding
+            // Redirect if speaker terms acceptance pending
+            if (this.UserAccessControlDto?.IsSpeakerTermsAcceptanceFinished() != true)
+            {
+                return RedirectToAction("SpeakerTermsAcceptance", "Onboarding");
+            }
 
             return RedirectToAction("Index", "Home");
         }
@@ -311,6 +315,103 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
 
             this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Messages.PlayerTerms, Labels.Accepted.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
+
+            return RedirectToAction("Index", "Onboarding");
+        }
+
+        #endregion
+
+        #region Speaker Terms Acceptance
+
+        /// <summary>Speakers the terms acceptance.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> SpeakerTermsAcceptance()
+        {
+            if (this.UserAccessControlDto?.IsSpeakerTermsAcceptanceFinished() == true)
+            {
+                return RedirectToAction("Index", "Onboarding");
+            }
+
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.WelcomeTitle, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Messages.CompleteYourRegistration, Url.Action("Index", "Onboarding"))
+            });
+
+            #endregion
+
+            this.SetViewBags();
+
+            var cmd = new OnboardSpeakerTermsAcceptance();
+
+            return View(cmd);
+        }
+
+        /// <summary>Speakers the terms acceptance.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> SpeakerTermsAcceptance(OnboardSpeakerTermsAcceptance cmd)
+        {
+            if (this.UserAccessControlDto?.IsSpeakerTermsAcceptanceFinished() == true)
+            {
+                return RedirectToAction("Index", "Onboarding");
+            }
+
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.WelcomeTitle, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Messages.CompleteYourRegistration, Url.Action("Index", "Onboarding"))
+            });
+
+            #endregion
+
+            this.SetViewBags();
+
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.UserAccessControlDto.Collaborator.Uid,
+                    this.UserAccessControlDto.User.Id,
+                    this.UserAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                this.StatusMessageToastr(ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+
+                return View(cmd);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+
+                return View(cmd);
+            }
+
+            this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Messages.ImageAuthorizationForm, Labels.Accepted.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
 
             return RedirectToAction("Index", "Onboarding");
         }
@@ -693,6 +794,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             var currentOrganization = this.UserAccessControlDto?.EditionAttendeeOrganizations?.FirstOrDefault(eao => !eao.OnboardingOrganizationDate.HasValue)?.Organization;
 
             var cmd = new CreateTicketBuyerOrganizationData(
+                Guid.Empty,
                 currentOrganization == null ? null : await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(currentOrganization.Uid, this.EditionDto.Id, this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),

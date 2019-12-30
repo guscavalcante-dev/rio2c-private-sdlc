@@ -1,5 +1,10 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateCollaboratorMainInformation
-
+﻿@using PlataformaRio2C.Domain.Dtos
+@model PlataformaRio2C.Application.CQRS.Commands.UpdateCollaboratorSiteMainInformation
+@{
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var isExecutive = userAccessControlDto?.HasAnyCollaboratorType(PlataformaRio2C.Domain.Constants.CollaboratorType.Executives) == true;
+    var isIndustry = userAccessControlDto?.HasCollaboratorType(PlataformaRio2C.Domain.Constants.CollaboratorType.Industry) == true;
+}
 <div class="row">
     <div class="form-group col-lg-4 text-center">
         @Html.EditorFor(m => m.CropperImage)
@@ -40,7 +45,6 @@
         </div>
     </div>
 </div>
-
 <div class="kt-section pt-4">
     <h3 class="kt-section__title mb-0">@Labels.JobTitles</h3>
     @Html.ValidationMessage("JobTitles", new { @class = "text-danger" })
@@ -48,7 +52,6 @@
         @Html.EditorFor(m => m.JobTitles, new { id = "vasco" })
     </div>
 </div>
-
 <div class="kt-section mt-30">
     <h3 class="kt-heading kt-heading--md">@Labels.MiniBios</h3>
     @Html.ValidationMessage("MiniBios", new { @class = "text-danger" })
@@ -56,23 +59,24 @@
         @Html.EditorFor(m => m.MiniBios)
     </div>
 </div>
-
-
-<div class="form-group row">
-    <div class="col-md-12">
-        @Html.LabelFor(m => m.PublicEmail, Messages.PublicEmail, new { @class = "control-label" })
-        <div class="kt-radio-inline">
-            <label class="kt-radio">
-                @Html.RadioButtonFor(m => m.SharePublicEmail, true) @Labels.Yes
-                <span></span>
-            </label>
-            <label class="kt-radio">
-                @Html.RadioButtonFor(m => m.SharePublicEmail, false) @Labels.No
-                <span></span>
-            </label>
+@if (isExecutive || isIndustry)
+{
+    <div class="form-group row">
+        <div class="col-md-12">
+            @Html.LabelFor(m => m.PublicEmail, Messages.PublicEmail, new { @class = "control-label" })
+            <div class="kt-radio-inline">
+                <label class="kt-radio">
+                    @Html.RadioButtonFor(m => m.SharePublicEmail, true) @Labels.Yes
+                    <span></span>
+                </label>
+                <label class="kt-radio">
+                    @Html.RadioButtonFor(m => m.SharePublicEmail, false) @Labels.No
+                    <span></span>
+                </label>
+            </div>
+            @Html.ValidationMessageFor(m => m.SharePublicEmail, "", new { @class = "text-danger" })
+            @Html.TextBoxFor(m => m.PublicEmail, Model.SharePublicEmail == true ? (object)new { @class = "form-control" } : (object)new { @class = "form-control", disabled = "" })
+            @Html.ValidationMessageFor(m => m.PublicEmail, "", new { @class = "text-danger" })
         </div>
-        @Html.ValidationMessageFor(m => m.SharePublicEmail, "", new { @class = "text-danger" })
-        @Html.TextBoxFor(m => m.PublicEmail, Model.SharePublicEmail == true ? (object)new { @class = "form-control" } : (object)new { @class = "form-control", disabled = "" })
-        @Html.ValidationMessageFor(m => m.PublicEmail, "", new { @class = "text-danger" })
-    </div>
-</div>
+    </div>   
+}

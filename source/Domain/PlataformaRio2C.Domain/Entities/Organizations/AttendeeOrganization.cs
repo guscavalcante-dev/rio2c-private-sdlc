@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified On : 12-18-2019
 // ***********************************************************************
 // <copyright file="AttendeeOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,7 +30,6 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTime? OnboardingInterestsDate { get; private set; }
         public DateTime? ProjectSubmissionOrganizationDate { get; private set; }
         public int SellProjectsCount { get; set; }
-        public bool IsApiDisplayEnabled { get; private set; }
 
         public virtual Edition Edition { get; private set; }
         public virtual Organization Organization { get; private set; }
@@ -45,18 +44,24 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="organization">The organization.</param>
         /// <param name="organizationType">Type of the organization.</param>
         /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
         /// <param name="userId">The user identifier.</param>
-        public AttendeeOrganization(Edition edition, Organization organization, OrganizationType organizationType, bool? isApiDisplayEnabled, int userId)
+        public AttendeeOrganization(
+            Edition edition, 
+            Organization organization, 
+            OrganizationType organizationType, 
+            bool? isApiDisplayEnabled, 
+            int? apiHighlightPosition, 
+            int userId)
         {
             this.Edition = edition;
             this.Organization = organization;
             this.SellProjectsCount = 0;
-            this.UpdateApiDisplay(isApiDisplayEnabled);
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
-            this.SynchronizeAttendeeOrganizationTypes(organizationType, userId);
+            this.SynchronizeAttendeeOrganizationTypes(organizationType, isApiDisplayEnabled, apiHighlightPosition, userId);
         }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeOrganization"/> class.</summary>
@@ -71,7 +76,6 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.UpdateApiDisplay(false);
             this.DeleteOrganizationType(organizationType, userId);
             this.DeleteAttendeeOrganizationCollaborators(userId);
 
@@ -85,35 +89,24 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Restores the specified organization type.</summary>
         /// <param name="organizationType">Type of the organization.</param>
         /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
         /// <param name="userId">The user identifier.</param>
-        public void Restore(OrganizationType organizationType, bool? isApiDisplayEnabled, int userId)
+        public void Restore(OrganizationType organizationType, bool? isApiDisplayEnabled, int? apiHighlightPosition, int userId)
         {
-            this.UpdateApiDisplay(isApiDisplayEnabled);
-
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.SynchronizeAttendeeOrganizationTypes(organizationType, userId);
-        }
-
-        /// <summary>Updates the API display.</summary>
-        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
-        private void UpdateApiDisplay(bool? isApiDisplayEnabled)
-        {
-            if (!isApiDisplayEnabled.HasValue)
-            {
-                return;
-            }
-
-            this.IsApiDisplayEnabled = isApiDisplayEnabled.Value;
+            this.SynchronizeAttendeeOrganizationTypes(organizationType, isApiDisplayEnabled, apiHighlightPosition, userId);
         }
 
         #region Attendee Organization Types
 
         /// <summary>Synchronizes the attendee organization types.</summary>
         /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
         /// <param name="userId">The user identifier.</param>
-        public void SynchronizeAttendeeOrganizationTypes(OrganizationType organizationType, int userId)
+        public void SynchronizeAttendeeOrganizationTypes(OrganizationType organizationType, bool? isApiDisplayEnabled, int? apiHighlightPosition, int userId)
         {
             if (this.AttendeeOrganizationTypes == null)
             {
@@ -128,11 +121,11 @@ namespace PlataformaRio2C.Domain.Entities
             var attendeeOrganizationType = this.AttendeeOrganizationTypes.FirstOrDefault(aot => aot.OrganizationTypeId == organizationType.Id);
             if (attendeeOrganizationType != null)
             {
-                attendeeOrganizationType.Restore(userId);
+                attendeeOrganizationType.Update(isApiDisplayEnabled, apiHighlightPosition, userId);
             }
             else
             {
-                this.AttendeeOrganizationTypes.Add(new AttendeeOrganizationType(this, organizationType, userId));
+                this.AttendeeOrganizationTypes.Add(new AttendeeOrganizationType(this, organizationType, isApiDisplayEnabled, apiHighlightPosition, userId));
             }
         }
 
@@ -153,6 +146,24 @@ namespace PlataformaRio2C.Domain.Entities
         private List<AttendeeOrganizationType> FindAllAttendeeOrganizationTypesNotDeleted(OrganizationType organizationType)
         {
             return this.AttendeeOrganizationTypes?.Where(aot => (organizationType == null || aot.OrganizationType.Uid == organizationType.Uid) && !aot.IsDeleted)?.ToList();
+        }
+
+        /// <summary>Finds the type of the attendee organization types by organization.</summary>
+        /// <param name="organizationType">Type of the organization.</param>
+        /// <returns></returns>
+        private AttendeeOrganizationType FindAttendeeOrganizationTypesByOrganizationType(OrganizationType organizationType)
+        {
+            return this.AttendeeOrganizationTypes?.FirstOrDefault(aot => !aot.IsDeleted
+                                                                         && aot.OrganizationTypeId == organizationType?.Id);
+        }
+
+        /// <summary>Deletes the API highlight position.</summary>
+        /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void DeleteApiHighlightPosition(OrganizationType organizationType, int userId)
+        {
+            var attendeeOrganizationType = this.FindAttendeeOrganizationTypesByOrganizationType(organizationType);
+            attendeeOrganizationType?.DeleteApiHighlightPosition(userId);
         }
 
         #endregion
@@ -299,7 +310,7 @@ namespace PlataformaRio2C.Domain.Entities
                 userId));
 
             this.UpdateProjectsCount();
-            this.SynchronizeAttendeeOrganizationTypes(projectType.OrganizationTypes?.FirstOrDefault(ot => ot.IsSeller), userId);
+            this.SynchronizeAttendeeOrganizationTypes(projectType.OrganizationTypes?.FirstOrDefault(ot => ot.IsSeller), false, null, userId);
         }
 
         /// <summary>Gets the last created project.</summary>

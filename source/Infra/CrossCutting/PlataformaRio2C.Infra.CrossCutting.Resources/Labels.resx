@@ -1893,4 +1893,44 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Baixar</value>
     <comment>Baixar</comment>
   </data>
+  <data name="RegisteredP" xml:space="preserve">
+    <value>Registrados</value>
+    <comment>Registrados</comment>
+  </data>
+  <data name="ShowHighlights" xml:space="preserve">
+    <value>Exibir destaques</value>
+    <comment>Exibir destaques</comment>
+  </data>
+  <data name="Event" xml:space="preserve">
+    <value>Evento</value>
+    <comment>Evento</comment>
+  </data>
+  <data name="Track" xml:space="preserve">
+    <value>Track</value>
+    <comment>Track</comment>
+  </data>
+  <data name="ApiConfigurations" xml:space="preserve">
+    <value>Configurações da API</value>
+    <comment>Configurações da API</comment>
+  </data>
+  <data name="HighlightPosition" xml:space="preserve">
+    <value>Posição no Destaque</value>
+    <comment>Posição no Destaque</comment>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Desativado</value>
+    <comment>Desativado</comment>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Ativado</value>
+    <comment>Ativado</comment>
+  </data>
+  <data name="EntityHighlights" xml:space="preserve">
+    <value>{0} em destaque</value>
+    <comment>{0} em destaque</comment>
+  </data>
+  <data name="In" xml:space="preserve">
+    <value>em</value>
+    <comment>em</comment>
+  </data>
 </root>

@@ -826,4 +826,24 @@
     <value>to login page</value>
     <comment>para a página de login</comment>
   </data>
+  <data name="ImageAuthorizationForm" xml:space="preserve">
+    <value>Image authorization form</value>
+    <comment>Autorização do uso de imagem</comment>
+  </data>
+  <data name="AcceptImageAuthorization" xml:space="preserve">
+    <value>I declare that I am aware and agree with the above-mentioned term.</value>
+    <comment>Declaro estar ciente e concordar com o termo acima.</comment>
+  </data>
+  <data name="NotShowingOnSiteEdition" xml:space="preserve">
+    <value>Not showing on site {0} edition</value>
+    <comment>Não exibindo na edição {0} do site</comment>
+  </data>
+  <data name="ShowingOnSiteEdition" xml:space="preserve">
+    <value>Showing on site {0} edition</value>
+    <comment>Exibindo na edição {0} do site</comment>
+  </data>
+  <data name="AttentionHighlightsList" xml:space="preserve">
+    <value>Overwrite the highlight of the below list.</value>
+    <comment>Substitui o destaque da lista abaixo.</comment>
+  </data>
 </root>

@@ -78,7 +78,7 @@ CREATE TABLE [dbo].[AttendeeCollaborators](
 	[OnboardingOrganizationDataSkippedDate] [datetime] NULL,
 	[PlayerTermsAcceptanceDate] [datetime] NULL,
 	[ProducerTermsAcceptanceDate] [datetime] NULL,
-	[IsApiDisplayEnabled] [bit] NOT NULL,
+	[SpeakerTermsAcceptanceDate] [datetime] NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,
@@ -148,6 +148,8 @@ CREATE TABLE [dbo].[AttendeeCollaboratorTypes](
 	[Uid] [uniqueidentifier] NOT NULL,
 	[AttendeeCollaboratorId] [int] NOT NULL,
 	[CollaboratorTypeId] [int] NOT NULL,
+	[IsApiDisplayEnabled] [bit] NOT NULL,
+	[ApiHighlightPosition] [int] NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,
@@ -214,7 +216,6 @@ CREATE TABLE [dbo].[AttendeeOrganizations](
 	[OnboardingInterestsDate] [date] NULL,
 	[ProjectSubmissionOrganizationDate] [datetime] NULL,
 	[SellProjectsCount] [int] NOT NULL,
-	[IsApiDisplayEnabled] [bit] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,
@@ -245,6 +246,8 @@ CREATE TABLE [dbo].[AttendeeOrganizationTypes](
 	[Uid] [uniqueidentifier] NOT NULL,
 	[AttendeeOrganizationId] [int] NOT NULL,
 	[OrganizationTypeId] [int] NOT NULL,
+	[IsApiDisplayEnabled] [bit] NOT NULL,
+	[ApiHighlightPosition] [int] NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,
@@ -1377,7 +1380,7 @@ CREATE TABLE [dbo].[ProjectEvaluationRefuseReasons](
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NULL,
+	[UpdateDate] [datetime] NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_ProjectEvaluationRefuseReasons] PRIMARY KEY CLUSTERED 
 (
@@ -2305,6 +2308,16 @@ CREATE NONCLUSTERED INDEX [IDX_AttendeeCollaboratorTickets_AttendeeCollaboratorI
 (
 	[AttendeeCollaboratorId] ASC,
 	[AttendeeSalesPlatformTicketTypeId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_AttendeeCollaboratorTypes_IsApiDisplayEnabled] ON [dbo].[AttendeeCollaboratorTypes]
+(
+	[IsApiDisplayEnabled] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_AttendeeOrganizationTypes_IsApiDisplayEnabled] ON [dbo].[AttendeeOrganizationTypes]
+(
+	[IsApiDisplayEnabled] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
 SET ANSI_PADDING ON

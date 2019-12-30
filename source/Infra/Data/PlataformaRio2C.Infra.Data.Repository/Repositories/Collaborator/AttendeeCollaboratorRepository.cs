@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-05-2019
+// Last Modified On : 11-18-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -116,15 +116,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
-        /// <summary>Determines whether [is audiovisual participant].</summary>
+        /// <summary>Determines whether [is network participant].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
-        internal static IQueryable<AttendeeCollaborator> IsAudiovisualParticipant(this IQueryable<AttendeeCollaborator> query)
+        internal static IQueryable<AttendeeCollaborator> IsNetworkParticipant(this IQueryable<AttendeeCollaborator> query)
         {
             query = query.Where(ac => ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted // Industry
                                                                               && !act.CollaboratorType.IsDeleted
-                                                                              && (act.CollaboratorType.Name == Domain.Constants.CollaboratorType.Industry
-                                                                                  || act.CollaboratorType.Name == Domain.Constants.CollaboratorType.ExecutiveAudiovisual)));
+                                                                              && Domain.Constants.CollaboratorType.NetworksArray.Contains(act.CollaboratorType.Name)));
 
             return query;
         }
@@ -231,7 +230,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
-        #region Site Widgets
+        #region Widgets
 
         /// <summary>Finds the site detailst dto by collaborator uid and by edition identifier asynchronous.</summary>
         /// <param name="collaboratorUid">The collaborator uid.</param>
@@ -267,6 +266,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             {
                                 AttendeeCollaborator = ac,
                                 Collaborator = ac.Collaborator,
+                                User = ac.Collaborator.User,
                                 JobTitlesDtos = ac.Collaborator.JobTitles.Where(d => !d.IsDeleted).Select(d => new CollaboratorJobTitleBaseDto
                                 {
                                     Id = d.Id,
@@ -322,6 +322,32 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             })
                             .FirstOrDefaultAsync();
         }
+
+        /// <summary>Finds the API configuration widget dto by collaborator uid and by edition identifier asynchronous.</summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttendeeCollaboratorApiConfigurationWidgetDto> FindApiConfigurationWidgetDtoByCollaboratorUidAndByEditionIdAsync(Guid collaboratorUid, int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByCollaboratorUid(collaboratorUid)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(ac => new AttendeeCollaboratorApiConfigurationWidgetDto
+                            {
+                                AttendeeCollaborator = ac,
+                                Collaborator = ac.Collaborator,
+                                User = ac.Collaborator.User,
+                                AttendeeCollaboratorTypeDtos = ac.AttendeeCollaboratorTypes.Where(act => !act.IsDeleted).Select(act => new AttendeeCollaboratorTypeDto
+                                {
+                                    AttendeeCollaboratorType = act,
+                                    CollaboratorType = act.CollaboratorType
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
         #endregion
 
         #region Networks
@@ -376,7 +402,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery(true)
                                 .FindByEditionId(editionId, false)
                                 .IsOnboardingFinished()
-                                .IsAudiovisualParticipant()
+                                .IsNetworkParticipant()
                                 .FindByKeywords(keywords);
 
             return await query
@@ -411,6 +437,38 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .ToListPagedAsync(page, pageSize);
         }
 
+
+        #endregion
+
+        #region Api
+
+        /// <summary>Finds all API configuration widget dto by highlight.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
+        /// <returns></returns>
+        public async Task<List<AttendeeCollaboratorApiConfigurationWidgetDto>> FindAllApiConfigurationWidgetDtoByHighlight(int editionId, string collaboratorTypeName)
+        {
+            var query = this.GetBaseQuery()
+                                .Where(ac => !ac.IsDeleted
+                                             && ac.EditionId == editionId
+                                             && ac.AttendeeCollaboratorTypes.Any(aot => !aot.IsDeleted
+                                                                                     && aot.CollaboratorType.Name == collaboratorTypeName
+                                                                                     && aot.ApiHighlightPosition.HasValue));
+
+            return await query
+                            .Select(ac => new AttendeeCollaboratorApiConfigurationWidgetDto
+                            {
+                                AttendeeCollaborator = ac,
+                                Collaborator = ac.Collaborator,
+                                User = ac.Collaborator.User,
+                                AttendeeCollaboratorTypeDtos = ac.AttendeeCollaboratorTypes.Where(act => !act.IsDeleted).Select(act => new AttendeeCollaboratorTypeDto
+                                {
+                                    AttendeeCollaboratorType = act,
+                                    CollaboratorType = act.CollaboratorType
+                                })
+                            })
+                            .ToListAsync();
+        }
 
         #endregion
     }

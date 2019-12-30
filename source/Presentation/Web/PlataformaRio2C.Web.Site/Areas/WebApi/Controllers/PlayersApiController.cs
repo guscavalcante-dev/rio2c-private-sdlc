@@ -4,7 +4,7 @@
 // Created          : 09-25-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified On : 12-19-2019
 // ***********************************************************************
 // <copyright file="PlayersApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,11 +17,11 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using PlataformaRio2c.Infra.Data.FileRepository;
+using PlataformaRio2C.Domain.ApiModels;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using PlataformaRio2C.Web.Site.Areas.WebApi.Models;
 
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 {
@@ -107,8 +107,10 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 Players = organizationsApiDtos?.Select(o => new PlayersApiListItem
                 {
                     Uid = o.Uid,
+                    Name = o.TradeName,
                     TradeName = o.TradeName,
                     CompanyName = o.CompanyName,
+                    HighlightPosition = o.ApiHighlightPosition,
                     Picture = o.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, o.Uid, o.ImageUploadDate, true) : null
                 })?.ToList()
             });

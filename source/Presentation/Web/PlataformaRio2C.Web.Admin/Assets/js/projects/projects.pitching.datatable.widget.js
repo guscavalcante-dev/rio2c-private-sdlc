@@ -12,7 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 
-var ProjectsPitchingDataTableWidget = function() {
+var ProjectsPitchingDataTableWidget = function () {
 
     var widgetElementId = '#ProjectPitchingDataTableWidget';
     var tableElementId = '#projectpitching-list-table';
@@ -20,16 +20,26 @@ var ProjectsPitchingDataTableWidget = function() {
     var table;
 
     // Invitation email ---------------------------------------------------------------------------
-    var downloadSelectedProjects = function(projectData) {
+    var downloadSelectedProjects = function (projectData) {
         MyRio2cCommon.block();
 
         var jsonParameters = new Object();
-        jsonParameters.selectedProjectsUids = $('#projectpitching-list-table_wrapper tr.selected').map(function() { return $(this).data('id'); }).get().join(',');
+        jsonParameters.selectedProjectsUids = $('#projectpitching-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
 
         var listUids = jsonParameters.selectedProjectsUids.split(',');
 
-        $.each(listUids, function(e) {
-            projectData.filter(function(value) {
+        if (jsonParameters.selectedProjectsUids == '') {
+            var options = new Object();
+            options.messageType = 'error';
+            options.message = translations.selectAtLeastOneOption;
+
+            MyRio2cCommon.unblock();
+
+            return MyRio2cCommon.showAlert(options);
+        }
+
+        $.each(listUids, function (e) {
+            projectData.filter(function (value) {
                 if (value.Uid === listUids[e]) {
                     window.open(value.UrlDownload);
                 }
@@ -40,48 +50,47 @@ var ProjectsPitchingDataTableWidget = function() {
 
     };
 
-    var downloadAllProjects = function() {
+    var downloadAllProjects = function () {
         MyRio2cCommon.block();
 
         var jsonParameters = new Object();
         jsonParameters.keyword = $('#Search').val();
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/DownloadAllProjects'), jsonParameters, function(data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/DownloadAllProjects'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
-                onSuccess: function() {
-                    $.each(data["data"], function(key, value) {
+                onSuccess: function () {
+                    $.each(data["data"], function (key, value) {
                         window.open(value.UrlDownload);
-                        console.log(value);
                     });
                 },
                 // Error
-                onError: function() {
+                onError: function () {
                 }
             });
         })
-            .fail(function() {
+            .fail(function () {
             })
-            .always(function() {
+            .always(function () {
                 MyRio2cCommon.unblock();
             });
     };
 
-    var showDownloadModal = function() {
+    var showDownloadModal = function () {
         bootbox.dialog({
-            message: translations.confirmDownload,
+            message: translations.confirmDownloadAll,
             buttons: {
                 cancel: {
                     label: labels.cancel,
                     className: "btn btn-secondary btn-elevate mr-auto",
-                    callback: function() {
+                    callback: function () {
                     }
                 },
                 confirm: {
-                    label: labels.send,
+                    label: labels.download,
                     className: "btn btn-brand btn-elevate",
-                    callback: function() {
+                    callback: function () {
                         downloadAllProjects();
                     }
                 }
@@ -89,27 +98,27 @@ var ProjectsPitchingDataTableWidget = function() {
         });
     };
 
-    var showSelectedListDownloadModal = function(projectData) {
+    var showSelectedListDownloadModal = function (projectData) {
         bootbox.dialog({
-            message: translations.confirmDownload,
+            message: translations.confirmDownloadSelected,
             buttons: {
                 cancel: {
                     label: labels.cancel,
                     className: "btn btn-secondary btn-elevate mr-auto",
-                    callback: function() {
+                    callback: function () {
                     }
                 },
                 confirm: {
-                    label: labels.send,
+                    label: labels.download,
                     className: "btn btn-brand btn-elevate",
-                    callback: function() {
+                    callback: function () {
                         downloadSelectedProjects(projectData);
                     }
                 }
             }
         });
     };
-    var initiListTable = function() {
+    var initiListTable = function () {
         var tableElement = $(tableElementId);
 
         // Disable datatable alert
@@ -155,13 +164,13 @@ var ProjectsPitchingDataTableWidget = function() {
                     buttons: [
                         {
                             text: translations.downloadSelectedProjects,
-                            action: function(e, dt, node, config) {
+                            action: function (e, dt, node, config) {
                                 showSelectedListDownloadModal(projectData);
                             }
                         },
                         {
                             text: translations.downloadAllProjects,
-                            action: function(e, dt, node, config) {
+                            action: function (e, dt, node, config) {
                                 showDownloadModal();
                             }
                         },
@@ -175,9 +184,9 @@ var ProjectsPitchingDataTableWidget = function() {
             },
             ajax: {
                 url: MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/ShowPitchingListWidget'),
-                data: function(d) {
+                data: function (d) {
                 },
-                dataFilter: function(data) {
+                dataFilter: function (data) {
                     var jsonReturned = JSON.parse(data);
 
                     projectData = jsonReturned.dataTable.Data;
@@ -185,7 +194,7 @@ var ProjectsPitchingDataTableWidget = function() {
                     return MyRio2cCommon.handleAjaxReturn({
                         data: jsonReturned,
                         // Success
-                        onSuccess: function() {
+                        onSuccess: function () {
                             // Parameters returned with capital letter
                             var json = new Object();
                             json.draw = jsonReturned.dataTable.Draw;
@@ -197,16 +206,16 @@ var ProjectsPitchingDataTableWidget = function() {
                             return JSON.stringify(json); // return JSON string
                         },
                         // Error
-                        onError: function() {
+                        onError: function () {
                         }
                     });
                 },
-                error: function(jqXHR, textStatus, errorThrown) {
+                error: function (jqXHR, textStatus, errorThrown) {
                     $(tableElementId + '_processing').hide();
                     MyRio2cCommon.showAlert();
                 }
             },
-            createdRow: function(row, data, dataIndex) {
+            createdRow: function (row, data, dataIndex) {
                 $(row).attr('data-id', data.Uid);
             },
             columns: [
@@ -214,13 +223,13 @@ var ProjectsPitchingDataTableWidget = function() {
                 { data: 'ProducerName' },
                 {
                     data: 'CreateDate',
-                    render: function(data) {
+                    render: function (data) {
                         return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
                 },
                 {
                     data: 'FinishDate',
-                    render: function(data) {
+                    render: function (data) {
                         return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
                 },
@@ -240,34 +249,34 @@ var ProjectsPitchingDataTableWidget = function() {
                     className: "dt-center"
                 },
             ],
-            initComplete: function() {
+            initComplete: function () {
                 $('button.buttons-collection').attr('data-toggle', 'dropdown');
             }
         });
 
-        $('#Search').keyup(function(e) {
+        $('#Search').keyup(function (e) {
             if (e.keyCode === 13) {
                 table.search($(this).val()).draw();
             }
         });
 
-        $('.enable-datatable-reload').click(function(e) {
+        $('.enable-datatable-reload').click(function (e) {
             table.ajax.reload();
         });
 
         MyRio2cCommon.unblock({ idOrClass: widgetElementId });
     };
 
-    var refreshData = function() {
+    var refreshData = function () {
         table.ajax.reload();
     };
 
     return {
-        init: function() {
+        init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             initiListTable();
         },
-        refreshData: function() {
+        refreshData: function () {
             refreshData();
         },
     };

@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-11-2019
+// Last Modified On : 12-13-2019
 // ***********************************************************************
 // <copyright file="SendPlayerWelcomeEmailAsyncCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -71,6 +71,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var collaborator = await this.collaboratorRepo.GetAsync(cmd.Collaboratoruid);
             if (collaborator == null || collaborator.IsDeleted 
                 || !collaborator.AttendeeCollaborators.Any(ac => !ac.IsDeleted
+                                                                 && ac.EditionId == cmd.Edition.Id
                                                                  && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
                                                                                                             && !act.CollaboratorType.IsDeleted
                                                                                                             && act.CollaboratorType.Name == Domain.Constants.CollaboratorType.ExecutiveAudiovisual)))
@@ -78,21 +79,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundM))));
             }
 
-            if (collaborator?.AttendeeCollaborators.Any(ac => !ac.IsDeleted 
-                                                              && ac.EditionId == cmd.Edition.Id
-                                                              && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
-                                                                                                         && !act.CollaboratorType.IsDeleted
-                                                                                                         && act.CollaboratorType.Name == Domain.Constants.CollaboratorType.ExecutiveAudiovisual)) != true)
-            {
-                this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Executive, Labels.Player))));
-            }
-
             if (!this.AppValidationResult.IsValid)
             {
                 return this.AppValidationResult;
             }
 
-            collaborator.SendWelcomeEmailSendDate(cmd.Edition.Id, cmd.UserId);
+            collaborator?.SendWelcomeEmailSendDate(cmd.Edition.Id, cmd.UserId);
 
             // Sends the email
             await this.MailerService.SendPlayerWelcomeEmail(cmd, sentEmail.Uid).SendAsync();

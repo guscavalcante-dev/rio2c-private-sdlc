@@ -1868,4 +1868,59 @@
     <value>Evaluate</value>
     <comment>Avaliar</comment>
   </data>
+  <data name="RegisteredP" xml:space="preserve">
+    <value>Registered</value>
+    <comment>Registrados</comment>
+  </data>
+  <data name="ShowHighlights" xml:space="preserve">
+    <value>Show highlights</value>
+    <comment>Exibir destaques</comment>
+  </data>
+  <data name="Event" xml:space="preserve">
+    <value>Event</value>
+    <comment>Evento</comment>
+  </data>
+  <data name="Track" xml:space="preserve">
+    <value>Track</value>
+    <comment>Track</comment>
+  </data>
+  <data name="ApiConfigurations" xml:space="preserve">
+    <value>API Configurations</value>
+    <comment>Configurações da API</comment>
+  </data>
+  <data name="HighlightPosition" xml:space="preserve">
+    <value>Highlight Position</value>
+    <comment>Posição no Destaque</comment>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Disabled</value>
+    <comment>Desativado</comment>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Enabled</value>
+    <comment>Ativado</comment>
+  </data>
+  <data name="EntityHighlights" xml:space="preserve">
+    <value>{0} highlights</value>
+    <comment>{0} em destaque</comment>
+  </data>
+  <data name="ArrivalDate" xml:space="preserve">
+    <value>Arrival Date</value>
+    <comment>Data da chegada</comment>
+  </data>
+  <data name="DepartureDate" xml:space="preserve">
+    <value>Departure Date</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="DownloadAllProjects" xml:space="preserve">
+    <value>Download all projects</value>
+  </data>
+  <data name="DownloadSelectedProjects" xml:space="preserve">
+    <value>Download selected projects</value>
+  </data>
+  <data name="EndTime" xml:space="preserve">
+    <value>End Time</value>
+  </data>
 </root>

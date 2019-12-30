@@ -4,7 +4,7 @@
 // Created          : 09-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-03-2019
+// Last Modified On : 12-19-2019
 // ***********************************************************************
 // <copyright file="CollaboratorType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,6 +17,7 @@ namespace PlataformaRio2C.Domain.Constants
     public class CollaboratorType
     {
         public const string AdminAudiovisual = "Admin | Audiovisual";
+        public const string CuratorshipAudiovisual = "Curatorship | Audiovisual";
         public const string ExecutiveAudiovisual = "Executive | Audiovisual";
         public const string ExecutiveMusic = "Executive | Music";
         public const string ExecutiveInnovation = "Executive | Innovation";
@@ -43,10 +44,15 @@ namespace PlataformaRio2C.Domain.Constants
 
         public static readonly string[] NetworksArray =
         {
-            ExecutiveAudiovisual, Industry, Creator
+            ExecutiveAudiovisual, Speaker, Industry, Summit, Creator
         };
 
-        public const string NetworksString = ExecutiveAudiovisual + "," + Industry + "," + Creator;
+        public const string NetworksString = ExecutiveAudiovisual + "," + Speaker + "," + Industry + "," + Summit + "," + Creator;
+
+        public static readonly string[] NetworksFullVisibilityArray =
+        {
+            ExecutiveAudiovisual, Speaker, Industry, Summit
+        };
 
         #endregion
     }

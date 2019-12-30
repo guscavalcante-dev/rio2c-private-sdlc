@@ -4,7 +4,7 @@
 // Created          : 10-08-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-09-2019
+// Last Modified On : 12-16-2019
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorSiteMainInformationWidgetDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,6 +22,7 @@ namespace PlataformaRio2C.Domain.Dtos
     {
         public AttendeeCollaborator AttendeeCollaborator { get; set; }
         public Collaborator Collaborator { get; set; }
+        public User User { get; set; }
 
         public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }
         public IEnumerable<CollaboratorMiniBioBaseDto> MiniBioDtos { get; set; }

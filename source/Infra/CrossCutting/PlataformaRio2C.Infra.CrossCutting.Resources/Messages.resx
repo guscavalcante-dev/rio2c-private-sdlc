@@ -831,16 +831,24 @@
     <value>para a página de login</value>
     <comment>para a página de login</comment>
   </data>
-  <data name="TemplateDocumentCorrupted" xml:space="preserve">
-    <value>O documento modelo está corrompido.</value>
-    <comment>O documento modelo está corrompido.</comment>
+  <data name="ImageAuthorizationForm" xml:space="preserve">
+    <value>Autorização do uso de imagem</value>
+    <comment>Autorização do uso de imagem</comment>
   </data>
-  <data name="TemplateDocumentNotDownloaded" xml:space="preserve">
-    <value>O documento modelo não pode ser baixado.</value>
-    <comment>O documento modelo não pode ser baixado.</comment>
+  <data name="AcceptImageAuthorization" xml:space="preserve">
+    <value>Declaro estar ciente e concordar com o termo acima.</value>
+    <comment>Declaro estar ciente e concordar com o termo acima.</comment>
   </data>
-  <data name="TemplateDocumentNotFound" xml:space="preserve">
-    <value>O doumento modelo não foi encontrado.</value>
-    <comment>O doumento modelo não foi encontrado.</comment>
+  <data name="NotShowingOnSiteEdition" xml:space="preserve">
+    <value>Não exibindo na edição {0} do site</value>
+    <comment>Não exibindo na edição {0} do site</comment>
+  </data>
+  <data name="ShowingOnSiteEdition" xml:space="preserve">
+    <value>Exibindo na edição {0} do site</value>
+    <comment>Exibindo na edição {0} do site</comment>
+  </data>
+  <data name="AttentionHighlightsList" xml:space="preserve">
+    <value>Substitui o destaque da lista abaixo.</value>
+    <comment>Substitui o destaque da lista abaixo.</comment>
   </data>
 </root>

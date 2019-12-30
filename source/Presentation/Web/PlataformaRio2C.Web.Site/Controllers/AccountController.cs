@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-11-2019
+// Last Modified On : 12-14-2019
 // ***********************************************************************
 // <copyright file="AccountController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -487,6 +487,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #region Onboarding
 
+        /// <summary>Onboardings the specified email.</summary>
+        /// <param name="email">The email.</param>
+        /// <param name="uid">The uid.</param>
+        /// <param name="token">The token.</param>
+        /// <returns></returns>
         [AllowAnonymous]
         public async Task<ActionResult> Onboarding(string email, Guid? uid, string token)
         {
@@ -563,7 +568,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 //return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return RedirectToAction("Index", "Quiz");
+            return RedirectToAction("Index", "Onboarding");
         }
 
         #endregion
