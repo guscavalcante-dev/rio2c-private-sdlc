@@ -6,7 +6,7 @@
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.Date, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.Date, new { @class = "form-control", @readonly = "readonly", data_date_start_date = editionDto?.StartDate.ToShortDateString(), data_date_end_date = editionDto?.EndDate.ToShortDateString() })
+        @Html.TextBoxFor(m => m.Date, new { @class = "form-control enable-datepicker", @readonly = "readonly", data_date_start_date = editionDto?.StartDate.ToShortDateString(), data_date_end_date = editionDto?.EndDate.ToShortDateString() })
         <span class="form-text text-muted">@string.Format(Messages.DateBetweenDates, editionDto?.EndDate.ToShortDateString(), editionDto?.StartDate.ToShortDateString())</span>
         @Html.ValidationMessageFor(m => m.Date, "", new { @class = "text-danger" })
     </div>
@@ -14,12 +14,12 @@
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.StartTime, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.StartTime, new { @class = "form-control", @readonly = "readonly" })
+        @Html.TextBoxFor(m => m.StartTime, new { @class = "form-control enable-timepicker", @readonly = "readonly" })
         @Html.ValidationMessageFor(m => m.StartTime, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EndTime, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.EndTime, new { @class = "form-control", @readonly = "readonly" })
+        @Html.TextBoxFor(m => m.EndTime, new { @class = "form-control enable-timepicker", @readonly = "readonly" })
         @Html.ValidationMessageFor(m => m.EndTime, "", new { @class = "text-danger" })
     </div>
 </div>

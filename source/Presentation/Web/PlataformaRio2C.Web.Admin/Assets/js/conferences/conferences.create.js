@@ -23,32 +23,10 @@ var ConferencesCreate = function () {
     };
 
     // Enable plugins -----------------------------------------------------------------------------
-    var enableDatePickers = function () {
-        $('#Date').datepicker({
-            todayHighlight: true,
-            orientation: "bottom left",
-            autoclose: true,
-            language: MyRio2cCommon.getGlobalVariable('userInterfaceLanguage')
-        });
-    };
-
-    var enableTimePickers = function () {
-        $('#StartTime, #EndTime').timepicker({
-            defaultTime: false,
-            minuteStep: 1,
-            showSeconds: false,
-            showMeridian: false,
-            icons: {
-                up: 'la la-angle-up',
-                down: 'la la-angle-down'
-            }
-        });
-    };
-
     var enablePlugins = function () {
         MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });
-        enableDatePickers();
-        enableTimePickers();
+        MyRio2cCommon.enableDatePicker();
+        MyRio2cCommon.enableTimePicker();
         enableAjaxForm();
         enableFormValidation();
     };

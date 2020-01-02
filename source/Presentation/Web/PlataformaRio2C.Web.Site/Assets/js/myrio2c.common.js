@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-11-2019
+// Last Modified On : 01-02-2020
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -112,7 +112,7 @@ var MyRio2cCommon = function () {
     };
 
     var enablePaginationBlockUi = function () {
-        $(document).on('click', '.kt-pagination .kt-pagination__links a', function() {
+        $(document).on('click', '.kt-pagination .kt-pagination__links a', function () {
             MyRio2cCommon.block();
         });
     };
@@ -521,6 +521,72 @@ var MyRio2cCommon = function () {
             width: '100%',
             allowClear: options.allowClear,
             placeholder: options.placeholder
+        });
+    };
+
+    var enableDatePicker = function (options) {
+        if (isNullOrEmpty(options)) {
+            options = new Object();
+        }
+
+        // Id or class
+        if (!hasProperty(options, 'inputIdOrClass') || isNullOrEmpty(options.inputIdOrClass)) {
+            options.inputIdOrClass = '.enable-datepicker';
+        }
+
+        // Orientation
+        if (!hasProperty(options, 'orientation') || isNullOrEmpty(options.orientation)) {
+            options.orientation = "bottom left";
+        }
+
+        if (!hasProperty(options, 'autoclose') || isNullOrEmpty(options.autoclose)) {
+            options.autoclose = true;
+        }
+
+        $(options.inputIdOrClass).datepicker({
+            todayHighlight: true,
+            orientation: options.orientation,
+            autoclose: options.autoclose,
+            language: MyRio2cCommon.getGlobalVariable('userInterfaceLanguage')
+        });
+    };
+
+    var enableTimePicker = function (options) {
+        if (isNullOrEmpty(options)) {
+            options = new Object();
+        }
+
+        // Id or class
+        if (!hasProperty(options, 'inputIdOrClass') || isNullOrEmpty(options.inputIdOrClass)) {
+            options.inputIdOrClass = '.enable-timepicker';
+        }
+
+        // Default time
+        if (!hasProperty(options, 'defaultTime') || isNullOrEmpty(options.defaultTime)) {
+            options.defaultTime = false;
+        }
+
+        if (!hasProperty(options, 'minuteStep') || isNullOrEmpty(options.minuteStep)) {
+            options.minuteStep = 1;
+        }
+
+        if (!hasProperty(options, 'showSeconds') || isNullOrEmpty(options.showSeconds)) {
+            options.showSeconds = false;
+        }
+
+        if (!hasProperty(options, 'showMeridian') || isNullOrEmpty(options.showMeridian)) {
+            options.showMeridian = false;
+        }
+
+        $(options.inputIdOrClass).timepicker({
+            defaultTime: options.defaultTime,
+            minuteStep: options.minuteStep,
+            showSeconds: options.showSeconds,
+            showMeridian: options.showMeridian,
+            icons: {
+                up: 'la la-angle-up',
+                down: 'la la-angle-down'
+            }
         });
     };
 
@@ -1093,6 +1159,12 @@ var MyRio2cCommon = function () {
         },
         enableSelect2: function (options) {
             enableSelect2(options);
+        },
+        enableDatePicker: function (options) {
+            enableDatePicker(options);
+        },
+        enableTimePicker: function (options) {
+            enableTimePicker(options);
         },
         submitForm: function (formIdOrClass) {
             submitForm(formIdOrClass);
