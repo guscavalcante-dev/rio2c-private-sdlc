@@ -917,7 +917,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Comissão Musical</value>
   </data>
   <data name="DownloadListProjects" xml:space="preserve">
-    <value>Baixar lista de Projetos</value>
+    <value>Baixar Lista de Projetos</value>
   </data>
   <data name="Accreditation" xml:space="preserve">
     <value>Credenciamento</value>
@@ -1881,12 +1881,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Avaliar</value>
     <comment>Avaliar</comment>
   </data>
-  <data name="DownloadAllProjects" xml:space="preserve">
-    <value>Baixar todos os projetos</value>
+  <data name="ConfirmDownloadAllProjects" xml:space="preserve">
+    <value>Confirma a geração do PDF para todos os registros de todas as páginas?</value>
     <comment>Baixar todos os projetos</comment>
   </data>
-  <data name="DownloadSelectedProjects" xml:space="preserve">
-    <value>Baixar projetos selecionados</value>
+  <data name="ConfirmDownloadSelectedProjects" xml:space="preserve">
+    <value>Confirma a geração do PDF para os registros selecionados?</value>
     <comment>Baixar projetos selecionados</comment>
   </data>
   <data name="Download" xml:space="preserve">

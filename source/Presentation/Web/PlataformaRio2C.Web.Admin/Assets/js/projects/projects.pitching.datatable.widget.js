@@ -20,66 +20,23 @@ var ProjectsPitchingDataTableWidget = function () {
     var table;
 
     // Invitation email ---------------------------------------------------------------------------
-    var downloadSelectedProjects = function (projectData) {
+    var downloadProjects = function (projectData) {
         MyRio2cCommon.block();
 
         var jsonParameters = new Object();
         jsonParameters.selectedProjectsUids = $('#projectpitching-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
-
-        var listUids = jsonParameters.selectedProjectsUids.split(',');
-
-        if (jsonParameters.selectedProjectsUids == '') {
-            var options = new Object();
-            options.messageType = 'error';
-            options.message = translations.selectAtLeastOneOption;
-
-            MyRio2cCommon.unblock();
-
-            return MyRio2cCommon.showAlert(options);
-        }
-
-        $.each(listUids, function (e) {
-            projectData.filter(function (value) {
-                if (value.Uid === listUids[e]) {
-                    window.open(value.UrlDownload);
-                }
-            })
-        });
-
-        MyRio2cCommon.unblock();
-
-    };
-
-    var downloadAllProjects = function () {
-        MyRio2cCommon.block();
-
-        var jsonParameters = new Object();
         jsonParameters.keyword = $('#Search').val();
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/DownloadAllProjects'), jsonParameters, function (data) {
-            MyRio2cCommon.handleAjaxReturn({
-                data: data,
-                // Success
-                onSuccess: function () {
-                    $.each(data["data"], function (key, value) {
-                        window.open(value.UrlDownload);
-                    });
-                },
-                // Error
-                onError: function () {
-                }
-            });
-        })
-            .fail(function () {
-            })
-            .always(function () {
-                MyRio2cCommon.unblock();
-            });
+        window.location = '/Projects/DownloadProjectDocument?' + 'keyword=' + jsonParameters.keyword + '&' + 'selectedProjectsUids=' + jsonParameters.selectedProjectsUids;
+
+        MyRio2cCommon.unblock();
     };
 
-    var showDownloadModal = function () {
+    var showDownloadModal = function (projectData) {
+        var selectedProjectsUids = $('#projectpitching-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
+        var message = selectedProjectsUids === '' ? translations.confirmDownloadAll : translations.confirmDownloadSelected;
         bootbox.dialog({
-            message: translations.confirmDownloadAll,
+            message: message,
             buttons: {
                 cancel: {
                     label: labels.cancel,
@@ -88,36 +45,17 @@ var ProjectsPitchingDataTableWidget = function () {
                     }
                 },
                 confirm: {
+
                     label: labels.download,
                     className: "btn btn-brand btn-elevate",
                     callback: function () {
-                        downloadAllProjects();
+                        downloadProjects(projectData);
                     }
                 }
             }
         });
     };
 
-    var showSelectedListDownloadModal = function (projectData) {
-        bootbox.dialog({
-            message: translations.confirmDownloadSelected,
-            buttons: {
-                cancel: {
-                    label: labels.cancel,
-                    className: "btn btn-secondary btn-elevate mr-auto",
-                    callback: function () {
-                    }
-                },
-                confirm: {
-                    label: labels.download,
-                    className: "btn btn-brand btn-elevate",
-                    callback: function () {
-                        downloadSelectedProjects(projectData);
-                    }
-                }
-            }
-        });
-    };
     var initiListTable = function () {
         var tableElement = $(tableElementId);
 
@@ -163,19 +101,11 @@ var ProjectsPitchingDataTableWidget = function () {
                     text: labels.actions,
                     buttons: [
                         {
-                            text: translations.downloadSelectedProjects,
+                            text: translations.downloadListProjects,
                             action: function (e, dt, node, config) {
-                                showSelectedListDownloadModal(projectData);
+                                showDownloadModal(projectData);
                             }
-                        },
-                        {
-                            text: translations.downloadAllProjects,
-                            action: function (e, dt, node, config) {
-                                showDownloadModal();
-                            }
-                        },
-
-                    ]
+                        }]
                 }],
             order: [[0, "asc"]],
             sDom: '<"row"<"col-sm-6"l><"col-sm-6 text-right"B>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',

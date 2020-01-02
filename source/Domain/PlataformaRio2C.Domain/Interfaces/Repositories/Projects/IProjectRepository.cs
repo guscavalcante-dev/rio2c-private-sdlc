@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : William Sergio Almado Junior
-// Last Modified On : 12-28-2019
+// Last Modified On : 01-02-2020
 // ***********************************************************************
 // <copyright file="IProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -32,6 +32,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<IPagedList<ProjectBaseDto>> FindAllPitchingProjectsDtoAsync(string searchKeywords, string languageCode, int page, int pageSize);
         Task<ProjectDto> FindPitchingProjectDtoByUidAsync(Guid projectUid);
         Task<List<ProjectBaseDto>> FindAllPitchingProjectsDtoByKeywordsAsync(string searchKeywords, string languageCode);
+        Task<List<ProjectDto>> FindPitchingProjectsByUids(string searchKeywords, List<Guid> projectUids);
         Task<ProjectDto> FindSiteDetailsDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteMainInformationWidgetDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteInterestWidgetDtoByProjectUidAsync(Guid projectUid);

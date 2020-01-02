@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : William Sergio Almado Junior
-// Last Modified On : 12-13-2019
+// Last Modified On : 01-02-2020
 // ***********************************************************************
 // <copyright file="ProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -239,6 +239,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
 
             return pagedList;
+        }
+
+        /// <summary>Finds the by uids.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="collaboratorsUids">The collaborators uids.</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> FindByUids(this IQueryable<Project> query, List<Guid> selectedProjectsUids)
+        {
+            if (selectedProjectsUids?.Any() == true)
+            {
+                query = query.Where(c => selectedProjectsUids.Contains(c.Uid));
+            }
+
+            return query;
         }
     }
 
@@ -511,6 +525,61 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .OrderBy(pd => pd.CreateDate)
                             .ToListAsync(); ;
         }
+
+        public async Task<List<ProjectDto>> FindPitchingProjectsByUids(string searchKeywords, List<Guid> projectUids)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByKeywords(searchKeywords)
+                                .IsPitching()
+                                .FindByUids(projectUids)
+                                .Select(p => new ProjectDto
+                                {
+                                    Project = p,
+                                    SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                    {
+                                        AttendeeOrganization = p.SellerAttendeeOrganization,
+                                        Organization = p.SellerAttendeeOrganization.Organization,
+                                        Edition = p.SellerAttendeeOrganization.Edition
+                                    },
+                                    ProjectTitleDtos = p.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                    {
+                                        ProjectTitle = t,
+                                        Language = t.Language
+                                    }),
+                                    ProjectSummaryDtos = p.ProjectSummaries.Where(s => !s.IsDeleted).Select(s => new ProjectSummaryDto
+                                    {
+                                        ProjectSummary = s,
+                                        Language = s.Language
+                                    }),
+                                    ProjectLogLineDtos = p.ProjectLogLines.Where(l => !l.IsDeleted).Select(l => new ProjectLogLineDto
+                                    {
+                                        ProjectLogLine = l,
+                                        Language = l.Language
+                                    }),
+                                    ProjectProductionPlanDtos = p.ProjectProductionPlans.Where(pp => !pp.IsDeleted).Select(pp => new ProjectProductionPlanDto
+                                    {
+                                        ProjectProductionPlan = pp,
+                                        Language = pp.Language
+                                    }),
+                                    ProjectAdditionalInformationDtos = p.ProjectAdditionalInformations.Where(a => !a.IsDeleted).Select(a => new ProjectAdditionalInformationDto
+                                    {
+                                        ProjectAdditionalInformation = a,
+                                        Language = a.Language
+                                    }),
+                                    ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted).Select(i => new ProjectInterestDto
+                                    {
+                                        ProjectInterest = i,
+                                        Interest = i.Interest,
+                                        InterestGroup = i.Interest.InterestGroup
+                                    })
+                                });
+
+            return await query
+                            .OrderBy(pd => pd.Project.CreateDate)
+                            .ToListAsync(); ;
+        }
+
+
 
         #region Site Widgets
 

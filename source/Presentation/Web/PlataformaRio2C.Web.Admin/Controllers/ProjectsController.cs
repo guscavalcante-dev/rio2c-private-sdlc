@@ -4,7 +4,7 @@
 //// Created          : 06-28-2019
 ////
 //// Last Modified By : William Sergio Almado Junior
-//// Last Modified On : 12-12-2019
+//// Last Modified On : 01-02-2020
 //// ***********************************************************************
 //// <copyright file="ProjectsController.cs" company="Softo">
 ////     Copyright (c) Softo. All rights reserved.
@@ -28,6 +28,8 @@ using PlataformaRio2C.Infra.Report;
 using PlataformaRio2C.Web.Admin.Filters;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -135,62 +137,97 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         #endregion
 
         #region Project Document Generation
+
         /// <summary>
-        /// Download selected projects from pitching list projects
+        /// Compact document files
         /// </summary>
-        /// <param name="uid"></param>
+        /// <param name="pdfCollection"></param>
+        /// <returns></returns>
+        public FileResult ZipDocuments(Dictionary<string, MemoryStream> pdfCollection)
+        {
+            string fileNameZip = "Compacted_Pdf_Documents" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".zip";
+            byte[] compressedBytes;
+            using (var outStream = new MemoryStream())
+            {
+                using (var archive = new ZipArchive(outStream, ZipArchiveMode.Create, true))
+                {
+                    foreach (var item in pdfCollection)
+                    {
+
+                        var fileInArchive = archive.CreateEntry(item.Key, CompressionLevel.Optimal);
+                        using (var entryStream = fileInArchive.Open())
+                        using (var fileToCompressStream = item.Value)
+                        {
+                            fileToCompressStream.CopyTo(entryStream);
+                        }
+                    }
+                }
+                compressedBytes = outStream.ToArray();
+            }
+            return File(compressedBytes, "application/zip", fileNameZip);
+        }
+
+        /// <summary>
+        /// Changes string Uid list into List<Guid>
+        /// </summary>
+        /// <param name="selectedProjectsUids"></param>
+        /// <returns></returns>
+        private List<Guid> GetProjectsUids(string selectedProjectsUids)
+        {
+            var projecstUids = new List<Guid>();
+
+            if (string.IsNullOrEmpty(selectedProjectsUids))
+            {
+                return projecstUids;
+            }
+
+            var selectedProjectUidsSplit = selectedProjectsUids.Split(',');
+            foreach (var selectedProjectUidSplit in selectedProjectUidsSplit)
+            {
+                if (Guid.TryParse(selectedProjectUidSplit, out Guid projectUid))
+                {
+                    projecstUids.Add(projectUid); ;
+                }
+            }
+
+            return projecstUids;
+        }
+
+        /// <summary>
+        /// Create and download PDF documents
+        /// </summary>
+        /// <param name="keyword"></param>
+        /// <param name="selectedProjectsUids"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<FileResult> DownloadProjectDocument(Guid uid)
+        public async Task<FileResult> DownloadProjectDocument(string keyword, string selectedProjectsUids)
         {
-            if (uid == null)
+            var projecstUids = this.GetProjectsUids(selectedProjectsUids);
+
+            var projectsDtos = await this.projectRepo.FindPitchingProjectsByUids(keyword, projecstUids);
+
+            if (projecstUids.Count.Equals(1))
             {
-                throw new DomainException(Messages.SelectAtLeastOneOption);
+                var pdf = new PlataformaRio2CDocument(new ProjectDocumentTemplate(projectsDtos.FirstOrDefault()));
+
+                return File(pdf.GetStream(), "application/pdf", "ProjectDocument_" + projecstUids.FirstOrDefault() + ".pdf");
             }
-
-            var projectDto = await this.projectRepo.FindPitchingProjectDtoByUidAsync(uid);
-            if (projectDto == null)
+            else
             {
-                throw new DomainException(Messages.SelectAtLeastOneOption);
-            }
-
-            var pdf = new PlataformaRio2CDocument(new ProjectDocumentTemplate(projectDto));
-
-            return File(pdf.GetStream(), "application/pdf", "ProjectDocument_" + uid + ".pdf");
-        }
-
-
-        /// <summary>Download all pitching projects.</summary>
-        /// <param name="selectedProjectsUids">The selected projects uids.</param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> DownloadAllProjects(string keyword)
-        {
-            try
-            {
-                var projectsDtos = await this.projectRepo.FindAllPitchingProjectsDtoByKeywordsAsync(keyword, this.UserInterfaceLanguage);
-                foreach (var item in projectsDtos)
+                var dictPdf = new Dictionary<string, MemoryStream>();
+                //var listPdf = new List<Dictionary<string, MemoryStream>>();
+                foreach (var projectDto in projectsDtos)
                 {
-                    item.UrlDownload = this.Url.Action("DownloadProjectDocument", "Projects", new { uid = item.Uid }, this.Request.Url.Scheme);
+                    var pdfDocument = new PlataformaRio2CDocument(new ProjectDocumentTemplate(projectDto));
+                    dictPdf.Add("ProjectDocument_" + projectDto.Project.Uid + ".pdf", pdfDocument.GetStream());
+                    //listPdf.Add(dictPdf);
                 }
 
-                return Json(new
-                {
-                    status = "success",
-                    data = projectsDtos,
-                }, JsonRequestBehavior.AllowGet);
-            }
-            catch (DomainException ex)
-            {
-                return Json(new { status = "error", message = ex.GetInnerMessage(), }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+                return ZipDocuments(dictPdf);
             }
 
         }
+
 
         #endregion
 

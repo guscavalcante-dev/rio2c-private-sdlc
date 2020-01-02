@@ -1914,11 +1914,11 @@
   <data name="Download" xml:space="preserve">
     <value>Download</value>
   </data>
-  <data name="DownloadAllProjects" xml:space="preserve">
-    <value>Download all projects</value>
+  <data name="ConfirmDownloadAllProjects" xml:space="preserve">
+    <value>Confirm PDF generation for all records on all pages?</value>
   </data>
-  <data name="DownloadSelectedProjects" xml:space="preserve">
-    <value>Download selected projects</value>
+  <data name="ConfirmDownloadSelectedProjects" xml:space="preserve">
+    <value>Confirm PDF generation for selected records?</value>
   </data>
   <data name="EndTime" xml:space="preserve">
     <value>End Time</value>
