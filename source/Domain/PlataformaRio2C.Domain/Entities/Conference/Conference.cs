@@ -75,6 +75,17 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
+        /// <summary>Deletes the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(int userId)
+        {
+            this.IsDeleted = true;
+            this.SynchronizeConferenceTitles(new List<ConferenceTitle>(), userId);
+
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
         #region Conference Titles
 
         /// <summary>Synchronizes the conference titles.</summary>

@@ -397,6 +397,7 @@
     <Content Include="Assets\js\conferences\conferences.editioncount.widget.js" />
     <Content Include="Assets\js\conferences\conferences.totalcount.widget.js" />
     <Content Include="Assets\js\conferences\conferences.create.js" />
+    <Content Include="Assets\js\conferences\conferences.delete.js" />
     <Content Include="Assets\js\speakers\speakers.company.widget.js" />
     <Content Include="Assets\js\speakers\speakers.apiconfiguration.widget.js" />
     <Content Include="Assets\js\speakers\speakers.maininformation.widget.js" />

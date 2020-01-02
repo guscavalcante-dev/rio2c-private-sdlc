@@ -393,8 +393,8 @@ namespace PlataformaRio2C.Web.Admin
             //bundles.Add(new ScriptBundle("~/bundles/js/conferences.update.js").Include(
             //    "~/Assets/js/conferences/conferences.update.js"));
 
-            //bundles.Add(new ScriptBundle("~/bundles/js/conferences.delete.js").Include(
-            //    "~/Assets/js/conferences/conferences.delete.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/conferences.delete.js").Include(
+                "~/Assets/js/conferences/conferences.delete.js"));
 
             #endregion
 
