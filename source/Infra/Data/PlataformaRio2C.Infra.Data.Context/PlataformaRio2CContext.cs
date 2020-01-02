@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-27-2019
+// Last Modified On : 01-02-2020
 // ***********************************************************************
 // <copyright file="PlataformaRio2CContext.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -113,6 +113,9 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new ConferenceMap());
             modelBuilder.Configurations.Add(new ConferenceTitleMap());
             modelBuilder.Configurations.Add(new ConferenceSynopsisMap());
+            modelBuilder.Configurations.Add(new ConferenceParticipantMap());
+            modelBuilder.Configurations.Add(new ConferenceParticipantRoleMap());
+            modelBuilder.Configurations.Add(new ConferenceParticipantRoleTitleMap());
 
             // Common
             modelBuilder.Configurations.Add(new ActivityMap());

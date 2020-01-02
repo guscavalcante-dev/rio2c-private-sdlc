@@ -1923,4 +1923,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Data de término</value>
     <comment>Data de término</comment>
   </data>
+  <data name="Participants" xml:space="preserve">
+    <value>Participantes</value>
+    <comment>Participantes</comment>
+  </data>
 </root>

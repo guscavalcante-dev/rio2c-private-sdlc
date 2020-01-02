@@ -399,6 +399,7 @@
     <Content Include="Assets\js\conferences\conferences.create.js" />
     <Content Include="Assets\js\conferences\conferences.delete.js" />
     <Content Include="Assets\js\conferences\conferences.maininformation.widget.js" />
+    <Content Include="Assets\js\conferences\conferences.participants.widget.js" />
     <Content Include="Assets\js\speakers\speakers.company.widget.js" />
     <Content Include="Assets\js\speakers\speakers.apiconfiguration.widget.js" />
     <Content Include="Assets\js\speakers\speakers.maininformation.widget.js" />
@@ -8218,6 +8219,7 @@
     <Content Include="Views\Conferences\Modals\UpdateMainInformationModal.cshtml" />
     <Content Include="Views\Conferences\Modals\UpdateMainInformationForm.cshtml" />
     <Content Include="Views\Conferences\EditorTemplates\ConferenceSynopsisBaseCommand.cshtml" />
+    <Content Include="Views\Conferences\Widgets\ParticipantsWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

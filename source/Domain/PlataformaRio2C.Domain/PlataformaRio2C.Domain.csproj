@@ -108,6 +108,9 @@
     <Compile Include="Dtos\Collaborators\CollaboratorMiniBioBaseDto.cs" />
     <Compile Include="Dtos\Collaborators\CollaboratorJobTitleBaseDto.cs" />
     <Compile Include="Dtos\Conferences\ConferenceDto.cs" />
+    <Compile Include="Dtos\Conferences\ConferenceParticipantRoleDto.cs" />
+    <Compile Include="Dtos\Conferences\ConferenceParticipantDto.cs" />
+    <Compile Include="Dtos\Conferences\ConferenceParticipantRoleTitleDto.cs" />
     <Compile Include="Dtos\Conferences\ConferenceSynopsisDto.cs" />
     <Compile Include="Dtos\Conferences\ConferenceTitleDto.cs" />
     <Compile Include="Dtos\Conferences\ConferenceJsonDto.cs" />
@@ -173,7 +176,10 @@
     <Compile Include="Entities\Collaborator\CollaboratorProducer.cs" />
     <Compile Include="Entities\Collaborator\CollaboratorSpeaker.cs" />
     <Compile Include="Entities\Common\InterestGroup.cs" />
+    <Compile Include="Entities\Conference\ConferenceParticipantRole.cs" />
+    <Compile Include="Entities\Conference\ConferenceParticipant.cs" />
     <Compile Include="Entities\Conference\Conference.cs" />
+    <Compile Include="Entities\Conference\ConferenceParticipantRoleTitle.cs" />
     <Compile Include="Entities\Conference\RoleLectureTitle.cs" />
     <Compile Include="Entities\Conference\LecturerJobTitle.cs" />
     <Compile Include="Entities\Conference\Lecturer.cs" />

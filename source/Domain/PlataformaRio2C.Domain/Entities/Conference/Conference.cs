@@ -39,6 +39,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         public virtual ICollection<ConferenceTitle> ConferenceTitles { get; private set; }
         public virtual ICollection<ConferenceSynopsis> ConferenceSynopses { get; private set; }
+        public virtual ICollection<ConferenceParticipant> ConferenceParticipants { get; private set; }
         //public virtual ICollection<ConferenceLecturer> Lecturers { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="Conference"/> class.</summary>

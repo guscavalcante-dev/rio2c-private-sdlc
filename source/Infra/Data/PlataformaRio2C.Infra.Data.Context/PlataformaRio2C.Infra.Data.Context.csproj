@@ -83,6 +83,9 @@
     <Compile Include="Mapping\Collaborator\CollaboratorProducerMap.cs" />
     <Compile Include="Mapping\Common\ActivityMap.cs" />
     <Compile Include="Mapping\Addresses\AddressMap.cs" />
+    <Compile Include="Mapping\Conference\ConferenceParticipantRoleTitleMap.cs" />
+    <Compile Include="Mapping\Conference\ConferenceParticipantRoleMap.cs" />
+    <Compile Include="Mapping\Conference\ConferenceParticipantMap.cs" />
     <Compile Include="Mapping\Conference\RoleLecturerTitleMap.cs" />
     <Compile Include="Mapping\Conference\LecturerJobTitleMap.cs" />
     <Compile Include="Mapping\Conference\LecturerMap.cs" />

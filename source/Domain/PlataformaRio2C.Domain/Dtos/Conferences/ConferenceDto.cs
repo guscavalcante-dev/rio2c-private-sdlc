@@ -25,6 +25,7 @@ namespace PlataformaRio2C.Domain.Dtos
 
         public IEnumerable<ConferenceTitleDto> ConferenceTitleDtos { get; set; }
         public IEnumerable<ConferenceSynopsisDto> ConferenceSynopsisDtos { get; set; }
+        public IEnumerable<ConferenceParticipantDto> ConferenceParticipantDtos { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="ConferenceDto"/> class.</summary>
         public ConferenceDto()

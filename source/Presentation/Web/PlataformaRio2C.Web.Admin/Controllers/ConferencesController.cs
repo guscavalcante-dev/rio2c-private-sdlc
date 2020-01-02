@@ -318,29 +318,26 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #endregion
 
-        //#region Company Widget
+        #region Participants Widget
 
-        ///// <summary>Shows the company widget.</summary>
-        ///// <param name="collaboratorUid">The collaborator uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowCompanyWidget(Guid? collaboratorUid)
-        //{
-        //    var companyWidgetDto = await this.attendeeCollaboratorRepo.FindSiteCompanyWidgetDtoByCollaboratorUidAndByEditionIdAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
-        //    if (companyWidgetDto == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
+        [HttpGet]
+        public async Task<ActionResult> ShowParticipantsWidget(Guid? conferenceUid)
+        {
+            var participantsWidgetDto = await this.conferenceRepo.FindParticipantsWidgetDtoAsync(conferenceUid ?? Guid.Empty, this.EditionDto.Id);
+            if (participantsWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Conference, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Widgets/CompanyWidget", companyWidgetDto), divIdOrClass = "#SpeakerCompanyWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/ParticipantsWidget", participantsWidgetDto), divIdOrClass = "#ConferenceParticipantsWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
         //#region Update
 
@@ -500,7 +497,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         //#endregion
 
-        //#endregion
+        #endregion
 
         //#region Api Configuration Widget
 

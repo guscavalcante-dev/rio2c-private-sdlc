@@ -1,0 +1,104 @@
+﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Statics
+@model ConferenceDto
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+            @Labels.Participants
+        </h3>
+    </div>
+    <div class="kt-portlet__head-toolbar">
+        <div class="kt-portlet__head-actions">
+            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="SpeakersCompanyWidget.showUpdateModal();">
+                <i class="flaticon2-plus"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="kt-portlet__body">
+    @if (Model.ConferenceParticipantDtos?.Any() == true)
+    {
+        <div class="row rio2c-scroll" style="height: 200px;">
+            @foreach (var participantDto in Model.ConferenceParticipantDtos)
+            {
+                <div class="col-sm-6 col-xl-4">
+                    <!--Begin::Portlet-->
+                    <div class="kt-portlet kt-portlet--height-fluid">
+                        <div class="text-right pr-2 pt-2">
+                            <a href="#" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" data-toggle="dropdown" aria-expanded="false">
+                                <i class="flaticon-more-1"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right" style="">
+                                <ul class="kt-nav">
+                                    <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link" onclick="ConferencesParticipantsWidget.showUpdateModal('@participantDto.ConferenceParticipant.Uid'); return false;">
+                                            <i class="kt-nav__link-icon flaticon2-edit"></i>
+                                            <span class="kt-nav__link-text">@Labels.Edit</span>
+                                        </a>
+                                    </li>
+                                    <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link" onclick="ConferencesParticipantsWidget.showDeleteModal('@participantDto.ConferenceParticipant.Uid'); return false;">
+                                            <i class="kt-nav__link-icon flaticon2-delete"></i>
+                                            <span class="kt-nav__link-text">@Labels.Remove</span>
+                                        </a>
+                                    </li>
+                                </ul>							
+                            </div>
+                        </div>
+                        @*<div class="kt-portlet__head-actions text-right pr-2 pt-2">
+                            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="SpeakersCompanyWidget.showUpdateModal('@attendeeOrganizationDto.Organization.Uid');">
+                                <i class="flaticon2-edit"></i>
+                            </button>
+                        </div>*@
+                        <div class="kt-portlet__body mt-10">
+                            <!--begin::Widget -->
+                            <div class="kt-widget kt-widget--user-profile-2" style="flex-direction: row;">
+                                <div class="kt-widget__head">
+                                    <div class="kt-widget__media">
+                                        @if (participantDto.AttendeeCollaboratorDto?.Collaborator?.HasImage() == true)
+                                        {
+                                            <img class="kt-widget__img" src="@ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, participantDto.AttendeeCollaboratorDto.Collaborator.Uid, participantDto.AttendeeCollaboratorDto.Collaborator.ImageUploadDate, true)" alt="image">
+                                        }
+                                        else
+                                        {
+                                            <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest">
+                                                @(participantDto.AttendeeCollaboratorDto?.Collaborator?.GetDisplayNameAbbreviation())
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="kt-widget__info">
+                                        <a @*href="@Url.Action("Details", "Companies", new { id = attendeeOrganizationDto.Organization.Uid })"*@ class="kt-widget__username">
+                                            @(participantDto.AttendeeCollaboratorDto?.Collaborator?.GetDisplayName())
+                                        </a>
+                                        @{
+                                            var jobTitle = participantDto.AttendeeCollaboratorDto?.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value;
+                                        }
+                                        @if (!string.IsNullOrEmpty(jobTitle))
+                                        {
+                                            <span class="kt-widget__desc">@jobTitle</span>
+                                        }
+                                        <span class="kt-widget__desc">
+                                            <a @*href="@Url.Action("Details", "Companies", new { id = attendeeOrganizationDto.Organization.Uid })"*@>
+                                                <small><i class="flaticon-profile"></i> @Labels.SeeDescription</small>
+                                            </a>
+                                        </span>
+                                    </div>
+                                </div>
+                                @*<div class="kt-widget__footer">
+                                        <button type="button" class="btn btn-label-warning btn-lg btn-upper">write message</button>
+                                    </div>*@
+                            </div>
+                            <!--end::Widget -->
+                        </div>
+                    </div>
+                    <!--End::Portlet-->
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.Participants, Labels.FoundFP)</span>
+    }
+</div>

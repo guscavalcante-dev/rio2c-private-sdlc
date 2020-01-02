@@ -240,6 +240,68 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+        /// <summary>Finds the participants widget dto asynchronous.</summary>
+        /// <param name="conferenceUid">The conference uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<ConferenceDto> FindParticipantsWidgetDtoAsync(Guid conferenceUid, int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(conferenceUid)
+                                .FindByEditionId(false, editionId);
+
+            return await query
+                .Select(c => new ConferenceDto
+                {
+                    Conference = c,
+                    ConferenceParticipantDtos = c.ConferenceParticipants.Where(cp => !cp.IsDeleted).Select(cp => new ConferenceParticipantDto
+                    {
+                        ConferenceParticipant = cp,
+                        AttendeeCollaboratorDto = new AttendeeCollaboratorDto
+                        {
+                            AttendeeCollaborator = cp.AttendeeCollaborator,
+                            Collaborator = cp.AttendeeCollaborator.Collaborator,
+                            JobTitlesDtos = cp.AttendeeCollaborator.Collaborator.JobTitles.Where(d => !d.IsDeleted).Select(d => new CollaboratorJobTitleBaseDto
+                            {
+                                Id = d.Id,
+                                Uid = d.Uid,
+                                Value = d.Value,
+                                LanguageDto = new LanguageBaseDto
+                                {
+                                    Id = d.Language.Id,
+                                    Uid = d.Language.Uid,
+                                    Name = d.Language.Name,
+                                    Code = d.Language.Code
+                                }
+                            }),
+                            AttendeeOrganizationsDtos = cp.AttendeeCollaborator.AttendeeOrganizationCollaborators
+                                .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted && !aoc.AttendeeOrganization.Organization.IsDeleted)
+                                .Select(aoc => new AttendeeOrganizationDto
+                                {
+                                    AttendeeOrganization = aoc.AttendeeOrganization,
+                                    Organization = aoc.AttendeeOrganization.Organization
+                                })
+                        },
+                        ConferenceParticipantRoleDto = new ConferenceParticipantRoleDto
+                        {
+                            ConferenceParticipantRole = cp.ConferenceParticipantRole,
+                            ConferenceParticipantRoleTitleDtos = cp.ConferenceParticipantRole.ConferenceParticipantRoleTitles.Where(cprt => !cprt.IsDeleted).Select(cprt => new ConferenceParticipantRoleTitleDto
+                            {
+                                ConferenceParticipantRoleTitle = cprt,
+                                LanguageDto = new LanguageBaseDto
+                                {
+                                    Id = cprt.Language.Id,
+                                    Uid = cprt.Language.Uid,
+                                    Name = cprt.Language.Name,
+                                    Code = cprt.Language.Code
+                                }
+                            })
+                        }
+                    })
+                })
+                .FirstOrDefaultAsync();
+        }
+
         /// <summary>Finds all by data table.</summary>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>

@@ -1909,4 +1909,8 @@
     <value>End date</value>
     <comment>Data de término</comment>
   </data>
+  <data name="Participants" xml:space="preserve">
+    <value>Participants</value>
+    <comment>Participantes</comment>
+  </data>
 </root>

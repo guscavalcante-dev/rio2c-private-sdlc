@@ -13,13 +13,13 @@
             </div>
         </div>
         <!--end:Main Information Widget-->
-        @*<!--begin:Company Widget-->
-            <div class="row">
-                <div class="col-12">
-                    <div id="SpeakerCompanyWidget" class="kt-portlet" style="min-height: 325px;"></div>
-                </div>
+        <!--begin:Participants Widget-->
+        <div class="row">
+            <div class="col-12">
+                <div id="ConferenceParticipantsWidget" class="kt-portlet" style="min-height: 325px;"></div>
             </div>
-            <!--end:Company Widget-->*@
+        </div>
+        <!--end:Participants Widget-->
     </div>
 </div>
 @section Styles {
@@ -46,7 +46,7 @@
 
         jQuery(document).ready(function () {
             ConferencesMainInformationWidget.init();
-            //ConferencesCompanyWidget.init();
+            ConferencesParticipantsWidget.init();
             //ConferencesApiConfigurationWidget.init();
         });
     </script>

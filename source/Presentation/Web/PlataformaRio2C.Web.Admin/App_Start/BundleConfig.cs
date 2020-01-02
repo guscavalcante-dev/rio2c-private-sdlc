@@ -384,7 +384,8 @@ namespace PlataformaRio2C.Web.Admin
             //    "~/Assets/themes/metronic/css/demo4/pages/pricing/pricing-1.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/conferences.details.js").Include(
-                "~/Assets/js/conferences/conferences.maininformation.widget.js"));
+                "~/Assets/js/conferences/conferences.maininformation.widget.js",
+                "~/Assets/js/conferences/conferences.participants.widget.js"));
 
             //bundles.Add(new ScriptBundle("~/bundles/js/conferences.update.js").Include(
             //    "~/Assets/js/conferences/conferences.update.js"));
