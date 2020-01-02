@@ -23,7 +23,8 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>IConferenceRepository</summary>
     public interface IConferenceRepository : IRepository<Conference>
     {
-        Task<ConferenceDto> FindConferenceDto(Guid conferenceUid, int editionId);
+        Task<ConferenceDto> FindDtoAsync(Guid conferenceUid, int editionId);
+        Task<ConferenceDto> FindMainInformationWidgetDtoAsync(Guid conferenceUid, int editionId);
         Task<IPagedList<ConferenceJsonDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> conferencesUids, int editionId, int languageId);
         Task<int> CountAllByDataTable(bool showAllEditions, int editionId);
 

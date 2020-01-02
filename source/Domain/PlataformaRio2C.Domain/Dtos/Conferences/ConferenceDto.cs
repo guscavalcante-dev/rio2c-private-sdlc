@@ -38,5 +38,13 @@ namespace PlataformaRio2C.Domain.Dtos
         {
             return this.ConferenceTitleDtos?.FirstOrDefault(ctd => ctd.LanguageDto.Code == languageCode);
         }
+
+        /// <summary>Gets the conference synopsis dto by language code.</summary>
+        /// <param name="languageCode">The language code.</param>
+        /// <returns></returns>
+        public ConferenceSynopsisDto GetConferenceSynopsisDtoByLanguageCode(string languageCode)
+        {
+            return this.ConferenceSynopsisDtos?.FirstOrDefault(ctd => ctd.LanguageDto.Code == languageCode);
+        }
     }
 }

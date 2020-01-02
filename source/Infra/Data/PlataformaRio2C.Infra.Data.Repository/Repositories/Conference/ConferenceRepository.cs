@@ -171,11 +171,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
-        /// <summary>Finds the conference dto.</summary>
+        /// <summary>Finds the dto asynchronous.</summary>
         /// <param name="conferenceUid">The conference uid.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<ConferenceDto> FindConferenceDto(Guid conferenceUid, int editionId)
+        public async Task<ConferenceDto> FindDtoAsync(Guid conferenceUid, int editionId)
         {
             var query = this.GetBaseQuery()
                                 .FindByUid(conferenceUid)
@@ -185,7 +185,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Select(c => new ConferenceDto
                             {
                                 Conference = c,
-                                ConferenceTitleDtos = c.ConferenceTitles.Select(ct => new ConferenceTitleDto
+                                ConferenceTitleDtos = c.ConferenceTitles.Where(ct => !ct.IsDeleted).Select(ct => new ConferenceTitleDto
                                 {
                                     ConferenceTitle = ct,
                                     LanguageDto = new LanguageBaseDto
@@ -194,6 +194,46 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                        Uid = ct.Language.Uid,
                                        Name = ct.Language.Name,
                                        Code = ct.Language.Code
+                                    }
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>Finds the main information widget dto asynchronous.</summary>
+        /// <param name="conferenceUid">The conference uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<ConferenceDto> FindMainInformationWidgetDtoAsync(Guid conferenceUid, int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                    .FindByUid(conferenceUid)
+                                    .FindByEditionId(false, editionId);
+
+            return await query
+                            .Select(c => new ConferenceDto
+                            {
+                                Conference = c,
+                                ConferenceTitleDtos = c.ConferenceTitles.Where(ct => !ct.IsDeleted).Select(ct => new ConferenceTitleDto
+                                {
+                                    ConferenceTitle = ct,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = ct.Language.Id,
+                                        Uid = ct.Language.Uid,
+                                        Name = ct.Language.Name,
+                                        Code = ct.Language.Code
+                                    }
+                                }),
+                                ConferenceSynopsisDtos = c.ConferenceSynopses.Where(cs => !cs.IsDeleted).Select(cs => new ConferenceSynopsisDto
+                                {
+                                    ConferenceSynopsis = cs,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = cs.Language.Id,
+                                        Uid = cs.Language.Uid,
+                                        Name = cs.Language.Name,
+                                        Code = cs.Language.Code
                                     }
                                 })
                             })

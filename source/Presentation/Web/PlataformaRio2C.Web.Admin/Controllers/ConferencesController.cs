@@ -180,7 +180,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Details(Guid? id)
         {
-            var conferenceDto = await this.conferenceRepo.FindConferenceDto(id ?? Guid.Empty, this.EditionDto.Id);
+            var conferenceDto = await this.conferenceRepo.FindDtoAsync(id ?? Guid.Empty, this.EditionDto.Id);
             if (conferenceDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Conference, Labels.FoundF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
@@ -199,29 +199,29 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             return View(conferenceDto);
         }
 
-        //#region Main Information Widget
+        #region Main Information Widget
 
-        ///// <summary>Shows the main information widget.</summary>
-        ///// <param name="collaboratorUid">The collaborator uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowMainInformationWidget(Guid? collaboratorUid)
-        //{
-        //    var mainInformationWidgetDto = await this.attendeeCollaboratorRepo.FindSiteMainInformationWidgetDtoByCollaboratorUidAndByEditionIdAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
-        //    if (mainInformationWidgetDto == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
+        /// <summary>Shows the main information widget.</summary>
+        /// <param name="conferenceUid">The conference uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowMainInformationWidget(Guid? conferenceUid)
+        {
+            var mainInformationWidgetDto = await this.conferenceRepo.FindMainInformationWidgetDtoAsync(conferenceUid ?? Guid.Empty, this.EditionDto.Id);
+            if (mainInformationWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Conference, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#SpeakerMainInformationWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#ConferenceMainInformationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
         //#region Update
 
@@ -323,7 +323,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         //#endregion
 
-        //#endregion
+        #endregion
 
         //#region Company Widget
 

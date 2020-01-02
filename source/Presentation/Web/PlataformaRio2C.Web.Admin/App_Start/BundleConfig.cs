@@ -383,12 +383,8 @@ namespace PlataformaRio2C.Web.Admin
             //bundles.Add(new StyleBundle("~/bundles/css/conferences.details.css").Include(
             //    "~/Assets/themes/metronic/css/demo4/pages/pricing/pricing-1.css"));
 
-            //bundles.Add(new ScriptBundle("~/bundles/js/conferences.details.js").Include(
-            //    "~/Assets/js/conferences/conferences.maininformation.widget.js",
-            //    "~/Assets/js/conferences/conferences.company.widget.js",
-            //    "~/Assets/js/companies/companyinfo.autocomplete.js",
-            //    "~/Assets/js/myrio2c.companynumber.js",
-            //    "~/Assets/js/conferences/conferences.apiconfiguration.widget.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/conferences.details.js").Include(
+                "~/Assets/js/conferences/conferences.maininformation.widget.js"));
 
             //bundles.Add(new ScriptBundle("~/bundles/js/conferences.update.js").Include(
             //    "~/Assets/js/conferences/conferences.update.js"));
