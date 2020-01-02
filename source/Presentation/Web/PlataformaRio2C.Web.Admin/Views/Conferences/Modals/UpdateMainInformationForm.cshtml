@@ -1,0 +1,9 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateConferenceMainInformation
+@Html.Partial("Modals/_CreateForm", Model)
+<div class="kt-section pt-2">
+    <h3 class="kt-section__title mb-0">@Labels.Synopsis</h3>
+    @Html.ValidationMessage("Synopsis", new { @class = "text-danger" })
+    <div class="kt-section__content mt-3">
+        @Html.EditorFor(m => m.Synopsis)
+    </div>
+</div>

@@ -75,12 +75,38 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
+        /// <summary>Updates the main information.</summary>
+        /// <param name="date">The date.</param>
+        /// <param name="startTime">The start time.</param>
+        /// <param name="endTime">The end time.</param>
+        /// <param name="conferenceTitles">The conference titles.</param>
+        /// <param name="conferenceSynopses">The conference synopses.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateMainInformation(
+            DateTime date,
+            string startTime,
+            string endTime,
+            List<ConferenceTitle> conferenceTitles,
+            List<ConferenceSynopsis> conferenceSynopses,
+            int userId)
+        {
+            this.StartDate = date.JoinDateAndTime(startTime, true);
+            this.EndDate = date.JoinDateAndTime(endTime, true);
+            this.SynchronizeConferenceTitles(conferenceTitles, userId);
+            this.SynchronizeConferenceSynopses(conferenceSynopses, userId);
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
         /// <summary>Deletes the specified user identifier.</summary>
         /// <param name="userId">The user identifier.</param>
         public void Delete(int userId)
         {
             this.IsDeleted = true;
             this.SynchronizeConferenceTitles(new List<ConferenceTitle>(), userId);
+            this.SynchronizeConferenceSynopses(new List<ConferenceSynopsis>(), userId);
 
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
@@ -105,7 +131,7 @@ namespace PlataformaRio2C.Domain.Entities
                 return;
             }
 
-            // Create or update job titles
+            // Create or update
             foreach (var conferenceTitle in conferenceTitles)
             {
                 var conferenceTitleDb = this.ConferenceTitles.FirstOrDefault(d => d.Language.Code == conferenceTitle.Language.Code);
@@ -137,6 +163,61 @@ namespace PlataformaRio2C.Domain.Entities
         private void CreateConferenceTitle(ConferenceTitle conferenceTitle)
         {
             this.ConferenceTitles.Add(conferenceTitle);
+        }
+
+        #endregion
+
+        #region Conference Synopses
+
+        /// <summary>Synchronizes the conference synopses.</summary>
+        /// <param name="conferenceSynopses">The conference synopses.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeConferenceSynopses(List<ConferenceSynopsis> conferenceSynopses, int userId)
+        {
+            if (this.ConferenceSynopses == null)
+            {
+                this.ConferenceSynopses = new List<ConferenceSynopsis>();
+            }
+
+            this.DeleteConferenceSynopses(conferenceSynopses, userId);
+
+            if (conferenceSynopses?.Any() != true)
+            {
+                return;
+            }
+
+            // Create or update
+            foreach (var conferenceSynopsis in conferenceSynopses)
+            {
+                var conferenceSynopsisDb = this.ConferenceSynopses.FirstOrDefault(d => d.Language.Code == conferenceSynopsis.Language.Code);
+                if (conferenceSynopsisDb != null)
+                {
+                    conferenceSynopsisDb.Update(conferenceSynopsis);
+                }
+                else
+                {
+                    this.CreateConferenceSynopsis(conferenceSynopsis);
+                }
+            }
+        }
+
+        /// <summary>Deletes the conference synopses.</summary>
+        /// <param name="newConferenceSynopses">The new conference synopses.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteConferenceSynopses(List<ConferenceSynopsis> newConferenceSynopses, int userId)
+        {
+            var conferenceSynopsesToDelete = this.ConferenceTitles.Where(db => newConferenceSynopses?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false && !db.IsDeleted).ToList();
+            foreach (var conferenceSynopsisToDelete in conferenceSynopsesToDelete)
+            {
+                conferenceSynopsisToDelete.Delete(userId);
+            }
+        }
+
+        /// <summary>Creates the conference synopsis.</summary>
+        /// <param name="conferenceSynopsis">The conference synopsis.</param>
+        private void CreateConferenceSynopsis(ConferenceSynopsis conferenceSynopsis)
+        {
+            this.ConferenceSynopses.Add(conferenceSynopsis);
         }
 
         #endregion

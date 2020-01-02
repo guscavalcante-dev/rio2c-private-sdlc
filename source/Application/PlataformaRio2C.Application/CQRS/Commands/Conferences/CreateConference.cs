@@ -38,9 +38,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<ConferenceTitleBaseCommand> Titles { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CreateConference"/> class.</summary>
-        public CreateConference(List<LanguageDto> languagesDtos)
+        public CreateConference(ConferenceDto entity, List<LanguageDto> languagesDtos)
         {
-            this.UpdateTitles(null, languagesDtos);
+            this.Date = entity?.Conference?.StartDate.Date;
+            this.StartTime = entity?.Conference?.StartDate.ToShortTimeString();
+            this.EndTime = entity?.Conference?.EndDate.ToShortTimeString();
+            this.UpdateTitles(entity, languagesDtos);
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateConference"/> class.</summary>

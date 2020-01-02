@@ -17,7 +17,7 @@
                     </div>
                 }
             </div>*@ 
-            <div class="kt-widget__content" style="overflow: hidden;">
+            <div class="kt-widget__content pl-0" style="overflow: hidden;">
                 <div class="kt-widget__head">
                     <span class="kt-widget__username">
                         @(Model.GetConferenceTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ConferenceTitle?.Value ?? "-")
@@ -48,7 +48,7 @@
                     @if (synopsisDto != null)
                     {
                         <div class="kt-widget__desc" style="word-wrap: break-word;">
-                            @Html.Raw(synopsisDto.Value)
+                            @Html.Raw(synopsisDto.ConferenceSynopsis.Value)
                         </div>
                     }
                 </div>

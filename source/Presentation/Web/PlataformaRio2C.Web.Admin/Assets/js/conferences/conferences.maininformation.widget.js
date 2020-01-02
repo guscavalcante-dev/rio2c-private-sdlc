@@ -59,8 +59,8 @@ var ConferencesMainInformationWidget = function () {
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                if (typeof (SpeakersMainInformationWidget) !== 'undefined') {
-                    SpeakersMainInformationWidget.init();
+                if (typeof (ConferencesMainInformationWidget) !== 'undefined') {
+                    ConferencesMainInformationWidget.init();
                 }
             },
             onError: function (data) {
@@ -83,8 +83,7 @@ var ConferencesMainInformationWidget = function () {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
-        jsonParameters.collaboratorUid = $('#AggregateId').val();
-        jsonParameters.isAddingToCurrentEdition = true;
+        jsonParameters.conferenceUid = $('#AggregateId').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Conferences/ShowUpdateMainInformationModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
