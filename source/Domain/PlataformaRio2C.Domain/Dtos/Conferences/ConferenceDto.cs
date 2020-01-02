@@ -4,7 +4,7 @@
 // Created          : 12-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-27-2019
+// Last Modified On : 01-02-2020
 // ***********************************************************************
 // <copyright file="ConferenceDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System.Collections.Generic;
+using System.Linq;
 using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Domain.Dtos
@@ -28,6 +29,14 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <summary>Initializes a new instance of the <see cref="ConferenceDto"/> class.</summary>
         public ConferenceDto()
         {
+        }
+
+        /// <summary>Gets the conference title dto by language code.</summary>
+        /// <param name="languageCode">The language code.</param>
+        /// <returns></returns>
+        public ConferenceTitleDto GetConferenceTitleDtoByLanguageCode(string languageCode)
+        {
+            return this.ConferenceTitleDtos?.FirstOrDefault(ctd => ctd.LanguageDto.Code == languageCode);
         }
     }
 }

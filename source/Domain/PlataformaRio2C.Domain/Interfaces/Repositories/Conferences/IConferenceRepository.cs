@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-27-2019
+// Last Modified On : 01-02-2020
 // ***********************************************************************
 // <copyright file="IConferenceRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,8 +14,6 @@
 using PlataformaRio2C.Domain.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using PlataformaRio2C.Domain.Dtos;
 using X.PagedList;
@@ -25,6 +23,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>IConferenceRepository</summary>
     public interface IConferenceRepository : IRepository<Conference>
     {
+        Task<ConferenceDto> FindConferenceDto(Guid conferenceUid, int editionId);
         Task<IPagedList<ConferenceJsonDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> conferencesUids, int editionId, int languageId);
         Task<int> CountAllByDataTable(bool showAllEditions, int editionId);
 

@@ -1,66 +1,49 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
-@model AttendeeCollaboratorSiteDetailsDto
+@model ConferenceDto
 @{
-    ViewBag.Title = $"{Labels.Speaker}  {Model.Collaborator.GetFullName()}";
+    ViewBag.Title = $"{Labels.Conference}  {Model.GetConferenceTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ConferenceTitle?.Value}";
 }
-@Html.Hidden("AggregateId", Model.Collaborator.Uid)
+@Html.Hidden("AggregateId", Model.Conference.Uid)
 <div class="row">
-    <!--begin: Main Container-->
-    <div class="col-md-8 col-lg-9">
+    <div class="col-md-12">
+        <!--begin:Main Information Widget-->
         <div class="row">
-            <div class="col-md-12">
-                <!--begin:Main Information Widget-->
-                <div class="row">
-                    <div class="col-12">
-                        <div id="SpeakerMainInformationWidget" class="kt-portlet" style="min-height: 325px;"></div>
-                    </div>
-                </div>
-                <!--end:Main Information Widget-->
-                <!--begin:Company Widget-->
+            <div class="col-12">
+                <div id="ConferenceMainInformationWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+        </div>
+        <!--end:Main Information Widget-->
+        @*<!--begin:Company Widget-->
                 <div class="row">
                     <div class="col-12">
                         <div id="SpeakerCompanyWidget" class="kt-portlet" style="min-height: 325px;"></div>
                     </div>
                 </div>
-                <!--end:Company Widget-->
-            </div>
-        </div>
+                <!--end:Company Widget-->*@
     </div>
-    <!--end: Main Container-->
-    <!--begin: Right Container-->
-    <div class="col-md-4 col-lg-3">
-        <!--begin:Api Configurations Widget-->
-        <div class="row">
-            <div class="col-12">
-                <div id="SpeakerApiConfigurationWidget" class="kt-portlet" style="min-height: 325px;"></div>
-            </div>
-        </div>
-        <!--end:Api Configurations Widget-->
-    </div>
-    <!--end: Right Container-->
 </div>
 @section Styles {
-    @Styles.Render("~/bundles/css/cropper.css")
+    @*@Styles.Render("~/bundles/css/cropper.css")*@
     @Styles.Render("~/bundles/css/select2.css")
-    @Styles.Render("~/bundles/css/jquery.autocomplete.css")
-    @Styles.Render("~/bundles/css/speakers.details.css")
+    @*@Styles.Render("~/bundles/css/jquery.autocomplete.css")*@
+    @*@Styles.Render("~/bundles/css/speakers.details.css")*@
 }
 @section Scripts {
-    @Scripts.Render("~/bundles/js/cropper.js")
+    @*@Scripts.Render("~/bundles/js/cropper.js")*@
     @Scripts.Render("~/bundles/js/select2.js")
     @*@Scripts.Render("~/bundles/js/ckEditor.js")*@
-    @Scripts.Render("~/bundles/js/inputmask.js")
-    @Scripts.Render("~/bundles/js/jquery.autocomplete.js")
+    @*@Scripts.Render("~/bundles/js/inputmask.js")*@
+    @*@Scripts.Render("~/bundles/js/jquery.autocomplete.js")*@
     @Scripts.Render("~/bundles/js/bootbox.js")
-    @Scripts.Render("~/bundles/js/addresses.form.js")
-    @Scripts.Render("~/bundles/js/speakers.details.js")
+    @*@Scripts.Render("~/bundles/js/addresses.form.js")*@
+    @Scripts.Render("~/bundles/js/conferences.details.js")
     <script>
         // Page translations ----------------------------------------------------------------------
 
         jQuery(document).ready(function () {
-            SpeakersMainInformationWidget.init();
-            SpeakersCompanyWidget.init();
-            SpeakersApiConfigurationWidget.init();
+            ConferencesMainInformationWidget.init();
+            //ConferencesCompanyWidget.init();
+            //ConferencesApiConfigurationWidget.init();
         });
     </script>
 }

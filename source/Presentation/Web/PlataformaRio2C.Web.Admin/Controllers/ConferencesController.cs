@@ -172,32 +172,32 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #endregion
 
-        //#region Details
+        #region Details
 
-        ///// <summary>Detailses the specified identifier.</summary>
-        ///// <param name="id">The identifier.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> Details(Guid? id)
-        //{
-        //    var attendeeCollaboratorDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUidAndByEditionIdAsync(id ?? Guid.Empty, this.EditionDto.Id);
-        //    if (attendeeCollaboratorDto == null)
-        //    {
-        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Speaker, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("Index", "Home", new { Area = "" });
-        //    }
+        /// <summary>Detailses the specified identifier.</summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> Details(Guid? id)
+        {
+            var conferenceDto = await this.conferenceRepo.FindConferenceDto(id ?? Guid.Empty, this.EditionDto.Id);
+            if (conferenceDto == null)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Conference, Labels.FoundF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Conferences", new { Area = "" });
+            }
 
-        //    #region Breadcrumb
+            #region Breadcrumb
 
-        //    ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Speakers, new List<BreadcrumbItemHelper> {
-        //        new BreadcrumbItemHelper(Labels.Speakers, Url.Action("Index", "Speakers", new { id })),
-        //        new BreadcrumbItemHelper(attendeeCollaboratorDto.Collaborator.GetFullName(), Url.Action("Details", "Speakers", new { id }))
-        //    });
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Conferences, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Conferences, Url.Action("Index", "Conferences", new { Area = "" })),
+                new BreadcrumbItemHelper(conferenceDto.GetConferenceTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ConferenceTitle?.Value, Url.Action("Details", "Conferences", new { id }))
+            });
 
-        //    #endregion
+            #endregion
 
-        //    return View(attendeeCollaboratorDto);
-        //}
+            return View(conferenceDto);
+        }
 
         //#region Main Information Widget
 
@@ -634,7 +634,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         //#endregion
 
-        //#endregion
+        #endregion
 
         #region Create
 

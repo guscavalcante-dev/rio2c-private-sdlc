@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-27-2019
+// Last Modified On : 01-02-2020
 // ***********************************************************************
 // <copyright file="ConferenceRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -169,6 +169,35 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return @readonly
                         ? consult.AsNoTracking()
                         : consult;
+        }
+
+        /// <summary>Finds the conference dto.</summary>
+        /// <param name="conferenceUid">The conference uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<ConferenceDto> FindConferenceDto(Guid conferenceUid, int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(conferenceUid)
+                                .FindByEditionId(false, editionId);
+
+            return await query
+                            .Select(c => new ConferenceDto
+                            {
+                                Conference = c,
+                                ConferenceTitleDtos = c.ConferenceTitles.Select(ct => new ConferenceTitleDto
+                                {
+                                    ConferenceTitle = ct,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                       Id = ct.Language.Id,
+                                       Uid = ct.Language.Uid,
+                                       Name = ct.Language.Name,
+                                       Code = ct.Language.Code
+                                    }
+                                })
+                            })
+                            .FirstOrDefaultAsync();
         }
 
         /// <summary>Finds all by data table.</summary>
