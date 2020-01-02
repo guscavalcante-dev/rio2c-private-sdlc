@@ -4,7 +4,7 @@
 // Created          : 12-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-27-2019
+// Last Modified On : 01-02-2020
 // ***********************************************************************
 // <copyright file="CreateConferenceCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,8 +19,6 @@ using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Domain.Validation;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -31,6 +29,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IEditionRepository editionRepo;
         private readonly ILanguageRepository languageRepo;
 
+        /// <summary>Initializes a new instance of the <see cref="CreateConferenceCommandHandler"/> class.</summary>
+        /// <param name="eventBus">The event bus.</param>
+        /// <param name="uow">The uow.</param>
+        /// <param name="conferenceRepository">The conference repository.</param>
+        /// <param name="editionRepository">The edition repository.</param>
+        /// <param name="languageRepository">The language repository.</param>
         public CreateConferenceCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
@@ -58,8 +62,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var conference = new Conference(
                 conferenceUid,
                 await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
-                cmd.StartDate.Value,
-                cmd.EndDate.Value,
+                cmd.Date.Value,
+                cmd.StartTime,
+                cmd.EndTime,
                 cmd.Titles?.Select(d => new ConferenceTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.UserId);
             if (!conference.IsValid())

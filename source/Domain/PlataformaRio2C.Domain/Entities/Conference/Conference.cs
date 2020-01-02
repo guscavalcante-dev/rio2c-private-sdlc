@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-27-2019
+// Last Modified On : 01-02-2020
 // ***********************************************************************
 // <copyright file="Conference.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -43,23 +44,25 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Initializes a new instance of the <see cref="Conference"/> class.</summary>
         /// <param name="conferenceUid">The conference uid.</param>
         /// <param name="edition">The edition.</param>
-        /// <param name="startDate">The start date.</param>
-        /// <param name="endDate">The end date.</param>
+        /// <param name="date">The date.</param>
+        /// <param name="startTime">The start time.</param>
+        /// <param name="endTime">The end time.</param>
         /// <param name="conferenceTitles">The conference titles.</param>
         /// <param name="userId">The user identifier.</param>
         public Conference(
             Guid conferenceUid,
             Edition edition,
-            DateTime startDate,
-            DateTime endDate,
+            DateTime date,
+            string startTime,
+            string endTime,
             List<ConferenceTitle> conferenceTitles,
             int userId)
         {
             //this.Uid = conferenceUid;
             this.EditionId = edition?.Id ?? 0;
             this.Edition = edition;
-            this.StartDate = startDate;
-            this.EndDate = endDate;
+            this.StartDate = date.JoinDateAndTime(startTime, true);
+            this.EndDate = date.JoinDateAndTime(endTime, true);
             this.SynchronizeConferenceTitles(conferenceTitles, userId);
 
             this.IsDeleted = false;
@@ -154,19 +157,15 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Validates the dates.</summary>
         public void ValidateDates()
         {
-            if (this.StartDate < this.Edition.StartDate)
+            if (this.StartDate < this.Edition.StartDate || this.StartDate > this.Edition.EndDate
+                || this.EndDate < this.Edition.StartDate || this.EndDate > this.Edition.EndDate)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.StartDate), new string[] { "StartDate" }));
-            }
-
-            if (this.EndDate > this.Edition.EndDate)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.EndDate), new string[] { "EndDate" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.Date, this.Edition.EndDate.ToShortDateString(), this.Edition.StartDate.ToShortDateString()), new string[] { "Date" }));
             }
 
             if (this.StartDate > this.EndDate)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.StartDate), new string[] { "StartDate" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyGreaterThanProperty, Labels.EndTime, Labels.StartTime), new string[] { "EndTime" }));
             }
         }
 

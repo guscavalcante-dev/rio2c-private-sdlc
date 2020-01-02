@@ -846,4 +846,16 @@
     <value>Overwrite the highlight of the below list.</value>
     <comment>Substitui o destaque da lista abaixo.</comment>
   </data>
+  <data name="DateBetweenDates" xml:space="preserve">
+    <value>The date must be between {1} and {0}.</value>
+    <comment>A data deve estar entre {1} e {0}.</comment>
+  </data>
+  <data name="PropertyBetweenDates" xml:space="preserve">
+    <value>The field {0} must be between '{2}' and '{1}'.</value>
+    <comment>O campo {0} deve ser entre '{2}' e '{1}'.</comment>
+  </data>
+  <data name="PropertyGreaterThanProperty" xml:space="preserve">
+    <value>The field {0} must be greater than field {1}.</value>
+    <comment>The field {0} must be greater than field {1}.</comment>
+  </data>
 </root>

@@ -439,6 +439,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A data deve estar entre {1} e {0}..
+        /// </summary>
+        public static string DateBetweenDates {
+            get {
+                return ResourceManager.GetString("DateBetweenDates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Descreve as restrições e/ou especificações sobre o conteúdo desejado..
         /// </summary>
         public static string DescribeRestrictionSpecifics {
@@ -1473,11 +1482,29 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O campo {0} deve ser entre &apos;{2}&apos; e &apos;{1}&apos;..
+        /// </summary>
+        public static string PropertyBetweenDates {
+            get {
+                return ResourceManager.GetString("PropertyBetweenDates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O campo {0} deve ter entre &apos;{2}&apos; e &apos;{1}&apos; caracteres..
         /// </summary>
         public static string PropertyBetweenLengths {
             get {
                 return ResourceManager.GetString("PropertyBetweenLengths", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo {0} deve ser maior que o campo {1}..
+        /// </summary>
+        public static string PropertyGreaterThanProperty {
+            get {
+                return ResourceManager.GetString("PropertyGreaterThanProperty", resourceCulture);
             }
         }
         

@@ -4,7 +4,7 @@
 // Created          : 12-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-27-2019
+// Last Modified On : 01-02-2020
 // ***********************************************************************
 // <copyright file="CreateConference.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,13 +23,17 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>CreateConference</summary>
     public class CreateConference : BaseCommand
     {
-        [Display(Name = "StartDate", ResourceType = typeof(Labels))]
+        [Display(Name = "Date", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public DateTime? StartDate { get; set; }
+        public DateTime? Date { get; set; }
 
-        [Display(Name = "EndDate", ResourceType = typeof(Labels))]
+        [Display(Name = "StartTime", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public DateTime? EndDate { get; set; }
+        public string StartTime { get; set; }
+
+        [Display(Name = "EndTime", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public string EndTime { get; set; }
 
         public List<ConferenceTitleBaseCommand> Titles { get; set; }
 

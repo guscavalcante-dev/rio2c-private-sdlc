@@ -342,3 +342,31 @@ a.r2c-login__footer-link, a.r2c-footer-link {
 .kt-chat .kt-chat__input .kt-chat__editor textarea {
     color: #495057 !important;
 }
+
+
+/*
+    Datepicker
+*/
+.datepicker tbody tr > td span.disabled {
+    color: #dedede !important;
+}
+
+.datepicker tbody tr > td.disabled {
+    color: #dedede !important;
+}
+
+
+/*
+    Timepicker
+*/
+.bootstrap-timepicker-widget table td input {
+    width: 35px !important;
+}
+
+.bootstrap-timepicker-widget .bootstrap-timepicker-hour,
+.bootstrap-timepicker-widget .bootstrap-timepicker-minute,
+.bootstrap-timepicker-widget .bootstrap-timepicker-meridian,
+.bootstrap-timepicker-widget .bootstrap-timepicker-second {
+    border: 1px solid #e2e5ec !important;
+    padding: 0.63rem 0rem !important;
+}

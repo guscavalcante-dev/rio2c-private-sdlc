@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-27-2019
+// Last Modified On : 01-02-2020
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -221,6 +221,38 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/dynamic.list.js").Include(
                 "~/Assets/js/dynamic.list.js"));
+
+            #endregion
+
+            #region Bootstrap Datetimepicker
+
+            bundles.Add(new StyleBundle("~/bundles/css/bootstrap-datetimepicker.css")
+                .Include("~/Assets/themes/metronic/vendors/general/bootstrap-datetime-picker/css/bootstrap-datetimepicker.css", new CssRewriteUrlTransform()));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/bootstrap-datetimepicker.js").Include(
+                "~/Assets/themes/metronic/vendors/general/bootstrap-datetime-picker/js/bootstrap-datetimepicker.js"));
+
+            #endregion
+
+            #region Bootstrap Datepicker
+
+            bundles.Add(new StyleBundle("~/bundles/css/bootstrap-datepicker.css")
+                .Include("~/Assets/themes/metronic/vendors/general/bootstrap-datepicker/dist/css/bootstrap-datepicker.css", new CssRewriteUrlTransform()));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/bootstrap-datepicker.js").Include(
+                "~/Assets/themes/metronic/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.js",
+                "~/Assets/components/bootstrap-timepicker/bootstrap-datepicker.en-us.js",
+                "~/Assets/components/bootstrap-timepicker/bootstrap-datepicker.pt-br.js"));
+
+            #endregion
+
+            #region Bootstrap Timepicker
+
+            bundles.Add(new StyleBundle("~/bundles/css/bootstrap-timepicker.css")
+                .Include("~/Assets/themes/metronic/vendors/general/bootstrap-timepicker/css/bootstrap-timepicker.css", new CssRewriteUrlTransform()));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/bootstrap-timepicker.js").Include(
+                "~/Assets/themes/metronic/vendors/general/bootstrap-timepicker/js/bootstrap-timepicker.js"));
 
             #endregion
 

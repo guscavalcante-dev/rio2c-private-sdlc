@@ -4,7 +4,7 @@
 // Created          : 12-13-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-13-2019
+// Last Modified On : 01-02-2020
 // ***********************************************************************
 // <copyright file="DateTimeExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,6 +27,40 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                    (dt.Day % 10 == 2 && dt.Day != 12) ? "nd" : 
                    (dt.Day % 10 == 3 && dt.Day != 13) ? "rd" : 
                    "th";
+        }
+
+        /// <summary>Joins the date and time.</summary>
+        /// <param name="dt">The dt.</param>
+        /// <param name="time">The time.</param>
+        /// <param name="isStart">if set to <c>true</c> [is start].</param>
+        /// <returns></returns>
+        public static DateTime JoinDateAndTime(this DateTime dt, string time, bool isStart)
+        {
+            var timeSplit = time?.Split(':');
+
+            // Add seconds
+            if (timeSplit?.Length == 3)
+            {
+                dt = dt.AddSeconds(int.Parse(timeSplit[2]));
+            }
+            else if (!isStart)
+            {
+                dt = dt.AddSeconds(59);
+            }
+
+            // Add minutes
+            if (timeSplit?.Length >= 2)
+            {
+                dt = dt.AddMinutes(int.Parse(timeSplit[1]));
+            }
+
+            // Add hours
+            if (timeSplit?.Length >= 1)
+            {
+                dt = dt.AddHours(int.Parse(timeSplit[0]));
+            }
+
+            return dt;
         }
     }
 }

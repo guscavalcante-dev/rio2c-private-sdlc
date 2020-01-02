@@ -851,4 +851,16 @@
     <value>Substitui o destaque da lista abaixo.</value>
     <comment>Substitui o destaque da lista abaixo.</comment>
   </data>
+  <data name="DateBetweenDates" xml:space="preserve">
+    <value>A data deve estar entre {1} e {0}.</value>
+    <comment>A data deve estar entre {1} e {0}.</comment>
+  </data>
+  <data name="PropertyBetweenDates" xml:space="preserve">
+    <value>O campo {0} deve ser entre '{2}' e '{1}'.</value>
+    <comment>O campo {0} deve ser entre '{2}' e '{1}'.</comment>
+  </data>
+  <data name="PropertyGreaterThanProperty" xml:space="preserve">
+    <value>O campo {0} deve ser maior que o campo {1}.</value>
+    <comment>O campo {0} deve ser maior que o campo {1}.</comment>
+  </data>
 </root>

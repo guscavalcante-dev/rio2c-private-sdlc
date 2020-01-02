@@ -374,6 +374,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\components\bootstrap-maxlength\src\bootstrap-maxlength.js" />
+    <Content Include="Assets\components\bootstrap-timepicker\bootstrap-datepicker.en-us.js" />
+    <Content Include="Assets\components\bootstrap-timepicker\bootstrap-datepicker.pt-br.js" />
     <Content Include="Assets\components\hideshowpassword\css\example.minimal.css" />
     <Content Include="Assets\components\hideshowpassword\css\example.wink.css" />
     <Content Include="Assets\components\hideshowpassword\hideShowPassword.js" />
