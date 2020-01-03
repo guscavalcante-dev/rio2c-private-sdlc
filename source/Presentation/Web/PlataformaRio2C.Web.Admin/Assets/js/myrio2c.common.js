@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-02-2020
+// Last Modified On : 01-03-2020
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1114,6 +1114,122 @@ var MyRio2cCommon = function () {
         }
     };
 
+    // Collaborator select2 -----------------------------------------------------------------------
+    var formatCollaboratorResult = function (collaborator) {
+        if (collaborator.loading) {
+            return collaborator.text;
+        }
+
+        var imageDirectory = 'https://' + globalVariables.bucket + '/img/users/';
+
+        var container =
+            '<div class="select2-result-collaborator clearfix">' +
+                '<div class="select2-result-collaborator__avatar">';
+
+        // Picture
+        if (!MyRio2cCommon.isNullOrEmpty(collaborator.Picture)) {
+            container +=
+                '<img src="' + collaborator.Picture + '" />';
+        }
+        else {
+            container +=
+                '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" />';
+        }
+
+        container +=
+            '</div > ' +
+            '<div class="select2-result-collaborator__meta">' +
+            '<div class="select2-result-collaborator__title">' + (collaborator.BadgeName || collaborator.Name) + '</div>';
+
+        if (!MyRio2cCommon.isNullOrEmpty(collaborator.JobTitle)) {
+            container +=
+                '<div class="select2-result-collaborator__description">' + collaborator.JobTitle + '</div>';
+        }
+
+        if (!MyRio2cCommon.isNullOrEmpty(collaborator.Companies) && collaborator.Companies.length > 0) {
+            container +=
+                '<div class="select2-result-collaborator__description">' + collaborator.Companies[0].TradeName + '</div>';
+        }
+
+        container +=
+            '   </div>' +
+            '</div>';
+
+        var $container = $(container);
+
+        return $container;
+    };
+
+    var formatCollaboratorSelection = function (collaborator) {
+        return collaborator.text;
+    };
+
+    var enableCollaboratorSelect2 = function (options) {
+        if (isNullOrEmpty(options)) {
+            options = new Object();
+        }
+
+        if (!hasProperty(options, 'inputIdOrClass') || isNullOrEmpty(options.inputIdOrClass)) {
+            options.inputIdOrClass = '.enable-collaborator-select2';
+        }
+
+        if (!hasProperty(options, 'allowClear') || isNullOrEmpty(options.allowClear)) {
+            options.allowClear = true;
+            options.placeholder = labels.selectPlaceholder;
+        }
+        else if (!hasProperty(options, 'placeholder') || isNullOrEmpty(options.placeholder)) {
+            options.placeholder = labels.selectPlaceholder;
+        }
+
+        $('#CollaboratorUid').select2({
+            language: MyRio2cCommon.getGlobalVariable('userInterfaceLanguageUppercade'),
+            width: '100%',
+            allowClear: options.allowClear,
+            placeholder: options.placeholder,
+            delay: 250,
+            ajax: {
+                url: MyRio2cCommon.getUrlWithCultureAndEdition(options.url),
+                dataType: 'json',
+                type: "GET",
+                quietMillis: 50,
+                data: function (params) {
+                    var query = {
+                        keywords: params.term,
+                        page: params.page
+                    };
+
+                    return query;
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+
+                    return MyRio2cCommon.handleAjaxReturn({
+                        data: data,
+                        // Success
+                        onSuccess: function () {
+                            for (var i = data.Speakers.length - 1; i >= 0; i--) {
+                                data.Speakers[i].id = data.Speakers[i].Uid;
+                                data.Speakers[i].text = data.Speakers[i].BadgeName || data.Speakers[i].Name;
+                            }
+
+                            return {
+                                results: data.Speakers,
+                                pagination: {
+                                    more: data.HasNextPage
+                                }
+                            };
+                        },
+                        // Error
+                        onError: function () {
+                        }
+                    });
+                }
+            },
+            templateResult: formatCollaboratorResult,
+            templateSelection: formatCollaboratorSelection
+        });
+    };
+
     return {
         init: function (userInterfaceLanguage, editionUrlCode, bucket) {
             setGlobalVariables(userInterfaceLanguage, editionUrlCode, bucket);
@@ -1213,6 +1329,9 @@ var MyRio2cCommon = function () {
         },
         showAlert: function (options) {
             showAlert(options);
+        },
+        enableCollaboratorSelect2: function (options) {
+            enableCollaboratorSelect2(options);
         }
     };
 }();

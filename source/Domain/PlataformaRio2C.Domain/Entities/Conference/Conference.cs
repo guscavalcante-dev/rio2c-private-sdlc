@@ -23,16 +23,10 @@ namespace PlataformaRio2C.Domain.Entities
     /// <summary>Conference</summary>
     public class Conference : Entity
     {
-        //public static readonly int LocalMinLength = 2;
-        //public static readonly int LocalMaxLength = 1000;
-        //public static readonly int InfoMaxLength = 3000;
-
         public int EditionId { get; private set; }
         public int? RoomId { get; private set; }
         public DateTime StartDate { get; private set; }
         public DateTime EndDate { get; private set; }
-
-        //public string Info { get; private set; }
 
         public virtual Edition Edition { get; private set; }
         public virtual Room Room { get; private set; }
@@ -40,7 +34,6 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<ConferenceTitle> ConferenceTitles { get; private set; }
         public virtual ICollection<ConferenceSynopsis> ConferenceSynopses { get; private set; }
         public virtual ICollection<ConferenceParticipant> ConferenceParticipants { get; private set; }
-        //public virtual ICollection<ConferenceLecturer> Lecturers { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="Conference"/> class.</summary>
         /// <param name="conferenceUid">The conference uid.</param>
