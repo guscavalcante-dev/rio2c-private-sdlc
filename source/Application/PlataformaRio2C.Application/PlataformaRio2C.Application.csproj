@@ -193,6 +193,7 @@
     <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorSiteMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Conferences\ConferenceBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Conferences\CreateConferenceCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Conferences\UpdateConferenceParticipantCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Conferences\DeleteConferenceParticipantCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Conferences\CreateConferenceParticipantCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Conferences\UpdateConferenceMainInformationCommandHandler.cs" />
@@ -260,6 +261,7 @@
     <Compile Include="CQRS\Commands\Common\BaseCommands\InterestBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Conferences\BaseCommands\ConferenceSynopsisBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Conferences\BaseCommands\ConferenceTitleBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Conferences\UpdateConferenceParticipant.cs" />
     <Compile Include="CQRS\Commands\Conferences\DeleteConferenceParticipant.cs" />
     <Compile Include="CQRS\Commands\Conferences\CreateConferenceParticipant.cs" />
     <Compile Include="CQRS\Commands\Conferences\CreateConference.cs" />

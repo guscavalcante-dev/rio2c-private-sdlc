@@ -20,6 +20,9 @@ var ConferencesParticipantsWidget = function () {
     var createModalId = '#CreateParticipantModal';
     var createFormId = '#CreateParticipantForm';
 
+    var updateModalId = '#UpdateParticipantModal';
+    var updateFormId = '#UpdateParticipantForm';
+
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         KTApp.initTooltips();
@@ -54,7 +57,7 @@ var ConferencesParticipantsWidget = function () {
     };
 
     // Create -------------------------------------------------------------------------------------
-    var enableAjaxForm = function () {
+    var enableCreateAjaxForm = function () {
         MyRio2cCommon.enableAjaxForm({
             idOrClass: createFormId,
             onSuccess: function (data) {
@@ -73,7 +76,7 @@ var ConferencesParticipantsWidget = function () {
     };
 
     var enableCreatePlugins = function () {
-        enableAjaxForm();
+        enableCreateAjaxForm();
         MyRio2cCommon.enableCollaboratorSelect2({ url: '/Speakers/FindAllByFilters' });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: createFormId + ' .enable-select2', allowClear: true });
         MyRio2cCommon.enableFormValidation({ formIdOrClass: createFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
@@ -92,6 +95,59 @@ var ConferencesParticipantsWidget = function () {
                 onSuccess: function () {
                     enableCreatePlugins();
                     $(createModalId).modal();
+                },
+                // Error
+                onError: function () {
+                }
+            });
+        })
+        .fail(function () {
+        })
+        .always(function () {
+            MyRio2cCommon.unblock();
+        });
+    };
+
+    // Update -------------------------------------------------------------------------------------
+    var enableUpdateAjaxForm = function () {
+        MyRio2cCommon.enableAjaxForm({
+            idOrClass: updateFormId,
+            onSuccess: function (data) {
+                $(updateModalId).modal('hide');
+
+                if (typeof (ConferencesParticipantsWidget) !== 'undefined') {
+                    ConferencesParticipantsWidget.init();
+                }
+            },
+            onError: function (data) {
+                if (MyRio2cCommon.hasProperty(data, 'pages')) {
+                    enableUpdatePlugins();
+                }
+            }
+        });
+    };
+
+    var enableUpdatePlugins = function () {
+        enableUpdateAjaxForm();
+        //MyRio2cCommon.enableCollaboratorSelect2({ url: '/Speakers/FindAllByFilters', selectedOption: { id: $('#InitialCollaboratorUid').val(), text: $('#InitialCollaboratorName').val() }});
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2', allowClear: true });
+        MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
+    };
+
+    var showUpdateModal = function (collaboratorUid) {
+        MyRio2cCommon.block({ isModal: true });
+
+        var jsonParameters = new Object();
+        jsonParameters.conferenceUid = $('#AggregateId').val();
+        jsonParameters.collaboratorUid = collaboratorUid;
+
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Conferences/ShowUpdateParticipantModal'), jsonParameters, function (data) {
+            MyRio2cCommon.handleAjaxReturn({
+                data: data,
+                // Success
+                onSuccess: function () {
+                    enableUpdatePlugins();
+                    $(updateModalId).modal();
                 },
                 // Error
                 onError: function () {
@@ -164,6 +220,9 @@ var ConferencesParticipantsWidget = function () {
         },
         showCreateModal: function () {
             showCreateModal();
+        },
+        showUpdateModal: function (collaboratorUid) {
+            showUpdateModal(collaboratorUid);
         },
         showDeleteModal: function (collaboratorUid) {
             showDeleteModal(collaboratorUid);

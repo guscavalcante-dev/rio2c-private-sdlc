@@ -1181,7 +1181,7 @@ var MyRio2cCommon = function () {
             options.placeholder = labels.selectPlaceholder;
         }
 
-        $('#CollaboratorUid').select2({
+        $(options.inputIdOrClass).select2({
             language: MyRio2cCommon.getGlobalVariable('userInterfaceLanguageUppercade'),
             width: '100%',
             allowClear: options.allowClear,
@@ -1228,6 +1228,12 @@ var MyRio2cCommon = function () {
             templateResult: formatCollaboratorResult,
             templateSelection: formatCollaboratorSelection
         });
+
+        // Add pre-selected value
+        if (hasProperty(options, 'selectedOption') && !isNullOrEmpty(options.selectedOption) && hasProperty(options.selectedOption, 'id') && hasProperty(options.selectedOption, 'text')) {
+            var newOption = new Option(options.selectedOption.text, options.selectedOption.id, false, true);
+            $(options.inputIdOrClass).append(newOption).trigger('change');
+        }
     };
 
     return {

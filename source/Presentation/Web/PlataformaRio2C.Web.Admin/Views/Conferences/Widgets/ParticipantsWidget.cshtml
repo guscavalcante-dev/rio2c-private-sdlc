@@ -20,7 +20,7 @@
     @if (Model.ConferenceParticipantDtos?.Any() == true)
     {
         <div class="row rio2c-scroll" style="height: 200px;">
-            @foreach (var participantDto in Model.ConferenceParticipantDtos)
+            @foreach (var participantDto in Model.ConferenceParticipantDtos?.OrderBy(cpd => cpd.AttendeeCollaboratorDto.Collaborator.GetDisplayName()))
             {
                 <div class="col-sm-6 col-xl-4">
                     <!--Begin::Portlet-->

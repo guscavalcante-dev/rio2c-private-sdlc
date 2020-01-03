@@ -243,6 +243,19 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
+        /// <summary>Updates the conference participant.</summary>
+        /// <param name="attendeeCollaborator">The attendee collaborator.</param>
+        /// <param name="conferenceParticipantRole">The conference participant role.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateConferenceParticipant(
+            AttendeeCollaborator attendeeCollaborator,
+            ConferenceParticipantRole conferenceParticipantRole,
+            int userId)
+        {
+            var conferenceParticipant = this.GetConferenceParticipantByAttendeeCollaboratorId(attendeeCollaborator?.Id ?? 0);
+            conferenceParticipant?.Update(conferenceParticipantRole, userId);
+        }
+
         /// <summary>Deletes the conference participant.</summary>
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
         /// <param name="userId">The user identifier.</param>

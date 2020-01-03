@@ -1,11 +1,4 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateConferenceParticipant
-<div class="row">
-    <div class="form-group col-md-8">
-        @Html.LabelFor(m => m.CollaboratorUid, new { @class = "control-label" })
-        @Html.DropDownList("CollaboratorUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control enable-collaborator-select2" })
-        @Html.ValidationMessageFor(m => m.CollaboratorUid, "", new { @class = "text-danger" })
-    </div>
-</div>
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateConferenceParticipant
 <div class="row">
     <div class="form-group col-md-8">
         @Html.LabelFor(m => m.ConferenceParticipanteRoleUid, new { @class = "control-label" })
