@@ -6,11 +6,13 @@
 @Html.Partial("Widgets/PitchingDataTablewidget")
 
 @section Styles {
+    @Styles.Render("~/bundles/css/select2.css")
     @Styles.Render("~/bundles/css/dataTables.css")
 }
 @section Scripts {
     @Scripts.Render("~/bundles/js/dataTables.js")
     @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/select2.js")
     @Scripts.Render("~/bundles/js/projects.pitching.widget.js")
     <script>
        // Page translations ----------------------------------------------------------------------

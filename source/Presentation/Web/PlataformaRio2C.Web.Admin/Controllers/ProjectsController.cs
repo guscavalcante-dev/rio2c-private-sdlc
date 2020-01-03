@@ -17,6 +17,7 @@ using MediatR;
 using Newtonsoft.Json;
 using PlataformaRio2C.Application.TemplateDocuments;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
@@ -92,7 +93,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult ProjectsPitchingList()
+        public async Task<ActionResult> ProjectsPitchingList()
         {
             #region Breadcrumb
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Producers, new List<BreadcrumbItemHelper>{
@@ -100,6 +101,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             });
             #endregion
 
+            ViewBag.GenreInterests = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.Genre.Uid);
             ViewBag.Page = 1;
             ViewBag.PageSize = 10;
 
@@ -117,12 +119,17 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         public async Task<ActionResult> ShowPitchingListWidget(IDataTablesRequest request)
         {
             var projects = await this.projectRepo.FindAllPitchingProjectsDtoAsync(request.Search?.Value, this.UserInterfaceLanguage, request.Start / request.Length, request.Length);
-            foreach (var item in projects)
+            foreach (var project in projects)
             {
-                item.UrlDownload = this.Url.Action("DownloadProjectDocument", "Projects", new { uid = item.Uid }, this.Request.Url.Scheme);
+                project.Genre = new List<string>();
+                foreach (var item in project.Genres)
+                {
+                    project.Genre.Add(item.Interest.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, '|'));
+                }
             }
 
 
+            ViewBag.GenreInterests = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.Genre.Uid);
             ViewBag.Page = request.Start / request.Length;
             ViewBag.PageSize = request.Length;
 
@@ -145,7 +152,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <returns></returns>
         public FileResult ZipDocuments(Dictionary<string, MemoryStream> pdfCollection)
         {
-            string fileNameZip = "Compacted_Pdf_Documents" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".zip";
+            string fileNameZip = Labels.Projects + "_" + DateTime.Now.ToString("yyyyMMdd") + ".zip";
             byte[] compressedBytes;
             using (var outStream = new MemoryStream())
             {
@@ -200,31 +207,34 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="selectedProjectsUids"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<FileResult> DownloadProjectDocument(string keyword, string selectedProjectsUids)
+        public async Task<FileResult> DownloadProjectDocument(string keyword, Guid? interestUid, string selectedProjectsUids)
         {
             var projecstUids = this.GetProjectsUids(selectedProjectsUids);
 
-            var projectsDtos = await this.projectRepo.FindPitchingProjectsByUids(keyword, projecstUids);
+            var projectsDtos = await this.projectRepo.FindPitchingProjectsByUids(keyword, interestUid, projecstUids);
 
-            if (projecstUids.Count.Equals(1))
+            if (projectsDtos.Count.Equals(1))
             {
-                var pdf = new PlataformaRio2CDocument(new ProjectDocumentTemplate(projectsDtos.FirstOrDefault()));
+                var projectDto = projectsDtos.FirstOrDefault();
+                var pdf = new PlataformaRio2CDocument(new ProjectDocumentTemplate(projectDto));
 
-                return File(pdf.GetStream(), "application/pdf", "ProjectDocument_" + projecstUids.FirstOrDefault() + ".pdf");
+
+                return File(pdf.GetStream(), "application/pdf", Labels.Project + "_" + projectDto.Project.Id.ToString("D4") + "_" + projectDto.GetTitleDtoByLanguageCode(Constants.Culture.Portuguese).ProjectTitle.Value + ".pdf");
             }
-            else
+            else if (projectsDtos.Count > 1)
             {
                 var dictPdf = new Dictionary<string, MemoryStream>();
-                //var listPdf = new List<Dictionary<string, MemoryStream>>();
+
                 foreach (var projectDto in projectsDtos)
                 {
                     var pdfDocument = new PlataformaRio2CDocument(new ProjectDocumentTemplate(projectDto));
-                    dictPdf.Add("ProjectDocument_" + projectDto.Project.Uid + ".pdf", pdfDocument.GetStream());
-                    //listPdf.Add(dictPdf);
+                    dictPdf.Add(Labels.Project + "_" + projectDto.Project.Id.ToString("D4") + "_" + projectDto.GetTitleDtoByLanguageCode(Constants.Culture.Portuguese).ProjectTitle.Value + ".pdf", pdfDocument.GetStream());
                 }
 
                 return ZipDocuments(dictPdf);
             }
+
+            return null;
 
         }
 

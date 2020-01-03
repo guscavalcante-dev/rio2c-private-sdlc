@@ -26,8 +26,9 @@ var ProjectsPitchingDataTableWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.selectedProjectsUids = $('#projectpitching-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
         jsonParameters.keyword = $('#Search').val();
+        jsonParameters.interestUid = $('#InterestUid').val();
 
-        window.location = '/Projects/DownloadProjectDocument?' + 'keyword=' + jsonParameters.keyword + '&' + 'selectedProjectsUids=' + jsonParameters.selectedProjectsUids;
+        window.location = '/Projects/DownloadProjectDocument?' + 'keyword=' + jsonParameters.keyword + '&interestUid=' + jsonParameters.interestUid + '&selectedProjectsUids=' + jsonParameters.selectedProjectsUids;
 
         MyRio2cCommon.unblock();
     };
@@ -46,7 +47,7 @@ var ProjectsPitchingDataTableWidget = function () {
                 },
                 confirm: {
 
-                    label: labels.download,
+                    label: labels.confirm,
                     className: "btn btn-brand btn-elevate",
                     callback: function () {
                         downloadProjects(projectData);
@@ -56,8 +57,15 @@ var ProjectsPitchingDataTableWidget = function () {
         });
     };
 
+    // Enable form plugins ------------------------------------------------------------------------
+    var enableFormPlugins = function () {
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: '.enable-select2' });
+    };
+
     var initiListTable = function () {
         var tableElement = $(tableElementId);
+
+        enableFormPlugins();
 
         // Disable datatable alert
         $.fn.dataTable.ext.errMode = 'none';
@@ -76,7 +84,7 @@ var ProjectsPitchingDataTableWidget = function () {
         }
 
         var globalVariables = MyRio2cCommon.getGlobalVariables();
-        //var imageDirectory = 'https://' + globalVariables.bucket + '/img/users/';
+        var imageDirectory = 'https://' + globalVariables.bucket + '/img/organizations/';
 
         // Initiate datatable
         table = tableElement.DataTable({
@@ -150,7 +158,45 @@ var ProjectsPitchingDataTableWidget = function () {
             },
             columns: [
                 { data: 'ProjectName' },
-                { data: 'ProducerName' },
+                {
+                    data: 'ProducerName',
+                    render: function (data, type, full, meta) {
+                        var html = '\
+                                <table class="image-side-text text-left">\
+                                    <tr>\
+                                        <td>';
+
+                        if (!MyRio2cCommon.isNullOrEmpty(full.ProducerImageUploadDate)) {
+                            html += '<img src="' + imageDirectory + full.ProducerUid + '_thumbnail.png?v=' + moment(full.ProducerImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
+                        }
+                        else {
+                            html += '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" /> ';
+                        }
+
+                        html += '       <td> ' + full.ProducerName + '</td>\
+                                    </tr>\
+                                </table>';
+
+                        return html;
+                    }
+                },
+                {
+                    data: 'Genre',
+                    render: function (data, type, row, meta) {
+                        var html = '<ul class="m-0 pl-4">';
+
+                        //loop through all the row details to build output string
+                        for (var item in row.Genre) {
+                            if (row.Genre.hasOwnProperty(item)) {
+                                html += '<li>' + row.Genre[item] + '</li>';
+                            }
+                        }
+
+                        html += '</ul>';
+
+                        return html;
+                    }
+                },
                 {
                     data: 'CreateDate',
                     render: function (data) {
@@ -175,7 +221,11 @@ var ProjectsPitchingDataTableWidget = function () {
                     orderable: false
                 },
                 {
-                    targets: [2, 3],
+                    targets: [2],
+                    className: "dt-left"
+                },
+                {
+                    targets: [3, 4],
                     className: "dt-center"
                 },
             ],
@@ -189,6 +239,15 @@ var ProjectsPitchingDataTableWidget = function () {
                 table.search($(this).val()).draw();
             }
         });
+
+        //$('#InterestUid').on('change', function (e) {
+        //    //if (e.keyCode === 13) {
+        //        table.column('Genre')
+        //        table.search('Genre')
+        //            //table.search($(this).val())
+        //            .draw();
+        //    //}
+        //});
 
         $('.enable-datatable-reload').click(function (e) {
             table.ajax.reload();

@@ -59,25 +59,5 @@ namespace PlataformaRio2C.Infra.Report.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap bg_footer_template_document_project {
-            get {
-                object obj = ResourceManager.GetObject("bg_footer_template_document_project", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap bg_template_document_project {
-            get {
-                object obj = ResourceManager.GetObject("bg_template_document_project", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
     }
 }

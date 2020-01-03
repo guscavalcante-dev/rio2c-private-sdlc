@@ -32,7 +32,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<IPagedList<ProjectBaseDto>> FindAllPitchingProjectsDtoAsync(string searchKeywords, string languageCode, int page, int pageSize);
         Task<ProjectDto> FindPitchingProjectDtoByUidAsync(Guid projectUid);
         Task<List<ProjectBaseDto>> FindAllPitchingProjectsDtoByKeywordsAsync(string searchKeywords, string languageCode);
-        Task<List<ProjectDto>> FindPitchingProjectsByUids(string searchKeywords, List<Guid> projectUids);
+        Task<List<ProjectDto>> FindPitchingProjectsByUids(string searchKeywords, Guid? interestUid, List<Guid> projectUids);
         Task<ProjectDto> FindSiteDetailsDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteMainInformationWidgetDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteInterestWidgetDtoByProjectUidAsync(Guid projectUid);

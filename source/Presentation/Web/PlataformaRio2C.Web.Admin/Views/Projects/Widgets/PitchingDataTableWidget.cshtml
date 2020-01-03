@@ -25,7 +25,20 @@
                 <label>@Labels.Search:</label>
                 @Html.Hidden("Page", ViewBag.Page as int?)
                 @Html.Hidden("PageSize", ViewBag.PageSize as int?)
-                @Html.TextBox("Search", null, new { @class = "form-control mr-1", autocomplete = "off", type = "search", placeholder = $"{Labels.Title.ToLowerInvariant()}, {Labels.Producer.ToLowerInvariant()}"  })
+                @Html.TextBox("Search", null, new { @class = "form-control mr-1", autocomplete = "off", type = "search", placeholder = $"{Labels.Title.ToLowerInvariant()}, {Labels.Producer.ToLowerInvariant()}" })
+            </div>
+            <div class="col-lg-4">
+                <label>@Labels.Genre:</label>
+
+                <select name="InterestUid" id="InterestUid" class="form-control enable-datatable-reload enable-select2">
+                    <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Genre.ToLowerInvariant()))...</option>
+                    @foreach (var interestDto in genreInterests)
+                    {
+                        <option value="@interestDto.Interest.Uid" @(interestDto.Interest.Uid == ViewBag.InterestUid ? "selected" : string.Empty)>
+                            @interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                        </option>
+                    }
+                </select>
             </div>
         </div>
         <!--end: SearchForm-->
@@ -35,9 +48,9 @@
                 <tr>
                     <th>@Labels.Title</th>
                     <th>@Labels.Producer</th>
+                    <th>@Labels.Genre</th>
                     <th class="dt-head-center dt-body-center">@Labels.CreateDate</th>
                     <th class="dt-head-center dt-body-center">@Labels.SendDate</th>
-                    @*<th class="dt-head-center dt-body-center">@Labels.Actions</th>*@
                 </tr>
             </thead>
         </table>

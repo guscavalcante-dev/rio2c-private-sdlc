@@ -13,6 +13,7 @@
 // ***********************************************************************
 using iTextSharp.text;
 using PlataformaRio2C.Infra.Report.Properties;
+using System;
 using System.IO;
 
 namespace PlataformaRio2C.Infra.Report
@@ -33,8 +34,9 @@ namespace PlataformaRio2C.Infra.Report
                 if (_background == null)
                 {
                     MemoryStream img = new MemoryStream();
-                    Resources.bg_template_document_project.Save(img, System.Drawing.Imaging.ImageFormat.Bmp);
-
+                    string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets\\img\\bg-template-document-project.jpg");
+                    var fileName = System.Drawing.Image.FromFile(path);
+                    fileName.Save(img, System.Drawing.Imaging.ImageFormat.Bmp);
                     _background = Image.GetInstance(img.ToArray());
                     _background.Alignment = Element.ALIGN_CENTER;
                 
@@ -51,11 +53,12 @@ namespace PlataformaRio2C.Infra.Report
                 if (_backgroundFooter == null)
                 {
                     MemoryStream img = new MemoryStream();
-                    Resources.bg_footer_template_document_project.Save(img, System.Drawing.Imaging.ImageFormat.Bmp);
+                    string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets\\img\\bg-footer-template-document-project.jpg");
+                    var fileName = System.Drawing.Image.FromFile(path);
+                    fileName.Save(img, System.Drawing.Imaging.ImageFormat.Bmp);
 
                     _backgroundFooter = Image.GetInstance(img.ToArray());
                     _backgroundFooter.Alignment = Element.ALIGN_CENTER;
-                    //_bg.ScaleToFit(50, 50); aqui comentei pq vc pode setar o scale da imagem
                 }
                 return _backgroundFooter;
             }

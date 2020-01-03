@@ -445,6 +445,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     Uid = p.Uid,
                                     ProjectName = p.ProjectTitles.Where(t => t.Language.Code == languageCode).Select(t => t.Value).FirstOrDefault(),
                                     ProducerName = p.SellerAttendeeOrganization.Organization.Name,
+                                    ProducerImageUploadDate = p.SellerAttendeeOrganization.Organization.ImageUploadDate,
+                                    ProducerUid = p.SellerAttendeeOrganization.Organization.Uid,
+                                    ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted && i.Interest.InterestGroup.Uid == InterestGroup.Genre.Uid).Select(i => new ProjectInterestDto
+                                    {
+                                        Interest = i.Interest,
+                                        InterestGroup = i.Interest.InterestGroup
+                                    }),
                                     CreateDate = p.CreateDate,
                                     FinishDate = p.FinishDate
                                 });
@@ -526,11 +533,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .ToListAsync(); ;
         }
 
-        public async Task<List<ProjectDto>> FindPitchingProjectsByUids(string searchKeywords, List<Guid> projectUids)
+        public async Task<List<ProjectDto>> FindPitchingProjectsByUids(string searchKeywords, Guid? interestUid, List<Guid> projectUids)
         {
             var query = this.GetBaseQuery()
                                 .FindByKeywords(searchKeywords)
                                 .IsPitching()
+                                .FindByInterest(interestUid)
                                 .FindByUids(projectUids)
                                 .Select(p => new ProjectDto
                                 {
@@ -539,7 +547,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     {
                                         AttendeeOrganization = p.SellerAttendeeOrganization,
                                         Organization = p.SellerAttendeeOrganization.Organization,
-                                        Edition = p.SellerAttendeeOrganization.Edition
+                                        Edition = p.SellerAttendeeOrganization.Edition,
                                     },
                                     ProjectTitleDtos = p.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
                                     {
@@ -575,7 +583,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 });
 
             return await query
-                            .OrderBy(pd => pd.Project.CreateDate)
+                            .OrderBy(pd => pd.Project.FinishDate)
                             .ToListAsync(); ;
         }
 

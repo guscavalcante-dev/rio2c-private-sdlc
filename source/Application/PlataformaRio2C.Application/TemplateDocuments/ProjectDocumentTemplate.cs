@@ -89,7 +89,7 @@ namespace PlataformaRio2C.Application.TemplateDocuments
         private Paragraph GetFirstPageInfo(ref PlataformaRio2CDocument document)
         {
             var paragraph = new Paragraph();
-            
+
             paragraph.Add(GetChunk(this.Project.GetTitleDtoByLanguageCode(Constants.Culture.Portuguese).ProjectTitle.Value.ToUpper(), DefaultFontSize + 12f, Font.BOLD));
             paragraph.IndentationLeft = 170;
             paragraph.SpacingBefore = 85;
@@ -299,6 +299,8 @@ namespace PlataformaRio2C.Application.TemplateDocuments
                     paragraph.Add(GetChunk(projectFormatDto.Interest.Name.GetSeparatorTranslation(Constants.Culture.English, '|'), DefaultFontSize + 4f, Font.NORMAL));
                     paragraph.Add(GetChunk(" | ", DefaultFontSize + 4f, Font.NORMAL));
                     paragraph.Add(GetChunk(projectFormatDto.Interest.Name.GetSeparatorTranslation(Constants.Culture.Portuguese, '|'), DefaultFontSize + 4f, Font.NORMAL));
+                    paragraph.Add(GetChunk("    ", DefaultFontSize + 4f, Font.NORMAL));
+
                 }
             }
 
@@ -318,8 +320,9 @@ namespace PlataformaRio2C.Application.TemplateDocuments
                 foreach (var projectPlatformDto in projectPlatformsDtos)
                 {
                     paragraph.Add(GetChunk(projectPlatformDto.Interest.Name.GetSeparatorTranslation(Constants.Culture.English, '|'), DefaultFontSize + 4f, Font.NORMAL));
-                    paragraph.Add(GetChunk(" | "));
+                    paragraph.Add(GetChunk(" | ", DefaultFontSize + 4f, Font.NORMAL));
                     paragraph.Add(GetChunk(projectPlatformDto.Interest.Name.GetSeparatorTranslation(Constants.Culture.Portuguese, '|'), DefaultFontSize + 4f, Font.NORMAL));
+                    paragraph.Add(GetChunk("    ", DefaultFontSize + 4f, Font.NORMAL));
                 }
             }
 
@@ -328,6 +331,47 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             paragraph.IndentationRight = 15;
             paragraph.SpacingBefore = 20;
             paragraph.SetLeading(1.0f, 1.0f);
+            document.Add(paragraph);
+            paragraph.Clear();
+
+
+            paragraph.Add(GetChunk("Status do projeto: ", DefaultFontSize + 4f, Font.BOLD));
+            var projectStatusDtos = this.Project.GetAllInterestsByInterestGroupUid(InterestGroup.ProjectStatus.Uid);
+            if (projectStatusDtos?.Any() == true)
+            {
+                foreach (var projectStatusDto in projectStatusDtos)
+                {
+                    paragraph.Add(GetChunk(projectStatusDto.Interest.Name.GetSeparatorTranslation(Constants.Culture.English, '|'), DefaultFontSize + 4f, Font.NORMAL));
+                    paragraph.Add(GetChunk(" | ", DefaultFontSize + 4f, Font.NORMAL));
+                    paragraph.Add(GetChunk(projectStatusDto.Interest.Name.GetSeparatorTranslation(Constants.Culture.Portuguese, '|'), DefaultFontSize + 4f, Font.NORMAL));
+                    paragraph.Add(GetChunk("    ", DefaultFontSize + 4f, Font.NORMAL));
+                }
+            }
+
+            paragraph.IndentationLeft = 15;
+            paragraph.IndentationRight = 15;
+            paragraph.SpacingBefore = 20;
+            document.Add(paragraph);
+            paragraph.Clear();
+
+
+            paragraph.Add(GetChunk("Subgênero: ", DefaultFontSize + 4f, Font.BOLD));
+            var subgeneroDtos = this.Project.GetAllInterestsByInterestGroupUid(InterestGroup.SubGenre.Uid);
+            if (subgeneroDtos?.Any() == true)
+            {
+                foreach (var subgeneroDto in subgeneroDtos)
+                {
+                    paragraph.Add(GetChunk(subgeneroDto.Interest.Name.GetSeparatorTranslation(Constants.Culture.English, '|'), DefaultFontSize + 4f, Font.NORMAL));
+                    paragraph.Add(GetChunk(" | ", DefaultFontSize + 4f, Font.NORMAL));
+                    paragraph.Add(GetChunk(subgeneroDto.Interest.Name.GetSeparatorTranslation(Constants.Culture.Portuguese, '|'), DefaultFontSize + 4f, Font.NORMAL));
+                    paragraph.Add(GetChunk("    ", DefaultFontSize + 4f, Font.NORMAL));
+
+                }
+            }
+
+            paragraph.IndentationLeft = 15;
+            paragraph.IndentationRight = 15;
+            paragraph.SpacingBefore = 20;
             document.Add(paragraph);
             paragraph.Clear();
 
@@ -340,7 +384,7 @@ namespace PlataformaRio2C.Application.TemplateDocuments
 
             double.TryParse(this.Project.Project.TotalValueOfProject, out double totalValueOfProject);
             paragraph.Add(GetChunk("Valor total do projeto (USD): ", DefaultFontSize + 4f, Font.BOLD));
-            paragraph.Add(GetChunk(totalValueOfProject.ToString("N2") , DefaultFontSize + 4f, Font.NORMAL));
+            paragraph.Add(GetChunk(totalValueOfProject.ToString("N2"), DefaultFontSize + 4f, Font.NORMAL));
             paragraph.IndentationLeft = 15;
             paragraph.IndentationRight = 15;
             paragraph.SpacingBefore = 15;
