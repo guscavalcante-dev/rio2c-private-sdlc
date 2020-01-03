@@ -73,14 +73,23 @@
                                         </a>
                                         @{
                                             var jobTitle = participantDto.AttendeeCollaboratorDto?.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value;
+                                            var companyName = participantDto.AttendeeCollaboratorDto?.AttendeeOrganizationsDtos?.FirstOrDefault()?.Organization?.TradeName;
                                         }
-                                        @if (!string.IsNullOrEmpty(jobTitle))
+                                        @if (!string.IsNullOrEmpty(jobTitle) || !string.IsNullOrEmpty(companyName))
                                         {
-                                            <span class="kt-widget__desc">@jobTitle</span>
+                                            <span class="kt-widget__desc">
+                                                @jobTitle
+                                                @if (!string.IsNullOrEmpty(jobTitle) && !string.IsNullOrEmpty(companyName))
+                                                {
+                                                    @(Labels.At + " " + companyName)
+                                                }
+                                            </span>
                                         }
                                         <span class="kt-widget__desc">
                                             <a @*href="@Url.Action("Details", "Companies", new { id = attendeeOrganizationDto.Organization.Uid })"*@>
-                                                <small><i class="flaticon-profile"></i> @Labels.SeeDescription</small>
+                                                <small>
+                                                    <i class="flaticon-presentation"></i> @participantDto.ConferenceParticipantRoleDto.GetConferenceParticipantRoleTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage).ConferenceParticipantRoleTitle.Value
+                                                </small>
                                             </a>
                                         </span>
                                     </div>
