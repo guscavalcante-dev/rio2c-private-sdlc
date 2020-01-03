@@ -45,7 +45,11 @@ namespace PlataformaRio2C.Domain.Entities
         public static InterestGroup ProjectStatus = new InterestGroup(new Guid("379A311F-3BEC-4A9F-8E6E-539B1FD8AB87"));
         public static InterestGroup Platforms = new InterestGroup(new Guid("6590E0F1-B8DA-45D0-BE2C-E4B7CCF3751B"));
         public static InterestGroup Genre = new InterestGroup(new Guid("7B4A7C4A-EF10-483C-8854-87EBEB883583"));
+        public static InterestGroup SubGenre = new InterestGroup(new Guid("BBFA501D-A4D2-4500-8D7D-8A133685E6D2"));
+        public static InterestGroup Format = new InterestGroup(new Guid("2D5AE955-8D8F-4763-AEE4-964980FFB170"));
 
+
+        
         #endregion
 
         #region Old methods

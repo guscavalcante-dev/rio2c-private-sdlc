@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-02-2020
+// Last Modified On : 01-03-2020
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -392,6 +392,14 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/conferences.delete.js").Include(
                 "~/Assets/js/conferences/conferences.delete.js"));
+
+            #endregion
+            
+            #region Projects
+
+            bundles.Add(new ScriptBundle("~/bundles/js/projects.pitching.widget.js").Include(
+                "~/Assets/js/projects/projects.pitching.datatable.widget.js",
+                "~/Scripts/jquery.unobtrusive-ajax.js"));
 
             #endregion
 

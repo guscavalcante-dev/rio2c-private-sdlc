@@ -77,6 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\CookieName.cs" />
+    <Compile Include="Constants\Culture.cs" />
     <Compile Include="Constants\OrganizationType.cs" />
     <Compile Include="Constants\CollaboratorType.cs" />
     <Compile Include="Constants\Role.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="Dtos\Organizations\OrganizationInterestDto.cs" />
     <Compile Include="Dtos\Organizations\OrganizationTargetAudienceDto.cs" />
     <Compile Include="Dtos\Organizations\OrganizationActivityDto.cs" />
+    <Compile Include="Dtos\Projects\ProjectBaseDto.cs" />
     <Compile Include="Dtos\Projects\ProjectBuyerEvaluationEmailDto.cs" />
     <Compile Include="Dtos\Projects\ProjectBuyerEvaluationDto.cs" />
     <Compile Include="Dtos\Projects\ProjectTeaserLinkDto.cs" />

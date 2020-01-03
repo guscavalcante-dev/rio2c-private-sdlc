@@ -918,8 +918,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="MusicalCommission" xml:space="preserve">
     <value>Comissão Musical</value>
   </data>
-  <data name="DownloadListProjects" xml:space="preserve">
-    <value>Baixar lista de Projetos</value>
+  <data name="DownloadPdfs" xml:space="preserve">
+    <value>Baixar PDF's</value>
+    <comment>Baixar PDF's</comment>
   </data>
   <data name="Accreditation" xml:space="preserve">
     <value>Credenciamento</value>
@@ -1883,6 +1884,18 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Avaliar</value>
     <comment>Avaliar</comment>
   </data>
+  <data name="ConfirmDownloadAllProjects" xml:space="preserve">
+    <value>Confirma a geração do PDF para todos os registros de todas as páginas?</value>
+    <comment>Baixar todos os projetos</comment>
+  </data>
+  <data name="ConfirmDownloadSelectedProjects" xml:space="preserve">
+    <value>Confirma a geração do PDF para os registros selecionados?</value>
+    <comment>Baixar projetos selecionados</comment>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Baixar</value>
+    <comment>Baixar</comment>
+  </data>
   <data name="RegisteredP" xml:space="preserve">
     <value>Registrados</value>
     <comment>Registrados</comment>
@@ -1926,5 +1939,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Participants" xml:space="preserve">
     <value>Participantes</value>
     <comment>Participantes</comment>
+  </data>
+  <data name="In" xml:space="preserve">
+    <value>em</value>
+    <comment>em</comment>
   </data>
 </root>

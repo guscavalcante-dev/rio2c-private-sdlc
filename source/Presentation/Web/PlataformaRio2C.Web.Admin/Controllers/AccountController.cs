@@ -540,7 +540,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Redirect(returnUrl);
             }
 
-            return RedirectToAction("ProjectPitching", "Project");
+            return RedirectToAction("ProjectsPitchingList", "Project");
         }
 
         /// <summary>Adds the errors.</summary>

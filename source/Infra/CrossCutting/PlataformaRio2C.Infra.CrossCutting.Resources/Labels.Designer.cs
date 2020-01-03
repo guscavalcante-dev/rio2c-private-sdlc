@@ -772,6 +772,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirma a geração do PDF para todos os registros de todas as páginas?.
+        /// </summary>
+        public static string ConfirmDownloadAllProjects {
+            get {
+                return ResourceManager.GetString("ConfirmDownloadAllProjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirma a geração do PDF para os registros selecionados?.
+        /// </summary>
+        public static string ConfirmDownloadSelectedProjects {
+            get {
+                return ResourceManager.GetString("ConfirmDownloadSelectedProjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirmação de senha.
         /// </summary>
         public static string ConfirmPassword {
@@ -1114,6 +1132,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Baixar.
+        /// </summary>
+        public static string Download {
+            get {
+                return ResourceManager.GetString("Download", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Baixar lista de executivos.
         /// </summary>
         public static string DownloadListOfExecutives {
@@ -1123,11 +1150,11 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Baixar lista de Projetos.
+        ///   Looks up a localized string similar to Baixar PDF&apos;s.
         /// </summary>
-        public static string DownloadListProjects {
+        public static string DownloadPdfs {
             get {
-                return ResourceManager.GetString("DownloadListProjects", resourceCulture);
+                return ResourceManager.GetString("DownloadPdfs", resourceCulture);
             }
         }
         
@@ -1731,6 +1758,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Important {
             get {
                 return ResourceManager.GetString("Important", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to em.
+        /// </summary>
+        public static string In {
+            get {
+                return ResourceManager.GetString("In", resourceCulture);
             }
         }
         

@@ -901,8 +901,9 @@
   <data name="MusicalCommission" xml:space="preserve">
     <value>Musical Commission</value>
   </data>
-  <data name="DownloadListProjects" xml:space="preserve">
-    <value>Download list projects</value>
+  <data name="DownloadPdfs" xml:space="preserve">
+    <value>Download PDF's</value>
+    <comment>Baixar PDF's</comment>
   </data>
   <data name="Accreditation" xml:space="preserve">
     <value>Accreditation</value>
@@ -1912,5 +1913,24 @@
   <data name="Participants" xml:space="preserve">
     <value>Participants</value>
     <comment>Participantes</comment>
+  </data>
+  <data name="ArrivalDate" xml:space="preserve">
+    <value>Arrival Date</value>
+    <comment>Data da chegada</comment>
+  </data>
+  <data name="DepartureDate" xml:space="preserve">
+    <value>Departure Date</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="ConfirmDownloadAllProjects" xml:space="preserve">
+    <value>Confirm PDF generation for all records on all pages?</value>
+  </data>
+  <data name="ConfirmDownloadSelectedProjects" xml:space="preserve">
+    <value>Confirm PDF generation for selected records?</value>
+  </data>
+  <data name="EndTime" xml:space="preserve">
+    <value>End Time</value>
   </data>
 </root>

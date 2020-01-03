@@ -1,0 +1,31 @@
+﻿@model CollaboratorSearchViewModel
+@{
+    ViewBag.Title = Labels.ProjectsForPitching;
+}
+@Html.Partial("Widgets/PitchingDataTablewidget")
+@section Styles {
+    @Styles.Render("~/bundles/css/select2.css")
+    @Styles.Render("~/bundles/css/dataTables.css")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/dataTables.js")
+    @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/select2.js")
+    @Scripts.Render("~/bundles/js/projects.pitching.widget.js")
+    <script>
+       // Page translations ----------------------------------------------------------------------
+        var translations = {
+            downloadPdfs: '@Labels.DownloadPdfs',
+            confirmDownloadAll: '@Labels.ConfirmDownloadAllProjects',
+            confirmDownloadSelected: '@Labels.ConfirmDownloadSelectedProjects'
+        };
+
+        // Pagination -----------------------------------------------------------------------------
+        var initialPage = @(ViewBag.Page?.ToString() ?? "null");
+        var initialPageSize = @(ViewBag.PageSize?.ToString() ?? "null");
+
+        jQuery(document).ready(function () {
+            ProjectsPitchingDataTableWidget.init();
+        });
+    </script>
+}
