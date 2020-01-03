@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : William Sergio Almado Junior
-// Last Modified On : 01-02-2020
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 01-03-2020
 // ***********************************************************************
 // <copyright file="ProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using PlataformaRio2C.Domain.Dtos;
 using X.PagedList;
 using LinqKit;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -39,6 +40,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static IQueryable<Project> FindByUid(this IQueryable<Project> query, Guid projectUid)
         {
             query = query.Where(p => p.Uid == projectUid);
+
+            return query;
+        }
+
+        /// <summary>Finds the by edition identifier.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> FindByEditionId(this IQueryable<Project> query, int editionId)
+        {
+            query = query.Where(p => p.SellerAttendeeOrganization.EditionId == editionId);
 
             return query;
         }
@@ -148,11 +160,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
-        /// <summary>Finds the by interest.</summary>
+
+        /// <summary>Finds the by interest uid.</summary>
         /// <param name="query">The query.</param>
         /// <param name="interestUid">The interest uid.</param>
         /// <returns></returns>
-        internal static IQueryable<Project> FindByInterest(this IQueryable<Project> query, Guid? interestUid)
+        internal static IQueryable<Project> FindByInterestUid(this IQueryable<Project> query, Guid? interestUid)
         {
             if (interestUid != null)
             {
@@ -208,11 +221,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<Project> IsPitching(this IQueryable<Project> query)
         {
-            query = query.Where(p => p.IsPitching == true);
+            query = query.Where(p => p.IsPitching);
 
             return query;
         }
-
     }
 
     #endregion
@@ -373,7 +385,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByBuyerAttendeeCollabratorUid(attendeeCollaboratorUid)
                                 .IsFinished()
                                 .FindByKeywords(searchKeywords)
-                                .FindByInterest(interestUid)
+                                .FindByInterestUid(interestUid)
                                 .FindByProjectEvaluationStatus(evaluationStatusUid, attendeeCollaboratorUid)
                                 .Select(p => new ProjectDto
                                 {
@@ -426,19 +438,35 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .ToListPagedAsync(page, pageSize);
         }
 
-        /// <summary>
-        /// Final all dtos to pitching projects
-        /// </summary>
-        /// <param name="searchKeywords"></param>
-        /// <param name="interestUid"></param>
-        /// <param name="page"></param>
-        /// <param name="pageSize"></param>
+        /// <summary>Finds all pitching base dtos by filters and by page asynchronous.</summary>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="sortColumns">The sort columns.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="interestUid">The interest uid.</param>
+        /// <param name="languageCode">The language code.</param>
+        /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<IPagedList<ProjectBaseDto>> FindAllPitchingProjectsDtoAsync(string searchKeywords, string languageCode, int page, int pageSize)
+        public async Task<IPagedList<ProjectBaseDto>> FindAllPitchingBaseDtosByFiltersAndByPageAsync(
+            int page, 
+            int pageSize,
+            List<Tuple<string, string>> sortColumns,
+            string keywords, 
+            Guid? interestUid, 
+            string languageCode, 
+            int editionId)
         {
             var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId)
+                                .IsFinished()
                                 .IsPitching()
-                                .FindByKeywords(searchKeywords)
+                                .FindByKeywords(keywords)
+                                .FindByInterestUid(interestUid)
+                                .DynamicOrder<Project>(
+                                    sortColumns,
+                                    null,
+                                    new List<string> { "CreateDate", "FinishDate" },
+                                    "FinishDate")
                                 .Select(p => new ProjectBaseDto
                                 {
                                     Id = p.Id,
@@ -456,89 +484,30 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     FinishDate = p.FinishDate
                                 });
 
-
             return await query
-                           .OrderBy(pd => pd.CreateDate)
                            .ToListPagedAsync(page, pageSize);
         }
 
-        public async Task<ProjectDto> FindPitchingProjectDtoByUidAsync(Guid projectUid)
+        /// <summary>Finds all pitching dtos by filters asynchronous.</summary>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="interestUid">The interest uid.</param>
+        /// <param name="projectUids">The project uids.</param>
+        /// <param name="languageCode">The language code.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<List<ProjectDto>> FindAllPitchingDtosByFiltersAsync(
+            string keywords, 
+            Guid? interestUid, 
+            List<Guid> projectUids, 
+            string languageCode, 
+            int editionId)
         {
             var query = this.GetBaseQuery()
-                                .FindByUid(projectUid)
+                                .FindByEditionId(editionId)
+                                .IsFinished()
                                 .IsPitching()
-                                .Select(p => new ProjectDto
-                                {
-                                    Project = p,
-                                    SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
-                                    {
-                                        AttendeeOrganization = p.SellerAttendeeOrganization,
-                                        Organization = p.SellerAttendeeOrganization.Organization,
-                                        Edition = p.SellerAttendeeOrganization.Edition
-                                    },
-                                    ProjectTitleDtos = p.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
-                                    {
-                                        ProjectTitle = t,
-                                        Language = t.Language
-                                    }),
-                                    ProjectSummaryDtos = p.ProjectSummaries.Where(s => !s.IsDeleted).Select(s => new ProjectSummaryDto
-                                    {
-                                        ProjectSummary = s,
-                                        Language = s.Language
-                                    }),
-                                    ProjectLogLineDtos = p.ProjectLogLines.Where(l => !l.IsDeleted).Select(l => new ProjectLogLineDto
-                                    {
-                                        ProjectLogLine = l,
-                                        Language = l.Language
-                                    }),
-                                    ProjectProductionPlanDtos = p.ProjectProductionPlans.Where(pp => !pp.IsDeleted).Select(pp => new ProjectProductionPlanDto
-                                    {
-                                        ProjectProductionPlan = pp,
-                                        Language = pp.Language
-                                    }),
-                                    ProjectAdditionalInformationDtos = p.ProjectAdditionalInformations.Where(a => !a.IsDeleted).Select(a => new ProjectAdditionalInformationDto
-                                    {
-                                        ProjectAdditionalInformation = a,
-                                        Language = a.Language
-                                    }),
-                                    ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted).Select(i => new ProjectInterestDto
-                                    {
-                                        ProjectInterest = i,
-                                        Interest = i.Interest,
-                                        InterestGroup = i.Interest.InterestGroup
-                                    })
-                                });
-
-
-            return await query.FirstOrDefaultAsync();
-        }
-
-        public async Task<List<ProjectBaseDto>> FindAllPitchingProjectsDtoByKeywordsAsync(string searchKeywords, string languageCode)
-        {
-            var query = this.GetBaseQuery()
-                                .FindByKeywords(searchKeywords)
-                                .IsPitching()
-                                .Select(p => new ProjectBaseDto
-                                {
-                                    Id = p.Id,
-                                    Uid = p.Uid,
-                                    ProjectName = p.ProjectTitles.Where(t => t.Language.Code == languageCode).Select(t => t.Value).FirstOrDefault(),
-                                    ProducerName = p.SellerAttendeeOrganization.Organization.Name,
-                                    CreateDate = p.CreateDate,
-                                    FinishDate = p.FinishDate
-                                });
-
-            return await query
-                            .OrderBy(pd => pd.CreateDate)
-                            .ToListAsync(); ;
-        }
-
-        public async Task<List<ProjectDto>> FindPitchingProjectsByUids(string searchKeywords, Guid? interestUid, List<Guid> projectUids)
-        {
-            var query = this.GetBaseQuery()
-                                .FindByKeywords(searchKeywords)
-                                .IsPitching()
-                                .FindByInterest(interestUid)
+                                .FindByKeywords(keywords)
+                                .FindByInterestUid(interestUid)
                                 .FindByUids(projectUids)
                                 .Select(p => new ProjectDto
                                 {
@@ -583,11 +552,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 });
 
             return await query
-                            .OrderBy(pd => pd.Project.FinishDate)
-                            .ToListAsync(); ;
+                            .ToListAsync();
         }
-
-
 
         #region Site Widgets
 

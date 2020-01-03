@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-19-2019
+// Last Modified On : 01-03-2020
 // ***********************************************************************
 // <copyright file="SpeakersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -100,7 +100,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 request.Length,
                 request.Search?.Value,
                 request.GetSortColumns(),
-                this.GetCollaboratorsUids(null),
+                new List<Guid>(),
                 Constants.CollaboratorType.Speaker,
                 showAllEditions,
                 false,
@@ -116,30 +116,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 status = "success",
                 dataTable = response
             }, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>Gets the collaborators uids.</summary>
-        /// <param name="selectedCollaboratorsUids">The selected collaborators uids.</param>
-        /// <returns></returns>
-        private List<Guid> GetCollaboratorsUids(string selectedCollaboratorsUids)
-        {
-            var collaboratorsUids = new List<Guid>();
-
-            if (string.IsNullOrEmpty(selectedCollaboratorsUids))
-            {
-                return collaboratorsUids;
-            }
-
-            var selectedCollaboratorsUidsSplit = selectedCollaboratorsUids.Split(',');
-            foreach (var selectedCollaboratorUid in selectedCollaboratorsUidsSplit)
-            {
-                if (Guid.TryParse(selectedCollaboratorUid, out Guid collaboratorUid))
-                {
-                    collaboratorsUids.Add(collaboratorUid); ;
-                }
-            }
-
-            return collaboratorsUids;
         }
 
         #endregion
@@ -649,7 +625,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     10000,
                     request?.Search?.Value,
                     request?.GetSortColumns(),
-                    this.GetCollaboratorsUids(selectedCollaboratorsUids),
+                    selectedCollaboratorsUids?.ToListGuid(','),
                     Constants.CollaboratorType.Speaker,
                     showAllEditions,
                     false,
@@ -696,7 +672,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     throw new DomainException(Messages.SelectAtLeastOneOption);
                 }
 
-                var collaboratorsUids = this.GetCollaboratorsUids(selectedCollaboratorsUids);
+                var collaboratorsUids = selectedCollaboratorsUids?.ToListGuid(',');
                 if (!collaboratorsUids.Any())
                 {
                     throw new DomainException(Messages.SelectAtLeastOneOption);

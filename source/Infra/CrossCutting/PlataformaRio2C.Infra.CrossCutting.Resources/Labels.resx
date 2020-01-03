@@ -916,8 +916,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="MusicalCommission" xml:space="preserve">
     <value>Comissão Musical</value>
   </data>
-  <data name="DownloadListProjects" xml:space="preserve">
-    <value>Baixar Lista de Projetos</value>
+  <data name="DownloadPdfs" xml:space="preserve">
+    <value>Baixar PDF's</value>
+    <comment>Baixar PDF's</comment>
   </data>
   <data name="Accreditation" xml:space="preserve">
     <value>Credenciamento</value>

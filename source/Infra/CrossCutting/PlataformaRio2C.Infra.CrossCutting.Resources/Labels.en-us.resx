@@ -900,8 +900,9 @@
   <data name="MusicalCommission" xml:space="preserve">
     <value>Musical Commission</value>
   </data>
-  <data name="DownloadListProjects" xml:space="preserve">
-    <value>Download list projects</value>
+  <data name="DownloadPdfs" xml:space="preserve">
+    <value>Download PDF's</value>
+    <comment>Baixar PDF's</comment>
   </data>
   <data name="Accreditation" xml:space="preserve">
     <value>Accreditation</value>

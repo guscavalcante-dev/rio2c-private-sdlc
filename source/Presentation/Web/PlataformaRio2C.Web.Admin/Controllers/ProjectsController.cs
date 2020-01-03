@@ -1,28 +1,25 @@
-﻿//// ***********************************************************************
-//// Assembly         : PlataformaRio2C.Web.Admin
-//// Author           : Rafael Dantas Ruiz
-//// Created          : 06-28-2019
-////
-//// Last Modified By : William Sergio Almado Junior
-//// Last Modified On : 01-02-2020
-//// ***********************************************************************
-//// <copyright file="ProjectsController.cs" company="Softo">
-////     Copyright (c) Softo. All rights reserved.
-//// </copyright>
-//// <summary></summary>
-//// ***********************************************************************
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Web.Admin
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-28-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 01-03-2020
+// ***********************************************************************
+// <copyright file="ProjectsController.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
-using Newtonsoft.Json;
 using PlataformaRio2C.Application.TemplateDocuments;
-using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Infra.Report;
@@ -40,10 +37,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>ProjectsController</summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual)] //TODO: Definir roles
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CommissionAudiovisual)]
     public class ProjectsController : BaseController
     {
-
         private readonly IProjectRepository projectRepo;
         private readonly IInterestRepository interestRepo;
 
@@ -63,42 +59,19 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             this.interestRepo = interestRepository;
         }
 
-        #region List
+        #region Pitchings
 
-        /// <summary>Indexes the specified search view model.</summary>
-        /// <param name="searchViewModel">The search view model.</param>
+        /// <summary>Pitchingses this instance.</summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Index()
+        public async Task<ActionResult> Pitchings()
         {
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Producers, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Project, Url.Action("Index", "Project", new { Area = "" })),
-                new BreadcrumbItemHelper(Labels.ProjectsForPitching, Url.Action("Index", "ProjectsPitchingList", new { Area = "" }))
-            });
-
-            #endregion
-
-            return View();
-        }
-
-        #endregion
-
-        #region Pitching
-        /// <summary>Pitching project list</summary>
-        /// <param name="searchKeywords"></param>
-        /// <param name="interestUid"></param>
-        /// <param name="page"></param>
-        /// <param name="pageSize"></param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ProjectsPitchingList()
-        {
-            #region Breadcrumb
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Producers, new List<BreadcrumbItemHelper>{
-                new BreadcrumbItemHelper(Labels.ProjectsForPitching, Url.Action("ProjectsPitchingList", "Projects", new { Area = "" }))
+                new BreadcrumbItemHelper(Labels.ProjectsForPitching, Url.Action("Pitchings", "Projects", new { Area = "" }))
             });
+
             #endregion
 
             ViewBag.GenreInterests = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.Genre.Uid);
@@ -108,17 +81,21 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             return View();
         }
 
-
-        /// <summary>Shows the pitching project list.</summary>
-        /// <param name="searchKeywords">The search keywords.</param>
+        /// <summary>Shows the pitching list widget.</summary>
+        /// <param name="request">The request.</param>
         /// <param name="interestUid">The interest uid.</param>
-        /// <param name="page">The page.</param>
-        /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowPitchingListWidget(IDataTablesRequest request)
+        public async Task<ActionResult> ShowPitchingListWidget(IDataTablesRequest request, Guid? interestUid)
         {
-            var projects = await this.projectRepo.FindAllPitchingProjectsDtoAsync(request.Search?.Value, this.UserInterfaceLanguage, request.Start / request.Length, request.Length);
+            var projects = await this.projectRepo.FindAllPitchingBaseDtosByFiltersAndByPageAsync(
+                request.Start / request.Length,
+                request.Length,
+                request.GetSortColumns(),
+                request.Search?.Value,
+                interestUid,
+                this.UserInterfaceLanguage,
+                this.EditionDto.Id);
             foreach (var project in projects)
             {
                 project.Genre = new List<string>();
@@ -127,7 +104,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     project.Genre.Add(item.Interest.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, '|'));
                 }
             }
-
 
             ViewBag.GenreInterests = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.Genre.Uid);
             ViewBag.Page = request.Start / request.Length;
@@ -141,16 +117,57 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 dataTable = response
             }, JsonRequestBehavior.AllowGet);
         }
+
         #endregion
 
-        #region Project Document Generation
+        #region Download PDFs
 
-        /// <summary>
-        /// Compact document files
-        /// </summary>
-        /// <param name="pdfCollection"></param>
+        /// <summary>Downloads the PDFS.</summary>
+        /// <param name="keyword">The keyword.</param>
+        /// <param name="interestUid">The interest uid.</param>
+        /// <param name="selectedProjectsUids">The selected projects uids.</param>
         /// <returns></returns>
-        public FileResult ZipDocuments(Dictionary<string, MemoryStream> pdfCollection)
+        [HttpGet]
+        public async Task<FileResult> DownloadPdfs(string keyword, Guid? interestUid, string selectedProjectsUids)
+        {
+            var projectsDtos = await this.projectRepo.FindAllPitchingDtosByFiltersAsync(
+                keyword, 
+                interestUid,
+                selectedProjectsUids?.ToListGuid(','),
+                this.UserInterfaceLanguage,
+                this.EditionDto.Id);
+
+            // No projects returned
+            if (projectsDtos?.Any() != true)
+            {
+                return null;
+            }
+
+            // Just one project returned
+            if (projectsDtos.Count == 1)
+            {
+                var projectDto = projectsDtos.First();
+                var pdf = new PlataformaRio2CDocument(new ProjectDocumentTemplate(projectDto));
+
+                return File(pdf.GetStream(), "application/pdf", Labels.Project + "_" + projectDto.Project.Id.ToString("D4") + "_" + projectDto.GetTitleDtoByLanguageCode(Constants.Culture.Portuguese).ProjectTitle.Value + ".pdf");
+            }
+
+            // Many projects returned
+            var dictPdf = new Dictionary<string, MemoryStream>();
+
+            foreach (var projectDto in projectsDtos)
+            {
+                var pdfDocument = new PlataformaRio2CDocument(new ProjectDocumentTemplate(projectDto));
+                dictPdf.Add(Labels.Project + "_" + projectDto.Project.Id.ToString("D4") + "_" + projectDto.GetTitleDtoByLanguageCode(Constants.Culture.Portuguese).ProjectTitle.Value + ".pdf", pdfDocument.GetStream());
+            }
+
+            return ZipDocuments(dictPdf);
+        }
+
+        /// <summary>Zips the documents.</summary>
+        /// <param name="pdfCollection">The PDF collection.</param>
+        /// <returns></returns>
+        private FileResult ZipDocuments(Dictionary<string, MemoryStream> pdfCollection)
         {
             string fileNameZip = Labels.Projects + "_" + DateTime.Now.ToString("yyyyMMdd") + ".zip";
             byte[] compressedBytes;
@@ -174,72 +191,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             return File(compressedBytes, "application/zip", fileNameZip);
         }
 
-        /// <summary>
-        /// Changes string Uid list into List<Guid>
-        /// </summary>
-        /// <param name="selectedProjectsUids"></param>
-        /// <returns></returns>
-        private List<Guid> GetProjectsUids(string selectedProjectsUids)
-        {
-            var projecstUids = new List<Guid>();
-
-            if (string.IsNullOrEmpty(selectedProjectsUids))
-            {
-                return projecstUids;
-            }
-
-            var selectedProjectUidsSplit = selectedProjectsUids.Split(',');
-            foreach (var selectedProjectUidSplit in selectedProjectUidsSplit)
-            {
-                if (Guid.TryParse(selectedProjectUidSplit, out Guid projectUid))
-                {
-                    projecstUids.Add(projectUid); ;
-                }
-            }
-
-            return projecstUids;
-        }
-
-        /// <summary>
-        /// Create and download PDF documents
-        /// </summary>
-        /// <param name="keyword"></param>
-        /// <param name="selectedProjectsUids"></param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<FileResult> DownloadProjectDocument(string keyword, Guid? interestUid, string selectedProjectsUids)
-        {
-            var projecstUids = this.GetProjectsUids(selectedProjectsUids);
-
-            var projectsDtos = await this.projectRepo.FindPitchingProjectsByUids(keyword, interestUid, projecstUids);
-
-            if (projectsDtos.Count.Equals(1))
-            {
-                var projectDto = projectsDtos.FirstOrDefault();
-                var pdf = new PlataformaRio2CDocument(new ProjectDocumentTemplate(projectDto));
-
-
-                return File(pdf.GetStream(), "application/pdf", Labels.Project + "_" + projectDto.Project.Id.ToString("D4") + "_" + projectDto.GetTitleDtoByLanguageCode(Constants.Culture.Portuguese).ProjectTitle.Value + ".pdf");
-            }
-            else if (projectsDtos.Count > 1)
-            {
-                var dictPdf = new Dictionary<string, MemoryStream>();
-
-                foreach (var projectDto in projectsDtos)
-                {
-                    var pdfDocument = new PlataformaRio2CDocument(new ProjectDocumentTemplate(projectDto));
-                    dictPdf.Add(Labels.Project + "_" + projectDto.Project.Id.ToString("D4") + "_" + projectDto.GetTitleDtoByLanguageCode(Constants.Culture.Portuguese).ProjectTitle.Value + ".pdf", pdfDocument.GetStream());
-                }
-
-                return ZipDocuments(dictPdf);
-            }
-
-            return null;
-
-        }
-
-
         #endregion
-
     }
 }

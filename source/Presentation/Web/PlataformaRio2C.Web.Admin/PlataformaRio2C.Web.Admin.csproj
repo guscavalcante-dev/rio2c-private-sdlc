@@ -8222,7 +8222,7 @@
     <Content Include="Views\Speakers\Modals\UpdateApiConfigurationModal.cshtml" />
     <Content Include="Views\Speakers\Modals\UpdateApiConfigurationForm.cshtml" />
     <Content Include="Views\Companies\Shared\_TicketBuyerCompanyInfoForm.cshtml" />
-    <Content Include="Views\Projects\ProjectsPitchingList.cshtml" />
+    <Content Include="Views\Projects\Pitchings.cshtml" />
     <Content Include="Views\Projects\Widgets\PitchingDataTableWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>

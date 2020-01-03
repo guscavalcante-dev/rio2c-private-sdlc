@@ -3,8 +3,8 @@
 // Author           : William Sergio Almado Junior
 // Created          : 12-13-2019
 //
-// Last Modified By : William Sergio Almado Junior
-// Last Modified On : 12-13-2019
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 01-03-2019
 // ***********************************************************************
 // <copyright file="projects.pitching.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,8 +19,8 @@ var ProjectsPitchingDataTableWidget = function () {
     var projectData;
     var table;
 
-    // Invitation email ---------------------------------------------------------------------------
-    var downloadProjects = function (projectData) {
+    // Download PDFs ------------------------------------------------------------------------------
+    var downloadProjects = function () {
         MyRio2cCommon.block();
 
         var jsonParameters = new Object();
@@ -28,14 +28,16 @@ var ProjectsPitchingDataTableWidget = function () {
         jsonParameters.keyword = $('#Search').val();
         jsonParameters.interestUid = $('#InterestUid').val();
 
-        window.location = '/Projects/DownloadProjectDocument?' + 'keyword=' + jsonParameters.keyword + '&interestUid=' + jsonParameters.interestUid + '&selectedProjectsUids=' + jsonParameters.selectedProjectsUids;
+        window.location = MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/DownloadPdfs') + '?keyword=' + jsonParameters.keyword + '&interestUid=' + jsonParameters.interestUid + '&selectedProjectsUids=' + jsonParameters.selectedProjectsUids;
 
         MyRio2cCommon.unblock();
     };
 
-    var showDownloadModal = function (projectData) {
+    var showDownloadModal = function () {
         var selectedProjectsUids = $('#projectpitching-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
-        var message = selectedProjectsUids === '' ? translations.confirmDownloadAll : translations.confirmDownloadSelected;
+        var message = selectedProjectsUids === '' ? translations.confirmDownloadAll :
+                                                    translations.confirmDownloadSelected;
+
         bootbox.dialog({
             message: message,
             buttons: {
@@ -50,7 +52,7 @@ var ProjectsPitchingDataTableWidget = function () {
                     label: labels.confirm,
                     className: "btn btn-brand btn-elevate",
                     callback: function () {
-                        downloadProjects(projectData);
+                        downloadProjects();
                     }
                 }
             }
@@ -109,13 +111,13 @@ var ProjectsPitchingDataTableWidget = function () {
                     text: labels.actions,
                     buttons: [
                         {
-                            text: translations.downloadListProjects,
+                            text: translations.downloadPdfs,
                             action: function (e, dt, node, config) {
-                                showDownloadModal(projectData);
+                                showDownloadModal();
                             }
                         }]
                 }],
-            order: [[0, "asc"]],
+            order: [[4, "asc"]],
             sDom: '<"row"<"col-sm-6"l><"col-sm-6 text-right"B>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
             oSearch: {
                 sSearch: $('#Search').val()
@@ -123,6 +125,7 @@ var ProjectsPitchingDataTableWidget = function () {
             ajax: {
                 url: MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/ShowPitchingListWidget'),
                 data: function (d) {
+                    d.interestUid = $('#InterestUid').val();
                 },
                 dataFilter: function (data) {
                     var jsonReturned = JSON.parse(data);
@@ -214,7 +217,8 @@ var ProjectsPitchingDataTableWidget = function () {
                 {
                     targets: [0],
                     width: "25%",
-                    className: "dt-left"
+                    className: "dt-left",
+                    orderable: false
                 },
                 {
                     targets: [1],
@@ -222,7 +226,8 @@ var ProjectsPitchingDataTableWidget = function () {
                 },
                 {
                     targets: [2],
-                    className: "dt-left"
+                    className: "dt-left",
+                    orderable: false
                 },
                 {
                     targets: [3, 4],
@@ -240,14 +245,9 @@ var ProjectsPitchingDataTableWidget = function () {
             }
         });
 
-        //$('#InterestUid').on('change', function (e) {
-        //    //if (e.keyCode === 13) {
-        //        table.column('Genre')
-        //        table.search('Genre')
-        //            //table.search($(this).val())
-        //            .draw();
-        //    //}
-        //});
+        $('#InterestUid').on('change', function (e) {
+            table.ajax.reload();
+        });
 
         $('.enable-datatable-reload').click(function (e) {
             table.ajax.reload();
@@ -267,6 +267,6 @@ var ProjectsPitchingDataTableWidget = function () {
         },
         refreshData: function () {
             refreshData();
-        },
+        }
     };
 }();
