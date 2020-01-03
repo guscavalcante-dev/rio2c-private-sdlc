@@ -4,7 +4,7 @@
 // Created          : 01-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-02-2020
+// Last Modified On : 01-03-2020
 // ***********************************************************************
 // <copyright file="ConferenceParticipant.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,6 +13,7 @@
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
 using System;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -28,11 +29,22 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual AttendeeCollaborator AttendeeCollaborator { get; private set; }
         public virtual ConferenceParticipantRole ConferenceParticipantRole { get; private set; }
 
+        /// <summary>Initializes a new instance of the <see cref="ConferenceParticipant"/> class.</summary>
+        /// <param name="conferenceParticipantUid">The conference participant uid.</param>
+        /// <param name="attendeeCollaborator">The attendee collaborator.</param>
+        /// <param name="conferenceParticipantRole">The conference participant role.</param>
+        /// <param name="userId">The user identifier.</param>
         public ConferenceParticipant(
             Guid conferenceParticipantUid,
+            AttendeeCollaborator attendeeCollaborator,
+            ConferenceParticipantRole conferenceParticipantRole,
             int userId)
         {
-            //this.Uid = conferenceUid;
+            //this.Uid = conferenceParticipantUid;
+            this.AttendeeCollaboratorId = attendeeCollaborator?.Id ?? 0;
+            this.AttendeeCollaborator = attendeeCollaborator;
+            this.ConferenceParticipantRoleId = conferenceParticipantRole?.Id ?? 0;
+            this.ConferenceParticipantRole = conferenceParticipantRole;
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
@@ -44,6 +56,30 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
+        /// <summary>Updates the specified conference participant role.</summary>
+        /// <param name="conferenceParticipantRole">The conference participant role.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Update(
+            ConferenceParticipantRole conferenceParticipantRole,
+            int userId)
+        {
+            this.ConferenceParticipantRoleId = conferenceParticipantRole?.Id ?? 0;
+            this.ConferenceParticipantRole = conferenceParticipantRole;
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Deletes the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(int userId)
+        {
+            this.IsDeleted = true;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
         #region Validations
 
         /// <summary>Returns true if ... is valid.</summary>
@@ -53,35 +89,29 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.ValidationResult = new ValidationResult();
 
-            //this.ValidateEdition();
-            //this.ValidateDates();
+            this.ValidateAttendeeCollaborator();
+            this.ValidateConferenceParticipantRole();
 
             return this.ValidationResult.IsValid;
         }
 
-        ///// <summary>Validates the edition.</summary>
-        //public void ValidateEdition()
-        //{
-        //    if (this.Edition == null)
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Edition), new string[] { "Edition" }));
-        //    }
-        //}
+        /// <summary>Validates the attendee collaborator.</summary>
+        public void ValidateAttendeeCollaborator()
+        {
+            if (this.AttendeeCollaborator == null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Speaker), new string[] { "Speaker" }));
+            }
+        }
 
-        ///// <summary>Validates the dates.</summary>
-        //public void ValidateDates()
-        //{
-        //    if (this.StartDate < this.Edition.StartDate || this.StartDate > this.Edition.EndDate
-        //        || this.EndDate < this.Edition.StartDate || this.EndDate > this.Edition.EndDate)
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.Date, this.Edition.EndDate.ToShortDateString(), this.Edition.StartDate.ToShortDateString()), new string[] { "Date" }));
-        //    }
-
-        //    if (this.StartDate > this.EndDate)
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyGreaterThanProperty, Labels.EndTime, Labels.StartTime), new string[] { "EndTime" }));
-        //    }
-        //}
+        /// <summary>Validates the conference participant role.</summary>
+        public void ValidateConferenceParticipantRole()
+        {
+            if (this.ConferenceParticipantRole == null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Function), new string[] { "Function" }));
+            }
+        }
 
         #endregion
     }

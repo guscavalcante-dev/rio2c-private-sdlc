@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-19-2019
+// Last Modified On : 01-03-2020
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -622,6 +622,58 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             })
                             .OrderBy(o => o.ApiHighlightPosition ?? 99)
                             .ThenBy(o => o.BadgeName)
+                            .ToListPagedAsync(page, pageSize);
+        }
+
+        /// <summary>Finds all dropdown API list dto paged.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<CollaboratorApiListDto>> FindAllDropdownApiListDtoPaged(int editionId, string keywords, string collaboratorTypeName, int page, int pageSize)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeName, false, false, false, editionId)
+                                .FindByKeywords(keywords, editionId);
+
+            return await query
+                            .Select(c => new CollaboratorApiListDto
+                            {
+                                Uid = c.Uid,
+                                BadgeName = c.Badge,
+                                Name = c.FirstName + " " + c.LastNames,
+                                ImageUploadDate = c.ImageUploadDate,
+                                JobTitlesDtos = c.JobTitles.Where(jb => !jb.IsDeleted).Select(d => new CollaboratorJobTitleBaseDto
+                                {
+                                    Id = d.Id,
+                                    Uid = d.Uid,
+                                    Value = d.Value,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = d.Language.Id,
+                                        Uid = d.Language.Uid,
+                                        Name = d.Language.Name,
+                                        Code = d.Language.Code
+                                    }
+                                }),
+                                OrganizationsDtos = c.AttendeeCollaborators
+                                    .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                    .SelectMany(ac => ac.AttendeeOrganizationCollaborators
+                                        .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted && !aoc.AttendeeOrganization.Organization.IsDeleted)
+                                        .Select(aoc => new OrganizationApiListDto
+                                        {
+                                            Uid = aoc.AttendeeOrganization.Organization.Uid,
+                                            CompanyName = aoc.AttendeeOrganization.Organization.CompanyName,
+                                            TradeName = aoc.AttendeeOrganization.Organization.TradeName,
+                                            ImageUploadDate = aoc.AttendeeOrganization.Organization.ImageUploadDate
+
+                                        })),
+                                CreateDate = c.CreateDate,
+                                UpdateDate = c.UpdateDate
+                            })
+                            .OrderBy(o => o.BadgeName)
                             .ToListPagedAsync(page, pageSize);
         }
 

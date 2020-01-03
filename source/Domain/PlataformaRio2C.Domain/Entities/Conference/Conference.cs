@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-02-2020
+// Last Modified On : 01-03-2020
 // ***********************************************************************
 // <copyright file="Conference.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -223,6 +223,43 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
+        #region Conference Participants
+
+        /// <summary>Creates the conference participant.</summary>
+        /// <param name="attendeeCollaborator">The attendee collaborator.</param>
+        /// <param name="conferenceParticipantRole">The conference participant role.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void CreateConferenceParticipant(
+            AttendeeCollaborator attendeeCollaborator,
+            ConferenceParticipantRole conferenceParticipantRole,
+            int userId)
+        {
+            if (this.ConferenceParticipants == null)
+            {
+                this.ConferenceParticipants = new List<ConferenceParticipant>();
+            }
+
+            var conferenceParticipant = this.GetConferenceParticipantByAttendeeCollaboratorId(attendeeCollaborator?.Id ?? 0);
+            if (conferenceParticipant == null)
+            {
+                this.ConferenceParticipants.Add(new ConferenceParticipant(Guid.NewGuid(), attendeeCollaborator, conferenceParticipantRole, userId));
+            }
+            else
+            {
+                conferenceParticipant.Update(conferenceParticipantRole, userId);
+            }
+        }
+
+        /// <summary>Gets the conference participant by attendee collaborator identifier.</summary>
+        /// <param name="attendeeCollaboratorId">The attendee collaborator identifier.</param>
+        /// <returns></returns>
+        public ConferenceParticipant GetConferenceParticipantByAttendeeCollaboratorId(int attendeeCollaboratorId)
+        {
+            return this.ConferenceParticipants?.FirstOrDefault(cp => cp.AttendeeCollaboratorId == attendeeCollaboratorId);
+        }
+
+        #endregion
+
         #region Validations
 
         /// <summary>Returns true if ... is valid.</summary>
@@ -234,6 +271,9 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.ValidateEdition();
             this.ValidateDates();
+            this.ValidateConferenceTitles();
+            this.ValidateConferenceSynopses();
+            this.ValidateConferenceParticipants();
 
             return this.ValidationResult.IsValid;
         }
@@ -259,6 +299,48 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.StartDate > this.EndDate)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyGreaterThanProperty, Labels.EndTime, Labels.StartTime), new string[] { "EndTime" }));
+            }
+        }
+
+        /// <summary>Validates the conference titles.</summary>
+        public void ValidateConferenceTitles()
+        {
+            if (this.ConferenceTitles?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var conferenceTitle in this.ConferenceTitles?.Where(d => !d.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(conferenceTitle.ValidationResult);
+            }
+        }
+
+        /// <summary>Validates the conference synopses.</summary>
+        public void ValidateConferenceSynopses()
+        {
+            if (this.ConferenceSynopses?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var conferenceSynopsis in this.ConferenceSynopses?.Where(d => !d.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(conferenceSynopsis.ValidationResult);
+            }
+        }
+
+        /// <summary>Validates the conference participants.</summary>
+        public void ValidateConferenceParticipants()
+        {
+            if (this.ConferenceParticipants?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var conferenceParticipant in this.ConferenceParticipants?.Where(d => !d.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(conferenceParticipant.ValidationResult);
             }
         }
 

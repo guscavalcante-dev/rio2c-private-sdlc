@@ -259,6 +259,7 @@
     <Compile Include="Interfaces\Repositories\AttendeeOrganizations\IAttendeeOrganizationRepository.cs" />
     <Compile Include="Interfaces\Repositories\Collaborators\ICollaboratorProducerRepository.cs" />
     <Compile Include="Interfaces\Repositories\Collaborators\ICollaboratorTypeRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Conferences\IConferenceParticipantRoleRepository.cs" />
     <Compile Include="Interfaces\Repositories\Conferences\ILecturerJobTitleRepository.cs" />
     <Compile Include="Interfaces\Repositories\Conferences\ILecturerRepository.cs" />
     <Compile Include="Interfaces\Repositories\Conferences\IConferenceSynopsisRepository.cs" />

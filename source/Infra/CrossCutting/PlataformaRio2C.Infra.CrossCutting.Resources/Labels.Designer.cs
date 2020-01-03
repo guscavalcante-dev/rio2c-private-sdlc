@@ -736,7 +736,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Conferência.
+        ///   Looks up a localized string similar to Palestra.
         /// </summary>
         public static string Conference {
             get {
@@ -1614,6 +1614,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string FullName {
             get {
                 return ResourceManager.GetString("FullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Função.
+        /// </summary>
+        public static string Function {
+            get {
+                return ResourceManager.GetString("Function", resourceCulture);
             }
         }
         

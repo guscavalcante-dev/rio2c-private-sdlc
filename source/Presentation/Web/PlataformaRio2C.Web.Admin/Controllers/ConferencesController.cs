@@ -4,7 +4,7 @@
 // Created          : 12-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-02-2020
+// Last Modified On : 01-03-2020
 // ***********************************************************************
 // <copyright file="ConferencesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -39,21 +39,29 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     public class ConferencesController : BaseController
     {
         private readonly IConferenceRepository conferenceRepo;
+        private readonly IConferenceParticipantRoleRepository conferenceParticipantRoleRepo;
+        private readonly ICollaboratorRepository collaboratorRepo;
         private readonly ILanguageRepository languageRepo;
 
         /// <summary>Initializes a new instance of the <see cref="ConferencesController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="conferenceRepository">The conference repository.</param>
+        /// <param name="conferenceParticipantRoleRepository">The conference participant role repository.</param>
+        /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="languageRepository">The language repository.</param>
         public ConferencesController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             IConferenceRepository conferenceRepository,
+            IConferenceParticipantRoleRepository conferenceParticipantRoleRepository,
+            ICollaboratorRepository collaboratorRepository,
             ILanguageRepository languageRepository)
             : base(commandBus, identityController)
         {
             this.conferenceRepo = conferenceRepository;
+            this.conferenceParticipantRoleRepo = conferenceParticipantRoleRepository;
+            this.collaboratorRepo = collaboratorRepository;
             this.languageRepo = languageRepository;
         }
 
@@ -320,6 +328,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #region Participants Widget
 
+        /// <summary>Shows the participants widget.</summary>
+        /// <param name="conferenceUid">The conference uid.</param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> ShowParticipantsWidget(Guid? conferenceUid)
         {
@@ -339,109 +350,104 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        //#region Update
+        #region Update
 
-        ///// <summary>Shows the update company information modal.</summary>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowUpdateCompanyInfoModal(Guid? collaboratorUid, Guid? organizationUid)
-        //{
-        //    CreateTicketBuyerOrganizationData cmd;
+        /// <summary>Shows the create participant modal.</summary>
+        /// <param name="conferenceUid">The conference uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowCreateParticipantModal(Guid? conferenceUid)
+        {
+            CreateConferenceParticipant cmd;
 
-        //    try
-        //    {
-        //        if (!collaboratorUid.HasValue)
-        //        {
-        //            throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Speaker, Labels.FoundM.ToLowerInvariant()));
-        //        }
+            try
+            {
+                if (!conferenceUid.HasValue)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Conference, Labels.FoundF.ToLowerInvariant()));
+                }
 
-        //        cmd = new CreateTicketBuyerOrganizationData(
-        //            collaboratorUid.Value,
-        //            organizationUid.HasValue ? await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(organizationUid, this.EditionDto.Id, this.UserInterfaceLanguage)) : null,
-        //            await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
-        //            await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-        //            false,
-        //            false,
-        //            false);
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-        //    }
+                cmd = new CreateConferenceParticipant(
+                    conferenceUid,
+                    await this.conferenceParticipantRoleRepo.FindAllDtosAsync());
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    ModelState.Clear();
+            ModelState.Clear();
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Modals/UpdateCompanyInfoModal", cmd), divIdOrClass = "#GlobalModalContainer" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/CreateParticipantModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
-        ///// <summary>Updates the company information.</summary>
-        ///// <param name="cmd">The command.</param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public async Task<ActionResult> UpdateCompanyInformation(CreateTicketBuyerOrganizationData cmd)
-        //{
-        //    var result = new AppValidationResult();
+        /// <summary>Creates the participant.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> CreateParticipant(CreateConferenceParticipant cmd)
+        {
+            var result = new AppValidationResult();
 
-        //    try
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
 
-        //        cmd.UpdatePreSendProperties(
-        //            cmd.CollaboratorUid,
-        //            this.AdminAccessControlDto.User.Id,
-        //            this.AdminAccessControlDto.User.Uid,
-        //            this.EditionDto.Id,
-        //            this.EditionDto.Uid,
-        //            this.UserInterfaceLanguage);
-        //        result = await this.CommandBus.Send(cmd);
-        //        if (!result.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        foreach (var error in result.Errors)
-        //        {
-        //            var target = error.Target ?? "";
-        //            ModelState.AddModelError(target, error.Message);
-        //        }
+                cmd.UpdatePreSendProperties(
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
 
-        //        cmd.UpdateDropdownProperties(
-        //            await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)));
+                cmd.UpdateDropdownProperties(
+                    await this.conferenceParticipantRoleRepo.FindAllDtosAsync());
 
-        //        return Json(new
-        //        {
-        //            status = "error",
-        //            message = ex.GetInnerMessage(),
-        //            pages = new List<dynamic>
-        //            {
-        //                new { page = this.RenderRazorViewToString("/Views/Companies/Shared/_TicketBuyerCompanyInfoForm.cshtml", cmd), divIdOrClass = "#form-container" },
-        //            }
-        //        }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-        //    }
+                return Json(new
+                {
+                    status = "error",
+                    message = ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/CreateParticipantForm", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Company, Labels.UpdatedF) });
-        //}
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Participant, Labels.CreatedM) });
+        }
 
-        //#endregion
+        #endregion
 
-        //#region Delete
+        #region Delete
 
         ///// <summary>Deletes the organization.</summary>
         ///// <param name="cmd">The command.</param>
@@ -495,7 +501,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Speaker, Labels.DeletedM) });
         //}
 
-        //#endregion
+        #endregion
 
         #endregion
 
