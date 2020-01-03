@@ -243,10 +243,21 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
+        /// <summary>Deletes the conference participant.</summary>
+        /// <param name="attendeeCollaborator">The attendee collaborator.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void DeleteConferenceParticipant(
+            AttendeeCollaborator attendeeCollaborator,
+            int userId)
+        {
+            var conferenceParticipant = this.GetConferenceParticipantByAttendeeCollaboratorId(attendeeCollaborator?.Id ?? 0);
+            conferenceParticipant?.Delete(userId);
+        }
+
         /// <summary>Gets the conference participant by attendee collaborator identifier.</summary>
         /// <param name="attendeeCollaboratorId">The attendee collaborator identifier.</param>
         /// <returns></returns>
-        public ConferenceParticipant GetConferenceParticipantByAttendeeCollaboratorId(int attendeeCollaboratorId)
+        private ConferenceParticipant GetConferenceParticipantByAttendeeCollaboratorId(int attendeeCollaboratorId)
         {
             return this.ConferenceParticipants?.FirstOrDefault(cp => cp.AttendeeCollaboratorId == attendeeCollaboratorId);
         }

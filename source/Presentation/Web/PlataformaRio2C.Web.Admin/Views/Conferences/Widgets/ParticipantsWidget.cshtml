@@ -32,13 +32,13 @@
                             <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right" style="">
                                 <ul class="kt-nav">
                                     <li class="kt-nav__item">
-                                        <a href="#" class="kt-nav__link" onclick="ConferencesParticipantsWidget.showUpdateModal('@participantDto.ConferenceParticipant.Uid'); return false;">
+                                        <a href="#" class="kt-nav__link" onclick="ConferencesParticipantsWidget.showUpdateModal('@participantDto.AttendeeCollaboratorDto.Collaborator.Uid'); return false;">
                                             <i class="kt-nav__link-icon flaticon2-edit"></i>
                                             <span class="kt-nav__link-text">@Labels.Edit</span>
                                         </a>
                                     </li>
                                     <li class="kt-nav__item">
-                                        <a href="#" class="kt-nav__link" onclick="ConferencesParticipantsWidget.showDeleteModal('@participantDto.ConferenceParticipant.Uid'); return false;">
+                                        <a href="#" class="kt-nav__link" onclick="ConferencesParticipantsWidget.showDeleteModal('@participantDto.AttendeeCollaboratorDto.Collaborator.Uid'); return false;">
                                             <i class="kt-nav__link-icon flaticon2-delete"></i>
                                             <span class="kt-nav__link-text">@Labels.Remove</span>
                                         </a>
@@ -68,7 +68,7 @@
                                         }
                                     </div>
                                     <div class="kt-widget__info">
-                                        <a @*href="@Url.Action("Details", "Companies", new { id = attendeeOrganizationDto.Organization.Uid })"*@ class="kt-widget__username">
+                                        <a href="@Url.Action("Details", "Speakers", new { id = participantDto.AttendeeCollaboratorDto?.Collaborator.Uid })" class="kt-widget__username">
                                             @(participantDto.AttendeeCollaboratorDto?.Collaborator?.GetDisplayName())
                                         </a>
                                         @{

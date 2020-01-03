@@ -105,61 +105,57 @@ var ConferencesParticipantsWidget = function () {
         });
     };
 
-    //// Delete -------------------------------------------------------------------------------------
-    //var executeDelete = function (organizationUid) {
-    //    MyRio2cCommon.block();
+    // Delete -------------------------------------------------------------------------------------
+    var executeDelete = function (collaboratorUid) {
+        MyRio2cCommon.block();
 
-    //    var jsonParameters = new Object();
-    //    jsonParameters.collaboratorUid = $('#AggregateId').val();
-    //    jsonParameters.organizationUid = organizationUid;
+        var jsonParameters = new Object();
+        jsonParameters.conferenceUid = $('#AggregateId').val();
+        jsonParameters.collaboratorUid = collaboratorUid;
 
-    //    $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/DeleteOrganization'), jsonParameters, function (data) {
-    //        MyRio2cCommon.handleAjaxReturn({
-    //            data: data,
-    //            // Success
-    //            onSuccess: function () {
-    //                if (typeof (SpeakersCompanyWidget) !== 'undefined') {
-    //                    SpeakersCompanyWidget.init();
-    //                }
-    //            },
-    //            // Error
-    //            onError: function () {
-    //            }
-    //        });
-    //    })
-    //    .fail(function () {
-    //    })
-    //    .always(function () {
-    //        MyRio2cCommon.unblock();
-    //    });
-    //};
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Conferences/DeleteParticipant'), jsonParameters, function (data) {
+            MyRio2cCommon.handleAjaxReturn({
+                data: data,
+                // Success
+                onSuccess: function () {
+                    if (typeof (ConferencesParticipantsWidget) !== 'undefined') {
+                        ConferencesParticipantsWidget.init();
+                    }
+                },
+                // Error
+                onError: function () {
+                }
+            });
+        })
+        .fail(function () {
+        })
+        .always(function () {
+            MyRio2cCommon.unblock();
+        });
+    };
 
-    //var showDeleteModal = function (organizationUid, isDeletingFromCurrentEdition) {
-    //    var message = labels.deleteConfirmationMessage;
+    var showDeleteModal = function (collaboratorUid) {
+        var message = labels.deleteConfirmationMessage;
 
-    //    if (isDeletingFromCurrentEdition) {
-    //        message = labels.deleteCurrentEditionConfirmationMessage;
-    //    }
-
-    //    bootbox.dialog({
-    //        message: message,
-    //        buttons: {
-    //            cancel: {
-    //                label: labels.cancel,
-    //                className: "btn btn-secondary mr-auto",
-    //                callback: function () {
-    //                }
-    //            },
-    //            confirm: {
-    //                label: labels.remove,
-    //                className: "btn btn-danger",
-    //                callback: function () {
-    //                    executeDelete(organizationUid);
-    //                }
-    //            }
-    //        }
-    //    });
-    //};
+        bootbox.dialog({
+            message: message,
+            buttons: {
+                cancel: {
+                    label: labels.cancel,
+                    className: "btn btn-secondary mr-auto",
+                    callback: function () {
+                    }
+                },
+                confirm: {
+                    label: labels.remove,
+                    className: "btn btn-danger",
+                    callback: function () {
+                        executeDelete(collaboratorUid);
+                    }
+                }
+            }
+        });
+    };
 
     return {
         init: function () {
@@ -169,8 +165,8 @@ var ConferencesParticipantsWidget = function () {
         showCreateModal: function () {
             showCreateModal();
         },
-        //showDeleteModal: function (organizationUid) {
-        //    showDeleteModal(organizationUid);
-        //}
+        showDeleteModal: function (collaboratorUid) {
+            showDeleteModal(collaboratorUid);
+        }
     };
 }();
