@@ -12,7 +12,9 @@
 // <summary></summary>
 // ***********************************************************************
 using iTextSharp.text;
+using iTextSharp.text.pdf;
 using System;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Infra.Report
 {
@@ -116,6 +118,41 @@ namespace PlataformaRio2C.Infra.Report
             return GetFont(DefaultFontSize, Font.NORMAL);
         }
 
+        public PdfPCell GetChips(List<string> texts, int fontStyle = Font.NORMAL, float fontSize = 0)
+        {
+            var mainCell = new PdfPCell();
+
+            var columns = new float[texts.Count];
+
+            var columnSize = 0f;
+
+            for (int i = 0; i < texts.Count; i++)
+            {
+                columns[i] = texts[i].Length + 15;
+                columnSize += texts[i].Length + 15;
+            }
+
+            var table = new PdfPTable(columns);
+            table.WidthPercentage = columnSize;
+            table.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.DefaultCell.Border = 0;
+            foreach (var text in texts)
+            {
+                var cell = new PdfPCell(GetPhrase(text, fontStyle, fontSize));
+                cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                cell.Padding = 5;
+                cell.CellEvent = new PdfCellChipLayout();
+                cell.Border = 0;
+                table.AddCell(cell);
+
+            }
+            mainCell.Border = 0;
+            mainCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            mainCell.AddElement(table);
+
+            return mainCell;
+        }
 
         /// <summary>
         /// Retorna a fonte padrão do template

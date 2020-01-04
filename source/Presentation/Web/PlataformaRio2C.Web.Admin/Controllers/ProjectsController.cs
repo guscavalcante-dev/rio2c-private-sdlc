@@ -13,6 +13,7 @@
 // ***********************************************************************
 using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
+using iTextSharp.text.pdf;
 using MediatR;
 using PlataformaRio2C.Application.TemplateDocuments;
 using PlataformaRio2C.Domain.Entities;
@@ -148,8 +149,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             {
                 var projectDto = projectsDtos.First();
                 var pdf = new PlataformaRio2CDocument(new ProjectDocumentTemplate(projectDto));
+                var compressed = CompressPdf(pdf.GetStream().ToArray());
 
-                return File(pdf.GetStream(), "application/pdf", Labels.Project + "_" + projectDto.Project.Id.ToString("D4") + "_" + projectDto.GetTitleDtoByLanguageCode(Constants.Culture.Portuguese).ProjectTitle.Value + ".pdf");
+                return File(compressed, "application/pdf", Labels.Project + "_" + projectDto.Project.Id.ToString("D4") + "_" + projectDto.GetTitleDtoByLanguageCode(Constants.Culture.Portuguese).ProjectTitle.Value + ".pdf");
             }
 
             // Many projects returned
@@ -191,6 +193,25 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             return File(compressedBytes, "application/zip", fileNameZip);
         }
 
+        public byte[] CompressPdf(byte[] src)
+        {
+            PdfReader reader = new PdfReader(src);
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (PdfStamper stamper =
+                    new PdfStamper(reader, ms, PdfWriter.VERSION_1_5))
+                {
+                    stamper.Writer.CompressionLevel = 9;
+                    int total = reader.NumberOfPages + 1;
+                    for (int i = 1; i < total; i++)
+                    {
+                        reader.SetPageContent(i, reader.GetPageContent(i));
+                    }
+                    stamper.SetFullCompression();
+                }
+                return ms.ToArray();
+            }
+        }
         #endregion
     }
 }

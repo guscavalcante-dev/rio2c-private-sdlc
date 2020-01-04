@@ -51,6 +51,7 @@
     <Compile Include="Models\TableStyles.cs" />
     <Compile Include="Models\TemplateBase.cs" />
     <Compile Include="Models\TemplateBlank.cs" />
+    <Compile Include="PdfCellChipLayout.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

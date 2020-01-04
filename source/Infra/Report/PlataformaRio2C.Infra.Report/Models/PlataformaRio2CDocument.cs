@@ -58,6 +58,7 @@ namespace PlataformaRio2C.Infra.Report
         {
             DocumentStream = new MemoryStream();
             Writer = PdfWriter.GetInstance(this, DocumentStream);
+
             Writer.CloseStream = false;
 
             if ((Template = template) != null)
