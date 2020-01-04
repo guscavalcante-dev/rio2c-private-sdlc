@@ -1941,6 +1941,10 @@
     <value>Horizontal Tracks</value>
     <comment>Tracks Horizontais</comment>
   </data>
+  <data name="SelectedFP" xml:space="preserve">
+    <value>Selected</value>
+    <comment>Selecionadas</comment>
+  </data>
   <data name="Tracks" xml:space="preserve">
     <value>Tracks</value>
     <comment>Tracks</comment>

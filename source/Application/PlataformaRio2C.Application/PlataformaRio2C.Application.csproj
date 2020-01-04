@@ -193,6 +193,7 @@
     <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorSiteMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Conferences\ConferenceBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Conferences\CreateConferenceCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Conferences\UpdateConferenceTracksCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Conferences\UpdateConferenceParticipantCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Conferences\DeleteConferenceParticipantCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Conferences\CreateConferenceParticipantCommandHandler.cs" />
@@ -267,6 +268,7 @@
     <Compile Include="CQRS\Commands\Conferences\CreateConference.cs" />
     <Compile Include="CQRS\Commands\Conferences\DeleteConference.cs" />
     <Compile Include="CQRS\Commands\Conferences\UpdateConferenceMainInformation.cs" />
+    <Compile Include="CQRS\Commands\Conferences\UpdateConferenceTracks.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendSpeakerWelcomeEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Common\SendForgotPasswordEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Site\SendProjectBuyerEvaluationEmailAsync.cs" />

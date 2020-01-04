@@ -53,9 +53,9 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Restores the specified user identifier.</summary>
+        /// <summary>Updates the specified user identifier.</summary>
         /// <param name="userId">The user identifier.</param>
-        public void Restore(int userId)
+        public void Update(int userId)
         {
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;

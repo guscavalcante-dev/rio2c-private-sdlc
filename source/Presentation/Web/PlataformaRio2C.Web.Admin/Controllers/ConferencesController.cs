@@ -42,6 +42,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         private readonly IConferenceParticipantRoleRepository conferenceParticipantRoleRepo;
         private readonly ICollaboratorRepository collaboratorRepo;
         private readonly ILanguageRepository languageRepo;
+        private readonly IVerticalTrackRepository verticalTrackRepo;
+        private readonly IHorizontalTrackRepository horizontalTrackRepo;
 
         /// <summary>Initializes a new instance of the <see cref="ConferencesController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -50,19 +52,25 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="conferenceParticipantRoleRepository">The conference participant role repository.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="languageRepository">The language repository.</param>
+        /// <param name="verticalTrackRepository">The vertical track repository.</param>
+        /// <param name="horizontalTrackRepository">The horizontal track repository.</param>
         public ConferencesController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             IConferenceRepository conferenceRepository,
             IConferenceParticipantRoleRepository conferenceParticipantRoleRepository,
             ICollaboratorRepository collaboratorRepository,
-            ILanguageRepository languageRepository)
+            ILanguageRepository languageRepository,
+            IVerticalTrackRepository verticalTrackRepository,
+            IHorizontalTrackRepository horizontalTrackRepository)
             : base(commandBus, identityController)
         {
             this.conferenceRepo = conferenceRepository;
             this.conferenceParticipantRoleRepo = conferenceParticipantRoleRepository;
             this.collaboratorRepo = collaboratorRepository;
             this.languageRepo = languageRepository;
+            this.verticalTrackRepo = verticalTrackRepository;
+            this.horizontalTrackRepo = horizontalTrackRepository;
         }
 
         #region List
@@ -349,6 +357,104 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
             }, JsonRequestBehavior.AllowGet);
         }
+
+        #region Update
+
+        /// <summary>Shows the update tracks modal.</summary>
+        /// <param name="conferenceUid">The conference uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowUpdateTracksModal(Guid? conferenceUid)
+        {
+            UpdateConferenceTracks cmd;
+
+            try
+            {
+                var tracksWidgetDto = await this.conferenceRepo.FindTracksWidgetDtoAsync(conferenceUid ?? Guid.Empty, this.EditionDto.Id);
+                if (tracksWidgetDto == null)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Conference, Labels.FoundF.ToLowerInvariant()));
+                }
+
+                cmd = new UpdateConferenceTracks(
+                    tracksWidgetDto,
+                    await this.verticalTrackRepo.FindAllAsync(),
+                    await this.horizontalTrackRepo.FindAllAsync());
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/UpdateTracksModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Updates the tracks.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> UpdateTracks(UpdateConferenceTracks cmd)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                cmd.UpdateDropdownProperties(
+                    await this.verticalTrackRepo.FindAllAsync(),
+                    await this.horizontalTrackRepo.FindAllAsync());
+
+                return Json(new
+                {
+                    status = "error",
+                    message = ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/UpdateTracksForm", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Conference, Labels.UpdatedF) });
+        }
+
+        #endregion
 
         #endregion
 

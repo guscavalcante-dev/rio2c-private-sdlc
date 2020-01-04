@@ -1,0 +1,37 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateConferenceTracks
+<div class="kt-section">
+    <h5>@Labels.VerticalTracks</h5>
+    @Html.ValidationMessage("VerticalTrackUids", new { @class = "text-danger" })
+    <div class="kt-section__content mt-3">
+        <div class="kt-checkbox-list">
+            @foreach (var verticalTrack in Model.VerticalTracks?.OrderBy(vt => vt.DisplayOrder))
+            {
+                <label class="kt-checkbox">
+                    <input type="checkbox"
+                           name="VerticalTrackUids"
+                           value="@verticalTrack.Uid"
+                           @if (Model.VerticalTrackUids?.Contains(verticalTrack.Uid) == true) { <text> checked </text> } /> @verticalTrack.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                        <span></span>
+                    </label>
+                }
+        </div>
+    </div>
+</div>
+<div class="kt-section">
+    <h5>@Labels.HorizontalTracks</h5>
+    @Html.ValidationMessage("HorizontalTrackUids", new { @class = "text-danger" })
+    <div class="kt-section__content mt-3">
+        <div class="kt-checkbox-list">
+            @foreach (var horizontalTrack in Model.HorizontalTracks?.OrderBy(ht => ht.DisplayOrder))
+            {
+                <label class="kt-checkbox">
+                    <input type="checkbox"
+                           name="HorizontalTrackUids"
+                           value="@horizontalTrack.Uid"
+                           @if (Model.HorizontalTrackUids?.Contains(horizontalTrack.Uid) == true) { <text> checked </text> } /> @horizontalTrack.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                        <span></span>
+                    </label>
+                }
+        </div>
+    </div>
+</div>

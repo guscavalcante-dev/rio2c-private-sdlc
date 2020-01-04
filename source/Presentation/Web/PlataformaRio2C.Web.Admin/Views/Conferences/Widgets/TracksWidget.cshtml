@@ -15,43 +15,40 @@
     </div>
 </div>
 <div class="kt-portlet__body">
-    @if (Model.ConferenceVerticalTrackDtos?.Any() == true || Model.ConferenceHorizontalTrackDtos?.Any() == true)
-    {
-        <div class="kt-widget">
-            <div class="kt-widget__bottom">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="kt-widget4">
+                <h3 class="kt-heading kt-heading--sm mb-0 mt-0">@Labels.VerticalTracks</h3>
                 @if (Model.ConferenceVerticalTrackDtos?.Any() == true)
                 {
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="kt-widget4">
-                                <h3 class="kt-heading kt-heading--sm mb-0">@Labels.VerticalTracks</h3>
-                                @foreach (var conferenceVerticalTrackDto in Model.ConferenceVerticalTrackDtos.OrderBy(cvtd => cvtd.VerticalTrack.DisplayOrder))
-                                {
-                                    <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@conferenceVerticalTrackDto.VerticalTrack.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
-                                }
-                            </div>
-                        </div>
-                    </div>
+                    foreach (var conferenceVerticalTrackDto in Model.ConferenceVerticalTrackDtos.OrderBy(cvtd => cvtd.VerticalTrack.DisplayOrder))
+                    {
+                        <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@conferenceVerticalTrackDto.VerticalTrack.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
+                    }
                 }
-                @if (Model.ConferenceHorizontalTrackDtos?.Any() == true)
+                else
                 {
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="kt-widget4">
-                            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.HorizontalTracks</h3>
-                            @foreach (var conferenceHorizontalTrackDto in Model.ConferenceHorizontalTrackDtos.OrderBy(chtd => chtd.HorizontalTrack.DisplayOrder))
-                            {
-                                <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@conferenceHorizontalTrackDto.HorizontalTrack.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
-                            }
-                        </div>
-                    </div>
-                </div>
+                    <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.VerticalTracks, Labels.SelectedFP.ToLowerInvariant())</span>
                 }
             </div>
         </div>
-    }
-    else
-    {
-        <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.Tracks, Labels.FoundFP)</span>
-    }
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="kt-widget4">
+                <h3 class="kt-heading kt-heading--sm mb-0">@Labels.HorizontalTracks</h3>
+                @if (Model.ConferenceHorizontalTrackDtos?.Any() == true)
+                {
+                    foreach (var conferenceHorizontalTrackDto in Model.ConferenceHorizontalTrackDtos.OrderBy(chtd => chtd.HorizontalTrack.DisplayOrder))
+                    {
+                        <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@conferenceHorizontalTrackDto.HorizontalTrack.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
+                    }
+                }
+                else
+                {
+                    <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.HorizontalTracks, Labels.SelectedFP.ToLowerInvariant())</span>
+                }
+            </div>
+        </div>
+    </div>
 </div>

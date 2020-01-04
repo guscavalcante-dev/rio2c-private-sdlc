@@ -8253,6 +8253,8 @@
     <Content Include="Views\Conferences\Modals\UpdateParticipantModal.cshtml" />
     <Content Include="Views\Conferences\Modals\UpdateParticipantForm.cshtml" />
     <Content Include="Views\Conferences\Widgets\TracksWidget.cshtml" />
+    <Content Include="Views\Conferences\Modals\UpdateTracksModal.cshtml" />
+    <Content Include="Views\Conferences\Modals\UpdateTracksForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
