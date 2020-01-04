@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-03-2020
+// Last Modified On : 01-04-2020
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -385,6 +385,7 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/conferences.details.js").Include(
                 "~/Assets/js/conferences/conferences.maininformation.widget.js",
+                "~/Assets/js/conferences/conferences.tracks.widget.js",
                 "~/Assets/js/conferences/conferences.participants.widget.js"));
 
             //bundles.Add(new ScriptBundle("~/bundles/js/conferences.update.js").Include(

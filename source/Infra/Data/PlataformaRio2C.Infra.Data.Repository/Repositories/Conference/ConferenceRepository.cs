@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-02-2020
+// Last Modified On : 01-04-2020
 // ***********************************************************************
 // <copyright file="ConferenceRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -235,6 +235,34 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         Name = cs.Language.Name,
                                         Code = cs.Language.Code
                                     }
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>Finds the tracks widget dto asynchronous.</summary>
+        /// <param name="conferenceUid">The conference uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<ConferenceDto> FindTracksWidgetDtoAsync(Guid conferenceUid, int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(conferenceUid)
+                                .FindByEditionId(false, editionId);
+
+            return await query
+                            .Select(c => new ConferenceDto
+                            {
+                                Conference = c,
+                                ConferenceVerticalTrackDtos = c.ConferenceVerticalTracks.Where(cvt => !cvt.IsDeleted).Select(cvt => new ConferenceVerticalTrackDto
+                                {
+                                    ConferenceVerticalTrack = cvt,
+                                    VerticalTrack = cvt.VerticalTrack
+                                }),
+                                ConferenceHorizontalTrackDtos = c.ConferenceHorizontalTracks.Where(cht => !cht.IsDeleted).Select(cht => new ConferenceHorizontalTrackDto
+                                {
+                                    ConferenceHorizontalTrack = cht,
+                                    HorizontalTrack = cht.HorizontalTrack
                                 })
                             })
                             .FirstOrDefaultAsync();

@@ -1,0 +1,57 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model ConferenceDto
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+            @Labels.Tracks
+        </h3>
+    </div>
+    <div class="kt-portlet__head-toolbar">
+        <div class="kt-portlet__head-actions">
+            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="ConferencesTracksWidget.showUpdateModal();">
+                <i class="flaticon2-edit"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="kt-portlet__body">
+    @if (Model.ConferenceVerticalTrackDtos?.Any() == true || Model.ConferenceHorizontalTrackDtos?.Any() == true)
+    {
+        <div class="kt-widget">
+            <div class="kt-widget__bottom">
+                @if (Model.ConferenceVerticalTrackDtos?.Any() == true)
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="kt-widget4">
+                                <h3 class="kt-heading kt-heading--sm mb-0">@Labels.VerticalTracks</h3>
+                                @foreach (var conferenceVerticalTrackDto in Model.ConferenceVerticalTrackDtos.OrderBy(cvtd => cvtd.VerticalTrack.DisplayOrder))
+                                {
+                                    <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@conferenceVerticalTrackDto.VerticalTrack.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (Model.ConferenceHorizontalTrackDtos?.Any() == true)
+                {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="kt-widget4">
+                            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.HorizontalTracks</h3>
+                            @foreach (var conferenceHorizontalTrackDto in Model.ConferenceHorizontalTrackDtos.OrderBy(chtd => chtd.HorizontalTrack.DisplayOrder))
+                            {
+                                <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@conferenceHorizontalTrackDto.HorizontalTrack.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.Tracks, Labels.FoundFP)</span>
+    }
+</div>

@@ -1948,4 +1948,16 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Função</value>
     <comment>Função</comment>
   </data>
+  <data name="HorizontalTracks" xml:space="preserve">
+    <value>Tracks Horizontais</value>
+    <comment>Tracks Horizontais</comment>
+  </data>
+  <data name="Tracks" xml:space="preserve">
+    <value>Tracks</value>
+    <comment>Tracks</comment>
+  </data>
+  <data name="VerticalTracks" xml:space="preserve">
+    <value>Tracks Verticais</value>
+    <comment>Tracks Verticais</comment>
+  </data>
 </root>

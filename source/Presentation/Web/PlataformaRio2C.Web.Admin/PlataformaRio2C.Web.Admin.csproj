@@ -419,6 +419,7 @@
     <Content Include="Assets\js\companies\companyinfo.autocomplete.js" />
     <Content Include="Assets\js\conferences\conferences.datatable.widget.js" />
     <Content Include="Assets\js\conferences\conferences.editioncount.widget.js" />
+    <Content Include="Assets\js\conferences\conferences.tracks.widget.js" />
     <Content Include="Assets\js\conferences\conferences.totalcount.widget.js" />
     <Content Include="Assets\js\conferences\conferences.create.js" />
     <Content Include="Assets\js\conferences\conferences.delete.js" />
@@ -8251,6 +8252,7 @@
     <Content Include="Views\Conferences\Modals\CreateParticipantForm.cshtml" />
     <Content Include="Views\Conferences\Modals\UpdateParticipantModal.cshtml" />
     <Content Include="Views\Conferences\Modals\UpdateParticipantForm.cshtml" />
+    <Content Include="Views\Conferences\Widgets\TracksWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

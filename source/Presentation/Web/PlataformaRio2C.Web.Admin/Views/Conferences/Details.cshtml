@@ -13,6 +13,13 @@
             </div>
         </div>
         <!--end:Main Information Widget-->
+        <!--begin:Tracks Widget-->
+        <div class="row">
+            <div class="col-12">
+                <div id="ConferenceTracksWidget" class="kt-portlet" style="min-height: 250px;"></div>
+            </div>
+        </div>
+        <!--end:Tracks Widget-->
         <!--begin:Participants Widget-->
         <div class="row">
             <div class="col-12">
@@ -46,6 +53,7 @@
 
         jQuery(document).ready(function () {
             ConferencesMainInformationWidget.init();
+            ConferencesTracksWidget.init();
             ConferencesParticipantsWidget.init();
             //ConferencesApiConfigurationWidget.init();
         });

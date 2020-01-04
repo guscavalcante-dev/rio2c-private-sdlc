@@ -115,6 +115,8 @@
     <Compile Include="Dtos\Conferences\ConferenceSynopsisDto.cs" />
     <Compile Include="Dtos\Conferences\ConferenceTitleDto.cs" />
     <Compile Include="Dtos\Conferences\ConferenceJsonDto.cs" />
+    <Compile Include="Dtos\Conferences\ConferenceHorizontalTrackDto.cs" />
+    <Compile Include="Dtos\Conferences\ConferenceVerticalTrackDto.cs" />
     <Compile Include="Dtos\Editions\EditionBaseDto.cs" />
     <Compile Include="Dtos\Editions\EditionDto.cs" />
     <Compile Include="Dtos\Emails\EmailRecipientDto.cs" />
@@ -178,6 +180,8 @@
     <Compile Include="Entities\Collaborator\CollaboratorProducer.cs" />
     <Compile Include="Entities\Collaborator\CollaboratorSpeaker.cs" />
     <Compile Include="Entities\Common\InterestGroup.cs" />
+    <Compile Include="Entities\Conference\ConferenceHorizontalTrack.cs" />
+    <Compile Include="Entities\Conference\ConferenceVerticalTrack.cs" />
     <Compile Include="Entities\Conference\ConferenceParticipantRole.cs" />
     <Compile Include="Entities\Conference\ConferenceParticipant.cs" />
     <Compile Include="Entities\Conference\Conference.cs" />
@@ -251,6 +255,8 @@
     <Compile Include="Entities\Collaborator\CollaboratorType.cs" />
     <Compile Include="Entities\SubscribeLists\UserUnsubscribedList.cs" />
     <Compile Include="Entities\SubscribeLists\SubscribeList.cs" />
+    <Compile Include="Entities\Tracks\HorizontalTrack.cs" />
+    <Compile Include="Entities\Tracks\VerticalTrack.cs" />
     <Compile Include="Enums\NegotiationTypeCodes.cs" />
     <Compile Include="Enums\StatusProjectCodes.cs" />
     <Compile Include="Interfaces\IMailCollaboratorRepository.cs" />
@@ -259,6 +265,8 @@
     <Compile Include="Interfaces\Repositories\AttendeeOrganizations\IAttendeeOrganizationRepository.cs" />
     <Compile Include="Interfaces\Repositories\Collaborators\ICollaboratorProducerRepository.cs" />
     <Compile Include="Interfaces\Repositories\Collaborators\ICollaboratorTypeRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Common\IHorizontalTrackRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Common\IVerticalTrackRepository.cs" />
     <Compile Include="Interfaces\Repositories\Conferences\IConferenceParticipantRoleRepository.cs" />
     <Compile Include="Interfaces\Repositories\Conferences\ILecturerJobTitleRepository.cs" />
     <Compile Include="Interfaces\Repositories\Conferences\ILecturerRepository.cs" />

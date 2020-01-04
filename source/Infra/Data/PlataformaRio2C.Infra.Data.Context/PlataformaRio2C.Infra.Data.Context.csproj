@@ -83,6 +83,8 @@
     <Compile Include="Mapping\Collaborator\CollaboratorProducerMap.cs" />
     <Compile Include="Mapping\Common\ActivityMap.cs" />
     <Compile Include="Mapping\Addresses\AddressMap.cs" />
+    <Compile Include="Mapping\Conference\ConferenceHorizontalTrackMap.cs" />
+    <Compile Include="Mapping\Conference\ConferenceVerticalTrackMap.cs" />
     <Compile Include="Mapping\Conference\ConferenceParticipantRoleTitleMap.cs" />
     <Compile Include="Mapping\Conference\ConferenceParticipantRoleMap.cs" />
     <Compile Include="Mapping\Conference\ConferenceParticipantMap.cs" />
@@ -158,6 +160,8 @@
     <Compile Include="Mapping\SubscribeLists\SubscribeListMap.cs" />
     <Compile Include="Mapping\TargetAudienceMap.cs" />
     <Compile Include="Mapping\Collaborator\CollaboratorTypeMap.cs" />
+    <Compile Include="Mapping\Tracks\HorizontalTrackMap.cs" />
+    <Compile Include="Mapping\Tracks\VerticalTrackMap.cs" />
     <Compile Include="Mapping\User\UserRoleMap.cs" />
     <Compile Include="Mapping\User\RoleMap.cs" />
     <Compile Include="Mapping\User\UserUseTermMap.cs" />

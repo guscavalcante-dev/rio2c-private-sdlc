@@ -1937,4 +1937,16 @@
     <value>Function</value>
     <comment>Função</comment>
   </data>
+  <data name="HorizontalTracks" xml:space="preserve">
+    <value>Horizontal Tracks</value>
+    <comment>Tracks Horizontais</comment>
+  </data>
+  <data name="Tracks" xml:space="preserve">
+    <value>Tracks</value>
+    <comment>Tracks</comment>
+  </data>
+  <data name="VerticalTracks" xml:space="preserve">
+    <value>Vertical Tracks</value>
+    <comment>Tracks Verticais</comment>
+  </data>
 </root>

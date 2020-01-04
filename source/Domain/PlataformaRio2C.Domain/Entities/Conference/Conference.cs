@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-03-2020
+// Last Modified On : 01-04-2020
 // ***********************************************************************
 // <copyright file="Conference.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,6 +34,8 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<ConferenceTitle> ConferenceTitles { get; private set; }
         public virtual ICollection<ConferenceSynopsis> ConferenceSynopses { get; private set; }
         public virtual ICollection<ConferenceParticipant> ConferenceParticipants { get; private set; }
+        public virtual ICollection<ConferenceVerticalTrack> ConferenceVerticalTracks { get; private set; }
+        public virtual ICollection<ConferenceHorizontalTrack> ConferenceHorizontalTracks { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="Conference"/> class.</summary>
         /// <param name="conferenceUid">The conference uid.</param>
