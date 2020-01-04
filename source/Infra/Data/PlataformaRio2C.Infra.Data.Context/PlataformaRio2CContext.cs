@@ -45,6 +45,7 @@ namespace PlataformaRio2C.Infra.Data.Context
 
             // Edition
             modelBuilder.Configurations.Add(new EditionMap());
+            modelBuilder.Configurations.Add(new EditionEventMap());
 
             // Holding
             modelBuilder.Configurations.Add(new HoldingMap());

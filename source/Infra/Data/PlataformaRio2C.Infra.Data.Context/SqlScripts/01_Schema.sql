@@ -637,7 +637,7 @@ GO
 CREATE TABLE [dbo].[Conferences](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
-	[EditionId] [int] NOT NULL,
+	[EditionEventId] [int] NOT NULL,
 	[RoomId] [int] NULL,
 	[StartDate] [datetime] NOT NULL,
 	[EndDate] [datetime] NOT NULL,
@@ -769,6 +769,37 @@ CREATE TABLE [dbo].[Countries](
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
  CONSTRAINT [IDX_UQ_Countries_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[EditionEvents](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[EditionId] [int] NOT NULL,
+	[Name] [varchar](200) NOT NULL,
+	[StartDate] [datetime] NOT NULL,
+	[EndDate] [datetime] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_EditionEvents] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_EditionEvents_Uid] UNIQUE NONCLUSTERED 
 (
 	[Uid] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -2461,9 +2492,13 @@ CREATE NONCLUSTERED INDEX [IDX_ConferenceParticipantRoles_IsLecturer] ON [dbo].[
 	[IsLecturer] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-CREATE NONCLUSTERED INDEX [IDX_Conferences_EditionId_RoomId] ON [dbo].[Conferences]
+CREATE NONCLUSTERED INDEX [IDX_Conferences_EditionEventId] ON [dbo].[Conferences]
 (
-	[EditionId] ASC,
+	[EditionEventId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_Conferences_RoomId] ON [dbo].[Conferences]
+(
 	[RoomId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
@@ -2475,6 +2510,11 @@ GO
 CREATE NONCLUSTERED INDEX [IDX_ConferenceVerticalTracks_VerticalTrackId] ON [dbo].[ConferenceVerticalTracks]
 (
 	[VerticalTrackId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_EditionEvents_EditionId] ON [dbo].[EditionEvents]
+(
+	[EditionId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
 SET ANSI_PADDING ON
@@ -3029,10 +3069,10 @@ REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[ConferenceParticipants] CHECK CONSTRAINT [FK_Users_ConferenceParticipants_UpdateUserId]
 GO
-ALTER TABLE [dbo].[Conferences]  WITH CHECK ADD  CONSTRAINT [FK_Editions_Conferences_EditionId] FOREIGN KEY([EditionId])
-REFERENCES [dbo].[Editions] ([Id])
+ALTER TABLE [dbo].[Conferences]  WITH CHECK ADD  CONSTRAINT [FK_EditionEvents_Conferences_EditionEventId] FOREIGN KEY([EditionEventId])
+REFERENCES [dbo].[EditionEvents] ([Id])
 GO
-ALTER TABLE [dbo].[Conferences] CHECK CONSTRAINT [FK_Editions_Conferences_EditionId]
+ALTER TABLE [dbo].[Conferences] CHECK CONSTRAINT [FK_EditionEvents_Conferences_EditionEventId]
 GO
 ALTER TABLE [dbo].[Conferences]  WITH CHECK ADD  CONSTRAINT [FK_Rooms_Conferences_RoomId] FOREIGN KEY([RoomId])
 REFERENCES [dbo].[Rooms] ([Id])
@@ -3123,6 +3163,21 @@ ALTER TABLE [dbo].[Countries]  WITH CHECK ADD  CONSTRAINT [FK_Users_Countries_Up
 REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[Countries] CHECK CONSTRAINT [FK_Users_Countries_UpdateUserId]
+GO
+ALTER TABLE [dbo].[EditionEvents]  WITH CHECK ADD  CONSTRAINT [FK_Languages_EditionEvents_EditionId] FOREIGN KEY([EditionId])
+REFERENCES [dbo].[Languages] ([Id])
+GO
+ALTER TABLE [dbo].[EditionEvents] CHECK CONSTRAINT [FK_Languages_EditionEvents_EditionId]
+GO
+ALTER TABLE [dbo].[EditionEvents]  WITH CHECK ADD  CONSTRAINT [FK_Users_EditionEvents_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[EditionEvents] CHECK CONSTRAINT [FK_Users_EditionEvents_CreateUserId]
+GO
+ALTER TABLE [dbo].[EditionEvents]  WITH CHECK ADD  CONSTRAINT [FK_Users_EditionEvents_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[EditionEvents] CHECK CONSTRAINT [FK_Users_EditionEvents_UpdateUserId]
 GO
 ALTER TABLE [dbo].[Editions]  WITH CHECK ADD  CONSTRAINT [FK_Users_Editions_CreateUserId] FOREIGN KEY([CreateUserId])
 REFERENCES [dbo].[Users] ([Id])

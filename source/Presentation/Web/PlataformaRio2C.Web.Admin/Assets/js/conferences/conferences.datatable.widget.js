@@ -4,7 +4,7 @@
 // Created          : 12-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-02-2020
+// Last Modified On : 01-04-2020
 // ***********************************************************************
 // <copyright file="conferences.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -132,7 +132,13 @@ var ConferencesDataTableWidget = function () {
                     data: 'Title'
                 },
                 {
-                     data: 'Room'
+                    data: 'EditionEventJsonDto',
+                    render: function (data) {
+                        return data.Name;
+                    }
+                },
+                {
+                    data: 'Room'
                 },
                 {
                     data: 'StartDate',
@@ -188,11 +194,11 @@ var ConferencesDataTableWidget = function () {
                     //className: "dt-center"
                 },
                 {
-                    targets: [1],
+                    targets: [2],
                     orderable: false
                 },
                 {
-                    targets: [2, 3, 4, 4],
+                    targets: [3, 4, 5, 6],
                     className: "dt-center"
                 },
                 {

@@ -4,7 +4,7 @@
 // Created          : 12-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-27-2019
+// Last Modified On : 01-04-2020
 // ***********************************************************************
 // <copyright file="ConferenceJsonDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,6 +20,7 @@ namespace PlataformaRio2C.Domain.Dtos
     {
         public int Id { get; set; }
         public Guid Uid { get; set; }
+        public EditionEventJsonDto EditionEventJsonDto { get; set; }
         public RoomJsonDto RoomJsonDto { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

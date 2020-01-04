@@ -4,7 +4,7 @@
 // Created          : 12-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-02-2020
+// Last Modified On : 01-04-2020
 // ***********************************************************************
 // <copyright file="CreateConference.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
@@ -23,6 +24,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>CreateConference</summary>
     public class CreateConference : BaseCommand
     {
+        [Display(Name = "Event", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public Guid? EditionEventUid { get; set; }
+
         [Display(Name = "Date", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public DateTime? Date { get; set; }
@@ -37,18 +42,34 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public List<ConferenceTitleBaseCommand> Titles { get; set; }
 
+        public List<EditionEvent> EditionEvents { get; private set; }
+
         /// <summary>Initializes a new instance of the <see cref="CreateConference"/> class.</summary>
-        public CreateConference(ConferenceDto entity, List<LanguageDto> languagesDtos)
+        /// <param name="entity">The entity.</param>
+        /// <param name="editionEvents">The edition events.</param>
+        /// <param name="languagesDtos">The languages dtos.</param>
+        public CreateConference(
+            ConferenceDto entity,
+            List<EditionEvent> editionEvents,
+            List<LanguageDto> languagesDtos)
         {
             this.Date = entity?.Conference?.StartDate.Date;
             this.StartTime = entity?.Conference?.StartDate.ToShortTimeString();
             this.EndTime = entity?.Conference?.EndDate.ToShortTimeString();
             this.UpdateTitles(entity, languagesDtos);
+            this.UpdateDropdowns(editionEvents);
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateConference"/> class.</summary>
         public CreateConference()
         {
+        }
+
+        /// <summary>Updates the dropdowns.</summary>
+        /// <param name="editionEvents">The edition events.</param>
+        public void UpdateDropdowns(List<EditionEvent> editionEvents)
+        {
+            this.EditionEvents = editionEvents;
         }
 
         #region Private Methods

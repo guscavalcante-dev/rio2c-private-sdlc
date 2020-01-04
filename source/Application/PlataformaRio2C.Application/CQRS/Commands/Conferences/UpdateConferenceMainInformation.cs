@@ -4,7 +4,7 @@
 // Created          : 01-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-02-2019
+// Last Modified On : 01-04-2020
 // ***********************************************************************
 // <copyright file="UpdateConferenceMainInformation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -26,11 +27,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Initializes a new instance of the <see cref="UpdateConferenceMainInformation"/> class.</summary>
         /// <param name="entity">The entity.</param>
+        /// <param name="editionEvents">The edition events.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         public UpdateConferenceMainInformation(
-            ConferenceDto entity, 
+            ConferenceDto entity,
+            List<EditionEvent> editionEvents,
             List<LanguageDto> languagesDtos)
-            : base(entity, languagesDtos)
+            : base(entity, editionEvents, languagesDtos)
         {
             this.ConferenceUid = entity?.Conference?.Uid ?? Guid.Empty;
             this.UpdateSynopsis(entity, languagesDtos);

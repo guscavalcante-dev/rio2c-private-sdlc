@@ -67,7 +67,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             if (!showAllEditions)
             {
-                query = query.Where(c => c.EditionId == editionId);
+                query = query.Where(c => c.EditionEvent.EditionId == editionId);
             }
 
             return query;
@@ -359,15 +359,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 sortColumns,
                                 new List<Tuple<string, string>>
                                 {
-                                    //new Tuple<string, string>("FullName", "User.Name"),
+                                    new Tuple<string, string>("EditionEventJsonDto", "EditionEvent.Name"),
                                     //new Tuple<string, string>("Email", "User.Email"),
                                 },
-                                new List<string> { "StartDate", "EndDate", "CreateDate", "UpdateDate" },
+                                new List<string> { "EditionEvent.Name", "StartDate", "EndDate", "CreateDate", "UpdateDate" },
                                 "StartDate")
                             .Select(c => new ConferenceJsonDto
                             {
                                 Id = c.Id,
                                 Uid = c.Uid,
+                                EditionEventJsonDto = new EditionEventJsonDto
+                                {
+                                    Id = c.EditionEvent.Id,
+                                    Uid = c.EditionEvent.Uid,
+                                    Name = c.EditionEvent.Name
+                                },
                                 RoomJsonDto = !c.RoomId.HasValue ? null : new RoomJsonDto
                                 {
                                     Id = c.Room.Id,

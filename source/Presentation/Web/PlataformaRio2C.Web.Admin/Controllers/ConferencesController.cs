@@ -40,6 +40,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     {
         private readonly IConferenceRepository conferenceRepo;
         private readonly IConferenceParticipantRoleRepository conferenceParticipantRoleRepo;
+        private readonly IEditionEventRepository editionEventRepo;
         private readonly ICollaboratorRepository collaboratorRepo;
         private readonly ILanguageRepository languageRepo;
         private readonly IVerticalTrackRepository verticalTrackRepo;
@@ -50,6 +51,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="identityController">The identity controller.</param>
         /// <param name="conferenceRepository">The conference repository.</param>
         /// <param name="conferenceParticipantRoleRepository">The conference participant role repository.</param>
+        /// <param name="editionEventRepository">The edition event repository.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="languageRepository">The language repository.</param>
         /// <param name="verticalTrackRepository">The vertical track repository.</param>
@@ -59,6 +61,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             IdentityAutenticationService identityController,
             IConferenceRepository conferenceRepository,
             IConferenceParticipantRoleRepository conferenceParticipantRoleRepository,
+            IEditionEventRepository editionEventRepository,
             ICollaboratorRepository collaboratorRepository,
             ILanguageRepository languageRepository,
             IVerticalTrackRepository verticalTrackRepository,
@@ -67,6 +70,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         {
             this.conferenceRepo = conferenceRepository;
             this.conferenceParticipantRoleRepo = conferenceParticipantRoleRepository;
+            this.editionEventRepo = editionEventRepository;
             this.collaboratorRepo = collaboratorRepository;
             this.languageRepo = languageRepository;
             this.verticalTrackRepo = verticalTrackRepository;
@@ -259,6 +263,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd = new UpdateConferenceMainInformation(
                     mainInformationWidgetDto,
+                    await this.editionEventRepo.FindAllByEditionIdAsync(this.EditionDto.Id),
                     await this.languageRepo.FindAllDtosAsync());
             }
             catch (DomainException ex)
@@ -310,6 +315,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     var target = error.Target ?? "";
                     ModelState.AddModelError(target, error.Message);
                 }
+
+                cmd.UpdateDropdowns(
+                    await this.editionEventRepo.FindAllByEditionIdAsync(this.EditionDto.Id));
 
                 return Json(new
                 {
@@ -746,6 +754,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         {
             var cmd = new CreateConference(
                 null,
+                await this.editionEventRepo.FindAllByEditionIdAsync(this.EditionDto.Id),
                 await this.languageRepo.FindAllDtosAsync());
 
             return Json(new
@@ -792,6 +801,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     var target = error.Target ?? "";
                     ModelState.AddModelError(target, error.Message);
                 }
+
+                cmd.UpdateDropdowns(
+                    await this.editionEventRepo.FindAllByEditionIdAsync(this.EditionDto.Id));
 
                 return Json(new
                 {

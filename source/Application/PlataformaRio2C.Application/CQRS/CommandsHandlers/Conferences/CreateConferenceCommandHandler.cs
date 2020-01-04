@@ -4,7 +4,7 @@
 // Created          : 12-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-02-2020
+// Last Modified On : 01-04-2020
 // ***********************************************************************
 // <copyright file="CreateConferenceCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,24 +26,24 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>CreateConferenceCommandHandler</summary>
     public class CreateConferenceCommandHandler : ConferenceBaseCommandHandler, IRequestHandler<CreateConference, AppValidationResult>
     {
-        private readonly IEditionRepository editionRepo;
+        private readonly IEditionEventRepository editionEventRepo;
         private readonly ILanguageRepository languageRepo;
 
         /// <summary>Initializes a new instance of the <see cref="CreateConferenceCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="conferenceRepository">The conference repository.</param>
-        /// <param name="editionRepository">The edition repository.</param>
+        /// <param name="editionEventRepository">The edition event repository.</param>
         /// <param name="languageRepository">The language repository.</param>
         public CreateConferenceCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IConferenceRepository conferenceRepository,
-            IEditionRepository editionRepository,
+            IEditionEventRepository editionEventRepository,
             ILanguageRepository languageRepository)
             : base(eventBus, uow, conferenceRepository)
         {
-            this.editionRepo = editionRepository;
+            this.editionEventRepo = editionEventRepository;
             this.languageRepo = languageRepository;
         }
 
@@ -61,7 +61,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var conference = new Conference(
                 conferenceUid,
-                await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
+                await this.editionEventRepo.GetAsync(cmd.EditionEventUid ?? Guid.Empty),
                 cmd.Date.Value,
                 cmd.StartTime,
                 cmd.EndTime,

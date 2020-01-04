@@ -23,12 +23,12 @@ namespace PlataformaRio2C.Domain.Entities
     /// <summary>Conference</summary>
     public class Conference : Entity
     {
-        public int EditionId { get; private set; }
+        public int EditionEventId { get; private set; }
         public int? RoomId { get; private set; }
         public DateTime StartDate { get; private set; }
         public DateTime EndDate { get; private set; }
 
-        public virtual Edition Edition { get; private set; }
+        public virtual EditionEvent EditionEvent { get; private set; }
         public virtual Room Room { get; private set; }
 
         public virtual ICollection<ConferenceTitle> ConferenceTitles { get; private set; }
@@ -39,7 +39,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Initializes a new instance of the <see cref="Conference"/> class.</summary>
         /// <param name="conferenceUid">The conference uid.</param>
-        /// <param name="edition">The edition.</param>
+        /// <param name="editionEvent">The edition event.</param>
         /// <param name="date">The date.</param>
         /// <param name="startTime">The start time.</param>
         /// <param name="endTime">The end time.</param>
@@ -47,7 +47,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public Conference(
             Guid conferenceUid,
-            Edition edition,
+            EditionEvent editionEvent,
             DateTime date,
             string startTime,
             string endTime,
@@ -55,8 +55,8 @@ namespace PlataformaRio2C.Domain.Entities
             int userId)
         {
             //this.Uid = conferenceUid;
-            this.EditionId = edition?.Id ?? 0;
-            this.Edition = edition;
+            this.EditionEventId = editionEvent?.Id ?? 0;
+            this.EditionEvent = editionEvent;
             this.StartDate = date.JoinDateAndTime(startTime, true);
             this.EndDate = date.JoinDateAndTime(endTime, true);
             this.SynchronizeConferenceTitles(conferenceTitles, userId);
@@ -418,7 +418,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.ValidationResult = new ValidationResult();
 
-            this.ValidateEdition();
+            this.ValidateEditionEvent();
             this.ValidateDates();
             this.ValidateConferenceTitles();
             this.ValidateConferenceSynopses();
@@ -428,21 +428,21 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>Validates the edition.</summary>
-        public void ValidateEdition()
+        public void ValidateEditionEvent()
         {
-            if (this.Edition == null)
+            if (this.EditionEvent == null)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Edition), new string[] { "Edition" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Event), new string[] { "Event" }));
             }
         }
 
         /// <summary>Validates the dates.</summary>
         public void ValidateDates()
         {
-            if (this.StartDate < this.Edition.StartDate || this.StartDate > this.Edition.EndDate
-                || this.EndDate < this.Edition.StartDate || this.EndDate > this.Edition.EndDate)
+            if (this.StartDate < this.EditionEvent.StartDate || this.StartDate > this.EditionEvent.EndDate
+                || this.EndDate < this.EditionEvent.StartDate || this.EndDate > this.EditionEvent.EndDate)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.Date, this.Edition.EndDate.ToShortDateString(), this.Edition.StartDate.ToShortDateString()), new string[] { "Date" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.Date, this.EditionEvent.EndDate.ToShortDateString(), this.EditionEvent.StartDate.ToShortDateString()), new string[] { "Date" }));
             }
 
             if (this.StartDate > this.EndDate)

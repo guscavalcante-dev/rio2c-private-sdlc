@@ -119,6 +119,7 @@
     <Compile Include="Dtos\Conferences\ConferenceVerticalTrackDto.cs" />
     <Compile Include="Dtos\Editions\EditionBaseDto.cs" />
     <Compile Include="Dtos\Editions\EditionDto.cs" />
+    <Compile Include="Dtos\Editions\EditionEventJsonDto.cs" />
     <Compile Include="Dtos\Emails\EmailRecipientDto.cs" />
     <Compile Include="Dtos\Messages\NotificationEmailConversationDto.cs" />
     <Compile Include="Dtos\Messages\HubBaseDto.cs" />
@@ -196,6 +197,7 @@
     <Compile Include="Entities\Addresses\City.cs" />
     <Compile Include="Entities\Addresses\Country.cs" />
     <Compile Include="Entities\Addresses\State.cs" />
+    <Compile Include="Entities\Editions\EditionEvent.cs" />
     <Compile Include="Entities\Logistics\Logistics.cs" />
     <Compile Include="Entities\Mail\Mail.cs" />
     <Compile Include="Entities\Mail\MailCollaborator.cs" />
@@ -279,6 +281,7 @@
     <Compile Include="Interfaces\Repositories\Addresses\ICityRepository.cs" />
     <Compile Include="Interfaces\Repositories\Addresses\ICountryRepository.cs" />
     <Compile Include="Interfaces\Repositories\Addresses\IStateRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Editions\IEditionEventRepository.cs" />
     <Compile Include="Interfaces\Repositories\Projects\IProjectEvaluationRefuseReasonRepository.cs" />
     <Compile Include="Interfaces\Repositories\Projects\IProjectEvaluationStatusRepository.cs" />
     <Compile Include="Interfaces\Repositories\Projects\IProjectBuyerEvaluationRepository.cs" />
