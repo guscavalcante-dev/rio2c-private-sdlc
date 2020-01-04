@@ -379,6 +379,7 @@
     <Content Include="SqlScripts\03_TicketSettings.sql" />
     <Content Include="SqlScripts\04_InitialData.sql" />
     <Content Include="SqlScripts\Deltas\20190930_114613_0001_ChangesForPlayersApi.sql" />
+    <Content Include="SqlScripts\Deltas\20200104_082325_0011_ChangesForTracks.sql" />
     <Content Include="SqlScripts\Deltas\20191218_102311_0010_ChangesForSpeakers.sql" />
     <Content Include="SqlScripts\Deltas\20191213_105603_0009_ChangesForSpeakers.sql" />
     <Content Include="SqlScripts\Deltas\20191210_145151_0009_ChangesForEvaluationRefuseReasons.sql" />

@@ -511,6 +511,31 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+CREATE TABLE [dbo].[ConferenceHorizontalTracks](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[ConferenceId] [int] NOT NULL,
+	[HorizontalTrackId] [int] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_ConferenceHorizontalTracks] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ConferenceHorizontalTracks_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[ConferenceParticipantRoles](
@@ -695,6 +720,31 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+CREATE TABLE [dbo].[ConferenceVerticalTracks](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[ConferenceId] [int] NOT NULL,
+	[VerticalTrackId] [int] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_ConferenceVerticalTracks] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ConferenceVerticalTracks_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[Countries](
@@ -831,6 +881,35 @@ CREATE TABLE [dbo].[Holdings](
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
  CONSTRAINT [IDX_UQ_Holdings_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[HorizontalTracks](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Name] [varchar](500) NOT NULL,
+	[DisplayOrder] [int] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_HorizontalTracks] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_HorizontalTracks_Uid] UNIQUE NONCLUSTERED 
 (
 	[Uid] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -2291,6 +2370,35 @@ CREATE TABLE [dbo].[UserUnsubscribedLists](
 ) ON [PRIMARY]
 
 GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[VerticalTracks](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Name] [varchar](500) NOT NULL,
+	[DisplayOrder] [int] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_VerticalTracks] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_VerticalTracks_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
 CREATE NONCLUSTERED INDEX [IDX_Activities_ProjectTYpeId] ON [dbo].[Activities]
 (
 	[ProjectTypeId] ASC
@@ -2338,6 +2446,16 @@ CREATE NONCLUSTERED INDEX [IDX_Collaborators_FirstName_LastNames] ON [dbo].[Coll
 	[LastNames] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
+CREATE NONCLUSTERED INDEX [IDX_ConferenceHorizontalTracks_ConferenceId] ON [dbo].[ConferenceHorizontalTracks]
+(
+	[ConferenceId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_ConferenceHorizontalTracks_HorizontalTrackId] ON [dbo].[ConferenceHorizontalTracks]
+(
+	[HorizontalTrackId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
 CREATE NONCLUSTERED INDEX [IDX_ConferenceParticipantRoles_IsLecturer] ON [dbo].[ConferenceParticipantRoles]
 (
 	[IsLecturer] ASC
@@ -2347,6 +2465,24 @@ CREATE NONCLUSTERED INDEX [IDX_Conferences_EditionId_RoomId] ON [dbo].[Conferenc
 (
 	[EditionId] ASC,
 	[RoomId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_ConferenceVerticalTracks_ConferenceId] ON [dbo].[ConferenceVerticalTracks]
+(
+	[ConferenceId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_ConferenceVerticalTracks_VerticalTrackId] ON [dbo].[ConferenceVerticalTracks]
+(
+	[VerticalTrackId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+CREATE NONCLUSTERED INDEX [IDX_HorizontalTracks_Name] ON [dbo].[HorizontalTracks]
+(
+	[Name] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
 CREATE NONCLUSTERED INDEX [IDX_InterestGroups_ProjectTypeId] ON [dbo].[InterestGroups]
@@ -2518,6 +2654,14 @@ GO
 CREATE NONCLUSTERED INDEX [IDX_Users_UserName] ON [dbo].[Users]
 (
 	[UserName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+CREATE NONCLUSTERED INDEX [IDX_VerticalTracks_Name] ON [dbo].[VerticalTracks]
+(
+	[Name] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[Activities]  WITH CHECK ADD  CONSTRAINT [FK_ProjectTypes_Activities_ProjectTypeId] FOREIGN KEY([ProjectTypeId])
@@ -2810,6 +2954,26 @@ REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[CollaboratorTypes] CHECK CONSTRAINT [FK_Users_CollaboratorTypes_UpdateUserId]
 GO
+ALTER TABLE [dbo].[ConferenceHorizontalTracks]  WITH CHECK ADD  CONSTRAINT [FK_Conferences_ConferenceHorizontalTracks_ConferenceId] FOREIGN KEY([ConferenceId])
+REFERENCES [dbo].[Conferences] ([Id])
+GO
+ALTER TABLE [dbo].[ConferenceHorizontalTracks] CHECK CONSTRAINT [FK_Conferences_ConferenceHorizontalTracks_ConferenceId]
+GO
+ALTER TABLE [dbo].[ConferenceHorizontalTracks]  WITH CHECK ADD  CONSTRAINT [FK_HorizontalTracks_ConferenceHorizontalTracks_HorizontalTrackId] FOREIGN KEY([HorizontalTrackId])
+REFERENCES [dbo].[HorizontalTracks] ([Id])
+GO
+ALTER TABLE [dbo].[ConferenceHorizontalTracks] CHECK CONSTRAINT [FK_HorizontalTracks_ConferenceHorizontalTracks_HorizontalTrackId]
+GO
+ALTER TABLE [dbo].[ConferenceHorizontalTracks]  WITH CHECK ADD  CONSTRAINT [FK_Users_ConferenceHorizontalTracks_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ConferenceHorizontalTracks] CHECK CONSTRAINT [FK_Users_ConferenceHorizontalTracks_CreateUserId]
+GO
+ALTER TABLE [dbo].[ConferenceHorizontalTracks]  WITH CHECK ADD  CONSTRAINT [FK_Users_ConferenceHorizontalTracks_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ConferenceHorizontalTracks] CHECK CONSTRAINT [FK_Users_ConferenceHorizontalTracks_UpdateUserId]
+GO
 ALTER TABLE [dbo].[ConferenceParticipantRoles]  WITH CHECK ADD  CONSTRAINT [FK_Users_ConferenceParticipantRoles_CreateUserId] FOREIGN KEY([CreateUserId])
 REFERENCES [dbo].[Users] ([Id])
 GO
@@ -2925,6 +3089,26 @@ REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[ConferenceTitles] CHECK CONSTRAINT [FK_Users_ConferenceTitles_UpdateUserId]
 GO
+ALTER TABLE [dbo].[ConferenceVerticalTracks]  WITH CHECK ADD  CONSTRAINT [FK_Conferences_ConferenceVerticalTracks_ConferenceId] FOREIGN KEY([ConferenceId])
+REFERENCES [dbo].[Conferences] ([Id])
+GO
+ALTER TABLE [dbo].[ConferenceVerticalTracks] CHECK CONSTRAINT [FK_Conferences_ConferenceVerticalTracks_ConferenceId]
+GO
+ALTER TABLE [dbo].[ConferenceVerticalTracks]  WITH CHECK ADD  CONSTRAINT [FK_Users_ConferenceVerticalTracks_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ConferenceVerticalTracks] CHECK CONSTRAINT [FK_Users_ConferenceVerticalTracks_CreateUserId]
+GO
+ALTER TABLE [dbo].[ConferenceVerticalTracks]  WITH CHECK ADD  CONSTRAINT [FK_Users_ConferenceVerticalTracks_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ConferenceVerticalTracks] CHECK CONSTRAINT [FK_Users_ConferenceVerticalTracks_UpdateUserId]
+GO
+ALTER TABLE [dbo].[ConferenceVerticalTracks]  WITH CHECK ADD  CONSTRAINT [FK_VerticalTracks_ConferenceVerticalTracks_VerticalTrackId] FOREIGN KEY([VerticalTrackId])
+REFERENCES [dbo].[VerticalTracks] ([Id])
+GO
+ALTER TABLE [dbo].[ConferenceVerticalTracks] CHECK CONSTRAINT [FK_VerticalTracks_ConferenceVerticalTracks_VerticalTrackId]
+GO
 ALTER TABLE [dbo].[Countries]  WITH CHECK ADD  CONSTRAINT [FK_Languages_Countries_DefaultLanguageId] FOREIGN KEY([DefaultLanguageId])
 REFERENCES [dbo].[Languages] ([Id])
 GO
@@ -2979,6 +3163,16 @@ ALTER TABLE [dbo].[Holdings]  WITH CHECK ADD  CONSTRAINT [FK_Users_Holdings_Upda
 REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[Holdings] CHECK CONSTRAINT [FK_Users_Holdings_UpdateUserId]
+GO
+ALTER TABLE [dbo].[HorizontalTracks]  WITH CHECK ADD  CONSTRAINT [FK_Users_HorizontalTracks_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[HorizontalTracks] CHECK CONSTRAINT [FK_Users_HorizontalTracks_CreateUserId]
+GO
+ALTER TABLE [dbo].[HorizontalTracks]  WITH CHECK ADD  CONSTRAINT [FK_Users_HorizontalTracks_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[HorizontalTracks] CHECK CONSTRAINT [FK_Users_HorizontalTracks_UpdateUserId]
 GO
 ALTER TABLE [dbo].[InterestGroups]  WITH CHECK ADD  CONSTRAINT [FK_ProjectTypes_InterestGroups_ProjectTypeId] FOREIGN KEY([ProjectTypeId])
 REFERENCES [dbo].[ProjectTypes] ([Id])
@@ -3709,4 +3903,14 @@ ALTER TABLE [dbo].[UserUnsubscribedLists]  WITH CHECK ADD  CONSTRAINT [FK_Users_
 REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[UserUnsubscribedLists] CHECK CONSTRAINT [FK_Users_UserUnsubscribedLists_UserId]
+GO
+ALTER TABLE [dbo].[VerticalTracks]  WITH CHECK ADD  CONSTRAINT [FK_Users_VerticalTracks_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[VerticalTracks] CHECK CONSTRAINT [FK_Users_VerticalTracks_CreateUserId]
+GO
+ALTER TABLE [dbo].[VerticalTracks]  WITH CHECK ADD  CONSTRAINT [FK_Users_VerticalTracks_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[VerticalTracks] CHECK CONSTRAINT [FK_Users_VerticalTracks_UpdateUserId]
 GO
