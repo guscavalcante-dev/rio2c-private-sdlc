@@ -21,6 +21,7 @@ namespace PlataformaRio2C.Domain.Dtos
     public class ConferenceDto
     {
         public Conference Conference { get; set; }
+        public EditionEvent EditionEvent { get; set; }
         public RoomDto RoomDto { get; set; }
 
         public IEnumerable<ConferenceTitleDto> ConferenceTitleDtos { get; set; }

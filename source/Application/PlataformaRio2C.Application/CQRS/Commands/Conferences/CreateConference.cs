@@ -45,18 +45,19 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<EditionEvent> EditionEvents { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="CreateConference"/> class.</summary>
-        /// <param name="entity">The entity.</param>
+        /// <param name="conferenceDto">The conference dto.</param>
         /// <param name="editionEvents">The edition events.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         public CreateConference(
-            ConferenceDto entity,
+            ConferenceDto conferenceDto,
             List<EditionEvent> editionEvents,
             List<LanguageDto> languagesDtos)
         {
-            this.Date = entity?.Conference?.StartDate.Date;
-            this.StartTime = entity?.Conference?.StartDate.ToShortTimeString();
-            this.EndTime = entity?.Conference?.EndDate.ToShortTimeString();
-            this.UpdateTitles(entity, languagesDtos);
+            this.EditionEventUid = conferenceDto?.EditionEvent?.Uid;
+            this.Date = conferenceDto?.Conference?.StartDate.Date;
+            this.StartTime = conferenceDto?.Conference?.StartDate.ToShortTimeString();
+            this.EndTime = conferenceDto?.Conference?.EndDate.ToShortTimeString();
+            this.UpdateTitles(conferenceDto, languagesDtos);
             this.UpdateDropdowns(editionEvents);
         }
 
@@ -75,14 +76,14 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         #region Private Methods
 
         /// <summary>Updates the titles.</summary>
-        /// <param name="entity">The entity.</param>
+        /// <param name="conferenceDto">The conference dto.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
-        private void UpdateTitles(ConferenceDto entity, List<LanguageDto> languagesDtos)
+        private void UpdateTitles(ConferenceDto conferenceDto, List<LanguageDto> languagesDtos)
         {
             this.Titles = new List<ConferenceTitleBaseCommand>();
             foreach (var languageDto in languagesDtos)
             {
-                var conferenceTitle = entity?.ConferenceTitleDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
+                var conferenceTitle = conferenceDto?.ConferenceTitleDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
                 this.Titles.Add(conferenceTitle != null ? new ConferenceTitleBaseCommand(conferenceTitle) :
                                                           new ConferenceTitleBaseCommand(languageDto));
             }

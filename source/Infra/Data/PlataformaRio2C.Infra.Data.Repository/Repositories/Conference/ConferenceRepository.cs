@@ -214,6 +214,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Select(c => new ConferenceDto
                             {
                                 Conference = c,
+                                EditionEvent = c.EditionEvent,
                                 ConferenceTitleDtos = c.ConferenceTitles.Where(ct => !ct.IsDeleted).Select(ct => new ConferenceTitleDto
                                 {
                                     ConferenceTitle = ct,

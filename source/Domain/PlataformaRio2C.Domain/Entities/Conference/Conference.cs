@@ -72,6 +72,7 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>Updates the main information.</summary>
+        /// <param name="editionEvent">The edition event.</param>
         /// <param name="date">The date.</param>
         /// <param name="startTime">The start time.</param>
         /// <param name="endTime">The end time.</param>
@@ -79,6 +80,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="conferenceSynopses">The conference synopses.</param>
         /// <param name="userId">The user identifier.</param>
         public void UpdateMainInformation(
+            EditionEvent editionEvent,
             DateTime date,
             string startTime,
             string endTime,
@@ -86,6 +88,8 @@ namespace PlataformaRio2C.Domain.Entities
             List<ConferenceSynopsis> conferenceSynopses,
             int userId)
         {
+            this.EditionEventId = editionEvent?.Id ?? 0;
+            this.EditionEvent = editionEvent;
             this.StartDate = date.JoinDateAndTime(startTime, true);
             this.EndDate = date.JoinDateAndTime(endTime, true);
             this.SynchronizeConferenceTitles(conferenceTitles, userId);

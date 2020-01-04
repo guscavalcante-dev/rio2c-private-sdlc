@@ -41,6 +41,9 @@
                         @synopsisDto.Value
                     </div>
                 }*@
+                <div class="kt-widget__subhead">
+                    <a onclick="return false;"><i class="flaticon-placeholder"></i>@Model.EditionEvent.Name</a>
+                </div>
                 <div class="kt-widget__info" style="display: block;">
                     @{
                         var synopsisDto = Model.GetConferenceSynopsisDtoByLanguageCode(ViewBag.UserInterfaceLanguage);

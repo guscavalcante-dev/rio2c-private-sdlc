@@ -4,13 +4,14 @@
 // Created          : 01-02-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-03-2020
+// Last Modified On : 01-04-2020
 // ***********************************************************************
 // <copyright file="UpdateConferenceMainInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,20 +26,24 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>UpdateConferenceMainInformationCommandHandler</summary>
     public class UpdateConferenceMainInformationCommandHandler : ConferenceBaseCommandHandler, IRequestHandler<UpdateConferenceMainInformation, AppValidationResult>
     {
+        private readonly IEditionEventRepository editionEventRepo;
         private readonly ILanguageRepository languageRepo;
 
         /// <summary>Initializes a new instance of the <see cref="UpdateConferenceMainInformationCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="conferenceRepository">The conference repository.</param>
+        /// <param name="editionEventRepository">The edition event repository.</param>
         /// <param name="languageRepository">The language repository.</param>
         public UpdateConferenceMainInformationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IConferenceRepository conferenceRepository,
+            IEditionEventRepository editionEventRepository,
             ILanguageRepository languageRepository)
             : base(eventBus, uow, conferenceRepository)
         {
+            this.editionEventRepo = editionEventRepository;
             this.languageRepo = languageRepository;
         }
 
@@ -65,6 +70,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
 
             conference.UpdateMainInformation(
+                await this.editionEventRepo.GetAsync(cmd.EditionEventUid ?? Guid.Empty),
                 cmd.Date.Value,
                 cmd.StartTime,
                 cmd.EndTime,

@@ -26,17 +26,17 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<ConferenceSynopsisBaseCommand> Synopsis { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateConferenceMainInformation"/> class.</summary>
-        /// <param name="entity">The entity.</param>
+        /// <param name="conferenceDto">The conference dto.</param>
         /// <param name="editionEvents">The edition events.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         public UpdateConferenceMainInformation(
-            ConferenceDto entity,
+            ConferenceDto conferenceDto,
             List<EditionEvent> editionEvents,
             List<LanguageDto> languagesDtos)
-            : base(entity, editionEvents, languagesDtos)
+            : base(conferenceDto, editionEvents, languagesDtos)
         {
-            this.ConferenceUid = entity?.Conference?.Uid ?? Guid.Empty;
-            this.UpdateSynopsis(entity, languagesDtos);
+            this.ConferenceUid = conferenceDto?.Conference?.Uid ?? Guid.Empty;
+            this.UpdateSynopsis(conferenceDto, languagesDtos);
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateConferenceMainInformation"/> class.</summary>
@@ -47,14 +47,14 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         #region Private Methods
 
         /// <summary>Updates the synopsis.</summary>
-        /// <param name="entity">The entity.</param>
+        /// <param name="conferenceDto">The conference dto.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
-        private void UpdateSynopsis(ConferenceDto entity, List<LanguageDto> languagesDtos)
+        private void UpdateSynopsis(ConferenceDto conferenceDto, List<LanguageDto> languagesDtos)
         {
             this.Synopsis = new List<ConferenceSynopsisBaseCommand>();
             foreach (var languageDto in languagesDtos)
             {
-                var conferenceSynopsis = entity?.ConferenceSynopsisDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
+                var conferenceSynopsis = conferenceDto?.ConferenceSynopsisDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
                 this.Synopsis.Add(conferenceSynopsis != null ? new ConferenceSynopsisBaseCommand(conferenceSynopsis) :
                                                                new ConferenceSynopsisBaseCommand(languageDto));
             }
