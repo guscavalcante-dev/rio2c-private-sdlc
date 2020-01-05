@@ -42,7 +42,14 @@
                     </div>
                 }*@
                 <div class="kt-widget__subhead">
-                    <a onclick="return false;"><i class="flaticon-placeholder"></i>@Model.EditionEvent.Name</a>
+                    <a onclick="return false;"><i class="flaticon-event-calendar-symbol"></i>@Model.EditionEvent.Name</a>
+                    @{
+                        var roomDto = Model.RoomDto?.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage);
+                    }
+                    @if (roomDto != null)
+                    {
+                        <a onclick="return false;"><i class="flaticon-placeholder"></i>@roomDto.Value</a>
+                    }
                 </div>
                 <div class="kt-widget__info" style="display: block;">
                     @{

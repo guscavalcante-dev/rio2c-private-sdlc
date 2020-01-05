@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-04-2020
+// Last Modified On : 01-05-2020
 // ***********************************************************************
 // <copyright file="ConferenceRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -215,6 +215,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             {
                                 Conference = c,
                                 EditionEvent = c.EditionEvent,
+                                RoomDto = new RoomDto
+                                {
+                                    Room = c.Room,
+                                    RoomNameBaseDtos = c.Room.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameBaseDto
+                                    {
+                                        Id = rn.Id,
+                                        Uid = rn.Uid,
+                                        Value = rn.Value,
+                                        LanguageDto = new LanguageDto
+                                        {
+                                            Id = rn.Language.Id,
+                                            Uid = rn.Language.Uid,
+                                            Code = rn.Language.Code
+                                        }
+                                    })
+                                },
                                 ConferenceTitleDtos = c.ConferenceTitles.Where(ct => !ct.IsDeleted).Select(ct => new ConferenceTitleDto
                                 {
                                     ConferenceTitle = ct,

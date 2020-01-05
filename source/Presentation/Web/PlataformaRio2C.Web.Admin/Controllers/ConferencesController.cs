@@ -41,7 +41,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         private readonly IConferenceRepository conferenceRepo;
         private readonly IConferenceParticipantRoleRepository conferenceParticipantRoleRepo;
         private readonly IEditionEventRepository editionEventRepo;
-        private readonly ICollaboratorRepository collaboratorRepo;
         private readonly ILanguageRepository languageRepo;
         private readonly IVerticalTrackRepository verticalTrackRepo;
         private readonly IHorizontalTrackRepository horizontalTrackRepo;
@@ -53,7 +52,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="conferenceRepository">The conference repository.</param>
         /// <param name="conferenceParticipantRoleRepository">The conference participant role repository.</param>
         /// <param name="editionEventRepository">The edition event repository.</param>
-        /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="languageRepository">The language repository.</param>
         /// <param name="verticalTrackRepository">The vertical track repository.</param>
         /// <param name="horizontalTrackRepository">The horizontal track repository.</param>
@@ -64,7 +62,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             IConferenceRepository conferenceRepository,
             IConferenceParticipantRoleRepository conferenceParticipantRoleRepository,
             IEditionEventRepository editionEventRepository,
-            ICollaboratorRepository collaboratorRepository,
             ILanguageRepository languageRepository,
             IVerticalTrackRepository verticalTrackRepository,
             IHorizontalTrackRepository horizontalTrackRepository,
@@ -74,7 +71,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             this.conferenceRepo = conferenceRepository;
             this.conferenceParticipantRoleRepo = conferenceParticipantRoleRepository;
             this.editionEventRepo = editionEventRepository;
-            this.collaboratorRepo = collaboratorRepository;
             this.languageRepo = languageRepository;
             this.verticalTrackRepo = verticalTrackRepository;
             this.horizontalTrackRepo = horizontalTrackRepository;
