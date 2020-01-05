@@ -312,13 +312,13 @@ namespace PlataformaRio2C.Application.TemplateDocuments
         /// <returns></returns>
         private Paragraph GetFormatPlatformInfo(ref PlataformaRio2CDocument document, Paragraph paragraph)
         {
+            #region Format
+
             var tableFormat = new PdfPTable(new float[] { 13, 87 });
             tableFormat.WidthPercentage = 100;
             tableFormat.HorizontalAlignment = Element.ALIGN_LEFT;
             tableFormat.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
             tableFormat.DefaultCell.BorderWidth = 0;
-
-            #region Format
 
             tableFormat.AddCell(new Phrase(new Chunk("Formato: ", _fontLabel)));
 
