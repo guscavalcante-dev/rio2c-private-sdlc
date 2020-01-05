@@ -1,17 +1,18 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Web.Admin
+// Assembly         : PlataformaRio2C.Infra.Report
 // Author           : William Sergio Almado Junior
 // Created          : 12-27-2019
 //
-// Last Modified By : William Sergio Almado Junior
-// Last Modified On : 12-27-2019
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 01-05-2020
 // ***********************************************************************
 // <copyright file="TableStyles.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-namespace PlataformaRio2C.Infra.Report
+
+namespace PlataformaRio2C.Infra.Report.Models
 {
     /// <summary>
     /// Estilos para tabela

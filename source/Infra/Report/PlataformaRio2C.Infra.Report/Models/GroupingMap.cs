@@ -1,22 +1,22 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Web.Admin
+// Assembly         : PlataformaRio2C.Infra.Report
 // Author           : William Sergio Almado Junior
 // Created          : 12-27-2019
 //
-// Last Modified By : William Sergio Almado Junior
-// Last Modified On : 12-27-2019
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 01-05-2020
 // ***********************************************************************
 // <copyright file="GroupingMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using iTextSharp.text.pdf;
 
-namespace PlataformaRio2C.Infra.Report
+namespace PlataformaRio2C.Infra.Report.Models
 {
     /// <summary>
     /// Mapeia o agrupamento em primeiro nível da coleção especificada no método SETDocument.AddTable()
@@ -37,7 +37,6 @@ namespace PlataformaRio2C.Infra.Report
         /// Índice das colunas que irão exibir os somatórios
         /// </summary>
         public uint[] SubtotalColumnIndexes { get; private set; }
-
 
         internal Dictionary<uint, ColumnSubtotal> SubTotals { get; private set; }
 
@@ -64,6 +63,7 @@ namespace PlataformaRio2C.Infra.Report
                 SubTotals.Add(SubtotalColumnIndexes[i], new ColumnSubtotal() { ColumnIndex = i });
         }
 
+        /// <summary>Resets the sub totals.</summary>
         internal void ResetSubTotals()
         {
             foreach (var subtotal in SubTotals)
@@ -71,19 +71,26 @@ namespace PlataformaRio2C.Infra.Report
         }
     }
 
+    /// <summary>ColumnSubtotal</summary>
     internal class ColumnSubtotal
     {
         public uint ColumnIndex { get; set; }
-
         public ColumnMap ColumnMap { get; set; }
-
         public PropertyInfo ColumnProperty { get; set; }
-
         public decimal Subtotal { get; set; }
     }
 
+    /// <summary>GroupedTableEvent</summary>
     internal class GroupedTableEvent : IPdfPTableEvent
     {
+        /// <summary>Tables the layout.</summary>
+        /// <param name="table">The table.</param>
+        /// <param name="widths">The widths.</param>
+        /// <param name="heights">The heights.</param>
+        /// <param name="headerRows">The header rows.</param>
+        /// <param name="rowStart">The row start.</param>
+        /// <param name="canvases">The canvases.</param>
+        /// <exception cref="NotImplementedException"></exception>
         public void TableLayout(PdfPTable table, float[][] widths, float[] heights, int headerRows, int rowStart, PdfContentByte[] canvases)
         {
             throw new NotImplementedException();

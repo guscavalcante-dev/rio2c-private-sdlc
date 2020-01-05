@@ -51,7 +51,7 @@
     <Compile Include="Models\TableStyles.cs" />
     <Compile Include="Models\TemplateBase.cs" />
     <Compile Include="Models\TemplateBlank.cs" />
-    <Compile Include="PdfCellChipLayout.cs" />
+    <Compile Include="Models\PdfCellChipLayout.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -70,12 +70,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\bg-footer-template-document-project.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\bg-template-document-project.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

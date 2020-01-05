@@ -1,32 +1,30 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Web.Admin
+// Assembly         : PlataformaRio2C.Infra.Report
 // Author           : William Sergio Almado Junior
 // Created          : 12-27-2019
 //
-// Last Modified By : William Sergio Almado Junior
-// Last Modified On : 12-27-2019
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 01-05-2020
 // ***********************************************************************
-// <copyright file="Images" company="Softo">
+// <copyright file="Images.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using iTextSharp.text;
-using PlataformaRio2C.Infra.Report.Properties;
 using System;
 using System.IO;
+using iTextSharp.text;
 
-namespace PlataformaRio2C.Infra.Report
+namespace PlataformaRio2C.Infra.Report.Models
 {
+    /// <summary>Images</summary>
     public static class Images
     {
         private static Image _background;
-
         private static Image _backgroundFooter;
 
-        /// <summary>
-        /// B
-        /// </summary>
+        /// <summary>Gets the background first page.</summary>
+        /// <value>The background first page.</value>
         public static Image BackgroundFirstPage
         {
             get
@@ -46,6 +44,8 @@ namespace PlataformaRio2C.Infra.Report
             }
         }
 
+        /// <summary>Gets the background footer.</summary>
+        /// <value>The background footer.</value>
         public static Image BackgroundFooter
         {
             get

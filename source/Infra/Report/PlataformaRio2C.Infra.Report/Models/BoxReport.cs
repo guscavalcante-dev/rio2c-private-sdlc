@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Web.Admin
+// Assembly         : PlataformaRio2C.Infra.Report
 // Author           : William Sergio Almado Junior
 // Created          : 12-27-2019
 //
-// Last Modified By : William Sergio Almado Junior
-// Last Modified On : 12-27-2019
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 01-05-2020
 // ***********************************************************************
-// <copyright file="ColumnMapt.js" company="Softo">
+// <copyright file="BoxReport.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -14,7 +14,7 @@
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 
-namespace PlataformaRio2C.Infra.Report
+namespace PlataformaRio2C.Infra.Report.Models
 {
     /// <summary>
     /// Classe responsável por "desenhar" bordas, observação: todas as bordas devem possuir a mesma espessura.
@@ -136,11 +136,9 @@ namespace PlataformaRio2C.Infra.Report
             return Custom(cell, borderWidth, borderWidth, borderWidth, borderWidth);
         }
 
-        /// <summary>
-        /// Desenha bordas em todos os lados
-        /// </summary>
-        /// <param name="cell"></param>
-        /// <param name="borderWidth"></param>
+        /// <summary>Desenha bordas em todos os lados</summary>
+        /// <param name="image">The image.</param>
+        /// <param name="borderWidth">Width of the border.</param>
         /// <returns></returns>
         public static Image Closed(Image image, float borderWidth)
         {
@@ -168,7 +166,6 @@ namespace PlataformaRio2C.Infra.Report
         {
             return Custom(cell, 0, borderWidth, borderWidth, borderWidth);
         }
-
 
         /// <summary>
         /// Desenha a borda da Esquerda

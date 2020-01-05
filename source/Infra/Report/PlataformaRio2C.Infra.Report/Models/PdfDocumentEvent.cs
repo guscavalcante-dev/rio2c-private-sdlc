@@ -1,33 +1,39 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Web.Admin
+// Assembly         : PlataformaRio2C.Infra.Report
 // Author           : William Sergio Almado Junior
 // Created          : 12-27-2019
 //
-// Last Modified By : William Sergio Almado Junior
-// Last Modified On : 12-27-2019
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 01-05-2020
 // ***********************************************************************
-// <copyright file="PDFDocumentEvent" company="Softo">
+// <copyright file="PDFDocumentEvent.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using System;
 
-namespace PlataformaRio2C.Infra.Report
+namespace PlataformaRio2C.Infra.Report.Models
 {
+    /// <summary>PDFDocumentEvent</summary>
     public class PDFDocumentEvent : PdfPageEventHelper
     {
         private readonly TemplateBase Template;
         PdfTemplate pdfTemplate;
         BaseFont basefont;
 
+        /// <summary>Initializes a new instance of the <see cref="PDFDocumentEvent"/> class.</summary>
+        /// <param name="template">The template.</param>
         public PDFDocumentEvent(TemplateBase template)
         {
             Template = template;
         }
 
+        /// <summary>Called when [start page].</summary>
+        /// <param name="writer">The writer.</param>
+        /// <param name="document">The document.</param>
         public override void OnStartPage(PdfWriter writer, Document document)
         {
             base.OnStartPage(writer, document);
@@ -52,9 +58,14 @@ namespace PlataformaRio2C.Infra.Report
                 //imgFooter.Transparency = new int[4];
                 document.Add(imgFooter);
             }
-
         }
 
+        /// <summary>Called when [end page].</summary>
+        /// <param name="writer"></param>
+        /// <param name="document"></param>
+        /// Called when a page is finished, just before being written to the document.
+        /// @param writer the <CODE>PdfWriter</CODE> for this document
+        /// @param document the document
         public override void OnEndPage(PdfWriter writer, Document document)
         {
             base.OnEndPage(writer, document);
@@ -82,20 +93,23 @@ namespace PlataformaRio2C.Infra.Report
             writer.DirectContent.BeginText();
             writer.DirectContent.SetFontAndSize(basefont, 6);
             writer.DirectContent.ShowTextAligned(
-                                    PdfContentByte.ALIGN_RIGHT,
-                                    "Impresso em " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"),
-                                    pageSize.GetRight(40),
-                                    pageSize.GetBottom(25), 0);
+                PdfContentByte.ALIGN_RIGHT,
+                "Impresso em " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"),
+                pageSize.GetRight(40),
+                pageSize.GetBottom(25), 0);
 
             writer.DirectContent.SetFontAndSize(basefont, 6);
             writer.DirectContent.ShowTextAligned(
-                                    PdfContentByte.ALIGN_CENTER,
-                                    (Template.HeaderAddendum == null ? "" : Template.HeaderAddendum),
-                                    pageSize.Width / 2,
-                                    pageSize.GetBottom(25), 0);
+                PdfContentByte.ALIGN_CENTER,
+                (Template.HeaderAddendum == null ? "" : Template.HeaderAddendum),
+                pageSize.Width / 2,
+                pageSize.GetBottom(25), 0);
             writer.DirectContent.EndText();
         }
 
+        /// <summary>Called when [close document].</summary>
+        /// <param name="writer">The writer.</param>
+        /// <param name="document">The document.</param>
         public override void OnCloseDocument(PdfWriter writer, Document document)
         {
             base.OnCloseDocument(writer, document);
@@ -110,5 +124,4 @@ namespace PlataformaRio2C.Infra.Report
             }
         }
     }
-
 }
