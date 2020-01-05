@@ -360,7 +360,7 @@ INSERT [dbo].[EditionEvents] ([Id], [Uid], [EditionId], [Name], [StartDate], [En
 GO
 INSERT [dbo].[EditionEvents] ([Id], [Uid], [EditionId], [Name], [StartDate], [EndDate], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (3, N'9c3bbba8-5128-4b01-b2c9-e9f14273a059', 2, N'Mercado', CAST(N'2020-05-05 00:00:00.000' AS DateTime), CAST(N'2020-05-08 23:59:59.000' AS DateTime), 0, CAST(N'2020-01-04 12:39:30.000' AS DateTime), 1, CAST(N'2020-01-04 12:39:30.000' AS DateTime), 1)
 GO
-INSERT [dbo].[EditionEvents] ([Id], [Uid], [EditionId], [Name], [StartDate], [EndDate], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (4, N'd1828ff4-86cb-43de-82af-1fa38501d214', 2, N'Festvália', CAST(N'2020-05-09 00:00:00.000' AS DateTime), CAST(N'2020-05-10 23:59:59.000' AS DateTime), 0, CAST(N'2020-01-04 12:39:30.000' AS DateTime), 1, CAST(N'2020-01-04 12:39:30.000' AS DateTime), 1)
+INSERT [dbo].[EditionEvents] ([Id], [Uid], [EditionId], [Name], [StartDate], [EndDate], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (4, N'd1828ff4-86cb-43de-82af-1fa38501d214', 2, N'Festvalia®', CAST(N'2020-05-09 00:00:00.000' AS DateTime), CAST(N'2020-05-10 23:59:59.000' AS DateTime), 0, CAST(N'2020-01-04 12:39:30.000' AS DateTime), 1, CAST(N'2020-01-04 12:39:30.000' AS DateTime), 1)
 GO
 SET IDENTITY_INSERT [dbo].[EditionEvents] OFF
 GO
