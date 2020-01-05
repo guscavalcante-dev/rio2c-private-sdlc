@@ -1,5 +1,12 @@
 ﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateConferenceMainInformation
 @Html.Partial("Modals/_CreateForm", Model)
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.RoomUid, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.RoomUid, new SelectList(Model.Rooms, "Uid", "Name", Model.RoomUid), Labels.Select + "...", new { @class = "form-control enable-select2" })
+        @Html.ValidationMessageFor(m => m.RoomUid, "", new { @class = "text-danger" })
+    </div>
+</div>
 <div class="kt-section pt-2">
     <h3 class="kt-section__title mb-0">@Labels.Synopsis</h3>
     @Html.ValidationMessage("Synopsis", new { @class = "text-danger" })

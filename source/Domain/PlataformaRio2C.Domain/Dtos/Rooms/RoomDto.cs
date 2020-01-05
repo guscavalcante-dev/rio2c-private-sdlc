@@ -4,7 +4,7 @@
 // Created          : 12-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-27-2019
+// Last Modified On : 01-05-2020
 // ***********************************************************************
 // <copyright file="RoomDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System.Collections.Generic;
+using System.Linq;
 using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Domain.Dtos
@@ -20,11 +21,25 @@ namespace PlataformaRio2C.Domain.Dtos
     public class RoomDto
     {
         public Room Room { get; set; }
-        public IEnumerable<RoomName> RoomNames { get; set; }
+        public IEnumerable<RoomNameBaseDto> RoomNameBaseDtos { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="RoomDto"/> class.</summary>
         public RoomDto()
         {
+        }
+
+        /// <summary>Gets the room name by language code.</summary>
+        /// <param name="languageCode">The language code.</param>
+        /// <returns></returns>
+        public RoomNameBaseDto GetRoomNameByLanguageCode(string languageCode)
+        {
+            if (string.IsNullOrEmpty(languageCode))
+            {
+                languageCode = "pt-br";
+            }
+
+            return this.RoomNameBaseDtos?.FirstOrDefault(rn => rn.LanguageDto.Code == languageCode) ??
+                   this.RoomNameBaseDtos?.FirstOrDefault(rn => rn.LanguageDto.Code == "pt-br");
         }
     }
 }

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-04-2020
+// Last Modified On : 01-05-2020
 // ***********************************************************************
 // <copyright file="Conference.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -76,6 +76,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="date">The date.</param>
         /// <param name="startTime">The start time.</param>
         /// <param name="endTime">The end time.</param>
+        /// <param name="room">The room.</param>
         /// <param name="conferenceTitles">The conference titles.</param>
         /// <param name="conferenceSynopses">The conference synopses.</param>
         /// <param name="userId">The user identifier.</param>
@@ -84,6 +85,7 @@ namespace PlataformaRio2C.Domain.Entities
             DateTime date,
             string startTime,
             string endTime,
+            Room room,
             List<ConferenceTitle> conferenceTitles,
             List<ConferenceSynopsis> conferenceSynopses,
             int userId)
@@ -92,6 +94,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.EditionEvent = editionEvent;
             this.StartDate = date.JoinDateAndTime(startTime, true);
             this.EndDate = date.JoinDateAndTime(endTime, true);
+            this.RoomId = room?.Id;
+            this.Room = room;
             this.SynchronizeConferenceTitles(conferenceTitles, userId);
             this.SynchronizeConferenceSynopses(conferenceSynopses, userId);
 

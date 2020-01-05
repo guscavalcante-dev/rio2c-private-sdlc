@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Domain
+// Assembly         : PlataformaRio2C.Infra.Data
 // Author           : Rafael Dantas Ruiz
 // Created          : 01-04-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-04-2020
+// Last Modified On : 01-05-2020
 // ***********************************************************************
 // <copyright file="EditionEventRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

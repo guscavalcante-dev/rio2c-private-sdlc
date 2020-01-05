@@ -4,7 +4,7 @@
 // Created          : 12-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-04-2020
+// Last Modified On : 01-05-2020
 // ***********************************************************************
 // <copyright file="ConferencesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -45,6 +45,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         private readonly ILanguageRepository languageRepo;
         private readonly IVerticalTrackRepository verticalTrackRepo;
         private readonly IHorizontalTrackRepository horizontalTrackRepo;
+        private readonly IRoomRepository roomRepo;
 
         /// <summary>Initializes a new instance of the <see cref="ConferencesController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -56,6 +57,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="languageRepository">The language repository.</param>
         /// <param name="verticalTrackRepository">The vertical track repository.</param>
         /// <param name="horizontalTrackRepository">The horizontal track repository.</param>
+        /// <param name="roomRepository">The room repository.</param>
         public ConferencesController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
@@ -65,7 +67,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             ICollaboratorRepository collaboratorRepository,
             ILanguageRepository languageRepository,
             IVerticalTrackRepository verticalTrackRepository,
-            IHorizontalTrackRepository horizontalTrackRepository)
+            IHorizontalTrackRepository horizontalTrackRepository,
+            IRoomRepository roomRepository)
             : base(commandBus, identityController)
         {
             this.conferenceRepo = conferenceRepository;
@@ -75,6 +78,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             this.languageRepo = languageRepository;
             this.verticalTrackRepo = verticalTrackRepository;
             this.horizontalTrackRepo = horizontalTrackRepository;
+            this.roomRepo = roomRepository;
         }
 
         #region List
@@ -264,7 +268,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 cmd = new UpdateConferenceMainInformation(
                     mainInformationWidgetDto,
                     await this.editionEventRepo.FindAllByEditionIdAsync(this.EditionDto.Id),
-                    await this.languageRepo.FindAllDtosAsync());
+                    await this.languageRepo.FindAllDtosAsync(),
+                    await this.roomRepo.FindAllDtoByEditionIdAsync(this.EditionDto.Id),
+                    this.UserInterfaceLanguage);
             }
             catch (DomainException ex)
             {
@@ -317,7 +323,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd.UpdateDropdowns(
-                    await this.editionEventRepo.FindAllByEditionIdAsync(this.EditionDto.Id));
+                    await this.editionEventRepo.FindAllByEditionIdAsync(this.EditionDto.Id),
+                    await this.roomRepo.FindAllDtoByEditionIdAsync(this.EditionDto.Id),
+                    this.UserInterfaceLanguage);
 
                 return Json(new
                 {
