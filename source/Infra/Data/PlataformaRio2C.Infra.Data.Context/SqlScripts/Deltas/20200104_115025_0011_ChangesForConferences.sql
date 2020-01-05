@@ -335,19 +335,21 @@ GO
 SET IDENTITY_INSERT [dbo].[HorizontalTracks] ON 
 
 GO
-INSERT [dbo].[HorizontalTracks] ([Id], [Uid], [Name], [DisplayOrder], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (1, N'b6322dd2-997c-437c-8485-a9600d0a5979', N'Arte, Mídia e Entretenimento', 1, 0, CAST(N'2020-01-04 08:39:41.977' AS DateTime), 1, CAST(N'2020-01-04 08:39:41.977' AS DateTime), 1)
+INSERT [dbo].[HorizontalTracks] ([Id], [Uid], [Name], [DisplayOrder], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (1, N'b6322dd2-997c-437c-8485-a9600d0a5979', N'Arte, Mídia e Entretenimento | Art, Media & Entertainment', 1, 0, CAST(N'2020-01-04 08:39:41.977' AS DateTime), 1, CAST(N'2020-01-04 08:39:41.977' AS DateTime), 1)
 GO
-INSERT [dbo].[HorizontalTracks] ([Id], [Uid], [Name], [DisplayOrder], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (2, N'b6e2ed47-553a-4f92-84cf-b505148ea084', N'Smart Communities e Comunidades colaborativas', 2, 0, CAST(N'2020-01-04 08:39:41.977' AS DateTime), 1, CAST(N'2020-01-04 08:39:41.977' AS DateTime), 1)
+INSERT [dbo].[HorizontalTracks] ([Id], [Uid], [Name], [DisplayOrder], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (2, N'b6e2ed47-553a-4f92-84cf-b505148ea084', N'Comunidades colaborativas | Smart Communities', 2, 0, CAST(N'2020-01-04 08:39:41.977' AS DateTime), 1, CAST(N'2020-01-04 08:39:41.977' AS DateTime), 1)
 GO
-INSERT [dbo].[HorizontalTracks] ([Id], [Uid], [Name], [DisplayOrder], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (3, N'fe555e57-0396-4e64-bccd-e85b6ee28a05', N'Novo consumo e Tendências', 3, 0, CAST(N'2020-01-04 08:39:41.980' AS DateTime), 1, CAST(N'2020-01-04 08:39:41.980' AS DateTime), 1)
+INSERT [dbo].[HorizontalTracks] ([Id], [Uid], [Name], [DisplayOrder], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (3, N'fe555e57-0396-4e64-bccd-e85b6ee28a05', N'Novo consumo e Tendências | New Consumers & Trends', 3, 0, CAST(N'2020-01-04 08:39:41.980' AS DateTime), 1, CAST(N'2020-01-04 08:39:41.980' AS DateTime), 1)
 GO
-INSERT [dbo].[HorizontalTracks] ([Id], [Uid], [Name], [DisplayOrder], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (4, N'b098b966-2f41-499b-b867-f0783a4bb901', N'O futuro da sociedade e impacto socioambiental', 4, 0, CAST(N'2020-01-04 08:39:41.983' AS DateTime), 1, CAST(N'2020-01-04 08:39:41.983' AS DateTime), 1)
+INSERT [dbo].[HorizontalTracks] ([Id], [Uid], [Name], [DisplayOrder], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (4, N'b098b966-2f41-499b-b867-f0783a4bb901', N'O futuro da sociedade e impacto socioambiental | Cities of the future and the future of society', 4, 0, CAST(N'2020-01-04 08:39:41.983' AS DateTime), 1, CAST(N'2020-01-04 08:39:41.983' AS DateTime), 1)
 GO
-INSERT [dbo].[HorizontalTracks] ([Id], [Uid], [Name], [DisplayOrder], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (5, N'244b01ec-bb26-4b42-a3d9-7faf54965c92', N'Educação e Qualificação profissional', 5, 0, CAST(N'2020-01-04 08:39:41.983' AS DateTime), 1, CAST(N'2020-01-04 08:39:41.983' AS DateTime), 1)
+INSERT [dbo].[HorizontalTracks] ([Id], [Uid], [Name], [DisplayOrder], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (5, N'244b01ec-bb26-4b42-a3d9-7faf54965c92', N'Educação e Qualificação profissional | Education & Professional Capacity Building', 5, 0, CAST(N'2020-01-04 08:39:41.983' AS DateTime), 1, CAST(N'2020-01-04 08:39:41.983' AS DateTime), 1)
 GO
-INSERT [dbo].[HorizontalTracks] ([Id], [Uid], [Name], [DisplayOrder], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (6, N'1517e35c-d6f1-41e7-89c8-cb8bcf151007', N'Saúde, Alimentação e Bem-estar', 6, 0, CAST(N'2020-01-04 08:39:41.987' AS DateTime), 1, CAST(N'2020-01-04 08:39:41.987' AS DateTime), 1)
+INSERT [dbo].[HorizontalTracks] ([Id], [Uid], [Name], [DisplayOrder], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (6, N'1517e35c-d6f1-41e7-89c8-cb8bcf151007', N'Saúde, Alimentação e Bem-estar | Health, Food & Well-being', 6, 0, CAST(N'2020-01-04 08:39:41.987' AS DateTime), 1, CAST(N'2020-01-04 08:39:41.987' AS DateTime), 1)
 GO
-INSERT [dbo].[HorizontalTracks] ([Id], [Uid], [Name], [DisplayOrder], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (7, N'aeea9445-c123-425f-b16a-0d6f7bcfcd91', N'Transformação das empresas e empregos', 7, 0, CAST(N'2020-01-04 08:39:41.987' AS DateTime), 1, CAST(N'2020-01-04 08:39:41.987' AS DateTime), 1)
+INSERT [dbo].[HorizontalTracks] ([Id], [Uid], [Name], [DisplayOrder], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (7, N'aeea9445-c123-425f-b16a-0d6f7bcfcd91', N'Transformação das empresas e empregos | Transformations for Enterprises & Employment', 7, 0, CAST(N'2020-01-04 08:39:41.987' AS DateTime), 1, CAST(N'2020-01-04 08:39:41.987' AS DateTime), 1)
+GO
+INSERT [dbo].[HorizontalTracks] ([Id], [Uid], [Name], [DisplayOrder], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (8, N'32a90fdb-8362-41ba-a24f-a797e4c1e6ad', N'Energia & Impacto socio-ambiental | Energy & Socio-environmental impact', 8, 0, CAST(N'2020-01-04 08:39:41.987' AS DateTime), 1, CAST(N'2020-01-04 08:39:41.987' AS DateTime), 1)
 GO
 SET IDENTITY_INSERT [dbo].[HorizontalTracks] OFF
 GO
