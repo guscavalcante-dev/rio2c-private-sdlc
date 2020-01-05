@@ -364,3 +364,145 @@ INSERT [dbo].[EditionEvents] ([Id], [Uid], [EditionId], [Name], [StartDate], [En
 GO
 SET IDENTITY_INSERT [dbo].[EditionEvents] OFF
 GO
+
+SET IDENTITY_INSERT [dbo].[Rooms] ON 
+GO
+INSERT [dbo].[Rooms] ([Id], [Uid], [EditionId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (23, N'05966836-05d8-43bb-b6d7-07ff821a79d0', 2, 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[Rooms] ([Id], [Uid], [EditionId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (24, N'9028ae4f-cf02-4d26-b5df-1ad5f7435815', 2, 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[Rooms] ([Id], [Uid], [EditionId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (25, N'51d82768-676d-4359-82da-e2976cfc5b14', 2, 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[Rooms] ([Id], [Uid], [EditionId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (26, N'5ec2ed97-d371-4293-925e-95666d8322d5', 2, 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[Rooms] ([Id], [Uid], [EditionId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (27, N'f78e3a5e-8e69-4d5d-b7e7-f67c2efa0f1b', 2, 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[Rooms] ([Id], [Uid], [EditionId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (28, N'53f0283d-aca7-4a27-9956-1de7442cb247', 2, 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[Rooms] ([Id], [Uid], [EditionId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (29, N'e78bb9e4-a79e-422b-b4a9-a76f44e41a93', 2, 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[Rooms] ([Id], [Uid], [EditionId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (30, N'cba1ae4d-40b5-4499-bd13-d2dd2e318931', 2, 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[Rooms] ([Id], [Uid], [EditionId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (31, N'06a27b8e-cf49-43e5-a616-58fea1ba9ff2', 2, 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[Rooms] ([Id], [Uid], [EditionId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (32, N'9ac5bbb4-122a-4750-8523-af4f8c754484', 2, 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[Rooms] ([Id], [Uid], [EditionId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (33, N'7cbf77ba-44fd-4374-8e01-3bbf79e0e2d3', 2, 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[Rooms] ([Id], [Uid], [EditionId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (34, N'027152d9-426d-46a0-8412-daf0481c85f9', 2, 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[Rooms] ([Id], [Uid], [EditionId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (35, N'b45143ca-28a0-45db-b8c2-7125bf08608b', 2, 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[Rooms] ([Id], [Uid], [EditionId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (36, N'51dea3fc-b68d-40ba-aa6b-ac022763819a', 2, 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[Rooms] ([Id], [Uid], [EditionId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (37, N'4c78b744-cd51-4bfa-a333-fd1fbe60944e', 2, 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[Rooms] ([Id], [Uid], [EditionId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (38, N'6cb72337-5537-4d89-967d-fce04459d571', 2, 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[Rooms] ([Id], [Uid], [EditionId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (39, N'3c5fb334-f551-4bea-91b9-80fa0930e62d', 2, 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[Rooms] ([Id], [Uid], [EditionId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (40, N'c311f2eb-78f5-4fd3-99d2-9d268a03f579', 2, 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[Rooms] ([Id], [Uid], [EditionId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (41, N'cdc9ebae-0ccc-4bb3-9b0f-b404185c287c', 2, 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[Rooms] ([Id], [Uid], [EditionId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (42, N'53b56368-9bef-4719-b89e-1fabadbefb8f', 2, 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[Rooms] ([Id], [Uid], [EditionId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (43, N'6a02d5dd-32b3-42a1-8d56-fd36f1de93ed', 2, 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[Rooms] ([Id], [Uid], [EditionId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (44, N'c30c63ea-05b5-4b61-a08f-35e43963176e', 2, 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+SET IDENTITY_INSERT [dbo].[Rooms] OFF
+GO
+
+SET IDENTITY_INSERT [dbo].[RoomNames] ON 
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (45, N'cc520447-e1f0-4aec-bbab-f87d137a9997', 23, 1, N'BrainSpace®', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (46, N'bedf26d0-84d9-4923-82b9-bea4f230c2b4', 23, 2, N'BrainSpace®', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (47, N'f8edc6fd-0828-4fb9-97e7-60ccd6ee3f08', 24, 1, N'Brazilian Content', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (48, N'ff50245d-38d3-453f-9aeb-f3270123254e', 24, 2, N'Brazilian Content', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (49, N'74cdfc74-6468-4e91-a238-633f44fac449', 25, 1, N'House of Brands', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (50, N'44b0d5ff-3f44-45f4-bfc9-06df121753a6', 25, 2, N'Casa das Marcas', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (51, N'5ff60156-b5af-4665-8ec9-358944916f8f', 26, 1, N'Experience Room', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (52, N'75a3a4ad-7df5-44fc-b55c-798753a1c932', 26, 2, N'Experience Room', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (53, N'49a673d3-54c8-42ce-987e-51a3844a869f', 27, 1, N'Grand Salon RIO2C', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (54, N'c7152234-717c-4961-8d4c-518161a58ee5', 27, 2, N'Grande Sala RIO2C', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (55, N'1e2dfa78-77ed-431c-b02a-d6847ca561db', 28, 1, N'Audiovisual Lounge', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (56, N'bc65e402-e107-4e9d-acc0-38e6d31fd353', 28, 2, N'Lounge Audiovisual', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (57, N'07f33d03-2193-4f38-bd9b-6dc0b5c3c725', 29, 1, N'Music Lounge', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (58, N'7af37d13-8ec1-4993-a3d8-bf895506e464', 29, 2, N'Lounge da Música', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (59, N'c058b88e-6a28-4a5a-b407-882a8edc8211', 30, 1, N'Eletroacustic Stage', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (60, N'f32e9490-2f09-4aaa-98a0-5a9568e35440', 30, 2, N'Palco Eletroacústico', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (61, N'78dd9393-ae61-4785-b12d-ef3d96835684', 31, 1, N'Music Stage', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (62, N'f1ac0616-1424-4fdf-82ef-7454f2a36b7c', 31, 2, N'Palco Música', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (63, N'be424950-7495-43d6-94f6-7fa3fdb20a51', 32, 1, N'PitchingShow®', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (64, N'4cf556f2-9e0d-4d17-a129-b9fd08ec24c6', 32, 2, N'PitchingShow®', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (65, N'626581b6-1c20-4fc3-ae99-7960b3a9f870', 33, 1, N'Audiovisual Room', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (66, N'28bf7577-868d-479d-8a51-1922b7191dd4', 33, 2, N'Sala de Audiovisual', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (67, N'dffd0ee1-eb24-4247-b45f-348c866f31a6', 34, 1, N'Innovation Room', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (68, N'1a341126-e785-4795-8115-fd5329073bb4', 34, 2, N'Sala de Inovação', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (69, N'2f4b0989-5edd-4156-9c57-a209606a2f41', 35, 1, N'Innovation Room 2', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (70, N'031c5572-8593-4ea8-a125-7d32d8db74b9', 35, 2, N'Sala de Inovação 2', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (71, N'f57a6731-08c8-4ff6-a5b8-128d38956e9e', 36, 1, N'Innovation Room 3', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (72, N'5e9a9fb5-f5a2-4924-a7ef-cc53c3c7b6f4', 36, 2, N'Sala de Inovação 3', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (73, N'79242f44-1ac5-4d8b-8e7d-dde88cc659f7', 37, 1, N'Innovation Room 4', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (74, N'a647ffa2-dc20-451a-8a6d-c944d7c61d0e', 37, 2, N'Sala de Inovação 4', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (75, N'5b542a52-9d0f-45ca-a5e5-13a2b8ef6da9', 38, 1, N'Music Room', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (76, N'7c307460-e909-4d0d-9722-9fd67f8cc6db', 38, 2, N'Sala de Música', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (77, N'7023b572-2569-42df-8f2d-b8ae2387f961', 39, 1, N'Audiovisual Pitching Room', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (78, N'2eaa1b54-1815-40bd-8061-c6ac7651c1bd', 39, 2, N'Sala Pitching de Audiovisual', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (79, N'd76c581e-dc76-4e16-8e35-9a1edaf5ef6e', 40, 1, N'StoryVillage', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (80, N'a28c861d-06f9-4262-8694-991843406a99', 40, 2, N'StoryVillage', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (81, N'51d42efd-7df4-4421-b01f-e97d379914d8', 41, 1, N'Summit Educa', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (82, N'25fb45c8-c53f-4f4f-b2a0-f1196b1f2cfc', 41, 2, N'Summit Educa', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (83, N'2c712b95-6b5a-4f64-b09d-78adade14dd0', 42, 1, N'Branded Content Summit by Meio & Mensagem', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (84, N'7fa99bb2-b577-4909-89a3-be1fb010eba2', 42, 2, N'Summit Marcas e Conteúdo by Meio & Mensagem', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (85, N'0967180d-036d-4748-8182-421bb65bfbbb', 43, 1, N'Chamber Theater PETROBRAS', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (86, N'4745235f-3502-4ca7-ab1f-51c11d9a84ad', 43, 2, N'Teatro de Câmara', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (87, N'146078af-b1ea-447e-ac84-05b1a35cb5e1', 44, 1, N'XR Game Stage', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+INSERT [dbo].[RoomNames] ([Id], [Uid], [RoomId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (88, N'eb184fa7-ca71-4ba3-94de-67fa41706f36', 44, 2, N'XR Game Stage', 0, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1, CAST(N'2020-01-05 08:30:41.320' AS DateTime), 1)
+GO
+SET IDENTITY_INSERT [dbo].[RoomNames] OFF
+GO
