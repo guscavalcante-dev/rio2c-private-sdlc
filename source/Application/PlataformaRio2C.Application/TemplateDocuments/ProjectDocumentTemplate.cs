@@ -329,7 +329,7 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             paragraph.Add(tableFormat);
             paragraph.IndentationLeft = 15;
             paragraph.IndentationRight = 15;
-            paragraph.SpacingBefore = 20;
+            paragraph.SpacingBefore = 10;
             paragraph.SetLeading(1.0f, 1.5f);
             document.Add(paragraph);
             paragraph.Clear();
@@ -491,17 +491,15 @@ namespace PlataformaRio2C.Application.TemplateDocuments
 
             paragraph.IndentationLeft = 15;
             paragraph.IndentationRight = 15;
-            paragraph.SpacingBefore = 20;
+            paragraph.SpacingBefore = 10;
             document.Add(paragraph);
             paragraph.Clear();
-
-            document.Add(paragraph);
 
 
             paragraph.Add(GetChunk("Participará no processo de seleção das sessões PITCHING no Rio2C / RioContentMarket: ", DefaultFontSize + 4f, Font.BOLD));
             paragraph.IndentationLeft = 15;
             paragraph.IndentationRight = 15;
-            paragraph.SpacingBefore = 20;
+            paragraph.SpacingBefore = 10;
             paragraph.SetLeading(1.0f, 2.0f);
             document.Add(paragraph);
             paragraph.Clear();
@@ -513,13 +511,11 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             document.Add(paragraph);
             paragraph.Clear();
 
-            document.Add(paragraph);
-
 
             paragraph.Add(GetChunk("Informações Adicionais", DefaultFontSize + 4f, Font.BOLD));
             paragraph.IndentationLeft = 15;
             paragraph.IndentationRight = 15;
-            paragraph.SpacingBefore = 20;
+            paragraph.SpacingBefore = 10;
             document.Add(paragraph);
             paragraph.Clear();
 
