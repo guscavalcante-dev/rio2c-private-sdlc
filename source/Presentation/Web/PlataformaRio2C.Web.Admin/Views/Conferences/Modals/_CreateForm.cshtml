@@ -6,7 +6,15 @@
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionEventUid, new { @class = "control-label" })
-        @Html.DropDownListFor(m => m.EditionEventUid, new SelectList(Model.EditionEvents, "Uid", "Name", Model.EditionEventUid), Labels.Select + "...", new { @class = "form-control enable-select2" })
+        <select name="@Html.NameFor(m => m.EditionEventUid)" id="@Html.IdFor(m => m.EditionEventUid)" @Html.GetUnobtrusiveValidationAttributesFor(m => m.EditionEventUid) class="form-control enable-select2">
+            <option value="" data-start-date="" data-end-date="">@(Labels.Select)...</option>
+            @foreach (var editionEvent in Model.EditionEvents)
+            {
+                <option value="@editionEvent.Uid" @(editionEvent.Uid == Model.EditionEventUid ? "selected" : "") data-start-date="@editionEvent.StartDate.ToShortDateString()" data-end-date="@editionEvent.EndDate.ToShortDateString()">
+                    @editionEvent.Name
+                </option>
+            }
+        </select>
         @Html.ValidationMessageFor(m => m.EditionEventUid, "", new { @class = "text-danger" })
     </div>
 </div>
@@ -14,7 +22,14 @@
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.Date, new { @class = "control-label" })
         @Html.TextBox("Date", Model.Date?.ToShortDateString(), new { @class = "form-control enable-datepicker", @readonly = "readonly", data_date_start_date = editionDto?.StartDate.ToShortDateString(), data_date_end_date = editionDto?.EndDate.ToShortDateString() })
-        <span class="form-text text-muted">@string.Format(Messages.DateBetweenDates, editionDto?.EndDate.ToShortDateString(), editionDto?.StartDate.ToShortDateString())</span>
+        @if (Model.StartDate.HasValue && Model.EndDate.HasValue)
+        {
+            <span id="data-period-container" class="form-text text-muted">@string.Format(Messages.DateBetweenDates, Model.EndDate.Value.ToShortDateString(), Model.StartDate.Value.ToShortDateString())</span>
+        }
+        else
+        {
+            <span id="data-period-container" class="form-text text-muted d-none"></span>
+        }
         @Html.ValidationMessageFor(m => m.Date, "", new { @class = "text-danger" })
     </div>
 </div>

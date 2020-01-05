@@ -48,8 +48,12 @@
     @Scripts.Render("~/bundles/js/bootstrap-timepicker.js")
     @*@Scripts.Render("~/bundles/js/addresses.form.js")*@
     @Scripts.Render("~/bundles/js/conferences.details.js")
+    @Scripts.Render("~/bundles/js/conferences.editionevents.js")
     <script>
         // Page translations ----------------------------------------------------------------------
+        var translations = {
+            dateBetweenDates: '@Messages.DateBetweenDates'
+        }
 
         jQuery(document).ready(function () {
             ConferencesMainInformationWidget.init();

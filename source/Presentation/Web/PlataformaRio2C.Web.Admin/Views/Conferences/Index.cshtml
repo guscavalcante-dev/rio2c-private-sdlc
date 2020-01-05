@@ -40,9 +40,13 @@
     @Scripts.Render("~/bundles/js/conferences.create.js")
     @*@Scripts.Render("~/bundles/js/speakers.update.js")*@
     @Scripts.Render("~/bundles/js/conferences.delete.js")
+    @Scripts.Render("~/bundles/js/conferences.editionevents.js")
     @*@Scripts.Render("~/bundles/js/addresses.form.js")*@
     <script>
         // Page translations ----------------------------------------------------------------------
+        var translations = {
+            dateBetweenDates: '@Messages.DateBetweenDates'
+        }
 
         // Pagination -----------------------------------------------------------------------------
         var initialPage = @(Model.Page?.ToString() ?? "null");

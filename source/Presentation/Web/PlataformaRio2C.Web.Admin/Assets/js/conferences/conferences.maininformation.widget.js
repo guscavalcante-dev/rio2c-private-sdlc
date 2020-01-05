@@ -4,7 +4,7 @@
 // Created          : 01-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-02-2019
+// Last Modified On : 01-05-2020
 // ***********************************************************************
 // <copyright file="conferences.maininformation.widget" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -72,6 +72,10 @@ var ConferencesMainInformationWidget = function () {
     };
 
     var enableUpdatePlugins = function () {
+        if (typeof (ConferencesEditionEvents) !== 'undefined') {
+            ConferencesEditionEvents.init();
+        }
+
         MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2' });
         MyRio2cCommon.enableDatePicker({ inputIdOrClass: updateFormId + ' .enable-datepicker' });
         MyRio2cCommon.enableTimePicker({ inputIdOrClass: updateFormId + ' .enable-timepicker' });

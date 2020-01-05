@@ -4,7 +4,7 @@
 // Created          : 12-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-04-2020
+// Last Modified On : 01-05-2020
 // ***********************************************************************
 // <copyright file="conferences.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -84,7 +84,7 @@ var ConferencesDataTableWidget = function () {
             //            }
             //        }]
             //}],
-            order: [[0, "asc"]],
+            order: [[3, "asc"]],
             sDom: '<"row"<"col-sm-6"l><"col-sm-6 text-right"B>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
             oSearch: {
                 sSearch: $('#Search').val()

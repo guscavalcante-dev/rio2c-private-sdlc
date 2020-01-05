@@ -4,7 +4,7 @@
 // Created          : 12-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-02-2020
+// Last Modified On : 01-05-2020
 // ***********************************************************************
 // <copyright file="conferences.create.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,6 +24,10 @@ var ConferencesCreate = function () {
 
     // Enable plugins -----------------------------------------------------------------------------
     var enablePlugins = function () {
+        if (typeof (ConferencesEditionEvents) !== 'undefined') {
+            ConferencesEditionEvents.init();
+        }
+
         MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });
         MyRio2cCommon.enableDatePicker({ inputIdOrClass: formId + ' .enable-datepicker' });
         MyRio2cCommon.enableTimePicker({ inputIdOrClass: formId + ' .enable-timepicker' });

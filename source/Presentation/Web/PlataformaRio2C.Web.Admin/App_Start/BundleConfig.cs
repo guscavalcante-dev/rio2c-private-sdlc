@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-04-2020
+// Last Modified On : 01-05-2020
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -379,6 +379,9 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/conferences.create.js").Include(
                 "~/Assets/js/conferences/conferences.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/conferences.editionevents.js").Include(
+                "~/Assets/js/conferences/conferences.editionevents.js"));
 
             //bundles.Add(new StyleBundle("~/bundles/css/conferences.details.css").Include(
             //    "~/Assets/themes/metronic/css/demo4/pages/pricing/pricing-1.css"));

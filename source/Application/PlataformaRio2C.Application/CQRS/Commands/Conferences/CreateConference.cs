@@ -4,7 +4,7 @@
 // Created          : 12-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-04-2020
+// Last Modified On : 01-05-2020
 // ***********************************************************************
 // <copyright file="CreateConference.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -42,6 +42,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public List<ConferenceTitleBaseCommand> Titles { get; set; }
 
+        public DateTime? StartDate { get; private set; }
+        public DateTime? EndDate { get; private set; }
         public List<EditionEvent> EditionEvents { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="CreateConference"/> class.</summary>
@@ -58,6 +60,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.StartTime = conferenceDto?.Conference?.StartDate.ToShortTimeString();
             this.EndTime = conferenceDto?.Conference?.EndDate.ToShortTimeString();
             this.UpdateTitles(conferenceDto, languagesDtos);
+
             this.UpdateDropdowns(editionEvents);
         }
 
@@ -71,6 +74,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public void UpdateDropdowns(List<EditionEvent> editionEvents)
         {
             this.EditionEvents = editionEvents;
+
+            if (this.EditionEventUid.HasValue)
+            {
+                var editionEvent = editionEvents.FirstOrDefault(ev => ev.Uid == this.EditionEventUid.Value);
+                this.StartDate = editionEvent?.StartDate;
+                this.EndDate = editionEvent?.EndDate;
+            }
         }
 
         #region Private Methods

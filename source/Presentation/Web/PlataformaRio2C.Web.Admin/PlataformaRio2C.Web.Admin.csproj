@@ -417,6 +417,7 @@
     <Content Include="Assets\js\accounts\accounts.password.js" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
     <Content Include="Assets\js\companies\companyinfo.autocomplete.js" />
+    <Content Include="Assets\js\conferences\conferences.editionevents.js" />
     <Content Include="Assets\js\conferences\conferences.datatable.widget.js" />
     <Content Include="Assets\js\conferences\conferences.editioncount.widget.js" />
     <Content Include="Assets\js\conferences\conferences.tracks.widget.js" />
