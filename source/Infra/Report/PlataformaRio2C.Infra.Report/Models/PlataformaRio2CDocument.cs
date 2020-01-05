@@ -1,37 +1,36 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Web.Admin
+// Assembly         : PlataformaRio2C.Infra.Report
 // Author           : William Sergio Almado Junior
 // Created          : 12-27-2019
 //
-// Last Modified By : William Sergio Almado Junior
-// Last Modified On : 12-27-2019
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 01-05-2020
 // ***********************************************************************
 // <copyright file="PlataformaRio2CDocument.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using iTextSharp.text;
-using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
-namespace PlataformaRio2C.Infra.Report
+namespace PlataformaRio2C.Infra.Report.Models
 {
+    /// <summary>PlataformaRio2CDocument</summary>
     public class PlataformaRio2CDocument : Document
     {
-
-        /// <summary>
-        /// Objeto "escritor" do documento utilizado para gerar esta instância de documento 
-        /// </summary>
+        /// <summary>Writer object of the document used to generate this document instance.</summary>
         public PdfWriter Writer { get; set; }
+
         private MemoryStream DocumentStream { get; set; }
 
         private TemplateBase _template;
-        /// <summary>
-        /// Template tido como base para configurações básicas e adição de novos elementos no documento
-        /// </summary>
+
+        /// <summary>Template for basic configurations and additions of new elments to the document.</summary>
+        /// <value>The template.</value>
         public TemplateBase Template
         {
             get
@@ -45,19 +44,18 @@ namespace PlataformaRio2C.Infra.Report
             }
         }
 
-        /// <summary>
-        /// Constrói uma instância de documento PDF com base no template especificado e pronto para receber elementos de conteúdo
-        /// </summary>
-        /// <param name="template">Template que implementa </param>
-        /// <param name="marginLeft">Margem esquerda do documento</param>
-        /// <param name="marginRight">Margem direita do documento</param>
-        /// <param name="marginTop">Margem superior do documento</param>
-        /// <param name="marginBottom">Margem inferior do documento</param>
+        /// <summary>Initializes a new instance of the <see cref="PlataformaRio2CDocument"/> class. Initialize a new PDF document based on the specified template and ready to receive new content elements.</summary>
+        /// <param name="template">The template.</param>
+        /// <param name="marginLeft">The margin left.</param>
+        /// <param name="marginRight">The margin right.</param>
+        /// <param name="marginTop">The margin top.</param>
+        /// <param name="marginBottom">The margin bottom.</param>
         public PlataformaRio2CDocument(TemplateBase template, float marginLeft = 25, float marginRight = 25, float marginTop = 10, float marginBottom = 50)
             : base(iTextSharp.text.PageSize.A4, marginLeft, marginRight, marginTop, marginBottom)
         {
             DocumentStream = new MemoryStream();
             Writer = PdfWriter.GetInstance(this, DocumentStream);
+
             Writer.CloseStream = false;
 
             if ((Template = template) != null)
@@ -77,51 +75,58 @@ namespace PlataformaRio2C.Infra.Report
             AddAuthor("Nome da sua Empresa");
             AddSubject(Template?.Subtitle);
             AddCreationDate();
-
         }
 
-        /// <summary>
-        /// Adiciona um parágrafo ao documento
-        /// </summary>
-        /// <param name="Text">Texto para o conteúdo </param>
-        /// <param name="Alignment">Alinhamento do parágrafo (e.g. Element.ALIGN_LEFT)</param>
-        /// <param name="FirstLineIndent">Recuo da primeira linha do parágrafo</param>
-        /// <param name="LinesLeading">Espaço entrelinhas do parágrafo</param>
-        public void AddParagraph(string Text, int Alignment = Element.ALIGN_JUSTIFIED, float FirstLineIndent = 0, float LinesLeading = 1.5f)
+        /// <summary>Adds a paragraph to do document.</summary>
+        /// <param name="text">The text.</param>
+        /// <param name="alignment">The alignment.</param>
+        /// <param name="firstLineIndent">The first line indent.</param>
+        /// <param name="linesLeading">The lines leading.</param>
+        public void AddParagraph(string text, int alignment = Element.ALIGN_JUSTIFIED, float firstLineIndent = 0, float linesLeading = 1.5f)
         {
             if (Template != null)
-                Add(Template.GetParagraph(Text));
+                Add(Template.GetParagraph(text));
             else
             {
                 var parag = new Paragraph();
-                parag.Alignment = Alignment;
-                parag.FirstLineIndent = 0;
-                parag.MultipliedLeading = LinesLeading;
+                parag.Alignment = alignment;
+                parag.FirstLineIndent = firstLineIndent;
+                parag.MultipliedLeading = linesLeading;
             }
         }
 
-        public PdfPTable CreateTable<T>(List<T> Items, ColumnMap[] Columns, TableStyles Style, int HeaderRows = 0, string Title = null, GroupingMap groupingMap = null, string emptyText = null)
+        /// <summary>Creates the table.</summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="items">The items.</param>
+        /// <param name="columns">The columns.</param>
+        /// <param name="style">The style.</param>
+        /// <param name="headerRows">The header rows.</param>
+        /// <param name="title">The title.</param>
+        /// <param name="groupingMap">The grouping map.</param>
+        /// <param name="emptyText">The empty text.</param>
+        /// <returns></returns>
+        public PdfPTable CreateTable<T>(List<T> items, ColumnMap[] columns, TableStyles style, int headerRows = 0, string title = null, GroupingMap groupingMap = null, string emptyText = null)
         {
-            if (Columns == null)
+            if (columns == null)
                 throw new Exception("O mapeamento das colunas não pode ser nulo");
 
-            var columnWidths = new float[Columns.Length];
+            var columnWidths = new float[columns.Length];
 
-            for (int i = 0; i < Columns.Length; i++)
-                columnWidths[i] = Columns[i].WidthPercentage;
+            for (int i = 0; i < columns.Length; i++)
+                columnWidths[i] = columns[i].WidthPercentage;
 
             var table = new PdfPTable(columnWidths);
             table.WidthPercentage = 100;
-            table.HeaderRows = HeaderRows;
+            table.HeaderRows = headerRows;
 
-            if (!string.IsNullOrEmpty(Title))
+            if (!string.IsNullOrEmpty(title))
             {
                 table.DefaultCell.BorderWidth = 0;
-                table.DefaultCell.Colspan = Columns.Length;
+                table.DefaultCell.Colspan = columns.Length;
                 table.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
                 table.DefaultCell.Padding = 7;
 
-                var paragTitle = Template.GetChunk(Title);
+                var paragTitle = Template.GetChunk(title);
                 paragTitle.Font = Template.GetFont();
                 paragTitle.Font.SetStyle(Font.BOLD);
                 paragTitle.Font.Size = Template.DefaultFontSize + (Template.DefaultFontSize * 0.5f);
@@ -130,29 +135,29 @@ namespace PlataformaRio2C.Infra.Report
             }
 
             var hasFooter = false;
-            foreach (var column in Columns)
+            foreach (var column in columns)
             {
                 table.DefaultCell.HorizontalAlignment = column.Alignment;
-                table.AddCell(Table.GetHeaderCell(column.ColumnHeader, Template, column.Alignment, Style));
+                table.AddCell(Table.GetHeaderCell(column.ColumnHeader, Template, column.Alignment, style));
                 hasFooter = (hasFooter || column.ColumnFooter != null);
             }
 
             var j = 0;
-            if (Items != null && Items.Count > 0)
+            if (items != null && items.Count > 0)
             {
-                var groupProperty = Items[0].GetType().GetProperty(groupingMap?.GroupPropertyPath ?? "-");
+                var groupProperty = items[0].GetType().GetProperty(groupingMap?.GroupPropertyPath ?? "-");
 
                 if (groupingMap != null && groupProperty == null)
                     throw new Exception($"A propriedade '{ groupingMap.GroupPropertyPath }' não existe nos elementos da coleção");
 
                 // Carregar propriedades de reflexão de agrupamento
-                for (uint i = 0; i < Columns.Length; i++)
+                for (uint i = 0; i < columns.Length; i++)
                     if (groupingMap != null && groupingMap.SubTotals.ContainsKey(i))
-                        groupingMap.SubTotals[i].ColumnProperty = Items[0].GetType().GetProperty(Columns[i].PropertyPath);
+                        groupingMap.SubTotals[i].ColumnProperty = items[0].GetType().GetProperty(columns[i].PropertyPath);
 
                 var currentGroupKey = "!Hey,do_you_know_that@#$Nothing_in_the_world_can_be_like_this_initializer_text?!";
                 bool firstGroup = true, lastGroup = false;
-                foreach (var item in Items)
+                foreach (var item in items)
                 {
                     if (groupingMap != null)
                     {
@@ -160,7 +165,7 @@ namespace PlataformaRio2C.Infra.Report
                         // Se o valor da propriedade chave do agrupamento mudou, criar linha de subtotal e próximo header
                         if (!currentGroupKey.Equals(groupProperty?.GetValue(item)?.ToString()))
                         {
-                            AddGroupStrip(table, groupProperty?.GetValue(item)?.ToString(), firstGroup, lastGroup, groupingMap, Columns, Template, Style);
+                            AddGroupStrip(table, groupProperty?.GetValue(item)?.ToString(), firstGroup, lastGroup, groupingMap, columns, Template, style);
                             currentGroupKey = groupProperty?.GetValue(item)?.ToString();
                         }
 
@@ -173,7 +178,7 @@ namespace PlataformaRio2C.Infra.Report
                         }
 
                         // Incrementar subtotais
-                        for (uint i = 0; i < Columns.Length; i++)
+                        for (uint i = 0; i < columns.Length; i++)
                         {
                             if (groupingMap.SubTotals.ContainsKey(i))
                             {
@@ -188,14 +193,14 @@ namespace PlataformaRio2C.Infra.Report
                         firstGroup = false;
                     }
 
-                    foreach (var column in Columns)
+                    foreach (var column in columns)
                     {
                         table.DefaultCell.HorizontalAlignment = column.Alignment;
                         table.AddCell(
                                 Table.GetCell(GetValue(item, column.PropertyPath, column.StringFormat),
                                                       Template,
                                                       column.Alignment,
-                                                      Style,
+                                    style,
                                                       (j % 2 == 0)));
                     }
                     j++;
@@ -203,14 +208,14 @@ namespace PlataformaRio2C.Infra.Report
 
                 //Adicionar último group strip se houver
                 if (groupingMap != null)
-                    AddGroupStrip(table, "", false, true, groupingMap, Columns, Template, Style);
+                    AddGroupStrip(table, "", false, true, groupingMap, columns, Template, style);
             }
             else
             {
                 if (!string.IsNullOrWhiteSpace(emptyText))
                 {
                     table.DefaultCell.BorderWidth = 0;
-                    table.DefaultCell.Colspan = Columns.Length;
+                    table.DefaultCell.Colspan = columns.Length;
                     table.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
                     table.DefaultCell.Padding = 7;
                     table.AddCell(Template.GetPhrase(emptyText, Font.NORMAL, Template.DefaultFontSize));
@@ -219,8 +224,8 @@ namespace PlataformaRio2C.Infra.Report
 
             if (hasFooter)
             {
-                for (int i = 0; i < Columns.Length; i++)
-                    table.AddCell(Table.GetHeaderCell(Columns[i].ColumnFooter, Template, Columns[i].Alignment, Style));
+                for (int i = 0; i < columns.Length; i++)
+                    table.AddCell(Table.GetHeaderCell(columns[i].ColumnFooter, Template, columns[i].Alignment, style));
 
                 table.DefaultCell.BorderWidth = 0;
                 table.CompleteRow();
@@ -229,50 +234,55 @@ namespace PlataformaRio2C.Infra.Report
             return table;
         }
 
-        /// <summary>
-        /// Adiciona uma tabela ao documento. Utiliza como fonte padrão a fonte especificada no template.
-        /// </summary>
+        /// <summary>Adds a table to the document. Users as default font the font specifiend in the template.</summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="Items">Coleção de objetos para preencher a tabela</param>
-        /// <param name="Columns">Colunas da tabela</param>
-        /// <param name="Style">Estilo da tabela</param>
-        /// <param name="HeaderRows">Linhas que serão repetidas caso a tabela estoure uma página</param>
-        /// <param name="Title">Título para a tabela</param>
-        /// <param name="groupingMap"></param>
-        public void AddTable<T>(List<T> Items, ColumnMap[] Columns, TableStyles Style, int HeaderRows = 0, string Title = null, GroupingMap groupingMap = null, string emptyText = null)
+        /// <param name="items">The items.</param>
+        /// <param name="columns">The columns.</param>
+        /// <param name="style">The style.</param>
+        /// <param name="headerRows">The header rows.</param>
+        /// <param name="title">The title.</param>
+        /// <param name="groupingMap">The grouping map.</param>
+        /// <param name="emptyText">The empty text.</param>
+        public void AddTable<T>(List<T> items, ColumnMap[] columns, TableStyles style, int headerRows = 0, string title = null, GroupingMap groupingMap = null, string emptyText = null)
         {
-            Add(CreateTable(Items, Columns, Style, HeaderRows, Title, groupingMap, emptyText));
+            Add(CreateTable(items, columns, style, headerRows, title, groupingMap, emptyText));
         }
 
-        /// <summary>
-        /// Adiciona uma faixa de agrupamento à tabela especificada que representa um sumário e um cabeçalho - grupo anterior e corrente respectivamente
-        /// </summary>
-        private void AddGroupStrip(PdfPTable table, string currentGroupKey, bool firstGroup, bool lastGroup, GroupingMap groupingMap, ColumnMap[] Columns, TemplateBase Template, TableStyles Style)
+        /// <summary>Adds a group strip to the specidifed table that represents an suumary and a header - last group and current group respectively.</summary>
+        /// <param name="table">The table.</param>
+        /// <param name="currentGroupKey">The current group key.</param>
+        /// <param name="firstGroup">if set to <c>true</c> [first group].</param>
+        /// <param name="lastGroup">if set to <c>true</c> [last group].</param>
+        /// <param name="groupingMap">The grouping map.</param>
+        /// <param name="columns">The columns.</param>
+        /// <param name="template">The template.</param>
+        /// <param name="style">The style.</param>
+        private void AddGroupStrip(PdfPTable table, string currentGroupKey, bool firstGroup, bool lastGroup, GroupingMap groupingMap, ColumnMap[] columns, TemplateBase template, TableStyles style)
         {
             if (string.IsNullOrWhiteSpace(currentGroupKey))
                 currentGroupKey = "-";
 
             // Subtotal (O primeiro group strip não é precedido por um sumário)
             if (!firstGroup)
-                for (uint i = 0; i < Columns.Length; i++)
+                for (uint i = 0; i < columns.Length; i++)
                 {
-                    table.DefaultCell.HorizontalAlignment = Columns[i].Alignment;
+                    table.DefaultCell.HorizontalAlignment = columns[i].Alignment;
                     if (groupingMap.SubTotals.ContainsKey(i))
                         table.AddCell(Table.GetHeaderCell(
-                                                    string.Format(Columns[i].StringFormat, groupingMap.SubTotals[i].Subtotal),
-                                                    Template,
-                                                    Columns[i].Alignment,
-                                                    Style));
+                                                    string.Format(columns[i].StringFormat, groupingMap.SubTotals[i].Subtotal),
+                                                    template,
+                                                    columns[i].Alignment,
+                            style));
                     else
-                        table.AddCell(Table.GetHeaderCell(i == 0 ? "Subtotal" : " ", Template, Columns[i].Alignment, Style));
+                        table.AddCell(Table.GetHeaderCell(i == 0 ? "Subtotal" : " ", template, columns[i].Alignment, style));
                 }
 
             // Cabeçalho (o último group strip não é seguido por um sumário)
             if (!lastGroup)
             {
-                var cell = Table.GetHeaderCell(currentGroupKey, Template, Element.ALIGN_LEFT, Style);
+                var cell = Table.GetHeaderCell(currentGroupKey, template, Element.ALIGN_LEFT, style);
                 cell.BackgroundColor = BaseColor.WHITE;
-                cell.Colspan = Columns.Length;
+                cell.Colspan = columns.Length;
                 table.AddCell(cell);
             }
 
@@ -280,6 +290,11 @@ namespace PlataformaRio2C.Infra.Report
                 groupingMap.ResetSubTotals();
         }
 
+        /// <summary>Gets the value.</summary>
+        /// <param name="obj">The object.</param>
+        /// <param name="path">The path.</param>
+        /// <param name="stringFormat">The string format.</param>
+        /// <returns></returns>
         private string GetValue(object obj, string path, string stringFormat)
         {
             if (obj == null)
@@ -316,9 +331,8 @@ namespace PlataformaRio2C.Infra.Report
                 return "";
         }
 
-        /// <summary>
-        /// Fecha o documento e recupera o streaming de bytes que o representa
-        /// </summary>
+        /// <summary>Close the document and recover the stream of bytes that represents it.</summary>
+        /// <returns></returns>
         public MemoryStream GetStream()
         {
             if (PageNumber == 0 && IsOpen())
@@ -330,11 +344,9 @@ namespace PlataformaRio2C.Infra.Report
             return DocumentStream;
         }
 
-        /// <summary>
-        /// Fecha o documento e salva o arquivo PDF no caminho especificado
-        /// </summary>
-        /// <param name="filepath">Caminho completo para o arquivo PDF gerado</param>
-        /// <param name="filemode">Modo como o Windows deve tratar a escrita em disco. Use 'Create' ou 'CreateNew' somente.</param>
+        /// <summary>Closed the document and saves the PDF to the specified filepath.</summary>
+        /// <param name="filepath">The filepath.</param>
+        /// <param name="filemode">The filemode.</param>
         public void Save(string filepath, FileMode filemode)
         {
             if (PageNumber == 0 && IsOpen())

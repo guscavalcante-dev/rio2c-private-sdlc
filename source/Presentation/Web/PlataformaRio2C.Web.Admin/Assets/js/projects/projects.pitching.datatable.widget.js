@@ -28,7 +28,7 @@ var ProjectsPitchingDataTableWidget = function () {
         jsonParameters.keyword = $('#Search').val();
         jsonParameters.interestUid = $('#InterestUid').val();
 
-        window.location = MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/DownloadPdfs') + '?keyword=' + jsonParameters.keyword + '&interestUid=' + jsonParameters.interestUid + '&selectedProjectsUids=' + jsonParameters.selectedProjectsUids;
+        window.open(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/DownloadPdfs') + '?keyword=' + jsonParameters.keyword + '&interestUid=' + jsonParameters.interestUid + '&selectedProjectsUids=' + jsonParameters.selectedProjectsUids);
 
         MyRio2cCommon.unblock();
     };

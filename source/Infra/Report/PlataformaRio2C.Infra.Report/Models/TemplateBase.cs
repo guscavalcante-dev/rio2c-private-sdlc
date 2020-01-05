@@ -1,105 +1,83 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Web.Admin
+// Assembly         : PlataformaRio2C.Infra.Report
 // Author           : William Sergio Almado Junior
 // Created          : 12-27-2019
 //
-// Last Modified By : William Sergio Almado Junior
-// Last Modified On : 12-27-2019
+// Last Modified By : Rafael Dantas RUiz
+// Last Modified On : 01-05-2020
 // ***********************************************************************
-// <copyright file="TemplateBase" company="Softo">
+// <copyright file="TemplateBase.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using iTextSharp.text;
 using System;
+using System.Collections.Generic;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
-namespace PlataformaRio2C.Infra.Report
+namespace PlataformaRio2C.Infra.Report.Models
 {
+    /// <summary>TemplateBase</summary>
     public abstract class TemplateBase
     {
-        /// <summary>
-        /// Título do documento
-        /// </summary>
+        /// <summary>Document Title.</summary>
         public string Title { get; set; }
 
-        /// <summary>
-        /// Subtítulo do documento
-        /// </summary>
+        /// <summary>Document Subtitle.</summary>
         public string Subtitle { get; set; }
 
-        /// <summary>
-        /// Primeiro Cabeçalho do documento
-        /// </summary>
+        /// <summary>First header of the document.</summary>
         public IElement FirstHeader { get; set; }
 
-        /// <summary>
-        /// Elemento de rodapé para o documento
-        /// </summary>
+        /// <summary>Footer of the document.</summary>
         public IElement Footer { get; set; }
 
-        /// <summary>
-        /// Cabeçalho para a segunda página em diante
-        /// </summary>
+        /// <summary>Header for second page and subsequential.</summary>
         public IElement SubsequentialHeaders { get; set; }
 
-        /// <summary>
-        /// Texto para compor o cabeçalho e rodapé
-        /// </summary>
+        /// <summary>Text to compose the header and footer.</summary>
         public string HeaderAddendum { get; set; }
 
-        /// <summary>
-        /// Tamanho padrão da fonte. Estabelece um padrão do qual outros tamanhos de fonte no documento podem derivar percentualmente.
-        /// <para>O tamanho inicial é 8</para>
-        /// </summary>
+        /// <summary>Default font size. Sets and standard that other fonte sizes of the document can in percentage.</summary>
         public float DefaultFontSize { get; set; }
 
-        /// <summary>
-        /// Especifica se o rodapé padrão deve ser exibido no documento
-        /// </summary>
+        /// <summary>Specify if the default footer must be shown in the document.</summary>
         public bool ShowDefaultFooter { get; set; }
 
+        /// <summary>Specify if the default background must be shown in the document.</summary>
         public bool ShowDefaultBackground { get; set; }
 
-        /// <summary>
-        /// Determina se a orientação do documento é em 'paisagem'
-        /// </summary>
+        /// <summary>Specify if the document orientation is landscape.</summary>
         public bool LandscapeOrientation { get; set; }
 
         public abstract void Prepare(PlataformaRio2CDocument document);
 
-        /// <summary>
-        /// Retorna uma instância de parágrafo com o formato do template
-        /// </summary>
-        /// <param name="Text">Conteúdo do parágafo</param>
-        public abstract Paragraph GetParagraph(string Text = null);
+        /// <summary>Gets a paragraph instance with the template format.</summary>
+        public abstract Paragraph GetParagraph(string text = null);
 
-        /// <summary>
-        /// Recupera um "fragmento" de texto 
-        /// </summary>
-        /// <param name="Text">Conteúdo do chunk</param>
-        public Chunk GetChunk(string Text)
+        /// <summary>Gets a chunk of the text.</summary>
+        /// <returns></returns>
+        public Chunk GetChunk(string text)
         {
-            return new Chunk(Text, GetFont());
+            return new Chunk(text, GetFont());
         }
 
-        /// <summary>
-        /// Retorna um "fragmento" de texto
-        /// </summary>
-        /// <param name="Text">Conteúdo do fragmento</param>
-        /// <param name="fontSize">Tamanho da fonte do fragmento</param>
-        /// <param name="fontStyle">Estilo da fonte do fragmento (e.g. Font.BOLD)</param>
-        public Chunk GetChunk(string Text, float fontSize, int fontStyle = Font.NORMAL)
+        /// <summary>Gets a chunk of the text.</summary>
+        /// <param name="text">The text.</param>
+        /// <param name="fontSize">Size of the font.</param>
+        /// <param name="fontStyle">The font style (e.g. Font.BOLD).</param>
+        /// <returns></returns>
+        public Chunk GetChunk(string text, float fontSize, int fontStyle = Font.NORMAL)
         {
-            return new Chunk(Text, GetFont(fontSize, fontStyle));
+            return new Chunk(text, GetFont(fontSize, fontStyle));
         }
 
-        /// <summary>
-        /// Retorna uma frase de texto
-        /// </summary>
-        /// <param name="text">Conteúdo da frase</param>
-        /// <param name="fontStyle">Estilo da fonte do fragmento (e.g. Font.BOLD)</param>
-        /// <param name="fontSize">Tamanho da fonte. Por padrão é a tamanho especificado pelo template</param>
+        /// <summary>Gets a phrase of the text.</summary>
+        /// <param name="text">The text.</param>
+        /// <param name="fontStyle">The font style (e.g. Font.BOLD).</param>
+        /// <param name="fontSize">Size of the font. By default is the size specified in the template.</param>
+        /// <returns></returns>
         public Phrase GetPhrase(string text, int fontStyle = Font.NORMAL, float fontSize = 0)
         {
             if (Convert.ToInt32(fontSize) == 0)
@@ -108,29 +86,62 @@ namespace PlataformaRio2C.Infra.Report
             return new Phrase(GetChunk(text, fontSize, fontStyle));
         }
 
-        /// <summary>
-        /// Retorna a fonte padrão do template
-        /// </summary>
+        /// <summary>Gets the default font of the template.</summary>
+        /// <returns></returns>
         public Font GetFont()
         {
             return GetFont(DefaultFontSize, Font.NORMAL);
         }
 
+        /// <summary>Gets the default font of the template.</summary>
+        /// <returns></returns>
+        public abstract Font GetFont(float fontSize, int fontStyle);
 
-        /// <summary>
-        /// Retorna a fonte padrão do template
-        /// </summary>
-        /// <param name="fontSize">Tamanho da fonte</param>
-        /// <param name="fontStyle">Estilo da fonte </param>
-        abstract public Font GetFont(float fontSize, int fontStyle);
+        /// <summary>Gets the chips.</summary>
+        /// <param name="texts">The texts.</param>
+        /// <param name="fontStyle">The font style.</param>
+        /// <param name="fontSize">Size of the font.</param>
+        /// <returns></returns>
+        public PdfPCell GetChips(List<string> texts, int fontStyle = Font.NORMAL, float fontSize = 0)
+        {
+            var mainCell = new PdfPCell();
 
-        /// <summary>
-        /// Construtor para setar valores iniciais padrão do template (e.g. DefaultFontSize)
-        /// </summary>
+            var columns = new float[texts.Count];
+
+            var columnSize = 0f;
+
+            for (int i = 0; i < texts.Count; i++)
+            {
+                columns[i] = texts[i].Length + 15;
+                columnSize += texts[i].Length + 15;
+            }
+
+            var table = new PdfPTable(columns);
+            table.WidthPercentage = columnSize;
+            table.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.DefaultCell.Border = 0;
+            foreach (var text in texts)
+            {
+                var cell = new PdfPCell(GetPhrase(text, fontStyle, fontSize));
+                cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                cell.Padding = 5;
+                cell.CellEvent = new PdfCellChipLayout();
+                cell.Border = 0;
+                table.AddCell(cell);
+
+            }
+            mainCell.Border = 0;
+            mainCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            mainCell.AddElement(table);
+
+            return mainCell;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="TemplateBase"/> class. Sets the initial default values of the template (e.g. DefaultFontSize).</summary>
         public TemplateBase()
         {
             DefaultFontSize = 8;
         }
     }
 }
-

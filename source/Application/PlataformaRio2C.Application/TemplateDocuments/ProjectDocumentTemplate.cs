@@ -3,8 +3,8 @@
 // Author           : William Sergio Almado Junior
 // Created          : 12-27-2019
 //
-// Last Modified By : William Sergio Almado Junior
-// Last Modified On : 12-27-2019
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 01-05-2020
 // ***********************************************************************
 // <copyright file="ProjectDocumentTemplate.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,8 +18,9 @@ using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using PlataformaRio2C.Infra.Report;
+using System.Collections.Generic;
 using System.Linq;
+using PlataformaRio2C.Infra.Report.Models;
 using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Application.TemplateDocuments
@@ -27,21 +28,27 @@ namespace PlataformaRio2C.Application.TemplateDocuments
     /// <summary>ProjectDocumentTemplate</summary>
     public class ProjectDocumentTemplate : TemplateBase
     {
-
         public ProjectDto Project { get; private set; }
         private Font _font;
+        private Font _fontLabel;
 
         /// <summary>Initializes a new instance of the <see cref="ProjectDocumentTemplate"/> class.</summary>
         public ProjectDocumentTemplate(ProjectDto project)
         {
             this.Project = project;
             _font = new Font(BaseFont.CreateFont("Helvetica", BaseFont.WINANSI, true));
-            _font.Color = new BaseColor(64, 64, 64);
+            _font.Color = BaseColor.DARK_GRAY;
 
             ShowDefaultBackground = true;
             ShowDefaultFooter = false;
+
+            _fontLabel = new Font(Font.FontFamily.HELVETICA, DefaultFontSize + 4f, Font.BOLD, BaseColor.DARK_GRAY);
         }
 
+        /// <summary>Retorna a fonte padrão do template</summary>
+        /// <param name="fontSize">Tamanho da fonte</param>
+        /// <param name="fontStyle">Estilo da fonte</param>
+        /// <returns></returns>
         public override Font GetFont(float fontSize, int fontStyle)
         {
             _font.Size = fontSize;
@@ -50,6 +57,9 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             return _font;
         }
 
+        /// <summary>Retorna uma instância de parágrafo com o formato do template</summary>
+        /// <param name="Text">Conteúdo do parágafo</param>
+        /// <returns></returns>
         public override Paragraph GetParagraph(string Text = null)
         {
             var paragraph = new Paragraph();
@@ -61,31 +71,26 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             return paragraph;
         }
 
+        /// <summary>Prepares the specified document.</summary>
+        /// <param name="document">The document.</param>
         public override void Prepare(PlataformaRio2CDocument document)
         {
-
             var paragraph = GetFirstPageInfo(ref document);
 
-
             document.Add(Chunk.NEXTPAGE);
-
-
             paragraph = GetSummaryInfo(ref document, paragraph);
-
             paragraph = GetLoglineInfo(ref document, paragraph);
-
             paragraph = GetProductionPlanInfo(ref document, paragraph);
 
-            document.Add(Chunk.NEXTPAGE);
-
+            //document.Add(Chunk.NEXTPAGE);
             paragraph = GetFormatPlatformInfo(ref document, paragraph);
-
             paragraph = GetProjectValuesInfo(ref document, paragraph);
-
             GetOtherInfos(ref document, paragraph);
-
         }
 
+        /// <summary>Gets the first page information.</summary>
+        /// <param name="document">The document.</param>
+        /// <returns></returns>
         private Paragraph GetFirstPageInfo(ref PlataformaRio2CDocument document)
         {
             var paragraph = new Paragraph();
@@ -105,7 +110,6 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             document.Add(paragraph);
             paragraph.Clear();
 
-
             paragraph.Add(GetChunk("Produtora/Empresa: ", DefaultFontSize + 6f, Font.NORMAL));
             paragraph.Add(GetChunk(this.Project.SellerAttendeeOrganizationDto.Organization.Name, DefaultFontSize + 6f, Font.NORMAL));
             paragraph.Alignment = Element.ALIGN_LEFT;
@@ -115,28 +119,34 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             document.Add(paragraph);
             paragraph.Clear();
 
-            paragraph.Add(GetChunk("Gênero: ", DefaultFontSize + 6f, Font.BOLD));
+            var fontLabelGenre = new Font( Font.FontFamily.HELVETICA, DefaultFontSize + 6f, Font.BOLD, BaseColor.DARK_GRAY);
+            var tableGenre = new PdfPTable(new float[] { 20, 80 });
+            tableGenre.WidthPercentage = 70;
+            tableGenre.HorizontalAlignment = Element.ALIGN_RIGHT;
+            tableGenre.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            tableGenre.DefaultCell.BorderWidth = 0;
+
+            tableGenre.AddCell(new Phrase(new Chunk("Gênero: ", fontLabelGenre)));
+
+            var chips = new List<string>();
             var projectInterestsDtos = this.Project.GetAllInterestsByInterestGroupUid(InterestGroup.Genre.Uid);
             if (projectInterestsDtos?.Any() == true)
             {
                 int index = 0;
                 foreach (var projectInterestDto in projectInterestsDtos)
                 {
-                    if (index > 0)
-                    {
-                        paragraph.Add(GetChunk("   ", DefaultFontSize + 4f, Font.NORMAL));
-                    }
-
-                    paragraph.Add(GetChunk(projectInterestDto.Interest.Name.GetSeparatorTranslation(Constants.Culture.Portuguese, '|'), DefaultFontSize + 4f, Font.BOLD));
-                    paragraph.Add(GetChunk(" | ", DefaultFontSize + 4f, Font.BOLD));
-                    paragraph.Add(GetChunk(projectInterestDto.Interest.Name.GetSeparatorTranslation(Constants.Culture.English, '|'), DefaultFontSize + 4f, Font.ITALIC | Font.BOLD));
-                    index++;
+                    chips.Add(
+                       projectInterestDto.Interest.Name.GetSeparatorTranslation(Constants.Culture.English, '|') + " | " +
+                       projectInterestDto.Interest.Name.GetSeparatorTranslation(Constants.Culture.Portuguese, '|')
+                       );
                 }
 
-            };
+                tableGenre.AddCell(GetChips(chips, Font.NORMAL, DefaultFontSize + 4f));
+            }
 
-            paragraph.Alignment = Element.ALIGN_LEFT;
+            paragraph.Add(tableGenre);
             paragraph.IndentationLeft = 170;
+            paragraph.IndentationLeft = 15;
             paragraph.SpacingBefore = 10;
             document.Add(paragraph);
             paragraph.Clear();
@@ -144,6 +154,10 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             return paragraph;
         }
 
+        /// <summary>Gets the summary information.</summary>
+        /// <param name="document">The document.</param>
+        /// <param name="paragraph">The paragraph.</param>
+        /// <returns></returns>
         private Paragraph GetSummaryInfo(ref PlataformaRio2CDocument document, Paragraph paragraph)
         {
             paragraph.Add(GetChunk("Resumo", DefaultFontSize + 4f, Font.BOLD));
@@ -192,6 +206,10 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             return paragraph;
         }
 
+        /// <summary>Gets the logline information.</summary>
+        /// <param name="document">The document.</param>
+        /// <param name="paragraph">The paragraph.</param>
+        /// <returns></returns>
         private Paragraph GetLoglineInfo(ref PlataformaRio2CDocument document, Paragraph paragraph)
         {
             paragraph.Add(GetChunk("Logline", DefaultFontSize + 4f, Font.BOLD));
@@ -207,7 +225,6 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             document.Add(paragraph);
             paragraph.Clear();
 
-
             paragraph.Add(GetChunk("English", DefaultFontSize + 3f, Font.BOLD));
             paragraph.IndentationLeft = 15;
             paragraph.IndentationRight = 15;
@@ -221,7 +238,6 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             paragraph.SpacingBefore = 0;
             document.Add(paragraph);
             paragraph.Clear();
-
 
             paragraph.Add(GetChunk("Português", DefaultFontSize + 3f, Font.BOLD));
             paragraph.IndentationLeft = 15;
@@ -237,10 +253,13 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             document.Add(paragraph);
             paragraph.Clear();
 
-
             return paragraph;
         }
 
+        /// <summary>Gets the production plan information.</summary>
+        /// <param name="document">The document.</param>
+        /// <param name="paragraph">The paragraph.</param>
+        /// <returns></returns>
         private Paragraph GetProductionPlanInfo(ref PlataformaRio2CDocument document, Paragraph paragraph)
         {
             paragraph.Add(GetChunk("Planos de Produção", DefaultFontSize + 4f, Font.BOLD));
@@ -287,103 +306,150 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             return paragraph;
         }
 
+        /// <summary>Gets the format platform information.</summary>
+        /// <param name="document">The document.</param>
+        /// <param name="paragraph">The paragraph.</param>
+        /// <returns></returns>
         private Paragraph GetFormatPlatformInfo(ref PlataformaRio2CDocument document, Paragraph paragraph)
         {
-            paragraph.Add(GetChunk("Formato: ", DefaultFontSize + 4f, Font.BOLD));
+            #region Format
 
+            var tableFormat = new PdfPTable(new float[] { 13, 87 });
+            tableFormat.WidthPercentage = 100;
+            tableFormat.HorizontalAlignment = Element.ALIGN_LEFT;
+            tableFormat.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            tableFormat.DefaultCell.BorderWidth = 0;
+
+            tableFormat.AddCell(new Phrase(new Chunk("Formato: ", _fontLabel)));
+
+            var chips = new List<string>();
             var projectFormatsDtos = this.Project.GetAllInterestsByInterestGroupUid(InterestGroup.Format.Uid);
             if (projectFormatsDtos?.Any() == true)
             {
                 foreach (var projectFormatDto in projectFormatsDtos)
                 {
-                    paragraph.Add(GetChunk(projectFormatDto.Interest.Name.GetSeparatorTranslation(Constants.Culture.English, '|'), DefaultFontSize + 4f, Font.NORMAL));
-                    paragraph.Add(GetChunk(" | ", DefaultFontSize + 4f, Font.NORMAL));
-                    paragraph.Add(GetChunk(projectFormatDto.Interest.Name.GetSeparatorTranslation(Constants.Culture.Portuguese, '|'), DefaultFontSize + 4f, Font.NORMAL));
-                    paragraph.Add(GetChunk("    ", DefaultFontSize + 4f, Font.NORMAL));
-
+                    chips.Add(projectFormatDto.Interest.Name);
                 }
+
+                tableFormat.AddCell(GetChips(chips, Font.NORMAL, DefaultFontSize + 4f));
             }
 
+            paragraph.Add(tableFormat);
             paragraph.IndentationLeft = 15;
             paragraph.IndentationRight = 15;
-            paragraph.SpacingBefore = 50;
+            paragraph.SpacingBefore = 10;
             paragraph.SetLeading(1.0f, 1.5f);
             document.Add(paragraph);
             paragraph.Clear();
 
+            #endregion
 
-            paragraph.Add(GetChunk("Plataforma: ", DefaultFontSize + 4f, Font.BOLD));
+            #region Platform
 
+            var tablePltaform = new PdfPTable(new float[] { 15, 85 });
+            tablePltaform.WidthPercentage = 100;
+            tablePltaform.HorizontalAlignment = Element.ALIGN_LEFT;
+            tablePltaform.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            tablePltaform.DefaultCell.BorderWidth = 0;
+
+            tablePltaform.AddCell(new Phrase(new Chunk("Plataforma: ", _fontLabel)));
+
+            chips = new List<string>();
             var projectPlatformsDtos = this.Project.GetAllInterestsByInterestGroupUid(InterestGroup.Platforms.Uid);
             if (projectPlatformsDtos?.Any() == true)
             {
                 foreach (var projectPlatformDto in projectPlatformsDtos)
                 {
-                    paragraph.Add(GetChunk(projectPlatformDto.Interest.Name.GetSeparatorTranslation(Constants.Culture.English, '|'), DefaultFontSize + 4f, Font.NORMAL));
-                    paragraph.Add(GetChunk(" | ", DefaultFontSize + 4f, Font.NORMAL));
-                    paragraph.Add(GetChunk(projectPlatformDto.Interest.Name.GetSeparatorTranslation(Constants.Culture.Portuguese, '|'), DefaultFontSize + 4f, Font.NORMAL));
-                    paragraph.Add(GetChunk("    ", DefaultFontSize + 4f, Font.NORMAL));
+                    chips.Add(projectPlatformDto.Interest.Name);
                 }
+
+                tablePltaform.AddCell(GetChips(chips, Font.NORMAL, DefaultFontSize + 4f));
             }
 
-
+            paragraph.Add(tablePltaform);
             paragraph.IndentationLeft = 15;
             paragraph.IndentationRight = 15;
-            paragraph.SpacingBefore = 20;
-            paragraph.SetLeading(1.0f, 1.0f);
+            paragraph.SpacingBefore = 0;
             document.Add(paragraph);
             paragraph.Clear();
 
+            #endregion
 
-            paragraph.Add(GetChunk("Status do projeto: ", DefaultFontSize + 4f, Font.BOLD));
+            #region Project Status
+
+            var tableStatus = new PdfPTable(new float[] { 25, 75 });
+            tableStatus.WidthPercentage = 100;
+            tableStatus.HorizontalAlignment = Element.ALIGN_LEFT;
+            tableStatus.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            tableStatus.DefaultCell.BorderWidth = 0;
+
+            tableStatus.AddCell(new Phrase(new Chunk("Status do projeto: ", _fontLabel)));
+
+            chips = new List<string>();
             var projectStatusDtos = this.Project.GetAllInterestsByInterestGroupUid(InterestGroup.ProjectStatus.Uid);
             if (projectStatusDtos?.Any() == true)
             {
                 foreach (var projectStatusDto in projectStatusDtos)
                 {
-                    paragraph.Add(GetChunk(projectStatusDto.Interest.Name.GetSeparatorTranslation(Constants.Culture.English, '|'), DefaultFontSize + 4f, Font.NORMAL));
-                    paragraph.Add(GetChunk(" | ", DefaultFontSize + 4f, Font.NORMAL));
-                    paragraph.Add(GetChunk(projectStatusDto.Interest.Name.GetSeparatorTranslation(Constants.Culture.Portuguese, '|'), DefaultFontSize + 4f, Font.NORMAL));
-                    paragraph.Add(GetChunk("    ", DefaultFontSize + 4f, Font.NORMAL));
+                    chips.Add(projectStatusDto.Interest.Name);
                 }
+
+                tableStatus.AddCell(GetChips(chips, Font.NORMAL, DefaultFontSize + 4f));
             }
 
+            paragraph.Add(tableStatus);
             paragraph.IndentationLeft = 15;
             paragraph.IndentationRight = 15;
-            paragraph.SpacingBefore = 20;
+            paragraph.SpacingBefore = 0;
             document.Add(paragraph);
             paragraph.Clear();
 
+            #endregion
 
-            paragraph.Add(GetChunk("Subgênero: ", DefaultFontSize + 4f, Font.BOLD));
+            #region Genre
+
+            var tableSubGenre = new PdfPTable(new float[] { 15, 85 });
+            tableSubGenre.WidthPercentage = 100;
+            tableSubGenre.HorizontalAlignment = Element.ALIGN_LEFT;
+            tableSubGenre.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            tableSubGenre.DefaultCell.BorderWidth = 0;
+
+            tableSubGenre.AddCell(new Phrase(new Chunk("Subgênero: ", _fontLabel)));
+
+            chips = new List<string>();
             var subgeneroDtos = this.Project.GetAllInterestsByInterestGroupUid(InterestGroup.SubGenre.Uid);
             if (subgeneroDtos?.Any() == true)
             {
                 foreach (var subgeneroDto in subgeneroDtos)
                 {
-                    paragraph.Add(GetChunk(subgeneroDto.Interest.Name.GetSeparatorTranslation(Constants.Culture.English, '|'), DefaultFontSize + 4f, Font.NORMAL));
-                    paragraph.Add(GetChunk(" | ", DefaultFontSize + 4f, Font.NORMAL));
-                    paragraph.Add(GetChunk(subgeneroDto.Interest.Name.GetSeparatorTranslation(Constants.Culture.Portuguese, '|'), DefaultFontSize + 4f, Font.NORMAL));
-                    paragraph.Add(GetChunk("    ", DefaultFontSize + 4f, Font.NORMAL));
-
+                    chips.Add(subgeneroDto.Interest.Name);
                 }
+
+                tableSubGenre.AddCell(GetChips(chips, Font.NORMAL, DefaultFontSize + 4f));
             }
 
+            paragraph.Add(tableSubGenre);
             paragraph.IndentationLeft = 15;
             paragraph.IndentationRight = 15;
-            paragraph.SpacingBefore = 20;
+            paragraph.SpacingBefore = 0;
             document.Add(paragraph);
             paragraph.Clear();
+
+            #endregion
 
             return paragraph;
         }
 
+        /// <summary>Gets the project values information.</summary>
+        /// <param name="document">The document.</param>
+        /// <param name="paragraph">The paragraph.</param>
+        /// <returns></returns>
         private Paragraph GetProjectValuesInfo(ref PlataformaRio2CDocument document, Paragraph paragraph)
         {
             document.Add(paragraph);
 
             double.TryParse(this.Project.Project.TotalValueOfProject, out double totalValueOfProject);
-            paragraph.Add(GetChunk("Valor total do projeto (USD): ", DefaultFontSize + 4f, Font.BOLD));
+            paragraph.Add(new Chunk("Valor total do projeto (USD): ", _fontLabel));
             paragraph.Add(GetChunk(totalValueOfProject.ToString("N2"), DefaultFontSize + 4f, Font.NORMAL));
             paragraph.IndentationLeft = 15;
             paragraph.IndentationRight = 15;
@@ -393,7 +459,7 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             paragraph.Clear();
 
             double.TryParse(this.Project.Project.ValueAlreadyRaised, out double valueAlreadyRaised);
-            paragraph.Add(GetChunk("Valor já captado (USD): ", DefaultFontSize + 4f, Font.BOLD));
+            paragraph.Add(new Chunk("Valor já captado (USD): ", _fontLabel));
             paragraph.Add(GetChunk(valueAlreadyRaised.ToString("N2"), DefaultFontSize + 4f, Font.NORMAL));
             paragraph.IndentationLeft = 15;
             paragraph.IndentationRight = 15;
@@ -402,7 +468,7 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             paragraph.Clear();
 
             double.TryParse(this.Project.Project.ValueStillNeeded, out double valueStillNeeded);
-            paragraph.Add(GetChunk("Valor a captar (USD): ", DefaultFontSize + 4f, Font.BOLD));
+            paragraph.Add(new Chunk("Valor a captar (USD): ", _fontLabel));
             paragraph.Add(GetChunk(valueStillNeeded.ToString("N2"), DefaultFontSize + 4f, Font.NORMAL));
             paragraph.IndentationLeft = 15;
             paragraph.IndentationRight = 15;
@@ -415,9 +481,12 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             return paragraph;
         }
 
+        /// <summary>Gets the other infos.</summary>
+        /// <param name="document">The document.</param>
+        /// <param name="paragraph">The paragraph.</param>
         private void GetOtherInfos(ref PlataformaRio2CDocument document, Paragraph paragraph)
         {
-            paragraph.Add(GetChunk("Links de teaser: ", DefaultFontSize + 4f, Font.BOLD));
+            paragraph.Add(new Chunk("Links de teaser: ", _fontLabel));
             if (this.Project.ProjectTeaserLinkDtos?.Any() == true)
             {
                 foreach (var projectTeaserLink in this.Project.ProjectTeaserLinkDtos)
@@ -431,20 +500,16 @@ namespace PlataformaRio2C.Application.TemplateDocuments
                 paragraph.Add(GetChunk("N/A", DefaultFontSize + 4f, Font.NORMAL));
             }
 
-
             paragraph.IndentationLeft = 15;
             paragraph.IndentationRight = 15;
-            paragraph.SpacingBefore = 20;
+            paragraph.SpacingBefore = 10;
             document.Add(paragraph);
             paragraph.Clear();
-
-            document.Add(paragraph);
-
 
             paragraph.Add(GetChunk("Participará no processo de seleção das sessões PITCHING no Rio2C / RioContentMarket: ", DefaultFontSize + 4f, Font.BOLD));
             paragraph.IndentationLeft = 15;
             paragraph.IndentationRight = 15;
-            paragraph.SpacingBefore = 20;
+            paragraph.SpacingBefore = 10;
             paragraph.SetLeading(1.0f, 2.0f);
             document.Add(paragraph);
             paragraph.Clear();
@@ -456,13 +521,10 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             document.Add(paragraph);
             paragraph.Clear();
 
-            document.Add(paragraph);
-
-
             paragraph.Add(GetChunk("Informações Adicionais", DefaultFontSize + 4f, Font.BOLD));
             paragraph.IndentationLeft = 15;
             paragraph.IndentationRight = 15;
-            paragraph.SpacingBefore = 20;
+            paragraph.SpacingBefore = 10;
             document.Add(paragraph);
             paragraph.Clear();
 
