@@ -19,7 +19,7 @@
         @if (Model.ConferenceDtos?.Any() == true)
         {
             <div class="col-12">
-                <table class="table table-sm table-head-bg-brand">
+                <table class="table table-sm table-head-bg-brand table-body-scroll">
                     <thead class="thead-inverse">
                         <tr>
                             <th>@Labels.Title</th>
@@ -27,7 +27,7 @@
                             <th class="text-center">@Labels.EndDate</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="rio2c-scroll" style="height: 200px;">
                         @foreach (var conferenceDto in Model.ConferenceDtos)
                         {
                             <tr>

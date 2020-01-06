@@ -358,3 +358,17 @@ table.dataTable tbody tr.selected {
     .kt-widget20 .kt-widget20__content .kt-widget20__desc a:hover {
         color: #505361;
     }
+
+
+/*
+    Table scroll
+*/
+.table-body-scroll tbody {
+    display: block;
+    overflow-y: scroll;
+}
+    .table-body-scroll thead, .table-body-scroll tbody tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+    }
