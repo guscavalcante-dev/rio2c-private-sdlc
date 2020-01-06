@@ -345,3 +345,16 @@ table.dataTable tbody tr.selected {
     color: #777;
     margin-top: 4px
 }
+
+/*
+    Edition Counters
+*/
+.kt-widget20 .kt-widget20__content .kt-widget20__desc a {
+    color: #74788d;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-top: 0.25rem;
+}
+    .kt-widget20 .kt-widget20__content .kt-widget20__desc a:hover {
+        color: #505361;
+    }
