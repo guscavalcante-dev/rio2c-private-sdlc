@@ -863,4 +863,8 @@
     <value>O campo {0} deve ser maior que o campo {1}.</value>
     <comment>O campo {0} deve ser maior que o campo {1}.</comment>
   </data>
+  <data name="RelatedEntities" xml:space="preserve">
+    <value>{0} Relacionadas</value>
+    <comment>{0} Relacionadas</comment>
+  </data>
 </root>

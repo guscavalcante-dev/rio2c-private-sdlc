@@ -24,6 +24,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface IRoomRepository : IRepository<Room>
     {
         Task<RoomDto> FindDtoAsync(Guid roomUid, int editionId);
+        Task<RoomDto> FindConferenceWidgetDtoAsync(Guid roomUid, int editionId);
         Task<Room> FindByUidAsync(Guid roomUid);
         Task<List<RoomDto>> FindAllDtoByEditionIdAsync(int editionId);
         Task<IPagedList<RoomJsonDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> roomUids, int editionId, int languageId);

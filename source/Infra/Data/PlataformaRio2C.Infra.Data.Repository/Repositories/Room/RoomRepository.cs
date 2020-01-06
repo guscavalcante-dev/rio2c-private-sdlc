@@ -191,6 +191,39 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+        /// <summary>Finds the conference widget dto asynchronous.</summary>
+        /// <param name="roomUid">The room uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<RoomDto> FindConferenceWidgetDtoAsync(Guid roomUid, int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                    .FindByUid(roomUid)
+                                    .FindByEditionId(false, editionId);
+
+            return await query
+                            .Select(r => new RoomDto
+                            {
+                                Room = r,
+                                ConferenceDtos = r.Conferences.Where(c => !c.IsDeleted).Select(c => new ConferenceDto
+                                {
+                                    Conference = c,
+                                    ConferenceTitleDtos = c.ConferenceTitles.Where(ct => !ct.IsDeleted).Select(ct => new ConferenceTitleDto
+                                    {
+                                        ConferenceTitle = ct,
+                                        LanguageDto = new LanguageBaseDto
+                                        {
+                                            Id = ct.Language.Id,
+                                            Uid = ct.Language.Uid,
+                                            Name = ct.Language.Name,
+                                            Code = ct.Language.Code
+                                        }
+                                    })
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
         /// <summary>Finds the by uid asynchronous.</summary>
         /// <param name="roomUid">The room uid.</param>
         /// <returns></returns>

@@ -19,7 +19,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Messages {
@@ -1563,6 +1563,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} Relacionadas.
+        /// </summary>
+        public static string RelatedEntities {
+            get {
+                return ResourceManager.GetString("RelatedEntities", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Restrições e/ou especificações sobre o conteúdo desejado.
         /// </summary>
         public static string RestrictionSpecifics {
@@ -1694,33 +1703,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string SwitchTo {
             get {
                 return ResourceManager.GetString("SwitchTo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to O documento modelo está corrompido..
-        /// </summary>
-        public static string TemplateDocumentCorrupted {
-            get {
-                return ResourceManager.GetString("TemplateDocumentCorrupted", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to O documento modelo não pode ser baixado..
-        /// </summary>
-        public static string TemplateDocumentNotDownloaded {
-            get {
-                return ResourceManager.GetString("TemplateDocumentNotDownloaded", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to O doumento modelo não foi encontrado..
-        /// </summary>
-        public static string TemplateDocumentNotFound {
-            get {
-                return ResourceManager.GetString("TemplateDocumentNotFound", resourceCulture);
             }
         }
         

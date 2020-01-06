@@ -22,6 +22,7 @@ namespace PlataformaRio2C.Domain.Dtos
     {
         public Room Room { get; set; }
         public IEnumerable<RoomNameDto> RoomNameDtos { get; set; }
+        public IEnumerable<ConferenceDto> ConferenceDtos { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="RoomDto"/> class.</summary>
         public RoomDto()
