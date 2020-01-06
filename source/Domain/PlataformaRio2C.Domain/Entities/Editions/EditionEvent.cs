@@ -12,6 +12,8 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
@@ -29,6 +31,8 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTime EndDate { get; private set; }
 
         public virtual Edition Edition { get; private set; }
+
+        public virtual ICollection<Conference> Conferences { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="EditionEvent"/> class.</summary>
         /// <param name="editionEventUid">The edition event uid.</param>
@@ -61,6 +65,36 @@ namespace PlataformaRio2C.Domain.Entities
         protected EditionEvent()
         {
         }
+
+        /// <summary>Deletes the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(int userId)
+        {
+            this.IsDeleted = true;
+            this.DeleteConferences(userId);
+
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
+        #region Conferences
+
+        /// <summary>Deletes the conferences.</summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteConferences(int userId)
+        {
+            if (this.Conferences?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var conference in this.Conferences)
+            {
+                conference.Delete(userId);
+            }
+        }
+
+        #endregion
 
         #region Validations
 

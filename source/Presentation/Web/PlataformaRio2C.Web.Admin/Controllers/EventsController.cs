@@ -375,59 +375,59 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #endregion
 
-        //#region Delete
+        #region Delete
 
-        ///// <summary>Deletes the specified conference.</summary>
-        ///// <param name="cmd"></param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public async Task<ActionResult> Delete(DeleteConference cmd)
-        //{
-        //    var result = new AppValidationResult();
+        /// <summary>Deletes the specified delete edition event.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> Delete(DeleteEditionEvent cmd)
+        {
+            var result = new AppValidationResult();
 
-        //    try
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
 
-        //        cmd.UpdatePreSendProperties(
-        //            this.AdminAccessControlDto.User.Id,
-        //            this.AdminAccessControlDto.User.Uid,
-        //            this.EditionDto.Id,
-        //            this.EditionDto.Uid,
-        //            this.UserInterfaceLanguage);
+                cmd.UpdatePreSendProperties(
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
 
-        //        result = await this.CommandBus.Send(cmd);
-        //        if (!result.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        foreach (var error in result.Errors)
-        //        {
-        //            var target = error.Target ?? "";
-        //            ModelState.AddModelError(target, error.Message);
-        //        }
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
 
-        //        return Json(new
-        //        {
-        //            status = "error",
-        //            message = ex.GetInnerMessage(),
-        //        }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-        //    }
+                return Json(new
+                {
+                    status = "error",
+                    message = ex.GetInnerMessage(),
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Conference, Labels.DeletedF) });
-        //}
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Event, Labels.DeletedM) });
+        }
 
-        //#endregion
+        #endregion
     }
 }

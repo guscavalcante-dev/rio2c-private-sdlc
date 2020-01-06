@@ -428,6 +428,7 @@
     <Content Include="Assets\js\conferences\conferences.delete.js" />
     <Content Include="Assets\js\conferences\conferences.maininformation.widget.js" />
     <Content Include="Assets\js\conferences\conferences.participants.widget.js" />
+    <Content Include="Assets\js\events\events.delete.js" />
     <Content Include="Assets\js\events\events.create.js" />
     <Content Include="Assets\js\rooms\rooms.datatable.widget.js" />
     <Content Include="Assets\js\rooms\rooms.editioncount.widget.js" />
