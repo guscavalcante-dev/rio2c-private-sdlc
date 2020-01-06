@@ -117,9 +117,10 @@
     <Compile Include="Dtos\Conferences\ConferenceJsonDto.cs" />
     <Compile Include="Dtos\Conferences\ConferenceHorizontalTrackDto.cs" />
     <Compile Include="Dtos\Conferences\ConferenceVerticalTrackDto.cs" />
+    <Compile Include="Dtos\EditionEvents\EditionEventDto.cs" />
     <Compile Include="Dtos\Editions\EditionBaseDto.cs" />
     <Compile Include="Dtos\Editions\EditionDto.cs" />
-    <Compile Include="Dtos\Editions\EditionEventJsonDto.cs" />
+    <Compile Include="Dtos\EditionEvents\EditionEventJsonDto.cs" />
     <Compile Include="Dtos\Emails\EmailRecipientDto.cs" />
     <Compile Include="Dtos\Messages\NotificationEmailConversationDto.cs" />
     <Compile Include="Dtos\Messages\HubBaseDto.cs" />

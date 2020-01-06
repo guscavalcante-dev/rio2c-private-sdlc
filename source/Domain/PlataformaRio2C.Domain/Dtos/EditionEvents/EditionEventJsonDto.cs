@@ -4,7 +4,7 @@
 // Created          : 01-04-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-05-2020
+// Last Modified On : 01-06-2020
 // ***********************************************************************
 // <copyright file="EditionEventJsonDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

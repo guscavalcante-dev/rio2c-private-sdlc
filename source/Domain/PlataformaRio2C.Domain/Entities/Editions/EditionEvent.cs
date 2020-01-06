@@ -4,7 +4,7 @@
 // Created          : 01-04-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-04-2020
+// Last Modified On : 01-06-2020
 // ***********************************************************************
 // <copyright file="EditionEvent.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,6 +30,32 @@ namespace PlataformaRio2C.Domain.Entities
 
         public virtual Edition Edition { get; private set; }
 
+        /// <summary>Initializes a new instance of the <see cref="EditionEvent"/> class.</summary>
+        /// <param name="editionEventUid">The edition event uid.</param>
+        /// <param name="edition">The edition.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <param name="userId">The user identifier.</param>
+        public EditionEvent(
+            Guid editionEventUid,
+            Edition edition,
+            string name,
+            DateTime startDate,
+            DateTime endDate,
+            int userId)
+        {
+            //this.Uid = editionEventUid;
+            this.EditionId = edition?.Id ?? 0;
+            this.Edition = edition;
+            this.Name = name?.Trim();
+            this.StartDate = startDate;
+            this.EndDate = endDate.AddHours(23).AddMinutes(59).AddSeconds(59);
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
 
         /// <summary>Initializes a new instance of the <see cref="EditionEvent"/> class.</summary>
         protected EditionEvent()
@@ -47,6 +73,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.ValidateEdition();
             this.ValidateName();
+            this.ValidateDates();
 
             return this.ValidationResult.IsValid;
         }
@@ -71,6 +98,25 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.Name?.Trim().Length < NameMinLength || this.Name?.Trim().Length > NameMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, NameMaxLength, NameMinLength), new string[] { "Name" }));
+            }
+        }
+
+        /// <summary>Validates the dates.</summary>
+        public void ValidateDates()
+        {
+            if (this.StartDate < this.Edition.StartDate || this.StartDate > this.Edition.EndDate)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.StartDate, this.Edition.EndDate.ToShortDateString(), this.Edition.StartDate.ToShortDateString()), new string[] { "StartDate" }));
+            }
+
+            if (this.EndDate < this.Edition.StartDate || this.EndDate > this.Edition.EndDate)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.EndDate, this.Edition.EndDate.ToShortDateString(), this.Edition.StartDate.ToShortDateString()), new string[] { "EndDate" }));
+            }
+
+            if (this.StartDate > this.EndDate)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyGreaterThanProperty, Labels.EndDate, Labels.StartDate), new string[] { "EndDate" }));
             }
         }
 
