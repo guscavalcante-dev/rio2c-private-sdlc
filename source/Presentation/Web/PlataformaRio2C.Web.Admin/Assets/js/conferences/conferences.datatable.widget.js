@@ -40,7 +40,6 @@ var ConferencesDataTableWidget = function () {
         }
 
         var globalVariables = MyRio2cCommon.getGlobalVariables();
-        var imageDirectory = 'https://' + globalVariables.bucket + '/img/users/';
 
         // Initiate datatable
         table = tableElement.DataTable({
@@ -138,7 +137,10 @@ var ConferencesDataTableWidget = function () {
                     }
                 },
                 {
-                    data: 'Room'
+                    data: 'RoomJsonDto',
+                    render: function (data) {
+                        return !MyRio2cCommon.isNullOrEmpty(data) ? data.Name : '';
+                    }
                 },
                 {
                     data: 'StartDate',
@@ -247,9 +249,6 @@ var ConferencesDataTableWidget = function () {
         },
         refreshData: function () {
             refreshData();
-        },
-        exportEventbriteCsv: function() {
-            exportEventbriteCsv();
         },
         showDetails: function (collaboratorUid) {
             showDetails(collaboratorUid);
