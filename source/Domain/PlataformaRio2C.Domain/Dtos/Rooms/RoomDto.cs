@@ -21,7 +21,7 @@ namespace PlataformaRio2C.Domain.Dtos
     public class RoomDto
     {
         public Room Room { get; set; }
-        public IEnumerable<RoomNameDto> RoomNameBaseDtos { get; set; }
+        public IEnumerable<RoomNameDto> RoomNameDtos { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="RoomDto"/> class.</summary>
         public RoomDto()
@@ -38,8 +38,8 @@ namespace PlataformaRio2C.Domain.Dtos
                 languageCode = "pt-br";
             }
 
-            return this.RoomNameBaseDtos?.FirstOrDefault(rn => rn.LanguageDto.Code == languageCode) ??
-                   this.RoomNameBaseDtos?.FirstOrDefault(rn => rn.LanguageDto.Code == "pt-br");
+            return this.RoomNameDtos?.FirstOrDefault(rn => rn.LanguageDto.Code == languageCode) ??
+                   this.RoomNameDtos?.FirstOrDefault(rn => rn.LanguageDto.Code == "pt-br");
         }
     }
 }

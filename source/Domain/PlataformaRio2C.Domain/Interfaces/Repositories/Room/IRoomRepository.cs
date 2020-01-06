@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-05-2020
+// Last Modified On : 01-06-2020
 // ***********************************************************************
 // <copyright file="IRoomRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,6 +23,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>IRoomRepository</summary>
     public interface IRoomRepository : IRepository<Room>
     {
+        Task<RoomDto> FindDtoAsync(Guid roomUid, int editionId);
         Task<Room> FindByUidAsync(Guid roomUid);
         Task<List<RoomDto>> FindAllDtoByEditionIdAsync(int editionId);
         Task<IPagedList<RoomJsonDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> roomUids, int editionId, int languageId);

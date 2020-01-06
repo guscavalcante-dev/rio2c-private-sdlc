@@ -217,7 +217,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 RoomDto = new RoomDto
                                 {
                                     Room = c.Room,
-                                    RoomNameBaseDtos = c.Room.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameDto
+                                    RoomNameDtos = c.Room.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameDto
                                     {
                                         RoomName = rn,
                                         LanguageDto = new LanguageDto

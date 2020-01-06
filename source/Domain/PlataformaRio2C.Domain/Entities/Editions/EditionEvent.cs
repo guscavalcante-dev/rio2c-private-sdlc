@@ -82,8 +82,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.EndDate = endDate.AddHours(23).AddMinutes(59).AddSeconds(59);
 
             this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
-            this.CreateUserId = this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
         }
 
         /// <summary>Deletes the specified user identifier.</summary>

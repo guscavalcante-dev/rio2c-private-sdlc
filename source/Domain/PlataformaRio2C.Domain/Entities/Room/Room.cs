@@ -55,6 +55,20 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
+        /// <summary>Updates the main information.</summary>
+        /// <param name="roomNames">The room names.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateMainInformation(
+            List<RoomName> roomNames,
+            int userId)
+        {
+            this.SynchronizeRoomNames(roomNames, userId);
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
         /// <summary>Deletes the specified user identifier.</summary>
         /// <param name="userId">The user identifier.</param>
         public void Delete(int userId)

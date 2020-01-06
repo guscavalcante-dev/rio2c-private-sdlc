@@ -80,7 +80,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Search(IDataTablesRequest request)
         {
-            var conferences = await this.editionEventRepo.FindAllByDataTable(
+            var editionEvents = await this.editionEventRepo.FindAllByDataTable(
                 request.Start / request.Length,
                 request.Length,
                 request.Search?.Value,
@@ -90,7 +90,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 this.AdminAccessControlDto.Language.Id
             );
 
-            var response = DataTablesResponse.Create(request, conferences.TotalItemCount, conferences.TotalItemCount, conferences);
+            var response = DataTablesResponse.Create(request, editionEvents.TotalItemCount, editionEvents.TotalItemCount, editionEvents);
 
             return Json(new
             {
@@ -110,14 +110,14 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowTotalCountWidget()
         {
-            var conferencesCount = await this.editionEventRepo.CountAllByDataTable(true, this.EditionDto.Id);
+            var editionEventsCount = await this.editionEventRepo.CountAllByDataTable(true, this.EditionDto.Id);
 
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", conferencesCount), divIdOrClass = "#EventsTotalCountWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", editionEventsCount), divIdOrClass = "#EventsTotalCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -130,14 +130,14 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <returns></returns>
         public async Task<ActionResult> ShowEditionCountWidget()
         {
-            var conferencesCount = await this.editionEventRepo.CountAllByDataTable(false, this.EditionDto.Id);
+            var editionEventsCount = await this.editionEventRepo.CountAllByDataTable(false, this.EditionDto.Id);
 
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", conferencesCount), divIdOrClass = "#EventsEditionCountWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", editionEventsCount), divIdOrClass = "#EventsEditionCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }

@@ -1,0 +1,29 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model RoomDto
+@{
+    ViewBag.Title = $"{Labels.Room}  {Model.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)?.RoomName?.Value}";
+}
+@Html.Hidden("AggregateId", Model.Room.Uid)
+<div class="row">
+    <div class="col-md-12">
+        <!--begin:Main Information Widget-->
+        <div class="row">
+            <div class="col-12">
+                <div id="RoomMainInformationWidget" class="kt-portlet" style="min-height: 150px;"></div>
+            </div>
+        </div>
+        <!--end:Main Information Widget-->
+    </div>
+</div>
+@section Styles {
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/rooms.details.js")
+    <script>
+        // Page translations ----------------------------------------------------------------------
+
+        jQuery(document).ready(function () {
+            RoomsMainInformationWidget.init();
+        });
+    </script>
+}

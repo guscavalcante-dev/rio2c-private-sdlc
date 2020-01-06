@@ -163,6 +163,34 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
+        /// <summary>Finds the dto asynchronous.</summary>
+        /// <param name="roomUid">The room uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<RoomDto> FindDtoAsync(Guid roomUid, int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(roomUid)
+                                .FindByEditionId(false, editionId);
+
+            return await query
+                            .Select(r => new RoomDto
+                            {
+                                Room = r,
+                                RoomNameDtos = r.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameDto
+                                {
+                                    RoomName = rn,
+                                    LanguageDto = new LanguageDto
+                                    {
+                                        Id = rn.Language.Id,
+                                        Uid = rn.Language.Uid,
+                                        Code = rn.Language.Code
+                                    }
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
         /// <summary>Finds the by uid asynchronous.</summary>
         /// <param name="roomUid">The room uid.</param>
         /// <returns></returns>
@@ -187,7 +215,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Select(r => new RoomDto
                             {
                                 Room = r,
-                                RoomNameBaseDtos = r.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameDto
+                                RoomNameDtos = r.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameDto
                                 {
                                     RoomName = rn,
                                     LanguageDto = new LanguageDto
