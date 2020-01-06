@@ -422,6 +422,7 @@
     <Content Include="Assets\js\conferences\conferences.editionevents.js" />
     <Content Include="Assets\js\conferences\conferences.datatable.widget.js" />
     <Content Include="Assets\js\conferences\conferences.editioncount.widget.js" />
+    <Content Include="Assets\js\events\events.conferences.widget.js" />
     <Content Include="Assets\js\rooms\rooms.conferences.widget.js" />
     <Content Include="Assets\js\rooms\rooms.maininformation.widget.js" />
     <Content Include="Assets\js\conferences\conferences.tracks.widget.js" />
@@ -8293,6 +8294,7 @@
     <Content Include="Views\Rooms\Modals\UpdateMainInformationForm.cshtml" />
     <Content Include="Views\Rooms\Modals\UpdateMainInformationModal.cshtml" />
     <Content Include="Views\Rooms\Widgets\ConferencesWidget.cshtml" />
+    <Content Include="Views\Events\Widgets\ConferencesWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -8317,7 +8319,6 @@
     <Folder Include="Scripts\ckeditor\themes\default\" />
     <Folder Include="UploadsArchives\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\Event\" />
     <Folder Include="Views\PlayerProducer\" />
     <Folder Include="Views\Rio2CNetwork\" />
   </ItemGroup>

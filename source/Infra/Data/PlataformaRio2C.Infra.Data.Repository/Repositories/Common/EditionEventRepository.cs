@@ -192,6 +192,39 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+        /// <summary>Finds the conference widget dto asynchronous.</summary>
+        /// <param name="editionEventUid">The edition event uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<EditionEventDto> FindConferenceWidgetDtoAsync(Guid editionEventUid, int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(editionEventUid)
+                                .FindByEditionId(false, editionId);
+
+            return await query
+                            .Select(ee => new EditionEventDto
+                            {
+                                EditionEvent = ee,
+                                ConferenceDtos = ee.Conferences.Where(c => !c.IsDeleted).Select(c => new ConferenceDto
+                                {
+                                    Conference = c,
+                                    ConferenceTitleDtos = c.ConferenceTitles.Where(ct => !ct.IsDeleted).Select(ct => new ConferenceTitleDto
+                                    {
+                                        ConferenceTitle = ct,
+                                        LanguageDto = new LanguageBaseDto
+                                        {
+                                            Id = ct.Language.Id,
+                                            Uid = ct.Language.Uid,
+                                            Name = ct.Language.Name,
+                                            Code = ct.Language.Code
+                                        }
+                                    })
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
         /// <summary>Finds all by edition identifier asynchronous.</summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>

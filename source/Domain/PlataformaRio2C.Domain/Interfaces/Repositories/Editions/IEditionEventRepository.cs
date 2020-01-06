@@ -24,6 +24,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface IEditionEventRepository : IRepository<EditionEvent>
     {
         Task<EditionEventDto> FindDtoAsync(Guid editionEventUid, int editionId);
+        Task<EditionEventDto> FindConferenceWidgetDtoAsync(Guid editionEventUid, int editionId);
         Task<EditionEvent> FindByUidAsync(Guid editionEventUid);
         Task<List<EditionEvent>> FindAllByEditionIdAsync(int editionId);
         Task<IPagedList<EditionEventJsonDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> editionEventUids, int editionId, int languageId);

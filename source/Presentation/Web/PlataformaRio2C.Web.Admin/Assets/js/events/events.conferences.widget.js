@@ -6,15 +6,15 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 01-06-2020
 // ***********************************************************************
-// <copyright file="rooms.conferences.widget.js" company="Softo">
+// <copyright file="events.conferences.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var RoomsConferencesWidget = function () {
+var EventsConferencesWidget = function () {
 
-    var widgetElementId = '#RoomConferencesWidget';
+    var widgetElementId = '#EventConferencesWidget';
     var widgetElement = $(widgetElementId);
 
     //var updateModalId = '#UpdateMainInformationModal';
@@ -31,9 +31,9 @@ var RoomsConferencesWidget = function () {
         }
 
         var jsonParameters = new Object();
-        jsonParameters.roomUid = $('#AggregateId').val();
+        jsonParameters.editionEventUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Rooms/ShowConferencesWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Events/ShowConferencesWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

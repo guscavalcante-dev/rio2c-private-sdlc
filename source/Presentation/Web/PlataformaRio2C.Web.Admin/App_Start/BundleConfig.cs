@@ -406,7 +406,8 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/events/events.create.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/events.details.js").Include(
-                "~/Assets/js/events/events.maininformation.widget.js"));
+                "~/Assets/js/events/events.maininformation.widget.js",
+                "~/Assets/js/events/events.conferences.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/events.delete.js").Include(
                 "~/Assets/js/events/events.delete.js"));

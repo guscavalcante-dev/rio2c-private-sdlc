@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 01-06-2020
 // ***********************************************************************
-// <copyright file="events.maininformation.widget" company="Softo">
+// <copyright file="events.maininformation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -61,6 +61,10 @@ var EventsMainInformationWidget = function () {
 
                 if (typeof (EventsMainInformationWidget) !== 'undefined') {
                     EventsMainInformationWidget.init();
+                }
+
+                if (typeof (EventsConferencesWidget) !== 'undefined') {
+                    EventsConferencesWidget.init();
                 }
             },
             onError: function (data) {

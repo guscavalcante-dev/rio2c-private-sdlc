@@ -288,6 +288,32 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #endregion
 
+        #region Conferences Widget
+
+        /// <summary>Shows the conferences widget.</summary>
+        /// <param name="editionEventUid">The edition event uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowConferencesWidget(Guid? editionEventUid)
+        {
+            var conferencesWidgetDto = await this.editionEventRepo.FindConferenceWidgetDtoAsync(editionEventUid ?? Guid.Empty, this.EditionDto.Id);
+            if (conferencesWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Event, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/ConferencesWidget", conferencesWidgetDto), divIdOrClass = "#EventConferencesWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
         #endregion
 
         #region Create
