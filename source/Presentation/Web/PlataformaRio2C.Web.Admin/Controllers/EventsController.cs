@@ -39,32 +39,18 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     public class EventsController : BaseController
     {
         private readonly IEditionEventRepository editionEventRepo;
-        private readonly IConferenceRepository conferenceRepo;
-        private readonly IConferenceParticipantRoleRepository conferenceParticipantRoleRepo;
-        private readonly ILanguageRepository languageRepo;
-        private readonly IVerticalTrackRepository verticalTrackRepo;
-        private readonly IHorizontalTrackRepository horizontalTrackRepo;
-        private readonly IRoomRepository roomRepo;
 
+        /// <summary>Initializes a new instance of the <see cref="EventsController"/> class.</summary>
+        /// <param name="commandBus">The command bus.</param>
+        /// <param name="identityController">The identity controller.</param>
+        /// <param name="editionEventRepository">The edition event repository.</param>
         public EventsController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
-            IEditionEventRepository editionEventRepository,
-            IConferenceRepository conferenceRepository,
-            IConferenceParticipantRoleRepository conferenceParticipantRoleRepository,
-            ILanguageRepository languageRepository,
-            IVerticalTrackRepository verticalTrackRepository,
-            IHorizontalTrackRepository horizontalTrackRepository,
-            IRoomRepository roomRepository)
+            IEditionEventRepository editionEventRepository)
             : base(commandBus, identityController)
         {
             this.editionEventRepo = editionEventRepository;
-            this.conferenceRepo = conferenceRepository;
-            this.conferenceParticipantRoleRepo = conferenceParticipantRoleRepository;
-            this.languageRepo = languageRepository;
-            this.verticalTrackRepo = verticalTrackRepository;
-            this.horizontalTrackRepo = horizontalTrackRepository;
-            this.roomRepo = roomRepository;
         }
 
         #region List
