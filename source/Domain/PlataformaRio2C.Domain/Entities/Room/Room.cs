@@ -27,6 +27,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual Edition Edition { get; private set; }
 
         public virtual ICollection<RoomName> RoomNames { get; private set; }
+        public virtual ICollection<Conference> Conferences { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="Room"/> class.</summary>
         /// <param name="roomUid">The room uid.</param>
@@ -52,6 +53,18 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Initializes a new instance of the <see cref="Room"/> class.</summary>
         protected Room()
         {
+        }
+
+        /// <summary>Deletes the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(int userId)
+        {
+            this.IsDeleted = true;
+            this.SynchronizeRoomNames(new List<RoomName>(), userId);
+            this.DeleteConferencesRooms(userId);
+
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
         }
 
         #region Room Names
@@ -105,6 +118,25 @@ namespace PlataformaRio2C.Domain.Entities
         private void CreateRoomName(RoomName roomName)
         {
             this.RoomNames.Add(roomName);
+        }
+
+        #endregion
+
+        #region Conferences
+
+        /// <summary>Deletes the conferences rooms.</summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteConferencesRooms(int userId)
+        {
+            if (this.Conferences?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var conference in this.Conferences.Where(c => !c.IsDeleted))
+            {
+                conference.DeleteRoom(userId);
+            }
         }
 
         #endregion

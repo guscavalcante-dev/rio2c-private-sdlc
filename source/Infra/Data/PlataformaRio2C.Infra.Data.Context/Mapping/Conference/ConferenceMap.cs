@@ -30,7 +30,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                 .HasForeignKey(t => t.EditionEventId);
 
             this.HasOptional(t => t.Room)
-              .WithMany()
+              .WithMany(d => d.Conferences)
               .HasForeignKey(t => t.RoomId);
         }
     }

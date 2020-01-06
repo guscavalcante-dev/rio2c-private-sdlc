@@ -431,6 +431,7 @@
     <Content Include="Assets\js\events\events.maininformation.widget.js" />
     <Content Include="Assets\js\events\events.delete.js" />
     <Content Include="Assets\js\events\events.create.js" />
+    <Content Include="Assets\js\rooms\rooms.delete.js" />
     <Content Include="Assets\js\rooms\rooms.create.js" />
     <Content Include="Assets\js\rooms\rooms.datatable.widget.js" />
     <Content Include="Assets\js\rooms\rooms.editioncount.widget.js" />

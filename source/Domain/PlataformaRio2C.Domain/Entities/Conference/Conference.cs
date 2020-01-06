@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-05-2020
+// Last Modified On : 01-06-2020
 // ***********************************************************************
 // <copyright file="Conference.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -111,6 +111,17 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = true;
             this.SynchronizeConferenceTitles(new List<ConferenceTitle>(), userId);
             this.SynchronizeConferenceSynopses(new List<ConferenceSynopsis>(), userId);
+
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Deletes the room.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void DeleteRoom(int userId)
+        {
+            this.RoomId = null;
+            this.Room = null;
 
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;

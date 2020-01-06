@@ -108,7 +108,7 @@ namespace PlataformaRio2C.Domain.Entities
                 return;
             }
 
-            foreach (var conference in this.Conferences)
+            foreach (var conference in this.Conferences.Where(c => !c.IsDeleted))
             {
                 conference.Delete(userId);
             }
