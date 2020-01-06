@@ -1,0 +1,31 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model EditionEventDto
+@{
+    ViewBag.Title = $"{Labels.Event}  {Model.EditionEvent.Name}";
+}
+@Html.Hidden("AggregateId", Model.EditionEvent.Uid)
+<div class="row">
+    <div class="col-md-12">
+        <!--begin:Main Information Widget-->
+        <div class="row">
+            <div class="col-12">
+                <div id="EventMainInformationWidget" class="kt-portlet" style="min-height: 150px;"></div>
+            </div>
+        </div>
+        <!--end:Main Information Widget-->
+    </div>
+</div>
+@section Styles {
+    @Styles.Render("~/bundles/css/bootstrap-datepicker.css")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/bootstrap-datepicker.js")
+    @Scripts.Render("~/bundles/js/events.details.js")
+    <script>
+        // Page translations ----------------------------------------------------------------------
+
+        jQuery(document).ready(function () {
+            EventsMainInformationWidget.init();
+        });
+    </script>
+}

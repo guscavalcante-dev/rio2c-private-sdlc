@@ -11,6 +11,7 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System.Collections.Generic;
 using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Domain.Dtos
@@ -19,6 +20,8 @@ namespace PlataformaRio2C.Domain.Dtos
     public class EditionEventDto
     {
         public EditionEvent EditionEvent { get; set; }
+
+        public IEnumerable<ConferenceDto> ConferenceDtos { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="EditionEventDto"/> class.</summary>
         public EditionEventDto()

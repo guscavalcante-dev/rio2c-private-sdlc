@@ -66,6 +66,26 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
+        /// <summary>Updates the main information.</summary>
+        /// <param name="name">The name.</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateMainInformation(
+            string name,
+            DateTime startDate,
+            DateTime endDate,
+            int userId)
+        {
+            this.Name = name?.Trim();
+            this.StartDate = startDate;
+            this.EndDate = endDate.AddHours(23).AddMinutes(59).AddSeconds(59);
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
         /// <summary>Deletes the specified user identifier.</summary>
         /// <param name="userId">The user identifier.</param>
         public void Delete(int userId)

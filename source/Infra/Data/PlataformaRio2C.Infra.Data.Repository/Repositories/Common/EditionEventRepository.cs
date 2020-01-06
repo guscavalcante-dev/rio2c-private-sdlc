@@ -4,7 +4,7 @@
 // Created          : 01-04-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-05-2020
+// Last Modified On : 01-06-2020
 // ***********************************************************************
 // <copyright file="EditionEventRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -171,6 +171,24 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByUid(editionEventUid);
 
             return await query
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>Finds the dto asynchronous.</summary>
+        /// <param name="editionEventUid">The edition event uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<EditionEventDto> FindDtoAsync(Guid editionEventUid, int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(editionEventUid)
+                                .FindByEditionId(false, editionId);
+
+            return await query
+                            .Select(ee => new EditionEventDto
+                            {
+                                EditionEvent = ee
+                            })
                             .FirstOrDefaultAsync();
         }
 
