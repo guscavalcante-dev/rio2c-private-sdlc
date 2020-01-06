@@ -76,10 +76,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>Finds the by keywords.</summary>
         /// <param name="query">The query.</param>
         /// <param name="keywords">The keywords.</param>
-        /// <param name="editionId">The edition identifier.</param>
         /// <param name="languageId">The language identifier.</param>
         /// <returns></returns>
-        internal static IQueryable<Conference> FindByKeywords(this IQueryable<Conference> query, string keywords, int editionId, int languageId)
+        internal static IQueryable<Conference> FindByKeywords(this IQueryable<Conference> query, string keywords, int languageId)
         {
             if (!string.IsNullOrEmpty(keywords))
             {
@@ -366,7 +365,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             int languageId)
         {
             var query = this.GetBaseQuery()
-                                .FindByKeywords(keywords, editionId, languageId)
+                                .FindByKeywords(keywords, languageId)
                                 .FindByEditionId(false, editionId)
                                 .FindByUids(conferencesUids);
                                 //.FindByHighlights(collaboratorTypeName, showHighlights);

@@ -383,22 +383,41 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/conferences.editionevents.js").Include(
                 "~/Assets/js/conferences/conferences.editionevents.js"));
 
-            //bundles.Add(new StyleBundle("~/bundles/css/conferences.details.css").Include(
-            //    "~/Assets/themes/metronic/css/demo4/pages/pricing/pricing-1.css"));
-
             bundles.Add(new ScriptBundle("~/bundles/js/conferences.details.js").Include(
                 "~/Assets/js/conferences/conferences.maininformation.widget.js",
                 "~/Assets/js/conferences/conferences.tracks.widget.js",
                 "~/Assets/js/conferences/conferences.participants.widget.js"));
 
-            //bundles.Add(new ScriptBundle("~/bundles/js/conferences.update.js").Include(
-            //    "~/Assets/js/conferences/conferences.update.js"));
-
             bundles.Add(new ScriptBundle("~/bundles/js/conferences.delete.js").Include(
                 "~/Assets/js/conferences/conferences.delete.js"));
 
             #endregion
-            
+
+            #region Conferences
+
+            bundles.Add(new ScriptBundle("~/bundles/js/events.list.js").Include(
+                "~/Assets/js/events/events.totalcount.widget.js",
+                "~/Assets/js/events/events.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/events.editioncount.js").Include(
+                "~/Assets/js/events/events.editioncount.widget.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/js/conferences.create.js").Include(
+            //    "~/Assets/js/conferences/conferences.create.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/js/conferences.editionevents.js").Include(
+            //    "~/Assets/js/conferences/conferences.editionevents.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/js/conferences.details.js").Include(
+            //    "~/Assets/js/conferences/conferences.maininformation.widget.js",
+            //    "~/Assets/js/conferences/conferences.tracks.widget.js",
+            //    "~/Assets/js/conferences/conferences.participants.widget.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/js/conferences.delete.js").Include(
+            //    "~/Assets/js/conferences/conferences.delete.js"));
+
+            #endregion
+
             #region Projects
 
             bundles.Add(new ScriptBundle("~/bundles/js/projects.pitching.widget.js").Include(

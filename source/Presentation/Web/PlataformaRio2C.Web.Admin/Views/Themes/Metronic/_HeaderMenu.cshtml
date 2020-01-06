@@ -148,7 +148,7 @@
     }
     @if (isAdminFull || isCuratorshipAudiovisual)
     {
-        <li class="kt-menu__item kt-menu__item--submenu kt-menu__item--rel @this.IsOpen(menuOpenCssClass, null, "Conferences", null) @this.IsOpen(menuOpenCssClass, null, "Speakers", null) @this.IsOpen(menuOpenCssClass, "Index", "RoleLecturer", null) @this.IsOpen(menuOpenCssClass, "Index", "Room", null)" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
+        <li class="kt-menu__item kt-menu__item--submenu kt-menu__item--rel @this.IsOpen(menuOpenCssClass, null, "Conferences,Speakers,Events,Rooms", null) @this.IsOpen(menuOpenCssClass, "Index", "RoleLecturer", null)" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
             <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">@Labels.Conferences</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
             <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
                 <ul class="kt-menu__subnav">
@@ -159,7 +159,7 @@
                         <a href="@Url.Action("Index", "Speakers", new { Area = "" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Speakers</span></a>
                     </li>
                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Events", null)" aria-haspopup="true">
-                        <a href="#" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Event</span></a>
+                        <a href="@Url.Action("Index", "Events", new { Area = "" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Events</span></a>
                     </li>
                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "Index", "Room", null)" aria-haspopup="true">
                         <a href="#" @*href="@Url.Action("Index", "Room")"*@ class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Rooms</span></a>
@@ -180,7 +180,7 @@
     @if (isAdminFull || isLogistics)
     {
         <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "Index", "Logistics", null)" aria-haspopup="true">
-            <a href="@Url.Action("Index", "Logistics")" class="kt-menu__link">
+            <a href="#" @*href="@Url.Action("Index", "Logistics")"*@ class="kt-menu__link">
                 <span class="kt-menu__link-text">@Labels.Logistics</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
             </a>
         </li>

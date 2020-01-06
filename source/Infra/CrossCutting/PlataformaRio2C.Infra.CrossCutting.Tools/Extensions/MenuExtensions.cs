@@ -4,7 +4,7 @@
 // Created          : 07-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-03-2019
+// Last Modified On : 01-05-2020
 // ***********************************************************************
 // <copyright file="MenuExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,11 +25,11 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         /// <param name="page">The page.</param>
         /// <param name="cssClass">The CSS class.</param>
         /// <param name="actionNames">The action names.</param>
-        /// <param name="controlName">Name of the control.</param>
+        /// <param name="controlNames">The control names.</param>
         /// <param name="areaName">Name of the area.</param>
         /// <param name="separatorCharacter">The separator character.</param>
         /// <returns></returns>
-        public static string IsOpen(this WebViewPage page, string cssClass, string actionNames, string controlName, string areaName, char separatorCharacter = ',')
+        public static string IsOpen(this WebViewPage page, string cssClass, string actionNames, string controlNames, string areaName, char separatorCharacter = ',')
         {
             if (!string.IsNullOrEmpty(areaName))
             {
@@ -40,10 +40,11 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                 }
             }
 
-            if (!string.IsNullOrEmpty(controlName))
+            if (!string.IsNullOrEmpty(controlNames))
             {
                 var currentControllerName = page.ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
-                if (currentControllerName != controlName)
+                var controllers = controlNames.Split(separatorCharacter);
+                if (!controllers.Contains(currentControllerName))
                 {
                     return string.Empty;
                 }
