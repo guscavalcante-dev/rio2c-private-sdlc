@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-05-2020
+// Last Modified On : 01-06-2020
 // ***********************************************************************
 // <copyright file="ConferenceRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -217,11 +217,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 RoomDto = new RoomDto
                                 {
                                     Room = c.Room,
-                                    RoomNameBaseDtos = c.Room.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameBaseDto
+                                    RoomNameBaseDtos = c.Room.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameDto
                                     {
-                                        Id = rn.Id,
-                                        Uid = rn.Uid,
-                                        Value = rn.Value,
+                                        RoomName = rn,
                                         LanguageDto = new LanguageDto
                                         {
                                             Id = rn.Language.Id,

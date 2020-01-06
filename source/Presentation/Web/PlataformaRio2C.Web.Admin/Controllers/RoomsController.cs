@@ -4,7 +4,7 @@
 // Created          : 01-05-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-05-2020
+// Last Modified On : 01-06-2020
 // ***********************************************************************
 // <copyright file="RoomsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -39,14 +39,22 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     public class RoomsController : BaseController
     {
         private readonly IRoomRepository roomRepo;
+        private readonly ILanguageRepository languageRepo;
 
+        /// <summary>Initializes a new instance of the <see cref="RoomsController"/> class.</summary>
+        /// <param name="commandBus">The command bus.</param>
+        /// <param name="identityController">The identity controller.</param>
+        /// <param name="roomRepository">The room repository.</param>
+        /// <param name="languageRepository">The language repository.</param>
         public RoomsController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
-            IRoomRepository roomRepository)
+            IRoomRepository roomRepository,
+            ILanguageRepository languageRepository)
             : base(commandBus, identityController)
         {
             this.roomRepo = roomRepository;
+            this.languageRepo = languageRepository;
         }
 
         #region List
@@ -296,86 +304,82 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         //#endregion
 
-        //#region Create
+        #region Create
 
-        ///// <summary>Shows the create modal.</summary>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowCreateModal()
-        //{
-        //    var cmd = new CreateConference(
-        //        null,
-        //        await this.editionEventRepo.FindAllByEditionIdAsync(this.EditionDto.Id),
-        //        await this.languageRepo.FindAllDtosAsync());
+        /// <summary>Shows the create modal.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowCreateModal()
+        {
+            var cmd = new CreateRoom(
+                null,
+                await this.languageRepo.FindAllDtosAsync());
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Modals/CreateModal", cmd), divIdOrClass = "#GlobalModalContainer" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/CreateModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
-        ///// <summary>Creates the specified command.</summary>
-        ///// <param name="cmd">The command.</param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public async Task<ActionResult> Create(CreateConference cmd)
-        //{
-        //    var result = new AppValidationResult();
+        /// <summary>Creates the specified room.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> Create(CreateRoom cmd)
+        {
+            var result = new AppValidationResult();
 
-        //    try
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
 
-        //        cmd.UpdatePreSendProperties(
-        //            this.AdminAccessControlDto.User.Id,
-        //            this.AdminAccessControlDto.User.Uid,
-        //            this.EditionDto.Id,
-        //            this.EditionDto.Uid,
-        //            this.UserInterfaceLanguage);
-        //        result = await this.CommandBus.Send(cmd);
-        //        if (!result.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        foreach (var error in result.Errors)
-        //        {
-        //            var target = error.Target ?? "";
-        //            ModelState.AddModelError(target, error.Message);
-        //        }
+                cmd.UpdatePreSendProperties(
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
 
-        //        cmd.UpdateDropdowns(
-        //            await this.editionEventRepo.FindAllByEditionIdAsync(this.EditionDto.Id));
+                return Json(new
+                {
+                    status = "error",
+                    message = ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/_CreateForm", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
 
-        //        return Json(new
-        //        {
-        //            status = "error",
-        //            message = ex.GetInnerMessage(),
-        //            pages = new List<dynamic>
-        //            {
-        //                new { page = this.RenderRazorViewToString("Modals/_CreateForm", cmd), divIdOrClass = "#form-container" },
-        //            }
-        //        }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-        //    }
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Room, Labels.CreatedF) });
+        }
 
-        //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Conference, Labels.CreatedF) });
-        //}
-
-        //#endregion
+        #endregion
 
         //#region Delete
 

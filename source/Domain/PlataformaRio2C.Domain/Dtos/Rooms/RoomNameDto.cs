@@ -1,31 +1,28 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Rafael Dantas Ruiz
-// Created          : 01-05-2020
+// Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-05-2020
+// Last Modified On : 01-06-2020
 // ***********************************************************************
-// <copyright file="RoomNameBaseDto.cs" company="Softo">
+// <copyright file="RoomNameDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
+using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
-    /// <summary>RoomNameBaseDto</summary>
-    public class RoomNameBaseDto
+    /// <summary>RoomNameDto</summary>
+    public class RoomNameDto
     {
-        public int Id { get; set; }
-        public Guid Uid { get; set; }
-        public string Value { get; set; }
-
+        public RoomName RoomName { get; set; }
         public LanguageBaseDto LanguageDto { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="RoomNameBaseDto"/> class.</summary>
-        public RoomNameBaseDto()
+        /// <summary>Initializes a new instance of the <see cref="RoomNameDto"/> class.</summary>
+        public RoomNameDto()
         {
         }
     }

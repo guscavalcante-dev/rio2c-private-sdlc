@@ -246,6 +246,8 @@
     <Compile Include="CQRS\CommandsHandlers\Projects\UpdateProjectLinksCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Projects\UpdateProjectMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Projects\CreateProjectCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Rooms\RoomBaseCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Rooms\CreateRoomCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\SalesPlatformWebhookRequests\BaseSalesPlatformWebhookRequestCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\SalesPlatformWebhookRequests\CreateSalesPlatformWebhookRequestCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\SalesPlatformWebhookRequests\ProcessPendingPlatformWebhookRequestsAsyncCommandHandler.cs" />
@@ -340,6 +342,8 @@
     <Compile Include="CQRS\Commands\Projects\UpdateProjectBuyerCompanies.cs" />
     <Compile Include="CQRS\Commands\Projects\UpdateProjectLinks.cs" />
     <Compile Include="CQRS\Commands\Projects\UpdateProjectMainInformation.cs" />
+    <Compile Include="CQRS\Commands\Rooms\BaseCommands\RoomNameBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Rooms\CreateRoom.cs" />
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\ProcessPendingPlatformWebhookRequestsAsync.cs" />
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\CreateSalesPlatformWebhookRequest.cs" />
     <Compile Include="CQRS\BaseUserRequest.cs" />

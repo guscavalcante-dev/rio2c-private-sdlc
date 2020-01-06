@@ -1957,4 +1957,8 @@
     <value>Events</value>
     <comment>Eventos</comment>
   </data>
+  <data name="Names" xml:space="preserve">
+    <value>Names</value>
+    <comment>Nomes</comment>
+  </data>
 </root>

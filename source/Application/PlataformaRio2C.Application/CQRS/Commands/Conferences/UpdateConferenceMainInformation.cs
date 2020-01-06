@@ -4,7 +4,7 @@
 // Created          : 01-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-05-2020
+// Last Modified On : 01-06-2020
 // ***********************************************************************
 // <copyright file="UpdateConferenceMainInformation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -73,7 +73,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             {
                 Id = r.Room.Id,
                 Uid = r.Room.Uid,
-                Name = r.GetRoomNameByLanguageCode(userInterfaceLanguage)?.Value
+                Name = r.GetRoomNameByLanguageCode(userInterfaceLanguage)?.RoomName?.Value
             })?.ToList();
         }
 

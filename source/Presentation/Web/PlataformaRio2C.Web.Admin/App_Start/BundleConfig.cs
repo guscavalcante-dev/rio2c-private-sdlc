@@ -422,8 +422,8 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/rooms.editioncount.js").Include(
                 "~/Assets/js/rooms/rooms.editioncount.widget.js"));
 
-            //bundles.Add(new ScriptBundle("~/bundles/js/rooms.create.js").Include(
-            //    "~/Assets/js/rooms/rooms.create.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/rooms.create.js").Include(
+                "~/Assets/js/rooms/rooms.create.js"));
 
             //bundles.Add(new ScriptBundle("~/bundles/js/rooms.editionevents.js").Include(
             //    "~/Assets/js/rooms/rooms.editionevents.js"));

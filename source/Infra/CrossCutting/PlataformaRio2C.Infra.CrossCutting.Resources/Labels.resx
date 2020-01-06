@@ -1968,4 +1968,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Eventos</value>
     <comment>Eventos</comment>
   </data>
+  <data name="Names" xml:space="preserve">
+    <value>Nomes</value>
+    <comment>Nomes</comment>
+  </data>
 </root>

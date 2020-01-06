@@ -148,7 +148,7 @@
     <Compile Include="Dtos\Projects\ProjectAdditionalInformationDto.cs" />
     <Compile Include="Dtos\Projects\ProjectTitleDto.cs" />
     <Compile Include="Dtos\Projects\ProjectDto.cs" />
-    <Compile Include="Dtos\Rooms\RoomNameBaseDto.cs" />
+    <Compile Include="Dtos\Rooms\RoomNameDto.cs" />
     <Compile Include="Dtos\Rooms\RoomDto.cs" />
     <Compile Include="Dtos\Rooms\RoomJsonDto.cs" />
     <Compile Include="Dtos\SalesPlatforms\AttendeeSalesPlatformTicketTypeDto.cs" />
