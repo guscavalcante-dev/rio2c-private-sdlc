@@ -627,6 +627,7 @@
     <Compile Include="ViewModels\Common\Player\Properties\PlayerDescriptionAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Player\PlayerAppViewModel.cs" />
     <Compile Include="ViewModels\Site\Player\PlayerDetailWithInterestAppViewModel.cs" />
+    <Compile Include="ViewModels\VerticalTracks\VerticalTrackSearchViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

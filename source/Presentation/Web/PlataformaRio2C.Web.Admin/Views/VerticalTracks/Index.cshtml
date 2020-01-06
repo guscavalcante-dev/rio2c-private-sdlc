@@ -1,0 +1,44 @@
+﻿@model VerticalTrackSearchViewModel
+@{
+    ViewBag.Title = Labels.VerticalTracks;
+}
+<!--begin:: Quick Stats-->
+<div class="row">
+    <div class="col-sm-6">
+        <!--begin:: Total Count Widget-->
+        <div id="VerticalTracksTotalCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <!--end:: Total Count Widget-->
+    </div>
+    <div class="col-sm-6">
+        <!--begin:: Edition Count-->
+        <div id="VerticalTracksEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <!--end:: Edition Count-->
+    </div>
+</div>
+<!--end:: Quick Stats-->
+@Html.Partial("Widgets/DataTablewidget", Model)
+@section Styles {
+    @Styles.Render("~/bundles/css/dataTables.css")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/dataTables.js")
+    @Scripts.Render("~/bundles/js/chart.js")
+    @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/verticaltracks.list.js")
+    @Scripts.Render("~/bundles/js/verticaltracks.editioncount.js")
+    @*@Scripts.Render("~/bundles/js/verticaltracks.create.js")*@
+    @*@Scripts.Render("~/bundles/js/verticaltracks.delete.js")*@
+    <script>
+        // Page translations ----------------------------------------------------------------------
+
+        // Pagination -----------------------------------------------------------------------------
+        var initialPage = @(Model.Page?.ToString() ?? "null");
+        var initialPageSize = @(Model.PageSize?.ToString() ?? "null");
+
+        jQuery(document).ready(function () {
+            VerticalTracksTotalCountWidget.init();
+            VerticalTracksEditionCountWidget.init();
+            VerticalTracksDataTableWidget.init();
+        });
+    </script>
+}

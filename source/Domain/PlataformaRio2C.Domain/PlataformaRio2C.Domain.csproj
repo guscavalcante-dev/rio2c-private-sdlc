@@ -175,6 +175,7 @@
     <Compile Include="Dtos\Users\UserLanguageDto.cs" />
     <Compile Include="Dtos\Users\UserAccessControlDto.cs" />
     <Compile Include="Dtos\Users\UserBaseDto.cs" />
+    <Compile Include="Dtos\VerticalTracks\VerticalTrackJsonDto.cs" />
     <Compile Include="Entities\Addresses\Address.cs" />
     <Compile Include="Entities\Base\AggregateRoot.cs" />
     <Compile Include="Entities\Collaborator\AttendeeCollaborator.cs" />
