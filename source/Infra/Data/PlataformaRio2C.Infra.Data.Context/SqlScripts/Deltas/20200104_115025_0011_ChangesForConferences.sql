@@ -313,6 +313,13 @@ ALTER TABLE "EditionEvents"
 	ADD CONSTRAINT "FK_Users_EditionEvents_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
 go
 
+ALTER TABLE "dbo"."ConferenceTitles"
+	ADD CONSTRAINT "IDX_UQ_ConferenceTitles_ConferenceId_LanguageId" UNIQUE ("ConferenceId"  ASC,"LanguageId"  ASC)
+go
+
+ALTER TABLE "dbo"."ConferenceSynopsis"
+	ADD CONSTRAINT "IDX_UQ_ConferenceSynopsis_ConferenceId_LanguageId" UNIQUE ("ConferenceId"  ASC,"LanguageId"  ASC)
+go
 
 
 SET IDENTITY_INSERT [dbo].[VerticalTracks] ON 
