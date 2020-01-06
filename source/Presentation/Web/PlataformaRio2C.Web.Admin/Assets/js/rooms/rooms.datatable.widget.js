@@ -6,16 +6,16 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 01-05-2020
 // ***********************************************************************
-// <copyright file="events.datatable.widget.js" company="Softo">
+// <copyright file="rooms.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var EventsDataTableWidget = function () {
+var RoomsDataTableWidget = function () {
 
-    var widgetElementId = '#EventsDataTableWidget';
-    var tableElementId = '#events-list-table';
+    var widgetElementId = '#RoomsDataTableWidget';
+    var tableElementId = '#rooms-list-table';
     var table;
 
     // Init datatable -----------------------------------------------------------------------------
@@ -89,7 +89,7 @@ var EventsDataTableWidget = function () {
                 sSearch: $('#Search').val()
             },
             ajax: {
-                url: MyRio2cCommon.getUrlWithCultureAndEdition('/Events/Search'),
+                url: MyRio2cCommon.getUrlWithCultureAndEdition('/Rooms/Search'),
                 data: function (d) {
                     //d.showAllEditions = $('#ShowAllEditions').prop('checked');
                     //d.showAllParticipants = $('#ShowAllParticipants').prop('checked');
@@ -131,18 +131,6 @@ var EventsDataTableWidget = function () {
                     data: 'Name'
                 },
                 {
-                    data: 'StartDate',
-                    render: function (data) {
-                        return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LT');
-                    }
-                },
-                {
-                    data: 'EndDate',
-                    render: function (data) {
-                        return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LT');
-                    }
-                },
-                {
                     data: 'CreateDate',
                     render: function (data) {
                         return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
@@ -165,8 +153,8 @@ var EventsDataTableWidget = function () {
                                             </a>\
                                             <div class="dropdown-menu dropdown-menu-right">';
 
-                        html += '               <button class="dropdown-item" onclick="EventsDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-edit"></i> ' + labels.edit + '</button>';
-                        html += '               <button class="dropdown-item" onclick="EventsDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+                        html += '               <button class="dropdown-item" onclick="RoomsDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-edit"></i> ' + labels.edit + '</button>';
+                        html += '               <button class="dropdown-item" onclick="RoomsDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
 
                         html += '\
                                             </div>\
@@ -179,10 +167,11 @@ var EventsDataTableWidget = function () {
             columnDefs: [
                 {
                     targets: [0],
-                    width: "25%"
+                    width: "25%",
+                    orderable: false
                 },
                 {
-                    targets: [1, 2, 3, 4],
+                    targets: [1, 2],
                     className: "dt-center"
                 },
                 {
@@ -221,7 +210,7 @@ var EventsDataTableWidget = function () {
             return;
         }
 
-        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Events/Details/' + collaboratorUid);
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Rooms/Details/' + collaboratorUid);
     };
 
     return {

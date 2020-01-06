@@ -154,7 +154,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <returns></returns>
         public async Task<ActionResult> ShowEditionCountWidget()
         {
-            var conferencesCount = await this.conferenceRepo.CountAllByDataTable(true, this.EditionDto.Id);
+            var conferencesCount = await this.conferenceRepo.CountAllByDataTable(false, this.EditionDto.Id);
 
             return Json(new
             {

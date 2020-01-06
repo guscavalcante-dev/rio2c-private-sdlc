@@ -191,7 +191,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="keywords">The keywords.</param>
         /// <param name="sortColumns">The sort columns.</param>
-        /// <param name="conferencesUids">The conferences uids.</param>
+        /// <param name="editionEventUids">The edition event uids.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="languageId">The language identifier.</param>
         /// <returns></returns>
@@ -200,14 +200,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             int pageSize,
             string keywords,
             List<Tuple<string, string>> sortColumns,
-            List<Guid> conferencesUids,
+            List<Guid> editionEventUids,
             int editionId,
             int languageId)
         {
             var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords)
                                 .FindByEditionId(false, editionId)
-                                .FindByUids(conferencesUids);
+                                .FindByUids(editionEventUids);
 
             return await query
                             .DynamicOrder<EditionEvent>(

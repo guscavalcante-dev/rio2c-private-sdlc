@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 01-05-2020
 // ***********************************************************************
-// <copyright file="EventsController.cs" company="Softo">
+// <copyright file="RoomsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -33,24 +33,20 @@ using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
-    /// <summary>EventsController</summary>
+    /// <summary>RoomsController</summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
     [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CuratorshipAudiovisual)]
-    public class EventsController : BaseController
+    public class RoomsController : BaseController
     {
-        private readonly IEditionEventRepository editionEventRepo;
+        private readonly IRoomRepository roomRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="EventsController"/> class.</summary>
-        /// <param name="commandBus">The command bus.</param>
-        /// <param name="identityController">The identity controller.</param>
-        /// <param name="editionEventRepository">The edition event repository.</param>
-        public EventsController(
+        public RoomsController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
-            IEditionEventRepository editionEventRepository)
+            IRoomRepository roomRepository)
             : base(commandBus, identityController)
         {
-            this.editionEventRepo = editionEventRepository;
+            this.roomRepo = roomRepository;
         }
 
         #region List
@@ -59,12 +55,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="searchViewModel">The search view model.</param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Index(EditionEventSearchViewModel searchViewModel)
+        public ActionResult Index(RoomSearchViewModel searchViewModel)
         {
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Conferences, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Events, Url.Action("Index", "Events", new { Area = "" }))
+                new BreadcrumbItemHelper(Labels.Rooms, Url.Action("Index", "Rooms", new { Area = "" }))
             });
 
             #endregion
@@ -80,7 +76,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Search(IDataTablesRequest request)
         {
-            var conferences = await this.editionEventRepo.FindAllByDataTable(
+            var conferences = await this.roomRepo.FindAllByDataTable(
                 request.Start / request.Length,
                 request.Length,
                 request.Search?.Value,
@@ -110,14 +106,14 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowTotalCountWidget()
         {
-            var conferencesCount = await this.editionEventRepo.CountAllByDataTable(true, this.EditionDto.Id);
+            var conferencesCount = await this.roomRepo.CountAllByDataTable(true, this.EditionDto.Id);
 
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", conferencesCount), divIdOrClass = "#EventsTotalCountWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", conferencesCount), divIdOrClass = "#RoomsTotalCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -130,14 +126,14 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <returns></returns>
         public async Task<ActionResult> ShowEditionCountWidget()
         {
-            var conferencesCount = await this.editionEventRepo.CountAllByDataTable(false, this.EditionDto.Id);
+            var conferencesCount = await this.roomRepo.CountAllByDataTable(false, this.EditionDto.Id);
 
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", conferencesCount), divIdOrClass = "#EventsEditionCountWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", conferencesCount), divIdOrClass = "#RoomsEditionCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }

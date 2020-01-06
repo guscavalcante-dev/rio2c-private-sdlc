@@ -161,8 +161,8 @@
                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Events", null)" aria-haspopup="true">
                         <a href="@Url.Action("Index", "Events", new { Area = "" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Events</span></a>
                     </li>
-                    <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "Index", "Room", null)" aria-haspopup="true">
-                        <a href="#" @*href="@Url.Action("Index", "Room")"*@ class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Rooms</span></a>
+                    <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Rooms", null)" aria-haspopup="true">
+                        <a href="@Url.Action("Index", "Rooms", new { Area = "" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Rooms</span></a>
                     </li>
                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "Index", "Room", null)" aria-haspopup="true">
                         <a href="#" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Track</span></a>

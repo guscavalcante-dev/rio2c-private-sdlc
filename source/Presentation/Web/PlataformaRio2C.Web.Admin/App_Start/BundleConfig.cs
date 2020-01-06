@@ -393,7 +393,7 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
-            #region Conferences
+            #region Events
 
             bundles.Add(new ScriptBundle("~/bundles/js/events.list.js").Include(
                 "~/Assets/js/events/events.totalcount.widget.js",
@@ -402,19 +402,44 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/events.editioncount.js").Include(
                 "~/Assets/js/events/events.editioncount.widget.js"));
 
-            //bundles.Add(new ScriptBundle("~/bundles/js/conferences.create.js").Include(
-            //    "~/Assets/js/conferences/conferences.create.js"));
+            //bundles.Add(new ScriptBundle("~/bundles/js/events.create.js").Include(
+            //    "~/Assets/js/events/events.create.js"));
 
-            //bundles.Add(new ScriptBundle("~/bundles/js/conferences.editionevents.js").Include(
-            //    "~/Assets/js/conferences/conferences.editionevents.js"));
+            //bundles.Add(new ScriptBundle("~/bundles/js/events.editionevents.js").Include(
+            //    "~/Assets/js/events/events.editionevents.js"));
 
-            //bundles.Add(new ScriptBundle("~/bundles/js/conferences.details.js").Include(
-            //    "~/Assets/js/conferences/conferences.maininformation.widget.js",
-            //    "~/Assets/js/conferences/conferences.tracks.widget.js",
-            //    "~/Assets/js/conferences/conferences.participants.widget.js"));
+            //bundles.Add(new ScriptBundle("~/bundles/js/events.details.js").Include(
+            //    "~/Assets/js/events/events.maininformation.widget.js",
+            //    "~/Assets/js/events/events.tracks.widget.js",
+            //    "~/Assets/js/events/events.participants.widget.js"));
 
-            //bundles.Add(new ScriptBundle("~/bundles/js/conferences.delete.js").Include(
-            //    "~/Assets/js/conferences/conferences.delete.js"));
+            //bundles.Add(new ScriptBundle("~/bundles/js/events.delete.js").Include(
+            //    "~/Assets/js/conferences/events.delete.js"));
+
+            #endregion
+
+            #region Rooms
+
+            bundles.Add(new ScriptBundle("~/bundles/js/rooms.list.js").Include(
+                "~/Assets/js/rooms/rooms.totalcount.widget.js",
+                "~/Assets/js/rooms/rooms.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/rooms.editioncount.js").Include(
+                "~/Assets/js/rooms/rooms.editioncount.widget.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/js/rooms.create.js").Include(
+            //    "~/Assets/js/rooms/rooms.create.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/js/rooms.editionevents.js").Include(
+            //    "~/Assets/js/rooms/rooms.editionevents.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/js/rooms.details.js").Include(
+            //    "~/Assets/js/rooms/rooms.maininformation.widget.js",
+            //    "~/Assets/js/rooms/rooms.tracks.widget.js",
+            //    "~/Assets/js/rooms/rooms.participants.widget.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/js/rooms.delete.js").Include(
+            //    "~/Assets/js/rooms/rooms.delete.js"));
 
             #endregion
 

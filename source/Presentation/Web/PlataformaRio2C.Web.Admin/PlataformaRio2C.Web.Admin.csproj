@@ -355,6 +355,7 @@
     <Compile Include="Controllers\CollaboratorController.cs" />
     <Compile Include="Controllers\CompaniesController.cs" />
     <Compile Include="Controllers\ConferenceController.cs" />
+    <Compile Include="Controllers\RoomsController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\ConfigNetworkRio2CController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
@@ -427,6 +428,9 @@
     <Content Include="Assets\js\conferences\conferences.delete.js" />
     <Content Include="Assets\js\conferences\conferences.maininformation.widget.js" />
     <Content Include="Assets\js\conferences\conferences.participants.widget.js" />
+    <Content Include="Assets\js\rooms\rooms.datatable.widget.js" />
+    <Content Include="Assets\js\rooms\rooms.editioncount.widget.js" />
+    <Content Include="Assets\js\rooms\rooms.totalcount.widget.js" />
     <Content Include="Assets\js\events\events.datatable.widget.js" />
     <Content Include="Assets\js\events\events.editioncount.widget.js" />
     <Content Include="Assets\js\events\events.totalcount.widget.js" />
@@ -8264,6 +8268,10 @@
     <Content Include="Views\Events\Widgets\DataTableWidget.cshtml" />
     <Content Include="Views\Events\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Views\Events\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Views\Rooms\Index.cshtml" />
+    <Content Include="Views\Rooms\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Views\Rooms\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Views\Rooms\Widgets\TotalCountWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
