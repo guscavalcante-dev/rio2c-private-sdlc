@@ -1972,4 +1972,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Nomes</value>
     <comment>Nomes</comment>
   </data>
+  <data name="SpeakerRole" xml:space="preserve">
+    <value>Função do Palestrante</value>
+    <comment>Função do Palestrante</comment>
+  </data>
+  <data name="SpeakersRoles" xml:space="preserve">
+    <value>Funções dos Palestrantes</value>
+    <comment>Funções dos Palestrantes</comment>
+  </data>
 </root>

@@ -4,7 +4,7 @@
 // Created          : 01-02-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-02-2020
+// Last Modified On : 01-07-2020
 // ***********************************************************************
 // <copyright file="ConferenceParticipantMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,9 +24,6 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         {
             this.ToTable("ConferenceParticipants");
 
-            //Property(u => u.Info)
-            //   .HasMaxLength(Conference.InfoMaxLength);
-
             //Relationships 
             this.HasRequired(t => t.Conference)
               .WithMany(d => d.ConferenceParticipants)
@@ -37,7 +34,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                 .HasForeignKey(t => t.AttendeeCollaboratorId);
 
             this.HasRequired(t => t.ConferenceParticipantRole)
-                .WithMany()
+                .WithMany(d => d.ConferenceParticipants)
                 .HasForeignKey(t => t.ConferenceParticipantRoleId);
         }
     }

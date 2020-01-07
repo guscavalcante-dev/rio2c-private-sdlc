@@ -3805,11 +3805,29 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Função do Palestrante.
+        /// </summary>
+        public static string SpeakerRole {
+            get {
+                return ResourceManager.GetString("SpeakerRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Palestrantes.
         /// </summary>
         public static string Speakers {
             get {
                 return ResourceManager.GetString("Speakers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Funções dos Palestrantes.
+        /// </summary>
+        public static string SpeakersRoles {
+            get {
+                return ResourceManager.GetString("SpeakersRoles", resourceCulture);
             }
         }
         

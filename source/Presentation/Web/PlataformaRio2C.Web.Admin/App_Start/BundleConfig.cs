@@ -435,6 +435,27 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+            #region Conference Participant Roles
+
+            bundles.Add(new ScriptBundle("~/bundles/js/conferenceparticipantroles.list.js").Include(
+                "~/Assets/js/conferenceparticipantroles/conferenceparticipantroles.totalcount.widget.js",
+                "~/Assets/js/conferenceparticipantroles/conferenceparticipantroles.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/conferenceparticipantroles.editioncount.js").Include(
+                "~/Assets/js/conferenceparticipantroles/conferenceparticipantroles.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/conferenceparticipantroles.create.js").Include(
+                "~/Assets/js/conferenceparticipantroles/conferenceparticipantroles.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/conferenceparticipantroles.details.js").Include(
+                "~/Assets/js/conferenceparticipantroles/conferenceparticipantroles.maininformation.widget.js",
+                "~/Assets/js/conferenceparticipantroles/conferenceparticipantroles.conferences.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/conferenceparticipantroles.delete.js").Include(
+                "~/Assets/js/conferenceparticipantroles/conferenceparticipantroles.delete.js"));
+
+            #endregion
+
             #region Vertical Tracks
 
             bundles.Add(new ScriptBundle("~/bundles/js/verticaltracks.list.js").Include(

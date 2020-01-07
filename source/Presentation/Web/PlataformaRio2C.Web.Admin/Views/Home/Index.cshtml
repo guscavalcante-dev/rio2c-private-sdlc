@@ -58,6 +58,11 @@
             <div id="HorizontalTracksEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
         </div>
         <!--end:: Horizontal Tracks Edition Count-->
+        <!--begin:: Conference Participant Roles Edition Count-->
+        <div class="col-sm-4">
+            <div id="ConferenceParticipantRolesEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        </div>
+        <!--end:: Conference Participant Roles Edition Count-->
     }
 </div>
 @section Styles {
@@ -78,6 +83,7 @@
         @Scripts.Render("~/bundles/js/rooms.editioncount.js")
         @Scripts.Render("~/bundles/js/verticaltracks.editioncount.js")
         @Scripts.Render("~/bundles/js/horizontaltracks.editioncount.js")
+        @Scripts.Render("~/bundles/js/conferenceparticipantroles.editioncount.js")
     }
     <script>
         jQuery(document).ready(function () {
@@ -98,6 +104,7 @@
                     RoomsEditionCountWidget.init();
                     VerticalTracksEditionCountWidget.init();
                     HorizontalTracksEditionCountWidget.init();
+                    ConferenceParticipantRolesEditionCountWidget.init();
                 </text>
             }
         });

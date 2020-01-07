@@ -356,6 +356,7 @@
     <Compile Include="Controllers\CompaniesController.cs" />
     <Compile Include="Controllers\ConferenceController.cs" />
     <Compile Include="Controllers\HorizontalTracksController.cs" />
+    <Compile Include="Controllers\ParticipantRolesController.cs" />
     <Compile Include="Controllers\VerticalTracksController.cs" />
     <Compile Include="Controllers\RoomsController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
@@ -425,6 +426,13 @@
     <Content Include="Assets\js\conferences\conferences.datatable.widget.js" />
     <Content Include="Assets\js\conferences\conferences.editioncount.widget.js" />
     <Content Include="Assets\js\events\events.conferences.widget.js" />
+    <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.conferences.widget.js" />
+    <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.create.js" />
+    <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.datatable.widget.js" />
+    <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.delete.js" />
+    <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.editioncount.widget.js" />
+    <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.maininformation.widget.js" />
+    <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.totalcount.widget.js" />
     <Content Include="Assets\js\rooms\rooms.conferences.widget.js" />
     <Content Include="Assets\js\rooms\rooms.maininformation.widget.js" />
     <Content Include="Assets\js\conferences\conferences.tracks.widget.js" />
@@ -8332,6 +8340,17 @@
     <Content Include="Views\HorizontalTracks\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Views\HorizontalTracks\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Views\HorizontalTracks\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Views\ParticipantRoles\Details.cshtml" />
+    <Content Include="Views\ParticipantRoles\EditorTemplates\ConferenceParticipantRoleTitleBaseCommand.cshtml" />
+    <Content Include="Views\ParticipantRoles\Index.cshtml" />
+    <Content Include="Views\ParticipantRoles\Modals\_CreateForm.cshtml" />
+    <Content Include="Views\ParticipantRoles\Modals\CreateModal.cshtml" />
+    <Content Include="Views\ParticipantRoles\Modals\UpdateMainInformationForm.cshtml" />
+    <Content Include="Views\ParticipantRoles\Modals\UpdateMainInformationModal.cshtml" />
+    <Content Include="Views\ParticipantRoles\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Views\ParticipantRoles\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Views\ParticipantRoles\Widgets\MainInformationWidget.cshtml" />
+    <Content Include="Views\ParticipantRoles\Widgets\TotalCountWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

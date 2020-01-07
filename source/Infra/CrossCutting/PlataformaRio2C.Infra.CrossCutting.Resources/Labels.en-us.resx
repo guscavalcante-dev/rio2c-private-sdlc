@@ -1961,4 +1961,12 @@
     <value>Names</value>
     <comment>Nomes</comment>
   </data>
+  <data name="SpeakerRole" xml:space="preserve">
+    <value>Speaker Role</value>
+    <comment>Função do Palestrante</comment>
+  </data>
+  <data name="SpeakersRoles" xml:space="preserve">
+    <value>Speakers Roles</value>
+    <comment>Funções dos Palestrantes</comment>
+  </data>
 </root>

@@ -4,7 +4,7 @@
 // Created          : 12-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-05-2020
+// Last Modified On : 01-07-2020
 // ***********************************************************************
 // <copyright file="ConferencesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -489,7 +489,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd = new CreateConferenceParticipant(
                     conferenceUid,
-                    await this.conferenceParticipantRoleRepo.FindAllDtosAsync());
+                    await this.conferenceParticipantRoleRepo.FindAllDtoByEditionIdAsync(this.EditionDto.Id));
             }
             catch (DomainException ex)
             {
@@ -544,7 +544,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd.UpdateDropdownProperties(
-                    await this.conferenceParticipantRoleRepo.FindAllDtosAsync());
+                    await this.conferenceParticipantRoleRepo.FindAllDtoByEditionIdAsync(this.EditionDto.Id));
 
                 return Json(new
                 {
@@ -588,7 +588,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 cmd = new UpdateConferenceParticipant(
                     await this.conferenceRepo.FindParticipantsWidgetDtoAsync(conferenceUid ?? Guid.Empty, this.EditionDto.Id),
                     collaboratorUid,
-                    await this.conferenceParticipantRoleRepo.FindAllDtosAsync());
+                    await this.conferenceParticipantRoleRepo.FindAllDtoByEditionIdAsync(this.EditionDto.Id));
             }
             catch (DomainException ex)
             {
@@ -643,7 +643,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd.UpdateDropdownProperties(
-                    await this.conferenceParticipantRoleRepo.FindAllDtosAsync());
+                    await this.conferenceParticipantRoleRepo.FindAllDtoByEditionIdAsync(this.EditionDto.Id));
 
                 return Json(new
                 {

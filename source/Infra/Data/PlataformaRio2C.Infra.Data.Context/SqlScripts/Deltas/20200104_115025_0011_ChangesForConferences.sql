@@ -524,46 +524,46 @@ go
 SET IDENTITY_INSERT [dbo].[ConferenceParticipantRoles] ON 
 
 GO
-INSERT [dbo].[ConferenceParticipantRoles] ([Id], [Uid], [Name], [IsLecturer], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (1, N'36457f36-14d4-47f3-b058-1b3d11ed2ee7', N'Interviewer', 0, 0, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1)
+INSERT [dbo].[ConferenceParticipantRoles] ([Id], [Uid], [Name], [IsLecturer], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (1, N'36457f36-14d4-47f3-b058-1b3d11ed2ee7', N'Interviewer', 0, 0, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1)
 GO
-INSERT [dbo].[ConferenceParticipantRoles] ([Id], [Uid], [Name], [IsLecturer], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (2, N'ccfcc04a-70de-4d37-b7d2-fe82d4838874', N'Interference', 0, 0, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1)
+INSERT [dbo].[ConferenceParticipantRoles] ([Id], [Uid], [Name], [IsLecturer], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (2, N'ccfcc04a-70de-4d37-b7d2-fe82d4838874', N'Interference', 0, 0, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1)
 GO
-INSERT [dbo].[ConferenceParticipantRoles] ([Id], [Uid], [Name], [IsLecturer], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (3, N'c7f9e23a-3132-4b7f-9648-7a19879e3490', N'Keynote', 0, 0, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1)
+INSERT [dbo].[ConferenceParticipantRoles] ([Id], [Uid], [Name], [IsLecturer], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (3, N'c7f9e23a-3132-4b7f-9648-7a19879e3490', N'Keynote', 0, 0, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1)
 GO
-INSERT [dbo].[ConferenceParticipantRoles] ([Id], [Uid], [Name], [IsLecturer], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (4, N'83eeb82d-fd18-4f47-b3da-204f35722a5d', N'Modarator (M)', 0, 0, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1)
+INSERT [dbo].[ConferenceParticipantRoles] ([Id], [Uid], [Name], [IsLecturer], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (4, N'83eeb82d-fd18-4f47-b3da-204f35722a5d', N'Modarator (M)', 0, 0, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1)
 GO
-INSERT [dbo].[ConferenceParticipantRoles] ([Id], [Uid], [Name], [IsLecturer], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (5, N'0511a35e-f18c-40a7-b7c5-11147405bcb7', N'Moderator (F)', 0, 0, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1)
+INSERT [dbo].[ConferenceParticipantRoles] ([Id], [Uid], [Name], [IsLecturer], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (5, N'0511a35e-f18c-40a7-b7c5-11147405bcb7', N'Moderator (F)', 0, 0, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1)
 GO
-INSERT [dbo].[ConferenceParticipantRoles] ([Id], [Uid], [Name], [IsLecturer], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (6, N'fac6b500-39c0-44fe-a214-4135d10bcd99', N'Speaker', 1, 0, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1)
+INSERT [dbo].[ConferenceParticipantRoles] ([Id], [Uid], [Name], [IsLecturer], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (6, N'fac6b500-39c0-44fe-a214-4135d10bcd99', N'Speaker', 1, 0, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1)
 GO
 SET IDENTITY_INSERT [dbo].[ConferenceParticipantRoles] OFF
 GO
 SET IDENTITY_INSERT [dbo].[ConferenceParticipantRoleTitles] ON 
 
 GO
-INSERT [dbo].[ConferenceParticipantRoleTitles] ([Id], [Uid], [ConferenceParticipantRoleId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (1, N'8a8ab20b-5030-4a49-90f4-d12d483f3773', 1, 1, N'Interviewer', 0, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1)
+INSERT [dbo].[ConferenceParticipantRoleTitles] ([Id], [Uid], [ConferenceParticipantRoleId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (1, N'8a8ab20b-5030-4a49-90f4-d12d483f3773', 1, 1, N'Interviewer', 0, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1)
 GO
-INSERT [dbo].[ConferenceParticipantRoleTitles] ([Id], [Uid], [ConferenceParticipantRoleId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (2, N'f293dd10-7501-4abd-87a2-8333e3caefb1', 1, 2, N'Entrevistador', 0, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1)
+INSERT [dbo].[ConferenceParticipantRoleTitles] ([Id], [Uid], [ConferenceParticipantRoleId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (2, N'f293dd10-7501-4abd-87a2-8333e3caefb1', 1, 2, N'Entrevistador', 0, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1)
 GO
-INSERT [dbo].[ConferenceParticipantRoleTitles] ([Id], [Uid], [ConferenceParticipantRoleId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (3, N'd7496a45-f5f4-468f-a057-a8e8a34807a0', 2, 1, N'Interference', 0, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1)
+INSERT [dbo].[ConferenceParticipantRoleTitles] ([Id], [Uid], [ConferenceParticipantRoleId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (3, N'd7496a45-f5f4-468f-a057-a8e8a34807a0', 2, 1, N'Interference', 0, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1)
 GO
-INSERT [dbo].[ConferenceParticipantRoleTitles] ([Id], [Uid], [ConferenceParticipantRoleId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (4, N'37181f22-7d03-417f-bc0f-0a319264f41c', 2, 2, N'Interferência', 0, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1)
+INSERT [dbo].[ConferenceParticipantRoleTitles] ([Id], [Uid], [ConferenceParticipantRoleId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (4, N'37181f22-7d03-417f-bc0f-0a319264f41c', 2, 2, N'Interferência', 0, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1)
 GO
-INSERT [dbo].[ConferenceParticipantRoleTitles] ([Id], [Uid], [ConferenceParticipantRoleId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (5, N'1bc1cb1d-4633-4b71-b9f1-a5816c7b5616', 3, 1, N'Keynote', 0, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1)
+INSERT [dbo].[ConferenceParticipantRoleTitles] ([Id], [Uid], [ConferenceParticipantRoleId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (5, N'1bc1cb1d-4633-4b71-b9f1-a5816c7b5616', 3, 1, N'Keynote', 0, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1)
 GO
-INSERT [dbo].[ConferenceParticipantRoleTitles] ([Id], [Uid], [ConferenceParticipantRoleId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (6, N'52b2c030-3630-45f8-b1d9-2e7158717667', 3, 2, N'Keynote', 0, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1)
+INSERT [dbo].[ConferenceParticipantRoleTitles] ([Id], [Uid], [ConferenceParticipantRoleId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (6, N'52b2c030-3630-45f8-b1d9-2e7158717667', 3, 2, N'Keynote', 0, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1)
 GO
-INSERT [dbo].[ConferenceParticipantRoleTitles] ([Id], [Uid], [ConferenceParticipantRoleId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (7, N'17ff3431-eabc-4cc7-ac08-ca22e5fc3ff0', 4, 1, N'Moderator', 0, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1)
+INSERT [dbo].[ConferenceParticipantRoleTitles] ([Id], [Uid], [ConferenceParticipantRoleId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (7, N'17ff3431-eabc-4cc7-ac08-ca22e5fc3ff0', 4, 1, N'Moderator', 0, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1)
 GO
-INSERT [dbo].[ConferenceParticipantRoleTitles] ([Id], [Uid], [ConferenceParticipantRoleId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (8, N'75f51a7e-b9d5-40c7-a484-d5563a21f0e1', 4, 2, N'Moderador', 0, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1)
+INSERT [dbo].[ConferenceParticipantRoleTitles] ([Id], [Uid], [ConferenceParticipantRoleId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (8, N'75f51a7e-b9d5-40c7-a484-d5563a21f0e1', 4, 2, N'Moderador', 0, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1)
 GO
-INSERT [dbo].[ConferenceParticipantRoleTitles] ([Id], [Uid], [ConferenceParticipantRoleId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (9, N'0248fdd5-3d52-400d-9920-a906a68c1c1e', 5, 1, N'Moderator', 0, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1)
+INSERT [dbo].[ConferenceParticipantRoleTitles] ([Id], [Uid], [ConferenceParticipantRoleId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (9, N'0248fdd5-3d52-400d-9920-a906a68c1c1e', 5, 1, N'Moderator', 0, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1)
 GO
-INSERT [dbo].[ConferenceParticipantRoleTitles] ([Id], [Uid], [ConferenceParticipantRoleId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (10, N'97675274-e706-43fc-9af9-afcd17391129', 5, 2, N'Moderadora', 0, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1)
+INSERT [dbo].[ConferenceParticipantRoleTitles] ([Id], [Uid], [ConferenceParticipantRoleId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (10, N'97675274-e706-43fc-9af9-afcd17391129', 5, 2, N'Moderadora', 0, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1)
 GO
-INSERT [dbo].[ConferenceParticipantRoleTitles] ([Id], [Uid], [ConferenceParticipantRoleId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (11, N'67cbd280-5d4d-4914-ba16-2441cde4b4c9', 6, 1, N'Speaker', 0, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1)
+INSERT [dbo].[ConferenceParticipantRoleTitles] ([Id], [Uid], [ConferenceParticipantRoleId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (11, N'67cbd280-5d4d-4914-ba16-2441cde4b4c9', 6, 1, N'Speaker', 0, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1)
 GO
-INSERT [dbo].[ConferenceParticipantRoleTitles] ([Id], [Uid], [ConferenceParticipantRoleId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (12, N'd71e70a1-94fc-4544-9579-5fd98162e092', 6, 2, N'Palestrante', 0, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1, CAST(N'2020-05-01 11:25:31.000' AS DateTime), 1)
+INSERT [dbo].[ConferenceParticipantRoleTitles] ([Id], [Uid], [ConferenceParticipantRoleId], [LanguageId], [Value], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (12, N'd71e70a1-94fc-4544-9579-5fd98162e092', 6, 2, N'Palestrante', 0, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1, CAST(N'2020-01-05 11:25:31.000' AS DateTime), 1)
 GO
 SET IDENTITY_INSERT [dbo].[ConferenceParticipantRoleTitles] OFF
 GO

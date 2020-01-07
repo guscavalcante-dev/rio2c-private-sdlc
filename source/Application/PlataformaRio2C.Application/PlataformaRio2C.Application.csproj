@@ -246,6 +246,10 @@
     <Compile Include="CQRS\CommandsHandlers\Projects\UpdateProjectLinksCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Projects\UpdateProjectMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Projects\CreateProjectCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\ConferenceParticipantRoles\CreateConferenceParticipantRoleCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\ConferenceParticipantRoles\DeleteConferenceParticipantRoleCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\ConferenceParticipantRoles\ConferenceParticipantRoleBaseCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\ConferenceParticipantRoles\UpdateCreateConferenceParticipantRoleMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Rooms\UpdateRoomMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Rooms\DeleteRoomCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\HorizontalTracks\CreateHorizontalTrackCommandHandler.cs" />
@@ -256,6 +260,10 @@
     <Compile Include="CQRS\CommandsHandlers\VerticalTracks\CreateVerticalTrackCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\VerticalTracks\DeleteVerticalTrackCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\VerticalTracks\VerticalTrackBaseCommandHandler.cs" />
+    <Compile Include="CQRS\Commands\ConferenceParticipantRoles\BaseCommands\ConferenceParticipantRoleTitleBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\ConferenceParticipantRoles\CreateConferenceParticipantRole.cs" />
+    <Compile Include="CQRS\Commands\ConferenceParticipantRoles\DeleteConferenceParticipantRole.cs" />
+    <Compile Include="CQRS\Commands\ConferenceParticipantRoles\UpdateConferenceParticipantRoleMainInformation.cs" />
     <Compile Include="CQRS\Commands\Rooms\DeleteRoom.cs" />
     <Compile Include="CQRS\CommandsHandlers\Rooms\RoomBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Rooms\CreateRoomCommandHandler.cs" />
@@ -592,6 +600,7 @@
     <Compile Include="ViewModels\Common\Speaker\SpeakerEditAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Speaker\SpeakerItemListAppViewModel.cs" />
     <Compile Include="ViewModels\Conferences\ConferenceSearchViewModel.cs" />
+    <Compile Include="ViewModels\ConferenceParticipantRoles\ConferenceParticipantRoleSearchViewModel.cs" />
     <Compile Include="ViewModels\Rooms\RoomSearchViewModel.cs" />
     <Compile Include="ViewModels\Editions\EditionEventSearchViewModel.cs" />
     <Compile Include="ViewModels\Site\Conference\ConferenceDetailAppViewModel.cs" />

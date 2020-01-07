@@ -109,9 +109,7 @@
     <Compile Include="Dtos\Collaborators\CollaboratorMiniBioBaseDto.cs" />
     <Compile Include="Dtos\Collaborators\CollaboratorJobTitleBaseDto.cs" />
     <Compile Include="Dtos\Conferences\ConferenceDto.cs" />
-    <Compile Include="Dtos\Conferences\ConferenceParticipantRoleDto.cs" />
     <Compile Include="Dtos\Conferences\ConferenceParticipantDto.cs" />
-    <Compile Include="Dtos\Conferences\ConferenceParticipantRoleTitleDto.cs" />
     <Compile Include="Dtos\Conferences\ConferenceSynopsisDto.cs" />
     <Compile Include="Dtos\Conferences\ConferenceTitleDto.cs" />
     <Compile Include="Dtos\Conferences\ConferenceJsonDto.cs" />
@@ -148,6 +146,9 @@
     <Compile Include="Dtos\Projects\ProjectAdditionalInformationDto.cs" />
     <Compile Include="Dtos\Projects\ProjectTitleDto.cs" />
     <Compile Include="Dtos\Projects\ProjectDto.cs" />
+    <Compile Include="Dtos\ConferenceParticipantRoles\ConferenceParticipantRoleDto.cs" />
+    <Compile Include="Dtos\ConferenceParticipantRoles\ConferenceParticipantRoleJsonDto.cs" />
+    <Compile Include="Dtos\ConferenceParticipantRoles\ConferenceParticipantRoleTitleDto.cs" />
     <Compile Include="Dtos\Rooms\RoomNameDto.cs" />
     <Compile Include="Dtos\Rooms\RoomDto.cs" />
     <Compile Include="Dtos\Rooms\RoomJsonDto.cs" />

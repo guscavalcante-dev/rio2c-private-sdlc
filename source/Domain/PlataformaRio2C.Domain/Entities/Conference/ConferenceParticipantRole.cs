@@ -4,7 +4,7 @@
 // Created          : 01-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-02-2020
+// Last Modified On : 01-07-2020
 // ***********************************************************************
 // <copyright file="ConferenceParticipantRole.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,20 +29,21 @@ namespace PlataformaRio2C.Domain.Entities
         public bool IsLecturer { get; private set; } //TODO: Remove this
 
         public virtual ICollection<ConferenceParticipantRoleTitle> ConferenceParticipantRoleTitles { get; private set; }
+        public virtual ICollection<ConferenceParticipant> ConferenceParticipants { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="ConferenceParticipantRole"/> class.</summary>
         /// <param name="conferenceParticipantRoleUid">The conference participant role uid.</param>
-        /// <param name="name">The name.</param>
+        /// <param name="edition">The edition.</param>
         /// <param name="conferenceParticipantRoleTitles">The conference participant role titles.</param>
         /// <param name="userId">The user identifier.</param>
         public ConferenceParticipantRole(
             Guid conferenceParticipantRoleUid,
-            string name,
+            Edition edition,
             List<ConferenceParticipantRoleTitle> conferenceParticipantRoleTitles,
             int userId)
         {
             //this.Uid = conferenceParticipantRoleUid;
-            this.Name = name?.Trim();
+            this.UpdateName(conferenceParticipantRoleTitles);
             this.SynchronizeConferenceParticipantRoleTitles(conferenceParticipantRoleTitles, userId);
 
             this.IsDeleted = false;
@@ -53,6 +54,47 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Initializes a new instance of the <see cref="ConferenceParticipantRole"/> class.</summary>
         protected ConferenceParticipantRole()
         {
+        }
+
+        /// <summary>Updates the main information.</summary>
+        /// <param name="conferenceParticipantRoleTitles">The conference participant role titles.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateMainInformation(
+            List<ConferenceParticipantRoleTitle> conferenceParticipantRoleTitles,
+            int userId)
+        {
+            this.UpdateName(conferenceParticipantRoleTitles);
+            this.SynchronizeConferenceParticipantRoleTitles(conferenceParticipantRoleTitles, userId);
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Deletes the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(int userId)
+        {
+            this.IsDeleted = true;
+            this.SynchronizeConferenceParticipantRoleTitles(new List<ConferenceParticipantRoleTitle>(), userId);
+            this.DeleteConferenceParticipants(userId);
+
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Updates the name.</summary>
+        /// <param name="conferenceParticipantRoleTitles">The conference participant role titles.</param>
+        private void UpdateName(List<ConferenceParticipantRoleTitle> conferenceParticipantRoleTitles)
+        {
+            var name = string.Empty;
+            foreach (var languageCode in Language.CodesOrder)
+            {
+                name += (!string.IsNullOrEmpty(name) ? " " + Language.Separator + " " : String.Empty) +
+                        conferenceParticipantRoleTitles?.FirstOrDefault(vtc => vtc.Language.Code == languageCode)?.Value;
+            }
+
+            this.Name = name;
         }
 
         #region Conference Participant Role Titles
@@ -110,6 +152,25 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
+        #region Conference Participants
+
+        /// <summary>Deletes the conference participants.</summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteConferenceParticipants(int userId)
+        {
+            if (this.ConferenceParticipants?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var conferenceParticipant in this.ConferenceParticipants.Where(c => !c.IsDeleted))
+            {
+                conferenceParticipant.Delete(userId);
+            }
+        }
+
+        #endregion
+
         #region Validations
 
         /// <summary>Returns true if ... is valid.</summary>
@@ -120,8 +181,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidationResult = new ValidationResult();
 
             this.ValidateName();
+            this.ValidateConferenceParticipantRoleTitles();
             //this.ValidateEdition();
-            //this.ValidateDates();
 
             return this.ValidationResult.IsValid;
         }
@@ -140,6 +201,19 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
+        /// <summary>Validates the conference participant role titles.</summary>
+        public void ValidateConferenceParticipantRoleTitles()
+        {
+            if (this.ConferenceParticipantRoleTitles?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var conferenceParticipantRoleTitle in this.ConferenceParticipantRoleTitles?.Where(d => !d.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(conferenceParticipantRoleTitle.ValidationResult);
+            }
+        }
 
         ///// <summary>Validates the edition.</summary>
         //public void ValidateEdition()
@@ -147,21 +221,6 @@ namespace PlataformaRio2C.Domain.Entities
         //    if (this.Edition == null)
         //    {
         //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Edition), new string[] { "Edition" }));
-        //    }
-        //}
-
-        ///// <summary>Validates the dates.</summary>
-        //public void ValidateDates()
-        //{
-        //    if (this.StartDate < this.Edition.StartDate || this.StartDate > this.Edition.EndDate
-        //        || this.EndDate < this.Edition.StartDate || this.EndDate > this.Edition.EndDate)
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.Date, this.Edition.EndDate.ToShortDateString(), this.Edition.StartDate.ToShortDateString()), new string[] { "Date" }));
-        //    }
-
-        //    if (this.StartDate > this.EndDate)
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyGreaterThanProperty, Labels.EndTime, Labels.StartTime), new string[] { "EndTime" }));
         //    }
         //}
 
