@@ -1753,7 +1753,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Pitching de Audiovisual</value>
     <comment>Pitching de Audiovisual</comment>
   </data>
-  <data name="BrandContentSummit" xml:space="preserve">
+  <data name="BrandedContentSummit" xml:space="preserve">
     <value>Summit Marcas</value>
     <comment>Summit Marcas</comment>
   </data>

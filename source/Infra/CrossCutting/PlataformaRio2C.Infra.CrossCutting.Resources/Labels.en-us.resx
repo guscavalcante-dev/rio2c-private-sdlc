@@ -1739,8 +1739,8 @@
     <value>Audiovisual Pitching Sessions</value>
     <comment>Pitching de Audiovisual</comment>
   </data>
-  <data name="BrandContentSummit" xml:space="preserve">
-    <value>Brand Content Summit</value>
+  <data name="BrandedContentSummit" xml:space="preserve">
+    <value>Branded Content Summit</value>
     <comment>Summit Marcas</comment>
   </data>
   <data name="BuyTicket" xml:space="preserve">

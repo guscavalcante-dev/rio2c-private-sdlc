@@ -441,9 +441,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Summit Marcas.
         /// </summary>
-        public static string BrandContentSummit {
+        public static string BrandedContentSummit {
             get {
-                return ResourceManager.GetString("BrandContentSummit", resourceCulture);
+                return ResourceManager.GetString("BrandedContentSummit", resourceCulture);
             }
         }
         
