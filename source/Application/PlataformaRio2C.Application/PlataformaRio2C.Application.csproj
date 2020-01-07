@@ -248,6 +248,7 @@
     <Compile Include="CQRS\CommandsHandlers\Projects\CreateProjectCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Rooms\UpdateRoomMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Rooms\DeleteRoomCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\VerticalTracks\UpdateVerticalTrackMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\VerticalTracks\CreateVerticalTrackCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\VerticalTracks\DeleteVerticalTrackCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\VerticalTracks\VerticalTrackBaseCommandHandler.cs" />
@@ -359,6 +360,7 @@
     <Compile Include="CQRS\Commands\VerticalTracks\BaseCommands\VerticalTrackNameBaseCommand.cs" />
     <Compile Include="CQRS\Commands\VerticalTracks\CreateVerticalTrack.cs" />
     <Compile Include="CQRS\Commands\VerticalTracks\DeleteVerticalTrack.cs" />
+    <Compile Include="CQRS\Commands\VerticalTracks\UpdateVerticalTrackMainInformation.cs" />
     <Compile Include="CQRS\QueriesHandlers\Users\FindAdminAccessControlDtoQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Users\FindUserLanguageDtoQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Users\FindUserAccessControlDtoQueryHandler.cs" />

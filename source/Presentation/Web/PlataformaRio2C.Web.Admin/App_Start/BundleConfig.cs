@@ -447,9 +447,9 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/verticaltracks.create.js").Include(
                 "~/Assets/js/verticaltracks/verticaltracks.create.js"));
 
-            //bundles.Add(new ScriptBundle("~/bundles/js/verticaltracks.details.js").Include(
-            //    "~/Assets/js/verticaltracks/verticaltracks.maininformation.widget.js",
-            //    "~/Assets/js/verticaltracks/verticaltracks.conferences.widget.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/verticaltracks.details.js").Include(
+                "~/Assets/js/verticaltracks/verticaltracks.maininformation.widget.js"));//,
+                //"~/Assets/js/verticaltracks/verticaltracks.conferences.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/verticaltracks.delete.js").Include(
                 "~/Assets/js/verticaltracks/verticaltracks.delete.js"));

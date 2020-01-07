@@ -158,6 +158,23 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
+        /// <summary>Finds the dto asynchronous.</summary>
+        /// <param name="verticalTrackUid">The vertical track uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<VerticalTrackDto> FindDtoAsync(Guid verticalTrackUid, int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(verticalTrackUid);
+                                //.FindByEditionId(false, editionId);
+
+            return await query
+                            .Select(vt => new VerticalTrackDto
+                            {
+                                VerticalTrack = vt
+                            })
+                            .FirstOrDefaultAsync();
+        }
 
         /// <summary>Finds all asynchronous.</summary>
         /// <returns></returns>

@@ -23,6 +23,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>IVerticalTrackRepository</summary>
     public interface IVerticalTrackRepository : IRepository<VerticalTrack>
     {
+        Task<VerticalTrackDto> FindDtoAsync(Guid verticalTrackUid, int editionId);
         Task<List<VerticalTrack>> FindAllAsync();
         Task<List<VerticalTrack>> FindAllByUidsAsync(List<Guid> verticalTrackUids);
         Task<IPagedList<VerticalTrackJsonDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> verticalTrackUids, int editionId, int languageId);

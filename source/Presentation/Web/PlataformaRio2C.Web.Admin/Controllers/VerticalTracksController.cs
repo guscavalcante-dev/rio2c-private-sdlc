@@ -149,152 +149,151 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #endregion
 
-        //#region Details
+        #region Details
 
-        ///// <summary>Detailses the specified identifier.</summary>
-        ///// <param name="id">The identifier.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> Details(Guid? id)
-        //{
-        //    var roomDto = await this.roomRepo.FindDtoAsync(id ?? Guid.Empty, this.EditionDto.Id);
-        //    if (roomDto == null)
-        //    {
-        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Room, Labels.FoundF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("Index", "Rooms", new { Area = "" });
-        //    }
+        /// <summary>Detailses the specified identifier.</summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> Details(Guid? id)
+        {
+            var verticalTrackDto = await this.verticalTrackRepo.FindDtoAsync(id ?? Guid.Empty, this.EditionDto.Id);
+            if (verticalTrackDto == null)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Track, Labels.FoundF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Rooms", new { Area = "" });
+            }
 
-        //    #region Breadcrumb
+            #region Breadcrumb
 
-        //    ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Conferences, new List<BreadcrumbItemHelper> {
-        //        new BreadcrumbItemHelper(Labels.Rooms, Url.Action("Index", "Rooms", new { Area = "" })),
-        //        new BreadcrumbItemHelper(roomDto.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)?.RoomName?.Value, Url.Action("Details", "Rooms", new { id }))
-        //    });
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Conferences, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.VerticalTracks, Url.Action("Index", "VerticalTracks", new { Area = "" })),
+                new BreadcrumbItemHelper(verticalTrackDto.GetNameByLanguageCode(ViewBag.UserInterfaceLanguage), Url.Action("Details", "VerticalTracks", new { id }))
+            });
 
-        //    #endregion
+            #endregion
 
-        //    return View(roomDto);
-        //}
+            return View(verticalTrackDto);
+        }
 
-        //#region Main Information Widget
+        #region Main Information Widget
 
-        ///// <summary>Shows the main information widget.</summary>
-        ///// <param name="roomUid">The room uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowMainInformationWidget(Guid? roomUid)
-        //{
-        //    var mainInformationWidgetDto = await this.roomRepo.FindDtoAsync(roomUid ?? Guid.Empty, this.EditionDto.Id);
-        //    if (mainInformationWidgetDto == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Room, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
+        /// <summary>Shows the main information widget.</summary>
+        /// <param name="verticalTrackUid">The vertical track uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowMainInformationWidget(Guid? verticalTrackUid)
+        {
+            var mainInformationWidgetDto = await this.verticalTrackRepo.FindDtoAsync(verticalTrackUid ?? Guid.Empty, this.EditionDto.Id);
+            if (mainInformationWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Track, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#RoomMainInformationWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#VerticalTrackMainInformationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
-        //#region Update
+        #region Update
 
-        ///// <summary>Shows the update main information modal.</summary>
-        ///// <param name="roomUid">The room uid.</param>
-        ///// <returns></returns>
-        ///// <exception cref="DomainException"></exception>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? roomUid)
-        //{
-        //    UpdateRoomMainInformation cmd;
+        /// <summary>Shows the update main information modal.</summary>
+        /// <param name="verticalTrackUid">The vertical track uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? verticalTrackUid)
+        {
+            UpdateVerticalTrackMainInformation cmd;
 
-        //    try
-        //    {
-        //        var mainInformationWidgetDto = await this.roomRepo.FindDtoAsync(roomUid ?? Guid.Empty, this.EditionDto.Id);
-        //        if (mainInformationWidgetDto == null)
-        //        {
-        //            throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Room, Labels.FoundF.ToLowerInvariant()));
-        //        }
+            try
+            {
+                var mainInformationWidgetDto = await this.verticalTrackRepo.FindDtoAsync(verticalTrackUid ?? Guid.Empty, this.EditionDto.Id);
+                if (mainInformationWidgetDto == null)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Track, Labels.FoundF.ToLowerInvariant()));
+                }
 
-        //        cmd = new UpdateRoomMainInformation(
-        //            mainInformationWidgetDto,
-        //            await this.languageRepo.FindAllDtosAsync());
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-        //    }
+                cmd = new UpdateVerticalTrackMainInformation(
+                    mainInformationWidgetDto,
+                    await this.languageRepo.FindAllDtosAsync());
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
-        ///// <summary>Updates the main information.</summary>
-        ///// <param name="cmd">The command.</param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public async Task<ActionResult> UpdateMainInformation(UpdateRoomMainInformation cmd)
-        //{
-        //    var result = new AppValidationResult();
+        /// <summary>Updates the main information.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> UpdateMainInformation(UpdateVerticalTrackMainInformation cmd)
+        {
+            var result = new AppValidationResult();
 
-        //    try
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
 
-        //        cmd.UpdatePreSendProperties(
-        //            this.AdminAccessControlDto.User.Id,
-        //            this.AdminAccessControlDto.User.Uid,
-        //            this.EditionDto.Id,
-        //            this.EditionDto.Uid,
-        //            this.UserInterfaceLanguage);
-        //        result = await this.CommandBus.Send(cmd);
-        //        if (!result.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        foreach (var error in result.Errors)
-        //        {
-        //            var target = error.Target ?? "";
-        //            ModelState.AddModelError(target, error.Message);
-        //        }
+                cmd.UpdatePreSendProperties(
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
 
-        //        return Json(new
-        //        {
-        //            status = "error",
-        //            message = ex.GetInnerMessage(),
-        //            pages = new List<dynamic>
-        //            {
-        //                new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationForm", cmd), divIdOrClass = "#form-container" },
-        //            }
-        //        }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-        //    }
+                return Json(new
+                {
+                    status = "error",
+                    message = ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationForm", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Room, Labels.UpdatedF) });
-        //}
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Track, Labels.UpdatedF) });
+        }
 
-        //#endregion
+        #endregion
 
-        //#endregion
+        #endregion
 
         //#region Conferences Widget
 
@@ -322,7 +321,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         //#endregion
 
-        //#endregion
+        #endregion
 
         #region Create
 
