@@ -496,6 +496,8 @@
     <Content Include="Assets\js\organizations\organizations.update.js" />
     <Content Include="Assets\js\myrio2c.additionalinfo.js" />
     <Content Include="Assets\js\projects\projects.pitching.datatable.widget.js" />
+    <Content Include="Assets\js\verticaltracks\verticaltracks.delete.js" />
+    <Content Include="Assets\js\verticaltracks\verticaltracks.create.js" />
     <Content Include="Assets\js\verticaltracks\verticaltracks.datatable.widget.js" />
     <Content Include="Assets\js\verticaltracks\verticaltracks.editioncount.widget.js" />
     <Content Include="Assets\js\verticaltracks\verticaltracks.totalcount.widget.js" />
@@ -8303,6 +8305,9 @@
     <Content Include="Views\VerticalTracks\Widgets\DataTableWidget.cshtml" />
     <Content Include="Views\VerticalTracks\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Views\VerticalTracks\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Views\VerticalTracks\EditorTemplates\VerticalTrackNameBaseCommand.cshtml" />
+    <Content Include="Views\VerticalTracks\Modals\_CreateForm.cshtml" />
+    <Content Include="Views\VerticalTracks\Modals\CreateModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

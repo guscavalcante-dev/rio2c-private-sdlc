@@ -4,13 +4,14 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 01-06-2020
 // ***********************************************************************
 // <copyright file="Language.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Entities
@@ -20,6 +21,13 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public static readonly int NameMinLength = 2;
         public static readonly int NameMaxLength = 50;
+
+        #region Configurations
+
+        public static List<string> CodesOrder = new List<string> { "pt-br", "en-us" };
+        public static char Separator = '|';
+
+        #endregion
 
         public string Name { get; private set; }
         public string Code { get; private set; }
@@ -37,15 +45,15 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="code">The code.</param>
         public Language(string name, string code)
         {
-            this.SetName(name);
-            this.Code = code;
+            SetName(name);
+            Code = code;
         }
 
         /// <summary>Sets the name.</summary>
         /// <param name="value">The value.</param>
         public void SetName(string value)
         {
-            this.Name = value;
+            Name = value;
         }
 
         /// <summary>Returns true if ... is valid.</summary>

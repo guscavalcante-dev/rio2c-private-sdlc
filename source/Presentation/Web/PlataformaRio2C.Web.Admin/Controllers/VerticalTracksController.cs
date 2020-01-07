@@ -324,136 +324,136 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         //#endregion
 
-        //#region Create
+        #region Create
 
-        ///// <summary>Shows the create modal.</summary>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowCreateModal()
-        //{
-        //    var cmd = new CreateRoom(
-        //        null,
-        //        await this.languageRepo.FindAllDtosAsync());
+        /// <summary>Shows the create modal.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowCreateModal()
+        {
+            var cmd = new CreateVerticalTrack(
+                null,
+                await this.languageRepo.FindAllDtosAsync());
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Modals/CreateModal", cmd), divIdOrClass = "#GlobalModalContainer" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/CreateModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
-        ///// <summary>Creates the specified room.</summary>
-        ///// <param name="cmd">The command.</param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public async Task<ActionResult> Create(CreateRoom cmd)
-        //{
-        //    var result = new AppValidationResult();
+        /// <summary>Creates the specified create vertical track.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> Create(CreateVerticalTrack cmd)
+        {
+            var result = new AppValidationResult();
 
-        //    try
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
 
-        //        cmd.UpdatePreSendProperties(
-        //            this.AdminAccessControlDto.User.Id,
-        //            this.AdminAccessControlDto.User.Uid,
-        //            this.EditionDto.Id,
-        //            this.EditionDto.Uid,
-        //            this.UserInterfaceLanguage);
-        //        result = await this.CommandBus.Send(cmd);
-        //        if (!result.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        foreach (var error in result.Errors)
-        //        {
-        //            var target = error.Target ?? "";
-        //            ModelState.AddModelError(target, error.Message);
-        //        }
+                cmd.UpdatePreSendProperties(
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
 
-        //        return Json(new
-        //        {
-        //            status = "error",
-        //            message = ex.GetInnerMessage(),
-        //            pages = new List<dynamic>
-        //            {
-        //                new { page = this.RenderRazorViewToString("Modals/_CreateForm", cmd), divIdOrClass = "#form-container" },
-        //            }
-        //        }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-        //    }
+                return Json(new
+                {
+                    status = "error",
+                    message = ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/_CreateForm", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Room, Labels.CreatedF) });
-        //}
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Track, Labels.CreatedF) });
+        }
 
-        //#endregion
+        #endregion
 
-        //#region Delete
+        #region Delete
 
-        ///// <summary>Deletes the specified delete room.</summary>
-        ///// <param name="cmd"></param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public async Task<ActionResult> Delete(DeleteRoom cmd)
-        //{
-        //    var result = new AppValidationResult();
+        /// <summary>Deletes the specified vertical track.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> Delete(DeleteVerticalTrack cmd)
+        {
+            var result = new AppValidationResult();
 
-        //    try
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
 
-        //        cmd.UpdatePreSendProperties(
-        //            this.AdminAccessControlDto.User.Id,
-        //            this.AdminAccessControlDto.User.Uid,
-        //            this.EditionDto.Id,
-        //            this.EditionDto.Uid,
-        //            this.UserInterfaceLanguage);
+                cmd.UpdatePreSendProperties(
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
 
-        //        result = await this.CommandBus.Send(cmd);
-        //        if (!result.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        foreach (var error in result.Errors)
-        //        {
-        //            var target = error.Target ?? "";
-        //            ModelState.AddModelError(target, error.Message);
-        //        }
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
 
-        //        return Json(new
-        //        {
-        //            status = "error",
-        //            message = ex.GetInnerMessage(),
-        //        }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-        //    }
+                return Json(new
+                {
+                    status = "error",
+                    message = ex.GetInnerMessage(),
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Room, Labels.DeletedF) });
-        //}
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Track, Labels.DeletedF) });
+        }
 
-        //#endregion
+        #endregion
     }
 }

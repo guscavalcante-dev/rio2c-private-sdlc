@@ -4,13 +4,16 @@
 // Created          : 01-04-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-04-2020
+// Last Modified On : 01-06-2020
 // ***********************************************************************
 // <copyright file="VerticalTrack.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
@@ -26,9 +29,71 @@ namespace PlataformaRio2C.Domain.Entities
         public int DisplayOrder { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="VerticalTrack"/> class.</summary>
+        /// <param name="verticalTrackUid">The vertical track uid.</param>
+        /// <param name="edition">The edition.</param>
+        /// <param name="verticalTrackNames">The vertical track names.</param>
+        /// <param name="userId">The user identifier.</param>
+        public VerticalTrack(
+            Guid verticalTrackUid,
+            Edition edition,
+            List<VerticalTrackName> verticalTrackNames,
+            int userId)
+        {
+            //this.Uid = verticalTrackUid;
+            //this.EditionId = edition?.Id ?? 0;
+            //this.Edition = edition;
+            this.UpdateName(verticalTrackNames);
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="VerticalTrack"/> class.</summary>
         protected VerticalTrack()
         {
         }
+
+        /// <summary>Updates the main information.</summary>
+        /// <param name="verticalTrackNames">The vertical track names.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateMainInformation(
+            List<VerticalTrackName> verticalTrackNames,
+            int userId)
+        {
+            this.UpdateName(verticalTrackNames);
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Deletes the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(int userId)
+        {
+            this.IsDeleted = true;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
+        #region Vertical Track Names
+
+        /// <summary>Updates the name.</summary>
+        /// <param name="verticalTrackNames">The vertical track names.</param>
+        private void UpdateName(List<VerticalTrackName> verticalTrackNames)
+        {
+            var name = string.Empty;
+            foreach (var languageCode in Language.CodesOrder)
+            {
+                name += (!string.IsNullOrEmpty(name) ? " "  + Language.Separator + " " : String.Empty) + 
+                        verticalTrackNames?.FirstOrDefault(vtc => vtc.Language.Code == languageCode)?.Value;
+            }
+
+            this.Name = name;
+        }
+
+        #endregion
 
         #region Validations
 
