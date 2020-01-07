@@ -83,6 +83,18 @@ ALTER TABLE "ConferenceHorizontalTracks"
 DROP CONSTRAINT "IDX_UQ_ConferenceHorizontalTracks_Uid"
 go
 
+DROP TABLE "ConferenceVerticalTracks"
+go
+
+DROP TABLE "ConferenceHorizontalTracks"
+go
+
+DROP TABLE "HorizontalTracks"
+go
+
+DROP TABLE "VerticalTracks"
+go
+
 CREATE TABLE "Tracks"
 ( 
 	"Id"                 int IDENTITY ( 1,1 ) ,
