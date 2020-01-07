@@ -74,6 +74,8 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void Delete(int userId)
         {
+            this.DeleteConferencesVerticalTracks(userId);
+
             this.IsDeleted = true;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
@@ -93,6 +95,25 @@ namespace PlataformaRio2C.Domain.Entities
             }
 
             this.Name = name;
+        }
+
+        #endregion
+
+        #region Conference Vertical Tracks
+
+        /// <summary>Deletes the conferences vertical tracks.</summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteConferencesVerticalTracks(int userId)
+        {
+            if (this.ConferenceVerticalTracks?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var conferenceVerticalTrack in this.ConferenceVerticalTracks.Where(c => !c.IsDeleted))
+            {
+                conferenceVerticalTrack.Delete(userId);
+            }
         }
 
         #endregion
