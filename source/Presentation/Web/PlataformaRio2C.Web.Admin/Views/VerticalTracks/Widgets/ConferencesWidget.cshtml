@@ -1,0 +1,48 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model VerticalTrackDto
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+            @(string.Format(Messages.RelatedEntities, Labels.Conferences))
+        </h3>
+    </div>
+    @*<div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-actions">
+                <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="ConferencesTracksWidget.showUpdateModal();">
+                    <i class="flaticon2-edit"></i>
+                </button>
+            </div>
+        </div>*@
+</div>
+<div class="kt-portlet__body">
+    <div class="row">
+        @if (Model.ConferenceDtos?.Any() == true)
+        {
+            <div class="col-12">
+                <table class="table table-sm table-head-bg-brand table-body-scroll">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>@Labels.Title</th>
+                            <th class="text-center">@Labels.StartDate</th>
+                            <th class="text-center">@Labels.EndDate</th>
+                        </tr>
+                    </thead>
+                    <tbody class="rio2c-scroll" style="height: 200px;">
+                        @foreach (var conferenceDto in Model.ConferenceDtos)
+                        {
+                            <tr>
+                                <td>@(conferenceDto.GetConferenceTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ConferenceTitle?.Value)</td>
+                                <td class="text-center">@(conferenceDto.Conference.StartDate.ToShortDateString()) @(conferenceDto.Conference.StartDate.ToShortTimeString())</td>
+                                <td class="text-center">@(conferenceDto.Conference.EndDate.ToShortDateString()) @(conferenceDto.Conference.EndDate.ToShortTimeString())</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="col-12 text-center mt-30">@string.Format(Messages.EntityNotAction, Labels.Conferences, Labels.FoundFP)</div>
+        }
+    </div>
+</div>

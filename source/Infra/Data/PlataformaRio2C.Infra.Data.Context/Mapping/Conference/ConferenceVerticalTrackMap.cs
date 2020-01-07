@@ -4,7 +4,7 @@
 // Created          : 01-04-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-04-2020
+// Last Modified On : 01-06-2020
 // ***********************************************************************
 // <copyright file="ConferenceVerticalTrackMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,7 +33,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
               .HasForeignKey(t => t.ConferenceId);
 
             this.HasRequired(t => t.VerticalTrack)
-                .WithMany()
+                .WithMany(d => d.ConferenceVerticalTracks)
                 .HasForeignKey(t => t.VerticalTrackId);
         }
     }

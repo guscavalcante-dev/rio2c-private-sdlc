@@ -28,6 +28,8 @@ namespace PlataformaRio2C.Domain.Entities
         public string Name { get; private set; }
         public int DisplayOrder { get; private set; }
 
+        public virtual ICollection<ConferenceVerticalTrack> ConferenceVerticalTracks { get; private set; }
+
         /// <summary>Initializes a new instance of the <see cref="VerticalTrack"/> class.</summary>
         /// <param name="verticalTrackUid">The vertical track uid.</param>
         /// <param name="edition">The edition.</param>

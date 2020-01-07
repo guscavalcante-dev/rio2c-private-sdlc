@@ -176,6 +176,39 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+        /// <summary>Finds the conference widget dto asynchronous.</summary>
+        /// <param name="verticalTrackUid">The vertical track uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<VerticalTrackDto> FindConferenceWidgetDtoAsync(Guid verticalTrackUid, int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(verticalTrackUid);
+                                //.FindByEditionId(false, editionId);
+
+            return await query
+                            .Select(vt => new VerticalTrackDto
+                            {
+                                VerticalTrack = vt,
+                                ConferenceDtos = vt.ConferenceVerticalTracks.Where(cvt => !cvt.IsDeleted && !cvt.Conference.IsDeleted).Select(cvt => new ConferenceDto
+                                {
+                                    Conference = cvt.Conference,
+                                    ConferenceTitleDtos = cvt.Conference.ConferenceTitles.Where(ct => !ct.IsDeleted).Select(ct => new ConferenceTitleDto
+                                    {
+                                        ConferenceTitle = ct,
+                                        LanguageDto = new LanguageBaseDto
+                                        {
+                                            Id = ct.Language.Id,
+                                            Uid = ct.Language.Uid,
+                                            Name = ct.Language.Name,
+                                            Code = ct.Language.Code
+                                        }
+                                    })
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
         /// <summary>Finds all asynchronous.</summary>
         /// <returns></returns>
         public async Task<List<VerticalTrack>> FindAllAsync()

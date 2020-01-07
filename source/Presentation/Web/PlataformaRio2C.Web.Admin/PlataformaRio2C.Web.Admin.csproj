@@ -496,6 +496,7 @@
     <Content Include="Assets\js\organizations\organizations.update.js" />
     <Content Include="Assets\js\myrio2c.additionalinfo.js" />
     <Content Include="Assets\js\projects\projects.pitching.datatable.widget.js" />
+    <Content Include="Assets\js\verticaltracks\verticaltracks.conferences.widget.js" />
     <Content Include="Assets\js\verticaltracks\verticaltracks.maininformation.widget.js" />
     <Content Include="Assets\js\verticaltracks\verticaltracks.delete.js" />
     <Content Include="Assets\js\verticaltracks\verticaltracks.create.js" />
@@ -8313,6 +8314,7 @@
     <Content Include="Views\VerticalTracks\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Views\VerticalTracks\Modals\UpdateMainInformationForm.cshtml" />
     <Content Include="Views\VerticalTracks\Modals\UpdateMainInformationModal.cshtml" />
+    <Content Include="Views\VerticalTracks\Widgets\ConferencesWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
