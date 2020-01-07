@@ -39,7 +39,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<PresentationFormat> FindByUid(this IQueryable<PresentationFormat> query, Guid presentationFormatUid)
         {
-            query = query.Where(ht => ht.Uid == presentationFormatUid);
+            query = query.Where(pf => pf.Uid == presentationFormatUid);
 
             return query;
         }
@@ -52,7 +52,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             if (presentationFormatUids?.Any() == true)
             {
-                query = query.Where(ht => presentationFormatUids.Contains(ht.Uid));
+                query = query.Where(pf => presentationFormatUids.Contains(pf.Uid));
+            }
+
+            return query;
+        }
+
+        /// <summary>Finds the by edition identifier.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<PresentationFormat> FindByEditionId(this IQueryable<PresentationFormat> query, bool showAllEditions, int editionId)
+        {
+            if (!showAllEditions)
+            {
+                query = query.Where(pf => pf.EditionId == editionId);
             }
 
             return query;
@@ -74,7 +89,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 {
                     if (!string.IsNullOrEmpty(keyword))
                     {
-                        innerPresentationFormatNameWhere = innerPresentationFormatNameWhere.And(ht => ht.Name.Contains(keyword));
+                        innerPresentationFormatNameWhere = innerPresentationFormatNameWhere.And(pf => pf.Name.Contains(keyword));
                     }
                 }
 
@@ -90,7 +105,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<PresentationFormat> IsNotDeleted(this IQueryable<PresentationFormat> query)
         {
-            query = query.Where(ht => !ht.IsDeleted);
+            query = query.Where(pf => !pf.IsDeleted);
 
             return query;
         }
@@ -100,7 +115,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         ///// <returns></returns>
         //internal static IQueryable<PresentationFormat> Order(this IQueryable<PresentationFormat> query)
         //{
-        //    query = query.OrderBy(ht => ht.DisplayOrder);
+        //    query = query.OrderBy(pf => pf.DisplayOrder);
 
         //    return query;
         //}
@@ -165,8 +180,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<PresentationFormatDto> FindDtoAsync(Guid presentationFormatUid, int editionId)
         {
             var query = this.GetBaseQuery()
-                                .FindByUid(presentationFormatUid);
-                                //.FindByEditionId(false, editionId);
+                                .FindByUid(presentationFormatUid)
+                                .FindByEditionId(false, editionId);
 
             return await query
                             .Select(vt => new PresentationFormatDto
@@ -183,8 +198,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<PresentationFormatDto> FindConferenceWidgetDtoAsync(Guid presentationFormatUid, int editionId)
         {
             var query = this.GetBaseQuery()
-                                .FindByUid(presentationFormatUid);
-                                //.FindByEditionId(false, editionId);
+                                .FindByUid(presentationFormatUid)
+                                .FindByEditionId(false, editionId);
 
             return await query
                             .Select(vt => new PresentationFormatDto
@@ -210,10 +225,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>Finds all asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<List<PresentationFormat>> FindAllAsync()
+        public async Task<List<PresentationFormat>> FindAllAsync(int editionId)
         {
-            var query = this.GetBaseQuery();
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(false, editionId);
 
             return await query
                             //.Order()
@@ -226,7 +243,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<List<PresentationFormat>> FindAllByUidsAsync(List<Guid> presentationFormatUids)
         {
             var query = this.GetBaseQuery()
-                .FindByUids(presentationFormatUids);
+                                .FindByUids(presentationFormatUids);
 
             return await query
                             //.Order()
@@ -253,7 +270,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords, languageId)
-                                //.FindByEditionId(false, editionId)
+                                .FindByEditionId(false, editionId)
                                 .FindByUids(presentationFormatUids);
 
             return await query
@@ -281,8 +298,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<int> CountAllByDataTable(bool showAllEditions, int editionId)
         {
-            var query = this.GetBaseQuery();
-                                //.FindByEditionId(showAllEditions, editionId);
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(showAllEditions, editionId);
 
             return await query
                             .CountAsync();

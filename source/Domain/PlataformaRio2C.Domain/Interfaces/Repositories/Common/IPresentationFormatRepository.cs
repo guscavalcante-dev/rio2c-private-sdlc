@@ -25,7 +25,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     {
         Task<PresentationFormatDto> FindDtoAsync(Guid presentationFormatUid, int editionId);
         Task<PresentationFormatDto> FindConferenceWidgetDtoAsync(Guid presentationFormatUid, int editionId);
-        Task<List<PresentationFormat>> FindAllAsync();
+        Task<List<PresentationFormat>> FindAllAsync(int editionId);
         Task<List<PresentationFormat>> FindAllByUidsAsync(List<Guid> presentationFormatUids);
         Task<IPagedList<PresentationFormatJsonDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> presentationFormatUids, int editionId, int languageId);
         Task<int> CountAllByDataTable(bool showAllEditions, int editionId);

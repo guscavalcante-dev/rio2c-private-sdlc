@@ -367,8 +367,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd = new UpdateConferenceTracksAndPresentationFormats(
                     tracksWidgetDto,
-                    await this.trackRepo.FindAllAsync(),
-                    await this.presentationFormatRepo.FindAllAsync());
+                    await this.trackRepo.FindAllAsync(this.EditionDto.Id),
+                    await this.presentationFormatRepo.FindAllAsync(this.EditionDto.Id));
             }
             catch (DomainException ex)
             {
@@ -421,8 +421,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd.UpdateDropdownProperties(
-                    await this.trackRepo.FindAllAsync(),
-                    await this.presentationFormatRepo.FindAllAsync());
+                    await this.trackRepo.FindAllAsync(this.EditionDto.Id),
+                    await this.presentationFormatRepo.FindAllAsync(this.EditionDto.Id));
 
                 return Json(new
                 {

@@ -39,7 +39,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<Track> FindByUid(this IQueryable<Track> query, Guid trackUid)
         {
-            query = query.Where(vt => vt.Uid == trackUid);
+            query = query.Where(t => t.Uid == trackUid);
 
             return query;
         }
@@ -52,7 +52,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             if (trackUids?.Any() == true)
             {
-                query = query.Where(vt => trackUids.Contains(vt.Uid));
+                query = query.Where(t => trackUids.Contains(t.Uid));
+            }
+
+            return query;
+        }
+
+        /// <summary>Finds the by edition identifier.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<Track> FindByEditionId(this IQueryable<Track> query, bool showAllEditions, int editionId)
+        {
+            if (!showAllEditions)
+            {
+                query = query.Where(t => t.EditionId == editionId);
             }
 
             return query;
@@ -74,7 +89,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 {
                     if (!string.IsNullOrEmpty(keyword))
                     {
-                        innerTrackNameWhere = innerTrackNameWhere.And(vt => vt.Name.Contains(keyword));
+                        innerTrackNameWhere = innerTrackNameWhere.And(t => t.Name.Contains(keyword));
                     }
                 }
 
@@ -90,7 +105,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<Track> IsNotDeleted(this IQueryable<Track> query)
         {
-            query = query.Where(vt => !vt.IsDeleted);
+            query = query.Where(t => !t.IsDeleted);
 
             return query;
         }
@@ -100,7 +115,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         ///// <returns></returns>
         //internal static IQueryable<Track> Order(this IQueryable<Track> query)
         //{
-        //    query = query.OrderBy(vt => vt.DisplayOrder);
+        //    query = query.OrderBy(t => t.DisplayOrder);
 
         //    return query;
         //}
@@ -165,8 +180,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<TrackDto> FindDtoAsync(Guid trackUid, int editionId)
         {
             var query = this.GetBaseQuery()
-                                .FindByUid(trackUid);
-                                //.FindByEditionId(false, editionId);
+                                .FindByUid(trackUid)
+                                .FindByEditionId(false, editionId);
 
             return await query
                             .Select(vt => new TrackDto
@@ -183,8 +198,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<TrackDto> FindConferenceWidgetDtoAsync(Guid trackUid, int editionId)
         {
             var query = this.GetBaseQuery()
-                                .FindByUid(trackUid);
-                                //.FindByEditionId(false, editionId);
+                                .FindByUid(trackUid)
+                                .FindByEditionId(false, editionId);
 
             return await query
                             .Select(vt => new TrackDto
@@ -210,10 +225,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>Finds all asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<List<Track>> FindAllAsync()
+        public async Task<List<Track>> FindAllAsync(int editionId)
         {
-            var query = this.GetBaseQuery();
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(false, editionId);
 
             return await query
                             //.Order()
@@ -253,7 +270,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords, languageId)
-                                //.FindByEditionId(false, editionId)
+                                .FindByEditionId(false, editionId)
                                 .FindByUids(trackUids);
 
             return await query
@@ -281,8 +298,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<int> CountAllByDataTable(bool showAllEditions, int editionId)
         {
-            var query = this.GetBaseQuery();
-                                //.FindByEditionId(showAllEditions, editionId);
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(showAllEditions, editionId);
 
             return await query
                             .CountAsync();
