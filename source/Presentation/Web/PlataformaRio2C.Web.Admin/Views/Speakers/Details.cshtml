@@ -9,20 +9,32 @@
     <div class="col-md-8 col-lg-9">
         <div class="row">
             <div class="col-md-12">
-                <!--begin:Main Information Widget-->
                 <div class="row">
+                    <!--begin:Main Information Widget-->
                     <div class="col-12">
                         <div id="SpeakerMainInformationWidget" class="kt-portlet" style="min-height: 325px;"></div>
                     </div>
+                    <!--end:Main Information Widget-->
                 </div>
-                <!--end:Main Information Widget-->
-                <!--begin:Company Widget-->
                 <div class="row">
+                    <!--begin:Company Widget-->
                     <div class="col-12">
                         <div id="SpeakerCompanyWidget" class="kt-portlet" style="min-height: 325px;"></div>
                     </div>
+                    <!--end:Company Widget-->
                 </div>
-                <!--end:Company Widget-->
+                <div class="row">
+                    <!--begin:Participants Widget-->
+                    <div class="col-6">
+                        <div id="SpeakerParticipantsWidget" class="kt-portlet" style="min-height: 325px;"></div>
+                    </div>
+                    <!--end:Participants Widget-->
+                    <!--begin:Conferences Widget-->
+                    <div class="col-6">
+                        <div id="SpeakerConferencesWidget" class="kt-portlet" style="min-height: 325px;"></div>
+                    </div>
+                    <!--end:Conferences Widget-->
+                </div>
             </div>
         </div>
     </div>
@@ -60,6 +72,8 @@
         jQuery(document).ready(function () {
             SpeakersMainInformationWidget.init();
             SpeakersCompanyWidget.init();
+            SpeakersParticipantsWidget.init();
+            SpeakersConferencesWidget.init();
             SpeakersApiConfigurationWidget.init();
         });
     </script>

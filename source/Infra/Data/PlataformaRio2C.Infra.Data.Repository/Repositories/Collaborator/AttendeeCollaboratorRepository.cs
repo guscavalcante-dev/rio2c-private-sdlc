@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-18-2019
+// Last Modified On : 01-07-2020
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -347,6 +347,92 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             })
                             .FirstOrDefaultAsync();
         }
+
+        /// <summary>Finds the conference widget dto asynchronous.</summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttendeeCollaboratorDto> FindConferenceWidgetDtoAsync(Guid collaboratorUid, int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByCollaboratorUid(collaboratorUid)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(ac => new AttendeeCollaboratorDto
+                            {
+                                AttendeeCollaborator = ac,
+                                Collaborator = ac.Collaborator,
+                                ConferenceDtos = ac.ConferenceParticipants.Where(cp => !cp.IsDeleted && !cp.Conference.IsDeleted).Select(cp => cp.Conference).Distinct().Select(c => new ConferenceDto
+                                {
+                                    Conference = c,
+                                    ConferenceTitleDtos = c.ConferenceTitles.Where(ct => !ct.IsDeleted).Select(ct => new ConferenceTitleDto
+                                    {
+                                        ConferenceTitle = ct,
+                                        LanguageDto = new LanguageBaseDto
+                                        {
+                                            Id = ct.Language.Id,
+                                            Uid = ct.Language.Uid,
+                                            Name = ct.Language.Name,
+                                            Code = ct.Language.Code
+                                        }
+                                    })
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>Finds the participants widget dto asynchronous.</summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttendeeCollaboratorDto> FindParticipantsWidgetDtoAsync(Guid collaboratorUid, int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByCollaboratorUid(collaboratorUid)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(ac => new AttendeeCollaboratorDto
+                            {
+                                AttendeeCollaborator = ac,
+                                Collaborator = ac.Collaborator,
+                                ConferenceParticipantDtos = ac.ConferenceParticipants.Where(cp => !cp.IsDeleted && !cp.Conference.IsDeleted && !cp.ConferenceParticipantRole.IsDeleted).Select(cp => new ConferenceParticipantDto
+                                {
+                                    ConferenceParticipant = cp,
+                                    ConferenceParticipantRoleDto = new ConferenceParticipantRoleDto
+                                    {
+                                        ConferenceParticipantRole = cp.ConferenceParticipantRole,
+                                        ConferenceParticipantRoleTitleDtos = cp.ConferenceParticipantRole.ConferenceParticipantRoleTitles.Where(cprt => !cprt.IsDeleted).Select(cprt => new ConferenceParticipantRoleTitleDto
+                                        {
+                                            ConferenceParticipantRoleTitle = cprt,
+                                            LanguageDto = new LanguageDto
+                                            {
+                                                Id = cprt.Language.Id,
+                                                Uid = cprt.Language.Uid,
+                                                Code = cprt.Language.Code
+                                            }
+                                        })
+                                    },
+                                    ConferenceDto = new ConferenceDto
+                                    {
+                                        Conference = cp.Conference,
+                                        ConferenceTitleDtos = cp.Conference.ConferenceTitles.Where(ct => !ct.IsDeleted).Select(ct => new ConferenceTitleDto
+                                        {
+                                            ConferenceTitle = ct,
+                                            LanguageDto = new LanguageBaseDto
+                                            {
+                                                Id = ct.Language.Id,
+                                                Uid = ct.Language.Uid,
+                                                Name = ct.Language.Name,
+                                                Code = ct.Language.Code
+                                            }
+                                        })
+                                    }
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+                    }
 
         #endregion
 

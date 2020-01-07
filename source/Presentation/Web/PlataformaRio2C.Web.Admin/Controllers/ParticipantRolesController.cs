@@ -295,32 +295,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #endregion
 
-        #region Conferences Widget
-
-        /// <summary>Shows the conferences widget.</summary>
-        /// <param name="conferenceParticipantRoleUid">The conferenceParticipantRole uid.</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ShowConferencesWidget(Guid? conferenceParticipantRoleUid)
-        {
-            var conferencesWidgetDto = await this.conferenceParticipantRoleRepo.FindConferenceWidgetDtoAsync(conferenceParticipantRoleUid ?? Guid.Empty, this.EditionDto.Id);
-            if (conferencesWidgetDto == null)
-            {
-                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.SpeakerRole, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("~/Views/Conferences/Widgets/RelatedConferencesWidget.cshtml", conferencesWidgetDto.ConferenceDtos), divIdOrClass = "#ConferenceParticipantRoleConferencesWidget" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        #endregion
-
         #region Participants Widget
 
         /// <summary>Shows the participants widget.</summary>
@@ -341,6 +315,32 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 pages = new List<dynamic>
                 {
                     new { page = this.RenderRazorViewToString("Widgets/RelatedParticipantsWidget", participantsWidgetDto), divIdOrClass = "#ConferenceParticipantRoleParticipantsWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Conferences Widget
+
+        /// <summary>Shows the conferences widget.</summary>
+        /// <param name="conferenceParticipantRoleUid">The conferenceParticipantRole uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowConferencesWidget(Guid? conferenceParticipantRoleUid)
+        {
+            var conferencesWidgetDto = await this.conferenceParticipantRoleRepo.FindConferenceWidgetDtoAsync(conferenceParticipantRoleUid ?? Guid.Empty, this.EditionDto.Id);
+            if (conferencesWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.SpeakerRole, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("~/Views/Conferences/Widgets/RelatedConferencesWidget.cshtml", conferencesWidgetDto.ConferenceDtos), divIdOrClass = "#ConferenceParticipantRoleConferencesWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }

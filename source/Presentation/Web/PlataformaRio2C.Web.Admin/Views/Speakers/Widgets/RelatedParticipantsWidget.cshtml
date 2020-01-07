@@ -1,9 +1,9 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
-@model ConferenceParticipantRoleDto
+@model AttendeeCollaboratorDto
 <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
         <h3 class="kt-portlet__head-title">
-            @(string.Format(Messages.RelatedEntities, Labels.Speakers))
+            @(string.Format(Messages.RelatedEntities, Labels.SpeakersRoles))
         </h3>
     </div>
     @*<div class="kt-portlet__head-toolbar">
@@ -22,7 +22,7 @@
                 <table class="table table-sm table-head-bg-brand table-body-scroll">
                     <thead class="thead-inverse">
                         <tr>
-                            <th>@Labels.Speaker</th>
+                            <th>@Labels.SpeakerRole</th>
                             <th>@Labels.Conference</th>
                         </tr>
                     </thead>
@@ -31,8 +31,8 @@
                         {
                             <tr>
                                 <td>
-                                    <a href="@Url.Action("Details", "Speakers", new { Area = "", id = conferenceParticipantDto.AttendeeCollaboratorDto.Collaborator.Uid })" target="_blank">
-                                        @(conferenceParticipantDto.AttendeeCollaboratorDto.Collaborator.GetDisplayName())
+                                    <a href="@Url.Action("Details", "ParticipantRoles", new { Area = "", id = conferenceParticipantDto.ConferenceParticipantRoleDto.ConferenceParticipantRole.Uid })" target="_blank">
+                                        @(conferenceParticipantDto.ConferenceParticipantRoleDto.GetConferenceParticipantRoleTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ConferenceParticipantRoleTitle?.Value)
                                     </a>
                                 </td>
                                 <td>@(conferenceParticipantDto.ConferenceDto.GetConferenceTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ConferenceTitle?.Value ?? "-")</td>

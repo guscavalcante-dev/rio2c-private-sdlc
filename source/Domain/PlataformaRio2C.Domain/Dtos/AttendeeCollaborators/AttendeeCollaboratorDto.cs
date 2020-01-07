@@ -4,7 +4,7 @@
 // Created          : 10-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-21-2019
+// Last Modified On : 01-07-2020
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,6 +24,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public Collaborator Collaborator { get; set; }
         public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }
         public IEnumerable<AttendeeOrganizationDto> AttendeeOrganizationsDtos { get; set; }
+        public IEnumerable<ConferenceDto> ConferenceDtos { get; set; }
+        public IEnumerable<ConferenceParticipantDto> ConferenceParticipantDtos { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeCollaboratorDto"/> class.</summary>
         public AttendeeCollaboratorDto()

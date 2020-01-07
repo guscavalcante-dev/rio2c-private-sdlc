@@ -35,7 +35,11 @@
                         @foreach (var conferenceDto in Model)
                         {
                             <tr>
-                                <td>@(conferenceDto.GetConferenceTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ConferenceTitle?.Value)</td>
+                                <td>
+                                    <a href="@Url.Action("Details", "Conferences", new { Area = "", id = conferenceDto.Conference.Uid })" target="_blank">
+                                        @(conferenceDto.GetConferenceTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ConferenceTitle?.Value)
+                                    </a>
+                                </td>
                                 <td class="text-center @(startDate.HasValue && endDate.HasValue && (conferenceDto.Conference.StartDate < startDate.Value || conferenceDto.Conference.StartDate > endDate.Value) ? "kt-font-danger" : string.Empty)">
                                     @(conferenceDto.Conference.StartDate.ToShortDateString()) @(conferenceDto.Conference.StartDate.ToShortTimeString())
                                 </td>

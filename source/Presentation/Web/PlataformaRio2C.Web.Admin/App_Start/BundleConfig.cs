@@ -342,6 +342,8 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/speakers.details.js").Include(
                 "~/Assets/js/speakers/speakers.maininformation.widget.js",
                 "~/Assets/js/speakers/speakers.company.widget.js",
+                "~/Assets/js/speakers/speakers.conferences.widget.js",
+                "~/Assets/js/speakers/speakers.participants.widget.js",
                 "~/Assets/js/companies/companyinfo.autocomplete.js",
                 "~/Assets/js/myrio2c.companynumber.js",
                 "~/Assets/js/speakers/speakers.apiconfiguration.widget.js"));

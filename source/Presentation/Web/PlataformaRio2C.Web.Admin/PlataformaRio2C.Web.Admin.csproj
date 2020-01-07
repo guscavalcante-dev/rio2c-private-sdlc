@@ -453,6 +453,8 @@
     <Content Include="Assets\js\events\events.datatable.widget.js" />
     <Content Include="Assets\js\events\events.editioncount.widget.js" />
     <Content Include="Assets\js\events\events.totalcount.widget.js" />
+    <Content Include="Assets\js\speakers\speakers.conferences.widget.js" />
+    <Content Include="Assets\js\speakers\speakers.participants.widget.js" />
     <Content Include="Assets\js\speakers\speakers.company.widget.js" />
     <Content Include="Assets\js\speakers\speakers.apiconfiguration.widget.js" />
     <Content Include="Assets\js\speakers\speakers.maininformation.widget.js" />
@@ -8353,6 +8355,7 @@
     <Content Include="Views\ParticipantRoles\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Views\ParticipantRoles\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Views\ParticipantRoles\Widgets\RelatedParticipantsWidget.cshtml" />
+    <Content Include="Views\Speakers\Widgets\RelatedParticipantsWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

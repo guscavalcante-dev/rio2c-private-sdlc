@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-19-2019
+// Last Modified On : 01-07-2020
 // ***********************************************************************
 // <copyright file="AttendeeCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -39,6 +39,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeCollaboratorType> AttendeeCollaboratorTypes { get; private set; }
         public virtual ICollection<AttendeeOrganizationCollaborator> AttendeeOrganizationCollaborators { get; private set; }
         public virtual ICollection<AttendeeCollaboratorTicket> AttendeeCollaboratorTickets { get; private set; }
+        public virtual ICollection<ConferenceParticipant> ConferenceParticipants { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeCollaborator"/> class.</summary>
         /// <param name="edition">The edition.</param>
@@ -160,6 +161,7 @@ namespace PlataformaRio2C.Domain.Entities
         public void Delete(CollaboratorType collaboratorType, int userId)
         {
             this.DeleteAttendeeCollaboratorType(collaboratorType, userId);
+            this.DeleteConferenceParticipants(userId);
 
             if (this.FindAllAttendeeCollaboratorTypesNotDeleted()?.Any() == true)
             {
@@ -611,6 +613,25 @@ namespace PlataformaRio2C.Domain.Entities
         private List<AttendeeCollaboratorTicket> FindAllAttendeeCollaboratorTicketsNotDeleted()
         {
             return this.AttendeeCollaboratorTickets?.Where(act => !act.IsDeleted).ToList();
+        }
+
+        #endregion
+
+        #region Conference Participants
+
+        /// <summary>Deletes the conference participants.</summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteConferenceParticipants(int userId)
+        {
+            if (this.ConferenceParticipants?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var conferenceParticipant in this.ConferenceParticipants.Where(c => !c.IsDeleted))
+            {
+                conferenceParticipant.Delete(userId);
+            }
         }
 
         #endregion
