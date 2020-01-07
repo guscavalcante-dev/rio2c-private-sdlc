@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-06-2020
+// Last Modified On : 01-07-2020
 // ***********************************************************************
 // <copyright file="verticaltracks.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -167,7 +167,7 @@ var VerticalTracksDataTableWidget = function () {
             columnDefs: [
                 {
                     targets: [0],
-                    width: "25%",
+                    width: "50%",
                     orderable: false
                 },
                 {

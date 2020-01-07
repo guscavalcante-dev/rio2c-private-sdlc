@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Rafael Dantas Ruiz
-// Created          : 01-06-2020
+// Created          : 01-07-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 01-07-2020
 // ***********************************************************************
-// <copyright file="CreateVerticalTrackCommandHandler.cs" company="Softo">
+// <copyright file="CreateHorizontalTrackCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -23,56 +23,56 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>CreateVerticalTrackCommandHandler</summary>
-    public class CreateVerticalTrackCommandHandler : VerticalTrackBaseCommandHandler, IRequestHandler<CreateVerticalTrack, AppValidationResult>
+    /// <summary>CreateHorizontalTrackCommandHandler</summary>
+    public class CreateHorizontalTrackCommandHandler : HorizontalTrackBaseCommandHandler, IRequestHandler<CreateHorizontalTrack, AppValidationResult>
     {
         private readonly IEditionRepository editionRepo;
         private readonly ILanguageRepository languageRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="CreateVerticalTrackCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="CreateHorizontalTrackCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
-        /// <param name="verticalTrackRepository">The vertical track repository.</param>
+        /// <param name="horizontalTrackRepository">The horizontal track repository.</param>
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="languageRepository">The language repository.</param>
-        public CreateVerticalTrackCommandHandler(
+        public CreateHorizontalTrackCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            IVerticalTrackRepository verticalTrackRepository,
+            IHorizontalTrackRepository horizontalTrackRepository,
             IEditionRepository editionRepository,
             ILanguageRepository languageRepository)
-            : base(eventBus, uow, verticalTrackRepository)
+            : base(eventBus, uow, horizontalTrackRepository)
         {
             this.editionRepo = editionRepository;
             this.languageRepo = languageRepository;
         }
 
-        /// <summary>Handles the specified create vertical track.</summary>
+        /// <summary>Handles the specified create horizontal track.</summary>
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(CreateVerticalTrack cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(CreateHorizontalTrack cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
-            var verticalTrackUid = Guid.NewGuid();
+            var horizontalTrackUid = Guid.NewGuid();
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
 
-            var verticalTrack = new VerticalTrack(
-                verticalTrackUid,
+            var horizontalTrack = new HorizontalTrack(
+                horizontalTrackUid,
                 await this.editionRepo.GetAsync(cmd.EditionId ?? 0),
-                cmd.Names?.Select(d => new VerticalTrackName(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
+                cmd.Names?.Select(d => new HorizontalTrackName(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.UserId);
-            if (!verticalTrack.IsValid())
+            if (!horizontalTrack.IsValid())
             {
-                this.AppValidationResult.Add(verticalTrack.ValidationResult);
+                this.AppValidationResult.Add(horizontalTrack.ValidationResult);
                 return this.AppValidationResult;
             }
 
-            this.VerticalTrackRepo.Create(verticalTrack);
+            this.HorizontalTrackRepo.Create(horizontalTrack);
             this.Uow.SaveChanges();
-            this.AppValidationResult.Data = verticalTrack;
+            this.AppValidationResult.Data = horizontalTrack;
 
             return this.AppValidationResult;
 

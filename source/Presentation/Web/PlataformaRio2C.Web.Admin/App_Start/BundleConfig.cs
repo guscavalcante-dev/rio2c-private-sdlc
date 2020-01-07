@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-06-2020
+// Last Modified On : 01-07-2020
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -453,6 +453,27 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/verticaltracks.delete.js").Include(
                 "~/Assets/js/verticaltracks/verticaltracks.delete.js"));
+
+            #endregion
+
+            #region Horizontal Tracks
+
+            bundles.Add(new ScriptBundle("~/bundles/js/horizontaltracks.list.js").Include(
+                "~/Assets/js/horizontaltracks/horizontaltracks.totalcount.widget.js",
+                "~/Assets/js/horizontaltracks/horizontaltracks.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/horizontaltracks.editioncount.js").Include(
+                "~/Assets/js/horizontaltracks/horizontaltracks.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/horizontaltracks.create.js").Include(
+                "~/Assets/js/horizontaltracks/horizontaltracks.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/horizontaltracks.details.js").Include(
+                "~/Assets/js/horizontaltracks/horizontaltracks.maininformation.widget.js",
+                "~/Assets/js/horizontaltracks/horizontaltracks.conferences.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/horizontaltracks.delete.js").Include(
+                "~/Assets/js/horizontaltracks/horizontaltracks.delete.js"));
 
             #endregion
 

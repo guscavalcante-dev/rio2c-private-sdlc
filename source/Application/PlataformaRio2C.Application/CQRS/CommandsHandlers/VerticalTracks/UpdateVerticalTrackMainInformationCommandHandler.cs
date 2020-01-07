@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-06-2020
+// Last Modified On : 01-07-2020
 // ***********************************************************************
 // <copyright file="UpdateVerticalTrackMainInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,14 +30,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <summary>Initializes a new instance of the <see cref="UpdateVerticalTrackMainInformationCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
-        /// <param name="verticakTrackRepository">The verticak track repository.</param>
+        /// <param name="verticalTrackRepository">The vertical track repository.</param>
         /// <param name="languageRepository">The language repository.</param>
         public UpdateVerticalTrackMainInformationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            IVerticalTrackRepository verticakTrackRepository,
+            IVerticalTrackRepository verticalTrackRepository,
             ILanguageRepository languageRepository)
-            : base(eventBus, uow, verticakTrackRepository)
+            : base(eventBus, uow, verticalTrackRepository)
         {
             this.languageRepo = languageRepository;
         }

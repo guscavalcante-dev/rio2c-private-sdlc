@@ -175,6 +175,8 @@
     <Compile Include="Dtos\Users\UserLanguageDto.cs" />
     <Compile Include="Dtos\Users\UserAccessControlDto.cs" />
     <Compile Include="Dtos\Users\UserBaseDto.cs" />
+    <Compile Include="Dtos\HorizontalTracks\HorizontalTrackDto.cs" />
+    <Compile Include="Dtos\HorizontalTracks\HorizontalTrackJsonDto.cs" />
     <Compile Include="Dtos\VerticalTracks\VerticalTrackDto.cs" />
     <Compile Include="Dtos\VerticalTracks\VerticalTrackJsonDto.cs" />
     <Compile Include="Entities\Addresses\Address.cs" />
@@ -262,6 +264,7 @@
     <Compile Include="Entities\SubscribeLists\UserUnsubscribedList.cs" />
     <Compile Include="Entities\SubscribeLists\SubscribeList.cs" />
     <Compile Include="Entities\Tracks\HorizontalTrack.cs" />
+    <Compile Include="Entities\Tracks\HorizontalTrackName.cs" />
     <Compile Include="Entities\Tracks\VerticalTrackName.cs" />
     <Compile Include="Entities\Tracks\VerticalTrack.cs" />
     <Compile Include="Enums\NegotiationTypeCodes.cs" />

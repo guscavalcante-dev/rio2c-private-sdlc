@@ -248,6 +248,10 @@
     <Compile Include="CQRS\CommandsHandlers\Projects\CreateProjectCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Rooms\UpdateRoomMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Rooms\DeleteRoomCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\HorizontalTracks\CreateHorizontalTrackCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\HorizontalTracks\DeleteHorizontalTrackCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\HorizontalTracks\UpdateHorizontalTrackMainInformationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\HorizontalTracks\HorizontalTrackBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\VerticalTracks\UpdateVerticalTrackMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\VerticalTracks\CreateVerticalTrackCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\VerticalTracks\DeleteVerticalTrackCommandHandler.cs" />
@@ -357,6 +361,10 @@
     <Compile Include="CQRS\BaseUserRequest.cs" />
     <Compile Include="CQRS\Commands\User\UpdateUserEmailSettings.cs" />
     <Compile Include="CQRS\Commands\User\UpdateUserInterfaceLanguage.cs" />
+    <Compile Include="CQRS\Commands\HorizontalTracks\BaseCommands\HorizontalTrackNameBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\HorizontalTracks\CreateHorizontalTrack.cs" />
+    <Compile Include="CQRS\Commands\HorizontalTracks\DeleteHorizontalTrack.cs" />
+    <Compile Include="CQRS\Commands\HorizontalTracks\UpdateHorizontalTrackMainInformation.cs" />
     <Compile Include="CQRS\Commands\VerticalTracks\BaseCommands\VerticalTrackNameBaseCommand.cs" />
     <Compile Include="CQRS\Commands\VerticalTracks\CreateVerticalTrack.cs" />
     <Compile Include="CQRS\Commands\VerticalTracks\DeleteVerticalTrack.cs" />
@@ -635,6 +643,7 @@
     <Compile Include="ViewModels\Common\Player\Properties\PlayerDescriptionAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Player\PlayerAppViewModel.cs" />
     <Compile Include="ViewModels\Site\Player\PlayerDetailWithInterestAppViewModel.cs" />
+    <Compile Include="ViewModels\HorizontalTracks\HorizontalTrackSearchViewModel.cs" />
     <Compile Include="ViewModels\VerticalTracks\VerticalTrackSearchViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

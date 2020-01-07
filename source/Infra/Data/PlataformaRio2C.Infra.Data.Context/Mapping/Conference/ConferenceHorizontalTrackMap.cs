@@ -4,7 +4,7 @@
 // Created          : 01-04-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-04-2020
+// Last Modified On : 01-07-2020
 // ***********************************************************************
 // <copyright file="ConferenceHorizontalTrackMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,16 +24,13 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         {
             this.ToTable("ConferenceHorizontalTracks");
 
-            //Property(u => u.Info)
-            //   .HasMaxLength(Conference.InfoMaxLength);
-
             //Relationships 
             this.HasRequired(t => t.Conference)
               .WithMany(d => d.ConferenceHorizontalTracks)
               .HasForeignKey(t => t.ConferenceId);
 
             this.HasRequired(t => t.HorizontalTrack)
-                .WithMany()
+                .WithMany(d => d.ConferenceHorizontalTracks)
                 .HasForeignKey(t => t.HorizontalTrackId);
         }
     }

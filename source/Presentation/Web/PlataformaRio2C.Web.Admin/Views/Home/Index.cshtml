@@ -10,49 +10,54 @@
 <div class="row">
     @if (isAdminFull || isAdminAudiovisual)
     {
+        <!--begin:: Holdings Edition Count-->
         <div class="col-sm-4">
-            <!--begin:: Holdings Edition Count-->
             <div id="HoldingsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-            <!--end:: Holdings Edition Count-->
         </div>
+        <!--end:: Holdings Edition Count-->
+        <!--begin:: Players Edition Count-->
         <div class="col-sm-4">
-            <!--begin:: Players Edition Count-->
             <div id="PlayersEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-            <!--end:: Players Edition Count-->
         </div>
+        <!--end:: Players Edition Count-->
+        <!--begin:: Players Executives Edition Count-->
         <div class="col-sm-4">
-            <!--begin:: Players Executives Edition Count-->
             <div id="PlayersExecutivesEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-            <!--end:: Players Executives Edition Count-->
         </div>
+        <!--end:: Players Executives Edition Count-->
     }
     @if (isAdminFull || isAdminAudiovisual || isCuratorshipAudiovisual)
     {
+        <!--begin:: Events Edition Count-->
         <div class="col-sm-4">
-            <!--begin:: Events Edition Count-->
             <div id="EventsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-            <!--end:: Events Edition Count-->
         </div>
+        <!--end:: Events Edition Count-->
+        <!--begin:: Conferences Edition Count-->
         <div class="col-sm-4">
-            <!--begin:: Conferences Edition Count-->
             <div id="ConferencesEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-            <!--end:: Conferences Edition Count-->
         </div>
+        <!--end:: Conferences Edition Count-->
+        <!--begin:: Speakers Edition Count-->
         <div class="col-sm-4">
-            <!--begin:: Speakers Edition Count-->
             <div id="SpeakersEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-            <!--end:: Speakers Edition Count-->
         </div>
+        <!--end:: Speakers Edition Count-->
+        <!--begin:: Rooms Edition Count-->
         <div class="col-sm-4">
-            <!--begin:: Rooms Edition Count-->
             <div id="RoomsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-            <!--end:: Rooms Edition Count-->
         </div>
+        <!--end:: Rooms Edition Count-->
+        <!--begin:: Vertical Tracks Edition Count-->
         <div class="col-sm-4">
-            <!--begin:: Vertical Tracks Edition Count-->
             <div id="VerticalTracksEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-            <!--end:: Vertical Tracks Edition Count-->
         </div>
+        <!--end:: Vertical Tracks Edition Count-->
+        <!--begin:: Horizontal Tracks Edition Count-->
+        <div class="col-sm-4">
+            <div id="HorizontalTracksEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        </div>
+        <!--end:: Horizontal Tracks Edition Count-->
     }
 </div>
 @section Styles {
@@ -72,6 +77,7 @@
         @Scripts.Render("~/bundles/js/speakers.editioncount.js")
         @Scripts.Render("~/bundles/js/rooms.editioncount.js")
         @Scripts.Render("~/bundles/js/verticaltracks.editioncount.js")
+        @Scripts.Render("~/bundles/js/horizontaltracks.editioncount.js")
     }
     <script>
         jQuery(document).ready(function () {
@@ -91,6 +97,7 @@
                     SpeakersEditionCountWidget.init();
                     RoomsEditionCountWidget.init();
                     VerticalTracksEditionCountWidget.init();
+                    HorizontalTracksEditionCountWidget.init();
                 </text>
             }
         });

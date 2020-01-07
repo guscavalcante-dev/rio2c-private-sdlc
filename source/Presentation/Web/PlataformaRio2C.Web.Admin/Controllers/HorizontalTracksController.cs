@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Rafael Dantas Ruiz
-// Created          : 01-06-2020
+// Created          : 01-07-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 01-07-2020
 // ***********************************************************************
-// <copyright file="VerticalTracksController.cs" company="Softo">
+// <copyright file="HorizontalTracksController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -33,27 +33,27 @@ using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
-    /// <summary>VerticalTracksController</summary>
+    /// <summary>HorizontalTracksController</summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
     [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CuratorshipAudiovisual)]
-    public class VerticalTracksController : BaseController
+    public class HorizontalTracksController : BaseController
     {
-        private readonly IVerticalTrackRepository verticalTrackRepo;
+        private readonly IHorizontalTrackRepository horizontalTrackRepo;
         private readonly ILanguageRepository languageRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="VerticalTracksController"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="HorizontalTracksController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        /// <param name="verticalTrackRepository">The vertical track repository.</param>
+        /// <param name="horizontalTrackRepository">The horizontal track repository.</param>
         /// <param name="languageRepository">The language repository.</param>
-        public VerticalTracksController(
+        public HorizontalTracksController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
-            IVerticalTrackRepository verticalTrackRepository,
+            IHorizontalTrackRepository horizontalTrackRepository,
             ILanguageRepository languageRepository)
             : base(commandBus, identityController)
         {
-            this.verticalTrackRepo = verticalTrackRepository;
+            this.horizontalTrackRepo = horizontalTrackRepository;
             this.languageRepo = languageRepository;
         }
 
@@ -63,12 +63,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="searchViewModel">The search view model.</param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Index(VerticalTrackSearchViewModel searchViewModel)
+        public ActionResult Index(HorizontalTrackSearchViewModel searchViewModel)
         {
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Conferences, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.VerticalTracks, Url.Action("Index", "VerticalTracks", new { Area = "" }))
+                new BreadcrumbItemHelper(Labels.HorizontalTracks, Url.Action("Index", "HorizontalTracks", new { Area = "" }))
             });
 
             #endregion
@@ -84,7 +84,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Search(IDataTablesRequest request)
         {
-            var verticalTracks = await this.verticalTrackRepo.FindAllByDataTable(
+            var horizontalTracks = await this.horizontalTrackRepo.FindAllByDataTable(
                 request.Start / request.Length,
                 request.Length,
                 request.Search?.Value,
@@ -94,12 +94,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 this.AdminAccessControlDto.Language.Id
             );
 
-            foreach (var verticalTrackJsonDto in verticalTracks)
+            foreach (var horizontalTrackJsonDto in horizontalTracks)
             {
-                verticalTrackJsonDto.Name = verticalTrackJsonDto.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, '|');
+                horizontalTrackJsonDto.Name = horizontalTrackJsonDto.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, '|');
             }
 
-            var response = DataTablesResponse.Create(request, verticalTracks.TotalItemCount, verticalTracks.TotalItemCount, verticalTracks);
+            var response = DataTablesResponse.Create(request, horizontalTracks.TotalItemCount, horizontalTracks.TotalItemCount, horizontalTracks);
 
             return Json(new
             {
@@ -119,14 +119,14 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowTotalCountWidget()
         {
-            var verticalTracksCount = await this.verticalTrackRepo.CountAllByDataTable(true, this.EditionDto.Id);
+            var horizontalTracksCount = await this.horizontalTrackRepo.CountAllByDataTable(true, this.EditionDto.Id);
 
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", verticalTracksCount), divIdOrClass = "#VerticalTracksTotalCountWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", horizontalTracksCount), divIdOrClass = "#HorizontalTracksTotalCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -139,14 +139,14 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <returns></returns>
         public async Task<ActionResult> ShowEditionCountWidget()
         {
-            var verticalTracksCount = await this.verticalTrackRepo.CountAllByDataTable(false, this.EditionDto.Id);
+            var horizontalTracksCount = await this.horizontalTrackRepo.CountAllByDataTable(false, this.EditionDto.Id);
 
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", verticalTracksCount), divIdOrClass = "#VerticalTracksEditionCountWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", horizontalTracksCount), divIdOrClass = "#HorizontalTracksEditionCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -161,8 +161,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Details(Guid? id)
         {
-            var verticalTrackDto = await this.verticalTrackRepo.FindDtoAsync(id ?? Guid.Empty, this.EditionDto.Id);
-            if (verticalTrackDto == null)
+            var horizontalTrackDto = await this.horizontalTrackRepo.FindDtoAsync(id ?? Guid.Empty, this.EditionDto.Id);
+            if (horizontalTrackDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Track, Labels.FoundF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
                 return RedirectToAction("Index", "Rooms", new { Area = "" });
@@ -171,24 +171,24 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Conferences, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.VerticalTracks, Url.Action("Index", "VerticalTracks", new { Area = "" })),
-                new BreadcrumbItemHelper(verticalTrackDto.GetNameByLanguageCode(ViewBag.UserInterfaceLanguage), Url.Action("Details", "VerticalTracks", new { id }))
+                new BreadcrumbItemHelper(Labels.HorizontalTracks, Url.Action("Index", "HorizontalTracks", new { Area = "" })),
+                new BreadcrumbItemHelper(horizontalTrackDto.GetNameByLanguageCode(ViewBag.UserInterfaceLanguage), Url.Action("Details", "HorizontalTracks", new { id }))
             });
 
             #endregion
 
-            return View(verticalTrackDto);
+            return View(horizontalTrackDto);
         }
 
         #region Main Information Widget
 
         /// <summary>Shows the main information widget.</summary>
-        /// <param name="verticalTrackUid">The vertical track uid.</param>
+        /// <param name="horizontalTrackUid">The horizontal track uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowMainInformationWidget(Guid? verticalTrackUid)
+        public async Task<ActionResult> ShowMainInformationWidget(Guid? horizontalTrackUid)
         {
-            var mainInformationWidgetDto = await this.verticalTrackRepo.FindDtoAsync(verticalTrackUid ?? Guid.Empty, this.EditionDto.Id);
+            var mainInformationWidgetDto = await this.horizontalTrackRepo.FindDtoAsync(horizontalTrackUid ?? Guid.Empty, this.EditionDto.Id);
             if (mainInformationWidgetDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Track, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
@@ -199,7 +199,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#VerticalTrackMainInformationWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#HorizontalTrackMainInformationWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -207,22 +207,22 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         #region Update
 
         /// <summary>Shows the update main information modal.</summary>
-        /// <param name="verticalTrackUid">The vertical track uid.</param>
+        /// <param name="horizontalTrackUid">The horizontal track uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? verticalTrackUid)
+        public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? horizontalTrackUid)
         {
-            UpdateVerticalTrackMainInformation cmd;
+            UpdateHorizontalTrackMainInformation cmd;
 
             try
             {
-                var mainInformationWidgetDto = await this.verticalTrackRepo.FindDtoAsync(verticalTrackUid ?? Guid.Empty, this.EditionDto.Id);
+                var mainInformationWidgetDto = await this.horizontalTrackRepo.FindDtoAsync(horizontalTrackUid ?? Guid.Empty, this.EditionDto.Id);
                 if (mainInformationWidgetDto == null)
                 {
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Track, Labels.FoundF.ToLowerInvariant()));
                 }
 
-                cmd = new UpdateVerticalTrackMainInformation(
+                cmd = new UpdateHorizontalTrackMainInformation(
                     mainInformationWidgetDto,
                     await this.languageRepo.FindAllDtosAsync());
             }
@@ -245,7 +245,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> UpdateMainInformation(UpdateVerticalTrackMainInformation cmd)
+        public async Task<ActionResult> UpdateMainInformation(UpdateHorizontalTrackMainInformation cmd)
         {
             var result = new AppValidationResult();
 
@@ -302,12 +302,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         #region Conferences Widget
 
         /// <summary>Shows the conferences widget.</summary>
-        /// <param name="verticalTrackUid">The vertical track uid.</param>
+        /// <param name="horizontalTrackUid">The horizontal track uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowConferencesWidget(Guid? verticalTrackUid)
+        public async Task<ActionResult> ShowConferencesWidget(Guid? horizontalTrackUid)
         {
-            var conferencesWidgetDto = await this.verticalTrackRepo.FindConferenceWidgetDtoAsync(verticalTrackUid ?? Guid.Empty, this.EditionDto.Id);
+            var conferencesWidgetDto = await this.horizontalTrackRepo.FindConferenceWidgetDtoAsync(horizontalTrackUid ?? Guid.Empty, this.EditionDto.Id);
             if (conferencesWidgetDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Room, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
@@ -318,7 +318,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("~/Views/Conferences/Widgets/RelatedConferencesWidget.cshtml", conferencesWidgetDto.ConferenceDtos), divIdOrClass = "#VerticalTrackConferencesWidget" },
+                    new { page = this.RenderRazorViewToString("~/Views/Conferences/Widgets/RelatedConferencesWidget.cshtml", conferencesWidgetDto.ConferenceDtos), divIdOrClass = "#HorizontalTrackConferencesWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -334,7 +334,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowCreateModal()
         {
-            var cmd = new CreateVerticalTrack(
+            var cmd = new CreateHorizontalTrack(
                 null,
                 await this.languageRepo.FindAllDtosAsync());
 
@@ -348,11 +348,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        /// <summary>Creates the specified create vertical track.</summary>
+        /// <summary>Creates the specified create horizontal track.</summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Create(CreateVerticalTrack cmd)
+        public async Task<ActionResult> Create(CreateHorizontalTrack cmd)
         {
             var result = new AppValidationResult();
 
@@ -406,11 +406,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #region Delete
 
-        /// <summary>Deletes the specified vertical track.</summary>
+        /// <summary>Deletes the specified horizontal track.</summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Delete(DeleteVerticalTrack cmd)
+        public async Task<ActionResult> Delete(DeleteHorizontalTrack cmd)
         {
             var result = new AppValidationResult();
 
