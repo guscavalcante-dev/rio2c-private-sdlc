@@ -15,7 +15,6 @@ using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using DataTables.AspNet.Core;
@@ -42,6 +41,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         private readonly IVerticalTrackRepository verticalTrackRepo;
         private readonly ILanguageRepository languageRepo;
 
+        /// <summary>Initializes a new instance of the <see cref="VerticalTracksController"/> class.</summary>
+        /// <param name="commandBus">The command bus.</param>
+        /// <param name="identityController">The identity controller.</param>
+        /// <param name="verticalTrackRepository">The vertical track repository.</param>
+        /// <param name="languageRepository">The language repository.</param>
         public VerticalTracksController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,

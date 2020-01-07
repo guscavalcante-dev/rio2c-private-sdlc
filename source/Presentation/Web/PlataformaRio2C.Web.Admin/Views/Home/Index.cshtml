@@ -29,24 +29,29 @@
     @if (isAdminFull || isAdminAudiovisual || isCuratorshipAudiovisual)
     {
         <div class="col-sm-4">
-            <!--begin:: Holdings Edition Count-->
+            <!--begin:: Events Edition Count-->
             <div id="EventsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-            <!--end:: Holdings Edition Count-->
+            <!--end:: Events Edition Count-->
         </div>
         <div class="col-sm-4">
-            <!--begin:: Holdings Edition Count-->
+            <!--begin:: Conferences Edition Count-->
             <div id="ConferencesEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-            <!--end:: Holdings Edition Count-->
+            <!--end:: Conferences Edition Count-->
         </div>
         <div class="col-sm-4">
-            <!--begin:: Holdings Edition Count-->
+            <!--begin:: Speakers Edition Count-->
             <div id="SpeakersEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-            <!--end:: Holdings Edition Count-->
+            <!--end:: Speakers Edition Count-->
         </div>
         <div class="col-sm-4">
-            <!--begin:: Holdings Edition Count-->
+            <!--begin:: Rooms Edition Count-->
             <div id="RoomsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-            <!--end:: Holdings Edition Count-->
+            <!--end:: Rooms Edition Count-->
+        </div>
+        <div class="col-sm-4">
+            <!--begin:: Vertical Tracks Edition Count-->
+            <div id="VerticalTracksEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+            <!--end:: Vertical Tracks Edition Count-->
         </div>
     }
 </div>
@@ -66,6 +71,7 @@
         @Scripts.Render("~/bundles/js/conferences.editioncount.js")
         @Scripts.Render("~/bundles/js/speakers.editioncount.js")
         @Scripts.Render("~/bundles/js/rooms.editioncount.js")
+        @Scripts.Render("~/bundles/js/verticaltracks.editioncount.js")
     }
     <script>
         jQuery(document).ready(function () {
@@ -84,6 +90,7 @@
                     ConferencesEditionCountWidget.init();
                     SpeakersEditionCountWidget.init();
                     RoomsEditionCountWidget.init();
+                    VerticalTracksEditionCountWidget.init();
                 </text>
             }
         });
