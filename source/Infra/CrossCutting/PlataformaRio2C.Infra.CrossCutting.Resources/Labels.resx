@@ -628,9 +628,6 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Accepted" xml:space="preserve">
     <value>Aceito</value>
   </data>
-  <data name="OnEvaluation" xml:space="preserve">
-    <value>Em avaliação</value>
-  </data>
   <data name="Rejected" xml:space="preserve">
     <value>Recusado</value>
   </data>

@@ -7143,7 +7143,6 @@
     <Content Include="Views\Networks\Modals\ShowContactsListModal.cshtml" />
     <Content Include="Views\Onboarding\SpeakerTermsAcceptance.cshtml" />
     <Content Include="Views\Onboarding\Shared\_SpeakerTermsAcceptanceText.cshtml" />
-    <None Include="Views\Projects\Index.cshtml.old" />
     <Content Include="Views\Projects\Modals\UpdateMainInformationModal.cshtml" />
     <Content Include="Views\Projects\Modals\UpdateMainInformationForm.cshtml" />
     <Content Include="Views\Projects\Modals\UpdateInterestForm.cshtml" />
@@ -7157,7 +7156,6 @@
     <Content Include="Views\Projects\Modals\RefuseEvaluationModal.cshtml" />
     <Content Include="Views\Projects\Modals\RefuseEvaluationForm.cshtml" />
     <Content Include="Views\Projects\Shared\_BuyersEvaluations.cshtml" />
-    <None Include="Views\Projects\Submit.cshtml.old" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

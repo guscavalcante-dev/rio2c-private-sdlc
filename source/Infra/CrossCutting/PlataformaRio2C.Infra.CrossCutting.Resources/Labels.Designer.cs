@@ -2491,15 +2491,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Em avaliação.
-        /// </summary>
-        public static string OnEvaluation {
-            get {
-                return ResourceManager.GetString("OnEvaluation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Oops!.
         /// </summary>
         public static string Oops {

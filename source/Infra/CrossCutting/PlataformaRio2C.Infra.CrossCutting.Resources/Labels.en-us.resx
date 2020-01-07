@@ -623,9 +623,6 @@
   <data name="Accepted" xml:space="preserve">
     <value>Accepted</value>
   </data>
-  <data name="OnEvaluation" xml:space="preserve">
-    <value>On Evaluation</value>
-  </data>
   <data name="Rejected" xml:space="preserve">
     <value>Rejected</value>
   </data>
