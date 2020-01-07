@@ -4,7 +4,7 @@
 // Created          : 01-05-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-06-2020
+// Last Modified On : 01-07-2020
 // ***********************************************************************
 // <copyright file="RoomsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -314,7 +314,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/ConferencesWidget", conferencesWidgetDto), divIdOrClass = "#RoomConferencesWidget" },
+                    new { page = this.RenderRazorViewToString("~/Views/Conferences/Widgets/RelatedConferencesWidget.cshtml", conferencesWidgetDto.ConferenceDtos), divIdOrClass = "#RoomConferencesWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }

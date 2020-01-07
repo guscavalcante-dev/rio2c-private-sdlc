@@ -8301,8 +8301,7 @@
     <Content Include="Views\Rooms\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Views\Rooms\Modals\UpdateMainInformationForm.cshtml" />
     <Content Include="Views\Rooms\Modals\UpdateMainInformationModal.cshtml" />
-    <Content Include="Views\Rooms\Widgets\ConferencesWidget.cshtml" />
-    <Content Include="Views\Events\Widgets\ConferencesWidget.cshtml" />
+    <Content Include="Views\Conferences\Widgets\RelatedConferencesWidget.cshtml" />
     <Content Include="Views\VerticalTracks\Index.cshtml" />
     <Content Include="Views\VerticalTracks\Widgets\DataTableWidget.cshtml" />
     <Content Include="Views\VerticalTracks\Widgets\EditionCountWidget.cshtml" />
@@ -8314,7 +8313,6 @@
     <Content Include="Views\VerticalTracks\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Views\VerticalTracks\Modals\UpdateMainInformationForm.cshtml" />
     <Content Include="Views\VerticalTracks\Modals\UpdateMainInformationModal.cshtml" />
-    <Content Include="Views\VerticalTracks\Widgets\ConferencesWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

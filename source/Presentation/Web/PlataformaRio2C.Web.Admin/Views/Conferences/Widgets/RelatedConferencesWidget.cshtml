@@ -1,5 +1,9 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
-@model VerticalTrackDto
+@model IEnumerable<ConferenceDto>
+@{
+    var startDate = ViewBag.StartDate as DateTime?;
+    var endDate = ViewBag.EndDate as DateTime?;
+}
 <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
         <h3 class="kt-portlet__head-title">
@@ -16,7 +20,7 @@
 </div>
 <div class="kt-portlet__body">
     <div class="row">
-        @if (Model.ConferenceDtos?.Any() == true)
+        @if (Model?.Any() == true)
         {
             <div class="col-12">
                 <table class="table table-sm table-head-bg-brand table-body-scroll">
@@ -28,12 +32,16 @@
                         </tr>
                     </thead>
                     <tbody class="rio2c-scroll" style="height: 200px;">
-                        @foreach (var conferenceDto in Model.ConferenceDtos)
+                        @foreach (var conferenceDto in Model)
                         {
                             <tr>
                                 <td>@(conferenceDto.GetConferenceTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ConferenceTitle?.Value)</td>
-                                <td class="text-center">@(conferenceDto.Conference.StartDate.ToShortDateString()) @(conferenceDto.Conference.StartDate.ToShortTimeString())</td>
-                                <td class="text-center">@(conferenceDto.Conference.EndDate.ToShortDateString()) @(conferenceDto.Conference.EndDate.ToShortTimeString())</td>
+                                <td class="text-center @(startDate.HasValue && endDate.HasValue && (conferenceDto.Conference.StartDate < startDate.Value || conferenceDto.Conference.StartDate > endDate.Value) ? "kt-font-danger" : string.Empty)">
+                                    @(conferenceDto.Conference.StartDate.ToShortDateString()) @(conferenceDto.Conference.StartDate.ToShortTimeString())
+                                </td>
+                                <td class="text-center @(startDate.HasValue && endDate.HasValue && (conferenceDto.Conference.EndDate < startDate.Value || conferenceDto.Conference.EndDate > endDate.Value) ? "kt-font-danger" : string.Empty)">
+                                    @(conferenceDto.Conference.EndDate.ToShortDateString()) @(conferenceDto.Conference.EndDate.ToShortTimeString())
+                                </td>
                             </tr>
                         }
                     </tbody>
