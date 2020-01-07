@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 01-07-2020
 // ***********************************************************************
-// <copyright file="conferenceParticipantRoles.totalcount.widget.js" company="Softo">
+// <copyright file="conferenceparticipantroles.totalcount.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>

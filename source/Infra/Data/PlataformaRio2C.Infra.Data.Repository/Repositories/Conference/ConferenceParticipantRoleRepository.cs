@@ -224,6 +224,48 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+        /// <summary>Finds the participants widget dto asynchronous.</summary>
+        /// <param name="conferenceParticipantRoleUid">The conference participant role uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<ConferenceParticipantRoleDto> FindParticipantsWidgetDtoAsync(Guid conferenceParticipantRoleUid, int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(conferenceParticipantRoleUid);
+                                //.FindByEditionId(false, editionId);
+
+            return await query
+                            .Select(cpr => new ConferenceParticipantRoleDto
+                            {
+                                ConferenceParticipantRole = cpr,
+                                ConferenceParticipantDtos = cpr.ConferenceParticipants.Where(cp => !cp.IsDeleted && !cp.Conference.IsDeleted).Select(cp => new ConferenceParticipantDto
+                                {
+                                    ConferenceParticipant = cp,
+                                    AttendeeCollaboratorDto = new AttendeeCollaboratorDto
+                                    {
+                                        AttendeeCollaborator = cp.AttendeeCollaborator,
+                                        Collaborator = cp.AttendeeCollaborator.Collaborator
+                                    },
+                                    ConferenceDto = new ConferenceDto
+                                    {
+                                        Conference = cp.Conference,
+                                        ConferenceTitleDtos = cp.Conference.ConferenceTitles.Where(ct => !ct.IsDeleted).Select(ct => new ConferenceTitleDto
+                                        {
+                                            ConferenceTitle = ct,
+                                            LanguageDto = new LanguageBaseDto
+                                            {
+                                                Id = ct.Language.Id,
+                                                Uid = ct.Language.Uid,
+                                                Name = ct.Language.Name,
+                                                Code = ct.Language.Code
+                                            }
+                                        })
+                                    }
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
         /// <summary>Finds the by uid asynchronous.</summary>
         /// <param name="conferenceParticipantRoleUid">The conferenceParticipantRole uid.</param>
         /// <returns></returns>

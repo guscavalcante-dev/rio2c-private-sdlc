@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 01-07-2020
 // ***********************************************************************
-// <copyright file="conferenceParticipantRole.create.js" company="Softo">
+// <copyright file="conferenceparticipantroles.create.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>

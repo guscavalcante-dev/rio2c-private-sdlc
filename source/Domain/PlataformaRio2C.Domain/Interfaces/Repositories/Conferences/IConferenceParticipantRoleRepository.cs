@@ -25,6 +25,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     {
         Task<ConferenceParticipantRoleDto> FindDtoAsync(Guid conferenceParticipantRoleUid, int editionId);
         Task<ConferenceParticipantRoleDto> FindConferenceWidgetDtoAsync(Guid conferenceParticipantRoleUid, int editionId);
+        Task<ConferenceParticipantRoleDto> FindParticipantsWidgetDtoAsync(Guid conferenceParticipantRoleUid, int editionId);
         Task<ConferenceParticipantRole> FindByUidAsync(Guid conferenceParticipantRoleUid);
         Task<List<ConferenceParticipantRoleDto>> FindAllDtoByEditionIdAsync(int editionId);
         Task<IPagedList<ConferenceParticipantRoleJsonDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> conferenceParticipantRoleUids, int editionId, int languageId);

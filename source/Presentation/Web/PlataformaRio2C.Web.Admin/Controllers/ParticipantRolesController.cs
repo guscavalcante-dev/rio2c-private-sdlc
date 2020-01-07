@@ -321,6 +321,32 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #endregion
 
+        #region Participants Widget
+
+        /// <summary>Shows the participants widget.</summary>
+        /// <param name="conferenceParticipantRoleUid">The conference participant role uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowParticipantsWidget(Guid? conferenceParticipantRoleUid)
+        {
+            var participantsWidgetDto = await this.conferenceParticipantRoleRepo.FindParticipantsWidgetDtoAsync(conferenceParticipantRoleUid ?? Guid.Empty, this.EditionDto.Id);
+            if (participantsWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.SpeakerRole, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/RelatedParticipantsWidget", participantsWidgetDto), divIdOrClass = "#ConferenceParticipantRoleParticipantsWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
         #endregion
 
         #region Create

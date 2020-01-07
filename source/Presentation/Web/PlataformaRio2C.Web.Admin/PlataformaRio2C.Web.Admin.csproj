@@ -422,6 +422,7 @@
     <Content Include="Assets\js\accounts\accounts.password.js" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
     <Content Include="Assets\js\companies\companyinfo.autocomplete.js" />
+    <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.participants.widget.js" />
     <Content Include="Assets\js\conferences\conferences.editionevents.js" />
     <Content Include="Assets\js\conferences\conferences.datatable.widget.js" />
     <Content Include="Assets\js\conferences\conferences.editioncount.widget.js" />
@@ -8351,6 +8352,7 @@
     <Content Include="Views\ParticipantRoles\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Views\ParticipantRoles\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Views\ParticipantRoles\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Views\ParticipantRoles\Widgets\RelatedParticipantsWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

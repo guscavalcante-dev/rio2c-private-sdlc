@@ -6,15 +6,15 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 01-07-2020
 // ***********************************************************************
-// <copyright file="conferenceparticipantroles.conferences.widget.js" company="Softo">
+// <copyright file="conferenceparticipantroles.participants.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var ConferenceParticipantRolesConferencesWidget = function () {
+var ConferenceParticipantRolesParticipantsWidget = function () {
 
-    var widgetElementId = '#ConferenceParticipantRoleConferencesWidget';
+    var widgetElementId = '#ConferenceParticipantRoleParticipantsWidget';
     var widgetElement = $(widgetElementId);
 
     //var updateModalId = '#UpdateMainInformationModal';
@@ -34,7 +34,7 @@ var ConferenceParticipantRolesConferencesWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.conferenceParticipantRoleUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/ParticipantRoles/ShowConferencesWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/ParticipantRoles/ShowParticipantsWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

@@ -6,20 +6,25 @@
 @Html.Hidden("AggregateId", Model.ConferenceParticipantRole.Uid)
 <div class="row">
     <div class="col-md-12">
-        <!--begin:Main Information Widget-->
         <div class="row">
+            <!--begin:Main Information Widget-->
             <div class="col-12">
                 <div id="ConferenceParticipantRoleMainInformationWidget" class="kt-portlet" style="min-height: 150px;"></div>
             </div>
+            <!--end:Main Information Widget-->
         </div>
-        <!--end:Main Information Widget-->
-        <!--begin:Conferences Widget-->
         <div class="row">
-            <div class="col-12">
+            <!--begin:Participants Widget-->
+            <div class="col-6">
+                <div id="ConferenceParticipantRoleParticipantsWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+            <!--end:Participants Widget-->
+            <!--begin:Conferences Widget-->
+            <div class="col-6">
                 <div id="ConferenceParticipantRoleConferencesWidget" class="kt-portlet" style="min-height: 325px;"></div>
             </div>
+            <!--end:Conferences Widget-->
         </div>
-        <!--end:Conferences Widget-->
     </div>
 </div>
 @section Styles {
@@ -31,6 +36,7 @@
 
         jQuery(document).ready(function () {
             ConferenceParticipantRolesMainInformationWidget.init();
+            ConferenceParticipantRolesParticipantsWidget.init();
             ConferenceParticipantRolesConferencesWidget.init();
         });
     </script>

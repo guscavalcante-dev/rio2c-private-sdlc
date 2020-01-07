@@ -449,7 +449,8 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/conferenceparticipantroles.details.js").Include(
                 "~/Assets/js/conferenceparticipantroles/conferenceparticipantroles.maininformation.widget.js",
-                "~/Assets/js/conferenceparticipantroles/conferenceparticipantroles.conferences.widget.js"));
+                "~/Assets/js/conferenceparticipantroles/conferenceparticipantroles.conferences.widget.js",
+                "~/Assets/js/conferenceparticipantroles/conferenceparticipantroles.participants.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/conferenceparticipantroles.delete.js").Include(
                 "~/Assets/js/conferenceparticipantroles/conferenceparticipantroles.delete.js"));
