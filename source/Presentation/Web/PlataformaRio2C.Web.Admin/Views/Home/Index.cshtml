@@ -48,11 +48,11 @@
             <div id="RoomsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
         </div>
         <!--end:: Rooms Edition Count-->
-        <!--begin:: Vertical Tracks Edition Count-->
+        <!--begin:: Tracks Edition Count-->
         <div class="col-sm-4">
-            <div id="VerticalTracksEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+            <div id="TracksEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
         </div>
-        <!--end:: Vertical Tracks Edition Count-->
+        <!--end:: Tracks Edition Count-->
         <!--begin:: Horizontal Tracks Edition Count-->
         <div class="col-sm-4">
             <div id="HorizontalTracksEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
@@ -81,7 +81,7 @@
         @Scripts.Render("~/bundles/js/conferences.editioncount.js")
         @Scripts.Render("~/bundles/js/speakers.editioncount.js")
         @Scripts.Render("~/bundles/js/rooms.editioncount.js")
-        @Scripts.Render("~/bundles/js/verticaltracks.editioncount.js")
+        @Scripts.Render("~/bundles/js/tracks.editioncount.js")
         @Scripts.Render("~/bundles/js/horizontaltracks.editioncount.js")
         @Scripts.Render("~/bundles/js/conferenceparticipantroles.editioncount.js")
     }
@@ -102,7 +102,7 @@
                     ConferencesEditionCountWidget.init();
                     SpeakersEditionCountWidget.init();
                     RoomsEditionCountWidget.init();
-                    VerticalTracksEditionCountWidget.init();
+                    TracksEditionCountWidget.init();
                     HorizontalTracksEditionCountWidget.init();
                     ConferenceParticipantRolesEditionCountWidget.init();
                 </text>

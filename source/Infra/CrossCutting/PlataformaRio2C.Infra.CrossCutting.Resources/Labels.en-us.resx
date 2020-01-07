@@ -1946,10 +1946,6 @@
     <value>Tracks</value>
     <comment>Tracks</comment>
   </data>
-  <data name="VerticalTracks" xml:space="preserve">
-    <value>Vertical Tracks</value>
-    <comment>Tracks Verticais</comment>
-  </data>
   <data name="Events" xml:space="preserve">
     <value>Events</value>
     <comment>Eventos</comment>

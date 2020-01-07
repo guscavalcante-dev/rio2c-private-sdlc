@@ -42,7 +42,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         private readonly IConferenceParticipantRoleRepository conferenceParticipantRoleRepo;
         private readonly IEditionEventRepository editionEventRepo;
         private readonly ILanguageRepository languageRepo;
-        private readonly IVerticalTrackRepository verticalTrackRepo;
+        private readonly ITrackRepository trackRepo;
         private readonly IHorizontalTrackRepository horizontalTrackRepo;
         private readonly IRoomRepository roomRepo;
 
@@ -53,7 +53,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="conferenceParticipantRoleRepository">The conference participant role repository.</param>
         /// <param name="editionEventRepository">The edition event repository.</param>
         /// <param name="languageRepository">The language repository.</param>
-        /// <param name="verticalTrackRepository">The vertical track repository.</param>
+        /// <param name="trackRepository">The track repository.</param>
         /// <param name="horizontalTrackRepository">The horizontal track repository.</param>
         /// <param name="roomRepository">The room repository.</param>
         public ConferencesController(
@@ -63,7 +63,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             IConferenceParticipantRoleRepository conferenceParticipantRoleRepository,
             IEditionEventRepository editionEventRepository,
             ILanguageRepository languageRepository,
-            IVerticalTrackRepository verticalTrackRepository,
+            ITrackRepository trackRepository,
             IHorizontalTrackRepository horizontalTrackRepository,
             IRoomRepository roomRepository)
             : base(commandBus, identityController)
@@ -72,7 +72,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             this.conferenceParticipantRoleRepo = conferenceParticipantRoleRepository;
             this.editionEventRepo = editionEventRepository;
             this.languageRepo = languageRepository;
-            this.verticalTrackRepo = verticalTrackRepository;
+            this.trackRepo = trackRepository;
             this.horizontalTrackRepo = horizontalTrackRepository;
             this.roomRepo = roomRepository;
         }
@@ -366,7 +366,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd = new UpdateConferenceTracks(
                     tracksWidgetDto,
-                    await this.verticalTrackRepo.FindAllAsync(),
+                    await this.trackRepo.FindAllAsync(),
                     await this.horizontalTrackRepo.FindAllAsync());
             }
             catch (DomainException ex)
@@ -420,7 +420,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd.UpdateDropdownProperties(
-                    await this.verticalTrackRepo.FindAllAsync(),
+                    await this.trackRepo.FindAllAsync(),
                     await this.horizontalTrackRepo.FindAllAsync());
 
                 return Json(new

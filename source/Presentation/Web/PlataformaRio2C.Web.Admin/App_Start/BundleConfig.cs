@@ -459,24 +459,24 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
-            #region Vertical Tracks
+            #region Tracks
 
-            bundles.Add(new ScriptBundle("~/bundles/js/verticaltracks.list.js").Include(
-                "~/Assets/js/verticaltracks/verticaltracks.totalcount.widget.js",
-                "~/Assets/js/verticaltracks/verticaltracks.datatable.widget.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/tracks.list.js").Include(
+                "~/Assets/js/tracks/tracks.totalcount.widget.js",
+                "~/Assets/js/tracks/tracks.datatable.widget.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/verticaltracks.editioncount.js").Include(
-                "~/Assets/js/verticaltracks/verticaltracks.editioncount.widget.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/tracks.editioncount.js").Include(
+                "~/Assets/js/tracks/tracks.editioncount.widget.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/verticaltracks.create.js").Include(
-                "~/Assets/js/verticaltracks/verticaltracks.create.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/tracks.create.js").Include(
+                "~/Assets/js/tracks/tracks.create.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/verticaltracks.details.js").Include(
-                "~/Assets/js/verticaltracks/verticaltracks.maininformation.widget.js",
-                "~/Assets/js/verticaltracks/verticaltracks.conferences.widget.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/tracks.details.js").Include(
+                "~/Assets/js/tracks/tracks.maininformation.widget.js",
+                "~/Assets/js/tracks/tracks.conferences.widget.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/verticaltracks.delete.js").Include(
-                "~/Assets/js/verticaltracks/verticaltracks.delete.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/tracks.delete.js").Include(
+                "~/Assets/js/tracks/tracks.delete.js"));
 
             #endregion
 

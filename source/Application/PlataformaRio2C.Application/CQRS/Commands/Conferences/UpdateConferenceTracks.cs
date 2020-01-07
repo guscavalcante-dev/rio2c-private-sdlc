@@ -4,7 +4,7 @@
 // Created          : 01-04-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-04-2020
+// Last Modified On : 01-07-2020
 // ***********************************************************************
 // <copyright file="UpdateConferenceTracks.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,26 +24,26 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         public Guid ConferenceUid { get; set; }
 
-        public List<Guid> VerticalTrackUids { get; set; }
+        public List<Guid> TrackUids { get; set; }
         public List<Guid> HorizontalTrackUids { get; set; }
 
-        public List<VerticalTrack> VerticalTracks { get; private set; }
+        public List<Track> Tracks { get; private set; }
         public List<HorizontalTrack> HorizontalTracks { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateConferenceTracks"/> class.</summary>
         /// <param name="conferenceDto">The conference dto.</param>
-        /// <param name="verticalTracks">The vertical tracks.</param>
+        /// <param name="tracks">The tracks.</param>
         /// <param name="horizontalTracks">The horizontal tracks.</param>
         public UpdateConferenceTracks(
             ConferenceDto conferenceDto,
-            List<VerticalTrack> verticalTracks,
+            List<Track> tracks,
             List<HorizontalTrack> horizontalTracks)
         {
             this.ConferenceUid = conferenceDto?.Conference?.Uid ?? Guid.Empty;
-            this.VerticalTrackUids = conferenceDto?.ConferenceVerticalTrackDtos?.Select(cvtd => cvtd.VerticalTrack.Uid)?.ToList();
+            this.TrackUids = conferenceDto?.ConferenceTrackDtos?.Select(cvtd => cvtd.Track.Uid)?.ToList();
             this.HorizontalTrackUids = conferenceDto?.ConferenceHorizontalTrackDtos?.Select(chtd => chtd.HorizontalTrack.Uid)?.ToList();
 
-            this.UpdateDropdownProperties(verticalTracks, horizontalTracks);
+            this.UpdateDropdownProperties(tracks, horizontalTracks);
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateConferenceTracks"/> class.</summary>
@@ -52,13 +52,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         }
 
         /// <summary>Updates the dropdown properties.</summary>
-        /// <param name="verticalTracks">The vertical tracks.</param>
+        /// <param name="tracks">The tracks.</param>
         /// <param name="horizontalTracks">The horizontal tracks.</param>
         public void UpdateDropdownProperties(
-            List<VerticalTrack> verticalTracks,
+            List<Track> tracks,
             List<HorizontalTrack> horizontalTracks)
         {
-            this.VerticalTracks = verticalTracks;
+            this.Tracks = tracks;
             this.HorizontalTracks = horizontalTracks;
         }
     }

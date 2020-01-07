@@ -150,7 +150,7 @@
     <Compile Include="Repositories\Collaborator\CollaboratorTypeRepository.cs" />
     <Compile Include="Repositories\Common\EditionEventRepository.cs" />
     <Compile Include="Repositories\Common\HorizontalTrackRepository.cs" />
-    <Compile Include="Repositories\Common\VerticalTrackRepository.cs" />
+    <Compile Include="Repositories\Common\TrackRepository.cs" />
     <Compile Include="Repositories\Conference\ConferenceParticipantRoleRepository.cs" />
     <Compile Include="Repositories\Conference\LecturerJobTitleRepository.cs" />
     <Compile Include="Repositories\Conference\LecturerRepository.cs" />

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-04-2020
+// Last Modified On : 01-07-2020
 // ***********************************************************************
 // <copyright file="PlataformaRio2CContext.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -117,7 +117,7 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new ConferenceParticipantMap());
             modelBuilder.Configurations.Add(new ConferenceParticipantRoleMap());
             modelBuilder.Configurations.Add(new ConferenceParticipantRoleTitleMap());
-            modelBuilder.Configurations.Add(new ConferenceVerticalTrackMap());
+            modelBuilder.Configurations.Add(new ConferenceTrackMap());
             modelBuilder.Configurations.Add(new ConferenceHorizontalTrackMap());
 
             // Common
@@ -128,7 +128,7 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new LanguageMap());
             modelBuilder.Configurations.Add(new RoomMap());
             modelBuilder.Configurations.Add(new RoomNameMap());
-            modelBuilder.Configurations.Add(new VerticalTrackMap());
+            modelBuilder.Configurations.Add(new TrackMap());
             modelBuilder.Configurations.Add(new HorizontalTrackMap());
 
             // TODO: Old mapping that must be reviewed

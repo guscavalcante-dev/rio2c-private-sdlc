@@ -1,0 +1,37 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model TrackDto
+@{
+    ViewBag.Title = $"{Labels.Track}  {Model.GetNameByLanguageCode(ViewBag.UserInterfaceLanguage)}";
+}
+@Html.Hidden("AggregateId", Model.Track.Uid)
+<div class="row">
+    <div class="col-md-12">
+        <!--begin:Main Information Widget-->
+        <div class="row">
+            <div class="col-12">
+                <div id="TrackMainInformationWidget" class="kt-portlet" style="min-height: 150px;"></div>
+            </div>
+        </div>
+        <!--end:Main Information Widget-->
+        <!--begin:Conferences Widget-->
+        <div class="row">
+            <div class="col-12">
+                <div id="TrackConferencesWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+        </div>
+        <!--end:Conferences Widget-->
+    </div>
+</div>
+@section Styles {
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/tracks.details.js")
+    <script>
+        // Page translations ----------------------------------------------------------------------
+
+        jQuery(document).ready(function () {
+            TracksMainInformationWidget.init();
+            TracksConferencesWidget.init();
+        });
+    </script>
+}

@@ -4345,15 +4345,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tracks Verticais.
-        /// </summary>
-        public static string VerticalTracks {
-            get {
-                return ResourceManager.GetString("VerticalTracks", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Visualizar.
         /// </summary>
         public static string View {

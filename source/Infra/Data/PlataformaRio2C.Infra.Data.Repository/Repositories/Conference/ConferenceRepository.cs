@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-06-2020
+// Last Modified On : 01-07-2020
 // ***********************************************************************
 // <copyright file="ConferenceRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -268,10 +268,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Select(c => new ConferenceDto
                             {
                                 Conference = c,
-                                ConferenceVerticalTrackDtos = c.ConferenceVerticalTracks.Where(cvt => !cvt.IsDeleted).Select(cvt => new ConferenceVerticalTrackDto
+                                ConferenceTrackDtos = c.ConferenceTracks.Where(cvt => !cvt.IsDeleted).Select(cvt => new ConferenceTrackDto
                                 {
-                                    ConferenceVerticalTrack = cvt,
-                                    VerticalTrack = cvt.VerticalTrack
+                                    ConferenceTrack = cvt,
+                                    Track = cvt.Track
                                 }),
                                 ConferenceHorizontalTrackDtos = c.ConferenceHorizontalTracks.Where(cht => !cht.IsDeleted).Select(cht => new ConferenceHorizontalTrackDto
                                 {

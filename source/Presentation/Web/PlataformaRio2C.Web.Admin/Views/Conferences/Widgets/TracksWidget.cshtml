@@ -18,17 +18,17 @@
     <div class="row">
         <div class="col-md-12">
             <div class="kt-widget4">
-                <h3 class="kt-heading kt-heading--sm mb-0 mt-0">@Labels.VerticalTracks</h3>
-                @if (Model.ConferenceVerticalTrackDtos?.Any() == true)
+                <h3 class="kt-heading kt-heading--sm mb-0 mt-0">@Labels.Tracks</h3>
+                @if (Model.ConferenceTrackDtos?.Any() == true)
                 {
-                    foreach (var conferenceVerticalTrackDto in Model.ConferenceVerticalTrackDtos.OrderBy(cvtd => cvtd.VerticalTrack.DisplayOrder))
+                    foreach (var conferenceTrackDto in Model.ConferenceTrackDtos.OrderBy(cvtd => cvtd.Track.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')))
                     {
-                        <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@conferenceVerticalTrackDto.VerticalTrack.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
+                        <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@conferenceTrackDto.Track.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
                     }
                 }
                 else
                 {
-                    <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.VerticalTracks, Labels.SelectedFP.ToLowerInvariant())</span>
+                    <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.Tracks, Labels.SelectedFP.ToLowerInvariant())</span>
                 }
             </div>
         </div>

@@ -4,7 +4,7 @@
 // Created          : 01-04-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-04-2020
+// Last Modified On : 01-07-2020
 // ***********************************************************************
 // <copyright file="UpdateConferenceTracksCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,24 +26,24 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>UpdateConferenceTracksCommandHandler</summary>
     public class UpdateConferenceTracksCommandHandler : ConferenceBaseCommandHandler, IRequestHandler<UpdateConferenceTracks, AppValidationResult>
     {
-        private readonly IVerticalTrackRepository verticalTrackRepo;
+        private readonly ITrackRepository trackRepo;
         private readonly IHorizontalTrackRepository horizontalTrackRepo;
 
         /// <summary>Initializes a new instance of the <see cref="UpdateConferenceTracksCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="conferenceRepository">The conference repository.</param>
-        /// <param name="verticalTrackRepository">The vertical track repository.</param>
+        /// <param name="trackRepository">The track repository.</param>
         /// <param name="horizontalTrackRepository">The horizontal track repository.</param>
         public UpdateConferenceTracksCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IConferenceRepository conferenceRepository,
-            IVerticalTrackRepository verticalTrackRepository,
+            ITrackRepository trackRepository,
             IHorizontalTrackRepository horizontalTrackRepository)
             : base(eventBus, uow, conferenceRepository)
         {
-            this.verticalTrackRepo = verticalTrackRepository;
+            this.trackRepo = trackRepository;
             this.horizontalTrackRepo = horizontalTrackRepository;
         }
 
@@ -68,7 +68,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #endregion
 
             conference.UpdateTracks(
-                cmd.VerticalTrackUids?.Any() == true ? await this.verticalTrackRepo.FindAllByUidsAsync(cmd.VerticalTrackUids) : new List<VerticalTrack>(),
+                cmd.TrackUids?.Any() == true ? await this.trackRepo.FindAllByUidsAsync(cmd.TrackUids) : new List<Track>(),
                 cmd.HorizontalTrackUids?.Any() == true ? await this.horizontalTrackRepo.FindAllByUidsAsync(cmd.HorizontalTrackUids) : new List<HorizontalTrack>(),
                 cmd.UserId);
             if (!conference.IsValid())

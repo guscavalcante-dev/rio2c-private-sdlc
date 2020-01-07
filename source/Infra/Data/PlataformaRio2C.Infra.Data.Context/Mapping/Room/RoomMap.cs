@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-27-2019
+// Last Modified On : 01-07-2020
 // ***********************************************************************
 // <copyright file="RoomMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,7 +23,10 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         {
             this.ToTable("Rooms");
 
-            //this.Ignore(t => t.Name);
+            // Relationships
+            this.HasRequired(t => t.Edition)
+                .WithMany()
+                .HasForeignKey(t => t.EditionId);
         }
     }
 }

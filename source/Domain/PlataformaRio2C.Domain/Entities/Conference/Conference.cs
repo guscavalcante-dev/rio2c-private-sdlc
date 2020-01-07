@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-06-2020
+// Last Modified On : 01-07-2020
 // ***********************************************************************
 // <copyright file="Conference.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,7 +34,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<ConferenceTitle> ConferenceTitles { get; private set; }
         public virtual ICollection<ConferenceSynopsis> ConferenceSynopses { get; private set; }
         public virtual ICollection<ConferenceParticipant> ConferenceParticipants { get; private set; }
-        public virtual ICollection<ConferenceVerticalTrack> ConferenceVerticalTracks { get; private set; }
+        public virtual ICollection<ConferenceTrack> ConferenceTracks { get; private set; }
         public virtual ICollection<ConferenceHorizontalTrack> ConferenceHorizontalTracks { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="Conference"/> class.</summary>
@@ -240,12 +240,12 @@ namespace PlataformaRio2C.Domain.Entities
         #region Tracks
 
         /// <summary>Updates the tracks.</summary>
-        /// <param name="verticalTracks">The vertical tracks.</param>
+        /// <param name="tracks">The tracks.</param>
         /// <param name="horizontalTracks">The horizontal tracks.</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateTracks(List<VerticalTrack> verticalTracks, List<HorizontalTrack> horizontalTracks, int userId)
+        public void UpdateTracks(List<Track> tracks, List<HorizontalTrack> horizontalTracks, int userId)
         {
-            this.SynchronizeConferenceVerticalTracks(verticalTracks, userId);
+            this.SynchronizeConferenceTracks(tracks, userId);
             this.SynchronizeConferenceHorizontalTracks(horizontalTracks, userId);
 
             this.IsDeleted = false;
@@ -253,58 +253,55 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.Now;
         }
 
-        #region Vertical Tracks
+        #region Vertical
 
-        /// <summary>Synchronizes the conference vertical tracks.</summary>
-        /// <param name="verticalTracks">The vertical tracks.</param>
-        /// <param name="userId">The user identifier.</param>
-        private void SynchronizeConferenceVerticalTracks(List<VerticalTrack> verticalTracks, int userId)
+        private void SynchronizeConferenceTracks(List<Track> tracks, int userId)
         {
-            if (this.ConferenceVerticalTracks == null)
+            if (this.ConferenceTracks == null)
             {
-                this.ConferenceVerticalTracks = new List<ConferenceVerticalTrack>();
+                this.ConferenceTracks = new List<ConferenceTrack>();
             }
 
-            this.DeleteConferenceVerticalTracks(verticalTracks, userId);
+            this.DeleteConferenceTracks(tracks, userId);
 
-            if (verticalTracks?.Any() != true)
+            if (tracks?.Any() != true)
             {
                 return;
             }
 
             // Create or update
-            foreach (var verticalTrack in verticalTracks)
+            foreach (var track in tracks)
             {
-                var verticalTrackDb = this.ConferenceVerticalTracks.FirstOrDefault(a => a.VerticalTrack.Uid == verticalTrack.Uid);
-                if (verticalTrackDb != null)
+                var trackDb = this.ConferenceTracks.FirstOrDefault(a => a.Track.Uid == track.Uid);
+                if (trackDb != null)
                 {
-                    verticalTrackDb.Update(userId);
+                    trackDb.Update(userId);
                 }
                 else
                 {
-                    this.CreateConferenceVerticalTrack(verticalTrack, userId);
+                    this.CreateConferenceTrack(track, userId);
                 }
             }
         }
 
-        /// <summary>Deletes the conference vertical tracks.</summary>
-        /// <param name="newVerticalTracks">The new vertical tracks.</param>
+        /// <summary>Deletes the conference tracks.</summary>
+        /// <param name="newTracks">The new tracks.</param>
         /// <param name="userId">The user identifier.</param>
-        private void DeleteConferenceVerticalTracks(List<VerticalTrack> newVerticalTracks, int userId)
+        private void DeleteConferenceTracks(List<Track> newTracks, int userId)
         {
-            var conferenceVerticalTracksToDelete = this.ConferenceVerticalTracks.Where(db => newVerticalTracks?.Select(a => a.Uid)?.Contains(db.VerticalTrack.Uid) == false && !db.IsDeleted).ToList();
-            foreach (var conferenceVerticalTrackToDelete in conferenceVerticalTracksToDelete)
+            var conferenceTracksToDelete = this.ConferenceTracks.Where(db => newTracks?.Select(a => a.Uid)?.Contains(db.Track.Uid) == false && !db.IsDeleted).ToList();
+            foreach (var conferenceTrackToDelete in conferenceTracksToDelete)
             {
-                conferenceVerticalTrackToDelete.Delete(userId);
+                conferenceTrackToDelete.Delete(userId);
             }
         }
 
-        /// <summary>Creates the conference vertical track.</summary>
-        /// <param name="verticalTrack">The vertical track.</param>
+        /// <summary>Creates the conference track.</summary>
+        /// <param name="track">The track.</param>
         /// <param name="userId">The user identifier.</param>
-        private void CreateConferenceVerticalTrack(VerticalTrack verticalTrack, int userId)
+        private void CreateConferenceTrack(Track track, int userId)
         {
-            this.ConferenceVerticalTracks.Add(new ConferenceVerticalTrack(Guid.NewGuid(), this, verticalTrack, userId));
+            this.ConferenceTracks.Add(new ConferenceTrack(Guid.NewGuid(), this, track, userId));
         }
 
         #endregion

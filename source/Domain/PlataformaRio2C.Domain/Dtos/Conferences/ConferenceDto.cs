@@ -4,7 +4,7 @@
 // Created          : 12-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-04-2020
+// Last Modified On : 01-07-2020
 // ***********************************************************************
 // <copyright file="ConferenceDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,7 +27,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<ConferenceTitleDto> ConferenceTitleDtos { get; set; }
         public IEnumerable<ConferenceSynopsisDto> ConferenceSynopsisDtos { get; set; }
         public IEnumerable<ConferenceParticipantDto> ConferenceParticipantDtos { get; set; }
-        public IEnumerable<ConferenceVerticalTrackDto> ConferenceVerticalTrackDtos { get; set; }
+        public IEnumerable<ConferenceTrackDto> ConferenceTrackDtos { get; set; }
         public IEnumerable<ConferenceHorizontalTrackDto> ConferenceHorizontalTrackDtos { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="ConferenceDto"/> class.</summary>
