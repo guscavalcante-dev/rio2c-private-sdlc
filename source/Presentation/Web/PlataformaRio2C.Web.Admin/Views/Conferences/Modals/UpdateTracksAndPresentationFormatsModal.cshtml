@@ -1,0 +1,26 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateConferenceTracksAndPresentationFormats
+<div class="modal fade" id="UpdateTracksAndPresentationFormatsModal" role="dialog" aria-labelledby="UpdateTracksAndPresentationFormatsModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    @Labels.Update @Labels.Tracks @Labels.And @Labels.PresentationFormats
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("UpdateTracksAndPresentationFormats", "Conferences", new { Area = "" }, FormMethod.Post, new { id = "UpdateTracksAndPresentationFormatsForm" }))
+                {
+                    @Html.HiddenFor(m => m.ConferenceUid)
+                    <div id="form-container">
+                        @Html.Partial("Modals/UpdateTracksAndPresentationFormatsForm", Model)
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">@Labels.Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="$('#UpdateTracksAndPresentationFormatsForm').submit();">@Labels.Save</button>
+            </div>
+        </div>
+    </div>
+</div>

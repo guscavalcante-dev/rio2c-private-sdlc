@@ -1934,9 +1934,9 @@
     <value>Function</value>
     <comment>Função</comment>
   </data>
-  <data name="HorizontalTracks" xml:space="preserve">
-    <value>Horizontal Tracks</value>
-    <comment>Tracks Horizontais</comment>
+  <data name="PresentationFormats" xml:space="preserve">
+    <value>Presentation Formats</value>
+    <comment>Formatos</comment>
   </data>
   <data name="SelectedFP" xml:space="preserve">
     <value>Selected</value>
@@ -1961,5 +1961,9 @@
   <data name="SpeakersRoles" xml:space="preserve">
     <value>Speakers Roles</value>
     <comment>Funções dos Palestrantes</comment>
+  </data>
+  <data name="PresentationFormat" xml:space="preserve">
+    <value>Presentation Format</value>
+    <comment>Formato</comment>
   </data>
 </root>

@@ -254,11 +254,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
-        /// <summary>Finds the tracks widget dto asynchronous.</summary>
+        /// <summary>Finds the tracks and presentation formats widget dto asynchronous.</summary>
         /// <param name="conferenceUid">The conference uid.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<ConferenceDto> FindTracksWidgetDtoAsync(Guid conferenceUid, int editionId)
+        public async Task<ConferenceDto> FindTracksAndPresentationFormatsWidgetDtoAsync(Guid conferenceUid, int editionId)
         {
             var query = this.GetBaseQuery()
                                 .FindByUid(conferenceUid)
@@ -273,10 +273,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     ConferenceTrack = cvt,
                                     Track = cvt.Track
                                 }),
-                                ConferenceHorizontalTrackDtos = c.ConferenceHorizontalTracks.Where(cht => !cht.IsDeleted).Select(cht => new ConferenceHorizontalTrackDto
+                                ConferencePresentationFormatDtos = c.ConferencePresentationFormats.Where(cht => !cht.IsDeleted).Select(cht => new ConferencePresentationFormatDto
                                 {
-                                    ConferenceHorizontalTrack = cht,
-                                    HorizontalTrack = cht.HorizontalTrack
+                                    ConferencePresentationFormat = cht,
+                                    PresentationFormat = cht.PresentationFormat
                                 })
                             })
                             .FirstOrDefaultAsync();

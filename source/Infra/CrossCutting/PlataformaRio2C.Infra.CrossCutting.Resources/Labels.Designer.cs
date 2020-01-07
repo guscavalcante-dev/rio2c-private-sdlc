@@ -1726,15 +1726,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tracks Horizontais.
-        /// </summary>
-        public static string HorizontalTracks {
-            get {
-                return ResourceManager.GetString("HorizontalTracks", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Horário.
         /// </summary>
         public static string Hour {
@@ -2851,6 +2842,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string PreRegistrationContact {
             get {
                 return ResourceManager.GetString("PreRegistrationContact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Formato.
+        /// </summary>
+        public static string PresentationFormat {
+            get {
+                return ResourceManager.GetString("PresentationFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Formatos.
+        /// </summary>
+        public static string PresentationFormats {
+            get {
+                return ResourceManager.GetString("PresentationFormats", resourceCulture);
             }
         }
         

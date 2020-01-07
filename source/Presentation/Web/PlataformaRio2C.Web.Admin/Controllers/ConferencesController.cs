@@ -43,7 +43,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         private readonly IEditionEventRepository editionEventRepo;
         private readonly ILanguageRepository languageRepo;
         private readonly ITrackRepository trackRepo;
-        private readonly IHorizontalTrackRepository horizontalTrackRepo;
+        private readonly IPresentationFormatRepository presentationFormatRepo;
         private readonly IRoomRepository roomRepo;
 
         /// <summary>Initializes a new instance of the <see cref="ConferencesController"/> class.</summary>
@@ -54,7 +54,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="editionEventRepository">The edition event repository.</param>
         /// <param name="languageRepository">The language repository.</param>
         /// <param name="trackRepository">The track repository.</param>
-        /// <param name="horizontalTrackRepository">The horizontal track repository.</param>
+        /// <param name="presentationFormatRepository">The presentation format repository.</param>
         /// <param name="roomRepository">The room repository.</param>
         public ConferencesController(
             IMediator commandBus, 
@@ -64,7 +64,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             IEditionEventRepository editionEventRepository,
             ILanguageRepository languageRepository,
             ITrackRepository trackRepository,
-            IHorizontalTrackRepository horizontalTrackRepository,
+            IPresentationFormatRepository presentationFormatRepository,
             IRoomRepository roomRepository)
             : base(commandBus, identityController)
         {
@@ -73,7 +73,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             this.editionEventRepo = editionEventRepository;
             this.languageRepo = languageRepository;
             this.trackRepo = trackRepository;
-            this.horizontalTrackRepo = horizontalTrackRepository;
+            this.presentationFormatRepo = presentationFormatRepository;
             this.roomRepo = roomRepository;
         }
 
@@ -322,15 +322,15 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #endregion
 
-        #region Tracks Widget
+        #region Tracks And Presentation Formats Widget
 
-        /// <summary>Shows the tracks widget.</summary>
+        /// <summary>Shows the tracks and presentation formats widget.</summary>
         /// <param name="conferenceUid">The conference uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowTracksWidget(Guid? conferenceUid)
+        public async Task<ActionResult> ShowTracksAndPresentationFormatsWidget(Guid? conferenceUid)
         {
-            var tracksWidgetDto = await this.conferenceRepo.FindTracksWidgetDtoAsync(conferenceUid ?? Guid.Empty, this.EditionDto.Id);
+            var tracksWidgetDto = await this.conferenceRepo.FindTracksAndPresentationFormatsWidgetDtoAsync(conferenceUid ?? Guid.Empty, this.EditionDto.Id);
             if (tracksWidgetDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Conference, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
@@ -341,33 +341,34 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/TracksWidget", tracksWidgetDto), divIdOrClass = "#ConferenceTracksWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/TracksAndPresentationFormatsWidget", tracksWidgetDto), divIdOrClass = "#ConferenceTracksAndPresentationFormatsWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
 
         #region Update
 
-        /// <summary>Shows the update tracks modal.</summary>
+        /// <summary>Shows the update tracks and presentation formats modal.</summary>
         /// <param name="conferenceUid">The conference uid.</param>
         /// <returns></returns>
+        /// <exception cref="DomainException"></exception>
         [HttpGet]
-        public async Task<ActionResult> ShowUpdateTracksModal(Guid? conferenceUid)
+        public async Task<ActionResult> ShowUpdateTracksAndPresentationFormatsModal(Guid? conferenceUid)
         {
-            UpdateConferenceTracks cmd;
+            UpdateConferenceTracksAndPresentationFormats cmd;
 
             try
             {
-                var tracksWidgetDto = await this.conferenceRepo.FindTracksWidgetDtoAsync(conferenceUid ?? Guid.Empty, this.EditionDto.Id);
+                var tracksWidgetDto = await this.conferenceRepo.FindTracksAndPresentationFormatsWidgetDtoAsync(conferenceUid ?? Guid.Empty, this.EditionDto.Id);
                 if (tracksWidgetDto == null)
                 {
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Conference, Labels.FoundF.ToLowerInvariant()));
                 }
 
-                cmd = new UpdateConferenceTracks(
+                cmd = new UpdateConferenceTracksAndPresentationFormats(
                     tracksWidgetDto,
                     await this.trackRepo.FindAllAsync(),
-                    await this.horizontalTrackRepo.FindAllAsync());
+                    await this.presentationFormatRepo.FindAllAsync());
             }
             catch (DomainException ex)
             {
@@ -379,16 +380,16 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Modals/UpdateTracksModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                    new { page = this.RenderRazorViewToString("Modals/UpdateTracksAndPresentationFormatsModal", cmd), divIdOrClass = "#GlobalModalContainer" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
 
-        /// <summary>Updates the tracks.</summary>
+        /// <summary>Updates the tracks and presentation formats.</summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> UpdateTracks(UpdateConferenceTracks cmd)
+        public async Task<ActionResult> UpdateTracksAndPresentationFormats(UpdateConferenceTracksAndPresentationFormats cmd)
         {
             var result = new AppValidationResult();
 
@@ -421,7 +422,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd.UpdateDropdownProperties(
                     await this.trackRepo.FindAllAsync(),
-                    await this.horizontalTrackRepo.FindAllAsync());
+                    await this.presentationFormatRepo.FindAllAsync());
 
                 return Json(new
                 {
@@ -429,7 +430,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     message = ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/UpdateTracksForm", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("Modals/UpdateTracksAndPresentationFormatsForm", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }

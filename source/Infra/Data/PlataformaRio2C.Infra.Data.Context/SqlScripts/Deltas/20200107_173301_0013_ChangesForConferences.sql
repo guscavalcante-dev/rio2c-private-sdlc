@@ -131,7 +131,7 @@ go
 
 CREATE TABLE "PresentationFormats"
 ( 
-	"Id"                 int  NOT NULL ,
+	"Id"                 int IDENTITY ( 1,1 ) ,
 	"Uid"                uniqueidentifier  NOT NULL ,
 	"EditionId"          int  NOT NULL ,
 	"Name"               varchar(600)  NOT NULL ,

@@ -35,7 +35,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<ConferenceSynopsis> ConferenceSynopses { get; private set; }
         public virtual ICollection<ConferenceParticipant> ConferenceParticipants { get; private set; }
         public virtual ICollection<ConferenceTrack> ConferenceTracks { get; private set; }
-        public virtual ICollection<ConferenceHorizontalTrack> ConferenceHorizontalTracks { get; private set; }
+        public virtual ICollection<ConferencePresentationFormat> ConferencePresentationFormats { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="Conference"/> class.</summary>
         /// <param name="conferenceUid">The conference uid.</param>
@@ -237,16 +237,16 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        #region Tracks
+        #region Tracks and Presentation Formats
 
-        /// <summary>Updates the tracks.</summary>
+        /// <summary>Updates the tracks and presentation formats.</summary>
         /// <param name="tracks">The tracks.</param>
-        /// <param name="horizontalTracks">The horizontal tracks.</param>
+        /// <param name="presentationFormats">The presentation formats.</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateTracks(List<Track> tracks, List<HorizontalTrack> horizontalTracks, int userId)
+        public void UpdateTracksAndPresentationFormats(List<Track> tracks, List<PresentationFormat> presentationFormats, int userId)
         {
             this.SynchronizeConferenceTracks(tracks, userId);
-            this.SynchronizeConferenceHorizontalTracks(horizontalTracks, userId);
+            this.SynchronizeConferencePresentationFormats(presentationFormats, userId);
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
@@ -306,58 +306,58 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        #region Horizontal Tracks
+        #region Presentation Formats
 
-        /// <summary>Synchronizes the conference horizontal tracks.</summary>
-        /// <param name="horizontalTracks">The horizontal tracks.</param>
+        /// <summary>Synchronizes the conference presentation formats.</summary>
+        /// <param name="presentationFormats">The presentation formats.</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeConferenceHorizontalTracks(List<HorizontalTrack> horizontalTracks, int userId)
+        private void SynchronizeConferencePresentationFormats(List<PresentationFormat> presentationFormats, int userId)
         {
-            if (this.ConferenceHorizontalTracks == null)
+            if (this.ConferencePresentationFormats == null)
             {
-                this.ConferenceHorizontalTracks = new List<ConferenceHorizontalTrack>();
+                this.ConferencePresentationFormats = new List<ConferencePresentationFormat>();
             }
 
-            this.DeleteConferenceHorizontalTracks(horizontalTracks, userId);
+            this.DeleteConferencePresentationFormats(presentationFormats, userId);
 
-            if (horizontalTracks?.Any() != true)
+            if (presentationFormats?.Any() != true)
             {
                 return;
             }
 
             // Create or update
-            foreach (var horizontalTrack in horizontalTracks)
+            foreach (var presentationFormat in presentationFormats)
             {
-                var horizontalTrackDb = this.ConferenceHorizontalTracks.FirstOrDefault(a => a.HorizontalTrack.Uid == horizontalTrack.Uid);
-                if (horizontalTrackDb != null)
+                var presentationFormatDb = this.ConferencePresentationFormats.FirstOrDefault(a => a.PresentationFormat.Uid == presentationFormat.Uid);
+                if (presentationFormatDb != null)
                 {
-                    horizontalTrackDb.Update(userId);
+                    presentationFormatDb.Update(userId);
                 }
                 else
                 {
-                    this.CreateConferenceHorizontalTrack(horizontalTrack, userId);
+                    this.CreateConferencePresentationFormat(presentationFormat, userId);
                 }
             }
         }
 
-        /// <summary>Deletes the conference horizontal tracks.</summary>
-        /// <param name="newHorizontalTracks">The new horizontal tracks.</param>
+        /// <summary>Deletes the conference presentation formats.</summary>
+        /// <param name="newPresentationFormats">The new presentation formats.</param>
         /// <param name="userId">The user identifier.</param>
-        private void DeleteConferenceHorizontalTracks(List<HorizontalTrack> newHorizontalTracks, int userId)
+        private void DeleteConferencePresentationFormats(List<PresentationFormat> newPresentationFormats, int userId)
         {
-            var conferenceHorizontalTracksToDelete = this.ConferenceHorizontalTracks.Where(db => newHorizontalTracks?.Select(a => a.Uid)?.Contains(db.HorizontalTrack.Uid) == false && !db.IsDeleted).ToList();
-            foreach (var conferenceHorizontalTrackToDelete in conferenceHorizontalTracksToDelete)
+            var conferencePresentationFormatsToDelete = this.ConferencePresentationFormats.Where(db => newPresentationFormats?.Select(a => a.Uid)?.Contains(db.PresentationFormat.Uid) == false && !db.IsDeleted).ToList();
+            foreach (var conferencePresentationFormatToDelete in conferencePresentationFormatsToDelete)
             {
-                conferenceHorizontalTrackToDelete.Delete(userId);
+                conferencePresentationFormatToDelete.Delete(userId);
             }
         }
 
-        /// <summary>Creates the conference horizontal track.</summary>
-        /// <param name="horizontalTrack">The horizontal track.</param>
+        /// <summary>Creates the conference presentation format.</summary>
+        /// <param name="presentationFormat">The presentation format.</param>
         /// <param name="userId">The user identifier.</param>
-        private void CreateConferenceHorizontalTrack(HorizontalTrack horizontalTrack, int userId)
+        private void CreateConferencePresentationFormat(PresentationFormat presentationFormat, int userId)
         {
-            this.ConferenceHorizontalTracks.Add(new ConferenceHorizontalTrack(Guid.NewGuid(), this, horizontalTrack, userId));
+            this.ConferencePresentationFormats.Add(new ConferencePresentationFormat(Guid.NewGuid(), this, presentationFormat, userId));
         }
 
         #endregion

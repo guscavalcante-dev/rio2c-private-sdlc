@@ -113,7 +113,7 @@
     <Compile Include="Dtos\Conferences\ConferenceSynopsisDto.cs" />
     <Compile Include="Dtos\Conferences\ConferenceTitleDto.cs" />
     <Compile Include="Dtos\Conferences\ConferenceJsonDto.cs" />
-    <Compile Include="Dtos\Conferences\ConferenceHorizontalTrackDto.cs" />
+    <Compile Include="Dtos\Conferences\ConferencePresentationFormatDto.cs" />
     <Compile Include="Dtos\Conferences\ConferenceTrackDto.cs" />
     <Compile Include="Dtos\EditionEvents\EditionEventDto.cs" />
     <Compile Include="Dtos\Editions\EditionBaseDto.cs" />
@@ -176,8 +176,8 @@
     <Compile Include="Dtos\Users\UserLanguageDto.cs" />
     <Compile Include="Dtos\Users\UserAccessControlDto.cs" />
     <Compile Include="Dtos\Users\UserBaseDto.cs" />
-    <Compile Include="Dtos\HorizontalTracks\HorizontalTrackDto.cs" />
-    <Compile Include="Dtos\HorizontalTracks\HorizontalTrackJsonDto.cs" />
+    <Compile Include="Dtos\PresentationFormats\PresentationFormatDto.cs" />
+    <Compile Include="Dtos\PresentationFormats\PresentationFormatJsonDto.cs" />
     <Compile Include="Dtos\Tracks\TrackDto.cs" />
     <Compile Include="Dtos\Tracks\TrackJsonDto.cs" />
     <Compile Include="Entities\Addresses\Address.cs" />
@@ -188,7 +188,7 @@
     <Compile Include="Entities\Collaborator\CollaboratorProducer.cs" />
     <Compile Include="Entities\Collaborator\CollaboratorSpeaker.cs" />
     <Compile Include="Entities\Common\InterestGroup.cs" />
-    <Compile Include="Entities\Conference\ConferenceHorizontalTrack.cs" />
+    <Compile Include="Entities\Conference\ConferencePresentationFormat.cs" />
     <Compile Include="Entities\Conference\ConferenceTrack.cs" />
     <Compile Include="Entities\Conference\ConferenceParticipantRole.cs" />
     <Compile Include="Entities\Conference\ConferenceParticipant.cs" />
@@ -264,10 +264,10 @@
     <Compile Include="Entities\Collaborator\CollaboratorType.cs" />
     <Compile Include="Entities\SubscribeLists\UserUnsubscribedList.cs" />
     <Compile Include="Entities\SubscribeLists\SubscribeList.cs" />
-    <Compile Include="Entities\Tracks\HorizontalTrack.cs" />
-    <Compile Include="Entities\Tracks\HorizontalTrackName.cs" />
-    <Compile Include="Entities\Tracks\TrackName.cs" />
-    <Compile Include="Entities\Tracks\Track.cs" />
+    <Compile Include="Entities\Common\PresentationFormat.cs" />
+    <Compile Include="Entities\Common\PresentationFormatName.cs" />
+    <Compile Include="Entities\Common\TrackName.cs" />
+    <Compile Include="Entities\Common\Track.cs" />
     <Compile Include="Enums\NegotiationTypeCodes.cs" />
     <Compile Include="Enums\StatusProjectCodes.cs" />
     <Compile Include="Interfaces\IMailCollaboratorRepository.cs" />
@@ -276,7 +276,7 @@
     <Compile Include="Interfaces\Repositories\AttendeeOrganizations\IAttendeeOrganizationRepository.cs" />
     <Compile Include="Interfaces\Repositories\Collaborators\ICollaboratorProducerRepository.cs" />
     <Compile Include="Interfaces\Repositories\Collaborators\ICollaboratorTypeRepository.cs" />
-    <Compile Include="Interfaces\Repositories\Common\IHorizontalTrackRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Common\IPresentationFormatRepository.cs" />
     <Compile Include="Interfaces\Repositories\Common\ITrackRepository.cs" />
     <Compile Include="Interfaces\Repositories\Conferences\IConferenceParticipantRoleRepository.cs" />
     <Compile Include="Interfaces\Repositories\Conferences\ILecturerJobTitleRepository.cs" />

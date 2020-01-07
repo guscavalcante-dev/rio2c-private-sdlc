@@ -193,7 +193,7 @@
     <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorSiteMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Conferences\ConferenceBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Conferences\CreateConferenceCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Conferences\UpdateConferenceTracksCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Conferences\UpdateConferenceTracksAndPresentationFormatsCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Conferences\UpdateConferenceParticipantCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Conferences\DeleteConferenceParticipantCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Conferences\CreateConferenceParticipantCommandHandler.cs" />
@@ -252,10 +252,10 @@
     <Compile Include="CQRS\CommandsHandlers\ConferenceParticipantRoles\UpdateCreateConferenceParticipantRoleMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Rooms\UpdateRoomMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Rooms\DeleteRoomCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\HorizontalTracks\CreateHorizontalTrackCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\HorizontalTracks\DeleteHorizontalTrackCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\HorizontalTracks\UpdateHorizontalTrackMainInformationCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\HorizontalTracks\HorizontalTrackBaseCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\PresentationFormats\CreatePresentationFormatCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\PresentationFormats\DeletePresentationFormatCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\PresentationFormats\UpdatePresentationFormatMainInformationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\PresentationFormats\PresentationFormatBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Tracks\UpdateTrackMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Tracks\CreateTrackCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Tracks\DeleteTrackCommandHandler.cs" />
@@ -293,7 +293,7 @@
     <Compile Include="CQRS\Commands\Conferences\CreateConference.cs" />
     <Compile Include="CQRS\Commands\Conferences\DeleteConference.cs" />
     <Compile Include="CQRS\Commands\Conferences\UpdateConferenceMainInformation.cs" />
-    <Compile Include="CQRS\Commands\Conferences\UpdateConferenceTracks.cs" />
+    <Compile Include="CQRS\Commands\Conferences\UpdateConferenceTracksAndPresentationFormats.cs" />
     <Compile Include="CQRS\Commands\EditionEvents\CreateEditionEvent.cs" />
     <Compile Include="CQRS\Commands\EditionEvents\DeleteEditionEvent.cs" />
     <Compile Include="CQRS\Commands\EditionEvents\UpdateEditionEventMainInformation.cs" />
@@ -369,10 +369,10 @@
     <Compile Include="CQRS\BaseUserRequest.cs" />
     <Compile Include="CQRS\Commands\User\UpdateUserEmailSettings.cs" />
     <Compile Include="CQRS\Commands\User\UpdateUserInterfaceLanguage.cs" />
-    <Compile Include="CQRS\Commands\HorizontalTracks\BaseCommands\HorizontalTrackNameBaseCommand.cs" />
-    <Compile Include="CQRS\Commands\HorizontalTracks\CreateHorizontalTrack.cs" />
-    <Compile Include="CQRS\Commands\HorizontalTracks\DeleteHorizontalTrack.cs" />
-    <Compile Include="CQRS\Commands\HorizontalTracks\UpdateHorizontalTrackMainInformation.cs" />
+    <Compile Include="CQRS\Commands\PresentationFormats\BaseCommands\PresentationFormatNameBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\PresentationFormats\CreatePresentationFormat.cs" />
+    <Compile Include="CQRS\Commands\PresentationFormats\DeletePresentationFormat.cs" />
+    <Compile Include="CQRS\Commands\PresentationFormats\UpdatePresentationFormatMainInformation.cs" />
     <Compile Include="CQRS\Commands\Tracks\BaseCommands\TrackNameBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Tracks\CreateTrack.cs" />
     <Compile Include="CQRS\Commands\Tracks\DeleteTrack.cs" />
@@ -652,7 +652,7 @@
     <Compile Include="ViewModels\Common\Player\Properties\PlayerDescriptionAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Player\PlayerAppViewModel.cs" />
     <Compile Include="ViewModels\Site\Player\PlayerDetailWithInterestAppViewModel.cs" />
-    <Compile Include="ViewModels\HorizontalTracks\HorizontalTrackSearchViewModel.cs" />
+    <Compile Include="ViewModels\PresentationFormats\PresentationFormatSearchViewModel.cs" />
     <Compile Include="ViewModels\Tracks\TrackSearchViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

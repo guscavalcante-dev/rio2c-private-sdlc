@@ -1945,10 +1945,6 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Função</value>
     <comment>Função</comment>
   </data>
-  <data name="HorizontalTracks" xml:space="preserve">
-    <value>Tracks Horizontais</value>
-    <comment>Tracks Horizontais</comment>
-  </data>
   <data name="SelectedFP" xml:space="preserve">
     <value>Selecionadas</value>
     <comment>Selecionadas</comment>
@@ -1972,5 +1968,13 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="SpeakersRoles" xml:space="preserve">
     <value>Funções dos Palestrantes</value>
     <comment>Funções dos Palestrantes</comment>
+  </data>
+  <data name="PresentationFormat" xml:space="preserve">
+    <value>Formato</value>
+    <comment>Formato</comment>
+  </data>
+  <data name="PresentationFormats" xml:space="preserve">
+    <value>Formatos</value>
+    <comment>Formatos</comment>
   </data>
 </root>

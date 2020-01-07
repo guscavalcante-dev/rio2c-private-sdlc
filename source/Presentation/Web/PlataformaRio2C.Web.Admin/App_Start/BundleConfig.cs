@@ -387,7 +387,7 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/conferences.details.js").Include(
                 "~/Assets/js/conferences/conferences.maininformation.widget.js",
-                "~/Assets/js/conferences/conferences.tracks.widget.js",
+                "~/Assets/js/conferences/conferences.tracksandformats.widget.js",
                 "~/Assets/js/conferences/conferences.participants.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/conferences.delete.js").Include(
@@ -480,24 +480,24 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
-            #region Horizontal Tracks
+            #region Presentation Formats
 
-            bundles.Add(new ScriptBundle("~/bundles/js/horizontaltracks.list.js").Include(
-                "~/Assets/js/horizontaltracks/horizontaltracks.totalcount.widget.js",
-                "~/Assets/js/horizontaltracks/horizontaltracks.datatable.widget.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/presentationformats.list.js").Include(
+                "~/Assets/js/presentationformats/presentationformats.totalcount.widget.js",
+                "~/Assets/js/presentationformats/presentationformats.datatable.widget.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/horizontaltracks.editioncount.js").Include(
-                "~/Assets/js/horizontaltracks/horizontaltracks.editioncount.widget.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/presentationformats.editioncount.js").Include(
+                "~/Assets/js/presentationformats/presentationformats.editioncount.widget.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/horizontaltracks.create.js").Include(
-                "~/Assets/js/horizontaltracks/horizontaltracks.create.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/presentationformats.create.js").Include(
+                "~/Assets/js/presentationformats/presentationformats.create.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/horizontaltracks.details.js").Include(
-                "~/Assets/js/horizontaltracks/horizontaltracks.maininformation.widget.js",
-                "~/Assets/js/horizontaltracks/horizontaltracks.conferences.widget.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/presentationformats.details.js").Include(
+                "~/Assets/js/presentationformats/presentationformats.maininformation.widget.js",
+                "~/Assets/js/presentationformats/presentationformats.conferences.widget.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/horizontaltracks.delete.js").Include(
-                "~/Assets/js/horizontaltracks/horizontaltracks.delete.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/presentationformats.delete.js").Include(
+                "~/Assets/js/presentationformats/presentationformats.delete.js"));
 
             #endregion
 

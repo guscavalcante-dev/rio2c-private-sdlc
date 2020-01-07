@@ -1406,7 +1406,7 @@ GO
 SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[PresentationFormats](
-	[Id] [int] NOT NULL,
+	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
 	[EditionId] [int] NOT NULL,
 	[Name] [varchar](600) NOT NULL,

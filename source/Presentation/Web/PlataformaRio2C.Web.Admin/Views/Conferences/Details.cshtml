@@ -13,13 +13,13 @@
             </div>
         </div>
         <!--end:Main Information Widget-->
-        <!--begin:Tracks Widget-->
+        <!--begin:Tracks and Presentation Formats Widget-->
         <div class="row">
             <div class="col-12">
-                <div id="ConferenceTracksWidget" class="kt-portlet" style="min-height: 250px;"></div>
+                <div id="ConferenceTracksAndPresentationFormatsWidget" class="kt-portlet" style="min-height: 250px;"></div>
             </div>
         </div>
-        <!--end:Tracks Widget-->
+        <!--end:Tracks and Presentation Formats Widget-->
         <!--begin:Participants Widget-->
         <div class="row">
             <div class="col-12">
@@ -30,23 +30,15 @@
     </div>
 </div>
 @section Styles {
-    @*@Styles.Render("~/bundles/css/cropper.css")*@
     @Styles.Render("~/bundles/css/select2.css")
-    @*@Styles.Render("~/bundles/css/jquery.autocomplete.css")*@
-    @*@Styles.Render("~/bundles/css/speakers.details.css")*@
     @Styles.Render("~/bundles/css/bootstrap-datepicker.css")
     @Styles.Render("~/bundles/css/bootstrap-timepicker.css")
 }
 @section Scripts {
-    @*@Scripts.Render("~/bundles/js/cropper.js")*@
     @Scripts.Render("~/bundles/js/select2.js")
-    @*@Scripts.Render("~/bundles/js/ckEditor.js")*@
-    @*@Scripts.Render("~/bundles/js/inputmask.js")*@
-    @*@Scripts.Render("~/bundles/js/jquery.autocomplete.js")*@
     @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/bootstrap-datepicker.js")
     @Scripts.Render("~/bundles/js/bootstrap-timepicker.js")
-    @*@Scripts.Render("~/bundles/js/addresses.form.js")*@
     @Scripts.Render("~/bundles/js/conferences.details.js")
     @Scripts.Render("~/bundles/js/conferences.editionevents.js")
     <script>
@@ -57,9 +49,8 @@
 
         jQuery(document).ready(function () {
             ConferencesMainInformationWidget.init();
-            ConferencesTracksWidget.init();
+            ConferencesTracksAndPresentationFormatsWidget.init();
             ConferencesParticipantsWidget.init();
-            //ConferencesApiConfigurationWidget.init();
         });
     </script>
 }
