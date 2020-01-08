@@ -4,13 +4,14 @@
 // Created          : 12-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-11-2019
+// Last Modified On : 01-08-2020
 // ***********************************************************************
 // <copyright file="ProjectBuyerEvaluationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using System.Linq;
@@ -56,6 +57,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static IQueryable<ProjectBuyerEvaluation> IsProjectFinished(this IQueryable<ProjectBuyerEvaluation> query)
         {
             query = query.Where(pbe => pbe.Project.FinishDate.HasValue);
+
+            return query;
+        }
+
+        /// <summary>Determines whether [is project finish date between evaluation period] [the specified edition project evaluation start date].</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="editionProjectEvaluationStartDate">The edition project evaluation start date.</param>
+        /// <param name="editionProjectEvaluationEndDate">The edition project evaluation end date.</param>
+        /// <returns></returns>
+        internal static IQueryable<ProjectBuyerEvaluation> IsProjectFinishDateBetweenEvaluationPeriod(this IQueryable<ProjectBuyerEvaluation> query, DateTime editionProjectEvaluationStartDate, DateTime editionProjectEvaluationEndDate)
+        {
+            query = query.Where(pbe => pbe.Project.FinishDate >= editionProjectEvaluationStartDate && pbe.Project.FinishDate <= editionProjectEvaluationEndDate);
 
             return query;
         }
@@ -112,13 +125,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         /// <summary>Finds all buyer email dtos asynchronous.</summary>
         /// <param name="editionId">The edition identifier.</param>
+        /// <param name="editionProjectEvaluationStartDate">The edition project evaluation start date.</param>
+        /// <param name="editionProjectEvaluationEndDate">The edition project evaluation end date.</param>
         /// <returns></returns>
-        public async Task<List<ProjectBuyerEvaluationEmailDto>> FindAllBuyerEmailDtosAsync(int editionId)
+        public async Task<List<ProjectBuyerEvaluationEmailDto>> FindAllBuyerEmailDtosAsync(
+            int editionId, 
+            DateTime editionProjectEvaluationStartDate,
+            DateTime editionProjectEvaluationEndDate)
         {
             var query = this.GetBaseQuery()
                                 .IsBuyerEvaluationEmailPending()
                                 .FindByProjectEditionId(editionId)
                                 .IsProjectFinished()
+                                .IsProjectFinishDateBetweenEvaluationPeriod(editionProjectEvaluationStartDate, editionProjectEvaluationEndDate)
                                 .IsProjectNotDeleted();
 
             return await query
