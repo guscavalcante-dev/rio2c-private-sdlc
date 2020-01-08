@@ -3,8 +3,8 @@
 // Author           : William Sergio Almado Junior
 // Created          : 12-13-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-03-2019
+// Last Modified By : William Sergio Almado Junior
+// Last Modified On : 12-13-2019
 // ***********************************************************************
 // <copyright file="projects.pitching.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

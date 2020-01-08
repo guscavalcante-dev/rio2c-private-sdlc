@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
 // Author           : William Sergio Almado Junior
-// Created          : 01-07-2019
+// Created          : 12-13-2019
 //
 // Last Modified By : William Sergio Almado Junior
-// Last Modified On : 01-07-2019
+// Last Modified On : 12-13-2019
 // ***********************************************************************
 // <copyright file="projects.pitching.totalcount.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

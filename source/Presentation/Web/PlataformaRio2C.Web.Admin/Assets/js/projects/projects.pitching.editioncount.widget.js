@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Rafael Dantas Ruiz
-// Created          : 12-12-2019
+// Author           : William Sergio Almado Junior
+// Created          : 12-13-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-12-2019
+// Last Modified By : William Sergio Almado Junior
+// Last Modified On : 12-13-2019
 // ***********************************************************************
-// <copyright file="speakers.editioncount.widget.js" company="Softo">
+// <copyright file="projects.pitching.editioncount.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>

@@ -884,6 +884,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
 
+        /// <summary>
+        /// Counts all projects for pitching by edition or in all editions.
+        /// </summary>
+        /// <param name="editionId"></param>
+        /// <param name="showAllEditions"></param>
+        /// <returns></returns>
         public async Task<int> CountAllByDataTable(
             int editionId,
             bool showAllEditions = false)
