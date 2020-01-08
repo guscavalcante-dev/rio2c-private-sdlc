@@ -340,7 +340,11 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/projects.pitching.widget.js").Include(
                 "~/Assets/js/projects/projects.pitching.datatable.widget.js",
+                "~/Assets/js/projects/projects.pitching.totalcount.widget.js",
                 "~/Scripts/jquery.unobtrusive-ajax.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/projects.pitching.editioncount.widget.js").Include(
+                "~/Assets/js/projects/projects.pitching.editioncount.widget.js"));
 
             #endregion
 

@@ -35,6 +35,11 @@
             <div id="SpeakersEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
             <!--end:: Holdings Edition Count-->
         </div>
+        <div class="col-sm-4">
+            <!--begin:: Edition Count-->
+            <div id="ProjectsPitchingEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+            <!--end:: Edition Count-->
+        </div>
     </div>
 }
 @section Styles {
@@ -50,6 +55,7 @@
     @if (isAdminFull || isAdminAudiovisual || isCuratorshipAudiovisual)
     {
         @Scripts.Render("~/bundles/js/speakers.editioncount.js")
+        @Scripts.Render("~/bundles/js/projects.pitching.editioncount.widget.js")
     }
     <script>
         jQuery(document).ready(function () {
@@ -59,6 +65,7 @@
                     HoldingsEditionCountWidget.init();
                     OrganizationsEditionCountWidget.init();
                     CollaboratorsEditionCountWidget.init();
+                    ProjectsPitchingEditionCountWidget.init();
                 </text>
             }
             @if (isAdminFull || isAdminAudiovisual || isCuratorshipAudiovisual)

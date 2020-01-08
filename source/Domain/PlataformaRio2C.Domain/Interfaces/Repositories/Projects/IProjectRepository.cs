@@ -38,6 +38,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<ProjectDto> FindSiteBuyerCompanyWidgetDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteDuplicateDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteBuyerEvaluationWidgetDtoByProjectUidAsync(Guid projectUid, Guid attendeeCollaboratorUid);
+        Task<int> CountAllByDataTable(int editionId, bool showAllEditions = false);
 
         #endregion
 

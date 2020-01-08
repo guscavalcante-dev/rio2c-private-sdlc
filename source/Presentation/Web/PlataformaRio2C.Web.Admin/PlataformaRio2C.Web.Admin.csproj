@@ -414,6 +414,8 @@
     <Content Include="Assets\js\accounts\accounts.password.js" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
     <Content Include="Assets\js\companies\companyinfo.autocomplete.js" />
+    <Content Include="Assets\js\projects\projects.pitching.editioncount.widget.js" />
+    <Content Include="Assets\js\projects\projects.pitching.totalcount.widget.js" />
     <Content Include="Assets\js\speakers\speakers.company.widget.js" />
     <Content Include="Assets\js\speakers\speakers.apiconfiguration.widget.js" />
     <Content Include="Assets\js\speakers\speakers.maininformation.widget.js" />
@@ -8224,6 +8226,8 @@
     <Content Include="Views\Companies\Shared\_TicketBuyerCompanyInfoForm.cshtml" />
     <Content Include="Views\Projects\Pitchings.cshtml" />
     <Content Include="Views\Projects\Widgets\PitchingDataTableWidget.cshtml" />
+    <Content Include="Views\Projects\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Views\Projects\Widgets\TotalCountWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

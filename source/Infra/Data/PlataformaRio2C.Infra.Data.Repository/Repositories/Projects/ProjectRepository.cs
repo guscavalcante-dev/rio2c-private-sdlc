@@ -48,9 +48,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="query">The query.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        internal static IQueryable<Project> FindByEditionId(this IQueryable<Project> query, int editionId)
+        internal static IQueryable<Project> FindByEditionId(this IQueryable<Project> query, int editionId, bool showAllEditions = false)
         {
-            query = query.Where(p => p.SellerAttendeeOrganization.EditionId == editionId);
+            query = query.Where(p => (showAllEditions || p.SellerAttendeeOrganization.EditionId == editionId));
 
             return query;
         }
@@ -881,6 +881,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 })
                             })
                             .FirstOrDefaultAsync();
+        }
+
+
+        public async Task<int> CountAllByDataTable(
+            int editionId,
+            bool showAllEditions = false)
+            
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId, showAllEditions)
+                                .IsFinished()
+                                .IsPitching();
+
+            return await query.CountAsync();
         }
 
         #endregion

@@ -192,5 +192,46 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         }
 
         #endregion
+
+        #region Total Count Widget
+
+        /// <summary>Shows the total count widget.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowTotalCountWidget()
+        {
+            var projectsCount = await this.projectRepo.CountAllByDataTable(this.EditionDto.Id, true);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", projectsCount), divIdOrClass = "#ProjectsPitchingTotalCountWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Edition Count Widget
+
+        /// <summary>Shows the edition count widget.</summary>
+        /// <returns></returns>
+        public async Task<ActionResult> ShowEditionCountWidget()
+        {
+            var projectsCount = await this.projectRepo.CountAllByDataTable(this.EditionDto.Id);
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", projectsCount), divIdOrClass = "#ProjectsPitchingEditionCountWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
     }
 }
