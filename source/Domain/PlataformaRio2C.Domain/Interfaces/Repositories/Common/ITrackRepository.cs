@@ -4,7 +4,7 @@
 // Created          : 01-04-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 01-08-2020
 // ***********************************************************************
 // <copyright file="ITrackRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,7 +25,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     {
         Task<TrackDto> FindDtoAsync(Guid trackUid, int editionId);
         Task<TrackDto> FindConferenceWidgetDtoAsync(Guid trackUid, int editionId);
-        Task<List<Track>> FindAllAsync(int editionId);
+        Task<List<Track>> FindAllByEditionIdAsync(int editionId);
         Task<List<Track>> FindAllByUidsAsync(List<Guid> trackUids);
         Task<IPagedList<TrackJsonDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> trackUids, int editionId, int languageId);
         Task<int> CountAllByDataTable(bool showAllEditions, int editionId);

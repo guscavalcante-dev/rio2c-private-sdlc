@@ -4,7 +4,7 @@
 // Created          : 01-04-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 01-08-2020
 // ***********************************************************************
 // <copyright file="TrackRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -224,10 +224,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
-        /// <summary>Finds all asynchronous.</summary>
+        /// <summary>Finds all by edition identifier asynchronous.</summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<List<Track>> FindAllAsync(int editionId)
+        public async Task<List<Track>> FindAllByEditionIdAsync(int editionId)
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(false, editionId);

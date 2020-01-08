@@ -76,6 +76,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiModels\ApiBaseRequest.cs" />
+    <Compile Include="ApiModels\Conferences\Requests\ConferencesFiltersApiRequest.cs" />
+    <Compile Include="ApiModels\Conferences\Responses\ConferencesFiltersApiResponse.cs" />
     <Compile Include="Constants\CookieName.cs" />
     <Compile Include="Constants\Culture.cs" />
     <Compile Include="Constants\OrganizationType.cs" />

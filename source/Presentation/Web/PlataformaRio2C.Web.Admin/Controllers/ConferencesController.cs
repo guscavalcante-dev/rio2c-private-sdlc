@@ -4,7 +4,7 @@
 // Created          : 12-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 01-08-2020
 // ***********************************************************************
 // <copyright file="ConferencesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -367,8 +367,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd = new UpdateConferenceTracksAndPresentationFormats(
                     tracksWidgetDto,
-                    await this.trackRepo.FindAllAsync(this.EditionDto.Id),
-                    await this.presentationFormatRepo.FindAllAsync(this.EditionDto.Id));
+                    await this.trackRepo.FindAllByEditionIdAsync(this.EditionDto.Id),
+                    await this.presentationFormatRepo.FindAllByEditionIdAsync(this.EditionDto.Id));
             }
             catch (DomainException ex)
             {
@@ -421,8 +421,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd.UpdateDropdownProperties(
-                    await this.trackRepo.FindAllAsync(this.EditionDto.Id),
-                    await this.presentationFormatRepo.FindAllAsync(this.EditionDto.Id));
+                    await this.trackRepo.FindAllByEditionIdAsync(this.EditionDto.Id),
+                    await this.presentationFormatRepo.FindAllByEditionIdAsync(this.EditionDto.Id));
 
                 return Json(new
                 {

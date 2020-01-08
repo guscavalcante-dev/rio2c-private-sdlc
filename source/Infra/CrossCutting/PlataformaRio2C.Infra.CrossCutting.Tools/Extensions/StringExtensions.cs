@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-26-2019
+// Last Modified On : 01-08-2020
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -186,7 +186,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                 return splitName[0].Trim();
             }
 
-            if (splitName.Length > 1)
+            if (culture?.ToLowerInvariant() == "en-us" && splitName.Length == 2)
             {
                 return splitName[1].Trim();
             }
