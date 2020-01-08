@@ -4,13 +4,14 @@
 // Created          : 12-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-11-2019
+// Last Modified On : 01-08-2020
 // ***********************************************************************
 // <copyright file="SendProjectsBuyersEvaluationsEmailsAsyncCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -60,7 +61,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
-            var unsentProjectBuyerEvaluations = await this.projectBuyerEvaluationRepo.FindAllBuyerEmailDtosAsync(currentEdition.Id);
+            // Check if is project evaluation period
+            if (DateTime.Now < currentEdition.ProjectEvaluationStartDate || DateTime.Now > currentEdition.ProjectEvaluationEndDate)
+            {
+                return this.AppValidationResult;
+            }
+
+            var unsentProjectBuyerEvaluations = await this.projectBuyerEvaluationRepo.FindAllBuyerEmailDtosAsync(currentEdition.Id, currentEdition.ProjectEvaluationStartDate, currentEdition.ProjectEvaluationEndDate);
             if (unsentProjectBuyerEvaluations?.Any() != true)
             {
                 return this.AppValidationResult;
