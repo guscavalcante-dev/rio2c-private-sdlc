@@ -31,6 +31,10 @@ namespace PlataformaRio2C.Application.TemplateDocuments
         public ProjectDto Project { get; private set; }
         private Font _font;
         private Font _fontLabel;
+        private Font _fontChip;
+
+        public static string cssText { get; set; }
+
 
         /// <summary>Initializes a new instance of the <see cref="ProjectDocumentTemplate"/> class.</summary>
         public ProjectDocumentTemplate(ProjectDto project)
@@ -43,6 +47,7 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             ShowDefaultFooter = false;
 
             _fontLabel = new Font(Font.FontFamily.HELVETICA, DefaultFontSize + 4f, Font.BOLD, BaseColor.DARK_GRAY);
+            _fontChip = new Font(Font.FontFamily.HELVETICA, DefaultFontSize + 4f, Font.NORMAL, BaseColor.DARK_GRAY);
         }
 
         /// <summary>Retorna a fonte padrão do template</summary>
@@ -119,37 +124,34 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             document.Add(paragraph);
             paragraph.Clear();
 
-            var fontLabelGenre = new Font( Font.FontFamily.HELVETICA, DefaultFontSize + 6f, Font.BOLD, BaseColor.DARK_GRAY);
-            var tableGenre = new PdfPTable(new float[] { 20, 80 });
-            tableGenre.WidthPercentage = 70;
-            tableGenre.HorizontalAlignment = Element.ALIGN_RIGHT;
+
+            var fontLabelGenre = new Font(Font.FontFamily.HELVETICA, DefaultFontSize + 6f, Font.BOLD, BaseColor.DARK_GRAY);
+            var fontChipGenre = new Font(Font.FontFamily.HELVETICA, DefaultFontSize + 4f, Font.BOLD, BaseColor.DARK_GRAY);
+
+            var tableGenre = new PdfPTable(new float[] { 100 });
+            tableGenre.WidthPercentage = 100;
+            tableGenre.HorizontalAlignment = Element.ALIGN_LEFT;
             tableGenre.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            tableGenre.DefaultCell.BorderWidth = 0;
 
-            tableGenre.AddCell(new Phrase(new Chunk("Gênero: ", fontLabelGenre)));
-
-            var chips = new List<string>();
+            var chips = new List<Chunk>();
             var projectInterestsDtos = this.Project.GetAllInterestsByInterestGroupUid(InterestGroup.Genre.Uid);
             if (projectInterestsDtos?.Any() == true)
             {
-                int index = 0;
                 foreach (var projectInterestDto in projectInterestsDtos)
                 {
-                    chips.Add(
-                       projectInterestDto.Interest.Name.GetSeparatorTranslation(Constants.Culture.English, '|') + " | " +
-                       projectInterestDto.Interest.Name.GetSeparatorTranslation(Constants.Culture.Portuguese, '|')
+                    chips.Add(new Chunk(projectInterestDto.Interest.Name.GetSeparatorTranslation(Constants.Culture.English, '|') +
+                        " | " +
+                       projectInterestDto.Interest.Name.GetSeparatorTranslation(Constants.Culture.Portuguese, '|'), fontChipGenre)
                        );
                 }
 
-                tableGenre.AddCell(GetChips(chips, Font.NORMAL, DefaultFontSize + 4f));
-            }
+                paragraph.Add(GetChips("Gênero: ", chips, fontLabelGenre, tableGenre));
+                paragraph.IndentationLeft = 170;
+                paragraph.SpacingBefore = 10;
+                document.Add(paragraph);
+                paragraph.Clear();
 
-            paragraph.Add(tableGenre);
-            paragraph.IndentationLeft = 170;
-            paragraph.IndentationLeft = 15;
-            paragraph.SpacingBefore = 10;
-            document.Add(paragraph);
-            paragraph.Clear();
+            }
 
             return paragraph;
         }
@@ -314,126 +316,112 @@ namespace PlataformaRio2C.Application.TemplateDocuments
         {
             #region Format
 
-            var tableFormat = new PdfPTable(new float[] { 13, 87 });
+            var tableFormat = new PdfPTable(new float[] { 100 });
             tableFormat.WidthPercentage = 100;
             tableFormat.HorizontalAlignment = Element.ALIGN_LEFT;
             tableFormat.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            tableFormat.DefaultCell.BorderWidth = 0;
 
             tableFormat.AddCell(new Phrase(new Chunk("Formato: ", _fontLabel)));
 
-            var chips = new List<string>();
+            var chips = new List<Chunk>();
             var projectFormatsDtos = this.Project.GetAllInterestsByInterestGroupUid(InterestGroup.Format.Uid);
             if (projectFormatsDtos?.Any() == true)
             {
                 foreach (var projectFormatDto in projectFormatsDtos)
                 {
-                    chips.Add(projectFormatDto.Interest.Name);
+                    chips.Add(new Chunk(projectFormatDto.Interest.Name, _fontChip));
                 }
 
-                tableFormat.AddCell(GetChips(chips, Font.NORMAL, DefaultFontSize + 4f));
+                paragraph.Add(GetChips("Formato: ", chips, _fontLabel, tableFormat));
+                paragraph.IndentationLeft = 15;
+                paragraph.IndentationRight = 15;
+                paragraph.SpacingBefore = 10;
+                paragraph.SetLeading(1.0f, 1.5f);
+                document.Add(paragraph);
+                paragraph.Clear();
             }
-
-            paragraph.Add(tableFormat);
-            paragraph.IndentationLeft = 15;
-            paragraph.IndentationRight = 15;
-            paragraph.SpacingBefore = 10;
-            paragraph.SetLeading(1.0f, 1.5f);
-            document.Add(paragraph);
-            paragraph.Clear();
 
             #endregion
 
+
+
+
+
             #region Platform
 
-            var tablePltaform = new PdfPTable(new float[] { 15, 85 });
+            var tablePltaform = new PdfPTable(new float[] { 100 });
             tablePltaform.WidthPercentage = 100;
             tablePltaform.HorizontalAlignment = Element.ALIGN_LEFT;
             tablePltaform.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            tablePltaform.DefaultCell.BorderWidth = 0;
 
-            tablePltaform.AddCell(new Phrase(new Chunk("Plataforma: ", _fontLabel)));
-
-            chips = new List<string>();
+            chips = new List<Chunk>();
             var projectPlatformsDtos = this.Project.GetAllInterestsByInterestGroupUid(InterestGroup.Platforms.Uid);
             if (projectPlatformsDtos?.Any() == true)
             {
                 foreach (var projectPlatformDto in projectPlatformsDtos)
                 {
-                    chips.Add(projectPlatformDto.Interest.Name);
+                    chips.Add(new Chunk(projectPlatformDto.Interest.Name, _fontChip));
                 }
 
-                tablePltaform.AddCell(GetChips(chips, Font.NORMAL, DefaultFontSize + 4f));
+                paragraph.Add(GetChips("Plataforma: ", chips, _fontLabel, tablePltaform));
+                paragraph.IndentationLeft = 15;
+                paragraph.IndentationRight = 15;
+                paragraph.SpacingBefore = 0;
+                document.Add(paragraph);
+                paragraph.Clear();
             }
-
-            paragraph.Add(tablePltaform);
-            paragraph.IndentationLeft = 15;
-            paragraph.IndentationRight = 15;
-            paragraph.SpacingBefore = 0;
-            document.Add(paragraph);
-            paragraph.Clear();
 
             #endregion
 
             #region Project Status
 
-            var tableStatus = new PdfPTable(new float[] { 25, 75 });
+            var tableStatus = new PdfPTable(new float[] { 100 });
             tableStatus.WidthPercentage = 100;
             tableStatus.HorizontalAlignment = Element.ALIGN_LEFT;
             tableStatus.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            tableStatus.DefaultCell.BorderWidth = 0;
 
-            tableStatus.AddCell(new Phrase(new Chunk("Status do projeto: ", _fontLabel)));
-
-            chips = new List<string>();
+            chips = new List<Chunk>();
             var projectStatusDtos = this.Project.GetAllInterestsByInterestGroupUid(InterestGroup.ProjectStatus.Uid);
             if (projectStatusDtos?.Any() == true)
             {
                 foreach (var projectStatusDto in projectStatusDtos)
                 {
-                    chips.Add(projectStatusDto.Interest.Name);
+                    chips.Add(new Chunk(projectStatusDto.Interest.Name, _fontChip));
                 }
 
-                tableStatus.AddCell(GetChips(chips, Font.NORMAL, DefaultFontSize + 4f));
+                paragraph.Add(GetChips("Status do projeto:", chips, _fontLabel, tableStatus));
+                paragraph.IndentationLeft = 15;
+                paragraph.IndentationRight = 15;
+                paragraph.SpacingBefore = 0;
+                document.Add(paragraph);
+                paragraph.Clear();
             }
-
-            paragraph.Add(tableStatus);
-            paragraph.IndentationLeft = 15;
-            paragraph.IndentationRight = 15;
-            paragraph.SpacingBefore = 0;
-            document.Add(paragraph);
-            paragraph.Clear();
 
             #endregion
 
-            #region Genre
+            #region SubGenre
 
-            var tableSubGenre = new PdfPTable(new float[] { 15, 85 });
+            var tableSubGenre = new PdfPTable(new float[] { 100 });
             tableSubGenre.WidthPercentage = 100;
             tableSubGenre.HorizontalAlignment = Element.ALIGN_LEFT;
             tableSubGenre.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            tableSubGenre.DefaultCell.BorderWidth = 0;
 
-            tableSubGenre.AddCell(new Phrase(new Chunk("Subgênero: ", _fontLabel)));
-
-            chips = new List<string>();
+            chips = new List<Chunk>();
             var subgeneroDtos = this.Project.GetAllInterestsByInterestGroupUid(InterestGroup.SubGenre.Uid);
             if (subgeneroDtos?.Any() == true)
             {
                 foreach (var subgeneroDto in subgeneroDtos)
                 {
-                    chips.Add(subgeneroDto.Interest.Name);
+                    chips.Add(new Chunk(subgeneroDto.Interest.Name, _fontChip));
                 }
 
-                tableSubGenre.AddCell(GetChips(chips, Font.NORMAL, DefaultFontSize + 4f));
+                paragraph.Add(GetChips("Subgênero: ", chips, _fontLabel, tableSubGenre));
+                paragraph.IndentationLeft = 15;
+                paragraph.IndentationRight = 15;
+                paragraph.SpacingBefore = 0;
+                document.Add(paragraph);
+                paragraph.Clear();
             }
-
-            paragraph.Add(tableSubGenre);
-            paragraph.IndentationLeft = 15;
-            paragraph.IndentationRight = 15;
-            paragraph.SpacingBefore = 0;
-            document.Add(paragraph);
-            paragraph.Clear();
 
             #endregion
 

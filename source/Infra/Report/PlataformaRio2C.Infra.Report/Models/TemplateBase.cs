@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 
@@ -102,6 +103,42 @@ namespace PlataformaRio2C.Infra.Report.Models
         /// <param name="fontStyle">The font style.</param>
         /// <param name="fontSize">Size of the font.</param>
         /// <returns></returns>
+        public PdfPCell GetChips(List<Chunk> texts, int fontStyle = Font.NORMAL, float fontSize = 0, int rowSize = 100)
+        {
+            var mainCell = new PdfPCell();
+
+            var tableMaster = new PdfPTable(1);
+            tableMaster.WidthPercentage = 100;
+
+
+            for (int i = 0; i < texts.Count; i++)
+            {
+                var columns = new float[1];
+                columns[0] = texts[i].GetWidthPoint() < 10 ? 20 : (texts[i].GetWidthPoint() * 1.8f);
+
+                var table = new PdfPTable(columns);
+                table.WidthPercentage = columns[0];
+                table.HorizontalAlignment = Element.ALIGN_LEFT;
+
+                var cell = new PdfPCell(GetPhrase(texts[i].Content, fontStyle, fontSize));
+                cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                cell.Padding = 5;
+                cell.CellEvent = new PdfCellChipLayout();
+
+                table.AddCell(cell);
+                tableMaster.SetWidths(columns);
+
+                tableMaster.AddCell(table);
+                table.DeleteLastRow();
+            }
+
+            mainCell.Border = 0;
+            mainCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            mainCell.AddElement(tableMaster);
+            return mainCell;
+        }
+
         public PdfPCell GetChips(List<string> texts, int fontStyle = Font.NORMAL, float fontSize = 0)
         {
             var mainCell = new PdfPCell();
@@ -112,8 +149,8 @@ namespace PlataformaRio2C.Infra.Report.Models
 
             for (int i = 0; i < texts.Count; i++)
             {
-                columns[i] = texts[i].Length + 15;
-                columnSize += texts[i].Length + 15;
+                columns[i] = texts[i].Length < 10 ? 20 : (texts[i].Length * 1.8f);
+                columnSize += columns[i];
             }
 
             var table = new PdfPTable(columns);
@@ -138,6 +175,82 @@ namespace PlataformaRio2C.Infra.Report.Models
             return mainCell;
         }
 
+        /// <summary>
+        /// Gets the chips
+        /// </summary>
+        /// <param name="label"></param>
+        /// <param name="chips"></param>
+        /// <param name="fontLabel"></param>
+        /// <param name="defaultTable"></param>
+        /// <returns></returns>
+        public PdfPTable GetChips(string label, List<Chunk> chips, Font fontLabel, PdfPTable defaultTable)
+        {
+            var rotulo = new Chunk(label, fontLabel);
+
+            var rootTable = new PdfPTable(new float[] { rotulo.GetWidthPoint() - 10, (PageSize.A4.Width / 2) - (rotulo.GetWidthPoint() - 10) });
+            rootTable.WidthPercentage = defaultTable.WidthPercentage;
+            rootTable.DefaultCell.VerticalAlignment = defaultTable.DefaultCell.VerticalAlignment;
+            rootTable.DefaultCell.HorizontalAlignment = defaultTable.DefaultCell.HorizontalAlignment;
+            rootTable.DefaultCell.Border = 0;
+
+            var availableWidth = (PageSize.A4.Width / 2) - (rotulo.GetWidthPoint() - 10);
+
+            rootTable.AddCell(new Paragraph(rotulo));
+
+            var rows = new List<List<Chunk>>();
+            var row = new List<Chunk>();
+
+            rows.Add(row);
+
+            var padding = 50f;
+
+            for (int i = 0; i < chips.Count; i++)
+            {
+                var currentChip = chips[i];
+
+                if (row.Sum(x => x.GetWidthPoint() + (padding * 1.3f) /*padding*/) < availableWidth)
+                    row.Add(currentChip);
+                else
+                {
+                    row = new List<Chunk>();
+                    row.Add(currentChip);
+                    rows.Add(row);
+                }
+
+            }
+
+            var rowsTable = new PdfPTable(1);
+            rowsTable.WidthPercentage = 100;
+            rowsTable.DefaultCell.Border = 0;
+
+
+            foreach (var line in rows)
+            {
+                var columns = line.Select(x => x.GetWidthPoint() /*+ padding*/).ToList();
+                columns.Add(availableWidth - (line.Sum(x => x.GetWidthPoint()) + (columns.Count /** padding*/)));
+
+                var chipsTable = new PdfPTable(columns.ToArray());
+                chipsTable.DefaultCell.Border = 0;
+                chipsTable.WidthPercentage = 100;
+                chipsTable.DefaultCell.CellEvent = new PdfCellChipLayout();
+                chipsTable.DefaultCell.Padding = 7;
+                chipsTable.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
+
+                foreach (var chip in line)
+                {
+                    var parag = new Paragraph(chip);
+                    parag.Alignment = Element.ALIGN_CENTER;
+                    chipsTable.AddCell(parag);
+                }
+
+                chipsTable.DefaultCell.CellEvent = null;
+                chipsTable.CompleteRow();
+                rowsTable.AddCell(chipsTable);
+            }
+            rootTable.AddCell(rowsTable);
+
+            return rootTable;
+        }
         /// <summary>Initializes a new instance of the <see cref="TemplateBase"/> class. Sets the initial default values of the template (e.g. DefaultFontSize).</summary>
         public TemplateBase()
         {
