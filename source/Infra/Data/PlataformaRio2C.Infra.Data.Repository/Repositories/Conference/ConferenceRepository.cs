@@ -295,7 +295,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             {
                                 Conference = c,
                                 EditionEvent = c.EditionEvent,
-                                RoomDto = !c.RoomId.HasValue ? null : new RoomDto
+                                RoomDto = new RoomDto
                                 {
                                     Room = c.Room,
                                     RoomNameDtos = c.Room.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameDto
@@ -469,7 +469,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     Uid = c.EditionEvent.Uid,
                                     Name = c.EditionEvent.Name
                                 },
-                                RoomJsonDto = !c.RoomId.HasValue ? null : new RoomJsonDto
+                                RoomJsonDto = new RoomJsonDto
                                 {
                                     Id = c.Room.Id,
                                     Uid = c.Room.Uid,
@@ -530,7 +530,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             {
                                 Conference = c,
                                 EditionEvent = c.EditionEvent,
-                                RoomDto = !c.RoomId.HasValue ? null : new RoomDto
+                                RoomDto = new RoomDto
                                 {
                                     Room = c.Room,
                                     RoomNameDtos = c.Room.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameDto

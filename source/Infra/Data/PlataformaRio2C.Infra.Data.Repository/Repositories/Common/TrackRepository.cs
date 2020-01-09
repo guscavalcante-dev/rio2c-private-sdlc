@@ -4,7 +4,7 @@
 // Created          : 01-04-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-08-2020
+// Last Modified On : 01-09-2020
 // ***********************************************************************
 // <copyright file="TrackRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -287,7 +287,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             {
                                 Id = r.Id,
                                 Uid = r.Uid,
-                                Name = r.Name
+                                Name = r.Name,
+                                Color = r.Color
                             })
                             .ToListPagedAsync(page, pageSize);
         }

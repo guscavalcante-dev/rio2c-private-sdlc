@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-06-2020
+// Last Modified On : 01-09-2020
 // ***********************************************************************
 // <copyright file="Room.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -149,7 +149,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             foreach (var conference in this.Conferences.Where(c => !c.IsDeleted))
             {
-                conference.DeleteRoom(userId);
+                conference.Delete(userId);
             }
         }
 

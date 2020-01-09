@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 01-09-2020
 // ***********************************************************************
 // <copyright file="TracksController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -209,7 +209,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <summary>Shows the update main information modal.</summary>
         /// <param name="trackUid">The track uid.</param>
         /// <returns></returns>
-        /// <exception cref="DomainException"></exception>
         [HttpGet]
         public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? trackUid)
         {

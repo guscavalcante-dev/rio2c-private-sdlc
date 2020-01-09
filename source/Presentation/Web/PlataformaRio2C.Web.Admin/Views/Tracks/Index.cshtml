@@ -19,11 +19,13 @@
 @Html.Partial("Widgets/DataTablewidget", Model)
 @section Styles {
     @Styles.Render("~/bundles/css/dataTables.css")
+    @Styles.Render("~/bundles/css/jquery-minicolors.css")
 }
 @section Scripts {
     @Scripts.Render("~/bundles/js/dataTables.js")
     @Scripts.Render("~/bundles/js/chart.js")
     @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/jquery-minicolors.js")
     @Scripts.Render("~/bundles/js/tracks.list.js")
     @Scripts.Render("~/bundles/js/tracks.editioncount.js")
     @Scripts.Render("~/bundles/js/tracks.create.js")

@@ -4,7 +4,7 @@
 // Created          : 01-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 01-09-2020
 // ***********************************************************************
 // <copyright file="tracks.maininformation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -72,6 +72,7 @@ var TracksMainInformationWidget = function () {
     };
 
     var enableUpdatePlugins = function () {
+        MyRio2cCommon.enableColorPicker();
         enableAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };

@@ -1970,4 +1970,8 @@
     <value>Start Time</value>
     <comment>Hora de início</comment>
   </data>
+  <data name="Color" xml:space="preserve">
+    <value>Color</value>
+    <comment>Cor</comment>
+  </data>
 </root>

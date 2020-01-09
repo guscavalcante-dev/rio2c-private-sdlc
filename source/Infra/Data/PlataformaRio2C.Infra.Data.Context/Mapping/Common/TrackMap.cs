@@ -4,7 +4,7 @@
 // Created          : 01-04-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 01-09-2020
 // ***********************************************************************
 // <copyright file="TrackMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,6 +26,9 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
 
             this.Property(p => p.Name)
                 .HasMaxLength(Track.NameMaxLength);
+
+            this.Property(p => p.Color)
+                .HasMaxLength(Track.ColorMaxLength);
 
             // Relationships
             this.HasRequired(t => t.Edition)

@@ -6,3 +6,10 @@
         @Html.EditorFor(m => m.Names)
     </div>
 </div>
+<div class="row">
+    <div class="form-group col-md-12">
+        @Html.LabelFor(m => m.Color, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Color, new { @class = "form-control enable-colorpicker" })
+        @Html.ValidationMessageFor(m => m.Color, "", new { @class = "text-danger", })
+    </div>
+</div>

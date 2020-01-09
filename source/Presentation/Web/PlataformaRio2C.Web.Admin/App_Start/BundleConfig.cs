@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 01-09-2020
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -253,6 +253,16 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/bootstrap-timepicker.js").Include(
                 "~/Assets/themes/metronic/vendors/general/bootstrap-timepicker/js/bootstrap-timepicker.js"));
+
+            #endregion
+
+            #region Jquery MiniColors
+
+            bundles.Add(new StyleBundle("~/bundles/css/jquery-minicolors.css")
+                .Include("~/Assets/components/jquery-minicolors/jquery.minicolors.css", new CssRewriteUrlTransform()));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/jquery-minicolors.js").Include(
+                "~/Assets/components/jquery-minicolors/jquery.minicolors.js"));
 
             #endregion
 

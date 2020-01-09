@@ -1977,4 +1977,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Formatos</value>
     <comment>Formatos</comment>
   </data>
+  <data name="Color" xml:space="preserve">
+    <value>Cor</value>
+    <comment>Cor</comment>
+  </data>
 </root>

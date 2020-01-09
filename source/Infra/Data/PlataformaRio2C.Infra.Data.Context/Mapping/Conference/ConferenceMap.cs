@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-06-2020
+// Last Modified On : 01-09-2020
 // ***********************************************************************
 // <copyright file="ConferenceMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,7 +29,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                 .WithMany(d => d.Conferences)
                 .HasForeignKey(t => t.EditionEventId);
 
-            this.HasOptional(t => t.Room)
+            this.HasRequired(t => t.Room)
               .WithMany(d => d.Conferences)
               .HasForeignKey(t => t.RoomId);
         }

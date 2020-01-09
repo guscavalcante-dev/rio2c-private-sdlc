@@ -83,7 +83,7 @@ var TracksDataTableWidget = function () {
             //            }
             //        }]
             //}],
-            order: [[1, "asc"]],
+            order: [[2, "asc"]],
             sDom: '<"row"<"col-sm-6"l><"col-sm-6 text-right"B>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
             oSearch: {
                 sSearch: $('#Search').val()
@@ -131,6 +131,15 @@ var TracksDataTableWidget = function () {
                     data: 'Name'
                 },
                 {
+                    data: 'Color',
+                    render: function (data, type, full, meta) {
+                        console.log(data);
+                        var html = '<span class="kt-badge kt-badge--inline mt-1" style="color: #ffffff; background: ' + data + '">' + data + '</span>';
+                                
+                        return html;
+                    }
+                },
+                {
                     data: 'CreateDate',
                     render: function (data) {
                         return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
@@ -171,7 +180,12 @@ var TracksDataTableWidget = function () {
                     orderable: false
                 },
                 {
-                    targets: [1, 2],
+                    targets: [1],
+                    className: "dt-center",
+                    orderable: false
+                },
+                {
+                    targets: [2, 3],
                     className: "dt-center"
                 },
                 {

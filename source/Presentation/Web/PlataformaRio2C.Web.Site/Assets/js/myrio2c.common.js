@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Web.Admin
+// Assembly         : PlataformaRio2C.Web.Site
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-03-2020
+// Last Modified On : 01-09-2020
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -587,6 +587,22 @@ var MyRio2cCommon = function () {
                 up: 'la la-angle-up',
                 down: 'la la-angle-down'
             }
+        });
+    };
+
+    var enableColorPicker = function (options) {
+        if (isNullOrEmpty(options)) {
+            options = new Object();
+        }
+
+        // Id or class
+        if (!hasProperty(options, 'inputIdOrClass') || isNullOrEmpty(options.inputIdOrClass)) {
+            options.inputIdOrClass = '.enable-colorpicker';
+        }
+
+        $(options.inputIdOrClass).minicolors({
+            letterCase: 'uppercase',
+            theme: 'bootstrap'
         });
     };
 
@@ -1287,6 +1303,9 @@ var MyRio2cCommon = function () {
         },
         enableTimePicker: function (options) {
             enableTimePicker(options);
+        },
+        enableColorPicker: function (options) {
+            enableColorPicker(options);
         },
         submitForm: function (formIdOrClass) {
             submitForm(formIdOrClass);

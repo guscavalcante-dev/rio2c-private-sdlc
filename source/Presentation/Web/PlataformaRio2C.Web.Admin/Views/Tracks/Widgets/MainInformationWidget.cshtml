@@ -77,6 +77,14 @@
                     <span class="kt-widget__value"><span>@(Model.Track.UpdateDate.ToShortDateString()) @(Model.Track.UpdateDate.ToShortTimeString())</span></span>
                 </div>
             </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.Color</span>
+                    <span class="kt-widget__value">
+                        <span class="kt-badge kt-badge--inline mt-1" style="color: #ffffff; background: @(Model.Track.Color)">@(Model.Track.Color)</span>
+                    </span>
+                </div>
+            </div>
         </div>
     </div>
 </div>

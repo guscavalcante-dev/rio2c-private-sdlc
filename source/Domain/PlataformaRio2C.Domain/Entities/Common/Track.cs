@@ -4,7 +4,7 @@
 // Created          : 01-04-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 01-09-2020
 // ***********************************************************************
 // <copyright file="Track.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,9 +24,12 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public static readonly int NameMinLength = 1;
         public static readonly int NameMaxLength = 600;
+        public static readonly int ColorMinLength = 1;
+        public static readonly int ColorMaxLength = 10;
 
         public int EditionId { get; private set; }
         public string Name { get; private set; }
+        public string Color { get; private set; }
 
         public virtual Edition Edition { get; private set; }
         public virtual ICollection<ConferenceTrack> ConferenceTracks { get; private set; }
@@ -35,17 +38,20 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="trackUid">The track uid.</param>
         /// <param name="edition">The edition.</param>
         /// <param name="trackNames">The track names.</param>
+        /// <param name="color">The color.</param>
         /// <param name="userId">The user identifier.</param>
         public Track(
             Guid trackUid,
             Edition edition,
             List<TrackName> trackNames,
+            string color,
             int userId)
         {
             //this.Uid = trackUid;
             this.EditionId = edition?.Id ?? 0;
             this.Edition = edition;
             this.UpdateName(trackNames);
+            this.Color = color?.Trim();
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
@@ -59,12 +65,15 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Updates the main information.</summary>
         /// <param name="trackNames">The track names.</param>
+        /// <param name="color">The color.</param>
         /// <param name="userId">The user identifier.</param>
         public void UpdateMainInformation(
             List<TrackName> trackNames,
+            string color,
             int userId)
         {
             this.UpdateName(trackNames);
+            this.Color = color?.Trim();
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
@@ -130,6 +139,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.ValidateEdition();
             this.ValidateName();
+            this.ValidateColor();
 
             return this.ValidationResult.IsValid;
         }
@@ -154,6 +164,20 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.Name?.Trim().Length < NameMinLength || this.Name?.Trim().Length > NameMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Descriptions, NameMaxLength, NameMinLength), new string[] { "Name" }));
+            }
+        }
+
+        /// <summary>Validates the color.</summary>
+        public void ValidateColor()
+        {
+            if (string.IsNullOrEmpty(this.Color?.Trim()))
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Color), new string[] { "Color" }));
+            }
+
+            if (this.Color?.Trim().Length < ColorMinLength || this.Color?.Trim().Length > ColorMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Descriptions, ColorMaxLength, ColorMinLength), new string[] { "Color" }));
             }
         }
 

@@ -24,7 +24,7 @@ namespace PlataformaRio2C.Domain.Entities
     public class Conference : Entity
     {
         public int EditionEventId { get; private set; }
-        public int? RoomId { get; private set; }
+        public int RoomId { get; private set; }
         public DateTime StartDate { get; private set; }
         public DateTime EndDate { get; private set; }
 
@@ -67,7 +67,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.EditionEvent = editionEvent;
             this.StartDate = date.JoinDateAndTime(startTime, true);
             this.EndDate = date.JoinDateAndTime(endTime, true);
-            this.RoomId = room?.Id;
+            this.RoomId = room?.Id ?? 0;
             this.Room = room;
             this.SynchronizeConferenceTitles(conferenceTitles, userId);
             this.SynchronizeConferenceSynopses(conferenceSynopses, userId);
@@ -107,7 +107,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.EditionEvent = editionEvent;
             this.StartDate = date.JoinDateAndTime(startTime, true);
             this.EndDate = date.JoinDateAndTime(endTime, true);
-            this.RoomId = room?.Id;
+            this.RoomId = room?.Id ?? 0;
             this.Room = room;
             this.SynchronizeConferenceTitles(conferenceTitles, userId);
             this.SynchronizeConferenceSynopses(conferenceSynopses, userId);
@@ -138,17 +138,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = true;
             this.SynchronizeConferenceTitles(new List<ConferenceTitle>(), userId);
             this.SynchronizeConferenceSynopses(new List<ConferenceSynopsis>(), userId);
-
-            this.UpdateDate = DateTime.Now;
-            this.UpdateUserId = userId;
-        }
-
-        /// <summary>Deletes the room.</summary>
-        /// <param name="userId">The user identifier.</param>
-        public void DeleteRoom(int userId)
-        {
-            this.RoomId = null;
-            this.Room = null;
 
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;

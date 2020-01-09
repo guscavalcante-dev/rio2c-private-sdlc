@@ -405,6 +405,10 @@
     <Content Include="Assets\components\hideshowpassword\hideShowPassword.min.js" />
     <Content Include="Assets\components\hideshowpassword\images\wink.png" />
     <Content Include="Assets\components\hideshowpassword\images\wink.svg" />
+    <Content Include="Assets\components\jquery-minicolors\jquery.minicolors.css" />
+    <Content Include="Assets\components\jquery-minicolors\jquery.minicolors.js" />
+    <Content Include="Assets\components\jquery-minicolors\jquery.minicolors.min.js" />
+    <Content Include="Assets\components\jquery-minicolors\jquery.minicolors.png" />
     <Content Include="Assets\components\jquery.autocomplete\content\styles.css" />
     <Content Include="Assets\components\jquery.autocomplete\dist\jquery.autocomplete.js" />
     <Content Include="Assets\components\jquery.autocomplete\dist\jquery.autocomplete.min.js" />

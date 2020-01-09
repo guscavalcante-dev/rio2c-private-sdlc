@@ -423,3 +423,11 @@ a.r2c-login__footer-link, a.r2c-footer-link {
         width: 100%;
         table-layout: fixed;
     }
+
+
+/*
+    Jquery MiniColors
+*/
+.minicolors-theme-bootstrap .minicolors-swatch {
+    top: 5px !important;
+}
