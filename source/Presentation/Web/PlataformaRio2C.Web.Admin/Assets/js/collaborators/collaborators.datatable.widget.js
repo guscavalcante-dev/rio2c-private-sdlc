@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-14-2019
+// Last Modified On : 01-09-2020
 // ***********************************************************************
 // <copyright file="collaborators.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -361,7 +361,6 @@ var CollaboratorsDataTableWidget = function () {
                 },
                 {
                     targets: -1,
-                    title: 'Actions',
                     width: "10%",
                     orderable: false,
                     searchable: false,

@@ -4,7 +4,7 @@
 // Created          : 01-05-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 01-09-2020
 // ***********************************************************************
 // <copyright file="events.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -187,7 +187,6 @@ var EventsDataTableWidget = function () {
                 },
                 {
                     targets: -1,
-                    title: 'Actions',
                     width: "10%",
                     orderable: false,
                     searchable: false,
