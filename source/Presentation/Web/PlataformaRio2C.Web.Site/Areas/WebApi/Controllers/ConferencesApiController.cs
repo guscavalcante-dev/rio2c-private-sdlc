@@ -4,7 +4,7 @@
 // Created          : 01-08-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-08-2020
+// Last Modified On : 01-09-2020
 // ***********************************************************************
 // <copyright file="ConferencesApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -36,6 +36,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         private readonly IRoomRepository roomRepo;
         private readonly ITrackRepository trackRepo;
         private readonly IPresentationFormatRepository presentationFormatRepo;
+        private readonly ILanguageRepository languageRepo;
+        private readonly IFileRepository fileRepo;
 
         public ConferencesApiController(
             IConferenceRepository conferenceRepository,
@@ -44,9 +46,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             IRoomRepository roomRepository,
             ITrackRepository trackRepository,
             IPresentationFormatRepository presentationFormatRepository,
-
-
-            ICollaboratorRepository collaboratorRepository,
+            ILanguageRepository languageRepository,
             IFileRepository fileRepository)
         {
             this.conferenceRepo = conferenceRepository;
@@ -55,64 +55,97 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             this.roomRepo = roomRepository;
             this.trackRepo = trackRepository;
             this.presentationFormatRepo = presentationFormatRepository;
+            this.languageRepo = languageRepository;
+            this.fileRepo = fileRepository;
         }
 
         #region List
 
-        //[HttpGet]
-        //[Route("conferences")]
-        //public async Task<IHttpActionResult> Conferences([FromUri]SpeakersApiRequest request)
-        //{
-        //    var editions = this.editionRepo.FindAllByIsActive(false);
-        //    if (editions?.Any() == false)
-        //    {
-        //        return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." } });
-        //    }
+        /// <summary>Conferenceses the specified request.</summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("conferences")]
+        public async Task<IHttpActionResult> Conferences([FromUri]ConferencesApiRequest request)
+        {
+            var editions = this.editionRepo.FindAllByIsActive(false);
+            if (editions?.Any() == false)
+            {
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." } });
+            }
 
-        //    // Get edition from request otherwise get current
-        //    var edition = request?.Edition.HasValue == true ? editions?.FirstOrDefault(e => e.UrlCode == request.Edition) :
-        //                                                      editions?.FirstOrDefault(e => e.IsCurrent);
-        //    if (edition == null)
-        //    {
-        //        return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "No editions found." } });
-        //    }
+            // Get edition from request otherwise get current
+            var edition = request?.Edition.HasValue == true ? editions?.FirstOrDefault(e => e.UrlCode == request.Edition) :
+                                                              editions?.FirstOrDefault(e => e.IsCurrent);
+            if (edition == null)
+            {
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "No editions found." } });
+            }
 
-        //    var collaboratorsApiDtos = await this.collaboratorRepo.FindAllPublicApiPaged(
-        //        edition.Id,
-        //        request?.Keywords,
-        //        Domain.Constants.CollaboratorType.Speaker,
-        //        request?.Page ?? 1,
-        //        request?.PageSize ?? 10);
+            // Get language from request otherwise get default
+            var languages = await this.languageRepo.FindAllDtosAsync();
+            var requestLanguage = languages?.FirstOrDefault(l => l.Code == request?.Culture);
+            var defaultLanguage = languages?.FirstOrDefault(l => l.IsDefault);
+            if (requestLanguage == null && defaultLanguage == null)
+            {
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "No active languages found." } });
+            }
 
-        //    return await Json(new SpeakersApiResponse
-        //    {
-        //        Status = ApiStatus.Success,
-        //        Error = null,
-        //        HasPreviousPage = collaboratorsApiDtos.HasPreviousPage,
-        //        HasNextPage = collaboratorsApiDtos.HasNextPage,
-        //        TotalItemCount = collaboratorsApiDtos.TotalItemCount,
-        //        PageCount = collaboratorsApiDtos.PageCount,
-        //        PageNumber = collaboratorsApiDtos.PageNumber,
-        //        PageSize = collaboratorsApiDtos.PageSize,
-        //        Speakers = collaboratorsApiDtos?.Select(c => new SpeakersApiListItem
-        //        {
-        //            Uid = c.Uid,
-        //            BadgeName = c.BadgeName?.Trim(),
-        //            Name = c.Name?.Trim(),
-        //            HighlightPosition = c.ApiHighlightPosition,
-        //            Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.Uid, c.ImageUploadDate, true) : null,
-        //            MiniBio = c.GetCollaboratorMiniBioBaseDtoByLanguageCode(request?.Culture)?.Value?.Trim(),
-        //            JobTitle = c.GetCollaboratorJobTitleBaseDtoByLanguageCode(request?.Culture)?.Value?.Trim(),
-        //            Companies = c.OrganizationsDtos?.Select(od => new OrganizationBaseApiResponse
-        //            {
-        //                Uid = od.Uid,
-        //                TradeName = od.TradeName,
-        //                CompanyName = od.CompanyName,
-        //                Picture = od.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, od.Uid, od.ImageUploadDate, true) : null
-        //            })?.ToList()
-        //        })?.ToList()
-        //    });
-        //}
+            var collaboratorsApiDtos = await this.conferenceRepo.FindAllPublicApiPaged(
+                edition.Id,
+                request?.Keywords,
+                request?.EditionDates?.ToListDateTime(',', "yyyy-MM-dd"),
+                request?.EventsUids?.ToListGuid(','),
+                request?.RoomsUids?.ToListGuid(','),
+                request?.TracksUids?.ToListGuid(','),
+                request?.PresentationFormatsUids?.ToListGuid(','),
+                request?.Page ?? 1,
+                request?.PageSize ?? 10);
+
+            return await Json(new ConferencesApiResponse
+            {
+                Status = ApiStatus.Success,
+                Error = null,
+                HasPreviousPage = collaboratorsApiDtos.HasPreviousPage,
+                HasNextPage = collaboratorsApiDtos.HasNextPage,
+                TotalItemCount = collaboratorsApiDtos.TotalItemCount,
+                PageCount = collaboratorsApiDtos.PageCount,
+                PageNumber = collaboratorsApiDtos.PageNumber,
+                PageSize = collaboratorsApiDtos.PageSize,
+                Conferences = collaboratorsApiDtos?.Select(c => new ConferencesApiListItem
+                {
+                    Uid = c.Conference.Uid,
+                    Event = new EditionEventBaseApiResponse
+                    {
+                        Uid = c.EditionEvent.Uid,
+                        Name = c.EditionEvent.Name.GetSeparatorTranslation(requestLanguage?.Code ?? defaultLanguage?.Code, Language.Separator)?.Trim()
+                    },
+                    Title = c.GetConferenceTitleDtoByLanguageCode(requestLanguage?.Code)?.ConferenceTitle?.Value?.Trim() ??
+                            c.GetConferenceTitleDtoByLanguageCode(defaultLanguage?.Code)?.ConferenceTitle?.Value?.Trim(),
+                    Synopsis = c.GetConferenceSynopsisDtoByLanguageCode(requestLanguage?.Code)?.ConferenceSynopsis?.Value?.Trim() ??
+                               c.GetConferenceSynopsisDtoByLanguageCode(defaultLanguage?.Code)?.ConferenceSynopsis?.Value?.Trim(),
+                    Date = c.Conference.StartDate.ToString("yyyy-MM-dd"),
+                    StartTime = c.Conference.StartDate.ToString("HH:mm"),
+                    EndTime = c.Conference.EndDate.ToString("HH:mm"),
+                    DurationMinutes = (int) ((c.Conference.EndDate - c.Conference.StartDate).TotalMinutes),
+                    Room = c.RoomDto != null ? new RoomBaseApiResponse
+                    {
+                        Uid = c.RoomDto.Room.Uid,
+                        Name = c.RoomDto.GetRoomNameByLanguageCode(requestLanguage?.Code ?? defaultLanguage?.Code)?.RoomName?.Value?.Trim()
+                    } : null,
+                    Tracks = c.ConferenceTrackDtos?.Select(ctd => new TrackBaseApiResponse
+                    {
+                        Uid = ctd.Track.Uid,
+                        Name = ctd.Track.Name?.GetSeparatorTranslation(requestLanguage?.Code ?? defaultLanguage?.Code, Language.Separator)?.Trim()
+                    })?.ToList(),
+                    PresentationFormats = c.ConferencePresentationFormatDtos?.Select(cpfd => new PresentationFormatBaseApiResponse
+                    {
+                        Uid = cpfd.PresentationFormat.Uid,
+                        Name = cpfd.PresentationFormat.Name?.GetSeparatorTranslation(requestLanguage?.Code ?? defaultLanguage?.Code, Language.Separator)?.Trim()
+                    })?.ToList()
+                })?.ToList()
+            });
+        }
 
         /// <summary>Filters for conferences.</summary>
         /// <returns></returns>
@@ -148,10 +181,13 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     EditionDates = Enumerable.Range(0, 1 + edition.EndDate.Subtract(edition.StartDate).Days)
                                              .Select(offset => edition.StartDate.AddDays(offset).ToString("yyyy-MM-dd"))
                                              .ToList(),
-                    EventsApiResponses = editionEvents?.Select(ee => new ConferencesFilterItemApiResponse
+                    EventsApiResponses = editionEvents?.Select(ee => new EditionEventApiResponse
                     {
                         Uid = ee.Uid,
-                        Name = ee.Name
+                        Name = ee.Name.Trim(),
+                        StartDate = ee.StartDate.ToString("yyyy-MM-dd"),
+                        EndDate = ee.EndDate.ToString("yyyy-MM-dd"),
+                        DurationDays = (int)((ee.EndDate - ee.StartDate).TotalDays) + 1
                     })?.OrderBy(c => c.Name)?.ToList(),
                     RoomsApiResponses = roomDtos?.Select(rd => new ConferencesFilterItemApiResponse
                     {

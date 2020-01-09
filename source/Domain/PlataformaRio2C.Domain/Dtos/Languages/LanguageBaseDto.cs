@@ -4,7 +4,7 @@
 // Created          : 08-08-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-16-2019
+// Last Modified On : 01-09-2020
 // ***********************************************************************
 // <copyright file="LanguageBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,6 +22,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public Guid Uid { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
+        public bool IsDefault { get; set; }
+        public bool IsActive { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="LanguageBaseDto"/> class.</summary>
         public LanguageBaseDto()

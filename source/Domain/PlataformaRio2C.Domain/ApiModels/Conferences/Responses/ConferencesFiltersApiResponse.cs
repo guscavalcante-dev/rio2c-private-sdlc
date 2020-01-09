@@ -4,7 +4,7 @@
 // Created          : 01-08-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-08-2020
+// Last Modified On : 01-09-2020
 // ***********************************************************************
 // <copyright file="ConferencesFiltersApiResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,7 +24,7 @@ namespace PlataformaRio2C.Domain.ApiModels
         public List<string> EditionDates { get; set; }
 
         [JsonProperty("events")]
-        public List<ConferencesFilterItemApiResponse> EventsApiResponses { get; set; }
+        public List<EditionEventApiResponse> EventsApiResponses { get; set; }
 
         [JsonProperty("rooms")]
         public List<ConferencesFilterItemApiResponse> RoomsApiResponses { get; set; }

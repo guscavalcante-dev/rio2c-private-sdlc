@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 01-09-2020
 // ***********************************************************************
 // <copyright file="ConferenceRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -107,6 +107,62 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds the by API filters.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="editionDates">The edition dates.</param>
+        /// <param name="editionEventsUids">The edition events uids.</param>
+        /// <param name="roomsUids">The rooms uids.</param>
+        /// <param name="tracksUids">The tracks uids.</param>
+        /// <param name="presentationFormatsUids">The presentation formats uids.</param>
+        /// <returns></returns>
+        internal static IQueryable<Conference> FindByApiFilters(this IQueryable<Conference> query, List<DateTime> editionDates, List<Guid> editionEventsUids, List<Guid> roomsUids, List<Guid> tracksUids, List<Guid> presentationFormatsUids)
+        {
+            if (editionDates?.Any() == true || editionEventsUids?.Any() == true || roomsUids?.Any() == true || tracksUids?.Any() == true || presentationFormatsUids?.Any() == true)
+            {
+                var outerWhere = PredicateBuilder.New<Conference>(false);
+                var innerEditionDatesWhere = PredicateBuilder.New<Conference>(true);
+                var innerEditionEventsUidsWhere = PredicateBuilder.New<Conference>(true);
+                var innerRoomsUidsWhere = PredicateBuilder.New<Conference>(true);
+                var innerTracksUidsWhere = PredicateBuilder.New<Conference>(true);
+                var innerPresentationFormatsUidsWhere = PredicateBuilder.New<Conference>(true);
+
+                if (editionDates?.Any() == true)
+                {
+                    innerEditionDatesWhere = innerEditionDatesWhere.Or(c => editionDates.Contains(DbFunctions.TruncateTime(c.StartDate).Value));
+                }
+
+                if (editionEventsUids?.Any() == true)
+                {
+                    innerEditionEventsUidsWhere = innerEditionEventsUidsWhere.Or(c => editionEventsUids.Contains(c.EditionEvent.Uid));
+                }
+
+                if (roomsUids?.Any() == true)
+                {
+                    innerRoomsUidsWhere = innerRoomsUidsWhere.Or(c => roomsUids.Contains(c.Room.Uid));
+                }
+
+                if (tracksUids?.Any() == true)
+                {
+                    innerTracksUidsWhere = innerTracksUidsWhere.Or(c => c.ConferenceTracks.Any(ct => tracksUids.Contains(ct.Track.Uid) && !ct.IsDeleted));
+                }
+
+                if (presentationFormatsUids?.Any() == true)
+                {
+                    innerPresentationFormatsUidsWhere = innerPresentationFormatsUidsWhere.Or(c => c.ConferencePresentationFormats.Any(cpf => presentationFormatsUids.Contains(cpf.PresentationFormat.Uid) && !cpf.IsDeleted));
+                }
+
+                outerWhere = outerWhere.And(innerEditionDatesWhere);
+                outerWhere = outerWhere.And(innerEditionEventsUidsWhere);
+                outerWhere = outerWhere.And(innerRoomsUidsWhere);
+                outerWhere = outerWhere.And(innerTracksUidsWhere);
+                outerWhere = outerWhere.And(innerPresentationFormatsUidsWhere);
+                query = query.Where(outerWhere);
+                //query = query.AsExpandable().Where(predicate);
+            }
+
+            return query;
+        }
+
         /// <summary>Determines whether [is not deleted].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
@@ -136,6 +192,31 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             page++;
 
+            // Page the list
+            var pagedList = await query.ToPagedListAsync(page, pageSize);
+            if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
+                pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
+
+            return pagedList;
+        }
+    }
+
+    #endregion
+
+    #region ConferenceDto IQueryable Extensions
+
+    /// <summary>
+    /// ConferenceDtoIQueryableExtensions
+    /// </summary>
+    internal static class ConferenceDtoIQueryableExtensions
+    {
+        /// <summary>Converts to listpagedasync.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        internal static async Task<IPagedList<ConferenceDto>> ToListPagedAsync(this IQueryable<ConferenceDto> query, int page, int pageSize)
+        {
             // Page the list
             var pagedList = await query.ToPagedListAsync(page, pageSize);
             if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
@@ -214,7 +295,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             {
                                 Conference = c,
                                 EditionEvent = c.EditionEvent,
-                                RoomDto = new RoomDto
+                                RoomDto = !c.RoomId.HasValue ? null : new RoomDto
                                 {
                                     Room = c.Room,
                                     RoomNameDtos = c.Room.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameDto
@@ -293,55 +374,55 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByEditionId(false, editionId);
 
             return await query
-                .Select(c => new ConferenceDto
-                {
-                    Conference = c,
-                    ConferenceParticipantDtos = c.ConferenceParticipants.Where(cp => !cp.IsDeleted).Select(cp => new ConferenceParticipantDto
-                    {
-                        ConferenceParticipant = cp,
-                        AttendeeCollaboratorDto = new AttendeeCollaboratorDto
-                        {
-                            AttendeeCollaborator = cp.AttendeeCollaborator,
-                            Collaborator = cp.AttendeeCollaborator.Collaborator,
-                            JobTitlesDtos = cp.AttendeeCollaborator.Collaborator.JobTitles.Where(d => !d.IsDeleted).Select(d => new CollaboratorJobTitleBaseDto
+                            .Select(c => new ConferenceDto
                             {
-                                Id = d.Id,
-                                Uid = d.Uid,
-                                Value = d.Value,
-                                LanguageDto = new LanguageBaseDto
+                                Conference = c,
+                                ConferenceParticipantDtos = c.ConferenceParticipants.Where(cp => !cp.IsDeleted).Select(cp => new ConferenceParticipantDto
                                 {
-                                    Id = d.Language.Id,
-                                    Uid = d.Language.Uid,
-                                    Name = d.Language.Name,
-                                    Code = d.Language.Code
-                                }
-                            }),
-                            AttendeeOrganizationsDtos = cp.AttendeeCollaborator.AttendeeOrganizationCollaborators
-                                .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted && !aoc.AttendeeOrganization.Organization.IsDeleted)
-                                .Select(aoc => new AttendeeOrganizationDto
-                                {
-                                    AttendeeOrganization = aoc.AttendeeOrganization,
-                                    Organization = aoc.AttendeeOrganization.Organization
+                                    ConferenceParticipant = cp,
+                                    AttendeeCollaboratorDto = new AttendeeCollaboratorDto
+                                    {
+                                        AttendeeCollaborator = cp.AttendeeCollaborator,
+                                        Collaborator = cp.AttendeeCollaborator.Collaborator,
+                                        JobTitlesDtos = cp.AttendeeCollaborator.Collaborator.JobTitles.Where(d => !d.IsDeleted).Select(d => new CollaboratorJobTitleBaseDto
+                                        {
+                                            Id = d.Id,
+                                            Uid = d.Uid,
+                                            Value = d.Value,
+                                            LanguageDto = new LanguageBaseDto
+                                            {
+                                                Id = d.Language.Id,
+                                                Uid = d.Language.Uid,
+                                                Name = d.Language.Name,
+                                                Code = d.Language.Code
+                                            }
+                                        }),
+                                        AttendeeOrganizationsDtos = cp.AttendeeCollaborator.AttendeeOrganizationCollaborators
+                                            .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted && !aoc.AttendeeOrganization.Organization.IsDeleted)
+                                            .Select(aoc => new AttendeeOrganizationDto
+                                            {
+                                                AttendeeOrganization = aoc.AttendeeOrganization,
+                                                Organization = aoc.AttendeeOrganization.Organization
+                                            })
+                                    },
+                                    ConferenceParticipantRoleDto = new ConferenceParticipantRoleDto
+                                    {
+                                        ConferenceParticipantRole = cp.ConferenceParticipantRole,
+                                        ConferenceParticipantRoleTitleDtos = cp.ConferenceParticipantRole.ConferenceParticipantRoleTitles.Where(cprt => !cprt.IsDeleted).Select(cprt => new ConferenceParticipantRoleTitleDto
+                                        {
+                                            ConferenceParticipantRoleTitle = cprt,
+                                            LanguageDto = new LanguageBaseDto
+                                            {
+                                                Id = cprt.Language.Id,
+                                                Uid = cprt.Language.Uid,
+                                                Name = cprt.Language.Name,
+                                                Code = cprt.Language.Code
+                                            }
+                                        })
+                                    }
                                 })
-                        },
-                        ConferenceParticipantRoleDto = new ConferenceParticipantRoleDto
-                        {
-                            ConferenceParticipantRole = cp.ConferenceParticipantRole,
-                            ConferenceParticipantRoleTitleDtos = cp.ConferenceParticipantRole.ConferenceParticipantRoleTitles.Where(cprt => !cprt.IsDeleted).Select(cprt => new ConferenceParticipantRoleTitleDto
-                            {
-                                ConferenceParticipantRoleTitle = cprt,
-                                LanguageDto = new LanguageBaseDto
-                                {
-                                    Id = cprt.Language.Id,
-                                    Uid = cprt.Language.Uid,
-                                    Name = cprt.Language.Name,
-                                    Code = cprt.Language.Code
-                                }
                             })
-                        }
-                    })
-                })
-                .FirstOrDefaultAsync();
+                            .FirstOrDefaultAsync();
         }
 
         /// <summary>Finds all by data table.</summary>
@@ -415,6 +496,92 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return await query.CountAsync();
         }
+
+        #region Api
+
+        /// <summary>Finds all public API paged.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="editionDates">The edition dates.</param>
+        /// <param name="editionEventsUids">The edition events uids.</param>
+        /// <param name="roomsUids">The rooms uids.</param>
+        /// <param name="tracksUids">The tracks uids.</param>
+        /// <param name="presentationFormatsUids">The presentation formats uids.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<ConferenceDto>> FindAllPublicApiPaged(
+            int editionId,
+            string keywords,
+            List<DateTime> editionDates,
+            List<Guid> editionEventsUids,
+            List<Guid> roomsUids,
+            List<Guid> tracksUids,
+            List<Guid> presentationFormatsUids,
+            int page,
+            int pageSize)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(false, editionId)
+                                .FindByApiFilters(editionDates, editionEventsUids, roomsUids, tracksUids, presentationFormatsUids);
+
+            return await query
+                            .Select(c => new ConferenceDto
+                            {
+                                Conference = c,
+                                EditionEvent = c.EditionEvent,
+                                RoomDto = !c.RoomId.HasValue ? null : new RoomDto
+                                {
+                                    Room = c.Room,
+                                    RoomNameDtos = c.Room.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameDto
+                                    {
+                                        RoomName = rn,
+                                        LanguageDto = new LanguageDto
+                                        {
+                                            Id = rn.Language.Id,
+                                            Uid = rn.Language.Uid,
+                                            Code = rn.Language.Code
+                                        }
+                                    })
+                                },
+                                ConferenceTitleDtos = c.ConferenceTitles.Where(ct => !ct.IsDeleted).Select(ct => new ConferenceTitleDto
+                                {
+                                    ConferenceTitle = ct,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = ct.Language.Id,
+                                        Uid = ct.Language.Uid,
+                                        Name = ct.Language.Name,
+                                        Code = ct.Language.Code
+                                    }
+                                }),
+                                ConferenceSynopsisDtos = c.ConferenceSynopses.Where(cs => !cs.IsDeleted).Select(cs => new ConferenceSynopsisDto
+                                {
+                                    ConferenceSynopsis = cs,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = cs.Language.Id,
+                                        Uid = cs.Language.Uid,
+                                        Name = cs.Language.Name,
+                                        Code = cs.Language.Code
+                                    }
+                                }),
+                                ConferenceTrackDtos = c.ConferenceTracks.Where(cvt => !cvt.IsDeleted).Select(cvt => new ConferenceTrackDto
+                                {
+                                    ConferenceTrack = cvt,
+                                    Track = cvt.Track
+                                }),
+                                ConferencePresentationFormatDtos = c.ConferencePresentationFormats.Where(cht => !cht.IsDeleted).Select(cht => new ConferencePresentationFormatDto
+                                {
+                                    ConferencePresentationFormat = cht,
+                                    PresentationFormat = cht.PresentationFormat
+                                })
+                            })
+                            .OrderBy(c => c.Conference.StartDate)
+                            .ToListPagedAsync(page, pageSize);
+        }
+
+        #endregion
 
         #region Old Methods
 

@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-08-2020
+// Last Modified On : 01-09-2020
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -230,6 +230,32 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                 if (Guid.TryParse(split, out Guid guid))
                 {
                     list.Add(guid);
+                }
+            }
+
+            return list;
+        }
+
+        /// <summary>Converts to listdatetime.</summary>
+        /// <param name="s">The s.</param>
+        /// <param name="separator">The separator.</param>
+        /// <param name="dateFormat">The date format.</param>
+        /// <returns></returns>
+        public static List<DateTime> ToListDateTime(this string s, char separator, string dateFormat)
+        {
+            var list = new List<DateTime>();
+
+            var splitted = s?.Split(separator);
+            if (splitted == null || splitted.Length <= 0)
+            {
+                return list;
+            }
+
+            foreach (var split in splitted)
+            {
+                if (DateTime.TryParseExact(split, dateFormat, null, DateTimeStyles.None, out DateTime dateTime))
+                {
+                    list.Add(dateTime);
                 }
             }
 

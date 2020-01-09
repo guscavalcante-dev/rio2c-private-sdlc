@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-16-2019
+// Last Modified On : 01-09-2020
 // ***********************************************************************
 // <copyright file="ILanguageRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,6 +21,6 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>ILanguageRepository</summary>
     public interface ILanguageRepository : IRepository<Language>
     {
-        Task<List<LanguageDto>> FindAllDtosAsync();
+        Task<List<LanguageDto>> FindAllDtosAsync(bool? showInactive = false);
     }    
 }

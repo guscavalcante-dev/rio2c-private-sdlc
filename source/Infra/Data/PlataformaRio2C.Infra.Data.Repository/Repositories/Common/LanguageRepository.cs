@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified On : 01-09-2020
 // ***********************************************************************
 // <copyright file="LanguageRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,12 +30,26 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     /// </summary>
     internal static class LanguageIQueryableExtensions
     {
+        /// <summary>Finds the by is active.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="showInactive">if set to <c>true</c> [show inactive].</param>
+        /// <returns></returns>
+        internal static IQueryable<Language> FindByIsActive(this IQueryable<Language> query, bool showInactive)
+        {
+            if (!showInactive)
+            {
+                query = query.Where(l => l.IsActive);
+            }
+
+            return query;
+        }
+
         /// <summary>Determines whether [is not deleted].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
         internal static IQueryable<Language> IsNotDeleted(this IQueryable<Language> query)
         {
-            query = query.Where(h => !h.IsDeleted);
+            query = query.Where(l => !l.IsDeleted);
 
             return query;
         }
@@ -105,9 +119,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         /// <summary>Finds all asynchronous.</summary>
         /// <returns></returns>
-        public async Task<List<LanguageDto>> FindAllDtosAsync()
+        public async Task<List<LanguageDto>> FindAllDtosAsync(bool? showInactive = false)
         {
             var query = this.GetBaseQuery()
+                                .FindByIsActive(showInactive.Value)
                                 .Order();
 
             return await query.Select(l => new LanguageDto
@@ -116,6 +131,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 Uid = l.Uid,
                 Name = l.Name,
                 Code = l.Code,
+                IsDefault = l.IsDefault,
+                IsActive = l.IsActive,
                 CreateDate = l.CreateDate,
                 CreateUserId = l.CreateUserId,
                 UpdateDate = l.UpdateDate,
