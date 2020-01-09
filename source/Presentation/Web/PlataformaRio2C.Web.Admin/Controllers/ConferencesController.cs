@@ -4,7 +4,7 @@
 // Created          : 12-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-08-2020
+// Last Modified On : 01-09-2020
 // ***********************************************************************
 // <copyright file="ConferencesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -420,7 +420,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
-                cmd.UpdateDropdownProperties(
+                cmd.UpdateDropdowns(
                     await this.trackRepo.FindAllByEditionIdAsync(this.EditionDto.Id),
                     await this.presentationFormatRepo.FindAllByEditionIdAsync(this.EditionDto.Id));
 
@@ -734,9 +734,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         public async Task<ActionResult> ShowCreateModal()
         {
             var cmd = new CreateConference(
-                null,
                 await this.editionEventRepo.FindAllByEditionIdAsync(this.EditionDto.Id),
-                await this.languageRepo.FindAllDtosAsync());
+                await this.languageRepo.FindAllDtosAsync(),
+                await this.roomRepo.FindAllDtoByEditionIdAsync(this.EditionDto.Id),
+                await this.trackRepo.FindAllByEditionIdAsync(this.EditionDto.Id),
+                await this.presentationFormatRepo.FindAllByEditionIdAsync(this.EditionDto.Id),
+                this.UserInterfaceLanguage);
 
             return Json(new
             {
@@ -784,7 +787,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd.UpdateDropdowns(
-                    await this.editionEventRepo.FindAllByEditionIdAsync(this.EditionDto.Id));
+                    await this.editionEventRepo.FindAllByEditionIdAsync(this.EditionDto.Id),
+                    await this.roomRepo.FindAllDtoByEditionIdAsync(this.EditionDto.Id),
+                    await this.trackRepo.FindAllByEditionIdAsync(this.EditionDto.Id),
+                    await this.presentationFormatRepo.FindAllByEditionIdAsync(this.EditionDto.Id),
+                    this.UserInterfaceLanguage);
 
                 return Json(new
                 {

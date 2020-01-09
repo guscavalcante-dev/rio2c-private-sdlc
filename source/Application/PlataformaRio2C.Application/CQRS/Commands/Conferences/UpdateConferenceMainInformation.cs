@@ -4,7 +4,7 @@
 // Created          : 01-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-06-2020
+// Last Modified On : 01-09-2020
 // ***********************************************************************
 // <copyright file="UpdateConferenceMainInformation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,35 +22,53 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>UpdateConferenceMainInformation</summary>
-    public class UpdateConferenceMainInformation : CreateConference
+    public class UpdateConferenceMainInformation : BaseCommand
     {
         public Guid ConferenceUid { get; set; }
 
+        [Display(Name = "Event", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public Guid? EditionEventUid { get; set; }
+
+        [Display(Name = "Date", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public DateTime? Date { get; set; }
+
+        [Display(Name = "StartTime", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public string StartTime { get; set; }
+
+        [Display(Name = "EndTime", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public string EndTime { get; set; }
+
         [Display(Name = "Room", ResourceType = typeof(Labels))]
-        //[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? RoomUid { get; set; }
 
+        public List<ConferenceTitleBaseCommand> Titles { get; set; }
         public List<ConferenceSynopsisBaseCommand> Synopsis { get; set; }
 
+        public DateTime? StartDate { get; private set; }
+        public DateTime? EndDate { get; private set; }
+        public List<EditionEvent> EditionEvents { get; private set; }
         public List<RoomJsonDto> Rooms { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateConferenceMainInformation"/> class.</summary>
-        /// <param name="conferenceDto">The conference dto.</param>
-        /// <param name="editionEvents">The edition events.</param>
-        /// <param name="languagesDtos">The languages dtos.</param>
-        /// <param name="roomDtos">The room dtos.</param>
-        /// <param name="userInterfaceLanguage">The user interface language.</param>
         public UpdateConferenceMainInformation(
             ConferenceDto conferenceDto,
             List<EditionEvent> editionEvents,
             List<LanguageDto> languagesDtos,
             List<RoomDto> roomDtos,
             string userInterfaceLanguage)
-            : base(conferenceDto, editionEvents, languagesDtos)
         {
-            this.ConferenceUid = conferenceDto?.Conference?.Uid ?? Guid.Empty;
+            this.EditionEventUid = conferenceDto?.EditionEvent?.Uid;
+            this.Date = conferenceDto?.Conference?.StartDate.Date;
+            this.StartTime = conferenceDto?.Conference?.StartDate.ToShortTimeString();
+            this.EndTime = conferenceDto?.Conference?.EndDate.ToShortTimeString();
             this.RoomUid = conferenceDto?.RoomDto?.Room?.Uid;
+            this.UpdateTitles(conferenceDto, languagesDtos);
             this.UpdateSynopsis(conferenceDto, languagesDtos);
+
             this.UpdateDropdowns(editionEvents, roomDtos, userInterfaceLanguage);
         }
 
@@ -59,16 +77,20 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
         }
 
-        /// <summary>Updates the dropdowns.</summary>
-        /// <param name="editionEvents">The edition events.</param>
-        /// <param name="roomDtos">The room dtos.</param>
-        /// <param name="userInterfaceLanguage">The user interface language.</param>
         public void UpdateDropdowns(
             List<EditionEvent> editionEvents,
             List<RoomDto> roomDtos,
             string userInterfaceLanguage)
         {
-            this.UpdateDropdowns(editionEvents);
+            this.EditionEvents = editionEvents;
+
+            if (this.EditionEventUid.HasValue)
+            {
+                var editionEvent = editionEvents.FirstOrDefault(ev => ev.Uid == this.EditionEventUid.Value);
+                this.StartDate = editionEvent?.StartDate;
+                this.EndDate = editionEvent?.EndDate;
+            }
+
             this.Rooms = roomDtos?.Select(r => new RoomJsonDto
             {
                 Id = r.Room.Id,
@@ -78,6 +100,20 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         }
 
         #region Private Methods
+
+        /// <summary>Updates the titles.</summary>
+        /// <param name="conferenceDto">The conference dto.</param>
+        /// <param name="languagesDtos">The languages dtos.</param>
+        private void UpdateTitles(ConferenceDto conferenceDto, List<LanguageDto> languagesDtos)
+        {
+            this.Titles = new List<ConferenceTitleBaseCommand>();
+            foreach (var languageDto in languagesDtos)
+            {
+                var conferenceTitle = conferenceDto?.ConferenceTitleDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
+                this.Titles.Add(conferenceTitle != null ? new ConferenceTitleBaseCommand(conferenceTitle) :
+                                                          new ConferenceTitleBaseCommand(languageDto));
+            }
+        }
 
         /// <summary>Updates the synopsis.</summary>
         /// <param name="conferenceDto">The conference dto.</param>

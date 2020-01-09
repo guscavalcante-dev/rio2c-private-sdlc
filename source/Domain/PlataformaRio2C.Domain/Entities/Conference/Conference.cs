@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 01-09-2020
 // ***********************************************************************
 // <copyright file="Conference.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -43,7 +43,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="date">The date.</param>
         /// <param name="startTime">The start time.</param>
         /// <param name="endTime">The end time.</param>
+        /// <param name="room">The room.</param>
         /// <param name="conferenceTitles">The conference titles.</param>
+        /// <param name="conferenceSynopses">The conference synopses.</param>
+        /// <param name="tracks">The tracks.</param>
+        /// <param name="presentationFormats">The presentation formats.</param>
         /// <param name="userId">The user identifier.</param>
         public Conference(
             Guid conferenceUid,
@@ -51,7 +55,11 @@ namespace PlataformaRio2C.Domain.Entities
             DateTime date,
             string startTime,
             string endTime,
+            Room room,
             List<ConferenceTitle> conferenceTitles,
+            List<ConferenceSynopsis> conferenceSynopses,
+            List<Track> tracks,
+            List<PresentationFormat> presentationFormats,
             int userId)
         {
             //this.Uid = conferenceUid;
@@ -59,7 +67,12 @@ namespace PlataformaRio2C.Domain.Entities
             this.EditionEvent = editionEvent;
             this.StartDate = date.JoinDateAndTime(startTime, true);
             this.EndDate = date.JoinDateAndTime(endTime, true);
+            this.RoomId = room?.Id;
+            this.Room = room;
             this.SynchronizeConferenceTitles(conferenceTitles, userId);
+            this.SynchronizeConferenceSynopses(conferenceSynopses, userId);
+            this.SynchronizeConferenceTracks(tracks, userId);
+            this.SynchronizeConferencePresentationFormats(presentationFormats, userId);
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
@@ -102,6 +115,20 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
+        }
+
+        /// <summary>Updates the tracks and presentation formats.</summary>
+        /// <param name="tracks">The tracks.</param>
+        /// <param name="presentationFormats">The presentation formats.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateTracksAndPresentationFormats(List<Track> tracks, List<PresentationFormat> presentationFormats, int userId)
+        {
+            this.SynchronizeConferenceTracks(tracks, userId);
+            this.SynchronizeConferencePresentationFormats(presentationFormats, userId);
+
+            this.IsDeleted = false;
+            this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.Now;
         }
 
         /// <summary>Deletes the specified user identifier.</summary>
@@ -237,22 +264,6 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        #region Tracks and Presentation Formats
-
-        /// <summary>Updates the tracks and presentation formats.</summary>
-        /// <param name="tracks">The tracks.</param>
-        /// <param name="presentationFormats">The presentation formats.</param>
-        /// <param name="userId">The user identifier.</param>
-        public void UpdateTracksAndPresentationFormats(List<Track> tracks, List<PresentationFormat> presentationFormats, int userId)
-        {
-            this.SynchronizeConferenceTracks(tracks, userId);
-            this.SynchronizeConferencePresentationFormats(presentationFormats, userId);
-
-            this.IsDeleted = false;
-            this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.Now;
-        }
-
         #region Vertical
 
         private void SynchronizeConferenceTracks(List<Track> tracks, int userId)
@@ -362,8 +373,6 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        #endregion
-
         #region Conference Participants
 
         /// <summary>Creates the conference participant.</summary>
@@ -436,6 +445,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.ValidateEditionEvent();
             this.ValidateDates();
+            this.ValidateRoom();
             this.ValidateConferenceTitles();
             this.ValidateConferenceSynopses();
             this.ValidateConferenceParticipants();
@@ -448,7 +458,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             if (this.EditionEvent == null)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Event), new string[] { "Event" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Event), new string[] { "EditionEventUid" }));
             }
         }
 
@@ -464,6 +474,15 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.StartDate > this.EndDate)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyGreaterThanProperty, Labels.EndTime, Labels.StartTime), new string[] { "EndTime" }));
+            }
+        }
+
+        /// <summary>Validates the room.</summary>
+        public void ValidateRoom()
+        {
+            if (this.Room == null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Room), new string[] { "RoomUid" }));
             }
         }
 

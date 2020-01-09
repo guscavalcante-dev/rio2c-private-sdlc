@@ -4,7 +4,7 @@
 // Created          : 12-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-04-2020
+// Last Modified On : 01-09-2020
 // ***********************************************************************
 // <copyright file="CreateConferenceCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,6 +29,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     {
         private readonly IEditionEventRepository editionEventRepo;
         private readonly ILanguageRepository languageRepo;
+        private readonly IRoomRepository roomRepo;
+        private readonly ITrackRepository trackRepo;
+        private readonly IPresentationFormatRepository presentationFormatRepo;
 
         /// <summary>Initializes a new instance of the <see cref="CreateConferenceCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
@@ -35,16 +39,25 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="conferenceRepository">The conference repository.</param>
         /// <param name="editionEventRepository">The edition event repository.</param>
         /// <param name="languageRepository">The language repository.</param>
+        /// <param name="roomRepository">The room repository.</param>
+        /// <param name="trackRepository">The track repository.</param>
+        /// <param name="presentationFormatRepository">The presentation format repository.</param>
         public CreateConferenceCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IConferenceRepository conferenceRepository,
             IEditionEventRepository editionEventRepository,
-            ILanguageRepository languageRepository)
+            ILanguageRepository languageRepository,
+            IRoomRepository roomRepository,
+            ITrackRepository trackRepository,
+            IPresentationFormatRepository presentationFormatRepository)
             : base(eventBus, uow, conferenceRepository)
         {
             this.editionEventRepo = editionEventRepository;
             this.languageRepo = languageRepository;
+            this.roomRepo = roomRepository;
+            this.trackRepo = trackRepository;
+            this.presentationFormatRepo = presentationFormatRepository;
         }
 
         /// <summary>Handles the specified create conference.</summary>
@@ -65,7 +78,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.Date.Value,
                 cmd.StartTime,
                 cmd.EndTime,
+                cmd.RoomUid.HasValue ? await this.roomRepo.FindByUidAsync(cmd.RoomUid.Value) : null,
                 cmd.Titles?.Select(d => new ConferenceTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
+                cmd.Synopsis?.Select(d => new ConferenceSynopsis(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
+                cmd.TrackUids?.Any() == true ? await this.trackRepo.FindAllByUidsAsync(cmd.TrackUids) : new List<Track>(),
+                cmd.PresentationFormatUids?.Any() == true ? await this.presentationFormatRepo.FindAllByUidsAsync(cmd.PresentationFormatUids) : new List<PresentationFormat>(),
                 cmd.UserId);
             if (!conference.IsValid())
             {

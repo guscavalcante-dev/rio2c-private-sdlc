@@ -1,5 +1,57 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateConferenceMainInformation
-@Html.Partial("Modals/_CreateForm", Model)
+﻿@using PlataformaRio2C.Domain.Dtos
+@model PlataformaRio2C.Application.CQRS.Commands.UpdateConferenceMainInformation
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+}
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EditionEventUid, new { @class = "control-label" })
+        <select name="@Html.NameFor(m => m.EditionEventUid)" id="@Html.IdFor(m => m.EditionEventUid)" @Html.GetUnobtrusiveValidationAttributesFor(m => m.EditionEventUid) class="form-control enable-select2">
+            <option value="" data-start-date="" data-end-date="">@(Labels.Select)...</option>
+            @foreach (var editionEvent in Model.EditionEvents)
+            {
+                <option value="@editionEvent.Uid" @(editionEvent.Uid == Model.EditionEventUid ? "selected" : "") data-start-date="@editionEvent.StartDate.ToShortDateString()" data-end-date="@editionEvent.EndDate.ToShortDateString()">
+                    @editionEvent.Name
+                </option>
+            }
+        </select>
+        @Html.ValidationMessageFor(m => m.EditionEventUid, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Date, new { @class = "control-label" })
+        @Html.TextBox("Date", Model.Date?.ToShortDateString(), new { @class = "form-control enable-datepicker", @readonly = "readonly", data_date_start_date = editionDto?.StartDate.ToShortDateString(), data_date_end_date = editionDto?.EndDate.ToShortDateString() })
+        @if (Model.StartDate.HasValue && Model.EndDate.HasValue)
+        {
+            <span id="data-period-container" class="form-text text-muted">@string.Format(Messages.DateBetweenDates, Model.EndDate.Value.ToShortDateString(), Model.StartDate.Value.ToShortDateString())</span>
+        }
+        else
+        {
+            <span id="data-period-container" class="form-text text-muted d-none"></span>
+        }
+        @Html.ValidationMessageFor(m => m.Date, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.StartTime, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.StartTime, new { @class = "form-control enable-timepicker", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.StartTime, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EndTime, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.EndTime, new { @class = "form-control enable-timepicker", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.EndTime, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="kt-section pt-2">
+    <h3 class="kt-section__title mb-0">@Labels.Titles</h3>
+    @Html.ValidationMessage("Titles", new { @class = "text-danger" })
+    <div class="kt-section__content mt-3">
+        @Html.EditorFor(m => m.Titles)
+    </div>
+</div>
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.RoomUid, new { @class = "control-label" })

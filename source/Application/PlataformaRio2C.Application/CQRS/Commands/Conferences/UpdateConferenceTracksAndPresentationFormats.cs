@@ -4,7 +4,7 @@
 // Created          : 01-04-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 01-09-2020
 // ***********************************************************************
 // <copyright file="UpdateConferenceTracksAndPresentationFormats.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -43,7 +43,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.TrackUids = conferenceDto?.ConferenceTrackDtos?.Select(cvtd => cvtd.Track.Uid)?.ToList();
             this.PresentationFormatUids = conferenceDto?.ConferencePresentationFormatDtos?.Select(chtd => chtd.PresentationFormat.Uid)?.ToList();
 
-            this.UpdateDropdownProperties(tracks, presentationFormats);
+            this.UpdateDropdowns(tracks, presentationFormats);
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateConferenceTracksAndPresentationFormats"/> class.</summary>
@@ -51,10 +51,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
         }
 
-        /// <summary>Updates the dropdown properties.</summary>
+        /// <summary>Updates the dropdowns.</summary>
         /// <param name="tracks">The tracks.</param>
         /// <param name="presentationFormats">The presentation formats.</param>
-        public void UpdateDropdownProperties(
+        public void UpdateDropdowns(
             List<Track> tracks,
             List<PresentationFormat> presentationFormats)
         {

@@ -6,16 +6,20 @@
         @if (Model.Tracks?.Any() == true)
         {
             <div class="kt-checkbox-list">
-                @foreach (var track in Model.Tracks?.OrderBy(vt => vt.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')))
-                {
-                    <label class="kt-checkbox">
-                        <input type="checkbox"
-                               name="TrackUids"
-                               value="@track.Uid"
-                               @if (Model.TrackUids?.Contains(track.Uid) == true) { <text> checked </text> } /> @track.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
-                        <span></span>
-                    </label>
-                }
+                <div class="row">
+                    @foreach (var track in Model.Tracks?.OrderBy(vt => vt.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')))
+                    {
+                        <div class="col-md-6">
+                            <label class="kt-checkbox">
+                                <input type="checkbox"
+                                       name="TrackUids"
+                                       value="@track.Uid"
+                                       @if (Model.TrackUids?.Contains(track.Uid) == true) { <text> checked </text> } /> @track.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                                <span></span>
+                            </label>
+                        </div>
+                    }
+                </div>
             </div>
         }
         else
@@ -31,19 +35,20 @@
         @if (Model.PresentationFormats?.Any() == true)
         {
             <div class="kt-checkbox-list">
-                @foreach (var presentationFormat in Model.PresentationFormats?.OrderBy(ht => ht.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')))
-                {
-                    <label class="kt-checkbox">
-                        <input type="checkbox"
-                               name="PresentationFormatUids"
-                               value="@presentationFormat.Uid"
-                               @if (Model.PresentationFormatUids?.Contains(presentationFormat.Uid) == true)
-                               {
-                                   <text> checked </text>
-                               }/> @presentationFormat.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
-                        <span></span>
-                    </label>
-                }
+                <div class="row">
+                    @foreach (var presentationFormat in Model.PresentationFormats?.OrderBy(ht => ht.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')))
+                    {
+                        <div class="col-md-6">
+                            <label class="kt-checkbox">
+                                <input type="checkbox"
+                                       name="PresentationFormatUids"
+                                       value="@presentationFormat.Uid"
+                                       @if (Model.PresentationFormatUids?.Contains(presentationFormat.Uid) == true) { <text> checked </text> } /> @presentationFormat.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                                <span></span>
+                            </label>
+                        </div>
+                    }
+                </div>
             </div>
         }
         else
