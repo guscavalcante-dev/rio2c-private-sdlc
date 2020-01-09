@@ -136,7 +136,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     Tracks = c.ConferenceTrackDtos?.Select(ctd => new TrackBaseApiResponse
                     {
                         Uid = ctd.Track.Uid,
-                        Name = ctd.Track.Name?.GetSeparatorTranslation(requestLanguage?.Code ?? defaultLanguage?.Code, Language.Separator)?.Trim()
+                        Name = ctd.Track.Name?.GetSeparatorTranslation(requestLanguage?.Code ?? defaultLanguage?.Code, Language.Separator)?.Trim(),
+                        Color = ctd.Track.Color
                     })?.ToList(),
                     PresentationFormats = c.ConferencePresentationFormatDtos?.Select(cpfd => new PresentationFormatBaseApiResponse
                     {
@@ -194,10 +195,11 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                         Uid = rd.Room.Uid,
                         Name = rd.GetRoomNameByLanguageCode(request?.Culture)?.RoomName?.Value
                     })?.OrderBy(c => c.Name)?.ToList(),
-                    TracksApiResponses = tracks?.Select(t => new ConferencesFilterItemApiResponse
+                    TracksApiResponses = tracks?.Select(t => new TrackBaseApiResponse
                     {
                         Uid = t.Uid,
-                        Name = t.Name.GetSeparatorTranslation(request?.Culture, Language.Separator)
+                        Name = t.Name.GetSeparatorTranslation(request?.Culture, Language.Separator),
+                        Color = t.Color
                     })?.OrderBy(c => c.Name)?.ToList(),
                     PresentationFormatsApiResponses = presentationFormats?.Select(ta => new ConferencesFilterItemApiResponse
                     {

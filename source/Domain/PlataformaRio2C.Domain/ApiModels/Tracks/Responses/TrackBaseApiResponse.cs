@@ -24,5 +24,8 @@ namespace PlataformaRio2C.Domain.ApiModels
 
         [JsonProperty("name", Order = 200)]
         public string Name { get; set; }
+
+        [JsonProperty("color", Order = 300)]
+        public string Color { get; set; }
     }
 }

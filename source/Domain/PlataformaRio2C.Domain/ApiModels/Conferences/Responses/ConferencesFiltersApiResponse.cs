@@ -30,7 +30,7 @@ namespace PlataformaRio2C.Domain.ApiModels
         public List<ConferencesFilterItemApiResponse> RoomsApiResponses { get; set; }
 
         [JsonProperty("tracks")]
-        public List<ConferencesFilterItemApiResponse> TracksApiResponses { get; set; }
+        public List<TrackBaseApiResponse> TracksApiResponses { get; set; }
 
         [JsonProperty("presentationFormats")]
         public List<ConferencesFilterItemApiResponse> PresentationFormatsApiResponses { get; set; }
