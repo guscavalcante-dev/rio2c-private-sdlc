@@ -79,6 +79,7 @@
     <Compile Include="ApiModels\ApiBaseRequest.cs" />
     <Compile Include="ApiModels\Conferences\Requests\ConferencesFiltersApiRequest.cs" />
     <Compile Include="ApiModels\Conferences\Requests\ConferencesApiRequest.cs" />
+    <Compile Include="ApiModels\Conferences\Requests\ConferenceApiRequest.cs" />
     <Compile Include="ApiModels\Conferences\Responses\ConferenceApiResponse.cs" />
     <Compile Include="ApiModels\Conferences\Responses\ConferencesFiltersApiResponse.cs" />
     <Compile Include="ApiModels\Conferences\Responses\ConferencesApiResponse.cs" />

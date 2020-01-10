@@ -4,7 +4,7 @@
 // Created          : 01-08-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-09-2020
+// Last Modified On : 01-10-2020
 // ***********************************************************************
 // <copyright file="ConferencesApiResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,31 +27,31 @@ namespace PlataformaRio2C.Domain.ApiModels
     /// <summary>ConferencesApiListItem</summary>
     public class ConferencesApiListItem
     {
-        [JsonProperty("uid", Order = 301)]
+        [JsonProperty("uid", Order = 101)]
         public Guid Uid { get; set; }
 
-        [JsonProperty("event", Order = 302)]
+        [JsonProperty("event", Order = 102)]
         public EditionEventBaseApiResponse Event { get; set; }
 
-        [JsonProperty("title", Order = 303)]
+        [JsonProperty("title", Order = 103)]
         public string Title { get; set; }
 
-        [JsonProperty("synopsis", Order = 304)]
+        [JsonProperty("synopsis", Order = 104)]
         public string Synopsis { get; set; }
 
-        [JsonProperty("room", Order = 305)]
+        [JsonProperty("room", Order = 105)]
         public RoomBaseApiResponse Room { get; set; }
 
-        [JsonProperty("date", Order = 306)]
+        [JsonProperty("date", Order = 106)]
         public string Date { get; set; }
 
-        [JsonProperty("startTime", Order = 307)]
+        [JsonProperty("startTime", Order = 107)]
         public string StartTime { get; set; }
 
-        [JsonProperty("endTime", Order = 308)]
+        [JsonProperty("endTime", Order = 108)]
         public string EndTime { get; set; }
 
-        [JsonProperty("durationMinutes", Order = 309)]
+        [JsonProperty("durationMinutes", Order = 109)]
         public int DurationMinutes { get; set; }
 
         [JsonProperty("tracks", Order = 701)]

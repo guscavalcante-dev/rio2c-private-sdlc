@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-09-2020
+// Last Modified On : 01-10-2020
 // ***********************************************************************
 // <copyright file="ConferenceRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -579,6 +579,128 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             })
                             .OrderBy(c => c.Conference.StartDate)
                             .ToListPagedAsync(page, pageSize);
+        }
+
+        /// <summary>Finds the API dto by uid asynchronous.</summary>
+        /// <param name="conferenceUid">The conference uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<ConferenceDto> FindApiDtoByUidAsync(Guid conferenceUid, int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(conferenceUid)
+                                .FindByEditionId(false, editionId);
+
+            return await query
+                            .Select(c => new ConferenceDto
+                            {
+                                Conference = c,
+                                EditionEvent = c.EditionEvent,
+                                RoomDto = new RoomDto
+                                {
+                                    Room = c.Room,
+                                    RoomNameDtos = c.Room.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameDto
+                                    {
+                                        RoomName = rn,
+                                        LanguageDto = new LanguageDto
+                                        {
+                                            Id = rn.Language.Id,
+                                            Uid = rn.Language.Uid,
+                                            Code = rn.Language.Code
+                                        }
+                                    })
+                                },
+                                ConferenceTitleDtos = c.ConferenceTitles.Where(ct => !ct.IsDeleted).Select(ct => new ConferenceTitleDto
+                                {
+                                    ConferenceTitle = ct,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = ct.Language.Id,
+                                        Uid = ct.Language.Uid,
+                                        Name = ct.Language.Name,
+                                        Code = ct.Language.Code
+                                    }
+                                }),
+                                ConferenceSynopsisDtos = c.ConferenceSynopses.Where(cs => !cs.IsDeleted).Select(cs => new ConferenceSynopsisDto
+                                {
+                                    ConferenceSynopsis = cs,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = cs.Language.Id,
+                                        Uid = cs.Language.Uid,
+                                        Name = cs.Language.Name,
+                                        Code = cs.Language.Code
+                                    }
+                                }),
+                                ConferenceTrackDtos = c.ConferenceTracks.Where(cvt => !cvt.IsDeleted).Select(cvt => new ConferenceTrackDto
+                                {
+                                    ConferenceTrack = cvt,
+                                    Track = cvt.Track
+                                }),
+                                ConferencePresentationFormatDtos = c.ConferencePresentationFormats.Where(cht => !cht.IsDeleted).Select(cht => new ConferencePresentationFormatDto
+                                {
+                                    ConferencePresentationFormat = cht,
+                                    PresentationFormat = cht.PresentationFormat
+                                }),
+                                ConferenceParticipantDtos = c.ConferenceParticipants.Where(cp => !cp.IsDeleted).Select(cp => new ConferenceParticipantDto
+                                {
+                                    ConferenceParticipant = cp,
+                                    AttendeeCollaboratorDto = new AttendeeCollaboratorDto
+                                    {
+                                        AttendeeCollaborator = cp.AttendeeCollaborator,
+                                        Collaborator = cp.AttendeeCollaborator.Collaborator,
+                                        JobTitlesDtos = cp.AttendeeCollaborator.Collaborator.JobTitles.Where(d => !d.IsDeleted).Select(d => new CollaboratorJobTitleBaseDto
+                                        {
+                                            Id = d.Id,
+                                            Uid = d.Uid,
+                                            Value = d.Value,
+                                            LanguageDto = new LanguageBaseDto
+                                            {
+                                                Id = d.Language.Id,
+                                                Uid = d.Language.Uid,
+                                                Name = d.Language.Name,
+                                                Code = d.Language.Code
+                                            }
+                                        }),
+                                        MiniBiosDtos = cp.AttendeeCollaborator.Collaborator.MiniBios.Where(d => !d.IsDeleted).Select(d => new CollaboratorMiniBioBaseDto
+                                        {
+                                            Id = d.Id,
+                                            Uid = d.Uid,
+                                            Value = d.Value,
+                                            LanguageDto = new LanguageBaseDto
+                                            {
+                                                Id = d.Language.Id,
+                                                Uid = d.Language.Uid,
+                                                Name = d.Language.Name,
+                                                Code = d.Language.Code
+                                            }
+                                        }),
+                                        AttendeeOrganizationsDtos = cp.AttendeeCollaborator.AttendeeOrganizationCollaborators
+                                            .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted && !aoc.AttendeeOrganization.Organization.IsDeleted)
+                                            .Select(aoc => new AttendeeOrganizationDto
+                                            {
+                                                AttendeeOrganization = aoc.AttendeeOrganization,
+                                                Organization = aoc.AttendeeOrganization.Organization
+                                            })
+                                    },
+                                    ConferenceParticipantRoleDto = new ConferenceParticipantRoleDto
+                                    {
+                                        ConferenceParticipantRole = cp.ConferenceParticipantRole,
+                                        ConferenceParticipantRoleTitleDtos = cp.ConferenceParticipantRole.ConferenceParticipantRoleTitles.Where(cprt => !cprt.IsDeleted).Select(cprt => new ConferenceParticipantRoleTitleDto
+                                        {
+                                            ConferenceParticipantRoleTitle = cprt,
+                                            LanguageDto = new LanguageBaseDto
+                                            {
+                                                Id = cprt.Language.Id,
+                                                Uid = cprt.Language.Uid,
+                                                Name = cprt.Language.Name,
+                                                Code = cprt.Language.Code
+                                            }
+                                        })
+                                    }
+                                })
+                            })
+                            .FirstOrDefaultAsync();
         }
 
         #endregion

@@ -35,6 +35,8 @@ UPDATE [dbo].[Tracks] SET Color = '#E5007D' WHERE [Uid] = 'aeea9445-c123-425f-b1
 GO
 UPDATE [dbo].[Tracks] SET Color = '#008542' WHERE [Uid] = '32a90fdb-8362-41ba-a24f-a797e4c1e6ad'
 GO
+UPDATE [dbo].[Tracks] SET Color = '#5578eb' WHERE Color IS NULL
+go
 
 ALTER TABLE "Tracks"
 ALTER COLUMN Color  varchar(10)  NULL
