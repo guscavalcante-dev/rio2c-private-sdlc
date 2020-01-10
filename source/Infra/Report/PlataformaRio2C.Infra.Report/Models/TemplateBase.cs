@@ -187,6 +187,7 @@ namespace PlataformaRio2C.Infra.Report.Models
         {
             var tagLabel = new Chunk(label, fontLabel);
             var tagLabelSize = tagLabel.GetWidthPoint() <= 60f ? tagLabel.GetWidthPoint() : tagLabel.GetWidthPoint() - 25;
+            
             var rootTable = new PdfPTable(new float[] { tagLabelSize, (PageSize.A4.Width / 2) - (tagLabelSize) });
             rootTable.WidthPercentage = defaultTable.WidthPercentage;
             rootTable.DefaultCell.VerticalAlignment = defaultTable.DefaultCell.VerticalAlignment;
@@ -195,7 +196,12 @@ namespace PlataformaRio2C.Infra.Report.Models
 
             var availableWidth = (PageSize.A4.Width / 2) - (tagLabelSize);
 
-            rootTable.AddCell(new Paragraph(tagLabel));
+            var paragLabel = new Paragraph(tagLabel);
+            rootTable.DefaultCell.PaddingTop = 10;
+
+            rootTable.AddCell(new Paragraph(paragLabel));
+
+            rootTable.DefaultCell.PaddingTop = 2;
 
             var rows = new List<List<Chunk>>();
             var row = new List<Chunk>();

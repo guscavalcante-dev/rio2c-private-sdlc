@@ -128,7 +128,7 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             var tableGenre = new PdfPTable(new float[] { 100 });
             tableGenre.WidthPercentage = 100;
             tableGenre.HorizontalAlignment = Element.ALIGN_LEFT;
-            tableGenre.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            tableGenre.DefaultCell.VerticalAlignment = Element.ALIGN_TOP;
 
             var chips = new List<Chunk>();
             var projectInterestsDtos = this.Project.GetAllInterestsByInterestGroupUid(InterestGroup.Genre.Uid);
@@ -316,7 +316,7 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             var tableFormat = new PdfPTable(new float[] { 100 });
             tableFormat.WidthPercentage = 100;
             tableFormat.HorizontalAlignment = Element.ALIGN_LEFT;
-            tableFormat.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            tableFormat.DefaultCell.VerticalAlignment = Element.ALIGN_TOP;
 
             tableFormat.AddCell(new Phrase(new Chunk("Formato: ", _fontLabel)));
 
@@ -345,7 +345,7 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             var tablePltaform = new PdfPTable(new float[] { 100 });
             tablePltaform.WidthPercentage = 100;
             tablePltaform.HorizontalAlignment = Element.ALIGN_LEFT;
-            tablePltaform.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            tablePltaform.DefaultCell.VerticalAlignment = Element.ALIGN_TOP;
 
             chips = new List<Chunk>();
             var projectPlatformsDtos = this.Project.GetAllInterestsByInterestGroupUid(InterestGroup.Platforms.Uid);
@@ -371,7 +371,7 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             var tableStatus = new PdfPTable(new float[] { 100 });
             tableStatus.WidthPercentage = 100;
             tableStatus.HorizontalAlignment = Element.ALIGN_LEFT;
-            tableStatus.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            tableStatus.DefaultCell.VerticalAlignment = Element.ALIGN_TOP;
 
             chips = new List<Chunk>();
             var projectStatusDtos = this.Project.GetAllInterestsByInterestGroupUid(InterestGroup.ProjectStatus.Uid);
@@ -397,7 +397,7 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             var tableSubGenre = new PdfPTable(new float[] { 100 });
             tableSubGenre.WidthPercentage = 100;
             tableSubGenre.HorizontalAlignment = Element.ALIGN_LEFT;
-            tableSubGenre.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            tableSubGenre.DefaultCell.VerticalAlignment = Element.ALIGN_TOP;
 
             chips = new List<Chunk>();
             var subgeneroDtos = this.Project.GetAllInterestsByInterestGroupUid(InterestGroup.SubGenre.Uid);
