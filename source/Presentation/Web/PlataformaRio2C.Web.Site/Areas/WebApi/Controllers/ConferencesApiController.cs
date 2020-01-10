@@ -112,7 +112,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 PageCount = collaboratorsApiDtos.PageCount,
                 PageNumber = collaboratorsApiDtos.PageNumber,
                 PageSize = collaboratorsApiDtos.PageSize,
-                Conferences = collaboratorsApiDtos?.Select(c => new ConferencesApiListItem
+                Conferences = collaboratorsApiDtos?.Select(c => new ConferenceBaseApiResponse
                 {
                     Uid = c.Conference.Uid,
                     Event = new EditionEventBaseApiResponse
@@ -213,6 +213,85 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "Players filters api failed." } });
             }
+        }
+
+        #endregion
+
+        #region Details
+
+        /// <summary>Conferences the specified request.</summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("conference/{uid?}")]
+        public async Task<IHttpActionResult> Conference([FromUri]ConferenceApiRequest request)
+        {
+            var editions = this.editionRepo.FindAllByIsActive(false);
+            if (editions?.Any() == false)
+            {
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." } });
+            }
+
+            // Get edition from request otherwise get current
+            var edition = request?.Edition.HasValue == true ? editions?.FirstOrDefault(e => e.UrlCode == request.Edition) :
+                editions?.FirstOrDefault(e => e.IsCurrent);
+            if (edition == null)
+            {
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "No editions found." } });
+            }
+
+            // Get language from request otherwise get default
+            var languages = await this.languageRepo.FindAllDtosAsync();
+            var requestLanguage = languages?.FirstOrDefault(l => l.Code == request?.Culture);
+            var defaultLanguage = languages?.FirstOrDefault(l => l.IsDefault);
+            if (requestLanguage == null && defaultLanguage == null)
+            {
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "No active languages found." } });
+            }
+
+            var collaboratorApiDto = await this.conferenceRepo.FindApiDtoByUidAsync(
+                request?.Uid ?? Guid.Empty,
+                edition.Id);
+            if (collaboratorApiDto == null)
+            {
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00004", Message = "Conference not found." } });
+            }
+
+            return await Json(new ConferenceApiResponse
+            {
+                Status = ApiStatus.Success,
+                Error = null,
+                Uid = collaboratorApiDto.Conference.Uid,
+                Event = new EditionEventBaseApiResponse
+                {
+                    Uid = collaboratorApiDto.EditionEvent.Uid,
+                    Name = collaboratorApiDto.EditionEvent.Name.GetSeparatorTranslation(requestLanguage?.Code ?? defaultLanguage?.Code, Language.Separator)?.Trim()
+                },
+                Title = collaboratorApiDto.GetConferenceTitleDtoByLanguageCode(requestLanguage?.Code)?.ConferenceTitle?.Value?.Trim() ??
+                        collaboratorApiDto.GetConferenceTitleDtoByLanguageCode(defaultLanguage?.Code)?.ConferenceTitle?.Value?.Trim(),
+                Synopsis = collaboratorApiDto.GetConferenceSynopsisDtoByLanguageCode(requestLanguage?.Code)?.ConferenceSynopsis?.Value?.Trim() ??
+                           collaboratorApiDto.GetConferenceSynopsisDtoByLanguageCode(defaultLanguage?.Code)?.ConferenceSynopsis?.Value?.Trim(),
+                Date = collaboratorApiDto.Conference.StartDate.ToString("yyyy-MM-dd"),
+                StartTime = collaboratorApiDto.Conference.StartDate.ToString("HH:mm"),
+                EndTime = collaboratorApiDto.Conference.EndDate.ToString("HH:mm"),
+                DurationMinutes = (int)((collaboratorApiDto.Conference.EndDate - collaboratorApiDto.Conference.StartDate).TotalMinutes),
+                Room = collaboratorApiDto.RoomDto != null ? new RoomBaseApiResponse
+                {
+                    Uid = collaboratorApiDto.RoomDto.Room.Uid,
+                    Name = collaboratorApiDto.RoomDto.GetRoomNameByLanguageCode(requestLanguage?.Code ?? defaultLanguage?.Code)?.RoomName?.Value?.Trim()
+                } : null,
+                Tracks = collaboratorApiDto.ConferenceTrackDtos?.Select(ctd => new TrackBaseApiResponse
+                {
+                    Uid = ctd.Track.Uid,
+                    Name = ctd.Track.Name?.GetSeparatorTranslation(requestLanguage?.Code ?? defaultLanguage?.Code, Language.Separator)?.Trim(),
+                    Color = ctd.Track.Color
+                })?.ToList(),
+                PresentationFormats = collaboratorApiDto.ConferencePresentationFormatDtos?.Select(cpfd => new PresentationFormatBaseApiResponse
+                {
+                    Uid = cpfd.PresentationFormat.Uid,
+                    Name = cpfd.PresentationFormat.Name?.GetSeparatorTranslation(requestLanguage?.Code ?? defaultLanguage?.Code, Language.Separator)?.Trim()
+                })?.ToList()
+            });
         }
 
         #endregion

@@ -581,6 +581,71 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .ToListPagedAsync(page, pageSize);
         }
 
+        /// <summary>Finds the API dto by uid asynchronous.</summary>
+        /// <param name="conferenceUid">The conference uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<ConferenceDto> FindApiDtoByUidAsync(Guid conferenceUid, int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(conferenceUid)
+                                .FindByEditionId(false, editionId);
+
+            return await query
+                            .Select(c => new ConferenceDto
+                            {
+                                Conference = c,
+                                EditionEvent = c.EditionEvent,
+                                RoomDto = new RoomDto
+                                {
+                                    Room = c.Room,
+                                    RoomNameDtos = c.Room.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameDto
+                                    {
+                                        RoomName = rn,
+                                        LanguageDto = new LanguageDto
+                                        {
+                                            Id = rn.Language.Id,
+                                            Uid = rn.Language.Uid,
+                                            Code = rn.Language.Code
+                                        }
+                                    })
+                                },
+                                ConferenceTitleDtos = c.ConferenceTitles.Where(ct => !ct.IsDeleted).Select(ct => new ConferenceTitleDto
+                                {
+                                    ConferenceTitle = ct,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = ct.Language.Id,
+                                        Uid = ct.Language.Uid,
+                                        Name = ct.Language.Name,
+                                        Code = ct.Language.Code
+                                    }
+                                }),
+                                ConferenceSynopsisDtos = c.ConferenceSynopses.Where(cs => !cs.IsDeleted).Select(cs => new ConferenceSynopsisDto
+                                {
+                                    ConferenceSynopsis = cs,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = cs.Language.Id,
+                                        Uid = cs.Language.Uid,
+                                        Name = cs.Language.Name,
+                                        Code = cs.Language.Code
+                                    }
+                                }),
+                                ConferenceTrackDtos = c.ConferenceTracks.Where(cvt => !cvt.IsDeleted).Select(cvt => new ConferenceTrackDto
+                                {
+                                    ConferenceTrack = cvt,
+                                    Track = cvt.Track
+                                }),
+                                ConferencePresentationFormatDtos = c.ConferencePresentationFormats.Where(cht => !cht.IsDeleted).Select(cht => new ConferencePresentationFormatDto
+                                {
+                                    ConferencePresentationFormat = cht,
+                                    PresentationFormat = cht.PresentationFormat
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
         #endregion
 
         #region Old Methods

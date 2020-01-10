@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 namespace PlataformaRio2C.Domain.ApiModels
 {
     /// <summary>ConferenceApiResponse</summary>
-    public class ConferenceApiResponse : ConferencesApiListItem
+    public class ConferenceApiResponse : ConferenceBaseApiResponse
     {
         [JsonProperty("speakers", Order = 703)]
         public List<SpeakersApiListItem> Speakers { get; set; }
