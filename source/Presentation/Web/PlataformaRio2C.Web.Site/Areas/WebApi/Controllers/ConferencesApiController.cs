@@ -4,7 +4,7 @@
 // Created          : 01-08-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-09-2020
+// Last Modified On : 01-10-2020
 // ***********************************************************************
 // <copyright file="ConferencesApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -112,7 +112,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 PageCount = collaboratorsApiDtos.PageCount,
                 PageNumber = collaboratorsApiDtos.PageNumber,
                 PageSize = collaboratorsApiDtos.PageSize,
-                Conferences = collaboratorsApiDtos?.Select(c => new ConferenceBaseApiResponse
+                Conferences = collaboratorsApiDtos?.Select(c => new ConferencesApiListItem
                 {
                     Uid = c.Conference.Uid,
                     Event = new EditionEventBaseApiResponse
@@ -290,6 +290,26 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 {
                     Uid = cpfd.PresentationFormat.Uid,
                     Name = cpfd.PresentationFormat.Name?.GetSeparatorTranslation(requestLanguage?.Code ?? defaultLanguage?.Code, Language.Separator)?.Trim()
+                })?.ToList(),
+                Speakers = collaboratorApiDto.ConferenceParticipantDtos?.Select(cpd => new ConferenceParticipantApiListItem
+                {
+                    Uid = cpd.AttendeeCollaboratorDto.Collaborator.Uid,
+                    BadgeName = cpd.AttendeeCollaboratorDto.Collaborator.Badge?.Trim(),
+                    Name = cpd.AttendeeCollaboratorDto.Collaborator.GetFullName()?.Trim(),
+                    Role = cpd.ConferenceParticipantRoleDto.GetConferenceParticipantRoleTitleDtoByLanguageCode(requestLanguage?.Code)?.ConferenceParticipantRoleTitle?.Value?.Trim() ??
+                           cpd.ConferenceParticipantRoleDto.GetConferenceParticipantRoleTitleDtoByLanguageCode(defaultLanguage?.Code)?.ConferenceParticipantRoleTitle?.Value?.Trim(),
+                    Picture = cpd.AttendeeCollaboratorDto.Collaborator.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, cpd.AttendeeCollaboratorDto.Collaborator.Uid, cpd.AttendeeCollaboratorDto.Collaborator.ImageUploadDate, true) : null,
+                    JobTitle = cpd.AttendeeCollaboratorDto.GetJobTitleDtoByLanguageCode(requestLanguage?.Code)?.Value?.Trim() ??
+                               cpd.AttendeeCollaboratorDto.GetJobTitleDtoByLanguageCode(defaultLanguage?.Code)?.Value?.Trim(),
+                    MiniBio = cpd.AttendeeCollaboratorDto.GetMiniBioDtoByLanguageCode(requestLanguage?.Code)?.Value?.Trim() ??
+                              cpd.AttendeeCollaboratorDto.GetMiniBioDtoByLanguageCode(defaultLanguage?.Code)?.Value?.Trim(),
+                    Companies = cpd.AttendeeCollaboratorDto.AttendeeOrganizationsDtos?.Select(aod => new OrganizationBaseApiResponse
+                    {
+                        Uid = aod.Organization.Uid,
+                        TradeName = aod.Organization.TradeName,
+                        CompanyName = aod.Organization.CompanyName,
+                        Picture = aod.Organization.HasImage() ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, aod.Organization.Uid, aod.Organization.ImageUploadDate, true) : null
+                    })?.ToList()
                 })?.ToList()
             });
         }

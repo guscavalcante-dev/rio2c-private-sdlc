@@ -4,7 +4,7 @@
 // Created          : 09-25-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-19-2019
+// Last Modified On : 01-10-2020
 // ***********************************************************************
 // <copyright file="ApiBaseResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,10 +18,10 @@ namespace PlataformaRio2C.Domain.ApiModels
     /// <summary>ApiBaseResponse</summary>
     public class ApiBaseResponse
     {
-        [JsonProperty("status")]
+        [JsonProperty("status", Order = 10000)]
         public string Status { get; set; }
 
-        [JsonProperty("error")]
+        [JsonProperty("error", Order = 10001)]
         public ApiError Error { get; set; }
     }
 
