@@ -33,9 +33,6 @@ namespace PlataformaRio2C.Application.TemplateDocuments
         private Font _fontLabel;
         private Font _fontChip;
 
-        public static string cssText { get; set; }
-
-
         /// <summary>Initializes a new instance of the <see cref="ProjectDocumentTemplate"/> class.</summary>
         public ProjectDocumentTemplate(ProjectDto project)
         {
@@ -342,10 +339,6 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             }
 
             #endregion
-
-
-
-
 
             #region Platform
 

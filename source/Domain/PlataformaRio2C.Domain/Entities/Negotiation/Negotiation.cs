@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-06-2019
+// Last Modified On : 12-27-2019
 // ***********************************************************************
 // <copyright file="Negotiation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,7 +23,7 @@ namespace PlataformaRio2C.Domain.Entities
         public int ProjectId { get; private set; }
         public virtual Project Project { get; private set; }
         public int PlayerId { get; private set; }
-        public virtual Player Player { get; private set; }
+        //public virtual Player Player { get; private set; }
         public int RoomId { get; private set; }
         public virtual Room Room { get; private set; }
         public int? EvaluationId { get; private set; }
@@ -58,14 +58,14 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        public void SetPlayer(Player entity)
-        {
-            Player = entity;
-            if (entity != null)
-            {
-                PlayerId = entity.Id;
-            }
-        }
+        //public void SetPlayer(Player entity)
+        //{
+        //    Player = entity;
+        //    if (entity != null)
+        //    {
+        //        PlayerId = entity.Id;
+        //    }
+        //}
 
         //public void SetSourceEvaluation(ProjectPlayerEvaluation entity)
         //{

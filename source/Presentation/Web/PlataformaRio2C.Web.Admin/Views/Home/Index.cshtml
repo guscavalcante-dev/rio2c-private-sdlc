@@ -7,41 +7,69 @@
     var isAdminAudiovisual = adminAccessControlDto?.IsAdminPartial() == true && adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminAudiovisual) == true;
     var isCuratorshipAudiovisual = adminAccessControlDto?.IsAdminPartial() == true && adminAccessControlDto?.HasCollaboratorType(CollaboratorType.CuratorshipAudiovisual) == true;
 }
-@if (isAdminFull || isAdminAudiovisual)
-{
-    <div class="row">
+<div class="row">
+    @if (isAdminFull || isAdminAudiovisual)
+    {
+        <!--begin:: Holdings Edition Count-->
         <div class="col-sm-4">
-            <!--begin:: Holdings Edition Count-->
             <div id="HoldingsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-            <!--end:: Holdings Edition Count-->
         </div>
+        <!--end:: Holdings Edition Count-->
+        <!--begin:: Players Edition Count-->
         <div class="col-sm-4">
-            <!--begin:: Players Edition Count-->
             <div id="PlayersEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-            <!--end:: Players Edition Count-->
         </div>
+        <!--end:: Players Edition Count-->
+        <!--begin:: Players Executives Edition Count-->
         <div class="col-sm-4">
-            <!--begin:: Players Executives Edition Count-->
             <div id="PlayersExecutivesEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-            <!--end:: Players Executives Edition Count-->
         </div>
-    </div>
-}
-@if (isAdminFull || isAdminAudiovisual || isCuratorshipAudiovisual)
-{
-    <div class="row">
+        <!--end:: Players Executives Edition Count-->
+    }
+    @if (isAdminFull || isAdminAudiovisual || isCuratorshipAudiovisual)
+    {
+        <!--begin:: Events Edition Count-->
         <div class="col-sm-4">
-            <!--begin:: Holdings Edition Count-->
+            <div id="EventsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        </div>
+        <!--end:: Events Edition Count-->
+        <!--begin:: Conferences Edition Count-->
+        <div class="col-sm-4">
+            <div id="ConferencesEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        </div>
+        <!--end:: Conferences Edition Count-->
+        <!--begin:: Speakers Edition Count-->
+        <div class="col-sm-4">
             <div id="SpeakersEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-            <!--end:: Holdings Edition Count-->
         </div>
+        <!--end:: Speakers Edition Count-->
+        <!--begin:: Rooms Edition Count-->
         <div class="col-sm-4">
-            <!--begin:: Edition Count-->
-            <div id="ProjectsPitchingEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-            <!--end:: Edition Count-->
+            <div id="RoomsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
         </div>
-    </div>
-}
+        <!--end:: Rooms Edition Count-->
+        <!--begin:: Tracks Edition Count-->
+        <div class="col-sm-4">
+            <div id="TracksEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        </div>
+        <!--end:: Tracks Edition Count-->
+        <!--begin:: Presentation Formats Edition Count-->
+        <div class="col-sm-4">
+            <div id="PresentationFormatsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        </div>
+        <!--end:: Presentation Formats Edition Count-->
+        <!--begin:: Conference Participant Roles Edition Count-->
+        <div class="col-sm-4">
+            <div id="ConferenceParticipantRolesEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        </div>
+        <!--end:: Conference Participant Roles Edition Count-->
+        <!--begin:: Projects for Pitching Edition Count-->
+        <div class="col-sm-4">
+            <div id="ProjectsPitchingEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        </div>
+        <!--end:: Projects for Pitching Edition Count-->
+    }
+</div>
 @section Styles {
 }
 @section Scripts {
@@ -54,7 +82,13 @@
     }
     @if (isAdminFull || isAdminAudiovisual || isCuratorshipAudiovisual)
     {
+        @Scripts.Render("~/bundles/js/events.editioncount.js")
+        @Scripts.Render("~/bundles/js/conferences.editioncount.js")
         @Scripts.Render("~/bundles/js/speakers.editioncount.js")
+        @Scripts.Render("~/bundles/js/rooms.editioncount.js")
+        @Scripts.Render("~/bundles/js/tracks.editioncount.js")
+        @Scripts.Render("~/bundles/js/horizontaltracks.editioncount.js")
+        @Scripts.Render("~/bundles/js/conferenceparticipantroles.editioncount.js")
         @Scripts.Render("~/bundles/js/projects.pitching.editioncount.widget.js")
     }
     <script>
@@ -71,7 +105,13 @@
             @if (isAdminFull || isAdminAudiovisual || isCuratorshipAudiovisual)
             {
                 <text>
+                    EventsEditionCountWidget.init();
+                    ConferencesEditionCountWidget.init();
                     SpeakersEditionCountWidget.init();
+                    RoomsEditionCountWidget.init();
+                    TracksEditionCountWidget.init();
+                    PresentationFormatsEditionCountWidget.init();
+                    ConferenceParticipantRolesEditionCountWidget.init();
                 </text>
             }
         });

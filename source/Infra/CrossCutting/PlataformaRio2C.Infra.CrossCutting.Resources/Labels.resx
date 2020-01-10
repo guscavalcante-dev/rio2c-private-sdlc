@@ -466,7 +466,8 @@
     <value>Resumo</value>
   </data>
   <data name="Titles" xml:space="preserve">
-    <value>Título</value>
+    <value>Títulos</value>
+    <comment>Títulos</comment>
   </data>
   <data name="TotalValueOfProject" xml:space="preserve">
     <value>Valor total do projeto (USD)</value>
@@ -627,9 +628,6 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Accepted" xml:space="preserve">
     <value>Aceito</value>
   </data>
-  <data name="OnEvaluation" xml:space="preserve">
-    <value>Em avaliação</value>
-  </data>
   <data name="Rejected" xml:space="preserve">
     <value>Recusado</value>
   </data>
@@ -750,11 +748,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Ementa</value>
   </data>
   <data name="Conference" xml:space="preserve">
-    <value>Conferência</value>
-    <comment>Conferência</comment>
+    <value>Palestra</value>
+    <comment>Palestra</comment>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Título</value>
+    <comment>Título</comment>
   </data>
   <data name="ArrivalDate" xml:space="preserve">
     <value>Data da chegada</value>
@@ -1754,7 +1753,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Pitching de Audiovisual</value>
     <comment>Pitching de Audiovisual</comment>
   </data>
-  <data name="BrandContentSummit" xml:space="preserve">
+  <data name="BrandedContentSummit" xml:space="preserve">
     <value>Summit Marcas</value>
     <comment>Summit Marcas</comment>
   </data>
@@ -1930,8 +1929,56 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>{0} em destaque</value>
     <comment>{0} em destaque</comment>
   </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>Data de término</value>
+    <comment>Data de término</comment>
+  </data>
+  <data name="Participants" xml:space="preserve">
+    <value>Participantes</value>
+    <comment>Participantes</comment>
+  </data>
   <data name="In" xml:space="preserve">
     <value>em</value>
     <comment>em</comment>
+  </data>
+  <data name="Function" xml:space="preserve">
+    <value>Função</value>
+    <comment>Função</comment>
+  </data>
+  <data name="SelectedFP" xml:space="preserve">
+    <value>Selecionadas</value>
+    <comment>Selecionadas</comment>
+  </data>
+  <data name="Tracks" xml:space="preserve">
+    <value>Tracks</value>
+    <comment>Tracks</comment>
+  </data>
+  <data name="Events" xml:space="preserve">
+    <value>Eventos</value>
+    <comment>Eventos</comment>
+  </data>
+  <data name="Names" xml:space="preserve">
+    <value>Nomes</value>
+    <comment>Nomes</comment>
+  </data>
+  <data name="SpeakerRole" xml:space="preserve">
+    <value>Função do Palestrante</value>
+    <comment>Função do Palestrante</comment>
+  </data>
+  <data name="SpeakersRoles" xml:space="preserve">
+    <value>Funções dos Palestrantes</value>
+    <comment>Funções dos Palestrantes</comment>
+  </data>
+  <data name="PresentationFormat" xml:space="preserve">
+    <value>Formato</value>
+    <comment>Formato</comment>
+  </data>
+  <data name="PresentationFormats" xml:space="preserve">
+    <value>Formatos</value>
+    <comment>Formatos</comment>
+  </data>
+  <data name="Color" xml:space="preserve">
+    <value>Cor</value>
+    <comment>Cor</comment>
   </data>
 </root>

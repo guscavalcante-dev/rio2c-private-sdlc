@@ -4,15 +4,13 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-06-2019
+// Last Modified On : 12-27-2019
 // ***********************************************************************
 // <copyright file="SiteIoCBootStrapper.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Domain.Services;
 using SimpleInjector;
 
 namespace PlataformaRio2C.Infra.CrossCutting.IOC
@@ -24,7 +22,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
         /// <param name="container">The container.</param>
         public static void RegisterServices(Container container)
         {
-            container.Register<IPlayerService, PlayerService>(Lifestyle.Scoped);
+            //container.Register<IPlayerService, PlayerService>(Lifestyle.Scoped);
             //container.Register<ICountryService, CountryService>(Lifestyle.Scoped);
         }
     }    

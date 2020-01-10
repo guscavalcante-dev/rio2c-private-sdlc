@@ -1,0 +1,56 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model ConferenceDto
+@{
+    ViewBag.Title = $"{Labels.Conference}  {Model.GetConferenceTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ConferenceTitle?.Value}";
+}
+@Html.Hidden("AggregateId", Model.Conference.Uid)
+<div class="row">
+    <div class="col-md-12">
+        <!--begin:Main Information Widget-->
+        <div class="row">
+            <div class="col-12">
+                <div id="ConferenceMainInformationWidget" class="kt-portlet" style="min-height: 250px;"></div>
+            </div>
+        </div>
+        <!--end:Main Information Widget-->
+        <!--begin:Tracks and Presentation Formats Widget-->
+        <div class="row">
+            <div class="col-12">
+                <div id="ConferenceTracksAndPresentationFormatsWidget" class="kt-portlet" style="min-height: 250px;"></div>
+            </div>
+        </div>
+        <!--end:Tracks and Presentation Formats Widget-->
+        <!--begin:Participants Widget-->
+        <div class="row">
+            <div class="col-12">
+                <div id="ConferenceParticipantsWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+        </div>
+        <!--end:Participants Widget-->
+    </div>
+</div>
+@section Styles {
+    @Styles.Render("~/bundles/css/select2.css")
+    @Styles.Render("~/bundles/css/bootstrap-datepicker.css")
+    @Styles.Render("~/bundles/css/bootstrap-timepicker.css")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/select2.js")
+    @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/bootstrap-datepicker.js")
+    @Scripts.Render("~/bundles/js/bootstrap-timepicker.js")
+    @Scripts.Render("~/bundles/js/conferences.details.js")
+    @Scripts.Render("~/bundles/js/conferences.editionevents.js")
+    <script>
+        // Page translations ----------------------------------------------------------------------
+        var translations = {
+            dateBetweenDates: '@Messages.DateBetweenDates'
+        }
+
+        jQuery(document).ready(function () {
+            ConferencesMainInformationWidget.init();
+            ConferencesTracksAndPresentationFormatsWidget.init();
+            ConferencesParticipantsWidget.init();
+        });
+    </script>
+}

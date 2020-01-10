@@ -466,7 +466,7 @@
     <value>Summary</value>
   </data>
   <data name="Titles" xml:space="preserve">
-    <value>Title</value>
+    <value>Titles</value>
     <comment>Títulos</comment>
   </data>
   <data name="TotalValueOfProject" xml:space="preserve">
@@ -623,9 +623,6 @@
   <data name="Accepted" xml:space="preserve">
     <value>Accepted</value>
   </data>
-  <data name="OnEvaluation" xml:space="preserve">
-    <value>On Evaluation</value>
-  </data>
   <data name="Rejected" xml:space="preserve">
     <value>Rejected</value>
   </data>
@@ -744,10 +741,11 @@
   </data>
   <data name="Conference" xml:space="preserve">
     <value>Conference</value>
-    <comment>Conferência</comment>
+    <comment>Palestra</comment>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Title</value>
+    <comment>Título</comment>
   </data>
   <data name="LecturerMemberOneOrMany" xml:space="preserve">
     <value>Panel Members and Listeners</value>
@@ -1741,8 +1739,8 @@
     <value>Audiovisual Pitching Sessions</value>
     <comment>Pitching de Audiovisual</comment>
   </data>
-  <data name="BrandContentSummit" xml:space="preserve">
-    <value>Brand Content Summit</value>
+  <data name="BrandedContentSummit" xml:space="preserve">
+    <value>Branded Content Summit</value>
     <comment>Summit Marcas</comment>
   </data>
   <data name="BuyTicket" xml:space="preserve">
@@ -1905,6 +1903,14 @@
     <value>{0} highlights</value>
     <comment>{0} em destaque</comment>
   </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>End date</value>
+    <comment>Data de término</comment>
+  </data>
+  <data name="Participants" xml:space="preserve">
+    <value>Participants</value>
+    <comment>Participantes</comment>
+  </data>
   <data name="ArrivalDate" xml:space="preserve">
     <value>Arrival Date</value>
     <comment>Data da chegada</comment>
@@ -1923,5 +1929,49 @@
   </data>
   <data name="EndTime" xml:space="preserve">
     <value>End Time</value>
+  </data>
+  <data name="Function" xml:space="preserve">
+    <value>Function</value>
+    <comment>Função</comment>
+  </data>
+  <data name="PresentationFormats" xml:space="preserve">
+    <value>Presentation Formats</value>
+    <comment>Formatos</comment>
+  </data>
+  <data name="SelectedFP" xml:space="preserve">
+    <value>Selected</value>
+    <comment>Selecionadas</comment>
+  </data>
+  <data name="Tracks" xml:space="preserve">
+    <value>Tracks</value>
+    <comment>Tracks</comment>
+  </data>
+  <data name="Events" xml:space="preserve">
+    <value>Events</value>
+    <comment>Eventos</comment>
+  </data>
+  <data name="Names" xml:space="preserve">
+    <value>Names</value>
+    <comment>Nomes</comment>
+  </data>
+  <data name="SpeakerRole" xml:space="preserve">
+    <value>Speaker Role</value>
+    <comment>Função do Palestrante</comment>
+  </data>
+  <data name="SpeakersRoles" xml:space="preserve">
+    <value>Speakers Roles</value>
+    <comment>Funções dos Palestrantes</comment>
+  </data>
+  <data name="PresentationFormat" xml:space="preserve">
+    <value>Presentation Format</value>
+    <comment>Formato</comment>
+  </data>
+  <data name="StartTime" xml:space="preserve">
+    <value>Start Time</value>
+    <comment>Hora de início</comment>
+  </data>
+  <data name="Color" xml:space="preserve">
+    <value>Color</value>
+    <comment>Cor</comment>
   </data>
 </root>

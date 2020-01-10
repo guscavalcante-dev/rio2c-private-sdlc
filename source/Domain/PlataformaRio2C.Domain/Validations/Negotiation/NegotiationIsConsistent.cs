@@ -9,7 +9,7 @@ namespace PlataformaRio2C.Domain.Entities.Validations
         public NegotiationIsConsistent()
         {
 
-            base.AddRule(new ValidationRule<Negotiation>(new NegotiationPlayerIsRequired(), "Player é obrigatório."));
+            //base.AddRule(new ValidationRule<Negotiation>(new NegotiationPlayerIsRequired(), "Player é obrigatório."));
             base.AddRule(new ValidationRule<Negotiation>(new NegotiationProjectIsRequired(), "Projeto é obrigatório."));
             base.AddRule(new ValidationRule<Negotiation>(new NegotiationDateIsRequired(), "Datá é obrigatória."));
             base.AddRule(new ValidationRule<Negotiation>(new NegotiationRoomIsRequired(), "Sala é obrigatória."));

@@ -185,30 +185,30 @@ namespace PlataformaRio2C.Infra.Report.Models
         /// <returns></returns>
         public PdfPTable GetChips(string label, List<Chunk> chips, Font fontLabel, PdfPTable defaultTable)
         {
-            var rotulo = new Chunk(label, fontLabel);
-
-            var rootTable = new PdfPTable(new float[] { rotulo.GetWidthPoint() - 10, (PageSize.A4.Width / 2) - (rotulo.GetWidthPoint() - 10) });
+            var tagLabel = new Chunk(label, fontLabel);
+            var tagLabelSize = tagLabel.GetWidthPoint() <= 60f ? tagLabel.GetWidthPoint() : tagLabel.GetWidthPoint() - 25;
+            var rootTable = new PdfPTable(new float[] { tagLabelSize, (PageSize.A4.Width / 2) - (tagLabelSize) });
             rootTable.WidthPercentage = defaultTable.WidthPercentage;
             rootTable.DefaultCell.VerticalAlignment = defaultTable.DefaultCell.VerticalAlignment;
-            rootTable.DefaultCell.HorizontalAlignment = defaultTable.DefaultCell.HorizontalAlignment;
+            rootTable.DefaultCell.HorizontalAlignment = Element.ALIGN_LEFT; //defaultTable.DefaultCell.HorizontalAlignment;
             rootTable.DefaultCell.Border = 0;
 
-            var availableWidth = (PageSize.A4.Width / 2) - (rotulo.GetWidthPoint() - 10);
+            var availableWidth = (PageSize.A4.Width / 2) - (tagLabelSize);
 
-            rootTable.AddCell(new Paragraph(rotulo));
+            rootTable.AddCell(new Paragraph(tagLabel));
 
             var rows = new List<List<Chunk>>();
             var row = new List<Chunk>();
 
             rows.Add(row);
 
-            var padding = 50f;
+            var padding = 2f;
 
             for (int i = 0; i < chips.Count; i++)
             {
                 var currentChip = chips[i];
 
-                if (row.Sum(x => x.GetWidthPoint() + (padding * 1.3f) /*padding*/) < availableWidth)
+                if (row.Sum(x => x.GetWidthPoint() + (padding * 1.0f) + currentChip.GetWidthPoint()/*padding*/) < availableWidth)
                     row.Add(currentChip);
                 else
                 {
@@ -226,14 +226,23 @@ namespace PlataformaRio2C.Infra.Report.Models
 
             foreach (var line in rows)
             {
-                var columns = line.Select(x => x.GetWidthPoint() /*+ padding*/).ToList();
-                columns.Add(availableWidth - (line.Sum(x => x.GetWidthPoint()) + (columns.Count /** padding*/)));
+                var columns = line.Select(x => x.GetWidthPoint() + padding).ToList();
+                var columnSize = availableWidth - (line.Sum(x => x.GetWidthPoint()) + (columns.Count * padding));
+                if (columnSize > 0)
+                {
+                    columns.Add(columnSize);
+                }
 
                 var chipsTable = new PdfPTable(columns.ToArray());
                 chipsTable.DefaultCell.Border = 0;
                 chipsTable.WidthPercentage = 100;
                 chipsTable.DefaultCell.CellEvent = new PdfCellChipLayout();
-                chipsTable.DefaultCell.Padding = 7;
+                chipsTable.DefaultCell.PaddingLeft = 0;
+                chipsTable.DefaultCell.PaddingRight = 0;
+                chipsTable.DefaultCell.PaddingTop = 7;
+                chipsTable.DefaultCell.PaddingBottom = 10;
+
+
                 chipsTable.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
 
                 foreach (var chip in line)

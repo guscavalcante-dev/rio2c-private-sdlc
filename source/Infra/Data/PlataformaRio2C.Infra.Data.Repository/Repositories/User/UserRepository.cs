@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-10-2019
+// Last Modified On : 01-07-2020
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -162,7 +162,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                         .Sum(aoc => aoc.AttendeeOrganization.ProjectBuyerEvaluations.Count(pbe => !pbe.IsDeleted
                                                                                                                                                                   && !pbe.Project.IsDeleted
                                                                                                                                                                   && pbe.Project.FinishDate.HasValue
-                                                                                                                                                                  && pbe.ProjectEvaluationStatus.Code == ProjectEvaluationStatus.OnEvaluation.Code))) ?? 0,
+                                                                                                                                                                  && pbe.ProjectEvaluationStatus.Code == ProjectEvaluationStatus.UnderEvaluation.Code))) ?? 0,
                             Collaborator = u.Collaborator,
                             EditionAttendeeCollaborator = u.Collaborator.AttendeeCollaborators.FirstOrDefault(ac => !ac.IsDeleted && ac.EditionId == editionId),
                             EditionCollaboratorTypes = u.Collaborator.AttendeeCollaborators
@@ -248,15 +248,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             entity.Roles.Clear();
 
-            if (entity.UserUseTerms != null && entity.UserUseTerms.Any())
-            {
-                var terms = entity.UserUseTerms.ToList();
+            //if (entity.UserUseTerms != null && entity.UserUseTerms.Any())
+            //{
+            //    var terms = entity.UserUseTerms.ToList();
 
-                foreach (var term in terms)
-                {
-                    _context.Entry(term).State = EntityState.Deleted;
-                }
-            }
+            //    foreach (var term in terms)
+            //    {
+            //        _context.Entry(term).State = EntityState.Deleted;
+            //    }
+            //}
 
             base.Delete(entity);
         }

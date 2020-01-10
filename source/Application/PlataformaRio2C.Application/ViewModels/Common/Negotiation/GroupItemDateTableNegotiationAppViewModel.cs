@@ -1,26 +1,26 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿//using System.Collections.Generic;
+//using System.Linq;
 
-namespace PlataformaRio2C.Application.ViewModels
-{
-    public class GroupItemDateTableNegotiationAppViewModel
-    {
-        public string Date { get; set; }
+//namespace PlataformaRio2C.Application.ViewModels
+//{
+//    public class GroupItemDateTableNegotiationAppViewModel
+//    {
+//        public string Date { get; set; }
 
-        public IEnumerable<GroupRoomTableNegotiationAppViewModel> Rooms { get; set; }
+//        public IEnumerable<GroupRoomTableNegotiationAppViewModel> Rooms { get; set; }
 
-        public GroupItemDateTableNegotiationAppViewModel()
-        {
+//        public GroupItemDateTableNegotiationAppViewModel()
+//        {
 
-        }
+//        }
 
-        public GroupItemDateTableNegotiationAppViewModel(string date, IEnumerable<NegotiationAppViewModel> negotiations)
-        {
-            Date = date;
+//        public GroupItemDateTableNegotiationAppViewModel(string date, IEnumerable<NegotiationAppViewModel> negotiations)
+//        {
+//            Date = date;
 
-            negotiations = negotiations.OrderBy(e => e.Room);
+//            negotiations = negotiations.OrderBy(e => e.Room);
 
-            Rooms = negotiations.GroupBy(e => e.Room).Select(e => new GroupRoomTableNegotiationAppViewModel(e.Key, e.ToList()));
-        }
-    }   
-}
+//            Rooms = negotiations.GroupBy(e => e.Room).Select(e => new GroupRoomTableNegotiationAppViewModel(e.Key, e.ToList()));
+//        }
+//    }   
+//}

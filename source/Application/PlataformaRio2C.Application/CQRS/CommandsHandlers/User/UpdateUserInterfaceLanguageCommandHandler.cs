@@ -4,7 +4,7 @@
 // Created          : 10-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-05-2019
+// Last Modified On : 12-27-2019
 // ***********************************************************************
 // <copyright file="UpdateUserInterfaceLanguageCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,7 +22,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
     public class UpdateUserInterfaceLanguageCommandHandler : BaseUserCommandHandler, IRequestHandler<UpdateUserInterfaceLanguage, AppValidationResult>
     {
-        private readonly ICollaboratorTypeRepository collaboratorTypeRepo;
         private readonly ILanguageRepository languageRepo;
 
         /// <summary>Initializes a new instance of the <see cref="UpdateUserInterfaceLanguageCommandHandler"/> class.</summary>

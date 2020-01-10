@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-19-2019
+// Last Modified On : 01-09-2020
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -224,6 +224,48 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+            #region Bootstrap Datetimepicker
+
+            bundles.Add(new StyleBundle("~/bundles/css/bootstrap-datetimepicker.css")
+                .Include("~/Assets/themes/metronic/vendors/general/bootstrap-datetime-picker/css/bootstrap-datetimepicker.css", new CssRewriteUrlTransform()));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/bootstrap-datetimepicker.js").Include(
+                "~/Assets/themes/metronic/vendors/general/bootstrap-datetime-picker/js/bootstrap-datetimepicker.js"));
+
+            #endregion
+
+            #region Bootstrap Datepicker
+
+            bundles.Add(new StyleBundle("~/bundles/css/bootstrap-datepicker.css")
+                .Include("~/Assets/themes/metronic/vendors/general/bootstrap-datepicker/dist/css/bootstrap-datepicker.css", new CssRewriteUrlTransform()));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/bootstrap-datepicker.js").Include(
+                "~/Assets/themes/metronic/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.js",
+                "~/Assets/components/bootstrap-timepicker/bootstrap-datepicker.en-us.js",
+                "~/Assets/components/bootstrap-timepicker/bootstrap-datepicker.pt-br.js"));
+
+            #endregion
+
+            #region Bootstrap Timepicker
+
+            bundles.Add(new StyleBundle("~/bundles/css/bootstrap-timepicker.css")
+                .Include("~/Assets/themes/metronic/vendors/general/bootstrap-timepicker/css/bootstrap-timepicker.css", new CssRewriteUrlTransform()));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/bootstrap-timepicker.js").Include(
+                "~/Assets/themes/metronic/vendors/general/bootstrap-timepicker/js/bootstrap-timepicker.js"));
+
+            #endregion
+
+            #region Jquery MiniColors
+
+            bundles.Add(new StyleBundle("~/bundles/css/jquery-minicolors.css")
+                .Include("~/Assets/components/jquery-minicolors/jquery.minicolors.css", new CssRewriteUrlTransform()));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/jquery-minicolors.js").Include(
+                "~/Assets/components/jquery-minicolors/jquery.minicolors.js"));
+
+            #endregion
+
             #endregion
 
             #region Pages Bundles
@@ -310,6 +352,8 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/speakers.details.js").Include(
                 "~/Assets/js/speakers/speakers.maininformation.widget.js",
                 "~/Assets/js/speakers/speakers.company.widget.js",
+                "~/Assets/js/speakers/speakers.conferences.widget.js",
+                "~/Assets/js/speakers/speakers.participants.widget.js",
                 "~/Assets/js/companies/companyinfo.autocomplete.js",
                 "~/Assets/js/myrio2c.companynumber.js",
                 "~/Assets/js/speakers/speakers.apiconfiguration.widget.js"));
@@ -333,6 +377,137 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/addresses.form.js").Include(
                 "~/Assets/js/addresses/addresses.form.js"));
+
+            #endregion
+
+            #region Conferences
+
+            bundles.Add(new ScriptBundle("~/bundles/js/conferences.list.js").Include(
+                "~/Assets/js/conferences/conferences.totalcount.widget.js",
+                "~/Assets/js/conferences/conferences.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/conferences.editioncount.js").Include(
+                "~/Assets/js/conferences/conferences.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/conferences.create.js").Include(
+                "~/Assets/js/conferences/conferences.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/conferences.editionevents.js").Include(
+                "~/Assets/js/conferences/conferences.editionevents.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/conferences.details.js").Include(
+                "~/Assets/js/conferences/conferences.maininformation.widget.js",
+                "~/Assets/js/conferences/conferences.tracksandformats.widget.js",
+                "~/Assets/js/conferences/conferences.participants.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/conferences.delete.js").Include(
+                "~/Assets/js/conferences/conferences.delete.js"));
+
+            #endregion
+
+            #region Events
+
+            bundles.Add(new ScriptBundle("~/bundles/js/events.list.js").Include(
+                "~/Assets/js/events/events.totalcount.widget.js",
+                "~/Assets/js/events/events.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/events.editioncount.js").Include(
+                "~/Assets/js/events/events.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/events.create.js").Include(
+                "~/Assets/js/events/events.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/events.details.js").Include(
+                "~/Assets/js/events/events.maininformation.widget.js",
+                "~/Assets/js/events/events.conferences.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/events.delete.js").Include(
+                "~/Assets/js/events/events.delete.js"));
+
+            #endregion
+
+            #region Rooms
+
+            bundles.Add(new ScriptBundle("~/bundles/js/rooms.list.js").Include(
+                "~/Assets/js/rooms/rooms.totalcount.widget.js",
+                "~/Assets/js/rooms/rooms.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/rooms.editioncount.js").Include(
+                "~/Assets/js/rooms/rooms.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/rooms.create.js").Include(
+                "~/Assets/js/rooms/rooms.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/rooms.details.js").Include(
+                "~/Assets/js/rooms/rooms.maininformation.widget.js",
+                "~/Assets/js/rooms/rooms.conferences.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/rooms.delete.js").Include(
+                "~/Assets/js/rooms/rooms.delete.js"));
+
+            #endregion
+
+            #region Conference Participant Roles
+
+            bundles.Add(new ScriptBundle("~/bundles/js/conferenceparticipantroles.list.js").Include(
+                "~/Assets/js/conferenceparticipantroles/conferenceparticipantroles.totalcount.widget.js",
+                "~/Assets/js/conferenceparticipantroles/conferenceparticipantroles.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/conferenceparticipantroles.editioncount.js").Include(
+                "~/Assets/js/conferenceparticipantroles/conferenceparticipantroles.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/conferenceparticipantroles.create.js").Include(
+                "~/Assets/js/conferenceparticipantroles/conferenceparticipantroles.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/conferenceparticipantroles.details.js").Include(
+                "~/Assets/js/conferenceparticipantroles/conferenceparticipantroles.maininformation.widget.js",
+                "~/Assets/js/conferenceparticipantroles/conferenceparticipantroles.conferences.widget.js",
+                "~/Assets/js/conferenceparticipantroles/conferenceparticipantroles.participants.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/conferenceparticipantroles.delete.js").Include(
+                "~/Assets/js/conferenceparticipantroles/conferenceparticipantroles.delete.js"));
+
+            #endregion
+
+            #region Tracks
+
+            bundles.Add(new ScriptBundle("~/bundles/js/tracks.list.js").Include(
+                "~/Assets/js/tracks/tracks.totalcount.widget.js",
+                "~/Assets/js/tracks/tracks.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/tracks.editioncount.js").Include(
+                "~/Assets/js/tracks/tracks.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/tracks.create.js").Include(
+                "~/Assets/js/tracks/tracks.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/tracks.details.js").Include(
+                "~/Assets/js/tracks/tracks.maininformation.widget.js",
+                "~/Assets/js/tracks/tracks.conferences.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/tracks.delete.js").Include(
+                "~/Assets/js/tracks/tracks.delete.js"));
+
+            #endregion
+
+            #region Presentation Formats
+
+            bundles.Add(new ScriptBundle("~/bundles/js/presentationformats.list.js").Include(
+                "~/Assets/js/presentationformats/presentationformats.totalcount.widget.js",
+                "~/Assets/js/presentationformats/presentationformats.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/presentationformats.editioncount.js").Include(
+                "~/Assets/js/presentationformats/presentationformats.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/presentationformats.create.js").Include(
+                "~/Assets/js/presentationformats/presentationformats.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/presentationformats.details.js").Include(
+                "~/Assets/js/presentationformats/presentationformats.maininformation.widget.js",
+                "~/Assets/js/presentationformats/presentationformats.conferences.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/presentationformats.delete.js").Include(
+                "~/Assets/js/presentationformats/presentationformats.delete.js"));
 
             #endregion
 

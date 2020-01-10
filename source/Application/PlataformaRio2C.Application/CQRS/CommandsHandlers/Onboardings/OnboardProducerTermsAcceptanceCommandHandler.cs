@@ -4,7 +4,7 @@
 // Created          : 10-29-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-29-2019
+// Last Modified On : 12-27-2019
 // ***********************************************************************
 // <copyright file="OnboardProducerTermsAcceptanceCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,7 +25,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     public class OnboardProducerTermsAcceptanceCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<OnboardProducerTermsAcceptance, AppValidationResult>
     {
         private readonly IEditionRepository editionRepo;
-        private readonly ILanguageRepository languageRepo;
 
         /// <summary>Initializes a new instance of the <see cref="OnboardProducerTermsAcceptanceCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>

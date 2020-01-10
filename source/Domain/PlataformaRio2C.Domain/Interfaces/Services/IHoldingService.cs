@@ -1,8 +1,8 @@
-﻿using PlataformaRio2C.Domain.Entities;
+﻿//using PlataformaRio2C.Domain.Entities;
 
-namespace PlataformaRio2C.Domain.Interfaces
-{
-    public interface IHoldingService : IService<Holding>
-    {
-    }
-}
+//namespace PlataformaRio2C.Domain.Interfaces
+//{
+//    public interface IHoldingService : IService<Holding>
+//    {
+//    }
+//}

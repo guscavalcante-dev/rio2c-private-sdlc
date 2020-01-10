@@ -4,7 +4,7 @@
 // Created          : 08-07-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-29-2019
+// Last Modified On : 01-09-2020
 // ***********************************************************************
 // <copyright file="holdings.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -159,7 +159,6 @@ var HoldingsDataTableWidget = function () {
                 },
                 {
                     targets: -1,
-                    title: 'Actions',
                     width: "10%",
                     orderable: false,
                     searchable: false,

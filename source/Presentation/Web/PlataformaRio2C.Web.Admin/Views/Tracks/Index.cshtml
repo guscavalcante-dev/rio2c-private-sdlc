@@ -1,0 +1,46 @@
+﻿@model TrackSearchViewModel
+@{
+    ViewBag.Title = Labels.Tracks;
+}
+<!--begin:: Quick Stats-->
+<div class="row">
+    <div class="col-sm-6">
+        <!--begin:: Total Count Widget-->
+        <div id="TracksTotalCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <!--end:: Total Count Widget-->
+    </div>
+    <div class="col-sm-6">
+        <!--begin:: Edition Count-->
+        <div id="TracksEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <!--end:: Edition Count-->
+    </div>
+</div>
+<!--end:: Quick Stats-->
+@Html.Partial("Widgets/DataTablewidget", Model)
+@section Styles {
+    @Styles.Render("~/bundles/css/dataTables.css")
+    @Styles.Render("~/bundles/css/jquery-minicolors.css")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/dataTables.js")
+    @Scripts.Render("~/bundles/js/chart.js")
+    @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/jquery-minicolors.js")
+    @Scripts.Render("~/bundles/js/tracks.list.js")
+    @Scripts.Render("~/bundles/js/tracks.editioncount.js")
+    @Scripts.Render("~/bundles/js/tracks.create.js")
+    @Scripts.Render("~/bundles/js/tracks.delete.js")
+    <script>
+        // Page translations ----------------------------------------------------------------------
+
+        // Pagination -----------------------------------------------------------------------------
+        var initialPage = @(Model.Page?.ToString() ?? "null");
+        var initialPageSize = @(Model.PageSize?.ToString() ?? "null");
+
+        jQuery(document).ready(function () {
+            TracksTotalCountWidget.init();
+            TracksEditionCountWidget.init();
+            TracksDataTableWidget.init();
+        });
+    </script>
+}

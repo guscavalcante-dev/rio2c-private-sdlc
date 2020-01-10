@@ -1,0 +1,71 @@
+﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Statics
+@model PlataformaRio2C.Application.CQRS.Commands.UpdateConferenceParticipant
+@{
+    var participantDto = Model.ConferenceParticipantDto;
+}
+<div class="modal fade" id="UpdateParticipantModal" role="dialog" aria-labelledby="UpdateParticipantModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    @(Labels.Update + " " + Labels.Participant)
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("UpdateParticipant", "Conferences", new { Area = "" }, FormMethod.Post, new { id = "UpdateParticipantForm" }))
+                {
+                    @Html.HiddenFor(m => m.ConferenceUid)
+                    @Html.HiddenFor(m => m.CollaboratorUid)
+                    <div class="row mb-5">
+                        <div class="col-12">
+                            <div class="kt-widget kt-widget--user-profile-2">
+                                <div class="kt-widget__head mt-0">
+                                    <div class="kt-widget__media">
+                                        @if (participantDto.AttendeeCollaboratorDto?.Collaborator?.HasImage() == true)
+                                        {
+                                            <img class="kt-widget__img" src="@ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, participantDto.AttendeeCollaboratorDto.Collaborator.Uid, participantDto.AttendeeCollaboratorDto.Collaborator.ImageUploadDate, true)" alt="image">
+                                        }
+                                        else
+                                        {
+                                            <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest">
+                                                @(participantDto.AttendeeCollaboratorDto?.Collaborator?.GetDisplayNameAbbreviation())
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="kt-widget__info">
+                                        <a href="@Url.Action("Details", "Speakers", new { id = participantDto.AttendeeCollaboratorDto?.Collaborator.Uid })" class="kt-widget__username">
+                                            @(participantDto.AttendeeCollaboratorDto?.Collaborator?.GetDisplayName())
+                                        </a>
+                                        @{
+                                            var jobTitle = participantDto.AttendeeCollaboratorDto?.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value;
+                                            var companyName = participantDto.AttendeeCollaboratorDto?.AttendeeOrganizationsDtos?.FirstOrDefault()?.Organization?.TradeName;
+                                        }
+                                        @if (!string.IsNullOrEmpty(jobTitle) || !string.IsNullOrEmpty(companyName))
+                                        {
+                                            <span class="kt-widget__desc">
+                                                @jobTitle
+                                                @if (!string.IsNullOrEmpty(jobTitle) && !string.IsNullOrEmpty(companyName))
+                                                {
+                                                    @(Labels.At + " " + companyName)
+                                                }
+                                            </span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                    <div id="form-container">
+                        @Html.Partial("Modals/UpdateParticipantForm", Model)
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">@Labels.Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="$('#UpdateParticipantForm').submit();">@Labels.Save</button>
+            </div>
+        </div>
+    </div>
+</div>

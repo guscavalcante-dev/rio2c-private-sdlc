@@ -279,3 +279,104 @@ table.dataTable tbody tr.selected {
     height: 27px;
     font-size: 0.8rem;
 }
+
+
+/*
+    Datepicker
+*/
+.datepicker tbody tr > td span.disabled {
+    color: #dedede !important;
+}
+.datepicker tbody tr > td.disabled {
+    color: #dedede !important;
+}
+
+
+/*
+    Timepicker
+*/
+.bootstrap-timepicker-widget table td input {
+    width: 35px !important;
+}
+
+.bootstrap-timepicker-widget .bootstrap-timepicker-hour,
+.bootstrap-timepicker-widget .bootstrap-timepicker-minute,
+.bootstrap-timepicker-widget .bootstrap-timepicker-meridian,
+.bootstrap-timepicker-widget .bootstrap-timepicker-second {
+    border: 1px solid #e2e5ec !important;
+    padding: 0.63rem 0rem !important;
+}
+
+
+/*
+    Collaborator Select2
+*/
+.select2-result-collaborator {
+    padding-top: 4px;
+    padding-bottom: 3px
+}
+
+.select2-result-collaborator__avatar {
+    float: left;
+    width: 60px;
+    margin-right: 10px
+}
+
+    .select2-result-collaborator__avatar img {
+        width: 100%;
+        height: auto;
+        border-radius: 2px
+    }
+
+.select2-result-collaborator__meta {
+    margin-left: 70px
+}
+
+.select2-result-collaborator__title {
+    color: black;
+    font-weight: 700;
+    word-wrap: break-word;
+    line-height: 1.1;
+    margin-bottom: 4px
+}
+
+.select2-result-collaborator__description {
+    font-size: 13px;
+    color: #777;
+    margin-top: 4px
+}
+
+/*
+    Edition Counters
+*/
+.kt-widget20 .kt-widget20__content .kt-widget20__desc a {
+    color: #74788d;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-top: 0.25rem;
+}
+    .kt-widget20 .kt-widget20__content .kt-widget20__desc a:hover {
+        color: #505361;
+    }
+
+
+/*
+    Table scroll
+*/
+.table-body-scroll tbody {
+    display: block;
+    overflow-y: scroll;
+}
+    .table-body-scroll thead, .table-body-scroll tbody tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+    }
+
+
+/*
+    Jquery MiniColors
+*/
+.minicolors-theme-bootstrap .minicolors-swatch {
+    top: 5px !important;
+}

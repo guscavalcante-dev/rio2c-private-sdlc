@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-31-2019
+// Last Modified On : 12-27-2019
 // ***********************************************************************
 // <copyright file="HoldingRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -129,7 +129,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
     #endregion
 
-    /// <summary></summary>
+    /// <summary>HoldingRepository</summary>
     public class HoldingRepository : Repository<PlataformaRio2CContext, Holding>, IHoldingRepository
     {
         /// <summary>Initializes a new instance of the <see cref="HoldingRepository"/> class.</summary>

@@ -4,7 +4,7 @@
 // Created          : 12-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-16-2019
+// Last Modified On : 01-09-2020
 // ***********************************************************************
 // <copyright file="speakers.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -378,7 +378,6 @@ var SpeakersDataTableWidget = function () {
                 },
                 {
                     targets: -1,
-                    title: 'Actions',
                     width: "10%",
                     orderable: false,
                     searchable: false,

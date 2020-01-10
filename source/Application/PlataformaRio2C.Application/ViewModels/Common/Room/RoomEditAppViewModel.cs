@@ -1,22 +1,22 @@
-﻿using System.Collections.Generic;
+﻿//using System.Collections.Generic;
 
-namespace PlataformaRio2C.Application.ViewModels
-{
-    public class RoomEditAppViewModel : RoomAppViewModel
-    {
-        public IEnumerable<LanguageAppViewModel> LanguagesOptions { get; set; }
+//namespace PlataformaRio2C.Application.ViewModels
+//{
+//    public class RoomEditAppViewModel : RoomAppViewModel
+//    {
+//        public IEnumerable<LanguageAppViewModel> LanguagesOptions { get; set; }
 
 
-        public RoomEditAppViewModel()
-            :base()
-        {
+//        public RoomEditAppViewModel()
+//            :base()
+//        {
 
-        }
+//        }
 
-        public RoomEditAppViewModel(Domain.Entities.Room entity)
-            :base(entity)
-        {
+//        public RoomEditAppViewModel(Domain.Entities.Room entity)
+//            :base(entity)
+//        {
            
-        }        
-    }
-}
+//        }        
+//    }
+//}

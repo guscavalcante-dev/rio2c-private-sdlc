@@ -343,6 +343,7 @@
     <Compile Include="Areas\WebApi\Controllers\CollaboratorController.cs" />
     <Compile Include="Areas\WebApi\Controllers\ProjectController.cs" />
     <Compile Include="Areas\WebApi\Controllers\PlayerController.cs" />
+    <Compile Include="Areas\WebApi\Controllers\ConferencesApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\SpeakersApiController.cs" />
     <Compile Include="Areas\WebApi\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -404,6 +405,10 @@
     <Content Include="Assets\components\hideshowpassword\hideShowPassword.min.js" />
     <Content Include="Assets\components\hideshowpassword\images\wink.png" />
     <Content Include="Assets\components\hideshowpassword\images\wink.svg" />
+    <Content Include="Assets\components\jquery-minicolors\jquery.minicolors.css" />
+    <Content Include="Assets\components\jquery-minicolors\jquery.minicolors.js" />
+    <Content Include="Assets\components\jquery-minicolors\jquery.minicolors.min.js" />
+    <Content Include="Assets\components\jquery-minicolors\jquery.minicolors.png" />
     <Content Include="Assets\components\jquery.autocomplete\content\styles.css" />
     <Content Include="Assets\components\jquery.autocomplete\dist\jquery.autocomplete.js" />
     <Content Include="Assets\components\jquery.autocomplete\dist\jquery.autocomplete.min.js" />
@@ -7143,7 +7148,6 @@
     <Content Include="Views\Networks\Modals\ShowContactsListModal.cshtml" />
     <Content Include="Views\Onboarding\SpeakerTermsAcceptance.cshtml" />
     <Content Include="Views\Onboarding\Shared\_SpeakerTermsAcceptanceText.cshtml" />
-    <None Include="Views\Projects\Index.cshtml.old" />
     <Content Include="Views\Projects\Modals\UpdateMainInformationModal.cshtml" />
     <Content Include="Views\Projects\Modals\UpdateMainInformationForm.cshtml" />
     <Content Include="Views\Projects\Modals\UpdateInterestForm.cshtml" />
@@ -7157,7 +7161,6 @@
     <Content Include="Views\Projects\Modals\RefuseEvaluationModal.cshtml" />
     <Content Include="Views\Projects\Modals\RefuseEvaluationForm.cshtml" />
     <Content Include="Views\Projects\Shared\_BuyersEvaluations.cshtml" />
-    <None Include="Views\Projects\Submit.cshtml.old" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

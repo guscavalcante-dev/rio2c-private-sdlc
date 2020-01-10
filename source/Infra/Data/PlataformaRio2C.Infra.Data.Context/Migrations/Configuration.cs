@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-23-2019
+// Last Modified On : 01-07-2020
 // ***********************************************************************
 // <copyright file="Configuration.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,106 +35,106 @@ namespace PlataformaRio2C.Infra.Data.Context.Migrations
             //SeedCountry(context);
             //SeedState(context);
 
-            SeedLanguages(context);
-            SeedHoldings(context);
-            SeedEvent(context);
-            SeedInterests(context);
-            SeedActivitys(context);
-            SeedTargetAudiences(context);
-            SeedProjectStatus(context);
-            SeedRooms(context);
-            SeedRoleLecturer(context);
+            //SeedLanguages(context);
+            //SeedHoldings(context);
+            //SeedEvent(context);
+            //SeedInterests(context);
+            //SeedActivitys(context);
+            //SeedTargetAudiences(context);
+            //SeedProjectStatus(context);
+            //SeedRooms(context);
+            //SeedRoleLecturer(context);
             //SeedCity(context);
 
-            SeedQuiz(context);
+            //SeedQuiz(context);
         }
 
-        private void SeedQuiz(PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext context)
-        {
-            var quiz = new Quiz(1, "Pesquisa 2018");
-            context.Quiz.Add(quiz);
+        //private void SeedQuiz(PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext context)
+        //{
+        //    var quiz = new Quiz(1, "Pesquisa 2018");
+        //    context.Quiz.Add(quiz);
 
-            context.QuizQuestion.AddRange(
-                new List<QuizQuestion>()
-                {
-                    new QuizQuestion(1,"1.	Sua empresa participou da edição do Rio2C de 2018 como Player? / Did your company acted as a player in the 2018 edition of Rio2C"),
-                    new QuizQuestion(1,"2.	Caso sim, sua empresa adiquiriu algum projeto? / if positive, did your company acquried any Project?"),
-                    new QuizQuestion(1,"3.  Qual Projeto? / Which Project? (ter a opção de ir abrindo mais campos, conforme a dupla abaixo)"),
-                }
-            );
+        //    context.QuizQuestion.AddRange(
+        //        new List<QuizQuestion>()
+        //        {
+        //            new QuizQuestion(1,"1.	Sua empresa participou da edição do Rio2C de 2018 como Player? / Did your company acted as a player in the 2018 edition of Rio2C"),
+        //            new QuizQuestion(1,"2.	Caso sim, sua empresa adiquiriu algum projeto? / if positive, did your company acquried any Project?"),
+        //            new QuizQuestion(1,"3.  Qual Projeto? / Which Project? (ter a opção de ir abrindo mais campos, conforme a dupla abaixo)"),
+        //        }
+        //    );
 
-            context.QuizOption.AddRange(
-                new List<QuizOption>()
-                {
-                    new QuizOption(1,"Sim / Yes", false),
-                    new QuizOption(1,"Não / No", false),
+        //    context.QuizOption.AddRange(
+        //        new List<QuizOption>()
+        //        {
+        //            new QuizOption(1,"Sim / Yes", false),
+        //            new QuizOption(1,"Não / No", false),
 
-                    new QuizOption(2,"Sim / Yes", false),
-                    new QuizOption(2,"Não / No", false),
+        //            new QuizOption(2,"Sim / Yes", false),
+        //            new QuizOption(2,"Não / No", false),
 
-                    new QuizOption(3,"Projeto / Project", true),
-                    new QuizOption(3,"Valor investido / Total amount invested", true),
+        //            new QuizOption(3,"Projeto / Project", true),
+        //            new QuizOption(3,"Valor investido / Total amount invested", true),
 
-                }
-          );
-        }
+        //        }
+        //  );
+        //}
 
-        private void SeedLanguages(PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext context)
-        {
-            var languages = default(LanguageCodes).ToEnumStrings(false);
+        //private void SeedLanguages(PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext context)
+        //{
+        //    var languages = default(LanguageCodes).ToEnumStrings(false);
 
-            foreach (var language in languages)
-            {
-                if (!context.Languages.Any(e => e.Code == language.Value))
-                {
-                    context.Languages.Add(new Language(language.Description, language.Value));
-                }
-            }
-        }
-        private void SeedHoldings(PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext context)
-        {
-            //var playerGloboSat = new Holding("GLOBOSAT");
-            //var playerMarlin = new Holding("MARLIN");
+        //    foreach (var language in languages)
+        //    {
+        //        if (!context.Languages.Any(e => e.Code == language.Value))
+        //        {
+        //            context.Languages.Add(new Language(language.Description, language.Value));
+        //        }
+        //    }
+        //}
+        //private void SeedHoldings(PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext context)
+        //{
+        //    //var playerGloboSat = new Holding("GLOBOSAT");
+        //    //var playerMarlin = new Holding("MARLIN");
 
-            //if (!context.Holdings.Any())
-            //{
-            //    context.Holdings.AddRange(
-            //        new List<Holding>()
-            //        {
-            //            playerGloboSat
-            //        }
-            //    );
-            //}
+        //    //if (!context.Holdings.Any())
+        //    //{
+        //    //    context.Holdings.AddRange(
+        //    //        new List<Holding>()
+        //    //        {
+        //    //            playerGloboSat
+        //    //        }
+        //    //    );
+        //    //}
 
-            //if (!context.Players.Any())
-            //{
-            //    context.Players.AddRange(
-            //       new List<Player>()
-            //       {
-            //            new Player("Gloob", playerGloboSat),
-            //            new Player("Multishow", playerGloboSat),
-            //            new Player("GNT", playerGloboSat),
-            //            //new Player("Marlin desenvolvimento", playerMarlin),
-            //       }
-            //   );
-            //}
-        }
-        private void SeedEvent(PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext context)
-        {
-            if (!context.Events.Any())
-            {
-                var eventInitial = new Edition("Rio2c 2018");
-                eventInitial.SetStartDate(new DateTime(2018, 3, 1));
-                eventInitial.SetEndDate(new DateTime(2018, 4, 1));
+        //    //if (!context.Players.Any())
+        //    //{
+        //    //    context.Players.AddRange(
+        //    //       new List<Player>()
+        //    //       {
+        //    //            new Player("Gloob", playerGloboSat),
+        //    //            new Player("Multishow", playerGloboSat),
+        //    //            new Player("GNT", playerGloboSat),
+        //    //            //new Player("Marlin desenvolvimento", playerMarlin),
+        //    //       }
+        //    //   );
+        //    //}
+        //}
+        //private void SeedEvent(PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext context)
+        //{
+        //    if (!context.Events.Any())
+        //    {
+        //        var eventInitial = new Edition("Rio2c 2018");
+        //        eventInitial.SetStartDate(new DateTime(2018, 3, 1));
+        //        eventInitial.SetEndDate(new DateTime(2018, 4, 1));
 
-                context.Events.AddRange(
-                   new List<Edition>()
-                   {
-                        eventInitial
-                   }
-               );
-            }
-        }
+        //        context.Events.AddRange(
+        //           new List<Edition>()
+        //           {
+        //                eventInitial
+        //           }
+        //       );
+        //    }
+        //}
         //private void SeedCity(PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext context)
         //{
         //if (!context.City.Any())
@@ -446,265 +446,265 @@ namespace PlataformaRio2C.Infra.Data.Context.Migrations
         //    }
         //}
 
-        private void SeedActivitys(PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext context)
-        {
-            if (!context.Activities.Any())
-            {
-                context.Activities.AddRange(
-                   new List<Activity>()
-                   {
-                       new Activity("Distribuidor | Distributor"),
-                       new Activity("Canal de TV Aberta | Broadcast TV Channel"),
-                       new Activity("VOD / OTT / Streaming"),
-                       new Activity("Programador | Programmer"),
-                       new Activity("Canal de TV por assinatura | Pay-TV Channel"),
-                       new Activity("Produtora  | Producer"),
-                       new Activity("Outras Mídias | Other Media")
-                   }
-               );
-            }
-        }
-        private void SeedInterests(PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext context)
-        {
-            if (!context.InterestGroups.Any())
-            {
-                var groupPlatform = new InterestGroup("Plataformas | Platforms", InterestGroupTypeCodes.Multiple);
-                var groupProjectStatus = new InterestGroup("Status do projeto | Project Status", InterestGroupTypeCodes.Multiple);
-                var groupSeeking = new InterestGroup("Está no mercado buscando | Seeking", InterestGroupTypeCodes.Multiple);
-                var groupFormat = new InterestGroup("Formato | Format", InterestGroupTypeCodes.Multiple);
-                var groupAudiovisualGenre = new InterestGroup("Gênero | Genre", InterestGroupTypeCodes.Multiple);
-                var groupSubgenre = new InterestGroup("Subgênero | Sub-genre", InterestGroupTypeCodes.Multiple);
+        //private void SeedActivitys(PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext context)
+        //{
+        //    if (!context.Activities.Any())
+        //    {
+        //        context.Activities.AddRange(
+        //           new List<Activity>()
+        //           {
+        //               new Activity("Distribuidor | Distributor"),
+        //               new Activity("Canal de TV Aberta | Broadcast TV Channel"),
+        //               new Activity("VOD / OTT / Streaming"),
+        //               new Activity("Programador | Programmer"),
+        //               new Activity("Canal de TV por assinatura | Pay-TV Channel"),
+        //               new Activity("Produtora  | Producer"),
+        //               new Activity("Outras Mídias | Other Media")
+        //           }
+        //       );
+        //    }
+        //}
+        //private void SeedInterests(PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext context)
+        //{
+        //    if (!context.InterestGroups.Any())
+        //    {
+        //        var groupPlatform = new InterestGroup("Plataformas | Platforms", InterestGroupTypeCodes.Multiple);
+        //        var groupProjectStatus = new InterestGroup("Status do projeto | Project Status", InterestGroupTypeCodes.Multiple);
+        //        var groupSeeking = new InterestGroup("Está no mercado buscando | Seeking", InterestGroupTypeCodes.Multiple);
+        //        var groupFormat = new InterestGroup("Formato | Format", InterestGroupTypeCodes.Multiple);
+        //        var groupAudiovisualGenre = new InterestGroup("Gênero | Genre", InterestGroupTypeCodes.Multiple);
+        //        var groupSubgenre = new InterestGroup("Subgênero | Sub-genre", InterestGroupTypeCodes.Multiple);
 
-                context.InterestGroups.AddRange(
-                   new List<InterestGroup>()
-                   {
-                       groupPlatform,
-                       groupProjectStatus,
-                       groupSeeking,
-                       groupFormat,
-                       groupAudiovisualGenre,
-                       groupSubgenre
-                   }
-               );
+        //        context.InterestGroups.AddRange(
+        //           new List<InterestGroup>()
+        //           {
+        //               groupPlatform,
+        //               groupProjectStatus,
+        //               groupSeeking,
+        //               groupFormat,
+        //               groupAudiovisualGenre,
+        //               groupSubgenre
+        //           }
+        //       );
 
-                if (!context.Interests.Any())
-                {
-                    context.Interests.AddRange(
-                      new List<Interest>()
-                      {
-                              // -----------------------------------
-                               new Interest("App", groupPlatform),
-                               new Interest("Cinema", groupPlatform),
-                               new Interest("Digital", groupPlatform),
-                               new Interest("TV", groupPlatform),
-                               new Interest("Outras Mídias | Other Media", groupPlatform),
-                               // -----------------------------------
-                               new Interest("Desenvolvimento | In Development", groupProjectStatus),
-                               new Interest("Produção | In Production", groupProjectStatus),
-                               new Interest("Finalizado (inédito) | Finished (no prior exhibition)", groupProjectStatus),
-                               new Interest("Catálogo | Catalogue", groupProjectStatus),
-                               // -----------------------------------
-                               new Interest("Aquisição/ Licenciamento | Acquisition/ Licensing", groupSeeking),
-                               new Interest("Coprodução | Co-production", groupSeeking),
-                               // -----------------------------------
-                               new Interest("Games e APPs", groupFormat),
-                               new Interest("Novela | Telenovela", groupFormat),
-                               new Interest("Série | Series", groupFormat),
-                               new Interest("Minissérie | Miniseries", groupFormat),
-                               new Interest("Longa | Feature Film", groupFormat),
-                               new Interest("Interprograma | Short-format series", groupFormat),
-                               new Interest("Curta | Short Film", groupFormat),
-                               new Interest("Podcast", groupFormat),
-                               new Interest("Reality Show", groupFormat),
-                               new Interest("Streaming/Live", groupFormat),
-                               new Interest("VR + AR + XR", groupFormat),
-                               new Interest("Variedades | Variety Shows", groupFormat),
-                               // -----------------------------------
-                               new Interest("Animação | Animation", groupAudiovisualGenre),
-                               new Interest("Documentário/Factual | Documentary/Factual", groupAudiovisualGenre),
-                               new Interest("Ficção | Fiction", groupAudiovisualGenre),
-                               new Interest("Kids", groupAudiovisualGenre),
-                               new Interest("Show | Concert", groupAudiovisualGenre),
-                               // -----------------------------------
-                               new Interest("Ação | Action", groupSubgenre),
-                               new Interest("Arte/Cultura | Art/Culture", groupSubgenre),
-                               new Interest("Aventura | Adventure", groupSubgenre),
-                               new Interest("Biografia | Biography ", groupSubgenre),
-                               new Interest("Comédia | Comedy", groupSubgenre),
-                               new Interest("Drama", groupSubgenre),
-                               new Interest("Esportes | Sports", groupSubgenre),
-                               new Interest("Família | Family", groupSubgenre),
-                               new Interest("Faroeste | Western", groupSubgenre),
-                               new Interest("Ficção | Sci-Fi", groupSubgenre),
-                               new Interest("Gastronomia | Gastronomy", groupSubgenre),
-                               new Interest("Música | Music", groupSubgenre),
-                               new Interest("Policial/Crime | Cop/Crime", groupSubgenre),
-                               new Interest("Romance", groupSubgenre),
-                               new Interest("Suspense/Mistério | Thriller/Mystery", groupSubgenre),
-                               new Interest("Terror | Horror", groupSubgenre),
-                               new Interest("Viagem | Travel", groupSubgenre),
-                               new Interest("Factual Life Style", groupSubgenre),
-                      }
-                    );
-                }
-            }
+        //        if (!context.Interests.Any())
+        //        {
+        //            context.Interests.AddRange(
+        //              new List<Interest>()
+        //              {
+        //                      // -----------------------------------
+        //                       new Interest("App", groupPlatform),
+        //                       new Interest("Cinema", groupPlatform),
+        //                       new Interest("Digital", groupPlatform),
+        //                       new Interest("TV", groupPlatform),
+        //                       new Interest("Outras Mídias | Other Media", groupPlatform),
+        //                       // -----------------------------------
+        //                       new Interest("Desenvolvimento | In Development", groupProjectStatus),
+        //                       new Interest("Produção | In Production", groupProjectStatus),
+        //                       new Interest("Finalizado (inédito) | Finished (no prior exhibition)", groupProjectStatus),
+        //                       new Interest("Catálogo | Catalogue", groupProjectStatus),
+        //                       // -----------------------------------
+        //                       new Interest("Aquisição/ Licenciamento | Acquisition/ Licensing", groupSeeking),
+        //                       new Interest("Coprodução | Co-production", groupSeeking),
+        //                       // -----------------------------------
+        //                       new Interest("Games e APPs", groupFormat),
+        //                       new Interest("Novela | Telenovela", groupFormat),
+        //                       new Interest("Série | Series", groupFormat),
+        //                       new Interest("Minissérie | Miniseries", groupFormat),
+        //                       new Interest("Longa | Feature Film", groupFormat),
+        //                       new Interest("Interprograma | Short-format series", groupFormat),
+        //                       new Interest("Curta | Short Film", groupFormat),
+        //                       new Interest("Podcast", groupFormat),
+        //                       new Interest("Reality Show", groupFormat),
+        //                       new Interest("Streaming/Live", groupFormat),
+        //                       new Interest("VR + AR + XR", groupFormat),
+        //                       new Interest("Variedades | Variety Shows", groupFormat),
+        //                       // -----------------------------------
+        //                       new Interest("Animação | Animation", groupAudiovisualGenre),
+        //                       new Interest("Documentário/Factual | Documentary/Factual", groupAudiovisualGenre),
+        //                       new Interest("Ficção | Fiction", groupAudiovisualGenre),
+        //                       new Interest("Kids", groupAudiovisualGenre),
+        //                       new Interest("Show | Concert", groupAudiovisualGenre),
+        //                       // -----------------------------------
+        //                       new Interest("Ação | Action", groupSubgenre),
+        //                       new Interest("Arte/Cultura | Art/Culture", groupSubgenre),
+        //                       new Interest("Aventura | Adventure", groupSubgenre),
+        //                       new Interest("Biografia | Biography ", groupSubgenre),
+        //                       new Interest("Comédia | Comedy", groupSubgenre),
+        //                       new Interest("Drama", groupSubgenre),
+        //                       new Interest("Esportes | Sports", groupSubgenre),
+        //                       new Interest("Família | Family", groupSubgenre),
+        //                       new Interest("Faroeste | Western", groupSubgenre),
+        //                       new Interest("Ficção | Sci-Fi", groupSubgenre),
+        //                       new Interest("Gastronomia | Gastronomy", groupSubgenre),
+        //                       new Interest("Música | Music", groupSubgenre),
+        //                       new Interest("Policial/Crime | Cop/Crime", groupSubgenre),
+        //                       new Interest("Romance", groupSubgenre),
+        //                       new Interest("Suspense/Mistério | Thriller/Mystery", groupSubgenre),
+        //                       new Interest("Terror | Horror", groupSubgenre),
+        //                       new Interest("Viagem | Travel", groupSubgenre),
+        //                       new Interest("Factual Life Style", groupSubgenre),
+        //              }
+        //            );
+        //        }
+        //    }
 
-        }
-        private void SeedTargetAudiences(PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext context)
-        {
-            if (!context.TargetAudiences.Any())
-            {
-                context.TargetAudiences.AddRange(
-                   new List<TargetAudience>()
-                   {
-                       new TargetAudience("Pré-Escolar | Preschool"),
-                       new TargetAudience("Infantil | Children"),
-                       new TargetAudience("Infanto-Juvenil | Tween"),
-                       new TargetAudience("Jovem | Young Adults"),
-                       new TargetAudience("Adulto | Adult"),
-                   }
-               );
-            }
-        }
-        private void SeedProjectStatus(PlataformaRio2CContext context)
-        {
-            var statusDtos = default(StatusProjectCodes).ToEnumStrings(false);
+        //}
+        //private void SeedTargetAudiences(PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext context)
+        //{
+        //    if (!context.TargetAudiences.Any())
+        //    {
+        //        context.TargetAudiences.AddRange(
+        //           new List<TargetAudience>()
+        //           {
+        //               new TargetAudience("Pré-Escolar | Preschool"),
+        //               new TargetAudience("Infantil | Children"),
+        //               new TargetAudience("Infanto-Juvenil | Tween"),
+        //               new TargetAudience("Jovem | Young Adults"),
+        //               new TargetAudience("Adulto | Adult"),
+        //           }
+        //       );
+        //    }
+        //}
+        //private void SeedProjectStatus(PlataformaRio2CContext context)
+        //{
+        //    var statusDtos = default(StatusProjectCodes).ToEnumStrings(false);
 
-            foreach (var statusItem in statusDtos)
-            {
-                if (!context.ProjectStatus.Any(e => e.Code == statusItem.Value))
-                {
-                    context.ProjectStatus.Add(new ProjectStatus(statusItem.Value, statusItem.Description));
-                }
-            }
-        }
+        //    foreach (var statusItem in statusDtos)
+        //    {
+        //        if (!context.ProjectStatus.Any(e => e.Code == statusItem.Value))
+        //        {
+        //            context.ProjectStatus.Add(new ProjectStatus(statusItem.Value, statusItem.Description));
+        //        }
+        //    }
+        //}
 
-        private void SeedRooms(PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext context)
-        {
-            if (!context.Rooms.Any())
-            {
-                var languagePt = context.Languages.FirstOrDefault(e => e.Code == "PtBr");
-                var languageEn = context.Languages.FirstOrDefault(e => e.Code == "En");
+        //private void SeedRooms(PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext context)
+        //{
+        //    if (!context.Rooms.Any())
+        //    {
+        //        var languagePt = context.Languages.FirstOrDefault(e => e.Code == "PtBr");
+        //        var languageEn = context.Languages.FirstOrDefault(e => e.Code == "En");
 
-                var roomNameGrandeSalaPt = new RoomName("Sala 1: Grande Sala", "PtBr");
-                roomNameGrandeSalaPt.SetLanguage(languagePt);
-                var roomNameGrandeSalaEn = new RoomName("Sala 1: Grande Sala", "En");
-                roomNameGrandeSalaEn.SetLanguage(languageEn);
-                var namesGrandeSala = new List<RoomName>() { roomNameGrandeSalaPt, roomNameGrandeSalaEn };
+        //        var roomNameGrandeSalaPt = new RoomName("Sala 1: Grande Sala", "PtBr");
+        //        roomNameGrandeSalaPt.SetLanguage(languagePt);
+        //        var roomNameGrandeSalaEn = new RoomName("Sala 1: Grande Sala", "En");
+        //        roomNameGrandeSalaEn.SetLanguage(languageEn);
+        //        var namesGrandeSala = new List<RoomName>() { roomNameGrandeSalaPt, roomNameGrandeSalaEn };
 
-                var roomNameTeatroCamaraPt = new RoomName("Sala 2: Teatro de Câmara", "PtBr");
-                roomNameTeatroCamaraPt.SetLanguage(languagePt);
-                var roomNameTeatroCamaraEn = new RoomName("Sala 2: Teatro de Câmara", "En");
-                roomNameTeatroCamaraEn.SetLanguage(languageEn);
-                var namesTeatroCamara = new List<RoomName>() { roomNameTeatroCamaraPt, roomNameTeatroCamaraEn };
+        //        var roomNameTeatroCamaraPt = new RoomName("Sala 2: Teatro de Câmara", "PtBr");
+        //        roomNameTeatroCamaraPt.SetLanguage(languagePt);
+        //        var roomNameTeatroCamaraEn = new RoomName("Sala 2: Teatro de Câmara", "En");
+        //        roomNameTeatroCamaraEn.SetLanguage(languageEn);
+        //        var namesTeatroCamara = new List<RoomName>() { roomNameTeatroCamaraPt, roomNameTeatroCamaraEn };
 
-                var roomNameSalaMusicaPt = new RoomName("Sala 3: Sala de Música", "PtBr");
-                roomNameSalaMusicaPt.SetLanguage(languagePt);
-                var roomNameSalaMusicaEn = new RoomName("Sala 3: Sala de Música", "En");
-                roomNameSalaMusicaEn.SetLanguage(languageEn);
-                var namesSalaMusica = new List<RoomName>() { roomNameSalaMusicaPt, roomNameSalaMusicaEn };
+        //        var roomNameSalaMusicaPt = new RoomName("Sala 3: Sala de Música", "PtBr");
+        //        roomNameSalaMusicaPt.SetLanguage(languagePt);
+        //        var roomNameSalaMusicaEn = new RoomName("Sala 3: Sala de Música", "En");
+        //        roomNameSalaMusicaEn.SetLanguage(languageEn);
+        //        var namesSalaMusica = new List<RoomName>() { roomNameSalaMusicaPt, roomNameSalaMusicaEn };
 
-                var roomNameSalaInovacaoPt = new RoomName("Sala 4: Sala de Inovação", "PtBr");
-                roomNameSalaInovacaoPt.SetLanguage(languagePt);
-                var roomNameSalaInovacaoEn = new RoomName("Sala 4: Sala de Inovação", "En");
-                roomNameSalaInovacaoEn.SetLanguage(languageEn);
-                var namesSalaInovacao = new List<RoomName>() { roomNameSalaInovacaoPt, roomNameSalaInovacaoEn };
+        //        var roomNameSalaInovacaoPt = new RoomName("Sala 4: Sala de Inovação", "PtBr");
+        //        roomNameSalaInovacaoPt.SetLanguage(languagePt);
+        //        var roomNameSalaInovacaoEn = new RoomName("Sala 4: Sala de Inovação", "En");
+        //        roomNameSalaInovacaoEn.SetLanguage(languageEn);
+        //        var namesSalaInovacao = new List<RoomName>() { roomNameSalaInovacaoPt, roomNameSalaInovacaoEn };
 
-                var roomNameBrazilianContentPt = new RoomName("Sala 5: Sala Brazilian Content", "PtBr");
-                roomNameBrazilianContentPt.SetLanguage(languagePt);
-                var roomNameBrazilianContentEn = new RoomName("Sala 5: Sala Brazilian Content", "En");
-                roomNameBrazilianContentEn.SetLanguage(languageEn);
-                var namesBrazilianContent = new List<RoomName>() { roomNameBrazilianContentPt, roomNameBrazilianContentEn };
+        //        var roomNameBrazilianContentPt = new RoomName("Sala 5: Sala Brazilian Content", "PtBr");
+        //        roomNameBrazilianContentPt.SetLanguage(languagePt);
+        //        var roomNameBrazilianContentEn = new RoomName("Sala 5: Sala Brazilian Content", "En");
+        //        roomNameBrazilianContentEn.SetLanguage(languageEn);
+        //        var namesBrazilianContent = new List<RoomName>() { roomNameBrazilianContentPt, roomNameBrazilianContentEn };
 
-                var roomNamePitchingAudioVisualPt = new RoomName("Sala 6: Sala de Pitching de ÁudioVisual", "PtBr");
-                roomNamePitchingAudioVisualPt.SetLanguage(languagePt);
-                var roomNamePitchingAudioVisualEn = new RoomName("Sala 6: Sala de Pitching de ÁudioVisual", "En");
-                roomNamePitchingAudioVisualEn.SetLanguage(languageEn);
-                var namesPitchingAudioVisual = new List<RoomName>() { roomNamePitchingAudioVisualPt, roomNamePitchingAudioVisualEn };
+        //        var roomNamePitchingAudioVisualPt = new RoomName("Sala 6: Sala de Pitching de ÁudioVisual", "PtBr");
+        //        roomNamePitchingAudioVisualPt.SetLanguage(languagePt);
+        //        var roomNamePitchingAudioVisualEn = new RoomName("Sala 6: Sala de Pitching de ÁudioVisual", "En");
+        //        roomNamePitchingAudioVisualEn.SetLanguage(languageEn);
+        //        var namesPitchingAudioVisual = new List<RoomName>() { roomNamePitchingAudioVisualPt, roomNamePitchingAudioVisualEn };
 
-                var roomNameRodadasNegocio1Pt = new RoomName("Rodadas de Negócio (Sala 1)", "PtBr");
-                roomNameRodadasNegocio1Pt.SetLanguage(languagePt);
-                var roomNameRodadasNegocio1En = new RoomName("One-to-One meetings - ROOM 1", "En");
-                roomNameRodadasNegocio1En.SetLanguage(languageEn);
-                var namesRodadasNegocio1 = new List<RoomName>() { roomNameRodadasNegocio1Pt, roomNameRodadasNegocio1En };
+        //        var roomNameRodadasNegocio1Pt = new RoomName("Rodadas de Negócio (Sala 1)", "PtBr");
+        //        roomNameRodadasNegocio1Pt.SetLanguage(languagePt);
+        //        var roomNameRodadasNegocio1En = new RoomName("One-to-One meetings - ROOM 1", "En");
+        //        roomNameRodadasNegocio1En.SetLanguage(languageEn);
+        //        var namesRodadasNegocio1 = new List<RoomName>() { roomNameRodadasNegocio1Pt, roomNameRodadasNegocio1En };
 
-                var roomNameRodadasNegocio2Pt = new RoomName("Rodadas de Negócio (Sala 2)", "PtBr");
-                roomNameRodadasNegocio2Pt.SetLanguage(languagePt);
-                var roomNameRodadasNegocio2En = new RoomName("One-to-One meetings - ROOM 2", "En");
-                roomNameRodadasNegocio2En.SetLanguage(languageEn);
-                var namesRodadasNegocio2 = new List<RoomName>() { roomNameRodadasNegocio2Pt, roomNameRodadasNegocio2En };
+        //        var roomNameRodadasNegocio2Pt = new RoomName("Rodadas de Negócio (Sala 2)", "PtBr");
+        //        roomNameRodadasNegocio2Pt.SetLanguage(languagePt);
+        //        var roomNameRodadasNegocio2En = new RoomName("One-to-One meetings - ROOM 2", "En");
+        //        roomNameRodadasNegocio2En.SetLanguage(languageEn);
+        //        var namesRodadasNegocio2 = new List<RoomName>() { roomNameRodadasNegocio2Pt, roomNameRodadasNegocio2En };
 
-                context.Rooms.AddRange(
-                    new List<Room>()
-                    {
-                        new Room(namesGrandeSala),
-                        new Room(namesTeatroCamara),
-                        new Room(namesSalaMusica),
-                        new Room(namesSalaInovacao),
-                        new Room(namesBrazilianContent),
-                        new Room(namesPitchingAudioVisual),
-                        new Room(namesRodadasNegocio1),
-                         new Room(namesRodadasNegocio2)
-                    }
-                );
-            }
-        }
+        //        context.Rooms.AddRange(
+        //            new List<Room>()
+        //            {
+        //                new Room(namesGrandeSala),
+        //                new Room(namesTeatroCamara),
+        //                new Room(namesSalaMusica),
+        //                new Room(namesSalaInovacao),
+        //                new Room(namesBrazilianContent),
+        //                new Room(namesPitchingAudioVisual),
+        //                new Room(namesRodadasNegocio1),
+        //                 new Room(namesRodadasNegocio2)
+        //            }
+        //        );
+        //    }
+        //}
 
-        private void SeedRoleLecturer(PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext context)
-        {
-            if (!context.RoleLecturers.Any())
-            {
-                var languagePt = context.Languages.FirstOrDefault(e => e.Code == "PtBr");
-                var languageEn = context.Languages.FirstOrDefault(e => e.Code == "En");
+        //private void SeedRoleLecturer(PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext context)
+        //{
+        //    if (!context.RoleLecturers.Any())
+        //    {
+        //        var languagePt = context.Languages.FirstOrDefault(e => e.Code == "PtBr");
+        //        var languageEn = context.Languages.FirstOrDefault(e => e.Code == "En");
 
-                var titlePalestrantePt = new RoleLecturerTitle("Palestrante", "PtBr");
-                titlePalestrantePt.SetLanguage(languagePt);
-                var titlePalestranteEn = new RoleLecturerTitle("Speaker", "En");
-                titlePalestranteEn.SetLanguage(languageEn);
-                var titlesPalestrante = new List<RoleLecturerTitle>() { titlePalestrantePt, titlePalestranteEn };
+        //        var titlePalestrantePt = new RoleLecturerTitle("Palestrante", "PtBr");
+        //        titlePalestrantePt.SetLanguage(languagePt);
+        //        var titlePalestranteEn = new RoleLecturerTitle("Speaker", "En");
+        //        titlePalestranteEn.SetLanguage(languageEn);
+        //        var titlesPalestrante = new List<RoleLecturerTitle>() { titlePalestrantePt, titlePalestranteEn };
 
-                var titleKeynotePt = new RoleLecturerTitle("Keynote", "PtBr");
-                titleKeynotePt.SetLanguage(languagePt);
-                var titleKeynoteEn = new RoleLecturerTitle("Keynote", "En");
-                titleKeynoteEn.SetLanguage(languageEn);
-                var titlesKeynotes = new List<RoleLecturerTitle>() { titleKeynotePt, titleKeynoteEn };
+        //        var titleKeynotePt = new RoleLecturerTitle("Keynote", "PtBr");
+        //        titleKeynotePt.SetLanguage(languagePt);
+        //        var titleKeynoteEn = new RoleLecturerTitle("Keynote", "En");
+        //        titleKeynoteEn.SetLanguage(languageEn);
+        //        var titlesKeynotes = new List<RoleLecturerTitle>() { titleKeynotePt, titleKeynoteEn };
 
-                var titleModeradorPt = new RoleLecturerTitle("Moderador", "PtBr");
-                titleModeradorPt.SetLanguage(languagePt);
-                var titleModeradorEn = new RoleLecturerTitle("Moderator", "En");
-                titleModeradorEn.SetLanguage(languageEn);
-                var titlesModeradores = new List<RoleLecturerTitle>() { titleModeradorPt, titleModeradorEn };
+        //        var titleModeradorPt = new RoleLecturerTitle("Moderador", "PtBr");
+        //        titleModeradorPt.SetLanguage(languagePt);
+        //        var titleModeradorEn = new RoleLecturerTitle("Moderator", "En");
+        //        titleModeradorEn.SetLanguage(languageEn);
+        //        var titlesModeradores = new List<RoleLecturerTitle>() { titleModeradorPt, titleModeradorEn };
 
-                var titleInterventorPt = new RoleLecturerTitle("Interventor", "PtBr");
-                titleInterventorPt.SetLanguage(languagePt);
-                var titleInterventorEn = new RoleLecturerTitle("Interventor", "En");
-                titleInterventorEn.SetLanguage(languageEn);
-                var titlesInterventores = new List<RoleLecturerTitle>() { titleInterventorPt, titleInterventorEn };
+        //        var titleInterventorPt = new RoleLecturerTitle("Interventor", "PtBr");
+        //        titleInterventorPt.SetLanguage(languagePt);
+        //        var titleInterventorEn = new RoleLecturerTitle("Interventor", "En");
+        //        titleInterventorEn.SetLanguage(languageEn);
+        //        var titlesInterventores = new List<RoleLecturerTitle>() { titleInterventorPt, titleInterventorEn };
 
-                var titleEntrevistadorPt = new RoleLecturerTitle("Entrevistador", "PtBr");
-                titleEntrevistadorPt.SetLanguage(languagePt);
-                var titleEntrevistadorEn = new RoleLecturerTitle("Interviewer", "En");
-                titleEntrevistadorEn.SetLanguage(languageEn);
-                var titlesEntrevistadores = new List<RoleLecturerTitle>() { titleEntrevistadorPt, titleEntrevistadorEn };
+        //        var titleEntrevistadorPt = new RoleLecturerTitle("Entrevistador", "PtBr");
+        //        titleEntrevistadorPt.SetLanguage(languagePt);
+        //        var titleEntrevistadorEn = new RoleLecturerTitle("Interviewer", "En");
+        //        titleEntrevistadorEn.SetLanguage(languageEn);
+        //        var titlesEntrevistadores = new List<RoleLecturerTitle>() { titleEntrevistadorPt, titleEntrevistadorEn };
 
-                var titleApresentadorPt = new RoleLecturerTitle("Apresentador", "PtBr");
-                titleApresentadorPt.SetLanguage(languagePt);
-                var titleApresentadorEn = new RoleLecturerTitle("Presenter", "En");
-                titleApresentadorEn.SetLanguage(languageEn);
-                var titlesApresentadores = new List<RoleLecturerTitle>() { titleApresentadorPt, titleApresentadorEn };
+        //        var titleApresentadorPt = new RoleLecturerTitle("Apresentador", "PtBr");
+        //        titleApresentadorPt.SetLanguage(languagePt);
+        //        var titleApresentadorEn = new RoleLecturerTitle("Presenter", "En");
+        //        titleApresentadorEn.SetLanguage(languageEn);
+        //        var titlesApresentadores = new List<RoleLecturerTitle>() { titleApresentadorPt, titleApresentadorEn };
 
-                context.RoleLecturers.AddRange(
-                    new List<RoleLecturer>()
-                    {
-                                new RoleLecturer(titlesPalestrante),
-                                new RoleLecturer(titlesKeynotes),
-                                new RoleLecturer(titlesModeradores),
-                                new RoleLecturer(titlesInterventores),
-                                new RoleLecturer(titlesEntrevistadores),
-                                new RoleLecturer(titlesApresentadores)
-                            }
-                        );
-            }
-        }
+        //        context.RoleLecturers.AddRange(
+        //            new List<RoleLecturer>()
+        //            {
+        //                        new RoleLecturer(titlesPalestrante),
+        //                        new RoleLecturer(titlesKeynotes),
+        //                        new RoleLecturer(titlesModeradores),
+        //                        new RoleLecturer(titlesInterventores),
+        //                        new RoleLecturer(titlesEntrevistadores),
+        //                        new RoleLecturer(titlesApresentadores)
+        //                    }
+        //                );
+        //    }
+        //}
     }
 }
