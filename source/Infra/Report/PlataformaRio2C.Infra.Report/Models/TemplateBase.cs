@@ -223,7 +223,6 @@ namespace PlataformaRio2C.Infra.Report.Models
             rowsTable.WidthPercentage = 100;
             rowsTable.DefaultCell.Border = 0;
 
-
             foreach (var line in rows)
             {
                 var columns = line.Select(x => x.GetWidthPoint() + padding).ToList();
@@ -241,8 +240,6 @@ namespace PlataformaRio2C.Infra.Report.Models
                 chipsTable.DefaultCell.PaddingRight = 0;
                 chipsTable.DefaultCell.PaddingTop = 7;
                 chipsTable.DefaultCell.PaddingBottom = 10;
-
-
                 chipsTable.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
 
                 foreach (var chip in line)
