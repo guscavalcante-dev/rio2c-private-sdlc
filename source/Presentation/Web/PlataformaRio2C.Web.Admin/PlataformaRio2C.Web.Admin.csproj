@@ -357,6 +357,7 @@
     <Compile Include="Controllers\ConferenceController.cs" />
     <Compile Include="Controllers\PresentationFormatsController.cs" />
     <Compile Include="Controllers\ParticipantRolesController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\TracksController.cs" />
     <Compile Include="Controllers\RoomsController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
@@ -438,6 +439,7 @@
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.editioncount.widget.js" />
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.maininformation.widget.js" />
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.totalcount.widget.js" />
+    <Content Include="Assets\js\reports\reports.audiovisual.subscriptions.widget.js" />
     <Content Include="Assets\js\rooms\rooms.conferences.widget.js" />
     <Content Include="Assets\js\rooms\rooms.maininformation.widget.js" />
     <Content Include="Assets\js\conferences\conferences.tracksandformats.widget.js" />
@@ -8364,6 +8366,8 @@
     <Content Include="Views\Speakers\Widgets\RelatedParticipantsWidget.cshtml" />
     <Content Include="Views\Projects\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Views\Projects\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Views\Reports\Audiovisual\AudiovisualSubscriptions.cshtml" />
+    <Content Include="Views\Reports\Audiovisual\Widgets\AudiovisualSubscriptionsWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

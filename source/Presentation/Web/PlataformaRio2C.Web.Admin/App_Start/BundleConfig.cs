@@ -523,6 +523,14 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+            #region Reports
+            #region Audiovisual
+            bundles.Add(new ScriptBundle("~/bundles/js/reports.audiovisual.subscriptions.widget.js").Include(
+               "~/Assets/js/reports/reports.audiovisual.subscriptions.widget.js"));
+
+            #endregion
+            #endregion
+
             #endregion
 
             #region Scripts

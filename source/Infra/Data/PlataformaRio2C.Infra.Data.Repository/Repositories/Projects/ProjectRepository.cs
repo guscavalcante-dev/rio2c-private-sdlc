@@ -905,6 +905,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         #endregion
 
+        #region Project Reports
+        public async Task<List<ProjectDto>> FindAudiovisualSubscribedProjectsDtosByFilterAsync()
+        {
+            var query = this.GetBaseQuery()
+                                .Select(p => new ProjectDto() { 
+                                    Project = p
+                                });
+            return await query.ToListAsync();
+        }
+        #endregion
+
         #region Old methods
 
         public IEnumerable<Project> GetAllByAdmin()

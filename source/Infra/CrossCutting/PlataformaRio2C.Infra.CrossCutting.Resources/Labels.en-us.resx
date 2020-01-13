@@ -1974,4 +1974,12 @@
     <value>Color</value>
     <comment>Cor</comment>
   </data>
+  <data name="Reports" xml:space="preserve">
+    <value>Reports</value>
+    <comment>Relatórios</comment>
+  </data>
+  <data name="AudiovisualSubscriptionProjectReport" xml:space="preserve">
+    <value>Audiovisual Subscription Project Report</value>
+    <comment>Relatório de Inscrição de Projeto Audiovisual</comment>
+  </data>
 </root>
