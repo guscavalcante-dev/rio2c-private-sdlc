@@ -4,7 +4,7 @@
 // Created          : 08-15-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-17-2019
+// Last Modified On : 01-13-2020
 // ***********************************************************************
 // <copyright file="ImageHelper.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -31,8 +31,8 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
     public static class ImageHelper
     {
         private static readonly List<string> AllowedImageFormats = new List<string> { "jpg", "jpeg", "png", "gif", "image/jpg", "image/jpeg", "image/png", "image/gif" };
-        private static readonly int imageWidth = 200;
-        private static readonly int imageHieght = 200;
+        //private static readonly int imageWidth = 200;
+        //private static readonly int imageHieght = 200;
 
         /// <summary>Uploads the original and cropped images.</summary>
         /// <param name="fileUid">The file uid.</param>
@@ -64,9 +64,16 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
                 throw new DomainException("The file was not uploaded.");
             }
 
-            var croppedImage = CropImage(imageBytes, dataX, dataY, dataWidth, dataHeight, true);
+            // Original image
             UploadLogo(fileUid, imageBytes, fileRepositoryPathType, true);
-            UploadLogo(fileUid, croppedImage.GetBytes(), fileRepositoryPathType, false);
+
+            // Thumbnail image 200x200
+            var croppedImage200 = CropImage(imageBytes, dataX, dataY, dataWidth, dataHeight, true, 200, 200);
+            UploadLogo(fileUid, croppedImage200.GetBytes(), fileRepositoryPathType, false);
+
+            // Thumbnail imagem 500x500
+            var croppedImage500 = CropImage(imageBytes, dataX, dataY, dataWidth, dataHeight, true, 500, 500);
+            UploadLogo(fileUid, croppedImage500.GetBytes(), fileRepositoryPathType, false, "_500x500");
         }
 
         /// <summary>Deletes the original and cropped images.</summary>
@@ -97,25 +104,28 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
         /// <param name="imageBytes">The image bytes.</param>
         /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
         /// <param name="isOriginalLogo">if set to <c>true</c> [is original logo].</param>
-        private static void UploadLogo(Guid siteId, byte[] imageBytes, FileRepositoryPathType fileRepositoryPathType, bool isOriginalLogo)
+        /// <param name="additionalFileInfo">The additional file information.</param>
+        private static void UploadLogo(Guid siteId, byte[] imageBytes, FileRepositoryPathType fileRepositoryPathType, bool isOriginalLogo, string additionalFileInfo = null)
         {
             IFileRepository fileRepo = new FileRepositoryFactory().Get();
 
             using (var originalImageStream = new MemoryStream(imageBytes))
             {
-                fileRepo.Upload(originalImageStream, "image/png", siteId + (isOriginalLogo ? "_original.png" : "_thumbnail.png"), fileRepositoryPathType);
+                fileRepo.Upload(originalImageStream, "image/png", siteId + (isOriginalLogo ? $"_original{additionalFileInfo}.png" : $"_thumbnail{additionalFileInfo}.png"), fileRepositoryPathType);
             }
         }
 
         /// <summary>Basics the crop.</summary>
         /// <param name="imageBytes">The image bytes.</param>
+        /// <param name="cropImageWidth">Width of the crop image.</param>
+        /// <param name="cropImageHeight">Height of the crop image.</param>
         /// <param name="preventEnlarge">if set to <c>true</c> [prevent enlarge].</param>
         /// <param name="cropFirstLineAndColumn">if set to <c>true</c> [crop first line and column].</param>
         /// <returns></returns>
-        private static WebImage BasicCrop(byte[] imageBytes, bool preventEnlarge = false, bool cropFirstLineAndColumn = false)
+        private static WebImage BasicCrop(byte[] imageBytes, int cropImageWidth, int cropImageHeight, bool preventEnlarge = false, bool cropFirstLineAndColumn = false)
         {
             var image = new WebImage(imageBytes)
-                                .Resize(imageWidth, imageHieght, true, preventEnlarge);
+                                .Resize(cropImageWidth, cropImageHeight, true, preventEnlarge);
 
             if (cropFirstLineAndColumn)
             {
@@ -133,8 +143,10 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
         /// <param name="basicCropAfter">if set to <c>true</c> [basic crop after].</param>
+        /// <param name="basicCropImageWidth">Width of the basic crop image.</param>
+        /// <param name="basicCropImageHeight">Height of the basic crop image.</param>
         /// <returns></returns>
-        private static WebImage CropImage(byte[] content, decimal? x, decimal? y, decimal? width, decimal? height, bool basicCropAfter)
+        private static WebImage CropImage(byte[] content, decimal? x, decimal? y, decimal? width, decimal? height, bool basicCropAfter, int? basicCropImageWidth, int? basicCropImageHeight)
         {
             byte[] croppedImage = null;
             if (width.HasValue && height.HasValue && x.HasValue && y.HasValue)
@@ -159,9 +171,9 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
                 croppedImage = content;
             }
 
-            if (basicCropAfter)
+            if (basicCropAfter && basicCropImageWidth.HasValue && basicCropImageHeight.HasValue)
             {
-                return BasicCrop(croppedImage);
+                return BasicCrop(croppedImage, basicCropImageWidth.Value, basicCropImageHeight.Value);
             }
 
             return new WebImage(croppedImage);

@@ -92,7 +92,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     BadgeName = c.BadgeName?.Trim(),
                     Name = c.Name?.Trim(),
                     HighlightPosition = c.ApiHighlightPosition,
-                    Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.Uid, c.ImageUploadDate, true) : null,
+                    Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.Uid, c.ImageUploadDate, true, "_500x500") : null,
                     MiniBio = c.GetCollaboratorMiniBioBaseDtoByLanguageCode(request?.Culture)?.Value?.Trim(),
                     JobTitle = c.GetCollaboratorJobTitleBaseDtoByLanguageCode(request?.Culture)?.Value?.Trim(),
                     Companies = c.OrganizationsDtos?.Select(od => new OrganizationBaseApiResponse
