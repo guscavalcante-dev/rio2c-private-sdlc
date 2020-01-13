@@ -4,7 +4,7 @@
 // Created          : 12-18-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-08-2020
+// Last Modified On : 01-13-2020
 // ***********************************************************************
 // <copyright file="SpeakersApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -71,6 +71,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             var collaboratorsApiDtos = await this.collaboratorRepo.FindAllPublicApiPaged(
                 edition.Id,
                 request?.Keywords,
+                request?.Highlights,
                 Domain.Constants.CollaboratorType.Speaker,
                 request?.Page ?? 1,
                 request?.PageSize ?? 10);

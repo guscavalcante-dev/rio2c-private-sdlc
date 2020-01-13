@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-03-2020
+// Last Modified On : 01-13-2020
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -133,6 +133,25 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                                       && act.CollaboratorType.Name == collaboratorTypeName
                                                                                                                       && act.IsApiDisplayEnabled
                                                                                                                       && act.ApiHighlightPosition.HasValue)));
+            }
+
+            return query;
+        }
+
+        /// <summary>Finds the by API highlights.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
+        /// <param name="highlights">The highlights.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> FindByApiHighlights(this IQueryable<Collaborator> query, string collaboratorTypeName, int? highlights)
+        {
+            if (highlights == 0 || highlights == 1)
+            {
+                query = query.Where(o => o.AttendeeCollaborators.Any(ac => !ac.IsDeleted
+                                                                           && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
+                                                                                                                      && act.CollaboratorType.Name == collaboratorTypeName
+                                                                                                                      && act.IsApiDisplayEnabled
+                                                                                                                      && (highlights.Value == 1 ? act.ApiHighlightPosition.HasValue : !act.ApiHighlightPosition.HasValue))));
             }
 
             return query;
@@ -558,16 +577,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>Finds all public API paged.</summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="keywords">The keywords.</param>
+        /// <param name="highlights">The highlights.</param>
         /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<CollaboratorApiListDto>> FindAllPublicApiPaged(int editionId, string keywords, string collaboratorTypeName, int page, int pageSize)
+        public async Task<IPagedList<CollaboratorApiListDto>> FindAllPublicApiPaged(int editionId, string keywords, int? highlights, string collaboratorTypeName, int page, int pageSize)
         {
             var query = this.GetBaseQuery()
                                 .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeName, false, false, false, editionId)
                                 .IsApiDisplayEnabled(editionId, collaboratorTypeName)
-                                .FindByKeywords(keywords, editionId);
+                                .FindByKeywords(keywords, editionId)
+                                .FindByApiHighlights(collaboratorTypeName, highlights);
 
             return await query
                             .Select(c => new CollaboratorApiListDto
