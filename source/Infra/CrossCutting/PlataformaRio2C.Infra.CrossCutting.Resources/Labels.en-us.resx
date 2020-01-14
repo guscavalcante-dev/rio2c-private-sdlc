@@ -1982,4 +1982,8 @@
     <value>Audiovisual Subscription Project Report</value>
     <comment>Relatório de Inscrição de Projeto Audiovisual</comment>
   </data>
+  <data name="ProjectSubscriptions" xml:space="preserve">
+    <value>Project Subscriptions</value>
+    <comment>Inscrições de Projeto</comment>
+  </data>
 </root>

@@ -1989,4 +1989,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Relatório de Inscrição de Projeto Audiovisual</value>
     <comment>Relatório de Inscrição de Projeto Audiovisual</comment>
   </data>
+  <data name="ProjectSubscriptions" xml:space="preserve">
+    <value>Inscrições de Projeto</value>
+    <comment>Inscrições de Projeto</comment>
+  </data>
 </root>
