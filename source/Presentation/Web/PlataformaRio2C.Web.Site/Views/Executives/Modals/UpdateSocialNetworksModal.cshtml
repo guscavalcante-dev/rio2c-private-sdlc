@@ -9,9 +9,8 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("UpdateSocialNetworks", "Speakers", new { Area = "" }, FormMethod.Post, new { id = "UpdateSocialNetworksForm" }))
+                @using (Html.BeginForm("UpdateSocialNetworks", "Executives", new { Area = "" }, FormMethod.Post, new { id = "UpdateSocialNetworksForm" }))
                 {
-                    @Html.HiddenFor(m => m.CollaboratorUid)
                     <div id="form-container">
                         @Html.Partial("Modals/UpdateSocialNetworksForm", Model)
                     </div>

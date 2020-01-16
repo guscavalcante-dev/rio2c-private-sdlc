@@ -4,7 +4,7 @@
 // Created          : 09-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-21-2019
+// Last Modified On : 01-16-2020
 // ***********************************************************************
 // <copyright file="OnboardCollaboratorDataCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -81,6 +81,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.CropperImage?.ImageFile != null,
                 cmd.JobTitles?.Select(d => new CollaboratorJobTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.MiniBios?.Select(d => new CollaboratorMiniBio(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
+                cmd.Website,
+                cmd.Linkedin,
+                cmd.Twitter,
+                cmd.Instagram,
+                cmd.Youtube,
                 cmd.UserId);
             if (!collaborator.IsValid())
             {

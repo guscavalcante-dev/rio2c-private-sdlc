@@ -6,15 +6,15 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 01-16-2020
 // ***********************************************************************
-// <copyright file="speakers.socialnetworks.widget.js" company="Softo">
+// <copyright file="executives.socialnetworks.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var SpeakersSocialNetworksWidget = function () {
+var ExecutivesSocialNetworksWidget = function () {
 
-    var widgetElementId = '#SpeakerSocialNetworksWidget';
+    var widgetElementId = '#ExecutiveSocialNetworksWidget';
     var widgetElement = $(widgetElementId);
 
     var updateModalId = '#UpdateSocialNetworksModal';
@@ -33,7 +33,7 @@ var SpeakersSocialNetworksWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.collaboratorUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/ShowSocialNetworksWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Executives/ShowSocialNetworksWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -59,8 +59,8 @@ var SpeakersSocialNetworksWidget = function () {
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                if (typeof (SpeakersSocialNetworksWidget) !== 'undefined') {
-                    SpeakersSocialNetworksWidget.init();
+                if (typeof (ExecutivesSocialNetworksWidget) !== 'undefined') {
+                    ExecutivesSocialNetworksWidget.init();
                 }
             },
             onError: function (data) {
@@ -88,7 +88,7 @@ var SpeakersSocialNetworksWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.collaboratorUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/ShowUpdateSocialNetworksModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Executives/ShowUpdateSocialNetworksModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

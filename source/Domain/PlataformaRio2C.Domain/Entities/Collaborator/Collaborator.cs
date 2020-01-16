@@ -1181,14 +1181,19 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
         }
-        
-        /// <summary>Called when [data].</summary>
+
+        /// <summary>Onboard collaborator data.</summary>
         /// <param name="edition">The edition.</param>
-        /// <param name="sharePublicEmail">if set to <c>true</c> [share public email].</param>
+        /// <param name="sharePublicEmail">The share public email.</param>
         /// <param name="publicEmail">The public email.</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="jobTitles">The job titles.</param>
         /// <param name="miniBios">The mini bios.</param>
+        /// <param name="website">The website.</param>
+        /// <param name="linkedin">The linkedin.</param>
+        /// <param name="twitter">The twitter.</param>
+        /// <param name="instagram">The instagram.</param>
+        /// <param name="youtube">The youtube.</param>
         /// <param name="userId">The user identifier.</param>
         public void OnboardData(
             Edition edition,
@@ -1197,6 +1202,11 @@ namespace PlataformaRio2C.Domain.Entities
             bool isImageUploaded,
             List<CollaboratorJobTitle> jobTitles,
             List<CollaboratorMiniBio> miniBios,
+            string website,
+            string linkedin,
+            string twitter,
+            string instagram,
+            string youtube,
             int userId)
         {
             this.UpdatePublicEmail(sharePublicEmail, publicEmail);
@@ -1204,6 +1214,11 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
             this.OnboardAttendeeCollaboratorData(edition, userId);
+            this.Website = website?.Trim();
+            this.Linkedin = linkedin?.Trim();
+            this.Twitter = twitter?.Trim();
+            this.Instagram = instagram?.Trim();
+            this.Youtube = youtube?.Trim();
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;

@@ -446,6 +446,7 @@
     <Content Include="Assets\js\companies\companies.maininformation.widget.js" />
     <Content Include="Assets\js\dynamic.list.js" />
     <Content Include="Assets\js\executives\executives.company.widget.js" />
+    <Content Include="Assets\js\executives\executives.socialnetworks.widget.js" />
     <Content Include="Assets\js\executives\executives.maininformation.widget.js" />
     <Content Include="Assets\js\myrio2c.common.js" />
     <Content Include="Assets\js\myrio2c.companynumber.js" />
@@ -7263,6 +7264,9 @@
     <Content Include="Views\Projects\EvaluationDetails.cshtml" />
     <Content Include="Views\Projects\Widgets\BuyerEvaluationWidget.cshtml" />
     <Content Include="Views\SiteMailerService\ProjectBuyerEvaluationEmail.cshtml" />
+    <Content Include="Views\Executives\Widgets\SocialNetworksWidget.cshtml" />
+    <Content Include="Views\Executives\Modals\UpdateSocialNetworksModal.cshtml" />
+    <Content Include="Views\Executives\Modals\UpdateSocialNetworksForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
