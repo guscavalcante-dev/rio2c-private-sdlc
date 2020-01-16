@@ -1,17 +1,135 @@
-﻿@{
+﻿@using PlataformaRio2C.Domain.Dtos
+@using Entities = PlataformaRio2C.Domain.Entities
+@model ReportsAudiovisualSearchViewModel
+@{
     ViewBag.Title = Labels.AudiovisualSubscriptionProjectReport;
+    var genreInterests = ViewBag.GenreInterests as List<InterestDto>;
+    var targetAudiences = ViewBag.TargetAudience as List<Entities.TargetAudience>;
 }
 
+<div class="kt-portlet kt-portlet--mobile">
+    <div class="kt-portlet__head kt-portlet__head--lg">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="kt-font-brand flaticon2-line-chart"></i>
+            </span>
+            <h3 class="kt-portlet__head-title">
+                @Labels.AudiovisualSubscriptionProjectReport
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions">
+                </div>
+            </div>
+        </div>
+    </div>
 
-@Html.Partial("Audiovisual/Widgets/AudiovisualSubscriptionsWidget")
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-4 col-lg-5 mt-2">
+                @Html.Hidden("Page", Model.Page as int? ?? 1)
+                @Html.Hidden("PageSize", Model.PageSize as int? ?? 10)
+                @Html.TextBox("SearchKeywords", null, new { @class = "form-control mr-1", type = "search", placeholder = Labels.Search })
+            </div>
+            <div class="col-3 col-lg-4 mt-2">
+                <div class="row">
+                    <div class="col-4 col-lg-5">
+                        @Html.TextBox("StartDate", Model.StartDate?.ToShortDateString(), new { @class = "form-control enable-datepicker", @readonly = "readonly", data_date_start_date = "01/01/2019", data_date_end_date = DateTime.Today, placeholder = Labels.StartDate })
+                        @if (Model.StartDate.HasValue && Model.EndDate.HasValue)
+                        {
+                            <span id="data-period-container" class="form-text text-muted">@string.Format(Messages.DateBetweenDates, Model.EndDate.Value.ToShortDateString(), Model.StartDate.Value.ToShortDateString())</span>
+                        }
+                        else
+                        {
+                            <span id="data-period-container" class="form-text text-muted d-none"></span>
+                        }
+                        @Html.ValidationMessageFor(m => m.StartDate, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-0 col-lg-0 mt-2">
+                        @Labels.To
+                    </div>
+                    <div class="col-4 col-lg-5">
+                        @Html.TextBox("EndDate", Model.EndDate?.ToShortDateString(), new { @class = "form-control enable-datepicker", @readonly = "readonly", data_date_start_date = "01/01/2019", data_date_end_date = DateTime.Today, placeholder = Labels.EndDate })
+                        @if (Model.StartDate.HasValue && Model.EndDate.HasValue)
+                        {
+                            <span id="data-period-container" class="form-text text-muted">@string.Format(Messages.DateBetweenDates, Model.EndDate.Value.ToShortDateString(), Model.StartDate.Value.ToShortDateString())</span>
+                        }
+                        else
+                        {
+                            <span id="data-period-container" class="form-text text-muted d-none"></span>
+                        }
+                        @Html.ValidationMessageFor(m => m.EndDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-2 col-lg-1 mt-2">
+                <button type="button" class="btn btn-primary btn-icon" onclick="ReportsAudiovisualSubscriptionWidget.search();"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4 col-sm-4 mt-2">
+                <select name="InterestUid" id="InterestUid" class="form-control">
+                    <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Genre.ToLowerInvariant()))...</option>
+                    @foreach (var interestDto in genreInterests)
+                    {
+                        <option value="@interestDto.Interest.Uid" @(interestDto.Interest.Uid == Model.InterestUid ? "selected" : string.Empty)>
+                            @interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                        </option>
+                    }
+                </select>
+            </div>
+            <div class="col-2 col-lg-3 mt-2">
+                <select name="TargetAudienceUid" id="TargetAudienceUid" class="form-control select2-selection--multiple">
+                    <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Status.ToLowerInvariant()))...</option>
+                    @foreach (var targetAudience in targetAudiences)
+                    {
+                        <option value="@targetAudience.Uid" @(targetAudience.Uid == Model.TargetAudienceUid ? "selected" : string.Empty)>
+                            @targetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                        </option>
+                    }
+                </select>
+            </div>
+            <div class="col-4 col-lg-4 mt-2">
+                <div class="kt-checkbox-list">
+                    <label class="kt-checkbox mt-2">
+                        @Html.CheckBox("IsPitching", false, new { @class = "enable-datatable-reload" }) @Labels.ProjectsForPitching?
+                        <span></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="kt-portlet kt-portlet--height-fluid">
+            <div class="kt-portlet__body">
+                <div id="ReportAudiovisualSubscriptionWidget" style="overflow: auto;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @section Styles {
     @Styles.Render("~/bundles/css/select2.css")
+    @Styles.Render("~/bundles/css/bootstrap-datepicker.css")
 }
 @section Scripts {
     @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/select2.js")
+    @Scripts.Render("~/bundles/js/bootstrap-datepicker.js")
     @Scripts.Render("~/bundles/js/reports.audiovisual.subscriptions.widget.js")
     <script>
+         var translations = {
+            selectPlaceholder: '@Labels.SelectAMEntity',
+            genre: '@Html.Raw(Labels.Genre.ToLowerInvariant())',
+            targetAudience: '@Html.Raw(Labels.TargetAudience.ToLowerInvariant())',
+            startDate: '@Html.Raw(Labels.StartDate.ToLowerInvariant())',
+            endDate: '@Html.Raw(Labels.EndDate.ToLowerInvariant())',
+        };
         jQuery(document).ready(function () {
             ReportsAudiovisualSubscriptionWidget.init();
         });

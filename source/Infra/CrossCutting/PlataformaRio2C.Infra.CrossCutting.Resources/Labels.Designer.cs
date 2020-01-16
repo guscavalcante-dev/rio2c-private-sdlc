@@ -2671,6 +2671,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pitching.
+        /// </summary>
+        public static string Pitching {
+            get {
+                return ResourceManager.GetString("Pitching", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MyRio2C.
         /// </summary>
         public static string PlatformRio2C {
@@ -2963,6 +2972,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to QTD Produtora.
+        /// </summary>
+        public static string ProducerQty {
+            get {
+                return ResourceManager.GetString("ProducerQty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Produtoras.
         /// </summary>
         public static string Producers {
@@ -3071,6 +3089,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ID do Projeto.
+        /// </summary>
+        public static string ProjectId {
+            get {
+                return ResourceManager.GetString("ProjectId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Informações do Projeto.
         /// </summary>
         public static string ProjectInfo {
@@ -3121,6 +3148,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ProjectsForPitching {
             get {
                 return ResourceManager.GetString("ProjectsForPitching", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to QTD Projetos Por Produtora.
+        /// </summary>
+        public static string ProjectsPerProducerQty {
+            get {
+                return ResourceManager.GetString("ProjectsPerProducerQty", resourceCulture);
             }
         }
         

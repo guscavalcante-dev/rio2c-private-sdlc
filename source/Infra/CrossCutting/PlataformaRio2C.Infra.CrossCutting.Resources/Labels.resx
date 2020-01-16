@@ -1993,4 +1993,20 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Inscrições de Projeto</value>
     <comment>Inscrições de Projeto</comment>
   </data>
+  <data name="Pitching" xml:space="preserve">
+    <value>Pitching</value>
+    <comment>Pitching</comment>
+  </data>
+  <data name="ProducerQty" xml:space="preserve">
+    <value>QTD Produtora</value>
+    <comment>QTD Produtora</comment>
+  </data>
+  <data name="ProjectId" xml:space="preserve">
+    <value>ID do Projeto</value>
+    <comment>ID do Projeto</comment>
+  </data>
+  <data name="ProjectsPerProducerQty" xml:space="preserve">
+    <value>QTD Projetos Por Produtora</value>
+    <comment>QTD Projetos Por Produtora</comment>
+  </data>
 </root>

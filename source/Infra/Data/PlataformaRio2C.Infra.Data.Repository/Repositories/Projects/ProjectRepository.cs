@@ -109,6 +109,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             {
                 var outerWhere = PredicateBuilder.New<Project>(false);
                 var innerProjectTitleNameWhere = PredicateBuilder.New<Project>(true);
+                var innerProjectSummaryNameWhere = PredicateBuilder.New<Project>(true);
                 var innerProjectInterestNameWhere = PredicateBuilder.New<Project>(true);
                 var innerSellerAttendeeOrganizationNameWhere = PredicateBuilder.New<Project>(true);
 
@@ -117,12 +118,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                     if (!string.IsNullOrEmpty(keyword))
                     {
                         innerProjectTitleNameWhere = innerProjectTitleNameWhere.Or(p => p.ProjectTitles.Any(pt => !pt.IsDeleted && pt.Value.Contains(keyword)));
+                        innerProjectSummaryNameWhere = innerProjectSummaryNameWhere.Or(p => p.ProjectSummaries.Any(pt => !pt.IsDeleted && pt.Value.Contains(keyword)));
                         innerProjectInterestNameWhere = innerProjectInterestNameWhere.Or(p => p.ProjectInterests.Any(pi => !pi.IsDeleted && pi.Interest.Name.Contains(keyword)));
                         innerSellerAttendeeOrganizationNameWhere = innerSellerAttendeeOrganizationNameWhere.Or(sao => sao.SellerAttendeeOrganization.Organization.Name.Contains(keyword));
                     }
                 }
 
                 outerWhere = outerWhere.Or(innerProjectTitleNameWhere);
+                outerWhere = outerWhere.Or(innerProjectSummaryNameWhere);
                 outerWhere = outerWhere.Or(innerProjectInterestNameWhere);
                 outerWhere = outerWhere.Or(innerSellerAttendeeOrganizationNameWhere);
                 query = query.Where(outerWhere);
@@ -177,6 +180,41 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds by target audience uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="targetAudienceUid">The target audience uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> FindByTargetAudienceUid(this IQueryable<Project> query, Guid? targetAudienceUid)
+        {
+            if (targetAudienceUid != null)
+            {
+                query = query.Where(p => p.ProjectTargetAudiences.Any(pi => !pi.IsDeleted
+                                                                      && !pi.TargetAudience.IsDeleted
+                                                                      && pi.TargetAudience.Uid == targetAudienceUid));
+            }
+
+            return query;
+        }
+
+        /// <summary>Finds by the start and end date</summary>
+        /// <param name="query"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns></returns>
+        internal static IQueryable<Project> FindByDate(this IQueryable<Project> query, DateTime? startDate, DateTime? endDate)
+        {
+            if (startDate != null)
+            {
+                query = query.Where(p => p.CreateDate >= startDate || p.FinishDate >= startDate);
+            }
+            if (endDate != null)
+            {
+                var maxEndDate = new DateTime(endDate.Value.Year, endDate.Value.Month, endDate.Value.Day, 23, 59, 59);
+                query = query.Where(p => p.CreateDate <= maxEndDate || p.FinishDate <= maxEndDate);
+            }
+            return query;
+        }
+
         /// <summary>Finds the by project evaluation status.</summary>
         /// <param name="query">The query.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
@@ -219,9 +257,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>Determines whether is pitching</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
-        internal static IQueryable<Project> IsPitching(this IQueryable<Project> query)
+        internal static IQueryable<Project> IsPitching(this IQueryable<Project> query, bool isPitching = true)
         {
-            query = query.Where(p => p.IsPitching);
+            if (isPitching)
+            {
+                query = query.Where(p => p.IsPitching);
+            }
 
             return query;
         }
@@ -448,12 +489,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
         public async Task<IPagedList<ProjectBaseDto>> FindAllPitchingBaseDtosByFiltersAndByPageAsync(
-            int page, 
+            int page,
             int pageSize,
             List<Tuple<string, string>> sortColumns,
-            string keywords, 
-            Guid? interestUid, 
-            string languageCode, 
+            string keywords,
+            Guid? interestUid,
+            string languageCode,
             int editionId)
         {
             var query = this.GetBaseQuery()
@@ -496,10 +537,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
         public async Task<List<ProjectDto>> FindAllPitchingDtosByFiltersAsync(
-            string keywords, 
-            Guid? interestUid, 
-            List<Guid> projectUids, 
-            string languageCode, 
+            string keywords,
+            Guid? interestUid,
+            List<Guid> projectUids,
+            string languageCode,
             int editionId)
         {
             var query = this.GetBaseQuery()
@@ -893,7 +934,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<int> CountAllByDataTable(
             int editionId,
             bool showAllEditions = false)
-            
+
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId, showAllEditions)
@@ -906,14 +947,109 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         #endregion
 
         #region Project Reports
-        public async Task<List<ProjectDto>> FindAudiovisualSubscribedProjectsDtosByFilterAsync()
+        /// <summary>Finds the audiovisual subscribed project list</summary>
+        /// <param name="keywords"></param>
+        /// <param name="interestUid"></param>
+        /// <param name="editionId"></param>
+        /// <param name="isPitching"></param>
+        /// <param name="targetAudienceUid"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="showAllEditions"></param>
+        /// <returns></returns>
+        public IEnumerable<AudiovisualProjectSubscriptionDto> FindAudiovisualSubscribedProjectsDtosByFilter(string keywords, Guid? interestUid, int editionId, bool isPitching, Guid? targetAudienceUid, DateTime? startDate, DateTime? endDate, bool showAllEditions = false)
         {
             var query = this.GetBaseQuery()
-                                .Select(p => new ProjectDto() { 
-                                    Project = p
+                                .FindByKeywords(keywords)
+                                .FindByInterestUid(interestUid)
+                                .FindByEditionId(editionId, showAllEditions)
+                                .IsFinished()
+                                .IsPitching(isPitching)
+                                .FindByTargetAudienceUid(targetAudienceUid)
+                                .FindByDate(startDate, endDate)
+                                .Select(p => new AudiovisualProjectSubscriptionDto()
+                                {
+                                    Project = p,
+                                    SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                    {
+                                        AttendeeOrganization = p.SellerAttendeeOrganization,
+                                        Organization = p.SellerAttendeeOrganization.Organization,
+                                        Edition = p.SellerAttendeeOrganization.Edition,
+                                    },
+                                    ProjectTitleDtos = p.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                    {
+                                        ProjectTitle = t,
+                                        Language = t.Language
+                                    }),
+                                    ProjectSummaryDtos = p.ProjectSummaries.Where(s => !s.IsDeleted).Select(s => new ProjectSummaryDto
+                                    {
+                                        ProjectSummary = s,
+                                        Language = s.Language
+                                    }),
+                                    ProjectLogLineDtos = p.ProjectLogLines.Where(l => !l.IsDeleted).Select(l => new ProjectLogLineDto
+                                    {
+                                        ProjectLogLine = l,
+                                        Language = l.Language
+                                    }),
+                                    ProjectProductionPlanDtos = p.ProjectProductionPlans.Where(pp => !pp.IsDeleted).Select(pp => new ProjectProductionPlanDto
+                                    {
+                                        ProjectProductionPlan = pp,
+                                        Language = pp.Language
+                                    }),
+                                    ProjectAdditionalInformationDtos = p.ProjectAdditionalInformations.Where(a => !a.IsDeleted).Select(a => new ProjectAdditionalInformationDto
+                                    {
+                                        ProjectAdditionalInformation = a,
+                                        Language = a.Language
+                                    }),
+                                    ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted).Select(i => new ProjectInterestDto
+                                    {
+                                        ProjectInterest = i,
+                                        Interest = i.Interest,
+                                        InterestGroup = i.Interest.InterestGroup
+                                    }),
+                                    ProjectBuyerEvaluationDtos = p.ProjectBuyerEvaluations.Where(be => !be.IsDeleted).Select(be => new ProjectBuyerEvaluationDto
+                                    {
+                                        ProjectBuyerEvaluation = be,
+                                        BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                        {
+                                            AttendeeOrganization = be.BuyerAttendeeOrganization,
+                                            Organization = be.BuyerAttendeeOrganization.Organization,
+                                            Edition = be.BuyerAttendeeOrganization.Edition
+                                        },
+                                        ProjectEvaluationStatus = be.ProjectEvaluationStatus
+                                    }),
+                                    ProjectTargetAudienceDtos = p.ProjectTargetAudiences.Where(ta => !ta.IsDeleted).Select(ta => new ProjectTargetAudienceDto
+                                    {
+                                        TargetAudience = ta.TargetAudience
+                                    })
                                 });
-            return await query.ToListAsync();
+            return query;
         }
+
+        /// <summary>Finds the audiovisual subscribed project list by page</summary>
+        /// <param name="keywords"></param>
+        /// <param name="interestUid"></param>
+        /// <param name="editionId"></param>
+        /// <param name="isPitching"></param>
+        /// <param name="targetAudienceUid"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="showAllEditions"></param>
+        /// <returns></returns>
+        public async Task<IPagedList<AudiovisualProjectSubscriptionDto>> FindAudiovisualSubscribedProjectsDtosByFilterAndByPageAsync(string keywords, Guid? interestUid, int editionId, bool isPitching, Guid? targetAudienceUid, DateTime? startDate, DateTime? endDate, int page = 1, int pageSize = 10, bool showAllEditions = false)
+        {
+            return await FindAudiovisualSubscribedProjectsDtosByFilter(keywords, interestUid, editionId, isPitching, targetAudienceUid, startDate, endDate, showAllEditions)
+                            .OrderBy(p => p.Project.CreateDate)
+                            .ToPagedListAsync(page, pageSize);
+        }
+
+        //public async Task<List<ProjectDto>> FindAudiovisualSubscribedProjectsDtosByFilterAndByPageAsync(int editionId, bool showAllEditions = false, int page, int pageSize)
+        //{
+        //    return FindAudiovisualSubscribedProjectsDtosByFilter(editionId, showAllEditions);
+
+        //}
         #endregion
 
         #region Old methods

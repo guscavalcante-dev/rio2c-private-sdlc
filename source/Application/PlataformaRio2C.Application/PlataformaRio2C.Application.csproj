@@ -561,6 +561,7 @@
     <Compile Include="ViewModels\Common\Quiz\AnswerEditAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Quiz\AnswerItemListAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Quiz\QuizBasicAppViewModel.cs" />
+    <Compile Include="ViewModels\Common\Reports\ReportsAudiovisualSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\RoleLecturer\RoleLecturerEditAppViewModel.cs" />
     <Compile Include="ViewModels\Common\RoleLecturer\RoleLecturerTitleAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Conference\LecturerJobTitleAppViewModel.cs" />

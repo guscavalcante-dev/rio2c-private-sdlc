@@ -1,22 +1,249 @@
-﻿@*@model RoomSearchViewModel*@
-<!--begin:: DataTable Widget-->
-<div id="ReportAudiovisualSubscriptionWidget" class="kt-portlet kt-portlet--mobile">
-    <div class="kt-portlet__head kt-portlet__head--lg">
-        <div class="kt-portlet__head-label">
-            <span class="kt-portlet__head-icon">
-                <i class="kt-font-brand flaticon2-line-chart"></i>
-            </span>
-            <h3 class="kt-portlet__head-title">
-                @Labels.AudiovisualSubscriptionProjectReport
-            </h3>
-        </div>
-        <div class="kt-portlet__head-toolbar">
-            <div class="kt-portlet__head-wrapper">
-                <div class="kt-portlet__head-actions">
-                    <div>Olá</div>
+﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Entities
+@using PlataformaRio2C.Domain.Statics
+@using Constants = PlataformaRio2C.Domain.Constants;
+@using X.PagedList.Mvc
+@using X.PagedList.Mvc.Common
+@model X.PagedList.IPagedList<AudiovisualProjectSubscriptionDto>
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+    var pageNumber = ViewBag.Page as int? ?? 1;
+    var pageSize = ViewBag.PageSize as int? ?? 10;
+}
+<!--begin::List-->
+@if (Model?.Any() == true)
+{
+    <!--begin: Table -->
+    <table class="table table-striped table-bordered table-hover table-checkable">
+        <thead>
+            <tr>
+                <th class="text-left text-nowrap">@Labels.ProducerQty</th>
+                <th class="text-left text-nowrap">@Labels.ProjectsPerProducerQty</th>
+                <th class="text-left text-nowrap">@Labels.ProjectId</th>
+                <th class="text-left text-nowrap">@Labels.Producer</th>
+                <th class="text-left text-nowrap">@Labels.Name</th>
+                <th class="text-left text-nowrap">@Labels.BadgeName</th>
+                <th class="text-left text-nowrap">@Labels.Email</th>
+                <th class="text-left text-nowrap">@Labels.Title - @Labels.Portuguese</th>
+                <th class="text-left text-nowrap">@Labels.Title - @Labels.English</th>
+                <th class="text-left text-nowrap">@Labels.Pitching?</th>
+                <th class="text-left text-nowrap">@Labels.PlayersSelectedForEvaluation</th>
+                <th class="text-left text-nowrap">@Labels.CreateDate</th>
+                <th class="text-left text-nowrap">@Labels.SendDate</th>
+                <th class="text-left text-nowrap">@Labels.Platforms</th>
+                <th class="text-left text-nowrap">@Labels.ProjectStatus</th>
+                <th class="text-left text-nowrap">@Labels.MarketLookingFor</th>
+                <th class="text-left text-nowrap">@Labels.Format</th>
+                <th class="text-left text-nowrap">@Labels.Genre</th>
+                <th class="text-left text-nowrap">@Labels.SubGenre</th>
+                <th class="text-left text-nowrap">@Labels.TargetAudience</th>
+                <th class="text-left text-nowrap">@Labels.Summary - @Labels.Portuguese</th>
+                <th class="text-left text-nowrap">@Labels.Summary - @Labels.English</th>
+            </tr>
+        </thead>
+        @{ 
+            var producerQty = 0;
+         }
+
+        @foreach (var projectDto in Model)
+        {
+            var projectTitle = projectDto.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value;
+            var sellerCollaborator = projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.AttendeeOrganizationCollaborators;
+
+            producerQty += ((pageNumber - 1) * pageSize) + 1;
+
+            <tbody>
+                <tr>
+                    <td class="text-right">@(producerQty)</td>
+                    <td class="text-right">@(projectDto.ProjectPerProducerCount)</td>
+                    <td class="text-right">@(projectDto.Project.Id)</td>
+                    <td>@(projectDto.SellerAttendeeOrganizationDto?.Organization?.Name)</td>
+                    <td width="200px">
+                        @foreach (var item in sellerCollaborator)
+                        {
+                            @item.AttendeeCollaborator.Collaborator.GetFullName();
+                        };
+                    </td>
+                    <td>
+                        @foreach (var item in sellerCollaborator)
+                        {
+                            @Html.Raw(!string.IsNullOrEmpty(item.AttendeeCollaborator.Collaborator.Badge) ? string.Format("{0}{1}", item.AttendeeCollaborator.Collaborator.Badge, ";") : string.Empty);
+                        }
+                    </td>
+                    <td>
+                        @foreach (var item in sellerCollaborator)
+                        {
+                            @Html.Raw(!string.IsNullOrEmpty(item.AttendeeCollaborator.Collaborator.PublicEmail) ? string.Format("{0}{1}", item.AttendeeCollaborator.Collaborator.PublicEmail, ";") : string.Empty);
+                        }
+                    </td>
+                    <td>@(projectDto.GetTitleDtoByLanguageCode(Constants.Culture.Portuguese)?.ProjectTitle?.Value)</td>
+                    <td>@(projectDto.GetTitleDtoByLanguageCode(Constants.Culture.English)?.ProjectTitle?.Value)</td>
+                    <td>@(projectDto.Project.IsPitching ? Labels.Yes : Labels.No)</td>
+                    <td>
+                        @{ var firstLine = true;}
+                        @foreach (var item in projectDto.ProjectBuyerEvaluationDtos)
+                        {
+                            @Html.Raw(string.Format("{0}{1}", firstLine ? "" : " / ", item.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization.Name));
+                            @Html.Raw(string.Format("{0}{1}", " | ", item.ProjectBuyerEvaluation.ProjectEvaluationStatus.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')));
+                            firstLine = false;
+                        };
+                    </td>
+                    <td>@(projectDto.Project.CreateDate)</td>
+                    <td>@(projectDto.Project.FinishDate)</td>
+                    <td>
+                        @{
+                            firstLine = true;
+                            var projectFormatsDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.Format.Uid);
+                            foreach (var interestDto in projectFormatsDtos)
+                            {
+                                @Html.Raw(string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')));
+                                firstLine = false;
+                            }
+                        }
+                    </td>
+                    <td>
+                        @{
+                            firstLine = true;
+                            var projectStatusDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.ProjectStatus.Uid);
+                            foreach (var interestDto in projectStatusDtos)
+                            {
+                                @Html.Raw(string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')));
+                                firstLine = false;
+                            }
+                        }
+                    </td>
+                    <td>
+                        @{
+                            firstLine = true;
+                            var projectLookingForDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.LookingFor.Uid);
+                            foreach (var interestDto in projectLookingForDtos)
+                            {
+                                @Html.Raw(string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')));
+                                firstLine = false;
+                            }
+                        }
+                    </td>
+                    <td>
+                        @{
+                            firstLine = true;
+                            var projectFormatDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.Format.Uid);
+                            foreach (var interestDto in projectFormatDtos)
+                            {
+                                @Html.Raw(string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')));
+                                firstLine = false;
+                            }
+                        }
+                    </td>
+                    <td>
+                        @{
+                            firstLine = true;
+                            var projectGenreDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.Genre.Uid);
+                            foreach (var interestDto in projectGenreDtos)
+                            {
+                                @Html.Raw(string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')));
+                                firstLine = false;
+                            }
+                        }
+                    </td>
+                    <td>
+                        @{
+                            firstLine = true;
+                            var projectSubgenreDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.SubGenre.Uid);
+                            foreach (var interestDto in projectSubgenreDtos)
+                            {
+                                @Html.Raw(string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')));
+                                firstLine = false;
+                            }
+                        }
+                    </td>
+                    <td>
+                        @{
+                            firstLine = true;
+                            foreach (var item in projectDto.ProjectTargetAudienceDtos)
+                            {
+                                @Html.Raw(string.Format("{0}{1}", firstLine ? "" : ", ", item.TargetAudience.Name));
+                                firstLine = false;
+                            }
+                        }
+                    </td>
+                    <td class="text-left text-nowrap">@(projectDto.GetSummaryDtoByLanguageCode(Constants.Culture.Portuguese).ProjectSummary.Value)</td>
+                    <td class="text-left text-nowrap">@(projectDto.GetSummaryDtoByLanguageCode(Constants.Culture.English).ProjectSummary.Value)</td>
+                </tr>
+            </tbody>
+        }
+    </table>
+    <!--end: Datatable -->
+    <!--end::List-->
+    <!--begin::Pagination-->
+    <div class="row">
+        <div class="col-xl-12">
+            <!--begin:: Components/Pagination/Default-->
+            <div class="kt-portlet">
+                <div class="kt-portlet__body">
+                    <!--begin: Pagination-->
+                    <div class="kt-pagination kt-pagination--brand justify-content-center justify-content-sm-between">
+                        @Html.PagedListPager(
+                            Model,
+                            page => Url.Action("ShowAudiovisualSubscriptionsWidget", "Reports", new { Search = ViewBag.SearchKeywords, InterestUid = ViewBag.InterestUid, IsPitching = ViewBag.IsPitching, page, PageSize = ViewBag.PageSize }),
+                            PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
+                                new PagedListRenderOptions
+                                {
+                                    DisplayLinkToIndividualPages = true,
+                                    MaximumPageNumbersToDisplay = 3,
+                                    DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                                    DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                                    DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                                    //ContainerDivClasses = new string[] { "kt-pagination kt-pagination--brand" },
+                                    UlElementClasses = new string[] { "kt-pagination__links" },
+                                    LiElementClasses = new string[] { "" },
+                                    PreviousElementClass = "kt-pagination__link--prev",
+                                    NextElementClass = "kt-pagination__link--next",
+                                    ClassToApplyToFirstListItemInPager = "kt-pagination__link--first",
+                                    ClassToApplyToLastListItemInPager = "kt-pagination__link--last kt-font-brand",
+                                    ActiveLiElementClass = "kt-pagination__link--active",
+                                    PageClasses = new string[] { "" },
+                                    EllipsesElementClass = ""
+                                }
+                                , new AjaxOptions { HttpMethod = "Post", OnBegin = "ReportsAudiovisualSubscriptionWidget.changePage", OnSuccess = "ReportsAudiovisualSubscriptionWidget.handlePaginationReturn" }))
+                        <div class="kt-pagination__toolbar">
+                            @Html.DropDownList("PageSizeDropdown", new SelectList(new[] { 1, 5, 10, 15, 30 }, ViewBag.PageSize), null, new { @class = "form-control kt-font-brand", style = "width: 60px;" })
+                            @Html.PagedListPager(
+                                Model,
+                                page => Url.Action(null, new { page }),
+                                PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
+                                    new PagedListRenderOptions
+                                    {
+                                        ItemSliceAndTotalFormat = Messages.PaginationMessage,
+                                        DisplayItemSliceAndTotal = true,
+                                        DisplayLinkToIndividualPages = false,
+                                        DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+                                        DisplayLinkToPreviousPage = PagedListDisplayMode.Never,
+                                        DisplayLinkToNextPage = PagedListDisplayMode.Never,
+                                        DisplayLinkToLastPage = PagedListDisplayMode.Never,
+                                        ContainerDivClasses = new[] { "pagination__desc" },
+                                        UlElementClasses = new string[] { "pagination mb-0" },
+                                        LiElementClasses = new string[] { "page-item" },
+                                        PageClasses = new string[] { "page-link" }
+                                    }, null))
+                        </div>
+                    </div>
+                    <!--end: Pagination-->
                 </div>
+            </div>
+            <!--end:: Components/Pagination/Default-->
+        </div>
+    </div>
+    <!--end::Pagination-->
+}
+else
+{
+    <div class="kt-portlet">
+        <div class="kt-portlet__body">
+            <div class="row">
+                <div class="col-12 text-center">@string.Format(Messages.NoneEntityAction, Labels.Project.ToLowerInvariant(), Labels.FoundM)</div>
             </div>
         </div>
     </div>
-</div>
-<!--end:: DataTable Widget-->
+}

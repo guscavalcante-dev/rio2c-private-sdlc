@@ -1986,4 +1986,20 @@
     <value>Project Subscriptions</value>
     <comment>Inscrições de Projeto</comment>
   </data>
+  <data name="Pitching" xml:space="preserve">
+    <value>Pitching</value>
+    <comment>Pitching</comment>
+  </data>
+  <data name="ProducerQty" xml:space="preserve">
+    <value>QTD Producer</value>
+    <comment>QTD Produtora</comment>
+  </data>
+  <data name="ProjectId" xml:space="preserve">
+    <value>Projeto ID</value>
+    <comment>ID do Projeto</comment>
+  </data>
+  <data name="ProjectsPerProducerQty" xml:space="preserve">
+    <value>QTD Projects Per Producer</value>
+    <comment>QTD Projetos Por Produtora</comment>
+  </data>
 </root>
