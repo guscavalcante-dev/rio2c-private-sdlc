@@ -11,16 +11,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
 using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -28,22 +23,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>UpdateCollaboratorSocialNetworksCommandHandler</summary>
     public class UpdateCollaboratorSocialNetworksCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<UpdateCollaboratorSocialNetworks, AppValidationResult>
     {
-        private readonly IEditionRepository editionRepo;
-        private readonly ICollaboratorTypeRepository collaboratorTypeRepo;
-        private readonly ILanguageRepository languageRepo;
-
+        /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorSocialNetworksCommandHandler"/> class.</summary>
+        /// <param name="eventBus">The event bus.</param>
+        /// <param name="uow">The uow.</param>
+        /// <param name="collaboratorRepository">The collaborator repository.</param>
         public UpdateCollaboratorSocialNetworksCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            ICollaboratorRepository collaboratorRepository,
-            IEditionRepository editionRepository,
-            ICollaboratorTypeRepository collaboratorTypeRepository,
-            ILanguageRepository languageRepository)
+            ICollaboratorRepository collaboratorRepository)
             : base(eventBus, uow, collaboratorRepository)
         {
-            this.editionRepo = editionRepository;
-            this.collaboratorTypeRepo = collaboratorTypeRepository;
-            this.languageRepo = languageRepository;
         }
 
         /// <summary>Handles the specified update collaborator social networks.</summary>
@@ -67,7 +56,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #endregion
 
             collaborator.UpdateSocialNetworks(
-                await this.collaboratorTypeRepo.FindByNameAsunc(cmd.CollaboratorTypeName),
                 cmd.Website,
                 cmd.Linkedin,
                 cmd.Twitter,

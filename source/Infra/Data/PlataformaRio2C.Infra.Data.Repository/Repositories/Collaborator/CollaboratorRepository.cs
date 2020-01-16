@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-13-2020
+// Last Modified On : 01-16-2020
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -390,6 +390,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 //    Name = c.Holding.Name
                                 //},
                                 ImageUploadDate = c.ImageUploadDate,
+                                Website = c.Website,
+                                Linkedin = c.Linkedin,
+                                Twitter = c.Twitter,
+                                Instagram = c.Instagram,
+                                Youtube = c.Youtube,
                                 CreateDate = c.CreateDate,
                                 CreateUserId = c.CreateUserId,
                                 UpdateDate = c.UpdateDate,

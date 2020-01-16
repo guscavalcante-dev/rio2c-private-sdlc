@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-12-2019
+// Last Modified On : 01-16-2020
 // ***********************************************************************
 // <copyright file="CollaboratorDataBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -45,6 +45,26 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [DataType(DataType.EmailAddress)]
         public string PublicEmail { get; set; }
 
+        [Display(Name = "Website", ResourceType = typeof(Labels))]
+        [StringLength(300, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string Website { get; set; }
+
+        [Display(Name = "LinkedIn")]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string Linkedin { get; set; }
+
+        [Display(Name = "Twitter")]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string Twitter { get; set; }
+
+        [Display(Name = "Instagram")]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string Instagram { get; set; }
+
+        [Display(Name = "YouTube")]
+        [StringLength(300, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string Youtube { get; set; }
+
         public List<AttendeeOrganizationBaseCommand> AttendeeOrganizationBaseCommands { get; set; }
         public List<CollaboratorJobTitleBaseCommand> JobTitles { get; set; }
         public List<CollaboratorMiniBioBaseCommand> MiniBios { get; set; }
@@ -80,6 +100,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.CellPhone = entity?.CellPhone;
             this.SharePublicEmail = !string.IsNullOrEmpty(entity?.PublicEmail);
             this.PublicEmail = entity?.PublicEmail;
+            this.Website = entity?.Website;
+            this.Linkedin = entity?.Linkedin;
+            this.Twitter = entity?.Twitter;
+            this.Instagram = entity?.Instagram;
+            this.Youtube = entity?.Youtube;
             this.UpdateOrganizations(entity, attendeeOrganizationsBaseDtos);
             this.UpdateJobTitles(entity, languagesDtos, isJobTitleRequired);
             this.UpdateMiniBios(entity, languagesDtos, isMiniBioRequired);

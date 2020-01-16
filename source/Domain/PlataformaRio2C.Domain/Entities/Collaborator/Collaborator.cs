@@ -92,7 +92,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateUserId = this.UpdateUserId = userId;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class for full create on admin.</summary>
+        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class for admin.</summary>
         /// <param name="uid">The uid.</param>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="edition">The edition.</param>
@@ -105,6 +105,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="cellPhone">The cell phone.</param>
         /// <param name="sharePublicEmail">The share public email.</param>
         /// <param name="publicEmail">The public email.</param>
+        /// <param name="website">The website.</param>
+        /// <param name="linkedin">The linkedin.</param>
+        /// <param name="twitter">The twitter.</param>
+        /// <param name="instagram">The instagram.</param>
+        /// <param name="youtube">The youtube.</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="jobTitles">The job titles.</param>
         /// <param name="miniBios">The mini bios.</param>
@@ -122,6 +127,11 @@ namespace PlataformaRio2C.Domain.Entities
             string cellPhone,
             bool? sharePublicEmail,
             string publicEmail,
+            string website,
+            string linkedin,
+            string twitter,
+            string instagram,
+            string youtube,
             bool isImageUploaded,
             List<CollaboratorJobTitle> jobTitles,
             List<CollaboratorMiniBio> miniBios,
@@ -135,12 +145,15 @@ namespace PlataformaRio2C.Domain.Entities
             this.CellPhone = cellPhone?.Trim();
             this.UpdatePublicEmail(sharePublicEmail, publicEmail);
             this.UpdateImageUploadDate(isImageUploaded, false);
+
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
+
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
             this.SynchronizeAttendeeCollaborators(edition, collaboratorType, false, null, attendeeOrganizations, true, userId);
+            this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
             this.UpdateUser(email);
         }
 
@@ -255,6 +268,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="cellPhone">The cell phone.</param>
         /// <param name="sharePublicEmail">The share public email.</param>
         /// <param name="publicEmail">The public email.</param>
+        /// <param name="website">The website.</param>
+        /// <param name="linkedin">The linkedin.</param>
+        /// <param name="twitter">The twitter.</param>
+        /// <param name="instagram">The instagram.</param>
+        /// <param name="youtube">The youtube.</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
         /// <param name="jobTitles">The job titles.</param>
@@ -273,6 +291,11 @@ namespace PlataformaRio2C.Domain.Entities
             string cellPhone,
             bool? sharePublicEmail,
             string publicEmail,
+            string website,
+            string linkedin,
+            string twitter,
+            string instagram,
+            string youtube,
             bool isImageUploaded,
             bool isImageDeleted,
             List<CollaboratorJobTitle> jobTitles,
@@ -288,9 +311,12 @@ namespace PlataformaRio2C.Domain.Entities
             this.CellPhone = cellPhone?.Trim();
             this.UpdatePublicEmail(sharePublicEmail, publicEmail);
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
+            this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
+
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
+
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
             this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, null, attendeeOrganizations, isAddingToCurrentEdition, userId);
@@ -391,7 +417,6 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>Updates the social networks.</summary>
-        /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="website">The website.</param>
         /// <param name="linkedin">The linkedin.</param>
         /// <param name="twitter">The twitter.</param>
@@ -399,7 +424,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="youtube">The youtube.</param>
         /// <param name="userId">The user identifier.</param>
         public void UpdateSocialNetworks(
-            CollaboratorType collaboratorType,
             string website,
             string linkedin,
             string twitter,
