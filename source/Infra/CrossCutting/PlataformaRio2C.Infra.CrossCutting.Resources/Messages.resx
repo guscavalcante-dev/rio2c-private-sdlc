@@ -867,4 +867,24 @@
     <value>{0} Relacionadas</value>
     <comment>{0} Relacionadas</comment>
   </data>
+  <data name="InstagramUser" xml:space="preserve">
+    <value>O usuário do Instagram.</value>
+    <comment>O usuário do Instagram.</comment>
+  </data>
+  <data name="LinkedinUser" xml:space="preserve">
+    <value>O usuário do LinkedIn.</value>
+    <comment>O usuário do LinkedIn.</comment>
+  </data>
+  <data name="TwitterUser" xml:space="preserve">
+    <value>O usuário do Twitter.</value>
+    <comment>O usuário do Twitter.</comment>
+  </data>
+  <data name="WebsiteUrl" xml:space="preserve">
+    <value>A url do site.</value>
+    <comment>A url do site.</comment>
+  </data>
+  <data name="YoutubeUrl" xml:space="preserve">
+    <value>A url do YouTube.</value>
+    <comment>A url do YouTube.</comment>
+  </data>
 </root>

@@ -182,6 +182,7 @@
     <Compile Include="CQRS\CommandsHandlers\Collaborators\CreateTinyCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\DeleteCollaboratorOrganizationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\DeleteCollaboratorTicketCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorSocialNetworksCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorApiConfigurationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorAdminMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateTinyCollaboratorCommandHandler.cs" />
@@ -260,6 +261,7 @@
     <Compile Include="CQRS\CommandsHandlers\Tracks\CreateTrackCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Tracks\DeleteTrackCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Tracks\TrackBaseCommandHandler.cs" />
+    <Compile Include="CQRS\Commands\Collaborators\UpdateCollaboratorSocialNetworks.cs" />
     <Compile Include="CQRS\Commands\ConferenceParticipantRoles\BaseCommands\ConferenceParticipantRoleTitleBaseCommand.cs" />
     <Compile Include="CQRS\Commands\ConferenceParticipantRoles\CreateConferenceParticipantRole.cs" />
     <Compile Include="CQRS\Commands\ConferenceParticipantRoles\DeleteConferenceParticipantRole.cs" />

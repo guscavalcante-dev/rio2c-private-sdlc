@@ -1981,4 +1981,16 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Cor</value>
     <comment>Cor</comment>
   </data>
+  <data name="SocialNetworks" xml:space="preserve">
+    <value>Redes Sociais</value>
+    <comment>Redes Sociais</comment>
+  </data>
+  <data name="Eg" xml:space="preserve">
+    <value>ex</value>
+    <comment>ex</comment>
+  </data>
+  <data name="Is" xml:space="preserve">
+    <value>é</value>
+    <comment>é</comment>
+  </data>
 </root>

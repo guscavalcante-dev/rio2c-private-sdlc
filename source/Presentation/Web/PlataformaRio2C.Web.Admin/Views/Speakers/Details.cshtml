@@ -17,6 +17,13 @@
                     <!--end:Main Information Widget-->
                 </div>
                 <div class="row">
+                    <!--begin:Social Networks Widget-->
+                    <div class="col-12">
+                        <div id="SpeakerSocialNetworksWidget" class="kt-portlet" style="min-height: 325px;"></div>
+                    </div>
+                    <!--end:Social Networks Widget-->
+                </div>
+                <div class="row">
                     <!--begin:Company Widget-->
                     <div class="col-12">
                         <div id="SpeakerCompanyWidget" class="kt-portlet" style="min-height: 325px;"></div>
@@ -71,6 +78,7 @@
 
         jQuery(document).ready(function () {
             SpeakersMainInformationWidget.init();
+            SpeakersSocialNetworksWidget.init();
             SpeakersCompanyWidget.init();
             SpeakersParticipantsWidget.init();
             SpeakersConferencesWidget.init();

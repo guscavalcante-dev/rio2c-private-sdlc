@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-18-2019
+// Last Modified On : 01-16-2020
 // ***********************************************************************
 // <copyright file="Organization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,18 +28,26 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int CompanyNameMaxLength = 100;
         public static readonly int TradeNameMaxLength = 100;
         public static readonly int DocumentMaxLength = 50;
-        public static readonly int WebsiteMaxLength = 100;
-        public static readonly int SocialMediaMaxLength = 256;
         public static readonly int PhoneNumberMaxLength = 50;
+        public static readonly int WebsiteMaxLength = 300;
+        public static readonly int LinkedinMaxLength = 100;
+        public static readonly int TwitterMaxLength = 100;
+        public static readonly int InstagramMaxLength = 100;
+        public static readonly int YoutubeMaxLength = 300;
+        public static readonly int SocialMediaMaxLength = 256;
 
         public int? HoldingId { get; private set; }
         public string Name { get; private set; }
         public string CompanyName { get; private set; }
         public string TradeName { get; private set; }
         public string Document { get; private set; }
-        public string Website { get; private set; }
-        public string SocialMedia { get; private set; }
         public string PhoneNumber { get; private set; }
+        public string Website { get; private set; }
+        public string Linkedin { get; private set; }
+        public string Twitter { get; private set; }
+        public string Instagram { get; private set; }
+        public string Youtube { get; private set; }
+        public string SocialMedia { get; private set; }
         public int? AddressId { get; private set; }
         public DateTime? ImageUploadDate { get; private set; }
         
@@ -1135,6 +1143,10 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateTradeName();
             this.ValidateDocument();
             this.ValidateWebsite();
+            this.ValidateLinkedin();
+            this.ValidateTwitter();
+            this.ValidateInstagram();
+            this.ValidateYoutube();
             this.ValidateSocialMedia();
             this.ValidatePhoneNumber();
             this.ValidateDescriptions();
@@ -1196,6 +1208,41 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
+        /// <summary>Validates the linkedin.</summary>
+        public void ValidateLinkedin()
+        {
+            if (!string.IsNullOrEmpty(this.Linkedin) && this.Linkedin?.Trim().Length > LinkedinMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "Linkedin", LinkedinMaxLength, 1), new string[] { "Linkedin" }));
+            }
+        }
+
+        /// <summary>Validates the twitter.</summary>
+        public void ValidateTwitter()
+        {
+            if (!string.IsNullOrEmpty(this.Twitter) && this.Twitter?.Trim().Length > TwitterMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "Twitter", TwitterMaxLength, 1), new string[] { "Twitter" }));
+            }
+        }
+
+        /// <summary>Validates the instagram.</summary>
+        public void ValidateInstagram()
+        {
+            if (!string.IsNullOrEmpty(this.Instagram) && this.Instagram?.Trim().Length > InstagramMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "Instagram", InstagramMaxLength, 1), new string[] { "Instagram" }));
+            }
+        }
+
+        /// <summary>Validates the youtube.</summary>
+        public void ValidateYoutube()
+        {
+            if (!string.IsNullOrEmpty(this.Youtube) && this.Youtube?.Trim().Length > YoutubeMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "Youtube", YoutubeMaxLength, 1), new string[] { "Youtube" }));
+            }
+        }
         /// <summary>Validates the social media.</summary>
         public void ValidateSocialMedia()
         {

@@ -353,5 +353,59 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
 
             return s;
         }
+
+        /// <summary>Gets the linkedin URL.</summary>
+        /// <param name="s">The s.</param>
+        /// <returns></returns>
+        public static string GetLinkedinUrl(this string s)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                return s;
+            }
+
+            if (s.Contains("linkedin.com"))
+            {
+                return s.GetUrlWithProtocol();
+            }
+
+            return $"https://www.linkedin.com/in/{s}";
+        }
+
+        /// <summary>Gets the twitter URL.</summary>
+        /// <param name="s">The s.</param>
+        /// <returns></returns>
+        public static string GetTwitterUrl(this string s)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                return s;
+            }
+
+            if (s.Contains("twitter.com"))
+            {
+                return s.GetUrlWithProtocol();
+            }
+
+            return $"https://twitter.com/{s}";
+        }
+
+        /// <summary>Gets the instagram URL.</summary>
+        /// <param name="s">The s.</param>
+        /// <returns></returns>
+        public static string GetInstagramUrl(this string s)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                return s;
+            }
+
+            if (s.Contains("instagram.com"))
+            {
+                return s.GetUrlWithProtocol();
+            }
+
+            return $"https://www.instagram.com/{s}";
+        }
     }
 }

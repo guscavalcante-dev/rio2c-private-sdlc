@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-27-2019
+// Last Modified On : 01-16-2020
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,6 +30,11 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int PhoneNumberMaxLength = 50;
         public static readonly int CellPhoneMaxLength = 50;
         public static readonly int PublicEmailMaxLength = 50;
+        public static readonly int WebsiteMaxLength = 300;
+        public static readonly int LinkedinMaxLength = 100;
+        public static readonly int TwitterMaxLength = 100;
+        public static readonly int InstagramMaxLength = 100;
+        public static readonly int YoutubeMaxLength = 300;
 
         public string FirstName { get; private set; }
         public string LastNames { get; private set; }
@@ -37,6 +42,11 @@ namespace PlataformaRio2C.Domain.Entities
         public string PhoneNumber { get; private set; }
         public string CellPhone { get; private set; }
         public string PublicEmail { get; private set; }
+        public string Website { get; private set; }
+        public string Linkedin { get; private set; }
+        public string Twitter { get; private set; }
+        public string Instagram { get; private set; }
+        public string Youtube { get; private set; }
         public int? AddressId { get; private set; }
         public DateTime? ImageUploadDate { get; private set; }
 
@@ -374,6 +384,34 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
             this.OnboardAttendeeCollaboratorData(edition, userId);
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Updates the social networks.</summary>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="website">The website.</param>
+        /// <param name="linkedin">The linkedin.</param>
+        /// <param name="twitter">The twitter.</param>
+        /// <param name="instagram">The instagram.</param>
+        /// <param name="youtube">The youtube.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateSocialNetworks(
+            CollaboratorType collaboratorType,
+            string website,
+            string linkedin,
+            string twitter,
+            string instagram,
+            string youtube,
+            int userId)
+        {
+            this.Website = website?.Trim();
+            this.Linkedin = linkedin?.Trim();
+            this.Twitter = twitter?.Trim();
+            this.Instagram = instagram?.Trim();
+            this.Youtube = youtube?.Trim();
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
@@ -1206,6 +1244,11 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidatePhoneNumber();
             this.ValidateCellPhone();
             this.ValidatePublicEmail();
+            this.ValidateWebsite();
+            this.ValidateLinkedin();
+            this.ValidateTwitter();
+            this.ValidateInstagram();
+            this.ValidateYoutube();
             this.ValidateJobTitles();
             this.ValidateMiniBios();
             //this.ValidateAddress();
@@ -1271,6 +1314,51 @@ namespace PlataformaRio2C.Domain.Entities
             if (!string.IsNullOrEmpty(this.PublicEmail) && this.PublicEmail?.Trim().Length > PublicEmailMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Email, PublicEmailMaxLength, 1), new string[] { "PublicEmail" }));
+            }
+        }
+
+        /// <summary>Validates the website.</summary>
+        public void ValidateWebsite()
+        {
+            if (!string.IsNullOrEmpty(this.Website) && this.Website?.Trim().Length > WebsiteMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Website, WebsiteMaxLength, 1), new string[] { "Website" }));
+            }
+        }
+
+        /// <summary>Validates the linkedin.</summary>
+        public void ValidateLinkedin()
+        {
+            if (!string.IsNullOrEmpty(this.Linkedin) && this.Linkedin?.Trim().Length > LinkedinMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "Linkedin", LinkedinMaxLength, 1), new string[] { "Linkedin" }));
+            }
+        }
+
+        /// <summary>Validates the twitter.</summary>
+        public void ValidateTwitter()
+        {
+            if (!string.IsNullOrEmpty(this.Twitter) && this.Twitter?.Trim().Length > TwitterMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "Twitter", TwitterMaxLength, 1), new string[] { "Twitter" }));
+            }
+        }
+
+        /// <summary>Validates the instagram.</summary>
+        public void ValidateInstagram()
+        {
+            if (!string.IsNullOrEmpty(this.Instagram) && this.Instagram?.Trim().Length > InstagramMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "Instagram", InstagramMaxLength, 1), new string[] { "Instagram" }));
+            }
+        }
+
+        /// <summary>Validates the youtube.</summary>
+        public void ValidateYoutube()
+        {
+            if (!string.IsNullOrEmpty(this.Youtube) && this.Youtube?.Trim().Length > YoutubeMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "Youtube", YoutubeMaxLength, 1), new string[] { "Youtube" }));
             }
         }
 

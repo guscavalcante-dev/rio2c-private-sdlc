@@ -726,6 +726,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O usuário do Instagram..
+        /// </summary>
+        public static string InstagramUser {
+            get {
+                return ResourceManager.GetString("InstagramUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Interesses incompleto!.
         /// </summary>
         public static string InterestsIncompleteMessage {
@@ -839,6 +848,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string JobTitlePtBrIsRequired {
             get {
                 return ResourceManager.GetString("JobTitlePtBrIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O usuário do LinkedIn..
+        /// </summary>
+        public static string LinkedinUser {
+            get {
+                return ResourceManager.GetString("LinkedinUser", resourceCulture);
             }
         }
         
@@ -1797,6 +1815,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O usuário do Twitter..
+        /// </summary>
+        public static string TwitterUser {
+            get {
+                return ResourceManager.GetString("TwitterUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mensagem indefinida..
         /// </summary>
         public static string UndefinedMessage {
@@ -1847,6 +1874,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string WebSiteIsRequired {
             get {
                 return ResourceManager.GetString("WebSiteIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A url do site..
+        /// </summary>
+        public static string WebsiteUrl {
+            get {
+                return ResourceManager.GetString("WebsiteUrl", resourceCulture);
             }
         }
         
@@ -1973,6 +2009,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string YourPasswordHasBeenChangedSuccessfully {
             get {
                 return ResourceManager.GetString("YourPasswordHasBeenChangedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A url do YouTube..
+        /// </summary>
+        public static string YoutubeUrl {
+            get {
+                return ResourceManager.GetString("YoutubeUrl", resourceCulture);
             }
         }
         

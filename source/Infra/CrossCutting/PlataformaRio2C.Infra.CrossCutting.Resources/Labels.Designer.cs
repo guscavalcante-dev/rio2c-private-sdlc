@@ -1267,6 +1267,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ex.
+        /// </summary>
+        public static string Eg {
+            get {
+                return ResourceManager.GetString("Eg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to E-mail.
         /// </summary>
         public static string Email {
@@ -1884,6 +1893,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string InvitationSending {
             get {
                 return ResourceManager.GetString("InvitationSending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to é.
+        /// </summary>
+        public static string Is {
+            get {
+                return ResourceManager.GetString("Is", resourceCulture);
             }
         }
         
@@ -3783,6 +3801,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string SocialMedia {
             get {
                 return ResourceManager.GetString("SocialMedia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Redes Sociais.
+        /// </summary>
+        public static string SocialNetworks {
+            get {
+                return ResourceManager.GetString("SocialNetworks", resourceCulture);
             }
         }
         
