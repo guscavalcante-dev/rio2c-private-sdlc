@@ -14,165 +14,168 @@
 <!--begin::List-->
 @if (Model?.Any() == true)
 {
-    <!--begin: Table -->
-    <table class="table table-striped table-bordered table-hover table-checkable">
-        <thead>
-            <tr>
-                <th class="text-left text-nowrap">@Labels.ProducerQty</th>
-                <th class="text-left text-nowrap">@Labels.ProjectsPerProducerQty</th>
-                <th class="text-left text-nowrap">@Labels.ProjectId</th>
-                <th class="text-left text-nowrap">@Labels.Producer</th>
-                <th class="text-left text-nowrap">@Labels.Name</th>
-                <th class="text-left text-nowrap">@Labels.BadgeName</th>
-                <th class="text-left text-nowrap">@Labels.Email</th>
-                <th class="text-left text-nowrap">@Labels.Title - @Labels.Portuguese</th>
-                <th class="text-left text-nowrap">@Labels.Title - @Labels.English</th>
-                <th class="text-left text-nowrap">@Labels.Pitching?</th>
-                <th class="text-left text-nowrap">@Labels.PlayersSelectedForEvaluation</th>
-                <th class="text-left text-nowrap">@Labels.CreateDate</th>
-                <th class="text-left text-nowrap">@Labels.SendDate</th>
-                <th class="text-left text-nowrap">@Labels.Platforms</th>
-                <th class="text-left text-nowrap">@Labels.ProjectStatus</th>
-                <th class="text-left text-nowrap">@Labels.MarketLookingFor</th>
-                <th class="text-left text-nowrap">@Labels.Format</th>
-                <th class="text-left text-nowrap">@Labels.Genre</th>
-                <th class="text-left text-nowrap">@Labels.SubGenre</th>
-                <th class="text-left text-nowrap">@Labels.TargetAudience</th>
-                <th class="text-left text-nowrap">@Labels.Summary - @Labels.Portuguese</th>
-                <th class="text-left text-nowrap">@Labels.Summary - @Labels.English</th>
-            </tr>
-        </thead>
-        @{ 
-            var producerQty = 0;
-         }
-
-        @foreach (var projectDto in Model)
-        {
-            var projectTitle = projectDto.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value;
-            var sellerCollaborator = projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.AttendeeOrganizationCollaborators;
-
-            producerQty += ((pageNumber - 1) * pageSize) + 1;
-
-            <tbody>
+    <div class="table-responsive">
+        <!--begin: Table -->
+        <table class="table table-striped table-hover table-bordered
+               ">
+            <thead>
                 <tr>
-                    <td class="text-right">@(producerQty)</td>
-                    <td class="text-right">@(projectDto.ProjectPerProducerCount)</td>
-                    <td class="text-right">@(projectDto.Project.Id)</td>
-                    <td>@(projectDto.SellerAttendeeOrganizationDto?.Organization?.Name)</td>
-                    <td width="200px">
-                        @foreach (var item in sellerCollaborator)
-                        {
-                            @item.AttendeeCollaborator.Collaborator.GetFullName();
-                        };
-                    </td>
-                    <td>
-                        @foreach (var item in sellerCollaborator)
-                        {
-                            @Html.Raw(!string.IsNullOrEmpty(item.AttendeeCollaborator.Collaborator.Badge) ? string.Format("{0}{1}", item.AttendeeCollaborator.Collaborator.Badge, ";") : string.Empty);
-                        }
-                    </td>
-                    <td>
-                        @foreach (var item in sellerCollaborator)
-                        {
-                            @Html.Raw(!string.IsNullOrEmpty(item.AttendeeCollaborator.Collaborator.PublicEmail) ? string.Format("{0}{1}", item.AttendeeCollaborator.Collaborator.PublicEmail, ";") : string.Empty);
-                        }
-                    </td>
-                    <td>@(projectDto.GetTitleDtoByLanguageCode(Constants.Culture.Portuguese)?.ProjectTitle?.Value)</td>
-                    <td>@(projectDto.GetTitleDtoByLanguageCode(Constants.Culture.English)?.ProjectTitle?.Value)</td>
-                    <td>@(projectDto.Project.IsPitching ? Labels.Yes : Labels.No)</td>
-                    <td>
-                        @{ var firstLine = true;}
-                        @foreach (var item in projectDto.ProjectBuyerEvaluationDtos)
-                        {
-                            @Html.Raw(string.Format("{0}{1}", firstLine ? "" : " / ", item.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization.Name));
-                            @Html.Raw(string.Format("{0}{1}", " | ", item.ProjectBuyerEvaluation.ProjectEvaluationStatus.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')));
-                            firstLine = false;
-                        };
-                    </td>
-                    <td>@(projectDto.Project.CreateDate)</td>
-                    <td>@(projectDto.Project.FinishDate)</td>
-                    <td>
-                        @{
-                            firstLine = true;
-                            var projectFormatsDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.Format.Uid);
-                            foreach (var interestDto in projectFormatsDtos)
-                            {
-                                @Html.Raw(string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')));
-                                firstLine = false;
-                            }
-                        }
-                    </td>
-                    <td>
-                        @{
-                            firstLine = true;
-                            var projectStatusDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.ProjectStatus.Uid);
-                            foreach (var interestDto in projectStatusDtos)
-                            {
-                                @Html.Raw(string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')));
-                                firstLine = false;
-                            }
-                        }
-                    </td>
-                    <td>
-                        @{
-                            firstLine = true;
-                            var projectLookingForDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.LookingFor.Uid);
-                            foreach (var interestDto in projectLookingForDtos)
-                            {
-                                @Html.Raw(string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')));
-                                firstLine = false;
-                            }
-                        }
-                    </td>
-                    <td>
-                        @{
-                            firstLine = true;
-                            var projectFormatDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.Format.Uid);
-                            foreach (var interestDto in projectFormatDtos)
-                            {
-                                @Html.Raw(string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')));
-                                firstLine = false;
-                            }
-                        }
-                    </td>
-                    <td>
-                        @{
-                            firstLine = true;
-                            var projectGenreDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.Genre.Uid);
-                            foreach (var interestDto in projectGenreDtos)
-                            {
-                                @Html.Raw(string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')));
-                                firstLine = false;
-                            }
-                        }
-                    </td>
-                    <td>
-                        @{
-                            firstLine = true;
-                            var projectSubgenreDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.SubGenre.Uid);
-                            foreach (var interestDto in projectSubgenreDtos)
-                            {
-                                @Html.Raw(string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')));
-                                firstLine = false;
-                            }
-                        }
-                    </td>
-                    <td>
-                        @{
-                            firstLine = true;
-                            foreach (var item in projectDto.ProjectTargetAudienceDtos)
-                            {
-                                @Html.Raw(string.Format("{0}{1}", firstLine ? "" : ", ", item.TargetAudience.Name));
-                                firstLine = false;
-                            }
-                        }
-                    </td>
-                    <td class="text-left text-nowrap">@(projectDto.GetSummaryDtoByLanguageCode(Constants.Culture.Portuguese).ProjectSummary.Value)</td>
-                    <td class="text-left text-nowrap">@(projectDto.GetSummaryDtoByLanguageCode(Constants.Culture.English).ProjectSummary.Value)</td>
+                    <th class="th-lg text-left text-nowrap">@Labels.ProducerQty</th>
+                    <th class="th-lg text-left text-nowrap">@Labels.ProjectsPerProducerQty</th>
+                    <th class="th-lg text-left text-nowrap">@Labels.ProjectId</th>
+                    <th class="th-lg text-left text-nowrap">@Labels.Producer</th>
+                    <th class="th-lg text-left text-nowrap w-auto">@Labels.Name</th>
+                    <th class="th-lg text-left text-nowrap">@Labels.BadgeName</th>
+                    <th class="th-lg text-left text-nowrap">@Labels.Email</th>
+                    <th class="th-lg text-left text-nowrap">@Labels.Title - @Labels.Portuguese</th>
+                    <th class="th-lg text-left text-nowrap">@Labels.Title - @Labels.English</th>
+                    <th class="th-lg text-left text-nowrap">@Labels.Pitching?</th>
+                    <th class="th-lg text-left text-nowrap">@Labels.PlayersSelectedForEvaluation</th>
+                    <th class="th-lg text-left text-nowrap">@Labels.CreateDate</th>
+                    <th class="th-lg text-left text-nowrap">@Labels.SendDate</th>
+                    <th class="th-lg text-left text-nowrap">@Labels.Platforms</th>
+                    <th class="th-lg text-left text-nowrap">@Labels.ProjectStatus</th>
+                    <th class="th-lg text-left text-nowrap">@Labels.MarketLookingFor</th>
+                    <th class="th-lg text-left text-nowrap">@Labels.Format</th>
+                    <th class="th-lg text-left text-nowrap">@Labels.Genre</th>
+                    <th class="th-lg text-left text-nowrap">@Labels.SubGenre</th>
+                    <th class="th-lg text-left text-nowrap">@Labels.TargetAudience</th>
+                    <th class="th-lg text-left text-nowrap">@Labels.Summary - @Labels.Portuguese</th>
+                    <th class="th-lg text-left text-nowrap">@Labels.Summary - @Labels.English</th>
                 </tr>
+            </thead>
+            <tbody>
+                @{
+                    var producerQty = 0;
+                }
+
+                @foreach (var projectDto in Model)
+                {
+                    var projectTitle = projectDto.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value;
+                    var sellerCollaborator = projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.AttendeeOrganizationCollaborators;
+
+                    producerQty += ((pageNumber - 1) * pageSize) + 1;
+
+                    <tr>
+                        <td class="text-right col-1">@(producerQty)</td>
+                        <td class="text-right">@(projectDto.ProjectPerProducerCount)</td>
+                        <td class="text-right">@(projectDto.Project.Id)</td>
+                        <td>@(projectDto.SellerAttendeeOrganizationDto?.Organization?.Name)</td>
+                        <td class="w-auto">
+                            @foreach (var item in sellerCollaborator)
+                            {
+                                @item.AttendeeCollaborator.Collaborator.GetFullName();
+                            };
+                        </td>
+                        <td>
+                            @foreach (var item in sellerCollaborator)
+                            {
+                                @Html.Raw(!string.IsNullOrEmpty(item.AttendeeCollaborator.Collaborator.Badge) ? string.Format("{0}{1}", item.AttendeeCollaborator.Collaborator.Badge, ";") : string.Empty);
+                            }
+                        </td>
+                        <td>
+                            @foreach (var item in sellerCollaborator)
+                            {
+                                @Html.Raw(!string.IsNullOrEmpty(item.AttendeeCollaborator.Collaborator.PublicEmail) ? string.Format("{0}{1}", item.AttendeeCollaborator.Collaborator.PublicEmail, ";") : string.Empty);
+                            }
+                        </td>
+                        <td>@(projectDto.GetTitleDtoByLanguageCode(Constants.Culture.Portuguese)?.ProjectTitle?.Value)</td>
+                        <td>@(projectDto.GetTitleDtoByLanguageCode(Constants.Culture.English)?.ProjectTitle?.Value)</td>
+                        <td>@(projectDto.Project.IsPitching ? Labels.Yes : Labels.No)</td>
+                        <td>
+                            @{ var firstLine = true;}
+                            @foreach (var item in projectDto.ProjectBuyerEvaluationDtos)
+                            {
+                                @Html.Raw(string.Format("{0}{1}", firstLine ? "" : " / ", item.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization.Name));
+                                @Html.Raw(string.Format("{0}{1}", " | ", item.ProjectBuyerEvaluation.ProjectEvaluationStatus.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')));
+                                firstLine = false;
+                            };
+                        </td>
+                        <td>@(projectDto.Project.CreateDate)</td>
+                        <td>@(projectDto.Project.FinishDate)</td>
+                        <td>
+                            @{
+                                firstLine = true;
+                                var projectPlatformsDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.Platforms.Uid);
+                                foreach (var interestDto in projectPlatformsDtos)
+                                {
+                                    @Html.Raw(string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')));
+                                    firstLine = false;
+                                }
+                            }
+                        </td>
+                        <td>
+                            @{
+                                firstLine = true;
+                                var projectStatusDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.ProjectStatus.Uid);
+                                foreach (var interestDto in projectStatusDtos)
+                                {
+                                    @Html.Raw(string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')));
+                                    firstLine = false;
+                                }
+                            }
+                        </td>
+                        <td>
+                            @{
+                                firstLine = true;
+                                var projectLookingForDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.LookingFor.Uid);
+                                foreach (var interestDto in projectLookingForDtos)
+                                {
+                                    @Html.Raw(string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')));
+                                    firstLine = false;
+                                }
+                            }
+                        </td>
+                        <td>
+                            @{
+                                firstLine = true;
+                                var projectFormatDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.Format.Uid);
+                                foreach (var interestDto in projectFormatDtos)
+                                {
+                                    @Html.Raw(string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')));
+                                    firstLine = false;
+                                }
+                            }
+                        </td>
+                        <td>
+                            @{
+                                firstLine = true;
+                                var projectGenreDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.Genre.Uid);
+                                foreach (var interestDto in projectGenreDtos)
+                                {
+                                    @Html.Raw(string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')));
+                                    firstLine = false;
+                                }
+                            }
+                        </td>
+                        <td>
+                            @{
+                                firstLine = true;
+                                var projectSubgenreDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.SubGenre.Uid);
+                                foreach (var interestDto in projectSubgenreDtos)
+                                {
+                                    @Html.Raw(string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')));
+                                    firstLine = false;
+                                }
+                            }
+                        </td>
+                        <td>
+                            @{
+                                firstLine = true;
+                                foreach (var item in projectDto.ProjectTargetAudienceDtos)
+                                {
+                                    @Html.Raw(string.Format("{0}{1}", firstLine ? "" : ", ", item.TargetAudience.Name));
+                                    firstLine = false;
+                                }
+                            }
+                        </td>
+                        <td class="text-left text-nowrap">@(projectDto.GetSummaryDtoByLanguageCode(Constants.Culture.Portuguese).ProjectSummary.Value)</td>
+                        <td class="text-left text-nowrap">@(projectDto.GetSummaryDtoByLanguageCode(Constants.Culture.English).ProjectSummary.Value)</td>
+                    </tr>
+                }
             </tbody>
-        }
-    </table>
+        </table>
+    </div>
     <!--end: Datatable -->
     <!--end::List-->
     <!--begin::Pagination-->

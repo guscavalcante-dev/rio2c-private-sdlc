@@ -2002,4 +2002,8 @@
     <value>QTD Projects Per Producer</value>
     <comment>QTD Projetos Por Produtora</comment>
   </data>
+  <data name="ExportToExcel" xml:space="preserve">
+    <value>Export to Excel</value>
+    <comment>Exportar para Excel</comment>
+  </data>
 </root>

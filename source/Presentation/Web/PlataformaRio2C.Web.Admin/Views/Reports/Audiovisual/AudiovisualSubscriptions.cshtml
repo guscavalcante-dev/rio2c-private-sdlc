@@ -66,10 +66,13 @@
             <div class="col-2 col-lg-1 mt-2">
                 <button type="button" class="btn btn-primary btn-icon" onclick="ReportsAudiovisualSubscriptionWidget.search();"><i class="fa fa-search"></i></button>
             </div>
+            <div class="col-3 col-lg-2 mt-2">
+                <button type="button" class="btn btn-primary" onclick="ReportsAudiovisualSubscriptionWidget.exportToExcel();"><i class="fa"></i>@Labels.ExportToExcel</button>
+            </div>
         </div>
         <div class="row">
             <div class="col-4 col-sm-4 mt-2">
-                <select name="InterestUid" id="InterestUid" class="form-control">
+                <select name="InterestUid" id="InterestUid" class="form-control" multiple="multiple">
                     <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Genre.ToLowerInvariant()))...</option>
                     @foreach (var interestDto in genreInterests)
                     {
@@ -80,7 +83,7 @@
                 </select>
             </div>
             <div class="col-2 col-lg-3 mt-2">
-                <select name="TargetAudienceUid" id="TargetAudienceUid" class="form-control select2-selection--multiple">
+                <select name="TargetAudienceUid" id="TargetAudienceUid" class="form-control" multiple="multiple">
                     <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Status.ToLowerInvariant()))...</option>
                     @foreach (var targetAudience in targetAudiences)
                     {
@@ -106,7 +109,7 @@
     <div class="col-md-12">
         <div class="kt-portlet kt-portlet--height-fluid">
             <div class="kt-portlet__body">
-                <div id="ReportAudiovisualSubscriptionWidget" style="overflow: auto;"></div>
+                <div id="ReportAudiovisualSubscriptionWidget"></div>
             </div>
         </div>
     </div>

@@ -1045,11 +1045,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .ToPagedListAsync(page, pageSize);
         }
 
-        //public async Task<List<ProjectDto>> FindAudiovisualSubscribedProjectsDtosByFilterAndByPageAsync(int editionId, bool showAllEditions = false, int page, int pageSize)
-        //{
-        //    return FindAudiovisualSubscribedProjectsDtosByFilter(editionId, showAllEditions);
-
-        //}
+        public async Task<List<AudiovisualProjectSubscriptionDto>> FindAudiovisualSubscribedProjectsDtosByFilterAsync(string keywords, Guid? interestUid, int editionId, bool isPitching, Guid? targetAudienceUid, DateTime? startDate, DateTime? endDate, bool showAllEditions = false)
+        {
+            return await FindAudiovisualSubscribedProjectsDtosByFilter(keywords, interestUid, editionId, isPitching, targetAudienceUid, startDate, endDate, showAllEditions)
+                            .OrderBy(p => p.Project.CreateDate)
+                            .ToListAsync();
+        }
         #endregion
 
         #region Old methods

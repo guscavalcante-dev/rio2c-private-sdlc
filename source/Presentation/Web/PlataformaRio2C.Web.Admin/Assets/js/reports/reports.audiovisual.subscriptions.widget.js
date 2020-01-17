@@ -103,6 +103,34 @@ var ReportsAudiovisualSubscriptionWidget = function () {
 
     };
 
+    // Excel -------------------------------------------------------------------------------------
+    var exportToExcel = function () {
+        if (widgetElement.length <= 0) {
+            return;
+        }
+
+        var jsonParameters = new Object();
+        jsonParameters.Search = $('#SearchKeywords').val();
+        jsonParameters.InterestUid = $('#InterestUid').val();
+        jsonParameters.Page = $('#Page').val();
+        jsonParameters.PageSize = $('#PageSize').val();
+        jsonParameters.IsPitching = $('#IsPitching').prop("checked");
+        jsonParameters.TargetAudienceUid = $('#TargetAudienceUid').val();
+        jsonParameters.StartDate = $('#StartDate').val();
+        jsonParameters.EndDate = $('#EndDate').val();
+
+        window.open(MyRio2cCommon.getUrlWithCultureAndEdition('/Reports/GenerateExcelDocumentAsync') +
+            '?Search=' + jsonParameters.Search +
+            '&InterestUid=' + jsonParameters.InterestUid +
+            '&IsPitching=' + jsonParameters.IsPitching +
+            '&TargetAudienceUid=' + jsonParameters.TargetAudienceUid +
+            '&StartDate=' + jsonParameters.StartDate +
+            '&EndDate=' + jsonParameters.EndDate
+        );
+
+        MyRio2cCommon.unblock({ idOrClass: widgetElementId });
+    };
+
     // Pagination ---------------------------------------------------------------------------------
     var enablePageSizeChangeEvent = function () {
         $('#PageSizeDropdown').not('.change-event-enabled').on('change', function () {
@@ -147,6 +175,9 @@ var ReportsAudiovisualSubscriptionWidget = function () {
         },
         handlePaginationReturn: function (data) {
             handlePaginationReturn(data);
+        },
+        exportToExcel: function () {
+            exportToExcel();
         }
     };
 }();

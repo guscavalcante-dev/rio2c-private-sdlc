@@ -2009,4 +2009,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>QTD Projetos Por Produtora</value>
     <comment>QTD Projetos Por Produtora</comment>
   </data>
+  <data name="ExportToExcel" xml:space="preserve">
+    <value>Exportar para Excel</value>
+    <comment>Exportar para Excel</comment>
+  </data>
 </root>
