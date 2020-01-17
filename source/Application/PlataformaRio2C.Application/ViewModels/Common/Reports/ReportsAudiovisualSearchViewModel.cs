@@ -24,10 +24,10 @@ namespace PlataformaRio2C.Application.ViewModels
         public string Search { get; set; }
 
         [Display(Name = "Interests", ResourceType = typeof(Labels))]
-        public Guid? InterestUid { get; set; }
+        public string InterestUids { get; set; }
 
         [Display(Name = "TargetAudience", ResourceType = typeof(Labels))]
-        public Guid? TargetAudienceUid { get; set; }
+        public string TargetAudienceUids { get; set; }
 
         [Display(Name = "ProjectsForPitching", ResourceType = typeof(Labels))]
         public bool IsPitching { get; set; }

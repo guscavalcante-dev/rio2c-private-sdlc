@@ -76,7 +76,7 @@
                     <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Genre.ToLowerInvariant()))...</option>
                     @foreach (var interestDto in genreInterests)
                     {
-                        <option value="@interestDto.Interest.Uid" @(interestDto.Interest.Uid == Model.InterestUid ? "selected" : string.Empty)>
+                        <option value="@interestDto.Interest.Uid" @(Model.InterestUids?.Split(',').ToList().Contains(interestDto.Interest.Uid.ToString()) == true ? "selected" : string.Empty)>
                             @interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
                         </option>
                     }
@@ -87,7 +87,7 @@
                     <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Status.ToLowerInvariant()))...</option>
                     @foreach (var targetAudience in targetAudiences)
                     {
-                        <option value="@targetAudience.Uid" @(targetAudience.Uid == Model.TargetAudienceUid ? "selected" : string.Empty)>
+                        <option value="@targetAudience.Uid" @(Model.TargetAudienceUids?.Split(',').ToList().Contains(targetAudience.Uid.ToString()) == true ? "selected" : string.Empty)>
                             @targetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
                         </option>
                     }

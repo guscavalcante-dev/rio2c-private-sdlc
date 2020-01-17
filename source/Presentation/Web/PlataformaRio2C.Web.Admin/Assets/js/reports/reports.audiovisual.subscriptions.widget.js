@@ -35,11 +35,11 @@ var ReportsAudiovisualSubscriptionWidget = function () {
 
         var jsonParameters = new Object();
         jsonParameters.Search = $('#SearchKeywords').val();
-        jsonParameters.InterestUid = $('#InterestUid').val();
+        jsonParameters.InterestUids = $('#InterestUid').val().join(',');
         jsonParameters.Page = $('#Page').val();
         jsonParameters.PageSize = $('#PageSize').val();
         jsonParameters.IsPitching = $('#IsPitching').prop("checked");
-        jsonParameters.TargetAudienceUid = $('#TargetAudienceUid').val();
+        jsonParameters.TargetAudienceUids = $('#TargetAudienceUid').val();
         jsonParameters.StartDate = $('#StartDate').val();
         jsonParameters.EndDate = $('#EndDate').val();
 
@@ -111,21 +111,19 @@ var ReportsAudiovisualSubscriptionWidget = function () {
 
         var jsonParameters = new Object();
         jsonParameters.Search = $('#SearchKeywords').val();
-        jsonParameters.InterestUid = $('#InterestUid').val();
-        jsonParameters.Page = $('#Page').val();
-        jsonParameters.PageSize = $('#PageSize').val();
+        jsonParameters.InterestUids = $('#InterestUid').val().join(',');
         jsonParameters.IsPitching = $('#IsPitching').prop("checked");
-        jsonParameters.TargetAudienceUid = $('#TargetAudienceUid').val();
+        jsonParameters.TargetAudienceUids = $('#TargetAudienceUid').val().join(',');
         jsonParameters.StartDate = $('#StartDate').val();
         jsonParameters.EndDate = $('#EndDate').val();
 
         window.open(MyRio2cCommon.getUrlWithCultureAndEdition('/Reports/GenerateExcelDocumentAsync') +
-            '?Search=' + jsonParameters.Search +
-            '&InterestUid=' + jsonParameters.InterestUid +
-            '&IsPitching=' + jsonParameters.IsPitching +
-            '&TargetAudienceUid=' + jsonParameters.TargetAudienceUid +
-            '&StartDate=' + jsonParameters.StartDate +
-            '&EndDate=' + jsonParameters.EndDate
+            '?search=' + jsonParameters.Search +
+            '&interestUids=' + jsonParameters.InterestUids +
+            '&isPitching=' + jsonParameters.IsPitching +
+            '&targetAudienceUids=' + jsonParameters.TargetAudienceUids +
+            '&startDate=' + jsonParameters.StartDate +
+            '&endDate=' + jsonParameters.EndDate
         );
 
         MyRio2cCommon.unblock({ idOrClass: widgetElementId });

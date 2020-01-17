@@ -180,6 +180,24 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+
+        /// <summary>Finds by interest uids.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="interestUids">The interest uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> FindByInterestUids(this IQueryable<Project> query, List<Guid> interestUids)
+        {
+            if (interestUids?.Any() == true)
+            {
+                query = query.Where(p => p.ProjectInterests.Any(pi => !pi.IsDeleted
+                                                                      && !pi.Interest.IsDeleted
+                                                                      && interestUids.Contains(pi.Interest.Uid)));
+            }
+
+            return query;
+        }
+
+
         /// <summary>Finds by target audience uid.</summary>
         /// <param name="query">The query.</param>
         /// <param name="targetAudienceUid">The target audience uid.</param>
@@ -191,6 +209,23 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 query = query.Where(p => p.ProjectTargetAudiences.Any(pi => !pi.IsDeleted
                                                                       && !pi.TargetAudience.IsDeleted
                                                                       && pi.TargetAudience.Uid == targetAudienceUid));
+            }
+
+            return query;
+        }
+
+
+        /// <summary>Finds by target audience uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="targetAudienceUid">The target audience uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> FindByTargetAudienceUids(this IQueryable<Project> query, List<Guid> targetAudienceUids)
+        {
+            if (targetAudienceUids?.Any() == true)
+            {
+                query = query.Where(p => p.ProjectTargetAudiences.Any(pi => !pi.IsDeleted
+                                                                      && !pi.TargetAudience.IsDeleted
+                                                                      && targetAudienceUids.Contains(pi.TargetAudience.Uid)));
             }
 
             return query;
@@ -957,15 +992,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="endDate"></param>
         /// <param name="showAllEditions"></param>
         /// <returns></returns>
-        public IEnumerable<AudiovisualProjectSubscriptionDto> FindAudiovisualSubscribedProjectsDtosByFilter(string keywords, Guid? interestUid, int editionId, bool isPitching, Guid? targetAudienceUid, DateTime? startDate, DateTime? endDate, bool showAllEditions = false)
+        public IEnumerable<AudiovisualProjectSubscriptionDto> FindAudiovisualSubscribedProjectsDtosByFilter(string keywords, List<Guid> interestUids, int editionId, bool isPitching, List<Guid> targetAudienceUids, DateTime? startDate, DateTime? endDate, bool showAllEditions = false)
         {
             var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords)
-                                .FindByInterestUid(interestUid)
+                                .FindByInterestUids(interestUids)
                                 .FindByEditionId(editionId, showAllEditions)
                                 .IsFinished()
                                 .IsPitching(isPitching)
-                                .FindByTargetAudienceUid(targetAudienceUid)
+                                .FindByTargetAudienceUids(targetAudienceUids)
                                 .FindByDate(startDate, endDate)
                                 .Select(p => new AudiovisualProjectSubscriptionDto()
                                 {
@@ -1028,26 +1063,36 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         /// <summary>Finds the audiovisual subscribed project list by page</summary>
         /// <param name="keywords"></param>
-        /// <param name="interestUid"></param>
+        /// <param name="interestUids"></param>
         /// <param name="editionId"></param>
         /// <param name="isPitching"></param>
-        /// <param name="targetAudienceUid"></param>
+        /// <param name="targetAudienceUids"></param>
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <param name="showAllEditions"></param>
         /// <returns></returns>
-        public async Task<IPagedList<AudiovisualProjectSubscriptionDto>> FindAudiovisualSubscribedProjectsDtosByFilterAndByPageAsync(string keywords, Guid? interestUid, int editionId, bool isPitching, Guid? targetAudienceUid, DateTime? startDate, DateTime? endDate, int page = 1, int pageSize = 10, bool showAllEditions = false)
+        public async Task<IPagedList<AudiovisualProjectSubscriptionDto>> FindAudiovisualSubscribedProjectsDtosByFilterAndByPageAsync(string keywords, List<Guid> interestUids, int editionId, bool isPitching, List<Guid> targetAudienceUids, DateTime? startDate, DateTime? endDate, int page = 1, int pageSize = 10, bool showAllEditions = false)
         {
-            return await FindAudiovisualSubscribedProjectsDtosByFilter(keywords, interestUid, editionId, isPitching, targetAudienceUid, startDate, endDate, showAllEditions)
+            return await FindAudiovisualSubscribedProjectsDtosByFilter(keywords, interestUids, editionId, isPitching, targetAudienceUids, startDate, endDate, showAllEditions)
                             .OrderBy(p => p.Project.CreateDate)
                             .ToPagedListAsync(page, pageSize);
         }
 
-        public async Task<List<AudiovisualProjectSubscriptionDto>> FindAudiovisualSubscribedProjectsDtosByFilterAsync(string keywords, Guid? interestUid, int editionId, bool isPitching, Guid? targetAudienceUid, DateTime? startDate, DateTime? endDate, bool showAllEditions = false)
+        /// <summary>Finds the audiovisual subscribed project list</summary>
+        /// <param name="keywords"></param>
+        /// <param name="interestUids"></param>
+        /// <param name="editionId"></param>
+        /// <param name="isPitching"></param>
+        /// <param name="targetAudienceUids"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="showAllEditions"></param>
+        /// <returns></returns>
+        public async Task<List<AudiovisualProjectSubscriptionDto>> FindAudiovisualSubscribedProjectsDtosByFilterAsync(string keywords, List<Guid> interestUids, int editionId, bool isPitching, List<Guid> targetAudienceUids, DateTime? startDate, DateTime? endDate, bool showAllEditions = false)
         {
-            return await FindAudiovisualSubscribedProjectsDtosByFilter(keywords, interestUid, editionId, isPitching, targetAudienceUid, startDate, endDate, showAllEditions)
+            return await FindAudiovisualSubscribedProjectsDtosByFilter(keywords, interestUids, editionId, isPitching, targetAudienceUids, startDate, endDate, showAllEditions)
                             .OrderBy(p => p.Project.CreateDate)
                             .ToListAsync();
         }

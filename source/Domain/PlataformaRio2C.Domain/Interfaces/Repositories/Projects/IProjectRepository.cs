@@ -39,9 +39,9 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<ProjectDto> FindSiteDuplicateDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteBuyerEvaluationWidgetDtoByProjectUidAsync(Guid projectUid, Guid attendeeCollaboratorUid);
         Task<int> CountAllByDataTable(int editionId, bool showAllEditions = false);
-        IEnumerable<AudiovisualProjectSubscriptionDto> FindAudiovisualSubscribedProjectsDtosByFilter(string keywords, Guid? interestUid, int editionId, bool isPitching, Guid? targetAudienceUid, DateTime? startDate, DateTime? endDate, bool showAllEditions = false);
-        Task<IPagedList<AudiovisualProjectSubscriptionDto>> FindAudiovisualSubscribedProjectsDtosByFilterAndByPageAsync(string keywords, Guid? interestUid, int editionId, bool isPitching, Guid? targetAudienceUid, DateTime? startDate, DateTime? endDate, int page, int pageSize, bool showAllEditions = false);
-        Task<List<AudiovisualProjectSubscriptionDto>> FindAudiovisualSubscribedProjectsDtosByFilterAsync(string keywords, Guid? interestUid, int editionId, bool isPitching, Guid? targetAudienceUid, DateTime? startDate, DateTime? endDate, bool showAllEditions = false);
+        IEnumerable<AudiovisualProjectSubscriptionDto> FindAudiovisualSubscribedProjectsDtosByFilter(string keywords, List<Guid> interestUids, int editionId, bool isPitching, List<Guid> targetAudienceUids, DateTime? startDate, DateTime? endDate, bool showAllEditions = false);
+        Task<IPagedList<AudiovisualProjectSubscriptionDto>> FindAudiovisualSubscribedProjectsDtosByFilterAndByPageAsync(string keywords, List<Guid> interestUids, int editionId, bool isPitching, List<Guid> targetAudienceUids, DateTime? startDate, DateTime? endDate, int page, int pageSize, bool showAllEditions = false);
+        Task<List<AudiovisualProjectSubscriptionDto>> FindAudiovisualSubscribedProjectsDtosByFilterAsync(string keywords, List<Guid> interestUids, int editionId, bool isPitching, List<Guid> targetAudienceUids, DateTime? startDate, DateTime? endDate, bool showAllEditions = false);
         #endregion
 
         #region Old methods

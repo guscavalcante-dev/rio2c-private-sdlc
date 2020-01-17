@@ -88,10 +88,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         {
             var audiovisualProjectSubscriptionDtos = await this.projectRepo.FindAudiovisualSubscribedProjectsDtosByFilterAndByPageAsync(
                                                                 searchViewModel.Search,
-                                                                searchViewModel.InterestUid,
+                                                                searchViewModel.InterestUids.ToListGuid(','),
                                                                 this.EditionDto.Id,
                                                                 searchViewModel.IsPitching,
-                                                                searchViewModel.TargetAudienceUid,
+                                                                searchViewModel.TargetAudienceUids.ToListGuid(','),
                                                                 searchViewModel.StartDate,
                                                                 searchViewModel.EndDate,
                                                                 searchViewModel.Page ?? 1,
@@ -112,9 +112,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             }
 
             ViewBag.SearchKeywords = searchViewModel.Search;
-            ViewBag.InterestUid = searchViewModel.InterestUid;
+            ViewBag.InterestUid = searchViewModel.InterestUids;
             ViewBag.IsPitching = searchViewModel.IsPitching;
-            ViewBag.TargetAudienceUid = searchViewModel.TargetAudienceUid;
+            ViewBag.TargetAudienceUid = searchViewModel.TargetAudienceUids;
             ViewBag.Page = searchViewModel.Page ?? 1;
             ViewBag.PageSize = searchViewModel.PageSize ?? 10;
 
@@ -133,9 +133,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> GenerateExcelDocumentAsync(
             string search,
-            Guid? interestUid,
+            string interestUids,
             bool isPitching,
-            Guid? targetAudienceUid,
+            string targetAudienceUids,
             DateTime? startDate,
             DateTime? endDate
             )
@@ -147,10 +147,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             var audiovisualProjectSubscriptionDtos = await this.projectRepo.FindAudiovisualSubscribedProjectsDtosByFilterAsync(
                                                                 search,
-                                                                interestUid,
+                                                                interestUids.ToListGuid(','),
                                                                 this.EditionDto.Id,
                                                                 isPitching,
-                                                                targetAudienceUid,
+                                                                targetAudienceUids.ToListGuid(','),
                                                                 startDate,
                                                                 endDate);
             if (audiovisualProjectSubscriptionDtos == null)
