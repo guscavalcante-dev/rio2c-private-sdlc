@@ -27,8 +27,11 @@
             <h3 class="kt-heading kt-heading--sm mb-0 mt-0">@Labels.Website</h3>
             <div class="row mt-3">
                 <div class="col-12">
-                    @if (!string.IsNullOrEmpty(Model.Collaborator.Website))
+                    @if (!string.IsNullOrEmpty(Model.Collaborator?.Website))
                     {
+                        <a href="@Model.Collaborator.Website.GetUrlWithProtocol()" class="btn btn-icon btn-circle btn-label-google" target="_blank">
+                            <i class="flaticon2-link"></i>
+                        </a>
                         <a href="@Model.Collaborator.Website.GetUrlWithProtocol()" target="_blank">@Model.Collaborator.Website</a>
                     }
                     else
@@ -42,8 +45,11 @@
             <h3 class="kt-heading kt-heading--sm mb-0 mt-0">LinkedIn</h3>
             <div class="row mt-3">
                 <div class="col-12">
-                    @if (!string.IsNullOrEmpty(Model.Collaborator.Linkedin))
+                    @if (!string.IsNullOrEmpty(Model.Collaborator?.Linkedin))
                     {
+                        <a href="@Model.Collaborator.Linkedin.GetLinkedinUrl()" class="btn btn-icon btn-circle btn-label-linkedin" target="_blank">
+                            <i class="socicon-linkedin"></i>
+                        </a>
                         <a href="@Model.Collaborator.Linkedin.GetLinkedinUrl()" target="_blank">@Model.Collaborator.Linkedin</a>
                     }
                     else
@@ -59,8 +65,11 @@
             <h3 class="kt-heading kt-heading--sm mb-0 mt-0">Twitter</h3>
             <div class="row mt-3">
                 <div class="col-12">
-                    @if (!string.IsNullOrEmpty(Model.Collaborator.Twitter))
+                    @if (!string.IsNullOrEmpty(Model.Collaborator?.Twitter))
                     {
+                        <a href="@Model.Collaborator.Twitter.GetTwitterUrl()" class="btn btn-icon btn-circle btn-label-twitter" target="_blank">
+                            <i class="socicon-twitter"></i>
+                        </a>
                         <a href="@Model.Collaborator.Twitter.GetTwitterUrl()" target="_blank">@Model.Collaborator.Twitter</a>
                     }
                     else
@@ -74,8 +83,11 @@
             <h3 class="kt-heading kt-heading--sm mb-0 mt-0">Instagram</h3>
             <div class="row mt-3">
                 <div class="col-12">
-                    @if (!string.IsNullOrEmpty(Model.Collaborator.Instagram))
+                    @if (!string.IsNullOrEmpty(Model.Collaborator?.Instagram))
                     {
+                        <a href="@Model.Collaborator.Instagram.GetInstagramUrl()" class="btn btn-icon btn-circle btn-label-instagram" target="_blank">
+                            <i class="socicon-instagram"></i>
+                        </a>
                         <a href="@Model.Collaborator.Instagram.GetInstagramUrl()" target="_blank">@Model.Collaborator.Instagram</a>
                     }
                     else
@@ -91,8 +103,11 @@
             <h3 class="kt-heading kt-heading--sm mb-0 mt-0">Youtube</h3>
             <div class="row mt-3">
                 <div class="col-12">
-                    @if (!string.IsNullOrEmpty(Model.Collaborator.Youtube))
+                    @if (!string.IsNullOrEmpty(Model.Collaborator?.Youtube))
                     {
+                        <a href="@Model.Collaborator.Youtube.GetUrlWithProtocol()" class="btn btn-icon btn-circle btn-label-youtube" target="_blank">
+                            <i class="socicon-youtube"></i>
+                        </a>
                         <a href="@Model.Collaborator.Youtube.GetUrlWithProtocol()" target="_blank">@Model.Collaborator.Youtube</a>
                     }
                     else
