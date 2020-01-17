@@ -4,7 +4,7 @@
 // Created          : 12-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-19-2019
+// Last Modified On : 01-16-2020
 // ***********************************************************************
 // <copyright file="CollaboratorBaseApiResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,6 +16,7 @@ using Newtonsoft.Json;
 
 namespace PlataformaRio2C.Domain.ApiModels.Responses
 {
+    /// <summary>CollaboratorBaseApiResponse</summary>
     public class CollaboratorBaseApiResponse
     {
         [JsonProperty("uid", Order = 100)]

@@ -384,6 +384,7 @@
     <Content Include="SqlScripts\03_TicketSettings.sql" />
     <Content Include="SqlScripts\04_InitialData.sql" />
     <Content Include="SqlScripts\Deltas\20190930_114613_0001_ChangesForPlayersApi.sql" />
+    <Content Include="SqlScripts\Deltas\20200116_110051_0015_ChangesForSpeakersSocialMedias.sql" />
     <Content Include="SqlScripts\Deltas\20200109_160711_0014_ChangesForTracksColors.sql" />
     <Content Include="SqlScripts\Deltas\20200107_173301_0013_ChangesForConferences.sql" />
     <Content Include="SqlScripts\Deltas\20200107_160941_0012_ChangesInProjectStatuses.sql" />

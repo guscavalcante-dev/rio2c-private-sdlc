@@ -9,10 +9,17 @@
         <!--begin:Main Information Widget-->
         <div class="row">
             <div class="col-12">
-                <div id="ExecutiveMainInformationWidget" class="kt-portlet" style="min-height: 325px;"></div>
+                <div id="ExecutiveMainInformationWidget" class="kt-portlet" style="min-height: 200px;"></div>
             </div>
         </div>
         <!--end:Main Information Widget-->
+        <!--begin:Social Networks Widget-->
+        <div class="row">
+            <div class="col-12">
+                <div id="ExecutiveSocialNetworksWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+        </div>
+        <!--end:Social Networks Widget-->
         <!--begin:Company Widget-->
         <div class="row">
             <div class="col-12">
@@ -41,6 +48,7 @@
 
         jQuery(document).ready(function () {
             ExecutivesMainInformationWidget.init();
+            ExecutivesSocialNetworksWidget.init();
             ExecutivesCompanyWidget.init();
         });
     </script>

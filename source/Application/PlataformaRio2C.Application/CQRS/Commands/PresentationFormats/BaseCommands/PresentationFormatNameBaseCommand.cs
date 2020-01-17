@@ -4,7 +4,7 @@
 // Created          : 01-07-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 01-16-2020
 // ***********************************************************************
 // <copyright file="PresentationFormatNameBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -32,7 +32,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="languageDto">The language dto.</param>
         public PresentationFormatNameBaseCommand(PresentationFormatDto presentationFormatDto, LanguageDto languageDto)
         {
-            this.Value = presentationFormatDto?.GetNameByLanguageCode(languageDto.Code);
+            this.Value = presentationFormatDto?.PresentationFormat?.GetNameByLanguageCode(languageDto.Code);
             this.LanguageCode = languageDto.Code;
             this.LanguageName = languageDto.Name;
         }

@@ -2006,4 +2006,16 @@
     <value>Export to Excel</value>
     <comment>Exportar para Excel</comment>
   </data>
+  <data name="SocialNetworks" xml:space="preserve">
+    <value>Social Networks</value>
+    <comment>Redes Sociais</comment>
+  </data>
+  <data name="Eg" xml:space="preserve">
+    <value>e.g.</value>
+    <comment>ex</comment>
+  </data>
+  <data name="Is" xml:space="preserve">
+    <value>is</value>
+    <comment>é</comment>
+  </data>
 </root>

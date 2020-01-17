@@ -11,8 +11,6 @@
             <div class="modal-body">
                 @using (Html.BeginForm("UpdateMainInformation", "Executives", new { Area = "" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UpdateMainInformationForm" }))
                 {
-                    @Html.HiddenFor(m => m.CollaboratorUid)
-
                     <div id="form-container">
                         @Html.Partial("Modals/UpdateMainInformationForm", Model)
                     </div>

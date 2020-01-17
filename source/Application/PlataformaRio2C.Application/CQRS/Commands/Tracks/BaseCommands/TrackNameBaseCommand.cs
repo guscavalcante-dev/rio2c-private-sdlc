@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 01-16-2020
 // ***********************************************************************
 // <copyright file="TrackNameBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -32,7 +32,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="languageDto">The language dto.</param>
         public TrackNameBaseCommand(TrackDto trackDto, LanguageDto languageDto)
         {
-            this.Value = trackDto?.GetNameByLanguageCode(languageDto.Code);
+            this.Value = trackDto?.Track?.GetNameByLanguageCode(languageDto.Code);
             this.LanguageCode = languageDto.Code;
             this.LanguageName = languageDto.Name;
         }

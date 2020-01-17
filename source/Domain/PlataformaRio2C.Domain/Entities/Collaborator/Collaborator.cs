@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-27-2019
+// Last Modified On : 01-16-2020
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,6 +30,11 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int PhoneNumberMaxLength = 50;
         public static readonly int CellPhoneMaxLength = 50;
         public static readonly int PublicEmailMaxLength = 50;
+        public static readonly int WebsiteMaxLength = 300;
+        public static readonly int LinkedinMaxLength = 100;
+        public static readonly int TwitterMaxLength = 100;
+        public static readonly int InstagramMaxLength = 100;
+        public static readonly int YoutubeMaxLength = 300;
 
         public string FirstName { get; private set; }
         public string LastNames { get; private set; }
@@ -37,6 +42,11 @@ namespace PlataformaRio2C.Domain.Entities
         public string PhoneNumber { get; private set; }
         public string CellPhone { get; private set; }
         public string PublicEmail { get; private set; }
+        public string Website { get; private set; }
+        public string Linkedin { get; private set; }
+        public string Twitter { get; private set; }
+        public string Instagram { get; private set; }
+        public string Youtube { get; private set; }
         public int? AddressId { get; private set; }
         public DateTime? ImageUploadDate { get; private set; }
 
@@ -82,7 +92,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateUserId = this.UpdateUserId = userId;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class for full create on admin.</summary>
+        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class for admin.</summary>
         /// <param name="uid">The uid.</param>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="edition">The edition.</param>
@@ -95,6 +105,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="cellPhone">The cell phone.</param>
         /// <param name="sharePublicEmail">The share public email.</param>
         /// <param name="publicEmail">The public email.</param>
+        /// <param name="website">The website.</param>
+        /// <param name="linkedin">The linkedin.</param>
+        /// <param name="twitter">The twitter.</param>
+        /// <param name="instagram">The instagram.</param>
+        /// <param name="youtube">The youtube.</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="jobTitles">The job titles.</param>
         /// <param name="miniBios">The mini bios.</param>
@@ -112,6 +127,11 @@ namespace PlataformaRio2C.Domain.Entities
             string cellPhone,
             bool? sharePublicEmail,
             string publicEmail,
+            string website,
+            string linkedin,
+            string twitter,
+            string instagram,
+            string youtube,
             bool isImageUploaded,
             List<CollaboratorJobTitle> jobTitles,
             List<CollaboratorMiniBio> miniBios,
@@ -125,12 +145,15 @@ namespace PlataformaRio2C.Domain.Entities
             this.CellPhone = cellPhone?.Trim();
             this.UpdatePublicEmail(sharePublicEmail, publicEmail);
             this.UpdateImageUploadDate(isImageUploaded, false);
+
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
+
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
             this.SynchronizeAttendeeCollaborators(edition, collaboratorType, false, null, attendeeOrganizations, true, userId);
+            this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
             this.UpdateUser(email);
         }
 
@@ -245,6 +268,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="cellPhone">The cell phone.</param>
         /// <param name="sharePublicEmail">The share public email.</param>
         /// <param name="publicEmail">The public email.</param>
+        /// <param name="website">The website.</param>
+        /// <param name="linkedin">The linkedin.</param>
+        /// <param name="twitter">The twitter.</param>
+        /// <param name="instagram">The instagram.</param>
+        /// <param name="youtube">The youtube.</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
         /// <param name="jobTitles">The job titles.</param>
@@ -263,6 +291,11 @@ namespace PlataformaRio2C.Domain.Entities
             string cellPhone,
             bool? sharePublicEmail,
             string publicEmail,
+            string website,
+            string linkedin,
+            string twitter,
+            string instagram,
+            string youtube,
             bool isImageUploaded,
             bool isImageDeleted,
             List<CollaboratorJobTitle> jobTitles,
@@ -278,9 +311,12 @@ namespace PlataformaRio2C.Domain.Entities
             this.CellPhone = cellPhone?.Trim();
             this.UpdatePublicEmail(sharePublicEmail, publicEmail);
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
+            this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
+
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
+
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
             this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, null, attendeeOrganizations, isAddingToCurrentEdition, userId);
@@ -374,6 +410,32 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
             this.OnboardAttendeeCollaboratorData(edition, userId);
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Updates the social networks.</summary>
+        /// <param name="website">The website.</param>
+        /// <param name="linkedin">The linkedin.</param>
+        /// <param name="twitter">The twitter.</param>
+        /// <param name="instagram">The instagram.</param>
+        /// <param name="youtube">The youtube.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateSocialNetworks(
+            string website,
+            string linkedin,
+            string twitter,
+            string instagram,
+            string youtube,
+            int userId)
+        {
+            this.Website = website?.Trim();
+            this.Linkedin = linkedin?.Trim();
+            this.Twitter = twitter?.Trim();
+            this.Instagram = instagram?.Trim();
+            this.Youtube = youtube?.Trim();
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
@@ -1143,14 +1205,19 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
         }
-        
-        /// <summary>Called when [data].</summary>
+
+        /// <summary>Onboard collaborator data.</summary>
         /// <param name="edition">The edition.</param>
-        /// <param name="sharePublicEmail">if set to <c>true</c> [share public email].</param>
+        /// <param name="sharePublicEmail">The share public email.</param>
         /// <param name="publicEmail">The public email.</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="jobTitles">The job titles.</param>
         /// <param name="miniBios">The mini bios.</param>
+        /// <param name="website">The website.</param>
+        /// <param name="linkedin">The linkedin.</param>
+        /// <param name="twitter">The twitter.</param>
+        /// <param name="instagram">The instagram.</param>
+        /// <param name="youtube">The youtube.</param>
         /// <param name="userId">The user identifier.</param>
         public void OnboardData(
             Edition edition,
@@ -1159,6 +1226,11 @@ namespace PlataformaRio2C.Domain.Entities
             bool isImageUploaded,
             List<CollaboratorJobTitle> jobTitles,
             List<CollaboratorMiniBio> miniBios,
+            string website,
+            string linkedin,
+            string twitter,
+            string instagram,
+            string youtube,
             int userId)
         {
             this.UpdatePublicEmail(sharePublicEmail, publicEmail);
@@ -1166,6 +1238,11 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
             this.OnboardAttendeeCollaboratorData(edition, userId);
+            this.Website = website?.Trim();
+            this.Linkedin = linkedin?.Trim();
+            this.Twitter = twitter?.Trim();
+            this.Instagram = instagram?.Trim();
+            this.Youtube = youtube?.Trim();
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
@@ -1206,6 +1283,11 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidatePhoneNumber();
             this.ValidateCellPhone();
             this.ValidatePublicEmail();
+            this.ValidateWebsite();
+            this.ValidateLinkedin();
+            this.ValidateTwitter();
+            this.ValidateInstagram();
+            this.ValidateYoutube();
             this.ValidateJobTitles();
             this.ValidateMiniBios();
             //this.ValidateAddress();
@@ -1271,6 +1353,51 @@ namespace PlataformaRio2C.Domain.Entities
             if (!string.IsNullOrEmpty(this.PublicEmail) && this.PublicEmail?.Trim().Length > PublicEmailMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Email, PublicEmailMaxLength, 1), new string[] { "PublicEmail" }));
+            }
+        }
+
+        /// <summary>Validates the website.</summary>
+        public void ValidateWebsite()
+        {
+            if (!string.IsNullOrEmpty(this.Website) && this.Website?.Trim().Length > WebsiteMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Website, WebsiteMaxLength, 1), new string[] { "Website" }));
+            }
+        }
+
+        /// <summary>Validates the linkedin.</summary>
+        public void ValidateLinkedin()
+        {
+            if (!string.IsNullOrEmpty(this.Linkedin) && this.Linkedin?.Trim().Length > LinkedinMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "Linkedin", LinkedinMaxLength, 1), new string[] { "Linkedin" }));
+            }
+        }
+
+        /// <summary>Validates the twitter.</summary>
+        public void ValidateTwitter()
+        {
+            if (!string.IsNullOrEmpty(this.Twitter) && this.Twitter?.Trim().Length > TwitterMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "Twitter", TwitterMaxLength, 1), new string[] { "Twitter" }));
+            }
+        }
+
+        /// <summary>Validates the instagram.</summary>
+        public void ValidateInstagram()
+        {
+            if (!string.IsNullOrEmpty(this.Instagram) && this.Instagram?.Trim().Length > InstagramMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "Instagram", InstagramMaxLength, 1), new string[] { "Instagram" }));
+            }
+        }
+
+        /// <summary>Validates the youtube.</summary>
+        public void ValidateYoutube()
+        {
+            if (!string.IsNullOrEmpty(this.Youtube) && this.Youtube?.Trim().Length > YoutubeMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "Youtube", YoutubeMaxLength, 1), new string[] { "Youtube" }));
             }
         }
 

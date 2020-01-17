@@ -460,6 +460,7 @@
     <Content Include="Assets\js\events\events.editioncount.widget.js" />
     <Content Include="Assets\js\events\events.totalcount.widget.js" />
     <Content Include="Assets\js\speakers\speakers.conferences.widget.js" />
+    <Content Include="Assets\js\speakers\speakers.socialnetworks.widget.js" />
     <Content Include="Assets\js\speakers\speakers.participants.widget.js" />
     <Content Include="Assets\js\projects\projects.pitching.editioncount.widget.js" />
     <Content Include="Assets\js\projects\projects.pitching.totalcount.widget.js" />
@@ -8368,6 +8369,9 @@
     <Content Include="Views\Projects\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Views\Reports\Audiovisual\AudiovisualSubscriptions.cshtml" />
     <Content Include="Views\Reports\Audiovisual\Widgets\AudiovisualSubscriptionsWidget.cshtml" />
+    <Content Include="Views\Speakers\Widgets\SocialNetworksWidget.cshtml" />
+    <Content Include="Views\Speakers\Modals\UpdateSocialNetworksModal.cshtml" />
+    <Content Include="Views\Speakers\Modals\UpdateSocialNetworksForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

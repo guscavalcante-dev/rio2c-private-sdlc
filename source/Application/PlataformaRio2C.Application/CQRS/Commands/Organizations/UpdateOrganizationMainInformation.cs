@@ -4,7 +4,7 @@
 // Created          : 10-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-10-2019
+// Last Modified On : 01-16-2020
 // ***********************************************************************
 // <copyright file="UpdateOrganizationMainInformation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -50,14 +50,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<OrganizationDescriptionBaseCommand> Descriptions { get; set; }
         public CropperImageBaseCommand CropperImage { get; set; }
 
-        [Display(Name = "Website", ResourceType = typeof(Labels))]
-        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        public string Website { get; set; }
-
-        [Display(Name = "SocialMedia", ResourceType = typeof(Labels))]
-        [StringLength(256, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        public string SocialMedia { get; set; }
-
         public Country Country { get; private set; }
 
         //public UserBaseDto UpdaterBaseDto { get; set; }
@@ -79,8 +71,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.TradeName = entity.Organization.TradeName;
             this.IsCompanyNumberRequired = entity.Country?.IsCompanyNumberRequired == true;
             this.Document = entity.Organization.Document;
-            this.Website = entity.Organization.Website;
-            this.SocialMedia = entity.Organization.SocialMedia;
             this.UpdateDescriptions(entity, languagesDtos, isDescriptionRequired);
             this.UpdateCropperImage(entity, isImageRequired);
             this.UpdateModelsAndLists(entity.Country);

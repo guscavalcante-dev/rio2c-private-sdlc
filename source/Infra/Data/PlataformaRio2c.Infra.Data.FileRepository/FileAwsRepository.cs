@@ -4,7 +4,7 @@
 // Created          : 08-15-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-27-2019
+// Last Modified On : 01-13-2020
 // ***********************************************************************
 // <copyright file="FileAwsRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -53,15 +53,16 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
         /// <param name="imageUid">The image uid.</param>
         /// <param name="imageUploadDate">The image upload date.</param>
         /// <param name="isThumbnail">if set to <c>true</c> [is thumbnail].</param>
+        /// <param name="additionalFileInfo">The additional file information.</param>
         /// <returns></returns>
-        public string GetImageUrl(FileRepositoryPathType fileRepositoryPathType, Guid? imageUid, DateTime? imageUploadDate, bool isThumbnail)
+        public string GetImageUrl(FileRepositoryPathType fileRepositoryPathType, Guid? imageUid, DateTime? imageUploadDate, bool isThumbnail, string additionalFileInfo)
         {
             if (!imageUploadDate.HasValue || !imageUid.HasValue)
             {
                 return string.Empty;
             }
 
-            return this.GetUrl(fileRepositoryPathType, imageUid.Value) + (isThumbnail ? "_thumbnail.png" : "_original.png") + $"?v={imageUploadDate.Value.ToString("yyyyMMddHHmmss")}";
+            return this.GetUrl(fileRepositoryPathType, imageUid.Value) + (isThumbnail ? $"_thumbnail{additionalFileInfo}.png" : $"_original{additionalFileInfo}.png") + $"?v={imageUploadDate.Value.ToString("yyyyMMddHHmmss")}";
         }
 
         /// <summary>Gets the URL.</summary>

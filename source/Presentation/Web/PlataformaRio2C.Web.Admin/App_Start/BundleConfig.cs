@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-09-2020
+// Last Modified On : 01-16-2020
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -351,6 +351,7 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/speakers.details.js").Include(
                 "~/Assets/js/speakers/speakers.maininformation.widget.js",
+                "~/Assets/js/speakers/speakers.socialnetworks.widget.js",
                 "~/Assets/js/speakers/speakers.company.widget.js",
                 "~/Assets/js/speakers/speakers.conferences.widget.js",
                 "~/Assets/js/speakers/speakers.participants.widget.js",

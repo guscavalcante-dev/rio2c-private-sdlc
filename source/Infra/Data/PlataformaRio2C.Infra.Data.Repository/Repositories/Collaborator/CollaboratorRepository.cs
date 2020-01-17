@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-03-2020
+// Last Modified On : 01-16-2020
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -133,6 +133,25 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                                       && act.CollaboratorType.Name == collaboratorTypeName
                                                                                                                       && act.IsApiDisplayEnabled
                                                                                                                       && act.ApiHighlightPosition.HasValue)));
+            }
+
+            return query;
+        }
+
+        /// <summary>Finds the by API highlights.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
+        /// <param name="highlights">The highlights.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> FindByApiHighlights(this IQueryable<Collaborator> query, string collaboratorTypeName, int? highlights)
+        {
+            if (highlights == 0 || highlights == 1)
+            {
+                query = query.Where(o => o.AttendeeCollaborators.Any(ac => !ac.IsDeleted
+                                                                           && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
+                                                                                                                      && act.CollaboratorType.Name == collaboratorTypeName
+                                                                                                                      && act.IsApiDisplayEnabled
+                                                                                                                      && (highlights.Value == 1 ? act.ApiHighlightPosition.HasValue : !act.ApiHighlightPosition.HasValue))));
             }
 
             return query;
@@ -371,6 +390,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 //    Name = c.Holding.Name
                                 //},
                                 ImageUploadDate = c.ImageUploadDate,
+                                Website = c.Website,
+                                Linkedin = c.Linkedin,
+                                Twitter = c.Twitter,
+                                Instagram = c.Instagram,
+                                Youtube = c.Youtube,
                                 CreateDate = c.CreateDate,
                                 CreateUserId = c.CreateUserId,
                                 UpdateDate = c.UpdateDate,
@@ -558,16 +582,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>Finds all public API paged.</summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="keywords">The keywords.</param>
+        /// <param name="highlights">The highlights.</param>
         /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<CollaboratorApiListDto>> FindAllPublicApiPaged(int editionId, string keywords, string collaboratorTypeName, int page, int pageSize)
+        public async Task<IPagedList<CollaboratorApiListDto>> FindAllPublicApiPaged(int editionId, string keywords, int? highlights, string collaboratorTypeName, int page, int pageSize)
         {
             var query = this.GetBaseQuery()
                                 .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeName, false, false, false, editionId)
                                 .IsApiDisplayEnabled(editionId, collaboratorTypeName)
-                                .FindByKeywords(keywords, editionId);
+                                .FindByKeywords(keywords, editionId)
+                                .FindByApiHighlights(collaboratorTypeName, highlights);
 
             return await query
                             .Select(c => new CollaboratorApiListDto
@@ -579,6 +605,54 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                         .AttendeeCollaboratorTypes.Where(act => !act.IsDeleted && act.CollaboratorType.Name == collaboratorTypeName).FirstOrDefault()
                                                         .ApiHighlightPosition,
                                 ImageUploadDate = c.ImageUploadDate,
+                                JobTitlesDtos = c.JobTitles.Where(jb => !jb.IsDeleted).Select(d => new CollaboratorJobTitleBaseDto
+                                {
+                                    Id = d.Id,
+                                    Uid = d.Uid,
+                                    Value = d.Value,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = d.Language.Id,
+                                        Uid = d.Language.Uid,
+                                        Name = d.Language.Name,
+                                        Code = d.Language.Code
+                                    }
+                                }),
+                                CreateDate = c.CreateDate,
+                                UpdateDate = c.UpdateDate,
+                            })
+                            .OrderBy(o => o.ApiHighlightPosition ?? 99)
+                            .ThenBy(o => o.BadgeName)
+                            .ToListPagedAsync(page, pageSize);
+        }
+
+        /// <summary>Finds the public API dto asynchronous.</summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
+        /// <returns></returns>
+        public async Task<SpeakerCollaboratorDto> FindPublicApiDtoAsync(Guid collaboratorUid, int editionId, string collaboratorTypeName)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(collaboratorUid)
+                                .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeName, false, false, false, editionId)
+                                .IsApiDisplayEnabled(editionId, collaboratorTypeName);
+
+            return await query
+                            .Select(c => new SpeakerCollaboratorDto
+                            {
+                                Uid = c.Uid,
+                                BadgeName = c.Badge,
+                                Name = c.FirstName + " " + c.LastNames,
+                                ApiHighlightPosition = c.AttendeeCollaborators.Where(ac => !ac.IsDeleted && ac.EditionId == editionId).FirstOrDefault()
+                                                        .AttendeeCollaboratorTypes.Where(act => !act.IsDeleted && act.CollaboratorType.Name == collaboratorTypeName).FirstOrDefault()
+                                                        .ApiHighlightPosition,
+                                ImageUploadDate = c.ImageUploadDate,
+                                Website = c.Website,
+                                Linkedin = c.Linkedin,
+                                Twitter = c.Twitter,
+                                Instagram = c.Instagram,
+                                Youtube = c.Youtube,
                                 MiniBiosDtos = c.MiniBios.Where(mb => !mb.IsDeleted).Select(d => new CollaboratorMiniBioBaseDto
                                 {
                                     Id = d.Id,
@@ -617,12 +691,67 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                         ImageUploadDate = aoc.AttendeeOrganization.Organization.ImageUploadDate
 
                                                                                     })),
+                                TracksDtos = c.AttendeeCollaborators
+                                                            .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                            .SelectMany(ac => ac.ConferenceParticipants
+                                                                                    .Where(cp => !cp.IsDeleted && !cp.Conference.IsDeleted)
+                                                                                    .SelectMany(cp => cp.Conference.ConferenceTracks
+                                                                                                            .Where(ct => !ct.IsDeleted && !ct.Track.IsDeleted)
+                                                                                                            .Select(ct => new TrackDto
+                                                                                                            {
+                                                                                                                Track = ct.Track
+                                                                                                            }))).Distinct(),
+                                ConferencesDtos = c.AttendeeCollaborators
+                                                            .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                            .SelectMany(ac => ac.ConferenceParticipants
+                                                                                    .Where(cp => !cp.IsDeleted && !cp.Conference.IsDeleted)
+                                                                                    .Select(cp => new ConferenceDto
+                                                                                    {
+                                                                                        Conference = cp.Conference,
+                                                                                        EditionEvent = cp.Conference.EditionEvent,
+                                                                                        RoomDto = new RoomDto
+                                                                                        {
+                                                                                            Room = cp.Conference.Room,
+                                                                                            RoomNameDtos = cp.Conference.Room.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameDto
+                                                                                            {
+                                                                                                RoomName = rn,
+                                                                                                LanguageDto = new LanguageDto
+                                                                                                {
+                                                                                                    Id = rn.Language.Id,
+                                                                                                    Uid = rn.Language.Uid,
+                                                                                                    Code = rn.Language.Code
+                                                                                                }
+                                                                                            })
+                                                                                        },
+                                                                                        ConferenceTitleDtos = cp.Conference.ConferenceTitles.Where(ct => !ct.IsDeleted).Select(ct => new ConferenceTitleDto
+                                                                                        {
+                                                                                            ConferenceTitle = ct,
+                                                                                            LanguageDto = new LanguageBaseDto
+                                                                                            {
+                                                                                                Id = ct.Language.Id,
+                                                                                                Uid = ct.Language.Uid,
+                                                                                                Name = ct.Language.Name,
+                                                                                                Code = ct.Language.Code
+                                                                                            }
+                                                                                        }),
+                                                                                        ConferenceSynopsisDtos = cp.Conference.ConferenceSynopses.Where(cs => !cs.IsDeleted).Select(cs => new ConferenceSynopsisDto
+                                                                                        {
+                                                                                            ConferenceSynopsis = cs,
+                                                                                            LanguageDto = new LanguageBaseDto
+                                                                                            {
+                                                                                                Id = cs.Language.Id,
+                                                                                                Uid = cs.Language.Uid,
+                                                                                                Name = cs.Language.Name,
+                                                                                                Code = cs.Language.Code
+                                                                                            }
+                                                                                        })
+                                                                                    })),
                                 CreateDate = c.CreateDate,
                                 UpdateDate = c.UpdateDate,
                             })
                             .OrderBy(o => o.ApiHighlightPosition ?? 99)
                             .ThenBy(o => o.BadgeName)
-                            .ToListPagedAsync(page, pageSize);
+                            .FirstOrDefaultAsync();
         }
 
         /// <summary>Finds all dropdown API list dto paged.</summary>

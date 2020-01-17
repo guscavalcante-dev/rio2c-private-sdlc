@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-28-2019
+// Last Modified On : 01-16-2020
 // ***********************************************************************
 // <copyright file="OrganizationDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,7 +20,10 @@ namespace PlataformaRio2C.Domain.Dtos
     {
         public string CompanyName { get; set; }
         public string TradeName { get; set; }
-        public string SocialMedia { get; set; }
+        public string Linkedin { get; set; }
+        public string Twitter { get; set; }
+        public string Instagram { get; set; }
+        public string Youtube { get; set; }
         public int CreateUserId { get; set; }
         public int UpdateUserId { get; set; }
 

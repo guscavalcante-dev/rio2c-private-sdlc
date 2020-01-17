@@ -24,25 +24,27 @@
                                 <div class="kt-widget__head pt-0">
                                     <div class="kt-widget__label">
                                         <div class="kt-widget__media" style="padding-right: 10px">
-                                            @if (projectDto.SellerAttendeeOrganizationDto?.Organization?.HasImage() == true)
-                                            {
-                                                <span class="kt-media kt-media--lg kt-margin-r-5 kt-margin-t-5">
-                                                    <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, projectDto.SellerAttendeeOrganizationDto.Organization.Uid, projectDto.SellerAttendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="" style="max-width: 65px; max-height: 65px;">
-                                                </span>
-                                            }
-                                            else
-                                            {
-                                                <div class="kt-userpic kt-userpic--lg kt-userpic--brand kt-margin-r-5 kt-margin-t-5">
-                                                    <span>@(projectDto.SellerAttendeeOrganizationDto?.Organization?.GetTradeNameAbbreviation())</span>
-                                                </div>
-                                            }
+                                            <a href="@Url.Action("Details", "Companies", new { Area = "", id = projectDto.SellerAttendeeOrganizationDto?.Organization?.Uid })" target="_blank">
+                                                @if (projectDto.SellerAttendeeOrganizationDto?.Organization?.HasImage() == true)
+                                                {
+                                                    <span class="kt-media kt-media--lg kt-margin-r-5 kt-margin-t-5">
+                                                        <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, projectDto.SellerAttendeeOrganizationDto.Organization.Uid, projectDto.SellerAttendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="" style="max-width: 65px; max-height: 65px;">
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <div class="kt-userpic kt-userpic--lg kt-userpic--brand kt-margin-r-5 kt-margin-t-5">
+                                                        <span>@(projectDto.SellerAttendeeOrganizationDto?.Organization?.GetTradeNameAbbreviation())</span>
+                                                    </div>
+                                                }
+                                            </a>
                                         </div>
                                         <div class="kt-widget__info mt-0 pl-0">
                                             <a href="@Url.Action("EvaluationDetails", "Projects", new { id = projectDto.Project.Uid, Area = "" })" class="kt-widget__title">
                                                 @projectTitle
                                             </a>
                                             <span class="kt-widget__desc">
-                                                @Labels.Producer: @(projectDto.SellerAttendeeOrganizationDto?.Organization?.Name)
+                                                @Labels.Producer: <a href="@Url.Action("Details", "Companies", new { Area = "", id = projectDto.SellerAttendeeOrganizationDto?.Organization?.Uid })" target="_blank">@(projectDto.SellerAttendeeOrganizationDto?.Organization?.Name)</a>
                                             </span>
                                             <span class="kt-widget__desc">
                                                 @Labels.Genre:

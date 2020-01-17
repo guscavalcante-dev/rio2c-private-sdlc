@@ -13,18 +13,20 @@
     <div class="kt-widget kt-widget--user-profile-3">
         <div class="kt-widget__top">
             <div style="float: right;">
-                @if (Model.SellerAttendeeOrganizationDto?.Organization?.HasImage() == true)
-                {
-                    <div class="kt-widget__media">
-                        <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, Model.SellerAttendeeOrganizationDto.Organization.Uid, Model.SellerAttendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="image">
-                    </div>
-                }
-                else
-                {
-                    <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest" style="width: 110px; height: 110px;">
-                        @(Model.SellerAttendeeOrganizationDto?.Organization?.GetTradeNameAbbreviation() ?? "-")
-                    </div>
-                }
+                <a href="@Url.Action("Details", "Companies", new { Area = "", id = Model.SellerAttendeeOrganizationDto?.Organization?.Uid })" target="_blank">
+                    @if (Model.SellerAttendeeOrganizationDto?.Organization?.HasImage() == true)
+                    {
+                        <div class="kt-widget__media">
+                            <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, Model.SellerAttendeeOrganizationDto.Organization.Uid, Model.SellerAttendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="image">
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest" style="width: 110px; height: 110px;">
+                            @(Model.SellerAttendeeOrganizationDto?.Organization?.GetTradeNameAbbreviation() ?? "-")
+                        </div>
+                    }
+                </a>
             </div>
             <div class="kt-widget__content" style="overflow: hidden;">
                 <div class="kt-widget__head">
@@ -45,7 +47,7 @@
                     }
                 </div>
                 <div class="kt-widget__subhead pt-0">
-                    @Labels.Producer: @(Model.SellerAttendeeOrganizationDto?.Organization?.TradeName ?? "-")
+                    @Labels.Producer: <a href="@Url.Action("Details", "Companies", new { Area = "", id = Model.SellerAttendeeOrganizationDto?.Organization?.Uid })" target="_blank">@(Model.SellerAttendeeOrganizationDto?.Organization?.TradeName ?? "-")</a>
                     @if (isCollaborator && !string.IsNullOrEmpty(Model.SellerAttendeeOrganizationDto?.Organization?.Document))
                     {
                         @:- @(Model.SellerAttendeeOrganizationDto?.Organization.Document)

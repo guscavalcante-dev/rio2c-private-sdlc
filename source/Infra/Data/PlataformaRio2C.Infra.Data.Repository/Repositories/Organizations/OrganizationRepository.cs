@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-18-2019
+// Last Modified On : 01-16-2020
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -358,7 +358,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 IsCompanyNumberRequired = o.Address != null && !o.Address.IsDeleted && o.Address.Country != null && o.Address.Country.IsCompanyNumberRequired,
                                 Document = o.Document,
                                 Website = o.Website,
-                                SocialMedia = o.SocialMedia,
+                                Linkedin = o.Linkedin,
+                                Twitter = o.Twitter,
+                                Instagram = o.Instagram,
+                                Youtube = o.Youtube,
                                 PhoneNumber = o.PhoneNumber,
                                 ImageUploadDate = o.ImageUploadDate,
                                 CreateDate = o.CreateDate,
@@ -620,7 +623,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 CompanyName = o.CompanyName,
                                 TradeName = o.TradeName,
                                 Website = o.Website,
-                                SocialMedia = o.SocialMedia,
+                                Linkedin = o.Linkedin,
+                                Twitter = o.Twitter,
+                                Instagram = o.Instagram,
+                                Youtube = o.Youtube,
                                 ImageUploadDate = o.ImageUploadDate,
                                 DescriptionsDtos = o.OrganizationDescriptions.Select(d => new OrganizationDescriptionDto
                                 {

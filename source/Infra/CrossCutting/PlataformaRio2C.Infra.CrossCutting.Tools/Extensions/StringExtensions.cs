@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-09-2020
+// Last Modified On : 01-16-2020
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -150,18 +151,14 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
 
             string code = null;
 
-            var splitString = s.Split(' ');
-            if (splitString.Length == 1)
+            var splitString = s.Split(' ').Where(ss => !string.IsNullOrEmpty(ss)).ToList();
+            if (splitString.Count == 1)
             {
                 code = splitString[0].Substring(0, 2);
             }
-            else if (splitString.Length >= 3)
-            {
-                code = splitString[0].Substring(0, 1) + splitString[2].Substring(0, 1);
-            }
             else
             {
-                code = splitString[0].Substring(0, 1) + splitString[1].Substring(0, 1);
+                code = splitString[0].Substring(0, 1) + splitString[splitString.Count - 1].Substring(0, 1);
             }
 
             return code?.ToUpperInvariant();
@@ -355,6 +352,60 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             }
 
             return s;
+        }
+
+        /// <summary>Gets the linkedin URL.</summary>
+        /// <param name="s">The s.</param>
+        /// <returns></returns>
+        public static string GetLinkedinUrl(this string s)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                return s;
+            }
+
+            if (s.Contains("linkedin.com"))
+            {
+                return s.GetUrlWithProtocol();
+            }
+
+            return $"https://www.linkedin.com/in/{s}";
+        }
+
+        /// <summary>Gets the twitter URL.</summary>
+        /// <param name="s">The s.</param>
+        /// <returns></returns>
+        public static string GetTwitterUrl(this string s)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                return s;
+            }
+
+            if (s.Contains("twitter.com"))
+            {
+                return s.GetUrlWithProtocol();
+            }
+
+            return $"https://twitter.com/{s}";
+        }
+
+        /// <summary>Gets the instagram URL.</summary>
+        /// <param name="s">The s.</param>
+        /// <returns></returns>
+        public static string GetInstagramUrl(this string s)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                return s;
+            }
+
+            if (s.Contains("instagram.com"))
+            {
+                return s.GetUrlWithProtocol();
+            }
+
+            return $"https://www.instagram.com/{s}";
         }
     }
 }

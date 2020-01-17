@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-10-2019
+// Last Modified On : 01-16-2020
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -308,6 +308,7 @@ namespace PlataformaRio2C.Web.Site
 
             bundles.Add(new ScriptBundle("~/bundles/js/companies.widget.js").Include(
                 "~/Assets/js/companies/companies.maininformation.widget.js",
+                "~/Assets/js/companies/companies.socialnetworks.widget.js",
                 "~/Assets/js/companies/companies.address.widget.js",
                 "~/Assets/js/companies/companies.activity.widget.js",
                 "~/Assets/js/companies/companies.targetaudience.widget.js",
@@ -323,6 +324,7 @@ namespace PlataformaRio2C.Web.Site
             bundles.Add(new ScriptBundle("~/bundles/js/executives.widget.js").Include(
                 "~/Assets/js/executives/executives.company.widget.js",
                 "~/Assets/js/executives/executives.maininformation.widget.js",
+                "~/Assets/js/executives/executives.socialnetworks.widget.js",
                 "~/Assets/js/companies/companyinfo.autocomplete.js",
                 "~/Assets/js/myrio2c.companynumber.js",
                 "~/Assets/js/myrio2c.publicemail.js",

@@ -4,7 +4,7 @@
 // Created          : 09-25-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-19-2019
+// Last Modified On : 01-16-2020
 // ***********************************************************************
 // <copyright file="PlayersApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -225,7 +225,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                         Name = i.Interest.Name
                     })?.ToList()
                 })?.ToList(),
-                CollaboratorsApiResponses = organizationApiDto.CollaboratorsDtos?.Select(cd => new CollaboratorApiResponse
+                CollaboratorsApiResponses = organizationApiDto.CollaboratorsDtos?.Select(cd => new PlayerCollaboratorApiResponse
                 {
                     Uid = cd.Uid,
                     BadgeName = cd.Badge,

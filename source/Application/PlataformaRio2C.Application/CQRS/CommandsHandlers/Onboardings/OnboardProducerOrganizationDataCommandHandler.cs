@@ -4,7 +4,7 @@
 // Created          : 10-29-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-08-2019
+// Last Modified On : 01-16-2020
 // ***********************************************************************
 // <copyright file="OnboardProducerOrganizationDataCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -108,7 +108,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.TradeName,
                     cmd.Document,
                     cmd.Website,
-                    cmd.SocialMedia,
+                    cmd.Linkedin,
+                    cmd.Twitter,
+                    cmd.Instagram,
+                    cmd.Youtube,
                     await this.countryRepo.GetAsync(cmd.CountryUid ?? Guid.Empty),
                     cmd.Address?.StateUid,
                     cmd.Address?.StateName,
@@ -158,7 +161,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.TradeName,
                     cmd.Document,
                     cmd.Website,
-                    cmd.SocialMedia,
+                    cmd.Linkedin,
+                    cmd.Twitter,
+                    cmd.Instagram,
+                    cmd.Youtube,
                     await this.countryRepo.GetAsync(cmd.CountryUid ?? Guid.Empty),
                     cmd.Address?.StateUid,
                     cmd.Address?.StateName,

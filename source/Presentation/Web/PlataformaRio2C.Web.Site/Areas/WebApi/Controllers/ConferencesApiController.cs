@@ -4,7 +4,7 @@
 // Created          : 01-08-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-10-2020
+// Last Modified On : 01-16-2020
 // ***********************************************************************
 // <copyright file="ConferencesApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -39,6 +39,15 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         private readonly ILanguageRepository languageRepo;
         private readonly IFileRepository fileRepo;
 
+        /// <summary>Initializes a new instance of the <see cref="ConferencesApiController"/> class.</summary>
+        /// <param name="conferenceRepository">The conference repository.</param>
+        /// <param name="editionRepository">The edition repository.</param>
+        /// <param name="editionEventRepository">The edition event repository.</param>
+        /// <param name="roomRepository">The room repository.</param>
+        /// <param name="trackRepository">The track repository.</param>
+        /// <param name="presentationFormatRepository">The presentation format repository.</param>
+        /// <param name="languageRepository">The language repository.</param>
+        /// <param name="fileRepository">The file repository.</param>
         public ConferencesApiController(
             IConferenceRepository conferenceRepository,
             IEditionRepository editionRepository,
