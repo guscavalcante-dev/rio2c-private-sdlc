@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-18-2019
+// Last Modified On : 01-16-2020
 // ***********************************************************************
 // <copyright file="OrganizationBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -55,12 +55,24 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string Document { get; set; }
 
         [Display(Name = "Website", ResourceType = typeof(Labels))]
-        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        [StringLength(300, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Website { get; set; }
 
-        [Display(Name = "SocialMedia", ResourceType = typeof(Labels))]
-        [StringLength(256, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        public string SocialMedia { get; set; }
+        [Display(Name = "LinkedIn")]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string Linkedin { get; set; }
+
+        [Display(Name = "Twitter")]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string Twitter { get; set; }
+
+        [Display(Name = "Instagram")]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string Instagram { get; set; }
+
+        [Display(Name = "YouTube")]
+        [StringLength(300, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string Youtube { get; set; }
 
         [Display(Name = "PhoneNumber", ResourceType = typeof(Labels))]
         [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
@@ -133,7 +145,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.IsCompanyNumberRequired = entity?.IsCompanyNumberRequired == true;
             this.Document = entity?.Document;
             this.Website = entity?.Website;
-            this.SocialMedia = entity?.SocialMedia;
+            this.Linkedin = entity?.Linkedin;
+            this.Twitter = entity?.Twitter;
+            this.Instagram = entity?.Instagram;
+            this.Youtube = entity?.Youtube;
             this.PhoneNumber = entity?.PhoneNumber;
             this.UpdateAddress(entity, isAddressRequired);
             this.UpdateDescriptions(entity, languagesDtos, isDescriptionRequired);

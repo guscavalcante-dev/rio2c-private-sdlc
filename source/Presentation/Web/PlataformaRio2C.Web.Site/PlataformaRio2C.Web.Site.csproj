@@ -440,6 +440,7 @@
     <Content Include="Assets\js\attendeeorganizations\attendeeorganizations.form.js" />
     <Content Include="Assets\js\companies\companies.executive.widget.js" />
     <Content Include="Assets\js\companies\companies.interest.widget.js" />
+    <Content Include="Assets\js\companies\companies.socialnetworks.widget.js" />
     <Content Include="Assets\js\companies\companies.targetaudience.widget.js" />
     <Content Include="Assets\js\companies\companies.activity.widget.js" />
     <Content Include="Assets\js\companies\companies.address.widget.js" />
@@ -7267,6 +7268,9 @@
     <Content Include="Views\Executives\Widgets\SocialNetworksWidget.cshtml" />
     <Content Include="Views\Executives\Modals\UpdateSocialNetworksModal.cshtml" />
     <Content Include="Views\Executives\Modals\UpdateSocialNetworksForm.cshtml" />
+    <Content Include="Views\Companies\Widgets\SocialNetworksWidget.cshtml" />
+    <Content Include="Views\Companies\Modals\UpdateSocialNetworksModal.cshtml" />
+    <Content Include="Views\Companies\Modals\UpdateSocialNetworksForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -4,7 +4,7 @@
 // Created          : 10-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-10-2019
+// Last Modified On : 01-16-2020
 // ***********************************************************************
 // <copyright file="UpdateOrganizationMainInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -92,8 +92,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.CompanyName,
                 cmd.TradeName,
                 cmd.Document,
-                cmd.Website,
-                cmd.SocialMedia,
                 cmd.CropperImage?.ImageFile != null,
                 cmd.CropperImage?.IsImageDeleted == true,
                 cmd.Descriptions?.Select(d => new OrganizationDescription(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),

@@ -6,15 +6,15 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 01-16-2020
 // ***********************************************************************
-// <copyright file="speakers.socialnetworks.widget.js" company="Softo">
+// <copyright file="companies.socialnetworks.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var SpeakersSocialNetworksWidget = function () {
+var CompaniesSocialNetworksWidget = function () {
 
-    var widgetElementId = '#SpeakerSocialNetworksWidget';
+    var widgetElementId = '#CompanySocialNetworksWidget';
     var widgetElement = $(widgetElementId);
 
     var updateModalId = '#UpdateSocialNetworksModal';
@@ -31,9 +31,9 @@ var SpeakersSocialNetworksWidget = function () {
         }
 
         var jsonParameters = new Object();
-        jsonParameters.collaboratorUid = $('#AggregateId').val();
+        jsonParameters.organizationUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/ShowSocialNetworksWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Companies/ShowSocialNetworksWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -41,13 +41,15 @@ var SpeakersSocialNetworksWidget = function () {
                     enableShowPlugins();
                 },
                 // Error
-                onError: function () {
+                onError: function() {
                 }
             });
         })
         .fail(function () {
+            //showAlert();
+            //MyRio2cCommon.unblock(widgetElementId);
         })
-        .always(function () {
+        .always(function() {
             MyRio2cCommon.unblock({ idOrClass: widgetElementId });
         });
     };
@@ -59,8 +61,8 @@ var SpeakersSocialNetworksWidget = function () {
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                if (typeof (SpeakersSocialNetworksWidget) !== 'undefined') {
-                    SpeakersSocialNetworksWidget.init();
+                if (typeof (CompaniesSocialNetworksWidget) !== 'undefined') {
+                    CompaniesSocialNetworksWidget.init();
                 }
             },
             onError: function (data) {
@@ -80,20 +82,20 @@ var SpeakersSocialNetworksWidget = function () {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
-        jsonParameters.collaboratorUid = $('#AggregateId').val();
+        jsonParameters.organizationUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/ShowUpdateSocialNetworksModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Companies/ShowUpdateSocialNetworksModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
-                data: data,
-                // Success
-                onSuccess: function () {
-                    enableUpdatePlugins();
-                    $(updateModalId).modal();
-                },
-                // Error
-                onError: function () {
-                }
-            });
+            data: data,
+            // Success
+            onSuccess: function () {
+                enableUpdatePlugins();
+                $(updateModalId).modal();
+            },
+            // Error
+            onError: function () {
+            }
+        });
         })
         .fail(function () {
         })

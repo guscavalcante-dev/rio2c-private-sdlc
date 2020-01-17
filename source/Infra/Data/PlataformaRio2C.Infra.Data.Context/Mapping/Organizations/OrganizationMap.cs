@@ -49,9 +49,6 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.Property(t => t.Youtube)
                 .HasMaxLength(Organization.YoutubeMaxLength);
 
-            this.Property(t => t.SocialMedia)
-                .HasMaxLength(Organization.SocialMediaMaxLength);
-
             // Relationships
             this.HasOptional(t => t.Holding)
                 .WithMany(e => e.Organizations)

@@ -34,7 +34,6 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int TwitterMaxLength = 100;
         public static readonly int InstagramMaxLength = 100;
         public static readonly int YoutubeMaxLength = 300;
-        public static readonly int SocialMediaMaxLength = 256;
 
         public int? HoldingId { get; private set; }
         public string Name { get; private set; }
@@ -47,7 +46,6 @@ namespace PlataformaRio2C.Domain.Entities
         public string Twitter { get; private set; }
         public string Instagram { get; private set; }
         public string Youtube { get; private set; }
-        public string SocialMedia { get; private set; }
         public int? AddressId { get; private set; }
         public DateTime? ImageUploadDate { get; private set; }
         
@@ -81,7 +79,10 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="tradeName">Name of the trade.</param>
         /// <param name="document">The document.</param>
         /// <param name="website">The website.</param>
-        /// <param name="socialMedia">The social media.</param>
+        /// <param name="linkedin">The linkedin.</param>
+        /// <param name="twitter">The twitter.</param>
+        /// <param name="instagram">The instagram.</param>
+        /// <param name="youtube">The youtube.</param>
         /// <param name="phoneNumber">The phone number.</param>
         /// <param name="country">The country.</param>
         /// <param name="stateUid">The state uid.</param>
@@ -108,9 +109,12 @@ namespace PlataformaRio2C.Domain.Entities
             string name, 
             string companyName, 
             string tradeName, 
-            string document, 
-            string website, 
-            string socialMedia, 
+            string document,
+            string website,
+            string linkedin,
+            string twitter,
+            string instagram,
+            string youtube,
             string phoneNumber, 
             Country country,
             Guid? stateUid,
@@ -135,8 +139,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CompanyName = companyName?.Trim();
             this.TradeName = tradeName?.Trim();
             this.Document = document?.Trim();
-            this.Website = website?.Trim();
-            this.SocialMedia = socialMedia?.Trim();
+            this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
             this.PhoneNumber = phoneNumber?.Trim();
             this.UpdateImageUploadDate(isImageUploaded, false);
             this.IsDeleted = false;
@@ -158,7 +161,10 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="tradeName">Name of the trade.</param>
         /// <param name="document">The document.</param>
         /// <param name="website">The website.</param>
-        /// <param name="socialMedia">The social media.</param>
+        /// <param name="linkedin">The linkedin.</param>
+        /// <param name="twitter">The twitter.</param>
+        /// <param name="instagram">The instagram.</param>
+        /// <param name="youtube">The youtube.</param>
         /// <param name="country">The country.</param>
         /// <param name="stateUid">The state uid.</param>
         /// <param name="stateName">Name of the state.</param>
@@ -177,7 +183,10 @@ namespace PlataformaRio2C.Domain.Entities
             string tradeName,
             string document,
             string website,
-            string socialMedia,
+            string linkedin,
+            string twitter,
+            string instagram,
+            string youtube,
             Country country,
             Guid? stateUid,
             string stateName,
@@ -194,8 +203,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.TradeName = tradeName?.Trim();
             this.CompanyName = companyName?.Trim();
             this.Document = document?.Trim();
-            this.Website = website?.Trim();
-            this.SocialMedia = socialMedia?.Trim();
+            this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
             this.UpdateImageUploadDate(isImageUploaded, false);
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
@@ -213,7 +221,10 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="tradeName">Name of the trade.</param>
         /// <param name="document">The document.</param>
         /// <param name="website">The website.</param>
-        /// <param name="socialMedia">The social media.</param>
+        /// <param name="linkedin">The linkedin.</param>
+        /// <param name="twitter">The twitter.</param>
+        /// <param name="instagram">The instagram.</param>
+        /// <param name="youtube">The youtube.</param>
         /// <param name="country">The country.</param>
         /// <param name="stateUid">The state uid.</param>
         /// <param name="stateName">Name of the state.</param>
@@ -234,7 +245,10 @@ namespace PlataformaRio2C.Domain.Entities
             string tradeName,
             string document,
             string website,
-            string socialMedia,
+            string linkedin,
+            string twitter,
+            string instagram,
+            string youtube,
             Country country,
             Guid? stateUid,
             string stateName,
@@ -253,8 +267,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.TradeName = tradeName?.Trim();
             this.CompanyName = companyName?.Trim();
             this.Document = document?.Trim();
-            this.Website = website?.Trim();
-            this.SocialMedia = socialMedia?.Trim();
+            this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
             this.UpdateImageUploadDate(isImageUploaded, false);
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
@@ -283,7 +296,10 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="tradeName">Name of the trade.</param>
         /// <param name="document">The document.</param>
         /// <param name="website">The website.</param>
-        /// <param name="socialMedia">The social media.</param>
+        /// <param name="linkedin">The linkedin.</param>
+        /// <param name="twitter">The twitter.</param>
+        /// <param name="instagram">The instagram.</param>
+        /// <param name="youtube">The youtube.</param>
         /// <param name="phoneNumber">The phone number.</param>
         /// <param name="country">The country.</param>
         /// <param name="stateUid">The state uid.</param>
@@ -313,7 +329,10 @@ namespace PlataformaRio2C.Domain.Entities
             string tradeName,
             string document,
             string website,
-            string socialMedia,
+            string linkedin,
+            string twitter,
+            string instagram,
+            string youtube,
             string phoneNumber,
             Country country,
             Guid? stateUid,
@@ -340,8 +359,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CompanyName = companyName?.Trim();
             this.TradeName = tradeName?.Trim();
             this.Document = document?.Trim();
-            this.Website = website?.Trim();
-            this.SocialMedia = socialMedia?.Trim();
+            this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
             this.PhoneNumber = phoneNumber?.Trim();
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
             this.IsDeleted = false;
@@ -361,8 +379,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="companyName">Name of the company.</param>
         /// <param name="tradeName">Name of the trade.</param>
         /// <param name="document">The document.</param>
-        /// <param name="website">The website.</param>
-        /// <param name="socialMedia">The social media.</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
         /// <param name="organizationDescriptions">The organization descriptions.</param>
@@ -372,8 +388,6 @@ namespace PlataformaRio2C.Domain.Entities
             string companyName,
             string tradeName,
             string document,
-            string website,
-            string socialMedia,
             bool isImageUploaded,
             bool isImageDeleted,
             List<OrganizationDescription> organizationDescriptions,
@@ -382,12 +396,36 @@ namespace PlataformaRio2C.Domain.Entities
             this.CompanyName = companyName?.Trim();
             this.TradeName = tradeName?.Trim();
             this.Document = document?.Trim();
-            this.Website = website?.Trim();
-            this.SocialMedia = socialMedia?.Trim();
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
             this.SynchronizeOrganizationDescriptions(organizationDescriptions, userId);
+        }
+
+        /// <summary>Updates the social networks.</summary>
+        /// <param name="website">The website.</param>
+        /// <param name="linkedin">The linkedin.</param>
+        /// <param name="twitter">The twitter.</param>
+        /// <param name="instagram">The instagram.</param>
+        /// <param name="youtube">The youtube.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateSocialNetworks(
+            string website,
+            string linkedin,
+            string twitter,
+            string instagram,
+            string youtube,
+            int userId)
+        {
+            this.Website = website?.Trim();
+            this.Linkedin = linkedin?.Trim();
+            this.Twitter = twitter?.Trim();
+            this.Instagram = instagram?.Trim();
+            this.Youtube = youtube?.Trim();
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
         }
 
         /// <summary>Deletes the specified edition.</summary>
@@ -439,14 +477,17 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Onboarding
 
-        /// <summary>Called when [player data].</summary>
+        /// <summary>Onboard player data.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="organizationType">Type of the organization.</param>
         /// <param name="companyName">Name of the company.</param>
         /// <param name="tradeName">Name of the trade.</param>
         /// <param name="document">The document.</param>
-        /// <param name="webSite">The web site.</param>
-        /// <param name="socialMedia">The social media.</param>
+        /// <param name="website">The website.</param>
+        /// <param name="linkedin">The linkedin.</param>
+        /// <param name="twitter">The twitter.</param>
+        /// <param name="instagram">The instagram.</param>
+        /// <param name="youtube">The youtube.</param>
         /// <param name="country">The country.</param>
         /// <param name="stateUid">The state uid.</param>
         /// <param name="stateName">Name of the state.</param>
@@ -467,8 +508,11 @@ namespace PlataformaRio2C.Domain.Entities
             string companyName,
             string tradeName,
             string document,
-            string webSite,
-            string socialMedia,
+            string website,
+            string linkedin,
+            string twitter,
+            string instagram,
+            string youtube,
             Country country,
             Guid? stateUid,
             string stateName,
@@ -487,8 +531,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CompanyName = companyName?.Trim();
             this.TradeName = tradeName?.Trim();
             this.Document = document?.Trim();
-            this.Website = webSite?.Trim();
-            this.SocialMedia = socialMedia?.Trim();
+            this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
@@ -525,8 +568,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="companyName">Name of the company.</param>
         /// <param name="tradeName">Name of the trade.</param>
         /// <param name="document">The document.</param>
-        /// <param name="webSite">The web site.</param>
-        /// <param name="socialMedia">The social media.</param>
+        /// <param name="website">The website.</param>
+        /// <param name="linkedin">The linkedin.</param>
+        /// <param name="twitter">The twitter.</param>
+        /// <param name="instagram">The instagram.</param>
+        /// <param name="youtube">The youtube.</param>
         /// <param name="country">The country.</param>
         /// <param name="stateUid">The state uid.</param>
         /// <param name="stateName">Name of the state.</param>
@@ -545,8 +591,11 @@ namespace PlataformaRio2C.Domain.Entities
             string companyName,
             string tradeName,
             string document,
-            string webSite,
-            string socialMedia,
+            string website,
+            string linkedin,
+            string twitter,
+            string instagram,
+            string youtube,
             Country country,
             Guid? stateUid,
             string stateName,
@@ -563,8 +612,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CompanyName = companyName?.Trim();
             this.TradeName = tradeName?.Trim();
             this.Document = document?.Trim();
-            this.Website = webSite?.Trim();
-            this.SocialMedia = socialMedia?.Trim();
+            this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
@@ -575,14 +623,17 @@ namespace PlataformaRio2C.Domain.Entities
             this.OnboardTicketBuyerAttendeeOrganizationData(edition, userId);
         }
 
-        /// <summary>Called when [producer data].</summary>
+        /// <summary>Onboard producer data.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
         /// <param name="companyName">Name of the company.</param>
         /// <param name="tradeName">Name of the trade.</param>
         /// <param name="document">The document.</param>
-        /// <param name="webSite">The web site.</param>
-        /// <param name="socialMedia">The social media.</param>
+        /// <param name="website">The website.</param>
+        /// <param name="linkedin">The linkedin.</param>
+        /// <param name="twitter">The twitter.</param>
+        /// <param name="instagram">The instagram.</param>
+        /// <param name="youtube">The youtube.</param>
         /// <param name="country">The country.</param>
         /// <param name="stateUid">The state uid.</param>
         /// <param name="stateName">Name of the state.</param>
@@ -603,8 +654,11 @@ namespace PlataformaRio2C.Domain.Entities
             string companyName,
             string tradeName,
             string document,
-            string webSite,
-            string socialMedia,
+            string website,
+            string linkedin,
+            string twitter,
+            string instagram,
+            string youtube,
             Country country,
             Guid? stateUid,
             string stateName,
@@ -623,8 +677,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CompanyName = companyName?.Trim();
             this.TradeName = tradeName?.Trim();
             this.Document = document?.Trim();
-            this.Website = webSite?.Trim();
-            this.SocialMedia = socialMedia?.Trim();
+            this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
@@ -1147,7 +1200,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateTwitter();
             this.ValidateInstagram();
             this.ValidateYoutube();
-            this.ValidateSocialMedia();
             this.ValidatePhoneNumber();
             this.ValidateDescriptions();
             this.ValidateRestrictionSpecifics();
@@ -1241,14 +1293,6 @@ namespace PlataformaRio2C.Domain.Entities
             if (!string.IsNullOrEmpty(this.Youtube) && this.Youtube?.Trim().Length > YoutubeMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "Youtube", YoutubeMaxLength, 1), new string[] { "Youtube" }));
-            }
-        }
-        /// <summary>Validates the social media.</summary>
-        public void ValidateSocialMedia()
-        {
-            if (!string.IsNullOrEmpty(this.SocialMedia) && this.SocialMedia?.Trim().Length > SocialMediaMaxLength)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.SocialMedia, SocialMediaMaxLength, 1), new string[] { "SocialMedia" }));
             }
         }
 
