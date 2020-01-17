@@ -4,7 +4,7 @@
 // Created          : 01-07-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 01-16-2020
 // ***********************************************************************
 // <copyright file="PresentationFormatsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -172,7 +172,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Conferences, new List<BreadcrumbItemHelper> {
                 new BreadcrumbItemHelper(Labels.PresentationFormats, Url.Action("Index", "PresentationFormats", new { Area = "" })),
-                new BreadcrumbItemHelper(presentationFormatDto.GetNameByLanguageCode(ViewBag.UserInterfaceLanguage), Url.Action("Details", "PresentationFormats", new { id }))
+                new BreadcrumbItemHelper(presentationFormatDto.PresentationFormat?.GetNameByLanguageCode(ViewBag.UserInterfaceLanguage), Url.Action("Details", "PresentationFormats", new { id }))
             });
 
             #endregion

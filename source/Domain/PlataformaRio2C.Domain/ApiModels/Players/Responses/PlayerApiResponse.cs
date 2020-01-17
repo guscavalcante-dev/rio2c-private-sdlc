@@ -4,7 +4,7 @@
 // Created          : 09-30-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-19-2019
+// Last Modified On : 01-16-2020
 // ***********************************************************************
 // <copyright file="PlayerApiResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -39,23 +39,11 @@ namespace PlataformaRio2C.Domain.ApiModels
         public List<InterestGroupApiResponse> InterestGroupApiResponses { get; set; }
 
         [JsonProperty("collaborators")]
-        public List<CollaboratorApiResponse> CollaboratorsApiResponses { get; set; }
+        public List<PlayerCollaboratorApiResponse> CollaboratorsApiResponses { get; set; }
     }
 
-    /// <summary>LanguageValueApiResponse</summary>
-    public class LanguageValueApiResponse
-    {
-        [JsonProperty("culture")]
-        public string Culture { get; set; }
-
-        [JsonProperty("value")]
-        public string Value { get; set; }
-    }
-
-    #region Collaborators
-
-    /// <summary>CollaboratorApiResponse</summary>
-    public class CollaboratorApiResponse
+    /// <summary>PlayerCollaboratorApiResponse</summary>
+    public class PlayerCollaboratorApiResponse
     {
         [JsonProperty("uid")]
         public Guid Uid { get; set; }
@@ -75,6 +63,4 @@ namespace PlataformaRio2C.Domain.ApiModels
         [JsonProperty("miniBios")]
         public List<LanguageValueApiResponse> MiniBiosApiResponses { get; set; }
     }
-
-    #endregion
 }

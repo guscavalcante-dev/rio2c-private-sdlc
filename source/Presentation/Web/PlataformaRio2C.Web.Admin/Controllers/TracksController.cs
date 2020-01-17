@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-09-2020
+// Last Modified On : 01-16-2020
 // ***********************************************************************
 // <copyright file="TracksController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -172,7 +172,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Conferences, new List<BreadcrumbItemHelper> {
                 new BreadcrumbItemHelper(Labels.Tracks, Url.Action("Index", "Tracks", new { Area = "" })),
-                new BreadcrumbItemHelper(trackDto.GetNameByLanguageCode(ViewBag.UserInterfaceLanguage), Url.Action("Details", "Tracks", new { id }))
+                new BreadcrumbItemHelper(trackDto.Track?.GetNameByLanguageCode(ViewBag.UserInterfaceLanguage), Url.Action("Details", "Tracks", new { id }))
             });
 
             #endregion

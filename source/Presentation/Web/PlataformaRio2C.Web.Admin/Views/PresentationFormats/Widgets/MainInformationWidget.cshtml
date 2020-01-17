@@ -20,7 +20,7 @@
             <div class="kt-widget__content pl-0" style="overflow: hidden;">
                 <div class="kt-widget__head">
                     <span class="kt-widget__username">
-                        @(Model.GetNameByLanguageCode(ViewBag.UserInterfaceLanguage) ?? "-")
+                        @(Model.PresentationFormat?.GetNameByLanguageCode(ViewBag.UserInterfaceLanguage) ?? "-")
                         @*@if (Model.AttendeeCollaborator?.OnboardingFinishDate != null)
                         {
                             <i class="flaticon2-correct"></i>

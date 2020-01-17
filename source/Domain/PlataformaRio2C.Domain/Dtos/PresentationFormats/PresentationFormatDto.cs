@@ -4,7 +4,7 @@
 // Created          : 01-07-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 01-16-2020
 // ***********************************************************************
 // <copyright file="PresentationFormatDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,7 +13,6 @@
 // ***********************************************************************
 using System.Collections.Generic;
 using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -26,14 +25,6 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <summary>Initializes a new instance of the <see cref="PresentationFormatDto"/> class.</summary>
         public PresentationFormatDto()
         {
-        }
-
-        /// <summary>Gets the name by language code.</summary>
-        /// <param name="languageCode">The language code.</param>
-        /// <returns></returns>
-        public string GetNameByLanguageCode(string languageCode)
-        {
-            return this.PresentationFormat?.Name.GetSeparatorTranslation(languageCode, '|');
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @model PresentationFormatDto
 @{
-    ViewBag.Title = $"{Labels.Track}  {Model.GetNameByLanguageCode(ViewBag.UserInterfaceLanguage)}";
+    ViewBag.Title = $"{Labels.Track}  {Model.PresentationFormat?.GetNameByLanguageCode(ViewBag.UserInterfaceLanguage)}";
 }
 @Html.Hidden("AggregateId", Model.PresentationFormat.Uid)
 <div class="row">

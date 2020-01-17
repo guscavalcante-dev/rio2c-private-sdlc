@@ -1,7 +1,7 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @model TrackDto
 @{
-    ViewBag.Title = $"{Labels.Track}  {Model.GetNameByLanguageCode(ViewBag.UserInterfaceLanguage)}";
+    ViewBag.Title = $"{Labels.Track}  {Model.Track?.GetNameByLanguageCode(ViewBag.UserInterfaceLanguage)}";
 }
 @Html.Hidden("AggregateId", Model.Track.Uid)
 <div class="row">

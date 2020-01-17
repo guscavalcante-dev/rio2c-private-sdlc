@@ -1,23 +1,24 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Site
 // Author           : Rafael Dantas Ruiz
-// Created          : 12-19-2019
+// Created          : 12-18-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 01-16-2020
 // ***********************************************************************
-// <copyright file="CollaboratorBaseApiResponse.cs" company="Softo">
+// <copyright file="SpeakersApiResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace PlataformaRio2C.Domain.ApiModels.Responses
+namespace PlataformaRio2C.Domain.Dtos
 {
-    /// <summary>CollaboratorBaseApiResponse</summary>
-    public class CollaboratorBaseApiResponse
+    /// <summary>SpeakersApiListItem</summary>
+    public class SpeakersDropdownDto
     {
         [JsonProperty("uid", Order = 100)]
         public Guid Uid { get; set; }
@@ -36,5 +37,24 @@ namespace PlataformaRio2C.Domain.ApiModels.Responses
 
         [JsonProperty("jobTitle", Order = 600)]
         public string JobTitle { get; set; }
+
+        [JsonProperty("companies", Order = 701)]
+        public List<SpeakersDropdownOrganizationDto> Companies { get; set; }
+    }
+
+    /// <summary>SpeakersDropdownOrganizationDto</summary>
+    public class SpeakersDropdownOrganizationDto
+    {
+        [JsonProperty("uid", Order = 100)]
+        public Guid Uid { get; set; }
+
+        [JsonProperty("tradeName", Order = 200)]
+        public string TradeName { get; set; }
+
+        [JsonProperty("companyName", Order = 300)]
+        public string CompanyName { get; set; }
+
+        [JsonProperty("picture", Order = 400)]
+        public string Picture { get; set; }
     }
 }

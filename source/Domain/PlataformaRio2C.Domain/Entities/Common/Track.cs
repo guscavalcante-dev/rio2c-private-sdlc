@@ -4,7 +4,7 @@
 // Created          : 01-04-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-09-2020
+// Last Modified On : 01-16-2020
 // ***********************************************************************
 // <copyright file="Track.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -92,6 +93,14 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         #region Track Names
+
+        /// <summary>Gets the name by language code.</summary>
+        /// <param name="languageCode">The language code.</param>
+        /// <returns></returns>
+        public string GetNameByLanguageCode(string languageCode)
+        {
+            return this.Name.GetSeparatorTranslation(languageCode, '|');
+        }
 
         /// <summary>Updates the name.</summary>
         /// <param name="trackNames">The track names.</param>

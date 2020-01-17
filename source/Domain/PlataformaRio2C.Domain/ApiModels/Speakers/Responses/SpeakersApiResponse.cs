@@ -4,16 +4,16 @@
 // Created          : 12-18-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-19-2019
+// Last Modified On : 01-16-2020
 // ***********************************************************************
 // <copyright file="SpeakersApiResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using PlataformaRio2C.Domain.ApiModels.Responses;
 
 namespace PlataformaRio2C.Domain.ApiModels
 {
@@ -21,16 +21,28 @@ namespace PlataformaRio2C.Domain.ApiModels
     public class SpeakersApiResponse : ListBaseModel
     {
         [JsonProperty("speakers")]
-        public List<SpeakersApiListItem> Speakers { get; set; }
+        public List<SpeakerListApiItem> Speakers { get; set; }
     }
 
     /// <summary>SpeakersApiListItem</summary>
-    public class SpeakersApiListItem : CollaboratorBaseApiResponse
+    public class SpeakerListApiItem
     {
+        [JsonProperty("uid", Order = 100)]
+        public Guid Uid { get; set; }
+
+        [JsonProperty("badgeName", Order = 200)]
+        public string BadgeName { get; set; }
+
+        [JsonProperty("name", Order = 300)]
+        public string Name { get; set; }
+
         [JsonProperty("highlightPosition", Order = 301)]
         public int? HighlightPosition { get; set; }
 
-        [JsonProperty("companies", Order = 701)]
-        public List<OrganizationBaseApiResponse> Companies { get; set; }
+        [JsonProperty("picture", Order = 400)]
+        public string Picture { get; set; }
+
+        [JsonProperty("jobTitle", Order = 500)]
+        public string JobTitle { get; set; }
     }
 }
