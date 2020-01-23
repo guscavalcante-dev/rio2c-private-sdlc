@@ -45,11 +45,15 @@ CREATE NONCLUSTERED INDEX "IDX_AttendeeLogisticSponsors_LogisticSponsorId_IsDele
 )
 go
 
-CREATE TABLE "Hotels"
+CREATE TABLE "Places"
 ( 
 	"Id"                 int IDENTITY ( 1,1 ) ,
 	"Uid"                uniqueidentifier  NOT NULL ,
 	"Name"               varchar(100)  NOT NULL ,
+	"IsHotel"            bit  NOT NULL ,
+	"AddressId"          int  NULL ,
+	"Website"            varchar(300)  NULL ,
+	"AdditionalInfo"     varchar(1000)  NULL ,
 	"IsDeleted"          bit  NOT NULL ,
 	"CreateDate"         datetime  NOT NULL ,
 	"CreateUserId"       int  NOT NULL ,
@@ -58,12 +62,12 @@ CREATE TABLE "Hotels"
 )
 go
 
-CREATE TABLE "AttendeeHotels"
+CREATE TABLE "AttendeePlaces"
 ( 
 	"Id"                 int IDENTITY ( 1,1 ) ,
 	"Uid"                uniqueidentifier  NOT NULL ,
 	"EditionId"          int  NOT NULL ,
-	"HotelId"            int  NOT NULL ,
+	"PlaceId"            int  NOT NULL ,
 	"IsDeleted"          bit  NOT NULL ,
 	"CreateDate"         datetime  NOT NULL ,
 	"CreateUserId"       int  NOT NULL ,
@@ -72,16 +76,16 @@ CREATE TABLE "AttendeeHotels"
 )
 go
 
-CREATE NONCLUSTERED INDEX "IDX_AttendeeHotels_EditionId_IsDeleted" ON "AttendeeHotels"
+CREATE NONCLUSTERED INDEX "IDX_AttendeePlaces_EditionId_IsDeleted" ON "AttendeePlaces"
 ( 
 	"EditionId"           ASC,
 	"IsDeleted"           ASC
 )
 go
 
-CREATE NONCLUSTERED INDEX "IDX_AttendeeHotels_HotelId_IsDeleted" ON "AttendeeHotels"
+CREATE NONCLUSTERED INDEX "IDX_AttendeePlaces_PlaceId_IsDeleted" ON "AttendeePlaces"
 ( 
-	"HotelId"             ASC,
+	"PlaceId"             ASC,
 	"IsDeleted"           ASC
 )
 go
@@ -98,16 +102,20 @@ ALTER TABLE "AttendeeLogisticSponsors"
 ADD CONSTRAINT "PK_AttendeeLogisticSponsors_Uid" PRIMARY KEY  CLUSTERED ("Id" ASC,"Uid" ASC)
 go
 
-ALTER TABLE "Hotels"
-ADD CONSTRAINT "XPKHotels" PRIMARY KEY  CLUSTERED ("Id" ASC)
+ALTER TABLE "Places"
+ADD CONSTRAINT "PK_Places" PRIMARY KEY  CLUSTERED ("Id" ASC)
 go
 
-ALTER TABLE "AttendeeHotels"
-ADD CONSTRAINT "PK_AttendeeHotels" PRIMARY KEY  CLUSTERED ("Id" ASC)
+ALTER TABLE "Places"
+ADD CONSTRAINT "IDX_UQ_Places_Uid" UNIQUE ("Uid"  ASC)
 go
 
-ALTER TABLE "AttendeeHotels"
-ADD CONSTRAINT "IDX_UQ_AttendeeHotels_Uid" UNIQUE ("Uid"  ASC)
+ALTER TABLE "AttendeePlaces"
+ADD CONSTRAINT "PK_AttendeePlaces" PRIMARY KEY  CLUSTERED ("Id" ASC)
+go
+
+ALTER TABLE "AttendeePlaces"
+ADD CONSTRAINT "IDX_UQ_AttendeePlaces" UNIQUE ("Uid"  ASC)
 go
 
 ALTER TABLE "LogisticSponsors"
@@ -134,26 +142,30 @@ ALTER TABLE "AttendeeLogisticSponsors"
 	ADD CONSTRAINT "FK_Users_AttendeeLogisticSponsors_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
 go
 
-ALTER TABLE "Hotels"
-	ADD CONSTRAINT "FK_Users_Hotels_CreateUserId" FOREIGN KEY ("CreateUserId") REFERENCES "dbo"."Users"("Id")
+ALTER TABLE "Places"
+	ADD CONSTRAINT "FK_Addresses_Places_AddressId" FOREIGN KEY ("AddressId") REFERENCES "dbo"."Addresses"("Id")
 go
 
-ALTER TABLE "Hotels"
-	ADD CONSTRAINT "FK_Users_Hotels_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
+ALTER TABLE "Places"
+	ADD CONSTRAINT "FK_Users_Places_CreateUserId" FOREIGN KEY ("CreateUserId") REFERENCES "dbo"."Users"("Id")
 go
 
-ALTER TABLE "AttendeeHotels"
-	ADD CONSTRAINT "FK_Editions_AttendeeHotels_EditionId" FOREIGN KEY ("EditionId") REFERENCES "dbo"."Editions"("Id")
+ALTER TABLE "Places"
+	ADD CONSTRAINT "FK_Users_Places_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
 go
 
-ALTER TABLE "AttendeeHotels"
-	ADD CONSTRAINT "FK_Hotels_AttendeeHotels_HotelId" FOREIGN KEY ("HotelId") REFERENCES "Hotels"("Id")
+ALTER TABLE "AttendeePlaces"
+	ADD CONSTRAINT "FK_Editions_AttendeePlaces_EditionId" FOREIGN KEY ("EditionId") REFERENCES "dbo"."Editions"("Id")
 go
 
-ALTER TABLE "AttendeeHotels"
-	ADD CONSTRAINT "FK_Users_AttendeeHotels_CreateUserId" FOREIGN KEY ("CreateUserId") REFERENCES "dbo"."Users"("Id")
+ALTER TABLE "AttendeePlaces"
+	ADD CONSTRAINT "FK_Places_AttendeePlaces_PlaceId" FOREIGN KEY ("PlaceId") REFERENCES "Places"("Id")
 go
 
-ALTER TABLE "AttendeeHotels"
-	ADD CONSTRAINT "FK_Users_AttendeeHotels_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
+ALTER TABLE "AttendeePlaces"
+	ADD CONSTRAINT "FK_Users_AttendeePlaces_CreateUserId" FOREIGN KEY ("CreateUserId") REFERENCES "dbo"."Users"("Id")
+go
+
+ALTER TABLE "AttendeePlaces"
+	ADD CONSTRAINT "FK_Users_AttendeePlaces_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
 go
