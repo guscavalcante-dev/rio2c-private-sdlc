@@ -3,10 +3,6 @@
 
 --possible values are: "no", "yes, not done" and "yes, done"
 
-ALTER TABLE "dbo"."ConferenceParticipants"
-ADD CreateUserId  int  NULL
-go
-
 CREATE TABLE "LogisticSponsors"
 ( 
 	"Id"                 int IDENTITY ( 1,1 ) ,
