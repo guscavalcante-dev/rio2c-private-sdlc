@@ -175,6 +175,53 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+CREATE TABLE [dbo].[AttendeeHotels](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[EditionId] [int] NOT NULL,
+	[HotelId] [int] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_AttendeeHotels] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_AttendeeHotels_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AttendeeLogisticSponsors](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[EditionId] [int] NOT NULL,
+	[LogisticSponsorId] [int] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_AttendeeLogisticSponsors_Uid] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC,
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 CREATE TABLE [dbo].[AttendeeOrganizationCollaborators](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
@@ -951,6 +998,30 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_PADDING ON
 GO
+CREATE TABLE [dbo].[Hotels](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Name] [varchar](100) NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [XPKHotels] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
 CREATE TABLE [dbo].[InterestGroups](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
@@ -1063,6 +1134,35 @@ CREATE TABLE [dbo].[Logistics](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[LogisticSponsors](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Name] [varchar](100) NOT NULL,
+	[IsAirfareTicketRequired] [bit] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_LogisticSponsors] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_LogisticSponsors_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
 GO
 SET ANSI_NULLS ON
 GO
@@ -2484,6 +2584,30 @@ CREATE NONCLUSTERED INDEX [IDX_AttendeeCollaboratorTypes_IsApiDisplayEnabled] ON
 	[IsApiDisplayEnabled] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
+CREATE NONCLUSTERED INDEX [IDX_AttendeeHotels_EditionId_IsDeleted] ON [dbo].[AttendeeHotels]
+(
+	[EditionId] ASC,
+	[IsDeleted] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_AttendeeHotels_HotelId_IsDeleted] ON [dbo].[AttendeeHotels]
+(
+	[HotelId] ASC,
+	[IsDeleted] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_AttendeeLogisticSponsors_EditionId_IsDeleted] ON [dbo].[AttendeeLogisticSponsors]
+(
+	[EditionId] ASC,
+	[IsDeleted] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_AttendeeLogisticSponsors_LogisticSponsorId_IsDeleted] ON [dbo].[AttendeeLogisticSponsors]
+(
+	[LogisticSponsorId] ASC,
+	[IsDeleted] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
 CREATE NONCLUSTERED INDEX [IDX_AttendeeOrganizationTypes_IsApiDisplayEnabled] ON [dbo].[AttendeeOrganizationTypes]
 (
 	[IsApiDisplayEnabled] ASC
@@ -2833,6 +2957,46 @@ ALTER TABLE [dbo].[AttendeeCollaboratorTypes]  WITH CHECK ADD  CONSTRAINT [FK_Us
 REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[AttendeeCollaboratorTypes] CHECK CONSTRAINT [FK_Users_AttendeeCollaboratorTypes_UpdateUserId]
+GO
+ALTER TABLE [dbo].[AttendeeHotels]  WITH CHECK ADD  CONSTRAINT [FK_Editions_AttendeeHotels_EditionId] FOREIGN KEY([EditionId])
+REFERENCES [dbo].[Editions] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeHotels] CHECK CONSTRAINT [FK_Editions_AttendeeHotels_EditionId]
+GO
+ALTER TABLE [dbo].[AttendeeHotels]  WITH CHECK ADD  CONSTRAINT [FK_Hotels_AttendeeHotels_HotelId] FOREIGN KEY([HotelId])
+REFERENCES [dbo].[Hotels] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeHotels] CHECK CONSTRAINT [FK_Hotels_AttendeeHotels_HotelId]
+GO
+ALTER TABLE [dbo].[AttendeeHotels]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeHotels_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeHotels] CHECK CONSTRAINT [FK_Users_AttendeeHotels_CreateUserId]
+GO
+ALTER TABLE [dbo].[AttendeeHotels]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeHotels_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeHotels] CHECK CONSTRAINT [FK_Users_AttendeeHotels_UpdateUserId]
+GO
+ALTER TABLE [dbo].[AttendeeLogisticSponsors]  WITH CHECK ADD  CONSTRAINT [FK_Editions_AttendeeLogisticSponsors_EditionId] FOREIGN KEY([EditionId])
+REFERENCES [dbo].[Editions] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeLogisticSponsors] CHECK CONSTRAINT [FK_Editions_AttendeeLogisticSponsors_EditionId]
+GO
+ALTER TABLE [dbo].[AttendeeLogisticSponsors]  WITH CHECK ADD  CONSTRAINT [FK_LogisticSponsors_AttendeeLogisticSponsors_LogisticSponsorId] FOREIGN KEY([LogisticSponsorId])
+REFERENCES [dbo].[LogisticSponsors] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeLogisticSponsors] CHECK CONSTRAINT [FK_LogisticSponsors_AttendeeLogisticSponsors_LogisticSponsorId]
+GO
+ALTER TABLE [dbo].[AttendeeLogisticSponsors]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeLogisticSponsors_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeLogisticSponsors] CHECK CONSTRAINT [FK_Users_AttendeeLogisticSponsors_CreateUserId]
+GO
+ALTER TABLE [dbo].[AttendeeLogisticSponsors]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeLogisticSponsors_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeLogisticSponsors] CHECK CONSTRAINT [FK_Users_AttendeeLogisticSponsors_UpdateUserId]
 GO
 ALTER TABLE [dbo].[AttendeeOrganizationCollaborators]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeCollaborators_AttendeeOrganizationCollaborators_AttendeeCollaboratorId] FOREIGN KEY([AttendeeCollaboratorId])
 REFERENCES [dbo].[AttendeeCollaborators] ([Id])
@@ -3249,6 +3413,16 @@ REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[Holdings] CHECK CONSTRAINT [FK_Users_Holdings_UpdateUserId]
 GO
+ALTER TABLE [dbo].[Hotels]  WITH CHECK ADD  CONSTRAINT [FK_Users_Hotels_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[Hotels] CHECK CONSTRAINT [FK_Users_Hotels_CreateUserId]
+GO
+ALTER TABLE [dbo].[Hotels]  WITH CHECK ADD  CONSTRAINT [FK_Users_Hotels_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[Hotels] CHECK CONSTRAINT [FK_Users_Hotels_UpdateUserId]
+GO
 ALTER TABLE [dbo].[InterestGroups]  WITH CHECK ADD  CONSTRAINT [FK_ProjectTypes_InterestGroups_ProjectTypeId] FOREIGN KEY([ProjectTypeId])
 REFERENCES [dbo].[ProjectTypes] ([Id])
 GO
@@ -3303,6 +3477,16 @@ ALTER TABLE [dbo].[Logistics]  WITH CHECK ADD  CONSTRAINT [FK_Users_Logistics_Up
 REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[Logistics] CHECK CONSTRAINT [FK_Users_Logistics_UpdateUserId]
+GO
+ALTER TABLE [dbo].[LogisticSponsors]  WITH CHECK ADD  CONSTRAINT [FK_Users_LogisticSponsors_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticSponsors] CHECK CONSTRAINT [FK_Users_LogisticSponsors_CreateUserId]
+GO
+ALTER TABLE [dbo].[LogisticSponsors]  WITH CHECK ADD  CONSTRAINT [FK_Users_LogisticSponsors_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticSponsors] CHECK CONSTRAINT [FK_Users_LogisticSponsors_UpdateUserId]
 GO
 ALTER TABLE [dbo].[Messages]  WITH CHECK ADD  CONSTRAINT [FK_Editions_Messages_EditionId] FOREIGN KEY([EditionId])
 REFERENCES [dbo].[Editions] ([Id])
