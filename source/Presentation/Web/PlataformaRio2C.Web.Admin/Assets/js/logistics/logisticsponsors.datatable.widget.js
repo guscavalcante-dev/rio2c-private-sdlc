@@ -6,146 +6,17 @@
 // Last Modified By : Arthur Souza
 // Last Modified On : 01-20-2020
 // ***********************************************************************
-// <copyright file="collaborators.datatable.widget.js" company="Softo">
+// <copyright file="logisticsponsors.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
 var LogisticSponsorsDataTableWidget = function () {
-
-    var widgetElementId = '#PlayersExecutivesDataTableWidget';
-    var tableElementId = '#playersexecutives-list-table';
-    var modalId = '#ExportEventbriteCsvModal';
+    var widgetElementId = '#LogisticSponsorsDataTableWidget';
+    var tableElementId = '#logisticsponsors-list-table';
     var table;
-    var eventbriteCsvExport;
-
-    // Invitation email ---------------------------------------------------------------------------
-    var sendInvitationEmails = function () {
-        MyRio2cCommon.block();
-
-        var jsonParameters = new Object();
-        jsonParameters.selectedCollaboratorsUids = $('#playersexecutives-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
-
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/PlayersExecutives/SendInvitationEmails'), jsonParameters, function (data) {
-            MyRio2cCommon.handleAjaxReturn({
-                data: data,
-                // Success
-                onSuccess: function () {
-                },
-                // Error
-                onError: function () {
-                }
-            });
-        })
-        .fail(function () {
-        })
-        .always(function () {
-            MyRio2cCommon.unblock();
-        });
-    };
-
-    var showSendInvitationEmailsModal = function () {
-        bootbox.dialog({
-            message: confirmToSendInvitationEmails,
-            buttons: {
-                cancel: {
-                    label: labels.cancel,
-                    className: "btn btn-secondary btn-elevate mr-auto",
-                    callback: function () {
-                    }
-                },
-                confirm: {
-                    label: labels.send,
-                    className: "btn btn-brand btn-elevate",
-                    callback: function () {
-                        sendInvitationEmails();
-                    }
-                }
-            }
-        });
-    };
-
-    // Export csv ---------------------------------------------------------------------------------
-    var enableExportEventbriteCsvPlugins = function () {
-        MyRio2cCommon.enableSelect2({ inputIdOrClass: modalId + ' .enable-select2' });
-    };
-
-    var showExportEventbriteCsvModal = function () {
-        MyRio2cCommon.block({ isModal: true });
-
-        var jsonParameters = new Object();
-
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/PlayersExecutives/ShowExportEventbriteCsvModal'), jsonParameters, function (data) {
-            MyRio2cCommon.handleAjaxReturn({
-                data: data,
-                // Success
-                onSuccess: function () {
-                    enableExportEventbriteCsvPlugins();
-                    $(modalId).modal();
-                },
-                // Error
-                onError: function () {
-                }
-            });
-        })
-        .fail(function () {
-        })
-        .always(function () {
-            MyRio2cCommon.unblock();
-        });
-    };
-
-    var exportEventbriteCsv = function () {
-        MyRio2cCommon.block({ isModal: true });
-
-        var ticketTypeNameId = 'AttendeeSalesPlatformTicketTypeName';
-        var ticketTypeName = $('#' + ticketTypeNameId).val();
-
-        if (MyRio2cCommon.isNullOrEmpty(ticketTypeName)) {
-            $('[data-valmsg-for="' + ticketTypeNameId + '"]').html('<span for="' + ticketTypeNameId + '" generated="true" class="">' + theFieldIsRequired.replace('{0}', ticketType) + '</span>');
-            $('[data-valmsg-for="' + ticketTypeNameId + '"]').removeClass('field-validation-valid');
-            $('[data-valmsg-for="' + ticketTypeNameId + '"]').addClass('field-validation-error');
-
-            MyRio2cCommon.unblock({ isModal: true });
-            return;
-        }
-        else {
-            $('[data-valmsg-for="' + ticketTypeNameId + '"]').html('');
-            $('[data-valmsg-for="' + ticketTypeNameId + '"]').addClass('field-validation-valid');
-            $('[data-valmsg-for="' + ticketTypeNameId + '"]').removeClass('field-validation-error');
-        }
-
-        eventbriteCsvExport.ticketClassName = ticketTypeName;
-
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/PlayersExecutives/ExportEventbriteCsv'), eventbriteCsvExport, function (data) {
-            MyRio2cCommon.handleAjaxReturn({
-                data: data,
-                // Success
-                onSuccess: function () {
-                    var json = jQuery.parseJSON(data.data);
-                    var csv = MyRio2cCommon.convertJsonToCsv(json);
-                    var bom = "\uFEFF";
-                    var csvContent = bom + csv;
-                    var csvData = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-                    var csvUrl = window.URL.createObjectURL(csvData);
-                    var tempLink = document.createElement('a');
-                    tempLink.href = csvUrl;
-                    tempLink.setAttribute('download', 'eventbrite.csv');
-                    tempLink.click();
-                },
-                // Error
-                onError: function () {
-                }
-            });
-        })
-        .fail(function () {
-        })
-        .always(function () {
-            MyRio2cCommon.unblock();
-        });
-    };
-
+    
     // Init datatable -----------------------------------------------------------------------------
     var initiListTable = function () {
 
@@ -191,25 +62,6 @@ var LogisticSponsorsDataTableWidget = function () {
             {
                 extend: 'collection',
                 text: labels.actions,
-                buttons: [
-                    {
-                        text: sendInvitationEmail,
-                        action: function (e, dt, node, config) {
-                            showSendInvitationEmailsModal();
-                        }
-                    },
-                    {
-                        text: exportToEventbrite,
-                        action: function (e, dt, node, config) {
-                            eventbriteCsvExport = dt.ajax.params();
-                            eventbriteCsvExport.selectedCollaboratorsUids = $('#playersexecutives-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
-                            eventbriteCsvExport.showAllEditions = $('#ShowAllEditions').prop('checked');
-                            eventbriteCsvExport.showAllExecutives = $('#ShowAllExecutives').prop('checked');
-                            eventbriteCsvExport.showAllParticipants = $('#ShowAllParticipants').prop('checked');
-
-                            showExportEventbriteCsvModal();
-                        }
-                    }]
             }],
             order: [[0, "asc"]],
             sDom: '<"row"<"col-sm-6"l><"col-sm-6 text-right"B>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
@@ -217,7 +69,7 @@ var LogisticSponsorsDataTableWidget = function () {
                 sSearch: $('#Search').val()
             },
             ajax: {
-                url: MyRio2cCommon.getUrlWithCultureAndEdition('/PlayersExecutives/Search'),
+                url: MyRio2cCommon.getUrlWithCultureAndEdition('/LogisticSponsors/Search'),
                 data: function (d) {
                     d.showAllEditions = $('#ShowAllEditions').prop('checked');
                     d.showAllExecutives = $('#ShowAllExecutives').prop('checked');
@@ -256,48 +108,9 @@ var LogisticSponsorsDataTableWidget = function () {
             },
             columns: [
                 {
-                    data: 'FullName',
+                    data: 'Name',
                     render: function (data, type, full, meta) {
-                        var html = '\
-                                <table class="image-side-text text-left">\
-                                    <tr>\
-                                        <td>';
-
-                        if (!MyRio2cCommon.isNullOrEmpty(full.ImageUploadDate)) {
-                            html += '<img src="' + imageDirectory + full.Uid + '_thumbnail.png?v=' + moment(full.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
-                        }
-                        else {
-                            html += '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" /> ';
-                        }
-
-                        html += '       <td> ' + full.FullName + '</td>\
-                                    </tr>\
-                                </table>';
-
-                        if (!full.IsInCurrentEdition) {
-                            html += '<span class="kt-badge kt-badge--inline kt-badge--info mt-2">' + labels.notInEdition + '</span>';
-                        }
-
-                        return html;
-                    }
-                },
-                { data: 'Email' },
-                {
-                    data: 'Player',
-                    render: function (data, type, row, meta) {
-                        var html = '<ul class="m-0 pl-4">';
-
-                        //loop through all the row details to build output string
-                        for (var item in row.AttendeeOrganizationBasesDtos) {
-                            if (row.AttendeeOrganizationBasesDtos.hasOwnProperty(item)) {
-                                var r = row.AttendeeOrganizationBasesDtos[item];
-                                html += '<li>' + r.DisplayName + '</li>';
-                            }
-                        }
-
-                        html += '</ul>';
-
-                        return html;
+                        return data;
                     }
                 },
                 {
@@ -352,11 +165,7 @@ var LogisticSponsorsDataTableWidget = function () {
                     className: "dt-center"
                 },
                 {
-                    targets: [2],
-                    orderable: false
-                },
-                {
-                    targets: [3, 4],
+                    targets: [2, 3],
                     className: "dt-center"
                 },
                 {

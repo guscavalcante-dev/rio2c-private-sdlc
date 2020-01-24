@@ -369,40 +369,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             {
                                 Id = c.Id,
                                 Uid = c.Uid,
-                                //FirstName = c.FirstName,
-                                //LastNames = c.LastNames,
-                                //Badge = c.Badge,
-                                //Email = c.User.Email,
-                                //PhoneNumber = c.PhoneNumber,
-                                //CellPhone = c.CellPhone,
-                                //PublicEmail = c.PublicEmail,
-                                //ImageUploadDate = c.ImageUploadDate,
+                                Name = c.Name,
                                 CreateDate = c.CreateDate,
-                                UpdateDate = c.UpdateDate,
-                                //EditionAttendeeCollaborator = editionId.HasValue ? c.AttendeeCollaborators.FirstOrDefault(ac => ac.EditionId == editionId
-                                //                                                                                                && !ac.Edition.IsDeleted
-                                //                                                                                                && !ac.IsDeleted
-                                //                                                                                                && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
-                                //                                                                                                                                           && act.CollaboratorType.Name == collaboratorTypeName)) : 
-                                //                                                   null,
-                                //IsInOtherEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId
-                                //                                                                           && !ac.IsDeleted),
-                                //AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
-                                //                                    .Where(at => !at.IsDeleted && at.EditionId == editionId)
-                                //                                    .SelectMany(at => at.AttendeeOrganizationCollaborators
-                                //                                                            .Where(aoc => !aoc.IsDeleted)
-                                //                                                            .Select(aoc => new AttendeeOrganizationBaseDto
-                                //                                                            {
-                                //                                                                Uid = aoc.AttendeeOrganization.Uid,
-                                //                                                                OrganizationBaseDto = new OrganizationBaseDto
-                                //                                                                {
-                                //                                                                    Name = aoc.AttendeeOrganization.Organization.Name,
-                                //                                                                    HoldingBaseDto = aoc.AttendeeOrganization.Organization.Holding == null ? null : new HoldingBaseDto
-                                //                                                                    {
-                                //                                                                        Name = aoc.AttendeeOrganization.Organization.Holding.Name
-                                //                                                                    }
-                                //                                                                }
-                                //                                                            }))
+                                UpdateDate = c.UpdateDate,                                
                             })
                             .ToListPagedAsync(page, pageSize);
         }

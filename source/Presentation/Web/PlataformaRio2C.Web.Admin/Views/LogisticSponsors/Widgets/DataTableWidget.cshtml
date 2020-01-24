@@ -1,6 +1,6 @@
 ﻿@model SpeakerSearchViewModel
 <!--begin:: DataTable Widget-->
-<div id="SpeakersDataTableWidget" class="kt-portlet kt-portlet--mobile">
+<div id="LogisticSponsorsDataTableWidget" class="kt-portlet kt-portlet--mobile">
     <div class="kt-portlet__head kt-portlet__head--lg">
         <div class="kt-portlet__head-label">
             <span class="kt-portlet__head-icon">
@@ -27,7 +27,6 @@
             <div class="col-lg-5">
                 <label>@Labels.Search:</label>
                 @Html.TextBoxFor(m => m.Search, new { type = "search", @class = "form-control", autocomplete = "off", placeholder = $"{Labels.Name.ToLowerInvariant()}, {Labels.Email.ToLowerInvariant()} {Labels.Or.ToLowerInvariant()} {Labels.Company.ToLowerInvariant()}" })
-                @*<span class="form-text text-muted">Please enter your full name</span>*@
             </div>
             <div class="col-lg-7">
                 <div class="form-group">
@@ -51,15 +50,12 @@
         </div>
         <!--end: SearchForm-->
         <!--begin: Datatable -->
-        <table class="table table-striped- table-bordered table-hover table-checkable" id="speakers-list-table">
+        <table class="table table-striped- table-bordered table-hover table-checkable" id="logisticsponsors-list-table">
             <thead>
                 <tr>
                     <th class="text-left">@Labels.Name</th>
-                    <th>@Labels.Email</th>
-                    <th>@Labels.Company</th>
                     <th>@Labels.CreateDate</th>
                     <th>@Labels.UpdateDate</th>
-                    <th>@Labels.OnboardingFinishDate</th>
                     <th class="dt-head-center dt-body-center">@Labels.Actions</th>
                 </tr>
             </thead>
