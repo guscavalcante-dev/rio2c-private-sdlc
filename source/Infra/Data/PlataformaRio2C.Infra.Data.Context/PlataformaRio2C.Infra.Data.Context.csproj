@@ -100,6 +100,10 @@
     <Compile Include="Mapping\Addresses\CountryMap.cs" />
     <Compile Include="Mapping\Addresses\StateMap.cs" />
     <Compile Include="Mapping\Editions\EditionEventMap.cs" />
+    <Compile Include="Mapping\Logistics\PlaceMap.cs" />
+    <Compile Include="Mapping\Logistics\AttendeeLogisticSponsorMap.cs" />
+    <Compile Include="Mapping\Logistics\LogisticsSponsorMap.cs" />
+    <Compile Include="Mapping\Logistics\AttendeePlacesMap.cs" />
     <Compile Include="Mapping\Logistics\LogisticsMap.cs" />
     <Compile Include="Mapping\Mail\MailCollaboratorMap.cs" />
     <Compile Include="Mapping\Mail\MailMap.cs" />

@@ -1993,4 +1993,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>é</value>
     <comment>é</comment>
   </data>
+  <data name="LogisticSponsors" xml:space="preserve">
+    <value>Patrocinadores de Logística</value>
+    <comment>Patrocinadores de Logística</comment>
+  </data>
 </root>

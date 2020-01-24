@@ -524,6 +524,27 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+            
+            #region Logistics - LogisticSponsors
+
+            bundles.Add(new ScriptBundle("~/bundles/js/logisticsponsors.list.js").Include(
+                "~/Assets/js/collaborators/logisticsponsors.datatable.widget.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/js/collaborators.editioncount.js").Include(
+            //    "~/Assets/js/collaborators/collaborators.editioncount.widget.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/js/collaborators.create.js").Include(
+            //    "~/Assets/js/collaborators/collaborators.create.js",
+            //    "~/Assets/js/myrio2c.publicemail.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/js/collaborators.update.js").Include(
+            //    "~/Assets/js/collaborators/collaborators.update.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/js/collaborators.delete.js").Include(
+            //    "~/Assets/js/collaborators/collaborators.delete.js"));
+
+            #endregion
+
             #endregion
 
             #region Scripts

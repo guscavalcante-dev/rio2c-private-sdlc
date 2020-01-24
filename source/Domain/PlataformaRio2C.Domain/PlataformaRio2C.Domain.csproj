@@ -138,6 +138,7 @@
     <Compile Include="Dtos\Editions\EditionDto.cs" />
     <Compile Include="Dtos\EditionEvents\EditionEventJsonDto.cs" />
     <Compile Include="Dtos\Emails\EmailRecipientDto.cs" />
+    <Compile Include="Dtos\Logistics\LogisticSponsorBaseDto.cs" />
     <Compile Include="Dtos\Messages\NotificationEmailConversationDto.cs" />
     <Compile Include="Dtos\Messages\HubBaseDto.cs" />
     <Compile Include="Dtos\Messages\MessageHubDto.cs" />
@@ -223,6 +224,10 @@
     <Compile Include="Entities\Addresses\Country.cs" />
     <Compile Include="Entities\Addresses\State.cs" />
     <Compile Include="Entities\Editions\EditionEvent.cs" />
+    <Compile Include="Entities\Logistics\AttendeePlaces.cs" />
+    <Compile Include="Entities\Logistics\Place.cs" />
+    <Compile Include="Entities\Logistics\LogisticSponsor.cs" />
+    <Compile Include="Entities\Logistics\AttendeeLogisticsSponsor.cs" />
     <Compile Include="Entities\Logistics\Logistics.cs" />
     <Compile Include="Entities\Mail\Mail.cs" />
     <Compile Include="Entities\Mail\MailCollaborator.cs" />
@@ -309,6 +314,9 @@
     <Compile Include="Interfaces\Repositories\Addresses\ICountryRepository.cs" />
     <Compile Include="Interfaces\Repositories\Addresses\IStateRepository.cs" />
     <Compile Include="Interfaces\Repositories\Editions\IEditionEventRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Logistics\IAttendeeLogisticSponsorRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Logistics\IPlaceRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Logistics\ILogisticSponsorRepository.cs" />
     <Compile Include="Interfaces\Repositories\Projects\IProjectEvaluationRefuseReasonRepository.cs" />
     <Compile Include="Interfaces\Repositories\Projects\IProjectEvaluationStatusRepository.cs" />
     <Compile Include="Interfaces\Repositories\Projects\IProjectBuyerEvaluationRepository.cs" />

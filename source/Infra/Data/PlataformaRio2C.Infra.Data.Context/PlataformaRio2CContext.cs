@@ -131,6 +131,12 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new TrackMap());
             modelBuilder.Configurations.Add(new PresentationFormatMap());
 
+            // Logistics Configuration
+            modelBuilder.Configurations.Add(new LogisticsSponsorMap());
+            modelBuilder.Configurations.Add(new PlaceMap());
+            modelBuilder.Configurations.Add(new AttendeePlacesMap());
+            modelBuilder.Configurations.Add(new AttendeeLogisticSponsorMap());
+
             // TODO: Old mapping that must be reviewed
 
             //modelBuilder.Configurations.Add(new ImageFileMap());            

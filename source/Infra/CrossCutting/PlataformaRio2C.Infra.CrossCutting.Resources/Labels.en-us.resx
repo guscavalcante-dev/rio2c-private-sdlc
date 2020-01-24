@@ -1986,4 +1986,8 @@
     <value>is</value>
     <comment>é</comment>
   </data>
+  <data name="LogisticSponsors" xml:space="preserve">
+    <value>Logistics Sponsors</value>
+    <comment>Patrocinadores de Logística</comment>
+  </data>
 </root>
