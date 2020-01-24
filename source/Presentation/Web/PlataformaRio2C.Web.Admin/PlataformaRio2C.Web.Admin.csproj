@@ -425,12 +425,12 @@
     <Content Include="Assets\img\logo-rio2c-footer.png" />
     <Content Include="Assets\js\accounts\accounts.password.js" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
-    <Content Include="Assets\js\logistics\collaborators.create.js" />
-    <Content Include="Assets\js\logistics\logisticsponsors.datatable.widget.js" />
-    <Content Include="Assets\js\logistics\collaborators.delete.js" />
-    <Content Include="Assets\js\logistics\collaborators.editioncount.widget.js" />
-    <Content Include="Assets\js\logistics\collaborators.totalcount.widget.js" />
-    <Content Include="Assets\js\logistics\collaborators.update.js" />
+    <Content Include="Assets\js\logisticsponsors\logisticsponsors.create.js" />
+    <Content Include="Assets\js\logisticsponsors\logisticsponsors.datatable.widget.js" />
+    <Content Include="Assets\js\logisticsponsors\collaborators.delete.js" />
+    <Content Include="Assets\js\logisticsponsors\collaborators.editioncount.widget.js" />
+    <Content Include="Assets\js\logisticsponsors\collaborators.totalcount.widget.js" />
+    <Content Include="Assets\js\logisticsponsors\collaborators.update.js" />
     <Content Include="Assets\js\companies\companyinfo.autocomplete.js" />
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.participants.widget.js" />
     <Content Include="Assets\js\conferences\conferences.editionevents.js" />
@@ -8372,6 +8372,8 @@
     <Content Include="Views\Speakers\Modals\UpdateSocialNetworksModal.cshtml" />
     <Content Include="Views\Speakers\Modals\UpdateSocialNetworksForm.cshtml" />
     <Content Include="Views\LogisticSponsors\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Views\LogisticSponsors\Modals\_TinyForm.cshtml" />
+    <Content Include="Views\LogisticSponsors\Modals\CreateModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

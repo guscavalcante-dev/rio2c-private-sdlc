@@ -12,10 +12,10 @@
 // <summary></summary>
 // ***********************************************************************
 
-var CollaboratorsCreate = function () {
+var LogisticSponsorsCreate = function () {
 
-    var modalId = '#CreatePlayerExecutiveModal';
-    var formId = '#CreatePlayerExecutiveForm';
+    var modalId = '#CreateLogisticSponsorModal';
+    var formId = '#CreateLogisticSponsorForm';
 
     // Enable form validation ---------------------------------------------------------------------
     var enableFormValidation = function () {
@@ -44,7 +44,7 @@ var CollaboratorsCreate = function () {
 
         var jsonParameters = new Object();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/PlayersExecutives/ShowCreateModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/LogisticSponsors/ShowCreateModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
