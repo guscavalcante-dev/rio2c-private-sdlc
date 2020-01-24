@@ -37,6 +37,8 @@ var ReportsAudiovisualSubscriptionWidget = function () {
             return;
         }
 
+        MyRio2cCommon.block();
+
         var jsonParameters = new Object();
         jsonParameters.Search = $('#SearchKeywords').val();
         jsonParameters.InterestUids = $('#InterestUid').val().join(',');
@@ -46,7 +48,6 @@ var ReportsAudiovisualSubscriptionWidget = function () {
         jsonParameters.TargetAudienceUids = $('#TargetAudienceUid').val();
         jsonParameters.StartDate = $('#StartDate').val();
         jsonParameters.EndDate = $('#EndDate').val();
-
 
         $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Reports/ShowAudiovisualSubscriptionsWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -60,51 +61,49 @@ var ReportsAudiovisualSubscriptionWidget = function () {
                 }
             });
         })
-            .fail(function () {
-            })
-            .always(function () {
-                MyRio2cCommon.unblock({ idOrClass: widgetElementId });
-            });
+        .fail(function () {
+        })
+        .always(function () {
+            MyRio2cCommon.unblock();
+        });
     };
 
     // Search -------------------------------------------------------------------------------------
     var search = function () {
         $('#Page').val('1');
-        ReportsAudiovisualSubscriptionWidget.init();
+        show();
     };
 
     var enableSearchEvents = function () {
-        $('#SearchKeywords').not('.search-event-enabled').on('search', function () {
-            search();
-        });
-        $('#SearchKeywords').addClass('search-event-enabled');
+        //$('#SearchKeywords').not('.search-event-enabled').on('search', function () {
+        //    search();
+        //});
+        //$('#SearchKeywords').addClass('search-event-enabled');
 
-        $('#InterestUid').not('.change-event-enabled').on('change', function () {
-            search();
-        });
-        $('#InterestUid').addClass('change-event-enabled');
+        //$('#InterestUid').not('.change-event-enabled').on('change', function () {
+        //    search();
+        //});
+        //$('#InterestUid').addClass('change-event-enabled');
 
-        $('#IsPitching').not('.change-event-enabled').on('change', function () {
-            search();
-        });
-        $('#IsPitching').addClass('change-event-enabled');
+        //$('#IsPitching').not('.change-event-enabled').on('change', function () {
+        //    search();
+        //});
+        //$('#IsPitching').addClass('change-event-enabled');
 
-        $('#TargetAudienceUid').not('.change-event-enabled').on('change', function () {
-            search();
-        });
-        $('#TargetAudienceUid').addClass('change-event-enabled');
+        //$('#TargetAudienceUid').not('.change-event-enabled').on('change', function () {
+        //    search();
+        //});
+        //$('#TargetAudienceUid').addClass('change-event-enabled');
 
-        $('#StartDate').not('.search-event-enabled').on('search', function () {
-            search();
-        });
-        $('#StartDate').addClass('search-event-enabled');
+        //$('#StartDate').not('.search-event-enabled').on('search', function () {
+        //    search();
+        //});
+        //$('#StartDate').addClass('search-event-enabled');
 
-        $('#EndDate').not('.search-event-enabled').on('search', function () {
-            search();
-        });
-        $('#EndDate').addClass('search-event-enabled');
-
-
+        //$('#EndDate').not('.search-event-enabled').on('search', function () {
+        //    search();
+        //});
+        //$('#EndDate').addClass('search-event-enabled');
     };
 
     // Excel -------------------------------------------------------------------------------------
@@ -130,7 +129,7 @@ var ReportsAudiovisualSubscriptionWidget = function () {
             '&endDate=' + jsonParameters.EndDate
         );
 
-        MyRio2cCommon.unblock({ idOrClass: widgetElementId });
+        MyRio2cCommon.unblock();
     };
 
     // Pagination ---------------------------------------------------------------------------------
@@ -144,7 +143,7 @@ var ReportsAudiovisualSubscriptionWidget = function () {
     };
 
     var changePage = function () {
-        MyRio2cCommon.block({ idOrClass: widgetElementId });
+        MyRio2cCommon.block();
     };
 
     var handlePaginationReturn = function (data) {
@@ -153,19 +152,18 @@ var ReportsAudiovisualSubscriptionWidget = function () {
             // Success
             onSuccess: function () {
                 enableShowPlugins();
-                MyRio2cCommon.unblock({ idOrClass: widgetElementId });
+                MyRio2cCommon.unblock();
                 $('#SearchKeywords').focus();
             },
             // Error
             onError: function () {
-                MyRio2cCommon.unblock({ idOrClass: widgetElementId });
+                MyRio2cCommon.unblock();
             }
         });
     };
 
     return {
         init: function () {
-            MyRio2cCommon.block({ idOrClass: widgetElementId });
             eanbelSearchFormPlugins();
             enableSearchEvents();
             show();
