@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-03-2020
+// Last Modified On : 01-24-2020
 // ***********************************************************************
 // <copyright file="ProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -981,7 +981,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         #endregion
 
-        #region Project Reports
+        #region Audivisual Projects Report
+
         /// <summary>Finds the audiovisual subscribed project list</summary>
         /// <param name="keywords"></param>
         /// <param name="interestUid"></param>
@@ -1073,10 +1074,23 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="pageSize"></param>
         /// <param name="showAllEditions"></param>
         /// <returns></returns>
-        public async Task<IPagedList<AudiovisualProjectSubscriptionDto>> FindAudiovisualSubscribedProjectsDtosByFilterAndByPageAsync(string keywords, List<Guid> interestUids, int editionId, bool isPitching, List<Guid> targetAudienceUids, DateTime? startDate, DateTime? endDate, int page = 1, int pageSize = 10, bool showAllEditions = false)
+        public async Task<IPagedList<AudiovisualProjectSubscriptionDto>> FindAudiovisualSubscribedProjectsDtosByFilterAndByPageAsync(
+            string keywords,
+            List<Guid> interestUids,
+            int editionId, 
+            bool isPitching, 
+            List<Guid> targetAudienceUids, 
+            DateTime? startDate, 
+            DateTime? endDate, 
+            int page = 1, 
+            int pageSize = 10, 
+            bool showAllEditions = false)
         {
-            return await FindAudiovisualSubscribedProjectsDtosByFilter(keywords, interestUids, editionId, isPitching, targetAudienceUids, startDate, endDate, showAllEditions)
-                            .OrderBy(p => p.Project.CreateDate)
+            var query = this.FindAudiovisualSubscribedProjectsDtosByFilter(keywords, interestUids, editionId, isPitching, targetAudienceUids, startDate, endDate, showAllEditions);
+
+            return await query
+                            .OrderBy(p => p.SellerAttendeeOrganizationDto.Organization.TradeName)
+                            .ThenBy(p => p.Project.CreateDate)
                             .ToPagedListAsync(page, pageSize);
         }
 
@@ -1090,10 +1104,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="endDate"></param>
         /// <param name="showAllEditions"></param>
         /// <returns></returns>
-        public async Task<List<AudiovisualProjectSubscriptionDto>> FindAudiovisualSubscribedProjectsDtosByFilterAsync(string keywords, List<Guid> interestUids, int editionId, bool isPitching, List<Guid> targetAudienceUids, DateTime? startDate, DateTime? endDate, bool showAllEditions = false)
+        public async Task<List<AudiovisualProjectSubscriptionDto>> FindAudiovisualSubscribedProjectsDtosByFilterAsync(
+            string keywords,
+            List<Guid> interestUids, 
+            int editionId, 
+            bool isPitching, 
+            List<Guid> targetAudienceUids,
+            DateTime? startDate, 
+            DateTime? endDate, 
+            bool showAllEditions = false)
         {
-            return await FindAudiovisualSubscribedProjectsDtosByFilter(keywords, interestUids, editionId, isPitching, targetAudienceUids, startDate, endDate, showAllEditions)
-                            .OrderBy(p => p.Project.CreateDate)
+            var query = this.FindAudiovisualSubscribedProjectsDtosByFilter(keywords, interestUids, editionId, isPitching, targetAudienceUids, startDate, endDate, showAllEditions);
+
+            return await query
+                            .OrderBy(p => p.SellerAttendeeOrganizationDto.Organization.TradeName)
+                            .ThenBy(p => p.Project.CreateDate)
                             .ToListAsync();
         }
         #endregion

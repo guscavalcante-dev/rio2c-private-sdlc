@@ -3,8 +3,8 @@
 // Author           : William Sergio Almado Junior
 // Created          : 01-13-2019
 //
-// Last Modified By : William Sergio Almado Junior
-// Last Modified On : 01-13-2019
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 01-24-2020
 // ***********************************************************************
 // <copyright file="reports.audiovisual.subscription.widget.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,14 +17,18 @@ var ReportsAudiovisualSubscriptionWidget = function () {
     var widgetElementId = '#ReportAudiovisualSubscriptionWidget';
     var widgetElement = $(widgetElementId);
 
-    // Show ---------------------------------------------------------------------------------------
-    var enableShowPlugins = function () {
-        KTApp.initTooltips();
-        MyRio2cCommon.initScroll();
+    // Search Form --------------------------------------------------------------------------------
+    var eanbelSearchFormPlugins = function () {
         MyRio2cCommon.enableSelect2({ inputIdOrClass: '#InterestUid', allowClear: true, placeholder: translations.selectPlaceholder.replace('{0}', translations.genre) + '...' });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: '#TargetAudienceUid', allowClear: true, placeholder: translations.selectPlaceholder.replace('{0}', translations.targetAudience) + '...' });
         MyRio2cCommon.enableDatePicker({ inputIdOrClass: '#StartDate', allowClear: true, placeholder: translations.selectPlaceholder.replace('{0}', translations.startDate) + '...' });
         MyRio2cCommon.enableDatePicker({ inputIdOrClass: '#EndDate', allowClear: true, placeholder: translations.selectPlaceholder.replace('{0}', translations.endDate) + '...' });
+    };
+
+    // Show ---------------------------------------------------------------------------------------
+    var enableShowPlugins = function () {
+        KTApp.initTooltips();
+        MyRio2cCommon.initScroll();
         enablePageSizeChangeEvent();
     };
 
@@ -162,6 +166,7 @@ var ReportsAudiovisualSubscriptionWidget = function () {
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
+            eanbelSearchFormPlugins();
             enableSearchEvents();
             show();
         },

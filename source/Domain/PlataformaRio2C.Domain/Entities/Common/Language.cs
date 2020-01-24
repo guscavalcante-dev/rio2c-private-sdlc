@@ -4,14 +4,13 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-09-2020
+// Last Modified On : 01-24-2020
 // ***********************************************************************
 // <copyright file="Language.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Entities
@@ -24,7 +23,10 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Configurations
 
-        public static List<string> CodesOrder = new List<string> { "pt-br", "en-us" };
+        public static Language Portuguese = new Language("pt-br");
+        public static Language English = new Language("en-us");
+
+        public static List<string> CodesOrder = new List<string> { Portuguese.Code, English.Code };
         public static char Separator = '|';
 
         #endregion
@@ -37,24 +39,24 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<User> Users { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="Language"/> class.</summary>
+        /// <param name="name">The name.</param>
+        /// <param name="code">The code.</param>
+        public Language(string name, string code)
+        {
+            this.Name = name?.Trim();
+            this.Code = code?.Trim();
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="Language"/> class.</summary>
         protected Language()
         {
         }
 
         /// <summary>Initializes a new instance of the <see cref="Language"/> class.</summary>
-        /// <param name="name">The name.</param>
         /// <param name="code">The code.</param>
-        public Language(string name, string code)
+        private Language (string code)
         {
-            SetName(name);
-            Code = code;
-        }
-
-        /// <summary>Sets the name.</summary>
-        /// <param name="value">The value.</param>
-        public void SetName(string value)
-        {
-            Name = value;
+            this.Code = code?.Trim();
         }
 
         /// <summary>Returns true if ... is valid.</summary>

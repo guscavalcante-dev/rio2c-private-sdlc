@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-05-2020
+// Last Modified On : 01-24-2020
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -149,7 +149,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 var projectDto = projectsDtos.First();
                 var pdf = new PlataformaRio2CDocument(new ProjectDocumentTemplate(projectDto));
 
-                return File(pdf.GetStream(), "application/pdf", Labels.Project + "_" + projectDto.Project.Id.ToString("D4") + "_" + projectDto.GetTitleDtoByLanguageCode(Constants.Culture.Portuguese).ProjectTitle.Value + ".pdf");
+                return File(pdf.GetStream(), "application/pdf", Labels.Project + "_" + projectDto.Project.Id.ToString("D4") + "_" + projectDto.GetTitleDtoByLanguageCode(Language.Portuguese.Code).ProjectTitle.Value + ".pdf");
             }
 
             // Many projects returned
@@ -158,7 +158,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             foreach (var projectDto in projectsDtos)
             {
                 var pdfDocument = new PlataformaRio2CDocument(new ProjectDocumentTemplate(projectDto));
-                dictPdf.Add(Labels.Project + "_" + projectDto.Project.Id.ToString("D4") + "_" + projectDto.GetTitleDtoByLanguageCode(Constants.Culture.Portuguese).ProjectTitle.Value + ".pdf", pdfDocument.GetStream());
+                dictPdf.Add(Labels.Project + "_" + projectDto.Project.Id.ToString("D4") + "_" + projectDto.GetTitleDtoByLanguageCode(Language.Portuguese.Code).ProjectTitle.Value + ".pdf", pdfDocument.GetStream());
             }
 
             return ZipDocuments(dictPdf);

@@ -3,8 +3,8 @@
 // Author           : William Sergio Almado Junior
 // Created          : 01-14-2019
 //
-// Last Modified By : William Sergio Almado Junior
-// Last Modified On : 01-14-2019
+// Last Modified By : Rafael Dantas RUiz
+// Last Modified On : 01-24-2020
 // ***********************************************************************
 // <copyright file="AudiovisualProjectSubscriptionDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,17 +15,15 @@ using PlataformaRio2C.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
     /// <summary>AudiovisualProjectSubscriptionDto</summary>
     public class AudiovisualProjectSubscriptionDto
     {
-        public int ProoducerCount { get; set; }
-        public int ProjectPerProducerCount { get; set; }
-        public bool IsFakeProject { get; set; }
+        //public int ProoducerCount { get; set; }
+        //public int ProjectPerProducerCount { get; set; }
+        //public bool IsFakeProject { get; set; }
         public Project Project { get; set; }
         public ProjectType ProjectType { get; set; }
         public AttendeeOrganizationDto SellerAttendeeOrganizationDto { get; set; }
@@ -40,11 +38,10 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<ProjectTeaserLinkDto> ProjectTeaserLinkDtos { get; set; }
         public IEnumerable<ProjectBuyerEvaluationDto> ProjectBuyerEvaluationDtos { get; set; }
 
-
+        /// <summary>Initializes a new instance of the <see cref="AudiovisualProjectSubscriptionDto"/> class.</summary>
         public AudiovisualProjectSubscriptionDto()
         {
         }
-
 
         #region Interests
 

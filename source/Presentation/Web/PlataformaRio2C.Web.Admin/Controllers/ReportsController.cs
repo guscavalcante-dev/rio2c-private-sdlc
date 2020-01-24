@@ -3,8 +3,8 @@
 // Author           : William Sergio Almado Junior
 // Created          : 01-13-2019
 //
-// Last Modified By : William Sergio Almado Junior
-// Last Modified On : 01-13-2019
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 01-24-2020
 // ***********************************************************************
 // <copyright file="ReportsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,8 +19,6 @@ using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
@@ -28,8 +26,6 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Application.ViewModels;
 using OfficeOpenXml;
-using System.Globalization;
-using System.Threading;
 using OfficeOpenXml.Style;
 using System.Drawing;
 using System.IO;
@@ -58,8 +54,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             this.targetAudienceRepo = targetAudienceRepository;
         }
 
-        #region Audiovisual 
+        #region Audiovisual Projects
+
         #region Listing
+
         /// <summary>Return the audiovisual subscription projects list</summary>
         /// <param name="searchViewModel"></param>
         /// <returns></returns>
@@ -78,7 +76,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             return View("Audiovisual/AudiovisualSubscriptions", searchViewModel);
         }
-
 
         /// <summary>Return the audiovisual subscription projects list</summary>
         /// <param name="searchViewModel"></param>
@@ -101,15 +98,15 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.AudiovisualSubscriptionProjectReport, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            var producer = string.Empty;
-            var projectPerProducerCountnt = 0;
-            foreach (var item in audiovisualProjectSubscriptionDtos)
-            {
-                projectPerProducerCountnt = (string.IsNullOrEmpty(producer) || !item.SellerAttendeeOrganizationDto?.Organization?.Name.Equals(producer) == true)
-                                                            ? 1 : projectPerProducerCountnt + 1;
-                item.ProjectPerProducerCount = projectPerProducerCountnt;
-                producer = item.SellerAttendeeOrganizationDto?.Organization?.Name;
-            }
+            //var producer = string.Empty;
+            //var projectPerProducerCountnt = 0;
+            //foreach (var item in audiovisualProjectSubscriptionDtos)
+            //{
+            //    projectPerProducerCountnt = (string.IsNullOrEmpty(producer) || !item.SellerAttendeeOrganizationDto?.Organization?.Name.Equals(producer) == true)
+            //                                                ? 1 : projectPerProducerCountnt + 1;
+            //    item.ProjectPerProducerCount = projectPerProducerCountnt;
+            //    producer = item.SellerAttendeeOrganizationDto?.Organization?.Name;
+            //}
 
             ViewBag.SearchKeywords = searchViewModel.Search;
             ViewBag.InterestUid = searchViewModel.InterestUids;
@@ -130,6 +127,14 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         }
         #endregion
 
+        /// <summary>Generates the excel document asynchronous.</summary>
+        /// <param name="search">The search.</param>
+        /// <param name="interestUids">The interest uids.</param>
+        /// <param name="isPitching">if set to <c>true</c> [is pitching].</param>
+        /// <param name="targetAudienceUids">The target audience uids.</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> GenerateExcelDocumentAsync(
             string search,
@@ -144,15 +149,14 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             ExcelWorksheet worksheetAudiovisual = excelFile.Workbook.Worksheets.Add(Labels.AudiovisualSubscriptionProjectReport);
 
-
             var audiovisualProjectSubscriptionDtos = await this.projectRepo.FindAudiovisualSubscribedProjectsDtosByFilterAsync(
-                                                                search,
-                                                                interestUids.ToListGuid(','),
-                                                                this.EditionDto.Id,
-                                                                isPitching,
-                                                                targetAudienceUids.ToListGuid(','),
-                                                                startDate,
-                                                                endDate);
+                search,
+                interestUids.ToListGuid(','),
+                this.EditionDto.Id,
+                isPitching,
+                targetAudienceUids.ToListGuid(','),
+                startDate,
+                endDate);
             if (audiovisualProjectSubscriptionDtos == null)
             {
                 return null;
@@ -195,49 +199,48 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             worksheetAudiovisual.Column(22).Width = 40;
             worksheetAudiovisual.Column(23).Width = 40;
 
-
-            worksheetAudiovisual.Cells[row, column++].Value = @Labels.ProducerQty;
-            worksheetAudiovisual.Cells[row, column++].Value = @Labels.ProjectsPerProducerQty;
-            worksheetAudiovisual.Cells[row, column++].Value = @Labels.ProjectId;
-            worksheetAudiovisual.Cells[row, column++].Value = @Labels.Producer;
-            worksheetAudiovisual.Cells[row, column++].Value = @Labels.Name;
-            worksheetAudiovisual.Cells[row, column++].Value = @Labels.BadgeName;
-            worksheetAudiovisual.Cells[row, column++].Value = @Labels.Email;
-            worksheetAudiovisual.Cells[row, column++].Value = string.Format("{0} - {1}", @Labels.Title, @Labels.Portuguese);
-            worksheetAudiovisual.Cells[row, column++].Value = string.Format("{0} - {1}", @Labels.Title, @Labels.English);
-            worksheetAudiovisual.Cells[row, column++].Value = string.Format("{0}{1}", @Labels.Pitching, "?");
-            worksheetAudiovisual.Cells[row, column++].Value = @Labels.PlayersSelectedForEvaluation;
-            worksheetAudiovisual.Cells[row, column++].Value = @Labels.CreateDate;
-            worksheetAudiovisual.Cells[row, column++].Value = @Labels.SendDate;
-            worksheetAudiovisual.Cells[row, column++].Value = @Labels.Platforms;
-            worksheetAudiovisual.Cells[row, column++].Value = @Labels.ProjectStatus;
-            worksheetAudiovisual.Cells[row, column++].Value = @Labels.MarketLookingFor;
-            worksheetAudiovisual.Cells[row, column++].Value = @Labels.Format;
-            worksheetAudiovisual.Cells[row, column++].Value = @Labels.Genre;
-            worksheetAudiovisual.Cells[row, column++].Value = @Labels.SubGenre;
-            worksheetAudiovisual.Cells[row, column++].Value = @Labels.TargetAudience;
-            worksheetAudiovisual.Cells[row, column++].Value = string.Format("{0} - {1}", @Labels.Summary, @Labels.Portuguese);
-            worksheetAudiovisual.Cells[row, column++].Value = string.Format("{0} - {1}", @Labels.Summary, @Labels.English);
+            worksheetAudiovisual.Cells[row, column++].Value = Labels.ProducerQty;
+            worksheetAudiovisual.Cells[row, column++].Value = Labels.ProjectsPerProducerQty;
+            worksheetAudiovisual.Cells[row, column++].Value = Labels.ProjectId;
+            worksheetAudiovisual.Cells[row, column++].Value = Labels.Producer;
+            worksheetAudiovisual.Cells[row, column++].Value = Labels.Name;
+            worksheetAudiovisual.Cells[row, column++].Value = Labels.BadgeName;
+            worksheetAudiovisual.Cells[row, column++].Value = Labels.Email;
+            worksheetAudiovisual.Cells[row, column++].Value = string.Format("{0} - {1}", Labels.Title, Labels.Portuguese);
+            worksheetAudiovisual.Cells[row, column++].Value = string.Format("{0} - {1}", Labels.Title, Labels.English);
+            worksheetAudiovisual.Cells[row, column++].Value = string.Format("{0}{1}", Labels.Pitching, "?");
+            worksheetAudiovisual.Cells[row, column++].Value = Labels.PlayersSelectedForEvaluation;
+            worksheetAudiovisual.Cells[row, column++].Value = Labels.CreateDate;
+            worksheetAudiovisual.Cells[row, column++].Value = Labels.SendDate;
+            worksheetAudiovisual.Cells[row, column++].Value = Labels.Platforms;
+            worksheetAudiovisual.Cells[row, column++].Value = Labels.ProjectStatus;
+            worksheetAudiovisual.Cells[row, column++].Value = Labels.MarketLookingFor;
+            worksheetAudiovisual.Cells[row, column++].Value = Labels.Format;
+            worksheetAudiovisual.Cells[row, column++].Value = Labels.Genre;
+            worksheetAudiovisual.Cells[row, column++].Value = Labels.SubGenre;
+            worksheetAudiovisual.Cells[row, column++].Value = Labels.TargetAudience;
+            worksheetAudiovisual.Cells[row, column++].Value = string.Format("{0} - {1}", Labels.Summary, Labels.Portuguese);
+            worksheetAudiovisual.Cells[row, column++].Value = string.Format("{0} - {1}", Labels.Summary, Labels.English);
 
             row++;
-            var producerQty = 0;
 
-            var producer = string.Empty;
-            var projectPerProducerCountnt = 0;
+            var projectsCount = 0;
+            Guid? lastSellerAttendeeOrganizationUid = null;
+            var projectPerProducerCount = 0;
+
             foreach (var projectDto in audiovisualProjectSubscriptionDtos)
             {
+                projectsCount++;
+                projectPerProducerCount = (!lastSellerAttendeeOrganizationUid.HasValue || lastSellerAttendeeOrganizationUid != projectDto.SellerAttendeeOrganizationDto?.AttendeeOrganization?.Uid)
+                                                            ? 1 : projectPerProducerCount + 1;
+                lastSellerAttendeeOrganizationUid = projectDto.SellerAttendeeOrganizationDto?.AttendeeOrganization?.Uid;
 
                 var sellerCollaborator = projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.AttendeeOrganizationCollaborators;
-                projectPerProducerCountnt = (string.IsNullOrEmpty(producer) || !projectDto.SellerAttendeeOrganizationDto?.Organization?.Name.Equals(producer) == true)
-                                                            ? 1 : projectPerProducerCountnt + 1;
-                projectDto.ProjectPerProducerCount = projectPerProducerCountnt;
-                producer = projectDto.SellerAttendeeOrganizationDto?.Organization?.Name;
 
                 column = 1;
-                producerQty += 1;
 
-                worksheetAudiovisual.Cells[row, column++].Value = producerQty;
-                worksheetAudiovisual.Cells[row, column++].Value = projectPerProducerCountnt;
+                worksheetAudiovisual.Cells[row, column++].Value = projectsCount;
+                worksheetAudiovisual.Cells[row, column++].Value = projectPerProducerCount;
                 worksheetAudiovisual.Cells[row, column++].Value = projectDto.Project.Id;
                 worksheetAudiovisual.Cells[row, column++].Value = projectDto.SellerAttendeeOrganizationDto?.Organization?.Name;
 
@@ -255,8 +258,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 worksheetAudiovisual.Cells[row, column++].Value = sellerName;
                 worksheetAudiovisual.Cells[row, column++].Value = badje;
                 worksheetAudiovisual.Cells[row, column++].Value = publicMail;
-                worksheetAudiovisual.Cells[row, column++].Value = projectDto.GetTitleDtoByLanguageCode(Constants.Culture.Portuguese)?.ProjectTitle?.Value;
-                worksheetAudiovisual.Cells[row, column++].Value = projectDto.GetTitleDtoByLanguageCode(Constants.Culture.English)?.ProjectTitle?.Value;
+                worksheetAudiovisual.Cells[row, column++].Value = projectDto.GetTitleDtoByLanguageCode(Language.Portuguese.Code)?.ProjectTitle?.Value;
+                worksheetAudiovisual.Cells[row, column++].Value = projectDto.GetTitleDtoByLanguageCode(Language.English.Code)?.ProjectTitle?.Value;
                 worksheetAudiovisual.Cells[row, column++].Value = projectDto.Project.IsPitching ? Labels.Yes : Labels.No;
 
                 var playersSelectedForEvaluation = string.Empty;
@@ -341,8 +344,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     firstLine = false;
                 }
                 worksheetAudiovisual.Cells[row, column++].Value = targetAudience;
-                worksheetAudiovisual.Cells[row, column++].Value = projectDto.GetSummaryDtoByLanguageCode(Constants.Culture.Portuguese).ProjectSummary.Value;
-                worksheetAudiovisual.Cells[row, column++].Value = projectDto.GetSummaryDtoByLanguageCode(Constants.Culture.English).ProjectSummary.Value;
+                worksheetAudiovisual.Cells[row, column++].Value = projectDto.GetSummaryDtoByLanguageCode(Language.Portuguese.Code).ProjectSummary.Value;
+                worksheetAudiovisual.Cells[row, column++].Value = projectDto.GetSummaryDtoByLanguageCode(Language.English.Code).ProjectSummary.Value;
 
                 row++;
             }
@@ -363,5 +366,4 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     }
 
     #endregion
-
 }
