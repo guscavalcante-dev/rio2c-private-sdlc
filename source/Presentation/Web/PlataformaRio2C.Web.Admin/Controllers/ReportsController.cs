@@ -92,15 +92,15 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         public async Task<ActionResult> ShowAudiovisualSubscriptionsWidget(ReportsAudiovisualSearchViewModel searchViewModel)
         {
             var audiovisualProjectSubscriptionDtos = await this.projectRepo.FindAudiovisualSubscribedProjectsDtosByFilterAndByPageAsync(
-                                                                searchViewModel.Search,
-                                                                searchViewModel.InterestUids.ToListGuid(','),
-                                                                this.EditionDto.Id,
-                                                                searchViewModel.IsPitching,
-                                                                searchViewModel.TargetAudienceUids.ToListGuid(','),
-                                                                searchViewModel.StartDate,
-                                                                searchViewModel.EndDate,
-                                                                searchViewModel.Page ?? 1,
-                                                                searchViewModel.PageSize ?? 10);
+                searchViewModel.Search,
+                searchViewModel.InterestUids.ToListGuid(','),
+                this.EditionDto.Id,
+                searchViewModel.IsPitching,
+                searchViewModel.TargetAudienceUids.ToListGuid(','),
+                searchViewModel.StartDate,
+                searchViewModel.EndDate,
+                searchViewModel.Page ?? 1,
+                searchViewModel.PageSize ?? 10);
             if (audiovisualProjectSubscriptionDtos == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.AudiovisualSubscriptionProjectReport, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
@@ -364,9 +364,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return File(stream, contentType, fileName);
             }
         }
+
+        #endregion
+
+        #endregion
     }
-
-    #endregion
-
-    #endregion
 }
