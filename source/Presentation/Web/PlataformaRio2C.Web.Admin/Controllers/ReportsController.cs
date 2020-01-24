@@ -33,6 +33,8 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
+    /// <summary>ReportsController</summary>
+    /// <seealso cref="PlataformaRio2C.Web.Admin.Controllers.BaseController" />
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
     [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CommissionAudiovisual)]
     public class ReportsController : BaseController
@@ -41,6 +43,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         private readonly IInterestRepository interestRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
 
+        /// <summary>Initializes a new instance of the <see cref="ReportsController"/> class.</summary>
+        /// <param name="commandBus">The command bus.</param>
+        /// <param name="identityController">The identity controller.</param>
+        /// <param name="projectRepository">The project repository.</param>
+        /// <param name="interestRepository">The interest repository.</param>
+        /// <param name="targetAudienceRepository">The target audience repository.</param>
         public ReportsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
@@ -58,8 +66,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #region Listing
 
-        /// <summary>Return the audiovisual subscription projects list</summary>
-        /// <param name="searchViewModel"></param>
+        /// <summary>Audiovisuals the subscriptions.</summary>
+        /// <param name="searchViewModel">The search view model.</param>
         /// <returns></returns>
         public async Task<ActionResult> AudiovisualSubscriptions(ReportsAudiovisualSearchViewModel searchViewModel)
         {
@@ -77,8 +85,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             return View("Audiovisual/AudiovisualSubscriptions", searchViewModel);
         }
 
-        /// <summary>Return the audiovisual subscription projects list</summary>
-        /// <param name="searchViewModel"></param>
+        /// <summary>Shows the audiovisual subscriptions widget.</summary>
+        /// <param name="searchViewModel">The search view model.</param>
         /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> ShowAudiovisualSubscriptionsWidget(ReportsAudiovisualSearchViewModel searchViewModel)
@@ -98,16 +106,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.AudiovisualSubscriptionProjectReport, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            //var producer = string.Empty;
-            //var projectPerProducerCountnt = 0;
-            //foreach (var item in audiovisualProjectSubscriptionDtos)
-            //{
-            //    projectPerProducerCountnt = (string.IsNullOrEmpty(producer) || !item.SellerAttendeeOrganizationDto?.Organization?.Name.Equals(producer) == true)
-            //                                                ? 1 : projectPerProducerCountnt + 1;
-            //    item.ProjectPerProducerCount = projectPerProducerCountnt;
-            //    producer = item.SellerAttendeeOrganizationDto?.Organization?.Name;
-            //}
-
             ViewBag.SearchKeywords = searchViewModel.Search;
             ViewBag.InterestUid = searchViewModel.InterestUids;
             ViewBag.IsPitching = searchViewModel.IsPitching;
@@ -125,7 +123,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             }, JsonRequestBehavior.AllowGet);
 
         }
+
         #endregion
+
+        #region Export Excel
 
         /// <summary>Generates the excel document asynchronous.</summary>
         /// <param name="search">The search.</param>
@@ -364,6 +365,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             }
         }
     }
+
+    #endregion
 
     #endregion
 }
