@@ -99,7 +99,7 @@ ADD CONSTRAINT "IDX_UQ_LogisticSponsors_Uid" UNIQUE ("Uid"  ASC)
 go
 
 ALTER TABLE "AttendeeLogisticSponsors"
-ADD CONSTRAINT "PK_AttendeeLogisticSponsors_Uid" PRIMARY KEY  CLUSTERED ("Id" ASC,"Uid" ASC)
+ADD CONSTRAINT "PK_AttendeeLogisticSponsors_Uid" PRIMARY KEY  CLUSTERED ("Id" ASC)
 go
 
 ALTER TABLE "Places"
