@@ -1088,12 +1088,91 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[LogisticAccommodations](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[LogisticId] [int] NOT NULL,
+	[AttendeePlaceId] [int] NOT NULL,
+	[CheckInDate] [datetime] NOT NULL,
+	[CheckOutDate] [datetime] NOT NULL,
+	[AdditionalInfo] [varchar](1000) NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_LogisticAccommodations] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_LogisticAccommodations_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[LogisticAirfares](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[LogisticId] [int] NOT NULL,
+	[IsNational] [bit] NOT NULL,
+	[From] [varchar](100) NOT NULL,
+	[DepartureDate] [datetime] NOT NULL,
+	[To] [datetime] NOT NULL,
+	[ArrivalDate] [datetime] NOT NULL,
+	[TicketNumber] [varchar](20) NULL,
+	[TicketUploadDate] [datetime] NULL,
+	[AdditionInfo] [varchar](1000) NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_LogisticAirfares] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_LogisticAirfares_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
 CREATE TABLE [dbo].[Logistics](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Uid] [uniqueidentifier] NULL,
-	[AttendeeCollaboratorId] [int] NULL,
-	[ArrivalDate] [datetime] NOT NULL,
-	[DepartureDate] [datetime] NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[AttendeeCollaboratorId] [int] NOT NULL,
+	[IsAirfareSponsored] [bit] NOT NULL,
+	[AirfareAttendeeLogisticSponsorId] [int] NULL,
+	[AirfareOtherLogisticSponsor] [varchar](100) NULL,
+	[IsAccommodationSponsored] [bit] NOT NULL,
+	[AccommodationAttendeeLogisticSponsorId] [int] NULL,
+	[AccommodationOtherLogisticSponsor] [varchar](100) NULL,
+	[IsAirportTransferSponsored] [bit] NOT NULL,
+	[AirportTransferAttendeeLogisticSponsorId] [int] NULL,
+	[AirportTransferOtherLogisticSponsor] [varchar](100) NULL,
+	[IsCityTransferRequired] [bit] NOT NULL,
+	[IsVehicleDisposalRequired] [bit] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,
@@ -1110,6 +1189,8 @@ CREATE TABLE [dbo].[Logistics](
 ) ON [PRIMARY]
 
 GO
+SET ANSI_PADDING OFF
+GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1121,6 +1202,7 @@ CREATE TABLE [dbo].[LogisticSponsors](
 	[Uid] [uniqueidentifier] NOT NULL,
 	[Name] [varchar](100) NOT NULL,
 	[IsAirfareTicketRequired] [bit] NOT NULL,
+	[IsOtherRequired] [bit] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,
@@ -1131,6 +1213,67 @@ CREATE TABLE [dbo].[LogisticSponsors](
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
  CONSTRAINT [IDX_UQ_LogisticSponsors_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[LogisticTransfers](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[LogisticId] [int] NOT NULL,
+	[FromAttendeePlaceId] [int] NOT NULL,
+	[ToAttendeePlaceId] [int] NOT NULL,
+	[Date] [datetime] NOT NULL,
+	[AdditionalInfo] [varchar](1000) NULL,
+	[LogisticTransferStatusId] [int] NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_LogisticTransfers] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_LogisticTransfers_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[LogisticTransferStatuses](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Name] [varchar](300) NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_LogisticTransferStatuses] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_LogisticTransferStatuses_Uid] UNIQUE NONCLUSTERED 
 (
 	[Uid] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -2673,9 +2816,32 @@ CREATE NONCLUSTERED INDEX [IDX_InterestGroups_ProjectTypeId] ON [dbo].[InterestG
 	[ProjectTypeId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
+CREATE NONCLUSTERED INDEX [IDX_LogisticAccommodations_LogisticId] ON [dbo].[LogisticAccommodations]
+(
+	[LogisticId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_LogisticAirfares_LogisticId] ON [dbo].[LogisticAirfares]
+(
+	[LogisticId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
 CREATE NONCLUSTERED INDEX [IDX_Logistics_AttendeeCollaboratorId] ON [dbo].[Logistics]
 (
 	[AttendeeCollaboratorId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_LogisticTransfers_LogisticId] ON [dbo].[LogisticTransfers]
+(
+	[LogisticId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+CREATE NONCLUSTERED INDEX [IDX_LogisticTransferStatuses_Name] ON [dbo].[LogisticTransferStatuses]
+(
+	[Name] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
 CREATE NONCLUSTERED INDEX [IDX_Messages_NotificationEmailSendDate] ON [dbo].[Messages]
@@ -3460,10 +3626,60 @@ REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[Languages] CHECK CONSTRAINT [FK_Users_Languages_UpdateUserId]
 GO
+ALTER TABLE [dbo].[LogisticAccommodations]  WITH CHECK ADD  CONSTRAINT [FK_AttendeePlaces_LogisticAccommodations_AttendeePlaceId] FOREIGN KEY([AttendeePlaceId])
+REFERENCES [dbo].[AttendeePlaces] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticAccommodations] CHECK CONSTRAINT [FK_AttendeePlaces_LogisticAccommodations_AttendeePlaceId]
+GO
+ALTER TABLE [dbo].[LogisticAccommodations]  WITH CHECK ADD  CONSTRAINT [FK_Logistics_LogisticAccommodations_LogisticId] FOREIGN KEY([LogisticId])
+REFERENCES [dbo].[Logistics] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticAccommodations] CHECK CONSTRAINT [FK_Logistics_LogisticAccommodations_LogisticId]
+GO
+ALTER TABLE [dbo].[LogisticAccommodations]  WITH CHECK ADD  CONSTRAINT [FK_Users_LogisticAccommodations_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticAccommodations] CHECK CONSTRAINT [FK_Users_LogisticAccommodations_CreateUserId]
+GO
+ALTER TABLE [dbo].[LogisticAccommodations]  WITH CHECK ADD  CONSTRAINT [FK_Users_LogisticAccommodations_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticAccommodations] CHECK CONSTRAINT [FK_Users_LogisticAccommodations_UpdateUserId]
+GO
+ALTER TABLE [dbo].[LogisticAirfares]  WITH CHECK ADD  CONSTRAINT [FK_Logistics_LogisticAirfares_LogisticId] FOREIGN KEY([LogisticId])
+REFERENCES [dbo].[Logistics] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticAirfares] CHECK CONSTRAINT [FK_Logistics_LogisticAirfares_LogisticId]
+GO
+ALTER TABLE [dbo].[LogisticAirfares]  WITH CHECK ADD  CONSTRAINT [FK_Users_LogisticAirfares_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticAirfares] CHECK CONSTRAINT [FK_Users_LogisticAirfares_CreateUserId]
+GO
+ALTER TABLE [dbo].[LogisticAirfares]  WITH CHECK ADD  CONSTRAINT [FK_Users_LogisticAirfares_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticAirfares] CHECK CONSTRAINT [FK_Users_LogisticAirfares_UpdateUserId]
+GO
 ALTER TABLE [dbo].[Logistics]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeCollaborators_Logistics_AttendeeCollaboratorId] FOREIGN KEY([AttendeeCollaboratorId])
 REFERENCES [dbo].[AttendeeCollaborators] ([Id])
 GO
 ALTER TABLE [dbo].[Logistics] CHECK CONSTRAINT [FK_AttendeeCollaborators_Logistics_AttendeeCollaboratorId]
+GO
+ALTER TABLE [dbo].[Logistics]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeLogisticSponsors_Logistics_AccommodationAttendeeLogisticSponsorId] FOREIGN KEY([AccommodationAttendeeLogisticSponsorId])
+REFERENCES [dbo].[AttendeeLogisticSponsors] ([Id])
+GO
+ALTER TABLE [dbo].[Logistics] CHECK CONSTRAINT [FK_AttendeeLogisticSponsors_Logistics_AccommodationAttendeeLogisticSponsorId]
+GO
+ALTER TABLE [dbo].[Logistics]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeLogisticSponsors_Logistics_AirfareAttendeeLogisticSponsorId] FOREIGN KEY([AirfareAttendeeLogisticSponsorId])
+REFERENCES [dbo].[AttendeeLogisticSponsors] ([Id])
+GO
+ALTER TABLE [dbo].[Logistics] CHECK CONSTRAINT [FK_AttendeeLogisticSponsors_Logistics_AirfareAttendeeLogisticSponsorId]
+GO
+ALTER TABLE [dbo].[Logistics]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeLogisticSponsors_Logistics_AirportTransferAttendeeLogisticSponsorId] FOREIGN KEY([AirportTransferAttendeeLogisticSponsorId])
+REFERENCES [dbo].[AttendeeLogisticSponsors] ([Id])
+GO
+ALTER TABLE [dbo].[Logistics] CHECK CONSTRAINT [FK_AttendeeLogisticSponsors_Logistics_AirportTransferAttendeeLogisticSponsorId]
 GO
 ALTER TABLE [dbo].[Logistics]  WITH CHECK ADD  CONSTRAINT [FK_Users_Logistics_CreateUserId] FOREIGN KEY([CreateUserId])
 REFERENCES [dbo].[Users] ([Id])
@@ -3484,6 +3700,46 @@ ALTER TABLE [dbo].[LogisticSponsors]  WITH CHECK ADD  CONSTRAINT [FK_Users_Logis
 REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[LogisticSponsors] CHECK CONSTRAINT [FK_Users_LogisticSponsors_UpdateUserId]
+GO
+ALTER TABLE [dbo].[LogisticTransfers]  WITH CHECK ADD  CONSTRAINT [FK_AttendeePlaces_LogisticTransfers_FromAttendeePlaceId] FOREIGN KEY([FromAttendeePlaceId])
+REFERENCES [dbo].[AttendeePlaces] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticTransfers] CHECK CONSTRAINT [FK_AttendeePlaces_LogisticTransfers_FromAttendeePlaceId]
+GO
+ALTER TABLE [dbo].[LogisticTransfers]  WITH CHECK ADD  CONSTRAINT [FK_AttendeePlaces_LogisticTransfers_ToAttendeePlaceId] FOREIGN KEY([ToAttendeePlaceId])
+REFERENCES [dbo].[AttendeePlaces] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticTransfers] CHECK CONSTRAINT [FK_AttendeePlaces_LogisticTransfers_ToAttendeePlaceId]
+GO
+ALTER TABLE [dbo].[LogisticTransfers]  WITH CHECK ADD  CONSTRAINT [FK_Logistics_LogisticTransfers_LogisticId] FOREIGN KEY([LogisticId])
+REFERENCES [dbo].[Logistics] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticTransfers] CHECK CONSTRAINT [FK_Logistics_LogisticTransfers_LogisticId]
+GO
+ALTER TABLE [dbo].[LogisticTransfers]  WITH CHECK ADD  CONSTRAINT [FK_LogisticTransferStatuses_LogisticTransfers_LogisticTransferStatusId] FOREIGN KEY([LogisticTransferStatusId])
+REFERENCES [dbo].[LogisticTransferStatuses] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticTransfers] CHECK CONSTRAINT [FK_LogisticTransferStatuses_LogisticTransfers_LogisticTransferStatusId]
+GO
+ALTER TABLE [dbo].[LogisticTransfers]  WITH CHECK ADD  CONSTRAINT [FK_Users_LogisticTransfers_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticTransfers] CHECK CONSTRAINT [FK_Users_LogisticTransfers_CreateUserId]
+GO
+ALTER TABLE [dbo].[LogisticTransfers]  WITH CHECK ADD  CONSTRAINT [FK_Users_LogisticTransfers_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticTransfers] CHECK CONSTRAINT [FK_Users_LogisticTransfers_UpdateUserId]
+GO
+ALTER TABLE [dbo].[LogisticTransferStatuses]  WITH CHECK ADD  CONSTRAINT [FK_Users_LogisticTransferStatuses_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticTransferStatuses] CHECK CONSTRAINT [FK_Users_LogisticTransferStatuses_CreateUserId]
+GO
+ALTER TABLE [dbo].[LogisticTransferStatuses]  WITH CHECK ADD  CONSTRAINT [FK_Users_LogisticTransferStatuses_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticTransferStatuses] CHECK CONSTRAINT [FK_Users_LogisticTransferStatuses_UpdateUserId]
 GO
 ALTER TABLE [dbo].[Messages]  WITH CHECK ADD  CONSTRAINT [FK_Editions_Messages_EditionId] FOREIGN KEY([EditionId])
 REFERENCES [dbo].[Editions] ([Id])
