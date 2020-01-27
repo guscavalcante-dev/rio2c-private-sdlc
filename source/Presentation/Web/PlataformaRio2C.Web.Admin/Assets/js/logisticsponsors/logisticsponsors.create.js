@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Rafael Dantas Ruiz
-// Created          : 08-26-2019
+// Author           : Arthur Souza
+// Created          : 01-27-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-21-2019
+// Last Modified By : Arthur Souza
+// Last Modified On : 01-27-2020
 // ***********************************************************************
 // <copyright file="collaborators.create.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,8 +14,8 @@
 
 var LogisticSponsorsCreate = function () {
 
-    var modalId = '#CreateLogisticSponsorModal';
-    var formId = '#CreateLogisticSponsorForm';
+    var modalId = '#CreateLogisticSponsorsModal';
+    var formId = '#CreateLogisticSponsorsForm';
 
     // Enable form validation ---------------------------------------------------------------------
     var enableFormValidation = function () {

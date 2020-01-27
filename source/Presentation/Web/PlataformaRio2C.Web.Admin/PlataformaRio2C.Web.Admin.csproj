@@ -8374,6 +8374,8 @@
     <Content Include="Views\LogisticSponsors\Widgets\DataTableWidget.cshtml" />
     <Content Include="Views\LogisticSponsors\Modals\_TinyForm.cshtml" />
     <Content Include="Views\LogisticSponsors\Modals\CreateModal.cshtml" />
+    <Content Include="Views\LogisticSponsors\Modals\_CreateForm.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\LogisticSponsorsNameBaseCommand.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

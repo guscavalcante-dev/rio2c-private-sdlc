@@ -1,0 +1,16 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model PlataformaRio2C.Application.CQRS.Commands.CreateLogisticSponsors
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+}
+
+<!--begin: Main Information-->
+<div class="kt-section pt-2">
+    <h3 class="kt-section__title mb-0">@Labels.Name</h3>
+    @Html.ValidationMessage("Names", new { @class = "text-danger" })
+    <div class="kt-section__content mt-3">
+        @Html.EditorFor(m => m.Names)
+    </div>
+</div>
+
+<!--end: Tracks and Presentation Formats-->

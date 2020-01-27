@@ -45,11 +45,13 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CuratorshipAudiovisual)]
     public class LogisticSponsorsController : BaseController
     {
-        private readonly ILogisticSponsorRepository logisticSponsorRepo;
         private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
         private readonly IAttendeeSalesPlatformTicketTypeRepository attendeeSalesPlatformTicketTypeRepo;
         private readonly IFileRepository fileRepo;
+
+        private readonly ILogisticSponsorRepository logisticSponsorRepo;
+        private readonly ILanguageRepository languageRepo;
 
         /// <summary>Initializes a new instance of the <see cref="SpeakersController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -62,17 +64,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             ILogisticSponsorRepository logisticSponsorRepo,
-            ICollaboratorRepository collaboratorRepository,
-            IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
-            IAttendeeSalesPlatformTicketTypeRepository attendeeSalesPlatformTicketTypeRepository,
-            IFileRepository fileRepository)
+            ILanguageRepository languageRepo)
             : base(commandBus, identityController)
         {
             this.logisticSponsorRepo = logisticSponsorRepo;
-            this.collaboratorRepo = collaboratorRepository;
-            this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
-            this.attendeeSalesPlatformTicketTypeRepo = attendeeSalesPlatformTicketTypeRepository;
-            this.fileRepo = fileRepository;
+            this.languageRepo = languageRepo;
         }
 
         #region List
@@ -961,7 +957,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowCreateModal()
         {
-            var cmd = new CreateTinyCollaborator();
+            var cmd = new CreateLogisticSponsors(
+                await this.languageRepo.FindAllDtosAsync(),
+                this.UserInterfaceLanguage);
 
             return Json(new
             {
