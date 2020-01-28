@@ -27,6 +27,10 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         public LogisticsSponsorMap()
         {
             this.ToTable("LogisticSponsors");
+                        
+            this.HasMany(t => t.AttendeeLogisticSponsors)
+                .WithRequired(e => e.LogisticSponsor)
+                .HasForeignKey(e => e.LogisticSponsorId);
         }
     }
 }

@@ -207,6 +207,7 @@
     <Compile Include="Entities\Collaborator\CollaboratorProducer.cs" />
     <Compile Include="Entities\Collaborator\CollaboratorSpeaker.cs" />
     <Compile Include="Entities\Common\InterestGroup.cs" />
+    <Compile Include="Entities\Common\TranslatedName.cs" />
     <Compile Include="Entities\Conference\ConferencePresentationFormat.cs" />
     <Compile Include="Entities\Conference\ConferenceTrack.cs" />
     <Compile Include="Entities\Conference\ConferenceParticipantRole.cs" />

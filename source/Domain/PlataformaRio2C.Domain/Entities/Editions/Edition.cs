@@ -45,6 +45,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeOrganization> AttendeeOrganizations { get; private set; }
         public virtual ICollection<AttendeeCollaborator> AttendeeCollaborators { get; private set; }
         public virtual ICollection<AttendeeSalesPlatform> AttendeeSalesPlatforms { get; private set; }
+        public virtual ICollection<AttendeeLogisticSponsor> AttendeeLogisticSponsors { get; private set; }        
 
         /// <summary>Initializes a new instance of the <see cref="Edition"/> class.</summary>
         /// <param name="name">The name.</param>

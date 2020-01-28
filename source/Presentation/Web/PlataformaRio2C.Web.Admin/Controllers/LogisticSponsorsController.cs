@@ -81,8 +81,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         {
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Speakers, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Speakers, Url.Action("Index", "LogisticsSponsors", new { Area = "" }))
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.LogisticSponsors, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.LogisticSponsors, Url.Action("Index", "LogisticsSponsors", new { Area = "" }))
             });
 
             #endregion
@@ -101,7 +101,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllParticipants, bool? showHighlights)
         {
-            var speakers = await this.logisticSponsorRepo.FindAllByDataTable(
+            var sponsors = await this.logisticSponsorRepo.FindAllByDataTable(
                 request.Start / request.Length,
                 request.Length,
                 request.Search?.Value,
@@ -112,11 +112,14 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 false,
                 showAllParticipants,
                 showHighlights,
-                this.EditionDto?.Id
-            );
+                this.EditionDto?.Id);
 
-            var response = DataTablesResponse.Create(request, speakers.TotalItemCount, speakers.TotalItemCount, speakers);
+            foreach (var item in sponsors){
+                item.Name = item.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, '|');
+            }
 
+            var response = DataTablesResponse.Create(request, sponsors.TotalItemCount, sponsors.TotalItemCount, sponsors);
+            
             return Json(new
             {
                 status = "success",
@@ -975,7 +978,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Create(CreateTinyCollaborator cmd)
+        public async Task<ActionResult> Create(CreateLogisticSponsors cmd)
         {
             var result = new AppValidationResult();
 
@@ -987,12 +990,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    Constants.CollaboratorType.Speaker,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
                     this.EditionDto.Uid,
                     this.UserInterfaceLanguage);
+
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
                 {

@@ -12,7 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 
-var CollaboratorsDelete = function () {
+var LogisticSponsorsDelete = function () {
 
     // Delete -------------------------------------------------------------------------------------
     var executeDelete = function (collaboratorUid) {
@@ -21,7 +21,7 @@ var CollaboratorsDelete = function () {
         var jsonParameters = new Object();
         jsonParameters.collaboratorUid = collaboratorUid;
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/PlayersExecutives/Delete'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/LogisticSponsors/Delete'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

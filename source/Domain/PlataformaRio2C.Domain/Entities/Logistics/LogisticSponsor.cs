@@ -23,7 +23,37 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public string Name { get; private set; }
         public bool IsAirfareTicketRequired { get; private set; }
+        public bool IsOtherRequired { get; protected set; }
         
+        public LogisticSponsor(){}
+
+        public LogisticSponsor(
+            List<TranslatedName> names,
+            int userId)
+        {
+            UpdateName(names);
+
+            this.IsDeleted = false;
+            this.IsAirfareTicketRequired = false;
+            this.IsOtherRequired = false;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
+        public virtual ICollection<AttendeeLogisticSponsor> AttendeeLogisticSponsors { get; private set; }
+        
+        private void UpdateName(List<TranslatedName> names)
+        {
+            var name = string.Empty;
+            foreach (var languageCode in Language.CodesOrder)
+            {
+                name += (!string.IsNullOrEmpty(name) ? " " + Language.Separator + " " : String.Empty) +
+                        names?.FirstOrDefault(vtc => vtc.Language.Code == languageCode)?.Value;
+            }
+
+            this.Name = name;
+        }
+
         #region Validations
 
         /// <summary>Returns true if ... is valid.</summary>

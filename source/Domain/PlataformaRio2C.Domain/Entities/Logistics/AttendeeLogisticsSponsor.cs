@@ -22,9 +22,9 @@ namespace PlataformaRio2C.Domain.Entities
     public class AttendeeLogisticSponsor : Entity
     {
         public int EditionId { get; private set; }
-        public int LogisticsSponsorId { get; private set; }
+        public int LogisticSponsorId { get; private set; }
         public virtual Edition Edition { get; private set; }
-        public virtual LogisticSponsor LogisticsSponsor { get; private set; }
+        public virtual LogisticSponsor LogisticSponsor { get; private set; }
                 
         #region Validations
 

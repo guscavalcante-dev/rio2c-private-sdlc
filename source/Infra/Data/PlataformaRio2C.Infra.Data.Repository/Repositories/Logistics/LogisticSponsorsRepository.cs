@@ -372,6 +372,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 Name = c.Name,
                                 CreateDate = c.CreateDate,
                                 UpdateDate = c.UpdateDate,                                
+                                IsInCurrentEdition = c.AttendeeLogisticSponsors.Any(o => !o.IsDeleted
+                                                                                && o.EditionId == editionId
+                                                                                && !o.Edition.IsDeleted
+                                                                                && !o.IsDeleted)
                             })
                             .ToListPagedAsync(page, pageSize);
         }
