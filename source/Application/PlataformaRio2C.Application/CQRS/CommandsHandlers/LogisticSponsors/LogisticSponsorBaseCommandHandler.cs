@@ -36,5 +36,20 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.repository = logisticSponsorRepository;
         }
+
+        
+        /// <summary>Gets the collaborator by uid.</summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <returns></returns>
+        public async Task<LogisticSponsor> GetByUid(Guid sponsorUid)
+        {
+            var entity = await this.repository.GetAsync(sponsorUid);
+            if (entity == null) // Do not check IsDeleted because the Collaborator/User can be restored
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundM), new string[] { "FirstName" }));
+            }
+
+            return entity;
+        }
     }
 }

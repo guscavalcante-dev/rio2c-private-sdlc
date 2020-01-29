@@ -21,11 +21,33 @@ namespace PlataformaRio2C.Domain.Entities
     /// <summary>AttendeeLogisticSponsor</summary>
     public class AttendeeLogisticSponsor : Entity
     {
+        public AttendeeLogisticSponsor()
+        {
+        }
+
+        public AttendeeLogisticSponsor(Edition edition, LogisticSponsor logisticSponsor, int userId)
+        {
+            this.Edition = edition;
+            this.LogisticSponsor = logisticSponsor;
+            this.CreateUserId = this.UpdateUserId = userId;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+        }
+        
+        public void Update(Edition edition, LogisticSponsor logisticSponsor, int userId)
+        {
+            this.Edition = edition;
+            this.LogisticSponsor = logisticSponsor;
+            this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.Now;
+        }
+
         public int EditionId { get; private set; }
         public int LogisticSponsorId { get; private set; }
         public virtual Edition Edition { get; private set; }
         public virtual LogisticSponsor LogisticSponsor { get; private set; }
                 
+
+
         #region Validations
 
         /// <summary>Returns true if ... is valid.</summary>

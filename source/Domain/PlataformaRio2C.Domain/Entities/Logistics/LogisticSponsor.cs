@@ -42,6 +42,20 @@ namespace PlataformaRio2C.Domain.Entities
 
         public virtual ICollection<AttendeeLogisticSponsor> AttendeeLogisticSponsors { get; private set; }
         
+        public void Update(List<TranslatedName> names, 
+            Edition edition, 
+            bool isAirfareTicketRequired,
+            bool isAddingToCurrentEdition, 
+            int userId)
+        {
+            this.IsDeleted = false;
+            this.IsAirfareTicketRequired = isAirfareTicketRequired;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            this.UpdateName(names);
+            this.SynchronizeAttendeeSponsors(edition, isAddingToCurrentEdition, userId);
+        }
+
         private void UpdateName(List<TranslatedName> names)
         {
             var name = string.Empty;
@@ -52,6 +66,54 @@ namespace PlataformaRio2C.Domain.Entities
             }
 
             this.Name = name;
+        }
+
+        /// <summary>Synchronizes the attendee collaborators.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
+        /// <param name="attendeeOrganizations">The attendee organizations.</param>
+        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeAttendeeSponsors(
+            Edition edition, 
+            bool isAddingToCurrentEdition, 
+            int userId)
+        {
+            // Synchronize only when is adding to current edition
+            if (!isAddingToCurrentEdition)
+            {
+                return;
+            }
+
+            if (this.AttendeeLogisticSponsors == null)
+            {
+                this.AttendeeLogisticSponsors = new List<AttendeeLogisticSponsor>();
+            }
+
+            if (edition == null)
+            {
+                return;
+            }
+
+            var attendeeSponsor = this.GetAttendeeByEditionId(edition.Id);
+            if (attendeeSponsor != null)
+            {
+                attendeeSponsor.Update(edition, this, userId);
+            }
+            else
+            {
+                this.AttendeeLogisticSponsors.Add(new AttendeeLogisticSponsor(edition, this, userId));
+            }
+        }
+
+        /// <summary>Gets the attendee collaborator by edition identifier.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public AttendeeLogisticSponsor GetAttendeeByEditionId(int editionId)
+        {
+            return this.AttendeeLogisticSponsors?.FirstOrDefault(ac => ac.EditionId == editionId);
         }
 
         #region Validations

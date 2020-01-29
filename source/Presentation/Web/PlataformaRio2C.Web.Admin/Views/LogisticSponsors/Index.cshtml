@@ -1,6 +1,6 @@
 ﻿@model SpeakerSearchViewModel
 @{
-    ViewBag.Title = Labels.LogisticSponsors;
+    ViewBag.Title = Labels.Sponsors;
 }
 
 @Html.Partial("Widgets/DataTablewidget", Model)
@@ -11,20 +11,14 @@
 }
 @section Scripts {
     @Scripts.Render("~/bundles/js/dataTables.js")
-    @Scripts.Render("~/bundles/js/chart.js")
-    @Scripts.Render("~/bundles/js/cropper.js")
     @Scripts.Render("~/bundles/js/select2.js")
     @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/dynamic.list.js")
 
-    @Scripts.Render("~/bundles/js/logisticsponsors.list.js")
- 
-    @Scripts.Render("~/bundles/js/speakers.editioncount.js")
-    @Scripts.Render("~/bundles/js/attendeeorganizations.form.js")
+    @Scripts.Render("~/bundles/js/logisticsponsors.list.js") 
     @Scripts.Render("~/bundles/js/logisticsponsors.create.js")
-    @Scripts.Render("~/bundles/js/speakers.update.js")
-    @Scripts.Render("~/bundles/js/speakers.delete.js")
-    @Scripts.Render("~/bundles/js/addresses.form.js")
+    @Scripts.Render("~/bundles/js/logisticsponsors.update.js")
+    @Scripts.Render("~/bundles/js/logisticsponsors.delete.js")
     <script>
         // Page translations ----------------------------------------------------------------------
         var addToEdition = '@string.Format(Labels.AddToEdition, ViewBag.EditionDto.UrlCode)';

@@ -1906,6 +1906,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ticket Aéreo Obrigatório.
+        /// </summary>
+        public static string IsAirfareTicketRequired {
+            get {
+                return ResourceManager.GetString("IsAirfareTicketRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cargo.
         /// </summary>
         public static string JobTitle {
@@ -2082,15 +2091,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Logistics {
             get {
                 return ResourceManager.GetString("Logistics", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Patrocinadores de Logística.
-        /// </summary>
-        public static string LogisticSponsors {
-            get {
-                return ResourceManager.GetString("LogisticSponsors", resourceCulture);
             }
         }
         
@@ -3882,6 +3882,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Speeches {
             get {
                 return ResourceManager.GetString("Speeches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Patrocinador.
+        /// </summary>
+        public static string Sponsor {
+            get {
+                return ResourceManager.GetString("Sponsor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Patrocinadores.
+        /// </summary>
+        public static string Sponsors {
+            get {
+                return ResourceManager.GetString("Sponsors", resourceCulture);
             }
         }
         

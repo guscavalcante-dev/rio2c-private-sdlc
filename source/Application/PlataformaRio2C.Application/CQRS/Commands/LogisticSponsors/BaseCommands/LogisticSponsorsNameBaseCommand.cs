@@ -29,11 +29,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Initializes a new instance of the <see cref="LogisticSponsorsNameBaseCommand"/> class.</summary>
         /// <param name="entity">The entity.</param>
-        public LogisticSponsorsNameBaseCommand(ConferenceTitleDto entity)
+        public LogisticSponsorsNameBaseCommand(LogisticSponsorBaseDto entity, LanguageDto languageDto)
         {
-            this.Value = entity.ConferenceTitle?.Value;
-            this.LanguageCode = entity.LanguageDto.Code;
-            this.LanguageName = entity.LanguageDto.Name;
+            this.Value = entity.Name;
+            this.LanguageCode = languageDto.Code;
+            this.LanguageName = languageDto.Name;
         }
 
         /// <summary>Initializes a new instance of the <see cref="LogisticSponsorsNameBaseCommand"/> class.</summary>

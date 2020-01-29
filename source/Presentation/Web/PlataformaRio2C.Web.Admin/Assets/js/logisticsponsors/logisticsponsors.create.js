@@ -24,16 +24,6 @@ var LogisticSponsorsCreate = function () {
 
     // Enable plugins -----------------------------------------------------------------------------
     var enablePlugins = function () {
-        if (typeof (MyRio2cPublicEmail) !== 'undefined') {
-            MyRio2cPublicEmail.init();
-        }
-
-        MyRio2cCropper.init({ formIdOrClass: formId });
-        MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });
-        AttendeeOrganizationsForm.init(formId);
-        AddressesForm.init();
-        //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-jobtitle', maxCharCount: 81 });
-        //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-minibio', maxCharCount: 710 });
         enableAjaxForm();
         enableFormValidation();
     };

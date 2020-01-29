@@ -58,11 +58,7 @@ var LogisticSponsorsDataTableWidget = function () {
             searchDelay: 2000,
             processing: true,
             serverSide: true,
-            buttons: [
-            {
-                extend: 'collection',
-                text: labels.actions,
-            }],
+            buttons: [],
             order: [[0, "asc"]],
             sDom: '<"row"<"col-sm-6"l><"col-sm-6 text-right"B>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
             oSearch: {
@@ -72,8 +68,8 @@ var LogisticSponsorsDataTableWidget = function () {
                 url: MyRio2cCommon.getUrlWithCultureAndEdition('/LogisticSponsors/Search'),
                 data: function (d) {
                     d.showAllEditions = $('#ShowAllEditions').prop('checked');
-                    d.showAllExecutives = $('#ShowAllExecutives').prop('checked');
-                    d.showAllParticipants = $('#ShowAllParticipants').prop('checked');
+                    //d.showAllExecutives = $('#ShowAllExecutives').prop('checked');
+                    //d.showAllParticipants = $('#ShowAllParticipants').prop('checked');
                 },
                 dataFilter: function (data) {
                     var jsonReturned = jQuery.parseJSON(data);
@@ -177,7 +173,7 @@ var LogisticSponsorsDataTableWidget = function () {
                 }
             ],
             initComplete: function() {
-                $('button.buttons-collection').attr('data-toggle', 'dropdown');
+                //$('button.buttons-collection').attr('data-toggle', 'dropdown');
             }
         });
 

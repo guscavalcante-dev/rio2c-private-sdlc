@@ -529,18 +529,15 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/logisticsponsors.list.js").Include(
                 "~/Assets/js/logisticsponsors/logisticsponsors.datatable.widget.js"));
-
-            //bundles.Add(new ScriptBundle("~/bundles/js/collaborators.editioncount.js").Include(
-            //    "~/Assets/js/collaborators/collaborators.editioncount.widget.js"));
-
+            
             bundles.Add(new ScriptBundle("~/bundles/js/logisticsponsors.create.js").Include(
                 "~/Assets/js/logisticsponsors/logisticsponsors.create.js"));
 
-            //bundles.Add(new ScriptBundle("~/bundles/js/collaborators.update.js").Include(
-            //    "~/Assets/js/collaborators/collaborators.update.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/logisticsponsors.update.js").Include(
+                "~/Assets/js/logisticsponsors/logisticsponsors.update.js"));
 
-            //bundles.Add(new ScriptBundle("~/bundles/js/collaborators.delete.js").Include(
-            //    "~/Assets/js/collaborators/collaborators.delete.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/logisticsponsors.delete.js").Include(
+                "~/Assets/js/logisticsponsors/logisticsponsors.delete.js"));
 
             #endregion
 

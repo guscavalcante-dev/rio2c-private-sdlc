@@ -1986,8 +1986,16 @@
     <value>is</value>
     <comment>é</comment>
   </data>
-  <data name="LogisticSponsors" xml:space="preserve">
-    <value>Logistics Sponsors</value>
-    <comment>Patrocinadores de Logística</comment>
+  <data name="Sponsors" xml:space="preserve">
+    <value>Sponsors</value>
+    <comment>Patrocinadores</comment>
+  </data>
+  <data name="IsAirfareTicketRequired" xml:space="preserve">
+    <value>Is Airfare Ticket Required</value>
+    <comment>Ticket Aéreo Obrigatório</comment>
+  </data>
+  <data name="Sponsor" xml:space="preserve">
+    <value>Sponsor</value>
+    <comment>Patrocinador</comment>
   </data>
 </root>

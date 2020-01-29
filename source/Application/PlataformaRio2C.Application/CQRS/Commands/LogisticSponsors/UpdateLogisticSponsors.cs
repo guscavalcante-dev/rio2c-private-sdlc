@@ -21,19 +21,22 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>CreateLogisticSponsors</summary>
-    public class CreateLogisticSponsors : BaseCommand
+    /// <summary>UpdateLogisticSponsors</summary>
+    public class UpdateLogisticSponsors : CreateLogisticSponsors
     {
-        public bool IsAirfareTicketRequired { get; set; }
-        public List<LogisticSponsorsNameBaseCommand> Names { get; set; }
-
+        public Guid LogisticSponsorUid { get; set; }        
+        public bool IsAddingToCurrentEdition { get; set; }
+        
+        public UpdateLogisticSponsors(LogisticSponsorBaseDto dto, List<LanguageDto> languagesDtos, string userInterfaceLanguage, bool? isAddingToCurrentEdition)
+        {
+            this.LogisticSponsorUid = dto.Uid;
+            this.IsAirfareTicketRequired = dto.IsAirfareTicketRequired;
+            this.IsAddingToCurrentEdition = isAddingToCurrentEdition ?? false;
+            this.UpdateNames(dto, languagesDtos);            
+        }
+        
         /// <summary>Initializes a new instance of the <see cref="CreateLogisticSponsors"/> class.</summary>
-        /// <param name="languagesDtos">The languages dtos.</param>
-        /// <param name="userInterfaceLanguage">The user interface language.</param>
-        public CreateLogisticSponsors(List<LanguageDto> languagesDtos, string userInterfaceLanguage) => this.UpdateNames(languagesDtos);
-
-        /// <summary>Initializes a new instance of the <see cref="CreateLogisticSponsors"/> class.</summary>
-        public CreateLogisticSponsors()
+        public UpdateLogisticSponsors()
         {
         }
         
@@ -41,12 +44,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Updates the titles.</summary>
         /// <param name="languagesDtos">The languages dtos.</param>
-        private void UpdateNames(List<LanguageDto> languagesDtos)
+        private void UpdateNames(LogisticSponsorBaseDto dto, List<LanguageDto> languagesDtos)
         {
             this.Names = new List<LogisticSponsorsNameBaseCommand>();
             foreach (var languageDto in languagesDtos)
             {
-                this.Names.Add(new LogisticSponsorsNameBaseCommand(languageDto));
+                this.Names.Add(new LogisticSponsorsNameBaseCommand(dto, languageDto));
             }
         }
 

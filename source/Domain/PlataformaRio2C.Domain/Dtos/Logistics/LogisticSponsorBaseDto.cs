@@ -28,5 +28,6 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTime UpdateDate { get; set; }
         public bool IsInOtherEdition { get; set; }
         public bool IsInCurrentEdition { get; set; }
+        public bool IsAirfareTicketRequired { get; set; }
     }
 }
