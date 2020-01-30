@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-14-2019
+// Last Modified On : 01-30-2020
 // ***********************************************************************
 // <copyright file="AccountController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -178,10 +178,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
                     if (userLanguage != null)
                     {
-                        return RedirectToAction("Index", "Quiz", new { culture = userLanguage?.Language?.Code });
+                        return RedirectToAction("Index", "Home", new { culture = userLanguage?.Language?.Code });
                     }
 
-                    return RedirectToAction("Index", "Quiz");
+                    return RedirectToAction("Index", "Home");
 
                     //transforma a senha digitada em md5
                     //byte[] encodedPassword = new UTF8Encoding().GetBytes(model.Password);
