@@ -280,7 +280,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     message = ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/_TinyForm", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("Modals/_CreateForm", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -301,7 +301,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Delete(DeleteCollaborator cmd)
+        public async Task<ActionResult> Delete(DeleteLogisticSponsors cmd)
         {
             var result = new AppValidationResult();
 
@@ -313,7 +313,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    Constants.CollaboratorType.Speaker,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,

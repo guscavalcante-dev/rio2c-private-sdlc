@@ -41,6 +41,13 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.Now;
         }
 
+        public void Delete(int userId)
+        {            
+            this.IsDeleted = true;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
         public int EditionId { get; private set; }
         public int LogisticSponsorId { get; private set; }
         public virtual Edition Edition { get; private set; }

@@ -61,16 +61,8 @@ var LogisticSponsorsCreate = function () {
             onSuccess: function (data) {
                 $(modalId).modal('hide');
 
-                if (typeof (CollaboratorsDataTableWidget) !== 'undefined') {
-                    CollaboratorsDataTableWidget.refreshData();
-                }
-
-                if (typeof (CollaboratorsTotalCountWidget) !== 'undefined') {
-                    CollaboratorsTotalCountWidget.init();
-                }
-
-                if (typeof (CollaboratorsEditionCountWidget) !== 'undefined') {
-                    CollaboratorsEditionCountWidget.init();
+                if (typeof (LogisticSponsorsDataTableWidget) !== 'undefined') {
+                    LogisticSponsorsDataTableWidget.refreshData();
                 }
             },
             onError: function (data) {

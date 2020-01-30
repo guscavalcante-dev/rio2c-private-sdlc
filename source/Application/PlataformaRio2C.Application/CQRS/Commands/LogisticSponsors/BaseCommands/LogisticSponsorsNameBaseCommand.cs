@@ -20,9 +20,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>LogisticSponsorsNameBaseCommand</summary>
     public class LogisticSponsorsNameBaseCommand
     {
-        [Display(Name = "Title", ResourceType = typeof(Labels))]
+        [Display(Name = "Name", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [StringLength(65, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        [StringLength(48, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Value { get; set; }
         public string LanguageCode { get; set; }
         public string LanguageName { get; set; }
@@ -31,7 +31,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="entity">The entity.</param>
         public LogisticSponsorsNameBaseCommand(LogisticSponsorBaseDto entity, LanguageDto languageDto)
         {
-            this.Value = entity.Name;
+            this.Value = entity?.GetNameByLanguageCode(languageDto.Code);;
             this.LanguageCode = languageDto.Code;
             this.LanguageName = languageDto.Name;
         }

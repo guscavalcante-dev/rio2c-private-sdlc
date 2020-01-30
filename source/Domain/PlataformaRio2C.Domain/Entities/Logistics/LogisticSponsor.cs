@@ -15,12 +15,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
     /// <summary>LogisticSponsor</summary>
     public class LogisticSponsor : Entity
     {
+        public static readonly int NameMinLength = 5;
+        public static readonly int NameMaxLength = 100;
+
         public string Name { get; private set; }
         public bool IsAirfareTicketRequired { get; private set; }
         public bool IsOtherRequired { get; protected set; }
@@ -66,6 +70,18 @@ namespace PlataformaRio2C.Domain.Entities
             }
 
             this.Name = name;
+        }
+
+        public void Delete(int userId)
+        {
+            this.IsDeleted = true;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+            
+            foreach(var attendee in this.AttendeeLogisticSponsors)
+            {
+                attendee.Delete(userId);
+            }
         }
 
         /// <summary>Synchronizes the attendee collaborators.</summary>
@@ -127,8 +143,24 @@ namespace PlataformaRio2C.Domain.Entities
             {
                 this.ValidationResult = new ValidationResult();
             }
+            
+            ValidateName();
 
             return this.ValidationResult.IsValid;
+        }
+        
+        /// <summary>Validates the first name.</summary>
+        public void ValidateName()
+        {
+            if (string.IsNullOrEmpty(this.Name?.Trim()))
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Name), new string[] { "Name" }));
+            }
+
+            if (this.Name?.Trim().Length < NameMinLength || this.Name?.Trim().Length > NameMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, NameMaxLength, NameMinLength), new string[] { "Name" }));
+            }
         }
 
         #endregion

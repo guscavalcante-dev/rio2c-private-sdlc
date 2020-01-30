@@ -27,6 +27,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public bool IsAirfareTicketRequired { get; set; }
         public List<LogisticSponsorsNameBaseCommand> Names { get; set; }
 
+
+
         /// <summary>Initializes a new instance of the <see cref="CreateLogisticSponsors"/> class.</summary>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>

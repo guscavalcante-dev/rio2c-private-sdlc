@@ -28,6 +28,10 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         {
             this.ToTable("LogisticSponsors");
                         
+            this.Property(t => t.Name)
+                .HasMaxLength(LogisticSponsor.NameMaxLength)
+                .IsRequired();
+
             this.HasMany(t => t.AttendeeLogisticSponsors)
                 .WithRequired(e => e.LogisticSponsor)
                 .HasForeignKey(e => e.LogisticSponsorId);

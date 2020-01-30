@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Web.Script.Serialization;
 using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -29,5 +30,13 @@ namespace PlataformaRio2C.Domain.Dtos
         public bool IsInOtherEdition { get; set; }
         public bool IsInCurrentEdition { get; set; }
         public bool IsAirfareTicketRequired { get; set; }
+
+        /// <summary>Gets the name by language code.</summary>
+        /// <param name="languageCode">The language code.</param>
+        /// <returns></returns>
+        public string GetNameByLanguageCode(string languageCode)
+        {
+            return this.Name.GetSeparatorTranslation(languageCode, '|');
+        }
     }
 }

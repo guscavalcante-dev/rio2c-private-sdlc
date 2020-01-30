@@ -15,27 +15,19 @@
 var LogisticSponsorsDelete = function () {
 
     // Delete -------------------------------------------------------------------------------------
-    var executeDelete = function (collaboratorUid) {
+    var executeDelete = function (sponsorUid) {
         MyRio2cCommon.block();
 
         var jsonParameters = new Object();
-        jsonParameters.collaboratorUid = collaboratorUid;
+        jsonParameters.sponsorUid = sponsorUid;
 
         $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/LogisticSponsors/Delete'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
                 onSuccess: function () {
-                    if (typeof (CollaboratorsDataTableWidget) !== 'undefined') {
-                        CollaboratorsDataTableWidget.refreshData();
-                    }
-
-                    if (typeof (CollaboratorsTotalCountWidget) !== 'undefined') {
-                        CollaboratorsTotalCountWidget.init();
-                    }
-
-                    if (typeof (CollaboratorsEditionCountWidget) !== 'undefined') {
-                        CollaboratorsEditionCountWidget.init();
+                    if (typeof (LogisticSponsorsDataTableWidget) !== 'undefined') {
+                        LogisticSponsorsDataTableWidget.refreshData();
                     }
                 },
                 // Error
