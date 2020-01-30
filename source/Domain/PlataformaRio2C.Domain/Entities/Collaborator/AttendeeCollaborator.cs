@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 01-30-2020
 // ***********************************************************************
 // <copyright file="AttendeeCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -595,16 +595,16 @@ namespace PlataformaRio2C.Domain.Entities
 
             var attendeeCollaboratorTickets = this.FindAllAttendeeCollaboratorTicketsNotDeleted();
 
-            // All tickets are deleted
-            if (attendeeCollaboratorTickets?.Any() != true)
+            // All tickets of the same collaborator type are deleted
+            if (attendeeCollaboratorTickets?.Any(act => act.AttendeeSalesPlatformTicketType.CollaboratorTypeId == collaboratorType.Id) != true)
             {
-                this.IsDeleted = true;
                 this.DeleteAttendeeCollaboratorType(collaboratorType, userId);
             }
-            // All tickets of the same collaborator type are deleted
-            else if (attendeeCollaboratorTickets?.Any(act => act.AttendeeSalesPlatformTicketType.CollaboratorTypeId == collaboratorType.Id) != true)
+
+            var attendeeCollaboratorTypes = this.FindAllAttendeeCollaboratorTypesNotDeleted();
+            if (attendeeCollaboratorTypes?.Any() != true)
             {
-                this.DeleteAttendeeCollaboratorType(collaboratorType, userId);
+                this.IsDeleted = true;
             }
         }
 
