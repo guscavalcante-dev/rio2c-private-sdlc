@@ -60,6 +60,16 @@
                                                     }
                                                 }
                                             </span>
+                                            <span class="kt-widget__desc">
+                                                @{
+                                                    var totalInterestGroupsMatchesCount = projectDto.GetTotalInterestGroupsMatchesCount();
+                                                }
+                                                <small>@totalInterestGroupsMatchesCount @((totalInterestGroupsMatchesCount != 1 ? Labels.Matches : Labels.Match).ToLowerInvariant()):</small>
+                                                @foreach (var interestGroupsMatch in projectDto.InterestGroupsMatches.OrderBy(igm => igm.DisplayOrder))
+                                                {
+                                                    <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@interestGroupsMatch.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
+                                                }
+                                            </span>
                                         </div>
                                     </div>
                                 </div>

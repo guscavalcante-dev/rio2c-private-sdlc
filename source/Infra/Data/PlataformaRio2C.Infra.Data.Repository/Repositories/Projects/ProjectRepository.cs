@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-24-2020
+// Last Modified On : 01-31-2020
 // ***********************************************************************
 // <copyright file="ProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -457,6 +457,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<IPagedList<ProjectDto>> FindAllDtosToEvaluateAsync(Guid attendeeCollaboratorUid, string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int page, int pageSize)
         {
+            var matchInterestsGroups = new List<Guid>
+            {
+                InterestGroup.LookingFor.Uid,
+                InterestGroup.ProjectStatus.Uid,
+                InterestGroup.Platforms.Uid,
+                InterestGroup.Genre.Uid
+            };
+
             var query = this.GetBaseQuery()
                                 .FindByBuyerAttendeeCollabratorUid(attendeeCollaboratorUid)
                                 .IsFinished()
@@ -489,6 +497,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         Interest = i.Interest,
                                         InterestGroup = i.Interest.InterestGroup
                                     }),
+                                    InterestGroupsMatches = p.ProjectInterests
+                                                                .Where(pi => !pi.IsDeleted && !pi.Interest.IsDeleted 
+                                                                             && p.ProjectBuyerEvaluations
+                                                                                    .Any(pbe => !pbe.IsDeleted 
+                                                                                                  && pbe.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators
+                                                                                                            .Where(aoc => aoc.AttendeeCollaborator.Uid == attendeeCollaboratorUid
+                                                                                                                          && !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted && !aoc.AttendeeOrganization.Organization.IsDeleted)
+                                                                                                            .FirstOrDefault()
+                                                                                                            .AttendeeOrganization.Organization.OrganizationInterests
+                                                                                                                    .Any(oi => !oi.IsDeleted && !oi.Interest.IsDeleted
+                                                                                                                               && matchInterestsGroups.Contains(oi.Interest.InterestGroup.Uid)
+                                                                                                                               && oi.Interest.Id == pi.Interest.Id)))
+                                                                .Select(pi => pi.Interest.InterestGroup)
+                                                                .Distinct(),
                                     ProjectBuyerEvaluationDtos = p.ProjectBuyerEvaluations
                                                                     .Where(pbe => !pbe.IsDeleted
                                                                                   && !pbe.BuyerAttendeeOrganization.IsDeleted
@@ -510,7 +532,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 });
 
             return await query
-                            .OrderBy(pd => pd.Project.CreateDate)
+                            .OrderByDescending(ao => ao.InterestGroupsMatches.Count())
+                            .ThenBy(pd => pd.Project.CreateDate)
                             .ToListPagedAsync(page, pageSize);
         }
 
