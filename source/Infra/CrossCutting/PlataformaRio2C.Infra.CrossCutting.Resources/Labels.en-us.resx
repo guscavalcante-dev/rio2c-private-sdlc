@@ -334,8 +334,8 @@
     <comment>Termo de uso</comment>
   </data>
   <data name="Welcome" xml:space="preserve">
-    <value>Welcome to Rio2C | RioContentMarket {0}!</value>
-    <comment>Bem-vindo ao Rio2C | RioContentMarket {0}!</comment>
+    <value>Welcome to Rio2C {0}</value>
+    <comment>Bem-vindo ao Rio2C {0}</comment>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>Password confirmation</value>
