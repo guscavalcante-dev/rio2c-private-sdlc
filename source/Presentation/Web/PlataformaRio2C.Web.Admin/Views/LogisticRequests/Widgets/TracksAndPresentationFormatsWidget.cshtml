@@ -1,0 +1,54 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model ConferenceDto
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+            @Labels.Tracks @Labels.And @Labels.PresentationFormats
+        </h3>
+    </div>
+    <div class="kt-portlet__head-toolbar">
+        <div class="kt-portlet__head-actions">
+            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="ConferencesTracksAndPresentationFormatsWidget.showUpdateModal();">
+                <i class="flaticon2-edit"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="kt-portlet__body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="kt-widget4">
+                <h3 class="kt-heading kt-heading--sm mb-0 mt-0">@Labels.Tracks</h3>
+                @if (Model.ConferenceTrackDtos?.Any() == true)
+                {
+                    foreach (var conferenceTrackDto in Model.ConferenceTrackDtos.OrderBy(cvtd => cvtd.Track.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')))
+                    {
+                        <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@conferenceTrackDto.Track.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
+                    }
+                }
+                else
+                {
+                    <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.Tracks, Labels.SelectedFP.ToLowerInvariant())</span>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="kt-widget4">
+                <h3 class="kt-heading kt-heading--sm mb-0">@Labels.PresentationFormats</h3>
+                @if (Model.ConferencePresentationFormatDtos?.Any() == true)
+                {
+                    foreach (var conferencePresentationFormatDto in Model.ConferencePresentationFormatDtos.OrderBy(chtd => chtd.PresentationFormat.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')))
+                    {
+                        <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@conferencePresentationFormatDto.PresentationFormat.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
+                    }
+                }
+                else
+                {
+                    <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.PresentationFormats, Labels.SelectedFP.ToLowerInvariant())</span>
+                }
+            </div>
+        </div>
+    </div>
+</div>

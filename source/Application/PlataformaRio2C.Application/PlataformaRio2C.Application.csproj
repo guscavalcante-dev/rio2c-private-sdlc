@@ -551,6 +551,8 @@
     <Compile Include="ViewModels\Common\Conference\LecturerDetailAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Country\CountryBasicAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Holdings\HoldingSearchViewModel.cs" />
+    <Compile Include="ViewModels\Common\LogisticRequest\LogisticRequestSearchViewModel.cs" />
+    <Compile Include="ViewModels\Common\LogisticSponsor\LogisticSponsorSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Mail\MailAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Mail\MailCollaboratorAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Mail\MailCollaboratorEditAppViewModel.cs" />

@@ -2005,4 +2005,20 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Patrocinador</value>
     <comment>Patrocinador</comment>
   </data>
+  <data name="Request" xml:space="preserve">
+    <value>Solicitação</value>
+    <comment>Solicitação</comment>
+  </data>
+  <data name="Requests" xml:space="preserve">
+    <value>Solicitações</value>
+    <comment>Solicitações</comment>
+  </data>
+  <data name="AddRequest" xml:space="preserve">
+    <value>Adicionar Solicitação</value>
+    <comment>Adicionar Solicitação</comment>
+  </data>
+  <data name="ShowAllSponsored" xml:space="preserve">
+    <value>Exibir todos os patrocinados</value>
+    <comment>Exibir todos os patrocinados</comment>
+  </data>
 </root>

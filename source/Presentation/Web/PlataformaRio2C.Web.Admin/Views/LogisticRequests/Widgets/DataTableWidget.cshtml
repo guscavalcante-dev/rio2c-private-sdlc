@@ -1,4 +1,4 @@
-﻿@model LogisticSponsorSearchViewModel
+﻿@model LogisticRequestSearchViewModel
 <!--begin:: DataTable Widget-->
 <div id="LogisticSponsorsDataTableWidget" class="kt-portlet kt-portlet--mobile">
     <div class="kt-portlet__head kt-portlet__head--lg">
@@ -7,7 +7,7 @@
                 <i class="kt-font-brand flaticon2-line-chart"></i>
             </span>
             <h3 class="kt-portlet__head-title">
-                @Labels.Sponsors
+                @Labels.Requests
             </h3>
         </div>
         <div class="kt-portlet__head-toolbar">
@@ -15,7 +15,7 @@
                 <div class="kt-portlet__head-actions">                   
                     <button onclick="LogisticSponsorsCreate.showModal();" class="btn btn-brand btn-elevate btn-icon-sm">
                         <i class="la la-plus"></i>
-                        @Labels.NewM @Labels.Sponsor
+                        @Labels.NewF @Labels.Request
                     </button>
                 </div>
             </div>
@@ -33,7 +33,11 @@
                     <label>&nbsp;</label>
                     <div class="kt-checkbox-inline">
                         <label class="kt-checkbox">
-                            @Html.CheckBoxFor(m => m.ShowAllEditions, new { @class = "enable-datatable-reload" }) @Labels.ShowAllEditions
+                            @Html.CheckBoxFor(m => m.ShowAllEditions, new { @class = "enable-datatable-reload" }) @Labels.ShowAllParticipants
+                            <span></span>
+                        </label>                        
+                        <label class="kt-checkbox">
+                            @Html.CheckBoxFor(m => m.ShowAllEditions, new { @class = "enable-datatable-reload" }) @Labels.ShowAllSponsored
                             <span></span>
                         </label>
                     </div>
@@ -46,6 +50,9 @@
             <thead>
                 <tr>
                     <th class="text-left">@Labels.Name</th>
+                    <th class="text-left">Aéreo</th>
+                    <th class="text-left">Hospedagem</th>
+                    <th class="text-left">Transfer Aeroporto</th>
                     <th>@Labels.CreateDate</th>
                     <th>@Labels.UpdateDate</th>
                     <th class="dt-head-center dt-body-center">@Labels.Actions</th>

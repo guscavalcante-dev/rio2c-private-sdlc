@@ -1,0 +1,31 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model PlataformaRio2C.Application.CQRS.Commands.CreateLogisticSponsors
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+}
+
+<!--begin: Main Information-->
+<div class="kt-section pt-2">
+    @Html.ValidationMessage("Names", new { @class = "text-danger" })
+    <div class="kt-section__content mt-3">
+        @Html.EditorFor(m => m.Names)
+    </div>
+</div>
+
+<div class="kt-section">    
+    <div class="kt-section__content mt-3">        
+        <div class="kt-checkbox-list">
+            <div class="row">                
+                <div class="col-md-6">
+                    <label class="kt-checkbox">
+                    <input type="checkbox"
+                            name="IsAirfareTicketRequired"
+                            value="true"
+                            @if (Model.IsAirfareTicketRequired) { <text> checked </text> } /> @Labels.IsAirfareTicketRequired                        
+                        <span></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

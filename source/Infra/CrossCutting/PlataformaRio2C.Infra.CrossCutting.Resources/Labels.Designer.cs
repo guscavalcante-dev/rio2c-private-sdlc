@@ -187,6 +187,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adicionar Solicitação.
+        /// </summary>
+        public static string AddRequest {
+            get {
+                return ResourceManager.GetString("AddRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Endereço.
         /// </summary>
         public static string Address {
@@ -3328,6 +3337,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Solicitação.
+        /// </summary>
+        public static string Request {
+            get {
+                return ResourceManager.GetString("Request", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Solicitações.
+        /// </summary>
+        public static string Requests {
+            get {
+                return ResourceManager.GetString("Requests", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Redefinir.
         /// </summary>
         public static string Reset {
@@ -3774,6 +3801,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ShowAllParticipants {
             get {
                 return ResourceManager.GetString("ShowAllParticipants", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exibir todos os patrocinados.
+        /// </summary>
+        public static string ShowAllSponsored {
+            get {
+                return ResourceManager.GetString("ShowAllSponsored", resourceCulture);
             }
         }
         

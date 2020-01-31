@@ -355,6 +355,7 @@
     <Compile Include="Controllers\CollaboratorController.cs" />
     <Compile Include="Controllers\CompaniesController.cs" />
     <Compile Include="Controllers\ConferenceController.cs" />
+    <Compile Include="Controllers\LogisticRequestsController.cs" />
     <Compile Include="Controllers\PresentationFormatsController.cs" />
     <Compile Include="Controllers\ParticipantRolesController.cs" />
     <Compile Include="Controllers\TracksController.cs" />
@@ -425,6 +426,10 @@
     <Content Include="Assets\img\logo-rio2c-footer.png" />
     <Content Include="Assets\js\accounts\accounts.password.js" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
+    <Content Include="Assets\js\logisticrequests\logisticsponsors.create.js" />
+    <Content Include="Assets\js\logisticrequests\datatable.widget.js" />
+    <Content Include="Assets\js\logisticrequests\logisticsponsors.delete.js" />
+    <Content Include="Assets\js\logisticrequests\logisticsponsors.update.js" />
     <Content Include="Assets\js\logisticsponsors\logisticsponsors.create.js" />
     <Content Include="Assets\js\logisticsponsors\logisticsponsors.datatable.widget.js" />
     <Content Include="Assets\js\logisticsponsors\logisticsponsors.delete.js" />
@@ -8375,6 +8380,12 @@
     <Content Include="Views\Shared\EditorTemplates\LogisticSponsorsNameBaseCommand.cshtml" />
     <Content Include="Views\LogisticSponsors\EditorTemplates\LogisticSponsorsNameBaseCommand.cshtml" />
     <Content Include="Views\LogisticSponsors\Modals\UpdateModal.cshtml" />
+    <Content Include="Views\LogisticRequests\EditorTemplates\LogisticSponsorsNameBaseCommand.cshtml" />
+    <Content Include="Views\LogisticRequests\Index.cshtml" />
+    <Content Include="Views\LogisticRequests\Modals\_CreateForm.cshtml" />
+    <Content Include="Views\LogisticRequests\Modals\CreateModal.cshtml" />
+    <Content Include="Views\LogisticRequests\Modals\UpdateModal.cshtml" />
+    <Content Include="Views\LogisticRequests\Widgets\DataTableWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

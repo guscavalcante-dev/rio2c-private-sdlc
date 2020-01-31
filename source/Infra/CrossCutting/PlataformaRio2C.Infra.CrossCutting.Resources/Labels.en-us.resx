@@ -1998,4 +1998,20 @@
     <value>Sponsor</value>
     <comment>Patrocinador</comment>
   </data>
+  <data name="Request" xml:space="preserve">
+    <value>Request</value>
+    <comment>Request</comment>
+  </data>
+  <data name="Requests" xml:space="preserve">
+    <value>Requests</value>
+    <comment>Solicitações</comment>
+  </data>
+  <data name="AddRequest" xml:space="preserve">
+    <value>Add Request</value>
+    <comment>Adicionar Solicitação</comment>
+  </data>
+  <data name="ShowAllSponsored" xml:space="preserve">
+    <value>Show All Sponsored</value>
+    <comment>Mostrar todos patrocinados</comment>
+  </data>
 </root>

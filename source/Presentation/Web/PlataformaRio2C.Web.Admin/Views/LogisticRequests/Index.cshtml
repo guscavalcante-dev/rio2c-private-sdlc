@@ -1,6 +1,6 @@
-﻿@model LogisticSponsorSearchViewModel
+﻿@model LogisticRequestSearchViewModel
 @{
-    ViewBag.Title = Labels.Sponsors;
+    ViewBag.Title = Labels.Requests;
 }
 
 @Html.Partial("Widgets/DataTablewidget", Model)
@@ -15,7 +15,7 @@
     @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/dynamic.list.js")
 
-    @Scripts.Render("~/bundles/js/logisticsponsors.list.js") 
+    @Scripts.Render("~/bundles/js/logisticrequests.list.js") 
     @Scripts.Render("~/bundles/js/logisticsponsors.create.js")
     @Scripts.Render("~/bundles/js/logisticsponsors.update.js")
     @Scripts.Render("~/bundles/js/logisticsponsors.delete.js")
@@ -28,13 +28,15 @@
         var sendInvitationEmail = '@Labels.SendInvitationEmail';
         var exportToEventbrite = '@Labels.ExportToEventbrite';
         var confirmToSendInvitationEmails = '@Messages.ConfirmToSendInvitationEmails';
-
+        var addRequest = '@Labels.AddRequest';
+        var view = '@Labels.View';
+        
         // Pagination -----------------------------------------------------------------------------
         var initialPage = @(Model.Page?.ToString() ?? "null");
         var initialPageSize = @(Model.PageSize?.ToString() ?? "null");
 
         jQuery(document).ready(function () {
-            LogisticSponsorsDataTableWidget.init();
+            LogisticRequestsDataTableWidget.init();
         });
     </script>
 }

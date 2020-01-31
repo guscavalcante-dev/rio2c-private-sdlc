@@ -37,13 +37,14 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
+using PagedListExtensions = X.PagedList.PagedListExtensions;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>LogisticSponsorsController</summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
     [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CuratorshipAudiovisual)]
-    public class LogisticSponsorsController : BaseController
+    public class LogisticRequestsController : BaseController
     {
         private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
@@ -60,7 +61,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
         /// <param name="attendeeSalesPlatformTicketTypeRepository">The attendee sales platform ticket type repository.</param>
         /// <param name="fileRepository">The file repository.</param>
-        public LogisticSponsorsController(
+        public LogisticRequestsController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             ILogisticSponsorRepository logisticSponsorRepo,
@@ -77,12 +78,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="searchViewModel">The search view model.</param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Index(LogisticSponsorSearchViewModel searchViewModel)
+        public ActionResult Index(LogisticRequestSearchViewModel searchViewModel)
         {
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Logistics, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Sponsors, Url.Action("Index", "LogisticsSponsors", new { Area = "" }))
+                new BreadcrumbItemHelper(Labels.Requests, Url.Action("Index", "LogisticRequests", new { Area = "" }))
             });
 
             #endregion
@@ -101,19 +102,68 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions)
         {
-            var sponsors = await this.logisticSponsorRepo.FindAllByDataTable(
-                request.Start / request.Length,
-                request.Length,
-                request.Search?.Value,
-                request.GetSortColumns(),
-                showAllEditions,
-                this.EditionDto?.Id);
+            //var sponsors = await this.logisticSponsorRepo.FindAllByDataTable(
+            //    request.Start / request.Length,
+            //    request.Length,
+            //    request.Search?.Value,
+            //    request.GetSortColumns(),
+            //    showAllEditions,
+            //    this.EditionDto?.Id);
 
-            foreach (var item in sponsors){
-                item.Name = item.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, '|');
-            }
+            //foreach (var item in sponsors){
+            //    item.Name = item.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, '|');
+            //}
 
-            var response = DataTablesResponse.Create(request, sponsors.TotalItemCount, sponsors.TotalItemCount, sponsors);
+            var list = new List<LogisticRequestBaseDto>()
+            {
+                new LogisticRequestBaseDto()
+                {
+                    Name = "Participante",
+                    AccommodationSponsor = "Próprio",
+                    AirfareSponsor = "Rio2C",
+                    TransferSponsor = "APEX",
+                    IsInCurrentEdition = true,
+                    IsSponsoredByEvent = true
+                },
+                new LogisticRequestBaseDto()
+                {
+                    Name = "Participante",
+                    AccommodationSponsor = "Patrocinado por outras instituições",
+                    AirfareSponsor = null,
+                    TransferSponsor = null,
+                    IsInCurrentEdition = true,
+                    IsSponsoredByEvent = false
+                },
+                new LogisticRequestBaseDto()
+                {
+                    Name = "Participante",
+                    AccommodationSponsor = "Patrocinado por outras instituições",
+                    AirfareSponsor = "Rio2C",
+                    TransferSponsor = "APEX",
+                    IsInCurrentEdition = true,
+                    IsSponsoredByEvent = true
+                },
+                new LogisticRequestBaseDto()
+                {
+                    Name = "Participante",
+                    AccommodationSponsor = "Patrocinado por outras instituições",
+                    AirfareSponsor = "Rio2C",
+                    TransferSponsor = "APEX",
+                    IsInCurrentEdition = true,
+                    IsSponsoredByEvent = true
+                },
+                new LogisticRequestBaseDto()
+                {
+                    Name = "Participante",
+                    AccommodationSponsor = "Próprio | Own",
+                    AirfareSponsor = "Rio2C",
+                    TransferSponsor = "APEX",
+                    IsInCurrentEdition = true,
+                    IsSponsoredByEvent = true
+                },
+            };
+
+            var response = DataTablesResponse.Create(request, 100, 100, list);
             
             return Json(new
             {
