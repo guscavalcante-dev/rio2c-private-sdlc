@@ -544,16 +544,16 @@ namespace PlataformaRio2C.Web.Admin
             #region Logistics - LogisticRequests
 
             bundles.Add(new ScriptBundle("~/bundles/js/logisticrequests.list.js").Include(
-                "~/Assets/js/logisticrequests/datatable.widget.js"));
+                "~/Assets/js/logisticrequests/logisticrequests.datatable.widget.js"));
             
-            bundles.Add(new ScriptBundle("~/bundles/js/logisticsponsors.create.js").Include(
-                "~/Assets/js/logisticsponsors/logisticsponsors.create.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/logisticrequests.create.js").Include(
+                "~/Assets/js/logisticrequests/logisticrequests.create.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/logisticsponsors.update.js").Include(
-                "~/Assets/js/logisticsponsors/logisticsponsors.update.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/logisticrequests.update.js").Include(
+                "~/Assets/js/logisticrequests/logisticrequests.update.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/logisticsponsors.delete.js").Include(
-                "~/Assets/js/logisticsponsors/logisticsponsors.delete.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/logisticrequests.delete.js").Include(
+                "~/Assets/js/logisticrequests/logisticrequests.delete.js"));
 
             #endregion
 

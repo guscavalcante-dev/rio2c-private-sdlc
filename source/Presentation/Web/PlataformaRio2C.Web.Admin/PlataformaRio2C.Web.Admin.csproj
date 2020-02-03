@@ -426,10 +426,10 @@
     <Content Include="Assets\img\logo-rio2c-footer.png" />
     <Content Include="Assets\js\accounts\accounts.password.js" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
-    <Content Include="Assets\js\logisticrequests\logisticsponsors.create.js" />
-    <Content Include="Assets\js\logisticrequests\datatable.widget.js" />
-    <Content Include="Assets\js\logisticrequests\logisticsponsors.delete.js" />
-    <Content Include="Assets\js\logisticrequests\logisticsponsors.update.js" />
+    <Content Include="Assets\js\logisticrequests\logisticrequests.create.js" />
+    <Content Include="Assets\js\logisticrequests\logisticrequests.datatable.widget.js" />
+    <Content Include="Assets\js\logisticrequests\logisticrequests.delete.js" />
+    <Content Include="Assets\js\logisticrequests\logisticrequests.update.js" />
     <Content Include="Assets\js\logisticsponsors\logisticsponsors.create.js" />
     <Content Include="Assets\js\logisticsponsors\logisticsponsors.datatable.widget.js" />
     <Content Include="Assets\js\logisticsponsors\logisticsponsors.delete.js" />
@@ -8386,6 +8386,7 @@
     <Content Include="Views\LogisticRequests\Modals\CreateModal.cshtml" />
     <Content Include="Views\LogisticRequests\Modals\UpdateModal.cshtml" />
     <Content Include="Views\LogisticRequests\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Views\LogisticRequests\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

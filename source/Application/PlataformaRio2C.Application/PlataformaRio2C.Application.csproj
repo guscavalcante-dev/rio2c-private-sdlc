@@ -271,6 +271,9 @@
     <Compile Include="CQRS\Commands\ConferenceParticipantRoles\CreateConferenceParticipantRole.cs" />
     <Compile Include="CQRS\Commands\ConferenceParticipantRoles\DeleteConferenceParticipantRole.cs" />
     <Compile Include="CQRS\Commands\ConferenceParticipantRoles\UpdateConferenceParticipantRoleMainInformation.cs" />
+    <Compile Include="CQRS\Commands\LogisticRequests\CreateLogisticRequest.cs" />
+    <Compile Include="CQRS\Commands\LogisticRequests\DeleteLogisticRequest.cs" />
+    <Compile Include="CQRS\Commands\LogisticRequests\UpdateLogisticRequest.cs" />
     <Compile Include="CQRS\Commands\LogisticSponsors\BaseCommands\LogisticSponsorsNameBaseCommand.cs" />
     <Compile Include="CQRS\Commands\LogisticSponsors\DeleteLogisticSponsors.cs" />
     <Compile Include="CQRS\Commands\LogisticSponsors\UpdateLogisticSponsors.cs" />

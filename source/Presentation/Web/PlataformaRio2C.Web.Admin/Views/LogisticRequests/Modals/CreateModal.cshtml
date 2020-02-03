@@ -1,13 +1,14 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateLogisticSponsors
-<div class="modal fade" id="CreateLogisticSponsorsModal" role="dialog" aria-labelledby="CreateLogisticSponsorsModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateLogisticRequest
+
+<div class="modal fade" id="CreateLogisticRequestModal" role="dialog" aria-labelledby="CreateLogisticRequestModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">@Labels.NewM @Labels.Sponsor</h5>
+                <h5 class="modal-title">@Labels.NewF @Labels.Request</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Create", "LogisticSponsors", new { Area = "" }, FormMethod.Post, new { id = "CreateLogisticSponsorsForm" }))
+                @using (Html.BeginForm("Create", "LogisticRequests", new { Area = "" }, FormMethod.Post, new { id = "CreateLogisticRequestForm" }))
                 {
                     <div id="form-container">
                         @Html.Partial("Modals/_CreateForm", Model)
@@ -16,7 +17,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">@Labels.Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="$('#CreateLogisticSponsorsForm').submit();">@Labels.Save</button>
+                <button type="button" class="btn btn-primary" onclick="$('#CreateLogisticRequestForm').submit();">@Labels.Save</button>
             </div>
         </div>
     </div>

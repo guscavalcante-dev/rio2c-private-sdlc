@@ -122,8 +122,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     AccommodationSponsor = "Próprio",
                     AirfareSponsor = "Rio2C",
                     TransferSponsor = "APEX",
-                    IsInCurrentEdition = true,
-                    IsSponsoredByEvent = true
+                    IsSponsoredByEvent = true,
+                    HasSponsors = true
                 },
                 new LogisticRequestBaseDto()
                 {
@@ -131,8 +131,17 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     AccommodationSponsor = "Patrocinado por outras instituições",
                     AirfareSponsor = null,
                     TransferSponsor = null,
-                    IsInCurrentEdition = true,
-                    IsSponsoredByEvent = false
+                    IsSponsoredByEvent = false,
+                    HasSponsors = true
+                },
+                new LogisticRequestBaseDto()
+                {
+                    Name = "Participante",
+                    AccommodationSponsor = null,
+                    AirfareSponsor = null,
+                    TransferSponsor = null,
+                    IsSponsoredByEvent = false,
+                    HasSponsors = false
                 },
                 new LogisticRequestBaseDto()
                 {
@@ -140,8 +149,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     AccommodationSponsor = "Patrocinado por outras instituições",
                     AirfareSponsor = "Rio2C",
                     TransferSponsor = "APEX",
-                    IsInCurrentEdition = true,
-                    IsSponsoredByEvent = true
+                    IsSponsoredByEvent = true,
+                    HasSponsors = true
                 },
                 new LogisticRequestBaseDto()
                 {
@@ -149,8 +158,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     AccommodationSponsor = "Patrocinado por outras instituições",
                     AirfareSponsor = "Rio2C",
                     TransferSponsor = "APEX",
-                    IsInCurrentEdition = true,
-                    IsSponsoredByEvent = true
+                    IsSponsoredByEvent = true,
+                    HasSponsors = true
                 },
                 new LogisticRequestBaseDto()
                 {
@@ -158,8 +167,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     AccommodationSponsor = "Próprio | Own",
                     AirfareSponsor = "Rio2C",
                     TransferSponsor = "APEX",
-                    IsInCurrentEdition = true,
-                    IsSponsoredByEvent = true
+                    IsSponsoredByEvent = true,
+                    HasSponsors = true
                 },
             };
 
@@ -183,9 +192,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowCreateModal()
         {
-            var cmd = new CreateLogisticSponsors(
-                await this.languageRepo.FindAllDtosAsync(),
-                this.UserInterfaceLanguage);
+            var cmd = new CreateLogisticRequest();
 
             return Json(new
             {
@@ -341,6 +348,35 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             }
 
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Speaker, Labels.UpdatedM) });
+        }
+
+        #endregion
+
+         #region Details
+        
+        /// <summary>Detailses the specified identifier.</summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> Details(Guid? id)
+        {
+            //var attendeeCollaboratorDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUidAndByEditionIdAsync(id ?? Guid.Empty, this.EditionDto.Id);
+            //if (attendeeCollaboratorDto == null)
+            //{
+            //    this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Speaker, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+            //    return RedirectToAction("Index", "Home", new { Area = "" });
+            //}
+
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Speakers, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Speakers, Url.Action("Index", "Speakers", new { id })),
+                new BreadcrumbItemHelper("", Url.Action("Details", "Speakers", new { id }))
+            });
+
+            #endregion
+
+            return View();
         }
 
         #endregion

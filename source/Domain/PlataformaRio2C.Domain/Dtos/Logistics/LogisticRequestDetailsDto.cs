@@ -22,7 +22,7 @@ namespace PlataformaRio2C.Domain.Dtos
     /// <summary>
     /// Class LogisticRequestBaseDto.
     /// </summary>
-    public class LogisticRequestBaseDto
+    public class LogisticRequestDetailsDto
     {
         public int Id { get; set; }
         public Guid Uid { get; set; }

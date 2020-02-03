@@ -1,21 +1,21 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Arthur Souza
-// Created          : 01-27-2020
+// Author           : Rafael Dantas Ruiz
+// Created          : 08-26-2019
 //
-// Last Modified By : Arthur Souza
-// Last Modified On : 01-27-2020
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 10-21-2019
 // ***********************************************************************
-// <copyright file="collaborators.create.js" company="Softo">
+// <copyright file="collaborators.update.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var LogisticSponsorsCreate = function () {
+var LogisticRequestUpdate = function () {
 
-    var modalId = '#CreateLogisticSponsorsModal';
-    var formId = '#CreateLogisticSponsorsForm';
+    var modalId = '#UpdateLogisticRequestModal';
+    var formId = '#UpdateLogisticRequestForm';
 
     // Enable form validation ---------------------------------------------------------------------
     var enableFormValidation = function () {
@@ -29,12 +29,14 @@ var LogisticSponsorsCreate = function () {
     };
 
     // Show modal ---------------------------------------------------------------------------------
-    var showModal = function () {
+    var showModal = function (uid, isAddingToCurrentEdition) {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
+        jsonParameters.sponsorUid = uid;
+        jsonParameters.isAddingToCurrentEdition = isAddingToCurrentEdition;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/LogisticSponsors/ShowCreateModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/LogisticRequests/ShowUpdateModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -74,8 +76,8 @@ var LogisticSponsorsCreate = function () {
     };
 
     return {
-        showModal: function () {
-            showModal();
+        showModal: function (collaboratorUid, isAddingToCurrentEdition) {
+            showModal(collaboratorUid, isAddingToCurrentEdition);
         }
     };
 }();

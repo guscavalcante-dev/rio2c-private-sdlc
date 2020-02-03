@@ -13,7 +13,7 @@
 // ***********************************************************************
 
 var LogisticRequestsDataTableWidget = function () {
-    var widgetElementId = '#LogisticSponsorsDataTableWidget';
+    var widgetElementId = '#LogisticRequestsDataTableWidget';
     var tableElementId = '#logisticsponsors-list-table';
     var table;
     
@@ -151,18 +151,26 @@ var LogisticRequestsDataTableWidget = function () {
                                             </a>\
                                             <div class="dropdown-menu dropdown-menu-right">';
                         
+
                         if (!full.HasSponsors) {
-                            html += '<button class="dropdown-item" onclick="LogisticRequestUpdate.showModal(\'' + full.Uid + '\', false);"><i class="la la-edit"></i> ' + addRequest + '</button>';
+                            // Create request
+                            html += '<button class="dropdown-item" onclick="LogisticRequestCreate.showModal(\'' + full.Uid + '\');"><i class="la la-edit"></i> ' + addRequest + '</button>';
                         }
                         else if (!full.HasLogistics) {
-                            html += '<button class="dropdown-item" onclick="LogisticRequestUpdate.showModal(\'' + full.Uid + '\', false);"><i class="la la-edit"></i> ' + labels.edit + '</button>';
+                            // Update request
+                            html += '<button class="dropdown-item" onclick="LogisticRequestUpdate.showModal(\'' + full.Uid + '\');"><i class="la la-edit"></i> ' + labels.edit + '</button>';
                         }
 
                         if (full.HasSponsors) {
-                            html += '<button class="dropdown-item" onclick="LogisticRequestUpdate.showModal(\'' + full.Uid + '\', false);"><i class="la la-edit"></i> ' + view + '</button>';
-                            html += '<button class="dropdown-item" onclick="LogisticSponsorsDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+                            // View details
+                            html += '<button class="dropdown-item" onclick="LogisticRequestsDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-edit"></i> ' + view + '</button>';
                         }
                         
+                        if (full.HasSponsors && !full.HasLogistics) {
+                            // Delete
+                            html += '<button class="dropdown-item" onclick="LogisticRequestDelete.showModal(\'' + full.Uid + '\');"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+                        }
+
                         html += '\
                                             </div>\
                                         </span>';
@@ -209,6 +217,14 @@ var LogisticRequestsDataTableWidget = function () {
 
     var refreshData = function () {
         table.ajax.reload();
+    };
+        
+    var showDetails = function (logisticsUid) {
+        if (MyRio2cCommon.isNullOrEmpty(logisticsUid)) {
+            return;
+        }
+
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/LogisticRequests/Details/' + logisticsUid);
     };
 
     return {
