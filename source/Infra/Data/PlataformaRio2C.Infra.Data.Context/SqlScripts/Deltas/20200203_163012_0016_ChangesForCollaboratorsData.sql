@@ -204,7 +204,7 @@ go
 
 SET IDENTITY_INSERT [dbo].[CollaboratorGenders] ON 
 GO
-INSERT [dbo].[CollaboratorGenders] ([Id], [Uid], [Name], [HasAdditionalInfo], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (1, N'85016891-2d7b-420e-863d-380af4242b0c', N'Masculino | Mal', 0, 0, CAST(N'2020-02-03 18:29:32.213' AS DateTime), 1, CAST(N'2020-02-03 18:29:32.213' AS DateTime), 1)
+INSERT [dbo].[CollaboratorGenders] ([Id], [Uid], [Name], [HasAdditionalInfo], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (1, N'85016891-2d7b-420e-863d-380af4242b0c', N'Masculino | Male', 0, 0, CAST(N'2020-02-03 18:29:32.213' AS DateTime), 1, CAST(N'2020-02-03 18:29:32.213' AS DateTime), 1)
 GO
 INSERT [dbo].[CollaboratorGenders] ([Id], [Uid], [Name], [HasAdditionalInfo], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (2, N'79da8e08-1a70-4c8d-88eb-4da7df5eb8f3', N'Feminino | Female', 0, 0, CAST(N'2020-02-03 18:29:32.213' AS DateTime), 1, CAST(N'2020-02-03 18:29:32.213' AS DateTime), 1)
 GO
