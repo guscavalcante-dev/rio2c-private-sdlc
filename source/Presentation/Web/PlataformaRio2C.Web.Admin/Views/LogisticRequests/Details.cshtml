@@ -1,88 +1,216 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @model LogisticRequestDetailsDto
 @{
-    ViewBag.Title = $"{Labels.Speaker}";
+    ViewBag.Title = Labels.Logistics;
 }
-@*@Html.Hidden("AggregateId", Model.)*@
+@Html.Hidden("Uid", Model.Uid)
 <div class="row">
-    <!--begin: Main Container-->
-    <div class="col-md-8 col-lg-9">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="row">
-                    <!--begin:Main Information Widget-->
-                    <div class="col-12">
-                        <div id="SpeakerMainInformationWidget" class="kt-portlet" style="min-height: 325px;"></div>
-                    </div>
-                    <!--end:Main Information Widget-->
-                </div>
-                <div class="row">
-                    <!--begin:Social Networks Widget-->
-                    <div class="col-12">
-                        <div id="SpeakerSocialNetworksWidget" class="kt-portlet" style="min-height: 325px;"></div>
-                    </div>
-                    <!--end:Social Networks Widget-->
-                </div>
-                <div class="row">
-                    <!--begin:Company Widget-->
-                    <div class="col-12">
-                        <div id="SpeakerCompanyWidget" class="kt-portlet" style="min-height: 325px;"></div>
-                    </div>
-                    <!--end:Company Widget-->
-                </div>
-                <div class="row">
-                    <!--begin:Participants Widget-->
-                    <div class="col-6">
-                        <div id="SpeakerParticipantsWidget" class="kt-portlet" style="min-height: 325px;"></div>
-                    </div>
-                    <!--end:Participants Widget-->
-                    <!--begin:Conferences Widget-->
-                    <div class="col-6">
-                        <div id="SpeakerConferencesWidget" class="kt-portlet" style="min-height: 325px;"></div>
-                    </div>
-                    <!--end:Conferences Widget-->
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--end: Main Container-->
-    <!--begin: Right Container-->
-    <div class="col-md-4 col-lg-3">
-        <!--begin:Api Configurations Widget-->
+    <div class="col-md-12">
+        <!--begin:Main Information Widget-->
         <div class="row">
             <div class="col-12">
-                <div id="SpeakerApiConfigurationWidget" class="kt-portlet" style="min-height: 325px;"></div>
+                <div id="ConferenceMainInformationWidget" class="kt-portlet" style="min-height: 250px;">
+                    <div class="kt-portlet__body">
+                        <div class="kt-widget kt-widget--user-profile-3">
+                            <div class="kt-widget__top">
+
+                                <div class="kt-widget__content pl-0" style="overflow: hidden;">
+                                    <div class="kt-widget__head">
+                                        <span class="kt-widget__username">
+                                            teste
+
+                                        </span>
+                                        <div class="kt-widget__action">
+                                            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="ConferencesMainInformationWidget.showUpdateModal();">
+                                                <i class="flaticon2-edit"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="kt-widget__subhead">
+                                        <a onclick="return false;"><i class="flaticon-event-calendar-symbol"></i>Conferência</a>
+
+                                        <a onclick="return false;"><i class="flaticon-placeholder"></i>Casa das Marcas</a>
+                                    </div>
+                                    <div class="kt-widget__info" style="display: block;">
+
+                                        <div class="kt-widget__desc" style="word-wrap: break-word;">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kt-widget__bottom">
+                                <div class="kt-widget__item">
+                                    <div class="kt-widget__details">
+                                        <span class="kt-widget__title">Data</span>
+                                        <span class="kt-widget__value"><span>07/05/2020</span></span>
+                                    </div>
+                                </div>
+                                <div class="kt-widget__item">
+                                    <div class="kt-widget__details">
+                                        <span class="kt-widget__title">Hora de início</span>
+                                        <span class="kt-widget__value"><span>01:03</span></span>
+                                    </div>
+                                </div>
+                                <div class="kt-widget__item">
+                                    <div class="kt-widget__details">
+                                        <span class="kt-widget__title">Hora de término</span>
+                                        <span class="kt-widget__value"><span>05:06</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <!--end:Api Configurations Widget-->
+        <!--end:Main Information Widget-->
+        <!--begin:Tracks and Presentation Formats Widget-->
+        <div class="row">
+            <div class="col-12">
+                <div id="ConferenceTracksAndPresentationFormatsWidget" class="kt-portlet" style="min-height: 250px; position: relative; zoom: 1;">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">
+                                Tracks e Formatos
+                            </h3>
+                        </div>
+                        <div class="kt-portlet__head-toolbar">
+                            <div class="kt-portlet__head-actions">
+                                <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="ConferencesTracksAndPresentationFormatsWidget.showUpdateModal();">
+                                    <i class="flaticon2-edit"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="kt-widget4">
+                                    <h3 class="kt-heading kt-heading--sm mb-0 mt-0">Tracks</h3>
+                                    <span class="text-center">Tracks não selecionadas.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="kt-widget4">
+                                    <h3 class="kt-heading kt-heading--sm mb-0">Formatos</h3>
+                                    <span class="text-center">Formatos não selecionadas.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end:Tracks and Presentation Formats Widget-->
+        <!--begin:Participants Widget-->
+        <div class="row">
+            <div class="col-12">
+                <div id="ConferenceParticipantsWidget" class="kt-portlet" style="min-height: 325px; position: relative; zoom: 1;">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">
+                                Participantes
+                            </h3>
+                        </div>
+                        <div class="kt-portlet__head-toolbar">
+                            <div class="kt-portlet__head-actions">
+                                <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="ConferencesParticipantsWidget.showCreateModal();">
+                                    <i class="flaticon2-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body">
+                        <div class="row rio2c-scroll" style="height: 200px;">
+                            <div class="col-sm-6 col-xl-4">
+                                <!--Begin::Portlet-->
+                                <div class="kt-portlet kt-portlet--height-fluid">
+                                    <div class="text-right pr-2 pt-2">
+                                        <a href="#" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" data-toggle="dropdown" aria-expanded="false">
+                                            <i class="flaticon-more-1"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right" style="">
+                                            <ul class="kt-nav">
+                                                <li class="kt-nav__item">
+                                                    <a href="#" class="kt-nav__link" onclick="ConferencesParticipantsWidget.showUpdateModal('0b5949e8-7b39-40a6-bd71-ad1fb99a2e02'); return false;">
+                                                        <i class="kt-nav__link-icon flaticon2-edit"></i>
+                                                        <span class="kt-nav__link-text">Editar</span>
+                                                    </a>
+                                                </li>
+                                                <li class="kt-nav__item">
+                                                    <a href="#" class="kt-nav__link" onclick="ConferencesParticipantsWidget.showDeleteModal('0b5949e8-7b39-40a6-bd71-ad1fb99a2e02'); return false;">
+                                                        <i class="kt-nav__link-icon flaticon2-delete"></i>
+                                                        <span class="kt-nav__link-text">Remover</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="kt-portlet__body mt-10">
+                                        <!--begin::Widget -->
+                                        <div class="kt-widget kt-widget--user-profile-2" style="flex-direction: row;">
+                                            <div class="kt-widget__head">
+                                                <div class="kt-widget__media">
+                                                    <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest">
+                                                        GM
+                                                    </div>
+                                                </div>
+                                                <div class="kt-widget__info">
+                                                    <a href="/pt-br/2020/Speakers/Details/0b5949e8-7b39-40a6-bd71-ad1fb99a2e02" class="kt-widget__username">
+                                                        Participante
+                                                    </a>
+
+                                                    <span class="kt-widget__desc">
+                                                        <a>
+                                                            <small>
+                                                                <i class="flaticon-presentation"></i> Interferência
+                                                            </small>
+                                                        </a>
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <!--end::Widget -->
+                                    </div>
+                                </div>
+                                <!--End::Portlet-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end:Participants Widget-->
     </div>
-    <!--end: Right Container-->
 </div>
 @section Styles {
-    @Styles.Render("~/bundles/css/cropper.css")
     @Styles.Render("~/bundles/css/select2.css")
-    @Styles.Render("~/bundles/css/jquery.autocomplete.css")
-    @Styles.Render("~/bundles/css/speakers.details.css")
+    @Styles.Render("~/bundles/css/bootstrap-datepicker.css")
+    @Styles.Render("~/bundles/css/bootstrap-timepicker.css")
 }
 @section Scripts {
-    @Scripts.Render("~/bundles/js/cropper.js")
     @Scripts.Render("~/bundles/js/select2.js")
-    @*@Scripts.Render("~/bundles/js/ckEditor.js")*@
-    @Scripts.Render("~/bundles/js/inputmask.js")
-    @Scripts.Render("~/bundles/js/jquery.autocomplete.js")
     @Scripts.Render("~/bundles/js/bootbox.js")
-    @Scripts.Render("~/bundles/js/addresses.form.js")
-    @Scripts.Render("~/bundles/js/speakers.details.js")
+    @Scripts.Render("~/bundles/js/bootstrap-datepicker.js")
+    @Scripts.Render("~/bundles/js/bootstrap-timepicker.js")
+    @Scripts.Render("~/bundles/js/conferences.details.js")
+    @Scripts.Render("~/bundles/js/conferences.editionevents.js")
     <script>
         // Page translations ----------------------------------------------------------------------
+        var translations = {
+            dateBetweenDates: '@Messages.DateBetweenDates'
+        }
 
         jQuery(document).ready(function () {
-            SpeakersMainInformationWidget.init();
-            SpeakersSocialNetworksWidget.init();
-            SpeakersCompanyWidget.init();
-            SpeakersParticipantsWidget.init();
-            SpeakersConferencesWidget.init();
-            SpeakersApiConfigurationWidget.init();
+            //ConferencesMainInformationWidget.init();
+            //ConferencesTracksAndPresentationFormatsWidget.init();
+            //ConferencesParticipantsWidget.init();
         });
     </script>
 }

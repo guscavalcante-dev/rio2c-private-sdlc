@@ -367,16 +367,18 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             //    return RedirectToAction("Index", "Home", new { Area = "" });
             //}
 
+            var dto = new LogisticRequestDetailsDto();
+
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Speakers, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Speakers, Url.Action("Index", "Speakers", new { id })),
-                new BreadcrumbItemHelper("", Url.Action("Details", "Speakers", new { id }))
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Logistics, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Requests, Url.Action("Index", "LogisticRequests", new { id })),
+                new BreadcrumbItemHelper("", Url.Action("Details", "LogisticRequests", new { id }))
             });
 
             #endregion
 
-            return View();
+            return View(dto);
         }
 
         #endregion

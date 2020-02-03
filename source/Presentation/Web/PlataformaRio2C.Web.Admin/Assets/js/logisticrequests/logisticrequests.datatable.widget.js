@@ -237,6 +237,9 @@ var LogisticRequestsDataTableWidget = function () {
         },
         exportEventbriteCsv: function() {
             exportEventbriteCsv();
+        },
+        showDetails: function (logisticsUid) {
+            showDetails(logisticsUid);
         }
     };
 }();
