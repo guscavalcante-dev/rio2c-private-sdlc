@@ -175,6 +175,27 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+CREATE TABLE [dbo].[AttendeeLogisticSponsors](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[EditionId] [int] NOT NULL,
+	[LogisticSponsorId] [int] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_AttendeeLogisticSponsors_Uid] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 CREATE TABLE [dbo].[AttendeeOrganizationCollaborators](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
@@ -263,6 +284,31 @@ CREATE TABLE [dbo].[AttendeeOrganizationTypes](
 	[OrganizationTypeId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
  CONSTRAINT [IDX_UQ_AttendeeOrganizationTypes_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AttendeePlaces](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[EditionId] [int] NOT NULL,
+	[PlaceId] [int] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_AttendeePlaces] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_AttendeePlaces] UNIQUE NONCLUSTERED 
 (
 	[Uid] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -377,6 +423,94 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+CREATE TABLE [dbo].[CollaboratorEditionParticipations](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[CollaboratorId] [int] NOT NULL,
+	[EditionId] [int] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_CollaboratorEditionParticipations] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_CollaboratorEditionParticipations_CollaboratorId_EditionId] UNIQUE NONCLUSTERED 
+(
+	[CollaboratorId] ASC,
+	[EditionId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_CollaboratorEditionParticipations_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[CollaboratorGenders](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Name] [varchar](300) NOT NULL,
+	[HasAdditionalInfo] [bit] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_CollaboratorGenders] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_CollaboratorGenders_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[CollaboratorIndustries](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Name] [varchar](300) NOT NULL,
+	[HasAdditionalInfo] [bit] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_CollaboratorIndustries] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_CollaboratorIndustries_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[CollaboratorJobTitles](
@@ -449,6 +583,35 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_PADDING ON
 GO
+CREATE TABLE [dbo].[CollaboratorRoles](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Name] [varchar](300) NOT NULL,
+	[HasAdditionalInfo] [bit] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_CollaboratorRoles] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_CollaboratorRoles_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
 CREATE TABLE [dbo].[Collaborators](
 	[Id] [int] NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
@@ -465,6 +628,15 @@ CREATE TABLE [dbo].[Collaborators](
 	[Twitter] [varchar](100) NULL,
 	[Youtube] [varchar](300) NULL,
 	[AddressId] [int] NULL,
+	[BirthDate] [datetime] NULL,
+	[CollaboratorGenderId] [int] NULL,
+	[CollaboratorGenderAdditionalInfo] [varchar](300) NULL,
+	[CollaboratorRoleId] [int] NULL,
+	[CollaboratorRoleAdditionalInfo] [varchar](300) NULL,
+	[CollaboratorIndustryId] [int] NULL,
+	[CollaboratorIndustryAdditionalInfo] [varchar](300) NULL,
+	[HasAnySpecialNeeds] [bit] NULL,
+	[SpecialNeedsDescription] [varchar](300) NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,
@@ -1042,12 +1214,91 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[LogisticAccommodations](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[LogisticId] [int] NOT NULL,
+	[AttendeePlaceId] [int] NOT NULL,
+	[CheckInDate] [datetime] NOT NULL,
+	[CheckOutDate] [datetime] NOT NULL,
+	[AdditionalInfo] [varchar](1000) NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_LogisticAccommodations] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_LogisticAccommodations_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[LogisticAirfares](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[LogisticId] [int] NOT NULL,
+	[IsNational] [bit] NOT NULL,
+	[From] [varchar](100) NOT NULL,
+	[DepartureDate] [datetime] NOT NULL,
+	[To] [datetime] NOT NULL,
+	[ArrivalDate] [datetime] NOT NULL,
+	[TicketNumber] [varchar](20) NULL,
+	[TicketUploadDate] [datetime] NULL,
+	[AdditionInfo] [varchar](1000) NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_LogisticAirfares] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_LogisticAirfares_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
 CREATE TABLE [dbo].[Logistics](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Uid] [uniqueidentifier] NULL,
-	[AttendeeCollaboratorId] [int] NULL,
-	[ArrivalDate] [datetime] NOT NULL,
-	[DepartureDate] [datetime] NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[AttendeeCollaboratorId] [int] NOT NULL,
+	[IsAirfareSponsored] [bit] NOT NULL,
+	[AirfareAttendeeLogisticSponsorId] [int] NULL,
+	[AirfareOtherLogisticSponsor] [varchar](100) NULL,
+	[IsAccommodationSponsored] [bit] NOT NULL,
+	[AccommodationAttendeeLogisticSponsorId] [int] NULL,
+	[AccommodationOtherLogisticSponsor] [varchar](100) NULL,
+	[IsAirportTransferSponsored] [bit] NOT NULL,
+	[AirportTransferAttendeeLogisticSponsorId] [int] NULL,
+	[AirportTransferOtherLogisticSponsor] [varchar](100) NULL,
+	[IsCityTransferRequired] [bit] NOT NULL,
+	[IsVehicleDisposalRequired] [bit] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,
@@ -1063,6 +1314,99 @@ CREATE TABLE [dbo].[Logistics](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[LogisticSponsors](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Name] [varchar](100) NOT NULL,
+	[IsAirfareTicketRequired] [bit] NOT NULL,
+	[IsOtherRequired] [bit] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_LogisticSponsors] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_LogisticSponsors_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[LogisticTransfers](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[LogisticId] [int] NOT NULL,
+	[FromAttendeePlaceId] [int] NOT NULL,
+	[ToAttendeePlaceId] [int] NOT NULL,
+	[Date] [datetime] NOT NULL,
+	[AdditionalInfo] [varchar](1000) NULL,
+	[LogisticTransferStatusId] [int] NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_LogisticTransfers] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_LogisticTransfers_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[LogisticTransferStatuses](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Name] [varchar](300) NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_LogisticTransferStatuses] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_LogisticTransferStatuses_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
 GO
 SET ANSI_NULLS ON
 GO
@@ -1400,6 +1744,38 @@ CREATE TABLE [dbo].[OrganizationTypes](
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
  CONSTRAINT [IDX_UQ_OrganizationTypes_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Places](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Name] [varchar](100) NOT NULL,
+	[IsHotel] [bit] NOT NULL,
+	[AddressId] [int] NULL,
+	[Website] [varchar](300) NULL,
+	[AdditionalInfo] [varchar](1000) NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_Places] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_Places_Uid] UNIQUE NONCLUSTERED 
 (
 	[Uid] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -2484,9 +2860,33 @@ CREATE NONCLUSTERED INDEX [IDX_AttendeeCollaboratorTypes_IsApiDisplayEnabled] ON
 	[IsApiDisplayEnabled] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
+CREATE NONCLUSTERED INDEX [IDX_AttendeeLogisticSponsors_EditionId_IsDeleted] ON [dbo].[AttendeeLogisticSponsors]
+(
+	[EditionId] ASC,
+	[IsDeleted] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_AttendeeLogisticSponsors_LogisticSponsorId_IsDeleted] ON [dbo].[AttendeeLogisticSponsors]
+(
+	[LogisticSponsorId] ASC,
+	[IsDeleted] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
 CREATE NONCLUSTERED INDEX [IDX_AttendeeOrganizationTypes_IsApiDisplayEnabled] ON [dbo].[AttendeeOrganizationTypes]
 (
 	[IsApiDisplayEnabled] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_AttendeePlaces_EditionId_IsDeleted] ON [dbo].[AttendeePlaces]
+(
+	[EditionId] ASC,
+	[IsDeleted] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_AttendeePlaces_PlaceId_IsDeleted] ON [dbo].[AttendeePlaces]
+(
+	[PlaceId] ASC,
+	[IsDeleted] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
 SET ANSI_PADDING ON
@@ -2495,6 +2895,30 @@ GO
 CREATE NONCLUSTERED INDEX [IDX_Cities_StateId_Name] ON [dbo].[Cities]
 (
 	[StateId] ASC,
+	[Name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+CREATE NONCLUSTERED INDEX [IDX_CollaboratorGenders_Name] ON [dbo].[CollaboratorGenders]
+(
+	[Name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+CREATE NONCLUSTERED INDEX [IDX_CollaboratorIndustries_Name] ON [dbo].[CollaboratorIndustries]
+(
+	[Name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+CREATE NONCLUSTERED INDEX [IDX_CollaboratorRoles_Name] ON [dbo].[CollaboratorRoles]
+(
 	[Name] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
@@ -2542,9 +2966,32 @@ CREATE NONCLUSTERED INDEX [IDX_InterestGroups_ProjectTypeId] ON [dbo].[InterestG
 	[ProjectTypeId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
+CREATE NONCLUSTERED INDEX [IDX_LogisticAccommodations_LogisticId] ON [dbo].[LogisticAccommodations]
+(
+	[LogisticId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_LogisticAirfares_LogisticId] ON [dbo].[LogisticAirfares]
+(
+	[LogisticId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
 CREATE NONCLUSTERED INDEX [IDX_Logistics_AttendeeCollaboratorId] ON [dbo].[Logistics]
 (
 	[AttendeeCollaboratorId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_LogisticTransfers_LogisticId] ON [dbo].[LogisticTransfers]
+(
+	[LogisticId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+CREATE NONCLUSTERED INDEX [IDX_LogisticTransferStatuses_Name] ON [dbo].[LogisticTransferStatuses]
+(
+	[Name] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
 CREATE NONCLUSTERED INDEX [IDX_Messages_NotificationEmailSendDate] ON [dbo].[Messages]
@@ -2834,6 +3281,26 @@ REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[AttendeeCollaboratorTypes] CHECK CONSTRAINT [FK_Users_AttendeeCollaboratorTypes_UpdateUserId]
 GO
+ALTER TABLE [dbo].[AttendeeLogisticSponsors]  WITH CHECK ADD  CONSTRAINT [FK_Editions_AttendeeLogisticSponsors_EditionId] FOREIGN KEY([EditionId])
+REFERENCES [dbo].[Editions] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeLogisticSponsors] CHECK CONSTRAINT [FK_Editions_AttendeeLogisticSponsors_EditionId]
+GO
+ALTER TABLE [dbo].[AttendeeLogisticSponsors]  WITH CHECK ADD  CONSTRAINT [FK_LogisticSponsors_AttendeeLogisticSponsors_LogisticSponsorId] FOREIGN KEY([LogisticSponsorId])
+REFERENCES [dbo].[LogisticSponsors] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeLogisticSponsors] CHECK CONSTRAINT [FK_LogisticSponsors_AttendeeLogisticSponsors_LogisticSponsorId]
+GO
+ALTER TABLE [dbo].[AttendeeLogisticSponsors]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeLogisticSponsors_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeLogisticSponsors] CHECK CONSTRAINT [FK_Users_AttendeeLogisticSponsors_CreateUserId]
+GO
+ALTER TABLE [dbo].[AttendeeLogisticSponsors]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeLogisticSponsors_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeLogisticSponsors] CHECK CONSTRAINT [FK_Users_AttendeeLogisticSponsors_UpdateUserId]
+GO
 ALTER TABLE [dbo].[AttendeeOrganizationCollaborators]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeCollaborators_AttendeeOrganizationCollaborators_AttendeeCollaboratorId] FOREIGN KEY([AttendeeCollaboratorId])
 REFERENCES [dbo].[AttendeeCollaborators] ([Id])
 GO
@@ -2894,6 +3361,26 @@ REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[AttendeeOrganizationTypes] CHECK CONSTRAINT [FK_Users_AttendeeOrganizationTypes_UpdateUserId]
 GO
+ALTER TABLE [dbo].[AttendeePlaces]  WITH CHECK ADD  CONSTRAINT [FK_Editions_AttendeePlaces_EditionId] FOREIGN KEY([EditionId])
+REFERENCES [dbo].[Editions] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeePlaces] CHECK CONSTRAINT [FK_Editions_AttendeePlaces_EditionId]
+GO
+ALTER TABLE [dbo].[AttendeePlaces]  WITH CHECK ADD  CONSTRAINT [FK_Places_AttendeePlaces_PlaceId] FOREIGN KEY([PlaceId])
+REFERENCES [dbo].[Places] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeePlaces] CHECK CONSTRAINT [FK_Places_AttendeePlaces_PlaceId]
+GO
+ALTER TABLE [dbo].[AttendeePlaces]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeePlaces_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeePlaces] CHECK CONSTRAINT [FK_Users_AttendeePlaces_CreateUserId]
+GO
+ALTER TABLE [dbo].[AttendeePlaces]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeePlaces_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeePlaces] CHECK CONSTRAINT [FK_Users_AttendeePlaces_UpdateUserId]
+GO
 ALTER TABLE [dbo].[AttendeeSalesPlatforms]  WITH CHECK ADD  CONSTRAINT [FK_Editions_AttendeeSalesPlatforms_EditionId] FOREIGN KEY([EditionId])
 REFERENCES [dbo].[Editions] ([Id])
 GO
@@ -2949,6 +3436,46 @@ REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[Cities] CHECK CONSTRAINT [FK_Users_Cities_UpdateUserId]
 GO
+ALTER TABLE [dbo].[CollaboratorEditionParticipations]  WITH CHECK ADD  CONSTRAINT [FK_Collaborators_CollaboratorEditionParticipations_CollaboratorId] FOREIGN KEY([CollaboratorId])
+REFERENCES [dbo].[Collaborators] ([Id])
+GO
+ALTER TABLE [dbo].[CollaboratorEditionParticipations] CHECK CONSTRAINT [FK_Collaborators_CollaboratorEditionParticipations_CollaboratorId]
+GO
+ALTER TABLE [dbo].[CollaboratorEditionParticipations]  WITH CHECK ADD  CONSTRAINT [FK_Editions_CollaboratorEditionParticipations_EditionId] FOREIGN KEY([EditionId])
+REFERENCES [dbo].[Editions] ([Id])
+GO
+ALTER TABLE [dbo].[CollaboratorEditionParticipations] CHECK CONSTRAINT [FK_Editions_CollaboratorEditionParticipations_EditionId]
+GO
+ALTER TABLE [dbo].[CollaboratorEditionParticipations]  WITH CHECK ADD  CONSTRAINT [FK_Users_CollaboratorEditionParticipations_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[CollaboratorEditionParticipations] CHECK CONSTRAINT [FK_Users_CollaboratorEditionParticipations_CreateUserId]
+GO
+ALTER TABLE [dbo].[CollaboratorEditionParticipations]  WITH CHECK ADD  CONSTRAINT [FK_Users_CollaboratorEditionParticipations_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[CollaboratorEditionParticipations] CHECK CONSTRAINT [FK_Users_CollaboratorEditionParticipations_UpdateUserId]
+GO
+ALTER TABLE [dbo].[CollaboratorGenders]  WITH CHECK ADD  CONSTRAINT [FK_Users_CollaboratorGenders_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[CollaboratorGenders] CHECK CONSTRAINT [FK_Users_CollaboratorGenders_CreateUserId]
+GO
+ALTER TABLE [dbo].[CollaboratorGenders]  WITH CHECK ADD  CONSTRAINT [FK_Users_CollaboratorGenders_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[CollaboratorGenders] CHECK CONSTRAINT [FK_Users_CollaboratorGenders_UpdateUserId]
+GO
+ALTER TABLE [dbo].[CollaboratorIndustries]  WITH CHECK ADD  CONSTRAINT [FK_Users_CollaboratorIndustries_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[CollaboratorIndustries] CHECK CONSTRAINT [FK_Users_CollaboratorIndustries_CreateUserId]
+GO
+ALTER TABLE [dbo].[CollaboratorIndustries]  WITH CHECK ADD  CONSTRAINT [FK_Users_CollaboratorIndustries_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[CollaboratorIndustries] CHECK CONSTRAINT [FK_Users_CollaboratorIndustries_UpdateUserId]
+GO
 ALTER TABLE [dbo].[CollaboratorJobTitles]  WITH CHECK ADD  CONSTRAINT [FK_Collaborators_CollaboratorJobTitles_CollaboratorId] FOREIGN KEY([CollaboratorId])
 REFERENCES [dbo].[Collaborators] ([Id])
 GO
@@ -2989,10 +3516,35 @@ REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[CollaboratorMiniBios] CHECK CONSTRAINT [FK_Users_CollaboratorMiniBios_UpdateUserId]
 GO
+ALTER TABLE [dbo].[CollaboratorRoles]  WITH CHECK ADD  CONSTRAINT [FK_Users_CollaboratorRoles_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[CollaboratorRoles] CHECK CONSTRAINT [FK_Users_CollaboratorRoles_CreateUserId]
+GO
+ALTER TABLE [dbo].[CollaboratorRoles]  WITH CHECK ADD  CONSTRAINT [FK_Users_CollaboratorRoles_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[CollaboratorRoles] CHECK CONSTRAINT [FK_Users_CollaboratorRoles_UpdateUserId]
+GO
 ALTER TABLE [dbo].[Collaborators]  WITH CHECK ADD  CONSTRAINT [FK_Addresses_Collaborators_AddressId] FOREIGN KEY([AddressId])
 REFERENCES [dbo].[Addresses] ([Id])
 GO
 ALTER TABLE [dbo].[Collaborators] CHECK CONSTRAINT [FK_Addresses_Collaborators_AddressId]
+GO
+ALTER TABLE [dbo].[Collaborators]  WITH CHECK ADD  CONSTRAINT [FK_CollaboratorGenders_Collaborators_CollaboratorGenderId] FOREIGN KEY([CollaboratorGenderId])
+REFERENCES [dbo].[CollaboratorGenders] ([Id])
+GO
+ALTER TABLE [dbo].[Collaborators] CHECK CONSTRAINT [FK_CollaboratorGenders_Collaborators_CollaboratorGenderId]
+GO
+ALTER TABLE [dbo].[Collaborators]  WITH CHECK ADD  CONSTRAINT [FK_CollaboratorIndustries_Collaborators_CollaboratorIndustryId] FOREIGN KEY([CollaboratorIndustryId])
+REFERENCES [dbo].[CollaboratorIndustries] ([Id])
+GO
+ALTER TABLE [dbo].[Collaborators] CHECK CONSTRAINT [FK_CollaboratorIndustries_Collaborators_CollaboratorIndustryId]
+GO
+ALTER TABLE [dbo].[Collaborators]  WITH CHECK ADD  CONSTRAINT [FK_CollaboratorRoles_Collaborators_CollaboratorRoleId] FOREIGN KEY([CollaboratorRoleId])
+REFERENCES [dbo].[CollaboratorRoles] ([Id])
+GO
+ALTER TABLE [dbo].[Collaborators] CHECK CONSTRAINT [FK_CollaboratorRoles_Collaborators_CollaboratorRoleId]
 GO
 ALTER TABLE [dbo].[Collaborators]  WITH CHECK ADD  CONSTRAINT [FK_Users_Collaborators_CreateUserId] FOREIGN KEY([CreateUserId])
 REFERENCES [dbo].[Users] ([Id])
@@ -3289,10 +3841,60 @@ REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[Languages] CHECK CONSTRAINT [FK_Users_Languages_UpdateUserId]
 GO
+ALTER TABLE [dbo].[LogisticAccommodations]  WITH CHECK ADD  CONSTRAINT [FK_AttendeePlaces_LogisticAccommodations_AttendeePlaceId] FOREIGN KEY([AttendeePlaceId])
+REFERENCES [dbo].[AttendeePlaces] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticAccommodations] CHECK CONSTRAINT [FK_AttendeePlaces_LogisticAccommodations_AttendeePlaceId]
+GO
+ALTER TABLE [dbo].[LogisticAccommodations]  WITH CHECK ADD  CONSTRAINT [FK_Logistics_LogisticAccommodations_LogisticId] FOREIGN KEY([LogisticId])
+REFERENCES [dbo].[Logistics] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticAccommodations] CHECK CONSTRAINT [FK_Logistics_LogisticAccommodations_LogisticId]
+GO
+ALTER TABLE [dbo].[LogisticAccommodations]  WITH CHECK ADD  CONSTRAINT [FK_Users_LogisticAccommodations_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticAccommodations] CHECK CONSTRAINT [FK_Users_LogisticAccommodations_CreateUserId]
+GO
+ALTER TABLE [dbo].[LogisticAccommodations]  WITH CHECK ADD  CONSTRAINT [FK_Users_LogisticAccommodations_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticAccommodations] CHECK CONSTRAINT [FK_Users_LogisticAccommodations_UpdateUserId]
+GO
+ALTER TABLE [dbo].[LogisticAirfares]  WITH CHECK ADD  CONSTRAINT [FK_Logistics_LogisticAirfares_LogisticId] FOREIGN KEY([LogisticId])
+REFERENCES [dbo].[Logistics] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticAirfares] CHECK CONSTRAINT [FK_Logistics_LogisticAirfares_LogisticId]
+GO
+ALTER TABLE [dbo].[LogisticAirfares]  WITH CHECK ADD  CONSTRAINT [FK_Users_LogisticAirfares_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticAirfares] CHECK CONSTRAINT [FK_Users_LogisticAirfares_CreateUserId]
+GO
+ALTER TABLE [dbo].[LogisticAirfares]  WITH CHECK ADD  CONSTRAINT [FK_Users_LogisticAirfares_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticAirfares] CHECK CONSTRAINT [FK_Users_LogisticAirfares_UpdateUserId]
+GO
 ALTER TABLE [dbo].[Logistics]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeCollaborators_Logistics_AttendeeCollaboratorId] FOREIGN KEY([AttendeeCollaboratorId])
 REFERENCES [dbo].[AttendeeCollaborators] ([Id])
 GO
 ALTER TABLE [dbo].[Logistics] CHECK CONSTRAINT [FK_AttendeeCollaborators_Logistics_AttendeeCollaboratorId]
+GO
+ALTER TABLE [dbo].[Logistics]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeLogisticSponsors_Logistics_AccommodationAttendeeLogisticSponsorId] FOREIGN KEY([AccommodationAttendeeLogisticSponsorId])
+REFERENCES [dbo].[AttendeeLogisticSponsors] ([Id])
+GO
+ALTER TABLE [dbo].[Logistics] CHECK CONSTRAINT [FK_AttendeeLogisticSponsors_Logistics_AccommodationAttendeeLogisticSponsorId]
+GO
+ALTER TABLE [dbo].[Logistics]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeLogisticSponsors_Logistics_AirfareAttendeeLogisticSponsorId] FOREIGN KEY([AirfareAttendeeLogisticSponsorId])
+REFERENCES [dbo].[AttendeeLogisticSponsors] ([Id])
+GO
+ALTER TABLE [dbo].[Logistics] CHECK CONSTRAINT [FK_AttendeeLogisticSponsors_Logistics_AirfareAttendeeLogisticSponsorId]
+GO
+ALTER TABLE [dbo].[Logistics]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeLogisticSponsors_Logistics_AirportTransferAttendeeLogisticSponsorId] FOREIGN KEY([AirportTransferAttendeeLogisticSponsorId])
+REFERENCES [dbo].[AttendeeLogisticSponsors] ([Id])
+GO
+ALTER TABLE [dbo].[Logistics] CHECK CONSTRAINT [FK_AttendeeLogisticSponsors_Logistics_AirportTransferAttendeeLogisticSponsorId]
 GO
 ALTER TABLE [dbo].[Logistics]  WITH CHECK ADD  CONSTRAINT [FK_Users_Logistics_CreateUserId] FOREIGN KEY([CreateUserId])
 REFERENCES [dbo].[Users] ([Id])
@@ -3303,6 +3905,56 @@ ALTER TABLE [dbo].[Logistics]  WITH CHECK ADD  CONSTRAINT [FK_Users_Logistics_Up
 REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[Logistics] CHECK CONSTRAINT [FK_Users_Logistics_UpdateUserId]
+GO
+ALTER TABLE [dbo].[LogisticSponsors]  WITH CHECK ADD  CONSTRAINT [FK_Users_LogisticSponsors_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticSponsors] CHECK CONSTRAINT [FK_Users_LogisticSponsors_CreateUserId]
+GO
+ALTER TABLE [dbo].[LogisticSponsors]  WITH CHECK ADD  CONSTRAINT [FK_Users_LogisticSponsors_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticSponsors] CHECK CONSTRAINT [FK_Users_LogisticSponsors_UpdateUserId]
+GO
+ALTER TABLE [dbo].[LogisticTransfers]  WITH CHECK ADD  CONSTRAINT [FK_AttendeePlaces_LogisticTransfers_FromAttendeePlaceId] FOREIGN KEY([FromAttendeePlaceId])
+REFERENCES [dbo].[AttendeePlaces] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticTransfers] CHECK CONSTRAINT [FK_AttendeePlaces_LogisticTransfers_FromAttendeePlaceId]
+GO
+ALTER TABLE [dbo].[LogisticTransfers]  WITH CHECK ADD  CONSTRAINT [FK_AttendeePlaces_LogisticTransfers_ToAttendeePlaceId] FOREIGN KEY([ToAttendeePlaceId])
+REFERENCES [dbo].[AttendeePlaces] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticTransfers] CHECK CONSTRAINT [FK_AttendeePlaces_LogisticTransfers_ToAttendeePlaceId]
+GO
+ALTER TABLE [dbo].[LogisticTransfers]  WITH CHECK ADD  CONSTRAINT [FK_Logistics_LogisticTransfers_LogisticId] FOREIGN KEY([LogisticId])
+REFERENCES [dbo].[Logistics] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticTransfers] CHECK CONSTRAINT [FK_Logistics_LogisticTransfers_LogisticId]
+GO
+ALTER TABLE [dbo].[LogisticTransfers]  WITH CHECK ADD  CONSTRAINT [FK_LogisticTransferStatuses_LogisticTransfers_LogisticTransferStatusId] FOREIGN KEY([LogisticTransferStatusId])
+REFERENCES [dbo].[LogisticTransferStatuses] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticTransfers] CHECK CONSTRAINT [FK_LogisticTransferStatuses_LogisticTransfers_LogisticTransferStatusId]
+GO
+ALTER TABLE [dbo].[LogisticTransfers]  WITH CHECK ADD  CONSTRAINT [FK_Users_LogisticTransfers_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticTransfers] CHECK CONSTRAINT [FK_Users_LogisticTransfers_CreateUserId]
+GO
+ALTER TABLE [dbo].[LogisticTransfers]  WITH CHECK ADD  CONSTRAINT [FK_Users_LogisticTransfers_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticTransfers] CHECK CONSTRAINT [FK_Users_LogisticTransfers_UpdateUserId]
+GO
+ALTER TABLE [dbo].[LogisticTransferStatuses]  WITH CHECK ADD  CONSTRAINT [FK_Users_LogisticTransferStatuses_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticTransferStatuses] CHECK CONSTRAINT [FK_Users_LogisticTransferStatuses_CreateUserId]
+GO
+ALTER TABLE [dbo].[LogisticTransferStatuses]  WITH CHECK ADD  CONSTRAINT [FK_Users_LogisticTransferStatuses_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[LogisticTransferStatuses] CHECK CONSTRAINT [FK_Users_LogisticTransferStatuses_UpdateUserId]
 GO
 ALTER TABLE [dbo].[Messages]  WITH CHECK ADD  CONSTRAINT [FK_Editions_Messages_EditionId] FOREIGN KEY([EditionId])
 REFERENCES [dbo].[Editions] ([Id])
@@ -3508,6 +4160,21 @@ ALTER TABLE [dbo].[OrganizationTypes]  WITH CHECK ADD  CONSTRAINT [FK_Users_Orga
 REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[OrganizationTypes] CHECK CONSTRAINT [FK_Users_OrganizationTypes_UpdateUserId]
+GO
+ALTER TABLE [dbo].[Places]  WITH CHECK ADD  CONSTRAINT [FK_Addresses_Places_AddressId] FOREIGN KEY([AddressId])
+REFERENCES [dbo].[Addresses] ([Id])
+GO
+ALTER TABLE [dbo].[Places] CHECK CONSTRAINT [FK_Addresses_Places_AddressId]
+GO
+ALTER TABLE [dbo].[Places]  WITH CHECK ADD  CONSTRAINT [FK_Users_Places_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[Places] CHECK CONSTRAINT [FK_Users_Places_CreateUserId]
+GO
+ALTER TABLE [dbo].[Places]  WITH CHECK ADD  CONSTRAINT [FK_Users_Places_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[Places] CHECK CONSTRAINT [FK_Users_Places_UpdateUserId]
 GO
 ALTER TABLE [dbo].[PresentationFormats]  WITH CHECK ADD  CONSTRAINT [FK_Editions_PresentationFormats_EditionId] FOREIGN KEY([EditionId])
 REFERENCES [dbo].[Editions] ([Id])
