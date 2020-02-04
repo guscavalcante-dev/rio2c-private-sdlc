@@ -146,8 +146,11 @@
     <Compile Include="Repositories\Collaborator\AttendeeCollaboratorTicketRepository.cs" />
     <Compile Include="Repositories\Collaborator\AttendeeCollaboratorRepository.cs" />
     <Compile Include="Repositories\AttendeeOrganizations\AttendeeOrganizationRepository.cs" />
+    <Compile Include="Repositories\Collaborator\CollaboratorRoleRepository.cs" />
+    <Compile Include="Repositories\Collaborator\CollaboratorIndustryRepository.cs" />
     <Compile Include="Repositories\Collaborator\CollaboratorProducerRepository.cs" />
     <Compile Include="Repositories\Collaborator\CollaboratorTypeRepository.cs" />
+    <Compile Include="Repositories\Collaborator\CollaboratorGenderRepository.cs" />
     <Compile Include="Repositories\Common\EditionEventRepository.cs" />
     <Compile Include="Repositories\Common\PresentationFormatRepository.cs" />
     <Compile Include="Repositories\Common\TrackRepository.cs" />

@@ -2025,4 +2025,28 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>é</value>
     <comment>é</comment>
   </data>
+  <data name="BirthDate" xml:space="preserve">
+    <value>Data de Nascimento</value>
+    <comment>Data de Nascimento</comment>
+  </data>
+  <data name="AdditionalInfo" xml:space="preserve">
+    <value>Informações Adicionais</value>
+    <comment>Informações Adicionais</comment>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>Gênero</value>
+    <comment>Gênero</comment>
+  </data>
+  <data name="HasAnySpecialNeeds" xml:space="preserve">
+    <value>Tem Necessidades Especiais</value>
+    <comment>Tem Necessidades Especiais</comment>
+  </data>
+  <data name="CollaboratorIndustry" xml:space="preserve">
+    <value>Área de Atuação</value>
+    <comment>Área de Atuação</comment>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Função</value>
+    <comment>Função</comment>
+  </data>
 </root>

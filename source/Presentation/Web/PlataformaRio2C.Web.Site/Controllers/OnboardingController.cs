@@ -442,10 +442,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             var cmd = new OnboardCollaboratorData(
                 await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(this.UserAccessControlDto?.Collaborator?.Uid ?? Guid.Empty, this.EditionDto.Id, this.UserInterfaceLanguage)),
+                await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
+                await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
+                await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                 true,
                 true,
-                true);
+                true,
+                UserInterfaceLanguage);
 
             return View(cmd);
         }

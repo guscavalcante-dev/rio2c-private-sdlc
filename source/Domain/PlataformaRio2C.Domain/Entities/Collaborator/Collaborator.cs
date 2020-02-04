@@ -35,6 +35,7 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int TwitterMaxLength = 100;
         public static readonly int InstagramMaxLength = 100;
         public static readonly int YoutubeMaxLength = 300;
+        public static readonly int SpecialNeedsDescriptionMaxLength = 300;
 
         public string FirstName { get; private set; }
         public string LastNames { get; private set; }
@@ -49,6 +50,16 @@ namespace PlataformaRio2C.Domain.Entities
         public string Youtube { get; private set; }
         public int? AddressId { get; private set; }
         public DateTime? ImageUploadDate { get; private set; }
+
+        public DateTime? BirthDate { get; private set; }
+        public int? CollaboratorGenderId  { get; private set; }
+        public string CollaboratorGenderAdditionalInfo  { get; private set; }
+        public int? CollaboratorRoleId  { get; private set; }
+        public string CollaboratorRoleAdditionalInfo  { get; private set; }
+        public int? CollaboratorIndustryId  { get; private set; }
+        public string CollaboratorIndustryAdditionalInfo  { get; private set; }
+        public bool? HasAnySpecialNeeds { get; private set; }
+        public string SpecialNeedsDescription  { get; private set; }
 
         public virtual User User { get; private set; }
         public virtual Address Address { get; private set; }

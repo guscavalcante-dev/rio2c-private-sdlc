@@ -381,6 +381,9 @@
     <Compile Include="CQRS\Commands\Tracks\CreateTrack.cs" />
     <Compile Include="CQRS\Commands\Tracks\DeleteTrack.cs" />
     <Compile Include="CQRS\Commands\Tracks\UpdateTrackMainInformation.cs" />
+    <Compile Include="CQRS\QueriesHandlers\Collaborators\FindAllCollaboratorIndustryAsyncQueryHandler.cs" />
+    <Compile Include="CQRS\QueriesHandlers\Collaborators\FindAllCollaboratorRoleAsyncQueryHandler.cs" />
+    <Compile Include="CQRS\QueriesHandlers\Collaborators\FindAllCollaboratorGenderAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Users\FindAdminAccessControlDtoQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Users\FindUserLanguageDtoQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Users\FindUserAccessControlDtoQueryHandler.cs" />
@@ -401,6 +404,9 @@
     <Compile Include="CQRS\QueriesHandlers\Quizzes\FindActiveQuizQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\SalesPlatformWebhookRequests\FindAllSalesPlatformWebhooRequestsDtoByPendingQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\SalesPlatforms\FindSalesPlatformDtoByNameQueryHandler.cs" />
+    <Compile Include="CQRS\Queries\Collaborators\FindAllCollaboratorIndustryAsync.cs" />
+    <Compile Include="CQRS\Queries\Collaborators\FindAllCollaboratorRoleAsync.cs" />
+    <Compile Include="CQRS\Queries\Collaborators\FindAllCollaboratorGenderAsync.cs" />
     <Compile Include="CQRS\Queries\Users\FindAdminAccessControlDto.cs" />
     <Compile Include="CQRS\Queries\Users\FindUserLanguageDto.cs" />
     <Compile Include="CQRS\Queries\Users\FindUserAccessControlDto.cs" />

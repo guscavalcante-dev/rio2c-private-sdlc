@@ -390,6 +390,12 @@
     <Content Include="Areas\Producer\Views\Collaborator\ProfileDetails.cshtml" />
     <Content Include="Areas\Producer\Views\Collaborator\ProfileEdit.cshtml" />
     <Content Include="Assets\components\bootstrap-maxlength\src\bootstrap-maxlength.js" />
+    <Content Include="Assets\components\bootstrap-timepicker\bootstrap-datepicker.en-us.js" />
+    <Content Include="Assets\components\bootstrap-timepicker\bootstrap-datepicker.pt-br.js" />
+    <Content Include="Assets\components\cldr\cldr.js" />
+    <Content Include="Assets\components\cldr\event.js" />
+    <Content Include="Assets\components\cldr\supplemental.js" />
+    <Content Include="Assets\components\cldr\unresolved.js" />
     <Content Include="Assets\components\cropper\demo\css\main.css" />
     <Content Include="Assets\components\cropper\demo\index.html" />
     <Content Include="Assets\components\cropper\demo\js\main.js" />
@@ -399,6 +405,16 @@
     <Content Include="Assets\components\cropper\dist\cropper.min.js" />
     <Content Include="Assets\components\datatables\datatables.en-us.js" />
     <Content Include="Assets\components\datatables\datatables.pt-br.js" />
+    <Content Include="Assets\components\globalize\culture\globalize.culture.es-US.js" />
+    <Content Include="Assets\components\globalize\culture\globalize.culture.pt-BR.js" />
+    <Content Include="Assets\components\globalize\currency.js" />
+    <Content Include="Assets\components\globalize\date.js" />
+    <Content Include="Assets\components\globalize\globalize.js" />
+    <Content Include="Assets\components\globalize\message.js" />
+    <Content Include="Assets\components\globalize\number.js" />
+    <Content Include="Assets\components\globalize\plural.js" />
+    <Content Include="Assets\components\globalize\relative-time.js" />
+    <Content Include="Assets\components\globalize\unit.js" />
     <Content Include="Assets\components\hideshowpassword\css\example.minimal.css" />
     <Content Include="Assets\components\hideshowpassword\css\example.wink.css" />
     <Content Include="Assets\components\hideshowpassword\hideShowPassword.js" />
@@ -6640,6 +6656,7 @@
     <Content Include="Scripts\ckeditor\skins\moono\images\close.png" />
     <Content Include="Scripts\ckeditor\skins\moono\readme.md" />
     <Content Include="postsharp.config" />
+    <Content Include="libman.json" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />

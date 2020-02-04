@@ -204,8 +204,12 @@
     <Compile Include="Entities\Collaborator\AttendeeCollaborator.cs" />
     <Compile Include="Entities\Collaborator\AttendeeCollaboratorType.cs" />
     <Compile Include="Entities\Collaborator\AttendeeCollaboratorTicket.cs" />
+    <Compile Include="Entities\Collaborator\CollaboratorEditionParticipation.cs" />
+    <Compile Include="Entities\Collaborator\CollaboratorIndustry.cs" />
     <Compile Include="Entities\Collaborator\CollaboratorProducer.cs" />
+    <Compile Include="Entities\Collaborator\CollaboratorGender.cs" />
     <Compile Include="Entities\Collaborator\CollaboratorSpeaker.cs" />
+    <Compile Include="Entities\Collaborator\CollaboratorRole.cs" />
     <Compile Include="Entities\Common\InterestGroup.cs" />
     <Compile Include="Entities\Conference\ConferencePresentationFormat.cs" />
     <Compile Include="Entities\Conference\ConferenceTrack.cs" />
@@ -293,8 +297,11 @@
     <Compile Include="Interfaces\Repositories\Collaborators\IAttendeeCollaboratorTicketRepository.cs" />
     <Compile Include="Interfaces\Repositories\Collaborators\IAttendeeCollaboratorRepository.cs" />
     <Compile Include="Interfaces\Repositories\AttendeeOrganizations\IAttendeeOrganizationRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Collaborators\ICollaboratorRoleRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Collaborators\ICollaboratorIndustryRepository.cs" />
     <Compile Include="Interfaces\Repositories\Collaborators\ICollaboratorProducerRepository.cs" />
     <Compile Include="Interfaces\Repositories\Collaborators\ICollaboratorTypeRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Collaborators\ICollaboratorGenderRepository.cs" />
     <Compile Include="Interfaces\Repositories\Common\IPresentationFormatRepository.cs" />
     <Compile Include="Interfaces\Repositories\Common\ITrackRepository.cs" />
     <Compile Include="Interfaces\Repositories\Conferences\IConferenceParticipantRoleRepository.cs" />

@@ -19,7 +19,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Labels {
@@ -129,6 +129,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Activity {
             get {
                 return ResourceManager.GetString("Activity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Informações Adicionais.
+        /// </summary>
+        public static string AdditionalInfo {
+            get {
+                return ResourceManager.GetString("AdditionalInfo", resourceCulture);
             }
         }
         
@@ -448,6 +457,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data de Nascimento.
+        /// </summary>
+        public static string BirthDate {
+            get {
+                return ResourceManager.GetString("BirthDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Summit Marcas.
         /// </summary>
         public static string BrandedContentSummit {
@@ -633,6 +651,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string CodeOfEthics {
             get {
                 return ResourceManager.GetString("CodeOfEthics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Área de Atuação.
+        /// </summary>
+        public static string CollaboratorIndustry {
+            get {
+                return ResourceManager.GetString("CollaboratorIndustry", resourceCulture);
             }
         }
         
@@ -1672,6 +1699,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gênero.
+        /// </summary>
+        public static string Gender {
+            get {
+                return ResourceManager.GetString("Gender", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gerar Agenda.
         /// </summary>
         public static string GenerateCalendar {
@@ -1704,6 +1740,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string GoBackToSignIn {
             get {
                 return ResourceManager.GetString("GoBackToSignIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tem Necessidades Especiais.
+        /// </summary>
+        public static string HasAnySpecialNeeds {
+            get {
+                return ResourceManager.GetString("HasAnySpecialNeeds", resourceCulture);
             }
         }
         
@@ -3468,6 +3513,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Rio2CSchedules {
             get {
                 return ResourceManager.GetString("Rio2CSchedules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Função.
+        /// </summary>
+        public static string Role {
+            get {
+                return ResourceManager.GetString("Role", resourceCulture);
             }
         }
         

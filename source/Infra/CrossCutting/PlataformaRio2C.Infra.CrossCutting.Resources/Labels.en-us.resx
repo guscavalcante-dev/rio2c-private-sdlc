@@ -2018,4 +2018,28 @@
     <value>is</value>
     <comment>é</comment>
   </data>
+  <data name="BirthDate" xml:space="preserve">
+    <value>Birth Date</value>
+    <comment>Data de nascimento</comment>
+  </data>
+  <data name="AdditionalInfo" xml:space="preserve">
+    <value>Additional Info</value>
+    <comment>Informações Adicionais</comment>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>Gender</value>
+    <comment>Gênero</comment>
+  </data>
+  <data name="HasAnySpecialNeeds" xml:space="preserve">
+    <value>Has Any Special Needs</value>
+    <comment>Tem necessidades especiais</comment>
+  </data>
+  <data name="CollaboratorIndustry" xml:space="preserve">
+    <value>Industry</value>
+    <comment>Área de Atuação</comment>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Role</value>
+    <comment>Função</comment>
+  </data>
 </root>
