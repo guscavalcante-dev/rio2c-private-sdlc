@@ -48,7 +48,7 @@ CREATE TABLE "CollaboratorRoles"
 	"IsDeleted"          bit  NOT NULL ,
 	"CreateDate"         datetime  NOT NULL ,
 	"CreateUserId"       int  NOT NULL ,
-	"UpdateDate"         datetime  NULL ,
+	"UpdateDate"         datetime  NOT NULL ,
 	"UpdateUserId"       int  NOT NULL 
 )
 go
@@ -68,7 +68,7 @@ CREATE TABLE "CollaboratorIndustries"
 	"IsDeleted"          bit  NOT NULL ,
 	"CreateDate"         datetime  NOT NULL ,
 	"CreateUserId"       int  NOT NULL ,
-	"UpdateDate"         datetime  NULL ,
+	"UpdateDate"         datetime  NOT NULL ,
 	"UpdateUserId"       int  NOT NULL 
 )
 go

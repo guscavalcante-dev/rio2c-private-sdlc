@@ -492,7 +492,7 @@ CREATE TABLE [dbo].[CollaboratorIndustries](
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NULL,
+	[UpdateDate] [datetime] NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_CollaboratorIndustries] PRIMARY KEY CLUSTERED 
 (
@@ -591,7 +591,7 @@ CREATE TABLE [dbo].[CollaboratorRoles](
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NULL,
+	[UpdateDate] [datetime] NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_CollaboratorRoles] PRIMARY KEY CLUSTERED 
 (
