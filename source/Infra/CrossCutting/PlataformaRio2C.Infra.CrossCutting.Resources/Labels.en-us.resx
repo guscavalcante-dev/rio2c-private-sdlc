@@ -2042,4 +2042,8 @@
     <value>Role</value>
     <comment>Função</comment>
   </data>
+  <data name="WhichSpecialNeedsQ" xml:space="preserve">
+    <value>Please, inform</value>
+    <comment>Quais?</comment>
+  </data>
 </root>

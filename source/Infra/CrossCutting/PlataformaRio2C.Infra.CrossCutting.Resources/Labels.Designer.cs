@@ -4660,6 +4660,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quais?.
+        /// </summary>
+        public static string WhichSpecialNeedsQ {
+            get {
+                return ResourceManager.GetString("WhichSpecialNeedsQ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Duração da obra.
         /// </summary>
         public static string WorkDuration {

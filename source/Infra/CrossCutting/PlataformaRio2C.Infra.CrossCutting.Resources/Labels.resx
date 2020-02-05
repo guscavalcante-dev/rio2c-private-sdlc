@@ -2049,4 +2049,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Função</value>
     <comment>Função</comment>
   </data>
+  <data name="WhichSpecialNeedsQ" xml:space="preserve">
+    <value>Quais?</value>
+    <comment>Quais?</comment>
+  </data>
 </root>

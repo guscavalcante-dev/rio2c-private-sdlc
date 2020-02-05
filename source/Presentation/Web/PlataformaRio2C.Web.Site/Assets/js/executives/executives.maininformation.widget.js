@@ -80,6 +80,7 @@ var ExecutivesMainInformationWidget = function () {
         MyRio2cCropper.init({ formIdOrClass: updateFormId });
         enableAjaxForm();           
         MyRio2cCommon.enableDatePicker({ inputIdOrClass: updateFormId + ' .enable-datepicker' });
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2' });       
         enableDropdownChangeEvent("CollaboratorGenderUid");
         enableDropdownChangeEvent("CollaboratorRoleUid");
         enableDropdownChangeEvent("CollaboratorIndustryUid");
@@ -90,14 +91,20 @@ var ExecutivesMainInformationWidget = function () {
     // Enable change events -----------------------------------------------------------------------
     var enableCheckboxChangeEvent = function (elementId) {
         var element = $('#' + elementId);
-
-        element.not('.change-event-enabled').on('click', function () {            
+        
+        function toggleChanged(element) {       
             if (element.prop('checked')) {
                 $("[data-additionalinfo='"+ element.attr("id") +"']").removeClass('d-none');
             }
             else {
                 $("[data-additionalinfo='"+element.attr("id")+"']").addClass('d-none');
             }
+        }
+        
+        toggleChanged(element);
+
+        element.not('.change-event-enabled').on('click', function () {   
+            toggleChanged(element);  
         });
 
         element.addClass('change-event-enabled');
@@ -106,13 +113,19 @@ var ExecutivesMainInformationWidget = function () {
     var enableDropdownChangeEvent = function (elementId) {
         var element = $('#' + elementId);
 
-        element.not('.change-event-enabled').on('change', function () {            
+        function toggleChanged(element) {
             if (element.find(':selected').data('aditionalinfo') === "True") {
                 $("[data-additionalinfo='"+ element.attr("id") +"']").removeClass('d-none');
             }
             else {
                 $("[data-additionalinfo='"+element.attr("id")+"']").addClass('d-none');
             }
+        }
+
+        toggleChanged(element);
+
+        element.not('.change-event-enabled').on('change', function () {            
+            toggleChanged(element);
         });
 
         element.addClass('change-event-enabled');
