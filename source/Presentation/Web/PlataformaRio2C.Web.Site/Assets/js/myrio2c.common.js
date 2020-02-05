@@ -543,6 +543,12 @@ var MyRio2cCommon = function () {
             options.autoclose = true;
         }
 
+        $.validator.methods.date = function (value, element) {
+            moment.locale(MyRio2cCommon.getGlobalVariable('userInterfaceLanguage'));
+            var val = moment(value).toDate();
+            return this.optional(element) || (val);
+        }
+
         $(options.inputIdOrClass).datepicker({
             todayHighlight: true,
             orientation: options.orientation,

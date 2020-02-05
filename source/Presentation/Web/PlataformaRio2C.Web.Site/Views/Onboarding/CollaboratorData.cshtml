@@ -42,8 +42,8 @@
                                                                         
                                     <div class="kt-section">                                        
                                         <div class="kt-section__content mt-3">                                    
-                                            @Html.LabelFor(m => m.CollaboratorIndustryUid, new { @class = "control-label" })
-                                            <select name="CollaboratorIndustryUid" id="CollaboratorIndustryUid" class="form-control enable-select2">
+                                            @Html.LabelFor(m => m.CollaboratorIndustryUid, new { @class = "control-label" })                                            
+                                            <select name="CollaboratorIndustryUid" id="CollaboratorIndustryUid" class="form-control enable-select2" @Html.GetUnobtrusiveValidationAttributesFor(m => m.CollaboratorIndustryUid)>
                                                 <option value="">@($"{Labels.Choose}...")</option>
                                                 @if (Model.CollaboratorIndustries != null)
                                                 {
@@ -69,7 +69,7 @@
                                     <div class="kt-section">                                        
                                         <div class="kt-section__content mt-3">                                    
                                             @Html.LabelFor(m => m.CollaboratorRoleUid, new { @class = "control-label" })
-                                            <select name="CollaboratorRoleUid" id="CollaboratorRoleUid" class="form-control enable-select2">
+                                            <select name="CollaboratorRoleUid" id="CollaboratorRoleUid" class="form-control enable-select2" @Html.GetUnobtrusiveValidationAttributesFor(m => m.CollaboratorRoleUid)>
                                                 <option value="">@($"{Labels.Choose}...")</option>
                                                 @if (Model.CollaboratorRoles != null)
                                                 {
@@ -92,11 +92,10 @@
                                         </div>
                                     </div>
 
-                                    <div class="kt-section">                                        
-                                        @Html.ValidationMessage("BirthDate", new { @class = "text-danger" })
+                                    <div class="kt-section">
                                         <div class="kt-section__content mt-3">
                                             @Html.LabelFor(m => m.BirthDate, new { @class = "control-label" })
-                                            @Html.TextBox("BirthDate", Model.BirthDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+                                            @Html.TextBox("BirthDate", Model.BirthDate?.ToShortDateString(), new { @class = "form-control enable-datepicker", @readonly="readonly" })
                                             @Html.ValidationMessageFor(m => m.BirthDate, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -104,7 +103,7 @@
                                     <div class="kt-section">                                        
                                         <div class="kt-section__content mt-3">                                    
                                             @Html.LabelFor(m => m.CollaboratorGenderUid, new { @class = "control-label" })
-                                            <select name="CollaboratorGenderUid" id="CollaboratorGenderUid" class="form-control enable-select2">
+                                            <select name="CollaboratorGenderUid" id="CollaboratorGenderUid" class="form-control enable-select2" @Html.GetUnobtrusiveValidationAttributesFor(m => m.CollaboratorGenderUid)>
                                                 <option value="">@($"{Labels.Choose}...")</option>
                                                 @if (Model.CollaboratorGenders != null)
                                                 {
@@ -130,7 +129,8 @@
                                     <div class="form-group">
 						                <div class="kt-checkbox-inline">
 							                <label class="kt-checkbox">
-								                <input type="checkbox" name="HasAnySpecialNeeds" id="HasAnySpecialNeeds" @if(Model.HasAnySpecialNeeds ?? false) { <text>checked</text> }> @Labels.HasAnySpecialNeeds
+								                <input type="checkbox" name="HasAnySpecialNeeds" id="HasAnySpecialNeeds" value="true" @if(Model.HasAnySpecialNeeds ?? false) { <text>checked</text> }> @Labels.HasAnySpecialNeeds
+                                                <input type="hidden" value="false" name="HasAnySpecialNeeds" />
 								                <span></span>
 							                </label>
 						                </div>

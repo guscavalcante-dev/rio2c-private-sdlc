@@ -486,7 +486,8 @@ namespace PlataformaRio2C.Web.Site
             bundles.Add(new StyleBundle("~/bundles/css/bootstrap-datepicker.css")
                 .Include("~/Assets/themes/metronic/vendors/general/bootstrap-datepicker/dist/css/bootstrap-datepicker.css", new CssRewriteUrlTransform()));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/bootstrap-datepicker.js").Include(
+            bundles.Add(new ScriptBundle("~/bundles/js/bootstrap-datepicker.js").Include(                
+                "~/Assets/themes/metronic/vendors/general/moment/min/moment-with-locales.min.js",
                 "~/Assets/themes/metronic/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.js",
                 "~/Assets/components/bootstrap-timepicker/bootstrap-datepicker.en-us.js",
                 "~/Assets/components/bootstrap-timepicker/bootstrap-datepicker.pt-br.js"));

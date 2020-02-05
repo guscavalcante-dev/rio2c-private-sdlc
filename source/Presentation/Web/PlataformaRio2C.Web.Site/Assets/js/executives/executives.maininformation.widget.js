@@ -78,8 +78,44 @@ var ExecutivesMainInformationWidget = function () {
 
         //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-minibio', maxCharCount: 710 });
         MyRio2cCropper.init({ formIdOrClass: updateFormId });
-        enableAjaxForm();
+        enableAjaxForm();           
+        MyRio2cCommon.enableDatePicker({ inputIdOrClass: updateFormId + ' .enable-datepicker' });
+        enableDropdownChangeEvent("CollaboratorGenderUid");
+        enableDropdownChangeEvent("CollaboratorRoleUid");
+        enableDropdownChangeEvent("CollaboratorIndustryUid");
+        enableCheckboxChangeEvent("HasAnySpecialNeeds");
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
+    };
+
+    // Enable change events -----------------------------------------------------------------------
+    var enableCheckboxChangeEvent = function (elementId) {
+        var element = $('#' + elementId);
+
+        element.not('.change-event-enabled').on('click', function () {            
+            if (element.prop('checked')) {
+                $("[data-additionalinfo='"+ element.attr("id") +"']").removeClass('d-none');
+            }
+            else {
+                $("[data-additionalinfo='"+element.attr("id")+"']").addClass('d-none');
+            }
+        });
+
+        element.addClass('change-event-enabled');
+    };
+
+    var enableDropdownChangeEvent = function (elementId) {
+        var element = $('#' + elementId);
+
+        element.not('.change-event-enabled').on('change', function () {            
+            if (element.find(':selected').data('aditionalinfo') === "True") {
+                $("[data-additionalinfo='"+ element.attr("id") +"']").removeClass('d-none');
+            }
+            else {
+                $("[data-additionalinfo='"+element.attr("id")+"']").addClass('d-none');
+            }
+        });
+
+        element.addClass('change-event-enabled');
     };
 
     var showUpdateModal = function () {

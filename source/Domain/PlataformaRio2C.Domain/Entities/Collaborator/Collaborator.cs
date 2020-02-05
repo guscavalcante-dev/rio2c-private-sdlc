@@ -64,6 +64,9 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual User User { get; private set; }
         public virtual Address Address { get; private set; }
         public virtual User Updater { get; private set; }
+        public virtual CollaboratorGender Gender { get; private set; }
+        public virtual CollaboratorRole Role { get; private set; }
+        public virtual CollaboratorIndustry Industry { get; private set; }
 
         public virtual ICollection<CollaboratorJobTitle> JobTitles { get; private set; }
         public virtual ICollection<CollaboratorMiniBio> MiniBios { get; private set; }
@@ -1237,6 +1240,15 @@ namespace PlataformaRio2C.Domain.Entities
             bool isImageUploaded,
             List<CollaboratorJobTitle> jobTitles,
             List<CollaboratorMiniBio> miniBios,
+            DateTime? birthDate,
+            CollaboratorGender collaboratorGender,
+            string collaboratorGenderAdditionalInfo,
+            CollaboratorRole collaboratorRole,
+            string collaboratorRoleAdditionalInfo,
+            CollaboratorIndustry collaboratorIndustry,
+            string collaboratorIndustryAdditionalInfo,
+            bool hasAnySpecialNeeds,
+            string specialNeedsDescription,
             string website,
             string linkedin,
             string twitter,
@@ -1254,6 +1266,19 @@ namespace PlataformaRio2C.Domain.Entities
             this.Twitter = twitter?.Trim();
             this.Instagram = instagram?.Trim();
             this.Youtube = youtube?.Trim();
+
+            this.BirthDate = birthDate;
+            this.Gender = collaboratorGender;
+            this.Industry = collaboratorIndustry;
+            this.Role = collaboratorRole;
+            this.CollaboratorGenderId = collaboratorGender?.Id;
+            this.CollaboratorGenderAdditionalInfo =  collaboratorGenderAdditionalInfo;
+            this.CollaboratorRoleId = collaboratorRole?.Id;
+            this.CollaboratorRoleAdditionalInfo = collaboratorRoleAdditionalInfo;
+            this.CollaboratorIndustryId = collaboratorIndustry?.Id;
+            this.CollaboratorIndustryAdditionalInfo = collaboratorIndustryAdditionalInfo;
+            this.HasAnySpecialNeeds = hasAnySpecialNeeds;
+            this.SpecialNeedsDescription = specialNeedsDescription;
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
@@ -1304,6 +1329,10 @@ namespace PlataformaRio2C.Domain.Entities
             //this.ValidateAddress();
             this.ValidateUser();
             this.ValidateAttendeeCollaborators();
+            this.ValidateGender();
+            this.ValidateIndustry();
+            this.ValidateRole();
+            this.ValidateBirthDate();
 
             return this.ValidationResult.IsValid;
         }
@@ -1319,6 +1348,17 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.FirstName?.Trim().Length < FirstNameMinLength || this.FirstName?.Trim().Length > FirstNameMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, FirstNameMaxLength, FirstNameMinLength), new string[] { "FirstName" }));
+            }
+        }
+        
+        /// <summary>
+        /// Validates the birth date
+        /// </summary>
+        private void ValidateBirthDate()
+        {
+            if (!BirthDate.HasValue)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.BirthDate), new string[] { "BirthDate" }));
             }
         }
 
@@ -1458,6 +1498,48 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
+        /// <summary>Validates the first name.</summary>
+        public void ValidateGender()
+        {
+            if (string.IsNullOrEmpty(this.CollaboratorGenderAdditionalInfo?.Trim()) && Gender?.HasAdditionalInfo == true)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Name), new string[] { "CollaboratorGenderAdditionalInfo" }));
+            }
+
+            if ((this.CollaboratorGenderAdditionalInfo?.Trim().Length < 1 || this.CollaboratorGenderAdditionalInfo?.Trim().Length > SpecialNeedsDescriptionMaxLength) && Gender?.HasAdditionalInfo == true)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.AdditionalInfo, SpecialNeedsDescriptionMaxLength, 1), new string[] { "CollaboratorGenderAdditionalInfo" }));
+            }
+        }
+                
+        /// <summary>Validates the first name.</summary>
+        public void ValidateIndustry()
+        {
+            if (string.IsNullOrEmpty(this.CollaboratorIndustryAdditionalInfo?.Trim()) && Industry?.HasAdditionalInfo == true)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Name), new string[] { "CollaboratorIndustryAdditionalInfo" }));
+            }
+
+            if ((this.CollaboratorIndustryAdditionalInfo?.Trim().Length < 1 || this.CollaboratorIndustryAdditionalInfo?.Trim().Length > SpecialNeedsDescriptionMaxLength) && Industry?.HasAdditionalInfo == true)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.AdditionalInfo, SpecialNeedsDescriptionMaxLength, 1), new string[] { "CollaboratorIndustryAdditionalInfo" }));
+            }
+        }
+                
+        /// <summary>Validates the first name.</summary>
+        public void ValidateRole()
+        {
+            if (string.IsNullOrEmpty(this.CollaboratorRoleAdditionalInfo?.Trim()) && Role?.HasAdditionalInfo == true)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Name), new string[] { "CollaboratorRoleAdditionalInfo" }));
+            }
+
+            if ((this.CollaboratorRoleAdditionalInfo?.Trim().Length < 1 || this.CollaboratorRoleAdditionalInfo?.Trim().Length > SpecialNeedsDescriptionMaxLength) && Role?.HasAdditionalInfo == true)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.AdditionalInfo, SpecialNeedsDescriptionMaxLength, 1), new string[] { "CollaboratorRoleAdditionalInfo" }));
+            }
+        }
+                
         /// <summary>Validates the attendee collaborators.</summary>
         public void ValidateAttendeeCollaborators()
         {

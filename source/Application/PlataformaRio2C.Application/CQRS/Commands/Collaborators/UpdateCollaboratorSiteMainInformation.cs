@@ -14,7 +14,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
@@ -46,6 +49,49 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string CellPhone { get; set; }
+        
+        [Display(Name = "BirthDate", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]        
+        public DateTime? BirthDate { get; set; }
+
+        [Display(Name = "Gender", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public Guid? CollaboratorGenderUid  { get; set; }
+
+        public IEnumerable<CollaboratorGender> CollaboratorGenders { get; set; }
+        
+        [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
+        [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string CollaboratorGenderAdditionalInfo  { get; set; }
+        
+        [Display(Name = "Role", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public Guid? CollaboratorRoleUid { get; set; }
+
+        public IEnumerable<CollaboratorRole> CollaboratorRoles { get; set; }
+
+        [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
+        [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string CollaboratorRoleAdditionalInfo  { get; set; }
+
+        [Display(Name = "CollaboratorIndustry", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public Guid? CollaboratorIndustryUid { get; set; }
+
+        public IEnumerable<CollaboratorIndustry> CollaboratorIndustries { get; set; }
+
+        [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
+        [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string CollaboratorIndustryAdditionalInfo  { get; set; }
+
+        [Display(Name = "HasAnySpecialNeeds", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public bool? HasAnySpecialNeeds { get; set; }
+
+        [Display(Name = "Description", ResourceType = typeof(Labels))]
+        [RequiredIf("HasAnySpecialNeeds", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string SpecialNeedsDescription { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorSiteMainInformation"/> class.</summary>
         /// <param name="entity">The entity.</param>
@@ -55,17 +101,35 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         public UpdateCollaboratorSiteMainInformation(
             AttendeeCollaboratorSiteMainInformationWidgetDto entity, 
+            List<CollaboratorGender> genders, 
+            List<CollaboratorIndustry> industries, 
+            List<CollaboratorRole> roles,
             List<LanguageDto> languagesDtos, 
             bool isJobTitleRequired, 
             bool isMiniBioRequired, 
-            bool isImageRequired)
+            bool isImageRequired,
+            string userInterfaceLanguage)
             : base (entity, languagesDtos, isJobTitleRequired, isMiniBioRequired, isImageRequired)
         {
+            this.UpdateGenders(genders, userInterfaceLanguage);
+            this.UpdateIndustries(industries, userInterfaceLanguage);
+            this.UpdateRoles(roles, userInterfaceLanguage);
+
             this.FirstName = entity?.Collaborator?.FirstName;
             this.LastNames = entity?.Collaborator?.LastNames;
             this.Badge = entity?.Collaborator?.Badge;
             this.PhoneNumber = entity?.Collaborator?.PhoneNumber;
             this.CellPhone = entity?.Collaborator?.CellPhone;
+
+            this.BirthDate = entity?.Collaborator?.BirthDate;
+            this.HasAnySpecialNeeds = entity?.Collaborator?.HasAnySpecialNeeds;
+            this.SpecialNeedsDescription = entity?.Collaborator?.SpecialNeedsDescription;
+            this.CollaboratorGenderUid = entity?.Collaborator?.Gender.Uid;
+            this.CollaboratorGenderAdditionalInfo = entity?.Collaborator?.CollaboratorGenderAdditionalInfo;
+            this.CollaboratorIndustryUid = entity?.Collaborator?.Industry.Uid;
+            this.CollaboratorIndustryAdditionalInfo = entity?.Collaborator?.CollaboratorIndustryAdditionalInfo;
+            this.CollaboratorRoleUid = entity?.Collaborator?.Role.Uid;
+            this.CollaboratorRoleAdditionalInfo = entity?.Collaborator?.CollaboratorRoleAdditionalInfo;
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorSiteMainInformation"/> class.</summary>
@@ -90,6 +154,43 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
             this.CollaboratorUid = collaboratorUid;
             this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, userInterfaceLanguage);
+        }
+
+        
+        /// <summary>
+        /// Updates the genders.
+        /// </summary>
+        /// <param name="genders">The genders.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void UpdateGenders(List<CollaboratorGender> genders, string userInterfaceLanguage)
+        {
+            genders.ForEach(g => g.Translate(userInterfaceLanguage));
+            this.CollaboratorGenders = genders.OrderBy(e => e.Name);
+        }
+
+        /// <summary>
+        /// Updates the genders.
+        /// </summary>
+        /// <param name="genders">The genders.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void UpdateIndustries(List<CollaboratorIndustry> industries, string userInterfaceLanguage)
+        {
+            industries.ForEach(g => g.Translate(userInterfaceLanguage));
+            this.CollaboratorIndustries = industries.OrderBy(e => e.Name);
+        }
+
+        /// <summary>
+        /// Updates the genders.
+        /// </summary>
+        /// <param name="genders">The genders.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void UpdateRoles(List<CollaboratorRole> roles, string userInterfaceLanguage)
+        {
+            roles.ForEach(g => g.Translate(userInterfaceLanguage));
+            this.CollaboratorRoles = roles.OrderBy(e => e.Name);
         }
     }
 }

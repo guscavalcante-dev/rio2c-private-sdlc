@@ -62,46 +62,49 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string Youtube { get; set; }
         
         [Display(Name = "Gender", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? CollaboratorGenderUid  { get; set; }
 
         public IEnumerable<CollaboratorGender> CollaboratorGenders { get; set; }
         
         [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
-        [StringLength(300, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        public string CollaboratorGenderAdditionalInfo  { get; private set; }
+        [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string CollaboratorGenderAdditionalInfo  { get; set; }
         
         [Display(Name = "Role", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? CollaboratorRoleUid { get; set; }
 
         public IEnumerable<CollaboratorRole> CollaboratorRoles { get; set; }
 
         [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
-        [StringLength(300, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        public string CollaboratorRoleAdditionalInfo  { get; private set; }
+        [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string CollaboratorRoleAdditionalInfo  { get; set; }
 
         [Display(Name = "CollaboratorIndustry", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? CollaboratorIndustryUid { get; set; }
 
         public IEnumerable<CollaboratorIndustry> CollaboratorIndustries { get; set; }
 
         [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
-        [StringLength(300, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        public string CollaboratorIndustryAdditionalInfo  { get; private set; }
+        [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string CollaboratorIndustryAdditionalInfo  { get; set; }
 
         [Display(Name = "HasAnySpecialNeeds", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public bool? HasAnySpecialNeeds { get; private set; }
+        public bool? HasAnySpecialNeeds { get; set; }
 
         [Display(Name = "Description", ResourceType = typeof(Labels))]
         [RequiredIf("HasAnySpecialNeeds", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [StringLength(300, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        public string SpecialNeedsDescription { get; private set; }
+        [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string SpecialNeedsDescription { get; set; }
 
         public List<CollaboratorJobTitleBaseCommand> JobTitles { get; set; }
         public List<CollaboratorMiniBioBaseCommand> MiniBios { get; set; }
         public CropperImageBaseCommand CropperImage { get; set; }
 
-        public Guid CollaboratorUid { get; private set; }
+        public Guid CollaboratorUid { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="OnboardCollaboratorData"/> class.</summary>
         /// <param name="collaborator">The collaborator.</param>
