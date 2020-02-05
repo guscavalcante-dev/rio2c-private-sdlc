@@ -29,7 +29,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     public class UpdateCollaboratorSiteMainInformationCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<UpdateCollaboratorSiteMainInformation, AppValidationResult>
     {
         private readonly IEditionRepository editionRepo;
-        private readonly ILanguageRepository languageRepo;
+        private readonly ILanguageRepository languageRepo;        
+        private readonly ICollaboratorGenderRepository genderRepo;
+        private readonly ICollaboratorIndustryRepository industryRepo;
+        private readonly ICollaboratorRoleRepository roleRepo;
 
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorSiteMainInformationCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
@@ -42,11 +45,17 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IUnitOfWork uow,
             ICollaboratorRepository collaboratorRepository,
             IEditionRepository editionRepository,
-            ILanguageRepository languageRepository)
+            ILanguageRepository languageRepository,
+            ICollaboratorGenderRepository genderRepo,
+            ICollaboratorIndustryRepository industryRepo,
+            ICollaboratorRoleRepository roleRepo)
             : base(eventBus, uow, collaboratorRepository)
         {
             this.editionRepo = editionRepository;
             this.languageRepo = languageRepository;
+            this.genderRepo = genderRepo;
+            this.industryRepo = industryRepo;
+            this.roleRepo = roleRepo;
         }
 
         /// <summary>Handles the specified update collaborator site main information.</summary>
@@ -84,6 +93,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.PublicEmail,
                 cmd.JobTitles?.Select(d => new CollaboratorJobTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.MiniBios?.Select(d => new CollaboratorMiniBio(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
+                cmd.BirthDate,
+                genderRepo.Get(cmd.CollaboratorGenderUid ?? Guid.Empty),
+                cmd.CollaboratorGenderAdditionalInfo,
+                roleRepo.Get(cmd.CollaboratorRoleUid ?? Guid.Empty),
+                cmd.CollaboratorRoleAdditionalInfo,
+                industryRepo.Get(cmd.CollaboratorIndustryUid ?? Guid.Empty),
+                cmd.CollaboratorIndustryAdditionalInfo,
+                cmd.HasAnySpecialNeeds ?? false,
+                cmd.SpecialNeedsDescription,
                 await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty), cmd.CropperImage?.ImageFile != null,
                 cmd.UserId);
 

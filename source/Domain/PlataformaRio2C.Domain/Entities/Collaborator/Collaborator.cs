@@ -410,6 +410,15 @@ namespace PlataformaRio2C.Domain.Entities
             string publicEmail,
             List<CollaboratorJobTitle> jobTitles,
             List<CollaboratorMiniBio> miniBios,
+            DateTime? birthDate,
+            CollaboratorGender collaboratorGender,
+            string collaboratorGenderAdditionalInfo,
+            CollaboratorRole collaboratorRole,
+            string collaboratorRoleAdditionalInfo,
+            CollaboratorIndustry collaboratorIndustry,
+            string collaboratorIndustryAdditionalInfo,
+            bool hasAnySpecialNeeds,
+            string specialNeedsDescription,
             Edition edition,
             bool isImageUploaded,
             int userId)
@@ -424,6 +433,19 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
             this.OnboardAttendeeCollaboratorData(edition, userId);
+            
+            this.BirthDate = birthDate;
+            this.Gender = collaboratorGender;
+            this.Industry = collaboratorIndustry;
+            this.Role = collaboratorRole;
+            this.CollaboratorGenderId = collaboratorGender?.Id;
+            this.CollaboratorGenderAdditionalInfo =  collaboratorGenderAdditionalInfo;
+            this.CollaboratorRoleId = collaboratorRole?.Id;
+            this.CollaboratorRoleAdditionalInfo = collaboratorRoleAdditionalInfo;
+            this.CollaboratorIndustryId = collaboratorIndustry?.Id;
+            this.CollaboratorIndustryAdditionalInfo = collaboratorIndustryAdditionalInfo;
+            this.HasAnySpecialNeeds = hasAnySpecialNeeds;
+            this.SpecialNeedsDescription = specialNeedsDescription;
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;

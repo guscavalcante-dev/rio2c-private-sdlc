@@ -29,8 +29,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     public class OnboardCollaboratorDataCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<OnboardCollaboratorData, AppValidationResult>
     {
         private readonly IEditionRepository editionRepo;
-        private readonly ILanguageRepository languageRepo;
-        
+        private readonly ILanguageRepository languageRepo;        
         private readonly ICollaboratorGenderRepository genderRepo;
         private readonly ICollaboratorIndustryRepository industryRepo;
         private readonly ICollaboratorRoleRepository roleRepo;

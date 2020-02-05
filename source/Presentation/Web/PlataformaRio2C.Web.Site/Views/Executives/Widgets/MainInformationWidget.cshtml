@@ -90,6 +90,79 @@
                         <span class="kt-widget__value"><span>@(Model.Collaborator?.PublicEmail ?? "-")</span></span>
                     </div>
                 </div>
+                
+                <div class="kt-widget__item">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.BirthDate</span>
+                        <span class="kt-widget__value"><span>@(Model.Collaborator?.BirthDate?.ToShortDateString() ?? "-")</span></span>
+                    </div>
+                </div>    
+                <div class="kt-widget__item">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.CollaboratorIndustry</span>
+                        <span class="kt-widget__value"><span>@(Model.Collaborator?.Industry?.Name?.GetSeparatorTranslation(Culture, '|') ?? "-")</span></span>
+                    </div>
+                </div>  
+                @if(Model.Collaborator?.Industry?.HasAdditionalInfo == true)
+                {
+                    <div class="kt-widget__item">
+                        <div class="kt-widget__details">
+                            <span class="kt-widget__title">@Labels.CollaboratorIndustry @Labels.AdditionalInfo</span>
+                            <span class="kt-widget__value"><span>@(Model.Collaborator?.CollaboratorIndustryAdditionalInfo ?? "-")</span></span>
+                        </div>
+                    </div>  
+                }      
+                
+                <div class="kt-widget__item">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.Gender</span>
+                        <span class="kt-widget__value"><span>@(Model.Collaborator?.Gender?.Name.GetSeparatorTranslation(Culture, '|') ?? "-")</span></span>
+                    </div>
+                </div>              
+                 
+                @if(Model.Collaborator?.Gender?.HasAdditionalInfo == true)
+                {
+                    <div class="kt-widget__item">
+                        <div class="kt-widget__details">
+                            <span class="kt-widget__title">@Labels.Gender @Labels.AdditionalInfo</span>
+                            <span class="kt-widget__value"><span>@(Model.Collaborator?.CollaboratorGenderAdditionalInfo ?? "-")</span></span>
+                        </div>
+                    </div>  
+                }      
+
+                <div class="kt-widget__item">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.Role</span>
+                        <span class="kt-widget__value"><span>@(Model.Collaborator?.Role?.Name.GetSeparatorTranslation(Culture, '|') ?? "-")</span></span>
+                    </div>
+                </div>
+                
+                @if(Model.Collaborator?.Role?.HasAdditionalInfo == true)
+                {
+                    <div class="kt-widget__item">
+                        <div class="kt-widget__details">
+                            <span class="kt-widget__title">@Labels.Role @Labels.AdditionalInfo</span>
+                            <span class="kt-widget__value"><span>@(Model.Collaborator?.CollaboratorRoleAdditionalInfo ?? "-")</span></span>
+                        </div>
+                    </div>  
+                }   
+
+                <div class="kt-widget__item">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.HasAnySpecialNeeds</span>
+                        <span class="kt-widget__value"><span>@(Model.Collaborator?.HasAnySpecialNeeds == true ? "Sim" : "Não")</span></span>
+                    </div>
+                </div>
+                
+                @if(Model.Collaborator?.HasAnySpecialNeeds == true)
+                {
+                    <div class="kt-widget__item">
+                        <div class="kt-widget__details">
+                            <span class="kt-widget__title">@Labels.HasAnySpecialNeeds @Labels.AdditionalInfo</span>
+                            <span class="kt-widget__value"><span>@(Model.Collaborator?.SpecialNeedsDescription ?? "-")</span></span>
+                        </div>
+                    </div>  
+                }   
             </div>
         }
     </div>
