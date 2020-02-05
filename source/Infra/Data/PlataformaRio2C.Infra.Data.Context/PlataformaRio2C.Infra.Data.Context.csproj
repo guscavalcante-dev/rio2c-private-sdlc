@@ -84,6 +84,7 @@
     <Compile Include="Mapping\Collaborator\CollaboratorIndustryMap.cs" />
     <Compile Include="Mapping\Collaborator\CollaboratorProducerMap.cs" />
     <Compile Include="Mapping\Collaborator\CollaboratorGenderMap.cs" />
+    <Compile Include="Mapping\Collaborator\CollaboratorEditionParticipationMap.cs" />
     <Compile Include="Mapping\Common\ActivityMap.cs" />
     <Compile Include="Mapping\Addresses\AddressMap.cs" />
     <Compile Include="Mapping\Conference\ConferencePresentationFormatMap.cs" />

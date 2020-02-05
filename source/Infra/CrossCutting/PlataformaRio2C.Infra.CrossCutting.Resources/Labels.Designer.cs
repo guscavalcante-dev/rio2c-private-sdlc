@@ -1753,6 +1753,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Já esteve em outras edições do Rio2C?.
+        /// </summary>
+        public static string HaveYouBeenToRio2CBefore {
+            get {
+                return ResourceManager.GetString("HaveYouBeenToRio2CBefore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Olá.
         /// </summary>
         public static string Hi {
@@ -1956,6 +1965,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string InvitationSending {
             get {
                 return ResourceManager.GetString("InvitationSending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Em que edição?.
+        /// </summary>
+        public static string InWhatEditions {
+            get {
+                return ResourceManager.GetString("InWhatEditions", resourceCulture);
             }
         }
         
@@ -2604,6 +2622,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Or {
             get {
                 return ResourceManager.GetString("Or", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Outros.
+        /// </summary>
+        public static string Others {
+            get {
+                return ResourceManager.GetString("Others", resourceCulture);
             }
         }
         

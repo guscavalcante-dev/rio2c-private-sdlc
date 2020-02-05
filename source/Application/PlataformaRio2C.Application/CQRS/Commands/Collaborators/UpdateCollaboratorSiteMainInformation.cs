@@ -92,6 +92,16 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [RequiredIf("HasAnySpecialNeeds", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string SpecialNeedsDescription { get; set; }
+        
+        
+        [Display(Name = "HaveYouBeenToRio2CBefore", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public bool? HaveYouBeenToRio2CBefore { get; set; }
+        
+        [Display(Name = "PreviousEditions", ResourceType = typeof(Labels))]
+        public IEnumerable<Guid> EditionsUids { get; set; }
+
+        public IEnumerable<EditionDto> Editions { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorSiteMainInformation"/> class.</summary>
         /// <param name="entity">The entity.</param>
@@ -105,6 +115,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<CollaboratorIndustry> industries, 
             List<CollaboratorRole> roles,
             List<LanguageDto> languagesDtos, 
+            List<EditionDto> editionsDtos, 
             bool isJobTitleRequired, 
             bool isMiniBioRequired, 
             bool isImageRequired,
@@ -114,13 +125,14 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateGenders(genders, userInterfaceLanguage);
             this.UpdateIndustries(industries, userInterfaceLanguage);
             this.UpdateRoles(roles, userInterfaceLanguage);
+            this.UpdateEditions(editionsDtos, entity.Collaborator);
+            this.Editions = editionsDtos;
 
             this.FirstName = entity?.Collaborator?.FirstName;
             this.LastNames = entity?.Collaborator?.LastNames;
             this.Badge = entity?.Collaborator?.Badge;
             this.PhoneNumber = entity?.Collaborator?.PhoneNumber;
-            this.CellPhone = entity?.Collaborator?.CellPhone;
-
+            this.CellPhone = entity?.Collaborator?.CellPhone;            
             this.BirthDate = entity?.Collaborator?.BirthDate;
             this.HasAnySpecialNeeds = entity?.Collaborator?.HasAnySpecialNeeds;
             this.SpecialNeedsDescription = entity?.Collaborator?.SpecialNeedsDescription;
@@ -130,6 +142,18 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.CollaboratorIndustryAdditionalInfo = entity?.Collaborator?.CollaboratorIndustryAdditionalInfo;
             this.CollaboratorRoleUid = entity?.Collaborator?.Role.Uid;
             this.CollaboratorRoleAdditionalInfo = entity?.Collaborator?.CollaboratorRoleAdditionalInfo;
+        }
+
+        private void UpdateEditions(IEnumerable<EditionDto> editions, Collaborator collaborator)
+        {
+            if (!collaborator.EditionParticipantions.Any())
+            {
+                EditionsUids = new List<Guid>();
+                return;
+            }
+
+            HaveYouBeenToRio2CBefore = true;
+            EditionsUids = editions.Where(e => collaborator.EditionParticipantions.Any(p => p.EditionId == e.Id)).Select(e => e.Uid).ToList();
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorSiteMainInformation"/> class.</summary>

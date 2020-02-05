@@ -74,6 +74,7 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new CollaboratorGenderMap());
             modelBuilder.Configurations.Add(new CollaboratorRoleMap());
             modelBuilder.Configurations.Add(new CollaboratorIndustryMap());
+            modelBuilder.Configurations.Add(new CollaboratorEditionParticipationMap());
 
             // Projects
             modelBuilder.Configurations.Add(new ProjectMap());

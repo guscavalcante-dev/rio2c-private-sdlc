@@ -85,6 +85,7 @@ var ExecutivesMainInformationWidget = function () {
         enableDropdownChangeEvent("CollaboratorRoleUid");
         enableDropdownChangeEvent("CollaboratorIndustryUid");
         enableCheckboxChangeEvent("HasAnySpecialNeeds");
+        enableCheckboxChangeEvent("HaveYouBeenToRio2CBefore");
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
 

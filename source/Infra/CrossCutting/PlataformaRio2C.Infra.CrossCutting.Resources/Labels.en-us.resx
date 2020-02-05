@@ -2046,4 +2046,16 @@
     <value>Please, inform</value>
     <comment>Quais?</comment>
   </data>
+  <data name="HaveYouBeenToRio2CBefore" xml:space="preserve">
+    <value>Have you been to Rio2C before?</value>
+    <comment>Já esteve em outras edições do Rio2C?</comment>
+  </data>
+  <data name="InWhatEditions" xml:space="preserve">
+    <value>When?</value>
+    <comment>Em que edição?</comment>
+  </data>
+  <data name="Others" xml:space="preserve">
+    <value>Others</value>
+    <comment>Outros</comment>
+  </data>
 </root>

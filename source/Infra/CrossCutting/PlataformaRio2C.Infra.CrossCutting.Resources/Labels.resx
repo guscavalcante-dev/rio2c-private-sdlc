@@ -2053,4 +2053,16 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Quais?</value>
     <comment>Quais?</comment>
   </data>
+  <data name="HaveYouBeenToRio2CBefore" xml:space="preserve">
+    <value>Já esteve em outras edições do Rio2C?</value>
+    <comment>Já esteve em outras edições do Rio2C?</comment>
+  </data>
+  <data name="InWhatEditions" xml:space="preserve">
+    <value>Em que edição?</value>
+    <comment>Em que edição?</comment>
+  </data>
+  <data name="Others" xml:space="preserve">
+    <value>Outros</value>
+    <comment>Outros</comment>
+  </data>
 </root>

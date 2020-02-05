@@ -71,6 +71,8 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<CollaboratorJobTitle> JobTitles { get; private set; }
         public virtual ICollection<CollaboratorMiniBio> MiniBios { get; private set; }
         public virtual ICollection<AttendeeCollaborator> AttendeeCollaborators { get; private set; }
+        public virtual ICollection<CollaboratorEditionParticipation> EditionParticipantions { get; private set; }
+
         //public virtual ICollection<Player> Players { get; private set; }
         //public virtual ICollection<CollaboratorProducer> ProducersEvents { get; private set; }
 
@@ -419,6 +421,7 @@ namespace PlataformaRio2C.Domain.Entities
             string collaboratorIndustryAdditionalInfo,
             bool hasAnySpecialNeeds,
             string specialNeedsDescription,
+            List<Edition> editionsParticipated,
             Edition edition,
             bool isImageUploaded,
             int userId)
@@ -430,6 +433,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CellPhone = cellPhone?.Trim();
             this.UpdatePublicEmail(sharePublicEmail, publicEmail);
             this.UpdateImageUploadDate(isImageUploaded, false);
+            this.UpdateEditions(editionsParticipated, userId);
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
             this.OnboardAttendeeCollaboratorData(edition, userId);
@@ -450,6 +454,42 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
+        }
+
+        /// <summary>
+        /// Updates the editions.
+        /// </summary>
+        /// <param name="editionsParticipated">The editions participated.</param>
+        private void UpdateEditions(List<Edition> editionsParticipated, int userId)
+        {
+            DeleteCollaboratorParticipation(editionsParticipated, userId);
+
+            foreach(var participation in editionsParticipated)
+            {
+                var existing = EditionParticipantions.FirstOrDefault(e => e.Id == participation.Id);
+
+                if(existing == null)
+                {
+                    EditionParticipantions.Add(new CollaboratorEditionParticipation(participation, this, userId));
+                    continue;
+                }
+
+                if (existing.IsDeleted)
+                {
+                    existing.Undelete(userId);
+                }
+            }
+        }
+
+        private void DeleteCollaboratorParticipation(List<Edition> editionsParticipated, int userId)
+        {
+            foreach(var participation in EditionParticipantions)
+            {
+                if(editionsParticipated.All(e => e.Id != participation.Id && !e.IsDeleted))
+                {
+                    participation.Delete(userId);
+                }
+            }
         }
 
         /// <summary>Updates the social networks.</summary>
