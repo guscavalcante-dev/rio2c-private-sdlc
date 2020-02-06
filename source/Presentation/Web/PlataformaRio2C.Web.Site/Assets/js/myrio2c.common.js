@@ -653,6 +653,52 @@ var MyRio2cCommon = function () {
             }
         });
     };
+        
+    // Enable change events -----------------------------------------------------------------------
+    var enableCheckboxChangeEvent = function (elementId) {
+            var element = $('#' + elementId);
+        
+            function toggleChanged(element) {       
+                if (element.prop('checked')) {
+                    $("[data-additionalinfo='"+ element.attr("id") +"']").removeClass('d-none');
+                }
+                else {
+                    $("[data-additionalinfo='"+element.attr("id")+"']").addClass('d-none');
+                }
+            }
+        
+            toggleChanged(element);
+
+            element.not('.change-event-enabled').on('click', function () {   
+                toggleChanged(element);  
+            });
+
+            element.addClass('change-event-enabled');
+        };
+
+    var enableDropdownChangeEvent = function (elementId, requiredFieldId) {
+        var element = $('#' + elementId);
+
+        function toggleChanged(element) {
+            var hasAdditionalInfo = element.find(':selected').data('additionalinfo');
+            if (hasAdditionalInfo === "True") {
+                $("[data-additionalinfo='"+ element.attr("id") +"']").removeClass('d-none');
+            }
+            else {
+                $("[data-additionalinfo='"+element.attr("id")+"']").addClass('d-none');                
+            }
+
+            if(requiredFieldId)
+                $('#' + requiredFieldId + 'Required').val(hasAdditionalInfo);
+        }
+
+        toggleChanged(element);
+        element.not('.change-event-enabled').on('change', function () {            
+            toggleChanged(element);
+        });
+
+        element.addClass('change-event-enabled');
+    };
 
     // Hide/Show Element --------------------------------------------------------------------------
     var hide = function (element) {
@@ -1363,6 +1409,13 @@ var MyRio2cCommon = function () {
         },
         enableCollaboratorSelect2: function (options) {
             enableCollaboratorSelect2(options);
+        },
+                
+        enableDropdownChangeEvent: function (elementId, requiredFieldId) {
+            enableDropdownChangeEvent(elementId, requiredFieldId);
+        },
+        enableCheckboxChangeEvent: function (elementId) {
+            enableCheckboxChangeEvent(elementId);
         }
     };
 }();

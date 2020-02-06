@@ -54,49 +54,6 @@ var OnboardingCollaboratorData = function () {
         }
     };
     
-    // Enable change events -----------------------------------------------------------------------
-var enableCheckboxChangeEvent = function (elementId) {
-        var element = $('#' + elementId);
-        
-        function toggleChanged(element) {       
-            if (element.prop('checked')) {
-                $("[data-additionalinfo='"+ element.attr("id") +"']").removeClass('d-none');
-            }
-            else {
-                $("[data-additionalinfo='"+element.attr("id")+"']").addClass('d-none');
-            }
-        }
-        
-        toggleChanged(element);
-
-        element.not('.change-event-enabled').on('click', function () {   
-            toggleChanged(element);  
-        });
-
-        element.addClass('change-event-enabled');
-    };
-
-    var enableDropdownChangeEvent = function (elementId) {
-        var element = $('#' + elementId);
-
-        function toggleChanged(element) {
-            if (element.find(':selected').data('aditionalinfo') === "True") {
-                $("[data-additionalinfo='"+ element.attr("id") +"']").removeClass('d-none');
-            }
-            else {
-                $("[data-additionalinfo='"+element.attr("id")+"']").addClass('d-none');
-            }
-        }
-
-        toggleChanged(element);
-
-        element.not('.change-event-enabled').on('change', function () {            
-            toggleChanged(element);
-        });
-
-        element.addClass('change-event-enabled');
-    };
-
     return {
         init: function() {
             enablePlugins();

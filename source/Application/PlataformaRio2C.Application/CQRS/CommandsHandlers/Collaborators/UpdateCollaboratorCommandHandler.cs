@@ -101,7 +101,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            if(cmd.EditionsUids == null)
+            if(cmd.EditionsUids == null || (!cmd.HaveYouBeenToRio2CBefore ?? false))
             {
                 cmd.EditionsUids = new List<Guid>();
             }

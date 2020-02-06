@@ -51,7 +51,7 @@
                                                         {
                                                             foreach (var industry in Model.CollaboratorIndustries)
                                                             {
-                                                                <option value="@industry.Uid" @(Model.CollaboratorIndustryUid == industry.Uid ? "selected" : "") data-aditionalinfo="@industry.HasAdditionalInfo">
+                                                                <option value="@industry.Uid" @(Model.CollaboratorIndustryUid == industry.Uid ? "selected" : "") data-additionalinfo="@industry.HasAdditionalInfo">
                                                                     @industry.Name
                                                                 </option>
                                                             }
@@ -79,7 +79,7 @@
                                                         {
                                                             foreach (var role in Model.CollaboratorRoles)
                                                             {
-                                                                <option value="@role.Uid" @(Model.CollaboratorRoleUid == role.Uid ? "selected" : "") data-aditionalinfo="@role.HasAdditionalInfo">
+                                                                <option value="@role.Uid" @(Model.CollaboratorRoleUid == role.Uid ? "selected" : "") data-additionalinfo="@role.HasAdditionalInfo">
                                                                     @role.Name
                                                                 </option>
                                                             }
@@ -119,7 +119,7 @@
                                                         {
                                                             foreach (var gender in Model.CollaboratorGenders)
                                                             {
-                                                                <option value="@gender.Uid" @(Model.CollaboratorGenderUid == gender.Uid ? "selected" : "") data-aditionalinfo="@gender.HasAdditionalInfo">
+                                                                <option value="@gender.Uid" @(Model.CollaboratorGenderUid == gender.Uid ? "selected" : "") data-additionalinfo="@gender.HasAdditionalInfo">
                                                                     @gender.Name
                                                                 </option>
                                                             }

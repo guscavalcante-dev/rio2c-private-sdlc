@@ -87,7 +87,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var beforeImageUploadDate = collaborator.ImageUploadDate;
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
-            if(cmd.EditionsUids == null) cmd.EditionsUids = new List<Guid>();
+            if(cmd.EditionsUids == null || (!cmd.HaveYouBeenToRio2CBefore ?? false)) cmd.EditionsUids = new List<Guid>();
             collaborator.UpdateAdminMainInformation(
                 await this.collaboratorTypeRepo.FindByNameAsunc(cmd.CollaboratorTypeName),
                 cmd.FirstName,

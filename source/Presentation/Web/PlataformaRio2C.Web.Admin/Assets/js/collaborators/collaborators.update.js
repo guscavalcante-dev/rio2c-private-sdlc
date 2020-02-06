@@ -35,59 +35,16 @@ var CollaboratorsUpdate = function () {
         AddressesForm.init();
         //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-jobtitle', maxCharCount: 81 });
         //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-minibio', maxCharCount: 710 });
-        enableDropdownChangeEvent("CollaboratorGenderUid");
-        enableDropdownChangeEvent("CollaboratorRoleUid");
-        enableDropdownChangeEvent("CollaboratorIndustryUid");
-        enableCheckboxChangeEvent("HasAnySpecialNeeds");
-        enableCheckboxChangeEvent("HaveYouBeenToRio2CBefore");
+
+        MyRio2cCommon.enableDropdownChangeEvent("CollaboratorGenderUid", "CollaboratorGenderAdditionalInfo");
+        MyRio2cCommon.enableDropdownChangeEvent("CollaboratorRoleUid", "CollaboratorRoleAdditionalInfo");
+        MyRio2cCommon.enableDropdownChangeEvent("CollaboratorIndustryUid", "CollaboratorIndustryAdditionalInfo");
+        MyRio2cCommon.enableCheckboxChangeEvent("HasAnySpecialNeeds");
+        MyRio2cCommon.enableCheckboxChangeEvent("HaveYouBeenToRio2CBefore");
         enableAjaxForm();
         enableFormValidation();
     };
-
     
-    // Enable change events -----------------------------------------------------------------------
-    var enableCheckboxChangeEvent = function (elementId) {
-        var element = $('#' + elementId);
-        
-        function toggleChanged(element) {       
-            if (element.prop('checked')) {
-                $("[data-additionalinfo='"+ element.attr("id") +"']").removeClass('d-none');
-            }
-            else {
-                $("[data-additionalinfo='"+element.attr("id")+"']").addClass('d-none');
-            }
-        }
-        
-        toggleChanged(element);
-
-        element.not('.change-event-enabled').on('click', function () {   
-            toggleChanged(element);  
-        });
-
-        element.addClass('change-event-enabled');
-    };
-
-    var enableDropdownChangeEvent = function (elementId) {
-        var element = $('#' + elementId);
-
-        function toggleChanged(element) {
-            if (element.find(':selected').data('aditionalinfo') === "True") {
-                $("[data-additionalinfo='"+ element.attr("id") +"']").removeClass('d-none');
-            }
-            else {
-                $("[data-additionalinfo='"+element.attr("id")+"']").addClass('d-none');
-            }
-        }
-
-        toggleChanged(element);
-
-        element.not('.change-event-enabled').on('change', function () {            
-            toggleChanged(element);
-        });
-
-        element.addClass('change-event-enabled');
-    };
-
     // Show modal ---------------------------------------------------------------------------------
     var showModal = function (collaboratorUid, isAddingToCurrentEdition) {
         MyRio2cCommon.block({ isModal: true });

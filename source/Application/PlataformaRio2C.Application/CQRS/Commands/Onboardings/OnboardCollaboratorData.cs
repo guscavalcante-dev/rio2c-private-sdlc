@@ -89,6 +89,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = "EnterYourIndustry", ResourceType = typeof(Labels))]
         [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        [RequiredIf("CollaboratorIndustryAdditionalInfo-required", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public string CollaboratorIndustryAdditionalInfo  { get; set; }
 
         [Display(Name = "HasAnySpecialNeeds", ResourceType = typeof(Labels))]
@@ -271,7 +272,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             int? editionId,
             Guid? editionUid,
             string userInterfaceLanguage)
-        {
+        {            
+            if (!HaveYouBeenToRio2CBefore ?? false)
+            {
+                EditionsUids = new List<Guid>();
+            }
+
             this.CollaboratorUid = collaboratorUid;
             this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, userInterfaceLanguage);
         }

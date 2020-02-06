@@ -32,11 +32,11 @@ var CollaboratorsCreate = function () {
         MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });
         AttendeeOrganizationsForm.init(formId);
         AddressesForm.init();        
-        enableDropdownChangeEvent("CollaboratorGenderUid");
-        enableDropdownChangeEvent("CollaboratorRoleUid");
-        enableDropdownChangeEvent("CollaboratorIndustryUid");
-        enableCheckboxChangeEvent("HasAnySpecialNeeds");
-        enableCheckboxChangeEvent("HaveYouBeenToRio2CBefore");
+        MyRio2cCommon.enableDropdownChangeEvent("CollaboratorGenderUid", "CollaboratorGenderAdditionalInfo");
+        MyRio2cCommon.enableDropdownChangeEvent("CollaboratorRoleUid", "CollaboratorRoleAdditionalInfo");
+        MyRio2cCommon.enableDropdownChangeEvent("CollaboratorIndustryUid", "CollaboratorIndustryAdditionalInfo");
+        MyRio2cCommon.enableCheckboxChangeEvent("HasAnySpecialNeeds");
+        MyRio2cCommon.enableCheckboxChangeEvent("HaveYouBeenToRio2CBefore");
         enableAjaxForm();
         enableFormValidation();
     };
@@ -67,49 +67,6 @@ var CollaboratorsCreate = function () {
         });
     };
     
-    // Enable change events -----------------------------------------------------------------------
-    var enableCheckboxChangeEvent = function (elementId) {
-        var element = $('#' + elementId);
-        
-        function toggleChanged(element) {       
-            if (element.prop('checked')) {
-                $("[data-additionalinfo='"+ element.attr("id") +"']").removeClass('d-none');
-            }
-            else {
-                $("[data-additionalinfo='"+element.attr("id")+"']").addClass('d-none');
-            }
-        }
-        
-        toggleChanged(element);
-
-        element.not('.change-event-enabled').on('click', function () {   
-            toggleChanged(element);  
-        });
-
-        element.addClass('change-event-enabled');
-    };
-
-    var enableDropdownChangeEvent = function (elementId) {
-        var element = $('#' + elementId);
-
-        function toggleChanged(element) {
-            if (element.find(':selected').data('aditionalinfo') === "True") {
-                $("[data-additionalinfo='"+ element.attr("id") +"']").removeClass('d-none');
-            }
-            else {
-                $("[data-additionalinfo='"+element.attr("id")+"']").addClass('d-none');
-            }
-        }
-
-        toggleChanged(element);
-
-        element.not('.change-event-enabled').on('change', function () {            
-            toggleChanged(element);
-        });
-
-        element.addClass('change-event-enabled');
-    };
-
     // Enable ajax form ---------------------------------------------------------------------------
     var enableAjaxForm = function () {
         MyRio2cCommon.enableAjaxForm({
