@@ -292,6 +292,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         Name = d.Language.Name,
                                         Code = d.Language.Code
                                     }
+                                }),
+                                EditionParticipationDtos = ac.Collaborator.EditionParticipantions.Where(d => !d.IsDeleted).Select(d => new CollaboratorEditionParticipationBaseDto()
+                                {
+                                    Id = d.Id,
+                                    Uid = d.Uid,
+                                    EditionId = d.EditionId,
+                                    EditionUid = d.Edition.Uid,
+                                    EditionName = d.Edition.Name                                    
                                 })
                             })
                             .FirstOrDefaultAsync();

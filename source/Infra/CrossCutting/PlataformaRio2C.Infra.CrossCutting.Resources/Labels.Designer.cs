@@ -1393,6 +1393,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Informe sua área de atuação.
+        /// </summary>
+        public static string EnterYourIndustry {
+            get {
+                return ResourceManager.GetString("EnterYourIndustry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Informe sua função.
+        /// </summary>
+        public static string EnterYourRole {
+            get {
+                return ResourceManager.GetString("EnterYourRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} em destaque.
         /// </summary>
         public static string EntityHighlights {

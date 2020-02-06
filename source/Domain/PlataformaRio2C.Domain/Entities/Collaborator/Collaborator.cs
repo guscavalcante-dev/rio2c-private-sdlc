@@ -365,17 +365,10 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.UpdateEditions(editionsParticipated, userId);
             this.BirthDate = birthDate;
-            this.Gender = collaboratorGender;
-            this.Industry = collaboratorIndustry;
-            this.Role = collaboratorRole;
-            this.CollaboratorGenderId = collaboratorGender?.Id;
-            this.CollaboratorGenderAdditionalInfo =  collaboratorGenderAdditionalInfo;
-            this.CollaboratorRoleId = collaboratorRole?.Id;
-            this.CollaboratorRoleAdditionalInfo = collaboratorRoleAdditionalInfo;
-            this.CollaboratorIndustryId = collaboratorIndustry?.Id;
-            this.CollaboratorIndustryAdditionalInfo = collaboratorIndustryAdditionalInfo;
-            this.HasAnySpecialNeeds = hasAnySpecialNeeds;
-            this.SpecialNeedsDescription = specialNeedsDescription;
+            UpdateGender(collaboratorGender, collaboratorGenderAdditionalInfo);
+            UpdateRole(collaboratorRole, collaboratorRoleAdditionalInfo);
+            UpdateIndustry(collaboratorIndustry, collaboratorIndustryAdditionalInfo);
+            UpdateSpecialNeeds(hasAnySpecialNeeds, specialNeedsDescription);
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
@@ -417,6 +410,16 @@ namespace PlataformaRio2C.Domain.Entities
             bool isImageDeleted,
             List<CollaboratorJobTitle> jobTitles,
             List<CollaboratorMiniBio> miniBios,
+            DateTime? birthDate,
+            CollaboratorGender collaboratorGender,
+            string collaboratorGenderAdditionalInfo,
+            CollaboratorRole collaboratorRole,
+            string collaboratorRoleAdditionalInfo,
+            CollaboratorIndustry collaboratorIndustry,
+            string collaboratorIndustryAdditionalInfo,
+            bool hasAnySpecialNeeds,
+            string specialNeedsDescription,
+            List<Edition> editionsParticipated,
             Edition edition,
             int userId)
         {
@@ -431,6 +434,13 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
             this.OnboardAttendeeCollaboratorData(edition, userId);
+            this.UpdateEditions(editionsParticipated, userId);
+                        
+            this.BirthDate = birthDate;
+            UpdateGender(collaboratorGender, collaboratorGenderAdditionalInfo);
+            UpdateRole(collaboratorRole, collaboratorRoleAdditionalInfo);
+            UpdateIndustry(collaboratorIndustry, collaboratorIndustryAdditionalInfo);
+            UpdateSpecialNeeds(hasAnySpecialNeeds, specialNeedsDescription);
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
@@ -487,21 +497,61 @@ namespace PlataformaRio2C.Domain.Entities
             this.OnboardAttendeeCollaboratorData(edition, userId);
             
             this.BirthDate = birthDate;
-            this.Gender = collaboratorGender;
-            this.Industry = collaboratorIndustry;
-            this.Role = collaboratorRole;
-            this.CollaboratorGenderId = collaboratorGender?.Id;
-            this.CollaboratorGenderAdditionalInfo =  collaboratorGenderAdditionalInfo;
-            this.CollaboratorRoleId = collaboratorRole?.Id;
-            this.CollaboratorRoleAdditionalInfo = collaboratorRoleAdditionalInfo;
-            this.CollaboratorIndustryId = collaboratorIndustry?.Id;
-            this.CollaboratorIndustryAdditionalInfo = collaboratorIndustryAdditionalInfo;
-            this.HasAnySpecialNeeds = hasAnySpecialNeeds;
-            this.SpecialNeedsDescription = specialNeedsDescription;
+            UpdateGender(collaboratorGender, collaboratorGenderAdditionalInfo);
+            UpdateRole(collaboratorRole, collaboratorRoleAdditionalInfo);
+            UpdateIndustry(collaboratorIndustry, collaboratorIndustryAdditionalInfo);
+            UpdateSpecialNeeds(hasAnySpecialNeeds, specialNeedsDescription);
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
+        }
+
+        /// <summary>
+        /// Updates the special needs.
+        /// </summary>
+        /// <param name="hasAnySpecialNeeds">if set to <c>true</c> [has any special needs].</param>
+        /// <param name="specialNeedsDescription">The special needs description.</param>
+        private void UpdateSpecialNeeds(bool hasAnySpecialNeeds, string specialNeedsDescription)
+        {
+            this.HasAnySpecialNeeds = hasAnySpecialNeeds;
+            this.SpecialNeedsDescription = hasAnySpecialNeeds ? specialNeedsDescription : null;
+        }
+
+        /// <summary>
+        /// Updates the industry.
+        /// </summary>
+        /// <param name="collaboratorIndustry">The collaborator industry.</param>
+        /// <param name="collaboratorIndustryAdditionalInfo">The collaborator industry additional information.</param>
+        private void UpdateIndustry(CollaboratorIndustry collaboratorIndustry, string collaboratorIndustryAdditionalInfo)
+        {
+            this.Industry = collaboratorIndustry;
+            this.CollaboratorIndustryId = collaboratorIndustry?.Id;
+            this.CollaboratorIndustryAdditionalInfo = collaboratorIndustry?.HasAdditionalInfo ?? false ? collaboratorIndustryAdditionalInfo : null;
+        }
+
+        /// <summary>
+        /// Updates the role.
+        /// </summary>
+        /// <param name="collaboratorRole">The collaborator role.</param>
+        /// <param name="collaboratorRoleAdditionalInfo">The collaborator role additional information.</param>
+        private void UpdateRole(CollaboratorRole collaboratorRole, string collaboratorRoleAdditionalInfo)
+        {
+            this.CollaboratorRoleId = collaboratorRole?.Id;
+            this.Role = collaboratorRole;
+            this.CollaboratorRoleAdditionalInfo = collaboratorRole?.HasAdditionalInfo ?? false ? collaboratorRoleAdditionalInfo : null;
+        }
+
+        /// <summary>
+        /// Updates the gender.
+        /// </summary>
+        /// <param name="collaboratorGender">The collaborator gender.</param>
+        /// <param name="collaboratorGenderAdditionalInfo">The collaborator gender additional information.</param>
+        private void UpdateGender(CollaboratorGender collaboratorGender, string collaboratorGenderAdditionalInfo)
+        {
+            this.Gender = collaboratorGender;
+            this.CollaboratorGenderId = collaboratorGender?.Id;
+            this.CollaboratorGenderAdditionalInfo = collaboratorGender?.HasAdditionalInfo ?? false ? collaboratorGenderAdditionalInfo : null;
         }
 
         /// <summary>

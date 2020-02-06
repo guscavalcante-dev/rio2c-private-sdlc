@@ -77,7 +77,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public IEnumerable<CollaboratorRole> CollaboratorRoles { get; set; }
 
-        [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
+        [Display(Name = "EnterYourRole", ResourceType = typeof(Labels))]
         [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string CollaboratorRoleAdditionalInfo  { get; set; }
 
@@ -87,7 +87,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public IEnumerable<CollaboratorIndustry> CollaboratorIndustries { get; set; }
 
-        [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
+        [Display(Name = "EnterYourIndustry", ResourceType = typeof(Labels))]
         [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string CollaboratorIndustryAdditionalInfo  { get; set; }
 

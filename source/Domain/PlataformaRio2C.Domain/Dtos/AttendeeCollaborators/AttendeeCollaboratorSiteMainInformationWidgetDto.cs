@@ -26,6 +26,7 @@ namespace PlataformaRio2C.Domain.Dtos
 
         public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }
         public IEnumerable<CollaboratorMiniBioBaseDto> MiniBioDtos { get; set; }
+        public IEnumerable<CollaboratorEditionParticipationBaseDto> EditionParticipationDtos { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeCollaboratorSiteMainInformationWidgetDto"/> class.</summary>
         public AttendeeCollaboratorSiteMainInformationWidgetDto()

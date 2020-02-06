@@ -199,8 +199,14 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd = new UpdateCollaboratorAdminMainInformation(
-                    mainInformationWidgetDto,
-                    await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)));
+                    mainInformationWidgetDto,                    
+                    await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllEditionsByIsActive()),
+                    EditionDto.Id,
+                    UserInterfaceLanguage);
             }
             catch (DomainException ex)
             {

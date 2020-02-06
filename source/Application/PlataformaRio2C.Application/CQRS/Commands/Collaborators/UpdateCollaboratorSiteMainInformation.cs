@@ -70,7 +70,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public IEnumerable<CollaboratorRole> CollaboratorRoles { get; set; }
 
-        [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
+        [Display(Name = "EnterYourRole", ResourceType = typeof(Labels))]
         [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string CollaboratorRoleAdditionalInfo  { get; set; }
 
@@ -80,7 +80,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public IEnumerable<CollaboratorIndustry> CollaboratorIndustries { get; set; }
 
-        [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
+        [Display(Name = "EnterYourIndustry", ResourceType = typeof(Labels))]
         [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string CollaboratorIndustryAdditionalInfo  { get; set; }
 
@@ -178,14 +178,14 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
             this.Editions = editions.Where(e => e.Id != currentEditionId).ToList();
 
-            if (!collaborator.EditionParticipantions.Any())
+            if (!collaborator.EditionParticipantions.Any(p => !p.IsDeleted))
             {
                 EditionsUids = new List<Guid>();
                 return;
             }           
             
             HaveYouBeenToRio2CBefore = true;
-            EditionsUids = editions.Where(e => collaborator.EditionParticipantions.Any(p => p.EditionId == e.Id)).Select(e => e.Uid).ToList();
+            EditionsUids = editions.Where(e => collaborator.EditionParticipantions.Any(p => p.EditionId == e.Id && !p.IsDeleted)).Select(e => e.Uid).ToList();
         }
 
         /// <summary>

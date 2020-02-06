@@ -2058,4 +2058,12 @@
     <value>Others</value>
     <comment>Outros</comment>
   </data>
+  <data name="EnterYourIndustry" xml:space="preserve">
+    <value>Enter your industry</value>
+    <comment>Informe sua área de atuação</comment>
+  </data>
+  <data name="EnterYourRole" xml:space="preserve">
+    <value>Enter your role</value>
+    <comment>Informe sua função</comment>
+  </data>
 </root>

@@ -168,7 +168,33 @@
                     <div class="kt-widget__item">
                         <div class="kt-widget__details">
                             <span class="kt-widget__title">@Labels.HasAnySpecialNeeds</span>
-                            <span class="kt-widget__value">@Labels.No</span>
+                            <span class="kt-widget__value"><span>@Labels.No</span></span>
+                        </div>
+                    </div>
+                }
+                
+                @if(Model.EditionParticipationDtos?.Any() == true)
+                {                    
+                    <div class="kt-widget__item">
+                        <div class="kt-widget__details">
+                            <span class="kt-widget__title">@Labels.HaveYouBeenToRio2CBefore</span>                            
+                            @foreach(var edition in Model.EditionParticipationDtos)
+                            {
+                                <span class="kt-widget__value">
+                                    <span>
+                                    @edition.EditionName
+                                    </span>
+                                </span>
+                            }
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="kt-widget__item">
+                        <div class="kt-widget__details">
+                            <span class="kt-widget__title">@Labels.HaveYouBeenToRio2CBefore</span>
+                            <span class="kt-widget__value"><span>@Labels.No</span></span>
                         </div>
                     </div>
                 }

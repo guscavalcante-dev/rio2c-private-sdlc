@@ -78,8 +78,58 @@ var SpeakersMainInformationWidget = function () {
 
         //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-minibio', maxCharCount: 710 });
         MyRio2cCropper.init({ formIdOrClass: updateFormId });
+        MyRio2cCommon.enableDatePicker({ inputIdOrClass: updateFormId + ' .enable-datepicker' });
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2' });       
+        enableDropdownChangeEvent("CollaboratorGenderUid");
+        enableDropdownChangeEvent("CollaboratorRoleUid");
+        enableDropdownChangeEvent("CollaboratorIndustryUid");
+        enableCheckboxChangeEvent("HasAnySpecialNeeds");
+        enableCheckboxChangeEvent("HaveYouBeenToRio2CBefore");
         enableAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
+    };
+
+    // Enable change events -----------------------------------------------------------------------
+    var enableCheckboxChangeEvent = function (elementId) {
+        var element = $('#' + elementId);
+        
+        function toggleChanged(element) {       
+            if (element.prop('checked')) {
+                $("[data-additionalinfo='"+ element.attr("id") +"']").removeClass('d-none');
+            }
+            else {
+                $("[data-additionalinfo='"+element.attr("id")+"']").addClass('d-none');
+            }
+        }
+        
+        toggleChanged(element);
+
+        element.not('.change-event-enabled').on('click', function () {   
+            toggleChanged(element);  
+        });
+
+        element.addClass('change-event-enabled');
+    };
+
+    var enableDropdownChangeEvent = function (elementId) {
+        var element = $('#' + elementId);
+
+        function toggleChanged(element) {
+            if (element.find(':selected').data('aditionalinfo') === "True") {
+                $("[data-additionalinfo='"+ element.attr("id") +"']").removeClass('d-none');
+            }
+            else {
+                $("[data-additionalinfo='"+element.attr("id")+"']").addClass('d-none');
+            }
+        }
+
+        toggleChanged(element);
+
+        element.not('.change-event-enabled').on('change', function () {            
+            toggleChanged(element);
+        });
+
+        element.addClass('change-event-enabled');
     };
 
     var showUpdateModal = function () {
